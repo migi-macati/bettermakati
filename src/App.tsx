@@ -3,6 +3,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import Home from './pages/Home';
+import About from './pages/About';
 import ScrollToTop from './components/ui/ScrollToTop';
 import Services from './pages/Services';
 import Document from './pages/Document';
@@ -21,6 +22,7 @@ function App() {
             <ScrollToTop />
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
               <Route path="/services/:category" element={<Services />} />
               <Route path="/services" element={<Services />} />
               <Route

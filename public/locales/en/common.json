@@ -2,13 +2,12 @@
   "site_name": "BetterMakati",
   "site_description": "Independent civic information portal for Makati City",
   "hero": {
-    "title": "BetterMakati",
-    "subtitle": "Find public services and government information for Makati City."
+    "subtitle": "Find selected public services and government information for Makati City."
   },
   "services": {
     "title": "Services & Information",
     "governmentServices": "Government Services",
-    "description": "Find practical information about selected Makati City services. Details are added only after they are checked against official sources.",
+    "description": "Verified information about selected Makati City services. More services will be added as sources are checked.",
     "viewAll": "View All Services",
     "viewAllCategory": "View All"
   },

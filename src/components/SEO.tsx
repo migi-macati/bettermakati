@@ -32,7 +32,9 @@ export default function SEO({
   const fullKeywords = keywords || defaultKeywords;
   const fullUrl = url || import.meta.env.VITE_WEBSITE_URL || '';
   const fullImage =
-    image || import.meta.env.VITE_OG_IMAGE_URL || (fullUrl ? `${fullUrl}/og-image.jpg` : '');
+    image ||
+    import.meta.env.VITE_OG_IMAGE_URL ||
+    (fullUrl ? `${fullUrl}/og-image.jpg` : '');
   const twitterHandle = import.meta.env.VITE_TWITTER_HANDLE || '';
 
   return (

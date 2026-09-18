@@ -1,9 +1,4 @@
-# legislative Department Pages
-# This file contains all the pages/governments/departments/legislative available under the Department
-#
-layout: grid
-title: 'Legislative Department'
-description: 'Page Description'
-pages:
-  - name: 'Councilor A'
-    description: 'Description'
+title: 'City Council'
+description: 'Verified City Council information will be added for the BetterMakati v1.0 release.'
+layout: list
+pages: []
