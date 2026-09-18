@@ -7,6 +7,8 @@ export const mainNavigation: NavigationItem[] = [
     href: '/visit',
     children: [
       { label: 'Places to Go', href: '/visit' },
+      { label: 'Getting Around', href: '/mobility' },
+      { label: 'Cinemas', href: '/cinemas' },
       { label: 'Heritage & Culture', href: '/heritage' },
       { label: 'History of Makati', href: '/history' },
     ],
@@ -17,6 +19,7 @@ export const mainNavigation: NavigationItem[] = [
     children: [
       { label: 'Government', href: '/government' },
       { label: 'Barangays', href: '/barangays' },
+      { label: 'Estates & Associations', href: '/estates' },
       { label: 'Makati Statistics', href: '/statistics' },
       { label: 'Legislation', href: '/legislation' },
       { label: 'News & Events', href: '/news' },
@@ -60,15 +63,18 @@ export const footerNavigation = {
       links: [
         { label: 'Services', href: '/services' },
         { label: 'Visit Makati', href: '/visit' },
-        { label: 'Government', href: '/government' },
+        { label: 'Getting Around', href: '/mobility' },
+        { label: 'Cinemas', href: '/cinemas' },
         { label: 'Barangays', href: '/barangays' },
         { label: 'Projects & Budget', href: '/projects-budget' },
-        { label: 'Community Tools', href: '/community-tools' },
       ],
     },
     {
-      title: 'Participate',
+      title: 'City',
       links: [
+        { label: 'Government', href: '/government' },
+        { label: 'Estates & Associations', href: '/estates' },
+        { label: 'Community Tools', href: '/community-tools' },
         { label: 'Get Involved', href: '/get-involved' },
         { label: 'Contact', href: '/contact' },
       ],

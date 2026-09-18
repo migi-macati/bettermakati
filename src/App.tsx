@@ -24,6 +24,9 @@ import Heritage from './pages/Heritage';
 import History from './pages/History';
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
+import Mobility from './pages/Mobility';
+import Cinemas from './pages/Cinemas';
+import Estates from './pages/Estates';
 import Search from './pages/Search';
 import { isMeilisearchEnabled } from './lib/meilisearch';
 
@@ -51,11 +54,14 @@ function App() {
                 />
 
                 <Route path="/visit" element={<VisitMakati />} />
+                <Route path="/mobility" element={<Mobility />} />
+                <Route path="/cinemas" element={<Cinemas />} />
                 <Route path="/heritage" element={<Heritage />} />
                 <Route path="/history" element={<History />} />
 
                 <Route path="/government" element={<Government />} />
                 <Route path="/barangays" element={<Barangays />} />
+                <Route path="/estates" element={<Estates />} />
                 <Route path="/statistics" element={<Statistics />} />
                 <Route path="/legislation" element={<Legislation />} />
                 <Route path="/news" element={<News />} />
