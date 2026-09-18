@@ -10,109 +10,17 @@ import {
   ArrowDown,
   ArrowRight,
   ArrowUp,
-  Building2,
   CornerDownLeft,
   Search,
   X,
 } from 'lucide-react';
 import { useNavigate } from 'react-router';
+import { searchIndex, type SearchItem } from '../../data/searchIndex';
 
-type ServiceCategory =
-  | 'Business'
-  | 'Health'
-  | 'Education'
-  | 'Social'
-  | 'Property';
+type SearchScope = 'site' | 'services';
 
-interface ServiceItem {
-  title: string;
-  category: ServiceCategory;
-  description: string;
-  href: string;
-  keywords: string;
-}
-
-const services: ServiceItem[] = [
-  {
-    title: 'Apply for a new business permit',
-    category: 'Business',
-    description: 'Requirements and application form for a new Makati business permit.',
-    href: '/services/business/new-business-permit',
-    keywords: 'business permit new mayor mayors licensing bplo trade company enterprise registration',
-  },
-  {
-    title: 'Renew a business permit',
-    category: 'Business',
-    description: 'Renewal requirements for an existing Makati business permit.',
-    href: '/services/business/renew-business-permit',
-    keywords: 'business permit renewal renew mayor mayors licensing bplo tax',
-  },
-  {
-    title: 'Makati Health Plus / Yellow Card',
-    category: 'Health',
-    description: 'Makati Health Plus application information and supporting documents.',
-    href: '/services/health-services/makati-health-plus',
-    keywords: 'yellow card health plus medical hospital patient healthcare benefit',
-  },
-  {
-    title: 'Get emergency assistance',
-    category: 'Health',
-    description: 'Emergency contacts and information to prepare when reporting an incident.',
-    href: '/services/health-services/emergency-assistance',
-    keywords: 'emergency 911 rescue medical drrmo disaster fire police ambulance',
-  },
-  {
-    title: 'Apply to the University of Makati',
-    category: 'Education',
-    description: 'University of Makati admissions and application information.',
-    href: '/services/education/umak-admissions',
-    keywords: 'umak university admission college school enrollment student',
-  },
-  {
-    title: 'University of Makati scholarships and grants',
-    category: 'Education',
-    description: 'UMak scholarship guidelines and application information.',
-    href: '/services/education/umak-scholarships',
-    keywords: 'umak scholarship education grant tuition student financial assistance',
-  },
-  {
-    title: 'Contact the Makati Action Center',
-    category: 'Social',
-    description: 'City concern, feedback and service-coordination contact information.',
-    href: '/services/social-welfare/makati-action-center',
-    keywords: 'complaint concern feedback action center help assistance mac mayor city hall',
-  },
-  {
-    title: 'Senior citizen Blu Card services',
-    category: 'Social',
-    description: 'Blu Card program information for Makati senior citizens.',
-    href: '/services/social-welfare/senior-citizen-blu-card',
-    keywords: 'senior citizen blue blu card elderly benefits social welfare',
-  },
-  {
-    title: 'Pay real property tax',
-    category: 'Property',
-    description: 'Requirements for Makati real property tax payment.',
-    href: '/services/housing-land-use/real-property-tax-payment',
-    keywords: 'property tax real estate rpta payment assessment treasurer land house',
-  },
-  {
-    title: 'Secure locational clearance and building permit',
-    category: 'Property',
-    description: 'Locational clearance and building-permit requirements.',
-    href: '/services/housing-land-use/locational-clearance-building-permit',
-    keywords: 'building permit zoning locational clearance construction land development occupancy',
-  },
-];
-
-const categories: Array<'All' | ServiceCategory> = [
-  'All',
-  'Business',
-  'Health',
-  'Education',
-  'Social',
-  'Property',
-];
+const siteTabs = ['All', 'Services', 'Government', 'Barangays', 'Records', 'Tools'] as const;
+const serviceTabs = ['All', 'Business', 'Health', 'Education', 'Social', 'Property'] as const;
 
 const normalize = (value: string) =>
   value
@@ -122,27 +30,26 @@ const normalize = (value: string) =>
     .replace(/\s+/g, ' ')
     .trim();
 
-const scoreService = (service: ServiceItem, query: string) => {
+const scoreItem = (item: SearchItem, query: string) => {
   const needle = normalize(query);
-  if (!needle) return 1;
+  if (!needle) return item.featured ? 5 : 1;
 
-  const title = normalize(service.title);
-  const description = normalize(service.description);
-  const keywords = normalize(service.keywords);
+  const title = normalize(item.title);
+  const description = normalize(item.description);
+  const keywords = normalize(item.keywords);
   const words = needle.split(' ').filter(Boolean);
 
   let score = 0;
 
-  if (title === needle) score += 40;
-  if (title.startsWith(needle)) score += 24;
-  if (title.includes(needle)) score += 18;
-  if (keywords.includes(needle)) score += 12;
+  if (title === needle) score += 50;
+  if (title.startsWith(needle)) score += 28;
+  if (title.includes(needle)) score += 20;
+  if (keywords.includes(needle)) score += 14;
   if (description.includes(needle)) score += 8;
 
   for (const word of words) {
-    if (title.split(' ').some(token => token.startsWith(word))) score += 6;
-    else if (title.includes(word)) score += 4;
-
+    if (title.split(' ').some(token => token.startsWith(word))) score += 7;
+    else if (title.includes(word)) score += 5;
     if (keywords.includes(word)) score += 3;
     if (description.includes(word)) score += 1;
   }
@@ -150,32 +57,67 @@ const scoreService = (service: ServiceItem, query: string) => {
   return score;
 };
 
-export default function ServiceSearch() {
+const matchesTab = (item: SearchItem, tab: string, scope: SearchScope) => {
+  if (tab === 'All') return true;
+
+  if (scope === 'services') {
+    return item.group === 'Service' && item.category === tab;
+  }
+
+  if (tab === 'Services') return item.group === 'Service';
+  if (tab === 'Government') return item.group === 'Government' || item.group === 'Contact';
+  if (tab === 'Barangays') return item.group === 'Barangay';
+  if (tab === 'Records') return item.group === 'Record';
+  if (tab === 'Tools') return item.group === 'Tool';
+
+  return true;
+};
+
+export default function ServiceSearch({
+  scope = 'site',
+  title,
+  placeholder,
+}: {
+  scope?: SearchScope;
+  title?: string;
+  placeholder?: string;
+}) {
+  const tabs = scope === 'services' ? serviceTabs : siteTabs;
   const [query, setQuery] = useState('');
-  const [category, setCategory] = useState<'All' | ServiceCategory>('All');
+  const [tab, setTab] = useState<string>('All');
   const [open, setOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const navigate = useNavigate();
   const containerRef = useRef<HTMLDivElement>(null);
 
   const results = useMemo(() => {
-    return services
-      .filter(service => category === 'All' || service.category === category)
-      .map(service => ({ ...service, score: scoreService(service, query) }))
-      .filter(service => !query.trim() || service.score > 0)
+    const base =
+      scope === 'services'
+        ? searchIndex.filter(item => item.group === 'Service')
+        : searchIndex;
+
+    return base
+      .filter(item => matchesTab(item, tab, scope))
+      .map(item => ({ ...item, score: scoreItem(item, query) }))
+      .filter(item => !query.trim() || item.score > 0)
       .sort((a, b) => b.score - a.score || a.title.localeCompare(b.title));
-  }, [category, query]);
+  }, [query, scope, tab]);
+
+  const visibleResults = useMemo(() => {
+    if (!query.trim()) {
+      const featured = results.filter(item => item.featured);
+      return (featured.length ? featured : results).slice(0, scope === 'site' ? 8 : 12);
+    }
+    return results.slice(0, 12);
+  }, [query, results, scope]);
 
   useEffect(() => {
     setActiveIndex(0);
-  }, [query, category]);
+  }, [query, tab]);
 
   useEffect(() => {
     const handlePointerDown = (event: MouseEvent | TouchEvent) => {
-      if (
-        containerRef.current &&
-        !containerRef.current.contains(event.target as Node)
-      ) {
+      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
         setOpen(false);
       }
     };
@@ -196,13 +138,11 @@ export default function ServiceSearch() {
 
   const submit = (event: FormEvent) => {
     event.preventDefault();
-
-    if (results.length > 0) {
-      selectResult(results[Math.min(activeIndex, results.length - 1)].href);
+    if (visibleResults.length > 0) {
+      selectResult(visibleResults[Math.min(activeIndex, visibleResults.length - 1)].href);
       return;
     }
-
-    navigate('/services');
+    navigate(scope === 'services' ? '/services' : '/community-tools/saan-ako-lalapit');
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -210,7 +150,7 @@ export default function ServiceSearch() {
       event.preventDefault();
       setOpen(true);
       setActiveIndex(index =>
-        results.length ? (index + 1) % results.length : 0,
+        visibleResults.length ? (index + 1) % visibleResults.length : 0,
       );
       return;
     }
@@ -219,8 +159,8 @@ export default function ServiceSearch() {
       event.preventDefault();
       setOpen(true);
       setActiveIndex(index =>
-        results.length
-          ? (index - 1 + results.length) % results.length
+        visibleResults.length
+          ? (index - 1 + visibleResults.length) % visibleResults.length
           : 0,
       );
       return;
@@ -232,11 +172,17 @@ export default function ServiceSearch() {
       return;
     }
 
-    if (event.key === 'Enter' && open && results.length > 0) {
+    if (event.key === 'Enter' && open && visibleResults.length > 0) {
       event.preventDefault();
-      selectResult(results[Math.min(activeIndex, results.length - 1)].href);
+      selectResult(visibleResults[Math.min(activeIndex, visibleResults.length - 1)].href);
     }
   };
+
+  const heading = title || (scope === 'services' ? 'Find a Government Service' : 'Find a service or information');
+  const inputPlaceholder =
+    placeholder || (scope === 'services'
+      ? 'Search services'
+      : 'e.g., Yellow Card, mayor, Poblacion, budget');
 
   return (
     <div
@@ -245,18 +191,18 @@ export default function ServiceSearch() {
     >
       <div className="flex items-center gap-2 text-primary-900 font-bold mb-4 text-lg">
         <Search className="h-5 w-5 text-secondary-700" />
-        Find a Government Service
+        {heading}
       </div>
 
       <form onSubmit={submit}>
-        <label htmlFor="service-search" className="sr-only">
-          Search BetterMakati services
+        <label htmlFor={scope === 'services' ? 'service-search' : 'site-search'} className="sr-only">
+          {heading}
         </label>
 
         <div className="flex gap-2">
           <div className="relative flex-1">
             <input
-              id="service-search"
+              id={scope === 'services' ? 'service-search' : 'site-search'}
               type="search"
               value={query}
               onFocus={() => setOpen(true)}
@@ -265,11 +211,11 @@ export default function ServiceSearch() {
                 setOpen(true);
               }}
               onKeyDown={handleKeyDown}
-              placeholder="Search services"
+              placeholder={inputPlaceholder}
               autoComplete="off"
               aria-autocomplete="list"
               aria-expanded={open}
-              aria-controls="service-search-results"
+              aria-controls="search-results"
               className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 pr-11 text-base outline-none text-gray-900 shadow-inner focus:border-primary-500 focus:ring-2 focus:ring-primary-200"
             />
 
@@ -291,7 +237,7 @@ export default function ServiceSearch() {
           <button
             type="submit"
             className="grid h-[50px] w-[54px] shrink-0 place-items-center rounded-xl bg-primary-800 text-white shadow-md transition hover:bg-primary-900"
-            aria-label="Open selected service"
+            aria-label="Open selected result"
           >
             <ArrowRight className="h-5 w-5" />
           </button>
@@ -300,19 +246,19 @@ export default function ServiceSearch() {
 
       {open && (
         <div
-          id="service-search-results"
+          id="search-results"
           role="listbox"
           className="absolute left-5 right-5 md:left-6 md:right-6 top-[118px] z-40 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-[0_24px_55px_rgba(26,43,32,0.22)]"
         >
           <div className="overflow-x-auto border-b border-gray-200 px-3 py-3">
             <div className="flex min-w-max gap-2">
-              {categories.map(item => (
+              {tabs.map(item => (
                 <button
                   key={item}
                   type="button"
-                  onClick={() => setCategory(item)}
+                  onClick={() => setTab(item)}
                   className={
-                    category === item
+                    tab === item
                       ? 'rounded-full bg-primary-800 px-4 py-1.5 text-sm font-semibold text-white shadow-sm'
                       : 'rounded-full border border-gray-200 bg-white px-4 py-1.5 text-sm font-medium text-gray-700 hover:border-primary-300 hover:bg-primary-50'
                   }
@@ -324,50 +270,39 @@ export default function ServiceSearch() {
           </div>
 
           <div className="max-h-[360px] overflow-y-auto">
-            {results.length > 0 ? (
-              results.map((service, index) => (
+            {visibleResults.length > 0 ? (
+              visibleResults.map((item, index) => (
                 <button
-                  key={service.href}
+                  key={item.href + item.title}
                   type="button"
                   role="option"
                   aria-selected={index === activeIndex}
                   onMouseEnter={() => setActiveIndex(index)}
-                  onClick={() => selectResult(service.href)}
+                  onClick={() => selectResult(item.href)}
                   className={
                     'w-full border-b border-gray-100 px-5 py-4 text-left last:border-b-0 transition ' +
-                    (index === activeIndex
-                      ? 'bg-primary-50'
-                      : 'bg-white hover:bg-gray-50')
+                    (index === activeIndex ? 'bg-primary-50' : 'bg-white hover:bg-gray-50')
                   }
                 >
-                  <div className="text-base font-bold text-primary-800">
-                    {service.title}
-                  </div>
+                  <div className="text-base font-bold text-primary-800">{item.title}</div>
                   <div className="mt-2 flex items-center gap-2 text-xs text-gray-600">
-                    <span className="inline-flex items-center gap-1 rounded-md bg-gray-100 px-2 py-1">
-                      <Building2 className="h-3.5 w-3.5" />
-                      {service.category}
+                    <span className="inline-flex items-center rounded-md bg-gray-100 px-2 py-1">
+                      {item.group === 'Service' ? item.category : item.group}
                     </span>
                   </div>
-                  <p className="mt-2 text-sm leading-relaxed text-gray-700">
-                    {service.description}
-                  </p>
+                  <p className="mt-2 text-sm leading-relaxed text-gray-700">{item.description}</p>
                 </button>
               ))
             ) : (
               <div className="px-5 py-8 text-center">
-                <div className="font-semibold text-gray-900">No matching service</div>
-                <p className="mt-1 text-sm text-gray-500">
-                  Try another keyword or category.
-                </p>
+                <div className="font-semibold text-gray-900">No matching result</div>
+                <p className="mt-1 text-sm text-gray-500">Try another keyword.</p>
               </div>
             )}
           </div>
 
           <div className="flex items-center justify-between gap-3 border-t border-gray-200 bg-gray-50 px-4 py-2.5 text-xs text-gray-500">
-            <span>
-              {results.length} {results.length === 1 ? 'service' : 'services'} found
-            </span>
+            <span>{results.length} {results.length === 1 ? 'result' : 'results'}</span>
             <div className="hidden md:flex items-center gap-3">
               <span className="inline-flex items-center gap-1">
                 <kbd className="search-kbd"><ArrowUp className="h-3 w-3" /></kbd>

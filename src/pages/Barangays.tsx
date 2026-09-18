@@ -31,6 +31,8 @@ const barangays = [
   ['Valenzuela', '5,598'],
 ];
 
+const slug = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+
 export default function Barangays() {
   return (
     <>
@@ -38,7 +40,7 @@ export default function Barangays() {
         title="Barangays"
         description="The 23 barangays of Makati City with 2024 POPCEN population."
       />
-      <Section className="p-3 mb-12">
+      <Section className="bg-[#fffdf8]">
         <Heading>Barangays</Heading>
         <Text className="text-gray-600 mb-4">
           Makati has{' '}
@@ -52,7 +54,7 @@ export default function Barangays() {
           .
         </Text>
 
-        <div className="overflow-x-auto border rounded-lg">
+        <div className="overflow-x-auto border rounded-lg bg-white">
           <table className="w-full text-left">
             <thead className="bg-gray-50">
               <tr>
@@ -62,7 +64,7 @@ export default function Barangays() {
             </thead>
             <tbody>
               {barangays.map(([name, population]) => (
-                <tr key={name} className="border-t">
+                <tr id={slug(name)} key={name} className="border-t scroll-mt-28">
                   <td className="p-3">{name}</td>
                   <td className="p-3 text-right">{population}</td>
                 </tr>

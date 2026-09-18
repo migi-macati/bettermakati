@@ -5,7 +5,7 @@ import ServiceSearch from '../home/ServiceSearch';
 export default function Hero() {
   return (
     <section className="makati-hero overflow-visible">
-      <div className="container mx-auto px-4 py-14 md:py-20 lg:py-24">
+      <div className="container px-5 md:px-6 lg:px-8 py-14 md:py-20 lg:py-24">
         <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-10 lg:gap-14 items-center">
           <div className="animate-fade-in">
             <div className="section-eyebrow">BetterMakati</div>
@@ -13,20 +13,20 @@ export default function Hero() {
               What do you need in Makati?
             </h1>
             <p className="mt-5 max-w-2xl text-base md:text-lg leading-relaxed text-gray-700">
-              Find public services, government information, barangays and public records.
+              Find services, offices, barangays, public records and civic tools.
             </p>
 
             <div className="mt-7 flex flex-wrap gap-3">
               <Link to="/services" className="brand-btn-primary">
                 Browse services <ArrowRight className="h-4 w-4" />
               </Link>
-              <Link to="/government" className="brand-btn-secondary">
-                Explore government
+              <Link to="/community-tools/saan-ako-lalapit" className="brand-btn-secondary">
+                Not sure where to go?
               </Link>
             </div>
           </div>
 
-          <ServiceSearch />
+          <ServiceSearch scope="site" />
         </div>
       </div>
     </section>

@@ -1,15 +1,15 @@
 import type { NavigationItem } from '../types';
 
 export const mainNavigation: NavigationItem[] = [
+  { label: 'Services', href: '/services' },
   {
-    label: 'Community Tools',
-    href: '/community-tools',
+    label: 'Government',
+    href: '/government',
     children: [
-      { label: 'Saan Ako Lalapit?', href: '/community-tools/saan-ako-lalapit' },
-      { label: 'Barangay Hub', href: '/barangays' },
-      { label: 'Budget & Public Records', href: '/projects-budget' },
-      { label: 'Emergency Guide', href: '/hotlines' },
-      { label: 'All Community Tools', href: '/community-tools' },
+      { label: 'Officials & Offices', href: '/government' },
+      { label: 'Makati Statistics', href: '/statistics' },
+      { label: 'Legislation', href: '/legislation' },
+      { label: 'News & Events', href: '/news' },
     ],
   },
   { label: 'Barangays', href: '/barangays' },
@@ -17,20 +17,19 @@ export const mainNavigation: NavigationItem[] = [
     label: 'Projects & Budget',
     href: '/projects-budget',
     children: [
-      { label: 'Budget & Disclosures', href: '/projects-budget' },
-      { label: 'Transparency', href: '/transparency' },
+      { label: 'Budget & Disclosures', href: '/projects-budget#budget' },
       { label: 'Project Tracker', href: '/projects-budget#projects' },
+      { label: 'Procurement', href: '/projects-budget#procurement' },
+      { label: 'Audit Reports', href: '/projects-budget#audit' },
     ],
   },
-  { label: 'Services', href: '/services' },
   {
-    label: 'City Information',
-    href: '/government',
+    label: 'Community Tools',
+    href: '/community-tools',
     children: [
-      { label: 'Government & Officials', href: '/government' },
-      { label: 'Makati Statistics', href: '/statistics' },
-      { label: 'Legislation', href: '/legislation' },
-      { label: 'News & Events', href: '/news' },
+      { label: 'Saan Ako Lalapit?', href: '/community-tools/saan-ako-lalapit' },
+      { label: 'Project Tracker', href: '/projects-budget#projects' },
+      { label: 'All Community Tools', href: '/community-tools' },
     ],
   },
   {
@@ -51,21 +50,18 @@ export const footerNavigation = {
     {
       title: 'Explore',
       links: [
-        { label: 'Community Tools', href: '/community-tools' },
         { label: 'Services', href: '/services' },
+        { label: 'Saan Ako Lalapit?', href: '/community-tools/saan-ako-lalapit' },
+        { label: 'Government', href: '/government' },
         { label: 'Barangays', href: '/barangays' },
         { label: 'Projects & Budget', href: '/projects-budget' },
-        { label: 'City Information', href: '/government' },
-        { label: 'Hotlines', href: '/hotlines' },
+        { label: 'Community Tools', href: '/community-tools' },
       ],
     },
     {
       title: 'Participate',
       links: [
         { label: 'Get Involved', href: '/get-involved' },
-        { label: 'Suggest an Idea', href: '/get-involved?type=idea#submission' },
-        { label: 'Share a Source', href: '/get-involved?type=source#submission' },
-        { label: 'Report a Correction', href: '/get-involved?type=correction#submission' },
         { label: 'Contact', href: '/contact' },
       ],
     },

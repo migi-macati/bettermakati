@@ -1,6 +1,6 @@
 import { NuqsAdapter } from 'nuqs/adapters/react';
 import { HelmetProvider } from 'react-helmet-async';
-import { BrowserRouter as Router, Routes, Route } from 'react-router';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import ScrollToTop from './components/ui/ScrollToTop';
@@ -10,7 +10,6 @@ import Services from './pages/Services';
 import Document from './pages/Document';
 import Government from './pages/Government';
 import Barangays from './pages/Barangays';
-import Transparency from './pages/Transparency';
 import Hotlines from './pages/Hotlines';
 import CommunityTools from './pages/CommunityTools';
 import ConcernFinder from './pages/ConcernFinder';
@@ -47,7 +46,7 @@ function App() {
                 <Route path="/government" element={<Government />} />
                 <Route path="/barangays" element={<Barangays />} />
                 <Route path="/projects-budget" element={<ProjectsBudget />} />
-                <Route path="/transparency" element={<Transparency />} />
+                <Route path="/transparency" element={<Navigate to="/projects-budget" replace />} />
                 <Route path="/statistics" element={<Statistics />} />
                 <Route path="/legislation" element={<Legislation />} />
                 <Route path="/news" element={<News />} />

@@ -1,18 +1,14 @@
 import { Link } from 'react-router';
 import {
   ArrowRight,
-  FileText,
+  FileBarChart,
   Landmark,
   MapPin,
   Store,
   HeartPulse,
   GraduationCap,
   Home as HomeIcon,
-  Scale,
-  ReceiptText,
-  Lightbulb,
-  Database,
-  HeartHandshake,
+  SearchCheck,
 } from 'lucide-react';
 import Hero from '../components/sections/Hero';
 import CommunityToolsGrid from '../components/community/CommunityToolsGrid';
@@ -45,10 +41,25 @@ const quickServices = [
   },
 ];
 
-const civicLinks = [
-  { label: 'Government', description: 'Officials, city offices and contacts.', href: '/government', icon: Landmark },
-  { label: 'Barangays', description: 'Barangay directory and population.', href: '/barangays', icon: MapPin },
-  { label: 'City Statistics', description: 'Population and other basic city figures.', href: '/statistics', icon: FileText },
+const cityPaths = [
+  {
+    label: 'Government',
+    description: 'Officials, city offices and contacts.',
+    href: '/government',
+    icon: Landmark,
+  },
+  {
+    label: 'Barangays',
+    description: 'Barangay directory and population.',
+    href: '/barangays',
+    icon: MapPin,
+  },
+  {
+    label: 'Projects & Budget',
+    description: 'Budget, projects, procurement and audit records.',
+    href: '/projects-budget',
+    icon: FileBarChart,
+  },
 ];
 
 const stats = [
@@ -75,27 +86,6 @@ const stats = [
     label: 'Pio Del Pilar',
     source: 'Largest barangay by 2024 population',
     href: 'https://psa.gov.ph/classification/psgc/barangays/1380300000',
-  },
-];
-
-const recordLinks = [
-  {
-    label: 'Annual Budget',
-    description: 'CY 2025',
-    href: 'https://www.makati.gov.ph/assets/uploads/staticmenu/docs/online_forms/pdf/Annual%20Budget%202025.pdf',
-    icon: ReceiptText,
-  },
-  {
-    label: 'Resolutions & Ordinances',
-    description: 'Local legislation',
-    href: 'https://www.makati.gov.ph/content/resolutions-and-ordinances/author',
-    icon: Scale,
-  },
-  {
-    label: 'Procurement',
-    description: 'PhilGEPS notices',
-    href: 'https://notices.philgeps.gov.ph/',
-    icon: FileText,
   },
 ];
 
@@ -135,19 +125,18 @@ const Home: React.FC = () => {
               );
             })}
           </div>
-        </div>
-      </section>
 
-      <section className="bg-white py-14 border-y border-gray-100">
-        <div className="container px-5 md:px-6 lg:px-8">
-          <div className="section-eyebrow">Community Tools</div>
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-3 mb-7">
-            <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-950">Tools for everyday Makati</h2>
-            <Link to="/community-tools" className="inline-flex items-center gap-1.5 text-sm font-bold text-primary-700 hover:text-primary-900">
-              View all tools <ArrowRight className="h-4 w-4" />
-            </Link>
-          </div>
-          <CommunityToolsGrid limit={4} />
+          <Link
+            to="/community-tools/saan-ako-lalapit"
+            className="mt-5 flex items-center gap-4 rounded-2xl border border-primary-200 bg-primary-50 p-5 hover:border-primary-300 transition"
+          >
+            <div className="home-service-card-icon"><SearchCheck className="h-5 w-5" /></div>
+            <div className="flex-1">
+              <h3 className="font-bold text-gray-950">Not sure where to go?</h3>
+              <p className="text-sm text-gray-600 mt-1">Describe your concern and find the right service, office or channel.</p>
+            </div>
+            <ArrowRight className="h-5 w-5 text-primary-700" />
+          </Link>
         </div>
       </section>
 
@@ -163,19 +152,12 @@ const Home: React.FC = () => {
               </a>
             ))}
           </div>
-        </div>
-      </section>
 
-      <section className="bg-white py-14">
-        <div className="container px-5 md:px-6 lg:px-8">
-          <div className="section-eyebrow">City information</div>
-          <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-950 mb-7">Explore Makati</h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {civicLinks.map(item => {
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
+            {cityPaths.map(item => {
               const Icon = item.icon;
               return (
-                <Link key={item.label} to={item.href} className="civic-card !min-h-0">
+                <Link key={item.label} to={item.href} className="civic-card !min-h-0 bg-white">
                   <Icon className="h-6 w-6 text-primary-700" />
                   <h3 className="font-bold text-gray-950 mt-4">{item.label}</h3>
                   <p className="text-sm text-gray-600 mt-1">{item.description}</p>
@@ -189,60 +171,28 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      <section className="bg-[#fff8e6] py-14 border-y border-secondary-100">
+      <section className="bg-white py-14">
         <div className="container px-5 md:px-6 lg:px-8">
-          <div className="section-eyebrow text-secondary-800">Projects & Budget</div>
+          <div className="section-eyebrow">Community Tools</div>
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-3 mb-7">
-            <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-950">Go straight to the records</h2>
-            <Link to="/projects-budget" className="inline-flex items-center gap-1.5 text-sm font-bold text-primary-700 hover:text-primary-900">
-              Projects & budget <ArrowRight className="h-4 w-4" />
+            <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-950">Tools for everyday Makati</h2>
+            <Link to="/community-tools" className="inline-flex items-center gap-1.5 text-sm font-bold text-primary-700 hover:text-primary-900">
+              View all tools <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {recordLinks.map(item => {
-              const Icon = item.icon;
-              return (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="rounded-2xl border border-[#ead6a0] bg-white/80 p-5 hover:bg-white hover:shadow-sm transition"
-                >
-                  <Icon className="h-6 w-6 text-secondary-700" />
-                  <h3 className="font-bold text-gray-950 mt-4">{item.label}</h3>
-                  <p className="text-sm text-gray-600 mt-1">{item.description}</p>
-                </a>
-              );
-            })}
-          </div>
+          <CommunityToolsGrid limit={4} />
         </div>
       </section>
 
-      <section className="bg-[#fffdf8] py-14">
+      <section className="bg-[#fffdf8] py-14 border-t border-gray-100">
         <div className="container px-5 md:px-6 lg:px-8">
-          <div className="section-eyebrow">Get Involved</div>
-          <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-7 items-center">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-5 rounded-2xl border border-primary-100 bg-white p-6 md:p-8">
             <div>
-              <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-950">Help build BetterMakati</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-6">
-                <Link to="/get-involved?type=idea#submission" className="home-service-card">
-                  <Lightbulb className="h-5 w-5 text-primary-700" />
-                  <span className="font-bold">Suggest an idea</span>
-                </Link>
-                <Link to="/get-involved?type=source#submission" className="home-service-card">
-                  <Database className="h-5 w-5 text-primary-700" />
-                  <span className="font-bold">Share a source</span>
-                </Link>
-                <Link to="/get-involved?type=volunteer#submission" className="home-service-card">
-                  <HeartHandshake className="h-5 w-5 text-primary-700" />
-                  <span className="font-bold">Volunteer</span>
-                </Link>
-              </div>
+              <div className="section-eyebrow">Get Involved</div>
+              <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight text-gray-950">Improve BetterMakati</h2>
             </div>
             <Link to="/get-involved" className="brand-btn-primary">
-              Get involved <ArrowRight className="h-4 w-4" />
+              Suggest, contribute or volunteer <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
         </div>
