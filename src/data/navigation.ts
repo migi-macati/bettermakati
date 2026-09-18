@@ -6,7 +6,6 @@ export const mainNavigation: NavigationItem[] = [
     label: 'Government',
     href: '/government',
     children: [
-      { label: 'Officials & Offices', href: '/government' },
       { label: 'Makati Statistics', href: '/statistics' },
       { label: 'Legislation', href: '/legislation' },
       { label: 'News & Events', href: '/news' },
@@ -29,7 +28,6 @@ export const mainNavigation: NavigationItem[] = [
     children: [
       { label: 'Saan Ako Lalapit?', href: '/community-tools/saan-ako-lalapit' },
       { label: 'Project Tracker', href: '/projects-budget#projects' },
-      { label: 'All Community Tools', href: '/community-tools' },
     ],
   },
   {
