@@ -1,4 +1,4 @@
-import { ArrowRight, ExternalLink, Landmark, Map, Utensils } from 'lucide-react';
+import { ArrowRight, Bus, ExternalLink, Film, Landmark, Map, Utensils } from 'lucide-react';
 import { Link } from 'react-router';
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
@@ -58,6 +58,29 @@ export default function VisitMakati() {
       </Section>
 
       <Section className="bg-[#f5f8f2]">
+        <div className="section-eyebrow">Plan your visit</div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <Link to="/mobility" className="rounded-2xl border border-primary-100 bg-white p-6 hover:border-primary-300 hover:shadow-sm transition">
+            <Bus className="h-7 w-7 text-primary-700" />
+            <h2 className="font-extrabold text-xl text-gray-950 mt-4">Getting around Makati</h2>
+            <p className="text-sm text-gray-600 mt-2">Public transport, directions and ride-hailing apps.</p>
+            <span className="inline-flex items-center gap-1 text-sm font-bold text-primary-700 mt-5">
+              Plan a trip <ArrowRight className="h-4 w-4" />
+            </span>
+          </Link>
+
+          <Link to="/cinemas" className="rounded-2xl border border-primary-100 bg-white p-6 hover:border-primary-300 hover:shadow-sm transition">
+            <Film className="h-7 w-7 text-primary-700" />
+            <h2 className="font-extrabold text-xl text-gray-950 mt-4">Cinemas</h2>
+            <p className="text-sm text-gray-600 mt-2">Cinema locations and current showtime links.</p>
+            <span className="inline-flex items-center gap-1 text-sm font-bold text-primary-700 mt-5">
+              Find a cinema <ArrowRight className="h-4 w-4" />
+            </span>
+          </Link>
+        </div>
+      </Section>
+
+      <Section className="bg-white">
         <div className="section-eyebrow">Culture & History</div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <Link to="/heritage" className="rounded-2xl border border-primary-100 bg-white p-6 hover:border-primary-300 hover:shadow-sm transition">
@@ -77,6 +100,30 @@ export default function VisitMakati() {
               View timeline <ArrowRight className="h-4 w-4" />
             </span>
           </Link>
+        </div>
+      </Section>
+
+      <Section className="bg-[#fffdf8]">
+        <div className="section-eyebrow">Visitor resources</div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <a
+            href="https://makeitmakati.com/"
+            target="_blank"
+            rel="noreferrer"
+            className="rounded-2xl border border-gray-200 bg-white p-5 hover:border-primary-300 hover:shadow-sm transition"
+          >
+            <h2 className="font-extrabold text-lg text-gray-950">Make It Makati</h2>
+            <p className="text-sm text-gray-600 mt-1">Ayala Land's guide to Makati CBD, Ayala Center and Circuit Makati.</p>
+          </a>
+          <a
+            href="https://www.makati.gov.ph/"
+            target="_blank"
+            rel="noreferrer"
+            className="rounded-2xl border border-gray-200 bg-white p-5 hover:border-primary-300 hover:shadow-sm transition"
+          >
+            <h2 className="font-extrabold text-lg text-gray-950">Official Makati Web Portal</h2>
+            <p className="text-sm text-gray-600 mt-1">City information, events and visitor resources.</p>
+          </a>
         </div>
       </Section>
 
