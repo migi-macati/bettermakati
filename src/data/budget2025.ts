@@ -1,5 +1,8 @@
 export const budgetSources = {
   annualBudget: 'https://www.makati.gov.ph/assets/uploads/staticmenu/docs/online_forms/pdf/Annual%20Budget%202025.pdf',
+  annualBudget2024: 'https://www.makati.gov.ph/assets/uploads/staticmenu/docs/online_forms/pdf/2024%20Annual%20Budget%20compressed%201.pdf',
+  developmentFundQ1: 'https://www.makati.gov.ph/assets/uploads/staticmenu/docs/online_forms/pdf/Q1%2020%20NTAU.pdf',
+  developmentFundQ3: 'https://www.makati.gov.ph/assets/uploads/staticmenu/docs/online_forms/pdf/Q3%2020%20NTAU.pdf',
   actuals: 'https://www.dbm.gov.ph/wp-content/uploads/BESF/BESF2026/F14.pdf',
   developmentFund: 'https://www.makati.gov.ph/assets/uploads/staticmenu/docs/online_forms/pdf/Q4%2020%20NTAU.pdf',
   procurement: 'https://notices.philgeps.gov.ph/',
@@ -7,6 +10,11 @@ export const budgetSources = {
 };
 
 export const cityPopulation = 309770;
+
+export const budgetTrend = [
+  { year: 2024, amountM: 17811.49, href: budgetSources.annualBudget2024 },
+  { year: 2025, amountM: 19000, href: budgetSources.annualBudget },
+];
 
 export const budgetSummary = {
   year: 2025,
@@ -55,7 +63,7 @@ export const dedicatedFunds = [
     label: '20% Development Fund',
     amountM: 522.75,
     description: 'Dedicated development-fund appropriation',
-    href: budgetSources.developmentFund,
+    href: budgetSources.annualBudget,
   },
   {
     label: 'Local Disaster Risk Reduction and Management Fund',
@@ -87,3 +95,37 @@ export const selectedBudgetLines = [
 ];
 
 export const capitalBudgetLines = selectedBudgetLines.filter(item => item.group === 'Capital');
+
+
+export const developmentFundProject = {
+  name: 'Social Development – Purchase of medical supplies',
+  location: 'Ospital ng Makati / Makati Health Department',
+  start: 'January 1, 2025',
+  targetCompletion: 'December 31, 2025',
+  latestCompletion: 100,
+  latestCostM: 619.75,
+  latestCostIncurredM: 619.73851097,
+  reports: [
+    {
+      quarter: 'Q1',
+      reportedCostM: 522.75,
+      completion: 98.47,
+      costIncurredM: 514.73851097,
+      href: budgetSources.developmentFundQ1,
+    },
+    {
+      quarter: 'Q3',
+      reportedCostM: 572.75,
+      completion: 98.60,
+      costIncurredM: 564.73851097,
+      href: budgetSources.developmentFundQ3,
+    },
+    {
+      quarter: 'Q4',
+      reportedCostM: 619.75,
+      completion: 100,
+      costIncurredM: 619.73851097,
+      href: budgetSources.developmentFund,
+    },
+  ],
+};
