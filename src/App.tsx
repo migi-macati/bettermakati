@@ -27,6 +27,9 @@ import Terms from './pages/Terms';
 import Mobility from './pages/Mobility';
 import Cinemas from './pages/Cinemas';
 import Estates from './pages/Estates';
+import LiveMakati from './pages/LiveMakati';
+import Parking from './pages/Parking';
+import WhatsOn from './pages/WhatsOn';
 import Search from './pages/Search';
 import { isMeilisearchEnabled } from './lib/meilisearch';
 
@@ -56,6 +59,8 @@ function App() {
                 <Route path="/visit" element={<VisitMakati />} />
                 <Route path="/mobility" element={<Mobility />} />
                 <Route path="/cinemas" element={<Cinemas />} />
+                <Route path="/parking" element={<Parking />} />
+                <Route path="/whats-on" element={<WhatsOn />} />
                 <Route path="/heritage" element={<Heritage />} />
                 <Route path="/history" element={<History />} />
 
@@ -65,6 +70,7 @@ function App() {
                 <Route path="/statistics" element={<Statistics />} />
                 <Route path="/legislation" element={<Legislation />} />
                 <Route path="/news" element={<News />} />
+                <Route path="/live" element={<LiveMakati />} />
 
                 <Route path="/projects-budget" element={<ProjectsBudget />} />
                 <Route path="/transparency" element={<Navigate to="/projects-budget" replace />} />
