@@ -14,6 +14,7 @@ import {
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
 import SEO from '../components/SEO';
+import { ComparisonBars, DonutChart, HorizontalBarChart } from '../components/budget/BudgetCharts';
 import {
   actualSpendingByFunction,
   budgetByType,
@@ -137,21 +138,25 @@ export default function ProjectsBudget() {
           </a>
         </div>
 
-        <div className="mt-8 rounded-2xl border border-gray-200 bg-white p-5 md:p-6">
-          <div className="flex items-center justify-between gap-4">
-            <div>
-              <div className="text-sm font-bold text-gray-950">Annual budget trend</div>
-              <div className="text-xs text-gray-500 mt-1">Published city annual-budget totals</div>
+        <div className="mt-8 grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-5">
+          <ComparisonBars
+            title="Annual budget trend"
+            items={budgetTrend.map(item => ({ label: String(item.year), value: item.amountM }))}
+            formatValue={peso}
+          />
+
+          <div className="rounded-2xl border border-gray-200 bg-white p-5 md:p-6">
+            <div className="text-sm font-bold text-gray-950">Published annual budgets</div>
+            <div className="text-3xl font-extrabold text-primary-800 mt-3">+6.7%</div>
+            <div className="text-sm text-gray-600 mt-1">Increase from 2024 to 2025</div>
+            <div className="grid grid-cols-2 gap-4 mt-5">
+              {budgetTrend.map(item => (
+                <a key={item.year} href={item.href} target="_blank" rel="noreferrer" className="rounded-xl bg-gray-50 p-4 hover:bg-primary-50 transition">
+                  <div className="text-xs font-bold text-gray-500">{item.year}</div>
+                  <div className="text-xl md:text-2xl font-extrabold text-gray-950 mt-1">{peso(item.amountM)}</div>
+                </a>
+              ))}
             </div>
-            <div className="text-sm font-extrabold text-primary-800">+6.7%</div>
-          </div>
-          <div className="grid grid-cols-2 gap-4 mt-5">
-            {budgetTrend.map(item => (
-              <a key={item.year} href={item.href} target="_blank" rel="noreferrer" className="rounded-xl bg-gray-50 p-4 hover:bg-primary-50 transition">
-                <div className="text-xs font-bold text-gray-500">{item.year}</div>
-                <div className="text-xl md:text-2xl font-extrabold text-gray-950 mt-1">{peso(item.amountM)}</div>
-              </a>
-            ))}
           </div>
         </div>
       </Section>
@@ -160,22 +165,30 @@ export default function ProjectsBudget() {
         <div className="section-eyebrow">Budget Plan</div>
         <Heading level={2}>How the ₱19.0B budget is allocated</Heading>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mt-7">
-          {budgetByType.map(item => (
-            <div key={item.label} className="rounded-2xl border border-gray-200 bg-white p-5">
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <h3 className="font-extrabold text-gray-950">{item.label}</h3>
-                  <p className="text-sm text-gray-600 mt-1">{item.description}</p>
+        <div className="grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-5 mt-7">
+          <DonutChart
+            title="Budget composition"
+            center="₱19.0B"
+            items={budgetByType.map(item => ({ label: item.label, value: item.amountM, share: item.share }))}
+          />
+
+          <div className="grid grid-cols-1 gap-4">
+            {budgetByType.map(item => (
+              <div key={item.label} className="rounded-2xl border border-gray-200 bg-white p-5">
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <h3 className="font-extrabold text-gray-950">{item.label}</h3>
+                    <p className="text-sm text-gray-600 mt-1">{item.description}</p>
+                  </div>
+                  <div className="text-right">
+                    <div className="font-extrabold text-primary-800">{peso(item.amountM)}</div>
+                    <div className="text-xs text-gray-500">{pct(item.share)}</div>
+                  </div>
                 </div>
-                <div className="text-right">
-                  <div className="font-extrabold text-primary-800">{peso(item.amountM)}</div>
-                  <div className="text-xs text-gray-500">{pct(item.share)}</div>
-                </div>
+                <ShareBar share={item.share} />
               </div>
-              <ShareBar share={item.share} />
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </Section>
 
@@ -183,16 +196,18 @@ export default function ProjectsBudget() {
         <div className="section-eyebrow">Actual 2025 Revenue</div>
         <Heading level={2}>Where city receipts came from</Heading>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-7">
-          {revenueSources.map(item => (
-            <div key={item.label} className="rounded-2xl border border-primary-100 bg-white p-5">
-              <div className="text-2xl font-extrabold text-primary-800">{peso(item.amountM)}</div>
-              <h3 className="font-bold text-gray-950 mt-1">{item.label}</h3>
-              <p className="text-sm text-gray-600 mt-1">{item.description}</p>
-              <ShareBar share={item.share} />
-              <div className="mt-2 text-xs text-gray-500">{pct(item.share)} of reported receipts</div>
-            </div>
-          ))}
+        <div className="grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-5 mt-7">
+          <DonutChart
+            title="Revenue mix"
+            center={peso(budgetSummary.actualReceiptsM)}
+            items={revenueSources.map(item => ({ label: item.label, value: item.amountM, share: item.share }))}
+          />
+
+          <HorizontalBarChart
+            title="Largest local revenue sources"
+            items={localRevenueBreakdown.slice(0, 6).map(item => ({ label: item.label, value: item.amountM }))}
+            formatValue={peso}
+          />
         </div>
 
         <div className="mt-8 overflow-x-auto rounded-2xl border border-gray-200 bg-white">
@@ -219,22 +234,30 @@ export default function ProjectsBudget() {
         <div className="section-eyebrow">Actual 2025 Spending</div>
         <Heading level={2}>Where reported expenditures went</Heading>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mt-7">
-          {actualSpendingByFunction.map(item => (
-            <div key={item.label} className="rounded-2xl border border-gray-200 p-5">
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <h3 className="font-extrabold text-gray-950">{item.label}</h3>
-                  <p className="text-sm text-gray-600 mt-1">{item.description}</p>
+        <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-5 mt-7">
+          <HorizontalBarChart
+            title="Actual spending by function"
+            items={actualSpendingByFunction.map(item => ({ label: item.label, value: item.amountM }))}
+            formatValue={peso}
+          />
+
+          <div className="grid grid-cols-1 gap-4">
+            {actualSpendingByFunction.map(item => (
+              <div key={item.label} className="rounded-2xl border border-gray-200 p-5">
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <h3 className="font-extrabold text-gray-950">{item.label}</h3>
+                    <p className="text-sm text-gray-600 mt-1">{item.description}</p>
+                  </div>
+                  <div className="text-right">
+                    <div className="font-extrabold text-primary-800">{peso(item.amountM)}</div>
+                    <div className="text-xs text-gray-500">{pct(item.share)}</div>
+                  </div>
                 </div>
-                <div className="text-right">
-                  <div className="font-extrabold text-primary-800">{peso(item.amountM)}</div>
-                  <div className="text-xs text-gray-500">{pct(item.share)}</div>
-                </div>
+                <ShareBar share={item.share} />
               </div>
-              <ShareBar share={item.share} />
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
         <div className="mt-6 rounded-2xl border border-secondary-100 bg-[#fff8e6] p-5 md:p-6">
