@@ -3,20 +3,13 @@ import * as LucideIcons from 'lucide-react';
 import { Heading } from '../ui/Heading';
 import { Text } from '../ui/Text';
 import { useTranslation } from '../../hooks/useTranslation';
-import { Card, CardContent } from '@bettergov/kapwa/card';
 import { Link } from 'react-router';
-
+import { ArrowRight } from 'lucide-react';
 import { serviceCategories } from '../../data/yamlLoader';
-
-interface Subcategory {
-  name: string;
-  slug: string;
-}
 
 interface Category {
   category: string;
   slug: string;
-  subcategories: Subcategory[];
   description: string;
   icon: string;
 }
@@ -40,37 +33,23 @@ export default function ServicesSection({
   const displayedCategories = serviceCategories.categories as Category[];
 
   return (
-    <Section>
+    <Section className="bg-[#fffdf8]">
+      <div className="section-eyebrow">Services</div>
       <Heading level={2}>{title || t('services.title')}</Heading>
-      <Text className="text-gray-600 mb-6">
+      <Text className="text-gray-600 mb-7">
         {description || t('services.description')}
       </Text>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {displayedCategories.map(category => (
-          <Card
-            key={category.slug}
-            hoverable
-            className="border-t-4 border-primary-500"
-          >
-            <Link
-              to={`/services/${category.slug}`}
-              className="mt-auto text-primary-600 hover:text-primary-700 font-medium transition-colors inline-flex items-center"
-            >
-              <CardContent className="flex flex-col h-full p-6">
-                <div className="flex gap-2">
-                  <div className="bg-primary-100 text-primary-600 p-3 rounded-md mb-4 self-start">
-                    {getIcon(category.icon)}
-                  </div>
-
-                  <h3 className="text-lg font-semibold mb-4 text-gray-900 self-center">
-                    {category.category}
-                  </h3>
-                </div>
-                <Text className="text-gray-800">{category.description}</Text>
-              </CardContent>
-            </Link>
-          </Card>
+          <Link key={category.slug} to={`/services/${category.slug}`} className="category-card">
+            <div className="category-card-icon">{getIcon(category.icon)}</div>
+            <div className="min-w-0">
+              <h3 className="text-lg font-bold text-gray-950">{category.category}</h3>
+              <p className="text-sm text-gray-600 mt-1 leading-relaxed">{category.description}</p>
+            </div>
+            <ArrowRight className="h-4 w-4 text-primary-600 ml-auto shrink-0" />
+          </Link>
         ))}
       </div>
     </Section>

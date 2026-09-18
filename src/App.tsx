@@ -21,23 +21,26 @@ function App() {
       <Router>
         <NuqsAdapter>
           <div className="min-h-screen flex flex-col">
+            <a href="#main-content" className="skip-link">Skip to main content</a>
             <Navbar />
             <ScrollToTop />
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/services" element={<Services />} />
-              <Route path="/services/:category" element={<Services />} />
-              <Route
-                path="/services/:category/:documentSlug"
-                element={<Document categoryType="service" />}
-              />
-              <Route path="/government" element={<Government />} />
-              <Route path="/barangays" element={<Barangays />} />
-              <Route path="/transparency" element={<Transparency />} />
-              <Route path="/hotlines" element={<Hotlines />} />
-              {isMeilisearchEnabled && <Route path="/search" element={<Search />} />}
-            </Routes>
+            <div id="main-content" className="flex-grow">
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/services" element={<Services />} />
+                <Route path="/services/:category" element={<Services />} />
+                <Route
+                  path="/services/:category/:documentSlug"
+                  element={<Document categoryType="service" />}
+                />
+                <Route path="/government" element={<Government />} />
+                <Route path="/barangays" element={<Barangays />} />
+                <Route path="/transparency" element={<Transparency />} />
+                <Route path="/hotlines" element={<Hotlines />} />
+                {isMeilisearchEnabled && <Route path="/search" element={<Search />} />}
+              </Routes>
+            </div>
             <Footer />
           </div>
         </NuqsAdapter>
