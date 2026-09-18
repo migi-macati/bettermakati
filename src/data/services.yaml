@@ -1,25 +1,25 @@
 categories:
   - category: 'Business & Permits'
     slug: 'business'
-    description: 'Business permit application and renewal information from official Makati sources.'
+    description: 'Business permit applications and renewals.'
     icon: 'Building2'
 
   - category: 'Health & Emergency'
     slug: 'health-services'
-    description: 'Selected health access and emergency-response information.'
+    description: 'Health services and emergency assistance.'
     icon: 'HeartPulse'
 
   - category: 'Education'
     slug: 'education'
-    description: 'University of Makati admissions and scholarship information.'
+    description: 'University of Makati admissions and scholarships.'
     icon: 'GraduationCap'
 
   - category: 'Social Services'
     slug: 'social-welfare'
-    description: 'Selected Makati Action Center and senior-citizen service information.'
+    description: 'Makati Action Center and senior-citizen services.'
     icon: 'Users'
 
   - category: 'Property & Land Use'
     slug: 'housing-land-use'
-    description: 'Selected real-property tax, locational-clearance and building-permit information.'
+    description: 'Real property tax, locational clearance and building permits.'
     icon: 'House'
