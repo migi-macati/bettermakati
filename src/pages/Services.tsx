@@ -61,7 +61,7 @@ const Services: React.FC = () => {
           title="Browse by category"
           description="Permits, health, education, social services, property and land-use information."
         />
-        <Section className="bg-[#fffdf8]">
+        <Section id="digital" className="bg-[#fffdf8]">
           <div className="section-eyebrow">Digital Makati</div>
           <Heading level={2}>City apps & portals</Heading>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
