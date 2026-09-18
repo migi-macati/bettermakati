@@ -8,7 +8,6 @@ import {
   HeartPulse,
   GraduationCap,
   Home as HomeIcon,
-  SearchCheck,
 } from 'lucide-react';
 import Hero from '../components/sections/Hero';
 import CommunityToolsGrid from '../components/community/CommunityToolsGrid';
@@ -125,18 +124,6 @@ const Home: React.FC = () => {
               );
             })}
           </div>
-
-          <Link
-            to="/community-tools/saan-ako-lalapit"
-            className="mt-5 flex items-center gap-4 rounded-2xl border border-primary-200 bg-primary-50 p-5 hover:border-primary-300 transition"
-          >
-            <div className="home-service-card-icon"><SearchCheck className="h-5 w-5" /></div>
-            <div className="flex-1">
-              <h3 className="font-bold text-gray-950">Not sure where to go?</h3>
-              <p className="text-sm text-gray-600 mt-1">Describe your concern and find the right service, office or channel.</p>
-            </div>
-            <ArrowRight className="h-5 w-5 text-primary-700" />
-          </Link>
         </div>
       </section>
 
