@@ -54,7 +54,7 @@ const Services: React.FC = () => {
             <div className="section-eyebrow">Services</div>
             <Heading>What do you need?</Heading>
             <Text className="text-gray-600 mb-6">Search by service, document, benefit or task.</Text>
-            <ServiceSearch />
+            <ServiceSearch scope="services" />
           </div>
         </Section>
         <ServicesSection
