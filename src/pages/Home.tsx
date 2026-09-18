@@ -13,6 +13,9 @@ import {
   Church,
   Bus,
   Film,
+  ParkingCircle,
+  CalendarDays,
+  Radio,
 } from 'lucide-react';
 import Hero from '../components/sections/Hero';
 import CommunityToolsGrid from '../components/community/CommunityToolsGrid';
@@ -71,6 +74,18 @@ const visitPaths = [
     icon: Film,
   },
   {
+    label: 'Parking',
+    description: 'Find parking near your destination.',
+    href: '/parking',
+    icon: ParkingCircle,
+  },
+  {
+    label: 'What’s on',
+    description: 'Events, activities and entertainment.',
+    href: '/whats-on',
+    icon: CalendarDays,
+  },
+  {
     label: 'Heritage & history',
     description: 'Historic sites, cultural places and the Makati timeline.',
     href: '/heritage',
@@ -96,6 +111,12 @@ const cityPaths = [
     description: 'Budget, projects, procurement and audit records.',
     href: '/projects-budget',
     icon: FileBarChart,
+  },
+  {
+    label: 'Live Makati',
+    description: 'Weather, advisories, utilities and live information.',
+    href: '/live',
+    icon: Radio,
   },
 ];
 
@@ -175,7 +196,7 @@ const Home: React.FC = () => {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7 gap-4">
             {visitPaths.map(item => {
               const Icon = item.icon;
               return (
@@ -206,7 +227,7 @@ const Home: React.FC = () => {
             ))}
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
             {cityPaths.map(item => {
               const Icon = item.icon;
               return (
