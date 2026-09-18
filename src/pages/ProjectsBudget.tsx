@@ -1,104 +1,355 @@
+import { useMemo, useState } from 'react';
 import {
-  ArrowRight,
+  ArrowUpRight,
+  Building2,
   FileBarChart,
   HardHat,
   Landmark,
+  PiggyBank,
+  ReceiptText,
+  Search,
   ShoppingCart,
+  WalletCards,
 } from 'lucide-react';
-import { Link } from 'react-router';
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
 import SEO from '../components/SEO';
+import {
+  actualSpendingByFunction,
+  budgetByType,
+  budgetSources,
+  budgetSummary,
+  capitalBudgetLines,
+  cityPopulation,
+  dedicatedFunds,
+  localRevenueBreakdown,
+  revenueSources,
+  selectedBudgetLines,
+} from '../data/budget2025';
 
-const annualBudget =
-  'https://www.makati.gov.ph/assets/uploads/staticmenu/docs/online_forms/pdf/Annual%20Budget%202025.pdf';
-const ntaDisclosure =
-  'https://www.makati.gov.ph/assets/uploads/staticmenu/docs/online_forms/pdf/Q4%2020%20NTAU.pdf';
+const peso = (millions: number) => {
+  if (millions >= 1000) return '₱' + (millions / 1000).toFixed(millions % 1000 === 0 ? 1 : 2) + 'B';
+  return '₱' + millions.toFixed(millions >= 100 ? 1 : 2) + 'M';
+};
+
+const pesoExact = (millions: number) =>
+  new Intl.NumberFormat('en-PH', {
+    style: 'currency',
+    currency: 'PHP',
+    maximumFractionDigits: 0,
+  }).format(millions * 1_000_000);
+
+const pct = (value: number) => (value < 0.1 ? '<0.1%' : value.toFixed(1) + '%');
+
+function ShareBar({ share }: { share: number }) {
+  return (
+    <div className="mt-3 h-2.5 overflow-hidden rounded-full bg-gray-100">
+      <div
+        className="h-full rounded-full bg-primary-700"
+        style={{ width: Math.max(share, 0.6) + '%' }}
+      />
+    </div>
+  );
+}
+
+function Metric({
+  label,
+  value,
+  detail,
+  icon: Icon,
+}: {
+  label: string;
+  value: string;
+  detail?: string;
+  icon: React.ComponentType<{ className?: string }>;
+}) {
+  return (
+    <div className="rounded-2xl border border-gray-200 bg-white p-5">
+      <Icon className="h-5 w-5 text-primary-700" />
+      <div className="mt-4 text-2xl md:text-3xl font-extrabold tracking-tight text-gray-950">{value}</div>
+      <div className="mt-1 font-bold text-gray-800">{label}</div>
+      {detail && <div className="mt-1 text-xs text-gray-500">{detail}</div>}
+    </div>
+  );
+}
 
 export default function ProjectsBudget() {
+  const [lineFilter, setLineFilter] = useState('All');
+  const [lineQuery, setLineQuery] = useState('');
+
+  const visibleLines = useMemo(() => {
+    const q = lineQuery.trim().toLowerCase();
+    return selectedBudgetLines.filter(item => {
+      const groupMatch = lineFilter === 'All' || item.group === lineFilter;
+      const queryMatch = !q || item.label.toLowerCase().includes(q);
+      return groupMatch && queryMatch;
+    });
+  }, [lineFilter, lineQuery]);
+
+  const perResident = Math.round((budgetSummary.totalBudgetM * 1_000_000) / cityPopulation);
+
   return (
     <>
       <SEO
         title="Projects & Budget"
-        description="Makati budget, project disclosure, procurement and audit records."
+        description="Makati City budget, revenue, spending, development funds and public financial records."
       />
 
       <Section id="budget" className="bg-[#fffdf8]">
-        <div className="section-eyebrow">Projects & Budget</div>
-        <Heading>City spending and public records</Heading>
+        <div className="section-eyebrow">2025 City Budget</div>
+        <Heading>Where Makati’s money comes from and goes</Heading>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
-          <a
-            href={annualBudget}
-            target="_blank"
-            rel="noreferrer"
-            className="rounded-2xl border border-gray-200 bg-white p-6 hover:border-primary-300 hover:shadow-sm transition"
-          >
-            <FileBarChart className="h-6 w-6 text-primary-700" />
-            <h2 className="text-lg font-bold text-gray-950 mt-4">CY 2025 Annual Budget</h2>
-            <p className="text-sm text-gray-600 mt-1">Annual budget document.</p>
-          </a>
+        <div className="mt-8 grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <Metric
+            label="2025 city budget"
+            value={peso(budgetSummary.totalBudgetM)}
+            detail={'About ' + pesoExact(perResident / 1_000_000) + ' per resident using the 2024 population'}
+            icon={WalletCards}
+          />
+          <Metric
+            label="2025 actual receipts"
+            value={peso(budgetSummary.actualReceiptsM)}
+            detail="DBM / BLGF actual annual data"
+            icon={ReceiptText}
+          />
+          <Metric
+            label="2025 actual expenditures"
+            value={peso(budgetSummary.actualExpendituresM)}
+            detail="DBM / BLGF actual annual data"
+            icon={FileBarChart}
+          />
+          <Metric
+            label="Ending cash balance"
+            value={peso(budgetSummary.endingCashM)}
+            detail="After reported payables and continuing appropriations"
+            icon={PiggyBank}
+          />
+        </div>
 
-          <a
-            href={ntaDisclosure}
-            target="_blank"
-            rel="noreferrer"
-            className="rounded-2xl border border-gray-200 bg-white p-6 hover:border-primary-300 hover:shadow-sm transition"
-          >
-            <HardHat className="h-6 w-6 text-primary-700" />
-            <h2 className="text-lg font-bold text-gray-950 mt-4">Q4 20% NTA Utilization</h2>
-            <p className="text-sm text-gray-600 mt-1">Development-fund programs and projects.</p>
+        <div className="mt-5 flex flex-wrap gap-3 text-sm">
+          <a href={budgetSources.annualBudget} target="_blank" rel="noreferrer" className="font-bold text-primary-700 underline underline-offset-2">
+            2025 Annual Budget <ArrowUpRight className="inline h-3.5 w-3.5" />
           </a>
+          <a href={budgetSources.actuals} target="_blank" rel="noreferrer" className="font-bold text-primary-700 underline underline-offset-2">
+            2025 DBM / BLGF actuals <ArrowUpRight className="inline h-3.5 w-3.5" />
+          </a>
+        </div>
+      </Section>
+
+      <Section className="bg-white">
+        <div className="section-eyebrow">Budget Plan</div>
+        <Heading level={2}>How the ₱19.0B budget is allocated</Heading>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mt-7">
+          {budgetByType.map(item => (
+            <div key={item.label} className="rounded-2xl border border-gray-200 bg-white p-5">
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <h3 className="font-extrabold text-gray-950">{item.label}</h3>
+                  <p className="text-sm text-gray-600 mt-1">{item.description}</p>
+                </div>
+                <div className="text-right">
+                  <div className="font-extrabold text-primary-800">{peso(item.amountM)}</div>
+                  <div className="text-xs text-gray-500">{pct(item.share)}</div>
+                </div>
+              </div>
+              <ShareBar share={item.share} />
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      <Section className="bg-[#f5f8f2]">
+        <div className="section-eyebrow">Actual 2025 Revenue</div>
+        <Heading level={2}>Where city receipts came from</Heading>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-7">
+          {revenueSources.map(item => (
+            <div key={item.label} className="rounded-2xl border border-primary-100 bg-white p-5">
+              <div className="text-2xl font-extrabold text-primary-800">{peso(item.amountM)}</div>
+              <h3 className="font-bold text-gray-950 mt-1">{item.label}</h3>
+              <p className="text-sm text-gray-600 mt-1">{item.description}</p>
+              <ShareBar share={item.share} />
+              <div className="mt-2 text-xs text-gray-500">{pct(item.share)} of reported receipts</div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-8 overflow-x-auto rounded-2xl border border-gray-200 bg-white">
+          <table className="w-full min-w-[620px] text-left">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-4 py-3 font-bold">Local revenue source</th>
+                <th className="px-4 py-3 font-bold text-right">2025 actual</th>
+              </tr>
+            </thead>
+            <tbody>
+              {localRevenueBreakdown.map(item => (
+                <tr key={item.label} className="border-t">
+                  <td className="px-4 py-3 text-gray-800">{item.label}</td>
+                  <td className="px-4 py-3 text-right font-semibold text-gray-950">{peso(item.amountM)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </Section>
+
+      <Section className="bg-white">
+        <div className="section-eyebrow">Actual 2025 Spending</div>
+        <Heading level={2}>Where reported expenditures went</Heading>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mt-7">
+          {actualSpendingByFunction.map(item => (
+            <div key={item.label} className="rounded-2xl border border-gray-200 p-5">
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <h3 className="font-extrabold text-gray-950">{item.label}</h3>
+                  <p className="text-sm text-gray-600 mt-1">{item.description}</p>
+                </div>
+                <div className="text-right">
+                  <div className="font-extrabold text-primary-800">{peso(item.amountM)}</div>
+                  <div className="text-xs text-gray-500">{pct(item.share)}</div>
+                </div>
+              </div>
+              <ShareBar share={item.share} />
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-6 rounded-2xl border border-secondary-100 bg-[#fff8e6] p-5 md:p-6">
+          <div className="text-sm text-gray-600">Receipts less expenditures</div>
+          <div className="text-3xl font-extrabold text-gray-950 mt-1">{peso(budgetSummary.receiptsLessExpendituresM)}</div>
         </div>
       </Section>
 
       <Section id="projects" className="bg-[#f5f8f2]">
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-6 items-center">
-          <div>
-            <div className="section-eyebrow">Project Tracker</div>
-            <Heading level={2}>Public projects</Heading>
-            <p className="text-gray-600">
-              Project records are being assembled from official disclosures.
-            </p>
+        <div className="section-eyebrow">Projects & Dedicated Funds</div>
+        <Heading level={2}>Development and capital spending</Heading>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-7">
+          {dedicatedFunds.map(item => (
+            <a
+              key={item.label}
+              href={item.href}
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-2xl border border-primary-100 bg-white p-6 hover:border-primary-300 hover:shadow-sm transition"
+            >
+              <HardHat className="h-6 w-6 text-primary-700" />
+              <div className="text-2xl font-extrabold text-gray-950 mt-4">{peso(item.amountM)}</div>
+              <h3 className="font-bold text-gray-950 mt-1">{item.label}</h3>
+              <p className="text-sm text-gray-600 mt-1">{item.description}</p>
+              <span className="inline-flex items-center gap-1 text-sm font-bold text-primary-700 mt-4">
+                Open disclosure <ArrowUpRight className="h-3.5 w-3.5" />
+              </span>
+            </a>
+          ))}
+        </div>
+
+        <div className="mt-8 rounded-2xl border border-gray-200 bg-white p-6">
+          <div className="flex items-center gap-2">
+            <Building2 className="h-5 w-5 text-primary-700" />
+            <h3 className="font-extrabold text-lg text-gray-950">2025 capital-outlay lines</h3>
           </div>
-          <Link to="/get-involved?type=source&tool=project-tracker#submission" className="brand-btn-primary">
-            Share project data <ArrowRight className="h-4 w-4" />
-          </Link>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-5">
+            {capitalBudgetLines.map(item => (
+              <div key={item.label} className="rounded-xl bg-gray-50 p-4">
+                <div className="text-xl font-extrabold text-primary-800">{peso(item.amountM)}</div>
+                <div className="text-sm font-semibold text-gray-800 mt-1">{item.label}</div>
+              </div>
+            ))}
+          </div>
         </div>
       </Section>
 
-      <Section id="procurement" className="bg-white">
-        <div className="section-eyebrow">Procurement</div>
-        <Heading level={2}>Bid and award notices</Heading>
+      <Section className="bg-white">
+        <div className="section-eyebrow">Budget Explorer</div>
+        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
+          <div>
+            <Heading level={2}>Budget line items</Heading>
+            <p className="text-gray-600">Selected lines extracted from the city’s 2025 annual budget summary.</p>
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-2">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <input
+                value={lineQuery}
+                onChange={event => setLineQuery(event.target.value)}
+                placeholder="Search line items"
+                className="rounded-xl border border-gray-300 py-2.5 pl-9 pr-3 text-sm outline-none focus:border-primary-500"
+              />
+            </div>
+            <select
+              value={lineFilter}
+              onChange={event => setLineFilter(event.target.value)}
+              className="rounded-xl border border-gray-300 bg-white px-3 py-2.5 text-sm"
+            >
+              <option>All</option>
+              <option>Personal Services</option>
+              <option>Operating</option>
+              <option>Capital</option>
+            </select>
+          </div>
+        </div>
+
+        <div className="mt-6 overflow-x-auto rounded-2xl border border-gray-200">
+          <table className="w-full min-w-[680px] text-left">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-4 py-3 font-bold">Category</th>
+                <th className="px-4 py-3 font-bold">Budget line</th>
+                <th className="px-4 py-3 font-bold text-right">2025 amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              {visibleLines.map(item => (
+                <tr key={item.group + item.label} className="border-t">
+                  <td className="px-4 py-3 text-sm text-gray-500">{item.group}</td>
+                  <td className="px-4 py-3 font-medium text-gray-900">{item.label}</td>
+                  <td className="px-4 py-3 text-right font-bold text-gray-950">{pesoExact(item.amountM)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
         <a
-          href="https://notices.philgeps.gov.ph/"
+          href={budgetSources.annualBudget}
           target="_blank"
           rel="noreferrer"
-          className="mt-6 inline-flex items-center gap-4 rounded-2xl border border-gray-200 bg-white p-6 hover:border-primary-300 hover:shadow-sm transition"
+          className="mt-5 inline-flex items-center gap-1 text-sm font-bold text-primary-700 underline underline-offset-2"
         >
-          <ShoppingCart className="h-6 w-6 text-primary-700" />
-          <div>
-            <div className="font-bold text-gray-950">PhilGEPS</div>
-            <div className="text-sm text-gray-600">Government procurement notices.</div>
-          </div>
+          Open the full 82-page annual budget <ArrowUpRight className="h-3.5 w-3.5" />
         </a>
       </Section>
 
-      <Section id="audit" className="bg-[#fffdf8]">
-        <div className="section-eyebrow">Audit</div>
-        <Heading level={2}>Annual audit reports</Heading>
-        <a
-          href="https://www.coa.gov.ph/reports/annual-audit-reports/"
-          target="_blank"
-          rel="noreferrer"
-          className="mt-6 inline-flex items-center gap-4 rounded-2xl border border-gray-200 bg-white p-6 hover:border-primary-300 hover:shadow-sm transition"
-        >
-          <Landmark className="h-6 w-6 text-primary-700" />
-          <div>
-            <div className="font-bold text-gray-950">Commission on Audit</div>
-            <div className="text-sm text-gray-600">Annual audit reports.</div>
-          </div>
-        </a>
+      <Section id="procurement" className="bg-[#fffdf8]">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <a
+            href={budgetSources.procurement}
+            target="_blank"
+            rel="noreferrer"
+            className="rounded-2xl border border-gray-200 bg-white p-6 hover:border-primary-300 hover:shadow-sm transition"
+          >
+            <ShoppingCart className="h-6 w-6 text-primary-700" />
+            <h2 className="font-extrabold text-lg text-gray-950 mt-4">Procurement</h2>
+            <p className="text-sm text-gray-600 mt-1">Search bid and award notices in PhilGEPS.</p>
+          </a>
+
+          <a
+            id="audit"
+            href={budgetSources.audit}
+            target="_blank"
+            rel="noreferrer"
+            className="rounded-2xl border border-gray-200 bg-white p-6 hover:border-primary-300 hover:shadow-sm transition"
+          >
+            <Landmark className="h-6 w-6 text-primary-700" />
+            <h2 className="font-extrabold text-lg text-gray-950 mt-4">Audit reports</h2>
+            <p className="text-sm text-gray-600 mt-1">Commission on Audit annual audit reports.</p>
+          </a>
+        </div>
       </Section>
     </>
   );
