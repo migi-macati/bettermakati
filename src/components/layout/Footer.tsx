@@ -10,14 +10,14 @@ const Footer: React.FC = () => {
   return (
     <footer className="bg-[#112b20] text-white mt-12">
       <div className="h-1.5 bg-gradient-to-r from-secondary-500 via-primary-500 to-accent-500" />
-      <div className="container mx-auto px-4 pt-12 pb-8">
+      <div className="container px-5 md:px-6 lg:px-8 pt-12 pb-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-9">
           <div>
             <div className="inline-block rounded-xl bg-white px-3 py-2 mb-4">
               <BrandMark compact />
             </div>
             <p className="text-primary-100 text-sm leading-relaxed">
-              Independent, community-built civic information for Makati City. BetterMakati is not an official City Government website.
+              Independent, community-built civic information for Makati City.
             </p>
             <a
               href="https://github.com/migi-macati/bettermakati"
@@ -56,9 +56,8 @@ const Footer: React.FC = () => {
           ))}
         </div>
 
-        <div className="border-t border-white/10 mt-10 pt-6 flex flex-col md:flex-row gap-3 justify-between text-xs text-primary-200">
+        <div className="border-t border-white/10 mt-10 pt-6 text-xs text-primary-200">
           <p>© 2026 BetterMakati. Independent BetterLGU civic portal.</p>
-          <p>Sources first • Open source • Public-interest</p>
         </div>
       </div>
     </footer>

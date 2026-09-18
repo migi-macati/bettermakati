@@ -20,7 +20,7 @@ const Navbar: React.FC = () => {
   return (
     <>
       <div className="bg-primary-900 text-white">
-        <div className="container mx-auto px-4 min-h-9 flex items-center justify-between gap-4 text-xs">
+        <div className="container px-4 min-h-9 flex items-center justify-between gap-4 text-xs">
           <div className="flex items-center gap-3 overflow-x-auto whitespace-nowrap py-2">
             <a href="tel:911" className="inline-flex items-center gap-1.5 font-semibold text-secondary-200 hover:text-white">
               <PhoneCall className="h-3.5 w-3.5" /> Emergency 911
@@ -42,16 +42,16 @@ const Navbar: React.FC = () => {
       </div>
 
       <nav className="bg-[#fffdf8]/95 backdrop-blur-md border-b border-[#eadfca] sticky top-0 z-50">
-        <div className="container mx-auto px-4">
-          <div className="flex justify-between items-center py-3.5">
+        <div className="container px-4">
+          <div className="flex justify-between items-center py-3.5 gap-5">
             <BrandMark />
 
-            <div className="hidden lg:flex items-center gap-6 xl:gap-8">
+            <div className="hidden xl:flex items-center gap-4">
               {mainNavigation.map(item => (
                 <div key={item.label} className="relative group">
                   <Link
                     to={item.href}
-                    className="flex items-center text-[15px] text-gray-700 hover:text-primary-700 font-semibold transition-colors"
+                    className="flex items-center text-[14px] text-gray-700 hover:text-primary-700 font-semibold transition-colors whitespace-nowrap"
                   >
                     {item.label}
                     {item.children && <ChevronDown className="ml-1 h-4 w-4" />}
@@ -78,7 +78,7 @@ const Navbar: React.FC = () => {
             <button
               type="button"
               onClick={() => setIsOpen(!isOpen)}
-              className="lg:hidden inline-flex items-center justify-center p-2 rounded-lg text-gray-700 hover:bg-primary-50"
+              className="xl:hidden inline-flex items-center justify-center p-2 rounded-lg text-gray-700 hover:bg-primary-50"
               aria-expanded={isOpen}
             >
               <span className="sr-only">Open main menu</span>
@@ -87,8 +87,8 @@ const Navbar: React.FC = () => {
           </div>
         </div>
 
-        <div className={`lg:hidden ${isOpen ? 'block' : 'hidden'} border-t border-[#eadfca] bg-[#fffdf8]`}>
-          <div className="container mx-auto px-2 py-3 space-y-1">
+        <div className={`xl:hidden ${isOpen ? 'block' : 'hidden'} border-t border-[#eadfca] bg-[#fffdf8]`}>
+          <div className="container px-2 py-3 space-y-1 max-h-[75vh] overflow-y-auto">
             {mainNavigation.map(item => (
               <div key={item.label}>
                 {item.children ? (
@@ -134,12 +134,7 @@ const Navbar: React.FC = () => {
                 )}
               </div>
             ))}
-            <Link to="/hotlines" onClick={closeMenu} className="block px-4 py-2.5 text-sm font-semibold text-primary-800">
-              Hotlines
-            </Link>
-            <Link to="/about" onClick={closeMenu} className="block px-4 py-2.5 text-sm text-gray-600">
-              About BetterMakati
-            </Link>
+
             <a
               href="https://www.makati.gov.ph/"
               target="_blank"

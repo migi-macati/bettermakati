@@ -12,6 +12,14 @@ import Government from './pages/Government';
 import Barangays from './pages/Barangays';
 import Transparency from './pages/Transparency';
 import Hotlines from './pages/Hotlines';
+import CommunityTools from './pages/CommunityTools';
+import ConcernFinder from './pages/ConcernFinder';
+import GetInvolved from './pages/GetInvolved';
+import ProjectsBudget from './pages/ProjectsBudget';
+import Statistics from './pages/Statistics';
+import Legislation from './pages/Legislation';
+import News from './pages/News';
+import Contact from './pages/Contact';
 import Search from './pages/Search';
 import { isMeilisearchEnabled } from './lib/meilisearch';
 
@@ -34,9 +42,17 @@ function App() {
                   path="/services/:category/:documentSlug"
                   element={<Document categoryType="service" />}
                 />
+                <Route path="/community-tools" element={<CommunityTools />} />
+                <Route path="/community-tools/saan-ako-lalapit" element={<ConcernFinder />} />
                 <Route path="/government" element={<Government />} />
                 <Route path="/barangays" element={<Barangays />} />
+                <Route path="/projects-budget" element={<ProjectsBudget />} />
                 <Route path="/transparency" element={<Transparency />} />
+                <Route path="/statistics" element={<Statistics />} />
+                <Route path="/legislation" element={<Legislation />} />
+                <Route path="/news" element={<News />} />
+                <Route path="/get-involved" element={<GetInvolved />} />
+                <Route path="/contact" element={<Contact />} />
                 <Route path="/hotlines" element={<Hotlines />} />
                 {isMeilisearchEnabled && <Route path="/search" element={<Search />} />}
               </Routes>
