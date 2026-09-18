@@ -1,3 +1,4 @@
+import { ExternalLink, Home as HomeIcon } from 'lucide-react';
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
 import { Text } from '../components/ui/Text';
@@ -29,6 +30,45 @@ const barangays = [
   ['Tejeros', '16,019'],
   ['Urdaneta', '4,720'],
   ['Valenzuela', '5,598'],
+];
+
+const associations = [
+  {
+    name: 'Bel-Air Village Association (BAVA)',
+    barangay: 'Bel-Air',
+    href: 'https://www.bava.ph/',
+    linkLabel: 'Website',
+  },
+  {
+    name: 'Dasmariñas Village Association (DVA)',
+    barangay: 'Dasmariñas',
+    href: 'https://dva.org.ph/',
+    linkLabel: 'Website',
+  },
+  {
+    name: 'Forbes Park Association (FPA)',
+    barangay: 'Forbes Park',
+    href: 'https://www.forbesparkassociation.com/',
+    linkLabel: 'Website',
+  },
+  {
+    name: 'Magallanes Village Association (MVA)',
+    barangay: 'Magallanes',
+    href: 'https://www.google.com/maps/search/?api=1&query=Magallanes%20Village%20Association%20Makati',
+    linkLabel: 'Map',
+  },
+  {
+    name: 'San Lorenzo Village Association (SLVA)',
+    barangay: 'San Lorenzo',
+    href: 'https://www.myslv.ph/',
+    linkLabel: 'Website',
+  },
+  {
+    name: 'Urdaneta Village Association (UVA)',
+    barangay: 'Urdaneta',
+    href: 'https://www.google.com/maps/search/?api=1&query=Urdaneta%20Village%20Association%20Makati',
+    linkLabel: 'Map',
+  },
 ];
 
 const slug = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
@@ -71,6 +111,29 @@ export default function Barangays() {
               ))}
             </tbody>
           </table>
+        </div>
+      </Section>
+
+      <Section className="bg-[#f5f8f2]">
+        <div className="section-eyebrow">Residential communities</div>
+        <Heading level={2}>Village & homeowners associations</Heading>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-7">
+          {associations.map(association => (
+            <article key={association.name} className="rounded-2xl border border-primary-100 bg-white p-5">
+              <HomeIcon className="h-5 w-5 text-primary-700" />
+              <h3 className="font-extrabold text-gray-950 mt-3">{association.name}</h3>
+              <p className="text-sm text-gray-500 mt-1">Barangay {association.barangay}</p>
+              <a
+                href={association.href}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700"
+              >
+                {association.linkLabel} <ExternalLink className="h-3.5 w-3.5" />
+              </a>
+            </article>
+          ))}
         </div>
       </Section>
     </>
