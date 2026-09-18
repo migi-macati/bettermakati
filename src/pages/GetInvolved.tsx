@@ -1,4 +1,4 @@
-import { FormEvent, useMemo, useState } from 'react';
+import { FormEvent, useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router';
 import {
   Bug,
@@ -50,6 +50,11 @@ export default function GetInvolved() {
   const [details, setDetails] = useState('');
   const [sourceUrl, setSourceUrl] = useState('');
   const [barangay, setBarangay] = useState('');
+
+  useEffect(() => {
+    setType(searchParams.get('type') || 'idea');
+    setTool(searchParams.get('tool') || '');
+  }, [searchParams]);
 
   const issueUrl = useMemo(() => {
     const label =
