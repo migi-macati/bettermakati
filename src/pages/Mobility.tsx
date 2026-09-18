@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router';
 import { Bike, Bus, Car, ExternalLink, MapPin, Navigation, Train } from 'lucide-react';
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
@@ -144,7 +145,7 @@ export default function Mobility() {
       </Section>
 
       <Section className="bg-white">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <a
             href="https://www.google.com/maps/search/?api=1&query=bike%20parking%20in%20Makati%20City"
             target="_blank"
@@ -155,6 +156,14 @@ export default function Mobility() {
             <h2 className="font-extrabold text-lg mt-4">Cycling</h2>
             <p className="text-sm text-gray-600 mt-1">Find bike parking and cycling destinations.</p>
           </a>
+          <Link
+            to="/parking"
+            className="rounded-2xl border border-gray-200 bg-white p-6 hover:border-primary-300 transition"
+          >
+            <Car className="h-6 w-6 text-primary-700" />
+            <h2 className="font-extrabold text-lg mt-4">Parking</h2>
+            <p className="text-sm text-gray-600 mt-1">Find parking near a Makati destination.</p>
+          </Link>
           <a
             href="https://www.google.com/maps/search/?api=1&query=transport%20terminal%20in%20Makati%20City"
             target="_blank"
