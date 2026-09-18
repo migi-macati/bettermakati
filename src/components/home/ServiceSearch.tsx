@@ -65,10 +65,10 @@ const matchesTab = (item: SearchItem, tab: string, scope: SearchScope) => {
   }
 
   if (tab === 'Services') return item.group === 'Service';
-  if (tab === 'Government') return item.group === 'Government' || item.group === 'Contact';
+  if (tab === 'Government') return item.group === 'Government' || (item.group === 'Contact' && item.category === 'Government');
   if (tab === 'Barangays') return item.group === 'Barangay';
   if (tab === 'Records') return item.group === 'Record';
-  if (tab === 'Tools') return item.group === 'Tool';
+  if (tab === 'Tools') return item.group === 'Tool' || (item.group === 'Contact' && item.category === 'Tools');
 
   return true;
 };
