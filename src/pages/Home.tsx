@@ -4,16 +4,14 @@ import {
   FileText,
   Landmark,
   MapPin,
-  Phone,
-  SearchCheck,
   Store,
   HeartPulse,
   GraduationCap,
   Home as HomeIcon,
+  Scale,
+  ReceiptText,
 } from 'lucide-react';
 import Hero from '../components/sections/Hero';
-import Section from '../components/ui/Section';
-import { Heading } from '../components/ui/Heading';
 import SEO from '../components/SEO';
 
 const quickServices = [
@@ -44,11 +42,9 @@ const quickServices = [
 ];
 
 const civicLinks = [
-  { label: 'Government', description: 'Leadership, offices and contacts.', href: '/government', icon: Landmark },
+  { label: 'Government', description: 'Officials, city offices and contacts.', href: '/government', icon: Landmark },
   { label: 'Barangays', description: 'Barangay directory and population.', href: '/barangays', icon: MapPin },
-  { label: 'Transparency', description: 'Budget, disclosures, legislation and procurement.', href: '/transparency', icon: FileText },
-  { label: 'Hotlines', description: 'Emergency and essential Makati contacts.', href: '/hotlines', icon: Phone },
-  { label: 'About BetterMakati', description: 'About the project and corrections.', href: '/about', icon: SearchCheck },
+  { label: 'Transparency', description: 'Budgets, legislation, procurement and audit records.', href: '/transparency', icon: FileText },
 ];
 
 const stats = [
@@ -78,6 +74,27 @@ const stats = [
   },
 ];
 
+const recordLinks = [
+  {
+    label: 'Annual Budget',
+    description: 'CY 2025',
+    href: 'https://www.makati.gov.ph/assets/uploads/staticmenu/docs/online_forms/pdf/Annual%20Budget%202025.pdf',
+    icon: ReceiptText,
+  },
+  {
+    label: 'Resolutions & Ordinances',
+    description: 'Local legislation',
+    href: 'https://www.makati.gov.ph/content/resolutions-and-ordinances/author',
+    icon: Scale,
+  },
+  {
+    label: 'Procurement',
+    description: 'PhilGEPS notices',
+    href: 'https://notices.philgeps.gov.ph/',
+    icon: FileText,
+  },
+];
+
 const Home: React.FC = () => {
   return (
     <>
@@ -91,7 +108,7 @@ const Home: React.FC = () => {
 
       <section className="bg-[#fffdf8] py-14">
         <div className="container mx-auto px-4">
-          <div className="section-eyebrow">Start here</div>
+          <div className="section-eyebrow">Services</div>
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-3 mb-7">
             <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-950">Frequently used services</h2>
             <Link to="/services" className="inline-flex items-center gap-1.5 text-sm font-bold text-primary-700 hover:text-primary-900">
@@ -120,7 +137,6 @@ const Home: React.FC = () => {
       <section className="bg-[#f5f8f2] py-14 border-y border-primary-100/70">
         <div className="container mx-auto px-4">
           <div className="section-eyebrow">Makati at a glance</div>
-          <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-950 mb-7">A quick civic snapshot</h2>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-5">
             {stats.map(stat => (
               <div key={stat.label} className="stat-card">
@@ -145,14 +161,17 @@ const Home: React.FC = () => {
           <div className="section-eyebrow">City information</div>
           <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-950 mb-7">Explore Makati</h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {civicLinks.map(item => {
               const Icon = item.icon;
               return (
-                <Link key={item.label} to={item.href} className="civic-card">
+                <Link key={item.label} to={item.href} className="civic-card !min-h-0">
                   <Icon className="h-6 w-6 text-primary-700" />
                   <h3 className="font-bold text-gray-950 mt-4">{item.label}</h3>
                   <p className="text-sm text-gray-600 mt-1">{item.description}</p>
+                  <span className="inline-flex items-center gap-1 text-sm font-bold text-primary-700 mt-4">
+                    Open <ArrowRight className="h-4 w-4" />
+                  </span>
                 </Link>
               );
             })}
@@ -160,18 +179,36 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      <Section className="bg-[#fffdf8]">
-        <div className="rounded-2xl border border-primary-100 bg-white p-6 md:p-8 flex flex-col md:flex-row md:items-center md:justify-between gap-5 shadow-sm">
-          <div>
-            <div className="section-eyebrow">Public records</div>
-            <Heading level={2} className="!mb-2">Budget, legislation and procurement</Heading>
-            <p className="text-gray-600">City budget documents, local legislation, audit resources and procurement portals.</p>
+      <section className="bg-[#fff8e6] py-14 border-y border-secondary-100">
+        <div className="container mx-auto px-4">
+          <div className="section-eyebrow text-secondary-800">Public records</div>
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-3 mb-7">
+            <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-950">Go straight to the records</h2>
+            <Link to="/transparency" className="inline-flex items-center gap-1.5 text-sm font-bold text-primary-700 hover:text-primary-900">
+              View all records <ArrowRight className="h-4 w-4" />
+            </Link>
           </div>
-          <Link to="/transparency" className="brand-btn-primary shrink-0">
-            Open transparency <ArrowRight className="h-4 w-4" />
-          </Link>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {recordLinks.map(item => {
+              const Icon = item.icon;
+              return (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="rounded-2xl border border-[#ead6a0] bg-white/80 p-5 hover:bg-white hover:shadow-sm transition"
+                >
+                  <Icon className="h-6 w-6 text-secondary-700" />
+                  <h3 className="font-bold text-gray-950 mt-4">{item.label}</h3>
+                  <p className="text-sm text-gray-600 mt-1">{item.description}</p>
+                </a>
+              );
+            })}
+          </div>
         </div>
-      </Section>
+      </section>
     </>
   );
 };

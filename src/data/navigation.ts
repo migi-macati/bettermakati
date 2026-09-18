@@ -18,7 +18,6 @@ export const mainNavigation: NavigationItem[] = [
   { label: 'Government', href: '/government' },
   { label: 'Barangays', href: '/barangays' },
   { label: 'Transparency', href: '/transparency' },
-  { label: 'Hotlines', href: '/hotlines' },
 ];
 
 export const footerNavigation = {
@@ -36,7 +35,7 @@ export const footerNavigation = {
     {
       title: 'BetterMakati',
       links: [
-        { label: 'About & Sources', href: '/about' },
+        { label: 'About', href: '/about' },
         { label: 'GitHub', href: 'https://github.com/migi-macati/bettermakati' },
         { label: 'Report a correction', href: 'https://github.com/migi-macati/bettermakati/issues' },
       ],

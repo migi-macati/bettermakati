@@ -11,6 +11,7 @@ import {
 import * as LucideIcons from 'lucide-react';
 import Breadcrumbs from '../components/ui/Breadcrumbs';
 import ServicesSection from '../components/home/ServicesSection';
+import ServiceSearch from '../components/home/ServiceSearch';
 import SEO from '../components/SEO';
 import { Card, CardContent } from '@bettergov/kapwa/card';
 import { Banner } from '@bettergov/kapwa/banner';
@@ -48,8 +49,16 @@ const Services: React.FC = () => {
           description="Makati City public-service information."
           keywords="Makati services, permits, health, education, social services, property"
         />
+        <Section className="bg-[#f5f8f2]">
+          <div className="max-w-3xl mx-auto">
+            <div className="section-eyebrow">Services</div>
+            <Heading>What do you need?</Heading>
+            <Text className="text-gray-600 mb-6">Search by service, document, benefit or task.</Text>
+            <ServiceSearch />
+          </div>
+        </Section>
         <ServicesSection
-          title="Makati City services"
+          title="Browse by category"
           description="Permits, health, education, social services, property and land-use information."
         />
       </>

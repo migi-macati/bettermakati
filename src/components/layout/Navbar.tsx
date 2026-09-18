@@ -22,11 +22,11 @@ const Navbar: React.FC = () => {
       <div className="bg-primary-900 text-white">
         <div className="container mx-auto px-4 min-h-9 flex items-center justify-between gap-4 text-xs">
           <div className="flex items-center gap-3 overflow-x-auto whitespace-nowrap py-2">
-            <span className="inline-flex items-center gap-1.5 font-semibold text-secondary-200">
+            <a href="tel:911" className="inline-flex items-center gap-1.5 font-semibold text-secondary-200 hover:text-white">
               <PhoneCall className="h-3.5 w-3.5" /> Emergency 911
-            </span>
+            </a>
             <span className="text-primary-200">•</span>
-            <span>City Hall: 8870-1000</span>
+            <a href="tel:+63288701000" className="hover:text-secondary-200">City Hall: 8870-1000</a>
             <span className="text-primary-200">•</span>
             <Link to="/hotlines" className="text-white underline underline-offset-2 hover:text-secondary-200">More hotlines</Link>
           </div>
@@ -46,7 +46,7 @@ const Navbar: React.FC = () => {
           <div className="flex justify-between items-center py-3.5">
             <BrandMark />
 
-            <div className="hidden lg:flex items-center gap-5 xl:gap-7">
+            <div className="hidden lg:flex items-center gap-6 xl:gap-8">
               {mainNavigation.map(item => (
                 <div key={item.label} className="relative group">
                   <Link
@@ -73,9 +73,6 @@ const Navbar: React.FC = () => {
                   )}
                 </div>
               ))}
-              <Link to="/about" className="text-[15px] text-gray-700 hover:text-primary-700 font-semibold transition-colors">
-                About
-              </Link>
             </div>
 
             <button
@@ -137,8 +134,11 @@ const Navbar: React.FC = () => {
                 )}
               </div>
             ))}
-            <Link to="/about" onClick={closeMenu} className="block px-4 py-2.5 text-base font-semibold text-gray-700">
-              About
+            <Link to="/hotlines" onClick={closeMenu} className="block px-4 py-2.5 text-sm font-semibold text-primary-800">
+              Hotlines
+            </Link>
+            <Link to="/about" onClick={closeMenu} className="block px-4 py-2.5 text-sm text-gray-600">
+              About BetterMakati
             </Link>
             <a
               href="https://www.makati.gov.ph/"
