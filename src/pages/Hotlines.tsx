@@ -1,6 +1,5 @@
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
-import { Text } from '../components/ui/Text';
 import SEO from '../components/SEO';
 
 export default function Hotlines() {
