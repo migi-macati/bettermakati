@@ -1,10 +1,10 @@
 title: 'Business & Permits'
-description: 'Selected business transactions verified against official Makati sources.'
+description: 'Business permit application and renewal.'
 layout: list
 pages:
   - name: 'Apply for a new business permit'
     slug: 'new-business-permit'
-    description: 'Basic requirements and the current official application form.'
+    description: 'Requirements and application form.'
   - name: 'Renew a business permit'
     slug: 'renew-business-permit'
-    description: 'Basic renewal information and the current official application form.'
+    description: 'Renewal requirements and application form.'

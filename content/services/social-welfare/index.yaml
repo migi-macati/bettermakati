@@ -1,10 +1,10 @@
 title: 'Social Services'
-description: 'Selected Makati social-service information.'
+description: 'Makati social-service information.'
 layout: list
 pages:
   - name: 'Contact the Makati Action Center'
     slug: 'makati-action-center'
-    description: 'City concern, feedback and service-coordination contacts.'
+    description: 'Concern, feedback and service-coordination contacts.'
   - name: 'Senior citizen Blu Card services'
     slug: 'senior-citizen-blu-card'
-    description: 'Program overview with a caution about older published requirements.'
+    description: 'Blu Card program information.'

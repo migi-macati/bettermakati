@@ -1,10 +1,10 @@
 title: 'Health & Emergency'
-description: 'Selected health and emergency information with authoritative source links.'
+description: 'Health access and emergency information.'
 layout: list
 pages:
   - name: 'Makati Health Plus / Yellow Card'
     slug: 'makati-health-plus'
-    description: 'Program overview and official application form.'
+    description: 'Program and application form.'
   - name: 'Get emergency assistance'
     slug: 'emergency-assistance'
-    description: 'How to reach emergency response and what information to prepare.'
+    description: 'Emergency contacts and reporting information.'

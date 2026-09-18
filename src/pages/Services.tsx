@@ -45,12 +45,12 @@ const Services: React.FC = () => {
       <>
         <SEO
           title="Services"
-          description="Selected verified Makati City public services with links to official sources."
+          description="Makati City public-service information."
           keywords="Makati services, permits, health, education, social services, property"
         />
         <ServicesSection
-          title="Selected Makati City services"
-          description="A small v1.0 directory of useful services. BetterMakati summarizes public information and links back to official sources for transactions and current requirements."
+          title="Makati City services"
+          description="Permits, health, education, social services, property and land-use information."
         />
       </>
     );
@@ -90,8 +90,8 @@ const Services: React.FC = () => {
         ) : subcategories.length === 0 ? (
           <Banner
             type="info"
-            title="More services are being verified"
-            description="BetterMakati only publishes service pages after checking an authoritative source."
+            title="No services listed"
+            description="Choose another service category."
           />
         ) : (
           <div className={categoryIndex.layout === 'grid'

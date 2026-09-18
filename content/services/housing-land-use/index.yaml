@@ -1,10 +1,10 @@
 title: 'Property & Land Use'
-description: 'Selected property-tax, locational-clearance and building-permit information.'
+description: 'Property tax, locational clearance and building permits.'
 layout: list
 pages:
   - name: 'Pay real property tax'
     slug: 'real-property-tax-payment'
-    description: 'Basic process and official Citizen's Charter source.'
+    description: 'Requirements for real property tax payment.'
   - name: 'Secure locational clearance and building permit'
     slug: 'locational-clearance-building-permit'
-    description: 'Core documents and official Makati reference.'
+    description: 'Locational clearance and building-permit requirements.'

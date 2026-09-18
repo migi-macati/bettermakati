@@ -3,6 +3,8 @@ import { Heading } from '../components/ui/Heading';
 import { Text } from '../components/ui/Text';
 import SEO from '../components/SEO';
 
+const psaUrl = 'https://psa.gov.ph/classification/psgc/barangays/1380300000';
+
 const barangays = [
   ['Bangkal', '18,013'],
   ['Bel-Air', '39,354'],
@@ -34,13 +36,22 @@ export default function Barangays() {
     <>
       <SEO
         title="Barangays"
-        description="The current 23 barangays of Makati City with 2024 POPCEN population."
+        description="The 23 barangays of Makati City with 2024 POPCEN population."
       />
       <Section className="p-3 mb-12">
         <Heading>Barangays</Heading>
         <Text className="text-gray-600 mb-4">
-          The Philippine Statistics Authority currently lists 23 barangays in the City of Makati. Population figures below are from the 2024 Census of Population.
+          Makati has{' '}
+          <a className="text-primary-700 underline underline-offset-2" href={psaUrl} target="_blank" rel="noreferrer">
+            23 barangays
+          </a>
+          . Population figures are from the{' '}
+          <a className="text-primary-700 underline underline-offset-2" href={psaUrl} target="_blank" rel="noreferrer">
+            2024 Census of Population
+          </a>
+          .
         </Text>
+
         <div className="overflow-x-auto border rounded-lg">
           <table className="w-full text-left">
             <thead className="bg-gray-50">
@@ -59,21 +70,6 @@ export default function Barangays() {
             </tbody>
           </table>
         </div>
-
-        <div className="mt-8 rounded-lg bg-gray-50 p-5">
-          <Heading level={3}>Why 23, not 33?</Heading>
-          <Text className="text-gray-700">
-            Older Makati documents can still show 33 barangays. BetterMakati uses the current Philippine Standard Geographic Code rather than carrying the older count forward.
-          </Text>
-        </div>
-
-        <Heading level={2}>Source</Heading>
-        <p>
-          <a className="text-primary-600 underline" href="https://psa.gov.ph/classification/psgc/barangays/1380300000" target="_blank" rel="noreferrer">
-            Philippine Statistics Authority — City of Makati, PSGC
-          </a>
-        </p>
-        <p className="text-xs text-gray-500 mt-4">Last verified by BetterMakati: 18 September 2026.</p>
       </Section>
     </>
   );

@@ -1,10 +1,10 @@
 title: 'Education'
-description: 'Current University of Makati admissions and scholarship information.'
+description: 'University of Makati admissions and scholarships.'
 layout: list
 pages:
   - name: 'Apply to the University of Makati'
     slug: 'umak-admissions'
-    description: 'Current admissions information and official links.'
+    description: 'Admissions and application information.'
   - name: 'University of Makati scholarships and grants'
     slug: 'umak-scholarships'
     description: 'Scholarship guidelines and application process.'
