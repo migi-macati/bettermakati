@@ -8,6 +8,9 @@ import {
   HeartPulse,
   GraduationCap,
   Home as HomeIcon,
+  Compass,
+  UtensilsCrossed,
+  Church,
 } from 'lucide-react';
 import Hero from '../components/sections/Hero';
 import CommunityToolsGrid from '../components/community/CommunityToolsGrid';
@@ -37,6 +40,27 @@ const quickServices = [
     description: 'RPT, zoning and building permits',
     href: '/services/housing-land-use',
     icon: HomeIcon,
+  },
+];
+
+const visitPaths = [
+  {
+    label: 'Places to go',
+    description: 'Museums, markets, parks, shopping and neighborhoods.',
+    href: '/visit',
+    icon: Compass,
+  },
+  {
+    label: 'Eat & drink',
+    description: 'Restaurants, cafés, markets and nightlife.',
+    href: '/visit',
+    icon: UtensilsCrossed,
+  },
+  {
+    label: 'Heritage & history',
+    description: 'Historic sites, cultural places and the Makati timeline.',
+    href: '/heritage',
+    icon: Church,
   },
 ];
 
@@ -94,7 +118,7 @@ const Home: React.FC = () => {
       <SEO
         title="Home"
         description="BetterMakati is an independent civic information portal for Makati City."
-        keywords="Makati, Makati City, public services, local government, civic information"
+        keywords="Makati, Makati City, public services, local government, civic information, tourism, heritage"
       />
 
       <Hero />
@@ -120,6 +144,34 @@ const Home: React.FC = () => {
                     <p className="text-sm text-gray-600 mt-1">{item.description}</p>
                   </div>
                   <ArrowRight className="h-4 w-4 text-primary-600 ml-auto shrink-0" />
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-white py-14 border-y border-gray-100">
+        <div className="container px-5 md:px-6 lg:px-8">
+          <div className="section-eyebrow">Visit Makati</div>
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-3 mb-7">
+            <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-950">Explore, eat and discover</h2>
+            <Link to="/visit" className="inline-flex items-center gap-1.5 text-sm font-bold text-primary-700 hover:text-primary-900">
+              Visit Makati <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {visitPaths.map(item => {
+              const Icon = item.icon;
+              return (
+                <Link key={item.label} to={item.href} className="civic-card !min-h-0">
+                  <Icon className="h-6 w-6 text-primary-700" />
+                  <h3 className="font-bold text-gray-950 mt-4">{item.label}</h3>
+                  <p className="text-sm text-gray-600 mt-1">{item.description}</p>
+                  <span className="inline-flex items-center gap-1 text-sm font-bold text-primary-700 mt-4">
+                    Open <ArrowRight className="h-4 w-4" />
+                  </span>
                 </Link>
               );
             })}

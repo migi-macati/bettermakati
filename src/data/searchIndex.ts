@@ -1,5 +1,6 @@
 export type SearchGroup =
   | 'Service'
+  | 'Visit'
   | 'Government'
   | 'Barangay'
   | 'Record'
@@ -126,6 +127,100 @@ const serviceItems: SearchItem[] = [
     description: 'Locational clearance and building-permit requirements.',
     href: '/services/housing-land-use/locational-clearance-building-permit',
     keywords: 'building permit zoning locational clearance construction land development occupancy',
+  },
+];
+
+const visitItems: SearchItem[] = [
+  {
+    title: 'Visit Makati',
+    group: 'Visit',
+    category: 'Visit',
+    description: 'Places to go, food, markets, parks, shopping and culture.',
+    href: '/visit',
+    keywords: 'visit tourist tourism attractions places restaurant cafe market park shopping nightlife',
+    featured: true,
+  },
+  {
+    title: 'Ayala Museum',
+    group: 'Visit',
+    category: 'Culture',
+    description: 'Philippine history, art and archaeology.',
+    href: '/visit',
+    keywords: 'ayala museum culture art history gallery',
+  },
+  {
+    title: 'Poblacion dining & nightlife',
+    group: 'Visit',
+    category: 'Food',
+    description: 'Dining, cafés, bars and nightlife in Poblacion.',
+    href: '/visit',
+    keywords: 'poblacion food restaurant cafe bar nightlife eat drink',
+  },
+  {
+    title: 'Salcedo Saturday Market',
+    group: 'Visit',
+    category: 'Food',
+    description: 'Weekend food and market destination.',
+    href: '/visit',
+    keywords: 'salcedo saturday market food weekend',
+  },
+  {
+    title: 'Legazpi Sunday Market',
+    group: 'Visit',
+    category: 'Food',
+    description: 'Sunday food and market destination.',
+    href: '/visit',
+    keywords: 'legazpi sunday market food weekend',
+  },
+  {
+    title: 'Ayala Triangle Gardens',
+    group: 'Visit',
+    category: 'Parks',
+    description: 'Urban park in the Makati CBD.',
+    href: '/visit',
+    keywords: 'ayala triangle gardens park walking green space',
+  },
+  {
+    title: 'Heritage & Culture',
+    group: 'Visit',
+    category: 'Heritage',
+    description: 'Historical markers, churches, museums and cultural sites.',
+    href: '/heritage',
+    keywords: 'heritage culture historical sites church museum old makati',
+    featured: true,
+  },
+  {
+    title: 'Nuestra Señora de Gracia Church',
+    group: 'Visit',
+    category: 'Heritage',
+    description: 'Historic Augustinian church and monastery in Guadalupe Viejo.',
+    href: '/heritage',
+    keywords: 'guadalupe church nuestra senora gracia monastery heritage historical',
+  },
+  {
+    title: 'Sts. Peter and Paul Parish Church',
+    group: 'Visit',
+    category: 'Heritage',
+    description: 'Historic San Pedro Macati church in Poblacion.',
+    href: '/heritage',
+    keywords: 'saints peter paul sampiro san pedro macati poblacion heritage church',
+  },
+  {
+    title: 'Nielson Tower',
+    group: 'Visit',
+    category: 'Heritage',
+    description: 'Historic airport tower at Ayala Triangle.',
+    href: '/heritage',
+    keywords: 'nielson tower airport ayala triangle heritage aviation history',
+  },
+  {
+    title: 'History of Makati',
+    group: 'Visit',
+    category: 'History',
+    description: 'Timeline from San Pedro Makati to cityhood.',
+    href: '/history',
+    keywords: 'history timeline san pedro makati sampiro cityhood origin name',
+    featured: true,
   },
 ];
 
@@ -286,7 +381,7 @@ const contactItems: SearchItem[] = [
     category: 'Tools',
     description: 'Contact the project or report a correction.',
     href: '/contact',
-    keywords: 'contact bettemakati correction github issue feedback',
+    keywords: 'contact bettermakati correction github issue feedback',
   },
 ];
 
@@ -301,6 +396,7 @@ const barangayItems: SearchItem[] = barangays.map(name => ({
 
 export const searchIndex: SearchItem[] = [
   ...serviceItems,
+  ...visitItems,
   ...governmentItems,
   ...recordItems,
   ...toolItems,

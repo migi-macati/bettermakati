@@ -19,6 +19,11 @@ import Statistics from './pages/Statistics';
 import Legislation from './pages/Legislation';
 import News from './pages/News';
 import Contact from './pages/Contact';
+import VisitMakati from './pages/VisitMakati';
+import Heritage from './pages/Heritage';
+import History from './pages/History';
+import Privacy from './pages/Privacy';
+import Terms from './pages/Terms';
 import Search from './pages/Search';
 import { isMeilisearchEnabled } from './lib/meilisearch';
 
@@ -35,24 +40,36 @@ function App() {
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/about" element={<About />} />
+                <Route path="/privacy" element={<Privacy />} />
+                <Route path="/terms" element={<Terms />} />
+
                 <Route path="/services" element={<Services />} />
                 <Route path="/services/:category" element={<Services />} />
                 <Route
                   path="/services/:category/:documentSlug"
                   element={<Document categoryType="service" />}
                 />
-                <Route path="/community-tools" element={<CommunityTools />} />
-                <Route path="/community-tools/saan-ako-lalapit" element={<ConcernFinder />} />
+
+                <Route path="/visit" element={<VisitMakati />} />
+                <Route path="/heritage" element={<Heritage />} />
+                <Route path="/history" element={<History />} />
+
                 <Route path="/government" element={<Government />} />
                 <Route path="/barangays" element={<Barangays />} />
-                <Route path="/projects-budget" element={<ProjectsBudget />} />
-                <Route path="/transparency" element={<Navigate to="/projects-budget" replace />} />
                 <Route path="/statistics" element={<Statistics />} />
                 <Route path="/legislation" element={<Legislation />} />
                 <Route path="/news" element={<News />} />
+
+                <Route path="/projects-budget" element={<ProjectsBudget />} />
+                <Route path="/transparency" element={<Navigate to="/projects-budget" replace />} />
+
+                <Route path="/community-tools" element={<CommunityTools />} />
+                <Route path="/community-tools/saan-ako-lalapit" element={<ConcernFinder />} />
+
                 <Route path="/get-involved" element={<GetInvolved />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/hotlines" element={<Hotlines />} />
+
                 {isMeilisearchEnabled && <Route path="/search" element={<Search />} />}
               </Routes>
             </div>

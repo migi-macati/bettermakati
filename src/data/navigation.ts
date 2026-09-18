@@ -3,15 +3,25 @@ import type { NavigationItem } from '../types';
 export const mainNavigation: NavigationItem[] = [
   { label: 'Services', href: '/services' },
   {
-    label: 'Government',
+    label: 'Visit Makati',
+    href: '/visit',
+    children: [
+      { label: 'Places to Go', href: '/visit' },
+      { label: 'Heritage & Culture', href: '/heritage' },
+      { label: 'History of Makati', href: '/history' },
+    ],
+  },
+  {
+    label: 'City',
     href: '/government',
     children: [
+      { label: 'Government', href: '/government' },
+      { label: 'Barangays', href: '/barangays' },
       { label: 'Makati Statistics', href: '/statistics' },
       { label: 'Legislation', href: '/legislation' },
       { label: 'News & Events', href: '/news' },
     ],
   },
-  { label: 'Barangays', href: '/barangays' },
   {
     label: 'Projects & Budget',
     href: '/projects-budget',
@@ -49,7 +59,7 @@ export const footerNavigation = {
       title: 'Explore',
       links: [
         { label: 'Services', href: '/services' },
-        { label: 'Saan Ako Lalapit?', href: '/community-tools/saan-ako-lalapit' },
+        { label: 'Visit Makati', href: '/visit' },
         { label: 'Government', href: '/government' },
         { label: 'Barangays', href: '/barangays' },
         { label: 'Projects & Budget', href: '/projects-budget' },
@@ -67,8 +77,9 @@ export const footerNavigation = {
       title: 'BetterMakati',
       links: [
         { label: 'About', href: '/about' },
+        { label: 'Privacy', href: '/privacy' },
+        { label: 'Terms', href: '/terms' },
         { label: 'GitHub', href: 'https://github.com/migi-macati/bettermakati' },
-        { label: 'BetterLGU Directory', href: 'https://lgu.bettergov.ph/' },
         { label: 'Official Makati Portal', href: 'https://www.makati.gov.ph/' },
       ],
     },

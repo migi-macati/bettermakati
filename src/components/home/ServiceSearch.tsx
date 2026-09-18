@@ -19,7 +19,7 @@ import { searchIndex, type SearchItem } from '../../data/searchIndex';
 
 type SearchScope = 'site' | 'services';
 
-const siteTabs = ['All', 'Services', 'Government', 'Barangays', 'Records', 'Tools'] as const;
+const siteTabs = ['All', 'Services', 'Visit', 'Government', 'Barangays', 'Records', 'Tools'] as const;
 const serviceTabs = ['All', 'Business', 'Health', 'Education', 'Social', 'Property'] as const;
 
 const normalize = (value: string) =>
@@ -65,6 +65,7 @@ const matchesTab = (item: SearchItem, tab: string, scope: SearchScope) => {
   }
 
   if (tab === 'Services') return item.group === 'Service';
+  if (tab === 'Visit') return item.group === 'Visit';
   if (tab === 'Government') return item.group === 'Government' || (item.group === 'Contact' && item.category === 'Government');
   if (tab === 'Barangays') return item.group === 'Barangay';
   if (tab === 'Records') return item.group === 'Record';
@@ -182,7 +183,7 @@ export default function ServiceSearch({
   const inputPlaceholder =
     placeholder || (scope === 'services'
       ? 'Search services'
-      : 'e.g., Yellow Card, mayor, Poblacion, budget');
+      : 'e.g., Yellow Card, Poblacion, restaurants, budget');
 
   return (
     <div
