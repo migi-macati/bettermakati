@@ -11,6 +11,8 @@ import {
   Compass,
   UtensilsCrossed,
   Church,
+  Bus,
+  Film,
 } from 'lucide-react';
 import Hero from '../components/sections/Hero';
 import CommunityToolsGrid from '../components/community/CommunityToolsGrid';
@@ -55,6 +57,18 @@ const visitPaths = [
     description: 'Restaurants, cafés, markets and nightlife.',
     href: '/visit',
     icon: UtensilsCrossed,
+  },
+  {
+    label: 'Getting around',
+    description: 'Public transport, directions and ride-hailing.',
+    href: '/mobility',
+    icon: Bus,
+  },
+  {
+    label: 'Cinemas',
+    description: 'Movie theaters and showtime links.',
+    href: '/cinemas',
+    icon: Film,
   },
   {
     label: 'Heritage & history',
@@ -161,7 +175,7 @@ const Home: React.FC = () => {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
             {visitPaths.map(item => {
               const Icon = item.icon;
               return (
