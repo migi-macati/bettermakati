@@ -116,7 +116,7 @@ const serviceItems: SearchItem[] = [
     group: 'Service',
     category: 'Social',
     description: 'Makati City mobile app.',
-    href: 'https://play.google.com/store/apps/details?id=project.smsgt.makaapp&hl=en',
+    href: '/services#digital',
     keywords: 'makatizen app city mobile digital services makati',
   },
   {
@@ -124,7 +124,7 @@ const serviceItems: SearchItem[] = [
     group: 'Service',
     category: 'Social',
     description: 'Official City Government of Makati web portal.',
-    href: 'https://www.makati.gov.ph/',
+    href: '/services#digital',
     keywords: 'official makati city web portal government forms announcements',
   },
   {
@@ -260,7 +260,7 @@ const visitItems: SearchItem[] = [
     group: 'Visit',
     category: 'Visit',
     description: 'Ayala Land guide to Makati CBD, Ayala Center and Circuit Makati.',
-    href: 'https://makeitmakati.com/',
+    href: '/visit#resources',
     keywords: 'make it makati ayala cbd circuit visitor guide lifestyle',
   },
 ];
