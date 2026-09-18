@@ -103,7 +103,7 @@ export default function VisitMakati() {
         </div>
       </Section>
 
-      <Section className="bg-[#fffdf8]">
+      <Section id="resources" className="bg-[#fffdf8]">
         <div className="section-eyebrow">Visitor resources</div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <a
