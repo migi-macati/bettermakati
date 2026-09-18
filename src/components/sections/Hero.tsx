@@ -20,9 +20,6 @@ export default function Hero() {
               <Link to="/services" className="brand-btn-primary">
                 Browse services <ArrowRight className="h-4 w-4" />
               </Link>
-              <Link to="/community-tools/saan-ako-lalapit" className="brand-btn-secondary">
-                Not sure where to go?
-              </Link>
             </div>
           </div>
 
