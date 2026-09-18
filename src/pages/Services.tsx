@@ -61,6 +61,30 @@ const Services: React.FC = () => {
           title="Browse by category"
           description="Permits, health, education, social services, property and land-use information."
         />
+        <Section className="bg-[#fffdf8]">
+          <div className="section-eyebrow">Digital Makati</div>
+          <Heading level={2}>City apps & portals</Heading>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+            <a
+              href="https://www.makati.gov.ph/"
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-2xl border border-gray-200 bg-white p-5 hover:border-primary-300 hover:shadow-sm transition"
+            >
+              <h3 className="font-extrabold text-gray-950">Official Makati Web Portal</h3>
+              <p className="text-sm text-gray-600 mt-1">Official city information, forms and announcements.</p>
+            </a>
+            <a
+              href="https://play.google.com/store/apps/details?id=project.smsgt.makaapp&hl=en"
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-2xl border border-gray-200 bg-white p-5 hover:border-primary-300 hover:shadow-sm transition"
+            >
+              <h3 className="font-extrabold text-gray-950">Makatizen App</h3>
+              <p className="text-sm text-gray-600 mt-1">Makati City mobile app.</p>
+            </a>
+          </div>
+        </Section>
       </>
     );
   }
