@@ -1,4 +1,10 @@
 title: 'Education'
-description: 'Verified Makati City education and scholarship services will be added here.'
+description: 'Current University of Makati admissions and scholarship information.'
 layout: list
-pages: []
+pages:
+  - name: 'Apply to the University of Makati'
+    slug: 'umak-admissions'
+    description: 'Current admissions information and official links.'
+  - name: 'University of Makati scholarships and grants'
+    slug: 'umak-scholarships'
+    description: 'Scholarship guidelines and application process.'

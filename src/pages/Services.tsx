@@ -25,11 +25,7 @@ const Services: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const subcategories: Subcategory[] = categoryIndex.pages;
 
-  const getCategory = () => {
-    return serviceCategories.categories.find(c => c.slug === category);
-  };
-
-  const categoryData = getCategory();
+  const categoryData = serviceCategories.categories.find(c => c.slug === category);
   const Icon = LucideIcons[
     categoryData?.icon as keyof typeof LucideIcons
   ] as React.ComponentType<{ className?: string }>;
@@ -49,16 +45,17 @@ const Services: React.FC = () => {
       <>
         <SEO
           title="Services"
-          description={`All services provided by the ${import.meta.env.VITE_GOVERNMENT_NAME} government. Find what you need for citizenship, business, education, and more.`}
-          keywords="government services, public services, local government, civic services"
+          description="Selected verified Makati City public services with links to official sources."
+          keywords="Makati services, permits, health, education, social services, property"
         />
         <ServicesSection
-          title={`All local government services`}
-          description={`All services provided by the ${import.meta.env.VITE_GOVERNMENT_NAME} government. Find what you need for citizenship, business, education, and more.`}
+          title="Selected Makati City services"
+          description="A small v1.0 directory of useful services. BetterMakati summarizes public information and links back to official sources for transactions and current requirements."
         />
       </>
     );
   }
+
   if (!categoryData) {
     return (
       <Section className="p-3 mb-12">
@@ -76,85 +73,50 @@ const Services: React.FC = () => {
   return (
     <>
       <SEO
-        title={categoryData.category || category}
+        title={categoryData.category}
         description={categoryData.description}
-        keywords={`${categoryData.category}, government services, public services, local government`}
+        keywords={`${categoryData.category}, Makati City services`}
       />
       <Section className="p-3 mb-12">
         <Breadcrumbs className="mb-8" />
-        <Icon className="h-8 w-8 mb-4 text-primary-600 rounded-md" />
-        <Heading>{categoryData.category || category}</Heading>
+        {Icon && <Icon className="h-8 w-8 mb-4 text-primary-600 rounded-md" />}
+        <Heading>{categoryData.category}</Heading>
         <Text className="text-gray-600 mb-6">{categoryData.description}</Text>
 
         {loading ? (
           <div className="flex justify-center items-center p-8">
             <Text>Loading services...</Text>
           </div>
+        ) : subcategories.length === 0 ? (
+          <Banner
+            type="info"
+            title="More services are being verified"
+            description="BetterMakati only publishes service pages after checking an authoritative source."
+          />
         ) : (
-          <>
-            {categoryIndex.title && (
-              <Heading level={3}>{categoryIndex.title}</Heading>
-            )}
-            {categoryIndex.description && (
-              <Text className="text-gray-600 mb-4">
-                {categoryIndex.description}
-              </Text>
-            )}
-            {categoryIndex.layout === 'grid' ? (
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {subcategories.map(subcategory => (
-                  <Link
-                    key={subcategory.slug}
-                    to={`/services/${category}/${subcategory.slug}`}
-                  >
-                    <Card
-                      hoverable
-                      className="h-full border-t-4 border-primary-500"
-                    >
-                      <CardContent>
-                        <h4 className="text-lg font-medium text-gray-900">
-                          {subcategory.name}
-                        </h4>
-                        {subcategory.description && (
-                          <p className="mt-2 text-sm text-gray-600">
-                            {subcategory.description}
-                          </p>
-                        )}
-                        <span className="inline-block px-2 py-1 mt-2 text-xs font-medium rounded-sm bg-gray-100 text-gray-800">
-                          {categoryData.category || category}
-                        </span>
-                      </CardContent>
-                    </Card>
-                  </Link>
-                ))}
-              </div>
-            ) : (
-              <div className="space-y-4">
-                {subcategories.map(subcategory => (
-                  <Link
-                    key={subcategory.slug}
-                    to={`/services/${category}/${subcategory.slug}`}
-                  >
-                    <Card hoverable className="mb-4">
-                      <CardContent>
-                        <h4 className="text-lg font-medium text-gray-900">
-                          {subcategory.name}
-                        </h4>
-                        {subcategory.description && (
-                          <p className="mt-2 text-sm text-gray-600">
-                            {subcategory.description}
-                          </p>
-                        )}
-                        <span className="inline-block px-2 py-1 mt-2 text-xs font-medium rounded-sm bg-gray-100 text-gray-800">
-                          {categoryData.category || category}
-                        </span>
-                      </CardContent>
-                    </Card>
-                  </Link>
-                ))}
-              </div>
-            )}
-          </>
+          <div className={categoryIndex.layout === 'grid'
+            ? 'grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3'
+            : 'space-y-4'}>
+            {subcategories.map(subcategory => (
+              <Link
+                key={subcategory.slug}
+                to={`/services/${category}/${subcategory.slug}`}
+              >
+                <Card hoverable className="mb-4 h-full">
+                  <CardContent>
+                    <h4 className="text-lg font-medium text-gray-900">
+                      {subcategory.name}
+                    </h4>
+                    {subcategory.description && (
+                      <p className="mt-2 text-sm text-gray-600">
+                        {subcategory.description}
+                      </p>
+                    )}
+                  </CardContent>
+                </Card>
+              </Link>
+            ))}
+          </div>
         )}
       </Section>
     </>

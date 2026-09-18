@@ -15,36 +15,39 @@ export const mainNavigation: NavigationItem[] = [
       href: `/services/${category.slug}`,
     })),
   },
-  {
-    label: 'Government',
-    href: '/government',
-  },
+  { label: 'Government', href: '/government' },
+  { label: 'Barangays', href: '/barangays' },
+  { label: 'Transparency', href: '/transparency' },
+  { label: 'Hotlines', href: '/hotlines' },
 ];
 
 export const footerNavigation = {
   mainSections: [
     {
-      title: 'BetterMakati',
+      title: 'Explore',
       links: [
-        { label: 'About', href: '/about' },
         { label: 'Services', href: '/services' },
         { label: 'Government', href: '/government' },
+        { label: 'Barangays', href: '/barangays' },
+        { label: 'Transparency', href: '/transparency' },
+        { label: 'Hotlines', href: '/hotlines' },
       ],
     },
     {
-      title: 'Project',
+      title: 'BetterMakati',
       links: [
+        { label: 'About & Sources', href: '/about' },
         { label: 'GitHub', href: 'https://github.com/migi-macati/bettermakati' },
-        { label: 'BetterGov', href: 'https://bettergov.ph' },
-        { label: 'BetterLGU Directory', href: 'https://lgu.bettergov.ph' },
+        { label: 'Report a correction', href: 'https://github.com/migi-macati/bettermakati/issues' },
       ],
     },
     {
       title: 'Official sources',
       links: [
-        { label: 'Gov.ph', href: 'https://www.gov.ph' },
-        { label: 'Official Gazette', href: 'https://www.officialgazette.gov.ph' },
-        { label: 'Open Data Philippines', href: 'https://data.gov.ph' },
+        { label: 'Makati City Web Portal', href: 'https://www.makati.gov.ph/' },
+        { label: 'Gov.ph', href: 'https://www.gov.ph/' },
+        { label: 'PSA PSGC', href: 'https://psa.gov.ph/classification/psgc/barangays/1380300000' },
+        { label: 'BetterLGU Directory', href: 'https://lgu.bettergov.ph/' },
       ],
     },
   ],

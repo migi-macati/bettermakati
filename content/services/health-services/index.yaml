@@ -1,4 +1,10 @@
-title: 'Health'
-description: 'Verified Makati City health services will be added here.'
+title: 'Health & Emergency'
+description: 'Selected health and emergency information with authoritative source links.'
 layout: list
-pages: []
+pages:
+  - name: 'Makati Health Plus / Yellow Card'
+    slug: 'makati-health-plus'
+    description: 'Program overview and official application form.'
+  - name: 'Get emergency assistance'
+    slug: 'emergency-assistance'
+    description: 'How to reach emergency response and what information to prepare.'
