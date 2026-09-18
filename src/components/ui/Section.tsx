@@ -1,4 +1,5 @@
 import { cn } from '../../lib/utils';
+
 export default function Section({
   children,
   className,
@@ -9,8 +10,8 @@ export default function Section({
   id?: string;
 }) {
   return (
-    <section className={cn('py-12 bg-white', className)} id={id}>
-      <div className={cn('container mx-auto px-4', className)}>{children}</div>
+    <section className={cn('py-12 md:py-14', className)} id={id}>
+      <div className="container mx-auto px-5 md:px-6 lg:px-8">{children}</div>
     </section>
   );
 }
