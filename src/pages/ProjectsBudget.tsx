@@ -19,9 +19,11 @@ import {
   budgetByType,
   budgetSources,
   budgetSummary,
+  budgetTrend,
   capitalBudgetLines,
   cityPopulation,
   dedicatedFunds,
+  developmentFundProject,
   localRevenueBreakdown,
   revenueSources,
   selectedBudgetLines,
@@ -133,6 +135,24 @@ export default function ProjectsBudget() {
           <a href={budgetSources.actuals} target="_blank" rel="noreferrer" className="font-bold text-primary-700 underline underline-offset-2">
             2025 DBM / BLGF actuals <ArrowUpRight className="inline h-3.5 w-3.5" />
           </a>
+        </div>
+
+        <div className="mt-8 rounded-2xl border border-gray-200 bg-white p-5 md:p-6">
+          <div className="flex items-center justify-between gap-4">
+            <div>
+              <div className="text-sm font-bold text-gray-950">Annual budget trend</div>
+              <div className="text-xs text-gray-500 mt-1">Published city annual-budget totals</div>
+            </div>
+            <div className="text-sm font-extrabold text-primary-800">+6.7%</div>
+          </div>
+          <div className="grid grid-cols-2 gap-4 mt-5">
+            {budgetTrend.map(item => (
+              <a key={item.year} href={item.href} target="_blank" rel="noreferrer" className="rounded-xl bg-gray-50 p-4 hover:bg-primary-50 transition">
+                <div className="text-xs font-bold text-gray-500">{item.year}</div>
+                <div className="text-xl md:text-2xl font-extrabold text-gray-950 mt-1">{peso(item.amountM)}</div>
+              </a>
+            ))}
+          </div>
         </div>
       </Section>
 
@@ -247,6 +267,66 @@ export default function ProjectsBudget() {
           ))}
         </div>
 
+        <div className="mt-8 rounded-2xl border border-primary-100 bg-white p-6">
+          <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-5">
+            <div>
+              <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">20% Development Fund project</div>
+              <h3 className="font-extrabold text-xl text-gray-950 mt-2">{developmentFundProject.name}</h3>
+              <p className="text-sm text-gray-600 mt-1">{developmentFundProject.location}</p>
+            </div>
+            <div className="lg:text-right">
+              <div className="text-2xl font-extrabold text-primary-800">{developmentFundProject.latestCompletion}%</div>
+              <div className="text-xs text-gray-500">Q4 reported completion</div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mt-6">
+            <div className="rounded-xl bg-gray-50 p-4">
+              <div className="text-xs text-gray-500">Q4 reported total cost</div>
+              <div className="font-extrabold text-gray-950 mt-1">{peso(developmentFundProject.latestCostM)}</div>
+            </div>
+            <div className="rounded-xl bg-gray-50 p-4">
+              <div className="text-xs text-gray-500">Cost incurred to date</div>
+              <div className="font-extrabold text-gray-950 mt-1">{peso(developmentFundProject.latestCostIncurredM)}</div>
+            </div>
+            <div className="rounded-xl bg-gray-50 p-4">
+              <div className="text-xs text-gray-500">Started</div>
+              <div className="font-bold text-gray-950 mt-1">{developmentFundProject.start}</div>
+            </div>
+            <div className="rounded-xl bg-gray-50 p-4">
+              <div className="text-xs text-gray-500">Target completion</div>
+              <div className="font-bold text-gray-950 mt-1">{developmentFundProject.targetCompletion}</div>
+            </div>
+          </div>
+
+          <div className="mt-6 overflow-x-auto rounded-xl border border-gray-200">
+            <table className="w-full min-w-[680px] text-left">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-4 py-3 font-bold">Report</th>
+                  <th className="px-4 py-3 font-bold text-right">Reported total cost</th>
+                  <th className="px-4 py-3 font-bold text-right">Completion</th>
+                  <th className="px-4 py-3 font-bold text-right">Cost incurred</th>
+                </tr>
+              </thead>
+              <tbody>
+                {developmentFundProject.reports.map(report => (
+                  <tr key={report.quarter} className="border-t">
+                    <td className="px-4 py-3">
+                      <a href={report.href} target="_blank" rel="noreferrer" className="font-bold text-primary-700 underline underline-offset-2">
+                        {report.quarter} <ArrowUpRight className="inline h-3.5 w-3.5" />
+                      </a>
+                    </td>
+                    <td className="px-4 py-3 text-right font-semibold">{peso(report.reportedCostM)}</td>
+                    <td className="px-4 py-3 text-right">{report.completion.toFixed(2)}%</td>
+                    <td className="px-4 py-3 text-right">{peso(report.costIncurredM)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
         <div className="mt-8 rounded-2xl border border-gray-200 bg-white p-6">
           <div className="flex items-center gap-2">
             <Building2 className="h-5 w-5 text-primary-700" />
@@ -268,7 +348,7 @@ export default function ProjectsBudget() {
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
           <div>
             <Heading level={2}>Budget line items</Heading>
-            <p className="text-gray-600">Selected lines extracted from the city’s 2025 annual budget summary.</p>
+            <p className="text-gray-600">Citywide line items extracted from the 2025 annual-budget summary.</p>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-2">
@@ -321,7 +401,7 @@ export default function ProjectsBudget() {
           rel="noreferrer"
           className="mt-5 inline-flex items-center gap-1 text-sm font-bold text-primary-700 underline underline-offset-2"
         >
-          Open the full 82-page annual budget <ArrowUpRight className="h-3.5 w-3.5" />
+          Open the original 82-page annual budget <ArrowUpRight className="h-3.5 w-3.5" />
         </a>
       </Section>
 
