@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run generate:site && npm run check:content && tsc -b && vite build",
+    "build": "npm run generate:site && npm run check:content && tsc -b && vite build && node scripts/postbuild-routes.mjs",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
