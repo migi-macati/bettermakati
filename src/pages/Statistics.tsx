@@ -52,6 +52,15 @@ export default function Statistics() {
       <SEO
         title="Makati Statistics"
         description="Current basic Makati City statistics from the Philippine Statistics Authority."
+        jsonLd={{
+          '@context': 'https://schema.org',
+          '@type': 'Dataset',
+          name: 'BetterMakati city statistics',
+          description:
+            'Population and economic indicators for Makati City with source links and comparable definitions.',
+          spatialCoverage: 'Makati City, Philippines',
+          temporalCoverage: '2010/2024',
+        }}
       />
       <Section className="bg-[#fffdf8]">
         <div className="section-eyebrow">City Information</div>
