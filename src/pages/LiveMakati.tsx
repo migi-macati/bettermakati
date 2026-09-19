@@ -202,7 +202,7 @@ export default function LiveMakati() {
                 dateStyle: 'medium',
                 timeStyle: 'short',
                 timeZone: 'Asia/Manila',
-              }).format(new Date(weather.observedAt))}
+              }).format(new Date(weather.observedAt + (/[zZ]|[+-]\d\d:\d\d$/.test(weather.observedAt) ? '' : '+08:00')))}
               .
             </span>
           )}
