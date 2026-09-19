@@ -29,6 +29,8 @@ const staticMeta = {
   '/open-government': ['BetterMakati Open Government Doctrine', 'The five-radical open-government doctrine, enabling foundations and living OECD-aligned self-audit.'],
   '/integrity': ['Integrity & Public Interest', 'Public-service ethics, procurement integrity, beneficial ownership, audit evidence and integrity coverage gaps for Makati civic research.'],
   '/status': ['BetterMakati Status', 'Public self-accountability for BetterMakati: civic coverage, source monitoring, community input and performance gaps.'],
+  '/city-monitor': ['Makati City Monitor', 'Daily-monitored official government activity across council, legislation, executive speeches, procurement, projects, publications and consultations.'],
+  '/briefs': ['BetterMakati Civic Briefs', 'Daily, weekly and monthly civic digests from City Monitor, plus RSS and newsletter delivery infrastructure.'],
   '/barangays': ['Makati Barangays', 'Profiles and population data for the 23 barangays of Makati City.'],
   '/elections': ['Makati Elections & Voting', 'Election results, voter information and COMELEC sources for Makati.'],
   '/estates': ['Makati Estates & Associations', 'Estate associations and district resources across Makati City.'],
