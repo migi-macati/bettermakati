@@ -4,6 +4,8 @@ import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
 import { Text } from '../components/ui/Text';
 import SEO from '../components/SEO';
+import LastReviewed from '../components/ui/LastReviewed';
+import SharePage from '../components/ui/SharePage';
 import {
   cityExecutiveOfficials,
   congressionalOfficials,
@@ -72,7 +74,11 @@ export default function Government() {
 
       <Section className="bg-[#fffdf8]">
         <div className="section-eyebrow">City government</div>
-        <Heading>Makati City Government</Heading>
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+          <Heading>Makati City Government</Heading>
+          <SharePage title="Makati City Government | BetterMakati" />
+        </div>
+        <LastReviewed note="Current elected-official profiles are tied to the 2025 election records cited on each profile." />
         <Text className="mt-3 max-w-3xl text-gray-700">
           Current elected-official profiles are linked to the election records
           used to identify the officeholder. Party labels, where shown, refer to
