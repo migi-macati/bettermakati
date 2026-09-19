@@ -523,6 +523,15 @@ const radicalCivicItems: SearchItem[] = [
     featured: true,
   },
   {
+    title: 'BetterMakati Status',
+    group: 'Record',
+    category: 'Open Government',
+    description: 'Public self-accountability: coverage, source monitoring, community input and unmeasured performance gaps.',
+    href: '/status',
+    keywords: 'bettermakati status performance self audit metrics source watch coverage gaps evaluation',
+    featured: true,
+  },
+  {
     title: 'Integrity & Public Interest',
     group: 'Record',
     category: 'Integrity',
