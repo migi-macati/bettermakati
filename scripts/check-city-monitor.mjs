@@ -114,6 +114,16 @@ const run = {
     .map(({ id, label, url, stream }) => ({ id, label, url, stream })),
 };
 
+const actionable =
+  run.changed.length > 0 ||
+  run.failed.length > 0 ||
+  run.newBaselines.length > 0;
+
+if (!actionable) {
+  console.log('No actionable City Monitor changes. Repository files remain unchanged.');
+  process.exit(0);
+}
+
 history.runs = [
   run,
   ...(Array.isArray(history.runs) ? history.runs : []),
@@ -127,9 +137,6 @@ await writeFile(
   'data/city-monitor-source-history.json',
   JSON.stringify(history, null, 2) + '\n'
 );
-
-const actionable =
-  run.changed.length > 0 || run.failed.length > 0;
 
 const report = [
   '# BetterMakati City Monitor daily source check',
