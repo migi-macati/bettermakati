@@ -107,16 +107,12 @@ export default function CityMonitor() {
       />
 
       <Section className="bg-[#fffdf8]">
-        <div className="section-eyebrow">Official activity, not media coverage</div>
+        <div className="section-eyebrow">Official activity</div>
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
             <Heading>City Monitor</Heading>
             <p className="mt-2 max-w-4xl text-gray-700 leading-relaxed">
-              City Monitor tracks what Makati government sources publish and
-              turns verified records into structured civic events. A detected
-              source change is only a review signal; it is never automatically
-              treated as proof that a measure advanced, a contract was awarded,
-              or a speech occurred.
+              Council, legislation, speeches, procurement, projects, publications, consultations and notices from monitored official sources.
             </p>
           </div>
           <SharePage title="Makati City Monitor | BetterMakati" />
@@ -124,7 +120,7 @@ export default function CityMonitor() {
 
         <LastReviewed
           date={cityMonitorReviewed}
-          note="Makati in the News remains the separate media-discovery layer. City Monitor is for primary-source government activity."
+          note="Source changes are reviewed before a record is added."
         />
 
         <div className="mt-6 flex flex-wrap gap-3">
@@ -134,27 +130,18 @@ export default function CityMonitor() {
           <Link to="/news" className="brand-btn-secondary">
             Makati in the News
           </Link>
-          <a
-            href="/city-monitor.rss.xml"
-            className="brand-btn-secondary"
-            target="_blank"
-            rel="noreferrer"
-          >
-            RSS source-change feed <ExternalLink className="h-4 w-4" />
-          </a>
         </div>
       </Section>
 
       <Section className="bg-[#f5f8f2]">
         <div className="section-eyebrow">Daily source watch</div>
-        <Heading level={2}>What official channels changed?</Heading>
+        <Heading level={2}>Source changes</Heading>
 
         {historyFailed ? (
           <div className="mt-6 rounded-2xl border border-secondary-200 bg-secondary-50 p-5 text-sm text-gray-700">
             <AlertCircle className="h-5 w-5 text-secondary-800" />
             <p className="mt-2">
-              The published City Monitor source history could not be read from
-              this deployment. Use the official source directory below.
+              Source history is unavailable. Use the official source directory below.
             </p>
           </div>
         ) : latestRun ? (
@@ -307,10 +294,7 @@ export default function CityMonitor() {
         <div className="mt-6 rounded-2xl border border-secondary-200 bg-secondary-50 p-5">
           <h3 className="font-extrabold text-gray-950">Known source gaps</h3>
           <p className="mt-2 text-sm leading-relaxed text-gray-700">
-            BetterMakati has not yet located a complete current machine-readable
-            City Council session calendar, full measure-stage history, or a
-            normalized city-publications feed. These gaps are published rather
-            than filled with recurrence assumptions or inferred legislative stages.
+            No complete current City Council calendar, measure-stage history or normalized city-publications feed is indexed yet.
           </p>
         </div>
 
