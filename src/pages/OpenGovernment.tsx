@@ -1,3 +1,4 @@
+import type { ComponentType } from 'react';
 import {
   ArrowRight,
   CheckCircle2,
@@ -38,7 +39,7 @@ const principleIcons = {
   integrity: ShieldCheck,
 };
 
-const foundationIcons: Record<string, React.ComponentType<{ className?: string }>> = {
+const foundationIcons: Record<string, ComponentType<{ className?: string }>> = {
   inclusion: Users,
   privacy: LockKeyhole,
   accessibility: Globe2,
@@ -183,7 +184,11 @@ export default function OpenGovernment() {
           {doctrinePrinciples.map(item => {
             const Icon = principleIcons[item.id as keyof typeof principleIcons];
             return (
-              <article key={item.id} className="rounded-2xl border border-gray-200 bg-[#fffdf8] p-6">
+              <article
+                key={item.id}
+                id={item.id}
+                className="scroll-mt-28 rounded-2xl border border-gray-200 bg-[#fffdf8] p-6"
+              >
                 <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
                   <div className="flex items-start gap-3">
                     <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-primary-50 text-primary-700">
