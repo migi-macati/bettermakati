@@ -20,6 +20,7 @@ import {
   BookOpen,
   HandHeart,
   Users,
+  Vote,
 } from 'lucide-react';
 import Hero from '../components/sections/Hero';
 import CommunityToolsGrid from '../components/community/CommunityToolsGrid';
@@ -136,6 +137,12 @@ const cityPaths = [
     description: 'Barangay directory and population.',
     href: '/barangays',
     icon: MapPin,
+  },
+  {
+    label: 'Elections & voting',
+    description: 'Voter information, election dates and COMELEC sources.',
+    href: '/elections',
+    icon: Vote,
   },
   {
     label: 'Projects & Budget',
