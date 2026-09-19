@@ -69,6 +69,7 @@ export default function Privacy() {
             followed. Do not include private or sensitive personal information.
             An open or closed project issue reflects BetterMakati&apos;s workflow,
             not an official City Government case status.
+          </p>
 
           <h2>Changes</h2>
           <p>
