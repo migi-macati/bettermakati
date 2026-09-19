@@ -158,16 +158,12 @@ export default function OfficialProfile() {
       </Section>
 
       <Section className="bg-white">
-        <div className="section-eyebrow">Public accountability</div>
-        <Heading level={2}>Follow records, not ratings</Heading>
+        <div className="section-eyebrow">Public records</div>
+        <Heading level={2}>Related records</Heading>
         <div className="mt-5 rounded-2xl border border-primary-100 bg-[#fffdf8] p-6">
           <Scale className="h-5 w-5 text-primary-700" />
           <p className="mt-3 max-w-4xl text-sm leading-relaxed text-gray-700">
-            BetterMakati does not grade elected officials or attribute a project
-            outcome to an individual without a source that establishes that
-            responsibility. The accountability layer instead exposes public
-            records, responsible offices, election records and legislative
-            sources so citizens can make their own assessment.
+            Open election, legislative and accountability records connected to this office. BetterMakati does not assign ratings.
           </p>
           <div className="mt-5 flex flex-wrap gap-3">
             <Link to="/accountability" className="brand-btn-primary">

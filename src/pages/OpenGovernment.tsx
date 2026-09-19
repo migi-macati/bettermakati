@@ -108,11 +108,7 @@ export default function OpenGovernment() {
           <div>
             <Heading>BetterMakati Open Government Doctrine</Heading>
             <p className="mt-2 max-w-4xl text-gray-700 leading-relaxed">
-              BetterMakati uses international open-government principles as a
-              discipline for product design while remaining an independent civic
-              project. The doctrine is a commitment about how BetterMakati
-              should work; it is not a claim that the City Government of Makati
-              has formally adopted an open-government program.
+              A living self-audit for BetterMakati. It applies to this project, not the City Government of Makati.
             </p>
           </div>
           <SharePage title="BetterMakati Open Government Doctrine" />
@@ -120,7 +116,7 @@ export default function OpenGovernment() {
 
         <LastReviewed
           date={doctrineReviewed}
-          note="This is a living self-audit. Status describes BetterMakati product coverage or institutional dependency, not a grade for any politician or public office."
+          note="Status refers to BetterMakati coverage or institutional dependency."
         />
 
         <div className="mt-5 flex flex-wrap gap-3">
@@ -139,13 +135,7 @@ export default function OpenGovernment() {
 
       <Section className="bg-primary-950 text-white">
         <div className="section-eyebrow !text-secondary-200">The doctrine</div>
-        <Heading level={2} className="!text-white">Five radicals</Heading>
-        <p className="mt-2 max-w-4xl text-primary-100">
-          OECD places integrity beside transparency, accountability and
-          stakeholder participation. BetterMakati retains presence as a fifth
-          product principle: openness has little practical value if useful civic
-          information is absent when and where people need it.
-        </p>
+        <Heading level={2} className="!text-white">Five operating principles</Heading>
 
         <div className="mt-7 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-4">
           {doctrinePrinciples.map(item => {
@@ -172,13 +162,7 @@ export default function OpenGovernment() {
 
       <Section className="bg-white">
         <div className="section-eyebrow">Living self-audit</div>
-        <Heading level={2}>Have we actually implemented the doctrine?</Heading>
-        <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-700">
-          Not completely. BetterMakati has a strong transparency foundation,
-          partial accountability/participation/presence systems, and an early
-          integrity layer. Each principle below publishes both evidence and
-          unfinished work.
-        </p>
+        <Heading level={2}>Implementation status</Heading>
 
         <div className="mt-7 space-y-5">
           {doctrinePrinciples.map(item => {
@@ -236,12 +220,7 @@ export default function OpenGovernment() {
 
       <Section className="bg-[#f5f8f2]">
         <div className="section-eyebrow">Cross-cutting requirements</div>
-        <Heading level={2}>The five radicals are not enough by themselves</Heading>
-        <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-700">
-          Inclusion, privacy, accessibility, evidence, open data, civic space,
-          institutionalization and evaluation determine whether openness is
-          meaningful or merely performative.
-        </p>
+        <Heading level={2}>Foundations</Heading>
 
         <div className="mt-7 grid grid-cols-1 md:grid-cols-2 gap-4">
           {doctrineFoundations.map(item => {
@@ -274,9 +253,7 @@ export default function OpenGovernment() {
         <div className="section-eyebrow">International benchmark</div>
         <Heading level={2}>OECD 10-provision implementation audit</Heading>
         <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-700">
-          This table separates what an independent civic platform can build from
-          what requires formal action by government institutions. BetterMakati
-          cannot declare Makati an open government on the strength of a website.
+          Separates project capabilities from actions requiring government adoption.
         </p>
 
         <div className="mt-6 overflow-x-auto rounded-2xl border border-gray-200">
@@ -311,7 +288,7 @@ export default function OpenGovernment() {
 
       <Section className="bg-[#fffdf8]">
         <div className="section-eyebrow">Standards used</div>
-        <Heading level={2}>Why these principles</Heading>
+        <Heading level={2}>Reference standards</Heading>
         <div className="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-4">
           {doctrineSources.map(source => (
             <a

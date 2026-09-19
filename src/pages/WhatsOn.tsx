@@ -104,9 +104,7 @@ export default function WhatsOn() {
             ))}
           </div>
           <p className="mt-4 text-xs leading-relaxed text-gray-500">
-            These discovery links search the current web. BetterMakati does not
-            treat a search result as verified until the event&apos;s own source
-            confirms the date and venue.
+            Verify the date and venue with the organizer before going.
           </p>
         </div>
       </Section>

@@ -31,7 +31,7 @@ const recordGroups = [
   {
     title: 'Accountability Ledger',
     description:
-      'Longitudinal records that connect plans, responsible bodies, later evidence and published information gaps.',
+      'Plans, responsible bodies, later evidence and coverage gaps.',
     href: '/accountability',
     icon: SearchCheck,
     coverage: 'Growing structured index',
@@ -71,7 +71,7 @@ const recordGroups = [
   {
     title: 'Open government audit',
     description:
-      'BetterMakati’s five-radical doctrine, enabling foundations and OECD-aligned implementation audit.',
+      'Methodology, implementation status and OECD-aligned audit.',
     href: '/open-government',
     icon: Database,
     coverage: 'Living self-audit',
@@ -127,20 +127,18 @@ export default function PublicRecords() {
         description="A citizen-facing index of Makati public records, structured datasets, source documents and known coverage gaps."
       />
       <Section className="bg-[#fffdf8]">
-        <div className="section-eyebrow">Radical transparency</div>
+        <div className="section-eyebrow">Records & data</div>
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
             <Heading>Public Records</Heading>
             <p className="max-w-3xl text-gray-700">
-              Start with the question, see the structured answer where
-              BetterMakati has one, then open the original public record that
-              supports it.
+              Browse structured data and open the original public record.
             </p>
           </div>
           <SharePage title="Makati Public Records | BetterMakati" />
         </div>
         <LastReviewed
-          note="BetterMakati publishes its coverage gaps instead of implying that an incomplete index is complete."
+          note="Coverage gaps are shown where the index is incomplete."
         />
 
         <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -175,9 +173,7 @@ export default function PublicRecords() {
         <div className="section-eyebrow">What changed</div>
         <Heading level={2}>Public source-watch history</Heading>
         <p className="max-w-3xl text-sm leading-relaxed text-gray-600">
-          BetterMakati compares selected high-value public sources on a weekly
-          schedule. A changed hash means the source changed; it does not by
-          itself mean a published figure is wrong or should be replaced.
+          Selected public sources are checked weekly. Changes are queued for review.
         </p>
 
         <a
@@ -241,8 +237,7 @@ export default function PublicRecords() {
         <div className="section-eyebrow">Source of truth</div>
         <Heading level={2}>Primary public sources</Heading>
         <p className="max-w-3xl text-sm leading-relaxed text-gray-600">
-          BetterMakati is an interpretation and navigation layer. The issuing
-          public body remains the controlling source for an official record.
+          For official use, open the record from the issuing public body.
         </p>
         <div className="mt-6 flex flex-wrap gap-3">
           {primarySources.map(([label, href]) => (
@@ -265,9 +260,7 @@ export default function PublicRecords() {
             Source changed? Missing record?
           </h2>
           <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600">
-            BetterMakati watches selected high-value sources for changes and
-            accepts corrections and public records from residents, researchers
-            and public institutions.
+            Share a missing source or report an error in the index.
           </p>
           <div className="mt-5 flex flex-wrap gap-3">
             <Link to="/get-involved?type=source#submission" className="brand-btn-primary">

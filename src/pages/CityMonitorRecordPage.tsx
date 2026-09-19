@@ -26,7 +26,7 @@ export default function CityMonitorRecordPage() {
         <Section className="bg-[#fffdf8]">
           <Heading>City Monitor record not found</Heading>
           <p className="mt-3 text-gray-600">
-            This record is not in the current validated City Monitor corpus.
+            No validated City Monitor record found.
           </p>
           <Link to="/city-monitor" className="brand-btn-primary mt-5">
             <ArrowLeft className="h-4 w-4" /> City Monitor
@@ -83,8 +83,8 @@ export default function CityMonitorRecordPage() {
 
       {(record.summaryBullets?.length || record.measures?.length) && (
         <Section className="bg-white">
-          <div className="section-eyebrow">BetterMakati factual summary</div>
-          <Heading level={2}>What the record establishes</Heading>
+          <div className="section-eyebrow">Summary</div>
+          <Heading level={2}>Key details</Heading>
           {record.summaryBullets && (
             <ul className="mt-5 space-y-2 text-sm text-gray-700">
               {record.summaryBullets.map(item => <li key={item}>• {item}</li>)}
@@ -110,8 +110,8 @@ export default function CityMonitorRecordPage() {
       )}
 
       <Section className="bg-[#f5f8f2]">
-        <div className="section-eyebrow">Documents & provenance</div>
-        <Heading level={2}>Original record first</Heading>
+        <div className="section-eyebrow">Sources</div>
+        <Heading level={2}>Documents</Heading>
         <div className="mt-5 space-y-3">
           <a
             href={record.sourceUrl}
@@ -146,7 +146,7 @@ export default function CityMonitorRecordPage() {
       {(record.transcript || record.type === 'executive-speech') && (
         <Section className="bg-white">
           <div className="section-eyebrow">Transcript</div>
-          <Heading level={2}>Speech provenance</Heading>
+          <Heading level={2}>Transcript</Heading>
           {record.transcript ? (
             <div className="mt-5 rounded-2xl border border-primary-100 bg-[#fffdf8] p-6">
               <Megaphone className="h-5 w-5 text-primary-700" />
@@ -166,9 +166,7 @@ export default function CityMonitorRecordPage() {
             </div>
           ) : (
             <div className="mt-5 rounded-2xl border border-secondary-200 bg-secondary-50 p-5 text-sm text-gray-700">
-              No transcript has been attached to this record. BetterMakati will
-              not reconstruct speech wording without an official text or stable
-              source recording.
+              No transcript is attached. An official text or stable recording is required.
             </div>
           )}
         </Section>
@@ -176,7 +174,7 @@ export default function CityMonitorRecordPage() {
 
       {record.commitments?.length ? (
         <Section className="bg-[#fffdf8]">
-          <div className="section-eyebrow">Accountability extraction</div>
+          <div className="section-eyebrow">Commitments</div>
           <Heading level={2}>Forward-looking commitments</Heading>
           <div className="mt-5 space-y-3">
             {record.commitments.map(commitment => (

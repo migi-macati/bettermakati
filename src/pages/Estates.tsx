@@ -56,9 +56,7 @@ export default function Estates() {
           <div>
             <Heading>Estates & Associations</Heading>
             <p className="max-w-3xl text-gray-600">
-              Makati&apos;s major estates and business districts maintain their
-              own public-facing information alongside city and barangay
-              government. BetterMakati keeps those layers together.
+              Makati&apos;s major managed districts and associations, with official links and maps.
             </p>
           </div>
           <SharePage title="Makati Estates & Associations | BetterMakati" />
@@ -113,15 +111,11 @@ export default function Estates() {
       </Section>
 
       <Section className="bg-[#f5f8f2]">
-        <div className="section-eyebrow">How the layers fit</div>
-        <Heading level={2}>City, barangay and estate information</Heading>
+        <div className="section-eyebrow">Which channel?</div>
+        <Heading level={2}>Estate, barangay or city?</Heading>
         <div className="mt-5 max-w-4xl rounded-2xl border border-primary-100 bg-white p-6 text-sm leading-relaxed text-gray-700">
           <p>
-            An estate association is not a substitute for the City Government
-            of Makati or the barangay. Depending on the concern, a resident,
-            worker or visitor may need an estate channel for managed-area
-            information and a city or barangay channel for a public service,
-            permit, law-enforcement or government matter.
+            Use estate channels for managed-area concerns; use city or barangay channels for public services and government matters.
           </p>
         </div>
       </Section>

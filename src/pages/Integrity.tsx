@@ -63,22 +63,22 @@ const gaps = [
   {
     title: 'Supplier and contractor graph',
     body:
-      'BetterMakati does not yet normalize Makati awards, suppliers, contracts and amendments into a citywide reusable entity graph.',
+      'Awards, suppliers, contracts and amendments are not yet normalized into a citywide entity graph.',
   },
   {
     title: 'Beneficial ownership linkage',
     body:
-      'BetterMakati does not yet connect public beneficial-ownership information to specific Makati procurement records.',
+      'Public beneficial-ownership information is not yet linked to specific Makati procurement records.',
   },
   {
     title: 'Conflict and recusal records',
     body:
-      'Conflict-of-interest, recusal or disclosure records are not yet systematically indexed. Absence from BetterMakati must never be treated as evidence that no such record exists.',
+      'Conflict-of-interest, recusal and disclosure records are not yet systematically indexed.',
   },
   {
     title: 'Audit resolution trail',
     body:
-      'COA findings are discoverable, but BetterMakati has not yet completed a finding → management response → corrective action → later audit trail.',
+      'COA findings are not yet linked through management response, corrective action and later audit status.',
   },
 ];
 
@@ -87,42 +87,29 @@ export default function Integrity() {
     <>
       <SEO
         title="Integrity & Public Interest"
-        description="BetterMakati’s factual integrity layer: public-service ethics, procurement transparency, beneficial ownership, audit records and integrity coverage gaps."
+        description="Public-service ethics, procurement, beneficial ownership, audit records and coverage gaps."
       />
 
       <Section className="bg-[#fffdf8]">
-        <div className="section-eyebrow">Radical integrity</div>
+        <div className="section-eyebrow">Integrity records</div>
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
             <Heading>Integrity & Public Interest</Heading>
             <p className="mt-2 max-w-4xl text-gray-700 leading-relaxed">
-              Integrity means exposing the rules, money, decisions and public
-              relationships that can be lawfully documented, while refusing to
-              convert correlation, association or missing information into an
-              accusation.
+              Public-service ethics, procurement, ownership and audit records.
             </p>
           </div>
           <SharePage title="Integrity & Public Interest | BetterMakati" />
         </div>
         <LastReviewed
           date="19 September 2026"
-          note="This page is an integrity evidence layer, not a corruption list. BetterMakati does not label a person or entity unethical without a reliable record establishing the relevant fact."
+          note="Evidence only; no person or entity is labeled without a supporting record."
         />
-
-        <div className="mt-7 rounded-2xl border border-primary-200 bg-primary-50 p-6">
-          <ShieldCheck className="h-6 w-6 text-primary-800" />
-          <h2 className="mt-3 text-xl font-extrabold text-gray-950">The rule</h2>
-          <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-700">
-            Show the applicable standard. Show the public record. Show the
-            relationship or transaction only when the evidence supports it.
-            Show uncertainty and gaps. Let the citizen make the judgment.
-          </p>
-        </div>
       </Section>
 
       <Section className="bg-white">
         <div className="section-eyebrow">Public standards</div>
-        <Heading level={2}>What integrity can be anchored to</Heading>
+        <Heading level={2}>Rules & records</Heading>
         <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
           {integritySources.map(item => {
             const Icon = item.icon;
@@ -150,8 +137,8 @@ export default function Integrity() {
       </Section>
 
       <Section className="bg-[#f5f8f2]">
-        <div className="section-eyebrow">Integrity lens</div>
-        <Heading level={2}>Where BetterMakati can test the public record</Heading>
+        <div className="section-eyebrow">Related records</div>
+        <Heading level={2}>Follow the evidence</Heading>
 
         <div className="mt-6 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
           {[
@@ -197,10 +184,9 @@ export default function Integrity() {
 
       <Section className="bg-white">
         <div className="section-eyebrow">Published gaps</div>
-        <Heading level={2}>What the integrity layer still cannot establish</Heading>
+        <Heading level={2}>Coverage gaps</Heading>
         <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-700">
-          These are BetterMakati coverage gaps. They are not findings of
-          wrongdoing and must never be presented as such.
+          Missing links in the current index; not findings of wrongdoing.
         </p>
 
         <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">

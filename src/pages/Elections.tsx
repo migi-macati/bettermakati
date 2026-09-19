@@ -100,10 +100,7 @@ export default function Elections() {
           { label: 'Candidates', href: '#candidates' },
         ]} />
         <p className="mt-5 max-w-3xl text-gray-700 leading-relaxed">
-          A neutral guide to voting and election results in Makati. Dates,
-          candidate records and precinct information should be checked against
-          COMELEC before acting. BetterMakati does not endorse candidates or
-          parties.
+          Voting information and election results for Makati. Check COMELEC for current dates, candidate records and precinct information. No endorsements.
         </p>
 
         <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">

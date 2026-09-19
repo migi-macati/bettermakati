@@ -141,9 +141,9 @@ export default function ProjectStatus() {
       icon: Database,
     },
     {
-      label: 'Doctrine gaps',
+      label: 'Methodology gaps',
       value: knownDoctrineGaps.toLocaleString('en-PH'),
-      detail: 'Open items across the five radicals and enabling foundations',
+      detail: 'Open items in the BetterMakati methodology audit',
       icon: Gauge,
     },
   ];
@@ -161,25 +161,23 @@ export default function ProjectStatus() {
     <>
       <SEO
         title="BetterMakati Status"
-        description="BetterMakati’s public self-accountability page: current civic coverage, source monitoring, community input and measures not yet collected."
+        description="Current BetterMakati coverage, source monitoring, community input and measurement gaps."
       />
 
       <Section className="bg-[#fffdf8]">
-        <div className="section-eyebrow">Accountability applies to us</div>
+        <div className="section-eyebrow">Site status</div>
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
             <Heading>BetterMakati Status</Heading>
             <p className="mt-2 max-w-4xl text-gray-700 leading-relaxed">
-              BetterMakati should not demand evidence, transparency and
-              follow-through from public institutions without exposing its own
-              coverage, gaps and measurement limits.
+              Current coverage, freshness, community input and measurement gaps.
             </p>
           </div>
           <SharePage title="BetterMakati Status" />
         </div>
         <LastReviewed
           date={doctrineReviewed}
-          note="Counts describe the current BetterMakati code/data model, not the completeness of Makati government records."
+          note="Counts reflect the current BetterMakati data model."
         />
 
         <div className="mt-7 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
@@ -198,8 +196,8 @@ export default function ProjectStatus() {
       </Section>
 
       <Section className="bg-white">
-        <div className="section-eyebrow">Doctrine implementation</div>
-        <Heading level={2}>Five-radical self-audit</Heading>
+        <div className="section-eyebrow">Methodology</div>
+        <Heading level={2}>Open-government audit</Heading>
         <div className="mt-6 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-4">
           {doctrinePrinciples.map(item => (
             <Link
@@ -221,8 +219,8 @@ export default function ProjectStatus() {
       </Section>
 
       <Section className="bg-[#f5f8f2]">
-        <div className="section-eyebrow">Freshness & participation</div>
-        <Heading level={2}>Live accountability signals</Heading>
+        <div className="section-eyebrow">Freshness</div>
+        <Heading level={2}>Live signals</Heading>
         <div className="mt-6 grid grid-cols-1 xl:grid-cols-3 gap-4">
           <div className="rounded-2xl border border-primary-100 bg-white p-6">
             <RefreshCw className="h-5 w-5 text-primary-700" />
@@ -326,11 +324,7 @@ export default function ProjectStatus() {
 
       <Section className="bg-white">
         <div className="section-eyebrow">Measurement gaps</div>
-        <Heading level={2}>What BetterMakati does not measure yet</Heading>
-        <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-700">
-          Not measuring something is different from performing well on it. These
-          are deliberately published as missing performance evidence.
-        </p>
+        <Heading level={2}>Not measured yet</Heading>
 
         <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-3">
           {notMeasured.map(item => (
@@ -345,11 +339,9 @@ export default function ProjectStatus() {
       <Section className="bg-[#fffdf8]">
         <div className="rounded-2xl border border-primary-100 bg-white p-6">
           <Database className="h-5 w-5 text-primary-700" />
-          <h2 className="mt-3 text-xl font-extrabold text-gray-950">Audit the audit</h2>
+          <h2 className="mt-3 text-xl font-extrabold text-gray-950">Audit & source code</h2>
           <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-600">
-            The doctrine audit is downloadable, the source code is public, and
-            corrections to BetterMakati can enter the same trackable workflow
-            used elsewhere on the site.
+            Methodology, source code and correction workflow.
           </p>
           <div className="mt-5 flex flex-wrap gap-3">
             <Link to="/open-government" className="brand-btn-primary">

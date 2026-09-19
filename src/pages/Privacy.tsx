@@ -19,9 +19,8 @@ export default function Privacy() {
           <p>
             The hosting platform and serverless functions may process ordinary
             technical request information such as IP address, browser details,
-            requested URL, timestamps and error logs for security and operation.
-            BetterMakati does not use this notice to claim that hosting providers
-            retain nothing.
+            requested URL, timestamps and error logs. Hosting providers may retain
+            technical logs under their own policies.
           </p>
 
           <h2>Search and third-party services</h2>
@@ -71,19 +70,10 @@ export default function Privacy() {
             not an official City Government case status.
           </p>
 
-          <h2>Newsletter subscriptions</h2>
-          <p>
-            BetterMakati does not store newsletter email addresses in public
-            GitHub issues. Email signup is enabled only when a private delivery
-            provider or webhook is configured. A subscription request sends the
-            email address, selected frequency and consent timestamp to that
-            private provider. RSS access does not require an email address.
-          </p>
-
           <h2>Changes</h2>
           <p>
             This notice should be updated before BetterMakati introduces a new
-            analytics, newsletter, account or data-collection feature that
+            analytics, account, social integration or data-collection feature that
             materially changes how visitor information is handled.
           </p>
         </div>

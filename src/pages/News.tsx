@@ -71,21 +71,17 @@ export default function News() {
     <>
       <SEO
         title="Makati in the News"
-        description="Official Makati City news, events and automatically refreshed Makati news links."
+        description="Current Makati news links and official city information sources."
       />
       <Section className="bg-[#fffdf8]">
         <div className="section-eyebrow">City Information</div>
         <Heading>Makati in the News</Heading>
-        <div className="mt-5 rounded-2xl border border-secondary-200 bg-secondary-50 p-5 text-sm leading-relaxed text-gray-700">
-          This page is for media coverage and official press/news discovery.
-          For council sessions, legislation, speeches, procurement, projects,
-          publications and consultations as structured government activity, use
-          <Link to="/city-monitor" className="ml-1 font-bold text-primary-700 underline underline-offset-2">
-            City Monitor
-          </Link>.
+
+        <div className="mt-5 flex flex-wrap gap-3">
+          <Link to="/city-monitor" className="brand-btn-secondary">City Monitor</Link>
         </div>
 
-        <div className="mt-8 rounded-2xl border border-primary-100 bg-primary-50 p-5 md:p-6">
+        <div className="mt-6 rounded-2xl border border-primary-100 bg-primary-50 p-5 md:p-6">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <div className="flex items-start gap-3">
               <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-white text-primary-700">
@@ -96,10 +92,7 @@ export default function News() {
                   Makati news, checked automatically
                 </h2>
                 <p className="mt-1 max-w-3xl text-sm leading-relaxed text-gray-700">
-                  Headlines are pulled from Google News with a Makati filter and
-                  linked to the original publisher. This is a discovery feed;
-                  verify important claims with the publisher or the official
-                  city source below.
+                  Current Makati headlines linked to the original publisher.
                 </p>
               </div>
             </div>

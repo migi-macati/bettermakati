@@ -63,7 +63,7 @@ export default function Legislation() {
           </div>
           <SharePage title="Makati Legislation | BetterMakati" />
         </div>
-        <LastReviewed note="BetterMakati does not replace the official legislative record." />
+        <LastReviewed note="Open the original record for controlling text." />
         <div className="mt-5">
           <Link to="/city-monitor" className="brand-btn-primary">
             Track legislative lifecycle in City Monitor
@@ -79,9 +79,7 @@ export default function Legislation() {
             Search Makati legislation
           </label>
           <p className="mt-1 text-sm text-gray-600">
-            Searches the official Makati legislation pages through a
-            site-restricted web search while BetterMakati builds a structured
-            local-law index.
+            Searches Makati&apos;s official legislation archive.
           </p>
           <div className="mt-4 flex gap-2">
             <input
@@ -181,20 +179,16 @@ export default function Legislation() {
         </div>
 
         <div className="mt-6 rounded-2xl border border-secondary-200 bg-secondary-50 p-5 text-sm leading-relaxed text-gray-700">
-          BetterMakati keeps the original city record one click away. Search
-          results are an aid to discovery, not a substitute for the ordinance,
-          resolution or later amendment that controls the legal text.
+          For legal or transactional use, rely on the original ordinance or resolution and later amendments.
         </div>
       </Section>
 
       <Section className="bg-[#fffdf8]">
         <div className="rounded-2xl border border-primary-100 bg-white p-6">
-          <div className="section-eyebrow">Before a decision</div>
-          <Heading level={2}>Participation belongs beside legislation</Heading>
+          <div className="section-eyebrow">Public participation</div>
+          <Heading level={2}>Hearings & consultations</Heading>
           <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-700">
-            BetterMakati&apos;s participation hub publishes consultation
-            opportunities it can source and explicitly shows when a complete
-            current hearing or consultation calendar has not been located.
+            Check indexed public hearings, consultations and participation opportunities.
           </p>
           <Link to="/participate" className="brand-btn-primary mt-5">
             Open Participation Hub

@@ -18,7 +18,7 @@ BetterMakati organizes public information into citizen-facing tools and dashboar
 - visitor information, mobility, cinemas, parking, events, estates and community associations;
 - live weather, air-quality and advisory links;
 - **City Monitor** for council, legislation, executive speeches, procurement, projects, publications, consultations and official notices;
-- **Civic Briefs** for daily, weekly and monthly government-activity digests, with RSS and private-provider newsletter infrastructure; and
+- **Civic Briefs** for daily, weekly and monthly government-activity digests, with Facebook distribution planned; and
 - community tools, corrections and contribution channels.
 
 ## Civic operating principles
@@ -49,7 +49,7 @@ City Monitor uses a daily reviewable source-detection workflow. It hashes select
 
 Validated records use permanent `/city-monitor/:id` pages with source provenance. Speech records can distinguish official transcripts from BetterMakati automated or reviewed transcriptions. Forward-looking commitments can be linked into the Accountability Ledger.
 
-The civic distribution layer exposes `/city-monitor.rss.xml`. Email subscriptions require the private `BETTERMAKATI_NEWSLETTER_WEBHOOK` environment variable and are never stored in public GitHub issues.
+Civic Briefs remain on the site as the permanent update archive. A BetterMakati Facebook Page is planned as the public distribution channel.
 
 ## Development
 

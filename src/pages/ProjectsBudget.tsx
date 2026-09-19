@@ -155,14 +155,13 @@ export default function ProjectsBudget() {
         >
           <div>
             <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
-              Accountability layer
+              Project follow-through
             </div>
             <div className="mt-1 font-extrabold text-gray-950">
-              Follow plan → responsible body → later evidence
+              Plan → responsibility → evidence
             </div>
             <p className="mt-1 text-sm text-gray-600">
-              The Accountability Ledger separates source-backed follow-through
-              from interpretation and publishes what BetterMakati still cannot establish.
+              Open linked plans, responsible bodies, progress and later evidence.
             </p>
           </div>
           <span className="inline-flex shrink-0 items-center gap-1 text-sm font-bold text-primary-700">
@@ -175,14 +174,13 @@ export default function ProjectsBudget() {
         >
           <div>
             <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
-              Procurement lifecycle
+              Procurement
             </div>
             <div className="mt-1 font-extrabold text-gray-950">
               Follow posting → bidding → award → contract → implementation
             </div>
             <p className="mt-1 text-sm text-gray-600">
-              City Monitor separates source-change detection from verified
-              procurement events and links validated awards back to projects.
+              Track postings, bids, awards, contracts and implementation.
             </p>
           </div>
           <span className="inline-flex shrink-0 items-center gap-1 text-sm font-bold text-primary-700">
