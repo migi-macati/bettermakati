@@ -277,6 +277,9 @@ export default function CityMonitor() {
                   </div>
                 )}
                 <div className="mt-5 flex flex-wrap gap-3">
+                  <Link to={'/city-monitor/' + record.id} className="brand-btn-primary">
+                    Open record <ArrowRight className="h-4 w-4" />
+                  </Link>
                   <a
                     href={record.sourceUrl}
                     target="_blank"
@@ -300,6 +303,16 @@ export default function CityMonitor() {
       <Section className="bg-[#f5f8f2]">
         <div className="section-eyebrow">Lifecycle rules</div>
         <Heading level={2}>Track the process, not only the final PDF</Heading>
+
+        <div className="mt-6 rounded-2xl border border-secondary-200 bg-secondary-50 p-5">
+          <h3 className="font-extrabold text-gray-950">Known source gaps</h3>
+          <p className="mt-2 text-sm leading-relaxed text-gray-700">
+            BetterMakati has not yet located a complete current machine-readable
+            City Council session calendar, full measure-stage history, or a
+            normalized city-publications feed. These gaps are published rather
+            than filled with recurrence assumptions or inferred legislative stages.
+          </p>
+        </div>
 
         <div className="mt-6 grid grid-cols-1 xl:grid-cols-3 gap-4">
           <div className="rounded-2xl border border-primary-100 bg-white p-6">
