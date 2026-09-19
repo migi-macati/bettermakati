@@ -115,7 +115,6 @@ export default function Today() {
       <SEO
         title="Today in Makati"
         description="A personalized daily starting point for Makati: your barangay, live city conditions, news, events, participation and civic records."
-        noIndex
       />
 
       <Section className="bg-[#fffdf8]">
