@@ -21,14 +21,17 @@ BetterMakati organizes public information into citizen-facing tools and dashboar
 
 ## Civic operating principles
 
-BetterMakati is being built around four operating rules:
+BetterMakati uses a five-radical open-government doctrine:
 
-- **Radical transparency:** every factual claim should be traceable, and important source gaps should be visible.
-- **Radical accountability:** track plans, responsibility, later evidence and outcomes without political scoring.
-- **Radical participation:** make participation discoverable and, where BetterMakati controls the workflow, publicly trackable.
-- **Radical presence:** bring useful current and local information forward without requiring an account or precise GPS.
+- **Radical transparency — See the state:** every public fact should be discoverable, understandable, traceable and reusable; important source gaps stay visible.
+- **Radical accountability — Follow the state:** track plans, responsibility, resources, later evidence and outcomes without political scoring.
+- **Radical participation — Shape the state:** make participation discoverable and, where BetterMakati controls the workflow, publicly trackable with visible follow-through.
+- **Radical presence — Reach the state:** bring useful current and local information forward without requiring an account or precise GPS.
+- **Radical integrity — Trust the process:** expose public-interest rules, money, procurement, audit and documented relationships to factual scrutiny without insinuation or guilt by association.
 
-The main products supporting these principles are the **Public Records index**, **Accountability Ledger**, **Participation Hub**, and **Today in Makati / My Makati**.
+The doctrine is supported by **inclusion, privacy, accessibility, evidence, open data, civic space, institutionalization and evaluation**. The site publishes a living self-audit against the doctrine and the OECD Recommendation on Open Government, plus a BetterMakati Status page that exposes our own coverage and measurement gaps.
+
+The main products supporting these principles are the **Public Records index**, **Accountability Ledger**, **Participation Hub**, **Today in Makati / My Makati**, **Integrity & Public Interest**, **Open Government Doctrine**, and **BetterMakati Status**.
 
 ## Data and sourcing
 
