@@ -3,6 +3,16 @@ import type { NavigationItem } from '../types';
 export const mainNavigation: NavigationItem[] = [
   { label: 'Services', href: '/services' },
   {
+    label: 'Today',
+    href: '/today',
+    children: [
+      { label: 'Today in Makati', href: '/today' },
+      { label: 'Live Makati', href: '/live' },
+      { label: 'What’s On', href: '/whats-on' },
+      { label: 'Makati in the News', href: '/news' },
+    ],
+  },
+  {
     label: 'Visit Makati',
     href: '/visit',
     children: [
@@ -25,8 +35,18 @@ export const mainNavigation: NavigationItem[] = [
       { label: 'Estates & Associations', href: '/estates' },
       { label: 'Makati Statistics', href: '/statistics' },
       { label: 'Legislation', href: '/legislation' },
-      { label: 'News & Events', href: '/news' },
-      { label: 'Live Makati', href: '/live' },
+      { label: 'Public Records', href: '/records' },
+      { label: 'Accountability Ledger', href: '/accountability' },
+    ],
+  },
+  {
+    label: 'Accountability',
+    href: '/accountability',
+    children: [
+      { label: 'Accountability Ledger', href: '/accountability' },
+      { label: 'Projects & Budget', href: '/projects-budget' },
+      { label: 'Public Records', href: '/records' },
+      { label: 'Legislation', href: '/legislation' },
     ],
   },
   {
@@ -45,6 +65,16 @@ export const mainNavigation: NavigationItem[] = [
     children: [
       { label: 'Saan Ako Lalapit?', href: '/community-tools/saan-ako-lalapit' },
       { label: 'Project Tracker', href: '/projects-budget#projects' },
+    ],
+  },
+  {
+    label: 'Participate',
+    href: '/participate',
+    children: [
+      { label: 'Participation Hub', href: '/participate' },
+      { label: 'Propose Something', href: '/get-involved?type=proposal#submission' },
+      { label: 'Share a Public Source', href: '/get-involved?type=source#submission' },
+      { label: 'Report a Correction', href: '/get-involved?type=correction#submission' },
     ],
   },
   {
@@ -74,6 +104,8 @@ export const footerNavigation = {
         { label: 'Barangays', href: '/barangays' },
         { label: 'Elections & Voting', href: '/elections' },
         { label: 'Projects & Budget', href: '/projects-budget' },
+        { label: 'Accountability Ledger', href: '/accountability' },
+        { label: 'Public Records', href: '/records' },
       ],
     },
     {
@@ -83,7 +115,9 @@ export const footerNavigation = {
         { label: 'Elections & Voting', href: '/elections' },
         { label: 'Estates & Associations', href: '/estates' },
         { label: 'Live Makati', href: '/live' },
+        { label: 'Today in Makati', href: '/today' },
         { label: 'Community Tools', href: '/community-tools' },
+        { label: 'Participate', href: '/participate' },
         { label: 'Get Involved', href: '/get-involved' },
         { label: 'Contact', href: '/contact' },
       ],
