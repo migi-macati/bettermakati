@@ -13,6 +13,8 @@ import {
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
 import SEO from '../components/SEO';
+import LastReviewed from '../components/ui/LastReviewed';
+import SharePage from '../components/ui/SharePage';
 
 interface WeatherState {
   temperature?: number;
@@ -22,6 +24,7 @@ interface WeatherState {
   weatherCode?: number;
   aqi?: number;
   pm25?: number;
+  observedAt?: string;
 }
 
 const weatherLabel = (code?: number) => {
@@ -87,6 +90,7 @@ const liveSources = [
 export default function LiveMakati() {
   const [weather, setWeather] = useState<WeatherState>({});
   const [loading, setLoading] = useState(true);
+  const [failed, setFailed] = useState(false);
 
   useEffect(() => {
     const load = async () => {
@@ -100,6 +104,10 @@ export default function LiveMakati() {
           ),
         ]);
 
+        if (!forecastResponse.ok || !airResponse.ok) {
+          throw new Error('Live weather source unavailable');
+        }
+
         const forecast = await forecastResponse.json();
         const air = await airResponse.json();
 
@@ -111,9 +119,12 @@ export default function LiveMakati() {
           weatherCode: forecast.current?.weather_code,
           aqi: air.current?.us_aqi,
           pm25: air.current?.pm2_5,
+          observedAt: forecast.current?.time,
         });
+        setFailed(false);
       } catch {
         setWeather({});
+        setFailed(true);
       } finally {
         setLoading(false);
       }
@@ -131,7 +142,18 @@ export default function LiveMakati() {
 
       <Section className="bg-[#fffdf8]">
         <div className="section-eyebrow">Live Makati</div>
-        <Heading>What’s happening now</Heading>
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+          <Heading>What’s happening now</Heading>
+          <SharePage title="Live Makati | BetterMakati" />
+        </div>
+        <LastReviewed label="Live-source setup reviewed" note="Official warnings always take priority over third-party weather data." />
+
+        {failed && (
+          <div className="mt-6 rounded-xl border border-secondary-200 bg-secondary-50 p-4 text-sm text-secondary-900" role="status">
+            Live weather and air-quality data could not be loaded. Use the
+            official PAGASA link below for current warnings and forecasts.
+          </div>
+        )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
           <div className="rounded-2xl border border-primary-100 bg-white p-5">
@@ -174,6 +196,16 @@ export default function LiveMakati() {
         </div>
 
         <div className="mt-3 text-xs text-gray-500">
+          {weather.observedAt && (
+            <span className="mr-2 font-semibold text-gray-700">
+              Data time: {new Intl.DateTimeFormat('en-PH', {
+                dateStyle: 'medium',
+                timeStyle: 'short',
+                timeZone: 'Asia/Manila',
+              }).format(new Date(weather.observedAt))}
+              .
+            </span>
+          )}
           Weather and air-quality data: <a href="https://open-meteo.com/" target="_blank" rel="noreferrer" className="underline">Open-Meteo</a>. Official warnings: <a href="https://www.pagasa.dost.gov.ph/regional-forecast/ncrprsd" target="_blank" rel="noreferrer" className="underline">PAGASA NCR</a>.
         </div>
       </Section>
