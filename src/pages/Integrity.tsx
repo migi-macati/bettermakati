@@ -63,22 +63,22 @@ const gaps = [
   {
     title: 'Supplier and contractor graph',
     body:
-      'BetterMakati does not yet normalize Makati awards, suppliers, contracts and amendments into a citywide reusable entity graph.',
+      'Awards, suppliers, contracts and amendments are not yet normalized into a citywide entity graph.',
   },
   {
     title: 'Beneficial ownership linkage',
     body:
-      'BetterMakati does not yet connect public beneficial-ownership information to specific Makati procurement records.',
+      'Public beneficial-ownership information is not yet linked to specific Makati procurement records.',
   },
   {
     title: 'Conflict and recusal records',
     body:
-      'Conflict-of-interest, recusal or disclosure records are not yet systematically indexed. Absence from BetterMakati must never be treated as evidence that no such record exists.',
+      'Conflict-of-interest, recusal and disclosure records are not yet systematically indexed.',
   },
   {
     title: 'Audit resolution trail',
     body:
-      'COA findings are discoverable, but BetterMakati has not yet completed a finding → management response → corrective action → later audit trail.',
+      'COA findings are not yet linked through management response, corrective action and later audit status.',
   },
 ];
 
@@ -87,7 +87,7 @@ export default function Integrity() {
     <>
       <SEO
         title="Integrity & Public Interest"
-        description="BetterMakati’s factual integrity layer: public-service ethics, procurement transparency, beneficial ownership, audit records and integrity coverage gaps."
+        description="Public-service ethics, procurement, beneficial ownership, audit records and coverage gaps."
       />
 
       <Section className="bg-[#fffdf8]">
