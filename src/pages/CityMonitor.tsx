@@ -1,3 +1,4 @@
+import type { ComponentType } from 'react';
 import { useEffect, useMemo, useState } from 'react';
 import {
   AlertCircle,
@@ -38,7 +39,7 @@ interface MonitorRun {
   newBaselines: Array<{ id: string; label: string; url: string; stream: string }>;
 }
 
-const typeIcon: Record<CityMonitorType, React.ComponentType<{ className?: string }>> = {
+const typeIcon: Record<CityMonitorType, ComponentType<{ className?: string }>> = {
   'council-session': Gavel,
   legislation: ScrollText,
   'executive-speech': Megaphone,
