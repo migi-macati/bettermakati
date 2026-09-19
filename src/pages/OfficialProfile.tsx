@@ -8,6 +8,7 @@ import { Link, useParams } from 'react-router';
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
 import SEO from '../components/SEO';
+import SharePage from '../components/ui/SharePage';
 import { findOfficial } from '../data/electedOfficials';
 import {
   election2025Sources,
@@ -55,7 +56,10 @@ export default function OfficialProfile() {
         <div className="mt-6 grid grid-cols-1 lg:grid-cols-[1fr_0.72fr] gap-6">
           <div>
             <div className="section-eyebrow">Elected official</div>
-            <Heading>{official.displayName}</Heading>
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+              <Heading>{official.displayName}</Heading>
+              <SharePage title={official.displayName + ' | BetterMakati'} />
+            </div>
             <p className="mt-2 text-lg font-semibold text-gray-800">
               {official.office}
               {official.district ? ' · ' + official.district : ''}
