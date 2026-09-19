@@ -46,8 +46,12 @@ export default function Today() {
   const [barangaySlug, setBarangaySlug] = useState(() => {
     if (requested && barangays.some(item => item.slug === requested)) return requested;
     if (typeof window !== 'undefined') {
-      const saved = window.localStorage.getItem('bettermakati:barangay');
-      if (saved && barangays.some(item => item.slug === saved)) return saved;
+      try {
+        const saved = window.localStorage.getItem('bettermakati:barangay');
+        if (saved && barangays.some(item => item.slug === saved)) return saved;
+      } catch {
+        return '';
+      }
     }
     return '';
   });
@@ -59,15 +63,6 @@ export default function Today() {
     () => barangays.find(item => item.slug === barangaySlug),
     [barangaySlug]
   );
-
-  useEffect(() => {
-    if (barangaySlug) {
-      window.localStorage.setItem('bettermakati:barangay', barangaySlug);
-      const next = new URLSearchParams(params);
-      next.set('barangay', barangaySlug);
-      setParams(next, { replace: true });
-    }
-  }, [barangaySlug]);
 
   useEffect(() => {
     const load = async () => {
@@ -108,6 +103,16 @@ export default function Today() {
 
   const chooseBarangay = (value: string) => {
     setBarangaySlug(value);
+    try {
+      if (value) window.localStorage.setItem('bettermakati:barangay', value);
+      else window.localStorage.removeItem('bettermakati:barangay');
+    } catch {
+      // Local preference storage is optional.
+    }
+    const next = new URLSearchParams(params);
+    if (value) next.set('barangay', value);
+    else next.delete('barangay');
+    setParams(next, { replace: true });
   };
 
   return (
