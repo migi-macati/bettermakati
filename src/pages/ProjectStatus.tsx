@@ -272,7 +272,7 @@ export default function ProjectStatus() {
             ) : latestMonitorRun ? (
               <>
                 <p className="mt-2 text-sm text-gray-600">
-                  Last daily check:{' '}
+                  Last published City Monitor update:{' '}
                   <strong>{new Date(latestMonitorRun.checkedAt).toLocaleString('en-PH')}</strong>
                 </p>
                 <div className="mt-4 grid grid-cols-3 gap-2 text-center">
@@ -292,7 +292,7 @@ export default function ProjectStatus() {
               </>
             ) : (
               <p className="mt-2 text-sm text-gray-600">
-                No completed daily City Monitor run has been published yet.
+                No actionable City Monitor source update has been published yet.
               </p>
             )}
             <Link to="/city-monitor" className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700">

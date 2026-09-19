@@ -238,7 +238,7 @@ export default function Today() {
         <div className="mt-6 rounded-2xl border border-primary-100 bg-[#fffdf8] p-6">
           <Radio className="h-5 w-5 text-primary-700" />
           <div className="mt-3 text-3xl font-extrabold text-gray-950">{monitorChanges}</div>
-          <div className="font-bold text-gray-800">official source changes in the latest check</div>
+          <div className="font-bold text-gray-800">official source changes in the latest published monitor update</div>
           <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600">
             A detected change is a review signal, not automatically a government
             action. City Monitor verifies the underlying record before publishing
@@ -246,7 +246,7 @@ export default function Today() {
           </p>
           {monitorCheckedAt && (
             <div className="mt-2 text-xs text-gray-500">
-              Latest check: {new Date(monitorCheckedAt).toLocaleString('en-PH')}
+              Published monitor update: {new Date(monitorCheckedAt).toLocaleString('en-PH')}
             </div>
           )}
           <div className="mt-5 flex flex-wrap gap-3">

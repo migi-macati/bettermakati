@@ -160,7 +160,7 @@ export default function CityMonitor() {
         ) : latestRun ? (
           <div className="mt-6 rounded-2xl border border-primary-100 bg-white p-6">
             <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
-              Latest daily check · {new Date(latestRun.checkedAt).toLocaleString('en-PH')}
+              Latest published monitor update · {new Date(latestRun.checkedAt).toLocaleString('en-PH')}
             </div>
             <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div className="rounded-xl border border-gray-200 bg-[#fffdf8] p-4">
@@ -213,7 +213,7 @@ export default function CityMonitor() {
           </div>
         ) : (
           <div className="mt-6 rounded-2xl border border-gray-200 bg-white p-5 text-sm text-gray-600">
-            The daily monitor has not published its first source baseline yet.
+            The daily monitor has not published its first actionable source update yet.
           </div>
         )}
       </Section>
