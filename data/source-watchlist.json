@@ -94,5 +94,17 @@
     "label": "MRT-3 official information",
     "url": "https://www.dotrmrt3.gov.ph/about-us",
     "kind": "mobility"
+  },
+  {
+    "id": "resilient-makati-consultations",
+    "label": "Resilient Makati consultations and public participation",
+    "url": "https://resilient.makati.gov.ph/mod/page/view.php?forceview=1&id=30",
+    "kind": "participation"
+  },
+  {
+    "id": "makati-cdp",
+    "label": "Makati Comprehensive Development Plan",
+    "url": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1580795672692.pdf",
+    "kind": "planning-participation"
   }
 ]

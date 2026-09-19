@@ -180,6 +180,21 @@ export default function Legislation() {
           resolution or later amendment that controls the legal text.
         </div>
       </Section>
+
+      <Section className="bg-[#fffdf8]">
+        <div className="rounded-2xl border border-primary-100 bg-white p-6">
+          <div className="section-eyebrow">Before a decision</div>
+          <Heading level={2}>Participation belongs beside legislation</Heading>
+          <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-700">
+            BetterMakati&apos;s participation hub publishes consultation
+            opportunities it can source and explicitly shows when a complete
+            current hearing or consultation calendar has not been located.
+          </p>
+          <a href="/participate" className="brand-btn-primary mt-5">
+            Open Participation Hub
+          </a>
+        </div>
+      </Section>
     </>
   );
 }

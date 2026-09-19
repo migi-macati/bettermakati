@@ -21,6 +21,10 @@ import {
   HandHeart,
   Users,
   Vote,
+  ClipboardCheck,
+  Files,
+  MessagesSquare,
+  SunMedium,
 } from 'lucide-react';
 import Hero from '../components/sections/Hero';
 import CommunityToolsGrid from '../components/community/CommunityToolsGrid';
@@ -73,9 +77,9 @@ const audiencePaths = [
     icon: BookOpen,
   },
   {
-    label: 'I want to contribute',
-    description: 'Share sources, corrections, ideas or volunteer help.',
-    href: '/get-involved',
+    label: 'I want to take part',
+    description: 'Find participation opportunities, propose ideas or share evidence.',
+    href: '/participate',
     icon: HandHeart,
   },
 ];
@@ -146,6 +150,33 @@ const cityPaths = [
   },
 ];
 
+const civicControl = [
+  {
+    label: 'See the record',
+    description: 'Find structured public records and open the original source.',
+    href: '/records',
+    icon: Files,
+  },
+  {
+    label: 'Track accountability',
+    description: 'Follow plans, responsible bodies, later evidence and known gaps.',
+    href: '/accountability',
+    icon: ClipboardCheck,
+  },
+  {
+    label: 'Take part',
+    description: 'Find consultations and track BetterMakati community input.',
+    href: '/participate',
+    icon: MessagesSquare,
+  },
+  {
+    label: 'Start with today',
+    description: 'Choose your barangay and bring current local information forward.',
+    href: '/today',
+    icon: SunMedium,
+  },
+];
+
 const stats = [
   {
     value: '309,770',
@@ -211,6 +242,45 @@ const Home: React.FC = () => {
                   <p className="mt-1 text-sm leading-relaxed text-gray-600">
                     {item.description}
                   </p>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-primary-950 py-12 text-white border-b border-primary-900">
+        <div className="container px-5 md:px-6 lg:px-8">
+          <div className="section-eyebrow !text-secondary-200">Civic control center</div>
+          <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+            <div>
+              <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight">
+                See it. Track it. Take part. Stay connected.
+              </h2>
+              <p className="mt-2 max-w-3xl text-sm md:text-base leading-relaxed text-primary-100">
+                BetterMakati&apos;s core civic tools are designed around traceable
+                information, factual follow-through, visible participation and
+                useful local presence.
+              </p>
+            </div>
+          </div>
+          <div className="mt-7 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {civicControl.map(item => {
+              const Icon = item.icon;
+              return (
+                <Link
+                  key={item.label}
+                  to={item.href}
+                  className="rounded-2xl border border-white/15 bg-white/5 p-5 transition hover:bg-white/10 hover:border-secondary-300"
+                >
+                  <Icon className="h-6 w-6 text-secondary-200" />
+                  <h3 className="mt-4 font-extrabold text-white">{item.label}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-primary-100">
+                    {item.description}
+                  </p>
+                  <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-secondary-200">
+                    Open <ArrowRight className="h-4 w-4" />
+                  </span>
                 </Link>
               );
             })}

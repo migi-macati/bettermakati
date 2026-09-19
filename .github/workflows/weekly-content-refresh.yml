@@ -47,4 +47,5 @@ jobs:
           add-paths: |
             src/data/newsSnapshot.ts
             data/source-watch.json
+            data/source-watch-history.json
             data/source-watch-report.md

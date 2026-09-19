@@ -19,6 +19,17 @@ BetterMakati organizes public information into citizen-facing tools and dashboar
 - live weather, air-quality and advisory links; and
 - community tools, corrections and contribution channels.
 
+## Civic operating principles
+
+BetterMakati is being built around four operating rules:
+
+- **Radical transparency:** every factual claim should be traceable, and important source gaps should be visible.
+- **Radical accountability:** track plans, responsibility, later evidence and outcomes without political scoring.
+- **Radical participation:** make participation discoverable and, where BetterMakati controls the workflow, publicly trackable.
+- **Radical presence:** bring useful current and local information forward without requiring an account or precise GPS.
+
+The main products supporting these principles are the **Public Records index**, **Accountability Ledger**, **Participation Hub**, and **Today in Makati / My Makati**.
+
 ## Data and sourcing
 
 BetterMakati prioritizes first-party records from the City Government of Makati, COMELEC, PSA, COA, DBM, PhilGEPS and other public institutions. Source links are placed beside the information they support.

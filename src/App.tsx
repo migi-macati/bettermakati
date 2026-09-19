@@ -35,6 +35,10 @@ import Parking from './pages/Parking';
 import WhatsOn from './pages/WhatsOn';
 import Search from './pages/Search';
 import NotFound from './pages/NotFound';
+import Accountability from './pages/Accountability';
+import Participate from './pages/Participate';
+import PublicRecords from './pages/PublicRecords';
+import Today from './pages/Today';
 
 function App() {
   return (
@@ -70,6 +74,10 @@ function App() {
                 <Route path="/history" element={<History />} />
 
                 <Route path="/government" element={<Government />} />
+                <Route path="/accountability" element={<Accountability />} />
+                <Route path="/records" element={<PublicRecords />} />
+                <Route path="/participate" element={<Participate />} />
+                <Route path="/today" element={<Today />} />
                 <Route path="/barangays" element={<Barangays />} />
                 <Route path="/barangays/:slug" element={<BarangayProfile />} />
                 <Route path="/elections" element={<Elections />} />

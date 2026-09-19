@@ -105,6 +105,18 @@ export default function BarangayProfile() {
           ]}
         />
 
+        <div className="mt-5 flex flex-wrap gap-3">
+          <Link to={'/today?barangay=' + barangay.slug} className="brand-btn-primary">
+            Make this My Makati
+          </Link>
+          <Link to={'/participate?barangay=' + barangay.slug} className="brand-btn-secondary">
+            Participate locally
+          </Link>
+          <Link to={'/accountability?barangay=' + barangay.slug} className="brand-btn-secondary">
+            Local accountability
+          </Link>
+        </div>
+
         <div className="mt-7 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <a
             href={psaBarangaySource}

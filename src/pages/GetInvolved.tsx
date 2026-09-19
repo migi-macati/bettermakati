@@ -7,6 +7,7 @@ import {
   HeartHandshake,
   Lightbulb,
   MessageCircle,
+  MessagesSquare,
   Send,
 } from 'lucide-react';
 import Section from '../components/ui/Section';
@@ -15,6 +16,12 @@ import SEO from '../components/SEO';
 import { communityTools } from '../data/communityTools';
 
 const actionCards = [
+  {
+    type: 'proposal',
+    title: 'Propose something',
+    description: 'Describe a civic problem, proposed change, evidence and trade-offs.',
+    icon: MessagesSquare,
+  },
   {
     type: 'idea',
     title: 'Suggest an idea',
@@ -65,12 +72,14 @@ export default function GetInvolved() {
   const [status, setStatus] = useState<SubmitState>('idle');
   const [message, setMessage] = useState('');
   const [fallbackUrl, setFallbackUrl] = useState('');
+  const [trackingUrl, setTrackingUrl] = useState('');
 
   const submit = async (event: FormEvent) => {
     event.preventDefault();
     setStatus('submitting');
     setMessage('');
     setFallbackUrl('');
+    setTrackingUrl('');
 
     try {
       const response = await fetch('/api/feedback', {
@@ -90,6 +99,7 @@ export default function GetInvolved() {
 
       if (response.ok) {
         setStatus('success');
+        setTrackingUrl(data.url || '');
         setMessage(
           data.reference
             ? 'Submitted. Reference #' + data.reference + '.'
@@ -143,7 +153,7 @@ export default function GetInvolved() {
           point us to stronger sources, missing information and useful tools.
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-4 mt-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 mt-8">
           {actionCards.map(action => {
             const Icon = action.icon;
             return (
@@ -169,6 +179,12 @@ export default function GetInvolved() {
         <div className="max-w-3xl mx-auto">
           <div className="section-eyebrow">Submission</div>
           <Heading>Send something to BetterMakati</Heading>
+          <p className="mt-2 text-sm leading-relaxed text-gray-600">
+            When the native project workflow is available, a successful
+            submission returns a public tracking link. This tracks
+            BetterMakati&apos;s handling of the submission, not an official City
+            Government case unless a government channel separately accepts it.
+          </p>
 
           <form
             onSubmit={submit}
@@ -178,7 +194,8 @@ export default function GetInvolved() {
               <label className="form-field">
                 <span>Submission type</span>
                 <select value={type} onChange={event => setType(event.target.value)}>
-                  <option value="idea">Idea</option>
+                  <option value="proposal">Civic proposal</option>
+                  <option value="idea">BetterMakati idea</option>
                   <option value="source">Source / data</option>
                   <option value="correction">Correction</option>
                   <option value="volunteer">Volunteer</option>
@@ -215,7 +232,9 @@ export default function GetInvolved() {
                   rows={7}
                   value={details}
                   onChange={event => setDetails(event.target.value)}
-                  placeholder="Describe the idea, source, correction or offer to help."
+                  placeholder={type === 'proposal'
+                    ? 'Problem, proposed change, evidence, possible benefits/costs, alternatives or questions still unanswered.'
+                    : 'Describe the idea, source, correction or offer to help.'}
                 />
               </label>
 
@@ -267,6 +286,16 @@ export default function GetInvolved() {
                 role="status"
               >
                 {message}
+                {status === 'success' && trackingUrl && (
+                  <a
+                    href={trackingUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="mt-3 inline-flex items-center gap-1 font-bold underline underline-offset-2"
+                  >
+                    Track this publicly <ExternalLink className="h-3.5 w-3.5" />
+                  </a>
+                )}
                 {status === 'fallback' && fallbackUrl && (
                   <a
                     href={fallbackUrl}

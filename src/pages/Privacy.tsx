@@ -52,8 +52,23 @@ export default function Privacy() {
           <h2>Cookies and local storage</h2>
           <p>
             BetterMakati currently does not require advertising cookies or a
-            user account. Third-party services reached from the site may use
-            their own cookies or storage according to their policies.
+            user account. The “My Makati” feature can store a selected barangay
+            in this browser&apos;s local storage so the Today page can bring local
+            information forward. That preference is device-local and does not
+            require precise GPS.
+          </p>
+          <p>
+            Third-party services reached from the site may use their own cookies
+            or storage according to their policies.
+          </p>
+
+          <h2>Public project submissions</h2>
+          <p>
+            Proposals, corrections, sources and other project submissions may be
+            recorded as public GitHub issues so the BetterMakati response can be
+            followed. Do not include private or sensitive personal information.
+            An open or closed project issue reflects BetterMakati&apos;s workflow,
+            not an official City Government case status.
           </p>
 
           <h2>Changes</h2>

@@ -76,10 +76,54 @@ await writeFile(
 const changed = results.filter(
   result => result.status !== 'ok' || result.change === 'content-changed'
 );
+let history = { version: 1, runs: [] };
+try {
+  history = JSON.parse(await readFile('data/source-watch-history.json', 'utf8'));
+} catch (error) {
+  if (error.code !== 'ENOENT') throw error;
+}
+
+const checkedAt = new Date().toISOString();
+const historyRun = {
+  checkedAt,
+  changed: results
+    .filter(result => result.change === 'content-changed')
+    .map(result => ({
+      id: result.id,
+      label: result.label,
+      url: result.url,
+      kind: result.kind,
+    })),
+  failed: results
+    .filter(result => result.status !== 'ok')
+    .map(result => ({
+      id: result.id,
+      label: result.label,
+      url: result.url,
+      kind: result.kind,
+      status: result.status,
+      statusCode: result.statusCode,
+    })),
+  newBaselines: results
+    .filter(result => result.change === 'new-baseline')
+    .map(result => ({
+      id: result.id,
+      label: result.label,
+      url: result.url,
+      kind: result.kind,
+    })),
+};
+
+history.runs = [historyRun, ...(Array.isArray(history.runs) ? history.runs : [])].slice(0, 52);
+await writeFile(
+  'data/source-watch-history.json',
+  `${JSON.stringify(history, null, 2)}\n`
+);
+
 const report = [
   '# Weekly BetterMakati source check',
   '',
-  `Checked: ${new Date().toISOString()}`,
+  `Checked: ${checkedAt}`,
   '',
   changed.length
     ? 'Source content changed or a check failed. Review the results below before updating site claims:'

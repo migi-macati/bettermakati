@@ -25,7 +25,9 @@ const clean = (value, max = 5000) =>
 
 const githubFallback = ({ type, subject, details, sourceUrl, barangay, tool }) => {
   const label =
-    type === 'source'
+    type === 'proposal'
+      ? 'Proposal'
+      : type === 'source'
       ? 'Source'
       : type === 'correction'
         ? 'Correction'
@@ -87,7 +89,9 @@ export default async function handler(req, res) {
   }
 
   const label =
-    payload.type === 'source'
+    payload.type === 'proposal'
+      ? 'Proposal'
+      : payload.type === 'source'
       ? 'Source'
       : payload.type === 'correction'
         ? 'Correction'
@@ -131,6 +135,7 @@ export default async function handler(req, res) {
     return res.status(201).json({
       ok: true,
       reference: data.number,
+      url: data.html_url,
     });
   } catch {
     return res.status(502).json({
