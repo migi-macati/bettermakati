@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useMemo, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import {
   AlertCircle,
   CalendarDays,
@@ -57,10 +57,10 @@ export default function CivicBriefs() {
     void load();
   }, []);
 
-  const cutoff = useMemo(
-    () => Date.now() - periodDays[period] * 24 * 60 * 60 * 1000,
-    [period]
-  );
+  const anchorTime = runs[0] ? new Date(runs[0].checkedAt).getTime() : 0;
+  const cutoff = anchorTime
+    ? anchorTime - periodDays[period] * 24 * 60 * 60 * 1000
+    : Number.POSITIVE_INFINITY;
 
   const relevantRuns = runs.filter(run => new Date(run.checkedAt).getTime() >= cutoff);
   const changed = relevantRuns.flatMap(run => run.changed);
