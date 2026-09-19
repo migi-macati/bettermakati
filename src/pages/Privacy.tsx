@@ -19,9 +19,8 @@ export default function Privacy() {
           <p>
             The hosting platform and serverless functions may process ordinary
             technical request information such as IP address, browser details,
-            requested URL, timestamps and error logs for security and operation.
-            BetterMakati does not use this notice to claim that hosting providers
-            retain nothing.
+            requested URL, timestamps and error logs. Hosting providers may retain
+            technical logs under their own policies.
           </p>
 
           <h2>Search and third-party services</h2>
