@@ -71,7 +71,7 @@ export default function News() {
     <>
       <SEO
         title="Makati in the News"
-        description="Official Makati City news, events and automatically refreshed Makati news links."
+        description="Current Makati news links and official city information sources."
       />
       <Section className="bg-[#fffdf8]">
         <div className="section-eyebrow">City Information</div>
