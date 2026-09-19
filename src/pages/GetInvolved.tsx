@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { useSearchParams } from 'react-router';
 import {
   Bug,
@@ -65,13 +65,6 @@ export default function GetInvolved() {
   const [status, setStatus] = useState<SubmitState>('idle');
   const [message, setMessage] = useState('');
   const [fallbackUrl, setFallbackUrl] = useState('');
-
-  useEffect(() => {
-    setType(searchParams.get('type') || 'idea');
-    setTool(searchParams.get('tool') || '');
-    const requestedSubject = searchParams.get('subject');
-    if (requestedSubject) setSubject(requestedSubject);
-  }, [searchParams]);
 
   const submit = async (event: FormEvent) => {
     event.preventDefault();
