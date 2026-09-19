@@ -8,7 +8,7 @@ import {
   Send,
   Users,
 } from 'lucide-react';
-import { Link } from 'react-router';
+import { Link, useSearchParams } from 'react-router';
 import SEO from '../components/SEO';
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
@@ -32,6 +32,8 @@ interface CommunityInput {
 }
 
 export default function Participate() {
+  const [params] = useSearchParams();
+  const barangayContext = params.get('barangay');
   const [inputs, setInputs] = useState<CommunityInput[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -74,6 +76,14 @@ export default function Participate() {
           date={participationReviewed}
           note="Official government participation and BetterMakati community participation are always labeled separately."
         />
+
+        {barangayContext && (
+          <div className="mt-6 rounded-xl border border-primary-200 bg-primary-50 p-4 text-sm text-gray-700">
+            Showing participation context for <strong>{barangayContext.replaceAll('-', ' ')}</strong>.
+            BetterMakati does not currently have a complete authoritative
+            barangay-assembly calendar, so no local meeting is invented here.
+          </div>
+        )}
 
         <div className="mt-7 grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="rounded-2xl border border-primary-100 bg-white p-6">
