@@ -150,11 +150,10 @@ export default function WhatsOn() {
 
       <Section className="bg-white">
         <div className="rounded-2xl border border-secondary-200 bg-secondary-50 p-6 text-sm leading-relaxed text-gray-700">
-          <strong className="text-gray-950">Next BetterMakati data layer:</strong>{' '}
-          the page is now structured for a dated, filterable event feed once
-          source-by-source ingestion is reliable enough to avoid publishing
-          stale schedules. Until then, discovery stays current by sending users
-          to live searches and organizer sources rather than hard-coding dates.
+          <strong className="text-gray-950">Why event links open original sources:</strong>{' '}
+          event dates, tickets and venue details change quickly. BetterMakati
+          prioritizes current organizer information rather than copying a dated
+          schedule that could become stale.
         </div>
       </Section>
     </>
