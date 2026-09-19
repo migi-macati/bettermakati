@@ -157,8 +157,7 @@ export default function OfficialProfile() {
         </div>
       </Section>
 
-      {electionResult && (
-        <Section className="bg-white">
+      <Section className="bg-white">
         <div className="section-eyebrow">Public accountability</div>
         <Heading level={2}>Follow records, not ratings</Heading>
         <div className="mt-5 rounded-2xl border border-primary-100 bg-[#fffdf8] p-6">
@@ -184,7 +183,8 @@ export default function OfficialProfile() {
         </div>
       </Section>
 
-      <Section className="bg-[#f5f8f2]">
+      {electionResult && (
+        <Section className="bg-[#f5f8f2]">
           <div className="section-eyebrow">2025 election result</div>
           <Heading level={2}>{electionResult.raceLabel}</Heading>
 
