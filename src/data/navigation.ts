@@ -112,7 +112,6 @@ export const footerNavigation = {
       links: [
         { label: 'Community Tools', href: '/community-tools' },
         { label: 'Get Involved', href: '/get-involved' },
-        { label: 'Open Government Doctrine', href: '/open-government' },
         { label: 'BetterMakati Status', href: '/status' },
         { label: 'About', href: '/about' },
         { label: 'Privacy', href: '/privacy' },
