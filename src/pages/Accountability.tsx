@@ -8,6 +8,7 @@ import {
   Scale,
   Search,
   WalletCards,
+  Download,
 } from 'lucide-react';
 import { Link, useSearchParams } from 'react-router';
 import SEO from '../components/SEO';
@@ -27,6 +28,29 @@ const money = (millions?: number) => {
   if (Math.abs(millions) >= 1000) return '₱' + (millions / 1000).toFixed(2) + 'B';
   return '₱' + millions.toFixed(2) + 'M';
 };
+
+const ledgerCsv = [
+  'id,type,status,title,period,responsible_bodies,target_date,location,planned_amount_m,reported_amount_m,actual_amount_m,completion_pct,last_verified',
+  ...accountabilityEntries.map(entry =>
+    [
+      entry.id,
+      entry.type,
+      entry.status,
+      entry.title,
+      entry.period,
+      entry.responsibleBodies.join(' / '),
+      entry.targetDate || '',
+      entry.location || '',
+      entry.plannedAmountM ?? '',
+      entry.reportedAmountM ?? '',
+      entry.actualAmountM ?? '',
+      entry.completionPct ?? '',
+      entry.lastVerified,
+    ]
+      .map(value => '"' + String(value).replaceAll('"', '""') + '"')
+      .join(',')
+  ),
+].join('\n');
 
 export default function Accountability() {
   const [params] = useSearchParams();
@@ -80,6 +104,15 @@ export default function Accountability() {
           date={accountabilityReviewed}
           note="No politician or office is scored or graded. The record is shown; citizens make the judgment."
         />
+        <div className="mt-4">
+          <a
+            href={`data:text/csv;charset=utf-8,${encodeURIComponent(ledgerCsv)}`}
+            download="bettermakati-accountability-ledger.csv"
+            className="brand-btn-secondary"
+          >
+            <Download className="h-4 w-4" /> Download ledger CSV
+          </a>
+        </div>
 
         {barangayContext && (
           <div className="mt-6 rounded-xl border border-secondary-200 bg-secondary-50 p-4 text-sm text-gray-700">
