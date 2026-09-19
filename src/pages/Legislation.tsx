@@ -175,10 +175,9 @@ export default function Legislation() {
         </div>
 
         <div className="mt-6 rounded-2xl border border-secondary-200 bg-secondary-50 p-5 text-sm leading-relaxed text-gray-700">
-          BetterMakati&apos;s next data layer for this section is a structured
-          index by number, year, topic and document type. Until the official
-          archive is fully normalized, search results always lead back to the
-          primary city record.
+          BetterMakati keeps the original city record one click away. Search
+          results are an aid to discovery, not a substitute for the ordinance,
+          resolution or later amendment that controls the legal text.
         </div>
       </Section>
     </>
