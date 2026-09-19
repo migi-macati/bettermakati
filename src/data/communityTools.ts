@@ -95,8 +95,8 @@ export const communityTools: CommunityTool[] = [
   {
     id: 'project-tracker',
     name: 'Project Tracker',
-    summary: 'Track publicly funded projects using city disclosure records.',
-    status: 'Researching',
+    summary: 'Track publicly funded projects using city disclosure records and the Accountability Ledger.',
+    status: 'Live',
     priority: 10,
     href: '/projects-budget#projects',
     icon: 'HardHat',
