@@ -1,0 +1,17 @@
+{
+  "name": "BetterMakati",
+  "short_name": "BetterMakati",
+  "description": "Independent civic information for Makati City.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fffdf8",
+  "theme_color": "#176238",
+  "icons": [
+    {
+      "src": "/bettermakati-mark.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
