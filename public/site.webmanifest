@@ -13,5 +13,34 @@
       "type": "image/svg+xml",
       "purpose": "any"
     }
+  ],
+  "id": "/",
+  "scope": "/",
+  "categories": [
+    "government",
+    "utilities",
+    "travel"
+  ],
+  "shortcuts": [
+    {
+      "name": "Today in Makati",
+      "short_name": "Today",
+      "url": "/today"
+    },
+    {
+      "name": "Emergency Hotlines",
+      "short_name": "Hotlines",
+      "url": "/hotlines"
+    },
+    {
+      "name": "Services",
+      "short_name": "Services",
+      "url": "/services"
+    },
+    {
+      "name": "Participate",
+      "short_name": "Participate",
+      "url": "/participate"
+    }
   ]
 }
