@@ -369,8 +369,21 @@ export default function ServiceSearch({
                   No matching result
                 </div>
                 <p className="mt-1 text-sm text-gray-500">
-                  Try another keyword.
+                  Try another keyword, or tell BetterMakati what information is missing.
                 </p>
+                <button
+                  type="button"
+                  onClick={() =>
+                    navigate(
+                      '/get-involved?type=idea&tool=saan-ako-lalapit&subject=' +
+                        encodeURIComponent('Missing search result: ' + query) +
+                        '#submission'
+                    )
+                  }
+                  className="mt-3 text-sm font-bold text-primary-700 underline underline-offset-2"
+                >
+                  Report a missing result
+                </button>
               </div>
             )}
           </div>
