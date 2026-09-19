@@ -223,9 +223,9 @@ const visitItems: SearchItem[] = [
     title: 'History of Makati',
     group: 'Visit',
     category: 'History',
-    description: 'Timeline from San Pedro Makati to cityhood.',
+    description: 'Timeline from San Pedro Macati to cityhood.',
     href: '/history',
-    keywords: 'history timeline san pedro makati sampiro cityhood origin name',
+    keywords: 'history timeline san pedro macati sampiro cityhood origin name',
     featured: true,
   },
   {
@@ -512,6 +512,45 @@ const toolItems: SearchItem[] = [
   },
 ];
 
+const radicalCivicItems: SearchItem[] = [
+  {
+    title: 'Accountability Ledger',
+    group: 'Record',
+    category: 'Accountability',
+    description: 'Track sourced public plans, responsible bodies, later evidence and known gaps.',
+    href: '/accountability',
+    keywords: 'accountability ledger commitment project responsible office evidence outcome target status track',
+    featured: true,
+  },
+  {
+    title: 'Public Records',
+    group: 'Record',
+    category: 'Records',
+    description: 'Citizen-facing index of Makati public records, structured data and original sources.',
+    href: '/records',
+    keywords: 'public records transparency data documents source ordinance audit budget election download',
+    featured: true,
+  },
+  {
+    title: 'Participate in Makati',
+    group: 'Tool',
+    category: 'Participation',
+    description: 'Find participation opportunities and follow BetterMakati community input.',
+    href: '/participate',
+    keywords: 'participate consultation public hearing assembly proposal comment community input feedback',
+    featured: true,
+  },
+  {
+    title: 'Today in Makati',
+    group: 'Tool',
+    category: 'Presence',
+    description: 'Personalize BetterMakati by barangay and start with what matters today.',
+    href: '/today',
+    keywords: 'today my makati barangay local live news event weather personalized',
+    featured: true,
+  },
+];
+
 const contactItems: SearchItem[] = [
   {
     title: 'Hotlines & emergency contacts',
@@ -561,6 +600,7 @@ export const searchIndex: SearchItem[] = [
     keywords: `${event.date} ${event.topic} ${event.source.label} history timeline`,
   })),
   ...serviceItems,
+  ...radicalCivicItems,
   ...visitItems,
   ...governmentItems,
   ...officialItems,
