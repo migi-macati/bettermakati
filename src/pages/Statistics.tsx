@@ -2,6 +2,8 @@ import { ArrowUpRight } from 'lucide-react';
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
 import SEO from '../components/SEO';
+import LastReviewed from '../components/ui/LastReviewed';
+import SharePage from '../components/ui/SharePage';
 import { HorizontalBarChart } from '../components/budget/BudgetCharts';
 import CityComparison from '../components/statistics/CityComparison';
 
@@ -46,7 +48,11 @@ export default function Statistics() {
       />
       <Section className="bg-[#fffdf8]">
         <div className="section-eyebrow">City Information</div>
-        <Heading>Makati Statistics</Heading>
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+          <Heading>Makati Statistics</Heading>
+          <SharePage title="Makati Statistics | BetterMakati" />
+        </div>
+        <LastReviewed note="Population and GDP figures use PSA sources and stated geographic definitions." />
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
           {stats.map(stat => (
