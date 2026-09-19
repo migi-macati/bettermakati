@@ -43,6 +43,19 @@ export default function OfficialProfile() {
           (official.district ? ', ' + official.district : '') +
           ' — current Makati elected-official profile and 2025 election result.'
         }
+        jsonLd={{
+          '@context': 'https://schema.org',
+          '@type': 'Person',
+          name: official.name,
+          jobTitle: official.office,
+          affiliation: {
+            '@type': 'GovernmentOrganization',
+            name:
+              official.level === 'congress'
+                ? 'House of Representatives of the Philippines'
+                : 'City Government of Makati',
+          },
+        }}
       />
 
       <Section className="bg-[#fffdf8]">
