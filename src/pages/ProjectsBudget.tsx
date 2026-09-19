@@ -121,6 +121,15 @@ export default function ProjectsBudget() {
       <SEO
         title="Projects & Budget"
         description="Makati City budget, revenue, spending, development funds and public financial records."
+        jsonLd={{
+          '@context': 'https://schema.org',
+          '@type': 'Dataset',
+          name: 'Makati city finance and project records',
+          description:
+            'Budget plans, actual receipts, expenditures, project and public financial records for Makati City.',
+          spatialCoverage: 'Makati City, Philippines',
+          temporalCoverage: '2014/2026',
+        }}
       />
 
       <Section id="budget" className="bg-[#fffdf8]">
