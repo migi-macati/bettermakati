@@ -1,13 +1,29 @@
-import { ArrowLeft, ExternalLink, Home, MapPin, Users } from 'lucide-react';
+import {
+  ArrowLeft,
+  ArrowRight,
+  ExternalLink,
+  Home,
+  Landmark,
+  MapPin,
+  Users,
+} from 'lucide-react';
 import { Link, useParams } from 'react-router';
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
 import SEO from '../components/SEO';
+import LastReviewed from '../components/ui/LastReviewed';
+import SharePage from '../components/ui/SharePage';
+import SectionNav from '../components/ui/SectionNav';
 import {
+  barangays,
   barangayMapsUrl,
   findBarangay,
   psaBarangaySource,
 } from '../data/barangays';
+import {
+  congressionalOfficials,
+  councilOfficials,
+} from '../data/electedOfficials';
 
 export default function BarangayProfile() {
   const { slug } = useParams();
@@ -24,14 +40,42 @@ export default function BarangayProfile() {
     );
   }
 
+  const cityPopulation = barangays.reduce(
+    (sum, item) => sum + item.population2024,
+    0
+  );
+  const populationShare = (barangay.population2024 / cityPopulation) * 100;
+  const districtNumber = barangay.legislativeDistrict.startsWith('1st')
+    ? '1st'
+    : '2nd';
+  const representative = congressionalOfficials.find(official =>
+    official.district?.startsWith(districtNumber)
+  );
+  const districtCouncilors = councilOfficials.filter(
+    official => official.district === barangay.legislativeDistrict
+  );
+
   return (
     <>
       <SEO
         title={'Barangay ' + barangay.name}
-        description={'Profile of Barangay ' + barangay.name + ', Makati City: population, district, community links and public records.'}
+        description={
+          'Profile of Barangay ' +
+          barangay.name +
+          ', Makati City: population, district representation, community links and public records.'
+        }
+        jsonLd={{
+          '@context': 'https://schema.org',
+          '@type': 'AdministrativeArea',
+          name: 'Barangay ' + barangay.name,
+          containedInPlace: {
+            '@type': 'City',
+            name: 'Makati City',
+          },
+        }}
       />
 
-      <Section className="bg-[#fffdf8]">
+      <Section id="overview" className="bg-[#fffdf8]">
         <Link
           to="/barangays"
           className="inline-flex items-center gap-1 text-sm font-bold text-primary-700"
@@ -40,9 +84,28 @@ export default function BarangayProfile() {
         </Link>
 
         <div className="mt-6 section-eyebrow">Barangay profile</div>
-        <Heading>{barangay.name}</Heading>
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+          <div>
+            <Heading>{barangay.name}</Heading>
+            <p className="max-w-2xl text-gray-600">
+              Population, city representation, map and available community
+              resources for Barangay {barangay.name}.
+            </p>
+          </div>
+          <SharePage title={'Barangay ' + barangay.name + ' | BetterMakati'} />
+        </div>
+        <LastReviewed note="Population uses PSA 2024 POPCEN; time-sensitive contacts should be checked with official sources." />
 
-        <div className="mt-7 grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <SectionNav
+          items={[
+            { label: 'Overview', href: '#overview' },
+            { label: 'Representation', href: '#representation' },
+            { label: 'Community', href: '#community' },
+            { label: 'More information', href: '#more' },
+          ]}
+        />
+
+        <div className="mt-7 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <a
             href={psaBarangaySource}
             target="_blank"
@@ -55,6 +118,16 @@ export default function BarangayProfile() {
             </div>
             <div className="text-sm text-gray-600">2024 population · PSA POPCEN</div>
           </a>
+
+          <div className="rounded-2xl border border-primary-100 bg-white p-5">
+            <Users className="h-5 w-5 text-primary-700" />
+            <div className="mt-3 text-2xl font-extrabold text-gray-950">
+              {populationShare.toFixed(1)}%
+            </div>
+            <div className="text-sm text-gray-600">
+              of Makati&apos;s 2024 population
+            </div>
+          </div>
 
           <div className="rounded-2xl border border-primary-100 bg-white p-5">
             <Home className="h-5 w-5 text-primary-700" />
@@ -79,57 +152,82 @@ export default function BarangayProfile() {
         </div>
       </Section>
 
-      <Section className="bg-[#f5f8f2]">
-        <div className="section-eyebrow">Government & records</div>
-        <Heading level={2}>Barangay information</Heading>
+      <Section id="representation" className="bg-[#f5f8f2]">
+        <div className="section-eyebrow">City representation</div>
+        <Heading level={2}>Who represents this district</Heading>
+        <p className="max-w-3xl text-sm leading-relaxed text-gray-600">
+          These are Makati city and congressional offices for the district that
+          contains Barangay {barangay.name}. They are separate from the
+          barangay&apos;s own Punong Barangay and Sangguniang Barangay.
+        </p>
 
-        <div className="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-4">
-          <div className="rounded-2xl border border-primary-100 bg-white p-6">
-            <h3 className="font-extrabold text-lg text-gray-950">
-              Barangay officials
-            </h3>
-            <p className="mt-2 text-sm leading-relaxed text-gray-600">
-              For the current Punong Barangay, Sangguniang Barangay and SK
-              roster, use the official Makati and COMELEC records linked from
-              this profile. BetterMakati publishes names only when they can be
-              matched to an authoritative public record.
-            </p>
+        {representative && (
+          <Link
+            to={'/officials/' + representative.slug}
+            className="mt-6 flex items-center justify-between gap-4 rounded-2xl border border-primary-100 bg-white p-5 hover:border-primary-300"
+          >
+            <div>
+              <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+                House of Representatives
+              </div>
+              <div className="mt-1 text-lg font-extrabold text-gray-950">
+                {representative.displayName}
+              </div>
+              <div className="text-sm text-gray-600">{representative.district}</div>
+            </div>
+            <ArrowRight className="h-5 w-5 text-primary-700" />
+          </Link>
+        )}
+
+        <h3 className="mt-7 font-extrabold text-lg text-gray-950">
+          City councilors · {barangay.legislativeDistrict}
+        </h3>
+        <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          {districtCouncilors.map(official => (
+            <Link
+              key={official.slug}
+              to={'/officials/' + official.slug}
+              className="rounded-xl border border-primary-100 bg-white p-4 hover:border-primary-300"
+            >
+              <div className="text-xs font-bold text-primary-700">Councilor</div>
+              <div className="mt-1 font-extrabold text-gray-950">
+                {official.displayName}
+              </div>
+            </Link>
+          ))}
+        </div>
+
+        <div className="mt-7 rounded-2xl border border-secondary-200 bg-secondary-50 p-5">
+          <h3 className="font-extrabold text-gray-950">Barangay officials</h3>
+          <p className="mt-2 text-sm leading-relaxed text-gray-700">
+            BetterMakati will publish the current Punong Barangay, seven
+            Sangguniang Barangay members and SK leadership here only after a
+            complete authoritative roster is matched to this barangay.
+          </p>
+          <div className="mt-4 flex flex-wrap gap-3">
             <a
               href="https://www.makati.gov.ph/"
               target="_blank"
               rel="noreferrer"
-              className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700"
+              className="inline-flex items-center gap-1 text-sm font-bold text-primary-700"
             >
               Official Makati portal <ExternalLink className="h-3.5 w-3.5" />
             </a>
-          </div>
-
-          <div className="rounded-2xl border border-primary-100 bg-white p-6">
-            <h3 className="font-extrabold text-lg text-gray-950">
-              Public data
-            </h3>
-            <p className="mt-2 text-sm leading-relaxed text-gray-600">
-              The comparable population figure shown here comes from the 2024
-              POPCEN. Barangay-level budgets, projects, facilities and service
-              records are linked only when a specific public record is
-              available.
-            </p>
-            <a
-              href={psaBarangaySource}
-              target="_blank"
-              rel="noreferrer"
-              className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700"
+            <Link
+              to="/elections"
+              className="inline-flex items-center gap-1 text-sm font-bold text-primary-700"
             >
-              PSA barangay source <ExternalLink className="h-3.5 w-3.5" />
-            </a>
+              Elections & voting <ArrowRight className="h-3.5 w-3.5" />
+            </Link>
           </div>
         </div>
       </Section>
 
-      {barangay.associations && barangay.associations.length > 0 && (
-        <Section className="bg-white">
-          <div className="section-eyebrow">Community</div>
-          <Heading level={2}>Village & homeowners associations</Heading>
+      <Section id="community" className="bg-white">
+        <div className="section-eyebrow">Community</div>
+        <Heading level={2}>Local links</Heading>
+
+        {barangay.associations && barangay.associations.length > 0 ? (
           <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
             {barangay.associations.map(association => (
               <a
@@ -139,15 +237,60 @@ export default function BarangayProfile() {
                 rel="noreferrer"
                 className="rounded-2xl border border-gray-200 bg-white p-5 hover:border-primary-300"
               >
-                <h3 className="font-extrabold text-gray-950">{association.name}</h3>
+                <Landmark className="h-5 w-5 text-primary-700" />
+                <h3 className="mt-3 font-extrabold text-gray-950">
+                  {association.name}
+                </h3>
                 <span className="mt-3 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
-                  {association.linkLabel} <ExternalLink className="h-3.5 w-3.5" />
+                  {association.linkLabel}{' '}
+                  <ExternalLink className="h-3.5 w-3.5" />
                 </span>
               </a>
             ))}
           </div>
-        </Section>
-      )}
+        ) : (
+          <div className="mt-5 rounded-2xl border border-gray-200 bg-[#fffdf8] p-5 text-sm text-gray-600">
+            No village or homeowners-association link has been verified for
+            this profile yet.
+          </div>
+        )}
+      </Section>
+
+      <Section id="more" className="bg-[#fffdf8]">
+        <div className="section-eyebrow">Keep exploring</div>
+        <Heading level={2}>More about {barangay.name}</Heading>
+        <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+          <Link
+            to={'/history?query=' + encodeURIComponent(barangay.name)}
+            className="rounded-2xl border border-gray-200 bg-white p-5 hover:border-primary-300"
+          >
+            <h3 className="font-extrabold text-gray-950">History references</h3>
+            <p className="mt-1 text-sm text-gray-600">
+              Search the sourced Makati timeline for this barangay.
+            </p>
+          </Link>
+          <Link
+            to="/services"
+            className="rounded-2xl border border-gray-200 bg-white p-5 hover:border-primary-300"
+          >
+            <h3 className="font-extrabold text-gray-950">City services</h3>
+            <p className="mt-1 text-sm text-gray-600">
+              Find Makati services, documents and official channels.
+            </p>
+          </Link>
+          <a
+            href={psaBarangaySource}
+            target="_blank"
+            rel="noreferrer"
+            className="rounded-2xl border border-gray-200 bg-white p-5 hover:border-primary-300"
+          >
+            <h3 className="font-extrabold text-gray-950">PSA source</h3>
+            <p className="mt-1 text-sm text-gray-600">
+              Open the current Philippine Standard Geographic Code record.
+            </p>
+          </a>
+        </div>
+      </Section>
     </>
   );
 }
