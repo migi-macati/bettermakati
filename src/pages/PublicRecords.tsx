@@ -10,6 +10,7 @@ import {
   Vote,
   RefreshCw,
   AlertCircle,
+  Download,
 } from 'lucide-react';
 import { Link } from 'react-router';
 import SEO from '../components/SEO';
@@ -162,6 +163,14 @@ export default function PublicRecords() {
           schedule. A changed hash means the source changed; it does not by
           itself mean a published figure is wrong or should be replaced.
         </p>
+
+        <a
+          href="/source-watch-history.json"
+          download
+          className="brand-btn-secondary mt-5"
+        >
+          <Download className="h-4 w-4" /> Download source-watch JSON
+        </a>
 
         {!latestRun ? (
           <div className="mt-6 rounded-2xl border border-gray-200 bg-[#fffdf8] p-5 text-sm text-gray-600">
