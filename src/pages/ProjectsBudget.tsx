@@ -14,6 +14,9 @@ import {
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
 import SEO from '../components/SEO';
+import LastReviewed from '../components/ui/LastReviewed';
+import SharePage from '../components/ui/SharePage';
+import SectionNav from '../components/ui/SectionNav';
 import {
   DonutChart,
   FiscalTrendChart,
@@ -124,7 +127,17 @@ export default function ProjectsBudget() {
         <div className="section-eyebrow">
           2025 budget detail · records through 2026
         </div>
-        <Heading>Where Makati’s money comes from and goes</Heading>
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+          <Heading>Where Makati’s money comes from and goes</Heading>
+          <SharePage title="Makati Projects & Budget | BetterMakati" />
+        </div>
+        <LastReviewed note="Budget plans and actuals remain separated; each dataset links to its public source." />
+        <SectionNav items={[
+          { label: 'Overview', href: '#budget' },
+          { label: 'Projects', href: '#projects' },
+          { label: 'Procurement', href: '#procurement' },
+          { label: 'Audit', href: '#audit' },
+        ]} />
 
         <div className="mt-8 grid grid-cols-2 lg:grid-cols-4 gap-4">
           <Metric
