@@ -104,6 +104,16 @@ const xml = [
 
 await mkdir('public', { recursive: true });
 await writeFile('public/sitemap.xml', xml);
+try {
+  const sourceHistory = await readFile('data/source-watch-history.json', 'utf8');
+  await writeFile('public/source-watch-history.json', sourceHistory);
+} catch {
+  await writeFile(
+    'public/source-watch-history.json',
+    JSON.stringify({ version: 1, runs: [] }, null, 2) + '\n'
+  );
+}
+
 await writeFile(
   'public/robots.txt',
   ['User-agent: *', 'Allow: /', 'Disallow: /search', 'Sitemap: ' + base + '/sitemap.xml', ''].join('\n')
