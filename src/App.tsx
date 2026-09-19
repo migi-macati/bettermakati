@@ -34,7 +34,7 @@ import LiveMakati from './pages/LiveMakati';
 import Parking from './pages/Parking';
 import WhatsOn from './pages/WhatsOn';
 import Search from './pages/Search';
-import { isMeilisearchEnabled } from './lib/meilisearch';
+import NotFound from './pages/NotFound';
 
 function App() {
   return (
@@ -42,10 +42,12 @@ function App() {
       <Router>
         <NuqsAdapter>
           <div className="min-h-screen flex flex-col">
-            <a href="#main-content" className="skip-link">Skip to main content</a>
+            <a href="#main-content" className="skip-link">
+              Skip to main content
+            </a>
             <Navbar />
             <ScrollToTop />
-            <div id="main-content" className="flex-grow">
+            <main id="main-content" className="flex-grow">
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/about" element={<About />} />
@@ -79,18 +81,25 @@ function App() {
                 <Route path="/live" element={<LiveMakati />} />
 
                 <Route path="/projects-budget" element={<ProjectsBudget />} />
-                <Route path="/transparency" element={<Navigate to="/projects-budget" replace />} />
+                <Route
+                  path="/transparency"
+                  element={<Navigate to="/projects-budget" replace />}
+                />
 
                 <Route path="/community-tools" element={<CommunityTools />} />
-                <Route path="/community-tools/saan-ako-lalapit" element={<ConcernFinder />} />
+                <Route
+                  path="/community-tools/saan-ako-lalapit"
+                  element={<ConcernFinder />}
+                />
 
+                <Route path="/search" element={<Search />} />
                 <Route path="/get-involved" element={<GetInvolved />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/hotlines" element={<Hotlines />} />
 
-                {isMeilisearchEnabled && <Route path="/search" element={<Search />} />}
+                <Route path="*" element={<NotFound />} />
               </Routes>
-            </div>
+            </main>
             <Footer />
           </div>
         </NuqsAdapter>

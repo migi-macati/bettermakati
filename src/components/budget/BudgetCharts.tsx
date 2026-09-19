@@ -40,7 +40,9 @@ export function DonutChart({
       <div className="mt-5 grid grid-cols-1 sm:grid-cols-[180px_1fr] gap-6 items-center">
         <div
           role="img"
-          aria-label={title}
+          aria-label={`${title}: ${items
+            .map(item => `${item.label} ${item.share !== undefined ? item.share.toFixed(1) + '%' : item.value}`)
+            .join(', ')}`}
           className="relative mx-auto h-44 w-44 rounded-full"
           style={{ background: `conic-gradient(${segments.join(',')})` }}
         >
@@ -173,7 +175,6 @@ export function FiscalTrendChart({
         <h3 className="font-extrabold text-gray-950">{title}</h3>
         <div
           className="flex flex-wrap gap-4 text-xs font-semibold text-gray-600"
-          aria-hidden="true"
         >
           <span className="inline-flex items-center gap-2">
             <span className="h-2.5 w-2.5 rounded-sm bg-primary-700" /> Receipts
@@ -187,12 +188,13 @@ export function FiscalTrendChart({
 
       <div
         className="mt-6 space-y-5"
-        role="img"
+        role="list"
         aria-label={`${title}, in Philippine pesos`}
       >
         {items.map(item => (
           <div
             key={item.year}
+            role="listitem"
             className="grid grid-cols-[3.25rem_1fr] gap-3 items-center"
           >
             <div className="text-sm font-extrabold text-gray-700">
@@ -209,6 +211,7 @@ export function FiscalTrendChart({
                   />
                 </div>
                 <span className="w-16 text-right text-xs font-bold text-gray-700">
+                  <span className="sr-only">{item.year} receipts: </span>
                   {formatValue(item.receiptsM)}
                 </span>
               </div>
@@ -222,6 +225,7 @@ export function FiscalTrendChart({
                   />
                 </div>
                 <span className="w-16 text-right text-xs font-bold text-gray-700">
+                  <span className="sr-only">{item.year} expenditures: </span>
                   {formatValue(item.expendituresM)}
                 </span>
               </div>

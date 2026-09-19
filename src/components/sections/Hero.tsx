@@ -13,7 +13,11 @@ export default function Hero() {
               What do you need in Makati?
             </h1>
             <p className="mt-5 max-w-2xl text-base md:text-lg leading-relaxed text-gray-700">
-              Find services, offices, barangays, public records and civic tools.
+              Understand Makati. Find what you need. See the source.
+            </p>
+            <p className="mt-2 max-w-2xl text-sm leading-relaxed text-gray-600">
+              Services, offices, barangays, public records, places and civic tools
+              in one independent city guide.
             </p>
 
             <div className="mt-7 flex flex-wrap gap-3">

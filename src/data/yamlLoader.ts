@@ -36,11 +36,6 @@ import healthServicesIndex from '../../content/services/health-services/index.ya
 import educationIndex from '../../content/services/education/index.yaml?raw';
 import businessIndex from '../../content/services/business/index.yaml?raw';
 import socialWelfareIndex from '../../content/services/social-welfare/index.yaml?raw';
-import agricultureFisheriesIndex from '../../content/services/agriculture-fisheries/index.yaml?raw';
-import infrastructurePublicWorksIndex from '../../content/services/infrastructure-public-works/index.yaml?raw';
-import garbageWasteDisposalIndex from '../../content/services/garbage-waste-disposal/index.yaml?raw';
-import environmentIndex from '../../content/services/environment/index.yaml?raw';
-import disasterPreparednessIndex from '../../content/services/disaster-preparedness/index.yaml?raw';
 import housingLandUseIndex from '../../content/services/housing-land-use/index.yaml?raw';
 import governmentDepartmentsIndex from '../../content/government/departments/index.yaml?raw';
 import governmentDepartmentsLegislativeIndex from '../../content/government/departments/legislative/index.yaml?raw';
@@ -51,11 +46,6 @@ const categoryIndexMap: { [key: string]: string } = {
   education: educationIndex,
   business: businessIndex,
   'social-welfare': socialWelfareIndex,
-  'agriculture-fisheries': agricultureFisheriesIndex,
-  'infrastructure-public-works': infrastructurePublicWorksIndex,
-  'garbage-waste-disposal': garbageWasteDisposalIndex,
-  environment: environmentIndex,
-  'disaster-preparedness': disasterPreparednessIndex,
   'housing-land-use': housingLandUseIndex,
   departments: governmentDepartmentsIndex,
   legislative: governmentDepartmentsLegislativeIndex,

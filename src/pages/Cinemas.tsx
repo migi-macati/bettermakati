@@ -2,6 +2,8 @@ import { ExternalLink, Film, MapPin } from 'lucide-react';
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
 import SEO from '../components/SEO';
+import LastReviewed from '../components/ui/LastReviewed';
+import SharePage from '../components/ui/SharePage';
 
 const cinemas = [
   {
@@ -55,7 +57,11 @@ export default function Cinemas() {
       />
       <Section className="bg-[#fffdf8]">
         <div className="section-eyebrow">Visit Makati</div>
-        <Heading>Cinemas</Heading>
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+          <Heading>Cinemas</Heading>
+          <SharePage title="Cinemas in Makati | BetterMakati" />
+        </div>
+        <LastReviewed note="Showtimes change daily; use the linked cinema or schedule source for current sessions." />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
           {cinemas.map(cinema => (

@@ -1,7 +1,9 @@
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, Database, Download } from 'lucide-react';
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
 import SEO from '../components/SEO';
+import LastReviewed from '../components/ui/LastReviewed';
+import SharePage from '../components/ui/SharePage';
 import { HorizontalBarChart } from '../components/budget/BudgetCharts';
 import CityComparison from '../components/statistics/CityComparison';
 
@@ -37,16 +39,36 @@ const populationTrend = [
 
 const people = (value: number) => new Intl.NumberFormat('en-PH').format(value);
 
+const populationCsv = [
+  'Census year,Population,Annual growth percent',
+  ...populationTrend.map(item =>
+    [item.year, item.population, item.annualGrowth ?? ''].join(',')
+  ),
+].join('\n');
+
 export default function Statistics() {
   return (
     <>
       <SEO
         title="Makati Statistics"
         description="Current basic Makati City statistics from the Philippine Statistics Authority."
+        jsonLd={{
+          '@context': 'https://schema.org',
+          '@type': 'Dataset',
+          name: 'BetterMakati city statistics',
+          description:
+            'Population and economic indicators for Makati City with source links and comparable definitions.',
+          spatialCoverage: 'Makati City, Philippines',
+          temporalCoverage: '2010/2024',
+        }}
       />
       <Section className="bg-[#fffdf8]">
         <div className="section-eyebrow">City Information</div>
-        <Heading>Makati Statistics</Heading>
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+          <Heading>Makati Statistics</Heading>
+          <SharePage title="Makati Statistics | BetterMakati" />
+        </div>
+        <LastReviewed note="Population and GDP figures use PSA sources and stated geographic definitions." />
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
           {stats.map(stat => (
@@ -130,7 +152,7 @@ export default function Statistics() {
           </div>
         </div>
 
-        <div className="mt-8">
+        <div className="mt-8 flex flex-wrap gap-3">
           <a
             href={populationSource}
             target="_blank"
@@ -139,11 +161,37 @@ export default function Statistics() {
           >
             Open the full PSA population table
           </a>
+          <a
+            href={`data:text/csv;charset=utf-8,${encodeURIComponent(populationCsv)}`}
+            download="makati-population-2010-2024.csv"
+            className="brand-btn-secondary"
+          >
+            <Download className="h-4 w-4" /> Download CSV
+          </a>
         </div>
       </Section>
 
       <Section className="bg-[#f5f8f2]">
         <CityComparison />
+      </Section>
+
+      <Section className="bg-white">
+        <div className="section-eyebrow">BetterMakati data</div>
+        <Heading level={2}>Explore related city datasets</Heading>
+        <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {[
+            ['Population', '/barangays', 'Barangay counts and profiles'],
+            ['City finance', '/projects-budget', 'Budgets, actuals and projects'],
+            ['Elections', '/elections', 'Turnout and 2025 local results'],
+            ['Historical data', '/history', 'Sourced chronology and downloadable records'],
+          ].map(([title, href, description]) => (
+            <a key={title} href={href} className="rounded-2xl border border-gray-200 bg-white p-5 hover:border-primary-300">
+              <Database className="h-5 w-5 text-primary-700" />
+              <h3 className="mt-3 font-extrabold text-gray-950">{title}</h3>
+              <p className="mt-1 text-sm text-gray-600">{description}</p>
+            </a>
+          ))}
+        </div>
       </Section>
     </>
   );

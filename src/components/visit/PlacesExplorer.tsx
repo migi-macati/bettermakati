@@ -30,6 +30,7 @@ export default function PlacesExplorer() {
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState<PlaceResult[]>([]);
   const [liveResults, setLiveResults] = useState(false);
+  const [fallbackNeeded, setFallbackNeeded] = useState(false);
 
   const search = async (value: string) => {
     const nextQuery = value.trim();
@@ -37,11 +38,14 @@ export default function PlacesExplorer() {
 
     setQuery(nextQuery);
     setLoading(true);
+    setFallbackNeeded(false);
 
     try {
       const response = await fetch(`/api/places?q=${encodeURIComponent(nextQuery)}`);
       if (!response.ok) {
-        window.open(mapsSearchUrl(nextQuery), '_blank', 'noopener,noreferrer');
+        setResults([]);
+        setLiveResults(false);
+        setFallbackNeeded(true);
         return;
       }
 
@@ -49,14 +53,19 @@ export default function PlacesExplorer() {
       const nextResults = Array.isArray(data.places) ? data.places : [];
 
       if (!data.enabled || nextResults.length === 0) {
-        window.open(mapsSearchUrl(nextQuery), '_blank', 'noopener,noreferrer');
+        setResults([]);
+        setLiveResults(false);
+        setFallbackNeeded(true);
         return;
       }
 
       setResults(nextResults);
       setLiveResults(true);
+      setFallbackNeeded(false);
     } catch {
-      window.open(mapsSearchUrl(nextQuery), '_blank', 'noopener,noreferrer');
+      setResults([]);
+      setLiveResults(false);
+      setFallbackNeeded(true);
     } finally {
       setLoading(false);
     }
@@ -128,6 +137,13 @@ export default function PlacesExplorer() {
             ))}
           </div>
         </div>
+      )}
+
+      {fallbackNeeded && (
+        <p className="mt-4 rounded-xl border border-secondary-200 bg-secondary-50 p-3 text-sm text-secondary-900" role="status">
+          Live place results are unavailable here. Open the same search in
+          Google Maps instead.
+        </p>
       )}
 
       {!liveResults && (

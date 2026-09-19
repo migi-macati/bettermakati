@@ -69,12 +69,12 @@ export default function News() {
   return (
     <>
       <SEO
-        title="News & Events"
+        title="Makati in the News"
         description="Official Makati City news, events and automatically refreshed Makati news links."
       />
       <Section className="bg-[#fffdf8]">
         <div className="section-eyebrow">City Information</div>
-        <Heading>News & Events</Heading>
+        <Heading>Makati in the News</Heading>
 
         <div className="mt-8 rounded-2xl border border-primary-100 bg-primary-50 p-5 md:p-6">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">

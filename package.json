@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "npm run generate:site && npm run check:content && tsc -b && vite build && node scripts/postbuild-routes.mjs",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
@@ -17,7 +17,10 @@
     "setup": "node scripts/setup-starter-kit.js",
     "index-content": "node scripts/index-content.mjs",
     "update:news": "node scripts/update-news-snapshot.mjs",
-    "check:sources": "node scripts/check-sources.mjs"
+    "check:sources": "node scripts/check-sources.mjs",
+    "generate:site": "node scripts/generate-site-files.mjs",
+    "check:content": "node scripts/check-content.mjs",
+    "check:links": "node scripts/check-links.mjs"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [

@@ -8,11 +8,18 @@ import {
   type Subcategory,
   type CategoryIndex,
 } from '../data/yamlLoader';
-import * as LucideIcons from 'lucide-react';
+import {
+  Building2,
+  GraduationCap,
+  HeartPulse,
+  House,
+  Users,
+} from 'lucide-react';
 import Breadcrumbs from '../components/ui/Breadcrumbs';
 import ServicesSection from '../components/home/ServicesSection';
 import ServiceSearch from '../components/home/ServiceSearch';
 import SEO from '../components/SEO';
+import LastReviewed from '../components/ui/LastReviewed';
 import { Card, CardContent } from '@bettergov/kapwa/card';
 import { Banner } from '@bettergov/kapwa/banner';
 import { useState, useEffect } from 'react';
@@ -27,9 +34,14 @@ const Services: React.FC = () => {
   const subcategories: Subcategory[] = categoryIndex.pages;
 
   const categoryData = serviceCategories.categories.find(c => c.slug === category);
-  const Icon = LucideIcons[
-    categoryData?.icon as keyof typeof LucideIcons
-  ] as React.ComponentType<{ className?: string }>;
+  const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
+    Building2,
+    HeartPulse,
+    GraduationCap,
+    Users,
+    House,
+  };
+  const Icon = categoryData?.icon ? iconMap[categoryData.icon] : undefined;
 
   useEffect(() => {
     if (category && categoryData) {
@@ -53,7 +65,11 @@ const Services: React.FC = () => {
           <div className="max-w-3xl mx-auto">
             <div className="section-eyebrow">Services</div>
             <Heading>What do you need?</Heading>
-            <Text className="text-gray-600 mb-6">Search by service, document, benefit or task.</Text>
+            <Text className="text-gray-600 mb-3">Search by service, document, benefit or task.</Text>
+            <LastReviewed
+              note="BetterMakati summarizes public information; confirm fees, deadlines and transactions with the linked official source."
+              className="mb-6"
+            />
             <ServiceSearch scope="services" />
           </div>
         </Section>
@@ -114,7 +130,11 @@ const Services: React.FC = () => {
         <Breadcrumbs className="mb-8" />
         {Icon && <Icon className="h-8 w-8 mb-4 text-primary-600 rounded-md" />}
         <Heading>{categoryData.category}</Heading>
-        <Text className="text-gray-600 mb-6">{categoryData.description}</Text>
+        <Text className="text-gray-600 mb-3">{categoryData.description}</Text>
+        <LastReviewed
+          note="Time-sensitive service requirements may change."
+          className="mb-6"
+        />
 
         {loading ? (
           <div className="flex justify-center items-center p-8">

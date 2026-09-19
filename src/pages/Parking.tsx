@@ -3,6 +3,7 @@ import { CarFront, ExternalLink, MapPin, ParkingCircle } from 'lucide-react';
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
 import SEO from '../components/SEO';
+import SharePage from '../components/ui/SharePage';
 
 const popularAreas = [
   'Ayala Center Makati',
@@ -35,12 +36,18 @@ export default function Parking() {
 
       <Section className="bg-[#fffdf8]">
         <div className="section-eyebrow">Visit Makati</div>
-        <Heading>Find parking</Heading>
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+          <div>
+            <Heading>Search parking nearby</Heading>
+            <p className="max-w-3xl text-gray-600">Search current map listings near a Makati destination. Rates, access and operating hours remain with each parking facility.</p>
+          </div>
+          <SharePage title="Parking in Makati | BetterMakati" />
+        </div>
 
         <form onSubmit={submit} className="mt-8 rounded-2xl border border-gray-200 bg-white p-6 max-w-3xl">
           <div className="flex items-center gap-2 font-bold text-gray-950">
             <ParkingCircle className="h-5 w-5 text-primary-700" />
-            Search near a destination
+            Search map listings near a destination
           </div>
           <div className="mt-4 flex gap-2">
             <input

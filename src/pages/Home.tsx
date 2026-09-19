@@ -88,41 +88,29 @@ const visitPaths = [
     icon: Compass,
   },
   {
-    label: 'Eat & drink',
-    description: 'Restaurants, cafés, markets and nightlife.',
-    href: '/visit',
-    icon: UtensilsCrossed,
-  },
-  {
     label: 'Getting around',
     description: 'Public transport, directions and ride-hailing.',
     href: '/mobility',
     icon: Bus,
   },
   {
-    label: 'Cinemas',
-    description: 'Movie theaters and showtime links.',
-    href: '/cinemas',
-    icon: Film,
-  },
-  {
-    label: 'Parking',
-    description: 'Find parking near your destination.',
-    href: '/parking',
-    icon: ParkingCircle,
-  },
-  {
     label: 'What’s on',
-    description: 'Events, activities and entertainment.',
+    description: 'Current events, activities and entertainment sources.',
     href: '/whats-on',
     icon: CalendarDays,
   },
   {
     label: 'Heritage & history',
-    description: 'Historic sites, cultural places and the Makati timeline.',
+    description: 'Historic sites, self-guided routes and the Makati timeline.',
     href: '/heritage',
     icon: Church,
   },
+];
+
+const visitShortcuts = [
+  { label: 'Eat & drink', href: '/visit', icon: UtensilsCrossed },
+  { label: 'Cinemas', href: '/cinemas', icon: Film },
+  { label: 'Parking', href: '/parking', icon: ParkingCircle },
 ];
 
 const cityPaths = [
@@ -286,7 +274,7 @@ const Home: React.FC = () => {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {visitPaths.map(item => {
               const Icon = item.icon;
               return (
@@ -303,6 +291,22 @@ const Home: React.FC = () => {
                   <span className="inline-flex items-center gap-1 text-sm font-bold text-primary-700 mt-4">
                     Open <ArrowRight className="h-4 w-4" />
                   </span>
+                </Link>
+              );
+            })}
+          </div>
+
+          <div className="mt-5 flex flex-wrap gap-2">
+            {visitShortcuts.map(item => {
+              const Icon = item.icon;
+              return (
+                <Link
+                  key={item.label}
+                  to={item.href}
+                  className="inline-flex min-h-11 items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-bold text-primary-800 hover:border-primary-300 hover:bg-primary-50"
+                >
+                  <Icon className="h-4 w-4" aria-hidden="true" />
+                  {item.label}
                 </Link>
               );
             })}
@@ -333,7 +337,7 @@ const Home: React.FC = () => {
             ))}
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mt-8">
             {cityPaths.map(item => {
               const Icon = item.icon;
               return (

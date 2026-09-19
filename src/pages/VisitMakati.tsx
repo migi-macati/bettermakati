@@ -5,6 +5,8 @@ import { Heading } from '../components/ui/Heading';
 import PlacesExplorer from '../components/visit/PlacesExplorer';
 import { visitorPlaces } from '../data/visitMakati';
 import SEO from '../components/SEO';
+import LastReviewed from '../components/ui/LastReviewed';
+import SharePage from '../components/ui/SharePage';
 
 const mapsUrl = (query: string) =>
   `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
@@ -19,7 +21,17 @@ export default function VisitMakati() {
 
       <Section className="bg-[#fffdf8]">
         <div className="section-eyebrow">Visit Makati</div>
-        <Heading>Explore the city</Heading>
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+          <div>
+            <Heading>Explore the city</Heading>
+            <p className="max-w-3xl text-gray-600">
+              Start with Makati&apos;s major districts, markets, parks, culture
+              and practical visitor tools.
+            </p>
+          </div>
+          <SharePage title="Visit Makati | BetterMakati" />
+        </div>
+        <LastReviewed note="Place details and operating conditions can change; current map and official links are provided." />
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_0.95fr] gap-8 mt-8 items-start">
           <div>
@@ -113,7 +125,7 @@ export default function VisitMakati() {
           <Link to="/history" className="rounded-2xl border border-primary-100 bg-white p-6 hover:border-primary-300 hover:shadow-sm transition">
             <Map className="h-7 w-7 text-primary-700" />
             <h2 className="font-extrabold text-xl text-gray-950 mt-4">History of Makati</h2>
-            <p className="text-sm text-gray-600 mt-2">A timeline from San Pedro Makati to the modern city.</p>
+            <p className="text-sm text-gray-600 mt-2">A timeline from San Pedro Macati to the modern city.</p>
             <span className="inline-flex items-center gap-1 text-sm font-bold text-primary-700 mt-5">
               View timeline <ArrowRight className="h-4 w-4" />
             </span>

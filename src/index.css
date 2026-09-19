@@ -499,3 +499,13 @@ body {
   border-color: #57ad73;
   box-shadow: 0 0 0 3px rgba(87, 173, 115, 0.16);
 }
+
+
+/* Google Maps Platform text attribution fallback. */
+.GMP-attribution {
+  color: #5f6368;
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 12px;
+  line-height: 1.2;
+  white-space: nowrap;
+}

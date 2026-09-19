@@ -36,9 +36,6 @@ export default function CommunityToolsGrid({
               <span className={statusClass[tool.status]}>{tool.status}</span>
             </div>
             <div className="mt-5">
-              <div className="text-xs font-bold text-gray-400 mb-1">
-                {String(tool.priority).padStart(2, '0')}
-              </div>
               <h3 className="text-lg font-extrabold text-gray-950">{tool.name}</h3>
               <p className="text-sm text-gray-600 mt-2 leading-relaxed">{tool.summary}</p>
             </div>

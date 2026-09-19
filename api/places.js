@@ -3,10 +3,39 @@ const MAKATI_CENTER = {
   longitude: 121.0244,
 };
 
+const WINDOW_MS = 60_000;
+const MAX_REQUESTS = 30;
+const rateBuckets = globalThis.__betterMakatiPlaceRateBuckets || new Map();
+globalThis.__betterMakatiPlaceRateBuckets = rateBuckets;
+
+const clientIp = req => {
+  const forwarded = String(req.headers['x-forwarded-for'] || '').split(',')[0].trim();
+  return forwarded || String(req.socket?.remoteAddress || 'unknown');
+};
+
+const allowed = req => {
+  const key = clientIp(req);
+  const now = Date.now();
+  const current = rateBuckets.get(key);
+  if (!current || now - current.startedAt >= WINDOW_MS) {
+    rateBuckets.set(key, { startedAt: now, count: 1 });
+    return true;
+  }
+  current.count += 1;
+  return current.count <= MAX_REQUESTS;
+};
+
 export default async function handler(req, res) {
   if (req.method !== 'GET') {
     res.setHeader('Allow', 'GET');
     return res.status(405).json({ error: 'Method not allowed' });
+  }
+
+  res.setHeader('Cache-Control', 'no-store');
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+
+  if (!allowed(req)) {
+    return res.status(429).json({ error: 'Too many place searches. Please try again shortly.' });
   }
 
   const key = process.env.GOOGLE_MAPS_API_KEY;
@@ -17,7 +46,7 @@ export default async function handler(req, res) {
   const rawQuery = Array.isArray(req.query.q) ? req.query.q[0] : req.query.q;
   const query = String(rawQuery || '').trim().slice(0, 80);
 
-  if (!query) {
+  if (!query || query.length < 2) {
     return res.status(400).json({ enabled: true, places: [] });
   }
 
@@ -63,7 +92,6 @@ export default async function handler(req, res) {
         mapsUrl: place.googleMapsUri || '',
       }));
 
-    res.setHeader('Cache-Control', 'no-store');
     return res.status(200).json({ enabled: true, places });
   } catch {
     return res.status(500).json({ enabled: true, places: [] });

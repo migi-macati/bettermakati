@@ -10,6 +10,9 @@ import {
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
 import SEO from '../components/SEO';
+import LastReviewed from '../components/ui/LastReviewed';
+import SharePage from '../components/ui/SharePage';
+import SectionNav from '../components/ui/SectionNav';
 import {
   election2025CouncilWinners,
   election2025Electorate,
@@ -71,12 +74,32 @@ export default function Elections() {
       <SEO
         title="Elections & Voting"
         description="Neutral voter information, 2025 Makati election results, dates and official COMELEC sources."
+        jsonLd={{
+          '@context': 'https://schema.org',
+          '@type': 'Dataset',
+          name: '2025 Makati local election results',
+          description:
+            'Makati mayor, vice mayor, congressional and city-council results with turnout and source links.',
+          spatialCoverage: 'Makati City, Philippines',
+          temporalCoverage: '2025',
+        }}
       />
 
-      <Section className="bg-[#fffdf8]">
+      <Section id="election-guide" className="bg-[#fffdf8]">
         <div className="section-eyebrow">Civic information</div>
-        <Heading>Elections & Voting</Heading>
-        <p className="mt-3 max-w-3xl text-gray-700 leading-relaxed">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+          <Heading>Elections & Voting</Heading>
+          <SharePage title="Elections & Voting | BetterMakati" />
+        </div>
+        <LastReviewed note="Election dates and results are linked to COMELEC sources." />
+        <SectionNav items={[
+          { label: '2025 results', href: '#results-2025' },
+          { label: 'Council', href: '#council-results' },
+          { label: '2026 BSKE', href: '#bske-2026' },
+          { label: 'Voter tools', href: '#voter-tools' },
+          { label: 'Candidates', href: '#candidates' },
+        ]} />
+        <p className="mt-5 max-w-3xl text-gray-700 leading-relaxed">
           A neutral guide to voting and election results in Makati. Dates,
           candidate records and precinct information should be checked against
           COMELEC before acting. BetterMakati does not endorse candidates or
@@ -114,7 +137,7 @@ export default function Elections() {
         </div>
       </Section>
 
-      <Section className="bg-white">
+      <Section id="results-2025" className="bg-white">
         <div className="section-eyebrow">Latest completed election</div>
         <Heading level={2}>2025 Makati election results</Heading>
         <p className="mt-3 max-w-4xl text-sm leading-relaxed text-gray-600">
@@ -233,7 +256,7 @@ export default function Elections() {
           })}
         </div>
 
-        <div className="mt-10">
+        <div id="council-results" className="mt-10 scroll-mt-28">
           <div className="section-eyebrow">City Council</div>
           <Heading level={3}>Elected councilors</Heading>
           <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-600">
@@ -331,7 +354,7 @@ export default function Elections() {
         </div>
       </Section>
 
-      <Section className="bg-[#f5f8f2]">
+      <Section id="bske-2026" className="bg-[#f5f8f2]">
         <div className="section-eyebrow">2026 BSKE</div>
         <Heading level={2}>Key dates</Heading>
         <div className="mt-7 grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -362,7 +385,7 @@ export default function Elections() {
         </div>
       </Section>
 
-      <Section className="bg-white">
+      <Section id="voter-tools" className="bg-white">
         <div className="section-eyebrow">Before election day</div>
         <Heading level={2}>Check your record and polling place</Heading>
         <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -412,7 +435,7 @@ export default function Elections() {
         </div>
       </Section>
 
-      <Section className="bg-[#fffdf8]">
+      <Section id="candidates" className="bg-[#fffdf8]">
         <div className="section-eyebrow">Candidates</div>
         <Heading level={2}>Candidate information</Heading>
         <p className="mt-3 max-w-3xl text-gray-700 leading-relaxed">

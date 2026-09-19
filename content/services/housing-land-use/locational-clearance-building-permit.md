@@ -13,3 +13,11 @@ The guide includes:
 - completed building-permit application forms.
 
 Additional requirements depend on the project and location.
+
+## Practical sequence
+
+The locational-clearance requirement comes before building-permit issuance. Start with the current city forms and project plans, then follow the review sequence stated by the permitting offices for the specific property and project type.
+
+## Before filing
+
+Confirm whether the project has additional technical, ownership, zoning, fire-safety or special-location requirements. BetterMakati summarizes the published guide but does not determine whether a proposed project is approvable.

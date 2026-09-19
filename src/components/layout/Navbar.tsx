@@ -69,18 +69,25 @@ const Navbar: React.FC = () => {
                   <Link
                     to={item.href}
                     aria-haspopup={item.children ? 'menu' : undefined}
+                    aria-expanded={item.children ? activeMenu === item.label : undefined}
+                    onFocus={() => item.children && setActiveMenu(item.label)}
                     className="flex items-center text-[14px] text-gray-700 hover:text-primary-700 focus-visible:text-primary-700 font-semibold transition-colors whitespace-nowrap"
                   >
                     {item.label}
                     {item.children && <ChevronDown className="ml-1 h-4 w-4" />}
                   </Link>
                   {item.children && (
-                    <div className="absolute left-0 mt-3 w-64 rounded-xl shadow-xl bg-white border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-150 z-50 overflow-hidden">
+                    <div
+                      role="menu"
+                      aria-label={item.label}
+                      className="absolute left-0 mt-3 w-64 rounded-xl shadow-xl bg-white border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-150 z-50 overflow-hidden"
+                    >
                       <div className="py-2">
                         {item.children.map(child => (
                           <Link
                             key={child.label}
                             to={child.href}
+                            role="menuitem"
                             className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-primary-50 hover:text-primary-800"
                           >
                             {child.label}
@@ -92,11 +99,10 @@ const Navbar: React.FC = () => {
                 </div>
               ))}
               <Link
-                to="/community-tools/saan-ako-lalapit"
+                to="/search"
                 className="inline-flex items-center gap-1.5 rounded-full border border-primary-200 bg-primary-50 px-3 py-2 text-xs font-bold text-primary-800 hover:border-primary-500 focus-visible:border-primary-700"
               >
-                <Search className="h-3.5 w-3.5" aria-hidden="true" /> Find a
-                service
+                <Search className="h-3.5 w-3.5" aria-hidden="true" /> Search
               </Link>
             </div>
 
@@ -129,6 +135,8 @@ const Navbar: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => toggleSubmenu(item.label)}
+                      aria-expanded={activeMenu === item.label}
+                      aria-controls={`mobile-submenu-${item.label.replace(/\s+/g, '-').toLowerCase()}`}
                       className="w-full flex justify-between items-center px-4 py-2.5 text-base font-semibold text-gray-700"
                     >
                       {item.label}
@@ -137,7 +145,10 @@ const Navbar: React.FC = () => {
                       />
                     </button>
                     {activeMenu === item.label && (
-                      <div className="ml-3 border-l border-primary-200 pl-3 py-1">
+                      <div
+                        id={`mobile-submenu-${item.label.replace(/\s+/g, '-').toLowerCase()}`}
+                        className="ml-3 border-l border-primary-200 pl-3 py-1"
+                      >
                         <Link
                           to={item.href}
                           onClick={closeMenu}
@@ -179,11 +190,11 @@ const Navbar: React.FC = () => {
               Official Makati site <ExternalLink className="h-3.5 w-3.5" />
             </a>
             <Link
-              to="/community-tools/saan-ako-lalapit"
+              to="/search"
               onClick={closeMenu}
               className="flex items-center gap-2 px-4 py-2.5 text-sm font-bold text-primary-800"
             >
-              <Search className="h-4 w-4" aria-hidden="true" /> Find a service
+              <Search className="h-4 w-4" aria-hidden="true" /> Search BetterMakati
             </Link>
           </div>
         </div>

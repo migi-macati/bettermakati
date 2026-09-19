@@ -101,13 +101,15 @@ export default function ServiceSearch({
   scope = 'site',
   title,
   placeholder,
+  initialQuery = '',
 }: {
   scope?: SearchScope;
   title?: string;
   placeholder?: string;
+  initialQuery?: string;
 }) {
   const tabs = scope === 'services' ? serviceTabs : siteTabs;
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState(initialQuery);
   const [tab, setTab] = useState<string>('All');
   const [open, setOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -254,9 +256,11 @@ export default function ServiceSearch({
               onKeyDown={handleKeyDown}
               placeholder={inputPlaceholder}
               autoComplete="off"
+              role="combobox"
               aria-autocomplete="list"
+              aria-haspopup="listbox"
               aria-expanded={open}
-              aria-controls="search-results"
+              aria-controls={`search-results-${scope}`}
               aria-activedescendant={
                 open && visibleResults[activeIndex]
                   ? `search-result-${scope}-${activeIndex}`
@@ -293,8 +297,8 @@ export default function ServiceSearch({
 
       {open && (
         <div
-          id="search-results"
-          role="listbox"
+          id={`search-results-${scope}`}
+          aria-label={heading + ' results'}
           className="absolute left-5 right-5 md:left-6 md:right-6 top-[118px] z-40 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-[0_24px_55px_rgba(26,43,32,0.22)]"
         >
           <div className="overflow-x-auto border-b border-gray-200 px-3 py-3">
@@ -319,7 +323,11 @@ export default function ServiceSearch({
             </div>
           </div>
 
-          <div className="max-h-[360px] overflow-y-auto">
+          <div
+            className="max-h-[360px] overflow-y-auto"
+            role="listbox"
+            aria-label={heading + ' matches'}
+          >
             {visibleResults.length > 0 ? (
               visibleResults.map((item, index) => (
                 <button
@@ -356,8 +364,21 @@ export default function ServiceSearch({
                   No matching result
                 </div>
                 <p className="mt-1 text-sm text-gray-500">
-                  Try another keyword.
+                  Try another keyword, or tell BetterMakati what information is missing.
                 </p>
+                <button
+                  type="button"
+                  onClick={() =>
+                    navigate(
+                      '/get-involved?type=idea&tool=saan-ako-lalapit&subject=' +
+                        encodeURIComponent('Missing search result: ' + query) +
+                        '#submission'
+                    )
+                  }
+                  className="mt-3 text-sm font-bold text-primary-700 underline underline-offset-2"
+                >
+                  Report a missing result
+                </button>
               </div>
             )}
           </div>

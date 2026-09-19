@@ -70,5 +70,29 @@
     "label": "COMELEC 2025 election results portal",
     "url": "https://2025electionresults.comelec.gov.ph/",
     "kind": "election-results"
+  },
+  {
+    "id": "makati-legislation",
+    "label": "Makati resolutions and ordinances archive",
+    "url": "https://www.makati.gov.ph/content/resolutions-and-ordinances/author",
+    "kind": "legislation"
+  },
+  {
+    "id": "makati-action-center",
+    "label": "Makati Action Center Citizen's Charter",
+    "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/481/pdf/Makati%20Action%20Center.pdf",
+    "kind": "services"
+  },
+  {
+    "id": "macea-circulars",
+    "label": "MACEA circulars and advisories",
+    "url": "https://macea.com.ph/memorandum-circular/",
+    "kind": "estate-advisory"
+  },
+  {
+    "id": "mrt3",
+    "label": "MRT-3 official information",
+    "url": "https://www.dotrmrt3.gov.ph/about-us",
+    "kind": "mobility"
   }
 ]
