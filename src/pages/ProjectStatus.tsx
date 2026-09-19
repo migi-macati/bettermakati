@@ -141,9 +141,9 @@ export default function ProjectStatus() {
       icon: Database,
     },
     {
-      label: 'Doctrine gaps',
+      label: 'Methodology gaps',
       value: knownDoctrineGaps.toLocaleString('en-PH'),
-      detail: 'Open items across the five radicals and enabling foundations',
+      detail: 'Open items in the BetterMakati methodology audit',
       icon: Gauge,
     },
   ];
