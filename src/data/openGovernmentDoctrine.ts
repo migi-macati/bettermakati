@@ -293,14 +293,15 @@ export const doctrineFoundations: DoctrineFoundation[] = [
     name: 'Evaluation',
     description:
       'Open-government initiatives should publish whether they are working, for whom, and where they are falling short.',
-    status: 'early',
+    status: 'partial',
     evidence: [
       'Living doctrine audit',
+      'Public BetterMakati Status page',
       'Source-watch history',
       'Public project workflow',
+      'Published list of performance measures not yet collected',
     ],
     gaps: [
-      'No public BetterMakati performance dashboard yet',
       'No outcome measures for participation, search success, correction time or coverage completeness yet',
     ],
   },
@@ -346,9 +347,9 @@ export const oecdProvisionAudit: OecdProvisionAudit[] = [
   {
     number: 5,
     title: 'Monitoring, evaluation and learning',
-    status: 'early',
+    status: 'partial',
     betterMakatiRole:
-      'Source monitoring and this living self-audit provide an initial public learning loop.',
+      'Source monitoring, the living doctrine audit and a public BetterMakati Status page provide an initial public learning loop.',
     institutionalDependency:
       'Government program outcomes and official reform evaluation require access to institutional performance evidence.',
   },
