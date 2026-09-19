@@ -88,21 +88,19 @@ export default function Accountability() {
       />
 
       <Section className="bg-[#fffdf8]">
-        <div className="section-eyebrow">Radical accountability</div>
+        <div className="section-eyebrow">Public follow-through</div>
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
             <Heading>Accountability Ledger</Heading>
             <p className="max-w-3xl text-gray-700">
-              Follow what the public record says was planned, who or which office
-              is responsible, what later evidence reports, and what BetterMakati
-              still cannot establish.
+              Track plans, responsible bodies, targets, later evidence and known gaps.
             </p>
           </div>
           <SharePage title="Makati Accountability Ledger | BetterMakati" />
         </div>
         <LastReviewed
           date={accountabilityReviewed}
-          note="No politician or office is scored or graded. The record is shown; citizens make the judgment."
+          note="Records are sourced; no ratings are assigned."
         />
         <div className="mt-4">
           <a
@@ -116,10 +114,7 @@ export default function Accountability() {
 
         {barangayContext && (
           <div className="mt-6 rounded-xl border border-secondary-200 bg-secondary-50 p-4 text-sm text-gray-700">
-            Local context requested: <strong>{barangayContext.replaceAll('-', ' ')}</strong>.
-            The ledger currently shows citywide records unless a source can
-            reliably tag a record to a specific barangay. BetterMakati will not
-            infer project geography from a title alone.
+            Local context: <strong>{barangayContext.replaceAll('-', ' ')}</strong>. Citywide records remain visible until a source supports a barangay tag.
           </div>
         )}
 
@@ -317,11 +312,10 @@ export default function Accountability() {
       </Section>
 
       <Section className="bg-[#f5f8f2]">
-        <div className="section-eyebrow">Radical transparency includes absence</div>
-        <Heading level={2}>What BetterMakati still cannot establish</Heading>
+        <div className="section-eyebrow">Coverage</div>
+        <Heading level={2}>Coverage gaps</Heading>
         <p className="max-w-3xl text-sm leading-relaxed text-gray-700">
-          These are gaps in BetterMakati&apos;s current public-record coverage,
-          not accusations that the underlying activity did not occur.
+          Missing links in the current public-record index.
         </p>
 
         <div className="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-4">
@@ -334,9 +328,6 @@ export default function Accountability() {
               <h3 className="mt-3 font-extrabold text-gray-950">{gap.title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-gray-600">
                 {gap.description}
-              </p>
-              <p className="mt-3 text-sm leading-relaxed text-gray-700">
-                <strong>Why this matters:</strong> {gap.whyItMatters}
               </p>
               <div className="mt-3 text-xs text-gray-500">
                 Last checked: {gap.lastChecked}
