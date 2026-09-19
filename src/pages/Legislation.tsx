@@ -1,4 +1,5 @@
 import { FormEvent, useState } from 'react';
+import { Link } from 'react-router';
 import {
   BookOpen,
   ExternalLink,
@@ -63,6 +64,11 @@ export default function Legislation() {
           <SharePage title="Makati Legislation | BetterMakati" />
         </div>
         <LastReviewed note="BetterMakati does not replace the official legislative record." />
+        <div className="mt-5">
+          <Link to="/city-monitor" className="brand-btn-primary">
+            Track legislative lifecycle in City Monitor
+          </Link>
+        </div>
 
         <form
           onSubmit={submit}
@@ -190,9 +196,9 @@ export default function Legislation() {
             opportunities it can source and explicitly shows when a complete
             current hearing or consultation calendar has not been located.
           </p>
-          <a href="/participate" className="brand-btn-primary mt-5">
+          <Link to="/participate" className="brand-btn-primary mt-5">
             Open Participation Hub
-          </a>
+          </Link>
         </div>
       </Section>
     </>

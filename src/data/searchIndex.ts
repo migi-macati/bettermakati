@@ -514,6 +514,24 @@ const toolItems: SearchItem[] = [
 
 const radicalCivicItems: SearchItem[] = [
   {
+    title: 'City Monitor',
+    group: 'Record',
+    category: 'Government activity',
+    description: 'Daily-monitored official activity across council, legislation, speeches, procurement, projects, publications and consultations.',
+    href: '/city-monitor',
+    keywords: 'city monitor council session legislation ordinance resolution speech mayor SOCA procurement bidding award publication consultation official activity',
+    featured: true,
+  },
+  {
+    title: 'Civic Briefs',
+    group: 'Tool',
+    category: 'Government activity',
+    description: 'Daily, weekly and monthly BetterMakati digests from City Monitor, with RSS and newsletter delivery infrastructure.',
+    href: '/briefs',
+    keywords: 'newsletter daily brief weekly makati brief monthly state of makati rss city monitor digest',
+    featured: true,
+  },
+  {
     title: 'Open Government Doctrine',
     group: 'Record',
     category: 'Open Government',

@@ -7,6 +7,8 @@ export const mainNavigation: NavigationItem[] = [
     href: '/today',
     children: [
       { label: 'Today in Makati', href: '/today' },
+      { label: 'City Monitor', href: '/city-monitor' },
+      { label: 'Civic Briefs', href: '/briefs' },
       { label: 'Live Makati', href: '/live' },
       { label: 'Makati in the News', href: '/news' },
       { label: 'What’s On', href: '/whats-on' },
@@ -18,6 +20,8 @@ export const mainNavigation: NavigationItem[] = [
     href: '/government',
     children: [
       { label: 'Government', href: '/government' },
+      { label: 'City Monitor', href: '/city-monitor' },
+      { label: 'Civic Briefs', href: '/briefs' },
       { label: 'Barangays', href: '/barangays' },
       { label: 'Elections & Voting', href: '/elections' },
       { label: 'Makati Statistics', href: '/statistics' },
@@ -79,6 +83,8 @@ export const footerNavigation = {
       links: [
         { label: 'Services', href: '/services' },
         { label: 'Today in Makati', href: '/today' },
+        { label: 'City Monitor', href: '/city-monitor' },
+        { label: 'Civic Briefs', href: '/briefs' },
         { label: 'Live Makati', href: '/live' },
         { label: 'Visit Makati', href: '/visit' },
         { label: 'Getting Around', href: '/mobility' },
@@ -89,6 +95,8 @@ export const footerNavigation = {
       title: 'Understand & participate',
       links: [
         { label: 'Government', href: '/government' },
+        { label: 'City Monitor', href: '/city-monitor' },
+        { label: 'Civic Briefs', href: '/briefs' },
         { label: 'Barangays', href: '/barangays' },
         { label: 'Elections & Voting', href: '/elections' },
         { label: 'Accountability Ledger', href: '/accountability' },

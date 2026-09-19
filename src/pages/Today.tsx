@@ -58,6 +58,8 @@ export default function Today() {
   const [weather, setWeather] = useState<Weather>({});
   const [news, setNews] = useState<NewsItem[]>([]);
   const [weatherFailed, setWeatherFailed] = useState(false);
+  const [monitorChanges, setMonitorChanges] = useState(0);
+  const [monitorCheckedAt, setMonitorCheckedAt] = useState('');
 
   const barangay = useMemo(
     () => barangays.find(item => item.slug === barangaySlug),
@@ -80,6 +82,18 @@ export default function Today() {
         });
       } catch {
         setWeatherFailed(true);
+      }
+
+      try {
+        const response = await fetch('/city-monitor-source-history.json', { cache: 'no-store' });
+        const data = await response.json();
+        const latest = Array.isArray(data.runs) ? data.runs[0] : undefined;
+        if (latest) {
+          setMonitorChanges(Array.isArray(latest.changed) ? latest.changed.length : 0);
+          setMonitorCheckedAt(latest.checkedAt || '');
+        }
+      } catch {
+        setMonitorChanges(0);
       }
 
       try {
@@ -215,6 +229,30 @@ export default function Today() {
             <div className="mt-3 font-extrabold text-gray-950">Participate</div>
             <p className="mt-1 text-sm text-gray-600">Consultations, community input and public participation gaps.</p>
           </Link>
+        </div>
+      </Section>
+
+      <Section className="bg-white">
+        <div className="section-eyebrow">Official activity</div>
+        <Heading level={2}>City Monitor</Heading>
+        <div className="mt-6 rounded-2xl border border-primary-100 bg-[#fffdf8] p-6">
+          <Radio className="h-5 w-5 text-primary-700" />
+          <div className="mt-3 text-3xl font-extrabold text-gray-950">{monitorChanges}</div>
+          <div className="font-bold text-gray-800">official source changes in the latest check</div>
+          <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600">
+            A detected change is a review signal, not automatically a government
+            action. City Monitor verifies the underlying record before publishing
+            an ordinance stage, award, speech or other structured civic event.
+          </p>
+          {monitorCheckedAt && (
+            <div className="mt-2 text-xs text-gray-500">
+              Latest check: {new Date(monitorCheckedAt).toLocaleString('en-PH')}
+            </div>
+          )}
+          <div className="mt-5 flex flex-wrap gap-3">
+            <Link to="/city-monitor" className="brand-btn-primary">Open City Monitor</Link>
+            <Link to="/briefs" className="brand-btn-secondary">Civic Briefs</Link>
+          </div>
         </div>
       </Section>
 

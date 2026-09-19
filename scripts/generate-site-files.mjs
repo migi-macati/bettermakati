@@ -30,6 +30,8 @@ const staticRoutes = [
   '/open-government',
   '/integrity',
   '/status',
+  '/city-monitor',
+  '/briefs',
   '/barangays',
   '/elections',
   '/estates',
@@ -107,6 +109,60 @@ const xml = [
 
 await mkdir('public', { recursive: true });
 await writeFile('public/sitemap.xml', xml);
+try {
+  const cityMonitorHistory = await readFile('data/city-monitor-source-history.json', 'utf8');
+  await writeFile('public/city-monitor-source-history.json', cityMonitorHistory);
+
+  const parsed = JSON.parse(cityMonitorHistory);
+  const items = (Array.isArray(parsed.runs) ? parsed.runs : [])
+    .flatMap(run =>
+      (Array.isArray(run.changed) ? run.changed : []).map(item => ({
+        ...item,
+        checkedAt: run.checkedAt,
+      }))
+    )
+    .slice(0, 60);
+
+  const xmlEscape = value =>
+    String(value)
+      .replaceAll('&', '&amp;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;')
+      .replaceAll('"', '&quot;')
+      .replaceAll("'", '&apos;');
+
+  const rss = [
+    '<?xml version="1.0" encoding="UTF-8"?>',
+    '<rss version="2.0">',
+    '<channel>',
+    '<title>BetterMakati City Monitor</title>',
+    '<link>' + base + '/city-monitor</link>',
+    '<description>Detected changes in monitored official Makati civic sources. A source change is a review signal, not an interpreted government action.</description>',
+    ...items.map(item => [
+      '<item>',
+      '<title>' + xmlEscape('Official source changed: ' + item.label) + '</title>',
+      '<link>' + xmlEscape(item.url) + '</link>',
+      '<guid isPermaLink="false">' + xmlEscape(item.id + '-' + item.checkedAt) + '</guid>',
+      '<pubDate>' + new Date(item.checkedAt).toUTCString() + '</pubDate>',
+      '<description>' + xmlEscape('BetterMakati detected a content change in the monitored official source. Review the original source before drawing a substantive conclusion.') + '</description>',
+      '</item>',
+    ].join('')),
+    '</channel>',
+    '</rss>',
+    '',
+  ].join('\n');
+  await writeFile('public/city-monitor.rss.xml', rss);
+} catch {
+  await writeFile(
+    'public/city-monitor-source-history.json',
+    JSON.stringify({ version: 1, runs: [] }, null, 2) + '\n'
+  );
+  await writeFile(
+    'public/city-monitor.rss.xml',
+    '<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>BetterMakati City Monitor</title><link>' + base + '/city-monitor</link><description>No source-change history has been published yet.</description></channel></rss>\n'
+  );
+}
+
 try {
   const sourceHistory = await readFile('data/source-watch-history.json', 'utf8');
   await writeFile('public/source-watch-history.json', sourceHistory);

@@ -28,6 +28,7 @@ import {
   doctrineStatusLabel,
 } from '../data/openGovernmentDoctrine';
 import { searchIndex } from '../data/searchIndex';
+import { cityMonitorRecords, cityMonitorSources } from '../data/cityMonitor';
 
 interface SourceWatchRun {
   checkedAt: string;
@@ -51,6 +52,8 @@ export default function ProjectStatus() {
   const [communityInput, setCommunityInput] = useState<CommunityInput[]>([]);
   const [sourceFeedFailed, setSourceFeedFailed] = useState(false);
   const [inputFeedFailed, setInputFeedFailed] = useState(false);
+  const [monitorRuns, setMonitorRuns] = useState<SourceWatchRun[]>([]);
+  const [monitorFeedFailed, setMonitorFeedFailed] = useState(false);
 
   useEffect(() => {
     const load = async () => {
@@ -61,6 +64,15 @@ export default function ProjectStatus() {
         else setSourceFeedFailed(true);
       } catch {
         setSourceFeedFailed(true);
+      }
+
+      try {
+        const response = await fetch('/city-monitor-source-history.json', { cache: 'no-store' });
+        const data = await response.json();
+        if (response.ok && Array.isArray(data.runs)) setMonitorRuns(data.runs);
+        else setMonitorFeedFailed(true);
+      } catch {
+        setMonitorFeedFailed(true);
       }
 
       try {
@@ -76,6 +88,7 @@ export default function ProjectStatus() {
   }, []);
 
   const latestSourceRun = sourceRuns[0];
+  const latestMonitorRun = monitorRuns[0];
   const openCommunityInput = communityInput.filter(item => item.state === 'open').length;
   const knownDoctrineGaps = useMemo(
     () =>
@@ -114,6 +127,18 @@ export default function ProjectStatus() {
       value: accountabilityCoverageGaps.length.toLocaleString('en-PH'),
       detail: 'Known ledger coverage gaps shown rather than concealed',
       icon: AlertCircle,
+    },
+    {
+      label: 'City Monitor source channels',
+      value: cityMonitorSources.length.toLocaleString('en-PH'),
+      detail: 'Official channels in the current City Monitor source directory',
+      icon: RefreshCw,
+    },
+    {
+      label: 'Validated City Monitor records',
+      value: cityMonitorRecords.length.toLocaleString('en-PH'),
+      detail: 'Structured records currently in the validated monitor corpus',
+      icon: Database,
     },
     {
       label: 'Doctrine gaps',
@@ -198,7 +223,7 @@ export default function ProjectStatus() {
       <Section className="bg-[#f5f8f2]">
         <div className="section-eyebrow">Freshness & participation</div>
         <Heading level={2}>Live accountability signals</Heading>
-        <div className="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div className="mt-6 grid grid-cols-1 xl:grid-cols-3 gap-4">
           <div className="rounded-2xl border border-primary-100 bg-white p-6">
             <RefreshCw className="h-5 w-5 text-primary-700" />
             <h3 className="mt-3 font-extrabold text-gray-950">Source-watch history</h3>
@@ -234,6 +259,44 @@ export default function ProjectStatus() {
             )}
             <Link to="/records" className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
               Open source history
+            </Link>
+          </div>
+
+          <div className="rounded-2xl border border-primary-100 bg-white p-6">
+            <RefreshCw className="h-5 w-5 text-primary-700" />
+            <h3 className="mt-3 font-extrabold text-gray-950">City Monitor</h3>
+            {monitorFeedFailed ? (
+              <p className="mt-2 text-sm text-gray-600">
+                The published City Monitor history could not be read from this deployment.
+              </p>
+            ) : latestMonitorRun ? (
+              <>
+                <p className="mt-2 text-sm text-gray-600">
+                  Last daily check:{' '}
+                  <strong>{new Date(latestMonitorRun.checkedAt).toLocaleString('en-PH')}</strong>
+                </p>
+                <div className="mt-4 grid grid-cols-3 gap-2 text-center">
+                  <div className="rounded-xl bg-[#fffdf8] p-3">
+                    <div className="text-xl font-extrabold">{latestMonitorRun.changed.length}</div>
+                    <div className="text-xs text-gray-500">changed</div>
+                  </div>
+                  <div className="rounded-xl bg-[#fffdf8] p-3">
+                    <div className="text-xl font-extrabold">{latestMonitorRun.failed.length}</div>
+                    <div className="text-xs text-gray-500">failed</div>
+                  </div>
+                  <div className="rounded-xl bg-[#fffdf8] p-3">
+                    <div className="text-xl font-extrabold">{latestMonitorRun.newBaselines.length}</div>
+                    <div className="text-xs text-gray-500">baselines</div>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <p className="mt-2 text-sm text-gray-600">
+                No completed daily City Monitor run has been published yet.
+              </p>
+            )}
+            <Link to="/city-monitor" className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
+              Open City Monitor
             </Link>
           </div>
 

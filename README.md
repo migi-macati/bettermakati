@@ -16,7 +16,9 @@ BetterMakati organizes public information into citizen-facing tools and dashboar
 - population, economic and historical trend data with city comparisons;
 - a sourced, searchable Makati history timeline;
 - visitor information, mobility, cinemas, parking, events, estates and community associations;
-- live weather, air-quality and advisory links; and
+- live weather, air-quality and advisory links;
+- **City Monitor** for council, legislation, executive speeches, procurement, projects, publications, consultations and official notices;
+- **Civic Briefs** for daily, weekly and monthly government-activity digests, with RSS and private-provider newsletter infrastructure; and
 - community tools, corrections and contribution channels.
 
 ## Civic operating principles
@@ -40,6 +42,14 @@ BetterMakati prioritizes first-party records from the City Government of Makati,
 Missing or uncertain information is not guessed. Political and election pages are factual and non-partisan.
 
 A scheduled source-watch workflow checks selected official records every week and opens a reviewable pull request when watched sources change. Automated detection does not silently rewrite public figures or election facts.
+
+## City Monitor
+
+City Monitor uses a daily reviewable source-detection workflow. It hashes selected official Makati and PhilGEPS source channels and opens a pull request when a source changes or a check fails. A changed hash is only a review signal and is never automatically interpreted as a legislative action, procurement award, speech, project status or other substantive event.
+
+Validated records use permanent `/city-monitor/:id` pages with source provenance. Speech records can distinguish official transcripts from BetterMakati automated or reviewed transcriptions. Forward-looking commitments can be linked into the Accountability Ledger.
+
+The civic distribution layer exposes `/city-monitor.rss.xml`. Email subscriptions require the private `BETTERMAKATI_NEWSLETTER_WEBHOOK` environment variable and are never stored in public GitHub issues.
 
 ## Development
 
