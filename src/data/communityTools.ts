@@ -12,24 +12,6 @@ export interface CommunityTool {
 
 export const communityTools: CommunityTool[] = [
   {
-    id: 'open-government-audit',
-    name: 'Open Government Audit',
-    summary: 'See BetterMakati’s five-radical doctrine, international benchmark and published gaps.',
-    status: 'Live',
-    priority: 1,
-    href: '/open-government',
-    icon: 'Scale',
-  },
-  {
-    id: 'integrity-public-interest',
-    name: 'Integrity & Public Interest',
-    summary: 'Follow public-service ethics, procurement, audit and public-interest evidence without political scoring.',
-    status: 'Live',
-    priority: 2,
-    href: '/integrity',
-    icon: 'ShieldCheck',
-  },
-  {
     id: 'today-in-makati',
     name: 'Today in Makati',
     summary: 'A personalized daily starting point using your selected barangay, live city sources and current civic information.',
