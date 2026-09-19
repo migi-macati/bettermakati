@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import {
   ArrowRight,
   Database,
@@ -7,6 +8,8 @@ import {
   History,
   SearchCheck,
   Vote,
+  RefreshCw,
+  AlertCircle,
 } from 'lucide-react';
 import { Link } from 'react-router';
 import SEO from '../components/SEO';
@@ -75,7 +78,31 @@ const primarySources = [
   ['Lawphil', 'https://lawphil.net/'],
 ];
 
+interface SourceWatchRun {
+  checkedAt: string;
+  changed: Array<{ id: string; label: string; url: string; kind?: string }>;
+  failed: Array<{ id: string; label: string; url: string; kind?: string; status?: string; statusCode?: number | null }>;
+  newBaselines: Array<{ id: string; label: string; url: string; kind?: string }>;
+}
+
 export default function PublicRecords() {
+  const [watchRuns, setWatchRuns] = useState<SourceWatchRun[]>([]);
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const response = await fetch('/source-watch-history.json', { cache: 'no-store' });
+        const data = await response.json();
+        if (response.ok && Array.isArray(data.runs)) setWatchRuns(data.runs);
+      } catch {
+        setWatchRuns([]);
+      }
+    };
+    void load();
+  }, []);
+
+  const latestRun = watchRuns[0];
+
   return (
     <>
       <SEO
@@ -125,6 +152,64 @@ export default function PublicRecords() {
             );
           })}
         </div>
+      </Section>
+
+      <Section className="bg-white">
+        <div className="section-eyebrow">What changed</div>
+        <Heading level={2}>Public source-watch history</Heading>
+        <p className="max-w-3xl text-sm leading-relaxed text-gray-600">
+          BetterMakati compares selected high-value public sources on a weekly
+          schedule. A changed hash means the source changed; it does not by
+          itself mean a published figure is wrong or should be replaced.
+        </p>
+
+        {!latestRun ? (
+          <div className="mt-6 rounded-2xl border border-gray-200 bg-[#fffdf8] p-5 text-sm text-gray-600">
+            <RefreshCw className="h-5 w-5 text-primary-700" />
+            <p className="mt-3">
+              No completed public source-watch run is in the published history
+              yet. The next scheduled refresh will establish the first visible
+              run for this release.
+            </p>
+          </div>
+        ) : (
+          <div className="mt-6 rounded-2xl border border-primary-100 bg-[#fffdf8] p-6">
+            <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+              Latest check · {new Date(latestRun.checkedAt).toLocaleString('en-PH')}
+            </div>
+            <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="rounded-xl border border-gray-200 bg-white p-4">
+                <div className="text-2xl font-extrabold text-gray-950">{latestRun.changed.length}</div>
+                <div className="text-sm text-gray-600">content changes</div>
+              </div>
+              <div className="rounded-xl border border-gray-200 bg-white p-4">
+                <div className="text-2xl font-extrabold text-gray-950">{latestRun.failed.length}</div>
+                <div className="text-sm text-gray-600">checks failed</div>
+              </div>
+              <div className="rounded-xl border border-gray-200 bg-white p-4">
+                <div className="text-2xl font-extrabold text-gray-950">{latestRun.newBaselines.length}</div>
+                <div className="text-sm text-gray-600">new baselines</div>
+              </div>
+            </div>
+
+            {(latestRun.changed.length > 0 || latestRun.failed.length > 0) && (
+              <div className="mt-5 space-y-3">
+                {latestRun.changed.map(item => (
+                  <a key={'changed-' + item.id} href={item.url} target="_blank" rel="noreferrer" className="flex items-start gap-3 rounded-xl border border-secondary-200 bg-secondary-50 p-4">
+                    <RefreshCw className="mt-0.5 h-4 w-4 shrink-0 text-secondary-800" />
+                    <span className="text-sm text-gray-700"><strong>{item.label}</strong> changed and requires review.</span>
+                  </a>
+                ))}
+                {latestRun.failed.map(item => (
+                  <a key={'failed-' + item.id} href={item.url} target="_blank" rel="noreferrer" className="flex items-start gap-3 rounded-xl border border-error-200 bg-error-50 p-4">
+                    <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-error-700" />
+                    <span className="text-sm text-gray-700"><strong>{item.label}</strong> could not be checked successfully.</span>
+                  </a>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
       </Section>
 
       <Section className="bg-[#f5f8f2]">
