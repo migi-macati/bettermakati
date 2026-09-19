@@ -5,6 +5,7 @@ const files = [
   'src/pages/VisitMakati.tsx',
   'src/pages/History.tsx',
   'src/data/visitMakati.ts',
+  'src/data/searchIndex.ts',
 ];
 const combined = (await Promise.all(files.map(file => readFile(file, 'utf8')))).join('\n');
 
