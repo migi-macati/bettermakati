@@ -89,10 +89,10 @@ export default function BarangayProfile() {
               Barangay officials
             </h3>
             <p className="mt-2 text-sm leading-relaxed text-gray-600">
-              BetterMakati is building a sourced roster of the current Punong
-              Barangay, seven Sangguniang Barangay members and SK leadership.
-              Names will appear here only when matched to an authoritative
-              election or government record.
+              For the current Punong Barangay, Sangguniang Barangay and SK
+              roster, use the official Makati and COMELEC records linked from
+              this profile. BetterMakati publishes names only when they can be
+              matched to an authoritative public record.
             </p>
             <a
               href="https://www.makati.gov.ph/"
@@ -109,10 +109,10 @@ export default function BarangayProfile() {
               Public data
             </h3>
             <p className="mt-2 text-sm leading-relaxed text-gray-600">
-              This profile starts with the 2024 PSA population count. Future
-              releases can add barangay budgets, facilities, projects,
-              resolutions, service schedules and historical series without
-              changing the page address.
+              The comparable population figure shown here comes from the 2024
+              POPCEN. Barangay-level budgets, projects, facilities and service
+              records are linked only when a specific public record is
+              available.
             </p>
             <a
               href={psaBarangaySource}
