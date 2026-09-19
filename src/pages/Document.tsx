@@ -3,7 +3,7 @@ import Breadcrumbs from '../components/ui/Breadcrumbs';
 import { Heading } from '../components/ui/Heading';
 import { Text } from '../components/ui/Text';
 import { Banner } from '@bettergov/kapwa/banner';
-import { useParams } from 'react-router';
+import { Link, useParams } from 'react-router';
 import { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -23,6 +23,7 @@ import {
   type CategoryIndex,
 } from '../data/yamlLoader';
 import SEO from '../components/SEO';
+import LastReviewed from '../components/ui/LastReviewed';
 
 interface DocumentProps {
   theme?: string;
@@ -67,6 +68,9 @@ export default function Document({
         const sectionLabel = isGovernment ? 'Government' : 'Services';
         const sectionHref = isGovernment ? '/government' : '/services';
         const categoryData = categories.find(c => c.slug === category);
+        if (!categoryData) {
+          throw new Error('Service category not found');
+        }
 
         // If the slug maps to its own index, render it as a nested listing
         if (isNestedCategory(documentSlug)) {
@@ -161,7 +165,12 @@ export default function Document({
           {nestedIndex.layout === 'grid' ? (
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {nestedPages.map((page, i) => (
-                <Card hoverable key={page.slug ?? i} className="h-full">
+                <Link
+                  key={page.slug ?? i}
+                  to={`${sectionHref}/${category}/${documentSlug}/${page.slug}`}
+                  className="block"
+                >
+                  <Card hoverable className="h-full">
                   <CardContent>
                     <h4 className="text-lg font-medium text-gray-900">
                       {page.name}
@@ -172,7 +181,8 @@ export default function Document({
                       </p>
                     )}
                   </CardContent>
-                </Card>
+                  </Card>
+                </Link>
               ))}
             </div>
           ) : (
@@ -214,6 +224,12 @@ export default function Document({
       />
       <Section className="p-3 mb-12">
         <Breadcrumbs className="mb-8" items={breadcrumbs} />
+        <div className="mb-5 rounded-xl border border-primary-100 bg-primary-50 p-4 text-sm leading-relaxed text-gray-700">
+          BetterMakati summarizes public information for convenience. For fees,
+          deadlines, eligibility and transactions, use the linked official source
+          before acting.
+          <LastReviewed className="mt-2" note="Time-sensitive requirements may change." />
+        </div>
         <Card className="mb-8 markdown-content">
           <CardHeader>
             {markdownContent.description && (
