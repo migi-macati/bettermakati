@@ -4,18 +4,28 @@
 
 It is part of the BetterLGU community and is **not** an official website of the City Government of Makati.
 
-## v1.0 scope
+## What the site covers
 
-The first public release intentionally stays small:
+BetterMakati organizes public information into citizen-facing tools and dashboards, including:
 
-- selected high-use public services;
-- basic city government information;
-- current barangay directory;
-- primary-source transparency links;
-- emergency and essential contacts; and
-- a clear sourcing and correction policy.
+- city services, hotlines and practical government contacts;
+- the 23 current Makati barangays and individual barangay profile pages;
+- current elected-official profiles and city-government information;
+- neutral elections and voting information based on COMELEC records;
+- budgets, projects, procurement and audit disclosures translated into dashboards;
+- population, economic and historical trend data with city comparisons;
+- a sourced, searchable Makati history timeline;
+- visitor information, mobility, cinemas, parking, events, estates and community associations;
+- live weather, air-quality and advisory links; and
+- community tools, corrections and contribution channels.
 
-Advanced analytics, barangay dashboards, historical datasets, comparisons, maps and other enhancements are deferred until after v1.0.
+## Data and sourcing
+
+BetterMakati prioritizes first-party records from the City Government of Makati, COMELEC, PSA, COA, DBM, PhilGEPS and other public institutions. Source links are placed beside the information they support.
+
+Missing or uncertain information is not guessed. Political and election pages are factual and non-partisan.
+
+A scheduled source-watch workflow checks selected official records every week and opens a reviewable pull request when watched sources change. Automated detection does not silently rewrite public figures or election facts.
 
 ## Development
 
@@ -29,10 +39,6 @@ Production build:
 ```bash
 npm run build
 ```
-
-## Content standard
-
-BetterMakati prioritizes authoritative sources and identifies verification dates. Old or uncertain information must be labeled as such. Missing information is not guessed.
 
 ## Corrections
 
