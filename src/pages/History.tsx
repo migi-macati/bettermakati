@@ -7,7 +7,7 @@ import {
   Search,
   Download,
 } from 'lucide-react';
-import { Link } from 'react-router';
+import { Link, useSearchParams } from 'react-router';
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
 import {
@@ -20,7 +20,8 @@ import SEO from '../components/SEO';
 
 const topics = [...new Set(makatiHistory.map(event => event.topic))];
 export default function History() {
-  const [query, setQuery] = useState('');
+  const [searchParams] = useSearchParams();
+  const [query, setQuery] = useState(searchParams.get('query') || '');
   const [era, setEra] = useState('');
   const [topic, setTopic] = useState('');
   const [primaryOnly, setPrimaryOnly] = useState(false);
