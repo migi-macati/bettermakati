@@ -61,6 +61,22 @@ const recordGroups = [
     coverage: 'Structured research chronology',
   },
   {
+    title: 'Integrity & public interest',
+    description:
+      'Ethics rules, procurement integrity, beneficial ownership sources, audit evidence and published coverage gaps.',
+    href: '/integrity',
+    icon: SearchCheck,
+    coverage: 'Integrity evidence layer',
+  },
+  {
+    title: 'Open government audit',
+    description:
+      'BetterMakati’s five-radical doctrine, enabling foundations and OECD-aligned implementation audit.',
+    href: '/open-government',
+    icon: Database,
+    coverage: 'Living self-audit',
+  },
+  {
     title: 'Statistics',
     description:
       'Population and economic data with definitions, source links and downloadable CSV.',
