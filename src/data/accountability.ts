@@ -15,10 +15,7 @@ export const accountabilityEntries: AccountabilityEntry[] = [
     status: 'completed',
     summary:
       'Quarterly development-fund disclosures show the medical-supplies project progressing from 98.47% in Q1 to 100% in Q4 2025.',
-    responsibleBodies: [
-      'Makati Health Department',
-      'Ospital ng Makati',
-    ],
+    responsibleBodies: ['City Government of Makati'],
     period: '2025',
     targetDate: developmentFundProject.targetCompletion,
     location: developmentFundProject.location,
