@@ -59,6 +59,8 @@ Use the BetterMakati contribution form on the site for corrections, public sourc
 
 Comprehensive CX, technical, accessibility, SEO, civic-content and security hardening merged on September 19, 2026.
 
+<!-- deployment-marker: 2026-09-19T17:24+08:00 -->
+
 ## Acknowledgment
 
 Built from the Better Local Gov starter kit and the BetterGov / BetterLGU civic-tech ecosystem.
