@@ -44,6 +44,7 @@ import Integrity from './pages/Integrity';
 import ProjectStatus from './pages/ProjectStatus';
 import CityMonitor from './pages/CityMonitor';
 import CivicBriefs from './pages/CivicBriefs';
+import CityMonitorRecordPage from './pages/CityMonitorRecordPage';
 
 function App() {
   return (
@@ -87,6 +88,7 @@ function App() {
                 <Route path="/integrity" element={<Integrity />} />
                 <Route path="/status" element={<ProjectStatus />} />
                 <Route path="/city-monitor" element={<CityMonitor />} />
+                <Route path="/city-monitor/:id" element={<CityMonitorRecordPage />} />
                 <Route path="/briefs" element={<CivicBriefs />} />
                 <Route path="/barangays" element={<Barangays />} />
                 <Route path="/barangays/:slug" element={<BarangayProfile />} />
