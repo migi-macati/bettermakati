@@ -141,11 +141,6 @@ export default function ServiceSearch({
   }, [query, results, scope]);
 
   useEffect(() => {
-    setQuery(initialQuery);
-    setActiveIndex(0);
-  }, [initialQuery]);
-
-  useEffect(() => {
     const handlePointerDown = (event: MouseEvent | TouchEvent) => {
       if (
         containerRef.current &&
