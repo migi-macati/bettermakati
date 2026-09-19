@@ -72,7 +72,7 @@ Use the BetterMakati contribution form on the site for corrections, public sourc
 
 Comprehensive CX, technical, accessibility, SEO, civic-content and security hardening merged on September 19, 2026.
 
-<!-- deployment-marker: 2026-09-19T17:24+08:00 -->
+<!-- deployment-marker: 2026-09-19T20:24+08:00 -->
 
 ## Acknowledgment
 
