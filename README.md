@@ -40,11 +40,13 @@ Production build:
 npm run build
 ```
 
-## Corrections
+## Corrections and contributions
 
-Open an issue at:
+Use the BetterMakati contribution form on the site for corrections, public sources, ideas and volunteer offers. When the native submission backend is unavailable, the form provides a pre-filled GitHub issue fallback.
 
-https://github.com/migi-macati/bettermakati/issues
+## Current release
+
+Comprehensive CX, technical, accessibility, SEO, civic-content and security hardening merged on September 19, 2026.
 
 ## Acknowledgment
 
