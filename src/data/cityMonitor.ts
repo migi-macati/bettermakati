@@ -44,6 +44,18 @@ export interface CityMonitorRecord {
   amount?: number;
   people?: string[];
   relatedHref?: string;
+  summaryBullets?: string[];
+  documents?: Array<{
+    label: string;
+    url: string;
+    kind: 'agenda' | 'minutes' | 'video' | 'official-text' | 'measure' | 'procurement' | 'publication' | 'other';
+  }>;
+  measures?: Array<{
+    reference: string;
+    title?: string;
+    action?: string;
+    url?: string;
+  }>;
   transcript?: {
     kind: 'official' | 'bettermakati-automated' | 'bettermakati-reviewed';
     status: 'available' | 'planned';
@@ -79,6 +91,16 @@ export const cityMonitorSources: CityMonitorSource[] = [
     cadence: 'daily',
     monitoringNote:
       'Watch for newly published speeches or official text. BetterMakati transcripts must be labeled separately from official transcripts.',
+  },
+  {
+    id: 'mymakati-broadcasts',
+    label: 'MyMakati official social broadcasts',
+    stream: 'council-session',
+    url: 'https://www.facebook.com/mymakativerified',
+    publisher: 'City Government of Makati',
+    cadence: 'event-driven',
+    monitoringNote:
+      'Historical city records identify MyMakati as a council-session streaming channel. Social-platform access can be inconsistent, so session claims still require a current official post or recording.',
   },
   {
     id: 'makati-events',
@@ -164,6 +186,33 @@ export const cityMonitorRecords: CityMonitorRecord[] = [
       'https://www.makati.gov.ph/assets/uploads/staticmenu/docs/online_forms/pdf/Q3%20Bid%20Results%20FDP.pdf',
     sourcePublisher: 'City Government of Makati',
     relatedHref: '/projects-budget#procurement',
+  },
+];
+
+export const cityMonitorCoverageGaps = [
+  {
+    id: 'current-council-calendar',
+    title: 'No complete current City Council session calendar is indexed yet',
+    description:
+      'BetterMakati has not located a reliable current machine-readable source for all regular and special session dates, agendas, attendance, votes and minutes. Makati’s official records establish that the council holds regular sessions and historically streamed sessions, but BetterMakati will not assume a 2026 recurrence pattern without a current source.',
+  },
+  {
+    id: 'measure-lifecycle',
+    title: 'Legislative lifecycle coverage is still incomplete',
+    description:
+      'The official archive is useful for enacted measures, but filing, committee referral, readings, voting and mayoral-action timestamps are not yet consistently available as one structured chain.',
+  },
+  {
+    id: 'speech-video-index',
+    title: 'Speech transcripts require a stable source recording or official text',
+    description:
+      'BetterMakati will transcribe only when the official text or recording can be preserved and cited. Automated text must never be presented as an official transcript.',
+  },
+  {
+    id: 'publication-index',
+    title: 'Official publication discovery is not yet a complete catalog',
+    description:
+      'Annual reports, plans, newsletters and Ulat sa Bayan records are distributed across the city portal and disclosure files rather than one normalized publication feed.',
   },
 ];
 
