@@ -137,13 +137,11 @@ export default function Today() {
       />
 
       <Section className="bg-[#fffdf8]">
-        <div className="section-eyebrow">Radical presence</div>
+        <div className="section-eyebrow">Your Makati</div>
         <Heading>Today in Makati</Heading>
         <p className="mt-1 text-sm font-semibold text-primary-800">{dateLabel}</p>
         <p className="mt-3 max-w-3xl text-gray-700">
-          Choose a barangay once on this device. BetterMakati uses that choice
-          to put local civic information closer to the top without requiring
-          precise GPS or an account.
+          Choose a barangay to bring local information forward.
         </p>
 
         <div className="mt-7 rounded-2xl border border-primary-100 bg-white p-5 md:p-6">
@@ -240,9 +238,7 @@ export default function Today() {
           <div className="mt-3 text-3xl font-extrabold text-gray-950">{monitorChanges}</div>
           <div className="font-bold text-gray-800">official source changes in the latest published monitor update</div>
           <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600">
-            A detected change is a review signal, not automatically a government
-            action. City Monitor verifies the underlying record before publishing
-            an ordinance stage, award, speech or other structured civic event.
+            Source changes are reviewed before they become structured records.
           </p>
           {monitorCheckedAt && (
             <div className="mt-2 text-xs text-gray-500">
@@ -289,13 +285,13 @@ export default function Today() {
         <div className="rounded-2xl border border-secondary-200 bg-secondary-50 p-6">
           <Bell className="h-5 w-5 text-secondary-800" />
           <h2 className="mt-3 text-xl font-extrabold text-gray-950">
-            Following and notifications come next
+            Follow BetterMakati on Facebook
           </h2>
-          <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-700">
-            The locality preference is live now. BetterMakati does not yet claim
-            to send official alerts or push notifications. Future notification
-            features should let people follow a barangay, project, consultation
-            or topic and always preserve the original source.
+          <div className="mt-2 inline-flex rounded-full bg-white px-3 py-1 text-xs font-bold text-secondary-900">
+            Page in progress
+          </div>
+          <p className="mt-3 max-w-3xl text-sm leading-relaxed text-gray-700">
+            Civic Briefs and major site updates will be posted there once the page is live.
           </p>
         </div>
       </Section>
