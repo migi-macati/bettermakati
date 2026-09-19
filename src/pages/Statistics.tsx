@@ -3,6 +3,7 @@ import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
 import SEO from '../components/SEO';
 import LastReviewed from '../components/ui/LastReviewed';
+import SectionNav from '../components/ui/SectionNav';
 import SharePage from '../components/ui/SharePage';
 import { HorizontalBarChart } from '../components/budget/BudgetCharts';
 import CityComparison from '../components/statistics/CityComparison';
@@ -70,7 +71,18 @@ export default function Statistics() {
         </div>
         <LastReviewed note="Population and GDP figures use PSA sources and stated geographic definitions." />
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
+        <SectionNav
+          items={[
+            { label: 'At a glance', href: '#statistics-summary' },
+            { label: 'Population trend', href: '#population-trend' },
+            { label: 'Compare cities', href: '#city-comparison-title' },
+            { label: 'Data downloads', href: '#statistics-data' },
+          ]}
+        />
+        <div
+          id="statistics-summary"
+          className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-8"
+        >
           {stats.map(stat => (
             <a
               key={stat.label}
@@ -91,7 +103,7 @@ export default function Statistics() {
         </div>
       </Section>
 
-      <Section className="bg-white">
+      <Section id="population-trend" className="bg-white">
         <div className="section-eyebrow">Population trend</div>
         <Heading level={2}>Comparable population, 2010–2024</Heading>
         <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600">
@@ -176,16 +188,30 @@ export default function Statistics() {
       </Section>
 
       <Section className="bg-white">
-        <div className="section-eyebrow">BetterMakati data</div>
+        <div id="statistics-data" className="section-eyebrow">
+          BetterMakati data
+        </div>
         <Heading level={2}>Explore related city datasets</Heading>
         <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {[
             ['Population', '/barangays', 'Barangay counts and profiles'],
-            ['City finance', '/projects-budget', 'Budgets, actuals and projects'],
+            [
+              'City finance',
+              '/projects-budget',
+              'Budgets, actuals and projects',
+            ],
             ['Elections', '/elections', 'Turnout and 2025 local results'],
-            ['Historical data', '/history', 'Sourced chronology and downloadable records'],
+            [
+              'Historical data',
+              '/history',
+              'Sourced chronology and downloadable records',
+            ],
           ].map(([title, href, description]) => (
-            <a key={title} href={href} className="rounded-2xl border border-gray-200 bg-white p-5 hover:border-primary-300">
+            <a
+              key={title}
+              href={href}
+              className="rounded-2xl border border-gray-200 bg-white p-5 hover:border-primary-300"
+            >
               <Database className="h-5 w-5 text-primary-700" />
               <h3 className="mt-3 font-extrabold text-gray-950">{title}</h3>
               <p className="mt-1 text-sm text-gray-600">{description}</p>

@@ -19,21 +19,26 @@ export default function Privacy() {
           <p>
             The hosting platform and serverless functions may process ordinary
             technical request information such as IP address, browser details,
-            requested URL, timestamps and error logs. Hosting providers may retain
-            technical logs under their own policies.
+            requested URL, timestamps and error logs. Hosting providers may
+            retain technical logs under their own policies.
           </p>
 
           <h2>Search and third-party services</h2>
           <p>
-            Site-wide BetterMakati search runs against the site&apos;s own search
-            index. Visitor place search may call Google Maps Platform when that
-            integration is enabled. Live weather and air-quality cards request
-            data from Open-Meteo. Opening an external link transfers you to that
-            provider and its privacy terms.
+            Site-wide BetterMakati search runs against the site&apos;s own
+            search index. Visitor place search may call Google Maps Platform
+            when that integration is enabled. Live weather and air-quality cards
+            request data from Open-Meteo. City photographs load from Wikimedia,
+            whose servers receive the image request. Opening an external link
+            transfers you to that provider and its privacy terms.
           </p>
           <p>
             Google Maps content is subject to the{' '}
-            <a href="https://policies.google.com/privacy" target="_blank" rel="noreferrer">
+            <a
+              href="https://policies.google.com/privacy"
+              target="_blank"
+              rel="noreferrer"
+            >
               Google Privacy Policy
             </a>
             .
@@ -52,9 +57,9 @@ export default function Privacy() {
           <p>
             BetterMakati currently does not require advertising cookies or a
             user account. The “My Makati” feature can store a selected barangay
-            in this browser&apos;s local storage so the Today page can bring local
-            information forward. That preference is device-local and does not
-            require precise GPS.
+            in this browser&apos;s local storage so the Today page can bring
+            local information forward. That preference is device-local and does
+            not require precise GPS.
           </p>
           <p>
             Third-party services reached from the site may use their own cookies
@@ -66,15 +71,15 @@ export default function Privacy() {
             Proposals, corrections, sources and other project submissions may be
             recorded as public GitHub issues so the BetterMakati response can be
             followed. Do not include private or sensitive personal information.
-            An open or closed project issue reflects BetterMakati&apos;s workflow,
-            not an official City Government case status.
+            An open or closed project issue reflects BetterMakati&apos;s
+            workflow, not an official City Government case status.
           </p>
 
           <h2>Changes</h2>
           <p>
             This notice should be updated before BetterMakati introduces a new
-            analytics, account, social integration or data-collection feature that
-            materially changes how visitor information is handled.
+            analytics, account, social integration or data-collection feature
+            that materially changes how visitor information is handled.
           </p>
         </div>
       </Section>

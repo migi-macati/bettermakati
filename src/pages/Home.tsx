@@ -79,7 +79,8 @@ const audiencePaths = [
   },
   {
     label: 'I want to take part',
-    description: 'Find participation opportunities, propose ideas or share evidence.',
+    description:
+      'Find participation opportunities, propose ideas or share evidence.',
     href: '/participate',
     icon: HandHeart,
   },
@@ -154,7 +155,8 @@ const cityPaths = [
 const civicControl = [
   {
     label: 'See the record',
-    description: 'Budgets, legislation, elections, audits and source documents.',
+    description:
+      'Budgets, legislation, elections, audits and source documents.',
     href: '/records',
     icon: Files,
   },
@@ -256,40 +258,6 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      <section className="bg-primary-950 py-12 text-white border-b border-primary-900">
-        <div className="container px-5 md:px-6 lg:px-8">
-          <div className="section-eyebrow !text-secondary-200">Civic records</div>
-          <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight">
-                Understand what&apos;s happening in Makati.
-              </h2>
-            </div>
-          </div>
-          <div className="mt-7 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-4">
-            {civicControl.map(item => {
-              const Icon = item.icon;
-              return (
-                <Link
-                  key={item.label}
-                  to={item.href}
-                  className="rounded-2xl border border-white/15 bg-white/5 p-5 transition hover:bg-white/10 hover:border-secondary-300"
-                >
-                  <Icon className="h-6 w-6 text-secondary-200" />
-                  <h3 className="mt-4 font-extrabold text-white">{item.label}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-primary-100">
-                    {item.description}
-                  </p>
-                  <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-secondary-200">
-                    Open <ArrowRight className="h-4 w-4" />
-                  </span>
-                </Link>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
       <section className="bg-[#fffdf8] py-14">
         <div className="container px-5 md:px-6 lg:px-8">
           <div className="section-eyebrow">Services</div>
@@ -324,6 +292,44 @@ const Home: React.FC = () => {
                     </p>
                   </div>
                   <ArrowRight className="h-4 w-4 text-primary-600 ml-auto shrink-0" />
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-primary-900 py-12 text-white border-b border-primary-900">
+        <div className="container px-5 md:px-6 lg:px-8">
+          <div className="section-eyebrow !text-secondary-200">
+            Civic records
+          </div>
+          <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+            <div>
+              <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight">
+                Understand what&apos;s happening in Makati.
+              </h2>
+            </div>
+          </div>
+          <div className="mt-7 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-4">
+            {civicControl.map(item => {
+              const Icon = item.icon;
+              return (
+                <Link
+                  key={item.label}
+                  to={item.href}
+                  className="rounded-2xl border border-white/15 bg-white/5 p-5 transition hover:bg-white/10 hover:border-secondary-300"
+                >
+                  <Icon className="h-6 w-6 text-secondary-200" />
+                  <h3 className="mt-4 font-extrabold text-white">
+                    {item.label}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-primary-100">
+                    {item.description}
+                  </p>
+                  <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-secondary-200">
+                    Open <ArrowRight className="h-4 w-4" />
+                  </span>
                 </Link>
               );
             })}

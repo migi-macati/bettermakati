@@ -8,10 +8,10 @@ const isExternal = (href: string) => href.startsWith('http');
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-[#112b20] text-white mt-12">
+    <footer className="bg-[#112b20] text-white">
       <div className="h-1.5 bg-gradient-to-r from-secondary-500 via-primary-500 to-accent-500" />
       <div className="container px-5 md:px-6 lg:px-8 pt-12 pb-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-9">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-9">
           <div>
             <div className="inline-block rounded-xl bg-white px-3 py-2 mb-4">
               <BrandMark compact />
@@ -31,8 +31,10 @@ const Footer: React.FC = () => {
 
           {footerNavigation.mainSections.map(section => (
             <div key={section.title}>
-              <h3 className="text-sm font-bold uppercase tracking-[0.12em] text-secondary-200 mb-4">{section.title}</h3>
-              <ul className="space-y-2.5">
+              <h3 className="text-sm font-bold uppercase tracking-[0.12em] text-secondary-200 mb-4">
+                {section.title}
+              </h3>
+              <ul className="space-y-1">
                 {section.links.map(link => (
                   <li key={link.label}>
                     {isExternal(link.href) ? (
@@ -40,12 +42,16 @@ const Footer: React.FC = () => {
                         href={link.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 text-primary-100 hover:text-white text-sm transition-colors"
+                        className="inline-flex min-h-9 items-center gap-1 text-primary-100 hover:text-white text-sm transition-colors"
                       >
-                        {link.label} <ExternalLink className="h-3 w-3 opacity-60" />
+                        {link.label}{' '}
+                        <ExternalLink className="h-3 w-3 opacity-60" />
                       </a>
                     ) : (
-                      <Link to={link.href} className="text-primary-100 hover:text-white text-sm transition-colors">
+                      <Link
+                        to={link.href}
+                        className="inline-flex min-h-9 items-center text-primary-100 hover:text-white text-sm transition-colors"
+                      >
                         {link.label}
                       </Link>
                     )}
