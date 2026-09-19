@@ -76,17 +76,36 @@ export default function About() {
         </p>
         <div className="mt-7 grid grid-cols-1 md:grid-cols-2 gap-4">
           {[
-            [Eye, 'Radical transparency', 'Every factual claim should be traceable to a source, and important missing information should be visible rather than silently omitted.'],
-            [ClipboardCheck, 'Radical accountability', 'Every trackable public plan or commitment should connect responsibility, target, later evidence and outcome without BetterMakati assigning political scores.'],
-            [MessagesSquare, 'Radical participation', 'Every invitation for community input should have a visible process and, where BetterMakati controls the workflow, a trackable outcome rather than a black box.'],
-            [Radio, 'Radical presence', 'Useful civic information should be available where and when people need it, with locality and current context brought forward without requiring an account or precise GPS.'],
-          ].map(([Icon, title, body]) => (
-            <div key={String(title)} className="rounded-2xl border border-white/15 bg-white/5 p-5">
-              <Icon className="h-5 w-5 text-secondary-200" />
-              <h3 className="mt-3 font-extrabold text-white">{String(title)}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-primary-100">{String(body)}</p>
-            </div>
-          ))}
+            {
+              icon: Eye,
+              title: 'Radical transparency',
+              body: 'Every factual claim should be traceable to a source, and important missing information should be visible rather than silently omitted.',
+            },
+            {
+              icon: ClipboardCheck,
+              title: 'Radical accountability',
+              body: 'Every trackable public plan or commitment should connect responsibility, target, later evidence and outcome without BetterMakati assigning political scores.',
+            },
+            {
+              icon: MessagesSquare,
+              title: 'Radical participation',
+              body: 'Every invitation for community input should have a visible process and, where BetterMakati controls the workflow, a trackable outcome rather than a black box.',
+            },
+            {
+              icon: Radio,
+              title: 'Radical presence',
+              body: 'Useful civic information should be available where and when people need it, with locality and current context brought forward without requiring an account or precise GPS.',
+            },
+          ].map(item => {
+            const Icon = item.icon;
+            return (
+              <div key={item.title} className="rounded-2xl border border-white/15 bg-white/5 p-5">
+                <Icon className="h-5 w-5 text-secondary-200" />
+                <h3 className="mt-3 font-extrabold text-white">{item.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-primary-100">{item.body}</p>
+              </div>
+            );
+          })}
         </div>
       </Section>
 
