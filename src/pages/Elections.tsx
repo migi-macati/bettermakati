@@ -74,6 +74,15 @@ export default function Elections() {
       <SEO
         title="Elections & Voting"
         description="Neutral voter information, 2025 Makati election results, dates and official COMELEC sources."
+        jsonLd={{
+          '@context': 'https://schema.org',
+          '@type': 'Dataset',
+          name: '2025 Makati local election results',
+          description:
+            'Makati mayor, vice mayor, congressional and city-council results with turnout and source links.',
+          spatialCoverage: 'Makati City, Philippines',
+          temporalCoverage: '2025',
+        }}
       />
 
       <Section id="election-guide" className="bg-[#fffdf8]">
