@@ -1,4 +1,6 @@
 import { makatiHistory } from './makatiHistory';
+import { barangays as barangayProfiles } from './barangays';
+import { electedOfficials } from './electedOfficials';
 
 export type SearchGroup =
   | 'Service'
@@ -18,32 +20,6 @@ export interface SearchItem {
   keywords: string;
   featured?: boolean;
 }
-
-const barangays = [
-  'Bangkal',
-  'Bel-Air',
-  'Carmona',
-  'Dasmariñas',
-  'Forbes Park',
-  'Guadalupe Nuevo',
-  'Guadalupe Viejo',
-  'Kasilawan',
-  'La Paz',
-  'Magallanes',
-  'Olympia',
-  'Palanan',
-  'Pinagkaisahan',
-  'Pio Del Pilar',
-  'Poblacion',
-  'San Antonio',
-  'San Isidro',
-  'San Lorenzo',
-  'Santa Cruz',
-  'Singkamas',
-  'Tejeros',
-  'Urdaneta',
-  'Valenzuela',
-];
 
 const serviceItems: SearchItem[] = [
   {
@@ -320,6 +296,15 @@ const governmentItems: SearchItem[] = [
     keywords: 'council councilor legislative sanggunian vice mayor ordinance',
   },
   {
+    title: 'Elections & Voting',
+    group: 'Government',
+    category: 'Elections',
+    description: 'Neutral voter information, election dates and official COMELEC sources.',
+    href: '/elections',
+    keywords: 'elections voting vote voter registration precinct polling place comelec barangay sk bske candidates',
+    featured: true,
+  },
+  {
     title: 'City offices',
     group: 'Government',
     category: 'Government',
@@ -548,13 +533,22 @@ const contactItems: SearchItem[] = [
   },
 ];
 
-const barangayItems: SearchItem[] = barangays.map(name => ({
-  title: `Barangay ${name}`,
+const barangayItems: SearchItem[] = barangayProfiles.map(barangay => ({
+  title: `Barangay ${barangay.name}`,
   group: 'Barangay',
   category: 'Barangays',
-  description: 'Barangay directory and population.',
-  href: `/barangays#${name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`,
-  keywords: `${name} barangay hall local neighborhood population`,
+  description: `Barangay profile, 2024 population and ${barangay.legislativeDistrict}.`,
+  href: `/barangays/${barangay.slug}`,
+  keywords: `${barangay.name} barangay hall local neighborhood population district profile`,
+}));
+
+const officialItems: SearchItem[] = electedOfficials.map(official => ({
+  title: official.displayName,
+  group: 'Government',
+  category: 'Elected officials',
+  description: `${official.office}${official.district ? ' · ' + official.district : ''}.`,
+  href: `/officials/${official.slug}`,
+  keywords: `${official.name} ${official.displayName} ${official.office} ${official.district ?? ''} elected official councilor congress representative mayor vice mayor`,
 }));
 
 export const searchIndex: SearchItem[] = [
@@ -569,6 +563,7 @@ export const searchIndex: SearchItem[] = [
   ...serviceItems,
   ...visitItems,
   ...governmentItems,
+  ...officialItems,
   ...recordItems,
   ...toolItems,
   ...contactItems,

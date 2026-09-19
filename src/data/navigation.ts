@@ -21,6 +21,7 @@ export const mainNavigation: NavigationItem[] = [
     children: [
       { label: 'Government', href: '/government' },
       { label: 'Barangays', href: '/barangays' },
+      { label: 'Elections & Voting', href: '/elections' },
       { label: 'Estates & Associations', href: '/estates' },
       { label: 'Makati Statistics', href: '/statistics' },
       { label: 'Legislation', href: '/legislation' },
@@ -71,6 +72,7 @@ export const footerNavigation = {
         { label: 'Parking', href: '/parking' },
         { label: 'What’s On', href: '/whats-on' },
         { label: 'Barangays', href: '/barangays' },
+        { label: 'Elections & Voting', href: '/elections' },
         { label: 'Projects & Budget', href: '/projects-budget' },
       ],
     },
@@ -78,6 +80,7 @@ export const footerNavigation = {
       title: 'City',
       links: [
         { label: 'Government', href: '/government' },
+        { label: 'Elections & Voting', href: '/elections' },
         { label: 'Estates & Associations', href: '/estates' },
         { label: 'Live Makati', href: '/live' },
         { label: 'Community Tools', href: '/community-tools' },

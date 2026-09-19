@@ -10,6 +10,9 @@ import Services from './pages/Services';
 import Document from './pages/Document';
 import Government from './pages/Government';
 import Barangays from './pages/Barangays';
+import BarangayProfile from './pages/BarangayProfile';
+import Elections from './pages/Elections';
+import OfficialProfile from './pages/OfficialProfile';
 import Hotlines from './pages/Hotlines';
 import CommunityTools from './pages/CommunityTools';
 import ConcernFinder from './pages/ConcernFinder';
@@ -66,6 +69,9 @@ function App() {
 
                 <Route path="/government" element={<Government />} />
                 <Route path="/barangays" element={<Barangays />} />
+                <Route path="/barangays/:slug" element={<BarangayProfile />} />
+                <Route path="/elections" element={<Elections />} />
+                <Route path="/officials/:slug" element={<OfficialProfile />} />
                 <Route path="/estates" element={<Estates />} />
                 <Route path="/statistics" element={<Statistics />} />
                 <Route path="/legislation" element={<Legislation />} />
