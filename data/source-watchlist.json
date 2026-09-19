@@ -64,5 +64,11 @@
     "label": "COMELEC announcements",
     "url": "https://www.comelec.gov.ph/",
     "kind": "election"
+  },
+  {
+    "id": "comelec-2025-results",
+    "label": "COMELEC 2025 election results portal",
+    "url": "https://2025electionresults.comelec.gov.ph/",
+    "kind": "election-results"
   }
 ]
