@@ -17,6 +17,8 @@ import {
   historyReviewed,
 } from '../data/makatiHistory';
 import SEO from '../components/SEO';
+import LastReviewed from '../components/ui/LastReviewed';
+import SharePage from '../components/ui/SharePage';
 
 const topics = [...new Set(makatiHistory.map(event => event.topic))];
 export default function History() {
@@ -80,7 +82,11 @@ export default function History() {
       />
       <Section className="bg-[#fffdf8]">
         <div className="section-eyebrow">The city through time</div>
-        <Heading>Many histories. One Makati.</Heading>
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+          <Heading>Many histories. One Makati.</Heading>
+          <SharePage title="History of Makati | BetterMakati" />
+        </div>
+        <LastReviewed label="Timeline review" date={historyReviewed} note="Coverage remains a growing research chronology." />
         <p className="mt-5 max-w-3xl text-lg leading-relaxed text-gray-700">
           Beyond the skyline: explore the communities, institutions, conflicts
           and decisions that shaped San Pedro Macati and the modern city.
