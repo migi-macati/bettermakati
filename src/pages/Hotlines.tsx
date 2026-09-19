@@ -8,6 +8,7 @@ import {
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
 import SEO from '../components/SEO';
+import LastReviewed from '../components/ui/LastReviewed';
 
 const actionCenterSource =
   'https://www.makati.gov.ph/assets/uploads/downloads/2/481/pdf/Makati%20Action%20Center.pdf';
@@ -58,6 +59,7 @@ export default function Hotlines() {
       <Section className="p-3 mb-12">
         <div className="section-eyebrow">Essential contacts</div>
         <Heading>Hotlines & Emergency Information</Heading>
+        <LastReviewed note="Confirm urgent contact details with the linked official source when possible." />
 
         <div className="rounded-2xl border border-red-200 bg-gradient-to-br from-red-50 to-white p-6 md:p-8 mb-8 flex flex-col md:flex-row md:items-center gap-5">
           <div className="h-14 w-14 rounded-2xl bg-red-100 text-red-700 flex items-center justify-center shrink-0">
