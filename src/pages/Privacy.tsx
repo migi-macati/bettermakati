@@ -71,6 +71,15 @@ export default function Privacy() {
             not an official City Government case status.
           </p>
 
+          <h2>Newsletter subscriptions</h2>
+          <p>
+            BetterMakati does not store newsletter email addresses in public
+            GitHub issues. Email signup is enabled only when a private delivery
+            provider or webhook is configured. A subscription request sends the
+            email address, selected frequency and consent timestamp to that
+            private provider. RSS access does not require an email address.
+          </p>
+
           <h2>Changes</h2>
           <p>
             This notice should be updated before BetterMakati introduces a new
