@@ -19,8 +19,23 @@ import { searchIndex, type SearchItem } from '../../data/searchIndex';
 
 type SearchScope = 'site' | 'services';
 
-const siteTabs = ['All', 'Services', 'Visit', 'Government', 'Barangays', 'Records', 'Tools'] as const;
-const serviceTabs = ['All', 'Business', 'Health', 'Education', 'Social', 'Property'] as const;
+const siteTabs = [
+  'All',
+  'Services',
+  'Visit',
+  'Government',
+  'Barangays',
+  'Records',
+  'Tools',
+] as const;
+const serviceTabs = [
+  'All',
+  'Business',
+  'Health',
+  'Education',
+  'Social',
+  'Property',
+] as const;
 
 const normalize = (value: string) =>
   value
@@ -66,10 +81,18 @@ const matchesTab = (item: SearchItem, tab: string, scope: SearchScope) => {
 
   if (tab === 'Services') return item.group === 'Service';
   if (tab === 'Visit') return item.group === 'Visit';
-  if (tab === 'Government') return item.group === 'Government' || (item.group === 'Contact' && item.category === 'Government');
+  if (tab === 'Government')
+    return (
+      item.group === 'Government' ||
+      (item.group === 'Contact' && item.category === 'Government')
+    );
   if (tab === 'Barangays') return item.group === 'Barangay';
   if (tab === 'Records') return item.group === 'Record';
-  if (tab === 'Tools') return item.group === 'Tool' || (item.group === 'Contact' && item.category === 'Tools');
+  if (tab === 'Tools')
+    return (
+      item.group === 'Tool' ||
+      (item.group === 'Contact' && item.category === 'Tools')
+    );
 
   return true;
 };
@@ -107,18 +130,20 @@ export default function ServiceSearch({
   const visibleResults = useMemo(() => {
     if (!query.trim()) {
       const featured = results.filter(item => item.featured);
-      return (featured.length ? featured : results).slice(0, scope === 'site' ? 8 : 12);
+      return (featured.length ? featured : results).slice(
+        0,
+        scope === 'site' ? 8 : 12
+      );
     }
     return results.slice(0, 12);
   }, [query, results, scope]);
 
   useEffect(() => {
-    setActiveIndex(0);
-  }, [query, tab]);
-
-  useEffect(() => {
     const handlePointerDown = (event: MouseEvent | TouchEvent) => {
-      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node)
+      ) {
         setOpen(false);
       }
     };
@@ -140,10 +165,14 @@ export default function ServiceSearch({
   const submit = (event: FormEvent) => {
     event.preventDefault();
     if (visibleResults.length > 0) {
-      selectResult(visibleResults[Math.min(activeIndex, visibleResults.length - 1)].href);
+      selectResult(
+        visibleResults[Math.min(activeIndex, visibleResults.length - 1)].href
+      );
       return;
     }
-    navigate(scope === 'services' ? '/services' : '/community-tools/saan-ako-lalapit');
+    navigate(
+      scope === 'services' ? '/services' : '/community-tools/saan-ako-lalapit'
+    );
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -151,7 +180,7 @@ export default function ServiceSearch({
       event.preventDefault();
       setOpen(true);
       setActiveIndex(index =>
-        visibleResults.length ? (index + 1) % visibleResults.length : 0,
+        visibleResults.length ? (index + 1) % visibleResults.length : 0
       );
       return;
     }
@@ -162,7 +191,7 @@ export default function ServiceSearch({
       setActiveIndex(index =>
         visibleResults.length
           ? (index - 1 + visibleResults.length) % visibleResults.length
-          : 0,
+          : 0
       );
       return;
     }
@@ -175,13 +204,20 @@ export default function ServiceSearch({
 
     if (event.key === 'Enter' && open && visibleResults.length > 0) {
       event.preventDefault();
-      selectResult(visibleResults[Math.min(activeIndex, visibleResults.length - 1)].href);
+      selectResult(
+        visibleResults[Math.min(activeIndex, visibleResults.length - 1)].href
+      );
     }
   };
 
-  const heading = title || (scope === 'services' ? 'Find a Government Service' : 'Find a service or information');
+  const heading =
+    title ||
+    (scope === 'services'
+      ? 'Find a Government Service'
+      : 'Find a service or information');
   const inputPlaceholder =
-    placeholder || (scope === 'services'
+    placeholder ||
+    (scope === 'services'
       ? 'Search services'
       : 'e.g., Yellow Card, Poblacion, restaurants, budget');
 
@@ -196,7 +232,10 @@ export default function ServiceSearch({
       </div>
 
       <form onSubmit={submit}>
-        <label htmlFor={scope === 'services' ? 'service-search' : 'site-search'} className="sr-only">
+        <label
+          htmlFor={scope === 'services' ? 'service-search' : 'site-search'}
+          className="sr-only"
+        >
           {heading}
         </label>
 
@@ -209,6 +248,7 @@ export default function ServiceSearch({
               onFocus={() => setOpen(true)}
               onChange={event => {
                 setQuery(event.target.value);
+                setActiveIndex(0);
                 setOpen(true);
               }}
               onKeyDown={handleKeyDown}
@@ -217,6 +257,11 @@ export default function ServiceSearch({
               aria-autocomplete="list"
               aria-expanded={open}
               aria-controls="search-results"
+              aria-activedescendant={
+                open && visibleResults[activeIndex]
+                  ? `search-result-${scope}-${activeIndex}`
+                  : undefined
+              }
               className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 pr-11 text-base outline-none text-gray-900 shadow-inner focus:border-primary-500 focus:ring-2 focus:ring-primary-200"
             />
 
@@ -225,6 +270,7 @@ export default function ServiceSearch({
                 type="button"
                 onClick={() => {
                   setQuery('');
+                  setActiveIndex(0);
                   setOpen(true);
                 }}
                 className="absolute right-3 top-1/2 -translate-y-1/2 rounded-md p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-700"
@@ -257,7 +303,10 @@ export default function ServiceSearch({
                 <button
                   key={item}
                   type="button"
-                  onClick={() => setTab(item)}
+                  onClick={() => {
+                    setTab(item);
+                    setActiveIndex(0);
+                  }}
                   className={
                     tab === item
                       ? 'rounded-full bg-primary-800 px-4 py-1.5 text-sm font-semibold text-white shadow-sm'
@@ -277,41 +326,60 @@ export default function ServiceSearch({
                   key={item.href + item.title}
                   type="button"
                   role="option"
+                  id={`search-result-${scope}-${index}`}
                   aria-selected={index === activeIndex}
                   onMouseEnter={() => setActiveIndex(index)}
                   onClick={() => selectResult(item.href)}
                   className={
                     'w-full border-b border-gray-100 px-5 py-4 text-left last:border-b-0 transition ' +
-                    (index === activeIndex ? 'bg-primary-50' : 'bg-white hover:bg-gray-50')
+                    (index === activeIndex
+                      ? 'bg-primary-50'
+                      : 'bg-white hover:bg-gray-50')
                   }
                 >
-                  <div className="text-base font-bold text-primary-800">{item.title}</div>
+                  <div className="text-base font-bold text-primary-800">
+                    {item.title}
+                  </div>
                   <div className="mt-2 flex items-center gap-2 text-xs text-gray-600">
                     <span className="inline-flex items-center rounded-md bg-gray-100 px-2 py-1">
                       {item.group === 'Service' ? item.category : item.group}
                     </span>
                   </div>
-                  <p className="mt-2 text-sm leading-relaxed text-gray-700">{item.description}</p>
+                  <p className="mt-2 text-sm leading-relaxed text-gray-700">
+                    {item.description}
+                  </p>
                 </button>
               ))
             ) : (
               <div className="px-5 py-8 text-center">
-                <div className="font-semibold text-gray-900">No matching result</div>
-                <p className="mt-1 text-sm text-gray-500">Try another keyword.</p>
+                <div className="font-semibold text-gray-900">
+                  No matching result
+                </div>
+                <p className="mt-1 text-sm text-gray-500">
+                  Try another keyword.
+                </p>
               </div>
             )}
           </div>
 
           <div className="flex items-center justify-between gap-3 border-t border-gray-200 bg-gray-50 px-4 py-2.5 text-xs text-gray-500">
-            <span>{results.length} {results.length === 1 ? 'result' : 'results'}</span>
+            <span>
+              {results.length} {results.length === 1 ? 'result' : 'results'}
+            </span>
             <div className="hidden md:flex items-center gap-3">
               <span className="inline-flex items-center gap-1">
-                <kbd className="search-kbd"><ArrowUp className="h-3 w-3" /></kbd>
-                <kbd className="search-kbd"><ArrowDown className="h-3 w-3" /></kbd>
+                <kbd className="search-kbd">
+                  <ArrowUp className="h-3 w-3" />
+                </kbd>
+                <kbd className="search-kbd">
+                  <ArrowDown className="h-3 w-3" />
+                </kbd>
                 Navigate
               </span>
               <span className="inline-flex items-center gap-1">
-                <kbd className="search-kbd"><CornerDownLeft className="h-3 w-3" /></kbd>
+                <kbd className="search-kbd">
+                  <CornerDownLeft className="h-3 w-3" />
+                </kbd>
                 Select
               </span>
               <span className="inline-flex items-center gap-1">

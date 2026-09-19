@@ -92,13 +92,25 @@
   --animate-slide-in: slideIn 0.5s ease-out;
 
   @keyframes fadeIn {
-    0% { opacity: 0; transform: translateY(4px); }
-    100% { opacity: 1; transform: translateY(0); }
+    0% {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   @keyframes slideIn {
-    0% { transform: translateY(10px); opacity: 0; }
-    100% { transform: translateY(0); opacity: 1; }
+    0% {
+      transform: translateY(10px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
   }
 }
 
@@ -109,6 +121,25 @@
 
 html {
   scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+:where(a, button, input, select, textarea):focus-visible {
+  outline: 3px solid #dca514;
+  outline-offset: 3px;
 }
 
 body {
@@ -142,8 +173,16 @@ body {
 .makati-hero {
   position: relative;
   background:
-    radial-gradient(circle at 82% 18%, rgba(220,165,20,0.20), transparent 30%),
-    radial-gradient(circle at 14% 82%, rgba(59,135,146,0.12), transparent 32%),
+    radial-gradient(
+      circle at 82% 18%,
+      rgba(220, 165, 20, 0.2),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 14% 82%,
+      rgba(59, 135, 146, 0.12),
+      transparent 32%
+    ),
     linear-gradient(135deg, #fffdf8 0%, #f3f8ef 52%, #fff7df 100%);
   border-bottom: 1px solid #e7dfd0;
 }
@@ -155,7 +194,7 @@ body {
   bottom: -7rem;
   width: 28rem;
   height: 14rem;
-  border: 2px solid rgba(47,135,146,0.18);
+  border: 2px solid rgba(47, 135, 146, 0.18);
   border-radius: 50%;
   transform: rotate(-8deg);
   pointer-events: none;
@@ -178,7 +217,7 @@ body {
 .brand-btn-primary {
   background: #176238;
   color: white;
-  box-shadow: 0 6px 18px rgba(23,98,56,0.16);
+  box-shadow: 0 6px 18px rgba(23, 98, 56, 0.16);
 }
 
 .brand-btn-primary:hover {
@@ -188,7 +227,7 @@ body {
 
 .brand-btn-secondary {
   border: 1px solid #b9ddc4;
-  background: rgba(255,255,255,0.78);
+  background: rgba(255, 255, 255, 0.78);
   color: #176238;
 }
 
@@ -237,7 +276,10 @@ body {
   background: white;
   border-radius: 1rem;
   padding: 1rem;
-  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    transform 0.15s ease,
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
   text-decoration: none;
 }
 
@@ -245,7 +287,7 @@ body {
 .category-card:hover {
   transform: translateY(-2px);
   border-color: #b9ddc4;
-  box-shadow: 0 10px 28px rgba(32,62,44,0.08);
+  box-shadow: 0 10px 28px rgba(32, 62, 44, 0.08);
 }
 
 .home-service-card-icon,
@@ -263,7 +305,7 @@ body {
 .stat-card {
   border: 1px solid #dcefe2;
   border-radius: 1rem;
-  background: rgba(255,255,255,0.86);
+  background: rgba(255, 255, 255, 0.86);
   padding: 1.15rem;
 }
 
@@ -286,7 +328,7 @@ body {
 .principle-card {
   border: 1px solid #ead6a0;
   border-radius: 1rem;
-  background: rgba(255,255,255,0.72);
+  background: rgba(255, 255, 255, 0.72);
   padding: 1.15rem;
 }
 
@@ -332,7 +374,6 @@ body {
   background-color: #f3f4f6;
 }
 
-
 .search-kbd {
   display: inline-grid;
   min-width: 1.4rem;
@@ -347,9 +388,8 @@ body {
   font-family: inherit;
   font-size: 0.68rem;
   line-height: 1;
-  box-shadow: 0 1px 0 rgba(0,0,0,0.03);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.03);
 }
-
 
 /* Site-wide content width and gutters */
 .container {

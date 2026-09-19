@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1120" role="img" aria-labelledby="title desc">
+  <title id="title">BetterMakati logo study</title>
+  <desc id="desc">A primary civic mark with an eight-ray rising sun over a Makati-inspired contour and a secondary heritage reference inspired by the Bandila ng Matagumpay.</desc>
+
+  <rect width="1600" height="1120" fill="#fffdf8"/>
+
+  <text x="100" y="98" fill="#143d2a" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="700" letter-spacing="5">BETTERMAKATI</text>
+  <text x="100" y="140" fill="#587066" font-family="Arial, Helvetica, sans-serif" font-size="18" letter-spacing="2">LOGO STUDY 01 · MODERN CIVIC MARK + HERITAGE REFERENCE</text>
+  <line x1="100" y1="175" x2="1500" y2="175" stroke="#d8e1d8" stroke-width="2"/>
+
+  <!-- Primary modern civic mark -->
+  <g transform="translate(160 210)">
+    <text x="280" y="30" text-anchor="middle" fill="#587066" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700" letter-spacing="3">PRIMARY CIVIC MARK</text>
+
+    <!-- restrained open triangle; a modern reference to the historical white triangle -->
+    <path d="M105 455 L280 112 L455 455" fill="none" stroke="#b8c9bd" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- eight simplified rays -->
+    <g stroke="#d6a41e" stroke-width="20" stroke-linecap="round">
+      <path d="M188 278 L120 256"/>
+      <path d="M205 240 L151 191"/>
+      <path d="M239 215 L210 148"/>
+      <path d="M266 207 L250 132"/>
+      <path d="M294 207 L310 132"/>
+      <path d="M321 215 L350 148"/>
+      <path d="M355 240 L409 191"/>
+      <path d="M372 278 L440 256"/>
+    </g>
+
+    <!-- rising sun, partially covered by the civic contour -->
+    <path d="M207 306 A73 73 0 0 1 353 306" fill="none" stroke="#d6a41e" stroke-width="34" stroke-linecap="round"/>
+
+    <!-- simplified irregular civic / mountain contour, deliberately not a heart or shield -->
+    <path d="M106 430 L143 390 L191 361 L232 374 L280 337 L323 369 L370 352 L419 389 L455 431 L432 468 L423 506 L379 538 L332 555 L281 548 L230 526 L184 493 L139 477 Z" fill="#176238" stroke="#143d2a" stroke-width="8" stroke-linejoin="round"/>
+
+    <!-- inner civic path / river line -->
+    <path d="M157 456 C204 434 225 397 279 389 C324 382 351 404 405 442" fill="none" stroke="#4f8c91" stroke-width="13" stroke-linecap="round"/>
+
+    <text x="280" y="660" text-anchor="middle" fill="#143d2a" font-family="Arial, Helvetica, sans-serif" font-size="62" font-weight="700" letter-spacing="-2">Better<tspan font-weight="400">Makati</tspan></text>
+    <text x="280" y="700" text-anchor="middle" fill="#587066" font-family="Arial, Helvetica, sans-serif" font-size="17" letter-spacing="2">LOOKING FORWARD · ROOTED HERE</text>
+  </g>
+
+  <!-- Secondary heritage reference -->
+  <g transform="translate(890 210)">
+    <text x="300" y="30" text-anchor="middle" fill="#587066" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700" letter-spacing="3">HERITAGE REFERENCE</text>
+    <text x="300" y="62" text-anchor="middle" fill="#a04a3a" font-family="Arial, Helvetica, sans-serif" font-size="15" letter-spacing="1">BANDILA NG MATAGUMPAY · PIO DEL PILAR · SAN PEDRO MACATI</text>
+
+    <!-- red field -->
+    <rect x="40" y="115" width="520" height="310" rx="3" fill="#b52d2d"/>
+
+    <!-- white triangle at the hoist -->
+    <path d="M40 115 L355 270 L40 425 Z" fill="#fffdf8"/>
+
+    <!-- eight-ray rising sun inside the triangle -->
+    <g stroke="#b52d2d" stroke-width="11" stroke-linecap="round">
+      <path d="M138 307 L86 296"/>
+      <path d="M148 282 L106 247"/>
+      <path d="M170 264 L146 210"/>
+      <path d="M190 258 L184 197"/>
+      <path d="M206 258 L212 197"/>
+      <path d="M226 264 L250 210"/>
+      <path d="M248 282 L290 247"/>
+      <path d="M258 307 L310 296"/>
+    </g>
+    <path d="M144 328 A54 54 0 0 1 252 328" fill="none" stroke="#b52d2d" stroke-width="18" stroke-linecap="round"/>
+    <!-- mountain beneath the sun -->
+    <path d="M112 337 L177 289 L211 315 L255 281 L307 337 Z" fill="#b52d2d"/>
+
+    <!-- three K's, intentionally confined to this heritage treatment -->
+    <text x="68" y="157" fill="#b52d2d" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700">K</text>
+    <text x="68" y="408" fill="#b52d2d" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700">K</text>
+    <text x="323" y="284" fill="#b52d2d" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700">K</text>
+
+    <text x="300" y="505" text-anchor="middle" fill="#143d2a" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700" letter-spacing="2">HISTORY IN THE MARK</text>
+    <text x="300" y="545" text-anchor="middle" fill="#587066" font-family="Arial, Helvetica, sans-serif" font-size="17">Use for the About page and commemorative storytelling</text>
+  </g>
+
+  <!-- usage notes -->
+  <g transform="translate(140 935)">
+    <circle cx="12" cy="12" r="9" fill="#176238"/>
+    <text x="35" y="18" fill="#143d2a" font-family="Arial, Helvetica, sans-serif" font-size="17">Modern site identity: green, gold, muted blue</text>
+    <circle cx="500" cy="12" r="9" fill="#b52d2d"/>
+    <text x="523" y="18" fill="#143d2a" font-family="Arial, Helvetica, sans-serif" font-size="17">Historical treatment: red, white, eight rays, three K’s</text>
+  </g>
+  <text x="140" y="1010" fill="#829087" font-family="Arial, Helvetica, sans-serif" font-size="15">CONCEPT STUDY · THE LOWER CIVIC CONTOUR SHOULD BE REDRAWN AGAINST THE CURRENT MAKATI BOUNDARY BEFORE FINAL VECTOR PRODUCTION.</text>
+</svg>

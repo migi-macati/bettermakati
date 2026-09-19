@@ -1,9 +1,16 @@
-import { AlertTriangle, Building2, HeartPulse, PhoneCall, ShieldAlert } from 'lucide-react';
+import {
+  AlertTriangle,
+  Building2,
+  HeartPulse,
+  PhoneCall,
+  ShieldAlert,
+} from 'lucide-react';
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
 import SEO from '../components/SEO';
 
-const actionCenterSource = 'https://www.makati.gov.ph/assets/uploads/downloads/2/481/pdf/Makati%20Action%20Center.pdf';
+const actionCenterSource =
+  'https://www.makati.gov.ph/assets/uploads/downloads/2/481/pdf/Makati%20Action%20Center.pdf';
 
 const contactCards = [
   {
@@ -16,7 +23,11 @@ const contactCards = [
     title: 'Makati Action Center',
     icon: PhoneCall,
     href: actionCenterSource,
-    lines: ['General concerns: 8870-1000', 'District I: 8870-1432', 'District II: 8870-1401'],
+    lines: [
+      'General concerns: 8870-1000',
+      'District I: 8870-1432',
+      'District II: 8870-1401',
+    ],
   },
   {
     title: 'Patient Relations',
@@ -31,6 +42,11 @@ const contactCards = [
     lines: ['20/F Makati City Hall Building I', 'makatidrrmo@makati.gov.ph'],
   },
 ];
+
+const phoneFromLine = (line: string) => {
+  const match = line.match(/(\d{3,4}-\d{3,4})$/);
+  return match ? `tel:+632${match[1].replace('-', '')}` : null;
+};
 
 export default function Hotlines() {
   return (
@@ -56,10 +72,17 @@ export default function Hotlines() {
             >
               National emergency hotline
             </a>
-            <div className="text-4xl md:text-5xl font-extrabold mt-1 text-gray-950">911</div>
-            <p className="text-gray-700 mt-2">Police, fire, medical, rescue and other emergencies.</p>
+            <div className="text-4xl md:text-5xl font-extrabold mt-1 text-gray-950">
+              911
+            </div>
+            <p className="text-gray-700 mt-2">
+              Police, fire, medical, rescue and other emergencies.
+            </p>
           </div>
-          <a href="tel:911" className="brand-btn-primary !bg-red-700 hover:!bg-red-800 self-start md:self-center">
+          <a
+            href="tel:911"
+            className="brand-btn-primary !bg-red-700 hover:!bg-red-800 self-start md:self-center"
+          >
             Call 911 <PhoneCall className="h-4 w-4" />
           </a>
         </div>
@@ -68,7 +91,10 @@ export default function Hotlines() {
           {contactCards.map(card => {
             const Icon = card.icon;
             return (
-              <div key={card.title} className="rounded-2xl border border-[#e8dfd0] bg-white p-5 shadow-sm">
+              <div
+                key={card.title}
+                className="rounded-2xl border border-[#e8dfd0] bg-white p-5 shadow-sm"
+              >
                 <Icon className="h-6 w-6 text-primary-700" />
                 <a
                   href={card.href}
@@ -79,7 +105,34 @@ export default function Hotlines() {
                   {card.title}
                 </a>
                 <div className="space-y-1 text-sm text-gray-700">
-                  {card.lines.map(line => <p key={line}>{line}</p>)}
+                  {card.lines.map(line => {
+                    const phoneHref = phoneFromLine(line);
+                    if (line.includes('@')) {
+                      return (
+                        <p key={line}>
+                          <a
+                            href={`mailto:${line}`}
+                            className="underline underline-offset-2 hover:text-primary-700"
+                          >
+                            {line}
+                          </a>
+                        </p>
+                      );
+                    }
+                    if (phoneHref) {
+                      return (
+                        <p key={line}>
+                          <a
+                            href={phoneHref}
+                            className="underline underline-offset-2 hover:text-primary-700"
+                          >
+                            {line}
+                          </a>
+                        </p>
+                      );
+                    }
+                    return <p key={line}>{line}</p>;
+                  })}
                 </div>
               </div>
             );

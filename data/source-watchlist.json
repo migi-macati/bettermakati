@@ -1,0 +1,50 @@
+[
+  {
+    "id": "makati-news",
+    "label": "Makati official news",
+    "url": "https://www.makati.gov.ph/content/news",
+    "kind": "official-news"
+  },
+  {
+    "id": "makati-events",
+    "label": "Makati official events",
+    "url": "https://www.makati.gov.ph/content/events",
+    "kind": "official-events"
+  },
+  {
+    "id": "makati-budget-2026",
+    "label": "Makati 2026 annual budget",
+    "url": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/online_forms/pdf/Annual%20Budget%20Report%202026.pdf",
+    "kind": "budget"
+  },
+  {
+    "id": "dbm-f14-2026",
+    "label": "DBM/BLGF 2025 actuals",
+    "url": "https://www.dbm.gov.ph/wp-content/uploads/BESF/BESF2026/F14.pdf",
+    "kind": "actuals"
+  },
+  {
+    "id": "psa-population",
+    "label": "PSA population table",
+    "url": "https://openstat.psa.gov.ph/PXWeb/pxweb/en/DB/DB__1A__PO_2024/0211A6DAPG0.px/",
+    "kind": "statistics"
+  },
+  {
+    "id": "psa-ppa",
+    "label": "PSA provincial product accounts",
+    "url": "https://psa.gov.ph/content/2024-economic-performance-provinces-and-highly-urbanized-cities-philippines-capita-gross",
+    "kind": "statistics"
+  },
+  {
+    "id": "coa-audit",
+    "label": "Commission on Audit annual reports",
+    "url": "https://www.coa.gov.ph/reports/annual-audit-reports/",
+    "kind": "audit"
+  },
+  {
+    "id": "philgeps",
+    "label": "PhilGEPS procurement notices",
+    "url": "https://notices.philgeps.gov.ph/",
+    "kind": "procurement"
+  }
+]

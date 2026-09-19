@@ -15,7 +15,9 @@
     "convert-yaml": "node scripts/yaml-to-json.js",
     "dev:yaml": "npm run convert-yaml && npm run dev",
     "setup": "node scripts/setup-starter-kit.js",
-    "index-content": "node scripts/index-content.mjs"
+    "index-content": "node scripts/index-content.mjs",
+    "update:news": "node scripts/update-news-snapshot.mjs",
+    "check:sources": "node scripts/check-sources.mjs"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [

@@ -1,3 +1,5 @@
+import { makatiHistory } from './makatiHistory';
+
 export type SearchGroup =
   | 'Service'
   | 'Visit'
@@ -48,9 +50,11 @@ const serviceItems: SearchItem[] = [
     title: 'Apply for a new business permit',
     group: 'Service',
     category: 'Business',
-    description: 'Requirements and application form for a new Makati business permit.',
+    description:
+      'Requirements and application form for a new Makati business permit.',
     href: '/services/business/new-business-permit',
-    keywords: 'business permit new mayor mayors licensing bplo trade company enterprise registration',
+    keywords:
+      'business permit new mayor mayors licensing bplo trade company enterprise registration',
     featured: true,
   },
   {
@@ -67,7 +71,8 @@ const serviceItems: SearchItem[] = [
     category: 'Health',
     description: 'Application information and supporting documents.',
     href: '/services/health-services/makati-health-plus',
-    keywords: 'yellow card health plus medical hospital patient healthcare benefit',
+    keywords:
+      'yellow card health plus medical hospital patient healthcare benefit',
     featured: true,
   },
   {
@@ -76,7 +81,8 @@ const serviceItems: SearchItem[] = [
     category: 'Health',
     description: 'Emergency contacts and reporting information.',
     href: '/services/health-services/emergency-assistance',
-    keywords: 'emergency 911 rescue medical drrmo disaster fire police ambulance',
+    keywords:
+      'emergency 911 rescue medical drrmo disaster fire police ambulance',
   },
   {
     title: 'Apply to the University of Makati',
@@ -92,7 +98,8 @@ const serviceItems: SearchItem[] = [
     category: 'Education',
     description: 'Scholarship guidelines and application information.',
     href: '/services/education/umak-scholarships',
-    keywords: 'umak scholarship education grant tuition student financial assistance',
+    keywords:
+      'umak scholarship education grant tuition student financial assistance',
   },
   {
     title: 'Contact the Makati Action Center',
@@ -100,7 +107,8 @@ const serviceItems: SearchItem[] = [
     category: 'Social',
     description: 'Citizen concerns, feedback and service coordination.',
     href: '/services/social-welfare/makati-action-center',
-    keywords: 'complaint concern feedback action center help assistance mac mayor city hall',
+    keywords:
+      'complaint concern feedback action center help assistance mac mayor city hall',
     featured: true,
   },
   {
@@ -133,7 +141,8 @@ const serviceItems: SearchItem[] = [
     category: 'Property',
     description: 'Requirements for Makati real property tax payment.',
     href: '/services/housing-land-use/real-property-tax-payment',
-    keywords: 'property tax real estate rpta payment assessment treasurer land house',
+    keywords:
+      'property tax real estate rpta payment assessment treasurer land house',
     featured: true,
   },
   {
@@ -142,7 +151,8 @@ const serviceItems: SearchItem[] = [
     category: 'Property',
     description: 'Locational clearance and building-permit requirements.',
     href: '/services/housing-land-use/locational-clearance-building-permit',
-    keywords: 'building permit zoning locational clearance construction land development occupancy',
+    keywords:
+      'building permit zoning locational clearance construction land development occupancy',
   },
 ];
 
@@ -153,7 +163,8 @@ const visitItems: SearchItem[] = [
     category: 'Visit',
     description: 'Places to go, food, markets, parks, shopping and culture.',
     href: '/visit',
-    keywords: 'visit tourist tourism attractions places restaurant cafe market park shopping nightlife',
+    keywords:
+      'visit tourist tourism attractions places restaurant cafe market park shopping nightlife',
     featured: true,
   },
   {
@@ -209,9 +220,11 @@ const visitItems: SearchItem[] = [
     title: 'Nuestra Señora de Gracia Church',
     group: 'Visit',
     category: 'Heritage',
-    description: 'Historic Augustinian church and monastery in Guadalupe Viejo.',
+    description:
+      'Historic Augustinian church and monastery in Guadalupe Viejo.',
     href: '/heritage',
-    keywords: 'guadalupe church nuestra senora gracia monastery heritage historical',
+    keywords:
+      'guadalupe church nuestra senora gracia monastery heritage historical',
   },
   {
     title: 'Sts. Peter and Paul Parish Church',
@@ -219,7 +232,8 @@ const visitItems: SearchItem[] = [
     category: 'Heritage',
     description: 'Historic San Pedro Macati church in Poblacion.',
     href: '/heritage',
-    keywords: 'saints peter paul sampiro san pedro macati poblacion heritage church',
+    keywords:
+      'saints peter paul sampiro san pedro macati poblacion heritage church',
   },
   {
     title: 'Nielson Tower',
@@ -244,7 +258,8 @@ const visitItems: SearchItem[] = [
     category: 'Transport',
     description: 'Public transport, route planning and ride-hailing.',
     href: '/mobility',
-    keywords: 'transport commute mrt one ayala bus jeep uv express grab angkas joyride move it',
+    keywords:
+      'transport commute mrt one ayala bus jeep uv express grab angkas joyride move it',
     featured: true,
   },
   {
@@ -253,7 +268,8 @@ const visitItems: SearchItem[] = [
     category: 'Entertainment',
     description: 'Cinema locations and showtime links.',
     href: '/cinemas',
-    keywords: 'cinema movie theater showtimes power plant glorietta greenbelt circuit century waltermart cash carry',
+    keywords:
+      'cinema movie theater showtimes power plant glorietta greenbelt circuit century waltermart cash carry',
   },
   {
     title: 'Parking in Makati',
@@ -261,7 +277,8 @@ const visitItems: SearchItem[] = [
     category: 'Transport',
     description: 'Find parking near destinations in Makati.',
     href: '/parking',
-    keywords: 'parking car park garage ayala rockwell circuit century poblacion salcedo legazpi',
+    keywords:
+      'parking car park garage ayala rockwell circuit century poblacion salcedo legazpi',
   },
   {
     title: 'What’s On in Makati',
@@ -269,14 +286,16 @@ const visitItems: SearchItem[] = [
     category: 'Entertainment',
     description: 'Events, activities and entertainment sources.',
     href: '/whats-on',
-    keywords: 'events activities whats on show concert mall festival theatre entertainment',
+    keywords:
+      'events activities whats on show concert mall festival theatre entertainment',
     featured: true,
   },
   {
     title: 'Make It Makati',
     group: 'Visit',
     category: 'Visit',
-    description: 'Ayala Land guide to Makati CBD, Ayala Center and Circuit Makati.',
+    description:
+      'Ayala Land guide to Makati CBD, Ayala Center and Circuit Makati.',
     href: '/visit#resources',
     keywords: 'make it makati ayala cbd circuit visitor guide lifestyle',
   },
@@ -306,7 +325,8 @@ const governmentItems: SearchItem[] = [
     category: 'Government',
     description: 'Departments and offices of the City Government of Makati.',
     href: '/government#offices',
-    keywords: 'office department city hall government engineering health social welfare environment budget finance',
+    keywords:
+      'office department city hall government engineering health social welfare environment budget finance',
     featured: true,
   },
   {
@@ -315,7 +335,8 @@ const governmentItems: SearchItem[] = [
     category: 'Government',
     description: 'Population and basic city figures.',
     href: '/statistics',
-    keywords: 'statistics population demographic income class data city profile',
+    keywords:
+      'statistics population demographic income class data city profile',
   },
   {
     title: 'Legislation',
@@ -337,9 +358,11 @@ const governmentItems: SearchItem[] = [
     title: 'Estates & Associations',
     group: 'Government',
     category: 'Government',
-    description: 'MACEA, Century City, Rockwell Center and Circuit Makati estate associations.',
+    description:
+      'MACEA, Century City, Rockwell Center and Circuit Makati estate associations.',
     href: '/estates',
-    keywords: 'macea estate association century city rockwell circuit cmea private estate',
+    keywords:
+      'macea estate association century city rockwell circuit cmea private estate',
   },
   {
     title: 'Bel-Air Village Association',
@@ -379,7 +402,8 @@ const governmentItems: SearchItem[] = [
     category: 'Government',
     description: 'Weather, air quality, advisories and utility status sources.',
     href: '/live',
-    keywords: 'live weather air quality aqi rain thunderstorm pagasa meralco outage manila water macea phivolcs advisory',
+    keywords:
+      'live weather air quality aqi rain thunderstorm pagasa meralco outage manila water macea phivolcs advisory',
     featured: true,
   },
 ];
@@ -391,7 +415,8 @@ const recordItems: SearchItem[] = [
     category: 'Records',
     description: 'Budget, project disclosures, procurement and audit records.',
     href: '/projects-budget',
-    keywords: 'budget spending projects procurement audit public records transparency contract',
+    keywords:
+      'budget spending projects procurement audit public records transparency contract',
     featured: true,
   },
   {
@@ -433,9 +458,11 @@ const toolItems: SearchItem[] = [
     title: 'Saan Ako Lalapit?',
     group: 'Tool',
     category: 'Tools',
-    description: 'Find the right Makati office, service or channel for your concern.',
+    description:
+      'Find the right Makati office, service or channel for your concern.',
     href: '/community-tools/saan-ako-lalapit',
-    keywords: 'where office concern help which department saan ako lalapit finder',
+    keywords:
+      'where office concern help which department saan ako lalapit finder',
     featured: true,
   },
   {
@@ -444,7 +471,8 @@ const toolItems: SearchItem[] = [
     category: 'Tools',
     description: 'Public-project records and development disclosures.',
     href: '/projects-budget#projects',
-    keywords: 'project tracker infrastructure public works development project status',
+    keywords:
+      'project tracker infrastructure public works development project status',
   },
   {
     title: 'Getting Around',
@@ -452,7 +480,8 @@ const toolItems: SearchItem[] = [
     category: 'Tools',
     description: 'Directions, public transport and ride-hailing links.',
     href: '/mobility',
-    keywords: 'commute transport route bus jeep terminal traffic fare mrt grab angkas joyride move it',
+    keywords:
+      'commute transport route bus jeep terminal traffic fare mrt grab angkas joyride move it',
   },
   {
     title: 'Parking Finder',
@@ -482,9 +511,11 @@ const toolItems: SearchItem[] = [
     title: 'Opportunities Hub',
     group: 'Tool',
     category: 'Tools',
-    description: 'Planned jobs, scholarships, training and volunteer opportunities tool.',
+    description:
+      'Planned jobs, scholarships, training and volunteer opportunities tool.',
     href: '/get-involved?type=idea&tool=opportunities-hub#submission',
-    keywords: 'jobs scholarship training internship volunteer opportunities employment',
+    keywords:
+      'jobs scholarship training internship volunteer opportunities employment',
   },
   {
     title: 'Waste & Collection Guide',
@@ -503,7 +534,8 @@ const contactItems: SearchItem[] = [
     category: 'Government',
     description: '911, City Hall, Makati Action Center and essential contacts.',
     href: '/hotlines',
-    keywords: 'hotline phone emergency 911 city hall drrmo action center contact',
+    keywords:
+      'hotline phone emergency 911 city hall drrmo action center contact',
     featured: true,
   },
   {
@@ -526,6 +558,14 @@ const barangayItems: SearchItem[] = barangays.map(name => ({
 }));
 
 export const searchIndex: SearchItem[] = [
+  ...makatiHistory.map(event => ({
+    title: event.title,
+    group: 'Record' as const,
+    category: 'History',
+    description: `${event.date} · ${event.summary}`,
+    href: `/history#${event.id}`,
+    keywords: `${event.date} ${event.topic} ${event.source.label} history timeline`,
+  })),
   ...serviceItems,
   ...visitItems,
   ...governmentItems,

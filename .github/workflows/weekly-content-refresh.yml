@@ -1,0 +1,50 @@
+name: Weekly content freshness
+
+on:
+  schedule:
+    # 09:00 Philippine time every Monday (UTC is used by GitHub Actions).
+    - cron: '0 1 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Refresh Google News snapshot
+        run: npm run update:news
+
+      - name: Check official source watchlist
+        run: npm run check:sources
+
+      - name: Verify the site build
+        run: npm run build
+
+      - name: Open a reviewable refresh pull request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: automation/weekly-content-refresh
+          delete-branch: true
+          commit-message: 'chore: refresh Makati news and source watch'
+          title: 'Weekly content freshness refresh'
+          body-path: data/source-watch-report.md
+          add-paths: |
+            src/data/newsSnapshot.ts
+            data/source-watch.json
+            data/source-watch-report.md

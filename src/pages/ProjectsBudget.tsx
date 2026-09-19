@@ -14,13 +14,18 @@ import {
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
 import SEO from '../components/SEO';
-import { ComparisonBars, DonutChart, HorizontalBarChart } from '../components/budget/BudgetCharts';
+import {
+  DonutChart,
+  FiscalTrendChart,
+  HorizontalBarChart,
+} from '../components/budget/BudgetCharts';
 import {
   actualSpendingByFunction,
+  actualFiscalHistory,
+  annualBudgetDocuments,
   budgetByType,
   budgetSources,
   budgetSummary,
-  budgetTrend,
   capitalBudgetLines,
   cityPopulation,
   dedicatedFunds,
@@ -31,8 +36,13 @@ import {
 } from '../data/budget2025';
 
 const peso = (millions: number) => {
-  if (millions >= 1000) return '₱' + (millions / 1000).toFixed(millions % 1000 === 0 ? 1 : 2) + 'B';
-  return '₱' + millions.toFixed(millions >= 100 ? 1 : 2) + 'M';
+  const sign = millions < 0 ? '−' : '';
+  const amount = Math.abs(millions);
+  if (amount >= 1000)
+    return (
+      sign + '₱' + (amount / 1000).toFixed(amount % 1000 === 0 ? 1 : 2) + 'B'
+    );
+  return sign + '₱' + amount.toFixed(amount >= 100 ? 1 : 2) + 'M';
 };
 
 const pesoExact = (millions: number) =>
@@ -41,6 +51,14 @@ const pesoExact = (millions: number) =>
     currency: 'PHP',
     maximumFractionDigits: 0,
   }).format(millions * 1_000_000);
+
+const pesoMillions = (millions: number) =>
+  new Intl.NumberFormat('en-PH', {
+    style: 'currency',
+    currency: 'PHP',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(millions) + 'M';
 
 const pct = (value: number) => (value < 0.1 ? '<0.1%' : value.toFixed(1) + '%');
 
@@ -69,7 +87,9 @@ function Metric({
   return (
     <div className="rounded-2xl border border-gray-200 bg-white p-5">
       <Icon className="h-5 w-5 text-primary-700" />
-      <div className="mt-4 text-2xl md:text-3xl font-extrabold tracking-tight text-gray-950">{value}</div>
+      <div className="mt-4 text-2xl md:text-3xl font-extrabold tracking-tight text-gray-950">
+        {value}
+      </div>
       <div className="mt-1 font-bold text-gray-800">{label}</div>
       {detail && <div className="mt-1 text-xs text-gray-500">{detail}</div>}
     </div>
@@ -89,7 +109,9 @@ export default function ProjectsBudget() {
     });
   }, [lineFilter, lineQuery]);
 
-  const perResident = Math.round((budgetSummary.totalBudgetM * 1_000_000) / cityPopulation);
+  const perResident = Math.round(
+    (budgetSummary.totalBudgetM * 1_000_000) / cityPopulation
+  );
 
   return (
     <>
@@ -99,14 +121,20 @@ export default function ProjectsBudget() {
       />
 
       <Section id="budget" className="bg-[#fffdf8]">
-        <div className="section-eyebrow">2025 City Budget</div>
+        <div className="section-eyebrow">
+          2025 budget detail · records through 2026
+        </div>
         <Heading>Where Makati’s money comes from and goes</Heading>
 
         <div className="mt-8 grid grid-cols-2 lg:grid-cols-4 gap-4">
           <Metric
             label="2025 city budget"
             value={peso(budgetSummary.totalBudgetM)}
-            detail={'About ' + pesoExact(perResident / 1_000_000) + ' per resident using the 2024 population'}
+            detail={
+              'About ' +
+              pesoExact(perResident / 1_000_000) +
+              ' per resident using the 2024 population'
+            }
             icon={WalletCards}
           />
           <Metric
@@ -130,33 +158,105 @@ export default function ProjectsBudget() {
         </div>
 
         <div className="mt-5 flex flex-wrap gap-3 text-sm">
-          <a href={budgetSources.annualBudget} target="_blank" rel="noreferrer" className="font-bold text-primary-700 underline underline-offset-2">
+          <a
+            href={budgetSources.annualBudget}
+            target="_blank"
+            rel="noreferrer"
+            className="font-bold text-primary-700 underline underline-offset-2"
+          >
             2025 Annual Budget <ArrowUpRight className="inline h-3.5 w-3.5" />
           </a>
-          <a href={budgetSources.actuals} target="_blank" rel="noreferrer" className="font-bold text-primary-700 underline underline-offset-2">
-            2025 DBM / BLGF actuals <ArrowUpRight className="inline h-3.5 w-3.5" />
+          <a
+            href={budgetSources.actuals}
+            target="_blank"
+            rel="noreferrer"
+            className="font-bold text-primary-700 underline underline-offset-2"
+          >
+            2025 DBM / BLGF actuals{' '}
+            <ArrowUpRight className="inline h-3.5 w-3.5" />
           </a>
         </div>
 
-        <div className="mt-8 grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-5">
-          <ComparisonBars
-            title="Annual budget trend"
-            items={budgetTrend.map(item => ({ label: String(item.year), value: item.amountM }))}
+        <div className="mt-8">
+          <FiscalTrendChart
+            title="Actual receipts and reported expenditures, 2019–2025"
+            items={actualFiscalHistory}
             formatValue={peso}
           />
 
-          <div className="rounded-2xl border border-gray-200 bg-white p-5 md:p-6">
-            <div className="text-sm font-bold text-gray-950">Published annual budgets</div>
-            <div className="text-3xl font-extrabold text-primary-800 mt-3">+6.7%</div>
-            <div className="text-sm text-gray-600 mt-1">Increase from 2024 to 2025</div>
-            <div className="grid grid-cols-2 gap-4 mt-5">
-              {budgetTrend.map(item => (
-                <a key={item.year} href={item.href} target="_blank" rel="noreferrer" className="rounded-xl bg-gray-50 p-4 hover:bg-primary-50 transition">
-                  <div className="text-xs font-bold text-gray-500">{item.year}</div>
-                  <div className="text-xl md:text-2xl font-extrabold text-gray-950 mt-1">{peso(item.amountM)}</div>
-                </a>
-              ))}
-            </div>
+          <div className="mt-5 overflow-x-auto rounded-2xl border border-gray-200 bg-white">
+            <table className="w-full min-w-[680px] text-left">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-4 py-3 font-bold">Year</th>
+                  <th className="px-4 py-3 font-bold text-right">
+                    Actual receipts
+                  </th>
+                  <th className="px-4 py-3 font-bold text-right">
+                    Reported expenditures
+                  </th>
+                  <th className="px-4 py-3 font-bold text-right">
+                    Receipts less expenditures
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {actualFiscalHistory.map(item => (
+                  <tr key={item.year} className="border-t">
+                    <td className="px-4 py-3">
+                      <a
+                        href={item.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="font-bold text-primary-700 underline underline-offset-2"
+                      >
+                        {item.year}{' '}
+                        <ArrowUpRight className="inline h-3.5 w-3.5" />
+                      </a>
+                    </td>
+                    <td className="px-4 py-3 text-right font-semibold">
+                      {pesoMillions(item.receiptsM)}
+                    </td>
+                    <td className="px-4 py-3 text-right font-semibold">
+                      {pesoMillions(item.expendituresM)}
+                    </td>
+                    <td className="px-4 py-3 text-right font-semibold">
+                      {pesoMillions(item.receiptsM - item.expendituresM)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="mt-3 text-xs leading-relaxed text-gray-500">
+            Values are reported by DBM/BLGF in millions of pesos. “Receipts less
+            expenditures” is a direct arithmetic comparison, not an accounting
+            surplus or deficit. The unusually high 2020 expenditure is retained
+            as published in the source table.
+          </p>
+        </div>
+
+        <div className="mt-10 rounded-2xl border border-gray-200 bg-white p-5 md:p-6">
+          <div className="section-eyebrow">Official documents</div>
+          <h2 className="text-xl font-extrabold text-gray-950">
+            Annual budget archive, 2014–2026
+          </h2>
+          <p className="mt-2 text-sm text-gray-600">
+            Open the city’s original annual-budget PDF for each year.
+          </p>
+          <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+            {annualBudgetDocuments.map(document => (
+              <a
+                key={document.year}
+                href={document.href}
+                target="_blank"
+                rel="noreferrer"
+                className="rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 font-extrabold text-gray-950 hover:border-primary-300 hover:bg-primary-50 transition"
+              >
+                {document.year}{' '}
+                <ArrowUpRight className="inline h-3.5 w-3.5 text-primary-700" />
+              </a>
+            ))}
           </div>
         </div>
       </Section>
@@ -164,25 +264,51 @@ export default function ProjectsBudget() {
       <Section className="bg-white">
         <div className="section-eyebrow">Budget Plan</div>
         <Heading level={2}>How the ₱19.0B budget is allocated</Heading>
+        <p className="mt-2 text-xs text-gray-500">
+          Source:{' '}
+          <a
+            href={budgetSources.annualBudget}
+            target="_blank"
+            rel="noreferrer"
+            className="font-bold text-primary-700 underline underline-offset-2"
+          >
+            2025 Annual Budget <ArrowUpRight className="inline h-3 w-3" />
+          </a>
+        </p>
 
         <div className="grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-5 mt-7">
           <DonutChart
             title="Budget composition"
             center="₱19.0B"
-            items={budgetByType.map(item => ({ label: item.label, value: item.amountM, share: item.share }))}
+            items={budgetByType.map(item => ({
+              label: item.label,
+              value: item.amountM,
+              share: item.share,
+            }))}
           />
 
           <div className="grid grid-cols-1 gap-4">
             {budgetByType.map(item => (
-              <div key={item.label} className="rounded-2xl border border-gray-200 bg-white p-5">
+              <div
+                key={item.label}
+                className="rounded-2xl border border-gray-200 bg-white p-5"
+              >
                 <div className="flex items-start justify-between gap-4">
                   <div>
-                    <h3 className="font-extrabold text-gray-950">{item.label}</h3>
-                    <p className="text-sm text-gray-600 mt-1">{item.description}</p>
+                    <h3 className="font-extrabold text-gray-950">
+                      {item.label}
+                    </h3>
+                    <p className="text-sm text-gray-600 mt-1">
+                      {item.description}
+                    </p>
                   </div>
                   <div className="text-right">
-                    <div className="font-extrabold text-primary-800">{peso(item.amountM)}</div>
-                    <div className="text-xs text-gray-500">{pct(item.share)}</div>
+                    <div className="font-extrabold text-primary-800">
+                      {peso(item.amountM)}
+                    </div>
+                    <div className="text-xs text-gray-500">
+                      {pct(item.share)}
+                    </div>
                   </div>
                 </div>
                 <ShareBar share={item.share} />
@@ -195,17 +321,34 @@ export default function ProjectsBudget() {
       <Section className="bg-[#f5f8f2]">
         <div className="section-eyebrow">Actual 2025 Revenue</div>
         <Heading level={2}>Where city receipts came from</Heading>
+        <p className="mt-2 text-xs text-gray-500">
+          Source:{' '}
+          <a
+            href={budgetSources.actuals}
+            target="_blank"
+            rel="noreferrer"
+            className="font-bold text-primary-700 underline underline-offset-2"
+          >
+            DBM / BLGF actuals <ArrowUpRight className="inline h-3 w-3" />
+          </a>
+        </p>
 
         <div className="grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-5 mt-7">
           <DonutChart
             title="Revenue mix"
             center={peso(budgetSummary.actualReceiptsM)}
-            items={revenueSources.map(item => ({ label: item.label, value: item.amountM, share: item.share }))}
+            items={revenueSources.map(item => ({
+              label: item.label,
+              value: item.amountM,
+              share: item.share,
+            }))}
           />
 
           <HorizontalBarChart
             title="Largest local revenue sources"
-            items={localRevenueBreakdown.slice(0, 6).map(item => ({ label: item.label, value: item.amountM }))}
+            items={localRevenueBreakdown
+              .slice(0, 6)
+              .map(item => ({ label: item.label, value: item.amountM }))}
             formatValue={peso}
           />
         </div>
@@ -222,7 +365,9 @@ export default function ProjectsBudget() {
               {localRevenueBreakdown.map(item => (
                 <tr key={item.label} className="border-t">
                   <td className="px-4 py-3 text-gray-800">{item.label}</td>
-                  <td className="px-4 py-3 text-right font-semibold text-gray-950">{peso(item.amountM)}</td>
+                  <td className="px-4 py-3 text-right font-semibold text-gray-950">
+                    {peso(item.amountM)}
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -233,25 +378,50 @@ export default function ProjectsBudget() {
       <Section className="bg-white">
         <div className="section-eyebrow">Actual 2025 Spending</div>
         <Heading level={2}>Where reported expenditures went</Heading>
+        <p className="mt-2 text-xs text-gray-500">
+          Source:{' '}
+          <a
+            href={budgetSources.actuals}
+            target="_blank"
+            rel="noreferrer"
+            className="font-bold text-primary-700 underline underline-offset-2"
+          >
+            DBM / BLGF actuals <ArrowUpRight className="inline h-3 w-3" />
+          </a>
+        </p>
 
         <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-5 mt-7">
           <HorizontalBarChart
             title="Actual spending by function"
-            items={actualSpendingByFunction.map(item => ({ label: item.label, value: item.amountM }))}
+            items={actualSpendingByFunction.map(item => ({
+              label: item.label,
+              value: item.amountM,
+            }))}
             formatValue={peso}
           />
 
           <div className="grid grid-cols-1 gap-4">
             {actualSpendingByFunction.map(item => (
-              <div key={item.label} className="rounded-2xl border border-gray-200 p-5">
+              <div
+                key={item.label}
+                className="rounded-2xl border border-gray-200 p-5"
+              >
                 <div className="flex items-start justify-between gap-4">
                   <div>
-                    <h3 className="font-extrabold text-gray-950">{item.label}</h3>
-                    <p className="text-sm text-gray-600 mt-1">{item.description}</p>
+                    <h3 className="font-extrabold text-gray-950">
+                      {item.label}
+                    </h3>
+                    <p className="text-sm text-gray-600 mt-1">
+                      {item.description}
+                    </p>
                   </div>
                   <div className="text-right">
-                    <div className="font-extrabold text-primary-800">{peso(item.amountM)}</div>
-                    <div className="text-xs text-gray-500">{pct(item.share)}</div>
+                    <div className="font-extrabold text-primary-800">
+                      {peso(item.amountM)}
+                    </div>
+                    <div className="text-xs text-gray-500">
+                      {pct(item.share)}
+                    </div>
                   </div>
                 </div>
                 <ShareBar share={item.share} />
@@ -261,14 +431,31 @@ export default function ProjectsBudget() {
         </div>
 
         <div className="mt-6 rounded-2xl border border-secondary-100 bg-[#fff8e6] p-5 md:p-6">
-          <div className="text-sm text-gray-600">Receipts less expenditures</div>
-          <div className="text-3xl font-extrabold text-gray-950 mt-1">{peso(budgetSummary.receiptsLessExpendituresM)}</div>
+          <div className="text-sm text-gray-600">
+            Receipts less expenditures
+          </div>
+          <div className="text-3xl font-extrabold text-gray-950 mt-1">
+            {peso(budgetSummary.receiptsLessExpendituresM)}
+          </div>
         </div>
       </Section>
 
       <Section id="projects" className="bg-[#f5f8f2]">
         <div className="section-eyebrow">Projects & Dedicated Funds</div>
         <Heading level={2}>Development and capital spending</Heading>
+        <p className="mt-2 text-xs text-gray-500">
+          Dedicated fund cards link to the original disclosure record.
+          Capital-outlay lines are from the{' '}
+          <a
+            href={budgetSources.annualBudget}
+            target="_blank"
+            rel="noreferrer"
+            className="font-bold text-primary-700 underline underline-offset-2"
+          >
+            2025 Annual Budget <ArrowUpRight className="inline h-3 w-3" />
+          </a>
+          .
+        </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-7">
           {dedicatedFunds.map(item => (
@@ -280,7 +467,9 @@ export default function ProjectsBudget() {
               className="rounded-2xl border border-primary-100 bg-white p-6 hover:border-primary-300 hover:shadow-sm transition"
             >
               <HardHat className="h-6 w-6 text-primary-700" />
-              <div className="text-2xl font-extrabold text-gray-950 mt-4">{peso(item.amountM)}</div>
+              <div className="text-2xl font-extrabold text-gray-950 mt-4">
+                {peso(item.amountM)}
+              </div>
               <h3 className="font-bold text-gray-950 mt-1">{item.label}</h3>
               <p className="text-sm text-gray-600 mt-1">{item.description}</p>
               <span className="inline-flex items-center gap-1 text-sm font-bold text-primary-700 mt-4">
@@ -293,32 +482,52 @@ export default function ProjectsBudget() {
         <div className="mt-8 rounded-2xl border border-primary-100 bg-white p-6">
           <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-5">
             <div>
-              <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">20% Development Fund project</div>
-              <h3 className="font-extrabold text-xl text-gray-950 mt-2">{developmentFundProject.name}</h3>
-              <p className="text-sm text-gray-600 mt-1">{developmentFundProject.location}</p>
+              <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+                20% Development Fund project
+              </div>
+              <h3 className="font-extrabold text-xl text-gray-950 mt-2">
+                {developmentFundProject.name}
+              </h3>
+              <p className="text-sm text-gray-600 mt-1">
+                {developmentFundProject.location}
+              </p>
             </div>
             <div className="lg:text-right">
-              <div className="text-2xl font-extrabold text-primary-800">{developmentFundProject.latestCompletion}%</div>
-              <div className="text-xs text-gray-500">Q4 reported completion</div>
+              <div className="text-2xl font-extrabold text-primary-800">
+                {developmentFundProject.latestCompletion}%
+              </div>
+              <div className="text-xs text-gray-500">
+                Q4 reported completion
+              </div>
             </div>
           </div>
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mt-6">
             <div className="rounded-xl bg-gray-50 p-4">
-              <div className="text-xs text-gray-500">Q4 reported total cost</div>
-              <div className="font-extrabold text-gray-950 mt-1">{peso(developmentFundProject.latestCostM)}</div>
+              <div className="text-xs text-gray-500">
+                Q4 reported total cost
+              </div>
+              <div className="font-extrabold text-gray-950 mt-1">
+                {peso(developmentFundProject.latestCostM)}
+              </div>
             </div>
             <div className="rounded-xl bg-gray-50 p-4">
               <div className="text-xs text-gray-500">Cost incurred to date</div>
-              <div className="font-extrabold text-gray-950 mt-1">{peso(developmentFundProject.latestCostIncurredM)}</div>
+              <div className="font-extrabold text-gray-950 mt-1">
+                {peso(developmentFundProject.latestCostIncurredM)}
+              </div>
             </div>
             <div className="rounded-xl bg-gray-50 p-4">
               <div className="text-xs text-gray-500">Started</div>
-              <div className="font-bold text-gray-950 mt-1">{developmentFundProject.start}</div>
+              <div className="font-bold text-gray-950 mt-1">
+                {developmentFundProject.start}
+              </div>
             </div>
             <div className="rounded-xl bg-gray-50 p-4">
               <div className="text-xs text-gray-500">Target completion</div>
-              <div className="font-bold text-gray-950 mt-1">{developmentFundProject.targetCompletion}</div>
+              <div className="font-bold text-gray-950 mt-1">
+                {developmentFundProject.targetCompletion}
+              </div>
             </div>
           </div>
 
@@ -327,22 +536,38 @@ export default function ProjectsBudget() {
               <thead className="bg-gray-50">
                 <tr>
                   <th className="px-4 py-3 font-bold">Report</th>
-                  <th className="px-4 py-3 font-bold text-right">Reported total cost</th>
+                  <th className="px-4 py-3 font-bold text-right">
+                    Reported total cost
+                  </th>
                   <th className="px-4 py-3 font-bold text-right">Completion</th>
-                  <th className="px-4 py-3 font-bold text-right">Cost incurred</th>
+                  <th className="px-4 py-3 font-bold text-right">
+                    Cost incurred
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 {developmentFundProject.reports.map(report => (
                   <tr key={report.quarter} className="border-t">
                     <td className="px-4 py-3">
-                      <a href={report.href} target="_blank" rel="noreferrer" className="font-bold text-primary-700 underline underline-offset-2">
-                        {report.quarter} <ArrowUpRight className="inline h-3.5 w-3.5" />
+                      <a
+                        href={report.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="font-bold text-primary-700 underline underline-offset-2"
+                      >
+                        {report.quarter}{' '}
+                        <ArrowUpRight className="inline h-3.5 w-3.5" />
                       </a>
                     </td>
-                    <td className="px-4 py-3 text-right font-semibold">{peso(report.reportedCostM)}</td>
-                    <td className="px-4 py-3 text-right">{report.completion.toFixed(2)}%</td>
-                    <td className="px-4 py-3 text-right">{peso(report.costIncurredM)}</td>
+                    <td className="px-4 py-3 text-right font-semibold">
+                      {peso(report.reportedCostM)}
+                    </td>
+                    <td className="px-4 py-3 text-right">
+                      {report.completion.toFixed(2)}%
+                    </td>
+                    <td className="px-4 py-3 text-right">
+                      {peso(report.costIncurredM)}
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -353,13 +578,19 @@ export default function ProjectsBudget() {
         <div className="mt-8 rounded-2xl border border-gray-200 bg-white p-6">
           <div className="flex items-center gap-2">
             <Building2 className="h-5 w-5 text-primary-700" />
-            <h3 className="font-extrabold text-lg text-gray-950">2025 capital-outlay lines</h3>
+            <h3 className="font-extrabold text-lg text-gray-950">
+              2025 capital-outlay lines
+            </h3>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-5">
             {capitalBudgetLines.map(item => (
               <div key={item.label} className="rounded-xl bg-gray-50 p-4">
-                <div className="text-xl font-extrabold text-primary-800">{peso(item.amountM)}</div>
-                <div className="text-sm font-semibold text-gray-800 mt-1">{item.label}</div>
+                <div className="text-xl font-extrabold text-primary-800">
+                  {peso(item.amountM)}
+                </div>
+                <div className="text-sm font-semibold text-gray-800 mt-1">
+                  {item.label}
+                </div>
               </div>
             ))}
           </div>
@@ -371,7 +602,9 @@ export default function ProjectsBudget() {
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
           <div>
             <Heading level={2}>Budget line items</Heading>
-            <p className="text-gray-600">Citywide line items extracted from the 2025 annual-budget summary.</p>
+            <p className="text-gray-600">
+              Citywide line items extracted from the 2025 annual-budget summary.
+            </p>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-2">
@@ -409,9 +642,15 @@ export default function ProjectsBudget() {
             <tbody>
               {visibleLines.map(item => (
                 <tr key={item.group + item.label} className="border-t">
-                  <td className="px-4 py-3 text-sm text-gray-500">{item.group}</td>
-                  <td className="px-4 py-3 font-medium text-gray-900">{item.label}</td>
-                  <td className="px-4 py-3 text-right font-bold text-gray-950">{pesoExact(item.amountM)}</td>
+                  <td className="px-4 py-3 text-sm text-gray-500">
+                    {item.group}
+                  </td>
+                  <td className="px-4 py-3 font-medium text-gray-900">
+                    {item.label}
+                  </td>
+                  <td className="px-4 py-3 text-right font-bold text-gray-950">
+                    {pesoExact(item.amountM)}
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -424,7 +663,8 @@ export default function ProjectsBudget() {
           rel="noreferrer"
           className="mt-5 inline-flex items-center gap-1 text-sm font-bold text-primary-700 underline underline-offset-2"
         >
-          Open the original 82-page annual budget <ArrowUpRight className="h-3.5 w-3.5" />
+          Open the original 82-page annual budget{' '}
+          <ArrowUpRight className="h-3.5 w-3.5" />
         </a>
       </Section>
 
@@ -437,8 +677,12 @@ export default function ProjectsBudget() {
             className="rounded-2xl border border-gray-200 bg-white p-6 hover:border-primary-300 hover:shadow-sm transition"
           >
             <ShoppingCart className="h-6 w-6 text-primary-700" />
-            <h2 className="font-extrabold text-lg text-gray-950 mt-4">Procurement</h2>
-            <p className="text-sm text-gray-600 mt-1">Search bid and award notices in PhilGEPS.</p>
+            <h2 className="font-extrabold text-lg text-gray-950 mt-4">
+              Procurement
+            </h2>
+            <p className="text-sm text-gray-600 mt-1">
+              Search bid and award notices in PhilGEPS.
+            </p>
           </a>
 
           <a
@@ -449,8 +693,12 @@ export default function ProjectsBudget() {
             className="rounded-2xl border border-gray-200 bg-white p-6 hover:border-primary-300 hover:shadow-sm transition"
           >
             <Landmark className="h-6 w-6 text-primary-700" />
-            <h2 className="font-extrabold text-lg text-gray-950 mt-4">Audit reports</h2>
-            <p className="text-sm text-gray-600 mt-1">Commission on Audit annual audit reports.</p>
+            <h2 className="font-extrabold text-lg text-gray-950 mt-4">
+              Audit reports
+            </h2>
+            <p className="text-sm text-gray-600 mt-1">
+              Commission on Audit annual audit reports.
+            </p>
           </a>
         </div>
       </Section>

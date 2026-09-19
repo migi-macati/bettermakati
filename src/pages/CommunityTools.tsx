@@ -15,6 +15,19 @@ export default function CommunityTools() {
       <Section className="bg-[#fffdf8]">
         <div className="section-eyebrow">Community Tools</div>
         <Heading>Useful tools for everyday Makati</Heading>
+        <div className="mt-5 rounded-2xl border border-primary-100 bg-primary-50 p-4 text-sm text-gray-700">
+          <p>
+            Each tool shows its current stage so you can see what is ready, what
+            is being researched, and where community input is useful.
+          </p>
+          <div className="mt-3 flex flex-wrap gap-2 text-xs font-bold">
+            <span className="tool-status tool-status-live">Live</span>
+            <span className="tool-status tool-status-researching">
+              Researching
+            </span>
+            <span className="tool-status tool-status-planned">Planned</span>
+          </div>
+        </div>
         <div className="mt-8">
           <CommunityToolsGrid />
         </div>
