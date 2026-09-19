@@ -148,6 +148,7 @@ export default function ProjectsBudget() {
           { label: 'Procurement', href: '#procurement' },
           { label: 'Audit', href: '#audit' },
         ]} />
+        <div className="mt-5 grid grid-cols-1 lg:grid-cols-2 gap-4">
         <Link
           to="/accountability#2025-medical-supplies-development-fund"
           className="mt-5 flex flex-col gap-3 rounded-2xl border border-primary-200 bg-primary-50 p-5 transition hover:border-primary-400 sm:flex-row sm:items-center sm:justify-between"
@@ -168,6 +169,27 @@ export default function ProjectsBudget() {
             Open ledger <ArrowUpRight className="h-4 w-4" />
           </span>
         </Link>
+        <Link
+          to="/city-monitor"
+          className="flex flex-col gap-3 rounded-2xl border border-primary-200 bg-white p-5 transition hover:border-primary-400 sm:flex-row sm:items-center sm:justify-between"
+        >
+          <div>
+            <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+              Procurement lifecycle
+            </div>
+            <div className="mt-1 font-extrabold text-gray-950">
+              Follow posting → bidding → award → contract → implementation
+            </div>
+            <p className="mt-1 text-sm text-gray-600">
+              City Monitor separates source-change detection from verified
+              procurement events and links validated awards back to projects.
+            </p>
+          </div>
+          <span className="inline-flex shrink-0 items-center gap-1 text-sm font-bold text-primary-700">
+            City Monitor <ArrowUpRight className="h-4 w-4" />
+          </span>
+        </Link>
+        </div>
 
         <div className="mt-8 grid grid-cols-2 lg:grid-cols-4 gap-4">
           <Metric
