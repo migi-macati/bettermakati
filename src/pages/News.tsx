@@ -7,6 +7,7 @@ import {
   RefreshCw,
   Rss,
 } from 'lucide-react';
+import { Link } from 'react-router';
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
 import SEO from '../components/SEO';
@@ -75,6 +76,14 @@ export default function News() {
       <Section className="bg-[#fffdf8]">
         <div className="section-eyebrow">City Information</div>
         <Heading>Makati in the News</Heading>
+        <div className="mt-5 rounded-2xl border border-secondary-200 bg-secondary-50 p-5 text-sm leading-relaxed text-gray-700">
+          This page is for media coverage and official press/news discovery.
+          For council sessions, legislation, speeches, procurement, projects,
+          publications and consultations as structured government activity, use
+          <Link to="/city-monitor" className="ml-1 font-bold text-primary-700 underline underline-offset-2">
+            City Monitor
+          </Link>.
+        </div>
 
         <div className="mt-8 rounded-2xl border border-primary-100 bg-primary-50 p-5 md:p-6">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
