@@ -1,4 +1,4 @@
-import { ExternalLink, MessageCircle, PhoneCall } from 'lucide-react';
+import { MessageCircle, PhoneCall } from 'lucide-react';
 import { Link } from 'react-router';
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
