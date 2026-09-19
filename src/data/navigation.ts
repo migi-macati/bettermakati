@@ -24,6 +24,7 @@ export const mainNavigation: NavigationItem[] = [
       { label: 'Legislation', href: '/legislation' },
       { label: 'Public Records', href: '/records' },
       { label: 'Open Government', href: '/open-government' },
+      { label: 'BetterMakati Status', href: '/status' },
       { label: 'Integrity & Public Interest', href: '/integrity' },
       { label: 'Estates & Associations', href: '/estates' },
       { label: 'History of Makati', href: '/history' },
@@ -41,6 +42,7 @@ export const mainNavigation: NavigationItem[] = [
       { label: 'Public Records', href: '/records' },
       { label: 'Integrity & Public Interest', href: '/integrity' },
       { label: 'Open Government Audit', href: '/open-government' },
+      { label: 'BetterMakati Status', href: '/status' },
     ],
   },
   {
@@ -102,6 +104,8 @@ export const footerNavigation = {
       links: [
         { label: 'Community Tools', href: '/community-tools' },
         { label: 'Get Involved', href: '/get-involved' },
+        { label: 'Open Government Doctrine', href: '/open-government' },
+        { label: 'BetterMakati Status', href: '/status' },
         { label: 'About', href: '/about' },
         { label: 'Privacy', href: '/privacy' },
         { label: 'Terms', href: '/terms' },
