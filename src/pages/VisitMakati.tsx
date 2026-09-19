@@ -113,7 +113,7 @@ export default function VisitMakati() {
           <Link to="/history" className="rounded-2xl border border-primary-100 bg-white p-6 hover:border-primary-300 hover:shadow-sm transition">
             <Map className="h-7 w-7 text-primary-700" />
             <h2 className="font-extrabold text-xl text-gray-950 mt-4">History of Makati</h2>
-            <p className="text-sm text-gray-600 mt-2">A timeline from San Pedro Makati to the modern city.</p>
+            <p className="text-sm text-gray-600 mt-2">A timeline from San Pedro Macati to the modern city.</p>
             <span className="inline-flex items-center gap-1 text-sm font-bold text-primary-700 mt-5">
               View timeline <ArrowRight className="h-4 w-4" />
             </span>
