@@ -46,5 +46,23 @@
     "label": "PhilGEPS procurement notices",
     "url": "https://notices.philgeps.gov.ph/",
     "kind": "procurement"
+  },
+  {
+    "id": "comelec-2026-bske-calendar",
+    "label": "COMELEC 2026 BSKE election calendar",
+    "url": "https://www.comelec.gov.ph/php-tpls-attachments/2025BSKE/Resolutions/com_res_11191.pdf",
+    "kind": "election"
+  },
+  {
+    "id": "comelec-2026-bske-registration",
+    "label": "COMELEC 2026 BSKE voter registration rules",
+    "url": "https://www.comelec.gov.ph/php-tpls-attachments/2025BSKE/Resolutions/com_res_11177.pdf",
+    "kind": "election"
+  },
+  {
+    "id": "comelec-home",
+    "label": "COMELEC announcements",
+    "url": "https://www.comelec.gov.ph/",
+    "kind": "election"
   }
 ]
