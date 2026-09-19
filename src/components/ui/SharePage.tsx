@@ -9,11 +9,12 @@ export default function SharePage({
   className?: string;
 }) {
   const [copied, setCopied] = useState(false);
+  const canShare = typeof navigator !== 'undefined' && typeof navigator.share === 'function';
 
   const share = async () => {
     const url = window.location.href;
     try {
-      if (navigator.share) {
+      if (canShare) {
         await navigator.share({ title: title || document.title, url });
         return;
       }
@@ -35,7 +36,7 @@ export default function SharePage({
         <>
           <Check className="h-4 w-4" aria-hidden="true" /> Link copied
         </>
-      ) : navigator.share ? (
+      ) : canShare ? (
         <>
           <Share2 className="h-4 w-4" aria-hidden="true" /> Share
         </>
