@@ -60,28 +60,24 @@ export default function Participate() {
       />
 
       <Section className="bg-[#fffdf8]">
-        <div className="section-eyebrow">Radical participation</div>
+        <div className="section-eyebrow">Participation</div>
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
             <Heading>Participate in Makati</Heading>
             <p className="max-w-3xl text-gray-700">
-              Discover documented public-participation opportunities, propose
-              improvements through BetterMakati, and follow what happens to
-              community input instead of sending it into a black box.
+              Find public consultations and track proposals, sources and corrections submitted through BetterMakati.
             </p>
           </div>
           <SharePage title="Participate in Makati | BetterMakati" />
         </div>
         <LastReviewed
           date={participationReviewed}
-          note="Official government participation and BetterMakati community participation are always labeled separately."
+          note="Official opportunities and BetterMakati submissions are labeled separately."
         />
 
         {barangayContext && (
           <div className="mt-6 rounded-xl border border-primary-200 bg-primary-50 p-4 text-sm text-gray-700">
-            Showing participation context for <strong>{barangayContext.replaceAll('-', ' ')}</strong>.
-            BetterMakati does not currently have a complete authoritative
-            barangay-assembly calendar, so no local meeting is invented here.
+            Local context: <strong>{barangayContext.replaceAll('-', ' ')}</strong>. No complete barangay-assembly calendar is indexed yet.
           </div>
         )}
 
@@ -92,10 +88,7 @@ export default function Participate() {
               Official participation
             </h2>
             <p className="mt-2 text-sm leading-relaxed text-gray-600">
-              Hearings, assemblies and consultations belong to the public body
-              running them. BetterMakati helps people discover and understand
-              those opportunities but cannot turn an unofficial submission into
-              an official government comment.
+              Hearings, assemblies and consultations published by the responsible public body.
             </p>
           </div>
           <div className="rounded-2xl border border-secondary-200 bg-secondary-50 p-6">
@@ -104,10 +97,7 @@ export default function Participate() {
               BetterMakati community input
             </h2>
             <p className="mt-2 text-sm leading-relaxed text-gray-700">
-              Proposals, corrections and source submissions can be tracked
-              publicly through BetterMakati&apos;s open project workflow. This is
-              civic participation in BetterMakati, not an official City Hall
-              ticket unless an official channel actually accepts it.
+              Proposals, corrections and source submissions tracked through BetterMakati&apos;s public project workflow.
             </p>
           </div>
         </div>
@@ -124,10 +114,7 @@ export default function Participate() {
               No current citywide consultation is indexed here yet
             </h3>
             <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-700">
-              BetterMakati has not found a complete authoritative current
-              consultation calendar. This does not mean no consultation or
-              barangay assembly is happening. The gap is published rather than
-              filled with guesses.
+              No complete current citywide consultation calendar is indexed yet.
             </p>
             <div className="mt-4 flex flex-wrap gap-3">
               <a
@@ -160,7 +147,7 @@ export default function Participate() {
 
       <Section className="bg-[#f5f8f2]">
         <div className="section-eyebrow">Documented precedent</div>
-        <Heading level={2}>Participation BetterMakati can source</Heading>
+        <Heading level={2}>Past participation records</Heading>
         <div className="mt-6 space-y-4">
           {documentedParticipation.map(item => (
             <article
@@ -267,9 +254,6 @@ export default function Participate() {
               <h3 className="mt-3 font-extrabold text-gray-950">{gap.title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-gray-600">
                 {gap.description}
-              </p>
-              <p className="mt-3 text-sm text-gray-700">
-                <strong>Why this matters:</strong> {gap.whyItMatters}
               </p>
             </article>
           ))}
