@@ -41,6 +41,7 @@ import PublicRecords from './pages/PublicRecords';
 import Today from './pages/Today';
 import OpenGovernment from './pages/OpenGovernment';
 import Integrity from './pages/Integrity';
+import ProjectStatus from './pages/ProjectStatus';
 
 function App() {
   return (
@@ -82,6 +83,7 @@ function App() {
                 <Route path="/today" element={<Today />} />
                 <Route path="/open-government" element={<OpenGovernment />} />
                 <Route path="/integrity" element={<Integrity />} />
+                <Route path="/status" element={<ProjectStatus />} />
                 <Route path="/barangays" element={<Barangays />} />
                 <Route path="/barangays/:slug" element={<BarangayProfile />} />
                 <Route path="/elections" element={<Elections />} />
