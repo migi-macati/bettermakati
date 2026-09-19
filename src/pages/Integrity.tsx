@@ -42,6 +42,14 @@ const integritySources = [
     icon: Landmark,
   },
   {
+    title: '2026 IRR advisory',
+    body:
+      'GPPB Public Advisory No. 09-2026 says a later “1st Edition, as of 31 March 2026” document was withdrawn and directs users back to the GPPB-approved IRR published in February 2025.',
+    href: 'https://www.gppb.gov.ph/public-advisory-no-09-2026/',
+    label: 'GPPB 2026 advisory',
+    icon: ShieldCheck,
+  },
+  {
     title: 'Beneficial ownership',
     body:
       'The New Government Procurement Act requires beneficial-ownership information for participating legal entities and provides for a public registry framework to strengthen transparency and conflict-of-interest safeguards.',
