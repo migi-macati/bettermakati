@@ -99,11 +99,10 @@ const Navbar: React.FC = () => {
                 </div>
               ))}
               <Link
-                to="/community-tools/saan-ako-lalapit"
+                to="/search"
                 className="inline-flex items-center gap-1.5 rounded-full border border-primary-200 bg-primary-50 px-3 py-2 text-xs font-bold text-primary-800 hover:border-primary-500 focus-visible:border-primary-700"
               >
-                <Search className="h-3.5 w-3.5" aria-hidden="true" /> Find a
-                service
+                <Search className="h-3.5 w-3.5" aria-hidden="true" /> Search
               </Link>
             </div>
 
@@ -191,11 +190,11 @@ const Navbar: React.FC = () => {
               Official Makati site <ExternalLink className="h-3.5 w-3.5" />
             </a>
             <Link
-              to="/community-tools/saan-ako-lalapit"
+              to="/search"
               onClick={closeMenu}
               className="flex items-center gap-2 px-4 py-2.5 text-sm font-bold text-primary-800"
             >
-              <Search className="h-4 w-4" aria-hidden="true" /> Find a service
+              <Search className="h-4 w-4" aria-hidden="true" /> Search BetterMakati
             </Link>
           </div>
         </div>
