@@ -167,7 +167,7 @@ export default function Document({
               {nestedPages.map((page, i) => (
                 <Link
                   key={page.slug ?? i}
-                  to={`${sectionHref}/${category}/${documentSlug}/${page.slug}`}
+                  to={`/services/${documentSlug}/${page.slug}`}
                   className="block"
                 >
                   <Card hoverable className="h-full">
