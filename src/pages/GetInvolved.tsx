@@ -53,10 +53,11 @@ export default function GetInvolved() {
   const [searchParams, setSearchParams] = useSearchParams();
   const initialType = searchParams.get('type') || 'idea';
   const initialTool = searchParams.get('tool') || '';
+  const initialSubject = searchParams.get('subject') || '';
 
   const [type, setType] = useState(initialType);
   const [tool, setTool] = useState(initialTool);
-  const [subject, setSubject] = useState('');
+  const [subject, setSubject] = useState(initialSubject);
   const [details, setDetails] = useState('');
   const [sourceUrl, setSourceUrl] = useState('');
   const [barangay, setBarangay] = useState('');
@@ -68,6 +69,8 @@ export default function GetInvolved() {
   useEffect(() => {
     setType(searchParams.get('type') || 'idea');
     setTool(searchParams.get('tool') || '');
+    const requestedSubject = searchParams.get('subject');
+    if (requestedSubject) setSubject(requestedSubject);
   }, [searchParams]);
 
   const submit = async (event: FormEvent) => {
