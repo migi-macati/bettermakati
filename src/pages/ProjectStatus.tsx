@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import {
   AlertCircle,
-  CheckCircle2,
   Database,
   ExternalLink,
   Eye,
