@@ -154,31 +154,31 @@ const cityPaths = [
 const civicControl = [
   {
     label: 'See the record',
-    description: 'Find structured public records and open the original source.',
+    description: 'Budgets, legislation, elections, audits and source documents.',
     href: '/records',
     icon: Files,
   },
   {
-    label: 'Track accountability',
-    description: 'Follow plans, responsible bodies, later evidence and known gaps.',
+    label: 'Track projects & commitments',
+    description: 'Plans, responsible bodies, progress, evidence and gaps.',
     href: '/accountability',
     icon: ClipboardCheck,
   },
   {
     label: 'Take part',
-    description: 'Find consultations and track BetterMakati community input.',
+    description: 'Consultations, proposals and public input.',
     href: '/participate',
     icon: MessagesSquare,
   },
   {
     label: 'Start with today',
-    description: 'Choose your barangay and bring current local information forward.',
+    description: 'Barangay, weather, advisories, events and current activity.',
     href: '/today',
     icon: SunMedium,
   },
   {
-    label: 'Test integrity',
-    description: 'Open ethics, procurement, audit and public-interest evidence without insinuation.',
+    label: 'Integrity & public interest',
+    description: 'Ethics, procurement, audit and ownership records.',
     href: '/integrity',
     icon: ShieldCheck,
   },
@@ -258,18 +258,12 @@ const Home: React.FC = () => {
 
       <section className="bg-primary-950 py-12 text-white border-b border-primary-900">
         <div className="container px-5 md:px-6 lg:px-8">
-          <div className="section-eyebrow !text-secondary-200">Civic control center</div>
+          <div className="section-eyebrow !text-secondary-200">Civic records</div>
           <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
             <div>
               <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight">
-                See it. Track it. Shape it. Reach it. Trust the process.
+                Understand what&apos;s happening in Makati.
               </h2>
-              <p className="mt-2 max-w-3xl text-sm md:text-base leading-relaxed text-primary-100">
-                BetterMakati&apos;s open-government doctrine combines radical
-                transparency, accountability, participation, presence and
-                integrity, with inclusion, privacy, accessibility, evidence,
-                open data and evaluation underneath.
-              </p>
             </div>
           </div>
           <div className="mt-7 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-4">
@@ -293,12 +287,6 @@ const Home: React.FC = () => {
               );
             })}
           </div>
-          <Link
-            to="/open-government"
-            className="mt-6 inline-flex items-center gap-1 text-sm font-bold text-secondary-200 underline underline-offset-4"
-          >
-            Read the doctrine and living self-audit <ArrowRight className="h-4 w-4" />
-          </Link>
         </div>
       </section>
 
