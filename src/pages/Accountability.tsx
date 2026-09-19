@@ -9,7 +9,7 @@ import {
   Search,
   WalletCards,
 } from 'lucide-react';
-import { Link } from 'react-router';
+import { Link, useSearchParams } from 'react-router';
 import SEO from '../components/SEO';
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
@@ -29,6 +29,8 @@ const money = (millions?: number) => {
 };
 
 export default function Accountability() {
+  const [params] = useSearchParams();
+  const barangayContext = params.get('barangay');
   const [query, setQuery] = useState('');
   const [type, setType] = useState('All');
 
@@ -78,6 +80,15 @@ export default function Accountability() {
           date={accountabilityReviewed}
           note="No politician or office is scored or graded. The record is shown; citizens make the judgment."
         />
+
+        {barangayContext && (
+          <div className="mt-6 rounded-xl border border-secondary-200 bg-secondary-50 p-4 text-sm text-gray-700">
+            Local context requested: <strong>{barangayContext.replaceAll('-', ' ')}</strong>.
+            The ledger currently shows citywide records unless a source can
+            reliably tag a record to a specific barangay. BetterMakati will not
+            infer project geography from a title alone.
+          </div>
+        )}
 
         <div className="mt-7 grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div className="rounded-2xl border border-primary-100 bg-white p-5">
