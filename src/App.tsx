@@ -39,6 +39,8 @@ import Accountability from './pages/Accountability';
 import Participate from './pages/Participate';
 import PublicRecords from './pages/PublicRecords';
 import Today from './pages/Today';
+import OpenGovernment from './pages/OpenGovernment';
+import Integrity from './pages/Integrity';
 
 function App() {
   return (
@@ -78,6 +80,8 @@ function App() {
                 <Route path="/records" element={<PublicRecords />} />
                 <Route path="/participate" element={<Participate />} />
                 <Route path="/today" element={<Today />} />
+                <Route path="/open-government" element={<OpenGovernment />} />
+                <Route path="/integrity" element={<Integrity />} />
                 <Route path="/barangays" element={<Barangays />} />
                 <Route path="/barangays/:slug" element={<BarangayProfile />} />
                 <Route path="/elections" element={<Elections />} />
