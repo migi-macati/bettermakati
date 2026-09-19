@@ -106,5 +106,53 @@
     "label": "Makati Comprehensive Development Plan",
     "url": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1580795672692.pdf",
     "kind": "planning-participation"
+  },
+  {
+    "id": "oecd-open-government-recommendation",
+    "label": "OECD Recommendation on Open Government implementation",
+    "url": "https://www.oecd.org/en/publications/open-government-for-stronger-democracies_5478db5b-en/full-report/component-4.html",
+    "kind": "open-government-standard"
+  },
+  {
+    "id": "ogp-foundations",
+    "label": "OGP foundations for open government",
+    "url": "https://www.opengovpartnership.org/national-handbook/foundations/",
+    "kind": "open-government-standard"
+  },
+  {
+    "id": "ogp-participation-standards",
+    "label": "OGP Participation and Co-Creation Standards",
+    "url": "https://www.opengovpartnership.org/national-handbook/standards/",
+    "kind": "open-government-standard"
+  },
+  {
+    "id": "ra-6713",
+    "label": "RA 6713 Code of Conduct and Ethical Standards",
+    "url": "https://lawphil.net/statutes/repacts/ra1989/pdf/ra_6713_1989.pdf",
+    "kind": "integrity-law"
+  },
+  {
+    "id": "ra-12009",
+    "label": "RA 12009 New Government Procurement Act",
+    "url": "https://lawphil.net/statutes/repacts/ra2024/ra_12009_2024.html",
+    "kind": "procurement-law"
+  },
+  {
+    "id": "ra-12009-irr",
+    "label": "Official IRR of RA 12009",
+    "url": "https://lawphil.net/statutes/repacts/ra2025/irr_12009_2025.html",
+    "kind": "procurement-law"
+  },
+  {
+    "id": "gppb-beneficial-ownership",
+    "label": "GPPB beneficial ownership disclosure guidance",
+    "url": "https://www.gppb.gov.ph/enhancing-transparency-beneficial-ownership-disclosure-under-ra-12009/",
+    "kind": "integrity-procurement"
+  },
+  {
+    "id": "gppb-2026-irr-advisory",
+    "label": "GPPB Public Advisory No. 09-2026 on RA 12009 IRR",
+    "url": "https://www.gppb.gov.ph/public-advisory-no-09-2026/",
+    "kind": "procurement-law"
   }
 ]

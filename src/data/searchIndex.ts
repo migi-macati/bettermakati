@@ -514,6 +514,34 @@ const toolItems: SearchItem[] = [
 
 const radicalCivicItems: SearchItem[] = [
   {
+    title: 'Open Government Doctrine',
+    group: 'Record',
+    category: 'Open Government',
+    description: 'BetterMakati’s five-radical doctrine, enabling foundations and living OECD-aligned self-audit.',
+    href: '/open-government',
+    keywords: 'open government doctrine transparency accountability participation presence integrity oecd ogp audit',
+    featured: true,
+  },
+  {
+    title: 'BetterMakati Status',
+    group: 'Record',
+    category: 'Open Government',
+    description: 'Public self-accountability: coverage, source monitoring, community input and unmeasured performance gaps.',
+    href: '/status',
+    keywords: 'bettermakati status performance self audit metrics source watch coverage gaps evaluation',
+    featured: true,
+  },
+  {
+    title: 'Integrity & Public Interest',
+    group: 'Record',
+    category: 'Integrity',
+    description: 'Public-service ethics, procurement integrity, beneficial ownership, audit evidence and coverage gaps.',
+    href: '/integrity',
+    keywords: 'integrity ethics procurement contractor supplier beneficial ownership audit public interest RA 6713 RA 12009',
+    featured: true,
+  },
+
+  {
     title: 'Accountability Ledger',
     group: 'Record',
     category: 'Accountability',

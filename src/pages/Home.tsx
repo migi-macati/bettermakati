@@ -25,6 +25,7 @@ import {
   Files,
   MessagesSquare,
   SunMedium,
+  ShieldCheck,
 } from 'lucide-react';
 import Hero from '../components/sections/Hero';
 import CommunityToolsGrid from '../components/community/CommunityToolsGrid';
@@ -175,6 +176,12 @@ const civicControl = [
     href: '/today',
     icon: SunMedium,
   },
+  {
+    label: 'Test integrity',
+    description: 'Open ethics, procurement, audit and public-interest evidence without insinuation.',
+    href: '/integrity',
+    icon: ShieldCheck,
+  },
 ];
 
 const stats = [
@@ -255,16 +262,17 @@ const Home: React.FC = () => {
           <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
             <div>
               <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight">
-                See it. Track it. Take part. Stay connected.
+                See it. Track it. Shape it. Reach it. Trust the process.
               </h2>
               <p className="mt-2 max-w-3xl text-sm md:text-base leading-relaxed text-primary-100">
-                BetterMakati&apos;s core civic tools are designed around traceable
-                information, factual follow-through, visible participation and
-                useful local presence.
+                BetterMakati&apos;s open-government doctrine combines radical
+                transparency, accountability, participation, presence and
+                integrity, with inclusion, privacy, accessibility, evidence,
+                open data and evaluation underneath.
               </p>
             </div>
           </div>
-          <div className="mt-7 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="mt-7 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-4">
             {civicControl.map(item => {
               const Icon = item.icon;
               return (
@@ -285,6 +293,12 @@ const Home: React.FC = () => {
               );
             })}
           </div>
+          <Link
+            to="/open-government"
+            className="mt-6 inline-flex items-center gap-1 text-sm font-bold text-secondary-200 underline underline-offset-4"
+          >
+            Read the doctrine and living self-audit <ArrowRight className="h-4 w-4" />
+          </Link>
         </div>
       </section>
 

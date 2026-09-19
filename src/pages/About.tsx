@@ -69,7 +69,7 @@ export default function About() {
 
       <Section className="bg-primary-950 text-white">
         <div className="section-eyebrow !text-secondary-200">Product principles</div>
-        <Heading level={2} className="!text-white">The four radicals</Heading>
+        <Heading level={2} className="!text-white">The five radicals</Heading>
         <p className="mt-2 max-w-4xl text-primary-100">
           These are operating rules for every major BetterMakati page, not
           claims about the City Government itself.
@@ -96,6 +96,11 @@ export default function About() {
               title: 'Radical presence',
               body: 'Useful civic information should be available where and when people need it, with locality and current context brought forward without requiring an account or precise GPS.',
             },
+            {
+              icon: ShieldCheck,
+              title: 'Radical integrity',
+              body: 'Public-interest decisions, money, relationships and ethical obligations should be open to factual scrutiny without insinuation, guilt by association or partisan interpretation.',
+            },
           ].map(item => {
             const Icon = item.icon;
             return (
@@ -106,6 +111,14 @@ export default function About() {
               </div>
             );
           })}
+        </div>
+        <div className="mt-7 flex flex-wrap gap-3">
+          <a href="/open-government" className="brand-btn-primary">
+            Open doctrine & living audit
+          </a>
+          <a href="/status" className="brand-btn-secondary">
+            BetterMakati Status
+          </a>
         </div>
       </Section>
 

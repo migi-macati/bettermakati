@@ -352,6 +352,9 @@ export default function Accountability() {
           <Link to="/records" className="brand-btn-secondary">
             <WalletCards className="h-4 w-4" /> Public records index
           </Link>
+          <Link to="/integrity" className="brand-btn-secondary">
+            <Scale className="h-4 w-4" /> Integrity & public interest
+          </Link>
         </div>
       </Section>
     </>
