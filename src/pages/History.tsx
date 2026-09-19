@@ -125,7 +125,7 @@ export default function History() {
           </summary>
           <div className="mt-4 space-y-3 text-sm leading-relaxed text-gray-700">
             <p>
-              We use <strong>San Pedro Macati</strong>, the name in{' '}
+              <strong>San Pedro Macati</strong> follows the name in{' '}
               <a
                 className="underline"
                 href="https://lawphil.net/statutes/acts/act1914/act_2390_1914.html"
