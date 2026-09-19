@@ -30,6 +30,8 @@ interface MonitorRun {
 type Period = 'daily' | 'weekly' | 'monthly';
 type SubmitState = 'idle' | 'submitting' | 'success' | 'unavailable' | 'error';
 
+const PAGE_NOW = Date.now();
+
 const periodDays: Record<Period, number> = {
   daily: 1,
   weekly: 7,
@@ -57,10 +59,7 @@ export default function CivicBriefs() {
     void load();
   }, []);
 
-  const anchorTime = runs[0] ? new Date(runs[0].checkedAt).getTime() : 0;
-  const cutoff = anchorTime
-    ? anchorTime - periodDays[period] * 24 * 60 * 60 * 1000
-    : Number.POSITIVE_INFINITY;
+  const cutoff = PAGE_NOW - periodDays[period] * 24 * 60 * 60 * 1000;
 
   const relevantRuns = runs.filter(run => new Date(run.checkedAt).getTime() >= cutoff);
   const changed = relevantRuns.flatMap(run => run.changed);
