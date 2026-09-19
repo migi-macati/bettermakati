@@ -2,6 +2,7 @@ import { ExternalLink, Film, MapPin } from 'lucide-react';
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
 import SEO from '../components/SEO';
+import LastReviewed from '../components/ui/LastReviewed';
 
 const cinemas = [
   {
@@ -56,6 +57,7 @@ export default function Cinemas() {
       <Section className="bg-[#fffdf8]">
         <div className="section-eyebrow">Visit Makati</div>
         <Heading>Cinemas</Heading>
+        <LastReviewed note="Showtimes change daily; use the linked cinema or schedule source for current sessions." />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
           {cinemas.map(cinema => (
