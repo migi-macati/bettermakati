@@ -1,6 +1,7 @@
 import { makatiHistory } from './makatiHistory';
 import { barangays as barangayProfiles } from './barangays';
 import { electedOfficials } from './electedOfficials';
+import { serviceDirectory } from './serviceDirectory';
 
 export type SearchGroup =
   | 'Service'
@@ -21,116 +22,20 @@ export interface SearchItem {
   featured?: boolean;
 }
 
-const serviceItems: SearchItem[] = [
-  {
-    title: 'Apply for a new business permit',
-    group: 'Service',
-    category: 'Business',
-    description:
-      'Requirements and application form for a new Makati business permit.',
-    href: '/services/business/new-business-permit',
-    keywords:
-      'business permit new mayor mayors licensing bplo trade company enterprise registration',
-    featured: true,
-  },
-  {
-    title: 'Renew a business permit',
-    group: 'Service',
-    category: 'Business',
-    description: 'Renewal requirements for an existing Makati business permit.',
-    href: '/services/business/renew-business-permit',
-    keywords: 'business permit renewal renew mayor mayors licensing bplo tax',
-  },
-  {
-    title: 'Makati Health Plus / Yellow Card',
-    group: 'Service',
-    category: 'Health',
-    description: 'Application information and supporting documents.',
-    href: '/services/health-services/makati-health-plus',
-    keywords:
-      'yellow card health plus medical hospital patient healthcare benefit',
-    featured: true,
-  },
-  {
-    title: 'Get emergency assistance',
-    group: 'Service',
-    category: 'Health',
-    description: 'Emergency contacts and reporting information.',
-    href: '/services/health-services/emergency-assistance',
-    keywords:
-      'emergency 911 rescue medical drrmo disaster fire police ambulance',
-  },
-  {
-    title: 'Apply to the University of Makati',
-    group: 'Service',
-    category: 'Education',
-    description: 'University of Makati admissions and application information.',
-    href: '/services/education/umak-admissions',
-    keywords: 'umak university admission college school enrollment student',
-  },
-  {
-    title: 'University of Makati scholarships and grants',
-    group: 'Service',
-    category: 'Education',
-    description: 'Scholarship guidelines and application information.',
-    href: '/services/education/umak-scholarships',
-    keywords:
-      'umak scholarship education grant tuition student financial assistance',
-  },
-  {
-    title: 'Contact the Makati Action Center',
-    group: 'Service',
-    category: 'Social',
-    description: 'Citizen concerns, feedback and service coordination.',
-    href: '/services/social-welfare/makati-action-center',
-    keywords:
-      'complaint concern feedback action center help assistance mac mayor city hall',
-    featured: true,
-  },
-  {
-    title: 'Senior citizen Blu Card services',
-    group: 'Service',
-    category: 'Social',
-    description: 'Blu Card information for Makati senior citizens.',
-    href: '/services/social-welfare/senior-citizen-blu-card',
-    keywords: 'senior citizen blue blu card elderly benefits social welfare',
-  },
-  {
-    title: 'Makatizen App',
-    group: 'Service',
-    category: 'Social',
-    description: 'Makati City mobile app.',
-    href: '/services#digital',
-    keywords: 'makatizen app city mobile digital services makati',
-  },
-  {
-    title: 'Official Makati Web Portal',
-    group: 'Service',
-    category: 'Social',
-    description: 'Official City Government of Makati web portal.',
-    href: '/services#digital',
-    keywords: 'official makati city web portal government forms announcements',
-  },
-  {
-    title: 'Pay real property tax',
-    group: 'Service',
-    category: 'Property',
-    description: 'Requirements for Makati real property tax payment.',
-    href: '/services/housing-land-use/real-property-tax-payment',
-    keywords:
-      'property tax real estate rpta payment assessment treasurer land house',
-    featured: true,
-  },
-  {
-    title: 'Secure locational clearance and building permit',
-    group: 'Service',
-    category: 'Property',
-    description: 'Locational clearance and building-permit requirements.',
-    href: '/services/housing-land-use/locational-clearance-building-permit',
-    keywords:
-      'building permit zoning locational clearance construction land development occupancy',
-  },
-];
+const serviceItems: SearchItem[] = serviceDirectory.map(item => ({
+  title: item.title,
+  group: 'Service',
+  category: item.category,
+  description: item.description,
+  href: item.href,
+  keywords: [
+    item.keywords,
+    item.agency,
+    item.level,
+    item.type,
+  ].join(' '),
+  featured: item.featured,
+}));
 
 const visitItems: SearchItem[] = [
   {
