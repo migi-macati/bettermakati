@@ -5,6 +5,7 @@ import {
   HeartPulse,
   GraduationCap,
   Home as HomeIcon,
+  Compass,
   UtensilsCrossed,
   Church,
   Bus,
