@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import Hero from '../components/sections/Hero';
 import CommunityToolsGrid from '../components/community/CommunityToolsGrid';
+import CapabilityCarousel from '../components/home/CapabilityCarousel';
 import SEO from '../components/SEO';
 
 const quickServices = [
@@ -146,6 +147,7 @@ const Home: React.FC = () => {
       />
 
       <Hero />
+      <CapabilityCarousel />
 
       <section className="bg-[#fffdf8] py-14">
         <div className="container px-5 md:px-6 lg:px-8">
