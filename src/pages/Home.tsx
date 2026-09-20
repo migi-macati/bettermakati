@@ -1,14 +1,10 @@
 import { Link } from 'react-router';
 import {
   ArrowRight,
-  FileBarChart,
-  Landmark,
-  MapPin,
   Store,
   HeartPulse,
   GraduationCap,
   Home as HomeIcon,
-  Compass,
   UtensilsCrossed,
   Church,
   Bus,
@@ -17,15 +13,9 @@ import {
   CalendarDays,
   Radio,
   BarChart3,
-  BookOpen,
-  HandHeart,
-  Users,
-  Vote,
   ClipboardCheck,
   Files,
-  MessagesSquare,
   SunMedium,
-  ShieldCheck,
 } from 'lucide-react';
 import Hero from '../components/sections/Hero';
 import CommunityToolsGrid from '../components/community/CommunityToolsGrid';
@@ -55,34 +45,6 @@ const quickServices = [
     description: 'RPT, zoning and building permits',
     href: '/services/housing-land-use',
     icon: HomeIcon,
-  },
-];
-
-const audiencePaths = [
-  {
-    label: 'I live or work here',
-    description: 'Find services, hotlines, barangays and city contacts.',
-    href: '/community-tools/saan-ako-lalapit',
-    icon: Users,
-  },
-  {
-    label: 'I am visiting',
-    description: 'Plan places, food, transport, parking and activities.',
-    href: '/visit',
-    icon: Compass,
-  },
-  {
-    label: 'I am researching',
-    description: 'Explore statistics, budgets, projects and legislation.',
-    href: '/statistics',
-    icon: BookOpen,
-  },
-  {
-    label: 'I want to take part',
-    description:
-      'Find participation opportunities, propose ideas or share evidence.',
-    href: '/participate',
-    icon: HandHeart,
   },
 ];
 
@@ -119,70 +81,30 @@ const visitShortcuts = [
   { label: 'Parking', href: '/parking', icon: ParkingCircle },
 ];
 
-const cityPaths = [
-  {
-    label: 'Government',
-    description: 'Officials, city offices and contacts.',
-    href: '/government',
-    icon: Landmark,
-  },
-  {
-    label: 'Barangays',
-    description: 'Barangay directory and population.',
-    href: '/barangays',
-    icon: MapPin,
-  },
-  {
-    label: 'Elections & voting',
-    description: 'Voter information, election dates and COMELEC sources.',
-    href: '/elections',
-    icon: Vote,
-  },
-  {
-    label: 'Projects & Budget',
-    description: 'Budget, projects, procurement and audit records.',
-    href: '/projects-budget',
-    icon: FileBarChart,
-  },
-  {
-    label: 'Live Makati',
-    description: 'Weather, advisories, utilities and live information.',
-    href: '/live',
-    icon: Radio,
-  },
-];
-
 const civicControl = [
   {
-    label: 'See the record',
-    description:
-      'Budgets, legislation, elections, audits and source documents.',
-    href: '/records',
-    icon: Files,
-  },
-  {
-    label: 'Track projects & commitments',
-    description: 'Plans, responsible bodies, progress, evidence and gaps.',
-    href: '/accountability',
-    icon: ClipboardCheck,
-  },
-  {
-    label: 'Take part',
-    description: 'Consultations, proposals and public input.',
-    href: '/participate',
-    icon: MessagesSquare,
-  },
-  {
-    label: 'Start with today',
-    description: 'Barangay, weather, advisories, events and current activity.',
+    label: 'Today in Makati',
+    description: 'Weather, advisories, events and current city activity.',
     href: '/today',
     icon: SunMedium,
   },
   {
-    label: 'Integrity & public interest',
-    description: 'Ethics, procurement, audit and ownership records.',
-    href: '/integrity',
-    icon: ShieldCheck,
+    label: 'City activity',
+    description: 'Council, legislation, procurement, projects and notices.',
+    href: '/city-monitor',
+    icon: Radio,
+  },
+  {
+    label: 'Projects & money',
+    description: 'Budgets, spending, projects, procurement and audit records.',
+    href: '/projects-budget',
+    icon: ClipboardCheck,
+  },
+  {
+    label: 'Public records',
+    description: 'Open the source documents and structured civic datasets.',
+    href: '/records',
+    icon: Files,
   },
 ];
 
@@ -223,40 +145,6 @@ const Home: React.FC = () => {
       />
 
       <Hero />
-
-      <section className="bg-white py-10 border-b border-gray-100">
-        <div className="container px-5 md:px-6 lg:px-8">
-          <div className="section-eyebrow">Choose your path</div>
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {audiencePaths.map(item => {
-              const Icon = item.icon;
-              return (
-                <Link
-                  key={item.label}
-                  to={item.href}
-                  className="group rounded-2xl border border-gray-200 bg-[#fffdf8] p-4 transition hover:-translate-y-0.5 hover:border-primary-300 hover:shadow-sm"
-                >
-                  <div className="flex items-center justify-between gap-3">
-                    <span className="grid h-9 w-9 place-items-center rounded-xl bg-primary-50 text-primary-700">
-                      <Icon className="h-5 w-5" aria-hidden="true" />
-                    </span>
-                    <ArrowRight
-                      className="h-4 w-4 text-primary-600 transition group-hover:translate-x-0.5"
-                      aria-hidden="true"
-                    />
-                  </div>
-                  <h2 className="mt-4 font-extrabold text-gray-950">
-                    {item.label}
-                  </h2>
-                  <p className="mt-1 text-sm leading-relaxed text-gray-600">
-                    {item.description}
-                  </p>
-                </Link>
-              );
-            })}
-          </div>
-        </div>
-      </section>
 
       <section className="bg-[#fffdf8] py-14">
         <div className="container px-5 md:px-6 lg:px-8">
@@ -307,11 +195,11 @@ const Home: React.FC = () => {
           <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
             <div>
               <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight">
-                Understand what&apos;s happening in Makati.
+                Follow what&apos;s happening in Makati.
               </h2>
             </div>
           </div>
-          <div className="mt-7 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-4">
+          <div className="mt-7 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
             {civicControl.map(item => {
               const Icon = item.icon;
               return (
@@ -413,28 +301,6 @@ const Home: React.FC = () => {
                 <div className="text-xs text-gray-500 mt-1">{stat.source}</div>
               </a>
             ))}
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mt-8">
-            {cityPaths.map(item => {
-              const Icon = item.icon;
-              return (
-                <Link
-                  key={item.label}
-                  to={item.href}
-                  className="civic-card !min-h-0 bg-white"
-                >
-                  <Icon className="h-6 w-6 text-primary-700" />
-                  <h3 className="font-bold text-gray-950 mt-4">{item.label}</h3>
-                  <p className="text-sm text-gray-600 mt-1">
-                    {item.description}
-                  </p>
-                  <span className="inline-flex items-center gap-1 text-sm font-bold text-primary-700 mt-4">
-                    Open <ArrowRight className="h-4 w-4" />
-                  </span>
-                </Link>
-              );
-            })}
           </div>
 
           <Link
