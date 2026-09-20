@@ -27,7 +27,7 @@ const serviceItems: SearchItem[] = serviceDirectory.map(item => ({
   group: 'Service',
   category: item.category,
   description: item.description,
-  href: item.href,
+  href: '/services/guide/' + item.id,
   keywords: [
     item.keywords,
     item.agency,
