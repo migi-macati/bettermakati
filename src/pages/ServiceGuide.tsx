@@ -72,6 +72,124 @@ const prepareByType: Record<string, string[]> = {
   ],
 };
 
+const agencyGuidance: Record<
+  string,
+  { prepare?: string[]; steps?: string[]; note?: string }
+> = {
+  'Social Security System': {
+    prepare: [
+      'Your SS number or CRN and access to My.SSS, when applicable.',
+      'A valid ID and the benefit- or loan-specific supporting documents.',
+      'An enrolled disbursement account when the SSS transaction requires one.',
+    ],
+    steps: [
+      'Check the SSS service page and your My.SSS account for eligibility and current requirements.',
+      'File online when the benefit or transaction is available in My.SSS.',
+      'For cases that require over-the-counter processing, use a Makati SSS branch listed below.',
+    ],
+    note: 'SSS rules differ by benefit. The official SSS benefit page controls the qualifying conditions and filing channel.',
+  },
+  'Pag-IBIG Fund': {
+    prepare: [
+      'Your Pag-IBIG MID number and access to Virtual Pag-IBIG, when applicable.',
+      'A valid ID and the current application form for the loan, savings or claim transaction.',
+      'Proof of income, membership savings or event-specific records when the program requires them.',
+    ],
+    steps: [
+      'Check Virtual Pag-IBIG first for your record and available online transaction.',
+      'Review the current program checklist before submitting a form.',
+      'Use one of the Makati Pag-IBIG offices below when branch filing or validation is required.',
+    ],
+    note: 'Loan and provident-claim eligibility varies by contribution history and the specific program.',
+  },
+  'Philippine Health Insurance Corporation': {
+    prepare: [
+      'Your PhilHealth Identification Number and Member Data Record, if available.',
+      'A valid ID and supporting documents for membership updates.',
+      'For benefit use, confirm that the health facility is PhilHealth-accredited and check current eligibility.',
+    ],
+    steps: [
+      'Use the PhilHealth Member Portal to check records, contributions, MDR and YAKAP clinic selection.',
+      'For benefit availment, confirm the package and accredited facility before care when practical.',
+      'Use the Makati Local Health Insurance Office below for transactions that require walk-in handling.',
+    ],
+    note: 'PhilHealth benefit rules and packages change. Check the current benefit or circular before relying on an older amount or requirement.',
+  },
+  'Employees’ Compensation Commission': {
+    prepare: [
+      'Employment information and records showing the work-related sickness, injury, disability or death.',
+      'Medical records, incident reports and receipts relevant to the claim.',
+      'SSS details for private-sector workers or GSIS details for public-sector workers.',
+    ],
+    steps: [
+      'Determine whether the claim is under SSS (private sector) or GSIS (public sector).',
+      'File the EC benefit claim with the administering system using its current requirements.',
+      'Contact the ECC Public Assistance Center in Makati for program guidance, rehabilitation or claim assistance.',
+    ],
+    note: 'ECC administers the Employees’ Compensation Program, while benefit claims are generally processed through SSS or GSIS depending on employment sector.',
+  },
+  'Government Service Insurance System': {
+    prepare: [
+      'Your GSIS BP number or membership record.',
+      'A valid ID or GSIS eCard/UMID where required.',
+      'The claim- or loan-specific form and supporting records.',
+    ],
+    steps: [
+      'Check GSIS Touch or the relevant GSIS online service first.',
+      'Review the benefit or loan requirements for your case.',
+      'Use GSIS online filing, a GW@PS facility or the servicing office when in-person handling is required.',
+    ],
+  },
+  'Department of Education – Schools Division Office Makati': {
+    prepare: [
+      'Student name, school and learner information.',
+      'The school record involved in the request.',
+      'Parent, guardian or authorization documents when applicable.',
+    ],
+    steps: [
+      'Start with the school when the request concerns a currently enrolled learner.',
+      'Use the SDO Makati Records Unit for CAV, record corrections and division-level records services.',
+      'Contact the Schools Division Office before visiting if the transaction needs a specific unit.',
+    ],
+  },
+  'Department of Social Welfare and Development': {
+    prepare: [
+      'A valid government ID.',
+      'Proof of the crisis or need being assessed.',
+      'Medical, funeral, transportation, income or other supporting records relevant to the assistance requested.',
+    ],
+    steps: [
+      'Check the current DSWD assistance program and documentary checklist.',
+      'Use the office serving Makati or the current DSWD online/appointment channel.',
+      'Expect eligibility and amount of assistance to be based on social-worker assessment and program rules.',
+    ],
+  },
+  'Department of Health – Metro Manila Center for Health Development': {
+    prepare: [
+      'Identify whether your need is a resident health service, facility verification or a regulated-facility transaction.',
+      'For licensing or regulatory transactions, prepare the DOH application and facility documents.',
+      'For routine personal care, check Makati Health Department or an appropriate licensed health facility first.',
+    ],
+    steps: [
+      'Use the DOH-NCR regulatory lists to verify licensed facilities when that is your need.',
+      'For facility licensing or regulatory transactions, follow the MMCHD Citizen’s Charter.',
+      'The DOH regional office serving Makati is in Mandaluyong; local resident care is often delivered through Makati or accredited providers.',
+    ],
+  },
+  'Bureau of Internal Revenue': {
+    prepare: [
+      'TIN and taxpayer registration details, if already registered.',
+      'A valid ID and the BIR form for the requested update or transaction.',
+      'Know the Makati Revenue District Office that has jurisdiction over your registered address.',
+    ],
+    steps: [
+      'Use ORUS or other BIR online services first when the transaction is available online.',
+      'Confirm your RDO before going to an office; Makati is divided among multiple RDOs.',
+      'Bring only the current documentary requirements listed by BIR for the transaction.',
+    ],
+  },
+};
+
 const specialGuidance: Record<
   string,
   { prepare?: string[]; steps?: string[]; note?: string }
@@ -158,7 +276,7 @@ export default function ServiceGuide() {
   }
 
   const offices = officesForAgency(item.agency);
-  const guidance = specialGuidance[item.id];
+  const guidance = specialGuidance[item.id] || agencyGuidance[item.agency];
   const prepare = guidance?.prepare || prepareByType[item.type] || prepareByType.Other;
   const steps = guidance?.steps || standardSteps(item);
   const destinationIsExternal = item.href.startsWith('http');
