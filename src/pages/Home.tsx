@@ -21,6 +21,8 @@ import {
 import Hero from '../components/sections/Hero';
 import CommunityToolsGrid from '../components/community/CommunityToolsGrid';
 import CapabilityCarousel from '../components/home/CapabilityCarousel';
+import PhotoCarousel from '../components/ui/PhotoCarousel';
+import { homeImageSet } from '../data/cityImages';
 import SEO from '../components/SEO';
 
 const quickServices = [
@@ -148,6 +150,12 @@ const Home: React.FC = () => {
 
       <Hero />
       <CapabilityCarousel />
+
+      <section className="bg-[#f5f8f2] py-8 border-b border-primary-100/70">
+        <div className="container px-5 md:px-6 lg:px-8">
+          <PhotoCarousel images={homeImageSet} title="Around Makati" compact />
+        </div>
+      </section>
 
       <section className="bg-[#fffdf8] py-14">
         <div className="container px-5 md:px-6 lg:px-8">
