@@ -20,13 +20,13 @@ if (sourceCount < directoryIds.length) {
   problems.push(`Only ${sourceCount} sourceUrl fields for ${directoryIds.length} services.`);
 }
 
-if (detailIds.length < 15) {
-  problems.push(`Structured service-guide coverage is too low: ${detailIds.length}. Minimum benchmark is 15.`);
+if (detailIds.length < 20) {
+  problems.push(`Structured service-guide coverage is too low: ${detailIds.length}. Minimum benchmark is 20.`);
 }
 
 const verifiedCount = (details.match(/verification:\s*'verified'/g) ?? []).length;
-if (verifiedCount < 10) {
-  problems.push(`Verified detailed-guide coverage is too low: ${verifiedCount}. Minimum benchmark is 10.`);
+if (verifiedCount < 14) {
+  problems.push(`Verified detailed-guide coverage is too low: ${verifiedCount}. Minimum benchmark is 14.`);
 }
 
 if (problems.length) {
