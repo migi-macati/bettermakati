@@ -5,9 +5,24 @@ const details = await readFile('src/data/serviceGuideDetails.ts', 'utf8');
 
 const directoryIds = [...directory.matchAll(/\bid:\s*'([^']+)'/g)].map(match => match[1]);
 const detailBlock = details.split('export const serviceGuideDetails')[1] ?? '';
-const detailIds = [...detailBlock.matchAll(/^\s{2}'([^']+)':\s*\{/gm)].map(match => match[1]);
+const quotedDetailIds = [...detailBlock.matchAll(/^\s{2}'([^']+)':\s*\{/gm)].map(match => match[1]);
+const bareDetailIds = [...detailBlock.matchAll(/^\s{2}([A-Za-z][A-Za-z0-9_-]*):\s*\{/gm)].map(match => match[1]);
+const detailIds = [...quotedDetailIds, ...bareDetailIds];
+
+const serviceBlocks = directory.split(/\n  \{/).slice(1).map(block => '{' + block);
+const featuredIds = serviceBlocks
+  .filter(block => /featured:\s*true/.test(block))
+  .map(block => block.match(/\bid:\s*'([^']+)'/)?.[1])
+  .filter(Boolean);
 
 const problems = [];
+const missingFeaturedDetails = featuredIds.filter(id => !detailIds.includes(id));
+if (missingFeaturedDetails.length) {
+  problems.push(
+    'Featured/high-use services without structured transaction guides: ' +
+      missingFeaturedDetails.join(', ')
+  );
+}
 const duplicateIds = directoryIds.filter((id, index) => directoryIds.indexOf(id) !== index);
 if (duplicateIds.length) problems.push('Duplicate service IDs: ' + [...new Set(duplicateIds)].join(', '));
 
@@ -35,5 +50,5 @@ if (problems.length) {
 }
 
 console.log(
-  `Service-depth audit passed: ${directoryIds.length} indexed services; ${detailIds.length} structured guides; ${verifiedCount} verified.`
+  `Service-depth audit passed: ${directoryIds.length} indexed services; ${detailIds.length} structured guides; ${verifiedCount} verified; ${featuredIds.length} featured services all structured.`
 );
