@@ -31,7 +31,11 @@ import {
 } from '../data/serviceDirectory';
 import PhotoCarousel from '../components/ui/PhotoCarousel';
 import { servicesImageSet } from '../data/cityImages';
-import { serviceGuideDetails } from '../data/serviceGuideDetails';
+import {
+  detailedServiceGuideCount,
+  serviceGuideDetails,
+  verifiedServiceGuideCount,
+} from '../data/serviceGuideDetails';
 
 const normalize = (value: string) =>
   value
@@ -40,6 +44,34 @@ const normalize = (value: string) =>
     .replace(/[^a-z0-9\s]/g, ' ')
     .replace(/\s+/g, ' ')
     .trim();
+
+const editDistance = (a: string, b: string) => {
+  if (a === b) return 0;
+  const previous = Array.from({ length: b.length + 1 }, (_, index) => index);
+  const current = new Array<number>(b.length + 1);
+  for (let i = 1; i <= a.length; i += 1) {
+    current[0] = i;
+    for (let j = 1; j <= b.length; j += 1) {
+      current[j] = Math.min(
+        current[j - 1] + 1,
+        previous[j] + 1,
+        previous[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1)
+      );
+    }
+    for (let j = 0; j <= b.length; j += 1) previous[j] = current[j];
+  }
+  return previous[b.length];
+};
+
+const fuzzyWordMatch = (word: string, tokens: string[]) => {
+  if (word.length < 4) return false;
+  const tolerance = word.length >= 8 ? 2 : 1;
+  return tokens.some(
+    token =>
+      Math.abs(token.length - word.length) <= tolerance &&
+      editDistance(word, token) <= tolerance
+  );
+};
 
 const Services: React.FC = () => {
   const { category } = useParams();
@@ -91,7 +123,11 @@ const Services: React.FC = () => {
             item.keywords,
           ].join(' ')
         );
-        return query.split(' ').every(word => haystack.includes(word));
+        const tokens = haystack.split(' ').filter(Boolean);
+        return query
+          .split(' ')
+          .filter(Boolean)
+          .every(word => haystack.includes(word) || fuzzyWordMatch(word, tokens));
       })
       .sort((a, b) => {
         if (a.featured !== b.featured) return a.featured ? -1 : 1;
@@ -193,7 +229,7 @@ const Services: React.FC = () => {
               <Heading level={2}>Government services</Heading>
             </div>
             <div className="text-sm text-gray-500">
-              {visibleDirectory.length} of {serviceDirectory.length} services
+              {visibleDirectory.length} of {serviceDirectory.length} services · {detailedServiceGuideCount} structured · {verifiedServiceGuideCount} verified
             </div>
           </div>
 
