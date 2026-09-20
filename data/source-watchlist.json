@@ -226,5 +226,17 @@
     "label": "Makati Veterinary Services Department",
     "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/481/pdf/Makati%20Veterinary%20Services%20Department.pdf",
     "kind": "services"
+  },
+  {
+    "id": "makati-assessment-services",
+    "label": "Makati Assessment Department services",
+    "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/481/pdf/Assessment%20Department.pdf",
+    "kind": "services"
+  },
+  {
+    "id": "makati-business-permit-form",
+    "label": "Makati business permit application form",
+    "url": "https://www.makati.gov.ph/assets/uploads/online_forms/pdf/522/business%20permit%20form%202025%20update1111.pdf",
+    "kind": "services"
   }
 ]
