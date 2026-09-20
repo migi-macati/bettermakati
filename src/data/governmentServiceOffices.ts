@@ -176,6 +176,17 @@ export const governmentServiceOffices: GovernmentServiceOffice[] = [
     mapsQuery: 'PSA Makati CRS Outlet Ayala Malls Circuit',
   },
   {
+    id: 'bfp-makati-city',
+    name: 'BFP Makati City Fire Station',
+    agency: 'Bureau of Fire Protection',
+    scope: 'In Makati',
+    address: 'Ground Level, Ayala Avenue corner Malugay Street, San Antonio, Makati City',
+    barangay: 'San Antonio',
+    sourceUrl: 'https://www.makati.gov.ph/assets/uploads/staticmenu/docs/online_forms/pdf/Q3%20Bid%20Results%20FDP.pdf',
+    mapsQuery: 'Makati City Fire Station Ayala Avenue Malugay Street San Antonio Makati',
+    note: 'For FSIC and fire-safety transactions, confirm the current BFP processing instructions before visiting.',
+  },
+  {
     id: 'makati-police-central',
     name: 'Makati City Police Station – Central Police Station',
     agency: 'Philippine National Police',
