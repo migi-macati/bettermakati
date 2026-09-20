@@ -29,6 +29,8 @@ import {
   serviceDirectoryLevels,
   type ServiceLevel,
 } from '../data/serviceDirectory';
+import PhotoCarousel from '../components/ui/PhotoCarousel';
+import { servicesImageSet } from '../data/cityImages';
 
 const normalize = (value: string) =>
   value
@@ -120,6 +122,13 @@ const Services: React.FC = () => {
               Government offices in and serving Makati
             </Link>
           </div>
+
+          <PhotoCarousel
+            images={servicesImageSet}
+            title="Public service in Makati"
+            compact
+            className="mt-7"
+          />
 
           <div className="mt-7 max-w-3xl">
             <label className="relative block">
