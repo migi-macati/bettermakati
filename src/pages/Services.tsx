@@ -115,6 +115,11 @@ const Services: React.FC = () => {
             note="Requirements can change. Open the linked official source before acting."
             className="mt-4"
           />
+          <div className="mt-4">
+            <Link to="/government-offices" className="text-sm font-bold text-primary-700 underline underline-offset-2">
+              Government offices in and serving Makati
+            </Link>
+          </div>
 
           <div className="mt-7 max-w-3xl">
             <label className="relative block">
