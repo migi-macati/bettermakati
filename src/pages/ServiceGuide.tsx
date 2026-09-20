@@ -152,6 +152,19 @@ const agencyGuidance: Record<
       'Contact the Schools Division Office before visiting if the transaction needs a specific unit.',
     ],
   },
+  'Overseas Workers Welfare Administration': {
+    prepare: [
+      'OWWA membership or OFW information and a valid ID.',
+      'Proof of overseas employment, relationship or the event connected with the requested benefit when applicable.',
+      'For scholarships, welfare or reintegration assistance, prepare the current program-specific supporting documents.',
+    ],
+    steps: [
+      'Check the current OWWA program page and membership status first.',
+      'Contact the OWWA NCR unit that handles the benefit, scholarship, welfare or reintegration service.',
+      'Use the OWWA NCR office serving Makati when in-person assessment or submission is required.',
+    ],
+    note: 'OWWA eligibility differs by program and membership status. Use the current program rules rather than older benefit amounts or checklists.',
+  },
   'Department of Social Welfare and Development': {
     prepare: [
       'A valid government ID.',
