@@ -183,66 +183,37 @@ const Services: React.FC = () => {
           </div>
 
           <div className="mt-6 divide-y divide-gray-200 overflow-hidden rounded-2xl border border-gray-200 bg-white">
-            {visibleDirectory.map(item => {
-              const isExternal = item.href.startsWith('http');
-              const isBarangayFinder = item.level === 'Barangay' && item.href === '/barangays';
-
-              return (
-                <article
-                  key={item.id}
-                  className="grid gap-4 p-5 md:grid-cols-[1fr_auto] md:items-center"
-                >
-                  <div className="min-w-0">
-                    <div className="flex flex-wrap items-center gap-2 text-xs font-bold">
-                      <span className="rounded-full bg-primary-50 px-2.5 py-1 text-primary-800">
-                        {item.level}
-                      </span>
-                      <span className="rounded-full bg-gray-100 px-2.5 py-1 text-gray-600">
-                        {item.type}
-                      </span>
-                    </div>
-                    <h3 className="mt-2 text-lg font-extrabold text-gray-950">
-                      {item.title}
-                    </h3>
-                    <p className="mt-1 text-sm leading-relaxed text-gray-600">
-                      {item.description}
-                    </p>
-                    <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-gray-500">
-                      <span>{item.agency}</span>
-                      {!isExternal && item.sourceUrl && (
-                        <a
-                          href={item.sourceUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="font-bold text-primary-700 underline underline-offset-2"
-                        >
-                          Source
-                        </a>
-                      )}
-                    </div>
+            {visibleDirectory.map(item => (
+              <article
+                key={item.id}
+                className="grid gap-4 p-5 md:grid-cols-[1fr_auto] md:items-center"
+              >
+                <div className="min-w-0">
+                  <div className="flex flex-wrap items-center gap-2 text-xs font-bold">
+                    <span className="rounded-full bg-primary-50 px-2.5 py-1 text-primary-800">
+                      {item.level}
+                    </span>
+                    <span className="rounded-full bg-gray-100 px-2.5 py-1 text-gray-600">
+                      {item.type}
+                    </span>
                   </div>
+                  <h3 className="mt-2 text-lg font-extrabold text-gray-950">
+                    {item.title}
+                  </h3>
+                  <p className="mt-1 text-sm leading-relaxed text-gray-600">
+                    {item.description}
+                  </p>
+                  <div className="mt-2 text-xs text-gray-500">{item.agency}</div>
+                </div>
 
-                  {isExternal ? (
-                    <a
-                      href={item.href}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex min-h-11 items-center justify-center gap-1 rounded-xl border border-primary-200 bg-white px-4 py-2 text-sm font-bold text-primary-800 hover:border-primary-500"
-                    >
-                      Official source <ExternalLink className="h-3.5 w-3.5" />
-                    </a>
-                  ) : (
-                    <Link
-                      to={item.href}
-                      className="inline-flex min-h-11 items-center justify-center rounded-xl bg-primary-800 px-4 py-2 text-sm font-bold text-white hover:bg-primary-900"
-                    >
-                      {isBarangayFinder ? 'Find barangay' : 'Open guide'}
-                    </Link>
-                  )}
-                </article>
-              );
-            })}
-
+                <Link
+                  to={`/services/guide/${item.id}`}
+                  className="inline-flex min-h-11 items-center justify-center rounded-xl bg-primary-800 px-4 py-2 text-sm font-bold text-white hover:bg-primary-900"
+                >
+                  Open guide
+                </Link>
+              </article>
+            ))}
             {visibleDirectory.length === 0 && (
               <div className="p-8 text-center text-sm text-gray-600">
                 No indexed service matches this search yet.
