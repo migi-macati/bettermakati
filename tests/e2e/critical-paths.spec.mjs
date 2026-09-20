@@ -1,5 +1,7 @@
 import { test, expect } from '@playwright/test';
 
+const baseURL = process.env.BASE_URL || 'http://127.0.0.1:4173';
+
 const criticalRoutes = [
   ['/', /What do you need in Makati/i],
   ['/services', /Find a government service/i],
@@ -41,7 +43,7 @@ for (const [route, heading] of criticalRoutes) {
   test(`critical route ${route}`, async ({ page }) => {
     const pageErrors = [];
     page.on('pageerror', error => pageErrors.push(error.message));
-    const response = await page.goto(route);
+    const response = await page.goto(baseURL + route);
     expect(response?.ok(), `HTTP response for ${route}`).toBeTruthy();
     await expect(page.getByRole('heading', { level: 1 })).toContainText(heading);
     await assertBasicAccessibility(page);
@@ -50,14 +52,14 @@ for (const [route, heading] of criticalRoutes) {
 }
 
 test('homepage universal search tolerates a simple typo', async ({ page }) => {
-  await page.goto('/');
+  await page.goto(baseURL + '/');
   const search = page.getByPlaceholder(/Try Yellow Card, Poblacion, budget, cinema/i);
   await search.fill('cedla');
   await expect(page.getByText(/Community Tax Certificate|Cedula/i).first()).toBeVisible();
 });
 
 test('service directory opens BetterMakati guide before external handoff', async ({ page }) => {
-  await page.goto('/services');
+  await page.goto(baseURL + '/services');
   const search = page.getByPlaceholder(/Search permit, clearance, ID, test or service/i);
   await search.fill('cedula');
   await page.getByRole('link', { name: /Open guide/i }).first().click();
@@ -70,7 +72,7 @@ test('service directory opens BetterMakati guide before external handoff', async
 test('mobile homepage and services have no material horizontal overflow', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   for (const route of ['/', '/services']) {
-    await page.goto(route);
+    await page.goto(baseURL + route);
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     expect(overflow, `Horizontal overflow on ${route}`).toBeLessThanOrEqual(2);
   }
