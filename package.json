@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run generate:site && npm run check:content && tsc -b && vite build && node scripts/postbuild-routes.mjs",
+    "build": "npm run generate:site && npm run check:content && npm run audit:services && npm run audit:pages && tsc -b && vite build && node scripts/postbuild-routes.mjs",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
@@ -21,7 +21,10 @@
     "check:city-monitor": "node scripts/check-city-monitor.mjs",
     "generate:site": "node scripts/generate-site-files.mjs",
     "check:content": "node scripts/check-content.mjs",
-    "check:links": "node scripts/check-links.mjs"
+    "check:links": "node scripts/check-links.mjs",
+    "audit:services": "node scripts/audit-service-depth.mjs",
+    "audit:pages": "node scripts/audit-page-freshness.mjs",
+    "quality": "npm run lint && npm run check:content && npm run audit:services && npm run audit:pages"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
