@@ -484,5 +484,23 @@
     "label": "GSIS active-member benefits",
     "url": "https://www.gsis.gov.ph/active-members/benefits/",
     "kind": "service-detail"
+  },
+  {
+    "id": "deped-makati-contact-detail",
+    "label": "DepEd Makati school and division contact directory",
+    "url": "https://depedmakati.ph/index.php/contact-us/",
+    "kind": "service-detail"
+  },
+  {
+    "id": "dswd-aics-faq",
+    "label": "DSWD AICS current FAQ",
+    "url": "https://aics.dswd.gov.ph/about-us/faqs/",
+    "kind": "service-detail"
+  },
+  {
+    "id": "pnp-clearance-detail",
+    "label": "PNP National Police Clearance System",
+    "url": "https://pnpclearance.ph/",
+    "kind": "service-detail"
   }
 ]
