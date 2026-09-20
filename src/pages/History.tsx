@@ -19,6 +19,8 @@ import {
 import SEO from '../components/SEO';
 import LastReviewed from '../components/ui/LastReviewed';
 import SharePage from '../components/ui/SharePage';
+import PhotoCarousel from '../components/ui/PhotoCarousel';
+import { historyImageSet } from '../data/cityImages';
 
 const topics = [...new Set(makatiHistory.map(event => event.topic))];
 export default function History() {
@@ -91,6 +93,12 @@ export default function History() {
           Beyond the skyline: explore the communities, institutions, conflicts
           and decisions that shaped San Pedro Macati and the modern city.
         </p>
+        <PhotoCarousel
+          images={historyImageSet}
+          title="Makati through time"
+          compact
+          className="mt-8"
+        />
         <div className="mt-8 grid gap-4 sm:grid-cols-3">
           {[
             {
