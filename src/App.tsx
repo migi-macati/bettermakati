@@ -10,6 +10,7 @@ import Home from './pages/Home';
 const About = lazy(() => import('./pages/About'));
 const Services = lazy(() => import('./pages/Services'));
 const Document = lazy(() => import('./pages/Document'));
+const ServiceGuide = lazy(() => import('./pages/ServiceGuide'));
 const Government = lazy(() => import('./pages/Government'));
 const Barangays = lazy(() => import('./pages/Barangays'));
 const BarangayProfile = lazy(() => import('./pages/BarangayProfile'));
@@ -78,6 +79,7 @@ function App() {
                     <Route path="/terms" element={<Terms />} />
 
                     <Route path="/services" element={<Services />} />
+                    <Route path="/services/guide/:id" element={<ServiceGuide />} />
                     <Route path="/services/:category" element={<Services />} />
                     <Route
                       path="/services/:category/:documentSlug"
