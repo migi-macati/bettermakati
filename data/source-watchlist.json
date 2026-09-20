@@ -214,5 +214,11 @@
     "label": "DFA passport appointment system",
     "url": "https://passport.gov.ph/",
     "kind": "national-services"
+  },
+  {
+    "id": "makati-sanitation-code",
+    "label": "Makati sanitation code",
+    "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/181/pdf/Makati%20City%20Ordinance%202019-A-102.pdf",
+    "kind": "services"
   }
 ]
