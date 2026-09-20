@@ -9,7 +9,7 @@ import {
   Newspaper,
   Radio,
   Settings2,
-  Users,
+  PhoneCall,
 } from 'lucide-react';
 import SEO from '../components/SEO';
 import Section from '../components/ui/Section';
@@ -222,10 +222,10 @@ export default function Today() {
             <div className="mt-3 font-extrabold text-gray-950">What&apos;s on</div>
             <p className="mt-1 text-sm text-gray-600">Current event discovery and original organizer sources.</p>
           </Link>
-          <Link to="/participate" className="rounded-2xl border border-primary-100 bg-white p-5">
-            <Users className="h-5 w-5 text-primary-700" />
-            <div className="mt-3 font-extrabold text-gray-950">Participate</div>
-            <p className="mt-1 text-sm text-gray-600">Consultations, community input and public participation gaps.</p>
+          <Link to="/hotlines" className="rounded-2xl border border-primary-100 bg-white p-5">
+            <PhoneCall className="h-5 w-5 text-primary-700" />
+            <div className="mt-3 font-extrabold text-gray-950">Hotlines</div>
+            <p className="mt-1 text-sm text-gray-600">Emergency, city services and other useful contacts.</p>
           </Link>
         </div>
       </Section>
