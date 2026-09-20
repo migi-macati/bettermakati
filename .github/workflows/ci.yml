@@ -3,8 +3,7 @@ name: CI
 on:
   push:
     branches:
-      - main
-      - cleanup/starter-content
+      - '**'
   pull_request:
     branches:
       - main
@@ -12,6 +11,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 12
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -24,9 +24,43 @@ jobs:
         run: npm ci
       - name: Audit production dependencies
         run: npm audit --omit=dev --audit-level=high
-      - name: Lint
-        run: npm run lint
-      - name: Content guardrails
-        run: npm run check:content
+      - name: Quality checks
+        run: npm run quality
       - name: Build
         run: npm run build
+
+  browser-smoke:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install app dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build
+      - name: Install browser-test dependencies
+        run: npm install --no-save @playwright/test@1.55.0 @axe-core/playwright@4.10.2
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Start production preview
+        run: |
+          npm run preview -- --host 127.0.0.1 --port 4173 > /tmp/bettermakati-preview.log 2>&1 &
+          for i in {1..45}; do
+            if curl -fsS http://127.0.0.1:4173/ >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/bettermakati-preview.log
+          exit 1
+      - name: Run critical browser and accessibility tests
+        env:
+          BASE_URL: http://127.0.0.1:4173
+        run: npx playwright test tests/e2e/critical-paths.spec.mjs tests/e2e/accessibility.spec.mjs --reporter=line

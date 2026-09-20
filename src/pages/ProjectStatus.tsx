@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import {
   AlertCircle,
+  BadgeCheck,
   Building2,
   Database,
   ExternalLink,
@@ -32,12 +33,25 @@ import { searchIndex } from '../data/searchIndex';
 import { cityMonitorRecords, cityMonitorSources } from '../data/cityMonitor';
 import { serviceDirectory } from '../data/serviceDirectory';
 import { governmentServiceOffices } from '../data/governmentServiceOffices';
+import {
+  detailedServiceGuideCount,
+  verifiedServiceGuideCount,
+} from '../data/serviceGuideDetails';
 
 interface SourceWatchRun {
   checkedAt: string;
   changed: Array<{ id: string; label: string; url: string }>;
   failed: Array<{ id: string; label: string; url: string; statusCode?: number | null }>;
   newBaselines: Array<{ id: string; label: string; url: string }>;
+}
+
+interface PageAuditRow {
+  path: string;
+  label: string;
+  status: 'reviewed' | 'partial';
+  reviewedAt: string;
+  checks: string[];
+  gaps: string[];
 }
 
 interface CommunityInput {
@@ -57,6 +71,8 @@ export default function ProjectStatus() {
   const [inputFeedFailed, setInputFeedFailed] = useState(false);
   const [monitorRuns, setMonitorRuns] = useState<SourceWatchRun[]>([]);
   const [monitorFeedFailed, setMonitorFeedFailed] = useState(false);
+  const [pageAudit, setPageAudit] = useState<PageAuditRow[]>([]);
+  const [pageAuditFailed, setPageAuditFailed] = useState(false);
 
   useEffect(() => {
     const load = async () => {
@@ -79,6 +95,15 @@ export default function ProjectStatus() {
       }
 
       try {
+        const response = await fetch('/page-audit.json', { cache: 'no-store' });
+        const data = await response.json();
+        if (response.ok && Array.isArray(data)) setPageAudit(data);
+        else setPageAuditFailed(true);
+      } catch {
+        setPageAuditFailed(true);
+      }
+
+      try {
         const response = await fetch('/api/community-input');
         const data = await response.json();
         if (response.ok && Array.isArray(data.items)) setCommunityInput(data.items);
@@ -93,6 +118,7 @@ export default function ProjectStatus() {
   const latestSourceRun = sourceRuns[0];
   const latestMonitorRun = monitorRuns[0];
   const openCommunityInput = communityInput.filter(item => item.state === 'open').length;
+  const auditedPagesWithGaps = pageAudit.filter(item => item.gaps.length > 0).length;
   const knownDoctrineGaps = useMemo(
     () =>
       doctrinePrinciples.reduce((sum, item) => sum + item.gaps.length, 0) +
@@ -106,6 +132,18 @@ export default function ProjectStatus() {
       value: serviceDirectory.length.toLocaleString('en-PH'),
       detail: 'City, barangay and major national services in the public-service directory',
       icon: Database,
+    },
+    {
+      label: 'Structured transaction guides',
+      value: detailedServiceGuideCount.toLocaleString('en-PH'),
+      detail: 'Services with explicit requirements, steps, fees/time where supported, and a verification state',
+      icon: FileSearch,
+    },
+    {
+      label: 'Verified transaction guides',
+      value: verifiedServiceGuideCount.toLocaleString('en-PH'),
+      detail: 'Structured guides checked field-by-field against the cited official source without unresolved source conflicts',
+      icon: BadgeCheck,
     },
     {
       label: 'Government service offices',
@@ -168,7 +206,7 @@ export default function ProjectStatus() {
     'Median time from correction submission to BetterMakati resolution',
     'Participation conversion: viewed opportunity → submitted input → documented response',
     'Coverage completeness against a definitive citywide records inventory',
-    'Recurring automated accessibility score from browser-based testing',
+    'A recurring full WCAG conformance score beyond the current browser accessibility smoke tests',
     'Usability outcomes for seniors, disabled users, low-bandwidth users and Filipino-first users',
   ];
 
@@ -335,6 +373,57 @@ export default function ProjectStatus() {
             </Link>
           </div>
         </div>
+      </Section>
+
+      <Section className="bg-white">
+        <div className="section-eyebrow">Page audit</div>
+        <Heading level={2}>Major-page completeness & freshness</Heading>
+        <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600">
+          BetterMakati now keeps an explicit review record for the major citizen journeys. A page can be reviewed while still publishing known coverage gaps.
+        </p>
+
+        {pageAuditFailed ? (
+          <div className="mt-6 rounded-xl border border-warning-200 bg-warning-50 p-4 text-sm text-warning-900">
+            The published page-audit file could not be read from this deployment.
+          </div>
+        ) : (
+          <>
+            <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-3">
+              <div className="rounded-xl border border-gray-200 bg-[#fffdf8] p-4">
+                <div className="text-2xl font-extrabold text-gray-950">{pageAudit.length}</div>
+                <div className="text-sm font-bold text-gray-700">major pages reviewed</div>
+              </div>
+              <div className="rounded-xl border border-gray-200 bg-[#fffdf8] p-4">
+                <div className="text-2xl font-extrabold text-gray-950">
+                  {pageAudit.filter(item => item.status === 'reviewed').length}
+                </div>
+                <div className="text-sm font-bold text-gray-700">reviewed without listed gaps</div>
+              </div>
+              <div className="rounded-xl border border-gray-200 bg-[#fffdf8] p-4">
+                <div className="text-2xl font-extrabold text-gray-950">{auditedPagesWithGaps}</div>
+                <div className="text-sm font-bold text-gray-700">publish known gaps</div>
+              </div>
+            </div>
+
+            {auditedPagesWithGaps > 0 && (
+              <div className="mt-6 overflow-hidden rounded-2xl border border-gray-200">
+                {pageAudit.filter(item => item.gaps.length > 0).map(item => (
+                  <div key={item.path} className="border-b border-gray-200 bg-white p-4 last:border-b-0">
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <Link to={item.path} className="font-extrabold text-primary-800 hover:underline">
+                        {item.label}
+                      </Link>
+                      <span className="text-xs font-semibold text-gray-500">Reviewed {item.reviewedAt}</span>
+                    </div>
+                    <ul className="mt-2 space-y-1 text-sm leading-relaxed text-gray-600">
+                      {item.gaps.map(gap => <li key={gap}>{gap}</li>)}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            )}
+          </>
+        )}
       </Section>
 
       <Section className="bg-white">

@@ -346,5 +346,161 @@
     "label": "OWWA Welfare Assistance Program",
     "url": "https://owwa.gov.ph/welfare-assistance-program-wap/",
     "kind": "national-services"
+  },
+  {
+    "id": "makati-marriage-license",
+    "label": "Makati marriage license Citizen's Charter",
+    "url": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1602120937269.pdf",
+    "kind": "service-detail"
+  },
+  {
+    "id": "makati-yellow-card",
+    "label": "Makati Health Plus / Yellow Card guide",
+    "url": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1715048169416.pdf",
+    "kind": "service-detail"
+  },
+  {
+    "id": "sss-sickness-benefit",
+    "label": "SSS sickness benefit",
+    "url": "https://www.sss.gov.ph/sickness-benefit/",
+    "kind": "service-detail"
+  },
+  {
+    "id": "sss-maternity-benefit",
+    "label": "SSS maternity benefit",
+    "url": "https://www.sss.gov.ph/maternity-benefit/",
+    "kind": "service-detail"
+  },
+  {
+    "id": "sss-retirement-benefit",
+    "label": "SSS retirement benefit",
+    "url": "https://www.sss.gov.ph/retirement-benefit/",
+    "kind": "service-detail"
+  },
+  {
+    "id": "pagibig-mpl-v08",
+    "label": "Pag-IBIG Multi-Purpose Loan form V08",
+    "url": "https://www.pagibigfund.gov.ph/document/pdf/dlforms/providentrelated/SLF065_MultiPurposeLoanApplicationForm_V08.pdf",
+    "kind": "service-detail"
+  },
+  {
+    "id": "pagibig-mp2-v06",
+    "label": "Pag-IBIG MP2 enrollment form V06",
+    "url": "https://www.pagibigfund.gov.ph/document/pdf/dlforms/providentrelated/PFF226_ModifiedPagIBIGIIEnrollmentForm_V06.pdf",
+    "kind": "service-detail"
+  },
+  {
+    "id": "philhealth-yakap-detail",
+    "label": "PhilHealth YAKAP program",
+    "url": "https://www.philhealth.gov.ph/yakap/",
+    "kind": "service-detail"
+  },
+  {
+    "id": "nbi-first-time-jobseekers",
+    "label": "NBI first-time jobseeker Citizen's Charter",
+    "url": "https://nbi.gov.ph/citizens-charter/nbi-clearance-first-time-job-seekers/",
+    "kind": "service-detail"
+  },
+  {
+    "id": "dfa-passport-system",
+    "label": "DFA passport appointment and requirements",
+    "url": "https://passport.gov.ph/",
+    "kind": "service-detail"
+  },
+  {
+    "id": "makati-real-property-tax-division",
+    "label": "Makati Real Property Tax Division Citizen's Charter",
+    "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/481/pdf/Real%20Property%20Tax%20Division.pdf",
+    "kind": "service-detail"
+  },
+  {
+    "id": "umak-admissions",
+    "label": "University of Makati admissions",
+    "url": "https://www.umak.edu.ph/admissions/",
+    "kind": "service-detail"
+  },
+  {
+    "id": "umak-scholarships",
+    "label": "University of Makati scholarships",
+    "url": "https://www.umak.edu.ph/admissions/scholarships/",
+    "kind": "service-detail"
+  },
+  {
+    "id": "makati-solo-parent-guide",
+    "label": "Makati Solo Parent service guide",
+    "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/48/281/pdf/Solo%20Parent.pdf",
+    "kind": "service-detail"
+  },
+  {
+    "id": "sss-employees-compensation",
+    "label": "SSS Employees’ Compensation Program",
+    "url": "https://www.sss.gov.ph/employees-compensation-program/",
+    "kind": "service-detail"
+  },
+  {
+    "id": "philhealth-benefits",
+    "label": "PhilHealth benefits",
+    "url": "https://www.philhealth.gov.ph/benefits/",
+    "kind": "service-detail"
+  },
+  {
+    "id": "ecc-faq",
+    "label": "Employees’ Compensation Commission FAQ",
+    "url": "https://ecc.gov.ph/frequently-asked-questions/",
+    "kind": "service-detail"
+  },
+  {
+    "id": "psa-birth-certificate",
+    "label": "PSA birth certificate service",
+    "url": "https://psa.gov.ph/birth-certificate",
+    "kind": "service-detail"
+  },
+  {
+    "id": "bir-online-services",
+    "label": "BIR online registration and taxpayer services",
+    "url": "https://www.bir.gov.ph/",
+    "kind": "service-detail"
+  },
+  {
+    "id": "dole-sena",
+    "label": "DOLE NCR Single Entry Approach",
+    "url": "https://ncr.dole.gov.ph/single-entry-approach-sena/",
+    "kind": "service-detail"
+  },
+  {
+    "id": "dti-negosyo-center-detail",
+    "label": "DTI Negosyo Center",
+    "url": "https://www.dti.gov.ph/negosyo-center/",
+    "kind": "service-detail"
+  },
+  {
+    "id": "tesda-registered-programs",
+    "label": "TESDA registered TVET programs",
+    "url": "https://www.tesda.gov.ph/About/TESDA/26",
+    "kind": "service-detail"
+  },
+  {
+    "id": "gsis-benefits-detail",
+    "label": "GSIS active-member benefits",
+    "url": "https://www.gsis.gov.ph/active-members/benefits/",
+    "kind": "service-detail"
+  },
+  {
+    "id": "deped-makati-contact-detail",
+    "label": "DepEd Makati school and division contact directory",
+    "url": "https://depedmakati.ph/index.php/contact-us/",
+    "kind": "service-detail"
+  },
+  {
+    "id": "dswd-aics-faq",
+    "label": "DSWD AICS current FAQ",
+    "url": "https://aics.dswd.gov.ph/about-us/faqs/",
+    "kind": "service-detail"
+  },
+  {
+    "id": "pnp-clearance-detail",
+    "label": "PNP National Police Clearance System",
+    "url": "https://pnpclearance.ph/",
+    "kind": "service-detail"
   }
 ]
