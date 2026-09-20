@@ -12,6 +12,8 @@ import { Heading } from '../components/ui/Heading';
 import { Text } from '../components/ui/Text';
 import SEO from '../components/SEO';
 import { barangays, psaBarangaySource } from '../data/barangays';
+import PhotoCarousel from '../components/ui/PhotoCarousel';
+import { barangayImageSet } from '../data/cityImages';
 
 export default function Barangays() {
   const [query, setQuery] = useState('');
@@ -56,6 +58,13 @@ export default function Barangays() {
           . Open a profile for population, district, map and available community
           links.
         </Text>
+
+        <PhotoCarousel
+          images={barangayImageSet}
+          title="Neighborhood Makati"
+          compact
+          className="mt-7"
+        />
 
         <div className="my-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <label className="relative block max-w-sm flex-1">
