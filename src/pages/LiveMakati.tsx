@@ -9,7 +9,10 @@ import {
   Radio,
   Waves,
   Zap,
+  PhoneCall,
+  ShieldAlert,
 } from 'lucide-react';
+import { Link } from 'react-router';
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
 import SEO from '../components/SEO';
@@ -147,6 +150,37 @@ export default function LiveMakati() {
           <SharePage title="Live Makati | BetterMakati" />
         </div>
         <LastReviewed label="Live-source setup reviewed" note="Official warnings always take priority over third-party weather data." />
+
+        <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <a
+            href="tel:911"
+            className="flex min-h-16 items-center gap-3 rounded-2xl bg-primary-900 px-5 py-4 text-white hover:bg-primary-950"
+          >
+            <PhoneCall className="h-5 w-5 shrink-0 text-secondary-200" />
+            <span>
+              <span className="block text-xs font-bold uppercase tracking-[0.08em] text-primary-100">
+                Emergency
+              </span>
+              <span className="font-extrabold">Call 911</span>
+            </span>
+          </a>
+          <a
+            href="https://resilient.makati.gov.ph/"
+            target="_blank"
+            rel="noreferrer"
+            className="flex min-h-16 items-center gap-3 rounded-2xl border border-primary-200 bg-white px-5 py-4 hover:border-primary-400"
+          >
+            <ShieldAlert className="h-5 w-5 shrink-0 text-primary-700" />
+            <span className="font-extrabold text-gray-950">Makati DRRMO</span>
+          </a>
+          <Link
+            to="/hotlines"
+            className="flex min-h-16 items-center gap-3 rounded-2xl border border-primary-200 bg-white px-5 py-4 hover:border-primary-400"
+          >
+            <PhoneCall className="h-5 w-5 shrink-0 text-primary-700" />
+            <span className="font-extrabold text-gray-950">All hotlines</span>
+          </Link>
+        </div>
 
         {failed && (
           <div className="mt-6 rounded-xl border border-secondary-200 bg-secondary-50 p-4 text-sm text-secondary-900" role="status">
