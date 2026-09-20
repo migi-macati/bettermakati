@@ -15,6 +15,8 @@ import { Heading } from '../components/ui/Heading';
 import SEO from '../components/SEO';
 import LastReviewed from '../components/ui/LastReviewed';
 import SharePage from '../components/ui/SharePage';
+import PhotoCarousel from '../components/ui/PhotoCarousel';
+import { cityImages } from '../data/cityImages';
 
 const transitLinks = [
   {
@@ -123,6 +125,12 @@ export default function Mobility() {
           <SharePage title="Getting Around Makati | BetterMakati" />
         </div>
         <LastReviewed note="Schedules and routes can change; confirm current service with the linked operator or map." />
+        <PhotoCarousel
+          images={[cityImages.jeepney]}
+          title="Street-level Makati"
+          compact
+          className="mt-7"
+        />
 
         <div className="mt-8 grid grid-cols-1 lg:grid-cols-[0.95fr_1.05fr] gap-6 items-start">
           <div className="rounded-2xl border border-gray-200 bg-white p-6">
