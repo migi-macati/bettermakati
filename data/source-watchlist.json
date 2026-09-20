@@ -406,5 +406,23 @@
     "label": "DFA passport appointment and requirements",
     "url": "https://passport.gov.ph/",
     "kind": "service-detail"
+  },
+  {
+    "id": "makati-real-property-tax-division",
+    "label": "Makati Real Property Tax Division Citizen's Charter",
+    "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/481/pdf/Real%20Property%20Tax%20Division.pdf",
+    "kind": "service-detail"
+  },
+  {
+    "id": "umak-admissions",
+    "label": "University of Makati admissions",
+    "url": "https://www.umak.edu.ph/admissions/",
+    "kind": "service-detail"
+  },
+  {
+    "id": "umak-scholarships",
+    "label": "University of Makati scholarships",
+    "url": "https://www.umak.edu.ph/admissions/scholarships/",
+    "kind": "service-detail"
   }
 ]
