@@ -29,6 +29,7 @@ import {
 } from '../data/openGovernmentDoctrine';
 import { searchIndex } from '../data/searchIndex';
 import { cityMonitorRecords, cityMonitorSources } from '../data/cityMonitor';
+import { serviceDirectory } from '../data/serviceDirectory';
 
 interface SourceWatchRun {
   checkedAt: string;
@@ -98,6 +99,12 @@ export default function ProjectStatus() {
   );
 
   const coverage = [
+    {
+      label: 'Government services',
+      value: serviceDirectory.length.toLocaleString('en-PH'),
+      detail: 'City, barangay and major national services in the public-service directory',
+      icon: Database,
+    },
     {
       label: 'Barangay profiles',
       value: barangays.length.toLocaleString('en-PH'),
