@@ -176,6 +176,18 @@ export const governmentServiceOffices: GovernmentServiceOffice[] = [
     mapsQuery: 'PSA Makati CRS Outlet Ayala Malls Circuit',
   },
   {
+    id: 'makati-police-central',
+    name: 'Makati City Police Station – Central Police Station',
+    agency: 'Philippine National Police',
+    scope: 'In Makati',
+    address: 'Ground Floor, Ayala Avenue Extension corner Yakal Street, San Antonio, Makati City',
+    barangay: 'San Antonio',
+    phone: '(02) 8887-2484',
+    sourceUrl: 'https://www.makati.gov.ph/assets/uploads/downloads/2/481/pdf/Makati%20Citizen%27s%20Charter%20-%20FOR%20PRINT.pdf',
+    mapsQuery: 'Makati Central Police Station Ayala Avenue Extension Yakal Makati',
+    note: 'The Makati Citizen’s Charter identifies this station for National Police Clearance biometrics and releasing. Confirm the current appointment site in the PNP clearance system.',
+  },
+  {
     id: 'lto-makati',
     name: 'LTO Makati District Office',
     agency: 'Land Transportation Office',
