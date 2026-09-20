@@ -45,6 +45,39 @@ const normalize = (value: string) =>
     .replace(/\s+/g, ' ')
     .trim();
 
+const editDistance = (a: string, b: string) => {
+  if (a === b) return 0;
+  if (!a.length) return b.length;
+  if (!b.length) return a.length;
+
+  const previous = Array.from({ length: b.length + 1 }, (_, index) => index);
+  const current = new Array<number>(b.length + 1);
+
+  for (let i = 1; i <= a.length; i += 1) {
+    current[0] = i;
+    for (let j = 1; j <= b.length; j += 1) {
+      current[j] = Math.min(
+        current[j - 1] + 1,
+        previous[j] + 1,
+        previous[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1)
+      );
+    }
+    for (let j = 0; j <= b.length; j += 1) previous[j] = current[j];
+  }
+
+  return previous[b.length];
+};
+
+const fuzzyMatch = (word: string, tokens: string[]) => {
+  if (word.length < 4) return false;
+  const tolerance = word.length >= 8 ? 2 : 1;
+  return tokens.some(
+    token =>
+      Math.abs(token.length - word.length) <= tolerance &&
+      editDistance(word, token) <= tolerance
+  );
+};
+
 const scoreItem = (item: SearchItem, query: string) => {
   const needle = normalize(query);
   if (!needle) return item.featured ? 5 : 1;
@@ -53,6 +86,10 @@ const scoreItem = (item: SearchItem, query: string) => {
   const description = normalize(item.description);
   const keywords = normalize(item.keywords);
   const words = needle.split(' ').filter(Boolean);
+  const titleTokens = title.split(' ').filter(Boolean);
+  const keywordTokens = keywords.split(' ').filter(Boolean);
+  const descriptionTokens = description.split(' ').filter(Boolean);
+  const allTokens = [...titleTokens, ...keywordTokens, ...descriptionTokens];
 
   let score = 0;
 
@@ -63,10 +100,19 @@ const scoreItem = (item: SearchItem, query: string) => {
   if (description.includes(needle)) score += 8;
 
   for (const word of words) {
-    if (title.split(' ').some(token => token.startsWith(word))) score += 7;
+    if (titleTokens.some(token => token.startsWith(word))) score += 7;
     else if (title.includes(word)) score += 5;
     if (keywords.includes(word)) score += 3;
     if (description.includes(word)) score += 1;
+
+    if (
+      !title.includes(word) &&
+      !keywords.includes(word) &&
+      !description.includes(word) &&
+      fuzzyMatch(word, allTokens)
+    ) {
+      score += 4;
+    }
   }
 
   return score;
