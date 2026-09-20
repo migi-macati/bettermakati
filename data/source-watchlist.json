@@ -334,5 +334,17 @@
     "label": "PCSO Medical Assistance Program",
     "url": "https://onlinemap.pcso.gov.ph/",
     "kind": "national-services"
+  },
+  {
+    "id": "owwa-ncr",
+    "label": "OWWA NCR office and services",
+    "url": "https://owwa.gov.ph/key-officials-regional-welfare-offices/",
+    "kind": "national-services"
+  },
+  {
+    "id": "owwa-wap",
+    "label": "OWWA Welfare Assistance Program",
+    "url": "https://owwa.gov.ph/welfare-assistance-program-wap/",
+    "kind": "national-services"
   }
 ]
