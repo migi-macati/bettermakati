@@ -16,7 +16,8 @@ import PlacesExplorer from '../components/visit/PlacesExplorer';
 import { visitorPlaces } from '../data/visitMakati';
 import SEO from '../components/SEO';
 import LastReviewed from '../components/ui/LastReviewed';
-import CityPhoto from '../components/ui/CityPhoto';
+import PhotoCarousel from '../components/ui/PhotoCarousel';
+import { visitImageSet } from '../data/cityImages';
 import SharePage from '../components/ui/SharePage';
 
 const mapsUrl = (query: string) =>
@@ -86,7 +87,7 @@ export default function VisitMakati() {
           </div>
 
           <div className="space-y-6 min-w-0">
-            <CityPhoto />
+            <PhotoCarousel images={visitImageSet} title="See Makati" />
             <PlacesExplorer />
           </div>
         </div>
