@@ -36,15 +36,28 @@ export default async function handler(req, res) {
     const items = issues
       .filter(issue => !issue.pull_request)
       .filter(issue => allowedPrefixes.some(prefix => issue.title.startsWith(prefix)))
-      .map(issue => ({
-        number: issue.number,
-        title: issue.title.replace(/^\[[^\]]+\]\s*/, ''),
-        state: issue.state,
-        url: issue.html_url,
-        updatedAt: issue.updated_at,
-        comments: issue.comments,
-        kind: kindFromTitle(issue.title),
-      }))
+      .map(issue => {
+        const labels = (issue.labels || [])
+          .map(label => typeof label === 'string' ? label : label.name)
+          .filter(Boolean);
+        const workflowLabel = labels.find(label =>
+          String(label).toLowerCase().startsWith('status:')
+        );
+        return {
+          number: issue.number,
+          title: issue.title.replace(/^\[[^\]]+\]\s*/, ''),
+          state: issue.state,
+          workflowStatus: workflowLabel
+            ? String(workflowLabel).replace(/^status:\s*/i, '')
+            : issue.state === 'closed'
+              ? 'Closed'
+              : 'Received',
+          url: issue.html_url,
+          updatedAt: issue.updated_at,
+          comments: issue.comments,
+          kind: kindFromTitle(issue.title),
+        };
+      })
       .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))
       .slice(0, 30);
 
