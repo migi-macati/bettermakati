@@ -220,5 +220,11 @@
     "label": "Makati sanitation code",
     "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/181/pdf/Makati%20City%20Ordinance%202019-A-102.pdf",
     "kind": "services"
+  },
+  {
+    "id": "makati-veterinary-services",
+    "label": "Makati Veterinary Services Department",
+    "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/481/pdf/Makati%20Veterinary%20Services%20Department.pdf",
+    "kind": "services"
   }
 ]
