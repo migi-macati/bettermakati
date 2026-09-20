@@ -154,5 +154,65 @@
     "label": "GPPB Public Advisory No. 09-2026 on RA 12009 IRR",
     "url": "https://www.gppb.gov.ph/public-advisory-no-09-2026/",
     "kind": "procurement-law"
+  },
+  {
+    "id": "makati-citizens-charter",
+    "label": "Makati Citizen's Charter",
+    "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/481/pdf/Makati%20Citizen%27s%20Charter%20-%20FOR%20PRINT.pdf",
+    "kind": "services"
+  },
+  {
+    "id": "makati-permits-clearances",
+    "label": "Makati permits and clearances guide",
+    "url": "https://www.makati.gov.ph/assets/uploads/downloads/402/243/pdf/40207032015120611.pdf",
+    "kind": "services"
+  },
+  {
+    "id": "makati-taxes-fees",
+    "label": "Makati taxes and fees guide",
+    "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/48/281/pdf/Taxes%20and%20Fees.pdf",
+    "kind": "services"
+  },
+  {
+    "id": "makati-civil-registry",
+    "label": "Makati civil registry services",
+    "url": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1581042114419.pdf",
+    "kind": "services"
+  },
+  {
+    "id": "makati-social-welfare",
+    "label": "Makati social welfare services",
+    "url": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/securing_social_services_%28citizens_charter%2920190104113800.pdf",
+    "kind": "services"
+  },
+  {
+    "id": "pnp-clearance",
+    "label": "PNP National Police Clearance",
+    "url": "https://www.pnpclearance.ph/",
+    "kind": "national-services"
+  },
+  {
+    "id": "nbi-clearance",
+    "label": "NBI clearance guidance",
+    "url": "https://nbi.gov.ph/how-to-apply-nbi-clearance/",
+    "kind": "national-services"
+  },
+  {
+    "id": "bfp-fsic",
+    "label": "BFP Fire Safety Inspection Certificate guidance",
+    "url": "https://bfp.gov.ph/wp-content/uploads/2020/12/3-BFP-Citizens-Charter-Handbook-for-Printing.pdf",
+    "kind": "national-services"
+  },
+  {
+    "id": "psa-frontline",
+    "label": "PSA frontline services",
+    "url": "https://psa.gov.ph/",
+    "kind": "national-services"
+  },
+  {
+    "id": "dfa-passport",
+    "label": "DFA passport appointment system",
+    "url": "https://passport.gov.ph/",
+    "kind": "national-services"
   }
 ]
