@@ -238,5 +238,101 @@
     "label": "Makati business permit application form",
     "url": "https://www.makati.gov.ph/assets/uploads/online_forms/pdf/522/business%20permit%20form%202025%20update1111.pdf",
     "kind": "services"
+  },
+  {
+    "id": "sss-benefits",
+    "label": "SSS benefits",
+    "url": "https://www.sss.gov.ph/benefits/",
+    "kind": "national-services"
+  },
+  {
+    "id": "pagibig-services",
+    "label": "Pag-IBIG member services",
+    "url": "https://www.pagibigfund.gov.ph/",
+    "kind": "national-services"
+  },
+  {
+    "id": "philhealth-services",
+    "label": "PhilHealth online services",
+    "url": "https://www.philhealth.gov.ph/services/",
+    "kind": "national-services"
+  },
+  {
+    "id": "ecc-contact",
+    "label": "Employees' Compensation Commission",
+    "url": "https://ecc.gov.ph/contact-us/",
+    "kind": "national-services"
+  },
+  {
+    "id": "deped-makati",
+    "label": "DepEd Schools Division Office Makati",
+    "url": "https://depedmakati.ph/",
+    "kind": "national-services"
+  },
+  {
+    "id": "dswd-satellite-offices",
+    "label": "DSWD satellite offices",
+    "url": "https://www.dswd.gov.ph/dswd-directory-satellite-offices/",
+    "kind": "national-services"
+  },
+  {
+    "id": "doh-mmchd",
+    "label": "DOH Metro Manila Center for Health Development",
+    "url": "https://ncroffice.doh.gov.ph/CitizensCharter",
+    "kind": "national-services"
+  },
+  {
+    "id": "psa-crs-outlets",
+    "label": "PSA Metro Manila CRS outlets",
+    "url": "https://psa.gov.ph/directory/census-serbilis-center-metro-manila",
+    "kind": "national-services"
+  },
+  {
+    "id": "gsis-benefits",
+    "label": "GSIS member benefits",
+    "url": "https://www.gsis.gov.ph/active-members/benefits/",
+    "kind": "national-services"
+  },
+  {
+    "id": "dole-makati-pasay",
+    "label": "DOLE NCR Makati-Pasay Field Office",
+    "url": "https://ncr.dole.gov.ph/contact/",
+    "kind": "national-services"
+  },
+  {
+    "id": "sec-headquarters",
+    "label": "Securities and Exchange Commission",
+    "url": "https://www.sec.gov.ph/",
+    "kind": "national-services"
+  },
+  {
+    "id": "tesda-pasmak",
+    "label": "TESDA PASMAK district office",
+    "url": "https://tesda.gov.ph/directory/regions",
+    "kind": "national-services"
+  },
+  {
+    "id": "phlpost-locator",
+    "label": "PHLPost office locator",
+    "url": "https://phlpost.gov.ph/post-office-locator/",
+    "kind": "national-services"
+  },
+  {
+    "id": "dti-services",
+    "label": "DTI services and Negosyo Center",
+    "url": "https://www.dti.gov.ph/",
+    "kind": "national-services"
+  },
+  {
+    "id": "dpwh-home",
+    "label": "DPWH public information",
+    "url": "https://www.dpwh.gov.ph/dpwh/",
+    "kind": "national-services"
+  },
+  {
+    "id": "pcso-medical-assistance",
+    "label": "PCSO Medical Assistance Program",
+    "url": "https://onlinemap.pcso.gov.ph/",
+    "kind": "national-services"
   }
 ]
