@@ -2,6 +2,7 @@ import { makatiHistory } from './makatiHistory';
 import { barangays as barangayProfiles } from './barangays';
 import { electedOfficials } from './electedOfficials';
 import { serviceDirectory } from './serviceDirectory';
+import { governmentServiceOffices } from './governmentServiceOffices';
 
 export type SearchGroup =
   | 'Service'
@@ -532,6 +533,23 @@ const barangayItems: SearchItem[] = barangayProfiles.map(barangay => ({
   keywords: `${barangay.name} barangay hall local neighborhood population district profile`,
 }));
 
+const officeItems: SearchItem[] = governmentServiceOffices.map(office => ({
+  title: office.name,
+  group: 'Government',
+  category: 'Government offices',
+  description: office.address,
+  href: '/government-offices#' + office.id,
+  keywords: [
+    office.agency,
+    office.scope,
+    office.address,
+    office.barangay ?? '',
+    office.phone ?? '',
+    office.email ?? '',
+  ].join(' '),
+  featured: office.scope === 'In Makati',
+}));
+
 const officialItems: SearchItem[] = electedOfficials.map(official => ({
   title: official.displayName,
   group: 'Government',
@@ -554,6 +572,7 @@ export const searchIndex: SearchItem[] = [
   ...radicalCivicItems,
   ...visitItems,
   ...governmentItems,
+  ...officeItems,
   ...officialItems,
   ...recordItems,
   ...toolItems,
