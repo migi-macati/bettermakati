@@ -88,12 +88,12 @@ export default function Accountability() {
       />
 
       <Section className="bg-[#fffdf8]">
-        <div className="section-eyebrow">Public follow-through</div>
+        <div className="section-eyebrow">Accountability Ledger</div>
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <Heading>Accountability Ledger</Heading>
+            <Heading>Track plans & projects</Heading>
             <p className="max-w-3xl text-gray-700">
-              Track plans, responsible bodies, targets, later evidence and known gaps.
+              See what was planned, who is responsible, when it is due, the money involved and the latest public evidence.
             </p>
           </div>
           <SharePage title="Makati Accountability Ledger | BetterMakati" />
@@ -145,7 +145,7 @@ export default function Accountability() {
 
       <Section className="bg-white">
         <div className="section-eyebrow">Trace the record</div>
-        <Heading level={2}>What can be followed now</Heading>
+        <Heading level={2}>What the public record shows</Heading>
 
         <div className="mt-6 flex flex-col gap-3 md:flex-row">
           <label className="relative flex-1">
@@ -206,7 +206,7 @@ export default function Accountability() {
               <div className="mt-5 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3">
                 <div className="rounded-xl border border-gray-200 bg-white p-4">
                   <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">
-                    Responsible body
+                    Who is responsible
                   </div>
                   <div className="mt-1 font-bold text-gray-950">
                     {entry.responsibleBodies.join(' · ')}
@@ -214,7 +214,7 @@ export default function Accountability() {
                 </div>
                 <div className="rounded-xl border border-gray-200 bg-white p-4">
                   <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">
-                    Target / period
+                    When
                   </div>
                   <div className="mt-1 font-bold text-gray-950">
                     {entry.targetDate || entry.period}
@@ -222,7 +222,7 @@ export default function Accountability() {
                 </div>
                 <div className="rounded-xl border border-gray-200 bg-white p-4">
                   <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">
-                    Public record
+                    What happened
                   </div>
                   <div className="mt-1 font-bold text-gray-950">
                     {entry.completionPct !== undefined
@@ -234,7 +234,7 @@ export default function Accountability() {
                 </div>
                 <div className="rounded-xl border border-gray-200 bg-white p-4">
                   <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">
-                    Amount context
+                    Money
                   </div>
                   <div className="mt-1 font-bold text-gray-950">
                     {entry.reportedAmountM !== undefined
@@ -269,7 +269,7 @@ export default function Accountability() {
 
               <div className="mt-5 border-t border-gray-200 pt-5">
                 <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">
-                  Evidence
+                  Source evidence
                 </div>
                 <div className="mt-2 flex flex-wrap gap-x-4 gap-y-2 text-sm">
                   {entry.sources.map(source => (
