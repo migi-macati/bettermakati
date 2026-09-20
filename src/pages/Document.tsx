@@ -212,6 +212,9 @@ export default function Document({
     return null;
   }
 
+  const officialSourceHref =
+    markdownContent.content.match(/\[[^\]]+\]\((https?:\/\/[^)]+)\)/)?.[1];
+
   return (
     <>
       <SEO
@@ -224,11 +227,21 @@ export default function Document({
       />
       <Section className="p-3 mb-12">
         <Breadcrumbs className="mb-8" items={breadcrumbs} />
-        <div className="mb-5 rounded-xl border border-primary-100 bg-primary-50 p-4 text-sm leading-relaxed text-gray-700">
-          BetterMakati summarizes public information for convenience. For fees,
-          deadlines, eligibility and transactions, use the linked official source
-          before acting.
-          <LastReviewed className="mt-2" note="Time-sensitive requirements may change." />
+        <div className="mb-5 flex flex-col gap-3 rounded-xl border border-primary-100 bg-primary-50 p-4 text-sm leading-relaxed text-gray-700 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            Check the official source before acting; requirements, fees and deadlines can change.
+            <LastReviewed className="mt-2" note="Time-sensitive requirements may change." />
+          </div>
+          {officialSourceHref && (
+            <a
+              href={officialSourceHref}
+              target="_blank"
+              rel="noreferrer"
+              className="brand-btn-secondary shrink-0"
+            >
+              Official source
+            </a>
+          )}
         </div>
         <Card className="mb-8 markdown-content">
           <CardHeader>
