@@ -2,6 +2,7 @@ import { readFile } from 'node:fs/promises';
 
 const directory = await readFile('src/data/serviceDirectory.ts', 'utf8');
 const details = await readFile('src/data/serviceGuideDetails.ts', 'utf8');
+const watchlist = JSON.parse(await readFile('data/source-watchlist.json', 'utf8'));
 
 const directoryIds = [...directory.matchAll(/\bid:\s*'([^']+)'/g)].map(match => match[1]);
 const detailBlock = details.split('export const serviceGuideDetails')[1] ?? '';
@@ -16,6 +17,20 @@ const featuredIds = serviceBlocks
   .filter(Boolean);
 
 const problems = [];
+const watchedUrls = new Set(watchlist.map(item => item.url));
+const detailSourceUrls = [
+  ...new Set(
+    [...detailBlock.matchAll(/sourceUrl:\s*'([^']+)'/g)].map(match => match[1])
+  ),
+];
+const unwatchedDetailSources = detailSourceUrls.filter(url => !watchedUrls.has(url));
+if (unwatchedDetailSources.length) {
+  problems.push(
+    'Structured guide sources missing from source-watch: ' +
+      unwatchedDetailSources.join(', ')
+  );
+}
+
 const missingFeaturedDetails = featuredIds.filter(id => !detailIds.includes(id));
 if (missingFeaturedDetails.length) {
   problems.push(
@@ -50,5 +65,5 @@ if (problems.length) {
 }
 
 console.log(
-  `Service-depth audit passed: ${directoryIds.length} indexed services; ${detailIds.length} structured guides; ${verifiedCount} verified; ${featuredIds.length} featured services all structured.`
+  `Service-depth audit passed: ${directoryIds.length} indexed services; ${detailIds.length} structured guides; ${verifiedCount} verified; ${featuredIds.length} featured services all structured; ${detailSourceUrls.length} detailed sources watched.`
 );
