@@ -58,6 +58,13 @@ test('homepage universal search tolerates a simple typo', async ({ page }) => {
   await expect(page.getByText(/Community Tax Certificate|Cedula/i).first()).toBeVisible();
 });
 
+test('service directory tolerates a common typo', async ({ page }) => {
+  await page.goto(baseURL + '/services');
+  const search = page.getByPlaceholder(/Search permit, clearance, ID, test or service/i);
+  await search.fill('cedla');
+  await expect(page.getByText(/Community Tax Certificate \/ Cedula/i).first()).toBeVisible();
+});
+
 test('service directory opens BetterMakati guide before external handoff', async ({ page }) => {
   await page.goto(baseURL + '/services');
   const search = page.getByPlaceholder(/Search permit, clearance, ID, test or service/i);
