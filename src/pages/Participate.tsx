@@ -25,6 +25,7 @@ interface CommunityInput {
   number: number;
   title: string;
   state: 'open' | 'closed';
+  workflowStatus?: string;
   url: string;
   updatedAt: string;
   comments: number;
@@ -214,7 +215,7 @@ export default function Participate() {
                     <div className="flex flex-wrap items-center gap-2 text-xs font-bold uppercase tracking-[0.08em]">
                       <span className="text-primary-700">{item.kind}</span>
                       <span className={item.state === 'closed' ? 'text-gray-500' : 'text-success-700'}>
-                        {item.state}
+                        {item.workflowStatus || (item.state === 'closed' ? 'Closed' : 'Received')}
                       </span>
                     </div>
                     <h3 className="mt-2 font-extrabold text-gray-950">
