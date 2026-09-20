@@ -176,6 +176,90 @@ const agencyGuidance: Record<
       'The DOH regional office serving Makati is in Mandaluyong; local resident care is often delivered through Makati or accredited providers.',
     ],
   },
+  'Department of Labor and Employment': {
+    prepare: [
+      'A valid ID and the employment, employer or workplace information connected with the concern.',
+      'Contracts, payslips, notices, messages or other records relevant to the labor issue when applicable.',
+      'For employer regulatory submissions, prepare the current DOLE form and project or establishment records.',
+    ],
+    steps: [
+      'Use the DOLE-NCR client portal when the transaction is available online.',
+      'For Makati workplaces and projects, contact the Makati–Pasay Field Office shown below.',
+      'Keep the filing or assistance reference for follow-up.',
+    ],
+  },
+  'Department of Trade and Industry': {
+    prepare: [
+      'A valid ID and basic business or consumer transaction information.',
+      'For business-name transactions, prepare the proposed name and owner details.',
+      'For consumer complaints, keep receipts, warranties, messages and other proof of the transaction.',
+    ],
+    steps: [
+      'Use DTI online services when the transaction is available digitally.',
+      'For MSME advice or transactions requiring assistance, use the Makati Negosyo Center below.',
+      'For consumer concerns, follow the current DTI complaint process and preserve the reference number.',
+    ],
+  },
+  'Securities and Exchange Commission': {
+    prepare: [
+      'Company or proposed-company information and the SEC registration number when applicable.',
+      'An eSECURE account when required by the selected electronic transaction.',
+      'The corporate documents required for registration, filing or records request.',
+    ],
+    steps: [
+      'Start with the relevant SEC electronic system for registration, filing or verification.',
+      'Complete authentication and electronic submission requirements before visiting the headquarters.',
+      'Use the SEC headquarters in Bel-Air for transactions or assistance that require onsite handling.',
+    ],
+  },
+  'Technical Education and Skills Development Authority': {
+    prepare: [
+      'A valid ID and your preferred qualification or training field.',
+      'Education or employment records if required by the chosen program.',
+      'Check the specific scholarship or training-provider requirements before enrollment.',
+    ],
+    steps: [
+      'Search current TESDA registered programs and scholarship announcements.',
+      'Contact the PASMAK district office serving Pasay and Makati for local guidance.',
+      'Enroll only with the current provider and program listed or recognized by TESDA.',
+    ],
+  },
+  'Philippine Postal Corporation': {
+    prepare: [
+      'The item or document to be mailed and the complete recipient address.',
+      'A valid ID when required for the selected postal transaction.',
+      'Check packaging, prohibited-item and fee rules before going to the counter.',
+    ],
+    steps: [
+      'Choose a Makati post office below.',
+      'Ask the counter for the appropriate domestic or international postal product.',
+      'Keep the official receipt and tracking number for trackable items.',
+    ],
+  },
+  'Department of Public Works and Highways': {
+    prepare: [
+      'The exact Makati road, bridge, drainage or infrastructure location.',
+      'Photos, dates and a concise description of the issue when reporting a concern.',
+      'Distinguish a DPWH national-road concern from a city or barangay road concern before filing.',
+    ],
+    steps: [
+      'Check whether the infrastructure is under DPWH jurisdiction.',
+      'For Makati DPWH matters, contact the Metro Manila 2nd District Engineering Office serving the city.',
+      'Keep the complaint, request or correspondence reference for follow-up.',
+    ],
+  },
+  'Philippine Charity Sweepstakes Office': {
+    prepare: [
+      'A valid ID and current medical documents supporting the assistance request.',
+      'Hospital, treatment, prescription or billing records required by the Medical Assistance Program.',
+      'An email address and mobile number for the online application.',
+    ],
+    steps: [
+      'Create or sign in to the PCSO Online Medical Assistance Program.',
+      'Upload only the current documents requested for the type of medical assistance.',
+      'Monitor the application through the official PCSO channel.',
+    ],
+  },
   'Bureau of Internal Revenue': {
     prepare: [
       'TIN and taxpayer registration details, if already registered.',
