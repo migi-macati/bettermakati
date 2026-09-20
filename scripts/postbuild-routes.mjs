@@ -82,7 +82,7 @@ for (const url of urls) {
   const [title, description] = metaFor(pathname);
   const fullTitle = title.includes('BetterMakati') ? title : title + ' | BetterMakati';
   const canonical = base + pathname;
-  const socialImage = base + '/og-image.svg';
+  const socialImage = base + '/og-image.png';
 
   let html = sourceHtml
     .replace(/<title>[^<]*<\/title>/, '<title>' + escapeHtml(fullTitle) + '</title>')

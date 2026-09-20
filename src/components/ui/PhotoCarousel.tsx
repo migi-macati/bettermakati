@@ -25,7 +25,7 @@ export default function PhotoCarousel({
   return (
     <figure
       className={
-        'overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm ' +
+        'photo-frame overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm ' +
         className
       }
       aria-label={title || 'Makati photographs'}
@@ -57,6 +57,8 @@ export default function PhotoCarousel({
             key={image.src}
             src={image.src}
             alt={image.alt}
+            width={1400}
+            height={933}
             loading="lazy"
             decoding="async"
             referrerPolicy="no-referrer"

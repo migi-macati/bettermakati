@@ -8,7 +8,7 @@ const isExternal = (href: string) => href.startsWith('http');
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-[#112b20] text-white">
+    <footer className="bg-primary-900 text-white">
       <div className="h-1.5 bg-gradient-to-r from-secondary-500 via-primary-500 to-accent-500" />
       <div className="container px-5 md:px-6 lg:px-8 pt-12 pb-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-9">
@@ -63,7 +63,23 @@ const Footer: React.FC = () => {
         </div>
 
         <div className="border-t border-white/10 mt-10 pt-6 text-xs text-primary-200">
-          <p>© 2026 BetterMakati. Independent BetterLGU civic portal.</p>
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <p>© 2026 BetterMakati. Independent BetterLGU civic portal.</p>
+            <div className="flex flex-wrap gap-5">
+              <Link
+                to="/about#identity"
+                className="underline underline-offset-4"
+              >
+                Our identity
+              </Link>
+              <Link to="/privacy" className="underline underline-offset-4">
+                Privacy
+              </Link>
+              <Link to="/status" className="underline underline-offset-4">
+                Coverage &amp; limitations
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </footer>

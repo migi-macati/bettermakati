@@ -8,19 +8,17 @@
 @theme {
   --font-serif: Georgia, 'Times New Roman', serif;
 
-  /* BetterMakati independent palette.
-     Inspired by Makati civic symbolism: green for life/progress,
-     golden yellow for wealth/prosperity, blue for the water/wave motif. */
-  --color-primary-50: #f1f8f3;
-  --color-primary-100: #dcefe2;
-  --color-primary-200: #b9ddc4;
-  --color-primary-300: #8bc79c;
-  --color-primary-400: #57ad73;
-  --color-primary-500: #2f9159;
-  --color-primary-600: #227947;
-  --color-primary-700: #176238;
-  --color-primary-800: #124e2e;
-  --color-primary-900: #0d3822;
+  /* Brand colours are design choices, not claims about historical symbolism. */
+  --color-primary-50: #edf7f4;
+  --color-primary-100: #d5ece5;
+  --color-primary-200: #afd8cc;
+  --color-primary-300: #78baaa;
+  --color-primary-400: #499987;
+  --color-primary-500: #267d6a;
+  --color-primary-600: #076653;
+  --color-primary-700: #005447;
+  --color-primary-800: #004438;
+  --color-primary-900: #00362d;
 
   --color-secondary-50: #fff9e8;
   --color-secondary-100: #fff0bf;
@@ -139,7 +137,8 @@ html {
 }
 
 :where(a, button, input, select, textarea, summary):focus-visible {
-  outline: 3px solid #dca514;
+  outline: 3px solid #005447;
+  box-shadow: 0 0 0 2px white;
   outline-offset: 3px;
 }
 
@@ -204,7 +203,7 @@ body {
 }
 
 .brand-btn-primary {
-  background: #176238;
+  background: #005447;
   color: white;
   box-shadow: 0 6px 18px rgba(23, 98, 56, 0.16);
 }
@@ -530,5 +529,56 @@ nav a[aria-current='page'] {
   }
   .community-tool-card {
     min-height: auto;
+  }
+}
+
+/* Shared civic reading rhythm, data legibility, and touch targets. */
+main h1 {
+  overflow-wrap: anywhere;
+}
+main p {
+  text-wrap: pretty;
+}
+main table {
+  font-variant-numeric: tabular-nums;
+}
+main button,
+main select,
+main input:not([type='checkbox']):not([type='radio']) {
+  min-height: 2.75rem;
+}
+main input[type='checkbox'],
+main input[type='radio'] {
+  accent-color: #005447;
+}
+main :is(button, select, label) {
+  font-size: max(0.875rem, 1em);
+}
+.photo-frame {
+  isolation: isolate;
+}
+.photo-frame figcaption {
+  font-size: 0.75rem;
+  color: #574f49;
+}
+@media (max-width: 639px) {
+  main > section {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+}
+@media print {
+  nav,
+  footer,
+  .page-help,
+  .skip-link {
+    display: none !important;
+  }
+  main {
+    color: #111;
+    background: white;
+  }
+  main a {
+    text-decoration: underline;
   }
 }

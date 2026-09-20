@@ -1,18 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
-  <title id="title">BetterMakati</title>
-  <desc id="desc">Independent civic information for Makati City</desc>
-  <rect width="1200" height="630" fill="#fffdf8"/>
-  <circle cx="1010" cy="108" r="170" fill="#fff0bf"/>
-  <circle cx="95" cy="570" r="220" fill="#dcefe2"/>
-  <path d="M0 520c150-58 280 16 430-20 168-41 291-83 445-27 127 47 209 28 325 7v150H0z" fill="#b9ddc4" opacity=".85"/>
-  <g fill="#176238">
-    <path d="M754 438V273h64v165zM835 438V207h47v231zM900 438V304h91v134zM1010 438V162h58v276zM1082 438V257h70v181z"/>
-  </g>
-  <path d="M690 483c111-45 193-45 300 0s178 44 245-1" fill="none" stroke="#3b8792" stroke-width="18" stroke-linecap="round"/>
-  <text x="86" y="190" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700" fill="#176238" letter-spacing="4">BETTERMAKATI</text>
-  <text x="86" y="290" font-family="Arial, Helvetica, sans-serif" font-size="70" font-weight="800" fill="#25211f">Understand Makati.</text>
-  <text x="86" y="370" font-family="Arial, Helvetica, sans-serif" font-size="70" font-weight="800" fill="#25211f">Find what you need.</text>
-  <text x="90" y="430" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="500" fill="#574f49">Independent civic information · sources included</text>
-  <circle cx="111" cy="507" r="12" fill="#dca514"/>
-  <text x="139" y="518" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="700" fill="#176238">Services · Barangays · Budgets · History · Elections · City data</text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630"><title>BetterMakati</title><rect width="1200" height="630" fill="#fffef9"/><rect width="1200" height="10" fill="#d5a62d"/><g transform="translate(810 150) scale(1.6)"><defs><clipPath id="horizon"><path d="M0 0H200V74Q165 63 145 76Q125 59 100 90Q75 44 48 74H0Z"/></clipPath></defs><g fill="#d5a62d" clip-path="url(#horizon)"><circle cx="100" cy="73" r="25"/><path d="M95 43 L93 18 L100 10 L107 18 L105 43Z" transform="rotate(0 100 73)"/><path d="M95 43 L93 18 L100 10 L107 18 L105 43Z" transform="rotate(45 100 73)"/><path d="M95 43 L93 18 L100 10 L107 18 L105 43Z" transform="rotate(90 100 73)"/><path d="M95 43 L93 18 L100 10 L107 18 L105 43Z" transform="rotate(135 100 73)"/><path d="M95 43 L93 18 L100 10 L107 18 L105 43Z" transform="rotate(180 100 73)"/><path d="M95 43 L93 18 L100 10 L107 18 L105 43Z" transform="rotate(225 100 73)"/><path d="M95 43 L93 18 L100 10 L107 18 L105 43Z" transform="rotate(270 100 73)"/><path d="M95 43 L93 18 L100 10 L107 18 L105 43Z" transform="rotate(315 100 73)"/></g><g fill="#005447"><path d="M8 111 C19 129 30 104 44 80 C58 55 75 53 90 77 C108 106 119 120 135 122 C110 131 93 109 77 87 C67 72 60 83 48 104 C32 132 11 135 8 111Z"/><path d="M97 87 C114 66 128 61 143 82 C159 105 166 123 191 112 C177 136 157 124 145 106 C130 84 122 79 107 97Z"/></g></g><text x="72" y="140" fill="#005447" font-family="Arial,sans-serif" font-size="46">Better<tspan font-weight="700">Makati</tspan></text><text x="72" y="260" fill="#00362d" font-family="Arial,sans-serif" font-size="58" font-weight="700">Find what you need.</text><text x="72" y="340" fill="#00362d" font-family="Arial,sans-serif" font-size="58" font-weight="700">Understand your city.</text><text x="75" y="422" fill="#574f49" font-family="Arial,sans-serif" font-size="28">Services · Places · People · Public records</text><path d="M75 490H1125" stroke="#d5ece5" stroke-width="2"/><text x="75" y="550" fill="#005447" font-family="Arial,sans-serif" font-size="25">Independent civic information for Makati City</text></svg>

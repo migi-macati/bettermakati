@@ -1,3 +1,4 @@
+import PageHelp from './components/ui/PageHelp';
 import { lazy, Suspense } from 'react';
 import { NuqsAdapter } from 'nuqs/adapters/react';
 import { HelmetProvider } from 'react-helmet-async';
@@ -80,8 +81,14 @@ function App() {
                     <Route path="/terms" element={<Terms />} />
 
                     <Route path="/services" element={<Services />} />
-                    <Route path="/services/guide/:id" element={<ServiceGuide />} />
-                    <Route path="/government-offices" element={<GovernmentOffices />} />
+                    <Route
+                      path="/services/guide/:id"
+                      element={<ServiceGuide />}
+                    />
+                    <Route
+                      path="/government-offices"
+                      element={<GovernmentOffices />}
+                    />
                     <Route path="/services/:category" element={<Services />} />
                     <Route
                       path="/services/:category/:documentSlug"
@@ -161,6 +168,7 @@ function App() {
                 </Suspense>
               </PageBoundary>
             </main>
+            <PageHelp />
             <Footer />
           </div>
         </NuqsAdapter>

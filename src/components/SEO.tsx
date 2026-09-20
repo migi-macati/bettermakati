@@ -39,7 +39,8 @@ export default function SEO({
       : '';
   const baseUrl = (configuredBase || runtimeBase).replace(/\/$/, '');
 
-  const defaultTitle = 'BetterMakati | Independent civic portal for Makati City';
+  const defaultTitle =
+    'BetterMakati | Independent civic portal for Makati City';
   const defaultDescription =
     import.meta.env.VITE_SITE_DESCRIPTION ||
     'Independent civic information portal for Makati City.';
@@ -58,7 +59,7 @@ export default function SEO({
       : '';
   const fullImage = absoluteUrl(
     baseUrl,
-    image || import.meta.env.VITE_OG_IMAGE_URL || '/og-image.svg'
+    image || import.meta.env.VITE_OG_IMAGE_URL || '/og-image.png'
   );
   const twitterHandle = import.meta.env.VITE_TWITTER_HANDLE || '';
 
@@ -89,7 +90,11 @@ export default function SEO({
       <meta name="author" content={siteName} />
       <meta
         name="robots"
-        content={noIndex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large'}
+        content={
+          noIndex
+            ? 'noindex, nofollow'
+            : 'index, follow, max-image-preview:large'
+        }
       />
       <meta name="language" content="English" />
 
@@ -98,7 +103,10 @@ export default function SEO({
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={fullDescription} />
       {fullImage && <meta property="og:image" content={fullImage} />}
-      <meta property="og:image:alt" content="BetterMakati — independent civic information for Makati City" />
+      <meta
+        property="og:image:alt"
+        content="BetterMakati — independent civic information for Makati City"
+      />
       <meta property="og:site_name" content={siteName} />
       <meta property="og:locale" content="en_PH" />
 

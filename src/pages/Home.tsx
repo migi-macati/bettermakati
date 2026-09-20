@@ -151,12 +151,6 @@ const Home: React.FC = () => {
       <Hero />
       <CapabilityCarousel />
 
-      <section className="bg-[#f5f8f2] py-8 border-b border-primary-100/70">
-        <div className="container px-5 md:px-6 lg:px-8">
-          <PhotoCarousel images={homeImageSet} title="Around Makati" compact />
-        </div>
-      </section>
-
       <section className="bg-[#fffdf8] py-14">
         <div className="container px-5 md:px-6 lg:px-8">
           <div className="section-eyebrow">Services</div>
@@ -195,6 +189,12 @@ const Home: React.FC = () => {
               );
             })}
           </div>
+        </div>
+      </section>
+
+      <section className="bg-[#f5f8f2] py-8 border-b border-primary-100/70">
+        <div className="container px-5 md:px-6 lg:px-8">
+          <PhotoCarousel images={homeImageSet} title="Around Makati" compact />
         </div>
       </section>
 

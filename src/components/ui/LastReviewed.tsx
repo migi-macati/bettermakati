@@ -1,4 +1,4 @@
-import { CheckCircle2 } from 'lucide-react';
+import { CalendarDays } from 'lucide-react';
 
 export default function LastReviewed({
   date = '19 September 2026',
@@ -13,10 +13,13 @@ export default function LastReviewed({
 }) {
   return (
     <div
-      className={`mt-5 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-gray-500 ${className}`}
+      className={`mt-5 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-gray-600 ${className}`}
       role="note"
     >
-      <CheckCircle2 className="h-3.5 w-3.5 text-primary-700" aria-hidden="true" />
+      <CalendarDays
+        className="h-3.5 w-3.5 text-primary-700"
+        aria-hidden="true"
+      />
       <span>
         <strong className="font-bold text-gray-700">{label}:</strong> {date}
       </span>

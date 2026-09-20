@@ -88,17 +88,25 @@ export default function History() {
           <Heading>Many histories. One Makati.</Heading>
           <SharePage title="History of Makati | BetterMakati" />
         </div>
-        <LastReviewed label="Timeline review" date={historyReviewed} note="Coverage remains a growing research chronology." />
+        <LastReviewed
+          label="Timeline review"
+          date={historyReviewed}
+          note="Coverage remains a growing research chronology."
+        />
         <p className="mt-5 max-w-3xl text-lg leading-relaxed text-gray-700">
           Beyond the skyline: explore the communities, institutions, conflicts
           and decisions that shaped San Pedro Macati and the modern city.
         </p>
         <PhotoCarousel
           images={historyImageSet}
-          title="Makati through time"
+          title="Historic places today"
           compact
           className="mt-8"
         />
+        <p className="mt-3 text-sm text-gray-600">
+          These contemporary photographs show historic places; the dated sources
+          below support the timeline entries.
+        </p>
         <div className="mt-8 grid gap-4 sm:grid-cols-3">
           {[
             {

@@ -69,8 +69,8 @@ export default function CityComparison() {
           {(
             [
               ['top10', 'Top 10 nationally'],
-              ['ncr', 'Metro Manila'],
-              ['outsideNcr', 'Outside NCR'],
+              ['ncr', 'NCR in the top 10'],
+              ['outsideNcr', 'Outside NCR in the top 10'],
             ] as const
           ).map(([value, label]) => (
             <button
@@ -108,7 +108,9 @@ export default function CityComparison() {
           <div className="mt-1 text-2xl font-extrabold text-gray-950">
             {pesos(average)}
           </div>
-          <div className="mt-1 text-xs text-gray-600">same PSA price basis</div>
+          <div className="mt-1 text-xs text-gray-600">
+            unweighted average of these 10 cities
+          </div>
         </div>
         <div className="rounded-2xl border border-secondary-200 bg-secondary-50 p-5">
           <Info className="h-5 w-5 text-secondary-700" aria-hidden="true" />
@@ -140,6 +142,7 @@ export default function CityComparison() {
               onClick={() => setShowTable(value => !value)}
               className="font-bold text-primary-700 underline underline-offset-2"
               aria-expanded={showTable}
+              aria-controls="city-comparison-table"
             >
               {showTable ? 'Hide table' : 'Show data table'}
             </button>
@@ -158,12 +161,12 @@ export default function CityComparison() {
           role="list"
           aria-label="GDP per person comparison"
         >
-          {rows.map((row, index) => (
+          {rows.map(row => (
             <div key={row.city} role="listitem">
               <div className="flex items-baseline justify-between gap-4">
                 <div className="flex items-center gap-2 text-sm font-semibold text-gray-800">
                   <span className="w-5 text-right text-xs text-gray-400">
-                    {index + 1}
+                    {cityComparisonRows.indexOf(row) + 1}
                   </span>
                   <span
                     className={
@@ -193,7 +196,10 @@ export default function CityComparison() {
         </div>
 
         {showTable && (
-          <div className="mt-7 overflow-x-auto rounded-xl border border-gray-200">
+          <div
+            id="city-comparison-table"
+            className="mt-7 overflow-x-auto rounded-xl border border-gray-200"
+          >
             <table className="w-full min-w-[520px] text-left text-sm">
               <caption className="sr-only">
                 2024 GDP per person for the selected cities

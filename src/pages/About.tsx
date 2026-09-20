@@ -43,19 +43,85 @@ export default function About() {
           </div>
           <div className="rounded-2xl border border-primary-100 bg-white p-5">
             <Scale className="h-5 w-5 text-primary-700" />
-            <h2 className="mt-3 font-extrabold text-gray-950">Political neutrality</h2>
+            <h2 className="mt-3 font-extrabold text-gray-950">
+              Political neutrality
+            </h2>
             <p className="mt-2 text-sm leading-relaxed text-gray-600">
-              Political pages show sourced records without candidate endorsements or BetterMakati ratings.
+              Political pages show sourced records without candidate
+              endorsements or BetterMakati ratings.
             </p>
           </div>
           <div className="rounded-2xl border border-primary-100 bg-white p-5">
             <RefreshCw className="h-5 w-5 text-primary-700" />
             <h2 className="mt-3 font-extrabold text-gray-950">Corrections</h2>
             <p className="mt-2 text-sm leading-relaxed text-gray-600">
-              Uncertain or missing information stays labeled until a defensible source is available.
+              Uncertain or missing information stays labeled until a defensible
+              source is available.
             </p>
           </div>
         </div>
+      </Section>
+
+      <Section id="identity" className="bg-primary-50">
+        <div className="section-eyebrow">Our identity</div>
+        <Heading level={2}>Rooted in Makati</Heading>
+        <p className="max-w-3xl leading-relaxed text-gray-700">
+          The BetterMakati mark brings together a Baybayin-inspired Ma form, two
+          flowing hills and a rising sun. The hill-and-sun composition draws on
+          the project founder’s Matagumpay flag reference. It is a contemporary
+          civic design, not an official seal or a reproduction of a historical
+          flag.
+        </p>
+        <div className="mt-7 grid gap-4 sm:grid-cols-3">
+          {[
+            [
+              '/bettermakati-mark.svg',
+              'Primary symbol',
+              'For headers and publications',
+            ],
+            [
+              '/bettermakati-icon.svg',
+              'Compact symbol',
+              'For browser tabs and small icons',
+            ],
+            [
+              '/bettermakati-mark-mono.svg',
+              'One colour',
+              'For simple print applications',
+            ],
+          ].map(([src, title, note]) => (
+            <figure
+              key={src}
+              className="rounded-2xl border border-primary-100 bg-white p-6"
+            >
+              <div className="flex h-36 items-center justify-center">
+                <img
+                  src={src}
+                  alt={title + ' of BetterMakati'}
+                  className="h-28 max-w-full"
+                  width="180"
+                  height="126"
+                />
+              </div>
+              <figcaption className="mt-4">
+                <h3 className="font-bold text-primary-900">{title}</h3>
+                <p className="mt-1 text-sm text-gray-600">{note}</p>
+                <a
+                  href={src}
+                  download
+                  className="mt-3 inline-flex min-h-11 items-center text-sm font-semibold text-primary-700 underline underline-offset-4"
+                >
+                  Download SVG
+                </a>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+        <p className="mt-5 max-w-3xl text-sm leading-relaxed text-gray-600">
+          “Baybayin-inspired” describes the design intent; it does not claim
+          that this stylized mark is a standard handwritten Ma. Readability with
+          Baybayin readers remains to be assessed.
+        </p>
       </Section>
 
       <Section className="bg-white">
@@ -63,14 +129,31 @@ export default function About() {
         <Heading level={2}>How information is handled</Heading>
         <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
           {[
-            ['Primary sources first', 'City, PSA, COA, COMELEC, DBM, enacted laws and other official records are preferred where they directly support the claim.'],
-            ['Definitions stay distinct', 'Budgets, actual receipts, expenditures, population boundaries and economic indicators are not treated as interchangeable.'],
-            ['Dates stay visible', 'Current and historical information is labeled by period or review date.'],
-            ['No invented gaps', 'Missing officeholders, project statuses or historical claims remain missing until supported.'],
+            [
+              'Primary sources first',
+              'City, PSA, COA, COMELEC, DBM, enacted laws and other official records are preferred where they directly support the claim.',
+            ],
+            [
+              'Definitions stay distinct',
+              'Budgets, actual receipts, expenditures, population boundaries and economic indicators are not treated as interchangeable.',
+            ],
+            [
+              'Dates stay visible',
+              'Current and historical information is labeled by period or review date.',
+            ],
+            [
+              'No invented gaps',
+              'Missing officeholders, project statuses or historical claims remain missing until supported.',
+            ],
           ].map(([title, body]) => (
-            <div key={title} className="rounded-2xl border border-primary-100 bg-[#fffdf8] p-5">
+            <div
+              key={title}
+              className="rounded-2xl border border-primary-100 bg-[#fffdf8] p-5"
+            >
               <h3 className="font-extrabold text-gray-950">{title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-gray-600">{body}</p>
+              <p className="mt-2 text-sm leading-relaxed text-gray-600">
+                {body}
+              </p>
             </div>
           ))}
         </div>

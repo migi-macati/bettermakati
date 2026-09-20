@@ -5,10 +5,10 @@
   "start_url": "/",
   "display": "standalone",
   "background_color": "#fffdf8",
-  "theme_color": "#176238",
+  "theme_color": "#005447",
   "icons": [
     {
-      "src": "/bettermakati-mark.svg",
+      "src": "/bettermakati-icon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any"
@@ -16,11 +16,7 @@
   ],
   "id": "/",
   "scope": "/",
-  "categories": [
-    "government",
-    "utilities",
-    "travel"
-  ],
+  "categories": ["government", "utilities", "travel"],
   "shortcuts": [
     {
       "name": "Today in Makati",
