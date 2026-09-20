@@ -6,6 +6,8 @@ import { Text } from '../components/ui/Text';
 import SEO from '../components/SEO';
 import LastReviewed from '../components/ui/LastReviewed';
 import SharePage from '../components/ui/SharePage';
+import PhotoCarousel from '../components/ui/PhotoCarousel';
+import { cityImages } from '../data/cityImages';
 import {
   cityExecutiveOfficials,
   congressionalOfficials,
@@ -84,6 +86,12 @@ export default function Government() {
           used to identify the officeholder. Party labels, where shown, refer to
           the 2025 ballot rather than an inferred current affiliation.
         </Text>
+        <PhotoCarousel
+          images={[cityImages.cityHall]}
+          title="City government"
+          compact
+          className="mt-8"
+        />
 
         <div
           id="leadership"
