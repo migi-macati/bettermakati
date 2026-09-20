@@ -207,6 +207,10 @@ export default function ServiceSearch({
 
   const selectResult = (href: string) => {
     setOpen(false);
+    if (href.startsWith('http://') || href.startsWith('https://')) {
+      window.location.assign(href);
+      return;
+    }
     navigate(href);
   };
 
