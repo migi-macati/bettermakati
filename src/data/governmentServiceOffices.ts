@@ -284,6 +284,18 @@ export const governmentServiceOffices: GovernmentServiceOffice[] = [
     note: 'This district engineering office has jurisdiction over Makati national-road and DPWH infrastructure concerns.',
   },
   {
+    id: 'owwa-ncr',
+    name: 'OWWA Regional Welfare Office – NCR',
+    agency: 'Overseas Workers Welfare Administration',
+    scope: 'Serves Makati',
+    address: '139 Sen. Gil J. Puyat Avenue, Pasay City',
+    phone: '1348',
+    email: 'ncr@owwa.gov.ph',
+    sourceUrl: 'https://owwa.gov.ph/key-officials-regional-welfare-offices/',
+    mapsQuery: 'OWWA NCR 139 Sen Gil Puyat Avenue Pasay',
+    note: 'OWWA NCR serves OFWs and their families in Metro Manila. Check the current unit contact for social benefits, scholarships, reintegration or welfare assistance before visiting.',
+  },
+  {
     id: 'gsis-head-office',
     name: 'GSIS Head Office',
     agency: 'Government Service Insurance System',
