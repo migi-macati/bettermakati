@@ -424,5 +424,65 @@
     "label": "University of Makati scholarships",
     "url": "https://www.umak.edu.ph/admissions/scholarships/",
     "kind": "service-detail"
+  },
+  {
+    "id": "makati-solo-parent-guide",
+    "label": "Makati Solo Parent service guide",
+    "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/48/281/pdf/Solo%20Parent.pdf",
+    "kind": "service-detail"
+  },
+  {
+    "id": "sss-employees-compensation",
+    "label": "SSS Employees’ Compensation Program",
+    "url": "https://www.sss.gov.ph/employees-compensation-program/",
+    "kind": "service-detail"
+  },
+  {
+    "id": "philhealth-benefits",
+    "label": "PhilHealth benefits",
+    "url": "https://www.philhealth.gov.ph/benefits/",
+    "kind": "service-detail"
+  },
+  {
+    "id": "ecc-faq",
+    "label": "Employees’ Compensation Commission FAQ",
+    "url": "https://ecc.gov.ph/frequently-asked-questions/",
+    "kind": "service-detail"
+  },
+  {
+    "id": "psa-birth-certificate",
+    "label": "PSA birth certificate service",
+    "url": "https://psa.gov.ph/birth-certificate",
+    "kind": "service-detail"
+  },
+  {
+    "id": "bir-online-services",
+    "label": "BIR online registration and taxpayer services",
+    "url": "https://www.bir.gov.ph/",
+    "kind": "service-detail"
+  },
+  {
+    "id": "dole-sena",
+    "label": "DOLE NCR Single Entry Approach",
+    "url": "https://ncr.dole.gov.ph/single-entry-approach-sena/",
+    "kind": "service-detail"
+  },
+  {
+    "id": "dti-negosyo-center-detail",
+    "label": "DTI Negosyo Center",
+    "url": "https://www.dti.gov.ph/negosyo-center/",
+    "kind": "service-detail"
+  },
+  {
+    "id": "tesda-registered-programs",
+    "label": "TESDA registered TVET programs",
+    "url": "https://www.tesda.gov.ph/About/TESDA/26",
+    "kind": "service-detail"
+  },
+  {
+    "id": "gsis-benefits-detail",
+    "label": "GSIS active-member benefits",
+    "url": "https://www.gsis.gov.ph/active-members/benefits/",
+    "kind": "service-detail"
   }
 ]
