@@ -10,19 +10,33 @@ import {
 } from '../data/yamlLoader';
 import {
   Building2,
+  ExternalLink,
   GraduationCap,
   HeartPulse,
   House,
+  Search,
   Users,
 } from 'lucide-react';
 import Breadcrumbs from '../components/ui/Breadcrumbs';
-import ServicesSection from '../components/home/ServicesSection';
-import ServiceSearch from '../components/home/ServiceSearch';
 import SEO from '../components/SEO';
 import LastReviewed from '../components/ui/LastReviewed';
 import { Card, CardContent } from '@bettergov/kapwa/card';
 import { Banner } from '@bettergov/kapwa/banner';
-import { useState, useEffect } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import {
+  serviceDirectory,
+  serviceDirectoryCategories,
+  serviceDirectoryLevels,
+  type ServiceLevel,
+} from '../data/serviceDirectory';
+
+const normalize = (value: string) =>
+  value
+    .toLowerCase()
+    .replace(/[’']/g, '')
+    .replace(/[^a-z0-9\s]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
 
 const Services: React.FC = () => {
   const { category } = useParams();
@@ -31,6 +45,9 @@ const Services: React.FC = () => {
     pages: [],
   });
   const [loading, setLoading] = useState(false);
+  const [directoryQuery, setDirectoryQuery] = useState('');
+  const [directoryLevel, setDirectoryLevel] = useState<'All' | ServiceLevel>('All');
+  const [directoryCategory, setDirectoryCategory] = useState('All');
   const subcategories: Subcategory[] = categoryIndex.pages;
 
   const categoryData = serviceCategories.categories.find(c => c.slug === category);
@@ -53,51 +70,205 @@ const Services: React.FC = () => {
     }
   }, [category, categoryData]);
 
+  const visibleDirectory = useMemo(() => {
+    const query = normalize(directoryQuery);
+    return serviceDirectory
+      .filter(item => directoryLevel === 'All' || item.level === directoryLevel)
+      .filter(item => directoryCategory === 'All' || item.category === directoryCategory)
+      .filter(item => {
+        if (!query) return true;
+        const haystack = normalize(
+          [
+            item.title,
+            item.description,
+            item.agency,
+            item.category,
+            item.level,
+            item.type,
+            item.keywords,
+          ].join(' ')
+        );
+        return query.split(' ').every(word => haystack.includes(word));
+      })
+      .sort((a, b) => {
+        if (a.featured !== b.featured) return a.featured ? -1 : 1;
+        return a.title.localeCompare(b.title);
+      });
+  }, [directoryCategory, directoryLevel, directoryQuery]);
+
   if (!category) {
     return (
       <>
         <SEO
           title="Services"
-          description="Makati City public-service information."
-          keywords="Makati services, permits, health, education, social services, property"
+          description="Search Makati city, barangay and major national government services, permits, clearances, certificates, IDs and assistance."
+          keywords="Makati services, permits, clearances, certificates, IDs, barangay, national government, health, business, civil registry"
         />
-        <Section className="bg-[#f5f8f2]">
-          <div className="max-w-3xl mx-auto">
-            <div className="section-eyebrow">Services</div>
-            <Heading>What do you need?</Heading>
-            <Text className="text-gray-600 mb-3">Search by service, document, benefit or task.</Text>
-            <LastReviewed
-              note="BetterMakati summarizes public information; confirm fees, deadlines and transactions with the linked official source."
-              className="mb-6"
-            />
-            <ServiceSearch scope="services" />
+
+        <Section className="bg-[#fffdf8]">
+          <div className="section-eyebrow">Services</div>
+          <Heading>Find a government service</Heading>
+          <Text className="mt-2 max-w-3xl text-gray-600">
+            City, barangay and major national services used by people and businesses in Makati.
+          </Text>
+          <LastReviewed
+            note="Requirements can change. Open the linked official source before acting."
+            className="mt-4"
+          />
+
+          <div className="mt-7 max-w-3xl">
+            <label className="relative block">
+              <span className="sr-only">Search government services</span>
+              <Search
+                className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-500"
+                aria-hidden="true"
+              />
+              <input
+                type="search"
+                value={directoryQuery}
+                onChange={event => setDirectoryQuery(event.target.value)}
+                placeholder="Search permit, clearance, ID, test or service"
+                className="w-full rounded-2xl border border-gray-300 bg-white py-3.5 pl-12 pr-4 text-base outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+              />
+            </label>
+          </div>
+
+          <div className="mt-5 flex flex-wrap gap-2" aria-label="Government level">
+            {serviceDirectoryLevels.map(level => (
+              <button
+                key={level}
+                type="button"
+                onClick={() => setDirectoryLevel(level)}
+                aria-pressed={directoryLevel === level}
+                className={
+                  directoryLevel === level
+                    ? 'rounded-full bg-primary-800 px-4 py-2 text-sm font-bold text-white'
+                    : 'rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-semibold text-gray-700 hover:border-primary-300'
+                }
+              >
+                {level}
+              </button>
+            ))}
+          </div>
+
+          <div className="mt-4 max-w-sm">
+            <label className="text-sm font-bold text-gray-800" htmlFor="service-category-filter">
+              Category
+            </label>
+            <select
+              id="service-category-filter"
+              value={directoryCategory}
+              onChange={event => setDirectoryCategory(event.target.value)}
+              className="mt-2 w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm"
+            >
+              <option value="All">All categories</option>
+              {serviceDirectoryCategories.map(item => (
+                <option key={item} value={item}>
+                  {item}
+                </option>
+              ))}
+            </select>
           </div>
         </Section>
-        <ServicesSection
-          title="Browse by category"
-          description="Permits, health, education, social services, property and land-use information."
-        />
-        <Section id="digital" className="bg-[#fffdf8]">
-          <div className="section-eyebrow">Digital Makati</div>
-          <Heading level={2}>City apps & portals</Heading>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+
+        <Section className="bg-white">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <div className="section-eyebrow">Directory</div>
+              <Heading level={2}>Government services</Heading>
+            </div>
+            <div className="text-sm text-gray-500">
+              {visibleDirectory.length} of {serviceDirectory.length} services
+            </div>
+          </div>
+
+          <div className="mt-6 divide-y divide-gray-200 overflow-hidden rounded-2xl border border-gray-200 bg-white">
+            {visibleDirectory.map(item => {
+              const isExternal = item.href.startsWith('http');
+              const isBarangayFinder = item.level === 'Barangay' && item.href === '/barangays';
+
+              return (
+                <article
+                  key={item.id}
+                  className="grid gap-4 p-5 md:grid-cols-[1fr_auto] md:items-center"
+                >
+                  <div className="min-w-0">
+                    <div className="flex flex-wrap items-center gap-2 text-xs font-bold">
+                      <span className="rounded-full bg-primary-50 px-2.5 py-1 text-primary-800">
+                        {item.level}
+                      </span>
+                      <span className="rounded-full bg-gray-100 px-2.5 py-1 text-gray-600">
+                        {item.type}
+                      </span>
+                    </div>
+                    <h3 className="mt-2 text-lg font-extrabold text-gray-950">
+                      {item.title}
+                    </h3>
+                    <p className="mt-1 text-sm leading-relaxed text-gray-600">
+                      {item.description}
+                    </p>
+                    <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-gray-500">
+                      <span>{item.agency}</span>
+                      {!isExternal && item.sourceUrl && (
+                        <a
+                          href={item.sourceUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="font-bold text-primary-700 underline underline-offset-2"
+                        >
+                          Source
+                        </a>
+                      )}
+                    </div>
+                  </div>
+
+                  {isExternal ? (
+                    <a
+                      href={item.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex min-h-11 items-center justify-center gap-1 rounded-xl border border-primary-200 bg-white px-4 py-2 text-sm font-bold text-primary-800 hover:border-primary-500"
+                    >
+                      Official source <ExternalLink className="h-3.5 w-3.5" />
+                    </a>
+                  ) : (
+                    <Link
+                      to={item.href}
+                      className="inline-flex min-h-11 items-center justify-center rounded-xl bg-primary-800 px-4 py-2 text-sm font-bold text-white hover:bg-primary-900"
+                    >
+                      {isBarangayFinder ? 'Find barangay' : 'Open guide'}
+                    </Link>
+                  )}
+                </article>
+              );
+            })}
+
+            {visibleDirectory.length === 0 && (
+              <div className="p-8 text-center text-sm text-gray-600">
+                No indexed service matches this search yet.
+              </div>
+            )}
+          </div>
+        </Section>
+
+        <Section id="digital" className="bg-[#f5f8f2]">
+          <div className="section-eyebrow">Official digital channels</div>
+          <div className="flex flex-wrap gap-3">
             <a
               href="https://www.makati.gov.ph/"
               target="_blank"
               rel="noreferrer"
-              className="rounded-2xl border border-gray-200 bg-white p-5 hover:border-primary-300 hover:shadow-sm transition"
+              className="brand-btn-secondary"
             >
-              <h3 className="font-extrabold text-gray-950">Official Makati Web Portal</h3>
-              <p className="text-sm text-gray-600 mt-1">Official city information, forms and announcements.</p>
+              Makati Web Portal <ExternalLink className="h-4 w-4" />
             </a>
             <a
               href="https://play.google.com/store/apps/details?id=project.smsgt.makaapp&hl=en"
               target="_blank"
               rel="noreferrer"
-              className="rounded-2xl border border-gray-200 bg-white p-5 hover:border-primary-300 hover:shadow-sm transition"
+              className="brand-btn-secondary"
             >
-              <h3 className="font-extrabold text-gray-950">Makatizen App</h3>
-              <p className="text-sm text-gray-600 mt-1">Makati City mobile app.</p>
+              Makatizen App <ExternalLink className="h-4 w-4" />
             </a>
           </div>
         </Section>
@@ -147,9 +318,11 @@ const Services: React.FC = () => {
             description="Choose another service category."
           />
         ) : (
-          <div className={categoryIndex.layout === 'grid'
-            ? 'grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3'
-            : 'space-y-4'}>
+          <div className={
+            categoryIndex.layout === 'grid'
+              ? 'grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3'
+              : 'space-y-4'
+          }>
             {subcategories.map(subcategory => (
               <Link
                 key={subcategory.slug}
