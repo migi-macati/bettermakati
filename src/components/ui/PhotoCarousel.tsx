@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
-import { ArrowLeft, ArrowRight, Camera } from 'lucide-react';
+import { useState } from 'react';
+import { ArrowLeft, ArrowRight, Camera, Pause, Play } from 'lucide-react';
+import useCarousel from '../../hooks/useCarousel';
 import type { CityImage } from '../../data/cityImages';
 
 export default function PhotoCarousel({
@@ -13,42 +14,31 @@ export default function PhotoCarousel({
   className?: string;
   compact?: boolean;
 }) {
-  const [index, setIndex] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const [failed, setFailed] = useState<Record<number, boolean>>({});
-
-  useEffect(() => {
-    if (paused || images.length < 2) return;
-    const media = window.matchMedia('(prefers-reduced-motion: reduce)');
-    if (media.matches) return;
-    const timer = window.setInterval(
-      () => setIndex(current => (current + 1) % images.length),
-      6500
-    );
-    return () => window.clearInterval(timer);
-  }, [images.length, paused]);
-
+  const carousel = useCarousel(images.length, 6500);
+  const { index } = carousel;
+  const [failed, setFailed] = useState<Record<string, boolean>>({});
   if (!images.length) return null;
-
   const image = images[index];
-  const previous = () =>
-    setIndex(current => (current - 1 + images.length) % images.length);
-  const next = () => setIndex(current => (current + 1) % images.length);
+  const previous = () => carousel.move(-1);
+  const next = () => carousel.move(1);
 
   return (
     <figure
-      className={'overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm ' + className}
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-      onFocusCapture={() => setPaused(true)}
-      onBlurCapture={event => {
-        if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
-          setPaused(false);
-        }
-      }}
+      className={
+        'overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm ' +
+        className
+      }
+      aria-label={title || 'Makati photographs'}
+      aria-roledescription="carousel"
+      {...carousel.interactions}
     >
-      <div className={'relative overflow-hidden bg-gray-100 ' + (compact ? 'aspect-[2.25/1]' : 'aspect-[16/9]')}>
-        {failed[index] ? (
+      <div
+        className={
+          'relative overflow-hidden bg-gray-100 ' +
+          (compact ? 'aspect-[2.25/1]' : 'aspect-[16/9]')
+        }
+      >
+        {failed[image.src] ? (
           <div className="grid h-full place-items-center text-gray-500">
             <div className="text-center">
               <Camera className="mx-auto h-7 w-7" />
@@ -64,12 +54,15 @@ export default function PhotoCarousel({
           </div>
         ) : (
           <img
+            key={image.src}
             src={image.src}
             alt={image.alt}
             loading="lazy"
             decoding="async"
             referrerPolicy="no-referrer"
-            onError={() => setFailed(current => ({ ...current, [index]: true }))}
+            onError={() =>
+              setFailed(current => ({ ...current, [image.src]: true }))
+            }
             className="h-full w-full object-cover transition-opacity duration-300"
             style={{ objectPosition: image.objectPosition ?? '50% 50%' }}
           />
@@ -81,7 +74,7 @@ export default function PhotoCarousel({
               type="button"
               onClick={previous}
               aria-label="Previous photo"
-              className="absolute left-3 top-1/2 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full bg-black/55 text-white backdrop-blur-sm hover:bg-black/70"
+              className="absolute left-3 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-black/55 text-white backdrop-blur-sm hover:bg-black/70"
             >
               <ArrowLeft className="h-4 w-4" />
             </button>
@@ -89,20 +82,24 @@ export default function PhotoCarousel({
               type="button"
               onClick={next}
               aria-label="Next photo"
-              className="absolute right-3 top-1/2 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full bg-black/55 text-white backdrop-blur-sm hover:bg-black/70"
+              className="absolute right-3 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-black/55 text-white backdrop-blur-sm hover:bg-black/70"
             >
               <ArrowRight className="h-4 w-4" />
             </button>
           </>
         )}
 
-        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent px-4 pb-4 pt-10 text-white">
-          {title && <div className="text-xs font-bold uppercase tracking-[0.08em] text-white/75">{title}</div>}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent px-4 pb-4 pt-10 text-white">
+          {title && (
+            <div className="text-xs font-bold uppercase tracking-[0.08em] text-white/75">
+              {title}
+            </div>
+          )}
           <div className="font-extrabold">{image.title}</div>
         </div>
       </div>
 
-      <figcaption className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 px-4 py-3 text-[11px] leading-relaxed text-gray-500">
+      <figcaption className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 px-4 py-3 text-xs leading-relaxed text-gray-500">
         <span>
           <a
             href={image.sourceUrl}
@@ -128,7 +125,25 @@ export default function PhotoCarousel({
           {' · cropped'}
         </span>
         {images.length > 1 && (
-          <span>{index + 1} / {images.length}</span>
+          <div className="flex items-center gap-3">
+            <span aria-live={carousel.rotating ? 'off' : 'polite'}>
+              {index + 1} / {images.length}
+            </span>
+            {!carousel.reducedMotion && (
+              <button
+                type="button"
+                onClick={() => carousel.setPaused(!carousel.paused)}
+                className="inline-flex min-h-11 items-center gap-1.5 rounded-lg px-2 font-semibold text-primary-800 hover:bg-primary-50"
+              >
+                {carousel.paused ? (
+                  <Play className="h-4 w-4" aria-hidden="true" />
+                ) : (
+                  <Pause className="h-4 w-4" aria-hidden="true" />
+                )}
+                {carousel.paused ? 'Resume photos' : 'Pause photos'}
+              </button>
+            )}
+          </div>
         )}
       </figcaption>
     </figure>
