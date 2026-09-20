@@ -35,5 +35,10 @@
       "destination": "/index.html"
     }
   ],
-  "ignoreCommand": "node -e \"process.exit(process.env.VERCEL_GIT_COMMIT_REF==='main' && /\\\\[deploy\\\\]/.test(process.env.VERCEL_GIT_COMMIT_MESSAGE||'') ? 1 : 0)\""
+  "git": {
+    "deploymentEnabled": {
+      "*": false,
+      "main": true
+    }
+  }
 }
