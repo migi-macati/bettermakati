@@ -270,6 +270,22 @@ const Services: React.FC = () => {
             >
               Makatizen App <ExternalLink className="h-4 w-4" />
             </a>
+            <a
+              href="https://e.gov.ph/"
+              target="_blank"
+              rel="noreferrer"
+              className="brand-btn-secondary"
+            >
+              eGovPH <ExternalLink className="h-4 w-4" />
+            </a>
+            <a
+              href="https://gov.ph/"
+              target="_blank"
+              rel="noreferrer"
+              className="brand-btn-secondary"
+            >
+              GOV.PH <ExternalLink className="h-4 w-4" />
+            </a>
           </div>
         </Section>
       </>
