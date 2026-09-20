@@ -15,6 +15,7 @@ const staticRoutes = [
   '/privacy',
   '/terms',
   '/services',
+  '/government-offices',
   '/visit',
   '/mobility',
   '/cinemas',
@@ -54,6 +55,7 @@ const extractSlugs = async file => {
 
 const barangaySlugs = await extractSlugs('src/data/barangays.ts');
 const officialSlugs = await extractSlugs('src/data/electedOfficials.ts');
+const serviceIds = [...(await readFile('src/data/serviceDirectory.ts', 'utf8')).matchAll(/\\bid:\\s*'([^']+)'/g)].map(match => match[1]);
 
 const serviceRoutes = [];
 const serviceRoot = 'content/services';
@@ -87,6 +89,7 @@ const routes = [
   ...staticRoutes,
   ...barangaySlugs.map(slug => '/barangays/' + slug),
   ...officialSlugs.map(slug => '/officials/' + slug),
+  ...serviceIds.map(id => '/services/guide/' + id),
   ...filteredServiceRoutes,
 ];
 
@@ -161,6 +164,13 @@ try {
     'public/city-monitor.rss.xml',
     '<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>BetterMakati City Monitor</title><link>' + base + '/city-monitor</link><description>No source-change history has been published yet.</description></channel></rss>\n'
   );
+}
+
+try {
+  const pageAudit = await readFile('data/page-audit.json', 'utf8');
+  await writeFile('public/page-audit.json', pageAudit);
+} catch {
+  await writeFile('public/page-audit.json', '[]\n');
 }
 
 try {
