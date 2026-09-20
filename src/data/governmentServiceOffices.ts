@@ -198,6 +198,17 @@ export const governmentServiceOffices: GovernmentServiceOffice[] = [
     note: 'Makati is divided among RDO 47 East, 48 West, 49 North and 50 South. Confirm your RDO before visiting.',
   },
   {
+    id: 'gsis-head-office',
+    name: 'GSIS Head Office',
+    agency: 'Government Service Insurance System',
+    scope: 'Serves Makati',
+    address: 'GSIS Financial Center, Pasay City',
+    phone: 'GSIS 24/7 Contact Center',
+    sourceUrl: 'https://www.gsis.gov.ph/',
+    mapsQuery: 'GSIS Financial Center Pasay City',
+    note: 'GSIS serves government employees, retirees and pensioners. Many transactions are available through GSIS Touch, online filing and GW@PS kiosks.',
+  },
+  {
     id: 'dswd-legarda',
     name: 'DSWD Legarda Satellite Office',
     agency: 'Department of Social Welfare and Development',
