@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import {
   AlertCircle,
+  Building2,
   Database,
   ExternalLink,
   Eye,
@@ -30,6 +31,7 @@ import {
 import { searchIndex } from '../data/searchIndex';
 import { cityMonitorRecords, cityMonitorSources } from '../data/cityMonitor';
 import { serviceDirectory } from '../data/serviceDirectory';
+import { governmentServiceOffices } from '../data/governmentServiceOffices';
 
 interface SourceWatchRun {
   checkedAt: string;
@@ -104,6 +106,12 @@ export default function ProjectStatus() {
       value: serviceDirectory.length.toLocaleString('en-PH'),
       detail: 'City, barangay and major national services in the public-service directory',
       icon: Database,
+    },
+    {
+      label: 'Government service offices',
+      value: governmentServiceOffices.length.toLocaleString('en-PH'),
+      detail: 'Citizen-facing offices in Makati and selected offices outside the city that directly serve Makati',
+      icon: Building2,
     },
     {
       label: 'Barangay profiles',
