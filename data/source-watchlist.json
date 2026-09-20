@@ -346,5 +346,65 @@
     "label": "OWWA Welfare Assistance Program",
     "url": "https://owwa.gov.ph/welfare-assistance-program-wap/",
     "kind": "national-services"
+  },
+  {
+    "id": "makati-marriage-license",
+    "label": "Makati marriage license Citizen's Charter",
+    "url": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1602120937269.pdf",
+    "kind": "service-detail"
+  },
+  {
+    "id": "makati-yellow-card",
+    "label": "Makati Health Plus / Yellow Card guide",
+    "url": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1715048169416.pdf",
+    "kind": "service-detail"
+  },
+  {
+    "id": "sss-sickness-benefit",
+    "label": "SSS sickness benefit",
+    "url": "https://www.sss.gov.ph/sickness-benefit/",
+    "kind": "service-detail"
+  },
+  {
+    "id": "sss-maternity-benefit",
+    "label": "SSS maternity benefit",
+    "url": "https://www.sss.gov.ph/maternity-benefit/",
+    "kind": "service-detail"
+  },
+  {
+    "id": "sss-retirement-benefit",
+    "label": "SSS retirement benefit",
+    "url": "https://www.sss.gov.ph/retirement-benefit/",
+    "kind": "service-detail"
+  },
+  {
+    "id": "pagibig-mpl-v08",
+    "label": "Pag-IBIG Multi-Purpose Loan form V08",
+    "url": "https://www.pagibigfund.gov.ph/document/pdf/dlforms/providentrelated/SLF065_MultiPurposeLoanApplicationForm_V08.pdf",
+    "kind": "service-detail"
+  },
+  {
+    "id": "pagibig-mp2-v06",
+    "label": "Pag-IBIG MP2 enrollment form V06",
+    "url": "https://www.pagibigfund.gov.ph/document/pdf/dlforms/providentrelated/PFF226_ModifiedPagIBIGIIEnrollmentForm_V06.pdf",
+    "kind": "service-detail"
+  },
+  {
+    "id": "philhealth-yakap-detail",
+    "label": "PhilHealth YAKAP program",
+    "url": "https://www.philhealth.gov.ph/yakap/",
+    "kind": "service-detail"
+  },
+  {
+    "id": "nbi-first-time-jobseekers",
+    "label": "NBI first-time jobseeker Citizen's Charter",
+    "url": "https://nbi.gov.ph/citizens-charter/nbi-clearance-first-time-job-seekers/",
+    "kind": "service-detail"
+  },
+  {
+    "id": "dfa-passport-system",
+    "label": "DFA passport appointment and requirements",
+    "url": "https://passport.gov.ph/",
+    "kind": "service-detail"
   }
 ]
