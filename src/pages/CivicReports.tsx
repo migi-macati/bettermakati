@@ -2,11 +2,9 @@ import { useEffect, useState } from 'react';
 import {
   AlertTriangle,
   ArrowLeft,
-  CheckCircle2,
   ClipboardList,
   ExternalLink,
   FileText,
-  Send,
   TrendingUp,
 } from 'lucide-react';
 import { Link } from 'react-router';
