@@ -1,4 +1,399 @@
 {
   "version": 1,
-  "runs": []
+  "runs": [
+    {
+      "checkedAt": "2026-09-21T01:11:13.358Z",
+      "changed": [],
+      "failed": [
+        {
+          "id": "makati-budget-2026",
+          "label": "Makati 2026 annual budget",
+          "url": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/online_forms/pdf/Annual%20Budget%20Report%202026.pdf",
+          "kind": "budget",
+          "status": "unreachable",
+          "statusCode": null
+        },
+        {
+          "id": "psa-population",
+          "label": "PSA population table",
+          "url": "https://openstat.psa.gov.ph/PXWeb/pxweb/en/DB/DB__1A__PO_2024/0211A6DAPG0.px/",
+          "kind": "statistics",
+          "status": "http-error",
+          "statusCode": 403
+        },
+        {
+          "id": "psa-ppa",
+          "label": "PSA provincial product accounts",
+          "url": "https://psa.gov.ph/content/2024-economic-performance-provinces-and-highly-urbanized-cities-philippines-capita-gross",
+          "kind": "statistics",
+          "status": "http-error",
+          "statusCode": 403
+        },
+        {
+          "id": "coa-audit",
+          "label": "Commission on Audit annual reports",
+          "url": "https://www.coa.gov.ph/reports/annual-audit-reports/",
+          "kind": "audit",
+          "status": "http-error",
+          "statusCode": 403
+        },
+        {
+          "id": "comelec-2025-results",
+          "label": "COMELEC 2025 election results portal",
+          "url": "https://2025electionresults.comelec.gov.ph/",
+          "kind": "election-results",
+          "status": "http-error",
+          "statusCode": 403
+        },
+        {
+          "id": "resilient-makati-consultations",
+          "label": "Resilient Makati consultations and public participation",
+          "url": "https://resilient.makati.gov.ph/mod/page/view.php?forceview=1&id=30",
+          "kind": "participation",
+          "status": "unreachable",
+          "statusCode": null
+        },
+        {
+          "id": "oecd-open-government-recommendation",
+          "label": "OECD Recommendation on Open Government implementation",
+          "url": "https://www.oecd.org/en/publications/open-government-for-stronger-democracies_5478db5b-en/full-report/component-4.html",
+          "kind": "open-government-standard",
+          "status": "http-error",
+          "statusCode": 403
+        },
+        {
+          "id": "ogp-foundations",
+          "label": "OGP foundations for open government",
+          "url": "https://www.opengovpartnership.org/national-handbook/foundations/",
+          "kind": "open-government-standard",
+          "status": "http-error",
+          "statusCode": 403
+        },
+        {
+          "id": "pnp-clearance",
+          "label": "PNP National Police Clearance",
+          "url": "https://www.pnpclearance.ph/",
+          "kind": "national-services",
+          "status": "http-error",
+          "statusCode": 403
+        },
+        {
+          "id": "nbi-clearance",
+          "label": "NBI clearance guidance",
+          "url": "https://nbi.gov.ph/how-to-apply-nbi-clearance/",
+          "kind": "national-services",
+          "status": "http-error",
+          "statusCode": 403
+        },
+        {
+          "id": "bfp-fsic",
+          "label": "BFP Fire Safety Inspection Certificate guidance",
+          "url": "https://bfp.gov.ph/wp-content/uploads/2020/12/3-BFP-Citizens-Charter-Handbook-for-Printing.pdf",
+          "kind": "national-services",
+          "status": "http-error",
+          "statusCode": 403
+        },
+        {
+          "id": "psa-frontline",
+          "label": "PSA frontline services",
+          "url": "https://psa.gov.ph/",
+          "kind": "national-services",
+          "status": "http-error",
+          "statusCode": 403
+        },
+        {
+          "id": "ecc-contact",
+          "label": "Employees' Compensation Commission",
+          "url": "https://ecc.gov.ph/contact-us/",
+          "kind": "national-services",
+          "status": "http-error",
+          "statusCode": 403
+        },
+        {
+          "id": "doh-mmchd",
+          "label": "DOH Metro Manila Center for Health Development",
+          "url": "https://ncroffice.doh.gov.ph/CitizensCharter",
+          "kind": "national-services",
+          "status": "unreachable",
+          "statusCode": null
+        },
+        {
+          "id": "psa-crs-outlets",
+          "label": "PSA Metro Manila CRS outlets",
+          "url": "https://psa.gov.ph/directory/census-serbilis-center-metro-manila",
+          "kind": "national-services",
+          "status": "http-error",
+          "statusCode": 403
+        },
+        {
+          "id": "dole-makati-pasay",
+          "label": "DOLE NCR Makati-Pasay Field Office",
+          "url": "https://ncr.dole.gov.ph/contact/",
+          "kind": "national-services",
+          "status": "http-error",
+          "statusCode": 403
+        },
+        {
+          "id": "sec-headquarters",
+          "label": "Securities and Exchange Commission",
+          "url": "https://www.sec.gov.ph/",
+          "kind": "national-services",
+          "status": "http-error",
+          "statusCode": 403
+        },
+        {
+          "id": "owwa-ncr",
+          "label": "OWWA NCR office and services",
+          "url": "https://owwa.gov.ph/key-officials-regional-welfare-offices/",
+          "kind": "national-services",
+          "status": "http-error",
+          "statusCode": 403
+        },
+        {
+          "id": "owwa-wap",
+          "label": "OWWA Welfare Assistance Program",
+          "url": "https://owwa.gov.ph/welfare-assistance-program-wap/",
+          "kind": "national-services",
+          "status": "http-error",
+          "statusCode": 403
+        }
+      ],
+      "newBaselines": [
+        {
+          "id": "makati-news",
+          "label": "Makati official news",
+          "url": "https://www.makati.gov.ph/content/news",
+          "kind": "official-news"
+        },
+        {
+          "id": "makati-events",
+          "label": "Makati official events",
+          "url": "https://www.makati.gov.ph/content/events",
+          "kind": "official-events"
+        },
+        {
+          "id": "dbm-f14-2026",
+          "label": "DBM/BLGF 2025 actuals",
+          "url": "https://www.dbm.gov.ph/wp-content/uploads/BESF/BESF2026/F14.pdf",
+          "kind": "actuals"
+        },
+        {
+          "id": "philgeps",
+          "label": "PhilGEPS procurement notices",
+          "url": "https://notices.philgeps.gov.ph/",
+          "kind": "procurement"
+        },
+        {
+          "id": "comelec-2026-bske-calendar",
+          "label": "COMELEC 2026 BSKE election calendar",
+          "url": "https://www.comelec.gov.ph/php-tpls-attachments/2025BSKE/Resolutions/com_res_11191.pdf",
+          "kind": "election"
+        },
+        {
+          "id": "comelec-2026-bske-registration",
+          "label": "COMELEC 2026 BSKE voter registration rules",
+          "url": "https://www.comelec.gov.ph/php-tpls-attachments/2025BSKE/Resolutions/com_res_11177.pdf",
+          "kind": "election"
+        },
+        {
+          "id": "comelec-home",
+          "label": "COMELEC announcements",
+          "url": "https://www.comelec.gov.ph/",
+          "kind": "election"
+        },
+        {
+          "id": "makati-legislation",
+          "label": "Makati resolutions and ordinances archive",
+          "url": "https://www.makati.gov.ph/content/resolutions-and-ordinances/author",
+          "kind": "legislation"
+        },
+        {
+          "id": "makati-action-center",
+          "label": "Makati Action Center Citizen's Charter",
+          "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/481/pdf/Makati%20Action%20Center.pdf",
+          "kind": "services"
+        },
+        {
+          "id": "macea-circulars",
+          "label": "MACEA circulars and advisories",
+          "url": "https://macea.com.ph/memorandum-circular/",
+          "kind": "estate-advisory"
+        },
+        {
+          "id": "mrt3",
+          "label": "MRT-3 official information",
+          "url": "https://www.dotrmrt3.gov.ph/about-us",
+          "kind": "mobility"
+        },
+        {
+          "id": "makati-cdp",
+          "label": "Makati Comprehensive Development Plan",
+          "url": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1580795672692.pdf",
+          "kind": "planning-participation"
+        },
+        {
+          "id": "ogp-participation-standards",
+          "label": "OGP Participation and Co-Creation Standards",
+          "url": "https://www.opengovpartnership.org/national-handbook/standards/",
+          "kind": "open-government-standard"
+        },
+        {
+          "id": "ra-6713",
+          "label": "RA 6713 Code of Conduct and Ethical Standards",
+          "url": "https://lawphil.net/statutes/repacts/ra1989/pdf/ra_6713_1989.pdf",
+          "kind": "integrity-law"
+        },
+        {
+          "id": "ra-12009",
+          "label": "RA 12009 New Government Procurement Act",
+          "url": "https://lawphil.net/statutes/repacts/ra2024/ra_12009_2024.html",
+          "kind": "procurement-law"
+        },
+        {
+          "id": "ra-12009-irr",
+          "label": "Official IRR of RA 12009",
+          "url": "https://lawphil.net/statutes/repacts/ra2025/irr_12009_2025.html",
+          "kind": "procurement-law"
+        },
+        {
+          "id": "gppb-beneficial-ownership",
+          "label": "GPPB beneficial ownership disclosure guidance",
+          "url": "https://www.gppb.gov.ph/enhancing-transparency-beneficial-ownership-disclosure-under-ra-12009/",
+          "kind": "integrity-procurement"
+        },
+        {
+          "id": "gppb-2026-irr-advisory",
+          "label": "GPPB Public Advisory No. 09-2026 on RA 12009 IRR",
+          "url": "https://www.gppb.gov.ph/public-advisory-no-09-2026/",
+          "kind": "procurement-law"
+        },
+        {
+          "id": "makati-citizens-charter",
+          "label": "Makati Citizen's Charter",
+          "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/481/pdf/Makati%20Citizen%27s%20Charter%20-%20FOR%20PRINT.pdf",
+          "kind": "services"
+        },
+        {
+          "id": "makati-permits-clearances",
+          "label": "Makati permits and clearances guide",
+          "url": "https://www.makati.gov.ph/assets/uploads/downloads/402/243/pdf/40207032015120611.pdf",
+          "kind": "services"
+        },
+        {
+          "id": "makati-taxes-fees",
+          "label": "Makati taxes and fees guide",
+          "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/48/281/pdf/Taxes%20and%20Fees.pdf",
+          "kind": "services"
+        },
+        {
+          "id": "makati-civil-registry",
+          "label": "Makati civil registry services",
+          "url": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1581042114419.pdf",
+          "kind": "services"
+        },
+        {
+          "id": "makati-social-welfare",
+          "label": "Makati social welfare services",
+          "url": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/securing_social_services_%28citizens_charter%2920190104113800.pdf",
+          "kind": "services"
+        },
+        {
+          "id": "dfa-passport",
+          "label": "DFA passport appointment system",
+          "url": "https://passport.gov.ph/",
+          "kind": "national-services"
+        },
+        {
+          "id": "makati-sanitation-code",
+          "label": "Makati sanitation code",
+          "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/181/pdf/Makati%20City%20Ordinance%202019-A-102.pdf",
+          "kind": "services"
+        },
+        {
+          "id": "makati-veterinary-services",
+          "label": "Makati Veterinary Services Department",
+          "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/481/pdf/Makati%20Veterinary%20Services%20Department.pdf",
+          "kind": "services"
+        },
+        {
+          "id": "makati-assessment-services",
+          "label": "Makati Assessment Department services",
+          "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/481/pdf/Assessment%20Department.pdf",
+          "kind": "services"
+        },
+        {
+          "id": "makati-business-permit-form",
+          "label": "Makati business permit application form",
+          "url": "https://www.makati.gov.ph/assets/uploads/online_forms/pdf/522/business%20permit%20form%202025%20update1111.pdf",
+          "kind": "services"
+        },
+        {
+          "id": "sss-benefits",
+          "label": "SSS benefits",
+          "url": "https://www.sss.gov.ph/benefits/",
+          "kind": "national-services"
+        },
+        {
+          "id": "pagibig-services",
+          "label": "Pag-IBIG member services",
+          "url": "https://www.pagibigfund.gov.ph/",
+          "kind": "national-services"
+        },
+        {
+          "id": "philhealth-services",
+          "label": "PhilHealth online services",
+          "url": "https://www.philhealth.gov.ph/services/",
+          "kind": "national-services"
+        },
+        {
+          "id": "deped-makati",
+          "label": "DepEd Schools Division Office Makati",
+          "url": "https://depedmakati.ph/",
+          "kind": "national-services"
+        },
+        {
+          "id": "dswd-satellite-offices",
+          "label": "DSWD satellite offices",
+          "url": "https://www.dswd.gov.ph/dswd-directory-satellite-offices/",
+          "kind": "national-services"
+        },
+        {
+          "id": "gsis-benefits",
+          "label": "GSIS member benefits",
+          "url": "https://www.gsis.gov.ph/active-members/benefits/",
+          "kind": "national-services"
+        },
+        {
+          "id": "tesda-pasmak",
+          "label": "TESDA PASMAK district office",
+          "url": "https://tesda.gov.ph/directory/regions",
+          "kind": "national-services"
+        },
+        {
+          "id": "phlpost-locator",
+          "label": "PHLPost office locator",
+          "url": "https://phlpost.gov.ph/post-office-locator/",
+          "kind": "national-services"
+        },
+        {
+          "id": "dti-services",
+          "label": "DTI services and Negosyo Center",
+          "url": "https://www.dti.gov.ph/",
+          "kind": "national-services"
+        },
+        {
+          "id": "dpwh-home",
+          "label": "DPWH public information",
+          "url": "https://www.dpwh.gov.ph/dpwh/",
+          "kind": "national-services"
+        },
+        {
+          "id": "pcso-medical-assistance",
+          "label": "PCSO Medical Assistance Program",
+          "url": "https://onlinemap.pcso.gov.ph/",
+          "kind": "national-services"
+        }
+      ]
+    }
+  ]
 }
