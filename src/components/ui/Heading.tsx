@@ -8,9 +8,9 @@ interface HeadingProps {
 }
 
 const headingStyles = {
-  1: 'text-3xl md:text-4xl lg:text-5xl font-bold mb-4 leading-tight tracking-tight text-balance',
-  2: 'text-2xl md:text-3xl lg:text-4xl font-bold mb-4 leading-tight tracking-tight text-balance',
-  3: 'text-xl md:text-2xl lg:text-3xl font-bold mb-4 leading-tight tracking-tight text-balance',
+  1: 'text-3xl md:text-4xl lg:text-5xl font-extrabold mb-4 leading-tight tracking-tight text-balance',
+  2: 'text-2xl md:text-3xl lg:text-4xl font-extrabold mb-4 leading-tight tracking-tight text-balance',
+  3: 'text-xl md:text-2xl lg:text-3xl font-extrabold mb-4 leading-tight tracking-tight text-balance',
   4: 'text-lg md:text-xl lg:text-2xl font-bold mb-4 leading-tight tracking-tight text-balance',
   5: 'text-base md:text-lg lg:text-xl font-bold mb-4 leading-tight tracking-tight text-balance',
   6: 'text-sm md:text-base lg:text-lg font-bold mb-4 leading-tight tracking-tight text-balance',
