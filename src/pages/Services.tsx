@@ -31,6 +31,11 @@ import {
 } from '../data/serviceDirectory';
 import PhotoCarousel from '../components/ui/PhotoCarousel';
 import { servicesImageSet } from '../data/cityImages';
+import {
+  detailedServiceGuideCount,
+  serviceGuideDetails,
+  verifiedServiceGuideCount,
+} from '../data/serviceGuideDetails';
 
 const normalize = (value: string) =>
   value
@@ -39,6 +44,34 @@ const normalize = (value: string) =>
     .replace(/[^a-z0-9\s]/g, ' ')
     .replace(/\s+/g, ' ')
     .trim();
+
+const editDistance = (a: string, b: string) => {
+  if (a === b) return 0;
+  const previous = Array.from({ length: b.length + 1 }, (_, index) => index);
+  const current = new Array<number>(b.length + 1);
+  for (let i = 1; i <= a.length; i += 1) {
+    current[0] = i;
+    for (let j = 1; j <= b.length; j += 1) {
+      current[j] = Math.min(
+        current[j - 1] + 1,
+        previous[j] + 1,
+        previous[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1)
+      );
+    }
+    for (let j = 0; j <= b.length; j += 1) previous[j] = current[j];
+  }
+  return previous[b.length];
+};
+
+const fuzzyWordMatch = (word: string, tokens: string[]) => {
+  if (word.length < 4) return false;
+  const tolerance = word.length >= 8 ? 2 : 1;
+  return tokens.some(
+    token =>
+      Math.abs(token.length - word.length) <= tolerance &&
+      editDistance(word, token) <= tolerance
+  );
+};
 
 const Services: React.FC = () => {
   const { category } = useParams();
@@ -90,7 +123,11 @@ const Services: React.FC = () => {
             item.keywords,
           ].join(' ')
         );
-        return query.split(' ').every(word => haystack.includes(word));
+        const tokens = haystack.split(' ').filter(Boolean);
+        return query
+          .split(' ')
+          .filter(Boolean)
+          .every(word => haystack.includes(word) || fuzzyWordMatch(word, tokens));
       })
       .sort((a, b) => {
         if (a.featured !== b.featured) return a.featured ? -1 : 1;
@@ -192,42 +229,54 @@ const Services: React.FC = () => {
               <Heading level={2}>Government services</Heading>
             </div>
             <div className="text-sm text-gray-500">
-              {visibleDirectory.length} of {serviceDirectory.length} services
+              {visibleDirectory.length} of {serviceDirectory.length} services · {detailedServiceGuideCount} structured · {verifiedServiceGuideCount} verified
             </div>
           </div>
 
           <div className="mt-6 divide-y divide-gray-200 overflow-hidden rounded-2xl border border-gray-200 bg-white">
-            {visibleDirectory.map(item => (
-              <article
-                key={item.id}
-                className="grid gap-4 p-5 md:grid-cols-[1fr_auto] md:items-center"
-              >
-                <div className="min-w-0">
-                  <div className="flex flex-wrap items-center gap-2 text-xs font-bold">
-                    <span className="rounded-full bg-primary-50 px-2.5 py-1 text-primary-800">
-                      {item.level}
-                    </span>
-                    <span className="rounded-full bg-gray-100 px-2.5 py-1 text-gray-600">
-                      {item.type}
-                    </span>
-                  </div>
-                  <h3 className="mt-2 text-lg font-extrabold text-gray-950">
-                    {item.title}
-                  </h3>
-                  <p className="mt-1 text-sm leading-relaxed text-gray-600">
-                    {item.description}
-                  </p>
-                  <div className="mt-2 text-xs text-gray-500">{item.agency}</div>
-                </div>
-
-                <Link
-                  to={`/services/guide/${item.id}`}
-                  className="inline-flex min-h-11 items-center justify-center rounded-xl bg-primary-800 px-4 py-2 text-sm font-bold text-white hover:bg-primary-900"
+            {visibleDirectory.map(item => {
+              const detail = serviceGuideDetails[item.id];
+              return (
+                <article
+                  key={item.id}
+                  className="grid gap-4 p-5 md:grid-cols-[1fr_auto] md:items-center"
                 >
-                  Open guide
-                </Link>
-              </article>
-            ))}
+                  <div className="min-w-0">
+                    <div className="flex flex-wrap items-center gap-2 text-xs font-bold">
+                      <span className="rounded-full bg-primary-50 px-2.5 py-1 text-primary-800">
+                        {item.level}
+                      </span>
+                      <span className="rounded-full bg-gray-100 px-2.5 py-1 text-gray-600">
+                        {item.type}
+                      </span>
+                      {detail && (
+                        <span className={
+                          detail.verification === 'verified'
+                            ? 'rounded-full bg-success-50 px-2.5 py-1 text-success-800'
+                            : 'rounded-full bg-warning-50 px-2.5 py-1 text-warning-800'
+                        }>
+                          {detail.verification === 'verified' ? 'Detailed guide' : 'Detail checked with caveat'}
+                        </span>
+                      )}
+                    </div>
+                    <h3 className="mt-2 text-lg font-extrabold text-gray-950">
+                      {item.title}
+                    </h3>
+                    <p className="mt-1 text-sm leading-relaxed text-gray-600">
+                      {item.description}
+                    </p>
+                    <div className="mt-2 text-xs text-gray-500">{item.agency}</div>
+                  </div>
+
+                  <Link
+                    to={`/services/guide/${item.id}`}
+                    className="inline-flex min-h-11 items-center justify-center rounded-xl bg-primary-800 px-4 py-2 text-sm font-bold text-white hover:bg-primary-900"
+                  >
+                    Open guide
+                  </Link>
+                </article>
+              );
+            })}
             {visibleDirectory.length === 0 && (
               <div className="p-8 text-center text-sm text-gray-600">
                 No indexed service matches this search yet.
