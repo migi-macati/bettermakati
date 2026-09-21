@@ -9,15 +9,15 @@ const isExternal = (href: string) => href.startsWith('http');
 const Footer: React.FC = () => {
   return (
     <footer className="bg-primary-900 text-white">
-      <div className="h-1.5 bg-gradient-to-r from-secondary-500 via-primary-500 to-accent-500" />
+      <div className="h-1.5 bg-secondary-500" />
       <div className="container px-5 md:px-6 lg:px-8 pt-12 pb-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-9">
           <div>
-            <div className="inline-block rounded-xl bg-white px-3 py-2 mb-4">
-              <BrandMark compact />
+            <div className="mb-4">
+              <BrandMark compact inverse />
             </div>
-            <p className="text-primary-100 text-sm leading-relaxed">
-              Independent, community-built civic information and participation for Makati.
+            <p className="max-w-xs text-primary-100 text-sm leading-relaxed">
+              Civic information, public records and participation tools for understanding and using Makati.
             </p>
             <a
               href="https://github.com/migi-macati/bettermakati"
