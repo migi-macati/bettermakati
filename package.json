@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run generate:site && npm run check:content && npm run check:civic-map && tsc -b && vite build && node scripts/postbuild-routes.mjs",
+    "build": "npm run generate:site && npm run check:content && npm run check:civic-map && npm run check:brand && tsc -b && vite build && node scripts/postbuild-routes.mjs",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
@@ -22,7 +22,8 @@
     "generate:site": "node scripts/generate-site-files.mjs",
     "check:content": "node scripts/check-content.mjs",
     "check:links": "node scripts/check-links.mjs",
-    "check:civic-map": "node scripts/check-civic-map.mjs"
+    "check:civic-map": "node scripts/check-civic-map.mjs",
+    "check:brand": "node scripts/check-brand.mjs"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [

@@ -8,50 +8,51 @@
 @theme {
   --font-serif: Georgia, 'Times New Roman', serif;
 
-  /* Brand colours are design choices, not claims about historical symbolism. */
-  --color-primary-50: #edf7f4;
-  --color-primary-100: #d5ece5;
-  --color-primary-200: #afd8cc;
-  --color-primary-300: #78baaa;
-  --color-primary-400: #499987;
-  --color-primary-500: #267d6a;
-  --color-primary-600: #076653;
-  --color-primary-700: #005447;
-  --color-primary-800: #004438;
-  --color-primary-900: #00362d;
+  /* BetterMakati identity: deep green, one sun-gold, warm white. */
+  --color-primary-50: #f1f7f3;
+  --color-primary-100: #dcece1;
+  --color-primary-200: #b9d9c3;
+  --color-primary-300: #8fc09f;
+  --color-primary-400: #62a277;
+  --color-primary-500: #3f8559;
+  --color-primary-600: #287245;
+  --color-primary-700: #176238;
+  --color-primary-800: #124f2f;
+  --color-primary-900: #0d3822;
 
-  --color-secondary-50: #fff9e8;
-  --color-secondary-100: #fff0bf;
-  --color-secondary-200: #ffe184;
-  --color-secondary-300: #f8ce45;
-  --color-secondary-400: #edbb22;
+  --color-secondary-50: #fffaf0;
+  --color-secondary-100: #fff1cf;
+  --color-secondary-200: #f7df9b;
+  --color-secondary-300: #edc85e;
+  --color-secondary-400: #e4b52f;
   --color-secondary-500: #dca514;
-  --color-secondary-600: #bd850c;
-  --color-secondary-700: #98640b;
-  --color-secondary-800: #7b4f0e;
-  --color-secondary-900: #664110;
+  --color-secondary-600: #b7860e;
+  --color-secondary-700: #8d670d;
+  --color-secondary-800: #6f510e;
+  --color-secondary-900: #5c430f;
 
-  --color-accent-50: #eff8f9;
-  --color-accent-100: #d8edef;
-  --color-accent-200: #b5dce0;
-  --color-accent-300: #86c2c8;
-  --color-accent-400: #58a5ae;
-  --color-accent-500: #3b8792;
-  --color-accent-600: #2f6f79;
-  --color-accent-700: #295b64;
-  --color-accent-800: #254b53;
-  --color-accent-900: #213f46;
+  /* Accent is intentionally restrained; green/gold remain the identity colours. */
+  --color-accent-50: #f7f4ed;
+  --color-accent-100: #eee8dc;
+  --color-accent-200: #ddd2bd;
+  --color-accent-300: #c6b899;
+  --color-accent-400: #aa9875;
+  --color-accent-500: #8e7a58;
+  --color-accent-600: #756347;
+  --color-accent-700: #5e4f3a;
+  --color-accent-800: #4e4233;
+  --color-accent-900: #43392f;
 
-  --color-success-50: #eaf7ef;
-  --color-success-100: #d4efdf;
-  --color-success-200: #a9dfbf;
-  --color-success-300: #7dce9f;
-  --color-success-400: #50b97c;
-  --color-success-500: #2f9b62;
-  --color-success-600: #237d4d;
-  --color-success-700: #1d633f;
-  --color-success-800: #194f34;
-  --color-success-900: #143f2b;
+  --color-success-50: #edf8f1;
+  --color-success-100: #d7eedf;
+  --color-success-200: #afdcbc;
+  --color-success-300: #7fc495;
+  --color-success-400: #51aa70;
+  --color-success-500: #318b56;
+  --color-success-600: #247044;
+  --color-success-700: #1d5a38;
+  --color-success-800: #19482f;
+  --color-success-900: #153b28;
 
   --color-warning-50: #fff9e8;
   --color-warning-100: #fff0bf;
@@ -90,31 +91,30 @@
   --animate-slide-in: slideIn 0.5s ease-out;
 
   @keyframes fadeIn {
-    0% {
-      opacity: 0;
-      transform: translateY(4px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    0% { opacity: 0; transform: translateY(4px); }
+    100% { opacity: 1; transform: translateY(0); }
   }
 
   @keyframes slideIn {
-    0% {
-      transform: translateY(10px);
-      opacity: 0;
-    }
-    100% {
-      transform: translateY(0);
-      opacity: 1;
-    }
+    0% { transform: translateY(10px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
   }
 }
 
 @theme inline {
-  --font-sans: var(--font-kapwa-sans);
-  --font-mono: var(--font-kapwa-mono);
+  --font-sans: 'Inter', var(--font-kapwa-sans), system-ui, sans-serif;
+  --font-mono: 'Roboto Mono', var(--font-kapwa-mono), ui-monospace, monospace;
+}
+
+:root {
+  --brand-green: #176238;
+  --brand-green-dark: #0d3822;
+  --brand-gold: #dca514;
+  --brand-warm-white: #fffdf8;
+  --brand-ink: #25211f;
+  --font-brand: 'Figtree', 'Inter', system-ui, sans-serif;
+  --font-ui: 'Inter', system-ui, sans-serif;
+  --font-technical: 'Roboto Mono', ui-monospace, monospace;
 }
 
 html {
@@ -137,14 +137,33 @@ html {
 }
 
 :where(a, button, input, select, textarea, summary):focus-visible {
-  outline: 3px solid #005447;
+  outline: 3px solid #176238;
   box-shadow: 0 0 0 2px white;
   outline-offset: 3px;
 }
 
 body {
-  background: #fffdf8;
-  color: #25211f;
+  background: var(--brand-warm-white);
+  color: var(--brand-ink);
+  font-family: var(--font-ui);
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.brand-wordmark {
+  font-family: var(--font-brand);
+}
+
+code,
+pre,
+kbd,
+samp {
+  font-family: var(--font-technical);
 }
 
 ::selection {
@@ -172,19 +191,32 @@ body {
 
 .makati-hero {
   position: relative;
-  background:
-    radial-gradient(
-      circle at 82% 18%,
-      rgba(220, 165, 20, 0.2),
-      transparent 30%
-    ),
-    radial-gradient(
-      circle at 14% 82%,
-      rgba(59, 135, 146, 0.12),
-      transparent 32%
-    ),
-    linear-gradient(135deg, #fffdf8 0%, #f3f8ef 52%, #fff7df 100%);
-  border-bottom: 1px solid #e7dfd0;
+  overflow: hidden;
+  background: var(--brand-warm-white);
+  border-bottom: 1px solid #e6dfd3;
+}
+
+.makati-hero::before {
+  content: '';
+  position: absolute;
+  width: 8.5rem;
+  height: 8.5rem;
+  right: 7%;
+  top: -4.75rem;
+  border-radius: 999px;
+  background: rgba(220, 165, 20, 0.12);
+  pointer-events: none;
+}
+
+.makati-hero::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: min(36rem, 68vw);
+  height: 4px;
+  background: var(--brand-green);
+  pointer-events: none;
 }
 
 .brand-btn-primary,
@@ -203,13 +235,13 @@ body {
 }
 
 .brand-btn-primary {
-  background: #005447;
+  background: var(--brand-green);
   color: white;
   box-shadow: 0 6px 18px rgba(23, 98, 56, 0.16);
 }
 
 .brand-btn-primary:hover {
-  background: #124e2e;
+  background: var(--brand-green-dark);
   transform: translateY(-1px);
 }
 
@@ -248,12 +280,25 @@ body {
 }
 
 .section-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
   margin-bottom: 0.5rem;
-  color: #176238;
+  color: var(--brand-green);
+  font-family: var(--font-brand);
   font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 0.14em;
   text-transform: uppercase;
+}
+
+.section-eyebrow::before {
+  content: '';
+  width: 1.5rem;
+  height: 3px;
+  flex: 0 0 auto;
+  border-radius: 999px;
+  background: var(--brand-gold);
 }
 
 .home-service-card,
@@ -485,8 +530,8 @@ body {
 .form-field input:focus,
 .form-field select:focus,
 .form-field textarea:focus {
-  border-color: #57ad73;
-  box-shadow: 0 0 0 3px rgba(87, 173, 115, 0.16);
+  border-color: #176238;
+  box-shadow: 0 0 0 3px rgba(23, 98, 56, 0.14);
 }
 
 /* Google Maps Platform text attribution fallback. */
@@ -549,7 +594,7 @@ main input:not([type='checkbox']):not([type='radio']) {
 }
 main input[type='checkbox'],
 main input[type='radio'] {
-  accent-color: #005447;
+  accent-color: #176238;
 }
 main :is(button, select, label) {
   font-size: max(0.875rem, 1em);
@@ -580,5 +625,69 @@ main :is(button, select, label) {
   }
   main a {
     text-decoration: underline;
+  }
+}
+
+
+/* BetterMakati identity utilities */
+.brand-surface {
+  background: var(--brand-warm-white);
+}
+
+.brand-surface-green {
+  background: var(--brand-green-dark);
+  color: white;
+}
+
+.brand-rule {
+  height: 4px;
+  background: var(--brand-gold);
+}
+
+.brand-wordmark {
+  font-weight: 800;
+  letter-spacing: -0.035em;
+}
+
+.brand-wordmark-better {
+  color: var(--brand-gold);
+}
+
+.brand-wordmark-makati {
+  color: var(--brand-green);
+}
+
+.brand-wordmark-inverse,
+.brand-wordmark-inverse .brand-wordmark-better,
+.brand-wordmark-inverse .brand-wordmark-makati {
+  color: white;
+}
+
+main :is(.home-service-card, .category-card, .civic-card, .community-tool-card, .stat-card) {
+  box-shadow: 0 1px 0 rgba(13, 56, 34, 0.03);
+}
+
+main :is(.home-service-card, .category-card, .civic-card, .community-tool-card):hover {
+  border-color: rgba(23, 98, 56, 0.42);
+  box-shadow: 0 12px 28px rgba(13, 56, 34, 0.08);
+}
+
+main a {
+  text-underline-offset: 3px;
+}
+
+main table {
+  font-feature-settings: 'tnum';
+}
+
+nav a[aria-current='page'] {
+  color: var(--brand-green-dark);
+  background: #f1f7f3;
+  box-shadow: inset 0 -3px 0 var(--brand-gold);
+}
+
+@media print {
+  .section-eyebrow::before {
+    background: #111;
   }
 }

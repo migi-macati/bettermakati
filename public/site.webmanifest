@@ -5,7 +5,7 @@
   "start_url": "/",
   "display": "standalone",
   "background_color": "#fffdf8",
-  "theme_color": "#005447",
+  "theme_color": "#176238",
   "icons": [
     {
       "src": "/bettermakati-icon.svg",

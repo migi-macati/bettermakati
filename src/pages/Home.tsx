@@ -200,7 +200,7 @@ const Home: React.FC = () => {
 
       <section className="bg-primary-900 py-12 text-white border-b border-primary-900">
         <div className="container px-5 md:px-6 lg:px-8">
-          <div className="section-eyebrow !text-secondary-200">
+          <div className="section-eyebrow !text-white/80">
             Civic records
           </div>
           <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
@@ -217,16 +217,16 @@ const Home: React.FC = () => {
                 <Link
                   key={item.label}
                   to={item.href}
-                  className="rounded-2xl border border-white/15 bg-white/5 p-5 transition hover:bg-white/10 hover:border-secondary-300"
+                  className="rounded-2xl border border-white/15 bg-white/5 p-5 transition hover:bg-white/10 hover:border-secondary-500"
                 >
-                  <Icon className="h-6 w-6 text-secondary-200" />
+                  <Icon className="h-6 w-6 text-secondary-500" />
                   <h3 className="mt-4 font-extrabold text-white">
                     {item.label}
                   </h3>
                   <p className="mt-2 text-sm leading-relaxed text-primary-100">
                     {item.description}
                   </p>
-                  <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-secondary-200">
+                  <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-white">
                     Open <ArrowRight className="h-4 w-4" />
                   </span>
                 </Link>
