@@ -42,6 +42,7 @@ const staticRoutes = [
   '/projects-budget',
   '/community-tools',
   '/civic-map',
+  '/civic-map/reports',
   '/community-tools/saan-ako-lalapit',
   '/get-involved',
   '/contact',
