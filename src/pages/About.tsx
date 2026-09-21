@@ -77,22 +77,22 @@ export default function About() {
         <div className="mt-7 grid gap-4 sm:grid-cols-3">
           {[
             {
-              src: '/bettermakati-mark.svg',
+              src: '/bettermakati-logo.svg',
               title: 'Primary',
-              note: 'Deep green symbol with the single sun-gold accent.',
+              note: 'Exact primary logo supplied by the project owner: green symbol, gold sun, gold Better and green Makati.',
               frame: 'bg-white',
             },
             {
-              src: '/bettermakati-mark-white.svg',
+              src: '/bettermakati-logo-reverse.svg',
               title: 'Reverse',
-              note: 'All-white mark for deep-green and other dark backgrounds.',
+              note: 'Exact all-white reverse logo supplied by the project owner.',
               frame: 'bg-primary-900',
             },
             {
-              src: '/bettermakati-mark-gold.svg',
-              title: 'Single gold',
-              note: 'Secondary one-colour application using the approved sun gold.',
-              frame: 'bg-primary-900',
+              src: '/bettermakati-symbol.svg',
+              title: 'Compact symbol',
+              note: 'Exact symbol-only crop from the approved logo for compact and app-scale applications.',
+              frame: 'bg-white',
             },
           ].map(item => (
             <figure
@@ -124,11 +124,11 @@ export default function About() {
         <div className="mt-9 grid gap-4 lg:grid-cols-2">
           <div className="rounded-2xl border border-primary-100 bg-white p-6">
             <div className="section-eyebrow">Colour system</div>
-            <h3 className="text-xl font-extrabold text-gray-950">One green. One gold. Warm white.</h3>
+            <h3 className="text-xl font-extrabold text-gray-950">Official logo colours + warm white.</h3>
             <div className="mt-5 grid grid-cols-3 gap-3">
               {[
-                ['#176238', 'Deep green', 'bg-[#176238] text-white'],
-                ['#DCA514', 'Sun gold', 'bg-[#DCA514] text-gray-950'],
+                ['#036738', 'Deep green', 'bg-[#036738] text-white'],
+                ['#FBBF01', 'Sun gold', 'bg-[#FBBF01] text-gray-950'],
                 ['#FFFDF8', 'Warm white', 'bg-[#FFFDF8] text-gray-950 border border-gray-200'],
               ].map(([hex, label, classes]) => (
                 <div key={hex}>
@@ -148,8 +148,8 @@ export default function About() {
             <div className="section-eyebrow">Typography</div>
             <div className="space-y-5">
               <div>
-                <div className="brand-wordmark text-3xl text-gray-950">Figtree</div>
-                <p className="mt-1 text-sm text-gray-600">Brand, wordmark and display headings.</p>
+                <div className="text-3xl font-extrabold text-gray-950">Official wordmark artwork</div>
+                <p className="mt-1 text-sm text-gray-600">The BetterMakati wordmark is artwork and is never recreated with live text; Figtree remains the display-heading family.</p>
               </div>
               <div>
                 <div className="text-2xl font-bold text-gray-950">Inter</div>

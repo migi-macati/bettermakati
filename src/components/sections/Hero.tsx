@@ -13,7 +13,7 @@ export default function Hero() {
             <h1 className="max-w-3xl text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.05] text-gray-950">
               What do you need in Makati?
             </h1>
-            <p className="mt-4 max-w-2xl text-base md:text-lg leading-relaxed text-gray-700">
+            <p className="mt-4 max-w-2xl text-base md:text-lg leading-relaxed text-gray-900">
               Services, places, barangays, public records, participation and city information.
             </p>
 

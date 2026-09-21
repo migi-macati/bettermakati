@@ -133,6 +133,24 @@ Contributors are warned not to submit passwords, government IDs, medical data, p
 
 A future authenticated system should keep private identity/contact information separate from public contribution content and require separate consent before sharing contributor contact information with an outside authority.
 
+## Moderation and referral lifecycle
+
+BetterMakati now separates community evidence from official routing through a recorded lifecycle.
+
+A report can enter the review/referral queue when it is marked high-priority or receives at least two independent confirmations. This threshold only creates a BetterMakati review signal; it does not automatically send anything to government.
+
+Authorized BetterMakati moderators can record lifecycle events separately from citizen comments:
+
+- BetterMakati reviewed
+- Forwarded by BetterMakati
+- Authority acknowledged
+- Action reported
+- Community verified resolved
+
+Each recorded referral event can include the responsible body, channel used, an external reference number and a note. “Forwarded” must never be displayed as “acknowledged” unless a separate acknowledgement event is recorded.
+
+The public `/civic-map/reports` page aggregates the same underlying cases into a weekly operational brief, a moderation/referral queue and a monthly public-realm summary. Ordinary government delivery remains human-reviewed during the pilot to avoid spam and false routing.
+
 ## Reporting products
 
 ### Weekly Civic Map digest

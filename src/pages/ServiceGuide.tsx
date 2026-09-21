@@ -7,6 +7,10 @@ import {
   Building2,
   CheckCircle2,
   FileText,
+  BadgeCheck,
+  AlertTriangle,
+  Clock3,
+  WalletCards,
 } from 'lucide-react';
 import { Link, useParams } from 'react-router';
 import SEO from '../components/SEO';
@@ -15,6 +19,7 @@ import { Heading } from '../components/ui/Heading';
 import LastReviewed from '../components/ui/LastReviewed';
 import { serviceDirectory, type ServiceDirectoryItem } from '../data/serviceDirectory';
 import { officesForAgency } from '../data/governmentServiceOffices';
+import { serviceGuideDetails } from '../data/serviceGuideDetails';
 
 const mapsUrl = (query: string) =>
   'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(query);
@@ -373,6 +378,7 @@ export default function ServiceGuide() {
   }
 
   const offices = officesForAgency(item.agency);
+  const detail = serviceGuideDetails[item.id];
   const guidance = specialGuidance[item.id] || agencyGuidance[item.agency];
   const prepare = guidance?.prepare || prepareByType[item.type] || prepareByType.Other;
   const steps = guidance?.steps || standardSteps(item);
@@ -403,46 +409,200 @@ export default function ServiceGuide() {
           {item.agency}
         </div>
         <LastReviewed
-          note="BetterMakati is a guide. The issuing agency's current requirements and eligibility rules control."
+          date={detail?.lastVerified}
+          note={
+            detail
+              ? 'BetterMakati checked the structured transaction details against the cited official source. The issuing agency still controls current requirements.'
+              : 'Source-first guide. BetterMakati has not yet completed a field-by-field transaction verification for this service.'
+          }
           className="mt-5"
         />
       </Section>
 
       <Section className="bg-white">
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-          <div>
-            <div className="section-eyebrow">Prepare</div>
-            <Heading level={2}>Before you start</Heading>
-            <ul className="mt-5 space-y-3">
-              {prepare.map(point => (
-                <li key={point} className="flex gap-3 text-sm leading-relaxed text-gray-700">
-                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary-700" />
-                  <span>{point}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
+        {detail ? (
+          <>
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+              <div>
+                <div className="section-eyebrow">Transaction guide</div>
+                <Heading level={2}>What you need to complete this</Heading>
+              </div>
+              <div className={
+                detail.verification === 'verified'
+                  ? 'inline-flex w-fit items-center gap-2 rounded-full bg-success-50 px-3 py-2 text-xs font-bold text-success-800'
+                  : 'inline-flex w-fit items-center gap-2 rounded-full bg-warning-50 px-3 py-2 text-xs font-bold text-warning-800'
+              }>
+                {detail.verification === 'verified' ? (
+                  <BadgeCheck className="h-4 w-4" />
+                ) : (
+                  <AlertTriangle className="h-4 w-4" />
+                )}
+                {detail.verification === 'verified' ? 'Structured details verified' : 'Partially verified'}
+              </div>
+            </div>
 
-          <div>
-            <div className="section-eyebrow">Process</div>
-            <Heading level={2}>How to start</Heading>
-            <ol className="mt-5 space-y-3">
-              {steps.map((point, index) => (
-                <li key={point} className="flex gap-3 text-sm leading-relaxed text-gray-700">
-                  <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-primary-800 text-xs font-bold text-white">
-                    {index + 1}
-                  </span>
-                  <span>{point}</span>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </div>
+            {(detail.classification || detail.transactionType || detail.processingTime) && (
+              <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-3">
+                {detail.classification && (
+                  <div className="rounded-xl border border-gray-200 bg-[#fffdf8] p-4">
+                    <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">Classification</div>
+                    <div className="mt-1 font-extrabold text-gray-950">{detail.classification}</div>
+                  </div>
+                )}
+                {detail.transactionType && (
+                  <div className="rounded-xl border border-gray-200 bg-[#fffdf8] p-4">
+                    <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">Transaction</div>
+                    <div className="mt-1 font-extrabold text-gray-950">{detail.transactionType}</div>
+                  </div>
+                )}
+                {detail.processingTime && (
+                  <div className="rounded-xl border border-gray-200 bg-[#fffdf8] p-4">
+                    <div className="flex items-center gap-1 text-xs font-bold uppercase tracking-[0.08em] text-gray-500">
+                      <Clock3 className="h-3.5 w-3.5" /> Time
+                    </div>
+                    <div className="mt-1 text-sm font-bold leading-relaxed text-gray-950">{detail.processingTime}</div>
+                  </div>
+                )}
+              </div>
+            )}
 
-        {guidance?.note && (
-          <div className="mt-6 rounded-xl border border-secondary-200 bg-secondary-50 p-4 text-sm text-gray-700">
-            {guidance.note}
-          </div>
+            {detail.whoMayAvail && (
+              <div className="mt-6 rounded-xl border border-primary-100 bg-primary-50 p-4">
+                <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">Who may avail</div>
+                <p className="mt-1 text-sm leading-relaxed text-gray-700">{detail.whoMayAvail}</p>
+              </div>
+            )}
+
+            <div className="mt-8">
+              <Heading level={3}>Requirements</Heading>
+              <div className="mt-4 overflow-hidden rounded-2xl border border-gray-200">
+                <div className="divide-y divide-gray-200">
+                  {detail.requirements.map((requirement, index) => (
+                    <div key={requirement.item} className="grid gap-2 bg-white p-4 md:grid-cols-[2rem_1fr_0.8fr]">
+                      <span className="grid h-7 w-7 place-items-center rounded-full bg-primary-50 text-xs font-extrabold text-primary-800">
+                        {index + 1}
+                      </span>
+                      <div>
+                        <div className="font-bold text-gray-950">{requirement.item}</div>
+                        {requirement.note && (
+                          <p className="mt-1 text-xs leading-relaxed text-warning-900">{requirement.note}</p>
+                        )}
+                      </div>
+                      {requirement.whereToSecure && (
+                        <div className="text-sm text-gray-600">
+                          <span className="font-bold text-gray-700">Where to secure:</span>{' '}
+                          {requirement.whereToSecure}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-8 grid grid-cols-1 gap-7 lg:grid-cols-[1.15fr_0.85fr]">
+              <div>
+                <Heading level={3}>Steps</Heading>
+                <ol className="mt-4 space-y-3">
+                  {detail.steps.map((point, index) => (
+                    <li key={point} className="flex gap-3 text-sm leading-relaxed text-gray-700">
+                      <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-primary-800 text-xs font-bold text-white">
+                        {index + 1}
+                      </span>
+                      <span>{point}</span>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+
+              <div>
+                <Heading level={3}>Fees & payment</Heading>
+                {detail.fees?.length ? (
+                  <div className="mt-4 space-y-3">
+                    {detail.fees.map(fee => (
+                      <div key={fee.label} className="rounded-xl border border-gray-200 bg-[#fffdf8] p-4">
+                        <div className="flex items-start gap-3">
+                          <WalletCards className="mt-0.5 h-5 w-5 shrink-0 text-primary-700" />
+                          <div>
+                            <div className="text-sm font-bold text-gray-700">{fee.label}</div>
+                            <div className="mt-1 text-lg font-extrabold text-gray-950">{fee.amount}</div>
+                            {fee.note && <p className="mt-1 text-xs leading-relaxed text-gray-500">{fee.note}</p>}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="mt-4 text-sm leading-relaxed text-gray-600">
+                    The cited source does not provide a stable fee that BetterMakati can safely hard-code. Confirm any assessment before paying.
+                  </p>
+                )}
+              </div>
+            </div>
+
+            {detail.notes?.length ? (
+              <div className="mt-7 rounded-xl border border-warning-200 bg-warning-50 p-4">
+                <div className="font-bold text-warning-900">Important source notes</div>
+                <ul className="mt-2 space-y-2 text-sm leading-relaxed text-warning-900">
+                  {detail.notes.map(note => <li key={note}>{note}</li>)}
+                </ul>
+              </div>
+            ) : null}
+
+            <div className="mt-7 text-xs leading-relaxed text-gray-500">
+              Checked {detail.lastVerified}. Structured from{' '}
+              <a
+                href={detail.sourceUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="font-bold text-primary-700 underline underline-offset-2"
+              >
+                {detail.sourceLabel}
+              </a>
+              .
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="rounded-xl border border-warning-200 bg-warning-50 p-4 text-sm leading-relaxed text-warning-900">
+              <strong>Guide depth:</strong> BetterMakati has indexed this service and its official source, but the field-by-field requirements, fees and processing time have not yet been independently structured and checked.
+            </div>
+            <div className="mt-7 grid grid-cols-1 gap-6 lg:grid-cols-2">
+              <div>
+                <div className="section-eyebrow">Prepare</div>
+                <Heading level={2}>Before you start</Heading>
+                <ul className="mt-5 space-y-3">
+                  {prepare.map(point => (
+                    <li key={point} className="flex gap-3 text-sm leading-relaxed text-gray-700">
+                      <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary-700" />
+                      <span>{point}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div>
+                <div className="section-eyebrow">Process</div>
+                <Heading level={2}>How to start</Heading>
+                <ol className="mt-5 space-y-3">
+                  {steps.map((point, index) => (
+                    <li key={point} className="flex gap-3 text-sm leading-relaxed text-gray-700">
+                      <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-primary-800 text-xs font-bold text-white">
+                        {index + 1}
+                      </span>
+                      <span>{point}</span>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            </div>
+
+            {guidance?.note && (
+              <div className="mt-6 rounded-xl border border-secondary-200 bg-secondary-50 p-4 text-sm text-gray-700">
+                {guidance.note}
+              </div>
+            )}
+          </>
         )}
       </Section>
 

@@ -1,10 +1,10 @@
 import { readFile } from 'node:fs/promises';
 
 const requiredFiles = [
-  'public/bettermakati-mark.svg',
-  'public/bettermakati-mark-white.svg',
-  'public/bettermakati-mark-gold.svg',
-  'public/bettermakati-mark-mono.svg',
+  'public/bettermakati-logo.svg',
+  'public/bettermakati-logo-reverse.svg',
+  'public/bettermakati-symbol.svg',
+  'public/bettermakati-symbol-reverse.svg',
   'public/bettermakati-icon.svg',
   'src/components/BrandMark.tsx',
   'src/index.css',
@@ -18,15 +18,15 @@ const contents = Object.fromEntries(
 );
 
 const problems = [];
-const primary = contents['public/bettermakati-mark.svg'];
-const reverse = contents['public/bettermakati-mark-white.svg'];
+const primary = contents['public/bettermakati-logo.svg'];
+const reverse = contents['public/bettermakati-logo-reverse.svg'];
 const css = contents['src/index.css'];
 const brandMark = contents['src/components/BrandMark.tsx'];
 const html = contents['index.html'];
 
-if (!primary.includes('#176238')) problems.push('Primary mark is missing approved green #176238.');
-if (!primary.includes('#DCA514')) problems.push('Primary mark is missing approved sun gold #DCA514.');
-if (!reverse.includes('#FFFFFF')) problems.push('Reverse mark must be all white.');
+if (!primary.includes('#036738')) problems.push('Primary mark is missing approved green #036738.');
+if (!primary.includes('#FBBF01')) problems.push('Primary mark is missing approved sun gold #FBBF01.');
+if (!/#fff(?:fff)?/i.test(reverse)) problems.push('Reverse mark must be all white.');
 
 for (const forbidden of ['#005447', '#d5a62d', '#D5A62D']) {
   for (const [file, content] of Object.entries(contents)) {
@@ -37,8 +37,8 @@ for (const forbidden of ['#005447', '#d5a62d', '#D5A62D']) {
 }
 
 for (const token of [
-  '--brand-green: #176238',
-  '--brand-gold: #dca514',
+  '--brand-green: #036738',
+  '--brand-gold: #fbbf01',
   '--brand-warm-white: #fffdf8',
   "--font-brand: 'Figtree'",
   "--font-ui: 'Inter'",
@@ -47,10 +47,10 @@ for (const token of [
   if (!css.includes(token)) problems.push('Missing brand token: ' + token);
 }
 
-if (!brandMark.includes('brand-wordmark-better')) {
-  problems.push('BrandMark is not using the approved Better/Makati wordmark treatment.');
+if (!brandMark.includes('/bettermakati-logo.svg')) {
+  problems.push('BrandMark is not using the exact official logo asset.');
 }
-if (!brandMark.includes('/bettermakati-mark-white.svg')) {
+if (!brandMark.includes('/bettermakati-logo-reverse.svg')) {
   problems.push('BrandMark does not support the reverse white mark.');
 }
 

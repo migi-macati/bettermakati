@@ -93,7 +93,12 @@ export default function CivicMap() {
               A community map of Makati&apos;s streets, sidewalks, parks, public facilities and public transport. Assess how places work, consolidate problems into cases, suggest improvements and follow public discussion over time.
             </p>
           </div>
-          <SharePage title="BetterMakati Civic Map" />
+          <div className="flex flex-wrap items-center gap-2">
+            <Link to="/civic-map/reports" className="brand-btn-secondary">
+              Weekly & monthly reports
+            </Link>
+            <SharePage title="BetterMakati Civic Map" />
+          </div>
         </div>
 
         <LastReviewed
