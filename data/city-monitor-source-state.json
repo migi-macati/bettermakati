@@ -1,4 +1,71 @@
 {
   "version": 1,
-  "sources": []
+  "checkedAt": "2026-09-21T00:44:01.318Z",
+  "sources": [
+    {
+      "id": "makati-legislation",
+      "label": "Makati resolutions & ordinances",
+      "url": "https://www.makati.gov.ph/content/resolutions-and-ordinances/author",
+      "stream": "legislation",
+      "status": "ok",
+      "statusCode": 200,
+      "contentType": "text/html; charset=utf-8",
+      "contentLength": 14019,
+      "sha256": "1111cd77020ea888323d24962f77fb40f4a4bc48f86ff0817330e4cb1807fdd4",
+      "lastSuccessfulHash": "1111cd77020ea888323d24962f77fb40f4a4bc48f86ff0817330e4cb1807fdd4",
+      "change": "new-baseline"
+    },
+    {
+      "id": "makati-mayor-speeches",
+      "label": "Mayor's Corner — Speeches",
+      "url": "https://www.makati.gov.ph/content/mayors-corner/speeches/803",
+      "stream": "executive-speech",
+      "status": "ok",
+      "statusCode": 200,
+      "contentType": "text/html; charset=utf-8",
+      "contentLength": 14019,
+      "sha256": "1111cd77020ea888323d24962f77fb40f4a4bc48f86ff0817330e4cb1807fdd4",
+      "lastSuccessfulHash": "1111cd77020ea888323d24962f77fb40f4a4bc48f86ff0817330e4cb1807fdd4",
+      "change": "new-baseline"
+    },
+    {
+      "id": "makati-events",
+      "label": "Makati Events",
+      "url": "https://www.makati.gov.ph/content/events",
+      "stream": "events",
+      "status": "ok",
+      "statusCode": 200,
+      "contentType": "text/html; charset=utf-8",
+      "contentLength": 14019,
+      "sha256": "1111cd77020ea888323d24962f77fb40f4a4bc48f86ff0817330e4cb1807fdd4",
+      "lastSuccessfulHash": "1111cd77020ea888323d24962f77fb40f4a4bc48f86ff0817330e4cb1807fdd4",
+      "change": "new-baseline"
+    },
+    {
+      "id": "makati-news",
+      "label": "Makati News",
+      "url": "https://www.makati.gov.ph/content/news",
+      "stream": "official-notice",
+      "status": "ok",
+      "statusCode": 200,
+      "contentType": "text/html; charset=utf-8",
+      "contentLength": 14019,
+      "sha256": "1111cd77020ea888323d24962f77fb40f4a4bc48f86ff0817330e4cb1807fdd4",
+      "lastSuccessfulHash": "1111cd77020ea888323d24962f77fb40f4a4bc48f86ff0817330e4cb1807fdd4",
+      "change": "new-baseline"
+    },
+    {
+      "id": "philgeps",
+      "label": "PhilGEPS",
+      "url": "https://notices.philgeps.gov.ph/",
+      "stream": "procurement",
+      "status": "ok",
+      "statusCode": 200,
+      "contentType": "text/html",
+      "contentLength": 61154,
+      "sha256": "546cdea6a4db28e92cb6fc846f9b6c315e13053421150ed0dfaad9f26a892c70",
+      "lastSuccessfulHash": "546cdea6a4db28e92cb6fc846f9b6c315e13053421150ed0dfaad9f26a892c70",
+      "change": "new-baseline"
+    }
+  ]
 }
