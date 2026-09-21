@@ -10,8 +10,8 @@ export default function Terms() {
         <Heading>Terms of Use</Heading>
         <div className="prose max-w-3xl mt-6">
           <p>
-            BetterMakati is an independent civic information portal and not an
-            official City Government of Makati website.
+            BetterMakati is an independent civic information and participation
+            platform and not an official City Government of Makati website.
           </p>
 
           <h2>Official information controls</h2>
