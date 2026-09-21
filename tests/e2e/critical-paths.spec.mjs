@@ -8,7 +8,7 @@ const criticalRoutes = [
   ['/government-offices', /Government offices for Makati/i],
   ['/government', /Makati City Government/i],
   ['/barangays', /Barangays/i],
-  ['/projects-budget', /budget|projects/i],
+  ['/projects-budget', /Where Makati’s money comes from and goes/i],
   ['/statistics', /Makati/i],
   ['/history', /Many histories\. One Makati\./i],
   ['/visit', /Explore the city/i],
@@ -114,7 +114,7 @@ test('owner task: project spending is reachable from homepage capability example
   } else {
     await page.goto(baseURL + '/projects-budget');
   }
-  await expect(page.getByRole('heading', { level: 1 })).toContainText(/budget|projects/i);
+  await expect(page.getByRole('heading', { level: 1 })).toContainText(/Where Makati’s money comes from and goes/i);
 });
 
 test('owner task: history search surface loads without a dead end', async ({ page }) => {
