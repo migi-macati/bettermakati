@@ -85,6 +85,7 @@ export default function CapabilityCarousel() {
   const carousel = useCarousel(useCases.length, 5500);
   const { index } = carousel;
   const visible = [useCases[index], useCases[(index + 1) % useCases.length]];
+  // Rotation advances one item at a time so mobile users see every example.
   const previous = () => carousel.move(-1);
   const next = () => carousel.move(1);
 
