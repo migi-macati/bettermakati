@@ -56,7 +56,7 @@ export default function SEO({
       : '';
   const fullImage = absoluteUrl(
     baseUrl,
-    image || import.meta.env.VITE_OG_IMAGE_URL || '/og-image.svg'
+    image || import.meta.env.VITE_OG_IMAGE_URL || '/og-image.png'
   );
   const twitterHandle = import.meta.env.VITE_TWITTER_HANDLE || '';
 

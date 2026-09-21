@@ -46,7 +46,7 @@ const quickServices = [
   },
   {
     label: 'Property & land use',
-    description: 'RPT, zoning and building permits',
+    description: 'Property tax, zoning and building permits',
     href: '/services/housing-land-use',
     icon: HomeIcon,
   },
@@ -156,7 +156,7 @@ const Home: React.FC = () => {
           <div className="section-eyebrow">Services</div>
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-3 mb-7">
             <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-950">
-              Frequently used services
+              Common services
             </h2>
             <Link
               to="/services"
@@ -324,10 +324,10 @@ const Home: React.FC = () => {
               </span>
               <div>
                 <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
-                  New comparison
+                  City comparison
                 </div>
                 <h2 className="mt-1 text-lg font-extrabold text-gray-950">
-                  See Makati beside the Philippines&apos; top cities
+                  Compare Makati with other Philippine cities
                 </h2>
                 <p className="mt-1 text-sm text-gray-600">
                   Compare 2024 GDP per person using the same PSA definition and

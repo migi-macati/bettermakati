@@ -285,14 +285,16 @@ export default function Today() {
         <div className="rounded-2xl border border-secondary-200 bg-secondary-50 p-6">
           <Bell className="h-5 w-5 text-secondary-800" />
           <h2 className="mt-3 text-xl font-extrabold text-gray-950">
-            Follow BetterMakati on Facebook
+            Keep up with Makati
           </h2>
-          <div className="mt-2 inline-flex rounded-full bg-white px-3 py-1 text-xs font-bold text-secondary-900">
-            Page in progress
-          </div>
           <p className="mt-3 max-w-3xl text-sm leading-relaxed text-gray-700">
-            Civic Briefs and major site updates will be posted there once the page is live.
+            Read Civic Briefs for a digest of city records, or explore the original
+            sources and updates in City Monitor.
           </p>
+          <div className="mt-4 flex flex-wrap gap-4 text-sm font-bold text-primary-800">
+            <Link to="/briefs" className="underline underline-offset-4">Read Civic Briefs</Link>
+            <Link to="/city-monitor" className="underline underline-offset-4">Explore City Monitor</Link>
+          </div>
         </div>
       </Section>
     </>

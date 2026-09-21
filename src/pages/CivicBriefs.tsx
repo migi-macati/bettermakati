@@ -180,21 +180,18 @@ export default function CivicBriefs() {
 
       <Section className="bg-[#f5f8f2]">
         <div className="section-eyebrow">Follow</div>
-        <Heading level={2}>BetterMakati on Facebook</Heading>
+        <Heading level={2}>Follow city updates</Heading>
         <div className="mt-6 max-w-2xl rounded-2xl border border-primary-100 bg-white p-6">
           <Bell className="h-6 w-6 text-primary-700" />
-          <div className="mt-3 inline-flex rounded-full bg-secondary-50 px-3 py-1 text-xs font-bold text-secondary-900">
-            Page in progress
-          </div>
           <p className="mt-3 text-sm leading-relaxed text-gray-600">
-            New Civic Briefs and major BetterMakati updates will be posted there once the page is live.
+            Explore source-linked records in City Monitor, or subscribe to its RSS feed
+            for detected changes in monitored official sources. Each change still
+            needs review before it can be treated as a government action.
           </p>
-          <span
-            aria-disabled="true"
-            className="mt-5 inline-flex cursor-not-allowed items-center rounded-xl bg-primary-700 px-4 py-2 text-sm font-bold text-white opacity-60"
-          >
-            Follow BetterMakati on Facebook
-          </span>
+          <div className="mt-5 flex flex-wrap gap-4 text-sm font-bold text-primary-700">
+            <Link to="/city-monitor" className="underline underline-offset-4">Open City Monitor</Link>
+            <a href="/city-monitor.rss.xml" className="underline underline-offset-4">Source-change RSS feed</a>
+          </div>
         </div>
       </Section>
     </>

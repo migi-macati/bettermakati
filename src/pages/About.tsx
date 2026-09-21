@@ -79,19 +79,19 @@ export default function About() {
             {
               src: '/bettermakati-logo.svg',
               title: 'Primary',
-              note: 'Exact primary logo supplied by the project owner: green symbol, gold sun, gold Better and green Makati.',
+              note: 'Green hills, a gold sun and the BetterMakati name.',
               frame: 'bg-white',
             },
             {
               src: '/bettermakati-logo-reverse.svg',
               title: 'Reverse',
-              note: 'Exact all-white reverse logo supplied by the project owner.',
+              note: 'All-white artwork for dark backgrounds.',
               frame: 'bg-primary-900',
             },
             {
               src: '/bettermakati-symbol.svg',
               title: 'Compact symbol',
-              note: 'Exact symbol-only crop from the approved logo for compact and app-scale applications.',
+              note: 'The symbol on its own for compact spaces.',
               frame: 'bg-white',
             },
           ].map(item => (
@@ -124,7 +124,7 @@ export default function About() {
         <div className="mt-9 grid gap-4 lg:grid-cols-2">
           <div className="rounded-2xl border border-primary-100 bg-white p-6">
             <div className="section-eyebrow">Colour system</div>
-            <h3 className="text-xl font-extrabold text-gray-950">Official logo colours + warm white.</h3>
+            <h3 className="text-xl font-extrabold text-gray-950">Green, sun gold and warm white.</h3>
             <div className="mt-5 grid grid-cols-3 gap-3">
               {[
                 ['#036738', 'Deep green', 'bg-[#036738] text-white'],

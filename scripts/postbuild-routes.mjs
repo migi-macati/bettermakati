@@ -1,11 +1,7 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 
-const base =
-  (process.env.VITE_WEBSITE_URL ||
-    (process.env.VERCEL_PROJECT_PRODUCTION_URL
-      ? 'https://' + process.env.VERCEL_PROJECT_PRODUCTION_URL
-      : 'https://bettermakati.vercel.app')).replace(/\/$/, '');
+const base = (process.env.VITE_WEBSITE_URL || 'https://bettermakati.org').replace(/\/$/, '');
 
 const sourceHtml = await readFile('dist/index.html', 'utf8');
 const sitemap = await readFile('dist/sitemap.xml', 'utf8');
@@ -30,6 +26,8 @@ const staticMeta = {
   '/integrity': ['Integrity & Public Interest', 'Public-service ethics, procurement integrity, beneficial ownership, audit evidence and integrity coverage gaps for Makati civic research.'],
   '/status': ['BetterMakati Status', 'Public self-accountability for BetterMakati: civic coverage, source monitoring, community input and performance gaps.'],
   '/city-monitor': ['Makati City Monitor', 'Daily-monitored official government activity across council, legislation, executive speeches, procurement, projects, publications and consultations.'],
+  '/civic-map': ['Makati Civic Map', 'Explore mapped public assets, assessment criteria and source records in Makati.'],
+  '/civic-map/reports': ['Civic Map Reports', 'Review public community reports submitted through the Makati Civic Map.'],
   '/briefs': ['BetterMakati Civic Briefs', 'Daily, weekly and monthly civic digests from City Monitor.'],
   '/barangays': ['Makati Barangays', 'Profiles and population data for the 23 barangays of Makati City.'],
   '/elections': ['Makati Elections & Voting', 'Election results, voter information and COMELEC sources for Makati.'],
@@ -58,6 +56,10 @@ const humanize = value =>
 
 const metaFor = pathname => {
   if (staticMeta[pathname]) return staticMeta[pathname];
+  if (pathname.startsWith('/civic-map/')) {
+    const name = humanize(pathname.split('/').at(-1));
+    return [name + ' | Civic Map', 'Public asset information, source records and community observations for ' + name + ', Makati.'];
+  }
   if (pathname.startsWith('/barangays/')) {
     const name = humanize(pathname.split('/').at(-1));
     return ['Barangay ' + name, 'Profile, population, representation and community links for Barangay ' + name + ', Makati City.'];
@@ -78,21 +80,25 @@ const escapeHtml = value =>
 
 for (const url of urls) {
   const pathname = new URL(url).pathname.replace(/\/$/, '') || '/';
-  if (pathname === '/') continue;
   const [title, description] = metaFor(pathname);
   const fullTitle = title.includes('BetterMakati') ? title : title + ' | BetterMakati';
   const canonical = base + pathname;
   const socialImage = base + '/og-image.png';
 
   let html = sourceHtml
+    // Replace the homepage metadata instead of leaving conflicting route tags.
+    .replace(/<link\b[^>]*\brel="canonical"[^>]*>/g, '')
+    .replace(/<meta\b[^>]*(?:property="og:[^"]+"|name="twitter:[^"]+")[^>]*>/g, '')
     .replace(/<title>[^<]*<\/title>/, '<title>' + escapeHtml(fullTitle) + '</title>')
     .replace(
       /<meta\s+name="description"\s+content="[^"]*"\s*\/>/,
-      '<meta name="description" content="' + escapeHtml(description) + '" />'
+      '<meta data-rh="true" name="description" content="' + escapeHtml(description) + '" />'
     );
 
   const meta = [
     '<link rel="canonical" href="' + canonical + '" />',
+    '<meta property="og:type" content="website" />',
+    '<meta property="og:site_name" content="BetterMakati" />',
     '<meta property="og:url" content="' + canonical + '" />',
     '<meta property="og:title" content="' + escapeHtml(fullTitle) + '" />',
     '<meta property="og:description" content="' + escapeHtml(description) + '" />',
@@ -101,7 +107,7 @@ for (const url of urls) {
     '<meta name="twitter:title" content="' + escapeHtml(fullTitle) + '" />',
     '<meta name="twitter:description" content="' + escapeHtml(description) + '" />',
     '<meta name="twitter:image" content="' + socialImage + '" />',
-  ].join('\n    ');
+  ].map(tag => tag.replace(/^<(link|meta) /, '<$1 data-rh="true" ')).join('\n    ');
 
   html = html.replace('</head>', '    ' + meta + '\n  </head>');
 
@@ -110,4 +116,4 @@ for (const url of urls) {
   await writeFile(path.join(outDir, 'index.html'), html);
 }
 
-console.log('Generated route-specific HTML metadata for ' + Math.max(urls.length - 1, 0) + ' pages.');
+console.log('Generated route-specific HTML metadata for ' + urls.length + ' pages.');

@@ -2,11 +2,7 @@ import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import * as yaml from 'js-yaml';
 
-const productionHost =
-  process.env.VITE_WEBSITE_URL ||
-  (process.env.VERCEL_PROJECT_PRODUCTION_URL
-    ? 'https://' + process.env.VERCEL_PROJECT_PRODUCTION_URL
-    : 'https://bettermakati.org');
+const productionHost = process.env.VITE_WEBSITE_URL || 'https://bettermakati.org';
 const base = productionHost.replace(/\/$/, '');
 
 const staticRoutes = [
@@ -58,9 +54,9 @@ const barangaySlugs = await extractSlugs('src/data/barangays.ts');
 const officialSlugs = await extractSlugs('src/data/electedOfficials.ts');
 const civicMapText = await readFile('src/data/civicMap.ts', 'utf8');
 const civicAssetBlock = civicMapText.split('export const civicAssets')[1]?.split('const commonCriteria')[0] ?? '';
-const civicAssetIds = [...civicAssetBlock.matchAll(/\\bid:\\s*'([^']+)'/g)].map(match => match[1]);
+const civicAssetIds = [...civicAssetBlock.matchAll(/\bid:\s*'([^']+)'/g)].map(match => match[1]);
 const serviceDirectoryText = await readFile('src/data/serviceDirectory.ts', 'utf8');
-const serviceIds = [...serviceDirectoryText.matchAll(/\\bid:\\s*'([^']+)'/g)].map(match => match[1]);
+const serviceIds = [...serviceDirectoryText.matchAll(/\bid:\s*'([^']+)'/g)].map(match => match[1]);
 
 const serviceRoutes = [];
 const serviceRoot = 'content/services';
