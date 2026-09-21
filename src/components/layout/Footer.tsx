@@ -23,7 +23,7 @@ const Footer: React.FC = () => {
               href="https://github.com/migi-macati/bettermakati"
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2 mt-4 text-sm font-semibold text-secondary-200 hover:text-white"
+              className="inline-flex items-center gap-2 mt-4 text-sm font-semibold text-primary-100 hover:text-white"
             >
               <Github className="h-4 w-4" /> Open-source on GitHub
             </a>
@@ -31,7 +31,7 @@ const Footer: React.FC = () => {
 
           {footerNavigation.mainSections.map(section => (
             <div key={section.title}>
-              <h3 className="text-sm font-bold uppercase tracking-[0.12em] text-secondary-200 mb-4">
+              <h3 className="text-sm font-bold uppercase tracking-[0.12em] text-white/80 mb-4">
                 {section.title}
               </h3>
               <ul className="space-y-1">
