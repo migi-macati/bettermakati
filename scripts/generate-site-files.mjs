@@ -6,7 +6,7 @@ const productionHost =
   process.env.VITE_WEBSITE_URL ||
   (process.env.VERCEL_PROJECT_PRODUCTION_URL
     ? 'https://' + process.env.VERCEL_PROJECT_PRODUCTION_URL
-    : 'https://bettermakati.vercel.app');
+    : 'https://bettermakati.org');
 const base = productionHost.replace(/\/$/, '');
 
 const staticRoutes = [
