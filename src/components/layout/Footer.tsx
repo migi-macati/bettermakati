@@ -17,7 +17,7 @@ const Footer: React.FC = () => {
               <BrandMark compact />
             </div>
             <p className="text-primary-100 text-sm leading-relaxed">
-              Independent, community-built civic information for Makati City.
+              Independent, community-built civic information and participation for Makati.
             </p>
             <a
               href="https://github.com/migi-macati/bettermakati"
@@ -64,7 +64,7 @@ const Footer: React.FC = () => {
 
         <div className="border-t border-white/10 mt-10 pt-6 text-xs text-primary-200">
           <div className="flex flex-wrap items-center justify-between gap-4">
-            <p>© 2026 BetterMakati. Independent BetterLGU civic portal.</p>
+            <p>© 2026 BetterMakati. Independent BetterLGU civic platform.</p>
             <div className="flex flex-wrap gap-5">
               <Link
                 to="/about#identity"
