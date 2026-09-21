@@ -36,8 +36,8 @@ interface CivicComment {
 
 const cleanComment = (body: string) =>
   body
-    .replace(/<!--[sS]*?-->/g, '')
-    .replace(/**/g, '')
+    .replace(/<!--[\\s\\S]*?-->/g, '')
+    .replace(/\\*\\*/g, '')
     .replace(/^_([^_]+)_$/gm, '$1')
     .trim();
 
