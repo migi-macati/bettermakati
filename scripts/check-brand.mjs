@@ -26,7 +26,7 @@ const html = contents['index.html'];
 
 if (!primary.includes('#036738')) problems.push('Primary mark is missing approved green #036738.');
 if (!primary.includes('#FBBF01')) problems.push('Primary mark is missing approved sun gold #FBBF01.');
-if (!reverse.includes('#FFFFFF')) problems.push('Reverse mark must be all white.');
+if (!/#fff(?:fff)?/i.test(reverse)) problems.push('Reverse mark must be all white.');
 
 for (const forbidden of ['#005447', '#d5a62d', '#D5A62D']) {
   for (const [file, content] of Object.entries(contents)) {
