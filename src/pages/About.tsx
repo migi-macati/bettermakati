@@ -90,9 +90,9 @@ export default function About() {
             },
             {
               src: '/bettermakati-symbol.svg',
-              title: 'Single gold',
-              note: 'Exact symbol-only crop from the approved logo for compact applications.',
-              frame: 'bg-primary-900',
+              title: 'Compact symbol',
+              note: 'Exact symbol-only crop from the approved logo for compact and app-scale applications.',
+              frame: 'bg-white',
             },
           ].map(item => (
             <figure
@@ -148,7 +148,7 @@ export default function About() {
             <div className="section-eyebrow">Typography</div>
             <div className="space-y-5">
               <div>
-                <div className="brand-wordmark text-3xl text-gray-950">Official wordmark artwork</div>
+                <div className="text-3xl font-extrabold text-gray-950">Official wordmark artwork</div>
                 <p className="mt-1 text-sm text-gray-600">The BetterMakati wordmark is artwork and is never recreated with live text; Figtree remains the display-heading family.</p>
               </div>
               <div>
