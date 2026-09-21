@@ -23,13 +23,15 @@ export default function About() {
         <div className="section-eyebrow">About</div>
         <Heading>BetterMakati</Heading>
         <Text className="mb-3 max-w-4xl">
-          BetterMakati is an independent, open-source civic information portal
-          for Makati City and part of the BetterLGU community. It is not an
-          official City Government website.
+          BetterMakati is an independent, open-source civic information and
+          participation platform for Makati and part of the BetterLGU community.
+          It is not an official City Government of Makati website.
         </Text>
         <Text className="max-w-4xl">
           Public information is organized into searchable services, records,
-          dashboards and trackers, with links to the original sources.
+          dashboards and trackers, while participation tools let people contribute
+          observations, proposals, corrections and civic input. Original sources
+          remain linked wherever they support the information shown.
         </Text>
         <LastReviewed label="Project policy reviewed" />
 
