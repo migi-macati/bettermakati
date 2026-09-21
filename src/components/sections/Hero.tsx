@@ -8,7 +8,7 @@ export default function Hero() {
     <section className="makati-hero overflow-visible">
       <div className="container px-5 md:px-6 lg:px-8 py-10 md:py-14 lg:py-16">
         <div className="grid grid-cols-1 lg:grid-cols-[1.08fr_0.92fr] gap-8 lg:gap-10 items-center">
-          <div className="animate-fade-in min-w-0">
+          <div className="min-w-0">
             <div className="section-eyebrow">BetterMakati</div>
             <h1 className="max-w-3xl text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.05] text-gray-950">
               What do you need in Makati?

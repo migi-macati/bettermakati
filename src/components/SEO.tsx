@@ -33,11 +33,8 @@ export default function SEO({
 }: SEOProps) {
   const location = useLocation();
   const configuredBase = import.meta.env.VITE_WEBSITE_URL || '';
-  const runtimeBase =
-    typeof window !== 'undefined' && window.location?.origin
-      ? window.location.origin
-      : '';
-  const baseUrl = (configuredBase || runtimeBase).replace(/\/$/, '');
+  const canonicalBase = 'https://bettermakati.org';
+  const baseUrl = (configuredBase || canonicalBase).replace(/\/$/, '');
 
   const defaultTitle =
     'BetterMakati | Civic information and participation for Makati';
