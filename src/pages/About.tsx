@@ -76,45 +76,41 @@ export default function About() {
         </p>
         <div className="mt-7 grid gap-4 sm:grid-cols-3">
           {[
-            [
-              '/bettermakati-mark.svg',
-              'Primary symbol',
-              'For headers and publications',
-            ],
-            [
-              '/bettermakati-icon.svg',
-              'Compact symbol',
-              'For browser tabs and small icons',
-            ],
-            [
-              '/bettermakati-mark-mono.svg',
-              'One colour',
-              'For simple print applications',
-            ],
-          ].map(([src, title, note]) => (
+            {
+              src: '/bettermakati-mark.svg',
+              title: 'Primary',
+              note: 'Deep green symbol with the single sun-gold accent.',
+              frame: 'bg-white',
+            },
+            {
+              src: '/bettermakati-mark-white.svg',
+              title: 'Reverse',
+              note: 'All-white mark for deep-green and other dark backgrounds.',
+              frame: 'bg-primary-900',
+            },
+            {
+              src: '/bettermakati-mark-gold.svg',
+              title: 'Single gold',
+              note: 'Secondary one-colour application using the approved sun gold.',
+              frame: 'bg-primary-900',
+            },
+          ].map(item => (
             <figure
-              key={src}
-              className="rounded-2xl border border-primary-100 bg-white p-6"
+              key={item.src}
+              className="overflow-hidden rounded-2xl border border-primary-100 bg-white"
             >
-              <div className="flex h-36 items-center justify-center">
+              <div className={'flex h-40 items-center justify-center p-6 ' + item.frame}>
                 <img
-                  src={src}
-                  alt={title + ' of BetterMakati'}
+                  src={item.src}
+                  alt={item.title + ' BetterMakati symbol'}
                   className="h-28 max-w-full"
                   width="180"
                   height="126"
                 />
               </div>
-              <figcaption className="mt-4">
-                <h3 className="font-bold text-primary-900">{title}</h3>
-                <p className="mt-1 text-sm text-gray-600">{note}</p>
-                <a
-                  href={src}
-                  download
-                  className="mt-3 inline-flex min-h-11 items-center text-sm font-semibold text-primary-700 underline underline-offset-4"
-                >
-                  Download SVG
-                </a>
+              <figcaption className="p-5">
+                <h3 className="font-bold text-primary-900">{item.title}</h3>
+                <p className="mt-1 text-sm text-gray-600">{item.note}</p>
               </figcaption>
             </figure>
           ))}
@@ -124,6 +120,48 @@ export default function About() {
           that this stylized mark is a standard handwritten Ma. Readability with
           Baybayin readers remains to be assessed.
         </p>
+
+        <div className="mt-9 grid gap-4 lg:grid-cols-2">
+          <div className="rounded-2xl border border-primary-100 bg-white p-6">
+            <div className="section-eyebrow">Colour system</div>
+            <h3 className="text-xl font-extrabold text-gray-950">One green. One gold. Warm white.</h3>
+            <div className="mt-5 grid grid-cols-3 gap-3">
+              {[
+                ['#176238', 'Deep green', 'bg-[#176238] text-white'],
+                ['#DCA514', 'Sun gold', 'bg-[#DCA514] text-gray-950'],
+                ['#FFFDF8', 'Warm white', 'bg-[#FFFDF8] text-gray-950 border border-gray-200'],
+              ].map(([hex, label, classes]) => (
+                <div key={hex}>
+                  <div className={'flex h-20 items-end rounded-xl p-3 text-xs font-bold ' + classes}>
+                    {hex}
+                  </div>
+                  <div className="mt-2 text-xs font-bold text-gray-700">{label}</div>
+                </div>
+              ))}
+            </div>
+            <p className="mt-4 text-sm leading-relaxed text-gray-600">
+              Gold is reserved for identity and emphasis rather than small body copy. Semantic alert and data colours remain functional and explicitly labelled.
+            </p>
+          </div>
+
+          <div className="rounded-2xl border border-primary-100 bg-white p-6">
+            <div className="section-eyebrow">Typography</div>
+            <div className="space-y-5">
+              <div>
+                <div className="brand-wordmark text-3xl text-gray-950">Figtree</div>
+                <p className="mt-1 text-sm text-gray-600">Brand, wordmark and display headings.</p>
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-gray-950">Inter</div>
+                <p className="mt-1 text-sm text-gray-600">Navigation, body copy, forms, tables and civic interfaces.</p>
+              </div>
+              <div>
+                <div className="font-mono text-xl font-semibold text-gray-950">Roboto Mono 2026</div>
+                <p className="mt-1 text-sm text-gray-600">Technical labels, code and machine-readable/data contexts.</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </Section>
 
       <Section className="bg-white">
