@@ -1,5 +1,9 @@
 # BetterMakati
 
+**Live:** https://bettermakati.org
+
+**Status:** 🟢 Active — publicly launched and actively maintained.
+
 **BetterMakati** is an independent, open-source civic information and participation platform for Makati, Philippines.
 
 It is part of the BetterLGU community and is **not** an official website of the City Government of Makati.
@@ -18,7 +22,7 @@ BetterMakati organizes public information into citizen-facing tools and dashboar
 - visitor information, mobility, cinemas, parking, events, estates and community associations;
 - live weather, air-quality and advisory links;
 - **City Monitor** for council, legislation, executive speeches, procurement, projects, publications, consultations and official notices;
-- **Civic Briefs** for daily, weekly and monthly government-activity digests, with Facebook distribution planned; and
+- **Civic Briefs** for daily, weekly and monthly government-activity digests; and
 - community tools, corrections and contribution channels.
 
 ## Civic operating principles
@@ -45,11 +49,11 @@ A scheduled source-watch workflow checks selected official records every week an
 
 ## City Monitor
 
-City Monitor uses a daily reviewable source-detection workflow. It hashes selected official Makati and PhilGEPS source channels and opens a pull request when a source changes or a check fails. A changed hash is only a review signal and is never automatically interpreted as a legislative action, procurement award, speech, project status or other substantive event.
+City Monitor uses a daily reviewable source-detection workflow. It hashes selected official Makati and PhilGEPS source channels and records changes for review when a source changes or a check fails. A changed hash is only a review signal and is never automatically interpreted as a legislative action, procurement award, speech, project status or other substantive event.
 
 Validated records use permanent `/city-monitor/:id` pages with source provenance. Speech records can distinguish official transcripts from BetterMakati automated or reviewed transcriptions. Forward-looking commitments can be linked into the Accountability Ledger.
 
-Civic Briefs remain on the site as the permanent update archive. A BetterMakati Facebook Page is planned as the public distribution channel.
+Civic Briefs remain on the site as the permanent update archive. External social-distribution channels are supplemental; bettermakati.org remains the canonical public source.
 
 ## Development
 
@@ -70,9 +74,9 @@ Use the BetterMakati contribution form on the site for corrections, public sourc
 
 ## Current release
 
-Comprehensive CX, technical, accessibility, SEO, civic-content and security hardening merged on September 19, 2026.
+Public launch completed on September 21, 2026 at **https://bettermakati.org**. The launch release includes the official BetterMakati identity, custom-domain canonicalization, structured high-use service guides, source/freshness audits, Civic Map moderation and public reporting, and production browser/accessibility checks.
 
-<!-- deployment-marker: 2026-09-20T00:09+08:00 -->
+The `www` and legacy Vercel hostnames permanently redirect to the canonical `.org` domain.
 
 ## Acknowledgment
 
