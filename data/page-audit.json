@@ -4,7 +4,14 @@
     "label": "Home",
     "status": "reviewed",
     "reviewedAt": "2026-09-20",
-    "checks": ["search", "major-use-cases", "services", "civic-records", "visitor-discovery", "mobile"],
+    "checks": [
+      "search",
+      "major-use-cases",
+      "services",
+      "civic-records",
+      "visitor-discovery",
+      "mobile"
+    ],
     "gaps": []
   },
   {
@@ -12,55 +19,109 @@
     "label": "Services",
     "status": "partial",
     "reviewedAt": "2026-09-20",
-    "checks": ["directory", "search", "city-barangay-national", "guide-first-routing", "office-context"],
-    "gaps": ["Continue converting long-tail indexed services into field-by-field verified transaction guides."]
+    "checks": [
+      "directory",
+      "search",
+      "city-barangay-national",
+      "guide-first-routing",
+      "office-context"
+    ],
+    "gaps": [
+      "Continue converting long-tail indexed services into field-by-field verified transaction guides."
+    ]
   },
   {
     "path": "/government-offices",
     "label": "Government service offices",
     "status": "reviewed",
     "reviewedAt": "2026-09-20",
-    "checks": ["Makati-locations", "serves-Makati-label", "contacts", "maps", "source-links"],
-    "gaps": ["Office moves and contact changes require continuing source-watch review."]
+    "checks": [
+      "Makati-locations",
+      "serves-Makati-label",
+      "contacts",
+      "maps",
+      "source-links"
+    ],
+    "gaps": [
+      "Office moves and contact changes require continuing source-watch review."
+    ]
   },
   {
     "path": "/government",
     "label": "Government",
     "status": "partial",
     "reviewedAt": "2026-09-20",
-    "checks": ["elected-officials", "representation", "city-offices", "city-hall-contact"],
-    "gaps": ["Department-level service and contact depth remains uneven outside the dedicated services directory."]
+    "checks": [
+      "elected-officials",
+      "representation",
+      "city-offices",
+      "city-hall-contact"
+    ],
+    "gaps": [
+      "Department-level service and contact depth remains uneven outside the dedicated services directory."
+    ]
   },
   {
     "path": "/barangays",
     "label": "Barangays",
     "status": "partial",
     "reviewedAt": "2026-09-20",
-    "checks": ["23-barangays", "population", "district", "profiles", "associations"],
-    "gaps": ["Barangay hall contacts and service inventories are not equally complete for all 23 barangays."]
+    "checks": [
+      "23-barangays",
+      "population",
+      "district",
+      "profiles",
+      "associations"
+    ],
+    "gaps": [
+      "Barangay hall contacts and service inventories are not equally complete for all 23 barangays."
+    ]
   },
   {
     "path": "/elections",
     "label": "Elections",
     "status": "partial",
     "reviewedAt": "2026-09-20",
-    "checks": ["official-results", "registration", "calendar", "official-profiles", "neutral-sourcing"],
-    "gaps": ["Election procedures and calendars need continuous COMELEC monitoring as new resolutions are issued."]
+    "checks": [
+      "official-results",
+      "registration",
+      "calendar",
+      "official-profiles",
+      "neutral-sourcing"
+    ],
+    "gaps": [
+      "Election procedures and calendars need continuous COMELEC monitoring as new resolutions are issued."
+    ]
   },
   {
     "path": "/projects-budget",
     "label": "Projects & budget",
     "status": "partial",
     "reviewedAt": "2026-09-20",
-    "checks": ["budget", "actuals", "projects", "procurement", "audit", "trend-view"],
-    "gaps": ["Coverage is limited by what Makati, DBM, COA and PhilGEPS publish in machine-readable or extractable form."]
+    "checks": [
+      "budget",
+      "actuals",
+      "projects",
+      "procurement",
+      "audit",
+      "trend-view"
+    ],
+    "gaps": [
+      "Coverage is limited by what Makati, DBM, COA and PhilGEPS publish in machine-readable or extractable form."
+    ]
   },
   {
     "path": "/statistics",
     "label": "Statistics",
     "status": "reviewed",
     "reviewedAt": "2026-09-20",
-    "checks": ["population", "economy", "comparability", "sources", "trend-context"],
+    "checks": [
+      "population",
+      "economy",
+      "comparability",
+      "sources",
+      "trend-context"
+    ],
     "gaps": []
   },
   {
@@ -68,15 +129,30 @@
     "label": "History",
     "status": "partial",
     "reviewedAt": "2026-09-20",
-    "checks": ["search", "period-filter", "topic-filter", "source-per-entry", "evidence-notes"],
-    "gaps": ["The chronology is intentionally growing and does not claim exhaustive historical coverage."]
+    "checks": [
+      "search",
+      "period-filter",
+      "topic-filter",
+      "source-per-entry",
+      "evidence-notes"
+    ],
+    "gaps": [
+      "The chronology is intentionally growing and does not claim exhaustive historical coverage."
+    ]
   },
   {
     "path": "/visit",
     "label": "Visit Makati",
     "status": "reviewed",
     "reviewedAt": "2026-09-20",
-    "checks": ["places", "maps", "mobility-links", "culture", "food", "visual-context"],
+    "checks": [
+      "places",
+      "maps",
+      "mobility-links",
+      "culture",
+      "food",
+      "visual-context"
+    ],
     "gaps": []
   },
   {
@@ -84,39 +160,76 @@
     "label": "Mobility",
     "status": "reviewed",
     "reviewedAt": "2026-09-20",
-    "checks": ["route-planning", "major-anchors", "ride-hailing", "walking", "cycling", "parking"],
-    "gaps": ["Operator schedules remain external and time-sensitive."]
+    "checks": [
+      "route-planning",
+      "major-anchors",
+      "ride-hailing",
+      "walking",
+      "cycling",
+      "parking"
+    ],
+    "gaps": [
+      "Operator schedules remain external and time-sensitive."
+    ]
   },
   {
     "path": "/today",
     "label": "Today in Makati",
     "status": "reviewed",
     "reviewedAt": "2026-09-20",
-    "checks": ["hotlines", "weather", "advisories", "events", "local-context"],
-    "gaps": ["Live signals depend on upstream availability."]
+    "checks": [
+      "hotlines",
+      "weather",
+      "advisories",
+      "events",
+      "local-context"
+    ],
+    "gaps": [
+      "Live signals depend on upstream availability."
+    ]
   },
   {
     "path": "/city-monitor",
     "label": "City Monitor",
     "status": "partial",
     "reviewedAt": "2026-09-20",
-    "checks": ["source-directory", "change-detection", "validated-records", "provenance"],
-    "gaps": ["A changed source still requires human interpretation before a substantive public record is published."]
+    "checks": [
+      "source-directory",
+      "change-detection",
+      "validated-records",
+      "provenance"
+    ],
+    "gaps": [
+      "A changed source still requires human interpretation before a substantive public record is published."
+    ]
   },
   {
     "path": "/accountability",
     "label": "Accountability Ledger",
     "status": "partial",
     "reviewedAt": "2026-09-20",
-    "checks": ["commitments", "responsibility", "resources", "evidence", "known-gaps"],
-    "gaps": ["No definitive citywide inventory exists yet against which ledger completeness can be measured."]
+    "checks": [
+      "commitments",
+      "responsibility",
+      "resources",
+      "evidence",
+      "known-gaps"
+    ],
+    "gaps": [
+      "No definitive citywide inventory exists yet against which ledger completeness can be measured."
+    ]
   },
   {
     "path": "/records",
     "label": "Public Records",
     "status": "reviewed",
     "reviewedAt": "2026-09-20",
-    "checks": ["source-index", "structured-data", "original-record-links", "download-paths"],
+    "checks": [
+      "source-index",
+      "structured-data",
+      "original-record-links",
+      "download-paths"
+    ],
     "gaps": []
   },
   {
@@ -124,15 +237,46 @@
     "label": "Participation",
     "status": "reviewed",
     "reviewedAt": "2026-09-20",
-    "checks": ["opportunities", "community-input", "workflow-status", "correction-path"],
-    "gaps": ["Response time and participation conversion are not yet measured longitudinally."]
+    "checks": [
+      "opportunities",
+      "community-input",
+      "workflow-status",
+      "correction-path"
+    ],
+    "gaps": [
+      "Response time and participation conversion are not yet measured longitudinally."
+    ]
   },
   {
     "path": "/hotlines",
     "label": "Hotlines",
     "status": "reviewed",
     "reviewedAt": "2026-09-20",
-    "checks": ["911", "city-response", "health", "police", "fire", "offline-access"],
+    "checks": [
+      "911",
+      "city-response",
+      "health",
+      "police",
+      "fire",
+      "offline-access"
+    ],
     "gaps": []
+  },
+  {
+    "path": "/civic-map",
+    "label": "Civic Map",
+    "status": "partial",
+    "reviewedAt": "2026-09-21",
+    "checks": [
+      "independence-boundary",
+      "emergency-routing",
+      "duplicate-consolidation",
+      "ratings",
+      "proposals",
+      "discussion"
+    ],
+    "gaps": [
+      "Pilot asset coverage is intentionally small; verified transport-route objects and recorded government referral/acknowledgement workflows are still being expanded."
+    ]
   }
 ]
