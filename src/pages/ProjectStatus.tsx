@@ -233,6 +233,19 @@ export default function ProjectStatus() {
           note="Counts reflect the current BetterMakati data model."
         />
 
+        <div className="mt-6 flex flex-col gap-3 rounded-2xl border border-success-200 bg-success-50 p-5 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <div className="flex items-center gap-2 font-extrabold text-success-900">
+              <BadgeCheck className="h-5 w-5" />
+              Publicly launched
+            </div>
+            <p className="mt-1 text-sm leading-relaxed text-success-900">
+              BetterMakati is active at <strong>bettermakati.org</strong> and remains under continuous maintenance.
+            </p>
+          </div>
+          <div className="text-xs font-bold text-success-800">Launched September 21, 2026</div>
+        </div>
+
         <div className="mt-7 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
           {coverage.map(item => {
             const Icon = item.icon;
