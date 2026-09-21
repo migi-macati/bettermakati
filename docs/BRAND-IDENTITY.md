@@ -31,13 +31,13 @@ Do not add:
 
 ### Deep green
 
-`#176238`
+`#036738`
 
 Primary civic identity colour. Use for primary actions, navigation states, the main symbol, headings/emphasis and dark brand surfaces.
 
 ### Sun gold
 
-`#DCA514`
+`#FBBF01`
 
 The single approved identity gold. Use for the sun, the word **Better**, rules, small identity accents and selected emphasis.
 
@@ -63,7 +63,7 @@ Primary horizontal treatment:
 
 - **Better** — sun gold
 - **Makati** — deep green
-- Figtree, bold/extrabold, tight tracking
+- Use the supplied official wordmark artwork; do not reconstruct the wordmark with live type.
 
 Reverse treatment on deep green or another dark background:
 
@@ -126,10 +126,10 @@ Gold is not used as small text on warm white because contrast is insufficient fo
 
 ## Production assets
 
-- `/bettermakati-mark.svg` — primary green + gold
-- `/bettermakati-mark-white.svg` — all-white reverse
-- `/bettermakati-mark-gold.svg` — single-gold secondary
-- `/bettermakati-mark-mono.svg` — single green
+- `/bettermakati-logo.svg` — primary green + gold
+- `/bettermakati-logo-reverse.svg` — all-white reverse
+- `/bettermakati-symbol.svg` — single-gold secondary
+- `/bettermakati-symbol-reverse.svg` — single green
 - `/bettermakati-icon.svg` — compact app/browser mark
 
 ## Web tokens
@@ -139,9 +139,9 @@ The live implementation is centralized in `src/index.css`.
 Core variables:
 
 ```css
---brand-green: #176238;
---brand-green-dark: #0D3822;
---brand-gold: #DCA514;
+--brand-green: #036738;
+--brand-green-dark: #015534;
+--brand-gold: #FBBF01;
 --brand-warm-white: #FFFDF8;
 --font-brand: 'Figtree';
 --font-ui: 'Inter';
@@ -149,3 +149,16 @@ Core variables:
 ```
 
 New components and pages should use the existing semantic Tailwind primary/secondary scales and shared brand classes instead of introducing arbitrary competing identity colours.
+
+
+## Authoritative logo master
+
+The uploaded BetterMakati artwork approved on 2026-09-21 is the source of truth for logo geometry and lockup.
+
+Production uses vector traces of that exact artwork:
+- `/bettermakati-logo.svg` — primary full lockup
+- `/bettermakati-logo-reverse.svg` — all-white full lockup
+- `/bettermakati-symbol.svg` — exact symbol-only crop
+- `/bettermakati-symbol-reverse.svg` — exact white symbol
+
+Do not redraw the sun, hills/M strokes, river strokes, or wordmark. Do not rebuild “BetterMakati” as live text in a logo placement.
