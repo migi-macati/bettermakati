@@ -1,7 +1,7 @@
 {
   "name": "BetterMakati",
   "short_name": "BetterMakati",
-  "description": "Independent civic information for Makati City.",
+  "description": "Independent civic information and participation platform for Makati.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#fffdf8",
@@ -16,7 +16,11 @@
   ],
   "id": "/",
   "scope": "/",
-  "categories": ["government", "utilities", "travel"],
+  "categories": [
+    "government",
+    "utilities",
+    "travel"
+  ],
   "shortcuts": [
     {
       "name": "Today in Makati",
