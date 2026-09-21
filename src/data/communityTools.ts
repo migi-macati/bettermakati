@@ -39,6 +39,15 @@ export const communityTools: CommunityTool[] = [
     icon: 'MessagesSquare',
   },
   {
+    id: 'civic-map',
+    name: 'Civic Map',
+    summary: 'Rate public infrastructure, report non-emergency problems, suggest improvements and follow community cases.',
+    status: 'Live',
+    priority: 3.5,
+    href: '/civic-map',
+    icon: 'MapPinned',
+  },
+  {
     id: 'public-records',
     name: 'Public Records',
     summary: 'Find structured Makati records and open the primary source behind them.',
