@@ -52,6 +52,13 @@ const useCases = [
     icon: MapPinned,
   },
   {
+    title: 'There’s a blocked sidewalk here. Has it been reported?',
+    description:
+      'Open the Civic Map, check for an existing case, confirm it or add a new localized report.',
+    href: '/civic-map',
+    icon: MapPinned,
+  },
+  {
     title: 'How do I vote in Makati?',
     description:
       'Find registration, election dates, voter information and official COMELEC sources.',
