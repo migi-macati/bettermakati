@@ -144,8 +144,8 @@ const Home: React.FC = () => {
     <>
       <SEO
         title="Home"
-        description="BetterMakati is an independent civic information portal for Makati City."
-        keywords="Makati, Makati City, public services, local government, civic information, tourism, heritage"
+        description="BetterMakati is an independent civic information and participation platform for Makati."
+        keywords="Makati, Makati City, public services, local government, civic information, civic participation, tourism, heritage"
       />
 
       <Hero />

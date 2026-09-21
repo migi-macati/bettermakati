@@ -40,10 +40,10 @@ export default function SEO({
   const baseUrl = (configuredBase || runtimeBase).replace(/\/$/, '');
 
   const defaultTitle =
-    'BetterMakati | Independent civic portal for Makati City';
+    'BetterMakati | Civic information and participation for Makati';
   const defaultDescription =
     import.meta.env.VITE_SITE_DESCRIPTION ||
-    'Independent civic information portal for Makati City.';
+    'Independent civic information and participation platform for Makati.';
   const defaultKeywords =
     import.meta.env.VITE_SITE_KEYWORDS ||
     'Makati, Makati City, public services, local government, civic information';
@@ -105,7 +105,7 @@ export default function SEO({
       {fullImage && <meta property="og:image" content={fullImage} />}
       <meta
         property="og:image:alt"
-        content="BetterMakati — independent civic information for Makati City"
+        content="BetterMakati — independent civic information and participation for Makati"
       />
       <meta property="og:site_name" content={siteName} />
       <meta property="og:locale" content="en_PH" />

@@ -1,6 +1,6 @@
 # BetterMakati
 
-**BetterMakati** is an independent, open-source civic information portal for Makati City, Philippines.
+**BetterMakati** is an independent, open-source civic information and participation platform for Makati, Philippines.
 
 It is part of the BetterLGU community and is **not** an official website of the City Government of Makati.
 
