@@ -8,7 +8,10 @@ on:
 
 permissions:
   contents: write
-  pull-requests: write
+
+concurrency:
+  group: daily-city-monitor
+  cancel-in-progress: false
 
 jobs:
   monitor:
@@ -16,6 +19,8 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Node
         uses: actions/setup-node@v4
@@ -32,16 +37,22 @@ jobs:
       - name: Verify production build
         run: npm run build
 
-      - name: Open reviewable City Monitor pull request
-        uses: peter-evans/create-pull-request@v7
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          branch: automation/daily-city-monitor
-          delete-branch: true
-          commit-message: 'chore: refresh City Monitor source state'
-          title: 'Daily City Monitor source refresh'
-          body-path: data/city-monitor-report.md
-          add-paths: |
-            data/city-monitor-source-state.json
-            data/city-monitor-source-history.json
-            data/city-monitor-report.md
+      - name: Publish monitor state when changed
+        shell: bash
+        run: |
+          git add             data/city-monitor-source-state.json             data/city-monitor-source-history.json             data/city-monitor-report.md
+
+          if git diff --cached --quiet; then
+            echo "No actionable City Monitor changes to publish."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git commit -m "chore: refresh City Monitor source state"
+
+          # Do not force-push. If main changed during this run, rebase the
+          # generated commit on the latest main and fail safely on conflicts.
+          git pull --rebase origin main
+          git push origin HEAD:main
