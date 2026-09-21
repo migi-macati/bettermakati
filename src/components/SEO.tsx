@@ -59,7 +59,7 @@ export default function SEO({
       : '';
   const fullImage = absoluteUrl(
     baseUrl,
-    image || import.meta.env.VITE_OG_IMAGE_URL || '/og-image.png'
+    image || import.meta.env.VITE_OG_IMAGE_URL || '/og-image.svg'
   );
   const twitterHandle = import.meta.env.VITE_TWITTER_HANDLE || '';
 
@@ -117,7 +117,7 @@ export default function SEO({
       {fullImage && <meta name="twitter:image" content={fullImage} />}
       {twitterHandle && <meta name="twitter:site" content={twitterHandle} />}
 
-      <meta name="theme-color" content="#176238" />
+      <meta name="theme-color" content="#036738" />
       {fullUrl && <link rel="canonical" href={fullUrl} />}
       {schemas.length > 0 && (
         <script type="application/ld+json">{JSON.stringify(schemas)}</script>
