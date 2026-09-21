@@ -14,7 +14,7 @@ export default function Hero() {
               What do you need in Makati?
             </h1>
             <p className="mt-4 max-w-2xl text-base md:text-lg leading-relaxed text-gray-700">
-              Services, places, barangays, public records and city information.
+              Services, places, barangays, public records, participation and city information.
             </p>
 
             <div className="mt-7">
