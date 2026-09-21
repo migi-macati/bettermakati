@@ -49,6 +49,25 @@ export default function Terms() {
             emergency authorities control instructions during an incident.
           </p>
 
+          <h2>Civic Map community content</h2>
+          <p>
+            Civic Map reports, ratings, proposals and comments are
+            community-submitted information. They are not official government
+            findings, case numbers, approvals or commitments unless BetterMakati
+            separately documents the relevant official record. BetterMakati may
+            consolidate duplicate submissions, moderate content, correct
+            categorization, or remove content that is unsafe, irrelevant,
+            abusive, privacy-invasive or unsupported.
+          </p>
+          <p>
+            Contributors should describe observable conditions and avoid
+            publishing sensitive personal information, unverified accusations
+            or unnecessary identifying information about individual workers,
+            drivers or bystanders. Ordinary Civic Map submission does not
+            guarantee that any government body will act on or receive the
+            report.
+          </p>
+
           <h2>Open-source project</h2>
           <p>
             BetterMakati&apos;s source code and change history are publicly

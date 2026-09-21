@@ -3,6 +3,7 @@ import { barangays as barangayProfiles } from './barangays';
 import { electedOfficials } from './electedOfficials';
 import { serviceDirectory } from './serviceDirectory';
 import { governmentServiceOffices } from './governmentServiceOffices';
+import { civicAssets, civicAssetTypeLabels } from './civicMap';
 
 export type SearchGroup =
   | 'Service'
@@ -418,6 +419,34 @@ const toolItems: SearchItem[] = [
   },
 ];
 
+const civicMapItems: SearchItem[] = [
+  {
+    title: 'Civic Map',
+    group: 'Tool',
+    category: 'Participation',
+    description: 'Rate public infrastructure, report non-emergency issues, suggest improvements and follow community discussion.',
+    href: '/civic-map',
+    keywords: 'civic map report pothole sidewalk blocked park review public infrastructure road street proposal crosswalk trees jeepney route public transport',
+    featured: true,
+  },
+  ...civicAssets.map(asset => ({
+    title: asset.title,
+    group: 'Tool' as const,
+    category: 'Civic Map',
+    description: asset.subtitle,
+    href: '/civic-map/' + asset.id,
+    keywords: [
+      civicAssetTypeLabels[asset.type],
+      asset.barangay ?? '',
+      asset.street ?? '',
+      asset.from ?? '',
+      asset.to ?? '',
+      asset.tags.join(' '),
+      'rate report review propose improve',
+    ].join(' '),
+  })),
+];
+
 const radicalCivicItems: SearchItem[] = [
   {
     title: 'City Monitor',
@@ -570,6 +599,7 @@ export const searchIndex: SearchItem[] = [
   })),
   ...serviceItems,
   ...radicalCivicItems,
+  ...civicMapItems,
   ...visitItems,
   ...governmentItems,
   ...officeItems,

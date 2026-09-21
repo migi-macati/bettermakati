@@ -41,6 +41,7 @@ const staticRoutes = [
   '/live',
   '/projects-budget',
   '/community-tools',
+  '/civic-map',
   '/community-tools/saan-ako-lalapit',
   '/get-involved',
   '/contact',
@@ -54,6 +55,9 @@ const extractSlugs = async file => {
 
 const barangaySlugs = await extractSlugs('src/data/barangays.ts');
 const officialSlugs = await extractSlugs('src/data/electedOfficials.ts');
+const civicMapText = await readFile('src/data/civicMap.ts', 'utf8');
+const civicAssetBlock = civicMapText.split('export const civicAssets')[1]?.split('const commonCriteria')[0] ?? '';
+const civicAssetIds = [...civicAssetBlock.matchAll(/\\bid:\\s*'([^']+)'/g)].map(match => match[1]);
 
 const serviceRoutes = [];
 const serviceRoot = 'content/services';
@@ -87,6 +91,7 @@ const routes = [
   ...staticRoutes,
   ...barangaySlugs.map(slug => '/barangays/' + slug),
   ...officialSlugs.map(slug => '/officials/' + slug),
+  ...civicAssetIds.map(id => '/civic-map/' + id),
   ...filteredServiceRoutes,
 ];
 

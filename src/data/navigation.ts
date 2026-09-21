@@ -48,6 +48,7 @@ export const mainNavigation: NavigationItem[] = [
     href: '/participate',
     children: [
       { label: 'Participation Hub', href: '/participate' },
+      { label: 'Civic Map', href: '/civic-map' },
       { label: 'Saan Ako Lalapit?', href: '/community-tools/saan-ako-lalapit' },
       { label: 'Community Tools', href: '/community-tools' },
       {
@@ -108,6 +109,7 @@ export const footerNavigation = {
         { label: 'Integrity & Public Interest', href: '/integrity' },
         { label: 'Open Government', href: '/open-government' },
         { label: 'Participate', href: '/participate' },
+        { label: 'Civic Map', href: '/civic-map' },
       ],
     },
     {

@@ -49,6 +49,8 @@ const Integrity = lazy(() => import('./pages/Integrity'));
 const ProjectStatus = lazy(() => import('./pages/ProjectStatus'));
 const CityMonitor = lazy(() => import('./pages/CityMonitor'));
 const CivicBriefs = lazy(() => import('./pages/CivicBriefs'));
+const CivicMap = lazy(() => import('./pages/CivicMap'));
+const CivicAsset = lazy(() => import('./pages/CivicAsset'));
 const CityMonitorRecordPage = lazy(
   () => import('./pages/CityMonitorRecordPage')
 );
@@ -123,6 +125,8 @@ function App() {
                       element={<CityMonitorRecordPage />}
                     />
                     <Route path="/briefs" element={<CivicBriefs />} />
+                    <Route path="/civic-map" element={<CivicMap />} />
+                    <Route path="/civic-map/:assetId" element={<CivicAsset />} />
                     <Route path="/barangays" element={<Barangays />} />
                     <Route
                       path="/barangays/:slug"
