@@ -53,6 +53,23 @@ export default function Privacy() {
             transparent follow-up.
           </p>
 
+          <h2>Civic Map pilot</h2>
+          <p>
+            Civic Map does not require a BetterMakati account during the pilot.
+            Reports, proposals, reviews, confirmations and replies are intended
+            to become public community records and may be stored through
+            BetterMakati&apos;s public GitHub-backed workflow. Contributors may
+            use an alias or appear as an anonymous contributor.
+          </p>
+          <p>
+            Do not submit government IDs, medical information, private phone
+            numbers, passwords, unnecessary personal information about other
+            people, or identifying details of rank-and-file workers or transport
+            personnel in public Civic Map text. Location attached to a Civic Map
+            case describes the public asset or reported condition; BetterMakati
+            does not need to publish the contributor&apos;s personal location.
+          </p>
+
           <h2>Cookies and local storage</h2>
           <p>
             BetterMakati currently does not require advertising cookies or a
