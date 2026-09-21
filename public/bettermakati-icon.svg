@@ -1,1 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><title>BetterMakati</title><rect width="64" height="64" rx="14" fill="#005447"/><g fill="#d5a62d"><circle cx="32" cy="29" r="9"/><path d="M30 17V8H34V17ZM21 21L15 15L18 12L24 18ZM40 18L46 12L49 15L43 21Z"/></g><path d="M7 44C14 52 18 25 26 26C33 26 36 48 46 47C36 53 30 37 26 35C22 32 17 57 7 44ZM32 34C44 19 46 48 57 43C49 57 42 34 39 35L35 39Z" fill="white"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">BetterMakati</title>
+  <rect width="64" height="64" rx="14" fill="#176238"/>
+  <g fill="#DCA514">
+    <circle cx="32" cy="29" r="9"/>
+    <path d="M30 17V8H34V17ZM21 21L15 15L18 12L24 18ZM40 18L46 12L49 15L43 21Z"/>
+  </g>
+  <path d="M7 44C14 52 18 25 26 26C33 26 36 48 46 47C36 53 30 37 26 35C22 32 17 57 7 44ZM32 34C44 19 46 48 57 43C49 57 42 34 39 35L35 39Z" fill="#FFFFFF"/>
+</svg>
