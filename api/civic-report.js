@@ -1,6 +1,5 @@
 const prefixes = ['[Civic Report]', '[Civic Proposal]', '[Civic Update]', '[Civic Reviews]'];
 
-const clean = value => String(value || '').trim();
 const parseJsonComment = (body, marker) => {
   const match = String(body || '').match(new RegExp('<!--\\s*' + marker + '\\s+({[\\s\\S]*?})\\s*-->'));
   if (!match) return null;
