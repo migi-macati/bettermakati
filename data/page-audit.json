@@ -273,10 +273,14 @@
       "duplicate-consolidation",
       "ratings",
       "proposals",
-      "discussion"
+      "discussion",
+      "corroboration",
+      "referral-lifecycle",
+      "weekly-monthly-reporting"
     ],
     "gaps": [
-      "Pilot asset coverage is intentionally small; verified transport-route objects and recorded government referral/acknowledgement workflows are still being expanded."
+      "Pilot asset coverage is intentionally small; verified public-transport route/stop objects still need expansion.",
+      "Referral lifecycle events can now be recorded, but delivery to government remains intentionally human-reviewed rather than automatic."
     ]
   }
 ]
