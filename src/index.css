@@ -191,3 +191,40 @@ nav a[aria-current='page'] {
   height: auto;
   max-width: 100%;
 }
+
+/* Shared controls used by service guides and civic participation. */
+.brand-btn-primary, .brand-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  min-height: 44px;
+  padding: .65rem 1rem;
+  border: 1px solid transparent;
+  border-radius: .75rem;
+  font-size: .875rem;
+  font-weight: 700;
+  line-height: 1.4;
+  text-align: center;
+  cursor: pointer;
+}
+.brand-btn-primary { background: var(--brand-green); color: white; }
+.brand-btn-primary:hover { background: var(--brand-green-dark); }
+.brand-btn-secondary { background: white; color: var(--brand-green-dark); border-color: #b5cdbf; }
+.brand-btn-secondary:hover { background: #f1f8f4; }
+button:disabled { cursor: not-allowed; opacity: .6; }
+.form-field { display: flex; flex-direction: column; gap: .5rem; min-width: 0; font-size: .875rem; font-weight: 600; }
+.form-field :is(input, select, textarea) {
+  display: block; width: 100%; min-width: 0; min-height: 44px;
+  border: 1px solid #94a89c; border-radius: .6rem;
+  padding: .7rem .8rem; background: white; color: #25211f;
+  font-size: 1rem; font-weight: 400; line-height: 1.5;
+}
+.form-field textarea { resize: vertical; }
+.form-field :is(input, textarea)::placeholder { color: #647169; opacity: 1; }
+.section-eyebrow { margin-bottom: .65rem; color: var(--brand-green-dark); font-size: .75rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+.skip-link { position: fixed; top: .5rem; left: .5rem; z-index: 100; transform: translateY(-200%); padding: .75rem 1rem; background: white; color: var(--brand-green-dark); border: 2px solid currentColor; border-radius: .5rem; }
+.skip-link:focus { transform: translateY(0); }
+[id] { scroll-margin-top: 6rem; }
+.hero-principle { display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; }
+.form-field.hidden { display: none; }

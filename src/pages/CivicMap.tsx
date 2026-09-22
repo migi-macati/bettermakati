@@ -37,6 +37,7 @@ const typeOptions: Array<{ value: 'all' | CivicAssetType; label: string }> = [
   { value: 'all', label: 'All mapped assets' },
   { value: 'street-segment', label: 'Street segments' },
   { value: 'park', label: 'Parks' },
+  { value: 'heritage-site', label: 'Heritage sites' },
   { value: 'public-office', label: 'Public offices' },
   { value: 'health-center', label: 'Health centers' },
   { value: 'transport-route', label: 'Transport routes' },
@@ -47,15 +48,18 @@ export default function CivicMap() {
   const [query, setQuery] = useState('');
   const [type, setType] = useState<'all' | CivicAssetType>('all');
   const [feed, setFeed] = useState<FeedItem[]>([]);
+  const [feedState, setFeedState] = useState<'loading' | 'ready' | 'failed'>('loading');
 
   useEffect(() => {
     const load = async () => {
       try {
         const response = await fetch('/api/civic', { cache: 'no-store' });
         const data = await response.json();
-        if (response.ok && Array.isArray(data.items)) setFeed(data.items);
+        if (!response.ok || !Array.isArray(data.items)) throw new Error('Feed unavailable');
+        setFeed(data.items);
+        setFeedState('ready');
       } catch {
-        // The mapped asset directory remains useful even when the community feed is unavailable.
+        setFeedState('failed');
       }
     };
     void load();
@@ -88,9 +92,9 @@ export default function CivicMap() {
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
             <div className="section-eyebrow">Civic Map · Pilot</div>
-            <Heading>See it. Rate it. Report it. Improve it.</Heading>
+            <Heading>Help improve public places</Heading>
             <p className="mt-3 max-w-4xl text-lg leading-relaxed text-gray-700">
-              A community map of Makati&apos;s streets, sidewalks, parks, public facilities and public transport. Assess how places work, consolidate problems into cases, suggest improvements and follow public discussion over time.
+              Choose a mapped place to report a non-emergency problem, rate your experience or suggest an improvement. You can also check existing community reports.
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-2">
@@ -99,6 +103,11 @@ export default function CivicMap() {
             </Link>
             <SharePage title="BetterMakati Civic Map" />
           </div>
+        </div>
+
+        <div className="mt-5 flex flex-wrap gap-3">
+          <a href="#places" className="brand-btn-primary">Choose a place <ArrowRight className="h-4 w-4" /></a>
+          <a href="#how-it-works" className="brand-btn-secondary">How it works</a>
         </div>
 
         <LastReviewed
@@ -128,11 +137,11 @@ export default function CivicMap() {
             <div className="text-xs font-bold text-gray-600">pilot mapped assets</div>
           </div>
           <div className="rounded-2xl border border-primary-100 bg-white p-4">
-            <div className="text-2xl font-extrabold text-gray-950">{activeReports}</div>
+            <div className="text-2xl font-extrabold text-gray-950">{feedState === 'ready' ? activeReports : '—'}</div>
             <div className="text-xs font-bold text-gray-600">open community cases</div>
           </div>
           <div className="rounded-2xl border border-primary-100 bg-white p-4">
-            <div className="text-2xl font-extrabold text-gray-950">{proposals}</div>
+            <div className="text-2xl font-extrabold text-gray-950">{feedState === 'ready' ? proposals : '—'}</div>
             <div className="text-xs font-bold text-gray-600">open improvement proposals</div>
           </div>
           <div className="rounded-2xl border border-primary-100 bg-white p-4">
@@ -140,39 +149,12 @@ export default function CivicMap() {
             <div className="text-xs font-bold text-gray-600">per duplicate problem, not per reporter</div>
           </div>
         </div>
+        {feedState !== 'ready' && <p role="status" className="mt-3 text-sm text-gray-600">
+          {feedState === 'loading' ? 'Loading community counts…' : 'Community counts are unavailable. You can still browse places and open their reporting forms.'}
+        </p>}
       </Section>
 
-      <Section className="bg-white">
-        <div className="grid gap-8 xl:grid-cols-[1.15fr_0.85fr]">
-          <CivicMapEmbed lat={14.5652} lng={121.0278} title="Makati Civic Map pilot" zoom={14} />
-
-          <div>
-            <div className="section-eyebrow">How it works</div>
-            <Heading level={2}>Four kinds of civic contribution</Heading>
-            <div className="mt-5 space-y-3">
-              {[
-                { icon: Star, title: 'Rate a place or route', text: 'Structured 1–5 assessment using criteria appropriate to the asset.' },
-                { icon: Wrench, title: 'Report a problem', text: 'A broken, blocked, unsafe or malfunctioning condition becomes a consolidatable case.' },
-                { icon: Trees, title: 'Suggest an improvement', text: 'More trees, a crosswalk, accessibility retrofit, route change or another specific improvement.' },
-                { icon: MessagesSquare, title: 'Discuss & update', text: 'Confirm, add evidence, reply, raise trade-offs, or say that something appears resolved.' },
-              ].map(item => {
-                const Icon = item.icon;
-                return (
-                  <div key={item.title} className="flex gap-3 rounded-xl border border-gray-200 bg-[#fffdf8] p-4">
-                    <Icon className="mt-0.5 h-5 w-5 shrink-0 text-primary-700" />
-                    <div>
-                      <div className="font-extrabold text-gray-950">{item.title}</div>
-                      <p className="mt-1 text-sm leading-relaxed text-gray-600">{item.text}</p>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      </Section>
-
-      <Section className="bg-[#f5f8f2]">
+      <Section className="bg-[#f5f8f2]" id="places">
         <div className="section-eyebrow">Mapped assets</div>
         <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
           <div>
@@ -240,7 +222,7 @@ export default function CivicMap() {
                   </div>
                 )}
                 <div className="mt-4 flex items-center justify-between gap-3 text-xs">
-                  <span className="text-gray-500">{records.length} community record{records.length === 1 ? '' : 's'}</span>
+                  <span className="text-gray-500">{feedState === 'ready' ? `${records.length} community record${records.length === 1 ? '' : 's'}` : 'Records loading or unavailable'}</span>
                   <span className="inline-flex items-center gap-1 font-bold text-primary-700">
                     Open <ArrowRight className="h-4 w-4" />
                   </span>
@@ -252,23 +234,55 @@ export default function CivicMap() {
 
         {visible.length === 0 && (
           <div className="mt-6 rounded-2xl border border-gray-200 bg-white p-6 text-sm text-gray-600">
-            No pilot asset matches this search yet. The map inventory will expand in stages rather than invent unverified infrastructure or route records.
+            <p>No mapped place matches these filters.</p>
+            <button type="button" onClick={() => { setQuery(''); setType('all'); }} className="brand-btn-secondary mt-3">Clear filters</button>
           </div>
         )}
+        <p className="mt-6 text-sm text-gray-600">Place missing? <Link to="/get-involved?type=proposal&subject=Add%20a%20place%20to%20Civic%20Map#submission" className="font-bold text-primary-700 underline">Suggest a place to map</Link>. The directory currently covers {civicAssets.length} pilot locations.</p>
+      </Section>
+
+      <Section className="bg-white" id="how-it-works">
+        <div className="grid gap-8 xl:grid-cols-[1.15fr_0.85fr]">
+          <CivicMapEmbed lat={14.5652} lng={121.0278} title="Makati Civic Map pilot" zoom={14} />
+
+          <div>
+            <div className="section-eyebrow">How it works</div>
+            <Heading level={2}>Four kinds of civic contribution</Heading>
+            <div className="mt-5 space-y-3">
+              {[
+                { icon: Star, title: 'Rate a place or route', text: 'Structured 1–5 assessment using criteria appropriate to the asset.' },
+                { icon: Wrench, title: 'Report a problem', text: 'A broken, blocked, unsafe or malfunctioning condition becomes a consolidatable case.' },
+                { icon: Trees, title: 'Suggest an improvement', text: 'More trees, a crosswalk, accessibility retrofit, route change or another specific improvement.' },
+                { icon: MessagesSquare, title: 'Discuss & update', text: 'Confirm, add evidence, reply, raise trade-offs, or say that something appears resolved.' },
+              ].map(item => {
+                const Icon = item.icon;
+                return (
+                  <div key={item.title} className="flex gap-3 rounded-xl border border-gray-200 bg-[#fffdf8] p-4">
+                    <Icon className="mt-0.5 h-5 w-5 shrink-0 text-primary-700" />
+                    <div>
+                      <div className="font-extrabold text-gray-950">{item.title}</div>
+                      <p className="mt-1 text-sm leading-relaxed text-gray-600">{item.text}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
       </Section>
 
       <Section className="bg-white">
         <div className="grid gap-6 lg:grid-cols-2">
           <div className="rounded-2xl border border-primary-100 bg-[#fffdf8] p-6">
             <Route className="h-6 w-6 text-primary-700" />
-            <h2 className="mt-3 text-xl font-extrabold text-gray-950">Street segmentation is part of the data model</h2>
+            <h2 className="mt-3 text-xl font-extrabold text-gray-950">Report the right stretch of road</h2>
             <p className="mt-2 text-sm leading-relaxed text-gray-600">
               Roads break at intersections and other meaningful boundaries. A case retains precise coordinates plus the permanent segment ID, and can identify the north, south, east or west sidewalk when needed.
             </p>
           </div>
           <div className="rounded-2xl border border-primary-100 bg-[#fffdf8] p-6">
             <Bus className="h-6 w-6 text-primary-700" />
-            <h2 className="mt-3 text-xl font-extrabold text-gray-950">Public transport uses route, stop and terminal objects</h2>
+            <h2 className="mt-3 text-xl font-extrabold text-gray-950">Public transport coverage is expanding</h2>
             <p className="mt-2 text-sm leading-relaxed text-gray-600">
               Jeepney and bus routes, individual stops, and tricycle/TODA terminals can each carry their own ratings, route corrections, fare/service reports and improvement proposals. Current route objects will only be published after their alignments and operating information are verified.
             </p>

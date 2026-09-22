@@ -37,16 +37,18 @@ const kindOptions: Array<{
 }> = [
   { id: 'report', label: 'Report a problem', description: 'Something is broken, blocked, unsafe or not working.', icon: Wrench },
   { id: 'proposal', label: 'Suggest an improvement', description: 'A physical or service change could make this work better.', icon: ThumbsUp },
-  { id: 'review', label: 'Rate this place / service', description: 'Structured 1–5 assessment using criteria for this asset type.', icon: Star },
+  { id: 'review', label: 'Rate this place / service', description: 'Rate the things you have experienced. Skip the rest.', icon: Star },
   { id: 'update', label: 'Update information', description: 'Route, hours, status or mapped information appears outdated.', icon: MessageSquare },
 ];
 
 export default function CivicContributionForm({
   asset,
   initialKind = 'report',
+  onSubmitted,
 }: {
   asset: CivicAsset;
   initialKind?: CivicContributionKind;
+  onSubmitted?: () => void;
 }) {
   const [kind, setKind] = useState<CivicContributionKind>(initialKind);
   const [category, setCategory] = useState('');
@@ -78,9 +80,10 @@ export default function CivicContributionForm({
   const chooseKind = (value: CivicContributionKind) => {
     setKind(value);
     setCategory('');
-    setSubject('');
     setStatus('idle');
     setMessage('');
+    setTrackingUrl('');
+    setFallbackUrl('');
     setDuplicates([]);
     setForceNew(false);
   };
@@ -100,11 +103,11 @@ export default function CivicContributionForm({
     side,
     segmentFrom: asset.from,
     segmentTo: asset.to,
-    severity,
+    severity: kind === 'report' ? severity : 'normal',
     preferredChannel: selectedIssue?.preferredChannel || '',
     alias,
     evidenceUrl,
-    scores,
+    scores: kind === 'review' ? scores : {},
     forceNew,
     website,
   });
@@ -136,6 +139,7 @@ export default function CivicContributionForm({
       setEvidenceUrl('');
       setSubject('');
       setForceNew(false);
+      onSubmitted?.();
       return;
     }
 
@@ -148,7 +152,7 @@ export default function CivicContributionForm({
     if (data.fallbackUrl) {
       setStatus('fallback');
       setFallbackUrl(data.fallbackUrl);
-      setMessage('Native Civic Map storage is unavailable on this deployment. You can continue to the pre-filled public GitHub submission.');
+      setMessage('Your submission has not been saved. You can try again or continue with a pre-filled public form on GitHub, which requires a GitHub account.');
       return;
     }
 
@@ -158,7 +162,12 @@ export default function CivicContributionForm({
 
   const submit = async (event: FormEvent) => {
     event.preventDefault();
-    if (emergency) return;
+    if (emergency || status === 'submitting') return;
+    if (kind === 'review' && Object.keys(scores).length === 0) {
+      setStatus('error');
+      setMessage('Choose at least one rating. Leave anything you cannot assess unrated.');
+      return;
+    }
     setStatus('submitting');
     setMessage('');
     setTrackingUrl('');
@@ -193,6 +202,7 @@ export default function CivicContributionForm({
       if (!response.ok) throw new Error(data.error || 'Could not add confirmation.');
       setStatus('success');
       setTrackingUrl(item.url);
+      onSubmitted?.();
       setMessage(
         kind === 'proposal'
           ? 'Support added to the existing proposal instead of creating a duplicate.'
@@ -232,6 +242,7 @@ export default function CivicContributionForm({
             <button
               key={option.id}
               type="button"
+              disabled={status === 'submitting'}
               onClick={() => chooseKind(option.id)}
               className={
                 active
@@ -252,7 +263,9 @@ export default function CivicContributionForm({
         <strong>Independent platform.</strong> BetterMakati is not an official City Government or agency reporting system. Ordinary reports are consolidated and reviewed before any government referral. Emergency reports must use official emergency channels.
       </div>
 
-      <form onSubmit={submit} className="mt-6">
+      <form onSubmit={submit} className="mt-6" aria-busy={status === 'submitting'}>
+        <fieldset disabled={status === 'submitting'} className="min-w-0">
+        <legend className="sr-only">Contribution details</legend>
         {kind === 'report' && (
           <div className="grid gap-5 md:grid-cols-2">
             <label className="form-field md:col-span-2">
@@ -316,14 +329,14 @@ export default function CivicContributionForm({
 
         {kind === 'review' && (
           <div>
-            <div className="text-sm font-bold text-gray-900">Rate the relevant dimensions</div>
+            <div className="text-sm font-bold text-gray-900">Rate what you have experienced</div>
             <p className="mt-1 text-xs leading-relaxed text-gray-500">
-              1 = very poor · 3 = adequate · 5 = excellent. Skip a criterion you cannot reasonably assess.
+              1 = very poor · 2 = poor · 3 = adequate · 4 = good · 5 = excellent. Leave anything you cannot assess unrated.
             </p>
             <div className="mt-4 space-y-4">
               {criteria.map(item => (
-                <div key={item.id} className="rounded-xl border border-gray-200 p-4">
-                  <div className="font-bold text-gray-900">{item.label}</div>
+                <fieldset key={item.id} className="min-w-0 rounded-xl border border-gray-200 p-4">
+                  <legend className="px-1 font-bold text-gray-900">{item.label}</legend>
                   <div className="mt-1 text-xs text-gray-500">{item.description}</div>
                   <div className="mt-3 flex flex-wrap gap-2">
                     {[1, 2, 3, 4, 5].map(score => (
@@ -331,18 +344,20 @@ export default function CivicContributionForm({
                         key={score}
                         type="button"
                         onClick={() => setScores(current => ({ ...current, [item.id]: score }))}
+                        aria-label={`${item.label}: ${score} of 5 — ${['Very poor', 'Poor', 'Adequate', 'Good', 'Excellent'][score - 1]}`}
                         aria-pressed={scores[item.id] === score}
                         className={
                           scores[item.id] === score
-                            ? 'grid h-9 w-9 place-items-center rounded-full bg-primary-800 text-sm font-extrabold text-white'
-                            : 'grid h-9 w-9 place-items-center rounded-full border border-gray-300 bg-white text-sm font-bold text-gray-700 hover:border-primary-400'
+                            ? 'grid h-11 w-11 place-items-center rounded-full bg-primary-800 text-sm font-extrabold text-white'
+                            : 'grid h-11 w-11 place-items-center rounded-full border border-gray-300 bg-white text-sm font-bold text-gray-700 hover:border-primary-400'
                         }
                       >
                         {score}
                       </button>
                     ))}
                   </div>
-                </div>
+                  <button type="button" disabled={!scores[item.id]} onClick={() => setScores(current => { const next = { ...current }; delete next[item.id]; return next; })} className="mt-2 min-h-11 text-xs font-bold text-primary-700 underline" aria-label={'Clear rating for ' + item.label}>Clear rating</button>
+                </fieldset>
               ))}
             </div>
           </div>
@@ -417,13 +432,14 @@ export default function CivicContributionForm({
             </label>
 
             <label className="form-field">
-              <span>Evidence link</span>
+              <span>Evidence link (optional)</span>
               <input
                 type="url"
                 value={evidenceUrl}
                 onChange={event => setEvidenceUrl(event.target.value)}
-                placeholder="Optional photo / public link"
+                placeholder="https://…"
               />
+              <span className="text-xs font-normal text-gray-600">Paste a publicly accessible photo or document link. Check that it contains no private information.</span>
             </label>
 
             <label className="hidden" aria-hidden="true">
@@ -461,10 +477,10 @@ export default function CivicContributionForm({
         )}
 
         {status === 'duplicate' && duplicates.length > 0 && (
-          <div className="mt-5 rounded-2xl border border-secondary-300 bg-secondary-50 p-5">
+          <div role="status" className="mt-5 rounded-2xl border border-secondary-300 bg-secondary-50 p-5">
             <div className="font-extrabold text-gray-950">This may already be reported</div>
             <p className="mt-1 text-sm text-gray-700">
-              Confirm an existing case instead of creating duplicate government-facing noise.
+              If this describes the same problem, add your confirmation and details to that case.
             </p>
             <div className="mt-4 space-y-3">
               {duplicates.map(item => (
@@ -521,7 +537,7 @@ export default function CivicContributionForm({
           </div>
         )}
 
-        {!emergency && (
+        {!emergency && status !== 'success' && status !== 'duplicate' && (
           <div className="mt-6">
             <button
               type="submit"
@@ -530,7 +546,7 @@ export default function CivicContributionForm({
             >
               <Send className="h-4 w-4" />
               {status === 'submitting'
-                ? 'Checking…'
+                ? 'Submitting…'
                 : kind === 'review'
                   ? 'Publish review'
                   : kind === 'proposal'
@@ -541,6 +557,8 @@ export default function CivicContributionForm({
             </button>
           </div>
         )}
+        {status === 'success' && <button type="button" className="brand-btn-secondary mt-5" onClick={() => { setStatus('idle'); setMessage(''); setScores({}); setDetails(''); setEvidenceUrl(''); setSubject(''); setTrackingUrl(''); setCategory(''); setSeverity('normal'); }}>Start another contribution</button>}
+        </fieldset>
       </form>
     </div>
   );

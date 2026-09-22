@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link, useParams } from 'react-router';
 import {
   AlertTriangle,
@@ -24,6 +25,7 @@ import {
 
 export default function CivicAsset() {
   const { assetId } = useParams();
+  const [revision, setRevision] = useState(0);
   const asset = civicAssets.find(item => item.id === assetId);
 
   if (!asset) {
@@ -100,6 +102,11 @@ export default function CivicAsset() {
           </Link>
         </div>
 
+        <nav aria-label="On this place page" className="mt-6 flex flex-wrap gap-3">
+          <a href="#contribute" className="brand-btn-primary">Report, rate or suggest</a>
+          <a href="#community-records" className="brand-btn-secondary">Check existing reports</a>
+          <a href="#place-details" className="brand-btn-secondary">Location & rating criteria</a>
+        </nav>
         <LastReviewed
           date={civicMethodologyReviewed}
           note="Civic Map pilot asset. Responsibility/jurisdiction should be treated as provisional where marked for verification."
@@ -111,7 +118,38 @@ export default function CivicAsset() {
         </div>
       </Section>
 
-      <Section className="bg-white">
+      <Section className="bg-[#f5f8f2]" id="contribute">
+        <div className="grid gap-8 lg:grid-cols-[0.65fr_1.35fr]">
+          <div>
+            <div className="section-eyebrow">Community contribution</div>
+            <Heading level={2}>Add an observation or idea</Heading>
+            <p className="mt-2 text-sm leading-relaxed text-gray-600">
+              BetterMakati checks for nearby duplicates before creating a separate issue case. Use confirmations and updates whenever an existing case describes the same problem.
+            </p>
+
+            <div className="mt-5 rounded-xl border border-error-200 bg-error-50 p-4 text-sm text-error-900">
+              <div className="flex gap-2">
+                <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0" />
+                <div>
+                  <strong>Emergency?</strong> For immediate danger, call <a href="tel:911" className="font-bold underline">911</a>. This form is for non-emergency observations.
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-5 rounded-xl border border-gray-200 bg-white p-4 text-sm leading-relaxed text-gray-600">
+              <ShieldCheck className="mb-2 h-5 w-5 text-primary-700" />
+              Reports start as <strong>unverified community submissions</strong>. Confirmation, BetterMakati review, official acknowledgement and community-verified resolution are separate evidence states.
+            </div>
+          </div>
+
+          <CivicContributionForm key={asset.id} asset={asset} onSubmitted={() => setRevision(value => value + 1)} />
+        </div>
+      </Section>
+
+      <Section className="bg-white" id="community-records">
+        <CivicDiscussion key={asset.id + revision} assetId={asset.id} />
+      </Section>
+      <Section className="bg-white" id="place-details">
         <div className="grid gap-8 xl:grid-cols-[1.1fr_0.9fr]">
           <CivicMapEmbed lat={asset.lat} lng={asset.lng} title={asset.title} />
 
@@ -138,37 +176,6 @@ export default function CivicAsset() {
         </div>
       </Section>
 
-      <Section className="bg-[#f5f8f2]">
-        <div className="grid gap-8 xl:grid-cols-[0.95fr_1.05fr]">
-          <div>
-            <div className="section-eyebrow">Community contribution</div>
-            <Heading level={2}>Add an observation or idea</Heading>
-            <p className="mt-2 text-sm leading-relaxed text-gray-600">
-              BetterMakati checks for nearby duplicates before creating a separate issue case. Use confirmations and updates whenever an existing case describes the same problem.
-            </p>
-
-            <div className="mt-5 rounded-xl border border-error-200 bg-error-50 p-4 text-sm text-error-900">
-              <div className="flex gap-2">
-                <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0" />
-                <div>
-                  <strong>Emergency?</strong> Fire, active crime, medical emergencies, serious collisions and immediate life-safety hazards should go to Unified 911, not the Civic Map queue.
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-5 rounded-xl border border-gray-200 bg-white p-4 text-sm leading-relaxed text-gray-600">
-              <ShieldCheck className="mb-2 h-5 w-5 text-primary-700" />
-              Reports start as <strong>unverified community submissions</strong>. Confirmation, BetterMakati review, official acknowledgement and community-verified resolution are separate evidence states.
-            </div>
-          </div>
-
-          <CivicContributionForm asset={asset} />
-        </div>
-      </Section>
-
-      <Section className="bg-white">
-        <CivicDiscussion assetId={asset.id} />
-      </Section>
     </>
   );
 }

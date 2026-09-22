@@ -55,6 +55,7 @@ export default function CivicDiscussion({ assetId }: { assetId: string }) {
   const [activeIssue, setActiveIssue] = useState<number | null>(null);
   const [comments, setComments] = useState<CivicComment[]>([]);
   const [commentsLoading, setCommentsLoading] = useState(false);
+  const [commentsFailed, setCommentsFailed] = useState(false);
   const [replyType, setReplyType] = useState('reply');
   const [reply, setReply] = useState('');
   const [alias, setAlias] = useState('');
@@ -89,6 +90,7 @@ export default function CivicDiscussion({ assetId }: { assetId: string }) {
   const loadComments = async (issueNumber: number) => {
     setActiveIssue(issueNumber);
     setCommentsLoading(true);
+    setCommentsFailed(false);
     setReplyState('idle');
     setReplyMessage('');
     setParentCommentId(null);
@@ -99,6 +101,7 @@ export default function CivicDiscussion({ assetId }: { assetId: string }) {
       setComments(data.comments);
     } catch {
       setComments([]);
+      setCommentsFailed(true);
     } finally {
       setCommentsLoading(false);
     }
@@ -314,7 +317,7 @@ export default function CivicDiscussion({ assetId }: { assetId: string }) {
             <div className="mt-5 text-sm text-gray-500">Loading discussion…</div>
           ) : comments.length === 0 ? (
             <div className="mt-5 rounded-xl border border-gray-200 bg-white p-4 text-sm text-gray-600">
-              No community replies yet.
+              {commentsFailed ? 'Replies could not be loaded. Reopen this discussion to try again.' : 'No community replies yet.'}
             </div>
           ) : (
             <div className="mt-5 space-y-3">
