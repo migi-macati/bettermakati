@@ -19,14 +19,40 @@ const Footer: React.FC = () => {
             <p className="max-w-xs text-primary-100 text-sm leading-relaxed">
               Civic information, public records and participation tools for understanding and using Makati.
             </p>
-            <a
-              href="https://github.com/migi-macati/bettermakati"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 mt-4 text-sm font-semibold text-primary-100 hover:text-white"
-            >
-              <Github className="h-4 w-4" /> Open-source on GitHub
-            </a>
+            <div className="mt-4 flex flex-col items-start gap-2 text-sm font-semibold">
+              <a
+                href="mailto:hello@bettermakati.org"
+                className="text-primary-100 hover:text-white"
+              >
+                hello@bettermakati.org
+              </a>
+              <div className="flex flex-wrap gap-x-4 gap-y-2">
+                <a
+                  href="https://www.facebook.com/bettermakati"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-primary-100 hover:text-white"
+                >
+                  Facebook
+                </a>
+                <a
+                  href="https://www.instagram.com/bettermakati/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-primary-100 hover:text-white"
+                >
+                  Instagram
+                </a>
+              </div>
+              <a
+                href="https://github.com/migi-macati/bettermakati"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 text-primary-100 hover:text-white"
+              >
+                <Github className="h-4 w-4" /> Open-source on GitHub
+              </a>
+            </div>
           </div>
 
           {footerNavigation.mainSections.map(section => (
