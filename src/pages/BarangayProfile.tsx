@@ -4,7 +4,9 @@ import {
   ExternalLink,
   Home,
   Landmark,
+  Mail,
   MapPin,
+  Phone,
   Users,
 } from 'lucide-react';
 import { Link, useParams } from 'react-router';
@@ -235,6 +237,29 @@ export default function BarangayProfile() {
         </div>
       </Section>
 
+      <Section className="bg-[#fffdf8]">
+        <div className="section-eyebrow">Local government access</div>
+        <Heading level={2}>Barangay hall contact</Heading>
+        {barangay.hallPhone || barangay.hallAddress || barangay.hallEmail ? (
+          <div className="mt-5 rounded-2xl border border-primary-100 bg-white p-5">
+            <p className="text-sm leading-relaxed text-gray-600">
+              These details are transcribed from the linked official Makati barangay page. Confirm hours and service availability before travelling.
+            </p>
+            <div className="mt-4 grid gap-3 text-sm text-gray-700">
+              {barangay.hallAddress && <div className="flex gap-2"><MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary-700" /><span>{barangay.hallAddress}</span></div>}
+              {barangay.hallPhone && <div className="flex gap-2"><Phone className="mt-0.5 h-4 w-4 shrink-0 text-primary-700" /><span>{barangay.hallPhone}</span></div>}
+              {barangay.hallEmail && <div className="flex gap-2"><Mail className="mt-0.5 h-4 w-4 shrink-0 text-primary-700" /><a className="font-semibold text-primary-700 underline underline-offset-2" href={'mailto:' + barangay.hallEmail}>{barangay.hallEmail}</a></div>}
+            </div>
+            {barangay.hallSource && <a href={barangay.hallSource} target="_blank" rel="noreferrer" className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700 underline underline-offset-2">Official barangay page <ExternalLink className="h-3.5 w-3.5" /></a>}
+          </div>
+        ) : (
+          <div className="mt-5 rounded-2xl border border-secondary-200 bg-secondary-50 p-5 text-sm leading-relaxed text-gray-700">
+            A verified hall contact record has not yet been matched to this profile. The official city portal remains the authoritative source while this directory is completed.
+            <a href="https://www.makati.gov.ph/" target="_blank" rel="noreferrer" className="mt-3 inline-flex items-center gap-1 font-bold text-primary-700 underline underline-offset-2">Open official Makati portal <ExternalLink className="h-3.5 w-3.5" /></a>
+          </div>
+        )}
+      </Section>
+
       <Section id="community" className="bg-white">
         <div className="section-eyebrow">Community</div>
         <Heading level={2}>Local links</Heading>
@@ -306,3 +331,4 @@ export default function BarangayProfile() {
     </>
   );
 }
+
