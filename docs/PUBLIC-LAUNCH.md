@@ -53,24 +53,18 @@ Verification tokens are account-specific and must never be invented or committed
 
 ## Project email
 
-Preferred first mailbox:
+Live mailbox:
 
-- `hello@bettermakati.org`
+- `hello@bettermakati.org` — sending and receiving confirmed by the project owner on 2026-09-22.
 
-Use the existing BetterMakati contribution/correction forms for structured corrections and source submissions even after a mailbox is created.
-
-Do not publish the address on the site until the mailbox can both receive and send successfully.
+Use the existing BetterMakati contribution/correction forms for structured corrections and source submissions. The mailbox is the general public contact channel and is published on the Contact page and footer.
 
 ## Social identity
 
-Preferred account/page name: **BetterMakati**
+Live project channels:
 
-Preferred username where available: **@BetterMakati** or **@bettermakati**.
-
-Priority launch channel:
-
-1. Facebook Page
-2. Instagram / Threads username reservation
+1. Facebook: https://www.facebook.com/bettermakati — **@bettermakati**
+2. Instagram: https://www.instagram.com/bettermakati/ — **@bettermakati**
 3. Other channels only when there is a clear publishing workflow
 
 The website remains the canonical archive. Social platforms distribute links and summaries; they should not become the only home of substantive civic records.
@@ -88,15 +82,15 @@ Continue to require:
 - accessibility regression checks
 - transparent publication of known coverage gaps
 
-## External-account actions still requiring account-owner access
+## External-account launch actions
 
-Some launch steps cannot be completed from repository automation alone because they require owner authentication or provider-generated verification tokens:
+Completed by the project owner:
 
-- upstream BetterLGU pull-request submission
-- GitHub repository About/Homepage website field
-- Google Search Console property creation and DNS verification token
-- Bing Webmaster Tools import
-- Dynadot mailbox creation
-- Facebook / Instagram account or Page creation
+- BetterLGU directory update merged with `bettermakati.org` and 🟢 Active status
+- GitHub repository public website field set
+- Google Search Console property created and verified; sitemap submitted
+- Bing Webmaster Tools setup completed
+- `hello@bettermakati.org` created and tested for sending and receiving
+- Facebook and Instagram **@bettermakati** created
 
-After those one-time account actions, BetterMakati can automate or document the ongoing workflows where supported.
+These account-level confirmations are maintained by the project owner because their provider dashboards are not public.
