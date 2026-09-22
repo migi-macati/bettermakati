@@ -18,7 +18,7 @@ const criticalRoutes = [
   ['/records', /Public Records/i],
   ['/participate', /Participate/i],
   ['/hotlines', /Hotlines|Emergency/i],
-  ['/civic-map', /See it\. Rate it\. Report it\. Improve it\./i],
+  ['/civic-map', /Help improve public places/i],
   ['/civic-map/reports', /Civic Map reports/i],
 ];
 
@@ -80,7 +80,7 @@ test('service directory opens BetterMakati guide before external handoff', async
 
 test('mobile homepage and services have no material horizontal overflow', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  for (const route of ['/', '/services']) {
+  for (const route of ['/', '/services', '/civic-map', '/civic-map/poblacion-park', '/civic-map/reports']) {
     await page.goto(baseURL + route);
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     expect(overflow, `Horizontal overflow on ${route}`).toBeLessThanOrEqual(2);
@@ -92,7 +92,7 @@ test('official logo artwork is used in the header, not a reconstructed wordmark'
   await page.goto(baseURL + '/');
   const logo = page.locator('nav img[alt="BetterMakati"]').first();
   await expect(logo).toBeVisible();
-  await expect(logo).toHaveAttribute('src', /bettermakati-logo\.svg$/);
+  await expect(logo).toHaveAttribute('src', /bettermakati-logo-horizontal\.svg$/);
   await expect(page.locator('nav .brand-wordmark')).toHaveCount(0);
 });
 
@@ -129,4 +129,29 @@ test('owner task: civic map exposes consolidated reports, not only submissions',
   await page.getByRole('link', { name: /Weekly & monthly reports/i }).click();
   await expect(page).toHaveURL(/\/civic-map\/reports/);
   await expect(page.getByRole('heading', { level: 1 })).toContainText(/Civic Map reports/i);
+});
+
+test('ratings are reversible and cannot be submitted empty', async ({ page }) => {
+  let posts = 0;
+  await page.route('**/api/civic', route => {
+    if (route.request().method() === 'POST') posts++;
+    return route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ items: [] }) });
+  });
+  await page.goto(baseURL + '/civic-map/poblacion-park');
+  await page.getByRole('button', { name: /Rate this place/ }).click();
+  const rating = page.getByRole('button', { name: /: 4 of 5/ }).first();
+  await rating.click();
+  await expect(rating).toHaveAttribute('aria-pressed', 'true');
+  await page.getByRole('button', { name: /Clear rating for/ }).first().click();
+  await expect(rating).toHaveAttribute('aria-pressed', 'false');
+  await page.getByRole('button', { name: 'Publish review', exact: true }).click();
+  await expect(page.getByRole('status')).toContainText('Choose at least one rating');
+  expect(posts).toBe(0);
+});
+
+test('failed civic feed does not imply zero reports', async ({ page }) => {
+  await page.route('**/api/civic', route => route.fulfill({ status: 503, contentType: 'application/json', body: '{}' }));
+  await page.goto(baseURL + '/civic-map');
+  await expect(page.getByText('Community counts are unavailable.', { exact: false })).toBeVisible();
+  await expect(page.getByText('0 community records', { exact: true })).toHaveCount(0);
 });

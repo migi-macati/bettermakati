@@ -1,4 +1,4 @@
-import { BarChart3, FileText, PhoneCall } from 'lucide-react';
+import { BarChart3, FileText, PhoneCall, MapPin } from 'lucide-react';
 import { Link } from 'react-router';
 import CityPhoto from '../ui/CityPhoto';
 import ServiceSearch from '../home/ServiceSearch';
@@ -26,6 +26,10 @@ export default function Hero() {
             </div>
 
             <div className="mt-6 flex flex-wrap gap-x-5 gap-y-3 text-sm">
+              <Link to="/civic-map#places" className="hero-principle hover:text-primary-800">
+                <MapPin className="h-4 w-4 text-primary-700" aria-hidden="true" />
+                Report or rate a place
+              </Link>
               <Link
                 to="/hotlines"
                 className="hero-principle hover:text-primary-800"

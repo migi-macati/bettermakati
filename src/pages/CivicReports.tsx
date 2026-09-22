@@ -60,9 +60,11 @@ interface CivicReportData {
 export default function CivicReports() {
   const [data, setData] = useState<CivicReportData | null>(null);
   const [failed, setFailed] = useState(false);
+  const [attempt, setAttempt] = useState(0);
 
   useEffect(() => {
     const load = async () => {
+      setFailed(false);
       try {
         const response = await fetch('/api/civic-report', { cache: 'no-store' });
         const result = await response.json();
@@ -73,7 +75,7 @@ export default function CivicReports() {
       }
     };
     void load();
-  }, []);
+  }, [attempt]);
 
   return (
     <>
@@ -86,7 +88,7 @@ export default function CivicReports() {
         <Link to="/civic-map" className="inline-flex items-center gap-1 text-sm font-bold text-primary-700">
           <ArrowLeft className="h-4 w-4" /> Civic Map
         </Link>
-        <div className="section-eyebrow mt-6">Public reporting layer</div>
+        <div className="section-eyebrow mt-6">Community reports</div>
         <Heading>Civic Map reports</Heading>
         <p className="mt-3 max-w-4xl text-lg leading-relaxed text-gray-700">
           BetterMakati consolidates community observations before amplifying them. These summaries show what has been reported, corroborated, suggested for improvement and identified for BetterMakati review or referral.
@@ -104,20 +106,22 @@ export default function CivicReports() {
               <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0" />
               <div>
                 <div className="font-extrabold">Report feed unavailable</div>
-                <p className="mt-1 text-sm">The Civic Map public records could not be aggregated from this deployment.</p>
+                <p className="mt-1 text-sm">We could not load the community reports. Please try again.</p>
+                <button type="button" onClick={() => setAttempt(value => value + 1)} className="brand-btn-secondary mt-3">Try again</button>
               </div>
             </div>
           </div>
         </Section>
       ) : !data ? (
         <Section className="bg-white">
-          <div className="text-sm text-gray-500">Generating Civic Map summaries…</div>
+          <div className="text-sm text-gray-500">Loading community reports…</div>
         </Section>
       ) : (
         <>
           <Section className="bg-white">
             <div className="section-eyebrow">Weekly operational brief</div>
             <Heading level={2}>Last 7 days</Heading>
+            <p className="mt-2 text-sm text-gray-600">New submissions cover the last 7 days. Open cases and review queues show the current backlog.</p>
             <div className="mt-6 grid grid-cols-2 gap-3 lg:grid-cols-6">
               {[
                 ['New issue cases', data.weekly.newCases],
@@ -214,7 +218,7 @@ export default function CivicReports() {
             )}
 
             <div className="mt-8">
-              <Heading level={3}>Mature improvement proposals</Heading>
+              <Heading level={3}>Proposals with community support</Heading>
               {data.monthly.matureProposals.length === 0 ? (
                 <p className="mt-3 text-sm text-gray-600">No open proposal has reached the pilot threshold of three community supports yet.</p>
               ) : (

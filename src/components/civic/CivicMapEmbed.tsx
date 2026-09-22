@@ -39,10 +39,11 @@ export default function CivicMapEmbed({
         loading="lazy"
         referrerPolicy="no-referrer"
       />
+      <p className="px-4 pt-3 text-xs text-gray-600">If the map does not display, open the full map. You can use the reporting form without it.</p>
       <div className="flex flex-wrap items-center justify-between gap-3 border-t border-gray-200 px-4 py-3 text-xs text-gray-600">
         <span className="inline-flex items-center gap-1.5">
           <MapPinned className="h-4 w-4 text-primary-700" />
-          OpenStreetMap base map · community reports are BetterMakati records
+          Location map · reports and ratings are separate community records
         </span>
         <a
           href={open}
