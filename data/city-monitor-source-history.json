@@ -1,4 +1,42 @@
 {
   "version": 1,
-  "runs": []
+  "runs": [
+    {
+      "checkedAt": "2026-09-22T00:43:21.107Z",
+      "changed": [],
+      "failed": [],
+      "newBaselines": [
+        {
+          "id": "makati-legislation",
+          "label": "Makati resolutions & ordinances",
+          "url": "https://www.makati.gov.ph/content/resolutions-and-ordinances/author",
+          "stream": "legislation"
+        },
+        {
+          "id": "makati-mayor-speeches",
+          "label": "Mayor's Corner — Speeches",
+          "url": "https://www.makati.gov.ph/content/mayors-corner/speeches/803",
+          "stream": "executive-speech"
+        },
+        {
+          "id": "makati-events",
+          "label": "Makati Events",
+          "url": "https://www.makati.gov.ph/content/events",
+          "stream": "events"
+        },
+        {
+          "id": "makati-news",
+          "label": "Makati News",
+          "url": "https://www.makati.gov.ph/content/news",
+          "stream": "official-notice"
+        },
+        {
+          "id": "philgeps",
+          "label": "PhilGEPS",
+          "url": "https://notices.philgeps.gov.ph/",
+          "stream": "procurement"
+        }
+      ]
+    }
+  ]
 }
