@@ -55,6 +55,15 @@ Validated records use permanent `/city-monitor/:id` pages with source provenance
 
 Civic Briefs remain on the site as the permanent update archive. External social-distribution channels are supplemental; bettermakati.org remains the canonical public source.
 
+## Public channels
+
+- Website: https://bettermakati.org
+- Email: hello@bettermakati.org
+- Facebook: https://www.facebook.com/bettermakati
+- Instagram: https://www.instagram.com/bettermakati/
+
+The website remains the canonical archive for substantive civic information and records.
+
 ## Development
 
 ```bash
