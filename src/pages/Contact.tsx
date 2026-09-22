@@ -1,4 +1,4 @@
-import { MessageCircle, PhoneCall } from 'lucide-react';
+import { ExternalLink, Mail, MessageCircle, PhoneCall } from 'lucide-react';
 import { Link } from 'react-router';
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
@@ -19,18 +19,47 @@ export default function Contact() {
           <div className="rounded-2xl border border-gray-200 bg-white p-6">
             <MessageCircle className="h-6 w-6 text-primary-700" />
             <h2 className="font-bold text-lg mt-4">BetterMakati</h2>
-            <div className="mt-4 space-y-3">
-              <Link
-                to="/get-involved?type=contact#submission"
-                className="inline-flex items-center gap-1 text-primary-700 font-semibold underline underline-offset-2"
-              >
-                Contact BetterMakati
-              </Link>
-              <div>
-                <Link to="/get-involved" className="text-primary-700 font-semibold underline underline-offset-2">
+            <div className="mt-4 space-y-3 text-sm">
+              <p>
+                <a
+                  href="mailto:hello@bettermakati.org"
+                  className="inline-flex items-center gap-2 font-semibold text-primary-700 underline underline-offset-2"
+                >
+                  <Mail className="h-4 w-4" />
+                  hello@bettermakati.org
+                </a>
+              </p>
+              <p className="flex flex-wrap gap-x-4 gap-y-2">
+                <a
+                  href="https://www.facebook.com/bettermakati"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1 font-semibold text-primary-700 underline underline-offset-2"
+                >
+                  Facebook @bettermakati <ExternalLink className="h-3.5 w-3.5" />
+                </a>
+                <a
+                  href="https://www.instagram.com/bettermakati/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1 font-semibold text-primary-700 underline underline-offset-2"
+                >
+                  Instagram @bettermakati <ExternalLink className="h-3.5 w-3.5" />
+                </a>
+              </p>
+              <p>
+                <Link
+                  to="/get-involved?type=contact#submission"
+                  className="font-semibold text-primary-700 underline underline-offset-2"
+                >
+                  Structured contact form
+                </Link>
+              </p>
+              <p>
+                <Link to="/get-involved" className="font-semibold text-primary-700 underline underline-offset-2">
                   Corrections, sources & volunteering
                 </Link>
-              </div>
+              </p>
             </div>
           </div>
 
