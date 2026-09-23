@@ -8,6 +8,7 @@ import {
   MapPin,
   Phone,
   Users,
+  Vote,
 } from 'lucide-react';
 import { Link, useParams } from 'react-router';
 import Section from '../components/ui/Section';
@@ -31,6 +32,10 @@ import {
   councilOfficials,
 } from '../data/electedOfficials';
 import { serviceDirectory } from '../data/serviceDirectory';
+import {
+  barangayResultSource2025,
+  findBarangayMayoralResult2025,
+} from '../data/electionHistory';
 
 export default function BarangayProfile() {
   const { slug } = useParams();
@@ -63,6 +68,7 @@ export default function BarangayProfile() {
   );
   const barangayServices = serviceDirectory.filter(service => commonBarangayServiceIds.includes(service.id));
   const localFacilities = barangayFacilities(barangay.name);
+  const barangayElection2025 = findBarangayMayoralResult2025(barangay.slug);
 
   return (
     <>
@@ -109,6 +115,7 @@ export default function BarangayProfile() {
           items={[
             { label: 'Overview', href: '#overview' },
             { label: 'Representation', href: '#representation' },
+            { label: '2025 election', href: '#election-2025' },
             { label: 'Services', href: '#services' },
             { label: 'Facilities', href: '#facilities' },
             { label: 'Community', href: '#community' },
@@ -253,6 +260,78 @@ export default function BarangayProfile() {
           </div>
         </div>
       </Section>
+
+      {barangayElection2025 && (
+        <Section id="election-2025" className="bg-white">
+          <div className="section-eyebrow">Latest city election</div>
+          <Heading level={2}>2025 mayoral result in {barangay.name}</Heading>
+
+          <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-[0.8fr_1.2fr]">
+            <div className="rounded-2xl border border-primary-100 bg-[#fffdf8] p-6">
+              <Vote className="h-6 w-6 text-primary-700" />
+              <div className="mt-4 text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+                Candidate who carried the barangay
+              </div>
+              <div className="mt-1 text-2xl font-extrabold text-gray-950">
+                {barangayElection2025.carriedBy}
+              </div>
+              <p className="mt-2 text-sm leading-relaxed text-gray-600">
+                This identifies which candidate received more mayoral votes in the barangay. It is not a statement about all residents, and population figures should not be used as the vote denominator.
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-gray-200 bg-white p-6">
+              {barangayElection2025.exactVotesVerified ? (
+                <>
+                  <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">
+                    Published barangay vote totals
+                  </div>
+                  <div className="mt-4 grid grid-cols-2 gap-3">
+                    <div className="rounded-xl bg-gray-50 p-4">
+                      <div className="text-xs text-gray-500">Nancy Binay</div>
+                      <div className="mt-1 text-xl font-extrabold text-gray-950">
+                        {barangayElection2025.nancyVotes?.toLocaleString('en-PH')}
+                      </div>
+                    </div>
+                    <div className="rounded-xl bg-gray-50 p-4">
+                      <div className="text-xs text-gray-500">Luis Campos Jr.</div>
+                      <div className="mt-1 text-xl font-extrabold text-gray-950">
+                        {barangayElection2025.camposVotes?.toLocaleString('en-PH')}
+                      </div>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">
+                    Current data coverage
+                  </div>
+                  <p className="mt-2 text-sm leading-relaxed text-gray-700">
+                    Published reporting identifies the barangay winner, but BetterMakati has not yet matched a reliable public precinct aggregate for the exact Nancy Binay and Luis Campos vote totals here.
+                  </p>
+                </>
+              )}
+
+              <div className="mt-5 flex flex-wrap gap-3">
+                <Link
+                  to="/elections#barangay-results-2025"
+                  className="brand-btn-primary"
+                >
+                  Compare all 23 barangays
+                </Link>
+                <a
+                  href={barangayResultSource2025.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="brand-btn-secondary"
+                >
+                  Result source <ExternalLink className="h-4 w-4" />
+                </a>
+              </div>
+            </div>
+          </div>
+        </Section>
+      )}
 
       <Section id="services" className="bg-[#f5f8f2]">
         <div className="section-eyebrow">Barangay services</div>
