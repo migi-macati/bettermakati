@@ -1,23 +1,23 @@
 import { ChevronDown } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router';
 import { barangays, findBarangay } from '../../data/barangays';
-import { withBarangayScope } from '../../hooks/useBarangayScope';
+import { useBarangayScope, withBarangayScope } from '../../hooks/useBarangayScope';
 
 const compactEditionName = (name: string) => name.replace(/\s+/g, '');
 
 export default function BarangayEditionBar() {
   const location = useLocation();
   const navigate = useNavigate();
-  const params = new URLSearchParams(location.search);
-  const querySlug = params.get('barangay');
+  const { barangay: scopedBarangay, setBarangay } = useBarangayScope();
   const profileMatch = location.pathname.match(/^\/barangays\/([^/]+)$/);
   const profileSlug = profileMatch?.[1];
-  const barangay = findBarangay(profileSlug) || findBarangay(querySlug || undefined);
+  const profileBarangay = findBarangay(profileSlug);
+  const barangay = profileBarangay || scopedBarangay;
 
   if (!barangay) return null;
 
   const slug = barangay.slug;
-  const isProfile = Boolean(profileSlug);
+  const isProfile = Boolean(profileBarangay);
   const items = [
     { label: 'Overview', href: '/barangays/' + slug, active: isProfile && (!location.hash || location.hash === '#overview') },
     { label: 'Services', href: withBarangayScope('/services', slug), active: location.pathname.startsWith('/services') },
@@ -30,26 +30,11 @@ export default function BarangayEditionBar() {
   ];
 
   const switchEdition = (nextSlug: string) => {
-    if (!nextSlug) {
-      if (isProfile) {
-        navigate('/barangays');
-        return;
-      }
-      const next = new URLSearchParams(location.search);
-      next.delete('barangay');
-      const query = next.toString();
-      navigate(location.pathname + (query ? '?' + query : '') + location.hash);
-      return;
-    }
-
     if (isProfile) {
-      navigate('/barangays/' + nextSlug);
+      navigate(nextSlug ? '/barangays/' + nextSlug : '/barangays');
       return;
     }
-
-    const next = new URLSearchParams(location.search);
-    next.set('barangay', nextSlug);
-    navigate(location.pathname + '?' + next.toString() + location.hash);
+    setBarangay(nextSlug);
   };
 
   return (
