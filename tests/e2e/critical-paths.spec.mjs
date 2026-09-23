@@ -18,7 +18,7 @@ const criticalRoutes = [
   ['/city-monitor', /City Monitor/i],
   ['/records', /Public Records/i],
   ['/reports', /Understand what the data says about Makati/i],
-  ['/reports/makati-overview', /What the information across BetterMakati says about the city/i],
+  ['/reports/makati-overview', /Four signals from Makati’s latest city data/i],
   ['/participate', /Participate/i],
   ['/hotlines', /Hotlines|Emergency/i],
   ['/civic-map', /Help improve public places/i],
@@ -75,12 +75,33 @@ test('homepage exposes and opens barangay editions', async ({ page }) => {
 });
 
 
-test('homepage overview teaser opens the cited Makati report', async ({ page }) => {
+test('homepage featured insights carousel opens the cited report finding', async ({ page }) => {
   await page.goto(baseURL + '/');
-  await page.getByRole('link', { name: /Makati Overview/i }).click();
-  await expect(page).toHaveURL(/\/reports\/makati-overview$/);
-  await expect(page.getByRole('heading', { level: 1 })).toContainText(/What the information across BetterMakati says about the city/i);
-  await expect(page.getByRole('link', { name: /\[1\] Projects & Budget/i })).toBeVisible();
+  await expect(page.getByRole('heading', { name: /What the data is saying/i })).toBeVisible();
+  await expect(
+    page.getByRole('heading', {
+      name: /Nearly three-quarters of the ₱2B increase in the 2026 budget plan/i,
+    })
+  ).toBeVisible();
+
+  await page.getByRole('link', { name: 'Read more', exact: true }).click();
+  await expect(page).toHaveURL(/\/reports\/makati-overview#budget-growth$/);
+  await expect(page.getByRole('heading', { level: 1 })).toContainText(
+    /Four signals from Makati’s latest city data/i
+  );
+  await expect(page.locator('#budget-growth')).toBeVisible();
+  await expect(page.getByRole('link', { name: '[1] Projects & Budget', exact: true })).toBeVisible();
+});
+
+test('homepage featured insights can be advanced manually', async ({ page }) => {
+  await page.goto(baseURL + '/');
+  await page.getByRole('button', { name: 'Next featured insight' }).click();
+  await expect(
+    page.getByRole('heading', {
+      name: /93\.5% of Makati’s reported 2025 receipts came from local sources/i,
+    })
+  ).toBeVisible();
+  await expect(page.getByText('23 September 2026', { exact: true })).toBeVisible();
 });
 
 test('homepage universal search tolerates a simple typo', async ({ page }) => {
