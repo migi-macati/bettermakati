@@ -24,7 +24,6 @@ import {
   FiscalTrendChart,
   HorizontalBarChart,
 } from '../components/budget/BudgetCharts';
-import BarangayScopeBar from '../components/barangay/BarangayScopeBar';
 import { useBarangayScope, withBarangayScope } from '../hooks/useBarangayScope';
 import {
   actualSpendingByFunction,
@@ -166,13 +165,6 @@ export default function ProjectsBudget() {
           <Heading>Where Makati’s money comes from and goes</Heading>
           <SharePage title="Makati Projects & Budget | BetterMakati" />
         </div>
-        <BarangayScopeBar
-          note={
-            barangay
-              ? `City budget records below remain citywide unless a public source explicitly identifies Barangay ${barangay.name}. Use the local accountability and map links for records that can be tied to place.`
-              : undefined
-          }
-        />
         <LastReviewed note="Budget plans and actuals remain separated; each dataset links to its public source." />
 
         {barangay && (
