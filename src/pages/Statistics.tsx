@@ -84,9 +84,8 @@ export default function Statistics() {
           <Heading>Makati Statistics</Heading>
           <SharePage title="Makati Statistics | BetterMakati" />
         </div>
+        <BarangayScopeBar note="Barangay population uses the 2024 POPCEN. Citywide economic and historical series remain visible where no comparable barangay series is available." />
         <LastReviewed note="Population and GDP figures use PSA sources and stated geographic definitions." />
-
-        <BarangayScopeBar note="Barangay population is shown from the 2024 POPCEN. Citywide economic and historical series remain visible where no comparable barangay series is available." />
 
         {barangay && (
           <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
