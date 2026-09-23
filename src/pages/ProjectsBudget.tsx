@@ -212,13 +212,16 @@ export default function ProjectsBudget() {
 
       <Section id="budget" className="bg-[#fffdf8]">
         <div className="section-eyebrow">
-          2026 budget plan · actuals through 2025
+          2026 proposed budget · 2025 city estimate · DBM/BLGF 2025 statement
         </div>
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <Heading>Where Makati’s money comes from and goes</Heading>
           <SharePage title="Makati Projects & Budget | BetterMakati" />
         </div>
-        <LastReviewed note="Budget plans and actuals remain separated; each dataset links to its public source." />
+        <LastReviewed
+          date="2026-09-24"
+          note="Adopted plans, the city’s current-year estimate, and DBM/BLGF receipts and expenditures are shown as separate datasets."
+        />
 
         {barangay && (
           <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -294,7 +297,7 @@ export default function ProjectsBudget() {
         </Link>
         </div>
 
-        <div className="mt-8 grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="mt-8 grid grid-cols-2 lg:grid-cols-3 gap-4">
           <Metric
             label="2026 proposed city budget"
             value={peso(budgetSummary2026.totalBudgetM)}
@@ -306,21 +309,33 @@ export default function ProjectsBudget() {
             icon={WalletCards}
           />
           <Metric
-            label="2025 actual receipts"
+            label="2025 adopted budget plan"
+            value={peso(budgetSummary.totalBudgetM)}
+            detail="Original 2025 annual-budget plan"
+            icon={FileBarChart}
+          />
+          <Metric
+            label="2025 current-year estimate"
+            value={peso(budgetCurrentEstimate2025.totalAppropriationM)}
+            detail="Current Year (Estimate) in the 2026 city budget report"
+            icon={FileBarChart}
+          />
+          <Metric
+            label="2025 reported receipts"
             value={peso(budgetSummary.actualReceiptsM)}
-            detail="DBM / BLGF actual annual data"
+            detail="DBM / BLGF Statement of Receipts and Expenditures"
             icon={ReceiptText}
           />
           <Metric
-            label="2025 actual expenditures"
+            label="2025 reported expenditures"
             value={peso(budgetSummary.actualExpendituresM)}
-            detail="DBM / BLGF actual annual data"
-            icon={FileBarChart}
+            detail="DBM / BLGF Statement of Receipts and Expenditures"
+            icon={ReceiptText}
           />
           <Metric
             label="2025 ending cash balance"
             value={peso(budgetSummary.endingCashM)}
-            detail="After reported payables and continuing appropriations"
+            detail="DBM / BLGF reported balance"
             icon={PiggyBank}
           />
         </div>
@@ -328,22 +343,14 @@ export default function ProjectsBudget() {
         <CitizenSummary
           className="mt-6"
           eyebrow="2026 budget in brief"
-          title="Operating and capital spending grow faster than the total budget"
-          summary="Makati’s 2026 proposed budget is ₱21.0B, compared with the ₱19.0B 2025 budget plan currently structured in BetterMakati. All major spending groups increase in peso terms, but they do not grow at the same pace."
+          title="The 2026 proposal is above the 2025 adopted plan, but below the city’s latest 2025 estimate"
+          summary="Makati’s 2026 proposed appropriation is ₱21.0B. That is ₱2.0B (+10.5%) above the ₱19.0B adopted 2025 plan, while it is ₱3.37B (-13.8%) below the ₱24.37B Current Year (Estimate) shown in the same 2026 Annual Budget Report."
           points={[
             {
-              label: 'Overall',
+              label: 'Operating',
               text: (
                 <>
-                  The total plan increases by <strong>₱2.0B (+10.5%)</strong>.
-                </>
-              ),
-            },
-            {
-              label: 'Operating costs',
-              text: (
-                <>
-                  MOOE rises by about <strong>₱1.49B (+16.5%)</strong>, accounting for roughly three-fourths of the net increase in the total plan.
+                  MOOE is <strong>₱10.47B</strong>: up <strong>16.5%</strong> from the 2025 adopted plan, but down about <strong>25.0%</strong> from the city’s 2025 current-year estimate.
                 </>
               ),
             },
@@ -351,7 +358,7 @@ export default function ProjectsBudget() {
               label: 'Capital',
               text: (
                 <>
-                  Capital outlay increases by about <strong>₱217.0M (+18.1%)</strong>, faster than the overall budget, but remains about <strong>6.7%</strong> of the 2026 plan.
+                  Capital outlay is <strong>₱1.41B</strong>: up <strong>18.1%</strong> from the 2025 adopted plan and about <strong>2.3%</strong> above the 2025 current-year estimate.
                 </>
               ),
             },
@@ -359,12 +366,20 @@ export default function ProjectsBudget() {
               label: 'Personnel',
               text: (
                 <>
-                  Personal Services increases by about <strong>₱141.0M (+2.2%)</strong>. Its share of the budget falls from about <strong>34.2%</strong> to <strong>31.6%</strong>.
+                  Personal Services is <strong>₱6.64B</strong>: up <strong>2.2%</strong> from the adopted plan and about <strong>0.3%</strong> below the current-year estimate.
+                </>
+              ),
+            },
+            {
+              label: 'Dedicated funds',
+              text: (
+                <>
+                  Special Purpose Appropriations total <strong>₱2.48B</strong>, including the 20% Development Fund, LDRRMF, MMDA contribution and financial assistance to barangays.
                 </>
               ),
             },
           ]}
-          note="This compares budget plans, not actual spending. The 2026 report labels the budget-year figures as proposed; 2025 actual receipts and expenditures are shown separately below."
+          note="The three columns answer different questions. The 2025 adopted plan is the original budget authority; the city’s 2025 current-year estimate is the later estimate printed in the 2026 budget report; the DBM/BLGF 2025 statement below reports receipts and expenditures on a separate fiscal table."
           actions={
             <a
               href={budgetSources.annualBudget2026}
@@ -378,31 +393,40 @@ export default function ProjectsBudget() {
         />
 
         <div className="mt-6 overflow-x-auto rounded-2xl border border-gray-200 bg-white">
-          <table className="w-full min-w-[700px] text-left">
+          <table className="w-full min-w-[980px] text-left">
             <thead className="bg-gray-50">
               <tr>
                 <th className="px-4 py-3 font-bold">Budget component</th>
-                <th className="px-4 py-3 font-bold text-right">2025 plan</th>
+                <th className="px-4 py-3 font-bold text-right">2025 adopted</th>
+                <th className="px-4 py-3 font-bold text-right">2025 current estimate</th>
                 <th className="px-4 py-3 font-bold text-right">2026 proposed</th>
-                <th className="px-4 py-3 font-bold text-right">Change</th>
+                <th className="px-4 py-3 font-bold text-right">vs adopted</th>
+                <th className="px-4 py-3 font-bold text-right">vs estimate</th>
               </tr>
             </thead>
             <tbody>
               {budgetPlanComparison.map(item => {
-                const change = percentChange(item.amount2025M, item.amount2026M);
+                const adoptedChange = percentChange(item.adopted2025M, item.proposed2026M);
+                const estimateChange = percentChange(item.estimate2025M, item.proposed2026M);
                 return (
                   <tr key={item.label} className="border-t">
                     <td className="px-4 py-3 font-semibold text-gray-900">
                       {item.label}
                     </td>
-                    <td className="px-4 py-3 text-right">
-                      {peso(item.amount2025M)}
-                    </td>
+                    <td className="px-4 py-3 text-right">{peso(item.adopted2025M)}</td>
+                    <td className="px-4 py-3 text-right">{peso(item.estimate2025M)}</td>
                     <td className="px-4 py-3 text-right font-bold text-gray-950">
-                      {peso(item.amount2026M)}
+                      {peso(item.proposed2026M)}
                     </td>
                     <td className="px-4 py-3 text-right font-semibold">
-                      {change === null ? '—' : (change >= 0 ? '+' : '') + change.toFixed(1) + '%'}
+                      {adoptedChange === null
+                        ? '—'
+                        : (adoptedChange >= 0 ? '+' : '') + adoptedChange.toFixed(1) + '%'}
+                    </td>
+                    <td className="px-4 py-3 text-right font-semibold">
+                      {estimateChange === null
+                        ? '—'
+                        : (estimateChange >= 0 ? '+' : '') + estimateChange.toFixed(1) + '%'}
                     </td>
                   </tr>
                 );
@@ -426,14 +450,14 @@ export default function ProjectsBudget() {
             rel="noreferrer"
             className="font-bold text-primary-700 underline underline-offset-2"
           >
-            2025 DBM / BLGF actuals{' '}
+            2025 DBM / BLGF statement{' '}
             <ArrowUpRight className="inline h-3.5 w-3.5" />
           </a>
         </div>
 
         <div className="mt-8">
           <FiscalTrendChart
-            title="Actual receipts and reported expenditures, 2019–2025"
+            title="DBM / BLGF receipts and reported expenditures, 2019–2025"
             items={actualFiscalHistory}
             formatValue={peso}
           />
@@ -444,7 +468,7 @@ export default function ProjectsBudget() {
                 <tr>
                   <th className="px-4 py-3 font-bold">Year</th>
                   <th className="px-4 py-3 font-bold text-right">
-                    Actual receipts
+                    Receipts
                   </th>
                   <th className="px-4 py-3 font-bold text-right">
                     Reported expenditures
@@ -485,8 +509,8 @@ export default function ProjectsBudget() {
           <p className="mt-3 text-xs leading-relaxed text-gray-500">
             Values are reported by DBM/BLGF in millions of pesos. “Receipts less
             expenditures” is a direct arithmetic comparison, not an accounting
-            surplus or deficit. The unusually high 2020 expenditure is retained
-            as published in the source table.
+            surplus or deficit. BetterMakati preserves the values as published and
+            does not relabel the DBM/BLGF series as audited city financial statements.
           </p>
         </div>
 
