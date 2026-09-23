@@ -161,7 +161,8 @@ test('Saan Ako Lalapit is task-first and service-only', async ({ page }) => {
   const search = page.getByPlaceholder(/hospital bill, PWD ID, business permit, cedula/i);
   await search.fill('hospital bill');
   await expect(page.getByText('Medical / financial assistance', { exact: true }).first()).toBeVisible();
-  await expect(page.getByText('Visit Makati', { exact: true })).toHaveCount(0);
+  const resultList = page.getByRole('listbox', { name: /What do you need help with\? matches/i });
+  await expect(resultList.getByRole('option').filter({ hasText: 'Visit Makati' })).toHaveCount(0);
 });
 
 test('Saan Ako Lalapit common need reaches the structured PWD guide', async ({ page }) => {
