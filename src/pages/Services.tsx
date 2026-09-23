@@ -196,6 +196,21 @@ const Services: React.FC = () => {
             </div>
           )}
 
+          <div className="mt-5 grid gap-3 rounded-2xl border border-primary-100 bg-white p-5 sm:grid-cols-[1fr_auto] sm:items-center">
+            <div>
+              <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+                Not sure which office handles it?
+              </div>
+              <div className="mt-1 text-lg font-extrabold text-gray-950">Saan Ako Lalapit?</div>
+              <p className="mt-1 text-sm text-gray-600">
+                Describe the task or problem and start with the service that handles it.
+              </p>
+            </div>
+            <Link to="/community-tools/saan-ako-lalapit" className="brand-btn-primary">
+              Find where to go
+            </Link>
+          </div>
+
           <div className="mt-4">
             <Link to="/government-offices" className="text-sm font-bold text-primary-700 underline underline-offset-2">
               Government offices in and serving Makati

@@ -35,6 +35,7 @@ import { serviceDirectory } from '../data/serviceDirectory';
 import { governmentServiceOffices } from '../data/governmentServiceOffices';
 import {
   detailedServiceGuideCount,
+  serviceGuideDetails,
   verifiedServiceGuideCount,
 } from '../data/serviceGuideDetails';
 
@@ -126,6 +127,37 @@ export default function ProjectStatus() {
     []
   );
 
+  const serviceCoverageByCategory = useMemo(() => {
+    const grouped = new Map<
+      string,
+      { category: string; indexed: number; structured: number; verified: number }
+    >();
+
+    serviceDirectory.forEach(item => {
+      const current = grouped.get(item.category) || {
+        category: item.category,
+        indexed: 0,
+        structured: 0,
+        verified: 0,
+      };
+      current.indexed += 1;
+      const detail = serviceGuideDetails[item.id];
+      if (detail) {
+        current.structured += 1;
+        if (detail.verification === 'verified') current.verified += 1;
+      }
+      grouped.set(item.category, current);
+    });
+
+    return [...grouped.values()].sort(
+      (a, b) => b.indexed - a.indexed || a.category.localeCompare(b.category)
+    );
+  }, []);
+
+  const partialServiceGuideCount = Object.values(serviceGuideDetails).filter(
+    item => item.verification === 'partial'
+  ).length;
+
   const coverage = [
     {
       label: 'Government services',
@@ -135,8 +167,8 @@ export default function ProjectStatus() {
     },
     {
       label: 'Structured transaction guides',
-      value: detailedServiceGuideCount.toLocaleString('en-PH'),
-      detail: 'Services with explicit requirements, steps, fees/time where supported, and a verification state',
+      value: `${detailedServiceGuideCount}/${serviceDirectory.length}`,
+      detail: 'Indexed services with explicit requirements, steps, fees/time where supported, and a verification state',
       icon: FileSearch,
     },
     {
@@ -288,6 +320,66 @@ export default function ProjectStatus() {
               </div>
             );
           })}
+        </div>
+      </Section>
+
+      <Section className="bg-white">
+        <div className="section-eyebrow">Service coverage</div>
+        <Heading level={2}>How complete are the service guides?</Heading>
+
+        <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="rounded-2xl border border-gray-200 bg-[#fffdf8] p-5">
+            <div className="text-3xl font-extrabold text-gray-950">{serviceDirectory.length}</div>
+            <div className="mt-1 text-sm font-bold text-gray-700">indexed services</div>
+          </div>
+          <div className="rounded-2xl border border-gray-200 bg-[#fffdf8] p-5">
+            <div className="text-3xl font-extrabold text-gray-950">{detailedServiceGuideCount}</div>
+            <div className="mt-1 text-sm font-bold text-gray-700">structured guides</div>
+          </div>
+          <div className="rounded-2xl border border-gray-200 bg-[#fffdf8] p-5">
+            <div className="text-3xl font-extrabold text-gray-950">{verifiedServiceGuideCount}</div>
+            <div className="mt-1 text-sm font-bold text-gray-700">field-by-field verified</div>
+          </div>
+          <div className="rounded-2xl border border-gray-200 bg-[#fffdf8] p-5">
+            <div className="text-3xl font-extrabold text-gray-950">{partialServiceGuideCount}</div>
+            <div className="mt-1 text-sm font-bold text-gray-700">structured with caveat</div>
+          </div>
+        </div>
+
+        <div className="mt-6 overflow-hidden rounded-2xl border border-gray-200 bg-white">
+          {serviceCoverageByCategory.map(item => (
+            <div
+              key={item.category}
+              className="grid gap-3 border-b border-gray-200 p-4 last:border-b-0 sm:grid-cols-[1fr_auto] sm:items-center"
+            >
+              <div>
+                <div className="font-extrabold text-gray-950">{item.category}</div>
+                <div className="mt-1 text-xs text-gray-500">
+                  {item.indexed - item.structured} indexed service{item.indexed - item.structured === 1 ? '' : 's'} still use the source-first fallback guide.
+                </div>
+              </div>
+              <div className="flex flex-wrap gap-2 text-xs font-bold">
+                <span className="rounded-full bg-gray-100 px-3 py-1.5 text-gray-700">
+                  {item.indexed} indexed
+                </span>
+                <span className="rounded-full bg-primary-50 px-3 py-1.5 text-primary-800">
+                  {item.structured} structured
+                </span>
+                <span className="rounded-full bg-success-50 px-3 py-1.5 text-success-800">
+                  {item.verified} verified
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-5 flex flex-wrap gap-3">
+          <Link to="/services" className="brand-btn-primary">
+            Open service directory
+          </Link>
+          <Link to="/community-tools/saan-ako-lalapit" className="brand-btn-secondary">
+            Saan Ako Lalapit?
+          </Link>
         </div>
       </Section>
 

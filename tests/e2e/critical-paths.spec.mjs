@@ -5,6 +5,7 @@ const baseURL = process.env.BASE_URL || 'http://127.0.0.1:4173';
 const criticalRoutes = [
   ['/', /What do you need in Makati/i],
   ['/services', /Find a government service/i],
+  ['/community-tools/saan-ako-lalapit', /Saan Ako Lalapit/i],
   ['/government-offices', /Government offices for Makati/i],
   ['/government', /Makati City Government/i],
   ['/barangays', /Choose a barangay/i],
@@ -153,9 +154,29 @@ test('service directory opens BetterMakati guide before external handoff', async
   await expect(page.getByRole('heading', { name: 'Fees & payment' })).toBeVisible();
 });
 
+test('Saan Ako Lalapit is task-first and service-only', async ({ page }) => {
+  await page.goto(baseURL + '/community-tools/saan-ako-lalapit');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Saan Ako Lalapit?');
+  await expect(page.getByRole('link', { name: /Open emergency hotlines/i })).toBeVisible();
+  const search = page.getByPlaceholder(/hospital bill, PWD ID, business permit, cedula/i);
+  await search.fill('hospital bill');
+  await expect(page.getByText('Medical / financial assistance', { exact: true }).first()).toBeVisible();
+  const resultList = page.getByRole('listbox', { name: /What do you need help with\? matches/i });
+  await expect(resultList.getByRole('option').filter({ hasText: 'Visit Makati' })).toHaveCount(0);
+});
+
+test('Saan Ako Lalapit common need reaches the structured PWD guide', async ({ page }) => {
+  await page.goto(baseURL + '/community-tools/saan-ako-lalapit');
+  await page.getByRole('link', { name: /I need a PWD ID/i }).click();
+  await expect(page).toHaveURL(/\/services\/guide\/pwd-id$/);
+  await expect(page.getByText('Partially verified')).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Requirements' })).toBeVisible();
+  await expect(page.getByText('Six 1x1 ID pictures', { exact: true })).toBeVisible();
+});
+
 test('mobile homepage and services have no material horizontal overflow', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  for (const route of ['/', '/services', '/barangays', '/barangays/poblacion', '/reports', '/reports/2026-budget-operating-expenses', '/reports/2025-local-revenue', '/civic-map', '/civic-map/poblacion-park', '/civic-map/reports']) {
+  for (const route of ['/', '/services', '/community-tools/saan-ako-lalapit', '/barangays', '/barangays/poblacion', '/reports', '/reports/2026-budget-operating-expenses', '/reports/2025-local-revenue', '/civic-map', '/civic-map/poblacion-park', '/civic-map/reports']) {
     await page.goto(baseURL + route);
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     expect(overflow, `Horizontal overflow on ${route}`).toBeLessThanOrEqual(2);

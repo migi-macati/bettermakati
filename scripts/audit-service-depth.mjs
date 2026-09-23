@@ -50,13 +50,22 @@ if (sourceCount < directoryIds.length) {
   problems.push(`Only ${sourceCount} sourceUrl fields for ${directoryIds.length} services.`);
 }
 
-if (detailIds.length < 20) {
-  problems.push(`Structured service-guide coverage is too low: ${detailIds.length}. Minimum benchmark is 20.`);
+if (directoryIds.length < 151) {
+  problems.push(`Service directory unexpectedly shrank to ${directoryIds.length}. Wave 1.2 baseline is 151 indexed services.`);
+}
+
+const cityServiceCount = (directory.match(/level:\s*'City'/g) ?? []).length;
+if (cityServiceCount < 73) {
+  problems.push(`City-service coverage unexpectedly shrank to ${cityServiceCount}. Wave 1.2 baseline is 73 city services.`);
+}
+
+if (detailIds.length < 48) {
+  problems.push(`Structured service-guide coverage is too low: ${detailIds.length}. Wave 1.2 minimum is 48.`);
 }
 
 const verifiedCount = (details.match(/verification:\s*'verified'/g) ?? []).length;
-if (verifiedCount < 14) {
-  problems.push(`Verified detailed-guide coverage is too low: ${verifiedCount}. Minimum benchmark is 14.`);
+if (verifiedCount < 20) {
+  problems.push(`Verified detailed-guide coverage is too low: ${verifiedCount}. Wave 1.2 minimum is 20.`);
 }
 
 if (problems.length) {
@@ -65,5 +74,5 @@ if (problems.length) {
 }
 
 console.log(
-  `Service-depth audit passed: ${directoryIds.length} indexed services; ${detailIds.length} structured guides; ${verifiedCount} verified; ${featuredIds.length} featured services all structured; ${detailSourceUrls.length} detailed sources watched.`
+  `Service-depth audit passed: ${directoryIds.length} indexed services (${cityServiceCount} city); ${detailIds.length} structured guides; ${verifiedCount} verified; ${featuredIds.length} featured services all structured; ${detailSourceUrls.length} detailed sources watched.`
 );
