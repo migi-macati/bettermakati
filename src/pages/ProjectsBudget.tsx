@@ -732,7 +732,20 @@ export default function ProjectsBudget() {
       </Section>
 
       <Section id="procurement" className="bg-[#fffdf8]">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+          <Link
+            to="/accountability?type=project"
+            className="rounded-2xl border border-primary-200 bg-primary-50 p-6 hover:border-primary-400 hover:shadow-sm transition"
+          >
+            <WalletCards className="h-6 w-6 text-primary-700" />
+            <h2 className="font-extrabold text-lg text-gray-950 mt-4">
+              Structured procurement records
+            </h2>
+            <p className="text-sm text-gray-600 mt-1">
+              Follow approved budget, winning bidder, bid amount and the next missing contract or implementation stage.
+            </p>
+          </Link>
+
           <a
             href={budgetSources.procurement}
             target="_blank"
@@ -741,15 +754,28 @@ export default function ProjectsBudget() {
           >
             <ShoppingCart className="h-6 w-6 text-primary-700" />
             <h2 className="font-extrabold text-lg text-gray-950 mt-4">
-              Procurement
+              PhilGEPS
             </h2>
             <p className="text-sm text-gray-600 mt-1">
-              Search bid and award notices in PhilGEPS.
+              Search the national procurement portal for bid and award notices.
             </p>
           </a>
 
-          <a
+          <Link
             id="audit"
+            to="/accountability?type=audit"
+            className="rounded-2xl border border-secondary-200 bg-secondary-50 p-6 hover:border-secondary-400 hover:shadow-sm transition"
+          >
+            <Landmark className="h-6 w-6 text-secondary-800" />
+            <h2 className="font-extrabold text-lg text-gray-950 mt-4">
+              Audit findings & follow-through
+            </h2>
+            <p className="text-sm text-gray-600 mt-1">
+              Read structured COA observations, recommendations, management responses and unresolved follow-up gaps.
+            </p>
+          </Link>
+
+          <a
             href={budgetSources.audit}
             target="_blank"
             rel="noreferrer"
@@ -757,10 +783,10 @@ export default function ProjectsBudget() {
           >
             <Landmark className="h-6 w-6 text-primary-700" />
             <h2 className="font-extrabold text-lg text-gray-950 mt-4">
-              Audit reports
+              COA reports
             </h2>
             <p className="text-sm text-gray-600 mt-1">
-              Commission on Audit annual audit reports.
+              Open the Commission on Audit annual-audit source collection.
             </p>
           </a>
         </div>
