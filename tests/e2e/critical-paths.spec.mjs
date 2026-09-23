@@ -176,7 +176,7 @@ test('Saan Ako Lalapit common need reaches the structured PWD guide', async ({ p
 
 test('mobile homepage and services have no material horizontal overflow', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  for (const route of ['/', '/services', '/community-tools/saan-ako-lalapit', '/barangays', '/barangays/poblacion', '/reports', '/reports/2026-budget-operating-expenses', '/reports/2025-local-revenue', '/civic-map', '/civic-map/poblacion-park', '/civic-map/reports']) {
+  for (const route of ['/', '/services', '/community-tools/saan-ako-lalapit', '/projects-budget', '/barangays', '/barangays/poblacion', '/reports', '/reports/2026-budget-operating-expenses', '/reports/2025-local-revenue', '/civic-map', '/civic-map/poblacion-park', '/civic-map/reports']) {
     await page.goto(baseURL + route);
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     expect(overflow, `Horizontal overflow on ${route}`).toBeLessThanOrEqual(2);
@@ -199,6 +199,45 @@ test('owner task: SSS benefit journey reaches Makati-facing service locations', 
   await page.getByRole('link', { name: /Open guide/i }).first().click();
   await expect(page).toHaveURL(/\/services\/guide\/sss-sickness-benefit/);
   await expect(page.getByText(/Makati|office|branch/i).first()).toBeVisible();
+});
+
+test('Projects & Budget separates adopted plan, current estimate and 2026 proposal', async ({ page }) => {
+  await page.goto(baseURL + '/projects-budget');
+  await expect(page.getByText('2025 adopted budget plan', { exact: true })).toBeVisible();
+  await expect(page.getByText('2025 current-year estimate', { exact: true })).toBeVisible();
+  await expect(page.getByText('2026 proposed city budget', { exact: true })).toBeVisible();
+  await expect(page.getByText('2025 adopted', { exact: true }).first()).toBeVisible();
+  await expect(page.getByText('2025 current estimate', { exact: true }).first()).toBeVisible();
+  await expect(page.getByText('2026 proposed', { exact: true }).first()).toBeVisible();
+});
+
+test('Budget Explorer exposes the complete reconciled 2026 citywide summary', async ({ page }) => {
+  await page.goto(baseURL + '/projects-budget');
+  await expect(page.getByText('103 lines indexed', { exact: true })).toBeVisible();
+  await expect(page.getByText('Line items reconcile to ₱21.0B', { exact: true })).toBeVisible();
+  const search = page.getByPlaceholder('Search line or account code');
+  await search.fill('1-07-04-990');
+  await expect(page.getByRole('cell', { name: 'Other Structures', exact: true })).toBeVisible();
+  await expect(page.getByRole('cell', { name: '₱55,265,000', exact: true })).toBeVisible();
+});
+
+test('Projects & Budget displays procurement evidence instead of only linking out', async ({ page }) => {
+  await page.goto(baseURL + '/projects-budget');
+  await expect(page.getByRole('heading', { name: 'Bid results BetterMakati can follow' })).toBeVisible();
+  await expect(page.getByText('21', { exact: true }).first()).toBeVisible();
+  const search = page.getByPlaceholder('Search project, supplier or reference');
+  await search.fill('BS25-04-0419');
+  await expect(page.getByText('Instructional materials for Makati public elementary and secondary schools', { exact: true })).toBeVisible();
+  await expect(page.getByText('Epigraphy Inc.', { exact: true })).toBeVisible();
+});
+
+test('Projects & Budget displays structured audit follow-through', async ({ page }) => {
+  await page.goto(baseURL + '/projects-budget');
+  await expect(page.getByRole('heading', { name: 'Structured COA findings' })).toBeVisible();
+  await expect(page.getByText('COA finding', { exact: true }).first()).toBeVisible();
+  await expect(page.getByText('Recommendation', { exact: true }).first()).toBeVisible();
+  await expect(page.getByText('Follow-up', { exact: true }).first()).toBeVisible();
+  await expect(page.getByRole('heading', { name: /development-fund use for loan and interest payments/i })).toBeVisible();
 });
 
 test('owner task: project spending is reachable from homepage capability examples', async ({ page }) => {

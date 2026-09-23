@@ -5,7 +5,6 @@ import {
   Building2,
   FileBarChart,
   HardHat,
-  Landmark,
   PiggyBank,
   ReceiptText,
   Search,
@@ -31,6 +30,8 @@ import {
   annualBudgetDocuments,
   budgetByType,
   budgetByType2026,
+  budgetByTypeCurrentEstimate2025,
+  budgetCurrentEstimate2025,
   budgetSources,
   budgetSummary,
   budgetSummary2026,
@@ -42,6 +43,11 @@ import {
   revenueSources,
   selectedBudgetLines2026,
 } from '../data/budget2025';
+import {
+  auditFindingEntries,
+  procurementProjectEntries,
+  specialEducationFundEntries,
+} from '../data/accountabilitySupplement';
 
 const peso = (millions: number) => {
   const sign = millions < 0 ? '−' : '';
@@ -73,16 +79,20 @@ const pct = (value: number) => (value < 0.1 ? '<0.1%' : value.toFixed(1) + '%');
 const budgetPlanComparison = [
   {
     label: 'Total budget',
-    amount2025M: budgetSummary.totalBudgetM,
-    amount2026M: budgetSummary2026.totalBudgetM,
+    adopted2025M: budgetSummary.totalBudgetM,
+    estimate2025M: budgetCurrentEstimate2025.totalAppropriationM,
+    proposed2026M: budgetSummary2026.totalBudgetM,
   },
   ...budgetByType2026
     .filter(item => item.label !== 'Financial Expenses')
     .map(item => ({
       label: item.label,
-      amount2025M:
+      adopted2025M:
         budgetByType.find(previous => previous.label === item.label)?.amountM ?? 0,
-      amount2026M: item.amountM,
+      estimate2025M:
+        budgetByTypeCurrentEstimate2025.find(previous => previous.label === item.label)
+          ?.amountM ?? 0,
+      proposed2026M: item.amountM,
     })),
 ];
 
@@ -127,15 +137,57 @@ export default function ProjectsBudget() {
   const { barangay } = useBarangayScope();
   const [lineFilter, setLineFilter] = useState('All');
   const [lineQuery, setLineQuery] = useState('');
+  const [procurementQuery, setProcurementQuery] = useState('');
+  const [procurementPeriod, setProcurementPeriod] = useState('All');
 
   const visibleLines = useMemo(() => {
     const q = lineQuery.trim().toLowerCase();
     return selectedBudgetLines2026.filter(item => {
       const groupMatch = lineFilter === 'All' || item.group === lineFilter;
-      const queryMatch = !q || item.label.toLowerCase().includes(q);
+      const queryMatch =
+        !q ||
+        item.label.toLowerCase().includes(q) ||
+        item.accountCode?.toLowerCase().includes(q);
       return groupMatch && queryMatch;
     });
   }, [lineFilter, lineQuery]);
+
+  const visibleProcurement = useMemo(() => {
+    const q = procurementQuery.trim().toLowerCase();
+    return procurementProjectEntries
+      .filter(item => procurementPeriod === 'All' || item.period === procurementPeriod)
+      .filter(item => {
+        if (!q) return true;
+        return [
+          item.title,
+          item.procurement?.referenceNo,
+          item.procurement?.supplier,
+          item.location,
+        ]
+          .filter(Boolean)
+          .join(' ')
+          .toLowerCase()
+          .includes(q);
+      })
+      .sort((a, b) => (b.procurement?.bidDate || '').localeCompare(a.procurement?.bidDate || ''));
+  }, [procurementPeriod, procurementQuery]);
+
+  const procurementPeriods = [...new Set(procurementProjectEntries.map(item => item.period))];
+  const procurementApprovedM = procurementProjectEntries.reduce(
+    (sum, item) => sum + (item.procurement?.approvedBudgetM || 0),
+    0
+  );
+  const procurementAwardedM = procurementProjectEntries.reduce(
+    (sum, item) => sum + (item.procurement?.awardedAmountM || 0),
+    0
+  );
+  const budgetLineTotalM = selectedBudgetLines2026.reduce(
+    (sum, item) => sum + item.amountM,
+    0
+  );
+  const budgetLineReconciles =
+    Math.abs(budgetLineTotalM - budgetSummary2026.totalBudgetM) < 0.001;
+  const sefRecord = specialEducationFundEntries[0];
 
   const perResident = Math.round(
     (budgetSummary2026.totalBudgetM * 1_000_000) / cityPopulation
@@ -145,13 +197,13 @@ export default function ProjectsBudget() {
     <>
       <SEO
         title="Projects & Budget"
-        description="Makati City budget, revenue, spending, development funds and public financial records."
+        description="Makati City budget plans, reported revenue and spending, development funds, procurement records and audit follow-through."
         jsonLd={{
           '@context': 'https://schema.org',
           '@type': 'Dataset',
           name: 'Makati city finance and project records',
           description:
-            'Budget plans, actual receipts, expenditures, project and public financial records for Makati City.',
+            'Budget plans, reported receipts and expenditures, project, procurement and public financial records for Makati City.',
           spatialCoverage: 'Makati City, Philippines',
           temporalCoverage: '2014/2026',
         }}
@@ -159,13 +211,16 @@ export default function ProjectsBudget() {
 
       <Section id="budget" className="bg-[#fffdf8]">
         <div className="section-eyebrow">
-          2026 budget plan · actuals through 2025
+          2026 proposed budget · 2025 city estimate · DBM/BLGF 2025 statement
         </div>
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <Heading>Where Makati’s money comes from and goes</Heading>
           <SharePage title="Makati Projects & Budget | BetterMakati" />
         </div>
-        <LastReviewed note="Budget plans and actuals remain separated; each dataset links to its public source." />
+        <LastReviewed
+          date="2026-09-24"
+          note="Adopted plans, the city’s current-year estimate, and DBM/BLGF receipts and expenditures are shown as separate datasets."
+        />
 
         {barangay && (
           <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -203,7 +258,7 @@ export default function ProjectsBudget() {
         <div className="mt-5 grid grid-cols-1 lg:grid-cols-2 gap-4">
         <Link
           to="/accountability#2025-medical-supplies-development-fund"
-          className="mt-5 flex flex-col gap-3 rounded-2xl border border-primary-200 bg-primary-50 p-5 transition hover:border-primary-400 sm:flex-row sm:items-center sm:justify-between"
+          className="flex flex-col gap-3 rounded-2xl border border-primary-200 bg-primary-50 p-5 transition hover:border-primary-400 sm:flex-row sm:items-center sm:justify-between"
         >
           <div>
             <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
@@ -241,7 +296,7 @@ export default function ProjectsBudget() {
         </Link>
         </div>
 
-        <div className="mt-8 grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="mt-8 grid grid-cols-2 lg:grid-cols-3 gap-4">
           <Metric
             label="2026 proposed city budget"
             value={peso(budgetSummary2026.totalBudgetM)}
@@ -253,21 +308,33 @@ export default function ProjectsBudget() {
             icon={WalletCards}
           />
           <Metric
-            label="2025 actual receipts"
+            label="2025 adopted budget plan"
+            value={peso(budgetSummary.totalBudgetM)}
+            detail="Original 2025 annual-budget plan"
+            icon={FileBarChart}
+          />
+          <Metric
+            label="2025 current-year estimate"
+            value={peso(budgetCurrentEstimate2025.totalAppropriationM)}
+            detail="Current Year (Estimate) in the 2026 city budget report"
+            icon={FileBarChart}
+          />
+          <Metric
+            label="2025 reported receipts"
             value={peso(budgetSummary.actualReceiptsM)}
-            detail="DBM / BLGF actual annual data"
+            detail="DBM / BLGF Statement of Receipts and Expenditures"
             icon={ReceiptText}
           />
           <Metric
-            label="2025 actual expenditures"
+            label="2025 reported expenditures"
             value={peso(budgetSummary.actualExpendituresM)}
-            detail="DBM / BLGF actual annual data"
-            icon={FileBarChart}
+            detail="DBM / BLGF Statement of Receipts and Expenditures"
+            icon={ReceiptText}
           />
           <Metric
             label="2025 ending cash balance"
             value={peso(budgetSummary.endingCashM)}
-            detail="After reported payables and continuing appropriations"
+            detail="DBM / BLGF reported balance"
             icon={PiggyBank}
           />
         </div>
@@ -275,22 +342,14 @@ export default function ProjectsBudget() {
         <CitizenSummary
           className="mt-6"
           eyebrow="2026 budget in brief"
-          title="Operating and capital spending grow faster than the total budget"
-          summary="Makati’s 2026 proposed budget is ₱21.0B, compared with the ₱19.0B 2025 budget plan currently structured in BetterMakati. All major spending groups increase in peso terms, but they do not grow at the same pace."
+          title="The 2026 proposal is above the 2025 adopted plan, but below the city’s latest 2025 estimate"
+          summary="Makati’s 2026 proposed appropriation is ₱21.0B. That is ₱2.0B (+10.5%) above the ₱19.0B adopted 2025 plan, while it is ₱3.37B (-13.8%) below the ₱24.37B Current Year (Estimate) shown in the same 2026 Annual Budget Report."
           points={[
             {
-              label: 'Overall',
+              label: 'Operating',
               text: (
                 <>
-                  The total plan increases by <strong>₱2.0B (+10.5%)</strong>.
-                </>
-              ),
-            },
-            {
-              label: 'Operating costs',
-              text: (
-                <>
-                  MOOE rises by about <strong>₱1.49B (+16.5%)</strong>, accounting for roughly three-fourths of the net increase in the total plan.
+                  MOOE is <strong>₱10.47B</strong>: up <strong>16.5%</strong> from the 2025 adopted plan, but down about <strong>25.0%</strong> from the city’s 2025 current-year estimate.
                 </>
               ),
             },
@@ -298,7 +357,7 @@ export default function ProjectsBudget() {
               label: 'Capital',
               text: (
                 <>
-                  Capital outlay increases by about <strong>₱217.0M (+18.1%)</strong>, faster than the overall budget, but remains about <strong>6.7%</strong> of the 2026 plan.
+                  Capital outlay is <strong>₱1.41B</strong>: up <strong>18.1%</strong> from the 2025 adopted plan and about <strong>2.3%</strong> above the 2025 current-year estimate.
                 </>
               ),
             },
@@ -306,12 +365,20 @@ export default function ProjectsBudget() {
               label: 'Personnel',
               text: (
                 <>
-                  Personal Services increases by about <strong>₱141.0M (+2.2%)</strong>. Its share of the budget falls from about <strong>34.2%</strong> to <strong>31.6%</strong>.
+                  Personal Services is <strong>₱6.64B</strong>: up <strong>2.2%</strong> from the adopted plan and about <strong>0.3%</strong> below the current-year estimate.
+                </>
+              ),
+            },
+            {
+              label: 'Dedicated funds',
+              text: (
+                <>
+                  Special Purpose Appropriations total <strong>₱2.48B</strong>, including the 20% Development Fund, LDRRMF, MMDA contribution and financial assistance to barangays.
                 </>
               ),
             },
           ]}
-          note="This compares budget plans, not actual spending. The 2026 report labels the budget-year figures as proposed; 2025 actual receipts and expenditures are shown separately below."
+          note="The three columns answer different questions. The 2025 adopted plan is the original budget authority; the city’s 2025 current-year estimate is the later estimate printed in the 2026 budget report; the DBM/BLGF 2025 statement below reports receipts and expenditures on a separate fiscal table."
           actions={
             <a
               href={budgetSources.annualBudget2026}
@@ -325,31 +392,40 @@ export default function ProjectsBudget() {
         />
 
         <div className="mt-6 overflow-x-auto rounded-2xl border border-gray-200 bg-white">
-          <table className="w-full min-w-[700px] text-left">
+          <table className="w-full min-w-[980px] text-left">
             <thead className="bg-gray-50">
               <tr>
                 <th className="px-4 py-3 font-bold">Budget component</th>
-                <th className="px-4 py-3 font-bold text-right">2025 plan</th>
+                <th className="px-4 py-3 font-bold text-right">2025 adopted</th>
+                <th className="px-4 py-3 font-bold text-right">2025 current estimate</th>
                 <th className="px-4 py-3 font-bold text-right">2026 proposed</th>
-                <th className="px-4 py-3 font-bold text-right">Change</th>
+                <th className="px-4 py-3 font-bold text-right">vs adopted</th>
+                <th className="px-4 py-3 font-bold text-right">vs estimate</th>
               </tr>
             </thead>
             <tbody>
               {budgetPlanComparison.map(item => {
-                const change = percentChange(item.amount2025M, item.amount2026M);
+                const adoptedChange = percentChange(item.adopted2025M, item.proposed2026M);
+                const estimateChange = percentChange(item.estimate2025M, item.proposed2026M);
                 return (
                   <tr key={item.label} className="border-t">
                     <td className="px-4 py-3 font-semibold text-gray-900">
                       {item.label}
                     </td>
-                    <td className="px-4 py-3 text-right">
-                      {peso(item.amount2025M)}
-                    </td>
+                    <td className="px-4 py-3 text-right">{peso(item.adopted2025M)}</td>
+                    <td className="px-4 py-3 text-right">{peso(item.estimate2025M)}</td>
                     <td className="px-4 py-3 text-right font-bold text-gray-950">
-                      {peso(item.amount2026M)}
+                      {peso(item.proposed2026M)}
                     </td>
                     <td className="px-4 py-3 text-right font-semibold">
-                      {change === null ? '—' : (change >= 0 ? '+' : '') + change.toFixed(1) + '%'}
+                      {adoptedChange === null
+                        ? '—'
+                        : (adoptedChange >= 0 ? '+' : '') + adoptedChange.toFixed(1) + '%'}
+                    </td>
+                    <td className="px-4 py-3 text-right font-semibold">
+                      {estimateChange === null
+                        ? '—'
+                        : (estimateChange >= 0 ? '+' : '') + estimateChange.toFixed(1) + '%'}
                     </td>
                   </tr>
                 );
@@ -373,14 +449,14 @@ export default function ProjectsBudget() {
             rel="noreferrer"
             className="font-bold text-primary-700 underline underline-offset-2"
           >
-            2025 DBM / BLGF actuals{' '}
+            2025 DBM / BLGF statement{' '}
             <ArrowUpRight className="inline h-3.5 w-3.5" />
           </a>
         </div>
 
         <div className="mt-8">
           <FiscalTrendChart
-            title="Actual receipts and reported expenditures, 2019–2025"
+            title="DBM / BLGF receipts and reported expenditures, 2019–2025"
             items={actualFiscalHistory}
             formatValue={peso}
           />
@@ -391,7 +467,7 @@ export default function ProjectsBudget() {
                 <tr>
                   <th className="px-4 py-3 font-bold">Year</th>
                   <th className="px-4 py-3 font-bold text-right">
-                    Actual receipts
+                    Receipts
                   </th>
                   <th className="px-4 py-3 font-bold text-right">
                     Reported expenditures
@@ -432,8 +508,8 @@ export default function ProjectsBudget() {
           <p className="mt-3 text-xs leading-relaxed text-gray-500">
             Values are reported by DBM/BLGF in millions of pesos. “Receipts less
             expenditures” is a direct arithmetic comparison, not an accounting
-            surplus or deficit. The unusually high 2020 expenditure is retained
-            as published in the source table.
+            surplus or deficit. BetterMakati preserves the values as published and
+            does not relabel the DBM/BLGF series as audited city financial statements.
           </p>
         </div>
 
@@ -520,7 +596,7 @@ export default function ProjectsBudget() {
       </Section>
 
       <Section className="bg-[#f5f8f2]">
-        <div className="section-eyebrow">Actual 2025 Revenue</div>
+        <div className="section-eyebrow">DBM / BLGF 2025 Revenue</div>
         <Heading level={2}>Where city receipts came from</Heading>
         <p className="mt-2 text-xs text-gray-500">
           Source:{' '}
@@ -530,7 +606,7 @@ export default function ProjectsBudget() {
             rel="noreferrer"
             className="font-bold text-primary-700 underline underline-offset-2"
           >
-            DBM / BLGF actuals <ArrowUpRight className="inline h-3 w-3" />
+            DBM / BLGF statement <ArrowUpRight className="inline h-3 w-3" />
           </a>
         </p>
 
@@ -559,7 +635,7 @@ export default function ProjectsBudget() {
             <thead className="bg-gray-50">
               <tr>
                 <th className="px-4 py-3 font-bold">Local revenue source</th>
-                <th className="px-4 py-3 font-bold text-right">2025 actual</th>
+                <th className="px-4 py-3 font-bold text-right">2025 reported</th>
               </tr>
             </thead>
             <tbody>
@@ -577,7 +653,7 @@ export default function ProjectsBudget() {
       </Section>
 
       <Section className="bg-white">
-        <div className="section-eyebrow">Actual 2025 Spending</div>
+        <div className="section-eyebrow">DBM / BLGF 2025 Spending</div>
         <Heading level={2}>Where reported expenditures went</Heading>
         <p className="mt-2 text-xs text-gray-500">
           Source:{' '}
@@ -587,13 +663,13 @@ export default function ProjectsBudget() {
             rel="noreferrer"
             className="font-bold text-primary-700 underline underline-offset-2"
           >
-            DBM / BLGF actuals <ArrowUpRight className="inline h-3 w-3" />
+            DBM / BLGF statement <ArrowUpRight className="inline h-3 w-3" />
           </a>
         </p>
 
         <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-5 mt-7">
           <HorizontalBarChart
-            title="Actual spending by function"
+            title="Reported spending by function"
             items={actualSpendingByFunction.map(item => ({
               label: item.label,
               value: item.amountM,
@@ -658,7 +734,7 @@ export default function ProjectsBudget() {
           .
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-7">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-7">
           {dedicatedFunds2026.map(item => (
             <a
               key={item.label}
@@ -684,7 +760,7 @@ export default function ProjectsBudget() {
           <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-5">
             <div>
               <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
-                20% Development Fund project
+                2025 20% Development Fund project follow-through
               </div>
               <h3 className="font-extrabold text-xl text-gray-950 mt-2">
                 {developmentFundProject.name}
@@ -776,6 +852,38 @@ export default function ProjectsBudget() {
           </div>
         </div>
 
+        {sefRecord && (
+          <div className="mt-8 rounded-2xl border border-secondary-100 bg-[#fff8e6] p-6">
+            <div className="section-eyebrow">Special Education Fund</div>
+            <h3 className="mt-1 text-xl font-extrabold text-gray-950">{sefRecord.title}</h3>
+            <p className="mt-2 text-sm leading-relaxed text-gray-700">{sefRecord.summary}</p>
+            <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-3">
+              <div className="rounded-xl bg-white p-4">
+                <div className="text-xs text-gray-500">Reported receipts</div>
+                <div className="mt-1 text-xl font-extrabold text-gray-950">{peso(sefRecord.reportedAmountM || 0)}</div>
+              </div>
+              <div className="rounded-xl bg-white p-4">
+                <div className="text-xs text-gray-500">Reported disbursements</div>
+                <div className="mt-1 text-xl font-extrabold text-gray-950">{peso(sefRecord.actualAmountM || 0)}</div>
+              </div>
+              <div className="rounded-xl bg-white p-4">
+                <div className="text-xs text-gray-500">Reported year-end balance</div>
+                <div className="mt-1 text-xl font-extrabold text-gray-950">
+                  {peso((sefRecord.reportedAmountM || 0) - (sefRecord.actualAmountM || 0))}
+                </div>
+              </div>
+            </div>
+            <a
+              href={sefRecord.sources[0]?.url}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700 underline underline-offset-2"
+            >
+              Open SEF utilization source <ArrowUpRight className="h-3.5 w-3.5" />
+            </a>
+          </div>
+        )}
+
         <div className="mt-8 rounded-2xl border border-gray-200 bg-white p-6">
           <div className="flex items-center gap-2">
             <Building2 className="h-5 w-5 text-primary-700" />
@@ -784,7 +892,7 @@ export default function ProjectsBudget() {
             </h3>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-5">
-            {capitalBudgetLines2026.map(item => (
+            {capitalBudgetLines2026.filter(item => item.amountM > 0).map(item => (
               <div key={item.label} className="rounded-xl bg-gray-50 p-4">
                 <div className="text-xl font-extrabold text-primary-800">
                   {peso(item.amountM)}
@@ -800,21 +908,34 @@ export default function ProjectsBudget() {
 
       <Section className="bg-white">
         <div className="section-eyebrow">Budget Explorer</div>
-        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <Heading level={2}>Budget line items</Heading>
-            <p className="text-gray-600">
-              Major citywide line items extracted from the 2026 Annual Budget Report.
+            <Heading level={2}>All citywide summary budget lines</Heading>
+            <p className="mt-1 max-w-3xl text-gray-600">
+              {selectedBudgetLines2026.length} object-of-expenditure lines from the five-page citywide summary of the 2026 Annual Budget Report. Department-level sheets remain in the original 82-page report.
             </p>
+            <div className="mt-3 flex flex-wrap gap-2 text-xs font-bold">
+              <span className="rounded-full bg-primary-50 px-3 py-1.5 text-primary-800">
+                {selectedBudgetLines2026.length} lines indexed
+              </span>
+              <span className={budgetLineReconciles
+                ? 'rounded-full bg-success-50 px-3 py-1.5 text-success-800'
+                : 'rounded-full bg-warning-50 px-3 py-1.5 text-warning-800'
+              }>
+                {budgetLineReconciles
+                  ? 'Line items reconcile to ₱21.0B'
+                  : 'Line-item total needs reconciliation'}
+              </span>
+            </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-2">
+          <div className="flex flex-col gap-2 sm:flex-row">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
               <input
                 value={lineQuery}
                 onChange={event => setLineQuery(event.target.value)}
-                placeholder="Search line items"
+                placeholder="Search line or account code"
                 className="rounded-xl border border-gray-300 py-2.5 pl-9 pr-3 text-sm outline-none focus:border-primary-500"
               />
             </div>
@@ -822,38 +943,50 @@ export default function ProjectsBudget() {
               value={lineFilter}
               onChange={event => setLineFilter(event.target.value)}
               className="rounded-xl border border-gray-300 bg-white px-3 py-2.5 text-sm"
+              aria-label="Filter budget line category"
             >
               <option>All</option>
               <option>Personal Services</option>
               <option>Operating</option>
               <option>Capital</option>
+              <option>Financial Expenses</option>
+              <option>Special Purpose</option>
             </select>
           </div>
         </div>
 
-        <div className="mt-6 overflow-x-auto rounded-2xl border border-gray-200">
-          <table className="w-full min-w-[680px] text-left">
+        <div className="mt-4 text-sm text-gray-500">
+          Showing {visibleLines.length} of {selectedBudgetLines2026.length} lines
+        </div>
+
+        <div className="mt-3 overflow-x-auto rounded-2xl border border-gray-200">
+          <table className="w-full min-w-[820px] text-left">
             <thead className="bg-gray-50">
               <tr>
                 <th className="px-4 py-3 font-bold">Category</th>
+                <th className="px-4 py-3 font-bold">Account code</th>
                 <th className="px-4 py-3 font-bold">Budget line</th>
-                <th className="px-4 py-3 font-bold text-right">2025 amount</th>
+                <th className="px-4 py-3 font-bold text-right">2026 proposed</th>
               </tr>
             </thead>
             <tbody>
               {visibleLines.map(item => (
                 <tr key={item.group + item.label} className="border-t">
-                  <td className="px-4 py-3 text-sm text-gray-500">
-                    {item.group}
-                  </td>
-                  <td className="px-4 py-3 font-medium text-gray-900">
-                    {item.label}
-                  </td>
+                  <td className="px-4 py-3 text-sm text-gray-500">{item.group}</td>
+                  <td className="px-4 py-3 font-mono text-xs text-gray-500">{item.accountCode || '—'}</td>
+                  <td className="px-4 py-3 font-medium text-gray-900">{item.label}</td>
                   <td className="px-4 py-3 text-right font-bold text-gray-950">
-                    {pesoExact(item.amountM)}
+                    {item.amountM === 0 ? '—' : pesoExact(item.amountM)}
                   </td>
                 </tr>
               ))}
+              {visibleLines.length === 0 && (
+                <tr>
+                  <td colSpan={4} className="px-4 py-8 text-center text-sm text-gray-600">
+                    No budget line matches this search.
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
@@ -870,63 +1003,262 @@ export default function ProjectsBudget() {
       </Section>
 
       <Section id="procurement" className="bg-[#fffdf8]">
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
-          <Link
-            to="/accountability?type=project"
-            className="rounded-2xl border border-primary-200 bg-primary-50 p-6 hover:border-primary-400 hover:shadow-sm transition"
-          >
-            <WalletCards className="h-6 w-6 text-primary-700" />
-            <h2 className="font-extrabold text-lg text-gray-950 mt-4">
-              Structured procurement records
-            </h2>
-            <p className="text-sm text-gray-600 mt-1">
-              Follow approved budget, winning bidder, bid amount and the next missing contract or implementation stage.
+        <div className="section-eyebrow">Structured procurement</div>
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <Heading level={2}>Bid results BetterMakati can follow</Heading>
+            <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-700">
+              These records come from published city bid-result disclosures already structured in BetterMakati. An award record is not the same as a completed contract, delivered project or final payment.
             </p>
-          </Link>
+          </div>
+          <div className="flex flex-wrap gap-3">
+            <Link to="/accountability?type=project" className="brand-btn-primary">
+              Open full project ledger
+            </Link>
+            <a
+              href={budgetSources.procurement}
+              target="_blank"
+              rel="noreferrer"
+              className="brand-btn-secondary"
+            >
+              Search PhilGEPS <ArrowUpRight className="h-4 w-4" />
+            </a>
+          </div>
+        </div>
 
-          <a
-            href={budgetSources.procurement}
-            target="_blank"
-            rel="noreferrer"
-            className="rounded-2xl border border-gray-200 bg-white p-6 hover:border-primary-300 hover:shadow-sm transition"
-          >
-            <ShoppingCart className="h-6 w-6 text-primary-700" />
-            <h2 className="font-extrabold text-lg text-gray-950 mt-4">
-              PhilGEPS
-            </h2>
-            <p className="text-sm text-gray-600 mt-1">
-              Search the national procurement portal for bid and award notices.
-            </p>
-          </a>
+        <div className="mt-6 grid grid-cols-2 gap-4 lg:grid-cols-4">
+          <Metric
+            label="Structured bid-result records"
+            value={procurementProjectEntries.length.toLocaleString('en-PH')}
+            detail="Currently ingested into BetterMakati"
+            icon={ShoppingCart}
+          />
+          <Metric
+            label="Approved budgets represented"
+            value={peso(procurementApprovedM)}
+            detail="Sum of ABCs in the structured records"
+            icon={WalletCards}
+          />
+          <Metric
+            label="Winning bids represented"
+            value={peso(procurementAwardedM)}
+            detail="Sum of reported winning bid amounts"
+            icon={ReceiptText}
+          />
+          <Metric
+            label="ABC less winning bids"
+            value={peso(procurementApprovedM - procurementAwardedM)}
+            detail="Arithmetic difference only; not claimed as realized savings"
+            icon={PiggyBank}
+          />
+        </div>
 
-          <Link
-            id="audit"
-            to="/accountability?type=audit"
-            className="rounded-2xl border border-secondary-200 bg-secondary-50 p-6 hover:border-secondary-400 hover:shadow-sm transition"
+        <div className="mt-7 flex flex-col gap-2 sm:flex-row">
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+            <input
+              type="search"
+              value={procurementQuery}
+              onChange={event => setProcurementQuery(event.target.value)}
+              placeholder="Search project, supplier or reference"
+              className="w-full rounded-xl border border-gray-300 py-2.5 pl-9 pr-3 text-sm outline-none focus:border-primary-500"
+            />
+          </div>
+          <select
+            value={procurementPeriod}
+            onChange={event => setProcurementPeriod(event.target.value)}
+            className="rounded-xl border border-gray-300 bg-white px-3 py-2.5 text-sm"
+            aria-label="Filter procurement period"
           >
-            <Landmark className="h-6 w-6 text-secondary-800" />
-            <h2 className="font-extrabold text-lg text-gray-950 mt-4">
-              Audit findings & follow-through
-            </h2>
-            <p className="text-sm text-gray-600 mt-1">
-              Read structured COA observations, recommendations, management responses and unresolved follow-up gaps.
-            </p>
-          </Link>
+            <option>All</option>
+            {procurementPeriods.map(period => (
+              <option key={period}>{period}</option>
+            ))}
+          </select>
+        </div>
 
-          <a
-            href={budgetSources.audit}
-            target="_blank"
-            rel="noreferrer"
-            className="rounded-2xl border border-gray-200 bg-white p-6 hover:border-primary-300 hover:shadow-sm transition"
-          >
-            <Landmark className="h-6 w-6 text-primary-700" />
-            <h2 className="font-extrabold text-lg text-gray-950 mt-4">
-              COA reports
-            </h2>
-            <p className="text-sm text-gray-600 mt-1">
-              Open the Commission on Audit annual-audit source collection.
+        <div className="mt-4 text-sm text-gray-500">
+          Showing {visibleProcurement.length} of {procurementProjectEntries.length} structured records
+        </div>
+
+        <div className="mt-3 overflow-x-auto rounded-2xl border border-gray-200 bg-white">
+          <table className="w-full min-w-[1120px] text-left">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-4 py-3 font-bold">Period</th>
+                <th className="px-4 py-3 font-bold">Reference</th>
+                <th className="px-4 py-3 font-bold">Procurement</th>
+                <th className="px-4 py-3 font-bold text-right">ABC</th>
+                <th className="px-4 py-3 font-bold text-right">Winning bid</th>
+                <th className="px-4 py-3 font-bold">Supplier</th>
+                <th className="px-4 py-3 font-bold">Evidence trail</th>
+              </tr>
+            </thead>
+            <tbody>
+              {visibleProcurement.map(item => {
+                const documented =
+                  item.procurement?.stages.filter(stage => stage.status === 'documented').length || 0;
+                const gaps =
+                  item.procurement?.stages.filter(stage => stage.status === 'source-gap').length || 0;
+                return (
+                  <tr key={item.id} className="border-t align-top">
+                    <td className="px-4 py-4 text-sm text-gray-600">{item.period}</td>
+                    <td className="px-4 py-4 font-mono text-xs text-gray-600">
+                      {item.procurement?.referenceNo || '—'}
+                    </td>
+                    <td className="px-4 py-4">
+                      <Link
+                        to={'/accountability?type=project#' + item.id}
+                        className="font-bold text-primary-800 hover:underline"
+                      >
+                        {item.title}
+                      </Link>
+                      {item.location && (
+                        <div className="mt-1 text-xs text-gray-500">{item.location}</div>
+                      )}
+                    </td>
+                    <td className="px-4 py-4 text-right font-semibold">
+                      {item.procurement?.approvedBudgetM !== undefined
+                        ? peso(item.procurement.approvedBudgetM)
+                        : '—'}
+                    </td>
+                    <td className="px-4 py-4 text-right font-semibold">
+                      {item.procurement?.awardedAmountM !== undefined
+                        ? peso(item.procurement.awardedAmountM)
+                        : '—'}
+                    </td>
+                    <td className="px-4 py-4 text-sm text-gray-700">
+                      {item.procurement?.supplier || '—'}
+                    </td>
+                    <td className="px-4 py-4 text-xs text-gray-600">
+                      <span className="font-bold text-success-800">{documented} documented</span>
+                      {' · '}
+                      <span className={gaps ? 'font-bold text-warning-800' : 'text-gray-500'}>
+                        {gaps} source gap{gaps === 1 ? '' : 's'}
+                      </span>
+                    </td>
+                  </tr>
+                );
+              })}
+              {visibleProcurement.length === 0 && (
+                <tr>
+                  <td colSpan={7} className="px-4 py-8 text-center text-sm text-gray-600">
+                    No structured procurement record matches this search.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+
+        <p className="mt-3 text-xs leading-relaxed text-gray-500">
+          Coverage is not a complete procurement registry. BetterMakati publishes the later contract, notice-to-proceed, implementation or completion stage only when a source has been linked to the same procurement record.
+        </p>
+      </Section>
+
+      <Section id="audit" className="bg-white">
+        <div className="section-eyebrow">Audit & follow-through</div>
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <Heading level={2}>Structured COA findings</Heading>
+            <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-700">
+              BetterMakati separates the audit finding, recommendation, management response and later follow-up where the cited records support each field.
             </p>
-          </a>
+          </div>
+          <div className="flex flex-wrap gap-3">
+            <Link to="/accountability?type=audit" className="brand-btn-primary">
+              Open audit ledger
+            </Link>
+            <a
+              href={budgetSources.audit}
+              target="_blank"
+              rel="noreferrer"
+              className="brand-btn-secondary"
+            >
+              COA reports <ArrowUpRight className="h-4 w-4" />
+            </a>
+          </div>
+        </div>
+
+        <div className="mt-7 space-y-4">
+          {auditFindingEntries.map(item => (
+            <article key={item.id} className="rounded-2xl border border-gray-200 bg-[#fffdf8] p-6">
+              <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
+                <div>
+                  <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+                    {item.period}
+                  </div>
+                  <h3 className="mt-1 text-lg font-extrabold text-gray-950">{item.title}</h3>
+                  <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-700">
+                    {item.summary}
+                  </p>
+                </div>
+                {item.reportedAmountM !== undefined && (
+                  <div className="shrink-0 rounded-xl bg-white px-4 py-3 text-right">
+                    <div className="text-xs text-gray-500">Amount cited</div>
+                    <div className="mt-1 text-xl font-extrabold text-gray-950">
+                      {peso(item.reportedAmountM)}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {item.audit && (
+                <div className="mt-5 grid gap-3 lg:grid-cols-2">
+                  <div className="rounded-xl border border-gray-200 bg-white p-4">
+                    <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">
+                      COA finding
+                    </div>
+                    <p className="mt-2 text-sm leading-relaxed text-gray-700">{item.audit.finding}</p>
+                  </div>
+                  <div className="rounded-xl border border-gray-200 bg-white p-4">
+                    <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">
+                      Recommendation
+                    </div>
+                    <p className="mt-2 text-sm leading-relaxed text-gray-700">
+                      {item.audit.recommendation || 'No recommendation has been structured from the linked public source.'}
+                    </p>
+                  </div>
+                  <div className="rounded-xl border border-gray-200 bg-white p-4">
+                    <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">
+                      Management response
+                    </div>
+                    <p className="mt-2 text-sm leading-relaxed text-gray-700">
+                      {item.audit.managementResponse || 'No management response has been linked in BetterMakati.'}
+                    </p>
+                  </div>
+                  <div className="rounded-xl border border-gray-200 bg-white p-4">
+                    <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">
+                      Follow-up
+                    </div>
+                    <p className="mt-2 text-sm leading-relaxed text-gray-700">
+                      {item.audit.followUpStatus || 'A later resolution record has not yet been linked.'}
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              {item.notes?.length ? (
+                <ul className="mt-4 space-y-1 text-xs leading-relaxed text-gray-500">
+                  {item.notes.map(note => <li key={note}>{note}</li>)}
+                </ul>
+              ) : null}
+
+              <div className="mt-4 flex flex-wrap gap-3 text-xs">
+                {item.sources.map(source => (
+                  <a
+                    key={source.url}
+                    href={source.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="font-bold text-primary-700 underline underline-offset-2"
+                  >
+                    {source.label} <ArrowUpRight className="inline h-3 w-3" />
+                  </a>
+                ))}
+              </div>
+            </article>
+          ))}
         </div>
       </Section>
     </>
