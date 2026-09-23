@@ -170,7 +170,7 @@ test('barangay dashboard carries local scope into Civic Map', async ({ page }) =
 
 test('barangay services open with Barangay level selected', async ({ page }) => {
   await page.goto(baseURL + '/barangays/poblacion');
-  await page.getByRole('link', { name: 'Services', exact: true }).first().click();
+  await page.getByRole('navigation', { name: 'Barangay local navigation' }).getByRole('link', { name: 'Services', exact: true }).click();
   await expect(page).toHaveURL(/\/services\?barangay=poblacion/);
   await expect(page.getByLabel('Change barangay scope')).toHaveValue('poblacion');
   await expect(page.getByRole('button', { name: 'Barangay', exact: true })).toHaveAttribute('aria-pressed', 'true');
