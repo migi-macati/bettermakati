@@ -20,6 +20,7 @@ import {
   barangays,
   barangayMapsUrl,
   findBarangay,
+  commonBarangayServiceIds,
   makatiBarangayDirectory,
   psaBarangaySource,
 } from '../data/barangays';
@@ -27,6 +28,7 @@ import {
   congressionalOfficials,
   councilOfficials,
 } from '../data/electedOfficials';
+import { serviceDirectory } from '../data/serviceDirectory';
 
 export default function BarangayProfile() {
   const { slug } = useParams();
@@ -57,6 +59,7 @@ export default function BarangayProfile() {
   const districtCouncilors = councilOfficials.filter(
     official => official.district === barangay.legislativeDistrict
   );
+  const barangayServices = serviceDirectory.filter(service => commonBarangayServiceIds.includes(service.id));
 
   return (
     <>
@@ -103,6 +106,7 @@ export default function BarangayProfile() {
           items={[
             { label: 'Overview', href: '#overview' },
             { label: 'Representation', href: '#representation' },
+            { label: 'Services', href: '#services' },
             { label: 'Community', href: '#community' },
             { label: 'More information', href: '#more' },
           ]}
@@ -214,10 +218,18 @@ export default function BarangayProfile() {
 
         <div className="mt-7 rounded-2xl border border-secondary-200 bg-secondary-50 p-5">
           <h3 className="font-extrabold text-gray-950">Barangay officials</h3>
+          {barangay.officials?.punongBarangay && (
+            <div className="mt-3 rounded-xl border border-secondary-200 bg-white p-4">
+              <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">Punong Barangay · city page snapshot</div>
+              <div className="mt-1 text-lg font-extrabold text-gray-950">{barangay.officials.punongBarangay}</div>
+            </div>
+          )}
           <p className="mt-2 text-sm leading-relaxed text-gray-700">
-            BetterMakati will publish the current Punong Barangay, seven
-            Sangguniang Barangay members and SK leadership here only after a
-            complete authoritative roster is matched to this barangay.
+            The current Punong Barangay, seven Sangguniang Barangay members and
+            SK leadership are maintained on the official Makati barangay page.
+            BetterMakati links to that roster rather than copying names that may
+            become stale. Check the source before relying on a name for an
+            official transaction.
           </p>
           <div className="mt-4 flex flex-wrap gap-3">
             <a
@@ -226,7 +238,7 @@ export default function BarangayProfile() {
               rel="noreferrer"
               className="inline-flex items-center gap-1 text-sm font-bold text-primary-700"
             >
-              Official Makati portal <ExternalLink className="h-3.5 w-3.5" />
+              Current barangay roster <ExternalLink className="h-3.5 w-3.5" />
             </a>
             <Link
               to="/elections"
@@ -235,6 +247,23 @@ export default function BarangayProfile() {
               Elections & voting <ArrowRight className="h-3.5 w-3.5" />
             </Link>
           </div>
+        </div>
+      </Section>
+
+      <Section id="services" className="bg-[#f5f8f2]">
+        <div className="section-eyebrow">Barangay services</div>
+        <Heading level={2}>Common services to confirm at the hall</Heading>
+        <p className="max-w-3xl text-sm leading-relaxed text-gray-600">
+          These services are available through the city’s barangay-service directory. Requirements, fees, office hours and whether a service is offered can vary by barangay, so confirm with the hall before travelling.
+        </p>
+        <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+          {barangayServices.map(service => (
+            <Link key={service.id} to={service.href} className="rounded-xl border border-primary-100 bg-white p-4 hover:border-primary-300">
+              <div className="text-xs font-bold text-primary-700">{service.type}</div>
+              <div className="mt-1 font-extrabold text-gray-950">{service.title}</div>
+              <div className="mt-2 text-sm leading-relaxed text-gray-600">{service.description}</div>
+            </Link>
+          ))}
         </div>
       </Section>
 
@@ -282,6 +311,21 @@ export default function BarangayProfile() {
 
         <div className="section-eyebrow">Community</div>
         <Heading level={2}>Local links</Heading>
+
+        {barangay.notablePlaces && barangay.notablePlaces.length > 0 && (
+          <>
+            <h3 className="mt-6 font-extrabold text-lg text-gray-950">Prominent places and institutions</h3>
+            <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-4">
+              {barangay.notablePlaces.map(place => (
+                <a key={place.name} href={place.href} target="_blank" rel="noreferrer" className="rounded-2xl border border-gray-200 bg-[#fffdf8] p-5 hover:border-primary-300">
+                  <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">{place.type}</div>
+                  <h3 className="mt-2 font-extrabold text-gray-950">{place.name}</h3>
+                  <span className="mt-3 inline-flex items-center gap-1 text-sm font-bold text-primary-700">Open link <ExternalLink className="h-3.5 w-3.5" /></span>
+                </a>
+              ))}
+            </div>
+          </>
+        )}
 
         {barangay.associations && barangay.associations.length > 0 ? (
           <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
