@@ -1,4 +1,6 @@
 export const budgetSources = {
+  annualBudget2026:
+    'https://www.makati.gov.ph/assets/uploads/staticmenu/docs/online_forms/pdf/Annual%20Budget%20Report%202026.pdf',
   annualBudget:
     'https://www.makati.gov.ph/assets/uploads/staticmenu/docs/online_forms/pdf/Annual%20Budget%202025.pdf',
   developmentFundQ1:
@@ -17,7 +19,7 @@ export const cityPopulation = 309770;
 export const annualBudgetDocuments = [
   {
     year: 2026,
-    href: 'https://www.makati.gov.ph/assets/uploads/staticmenu/docs/online_forms/pdf/Annual%20Budget%20Report%202026.pdf',
+    href: budgetSources.annualBudget2026,
   },
   { year: 2025, href: budgetSources.annualBudget },
   {
@@ -110,6 +112,121 @@ export const actualFiscalHistory = [
     href: budgetSources.actuals,
   },
 ];
+
+export const budgetSummary2026 = {
+  year: 2026,
+  totalBudgetM: 21000,
+  personalServicesM: 6635.88,
+  mooeM: 10473.626,
+  capitalOutlayM: 1412.815,
+  financialExpensesM: 1.09,
+  specialPurposeAppropriationsM: 2476.589,
+};
+
+export const budgetByType2026 = [
+  {
+    label: 'Personal Services',
+    amountM: 6635.88,
+    share: 31.6,
+    description: 'Salaries, benefits and personnel costs',
+  },
+  {
+    label: 'Maintenance & Other Operating Expenses',
+    amountM: 10473.626,
+    share: 49.9,
+    description: 'Operating programs, supplies, services and assistance',
+  },
+  {
+    label: 'Capital Outlay',
+    amountM: 1412.815,
+    share: 6.7,
+    description: 'Infrastructure, equipment and other capital assets',
+  },
+  {
+    label: 'Special Purpose Appropriations',
+    amountM: 2476.589,
+    share: 11.8,
+    description: 'Dedicated and statutory funds',
+  },
+  {
+    label: 'Financial Expenses',
+    amountM: 1.09,
+    share: 0.01,
+    description: 'Bank and other financial charges',
+  },
+];
+
+export const dedicatedFunds2026 = [
+  {
+    label: '20% Development Fund',
+    amountM: 676.313,
+    description: '2026 proposed development-fund appropriation',
+    href: budgetSources.annualBudget2026,
+  },
+  {
+    label: 'Local Disaster Risk Reduction and Management Fund',
+    amountM: 1000,
+    description: '2026 proposed LDRRMF appropriation',
+    href: budgetSources.annualBudget2026,
+  },
+  {
+    label: '5% MMDA Contribution',
+    amountM: 800.176,
+    description: '2026 proposed statutory contribution',
+    href: budgetSources.annualBudget2026,
+  },
+];
+
+export const selectedBudgetLines2026 = [
+  { group: 'Personal Services', label: 'Salaries and Wages - Regular', amountM: 2108.009 },
+  { group: 'Personal Services', label: 'Salaries and Wages - Casual / Contractual', amountM: 1740.307 },
+  { group: 'Personal Services', label: 'Hazard Pay', amountM: 250.002 },
+  { group: 'Personal Services', label: 'Year End Bonus', amountM: 321.76 },
+  { group: 'Personal Services', label: 'Other Bonuses and Allowances', amountM: 350.571 },
+  { group: 'Personal Services', label: 'Retirement and Life Insurance Premiums', amountM: 448.565 },
+  { group: 'Personal Services', label: 'Other Personnel Benefits', amountM: 442.348 },
+
+  { group: 'Operating', label: 'Training Expenses', amountM: 278.835 },
+  { group: 'Operating', label: 'Drugs and Medicines Expenses', amountM: 1350.811 },
+  { group: 'Operating', label: 'Medical, Dental and Laboratory Supplies Expenses', amountM: 1018.02 },
+  { group: 'Operating', label: 'Other Supplies and Materials Expenses', amountM: 812.82 },
+  { group: 'Operating', label: 'Electricity Expenses', amountM: 400 },
+  { group: 'Operating', label: 'Other Professional Services', amountM: 1181.596 },
+  { group: 'Operating', label: 'Environment / Sanitary Services', amountM: 641.092 },
+  { group: 'Operating', label: 'Janitorial Services', amountM: 215.8 },
+  { group: 'Operating', label: 'Security Services', amountM: 404.5 },
+  { group: 'Operating', label: 'Other General Services', amountM: 458.539 },
+  { group: 'Operating', label: 'Donations', amountM: 1284.205 },
+  { group: 'Operating', label: 'Other Maintenance and Operating Expenses', amountM: 1109.878 },
+
+  { group: 'Capital', label: 'Other Land Improvements', amountM: 78.75 },
+  { group: 'Capital', label: 'Road Networks', amountM: 78.122 },
+  { group: 'Capital', label: 'Power Supply Systems', amountM: 129 },
+  { group: 'Capital', label: 'Other Infrastructure Assets', amountM: 61.55 },
+  { group: 'Capital', label: 'Buildings', amountM: 130 },
+  { group: 'Capital', label: 'School Buildings', amountM: 116 },
+  { group: 'Capital', label: 'Hospitals and Health Centers', amountM: 12 },
+  { group: 'Capital', label: 'Other Structures', amountM: 265 },
+  { group: 'Capital', label: 'Machinery', amountM: 6.11 },
+  { group: 'Capital', label: 'Office Equipment', amountM: 116.307 },
+  { group: 'Capital', label: 'Information and Communication Technology Equipment', amountM: 143.485 },
+  { group: 'Capital', label: 'Agricultural and Forestry Equipment', amountM: 9.5 },
+  { group: 'Capital', label: 'Communication Equipment', amountM: 2.195 },
+  { group: 'Capital', label: 'Construction and Heavy Equipment', amountM: 15.443 },
+  { group: 'Capital', label: 'Military, Police and Security Equipment', amountM: 167.733 },
+  { group: 'Capital', label: 'Medical Equipment', amountM: 117.742 },
+  { group: 'Capital', label: 'Sports Equipment', amountM: 2.938 },
+  { group: 'Capital', label: 'Technical and Scientific Equipment', amountM: 27.397 },
+  { group: 'Capital', label: 'Other Machinery and Equipment', amountM: 24.18 },
+  { group: 'Capital', label: 'Motor Vehicles', amountM: 65.95 },
+  { group: 'Capital', label: 'Furniture and Fixtures', amountM: 8.856 },
+  { group: 'Capital', label: 'Other Property, Plant and Equipment', amountM: 8.684 },
+  { group: 'Capital', label: 'Computer Software', amountM: 35.608 },
+];
+
+export const capitalBudgetLines2026 = selectedBudgetLines2026.filter(
+  item => item.group === 'Capital'
+);
 
 export const budgetSummary = {
   year: 2025,
