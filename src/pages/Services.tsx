@@ -36,6 +36,8 @@ import {
   serviceGuideDetails,
   verifiedServiceGuideCount,
 } from '../data/serviceGuideDetails';
+import BarangayScopeBar from '../components/barangay/BarangayScopeBar';
+import { useBarangayScope } from '../hooks/useBarangayScope';
 
 const normalize = (value: string) =>
   value
@@ -83,6 +85,7 @@ const Services: React.FC = () => {
   const [directoryQuery, setDirectoryQuery] = useState('');
   const [directoryLevel, setDirectoryLevel] = useState<'All' | ServiceLevel>('All');
   const [directoryCategory, setDirectoryCategory] = useState('All');
+  const { barangay } = useBarangayScope();
   const subcategories: Subcategory[] = categoryIndex.pages;
 
   const categoryData = serviceCategories.categories.find(c => c.slug === category);
@@ -94,6 +97,12 @@ const Services: React.FC = () => {
     House,
   };
   const Icon = categoryData?.icon ? iconMap[categoryData.icon] : undefined;
+
+  useEffect(() => {
+    if (!category && barangay) {
+      setDirectoryLevel('Barangay');
+    }
+  }, [barangay, category]);
 
   useEffect(() => {
     if (category && categoryData) {
@@ -154,6 +163,7 @@ const Services: React.FC = () => {
             note="Requirements can change. Open the linked official source before acting."
             className="mt-4"
           />
+          <BarangayScopeBar note="When a barangay is selected, barangay-level services are brought forward first. City and national services remain available by changing the government-level filter." />
           <div className="mt-4">
             <Link to="/government-offices" className="text-sm font-bold text-primary-700 underline underline-offset-2">
               Government offices in and serving Makati
