@@ -361,10 +361,10 @@ const toolItems: SearchItem[] = [
     title: 'Project Tracker',
     group: 'Tool',
     category: 'Tools',
-    description: 'Public-project records and development disclosures.',
-    href: '/projects-budget#projects',
+    description: 'Follow projects and procurements from public award records toward implementation and completion evidence.',
+    href: '/accountability?type=project',
     keywords:
-      'project tracker infrastructure public works development project status',
+      'project tracker infrastructure public works procurement award contract notice to proceed implementation completion evidence status',
   },
   {
     title: 'Getting Around',
