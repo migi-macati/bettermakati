@@ -165,6 +165,15 @@ test('barangay profile uses one contextual local-edition header', async ({ page 
   await expect(page.getByLabel('Switch barangay edition')).toHaveValue('poblacion');
 });
 
+test('mobile barangay edition uses a section dropdown instead of horizontal local tabs', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto(baseURL + '/barangays/poblacion');
+  await expect(page.getByLabel('Local section')).toBeVisible();
+  await expect(page.getByRole('navigation', { name: 'Barangay local navigation' })).toBeHidden();
+  await page.getByLabel('Local section').selectOption({ label: 'Services' });
+  await expect(page).toHaveURL(/\/services\?barangay=poblacion/);
+});
+
 test('barangay edition does not persist onto unrelated citywide pages', async ({ page }) => {
   await page.goto(baseURL + '/services?barangay=poblacion');
   await expect(page.getByLabel('Switch barangay edition')).toHaveValue('poblacion');
