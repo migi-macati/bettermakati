@@ -49,7 +49,7 @@ const developmentFundEntry: AccountabilityEntry = {
 };
 
 const fiscalYearEntries: AccountabilityEntry[] = annualBudgetDocuments.map(
-  document => {
+  (document): AccountabilityEntry => {
     const actual = actualFiscalHistory.find(item => item.year === document.year);
     const hasActuals = Boolean(actual);
 
@@ -99,7 +99,7 @@ const fiscalYearEntries: AccountabilityEntry[] = annualBudgetDocuments.map(
   }
 );
 
-const dedicatedFundEntries: AccountabilityEntry[] = dedicatedFunds.map(fund => ({
+const dedicatedFundEntries: AccountabilityEntry[] = dedicatedFunds.map((fund): AccountabilityEntry => ({
   id: `2025-fund-${slugify(fund.label)}`,
   title: `2025 ${fund.label}`,
   type: 'fiscal',
@@ -122,7 +122,7 @@ const dedicatedFundEntries: AccountabilityEntry[] = dedicatedFunds.map(fund => (
 
 const majorBudgetEntries: AccountabilityEntry[] = selectedBudgetLines
   .filter(item => item.amountM >= 250 || item.group === 'Capital')
-  .map(item => ({
+  .map((item): AccountabilityEntry => ({
     id: `2025-budget-${slugify(item.label)}`,
     title: `2025 appropriation: ${item.label}`,
     type: 'fiscal',
@@ -151,7 +151,7 @@ const majorBudgetEntries: AccountabilityEntry[] = selectedBudgetLines
 
 const procurementEntries: AccountabilityEntry[] = cityMonitorRecords
   .filter(record => record.type === 'procurement')
-  .map(record => ({
+  .map((record): AccountabilityEntry => ({
     id: `procurement-${record.id}`,
     title: record.title,
     type: 'project',
@@ -184,7 +184,7 @@ const procurementEntries: AccountabilityEntry[] = cityMonitorRecords
   }));
 
 const serviceStandardEntries: AccountabilityEntry[] = serviceDirectory.flatMap(
-  service => {
+  (service): AccountabilityEntry[] => {
     const detail = serviceGuideDetails[service.id];
     if (
       service.level !== 'City' ||
@@ -223,7 +223,7 @@ const serviceStandardEntries: AccountabilityEntry[] = serviceDirectory.flatMap(
 );
 
 const cityMonitorCommitmentEntries: AccountabilityEntry[] = cityMonitorRecords.flatMap(
-  record =>
+  (record): AccountabilityEntry[] =>
     (record.commitments ?? []).map((commitment, index) => ({
       id: `commitment-${record.id}-${index + 1}`,
       title: commitment.text,
