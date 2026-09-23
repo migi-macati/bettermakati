@@ -166,8 +166,6 @@ export default function ProjectsBudget() {
           <Heading>Where Makati’s money comes from and goes</Heading>
           <SharePage title="Makati Projects & Budget | BetterMakati" />
         </div>
-        <LastReviewed note="Budget plans and actuals remain separated; each dataset links to its public source." />
-
         <BarangayScopeBar
           note={
             barangay
@@ -175,6 +173,7 @@ export default function ProjectsBudget() {
               : undefined
           }
         />
+        <LastReviewed note="Budget plans and actuals remain separated; each dataset links to its public source." />
 
         {barangay && (
           <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">

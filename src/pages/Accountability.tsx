@@ -349,11 +349,6 @@ export default function Accountability() {
           <SharePage title="Makati Accountability Ledger | BetterMakati" />
         </div>
 
-        <LastReviewed
-          date={accountabilityReviewed}
-          note="A missing source means BetterMakati has not located public evidence for that step. It is not a finding of wrongdoing or non-performance."
-        />
-
         <BarangayScopeBar
           note={
             barangay
@@ -362,6 +357,10 @@ export default function Accountability() {
                 : `No ledger record currently identifies Barangay ${barangay.name} explicitly, so citywide records remain visible rather than being falsely attributed locally.`
               : undefined
           }
+        />
+        <LastReviewed
+          date={accountabilityReviewed}
+          note="A missing source means BetterMakati has not located public evidence for that step. It is not a finding of wrongdoing or non-performance."
         />
 
         {barangay && locallyTaggedEntries.length === 0 && (
