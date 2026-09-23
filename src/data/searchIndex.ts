@@ -206,10 +206,26 @@ const governmentItems: SearchItem[] = [
     title: 'Elections & Voting',
     group: 'Government',
     category: 'Elections',
-    description: 'Neutral voter information, election dates and official COMELEC sources.',
+    description: 'Neutral voter information, 2025 results, barangay voting patterns and Makati election history.',
     href: '/elections',
-    keywords: 'elections voting vote voter registration precinct polling place comelec barangay sk bske candidates',
+    keywords: 'elections voting vote voter registration precinct polling place comelec barangay sk bske candidates mayor history 1998 2001 2004 2007 2010 2013 2016 2019 2022 2025',
     featured: true,
+  },
+  {
+    title: '2025 Makati results by barangay',
+    group: 'Government',
+    category: 'Elections',
+    description: 'See which mayoral candidate carried each of Makati’s current 23 barangays, with exact barangay totals where published.',
+    href: '/elections#barangay-results-2025',
+    keywords: '2025 election mayor barangay results Nancy Binay Luis Campos Bangkal Bel-Air Carmona Dasmarinas Forbes Park Guadalupe Nuevo Guadalupe Viejo Kasilawan La Paz Magallanes Olympia Palanan Pinagkaisahan Pio Del Pilar Poblacion San Antonio San Isidro San Lorenzo Santa Cruz Singkamas Tejeros Urdaneta Valenzuela',
+  },
+  {
+    title: 'Makati mayoral election history, 1998–2025',
+    group: 'Record',
+    category: 'Elections',
+    description: 'Ten regular Makati mayoral elections with candidates, vote totals, margins, source quality and the 2025 boundary break.',
+    href: '/elections#mayoral-history',
+    keywords: 'Makati mayor election history historical results 1998 2001 2004 2007 2010 2013 2016 2019 2022 2025 Binay Pena Campos vote margin',
   },
   {
     title: 'City offices',
@@ -566,9 +582,9 @@ const barangayItems: SearchItem[] = barangayProfiles.map(barangay => ({
   title: `Barangay ${barangay.name}`,
   group: 'Barangay',
   category: 'Barangays',
-  description: `Barangay profile, 2024 population and ${barangay.legislativeDistrict}.`,
+  description: `Barangay profile, 2024 population, ${barangay.legislativeDistrict}, and 2025 mayoral result.`,
   href: `/barangays/${barangay.slug}`,
-  keywords: `${barangay.name} barangay hall local neighborhood population district profile`,
+  keywords: `${barangay.name} barangay hall local neighborhood population district profile 2025 election mayor result voting`,
 }));
 
 const officeItems: SearchItem[] = governmentServiceOffices.map(office => ({
