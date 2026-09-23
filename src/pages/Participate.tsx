@@ -8,7 +8,7 @@ import {
   Send,
   Users,
 } from 'lucide-react';
-import { Link, useSearchParams } from 'react-router';
+import { Link } from 'react-router';
 import SEO from '../components/SEO';
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
@@ -20,6 +20,8 @@ import {
   participationCoverageGaps,
   participationReviewed,
 } from '../data/participation';
+import BarangayScopeBar from '../components/barangay/BarangayScopeBar';
+import { useBarangayScope, withBarangayScope } from '../hooks/useBarangayScope';
 
 interface CommunityInput {
   number: number;
@@ -33,8 +35,7 @@ interface CommunityInput {
 }
 
 export default function Participate() {
-  const [params] = useSearchParams();
-  const barangayContext = params.get('barangay');
+  const { barangay } = useBarangayScope();
   const [inputs, setInputs] = useState<CommunityInput[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -76,9 +77,54 @@ export default function Participate() {
           note="Official opportunities and BetterMakati submissions are labeled separately."
         />
 
-        {barangayContext && (
-          <div className="mt-6 rounded-xl border border-primary-200 bg-primary-50 p-4 text-sm text-gray-700">
-            Local context: <strong>{barangayContext.replaceAll('-', ' ')}</strong>. No complete barangay-assembly calendar is indexed yet.
+        <BarangayScopeBar note="Official participation opportunities remain source-led. Local actions below stay tied to the selected barangay." />
+
+        {barangay && (
+          <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-3">
+            <a
+              href={barangay.hallEmail ? 'mailto:' + barangay.hallEmail : barangay.officialPageUrl}
+              target={barangay.hallEmail ? undefined : '_blank'}
+              rel={barangay.hallEmail ? undefined : 'noreferrer'}
+              className="rounded-2xl border border-primary-100 bg-white p-5 hover:border-primary-300"
+            >
+              <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+                Barangay government
+              </div>
+              <div className="mt-2 font-extrabold text-gray-950">
+                Contact Barangay {barangay.name}
+              </div>
+              <p className="mt-1 text-sm text-gray-600">
+                Use the verified hall email where available, otherwise open the official barangay page.
+              </p>
+            </a>
+            <Link
+              to={withBarangayScope('/civic-map', barangay.slug)}
+              className="rounded-2xl border border-primary-100 bg-white p-5 hover:border-primary-300"
+            >
+              <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+                Public places
+              </div>
+              <div className="mt-2 font-extrabold text-gray-950">
+                Report or propose an improvement
+              </div>
+              <p className="mt-1 text-sm text-gray-600">
+                Open the Civic Map already filtered to this barangay.
+              </p>
+            </Link>
+            <Link
+              to={`/get-involved?type=source&barangay=${encodeURIComponent(barangay.slug)}#submission`}
+              className="rounded-2xl border border-primary-100 bg-white p-5 hover:border-primary-300"
+            >
+              <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+                Community evidence
+              </div>
+              <div className="mt-2 font-extrabold text-gray-950">
+                Add a local public source
+              </div>
+              <p className="mt-1 text-sm text-gray-600">
+                Submit a notice, record or correction for review.
+              </p>
+            </Link>
           </div>
         )}
 
