@@ -10,6 +10,11 @@ import {
 import { cityMonitorRecords } from './cityMonitor';
 import { serviceDirectory } from './serviceDirectory';
 import { serviceGuideDetails } from './serviceGuideDetails';
+import {
+  auditFindingEntries,
+  procurementProjectEntries,
+  specialEducationFundEntries,
+} from './accountabilitySupplement';
 import type { AccountabilityEntry, CoverageGap } from './civicTypes';
 
 export const accountabilityReviewed = '23 September 2026';
@@ -278,21 +283,24 @@ const auditEntries: AccountabilityEntry[] = [
 
 export const accountabilityEntries: AccountabilityEntry[] = [
   developmentFundEntry,
+  ...procurementProjectEntries,
   ...procurementEntries,
   ...serviceStandardEntries,
   ...cityMonitorCommitmentEntries,
+  ...specialEducationFundEntries,
   ...dedicatedFundEntries,
   ...majorBudgetEntries,
   ...fiscalYearEntries,
+  ...auditFindingEntries,
   ...auditEntries,
 ];
 
 export const accountabilityCoverageGaps: CoverageGap[] = [
   {
     id: 'project-contract-linkage',
-    title: 'Project → procurement → contract linkage is not yet complete',
+    title: 'Project → procurement → contract linkage is partially structured',
     description:
-      'Public procurement sources are linked, but BetterMakati has not yet normalized award and contract records into a reliable project-by-project chain.',
+      'BetterMakati now structures selected bid-result records with approved budget, bidder, winning amount and bid date. Contract, notice-to-proceed, implementation and completion links remain incomplete for many projects.',
     whyItMatters:
       'A complete chain would let residents trace an appropriation through procurement, supplier, contract changes and completion evidence.',
     checkedSources: [
@@ -306,9 +314,9 @@ export const accountabilityCoverageGaps: CoverageGap[] = [
   },
   {
     id: 'audit-follow-through',
-    title: 'COA findings are not yet linked to later management action',
+    title: 'COA finding follow-through remains incomplete',
     description:
-      'Audit reports are available as source documents, but findings, management responses and subsequent resolution status are not yet structured into longitudinal records.',
+      'Selected COA findings and recommendations are now structured, including management response where the source provides it. Later implementation or resolution status is still missing for many observations.',
     whyItMatters:
       'Accountability is stronger when a finding can be followed through response, corrective action and later audit status.',
     checkedSources: [
