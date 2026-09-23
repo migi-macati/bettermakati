@@ -214,7 +214,7 @@ export default function ProjectsBudget() {
             icon={FileBarChart}
           />
           <Metric
-            label="Ending cash balance"
+            label="2025 ending cash balance"
             value={peso(budgetSummary.endingCashM)}
             detail="After reported payables and continuing appropriations"
             icon={PiggyBank}
