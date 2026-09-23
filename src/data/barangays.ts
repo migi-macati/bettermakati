@@ -604,6 +604,7 @@ export const barangayCoverageSummary = {
   verifiedHealthFacilityBarangays: barangays.filter(
     item => (yakapHealthCenters[item.slug]?.length ?? 0) > 0
   ).length,
+  verifiedSocialChannels: barangays.filter(item => Boolean(item.facebookUrl)).length,
   barangaysWithCommunityLinks: barangays.filter(
     item =>
       (item.notablePlaces?.length ?? 0) > 0 ||
