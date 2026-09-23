@@ -6,6 +6,30 @@ export interface CivicSource {
   note?: string;
 }
 
+
+export interface AccountabilityStage {
+  label: string;
+  status: 'documented' | 'source-gap';
+  date?: string;
+  detail?: string;
+}
+
+export interface ProcurementTrace {
+  referenceNo: string;
+  approvedBudgetM?: number;
+  awardedAmountM?: number;
+  supplier?: string;
+  bidDate?: string;
+  stages: AccountabilityStage[];
+}
+
+export interface AuditTrace {
+  finding: string;
+  recommendation?: string;
+  managementResponse?: string;
+  followUpStatus?: string;
+}
+
 export type AccountabilityStatus =
   | 'planned'
   | 'in-progress'
@@ -32,6 +56,8 @@ export interface AccountabilityEntry {
   lastVerified: string;
   sources: CivicSource[];
   notes?: string[];
+  procurement?: ProcurementTrace;
+  audit?: AuditTrace;
 }
 
 export interface CoverageGap {
