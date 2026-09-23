@@ -13,7 +13,24 @@ import { Text } from '../components/ui/Text';
 import SEO from '../components/SEO';
 import { barangays, psaBarangaySource } from '../data/barangays';
 import PhotoCarousel from '../components/ui/PhotoCarousel';
+import CitizenSummary from '../components/ui/CitizenSummary';
 import { barangayImageSet } from '../data/cityImages';
+
+const totalPopulation = barangays.reduce(
+  (sum, barangay) => sum + barangay.population2024,
+  0
+);
+const largestBarangays = [...barangays]
+  .sort((a, b) => b.population2024 - a.population2024)
+  .slice(0, 3);
+const largestThreePopulation = largestBarangays.reduce(
+  (sum, barangay) => sum + barangay.population2024,
+  0
+);
+const district1Population = barangays
+  .filter(barangay => barangay.legislativeDistrict === '1st District')
+  .reduce((sum, barangay) => sum + barangay.population2024, 0);
+const district2Population = totalPopulation - district1Population;
 
 export default function Barangays() {
   const [query, setQuery] = useState('');
@@ -64,6 +81,48 @@ export default function Barangays() {
           title="Neighborhood Makati"
           compact
           className="mt-7"
+        />
+
+        <CitizenSummary
+          className="mt-6"
+          eyebrow="How population is distributed"
+          title="Makati’s barangays vary widely in population"
+          summary="The 2024 POPCEN count for Makati’s current 23 barangays totals 309,770 people. Population is concentrated in a relatively small number of barangays."
+          points={[
+            {
+              label: 'Largest barangay',
+              text: (
+                <>
+                  <strong>{largestBarangays[0].name}</strong> has {largestBarangays[0].population2024.toLocaleString('en-PH')} residents, about <strong>{((largestBarangays[0].population2024 / totalPopulation) * 100).toFixed(1)}%</strong> of the city total.
+                </>
+              ),
+            },
+            {
+              label: 'Top three',
+              text: (
+                <>
+                  {largestBarangays.map(item => item.name).join(', ')} together account for about <strong>{((largestThreePopulation / totalPopulation) * 100).toFixed(1)}%</strong> of Makati’s population.
+                </>
+              ),
+            },
+            {
+              label: '1st District',
+              text: (
+                <>
+                  Barangays in the 1st District account for {district1Population.toLocaleString('en-PH')} residents, about <strong>{((district1Population / totalPopulation) * 100).toFixed(1)}%</strong> of the current city population.
+                </>
+              ),
+            },
+            {
+              label: '2nd District',
+              text: (
+                <>
+                  The current 2nd District barangays account for {district2Population.toLocaleString('en-PH')} residents, about <strong>{((district2Population / totalPopulation) * 100).toFixed(1)}%</strong>.
+                </>
+              ),
+            },
+          ]}
+          note="Population is not the same as registered voters and should not be read as a measure of political support or representation."
         />
 
         <div className="my-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
