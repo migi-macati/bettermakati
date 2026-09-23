@@ -164,6 +164,40 @@ const Services: React.FC = () => {
             className="mt-4"
           />
           <BarangayScopeBar note="When a barangay is selected, barangay-level services are brought forward first. City and national services remain available by changing the government-level filter." />
+
+          {barangay && (
+            <div className="mt-4 rounded-2xl border border-primary-100 bg-white p-5">
+              <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+                Local starting point
+              </div>
+              <div className="mt-1 text-lg font-extrabold text-gray-950">
+                Barangay {barangay.name} Hall
+              </div>
+              <div className="mt-3 grid gap-2 text-sm text-gray-600">
+                {barangay.hallAddress && <div>{barangay.hallAddress}</div>}
+                {barangay.hallPhone && <div>{barangay.hallPhone}</div>}
+              </div>
+              <div className="mt-4 flex flex-wrap gap-3">
+                {barangay.hallEmail && (
+                  <a href={'mailto:' + barangay.hallEmail} className="brand-btn-primary">
+                    Email barangay hall
+                  </a>
+                )}
+                <a
+                  href={barangay.officialPageUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="brand-btn-secondary"
+                >
+                  Official barangay page
+                </a>
+                <Link to={'/barangays/' + barangay.slug} className="brand-btn-secondary">
+                  Barangay dashboard
+                </Link>
+              </div>
+            </div>
+          )}
+
           <div className="mt-4">
             <Link to="/government-offices" className="text-sm font-bold text-primary-700 underline underline-offset-2">
               Government offices in and serving Makati
