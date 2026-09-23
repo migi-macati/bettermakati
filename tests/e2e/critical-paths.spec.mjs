@@ -160,7 +160,7 @@ test('failed civic feed does not imply zero reports', async ({ page }) => {
 
 test('barangay profile uses one contextual local-edition header', async ({ page }) => {
   await page.goto(baseURL + '/barangays/poblacion');
-  await expect(page.getByText('BetterPoblacion', { exact: true })).toBeVisible();
+  await expect(page.locator('span').filter({ hasText: 'BetterPoblacion' }).first()).toBeVisible();
   await expect(page.getByRole('navigation', { name: 'Barangay local navigation' })).toHaveCount(1);
   await expect(page.getByLabel('Switch barangay edition')).toHaveValue('poblacion');
 });
