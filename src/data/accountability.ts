@@ -95,10 +95,10 @@ const fiscalYearEntries: AccountabilityEntry[] = annualBudgetDocuments.map(
         ...(actual
           ? [
               {
-                label: `DBM/BLGF ${document.year} fiscal actuals`,
+                label: `DBM/BLGF ${document.year} fiscal statement`,
                 url: actual.href,
                 publisher: 'Department of Budget and Management / BLGF',
-                publishedOrPeriod: `${document.year} actuals`,
+                publishedOrPeriod: `${document.year} reported year`,
               },
             ]
           : []),
