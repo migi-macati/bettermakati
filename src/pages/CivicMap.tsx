@@ -20,7 +20,6 @@ import { Heading } from '../components/ui/Heading';
 import LastReviewed from '../components/ui/LastReviewed';
 import SharePage from '../components/ui/SharePage';
 import CivicMapEmbed from '../components/civic/CivicMapEmbed';
-import BarangayScopeBar from '../components/barangay/BarangayScopeBar';
 import { useBarangayScope, withBarangayScope } from '../hooks/useBarangayScope';
 import {
   civicAssets,
@@ -112,8 +111,6 @@ export default function CivicMap() {
             <SharePage title="BetterMakati Civic Map" />
           </div>
         </div>
-
-        <BarangayScopeBar note="Mapped places and infrastructure are filtered to this barangay when location data is available." />
 
         <div className="mt-5 flex flex-wrap gap-3">
           <a href="#places" className="brand-btn-primary">Choose a place <ArrowRight className="h-4 w-4" /></a>
