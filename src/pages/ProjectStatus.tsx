@@ -176,6 +176,18 @@ export default function ProjectStatus() {
       icon: ShieldCheck,
     },
     {
+      label: 'Specific Makati barangay pages',
+      value: `${barangayCoverageSummary.specificOfficialPages}/23`,
+      detail: 'Profiles linked to a barangay-specific Makati Web Portal page rather than the citywide barangay directory',
+      icon: Building2,
+    },
+    {
+      label: 'Verified official social channels',
+      value: `${barangayCoverageSummary.verifiedSocialChannels}/23`,
+      detail: 'Barangay social accounts BetterMakati could verify without guessing from similarly named or unofficial pages',
+      icon: MessagesSquare,
+    },
+    {
       label: 'Elected-official profiles',
       value: electedOfficials.length.toLocaleString('en-PH'),
       detail: 'Current city/congress profiles in the civic directory',
