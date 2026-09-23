@@ -53,7 +53,7 @@ const CivicMap = lazy(() => import('./pages/CivicMap'));
 const CivicAsset = lazy(() => import('./pages/CivicAsset'));
 const CivicReports = lazy(() => import('./pages/CivicReports'));
 const Reports = lazy(() => import('./pages/Reports'));
-const MakatiOverview = lazy(() => import('./pages/MakatiOverview'));
+const ReportArticle = lazy(() => import('./pages/ReportArticle'));
 const CityMonitorRecordPage = lazy(
   () => import('./pages/CityMonitorRecordPage')
 );
@@ -129,7 +129,8 @@ function App() {
                     />
                     <Route path="/briefs" element={<CivicBriefs />} />
                     <Route path="/reports" element={<Reports />} />
-                    <Route path="/reports/makati-overview" element={<MakatiOverview />} />
+                    <Route path="/reports/makati-overview" element={<Navigate to="/reports/2026-budget-operating-expenses" replace />} />
+                    <Route path="/reports/:slug" element={<ReportArticle />} />
                     <Route path="/civic-map" element={<CivicMap />} />
                     <Route path="/civic-map/reports" element={<CivicReports />} />
                     <Route path="/civic-map/:assetId" element={<CivicAsset />} />
