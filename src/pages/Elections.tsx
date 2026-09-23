@@ -81,15 +81,15 @@ export default function Elections() {
     <>
       <SEO
         title="Elections & Voting"
-        description="Neutral voter information, 2025 Makati election results, dates and official COMELEC sources."
+        description="Neutral Makati election information with 2025 city and barangay results, a 1998–2025 mayoral history, voter dates and source-quality notes."
         jsonLd={{
           '@context': 'https://schema.org',
           '@type': 'Dataset',
-          name: '2025 Makati local election results',
+          name: 'Makati election results and voter information',
           description:
-            'Makati mayor, vice mayor, congressional and city-council results with turnout and source links.',
+            'Makati election results including 2025 city and barangay views, historical mayoral races from 1998 to 2025, turnout and source links.',
           spatialCoverage: 'Makati City, Philippines',
-          temporalCoverage: '2025',
+          temporalCoverage: '1998/2026',
         }}
       />
 
@@ -518,10 +518,14 @@ export default function Elections() {
                         className="font-bold text-primary-700 underline underline-offset-2"
                       >
                         {race.sourceQuality === 'official'
-                          ? 'Official / COMELEC-linked'
-                          : race.sourceQuality === 'academic'
-                            ? 'UP CIDS dataset'
-                            : 'Archival secondary'}
+                          ? 'Official COMELEC'
+                          : race.sourceQuality === 'comelec-media'
+                            ? 'COMELEC Media Server via publisher'
+                            : race.sourceQuality === 'academic'
+                              ? 'UP CIDS dataset'
+                              : race.sourceQuality === 'mixed'
+                                ? 'Official + archival'
+                                : 'Archival secondary'}
                         <ExternalLink className="ml-1 inline h-3.5 w-3.5" />
                       </a>
                     </td>
