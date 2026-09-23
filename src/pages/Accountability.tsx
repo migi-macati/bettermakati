@@ -59,8 +59,14 @@ const ledgerCsv = [
 export default function Accountability() {
   const [params] = useSearchParams();
   const barangayContext = params.get('barangay');
+  const requestedType = params.get('type');
+  const initialType = ['project', 'fiscal', 'service', 'audit', 'commitment'].includes(
+    requestedType || ''
+  )
+    ? requestedType || 'All'
+    : 'All';
   const [query, setQuery] = useState('');
-  const [type, setType] = useState('All');
+  const [type, setType] = useState(initialType);
 
   const visible = useMemo(() => {
     const needle = query.trim().toLowerCase();
