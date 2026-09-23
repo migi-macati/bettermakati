@@ -41,6 +41,8 @@ export default function BarangayEditionBar() {
     { label: 'Statistics', href: withBarangayScope('/statistics', slug), active: location.pathname.startsWith('/statistics') },
   ];
 
+  const activeItem = items.find(item => item.active) ?? items[0];
+
   const switchEdition = (nextSlug: string) => {
     if (isProfile) {
       navigate(nextSlug ? '/barangays/' + nextSlug : '/barangays');
@@ -52,13 +54,13 @@ export default function BarangayEditionBar() {
   return (
     <div className="border-t border-primary-800 bg-primary-900 text-white">
       <div className="container flex min-h-[52px] items-center gap-2 px-3 sm:px-4">
-        <div className="relative shrink-0 border-r border-white/20 pr-2 sm:pr-3">
-          <div className="pointer-events-none flex min-h-11 items-center gap-1.5 rounded-lg px-2">
-            <span className="text-base font-black tracking-tight sm:text-lg">
+        <div className="relative min-w-0 flex-1 border-r border-white/20 pr-2 sm:pr-3 lg:flex-none">
+          <div className="pointer-events-none flex min-h-11 min-w-0 items-center gap-1.5 rounded-lg px-2">
+            <span className="min-w-0 truncate text-base font-black tracking-tight sm:text-lg">
               <span className="text-secondary-300">Better</span>
               <span className="text-white">{compactEditionName(barangay.name)}</span>
             </span>
-            <ChevronDown className="h-4 w-4 text-primary-100" aria-hidden="true" />
+            <ChevronDown className="h-4 w-4 shrink-0 text-primary-100" aria-hidden="true" />
           </div>
           <select
             aria-label="Switch barangay edition"
@@ -75,12 +77,31 @@ export default function BarangayEditionBar() {
           </select>
         </div>
 
+        <div className="relative shrink-0 lg:hidden">
+          <div className="pointer-events-none flex min-h-10 items-center gap-1 rounded-lg bg-white/10 px-3 pr-8 text-sm font-bold text-white">
+            <span>{activeItem.label}</span>
+            <ChevronDown className="absolute right-2.5 h-4 w-4 text-primary-100" aria-hidden="true" />
+          </div>
+          <select
+            aria-label="Local section"
+            value={activeItem.href}
+            onChange={event => navigate(event.target.value)}
+            className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
+          >
+            {items.map(item => (
+              <option key={item.label} value={item.href}>
+                {item.label}
+              </option>
+            ))}
+          </select>
+        </div>
+
         <div
           role="navigation"
           aria-label="Barangay local navigation"
-          className="min-w-0 flex-1 overflow-x-auto overscroll-x-contain"
+          className="hidden min-w-0 flex-1 lg:block"
         >
-          <div className="flex min-w-max items-center gap-1 py-1">
+          <div className="flex items-center gap-1 py-1">
             {items.map(item => (
               <Link
                 key={item.label}
