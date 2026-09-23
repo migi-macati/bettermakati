@@ -12,6 +12,7 @@ import {
   ReceiptText,
   Search,
   ShieldCheck,
+  Target,
   WalletCards,
 } from 'lucide-react';
 import { Link, useSearchParams } from 'react-router';
@@ -62,7 +63,8 @@ const hasEvidenceGap = (entry: AccountabilityEntry) =>
       /(not yet|missing|not linked|incomplete|unresolved)/i.test(
         entry.audit.followUpStatus
       )
-  );
+  ) ||
+  entry.commitment?.outcomeStatus === 'source-gap';
 
 const hasLaterEvidence = (entry: AccountabilityEntry) =>
   entry.status === 'completed' ||
@@ -72,7 +74,8 @@ const hasLaterEvidence = (entry: AccountabilityEntry) =>
       .slice(1)
       .some(stage => stage.status === 'documented')
   ) ||
-  Boolean(entry.audit?.managementResponse);
+  Boolean(entry.audit?.managementResponse) ||
+  Boolean(entry.commitment?.evidenceDate);
 
 const firstMissingEvidence = (entry: AccountabilityEntry) => {
   const procurementGap = entry.procurement?.stages.find(
@@ -87,7 +90,25 @@ const firstMissingEvidence = (entry: AccountabilityEntry) => {
   ) {
     return 'Audit follow-up / resolution';
   }
+  if (entry.commitment?.outcomeStatus === 'source-gap') {
+    return 'Outcome evidence';
+  }
   return undefined;
+};
+
+const commitmentOutcomeLabel = (entry: AccountabilityEntry) => {
+  switch (entry.commitment?.outcomeStatus) {
+    case 'delivered-late':
+      return 'Delivered after target';
+    case 'delivered':
+      return 'Later delivery evidence found';
+    case 'in-progress':
+      return 'In progress';
+    case 'source-gap':
+      return 'Outcome evidence missing';
+    default:
+      return undefined;
+  }
 };
 
 const publicRecordSummary = (entry: AccountabilityEntry) => {
@@ -126,10 +147,11 @@ const publicRecordSummary = (entry: AccountabilityEntry) => {
     return 'The published service standard is documented. BetterMakati has not independently measured actual service performance.';
   }
 
-  if (entry.type === 'commitment') {
-    return entry.status === 'completed'
-      ? 'Later public evidence supports completion of this commitment.'
-      : 'The commitment is documented; later delivery evidence is tracked separately.';
+  if (entry.commitment) {
+    const label = commitmentOutcomeLabel(entry);
+    return label
+      ? `${label}. The promise, target and later evidence are shown together below.`
+      : 'The commitment is documented and linked to later public evidence where available.';
   }
 
   return entry.status === 'completed'
@@ -138,7 +160,7 @@ const publicRecordSummary = (entry: AccountabilityEntry) => {
 };
 
 const ledgerCsv = [
-  'id,type,status,title,period,responsible_bodies,target_date,location,planned_amount_m,reported_amount_m,actual_amount_m,completion_pct,procurement_reference,supplier,bid_date,next_missing_evidence,audit_follow_up,last_verified',
+  'id,type,status,title,period,responsible_bodies,target_date,location,planned_amount_m,reported_amount_m,actual_amount_m,completion_pct,procurement_reference,supplier,bid_date,next_missing_evidence,commitment_outcome,audit_follow_up,last_verified',
   ...accountabilityEntries.map(entry =>
     [
       entry.id,
@@ -157,6 +179,7 @@ const ledgerCsv = [
       entry.procurement?.supplier ?? '',
       entry.procurement?.bidDate ?? '',
       firstMissingEvidence(entry) ?? '',
+      commitmentOutcomeLabel(entry) ?? '',
       entry.audit?.followUpStatus ?? '',
       entry.lastVerified,
     ]
@@ -328,7 +351,7 @@ export default function Accountability() {
           <div className="text-sm font-extrabold text-gray-950">
             What do you want to understand?
           </div>
-          <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3">
             <button
               type="button"
               onClick={() => chooseQuestion('fiscal')}
@@ -382,6 +405,20 @@ export default function Accountability() {
               </div>
               <p className="mt-1 text-sm leading-relaxed text-gray-600">
                 See what the city says a transaction should take or require.
+              </p>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => chooseQuestion('commitment')}
+              className="rounded-2xl border border-primary-100 bg-white p-5 text-left transition hover:border-primary-300 hover:shadow-sm"
+            >
+              <Target className="h-5 w-5 text-primary-700" />
+              <div className="mt-3 font-extrabold text-gray-950">
+                What did the city promise?
+              </div>
+              <p className="mt-1 text-sm leading-relaxed text-gray-600">
+                Compare a sourced promise or target with later delivery evidence.
               </p>
             </button>
           </div>
@@ -688,6 +725,55 @@ export default function Accountability() {
                       <div className="text-sm text-gray-700">
                         <span className="text-gray-500">Winning bid:</span>{' '}
                         <strong>{money(entry.procurement.awardedAmountM)}</strong>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {entry.commitment && (
+                  <div className="mt-4 rounded-xl border border-primary-100 bg-white p-4">
+                    <div className="flex flex-wrap items-center justify-between gap-3">
+                      <div className="text-xs font-bold uppercase tracking-[0.07em] text-primary-700">
+                        Commitment follow-through
+                      </div>
+                      <span className="rounded-full bg-primary-50 px-2.5 py-1 text-xs font-bold text-primary-800">
+                        {commitmentOutcomeLabel(entry)}
+                      </span>
+                    </div>
+                    <div className="mt-4 grid grid-cols-1 gap-3 md:grid-cols-3">
+                      <div className="rounded-xl bg-gray-50 p-4">
+                        <div className="text-xs font-bold uppercase tracking-[0.06em] text-gray-500">
+                          Promise
+                        </div>
+                        <p className="mt-2 text-sm leading-relaxed text-gray-700">
+                          {entry.commitment.commitmentText}
+                        </p>
+                        {entry.commitment.announcedDate && (
+                          <div className="mt-2 text-xs text-gray-500">
+                            Announced {entry.commitment.announcedDate}
+                          </div>
+                        )}
+                      </div>
+                      <div className="rounded-xl bg-gray-50 p-4">
+                        <div className="text-xs font-bold uppercase tracking-[0.06em] text-gray-500">
+                          Target
+                        </div>
+                        <div className="mt-2 text-sm font-extrabold text-gray-950">
+                          {entry.commitment.target || 'No deadline stated in source'}
+                        </div>
+                      </div>
+                      <div className="rounded-xl bg-gray-50 p-4">
+                        <div className="text-xs font-bold uppercase tracking-[0.06em] text-gray-500">
+                          Latest evidence
+                        </div>
+                        <p className="mt-2 text-sm leading-relaxed text-gray-700">
+                          {entry.commitment.outcome}
+                        </p>
+                        {entry.commitment.evidenceDate && (
+                          <div className="mt-2 text-xs text-gray-500">
+                            Evidence date {entry.commitment.evidenceDate}
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
