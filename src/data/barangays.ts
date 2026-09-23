@@ -23,7 +23,16 @@ export interface BarangayProfile {
   hallSource?: string;
   officials?: {
     punongBarangay?: string;
+    kagawads?: string[];
+    skChairperson?: string;
+    secretary?: string;
+    treasurer?: string;
+    term?: string;
     source: string;
+    sourceLabel?: string;
+    secondarySource?: string;
+    lastVerified?: string;
+    note?: string;
   };
   heritageMarkers?: Array<{ name: string; agency: 'NHCP' | 'NCCA'; status: string; href: string; location?: string }>;
   notablePlaces?: Array<{ name: string; href: string; type: 'Institution' | 'Establishment' | 'Heritage'; source?: string }>;
@@ -239,7 +248,311 @@ export const barangayFacilities = (slug: string, name: string): BarangayFacility
   return [hall, ...(yakapHealthCenters[slug] ?? [])];
 };
 
-export const barangays: BarangayProfile[] = [
+export const barangayProfilesReviewed = '23 September 2026';
+
+const barangayRosterSource = (slug: string) =>
+  'https://barangay.org.ph/' + slug + '-barangay';
+
+const barangayOfficialData: Record<string, NonNullable<BarangayProfile['officials']>> = {
+  'bangkal': {
+    punongBarangay: "Virgilio M. Hilario III",
+    kagawads: ["Tricia Mae C. Eusebio","Mario V. Montañes II","Roberto S. Aguinaldo","Criselle Mhae Hilario","Richard D. Saquilayan","Mark Jael B. Hildawa","Christian R. Jacinto"],
+    skChairperson: "Frances Anne Driz Saquilayan",
+    secretary: "Rommel D. Padua",
+    treasurer: "Rizalina R. Collada",
+    term: '2023–2026',
+    source: "https://barangay.org.ph/bangkal-barangay",
+    sourceLabel: "Barangay Directory roster cross-check",
+    secondarySource: "https://www.makati.gov.ph/barangay",
+    lastVerified: barangayProfilesReviewed,
+  },
+  'bel-air': {
+    punongBarangay: "Cynthia D. Cervantes",
+    kagawads: ["Kevin Tence Dionisio","Joan O. Asuncion","Ma. Bella Retuerto Oposa","Maria Carmen Roa Guerzon","Paolo Romaldo Fuentes Pagulayan","Milagros Sembrano Alora","Roman Gonzales Leus"],
+    skChairperson: "Cristina Alexandra Golez Camus",
+    secretary: "Pia Redempta Trinidad Manalastas",
+    treasurer: "Ma. Patricia Bautista Turcuato",
+    term: '2023–2026',
+    source: "https://belair.itdcsystems.com/government",
+    sourceLabel: "Barangay Bel-Air website",
+    secondarySource: "https://barangay.org.ph/bel-air-barangay",
+    lastVerified: barangayProfilesReviewed,
+  },
+  'carmona': {
+    punongBarangay: "Ricardo Perfecto B. Garcia",
+    kagawads: ["Percilon N. Ilan","Andre Iñigo D. Chua","Frederick A. Perez","Gilbert D. Cruz","Leberato P. Layug","Peter John P. Santos","Jeffrey L. Sordan"],
+    skChairperson: "Mikykllie M. Chua",
+    secretary: "Zenaida S. Benito",
+    treasurer: "Mario Reyes Ubarre Jr.",
+    term: '2023–2026',
+    source: "https://barangay.org.ph/carmona-barangay",
+    sourceLabel: "Barangay Directory roster cross-check",
+    secondarySource: "https://www.makati.gov.ph/barangay",
+    lastVerified: barangayProfilesReviewed,
+  },
+  'dasmarinas': {
+    punongBarangay: "Wellington James S. Lim",
+    kagawads: ["Victoria Regina Ledesma Gonzalez","Joshua Anton Uy Jao","Francis Xavier Santiago Apostol","Alessandro Lorenzo Floro Herbosa","Alessandro Lorenzo Estayo Cruz","Martino Anton Moya Benitez","Vincente Rafael Legaspi Rosales"],
+    skChairperson: "Natalia Georgianna M. Tupaz",
+    secretary: "Roanne Valerie Lim Dionisio",
+    treasurer: "Mariell Leane Delos Santos Chuateco",
+    term: '2023–2026',
+    source: "https://barangay.org.ph/dasmarinas-barangay",
+    sourceLabel: "Barangay Directory roster cross-check",
+    secondarySource: "https://www.makati.gov.ph/barangay",
+    lastVerified: barangayProfilesReviewed,
+  },
+  'forbes-park': {
+    punongBarangay: "Evangeline Tankiang Manotok",
+    kagawads: ["Ana Maria Vazquez Borromeo","Rosanna Mercedes Ongpin Periquet","Marie Czarina Celestene Perez De Tagle Ledesma","Nicolo Francisco Josemari Tankiang Villonco","Tanya Michelle Shih Go","Carlo Felicito Baldo Bernardino","Miguel Fong Luy"],
+    skChairperson: "Ignacio Luis Gabriel Concepcion Santos",
+    secretary: "Jose Pio Reyes Luz",
+    treasurer: "Margarita Soriano Roque",
+    term: '2023–2026',
+    source: "https://barangay.org.ph/forbes-park-barangay",
+    sourceLabel: "Barangay Directory roster cross-check",
+    secondarySource: "https://www.makati.gov.ph/barangay",
+    lastVerified: barangayProfilesReviewed,
+  },
+  'guadalupe-nuevo': {
+    punongBarangay: "German Ocampo Sunga",
+    kagawads: ["Romeo Viray Lobo","Andrew De Leon Aguinaldo","Michael Cornejo De Jesus","Edgardo Restauro Jusi","Angelo Robert Sablad Mones","Rolando Razon Sinang Jr.","Eduardo Ordilla Causapin"],
+    skChairperson: "Oona Patricia Sophia Jacob Agtutubo",
+    secretary: "Joemarie Robleza Simangan",
+    treasurer: "Daniel Nuqui Mandapat",
+    term: '2023–2026',
+    source: "https://barangay.org.ph/guadalupe-nuevo-barangay",
+    sourceLabel: "Barangay Directory roster cross-check",
+    secondarySource: "https://www.makati.gov.ph/barangay",
+    lastVerified: barangayProfilesReviewed,
+  },
+  'guadalupe-viejo': {
+    punongBarangay: "Mikhail Sandino Sagayno Gatchalian",
+    kagawads: ["Luis Pagulayan Almario Jr.","Ferdinand Boñag Evangelista","Andrea Blanche Silva Jacome","Shirley Guevarra Borja","Abelardo Urge Brillantes","Crisostomo Borguilla Cunanan","Genaro Silvestre Gutierrez"],
+    skChairperson: "Jeayla Marteena Plastina Tavera",
+    secretary: "Myrna Francisco Casabon",
+    treasurer: "Myla Dela Cruz Gepitan",
+    term: '2023–2026',
+    source: "https://barangay.org.ph/guadalupe-viejo-barangay",
+    sourceLabel: "Barangay Directory roster cross-check",
+    secondarySource: "https://www.makati.gov.ph/barangay",
+    lastVerified: barangayProfilesReviewed,
+  },
+  'kasilawan': {
+    punongBarangay: "Marc Lester G. Gabriel",
+    kagawads: ["Rowel S. Agoot","Luisito G. Campos","Jermaine W. Alvarez","Arturo G. Encarnacion","Edwin M. Vittali","Eduardo F. Mercado","Evelyn Reposo Pascual"],
+    skChairperson: "Jomel Mitzi Ann D. Gueta",
+    secretary: "Melani M. Canlas",
+    treasurer: "Mark Anthony C. Tandoc",
+    term: '2023–2026',
+    source: "https://barangay.org.ph/kasilawan-barangay",
+    sourceLabel: "Barangay Directory roster cross-check",
+    secondarySource: "https://www.makati.gov.ph/barangay",
+    lastVerified: barangayProfilesReviewed,
+  },
+  'la-paz': {
+    punongBarangay: "Ferdinand O. Concepcion",
+    kagawads: ["Evelyn C. Boyo","Tito Jorge Mergal Riva","Juan Edison N. Tolentino","Loreto C. Mapa Jr.","Maria Rebecca D. Alano","Evangeline D. Cruz","Rochelle Angelica Galisim Ampusta"],
+    skChairperson: "Stephanie Kim T. Belonio",
+    secretary: "Anabelle Butron Pamular",
+    treasurer: "Crislin C. Dacuan",
+    term: '2023–2026',
+    source: "https://barangay.org.ph/la-paz-barangay",
+    sourceLabel: "Barangay Directory roster cross-check",
+    secondarySource: "https://www.makati.gov.ph/barangay",
+    lastVerified: barangayProfilesReviewed,
+  },
+  'magallanes': {
+    punongBarangay: "Jose Mari Aligui Alzona",
+    kagawads: ["Noemi Manikan Gomez","Alfonso Julio Amador Padilla","Antonio Lualhati Alcasid","Conrado Gutierrez Paras","Paulo Augustine Baniqued Alunan","Margarita Isabel Lim Marty","Andrea Krizzia Gonzales De Jesus"],
+    skChairperson: "Cecilia Louise Pajarillo Yabut",
+    secretary: "Jacinto Maria Samala Gonzalez",
+    treasurer: "Ma. Cecilia Diaz De Rivera Asuncion",
+    term: '2023–2026',
+    source: "https://barangay.org.ph/magallanes-barangay",
+    sourceLabel: "Barangay Directory roster cross-check",
+    secondarySource: "https://www.makati.gov.ph/barangay",
+    lastVerified: barangayProfilesReviewed,
+  },
+  'olympia': {
+    punongBarangay: "Reynaldo A. Yulo",
+    kagawads: ["Rodrigo L. Binay Jr.","Febie D. Javier","Jonathan O. Alvarez","Segundo H. Gonzalez Jr.","Susana D. Arceta","Maria Guia Marie R. David","Ryan Vasquez Medina"],
+    skChairperson: "Nicole Caren V. Paggao",
+    secretary: "Vera Narie S. Ferrer",
+    treasurer: "Lorelie Aguilar Mamuyac",
+    term: '2023–2026',
+    source: "https://barangay.org.ph/olympia-barangay",
+    sourceLabel: "Barangay Directory roster cross-check",
+    secondarySource: "https://www.makati.gov.ph/barangay",
+    lastVerified: barangayProfilesReviewed,
+  },
+  'palanan': {
+    punongBarangay: "John Benedict C. Corcuera",
+    kagawads: ["Emmanuel N. Cayetano","Adelaida S. Arciaga","Justine Mae C. De Ocampo","Rolando C. Mole Jr.","Janica S. Acosta","Michael D. Omampo","Erwin D. Liberato"],
+    skChairperson: "John Victor T. Caguioa",
+    term: '2023–2026',
+    source: "https://barangay.org.ph/palanan-barangay",
+    sourceLabel: "Barangay Directory roster cross-check",
+    secondarySource: "https://www.makati.gov.ph/barangay",
+    lastVerified: barangayProfilesReviewed,
+    note: "Council roster cross-checked against a 2026 public legal-research compilation citing the Makati City website; verify against the city page when it is updated.",
+  },
+  'pinagkaisahan': {
+    punongBarangay: "Shyla Marie Ramos (Acting)",
+    kagawads: ["Jasmine M. Magcale","Marie Antonette Francheska C. Da Roza","Fernando V. Creo","Reymond E. Briones","Gerardo H. Loreto","Editha M. Tolentino"],
+    skChairperson: "Julianne T. Garcia",
+    secretary: "Jun Jun Labrador Abella",
+    treasurer: "Leni F. Caramat",
+    term: '2023–2026',
+    source: "https://barangay.org.ph/pinagkaisahan-barangay",
+    sourceLabel: "Barangay Directory roster cross-check",
+    secondarySource: "https://www.makati.gov.ph/barangay",
+    lastVerified: barangayProfilesReviewed,
+    note: "The Makati barangay page identifies Shyla Marie Ramos as Acting Punong Barangay. The cross-check directory still lists her among the kagawads while the punong-barangay field is being verified.",
+  },
+  'pio-del-pilar': {
+    punongBarangay: "Hazel Ann Sanchez Lacia",
+    kagawads: ["Ronnel Martin Ortega","Michelle Yu Acha","Benedict De Leon Gawat","Narcisa Clado Reynaldo","Richard Albin Sanchez Lacia","Cesar Santos Parrucho","Dennis Rodriguez Pancipane"],
+    skChairperson: "Janine Nicole S. Quinto",
+    secretary: "Ryan John A. Babasol",
+    treasurer: "Larry U. Vicente",
+    term: '2023–2026',
+    source: "https://barangay.org.ph/pio-del-pilar-barangay",
+    sourceLabel: "Barangay Directory roster cross-check",
+    secondarySource: "https://www.makati.gov.ph/barangay",
+    lastVerified: barangayProfilesReviewed,
+  },
+  'poblacion': {
+    punongBarangay: "Jose Mikhail Ranillo Villena",
+    kagawads: ["Joanna Marie Mapalao Cruz","Jullian Kyle Gonzaga San Mateo","Mark Anthony Tan Gabutin","Alexander Gonzaga Diez","Kirsten Adrienne Pagulayan Reyes","Marcelino Estrella Crisolo","Gio Brylle Joaquin Labares"],
+    skChairperson: "Phoebe Marie Pangilinan Jara",
+    secretary: "Alicia Arpilleda Velasco",
+    treasurer: "Serge Castro Santos",
+    term: '2023–2026',
+    source: "https://barangay.org.ph/poblacion-barangay",
+    sourceLabel: "Barangay Directory roster cross-check",
+    secondarySource: "https://www.makati.gov.ph/barangay",
+    lastVerified: barangayProfilesReviewed,
+  },
+  'san-antonio': {
+    punongBarangay: "Restituto Eronico Cajes",
+    kagawads: ["Joselito Roque Apelo","Gary Terada Teneza","John Victor Ibarra Alegre","Alfonso Mendoza Paredes","Allaysa Mascariñas Baria","Jeanet Chin Yao","Renasar Yamon Concepcion"],
+    skChairperson: "John Patrick Conlu Ferrera",
+    secretary: "Jerry Tongson Guanco",
+    treasurer: "Rhonna Laluna Desacula",
+    term: '2023–2026',
+    source: "https://barangay.org.ph/san-antonio-barangay",
+    sourceLabel: "Barangay Directory roster cross-check",
+    secondarySource: "https://www.makati.gov.ph/barangay",
+    lastVerified: barangayProfilesReviewed,
+  },
+  'san-isidro': {
+    punongBarangay: "Rolando D. Alvarez Jr.",
+    kagawads: ["Denneth Grace Z. Cases","Judith E. Javier","Ernesto R. Basa","Erros Lloyd C. Baylon","Mike Joel G. Comiso","Karen May C. Matibag","Renato Hallera Lao"],
+    skChairperson: "Jenniel Sequitin",
+    secretary: "Medlyn Joy M. Ong",
+    treasurer: "Marie Anthonette L. Capistrano",
+    term: '2023–2026',
+    source: "https://barangay.org.ph/san-isidro-barangay",
+    sourceLabel: "Barangay Directory roster cross-check",
+    secondarySource: "https://www.makati.gov.ph/barangay",
+    lastVerified: barangayProfilesReviewed,
+  },
+  'san-lorenzo': {
+    punongBarangay: "Jose Emmanuel Alandy-Dy Recto",
+    kagawads: ["Isabel Joaquine Espejo Po","Jocelyn Vida Hernandez","Frederick Raymund Romero Sibug","Marsha Regala Santos","Marvin John Carlo Yabut Sario","John Anthony Lontoc Fernandez","Edmond Edward Mendoza Flaminiano"],
+    skChairperson: "Ysabela Rosario Montenegro Yupangco",
+    secretary: "Leilani Moral Canullas",
+    treasurer: "Dominador Polinag Hular",
+    term: '2023–2026',
+    source: "https://barangay.org.ph/san-lorenzo-barangay",
+    sourceLabel: "Barangay Directory roster cross-check",
+    secondarySource: "https://www.makati.gov.ph/barangay",
+    lastVerified: barangayProfilesReviewed,
+  },
+  'santa-cruz': {
+    punongBarangay: "Kit H. Taguiang",
+    kagawads: ["Enrico S. Evangelista","John Yland M. De Ocampo","Maria Katrina Paile Alicando","Elijah Salenga","Flodeliza R. Ambrosio","Liza Flor G. Castor","Nilo Jann D. Basada"],
+    skChairperson: "Jerome Tristan G. Pangilinan",
+    secretary: "Bayani G. Olegario",
+    treasurer: "Ma. Victoria S. Abergos",
+    term: '2023–2026',
+    source: "https://barangay.org.ph/santa-cruz-barangay",
+    sourceLabel: "Barangay Directory roster cross-check",
+    secondarySource: "https://www.makati.gov.ph/barangay",
+    lastVerified: barangayProfilesReviewed,
+  },
+  'singkamas': {
+    punongBarangay: "Sean Lastimosa Francisco",
+    kagawads: ["Jiggs Angelika Dava Paras","Edna Tanooy Argones","Lawrence Aaron Neo Imperial","Orlino Pascua Benedicto","Danilo Solano Añonuevo","Carolina Lacsamana Manlullu","Erlinda Marquez De Guzman"],
+    skChairperson: "Mars Raven Francisco Del Rosario",
+    secretary: "Librado T. Olivares",
+    treasurer: "Herodita D. Villanueva",
+    term: '2023–2026',
+    source: "https://barangay.org.ph/singkamas-barangay",
+    sourceLabel: "Barangay Directory roster cross-check",
+    secondarySource: "https://www.makati.gov.ph/barangay",
+    lastVerified: barangayProfilesReviewed,
+  },
+  'tejeros': {
+    punongBarangay: "Wilfredo Soriano Leonardo",
+    kagawads: ["Roberto Mendoza Cervantes","Teresita Hermocilla Brillante","Carlito Salanguit Añasco","Valeriano Soriano Javier","John David Ilagan Gaces","Lennie Hodrial Cosing","Jocelyn Rabe Leonardo"],
+    skChairperson: "Raphael Salvador Lopez",
+    secretary: "Rosalie Sancha Ireneo",
+    treasurer: "Cristina Salvador Lopez",
+    term: '2023–2026',
+    source: "https://barangay.org.ph/tejeros-barangay",
+    sourceLabel: "Barangay Directory roster cross-check",
+    secondarySource: "https://www.makati.gov.ph/barangay",
+    lastVerified: barangayProfilesReviewed,
+  },
+  'urdaneta': {
+    punongBarangay: "Leonard Yang Alandy Dy",
+    kagawads: ["Mona Lisa De Guzman Camara","Lorenzo De Vera Regala","Charles Justin Alandy Dy Tiu","Patricia Bernice Reyes Go","Justin Vincent Go Tan","Fritzi Munsayac Tansengco","Theodore Martin Timbol Manapat"],
+    skChairperson: "Klarisse Kaye Lim Tan",
+    secretary: "Trisha Janice Vivar Paje",
+    treasurer: "Victoria Del Prado Carballo",
+    term: '2023–2026',
+    source: "https://barangay.org.ph/urdaneta-barangay",
+    sourceLabel: "Barangay Directory roster cross-check",
+    secondarySource: "https://www.makati.gov.ph/barangay",
+    lastVerified: barangayProfilesReviewed,
+  },
+  'valenzuela': {
+    punongBarangay: "George Anthony Valderama Peña",
+    kagawads: ["Carlo Daniel Peña Daulat","Michael Alcala Infante","Rodney Tristan Cawili Cailles","Roberto Arayata Javier","Elvis Cariño Sararana","Danilo Gallano Libao Jr.","Lyall De Jesus Dela Cruz"],
+    skChairperson: "Bhernadette Isanan Salen",
+    secretary: "Dennis Rafael Castro Bacod",
+    treasurer: "Wilfredo Garrido Bustamante",
+    term: '2023–2026',
+    source: "https://barangay.org.ph/valenzuela-barangay",
+    sourceLabel: "Barangay Directory roster cross-check",
+    secondarySource: "https://www.makati.gov.ph/barangay",
+    lastVerified: barangayProfilesReviewed,
+  },
+};
+
+const barangayContactSupplement: Record<string, Partial<BarangayProfile>> = {
+  'bangkal': { hallPhone: "7751-0787", },
+  'bel-air': { hallAddress: "Hydra Street, Bel-Air Village, Makati City", hallPhone: "(02) 8895-4011 / (02) 8895-4012", hallSource: "https://belair.itdcsystems.com/", },
+  'carmona': { hallPhone: "(02) 8650-4427", },
+  'forbes-park': { hallPhone: "(02) 8887-0461", },
+  'guadalupe-nuevo': { hallPhone: "(02) 8882-1992", },
+  'guadalupe-viejo': { hallPhone: "(02) 8672-0032", },
+  'kasilawan': { hallPhone: "(02) 7505-3583", },
+  'magallanes': { hallPhone: "(02) 8713-4820", },
+  'palanan': { hallAddress: "4513 Casino Street, Palanan, Makati City", hallPhone: "(02) 8640-2945", hallEmail: "brgypalanan2023@gmail.com", hallSource: "https://notices.philgeps.gov.ph/GEPSNONPILOT/Tender/PrintableBidNoticeAbstractUI.aspx?refid=11450082", },
+  'pio-del-pilar': { hallPhone: "(02) 8660-2367", },
+  'san-antonio': { hallPhone: "(02) 8890-4366", },
+  'san-isidro': { hallPhone: "(02) 8845-0260", },
+  'santa-cruz': { hallPhone: "(02) 8896-8775", },
+  'singkamas': { hallPhone: "(02) 7254-8121", },
+  'tejeros': { hallPhone: "(02) 7092-5038", },
+  'urdaneta': { hallPhone: "(02) 8892-5431", },
+  'valenzuela': { hallPhone: "(02) 8519-9232", },
+};
+
+const barangayBaseProfiles: BarangayProfile[] = [
   { slug: 'bangkal', name: 'Bangkal', population2024: 18013, legislativeDistrict: '1st District', officialPageUrl: 'https://www.makati.gov.ph/barangay/bangkal/29', notablePlaces: [{ name: 'Don Bosco Technical Institute – Makati', href: 'https://www.donboscomakati.edu.ph/', type: 'Institution' }] },
   { slug: 'bel-air', name: 'Bel-Air', population2024: 39354, legislativeDistrict: '1st District', officialPageUrl: 'https://www.makati.gov.ph/barangay/bel--air/30', associations: [{ name: 'Bel-Air Village Association (BAVA)', href: 'https://www.bava.ph/', linkLabel: 'Website' }, { name: 'Makati Central Estate Association (MACEA)', href: 'https://macea.com.ph/', linkLabel: 'Estate association' }] },
   { slug: 'carmona', name: 'Carmona', population2024: 3034, legislativeDistrict: '1st District', officialPageUrl: 'https://www.makati.gov.ph/barangay/carmona/31', officials: { punongBarangay: 'Ricardo Perfecto B. Garcia', source: 'https://www.makati.gov.ph/barangay/carmona/31' }, associations: [{ name: 'Circuit Makati', href: 'https://circuitmakati.com/', linkLabel: 'Estate website' }], notablePlaces: [{ name: 'Circuit Makati', href: 'https://circuitmakati.com/', type: 'Establishment' }] },
@@ -264,6 +577,53 @@ export const barangays: BarangayProfile[] = [
   { slug: 'urdaneta', name: 'Urdaneta', population2024: 4720, legislativeDistrict: '1st District', officialPageUrl: 'https://www.makati.gov.ph/barangay/urdaneta/8', officials: { punongBarangay: 'Leonard Y. Alandy Dy', source: 'https://www.makati.gov.ph/barangay/urdaneta/8' }, associations: [{ name: 'Urdaneta Village Association (UVA)', href: 'https://www.google.com/maps/search/?api=1&query=Urdaneta%20Village%20Association%20Makati', linkLabel: 'Map' }, { name: 'Makati Central Estate Association (MACEA)', href: 'https://macea.com.ph/', linkLabel: 'Estate association' }] },
   { slug: 'valenzuela', name: 'Valenzuela', population2024: 5598, legislativeDistrict: '1st District', officialPageUrl: makatiBarangayDirectory },
 ];
+
+export const barangays: BarangayProfile[] = barangayBaseProfiles.map(profile => ({
+  ...(barangayContactSupplement[profile.slug] ?? {}),
+  ...profile,
+  officials: barangayOfficialData[profile.slug] ?? profile.officials,
+}));
+
+export const barangayCoverageSummary = {
+  profiles: barangays.length,
+  councilRosters: barangays.filter(
+    item =>
+      Boolean(item.officials?.punongBarangay) &&
+      (item.officials?.kagawads?.length ?? 0) >= 6 &&
+      Boolean(item.officials?.skChairperson)
+  ).length,
+  hallContacts: barangays.filter(
+    item => Boolean(item.hallAddress || item.hallPhone || item.hallEmail)
+  ).length,
+  specificOfficialPages: barangays.filter(
+    item => Boolean(item.officialPageUrl && item.officialPageUrl !== makatiBarangayDirectory)
+  ).length,
+  verifiedHealthFacilityBarangays: barangays.filter(
+    item => (yakapHealthCenters[item.slug]?.length ?? 0) > 0
+  ).length,
+  barangaysWithCommunityLinks: barangays.filter(
+    item =>
+      (item.notablePlaces?.length ?? 0) > 0 ||
+      (item.associations?.length ?? 0) > 0 ||
+      (item.heritageMarkers?.length ?? 0) > 0
+  ).length,
+};
+
+export const barangayCoverageGaps = barangays.map(item => ({
+  slug: item.slug,
+  name: item.name,
+  missing: [
+    ...(!item.hallAddress ? ['hall address'] : []),
+    ...(!item.hallPhone ? ['hall phone'] : []),
+    ...(!item.hallEmail ? ['hall email'] : []),
+    ...(item.officialPageUrl === makatiBarangayDirectory ? ['specific Makati barangay page'] : []),
+    ...(!(yakapHealthCenters[item.slug]?.length) ? ['verified YAKAP health center'] : []),
+    ...(!(item.facebookUrl) ? ['verified official social channel'] : []),
+    ...(!(item.notablePlaces?.length || item.associations?.length || item.heritageMarkers?.length)
+      ? ['verified community places / associations']
+      : []),
+  ],
+}));
 
 export const findBarangay = (slug?: string) => barangays.find(barangay => barangay.slug === slug);
 export const barangayMapsUrl = (name: string) => 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('Barangay ' + name + ', Makati City, Philippines');
