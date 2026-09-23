@@ -158,61 +158,61 @@ test('failed civic feed does not imply zero reports', async ({ page }) => {
 });
 
 
-test('barangay profile uses one contextual local-edition header', async ({ page }) => {
-  await page.goto(baseURL + '/barangays/poblacion');
-  await expect(page.locator('span').filter({ hasText: 'BetterPoblacion' }).first()).toBeVisible();
-  await expect(page.getByRole('navigation', { name: 'Barangay local navigation' })).toHaveCount(1);
-  await expect(page.getByLabel('Switch barangay edition')).toHaveValue('poblacion');
+test('barangays page is a focused selection gateway', async ({ page }) => {
+  await page.goto(baseURL + '/barangays');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Choose a barangay');
+  await expect(page.getByRole('link', { name: /BetterPoblacion/i })).toBeVisible();
+  await expect(page.getByText(/How population is distributed/i)).toHaveCount(0);
 });
 
-test('mobile barangay edition uses a section dropdown instead of horizontal local tabs', async ({ page }) => {
-  await page.setViewportSize({ width: 390, height: 844 });
+test('barangay landing page behaves like a local homepage', async ({ page }) => {
   await page.goto(baseURL + '/barangays/poblacion');
-  await expect(page.getByLabel('Local section')).toBeVisible();
-  await expect(page.getByRole('navigation', { name: 'Barangay local navigation' })).toBeHidden();
-  await page.getByLabel('Local section').selectOption({ label: 'Services' });
-  await expect(page).toHaveURL(/\/services\?barangay=poblacion/);
-});
-
-test('barangay edition does not persist onto unrelated citywide pages', async ({ page }) => {
-  await page.goto(baseURL + '/services?barangay=poblacion');
-  await expect(page.getByLabel('Switch barangay edition')).toHaveValue('poblacion');
-
-  await page.goto(baseURL + '/history');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('BetterPoblacion');
+  await expect(page.getByRole('heading', { name: /What do you need in Poblacion/i })).toBeVisible();
+  await expect(page.getByRole('heading', { name: /Follow what affects Poblacion/i })).toBeVisible();
+  await expect(page.getByRole('navigation', { name: 'Barangay local navigation' })).toHaveCount(0);
   await expect(page.getByLabel('Switch barangay edition')).toHaveCount(0);
+});
 
+test('citywide services exposes an optional barangay slicer', async ({ page }) => {
   await page.goto(baseURL + '/services');
-  await expect(page.getByLabel('Switch barangay edition')).toHaveCount(0);
   await expect(page.getByLabel('Change barangay scope')).toHaveValue('');
+  await page.getByLabel('Change barangay scope').selectOption('poblacion');
+  await expect(page).toHaveURL(/\/services\?barangay=poblacion/);
+  await expect(page.getByLabel('Change barangay scope')).toHaveValue('poblacion');
 });
 
-test('citywide civic reports do not show a barangay edition header', async ({ page }) => {
-  await page.goto(baseURL + '/civic-map/reports?barangay=poblacion');
-  await expect(page.getByLabel('Switch barangay edition')).toHaveCount(0);
-  await expect(page.getByRole('heading', { level: 1 })).toContainText(/Civic Map reports/i);
-});
-
-test('barangay dashboard carries local scope into Civic Map', async ({ page }) => {
+test('barangay homepage launches scoped Civic Map', async ({ page }) => {
   await page.goto(baseURL + '/barangays/poblacion');
-  await page.getByRole('link', { name: 'Map & reports' }).click();
+  await page.getByRole('link', { name: 'Open local Civic Map' }).click();
   await expect(page).toHaveURL(/\/civic-map\?barangay=poblacion/);
-  await expect(page.getByLabel('Switch barangay edition')).toHaveValue('poblacion');
+  await expect(page.getByLabel('Change barangay scope')).toHaveValue('poblacion');
   await expect(page.getByText(/mapped assets in Barangay Poblacion/i)).toBeVisible();
   await expect(page.getByText('Makati Poblacion Park', { exact: true })).toBeVisible();
   await expect(page.getByText(/Ayala Avenue — Paseo de Roxas to V\.A\. Rufino/i)).toHaveCount(0);
 });
 
-test('barangay services open with Barangay level selected', async ({ page }) => {
+test('barangay homepage launches services with barangay slice', async ({ page }) => {
   await page.goto(baseURL + '/barangays/poblacion');
-  await page.getByRole('navigation', { name: 'Barangay local navigation' }).getByRole('link', { name: 'Services', exact: true }).click();
+  await page.getByRole('link', { name: /Find a service/i }).first().click();
   await expect(page).toHaveURL(/\/services\?barangay=poblacion/);
-  await expect(page.getByLabel('Switch barangay edition')).toHaveValue('poblacion');
+  await expect(page.getByLabel('Change barangay scope')).toHaveValue('poblacion');
   await expect(page.getByRole('button', { name: 'Barangay', exact: true })).toHaveAttribute('aria-pressed', 'true');
 });
 
-test('barangay statistics show local population context', async ({ page }) => {
+test('barangay statistics show local population context through slicer', async ({ page }) => {
   await page.goto(baseURL + '/statistics?barangay=poblacion');
-  await expect(page.getByLabel('Switch barangay edition')).toHaveValue('poblacion');
+  await expect(page.getByLabel('Change barangay scope')).toHaveValue('poblacion');
   await expect(page.getByText('17,088', { exact: true })).toBeVisible();
   await expect(page.getByText('Barangay population', { exact: true })).toBeVisible();
 });
+
+test('barangay context does not follow users to unrelated citywide pages', async ({ page }) => {
+  await page.goto(baseURL + '/services?barangay=poblacion');
+  await expect(page.getByLabel('Change barangay scope')).toHaveValue('poblacion');
+  await page.goto(baseURL + '/history');
+  await expect(page.getByLabel('Change barangay scope')).toHaveCount(0);
+  await page.goto(baseURL + '/services');
+  await expect(page.getByLabel('Change barangay scope')).toHaveValue('');
+});
+
