@@ -5,6 +5,18 @@ import { useBarangayScope, withBarangayScope } from '../../hooks/useBarangayScop
 
 const compactEditionName = (name: string) => name.replace(/\s+/g, '');
 
+const supportsBarangayEdition = (pathname: string) => {
+  if (/^\/barangays\/[^/]+$/.test(pathname)) return true;
+  if (pathname === '/services') return true;
+  if (pathname === '/projects-budget') return true;
+  if (pathname === '/accountability') return true;
+  if (pathname === '/participate') return true;
+  if (pathname === '/statistics') return true;
+  if (pathname === '/civic-map') return true;
+  if (/^\/civic-map\/[^/]+$/.test(pathname) && pathname !== '/civic-map/reports') return true;
+  return false;
+};
+
 export default function BarangayEditionBar() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -14,7 +26,7 @@ export default function BarangayEditionBar() {
   const profileBarangay = findBarangay(profileSlug);
   const barangay = profileBarangay || scopedBarangay;
 
-  if (!barangay) return null;
+  if (!barangay || !supportsBarangayEdition(location.pathname)) return null;
 
   const slug = barangay.slug;
   const isProfile = Boolean(profileBarangay);
