@@ -78,7 +78,8 @@ export default function BarangayEditionBar() {
           </select>
         </div>
 
-        <nav
+        <div
+          role="navigation"
           aria-label="Barangay local navigation"
           className="min-w-0 flex-1 overflow-x-auto overscroll-x-contain"
         >
@@ -98,7 +99,7 @@ export default function BarangayEditionBar() {
               </Link>
             ))}
           </div>
-        </nav>
+        </div>
       </div>
     </div>
   );
