@@ -532,5 +532,23 @@
     "label": "Makatizen Card application guide",
     "url": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1581041433613.pdf",
     "kind": "service-detail"
+  },
+  {
+    "id": "makati-q2-2025-bid-results",
+    "label": "Makati Q2 2025 bid results",
+    "url": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/online_forms/pdf/Q2%20Bids.pdf",
+    "kind": "procurement"
+  },
+  {
+    "id": "makati-q3-2024-bid-results",
+    "label": "Makati Q3 2024 bid results",
+    "url": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/online_forms/pdf/Q3%20Bid%20Results%20FDP.pdf",
+    "kind": "procurement"
+  },
+  {
+    "id": "makati-sef-q4-2024",
+    "label": "Makati Special Education Fund utilization Q4 2024",
+    "url": "https://www.depedncr.com.ph/wp-content/uploads/2025/05/SEF-MAKATI-CITY-4th-Quarter-2024.pdf",
+    "kind": "fiscal"
   }
 ]
