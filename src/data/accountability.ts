@@ -13,6 +13,7 @@ import { serviceGuideDetails } from './serviceGuideDetails';
 import {
   auditFindingEntries,
   procurementProjectEntries,
+  publicCommitmentEntries,
   specialEducationFundEntries,
 } from './accountabilitySupplement';
 import type { AccountabilityEntry, CoverageGap } from './civicTypes';
@@ -286,6 +287,7 @@ export const accountabilityEntries: AccountabilityEntry[] = [
   ...procurementProjectEntries,
   ...procurementEntries,
   ...serviceStandardEntries,
+  ...publicCommitmentEntries,
   ...cityMonitorCommitmentEntries,
   ...specialEducationFundEntries,
   ...dedicatedFundEntries,
@@ -330,11 +332,11 @@ export const accountabilityCoverageGaps: CoverageGap[] = [
   },
   {
     id: 'public-commitments',
-    title: 'Public commitments and measurable targets are not yet systematically indexed',
+    title: 'Coverage of public commitments is still partial',
     description:
-      'BetterMakati can track a promise only when a public source clearly states the commitment, responsible body and, where available, a target or deadline. Current City Monitor records do not yet provide a complete commitment set.',
+      'BetterMakati now tracks selected source-backed promises with targets and later evidence, but speeches, plans, ordinances and official announcements have not yet been comprehensively normalized into the commitment tracker.',
     whyItMatters:
-      'Public memory should cover promises and targets, not only budgets, awards and audit findings.',
+      'Public memory should cover promises and targets consistently across administrations and policy areas, not only budgets, awards and audit findings.',
     lastChecked: accountabilityReviewed,
   },
   {
