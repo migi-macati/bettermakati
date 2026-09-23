@@ -217,11 +217,8 @@ test('Budget Explorer exposes the complete reconciled 2026 citywide summary', as
   await expect(page.getByText('Line items reconcile to ₱21.0B', { exact: true })).toBeVisible();
   const search = page.getByPlaceholder('Search line or account code');
   await search.fill('1-07-04-990');
-  const explorerTable = page.locator('table').filter({
-    has: page.getByRole('columnheader', { name: 'Account code' }),
-  });
-  await expect(explorerTable.getByText('Other Structures', { exact: true })).toBeVisible();
-  await expect(explorerTable.getByText('₱55,265,000', { exact: true })).toBeVisible();
+  await expect(page.getByRole('cell', { name: 'Other Structures', exact: true })).toBeVisible();
+  await expect(page.getByRole('cell', { name: '₱55,265,000', exact: true })).toBeVisible();
 });
 
 test('Projects & Budget displays procurement evidence instead of only linking out', async ({ page }) => {
