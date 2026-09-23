@@ -5,7 +5,9 @@ const baseURL = process.env.BASE_URL || 'http://127.0.0.1:4173';
 const routes = [
   '/',
   '/services',
+  '/community-tools/saan-ako-lalapit',
   '/services/guide/community-tax-certificate',
+  '/services/guide/pwd-id',
   '/government',
   '/barangays',
   '/barangays/poblacion',
