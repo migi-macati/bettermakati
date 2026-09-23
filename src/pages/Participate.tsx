@@ -20,7 +20,6 @@ import {
   participationCoverageGaps,
   participationReviewed,
 } from '../data/participation';
-import BarangayScopeBar from '../components/barangay/BarangayScopeBar';
 import { useBarangayScope, withBarangayScope } from '../hooks/useBarangayScope';
 
 interface CommunityInput {
@@ -72,7 +71,6 @@ export default function Participate() {
           </div>
           <SharePage title="Participate in Makati | BetterMakati" />
         </div>
-        <BarangayScopeBar note="Official participation opportunities remain source-led. Local actions below stay tied to the selected barangay." />
         <LastReviewed
           date={participationReviewed}
           note="Official opportunities and BetterMakati submissions are labeled separately."

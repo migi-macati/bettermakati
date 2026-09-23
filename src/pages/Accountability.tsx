@@ -16,7 +16,6 @@ import {
   WalletCards,
 } from 'lucide-react';
 import { Link, useSearchParams } from 'react-router';
-import BarangayScopeBar from '../components/barangay/BarangayScopeBar';
 import { useBarangayScope } from '../hooks/useBarangayScope';
 import SEO from '../components/SEO';
 import Section from '../components/ui/Section';
@@ -348,16 +347,6 @@ export default function Accountability() {
           </div>
           <SharePage title="Makati Accountability Ledger | BetterMakati" />
         </div>
-
-        <BarangayScopeBar
-          note={
-            barangay
-              ? locallyTaggedEntries.length > 0
-                ? `Showing ${locallyTaggedEntries.length} accountability record${locallyTaggedEntries.length === 1 ? '' : 's'} that explicitly mention Barangay ${barangay.name}.`
-                : `No ledger record currently identifies Barangay ${barangay.name} explicitly, so citywide records remain visible rather than being falsely attributed locally.`
-              : undefined
-          }
-        />
         <LastReviewed
           date={accountabilityReviewed}
           note="A missing source means BetterMakati has not located public evidence for that step. It is not a finding of wrongdoing or non-performance."
