@@ -31,10 +31,10 @@ const recordGroups = [
   {
     title: 'Accountability Ledger',
     description:
-      'Plans, responsible bodies, later evidence and coverage gaps.',
+      'Follow public money, projects, audit findings and promises from source to later evidence, with missing links shown clearly.',
     href: '/accountability',
     icon: SearchCheck,
-    coverage: 'Growing structured index',
+    coverage: 'Citizen follow-through tracker',
   },
   {
     title: 'Legislation',
