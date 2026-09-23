@@ -504,6 +504,15 @@ const radicalCivicItems: SearchItem[] = [
     featured: true,
   },
   {
+    title: 'Public Commitments',
+    group: 'Record',
+    category: 'Accountability',
+    description: 'Track sourced city promises and targets against later public evidence.',
+    href: '/accountability?type=commitment',
+    keywords: 'public commitment promise target pledge delivery evidence deadline accountability follow through',
+    featured: true,
+  },
+  {
     title: 'Public Records',
     group: 'Record',
     category: 'Records',
