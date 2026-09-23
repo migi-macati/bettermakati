@@ -8,6 +8,7 @@ const criticalRoutes = [
   ['/government-offices', /Government offices for Makati/i],
   ['/government', /Makati City Government/i],
   ['/barangays', /Barangays/i],
+  ['/barangays/poblacion', /Poblacion/i],
   ['/projects-budget', /Where Makati’s money comes from and goes/i],
   ['/statistics', /Makati/i],
   ['/history', /Many histories\. One Makati\./i],
@@ -154,4 +155,30 @@ test('failed civic feed does not imply zero reports', async ({ page }) => {
   await page.goto(baseURL + '/civic-map');
   await expect(page.getByText('Community counts are unavailable.', { exact: false })).toBeVisible();
   await expect(page.getByText('0 community records', { exact: true })).toHaveCount(0);
+});
+
+
+test('barangay dashboard carries local scope into Civic Map', async ({ page }) => {
+  await page.goto(baseURL + '/barangays/poblacion');
+  await page.getByRole('link', { name: 'Map & reports' }).click();
+  await expect(page).toHaveURL(/\/civic-map\?barangay=poblacion/);
+  await expect(page.getByLabel('Change barangay scope')).toHaveValue('poblacion');
+  await expect(page.getByText(/mapped assets in Barangay Poblacion/i)).toBeVisible();
+  await expect(page.getByText('Makati Poblacion Park', { exact: true })).toBeVisible();
+  await expect(page.getByText(/Ayala Avenue — Paseo de Roxas to V\.A\. Rufino/i)).toHaveCount(0);
+});
+
+test('barangay services open with Barangay level selected', async ({ page }) => {
+  await page.goto(baseURL + '/barangays/poblacion');
+  await page.getByRole('link', { name: 'Services', exact: true }).first().click();
+  await expect(page).toHaveURL(/\/services\?barangay=poblacion/);
+  await expect(page.getByLabel('Change barangay scope')).toHaveValue('poblacion');
+  await expect(page.getByRole('button', { name: 'Barangay', exact: true })).toHaveAttribute('aria-pressed', 'true');
+});
+
+test('barangay statistics show local population context', async ({ page }) => {
+  await page.goto(baseURL + '/statistics?barangay=poblacion');
+  await expect(page.getByLabel('Change barangay scope')).toHaveValue('poblacion');
+  await expect(page.getByText('17,088', { exact: true })).toBeVisible();
+  await expect(page.getByText('Barangay population', { exact: true })).toBeVisible();
 });
