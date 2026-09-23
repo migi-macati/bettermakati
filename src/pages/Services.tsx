@@ -36,7 +36,6 @@ import {
   serviceGuideDetails,
   verifiedServiceGuideCount,
 } from '../data/serviceGuideDetails';
-import BarangayScopeBar from '../components/barangay/BarangayScopeBar';
 import { useBarangayScope } from '../hooks/useBarangayScope';
 
 const normalize = (value: string) =>
@@ -159,7 +158,6 @@ const Services: React.FC = () => {
           <Text className="mt-2 max-w-3xl text-gray-600">
             City, barangay and major national services used by people and businesses in Makati.
           </Text>
-          <BarangayScopeBar note="Barangay-level services are brought forward first. City and national services remain available through the government-level filter." />
           <LastReviewed
             note="Requirements can change. Open the linked official source before acting."
             className="mt-4"
