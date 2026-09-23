@@ -7,6 +7,7 @@ import SEO from '../components/SEO';
 import LastReviewed from '../components/ui/LastReviewed';
 import SharePage from '../components/ui/SharePage';
 import PhotoCarousel from '../components/ui/PhotoCarousel';
+import CitizenSummary from '../components/ui/CitizenSummary';
 import { cityImages } from '../data/cityImages';
 import {
   cityExecutiveOfficials,
@@ -91,6 +92,49 @@ export default function Government() {
           title="City government"
           compact
           className="mt-8"
+        />
+
+        <CitizenSummary
+          className="mt-6"
+          eyebrow="How city government fits together"
+          title="Different offices answer different civic questions"
+          points={[
+            {
+              label: 'Mayor · executive',
+              text: 'The City Mayor is Makati’s chief executive and leads the city administration, development planning and implementation of city programs under the charter.',
+            },
+            {
+              label: 'Vice Mayor · council',
+              text: 'The Vice Mayor presides over the Sangguniang Panlungsod and has succession and acting-mayor functions defined by law.',
+            },
+            {
+              label: 'City Council · legislation & budget',
+              text: 'The Sangguniang Panlungsod enacts local ordinances and approves annual and supplemental budgets and appropriations.',
+            },
+            {
+              label: 'Departments · service delivery',
+              text: 'City departments carry out specialized functions such as health, engineering, finance, social welfare, environment and public safety.',
+            },
+          ]}
+          note={
+            <>
+              For the legal allocation of powers, use the{' '}
+              <a
+                href={charterUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="font-bold text-primary-700 underline underline-offset-2"
+              >
+                Makati City Charter
+              </a>
+              . For a transaction or concern, use Services or the government-office directory rather than starting with an elected-official profile.
+            </>
+          }
+          actions={
+            <Link to="/services" className="text-sm font-bold text-primary-700 underline underline-offset-2">
+              Find a service <ArrowRight className="inline h-3.5 w-3.5" />
+            </Link>
+          }
         />
 
         <div
