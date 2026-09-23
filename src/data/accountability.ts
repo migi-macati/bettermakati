@@ -160,7 +160,7 @@ const procurementEntries: AccountabilityEntry[] = cityMonitorRecords
     id: `procurement-${record.id}`,
     title: record.title,
     type: 'project',
-    status: record.status === 'completed' ? 'completed' : 'in-progress',
+    status: record.status === 'completed' ? 'completed' : 'reported',
     summary: record.summary,
     responsibleBodies: [record.sourcePublisher],
     period: record.date.slice(0, 4),
@@ -326,6 +326,15 @@ export const accountabilityCoverageGaps: CoverageGap[] = [
         publisher: 'Commission on Audit',
       },
     ],
+    lastChecked: accountabilityReviewed,
+  },
+  {
+    id: 'public-commitments',
+    title: 'Public commitments and measurable targets are not yet systematically indexed',
+    description:
+      'BetterMakati can track a promise only when a public source clearly states the commitment, responsible body and, where available, a target or deadline. Current City Monitor records do not yet provide a complete commitment set.',
+    whyItMatters:
+      'Public memory should cover promises and targets, not only budgets, awards and audit findings.',
     lastChecked: accountabilityReviewed,
   },
   {
