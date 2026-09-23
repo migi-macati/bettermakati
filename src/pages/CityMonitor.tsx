@@ -21,6 +21,7 @@ import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
 import LastReviewed from '../components/ui/LastReviewed';
 import SharePage from '../components/ui/SharePage';
+import CitizenSummary from '../components/ui/CitizenSummary';
 import {
   cityMonitorRecords,
   cityMonitorReviewed,
@@ -29,6 +30,7 @@ import {
   legislativeLifecycle,
   procurementLifecycle,
   speechWorkflow,
+  type CityMonitorRecord,
   type CityMonitorType,
 } from '../data/cityMonitor';
 
@@ -48,6 +50,37 @@ const typeIcon: Record<CityMonitorType, ComponentType<{ className?: string }>> =
   publication: Newspaper,
   consultation: CalendarDays,
   'official-notice': Radio,
+};
+
+const recordInterpretation = (record: CityMonitorRecord) => {
+  if (record.type === 'procurement') {
+    if (record.status === 'awarded') {
+      return 'The public record establishes an award and the reported winning amount. It does not by itself establish that a contract was executed, work was completed or payment was made.';
+    }
+    return 'This procurement record establishes only the stage shown by the cited source. Later stages require separate public evidence.';
+  }
+
+  if (record.type === 'council-session') {
+    return 'This establishes the documented volume or occurrence of council activity. It does not by itself show the substance, vote or later implementation of each measure.';
+  }
+
+  if (record.type === 'legislation') {
+    return 'This establishes the legislative action shown by the source. Check the original measure and later records for amendments, effectivity and implementation.';
+  }
+
+  if (record.type === 'executive-speech') {
+    return 'Statements and commitments are attributed to the official source. Delivery is tracked separately when later evidence is available.';
+  }
+
+  if (record.type === 'project') {
+    return 'The record shows the latest sourced project stage. Budget, procurement, implementation and completion should be read as separate evidence points.';
+  }
+
+  if (record.type === 'consultation') {
+    return 'This confirms a participation opportunity or event. It does not establish what influence public input ultimately had on the decision.';
+  }
+
+  return 'This record summarizes the cited official source. Open the original source for controlling details and later updates.';
 };
 
 const streamOptions: Array<{ value: 'all' | CityMonitorType; label: string }> = [
@@ -258,6 +291,12 @@ export default function CityMonitor() {
                   <time className="text-sm text-gray-500" dateTime={record.date}>{record.date}</time>
                 </div>
                 <p className="mt-4 max-w-4xl text-sm leading-relaxed text-gray-700">{record.summary}</p>
+                <CitizenSummary
+                  className="mt-4"
+                  eyebrow="What this tells you"
+                  title={cityMonitorTypeLabel[record.type]}
+                  summary={recordInterpretation(record)}
+                />
                 {record.referenceNo && (
                   <div className="mt-3 text-sm text-gray-600">
                     Reference: <strong>{record.referenceNo}</strong>
