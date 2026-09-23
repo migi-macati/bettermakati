@@ -293,7 +293,7 @@ export const selectedBudgetLines2026 = [
   { group: 'Capital', accountCode: '1-07-04-010', label: 'Buildings', amountM: 130 },
   { group: 'Capital', accountCode: '1-07-04-020', label: 'School Buildings', amountM: 116 },
   { group: 'Capital', accountCode: '1-07-04-030', label: 'Hospitals and Health Centers', amountM: 12 },
-  { group: 'Capital', accountCode: '1-07-04-990', label: 'Other Structures', amountM: 265 },
+  { group: 'Capital', accountCode: '1-07-04-990', label: 'Other Structures', amountM: 55.265 },
   { group: 'Capital', accountCode: '1-07-05-010', label: 'Machinery', amountM: 6.11 },
   { group: 'Capital', accountCode: '1-07-05-020', label: 'Office Equipment', amountM: 116.307 },
   { group: 'Capital', accountCode: '1-07-05-030', label: 'Information and Communication Technology Equipment', amountM: 143.485 },
