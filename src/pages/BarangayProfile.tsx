@@ -1,40 +1,26 @@
 import {
   ArrowLeft,
   ArrowRight,
+  BarChart3,
+  Building2,
+  ClipboardCheck,
   ExternalLink,
-  Home,
+  FileCheck2,
   Landmark,
   Mail,
   MapPin,
+  MessageSquarePlus,
   Phone,
+  Search,
   Users,
-  Vote,
+  Wrench,
 } from 'lucide-react';
 import { Link, useParams } from 'react-router';
-import Section from '../components/ui/Section';
-import { Heading } from '../components/ui/Heading';
 import SEO from '../components/SEO';
-import LastReviewed from '../components/ui/LastReviewed';
-import SharePage from '../components/ui/SharePage';
-import {
-  barangays,
-  barangayMapsUrl,
-  barangayFacilities,
-  findBarangay,
-  commonBarangayServiceIds,
-  makatiCitizenCharterSource,
-  makatiBarangayDirectory,
-  psaBarangaySource,
-} from '../data/barangays';
-import {
-  congressionalOfficials,
-  councilOfficials,
-} from '../data/electedOfficials';
-import { serviceDirectory } from '../data/serviceDirectory';
-import {
-  barangayResultSource2025,
-  findBarangayMayoralResult2025,
-} from '../data/electionHistory';
+import { barangays, barangayFacilities, findBarangay, psaBarangaySource } from '../data/barangays';
+import { withBarangayScope } from '../hooks/useBarangayScope';
+
+const compactEditionName = (name: string) => name.replace(/\s+/g, '');
 
 export default function BarangayProfile() {
   const { slug } = useParams();
@@ -42,491 +28,353 @@ export default function BarangayProfile() {
 
   if (!barangay) {
     return (
-      <Section className="bg-[#fffdf8]">
-        <Heading>Barangay not found</Heading>
-        <Link to="/barangays" className="brand-btn-secondary mt-6">
-          <ArrowLeft className="h-4 w-4" /> Back to barangays
-        </Link>
-      </Section>
+      <section className="bg-[#fffdf8] py-16">
+        <div className="container px-5 md:px-6 lg:px-8">
+          <h1 className="text-3xl font-extrabold text-gray-950">Barangay not found</h1>
+          <Link to="/barangays" className="brand-btn-secondary mt-6">
+            <ArrowLeft className="h-4 w-4" /> Choose a barangay
+          </Link>
+        </div>
+      </section>
     );
   }
 
-  const cityPopulation = barangays.reduce(
-    (sum, item) => sum + item.population2024,
-    0
-  );
+  const cityPopulation = barangays.reduce((sum, item) => sum + item.population2024, 0);
   const populationShare = (barangay.population2024 / cityPopulation) * 100;
-  const districtNumber = barangay.legislativeDistrict.startsWith('1st')
-    ? '1st'
-    : '2nd';
-  const representative = congressionalOfficials.find(official =>
-    official.district?.startsWith(districtNumber)
-  );
-  const districtCouncilors = councilOfficials.filter(
-    official => official.district === barangay.legislativeDistrict
-  );
-  const barangayServices = serviceDirectory.filter(service => commonBarangayServiceIds.includes(service.id));
-  const localFacilities = barangayFacilities(barangay.slug, barangay.name);
-  const barangayElection2025 = findBarangayMayoralResult2025(barangay.slug);
+  const facilities = barangayFacilities(barangay.slug, barangay.name);
+
+  const quickActions = [
+    {
+      label: 'Find a service',
+      description: 'Barangay clearances, certificates and other public services.',
+      href: withBarangayScope('/services', barangay.slug),
+      icon: Search,
+    },
+    {
+      label: 'Report a public-place issue',
+      description: 'Open the Civic Map with this barangay selected.',
+      href: withBarangayScope('/civic-map', barangay.slug),
+      icon: Wrench,
+    },
+    {
+      label: 'Participate locally',
+      description: 'Find ways to raise concerns, contribute or take part.',
+      href: withBarangayScope('/participate', barangay.slug),
+      icon: MessageSquarePlus,
+    },
+    {
+      label: 'Barangay hall',
+      description: 'See verified local contact details and official channels.',
+      href: '#local-government',
+      icon: Building2,
+    },
+  ];
+
+  const civicLinks = [
+    {
+      label: 'Projects & money',
+      description: 'See city budget and project records, sliced locally where geography is available.',
+      href: withBarangayScope('/projects-budget', barangay.slug),
+      icon: ClipboardCheck,
+    },
+    {
+      label: 'Accountability',
+      description: 'Review public records and accountability entries connected to this barangay.',
+      href: withBarangayScope('/accountability', barangay.slug),
+      icon: FileCheck2,
+    },
+    {
+      label: 'Civic Map',
+      description: 'Browse mapped public places and infrastructure in this barangay.',
+      href: withBarangayScope('/civic-map', barangay.slug),
+      icon: MapPin,
+    },
+    {
+      label: 'Statistics',
+      description: 'Start with this barangay’s population context, then compare citywide indicators.',
+      href: withBarangayScope('/statistics', barangay.slug),
+      icon: BarChart3,
+    },
+  ];
+
+  const communityLinks = [
+    ...(barangay.notablePlaces ?? []).slice(0, 2).map(place => ({
+      label: place.name,
+      description: place.type,
+      href: place.href,
+    })),
+    ...(barangay.associations ?? []).slice(0, 2).map(association => ({
+      label: association.name,
+      description: association.linkLabel,
+      href: association.href,
+    })),
+  ].slice(0, 4);
 
   return (
     <>
       <SEO
-        title={'Barangay ' + barangay.name}
+        title={'Better' + compactEditionName(barangay.name)}
         description={
-          'Profile of Barangay ' +
+          'Local BetterMakati homepage for Barangay ' +
           barangay.name +
-          ', Makati City: population, district representation, community links and public records.'
+          ': services, projects, public places, participation and local information.'
         }
-        jsonLd={{
-          '@context': 'https://schema.org',
-          '@type': 'AdministrativeArea',
-          name: 'Barangay ' + barangay.name,
-          containedInPlace: {
-            '@type': 'City',
-            name: 'Makati City',
-          },
-        }}
       />
 
-      <Section id="overview" className="bg-[#fffdf8]">
-        <Link
-          to="/barangays"
-          className="inline-flex items-center gap-1 text-sm font-bold text-primary-700"
-        >
-          <ArrowLeft className="h-4 w-4" /> Barangays
-        </Link>
-
-        <div className="mt-6 section-eyebrow">Barangay profile</div>
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-          <div>
-            <Heading>{barangay.name}</Heading>
-            <p className="max-w-2xl text-gray-600">
-              Your local BetterMakati view for services, government, projects,
-              accountability, participation, public places and community information
-              in Barangay {barangay.name}.
-            </p>
-          </div>
-          <SharePage title={'Barangay ' + barangay.name + ' | BetterMakati'} />
-        </div>
-        <LastReviewed note="Population uses PSA 2024 POPCEN; time-sensitive contacts should be checked with official sources." />
-
-        <div className="mt-5 flex flex-wrap gap-3">
-          <Link to={'/today?barangay=' + barangay.slug} className="brand-btn-primary">
-            Make this My Makati
-          </Link>
-          <Link to={'/participate?barangay=' + barangay.slug} className="brand-btn-secondary">
-            Participate locally
-          </Link>
-          <Link to={'/accountability?barangay=' + barangay.slug} className="brand-btn-secondary">
-            Local accountability
-          </Link>
-        </div>
-
-        <div className="mt-7 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <a
-            href={psaBarangaySource}
-            target="_blank"
-            rel="noreferrer"
-            className="rounded-2xl border border-primary-100 bg-white p-5"
-          >
-            <Users className="h-5 w-5 text-primary-700" />
-            <div className="mt-3 text-2xl font-extrabold text-gray-950">
-              {barangay.population2024.toLocaleString('en-PH')}
-            </div>
-            <div className="text-sm text-gray-600">2024 population · PSA POPCEN</div>
-          </a>
-
-          <div className="rounded-2xl border border-primary-100 bg-white p-5">
-            <Users className="h-5 w-5 text-primary-700" />
-            <div className="mt-3 text-2xl font-extrabold text-gray-950">
-              {populationShare.toFixed(1)}%
-            </div>
-            <div className="text-sm text-gray-600">
-              of Makati&apos;s 2024 population
-            </div>
-          </div>
-
-          <div className="rounded-2xl border border-primary-100 bg-white p-5">
-            <Home className="h-5 w-5 text-primary-700" />
-            <div className="mt-3 text-xl font-extrabold text-gray-950">
-              {barangay.legislativeDistrict}
-            </div>
-            <div className="text-sm text-gray-600">Makati legislative district</div>
-          </div>
-
-          <a
-            href={barangayMapsUrl(barangay.name)}
-            target="_blank"
-            rel="noreferrer"
-            className="rounded-2xl border border-primary-100 bg-white p-5"
-          >
-            <MapPin className="h-5 w-5 text-primary-700" />
-            <div className="mt-3 text-xl font-extrabold text-gray-950">
-              Open map
-            </div>
-            <div className="text-sm text-gray-600">Locate the barangay in Makati</div>
-          </a>
-        </div>
-      </Section>
-
-      <Section id="representation" className="bg-[#f5f8f2]">
-        <div className="section-eyebrow">City representation</div>
-        <Heading level={2}>Who represents this district</Heading>
-        <p className="max-w-3xl text-sm leading-relaxed text-gray-600">
-          These are Makati city and congressional offices for the district that
-          contains Barangay {barangay.name}. They are separate from the
-          barangay&apos;s own Punong Barangay and Sangguniang Barangay.
-        </p>
-
-        {representative && (
+      <section className="bg-[#fffdf8] py-12 md:py-16">
+        <div className="container px-5 md:px-6 lg:px-8">
           <Link
-            to={'/officials/' + representative.slug}
-            className="mt-6 flex items-center justify-between gap-4 rounded-2xl border border-primary-100 bg-white p-5 hover:border-primary-300"
+            to="/barangays"
+            className="inline-flex items-center gap-1 text-sm font-bold text-primary-700"
           >
-            <div>
-              <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
-                House of Representatives
-              </div>
-              <div className="mt-1 text-lg font-extrabold text-gray-950">
-                {representative.displayName}
-              </div>
-              <div className="text-sm text-gray-600">{representative.district}</div>
-            </div>
-            <ArrowRight className="h-5 w-5 text-primary-700" />
+            <ArrowLeft className="h-4 w-4" /> All barangays
           </Link>
-        )}
 
-        <h3 className="mt-7 font-extrabold text-lg text-gray-950">
-          City councilors · {barangay.legislativeDistrict}
-        </h3>
-        <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-          {districtCouncilors.map(official => (
-            <Link
-              key={official.slug}
-              to={'/officials/' + official.slug}
-              className="rounded-xl border border-primary-100 bg-white p-4 hover:border-primary-300"
-            >
-              <div className="text-xs font-bold text-primary-700">Councilor</div>
-              <div className="mt-1 font-extrabold text-gray-950">
-                {official.displayName}
-              </div>
-            </Link>
-          ))}
-        </div>
-
-        <div className="mt-7 rounded-2xl border border-secondary-200 bg-secondary-50 p-5">
-          <h3 className="font-extrabold text-gray-950">Barangay officials</h3>
-          {barangay.officials?.punongBarangay && (
-            <div className="mt-3 rounded-xl border border-secondary-200 bg-white p-4">
-              <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">Punong Barangay · city page snapshot</div>
-              <div className="mt-1 text-lg font-extrabold text-gray-950">{barangay.officials.punongBarangay}</div>
-            </div>
-          )}
-          <p className="mt-2 text-sm leading-relaxed text-gray-700">
-            The current Punong Barangay, seven Sangguniang Barangay members and
-            SK leadership are maintained on the official Makati barangay page.
-            BetterMakati links to that roster rather than copying names that may
-            become stale. Check the source before relying on a name for an
-            official transaction.
-          </p>
-          <div className="mt-4 flex flex-wrap gap-3">
-            <a
-              href="https://www.makati.gov.ph/"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-1 text-sm font-bold text-primary-700"
-            >
-              Current barangay roster <ExternalLink className="h-3.5 w-3.5" />
-            </a>
-            <Link
-              to="/elections"
-              className="inline-flex items-center gap-1 text-sm font-bold text-primary-700"
-            >
-              Elections & voting <ArrowRight className="h-3.5 w-3.5" />
-            </Link>
-          </div>
-        </div>
-      </Section>
-
-      {barangayElection2025 && (
-        <Section id="election-2025" className="bg-white">
-          <div className="section-eyebrow">Latest city election</div>
-          <Heading level={2}>2025 mayoral result in {barangay.name}</Heading>
-
-          <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-[0.8fr_1.2fr]">
-            <div className="rounded-2xl border border-primary-100 bg-[#fffdf8] p-6">
-              <Vote className="h-6 w-6 text-primary-700" />
-              <div className="mt-4 text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
-                Candidate who carried the barangay
-              </div>
-              <div className="mt-1 text-2xl font-extrabold text-gray-950">
-                {barangayElection2025.carriedBy}
-              </div>
-              <p className="mt-2 text-sm leading-relaxed text-gray-600">
-                This identifies which candidate received more mayoral votes in the barangay. It is not a statement about all residents, and population figures should not be used as the vote denominator.
+          <div className="mt-7 grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
+            <div>
+              <div className="section-eyebrow">Barangay homepage</div>
+              <h1 className="text-4xl font-extrabold tracking-tight text-gray-950 md:text-6xl">
+                <span className="text-primary-700">Better</span>
+                {compactEditionName(barangay.name)}
+              </h1>
+              <p className="mt-4 max-w-2xl text-lg leading-relaxed text-gray-700">
+                Your starting point for public services, civic records, local contacts,
+                public places and participation in Barangay {barangay.name}.
               </p>
+              <div className="mt-6 flex flex-wrap gap-3">
+                <Link to={withBarangayScope('/services', barangay.slug)} className="brand-btn-primary">
+                  Find a service <ArrowRight className="h-4 w-4" />
+                </Link>
+                <Link to={withBarangayScope('/civic-map', barangay.slug)} className="brand-btn-secondary">
+                  Open local Civic Map
+                </Link>
+              </div>
             </div>
 
-            <div className="rounded-2xl border border-gray-200 bg-white p-6">
-              {barangayElection2025.exactVotesVerified ? (
-                <>
-                  <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">
-                    Published barangay vote totals
-                  </div>
-                  <div className="mt-4 grid grid-cols-2 gap-3">
-                    <div className="rounded-xl bg-gray-50 p-4">
-                      <div className="text-xs text-gray-500">Nancy Binay</div>
-                      <div className="mt-1 text-xl font-extrabold text-gray-950">
-                        {barangayElection2025.nancyVotes?.toLocaleString('en-PH')}
-                      </div>
-                    </div>
-                    <div className="rounded-xl bg-gray-50 p-4">
-                      <div className="text-xs text-gray-500">Luis Campos Jr.</div>
-                      <div className="mt-1 text-xl font-extrabold text-gray-950">
-                        {barangayElection2025.camposVotes?.toLocaleString('en-PH')}
-                      </div>
-                    </div>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">
-                    Current data coverage
-                  </div>
-                  <p className="mt-2 text-sm leading-relaxed text-gray-700">
-                    Published reporting identifies the barangay winner, but BetterMakati has not yet matched a reliable public precinct aggregate for the exact Nancy Binay and Luis Campos vote totals here.
-                  </p>
-                </>
-              )}
-
-              <div className="mt-5 flex flex-wrap gap-3">
-                <Link
-                  to="/elections#barangay-results-2025"
-                  className="brand-btn-primary"
-                >
-                  Compare all 23 barangays
-                </Link>
-                <a
-                  href={barangayResultSource2025.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="brand-btn-secondary"
-                >
-                  Result source <ExternalLink className="h-4 w-4" />
-                </a>
+            <div className="grid grid-cols-2 gap-3">
+              <a
+                href={psaBarangaySource}
+                target="_blank"
+                rel="noreferrer"
+                className="rounded-2xl border border-primary-100 bg-white p-5"
+              >
+                <div className="text-2xl font-extrabold text-primary-800">
+                  {barangay.population2024.toLocaleString('en-PH')}
+                </div>
+                <div className="mt-1 text-sm font-semibold text-gray-900">Population</div>
+                <div className="mt-1 text-xs text-gray-500">2024 POPCEN</div>
+              </a>
+              <div className="rounded-2xl border border-primary-100 bg-white p-5">
+                <div className="text-2xl font-extrabold text-primary-800">
+                  {populationShare.toFixed(1)}%
+                </div>
+                <div className="mt-1 text-sm font-semibold text-gray-900">of Makati</div>
+                <div className="mt-1 text-xs text-gray-500">2024 population</div>
+              </div>
+              <div className="col-span-2 rounded-2xl border border-primary-100 bg-white p-5">
+                <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+                  Legislative district
+                </div>
+                <div className="mt-1 text-xl font-extrabold text-gray-950">
+                  {barangay.legislativeDistrict}
+                </div>
               </div>
             </div>
           </div>
-        </Section>
-      )}
-
-      <Section id="services" className="bg-[#f5f8f2]">
-        <div className="section-eyebrow">Barangay services</div>
-        <Heading level={2}>Common services to confirm at the hall</Heading>
-        <p className="max-w-3xl text-sm leading-relaxed text-gray-600">
-          These services are available through the city’s barangay-service directory. Requirements, fees, office hours and whether a service is offered can vary by barangay, so confirm with the hall before travelling.
-        </p>
-        <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
-          {barangayServices.map(service => (
-            <Link key={service.id} to={service.href} className="rounded-xl border border-primary-100 bg-white p-4 hover:border-primary-300">
-              <div className="text-xs font-bold text-primary-700">{service.type}</div>
-              <div className="mt-1 font-extrabold text-gray-950">{service.title}</div>
-              <div className="mt-2 text-sm leading-relaxed text-gray-600">{service.description}</div>
-            </Link>
-          ))}
         </div>
-      </Section>
+      </section>
 
-      <Section id="facilities" className="bg-white">
-        <div className="section-eyebrow">Barangay facilities</div>
-        <Heading level={2}>Places to start locally</Heading>
-        <p className="max-w-3xl text-sm leading-relaxed text-gray-600">
-          Verified local facilities are shown as records, with their source where available. We do not create placeholder schools, police stations or clinics when a facility has not yet been matched confidently.
-        </p>
-        <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-          {localFacilities.map(facility => (
-            <div key={facility.name} className="rounded-2xl border border-primary-100 bg-[#fffdf8] p-5">
-              <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">{facility.type}</div>
-              <div className="mt-1 text-lg font-extrabold text-gray-950">{facility.name}</div>
-              {facility.address && (
-                <div className="mt-3 flex gap-2 text-sm text-gray-700">
-                  <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary-700" />
-                  <span>{facility.address}</span>
+      <section className="bg-white py-14">
+        <div className="container px-5 md:px-6 lg:px-8">
+          <div className="section-eyebrow">Start here</div>
+          <h2 className="text-3xl font-extrabold tracking-tight text-gray-950 md:text-4xl">
+            What do you need in {barangay.name}?
+          </h2>
+          <div className="mt-7 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {quickActions.map(item => {
+              const Icon = item.icon;
+              return (
+                <Link
+                  key={item.label}
+                  to={item.href}
+                  className="home-service-card"
+                >
+                  <div className="home-service-card-icon">
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-gray-950">{item.label}</h3>
+                    <p className="mt-1 text-sm text-gray-600">{item.description}</p>
+                  </div>
+                  <ArrowRight className="ml-auto h-4 w-4 shrink-0 text-primary-600" />
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-b border-primary-900 bg-primary-900 py-12 text-white">
+        <div className="container px-5 md:px-6 lg:px-8">
+          <div className="section-eyebrow !text-white/80">Civic information</div>
+          <h2 className="text-3xl font-extrabold tracking-tight md:text-4xl">
+            Follow what affects {barangay.name}.
+          </h2>
+          <div className="mt-7 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            {civicLinks.map(item => {
+              const Icon = item.icon;
+              return (
+                <Link
+                  key={item.label}
+                  to={item.href}
+                  className="rounded-2xl border border-white/15 bg-white/5 p-5 transition hover:border-secondary-500 hover:bg-white/10"
+                >
+                  <Icon className="h-6 w-6 text-secondary-500" />
+                  <h3 className="mt-4 font-extrabold text-white">{item.label}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-primary-100">
+                    {item.description}
+                  </p>
+                  <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-white">
+                    Open <ArrowRight className="h-4 w-4" />
+                  </span>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <section id="local-government" className="bg-[#f5f8f2] py-14">
+        <div className="container px-5 md:px-6 lg:px-8">
+          <div className="grid gap-6 lg:grid-cols-2">
+            <div>
+              <div className="section-eyebrow">Local government</div>
+              <h2 className="text-3xl font-extrabold tracking-tight text-gray-950">
+                Barangay hall
+              </h2>
+              <div className="mt-5 rounded-2xl border border-primary-100 bg-white p-6">
+                <h3 className="text-lg font-extrabold text-gray-950">
+                  Barangay {barangay.name}
+                </h3>
+                <div className="mt-4 space-y-3 text-sm text-gray-700">
+                  {barangay.hallAddress && (
+                    <div className="flex gap-2">
+                      <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary-700" />
+                      <span>{barangay.hallAddress}</span>
+                    </div>
+                  )}
+                  {barangay.hallPhone && (
+                    <div className="flex gap-2">
+                      <Phone className="mt-0.5 h-4 w-4 shrink-0 text-primary-700" />
+                      <span>{barangay.hallPhone}</span>
+                    </div>
+                  )}
+                  {barangay.hallEmail && (
+                    <div className="flex gap-2">
+                      <Mail className="mt-0.5 h-4 w-4 shrink-0 text-primary-700" />
+                      <a
+                        href={'mailto:' + barangay.hallEmail}
+                        className="break-all font-semibold text-primary-700 underline underline-offset-2"
+                      >
+                        {barangay.hallEmail}
+                      </a>
+                    </div>
+                  )}
                 </div>
-              )}
-              {facility.phone && (
-                <div className="mt-2 flex gap-2 text-sm text-gray-700">
-                  <Phone className="mt-0.5 h-4 w-4 shrink-0 text-primary-700" />
-                  <span>{facility.phone}</span>
-                </div>
-              )}
-              {facility.email && (
-                <div className="mt-2 flex gap-2 text-sm text-gray-700">
-                  <Mail className="mt-0.5 h-4 w-4 shrink-0 text-primary-700" />
-                  <a href={'mailto:' + facility.email} className="break-all font-semibold text-primary-700 underline underline-offset-2">{facility.email}</a>
-                </div>
-              )}
-              {facility.note && <p className="mt-3 text-xs leading-relaxed text-gray-500">{facility.note}</p>}
-              <div className="mt-4 flex flex-wrap gap-3">
-                <a href={facility.href} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-sm font-bold text-primary-700">
-                  Open map <ExternalLink className="h-3.5 w-3.5" />
-                </a>
-                {facility.source && (
-                  <a href={facility.source} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-sm font-bold text-primary-700">
-                    {facility.sourceLabel || 'Source'} <ExternalLink className="h-3.5 w-3.5" />
+                <div className="mt-5 flex flex-wrap gap-3">
+                  <a
+                    href={barangay.officialPageUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="brand-btn-secondary"
+                  >
+                    Official barangay page <ExternalLink className="h-4 w-4" />
                   </a>
+                  {barangay.facebookUrl && (
+                    <a
+                      href={barangay.facebookUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="brand-btn-secondary"
+                    >
+                      Facebook <ExternalLink className="h-4 w-4" />
+                    </a>
+                  )}
+                </div>
+                {!barangay.hallAddress && !barangay.hallPhone && !barangay.hallEmail && (
+                  <p className="mt-4 text-sm leading-relaxed text-gray-600">
+                    A verified direct hall contact has not yet been matched to this local homepage.
+                    Use the official barangay page for current contact information.
+                  </p>
                 )}
               </div>
             </div>
-          ))}
-        </div>
-        <a href={makatiCitizenCharterSource} target="_blank" rel="noreferrer" className="mt-5 inline-flex items-center gap-1 text-sm font-bold text-primary-700 underline underline-offset-2">Open Makati Citizen&apos;s Charter <ExternalLink className="h-3.5 w-3.5" /></a>
-      </Section>
 
-      <Section className="bg-[#fffdf8]">
-        <div className="section-eyebrow">Local government access</div>
-        <Heading level={2}>Barangay hall contact</Heading>
-        {barangay.hallPhone || barangay.hallAddress || barangay.hallEmail ? (
-          <div className="mt-5 rounded-2xl border border-primary-100 bg-white p-5">
-            <p className="text-sm leading-relaxed text-gray-600">
-              These details are transcribed from the linked official Makati barangay page. Confirm hours and service availability before travelling.
-            </p>
-            <div className="mt-4 grid gap-3 text-sm text-gray-700">
-              {barangay.hallAddress && <div className="flex gap-2"><MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary-700" /><span>{barangay.hallAddress}</span></div>}
-              {barangay.hallPhone && <div className="flex gap-2"><Phone className="mt-0.5 h-4 w-4 shrink-0 text-primary-700" /><span>{barangay.hallPhone}</span></div>}
-              {barangay.hallEmail && <div className="flex gap-2"><Mail className="mt-0.5 h-4 w-4 shrink-0 text-primary-700" /><a className="font-semibold text-primary-700 underline underline-offset-2" href={'mailto:' + barangay.hallEmail}>{barangay.hallEmail}</a></div>}
+            <div>
+              <div className="section-eyebrow">Verified facilities</div>
+              <h2 className="text-3xl font-extrabold tracking-tight text-gray-950">
+                Useful local places
+              </h2>
+              <div className="mt-5 grid gap-3">
+                {facilities.slice(0, 3).map(facility => (
+                  <a
+                    key={facility.name}
+                    href={facility.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex items-center justify-between gap-4 rounded-2xl border border-primary-100 bg-white p-5 hover:border-primary-300"
+                  >
+                    <div>
+                      <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+                        {facility.type}
+                      </div>
+                      <h3 className="mt-1 font-extrabold text-gray-950">{facility.name}</h3>
+                      {facility.address && (
+                        <p className="mt-1 text-sm text-gray-600">{facility.address}</p>
+                      )}
+                    </div>
+                    <ExternalLink className="h-4 w-4 shrink-0 text-primary-700" />
+                  </a>
+                ))}
+              </div>
             </div>
-            {barangay.hallSource && <a href={barangay.hallSource} target="_blank" rel="noreferrer" className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700 underline underline-offset-2">Official barangay page <ExternalLink className="h-3.5 w-3.5" /></a>}
           </div>
-        ) : (
-          <div className="mt-5 rounded-2xl border border-secondary-200 bg-secondary-50 p-5 text-sm leading-relaxed text-gray-700">
-            A verified hall contact record has not yet been matched to this profile. The official city portal remains the authoritative source while this directory is completed.
-            <a href="https://www.makati.gov.ph/" target="_blank" rel="noreferrer" className="mt-3 inline-flex items-center gap-1 font-bold text-primary-700 underline underline-offset-2">Open official Makati portal <ExternalLink className="h-3.5 w-3.5" /></a>
-          </div>
-        )}
-      </Section>
-
-      <Section id="community" className="bg-white">
-        <div className="section-eyebrow">Official channels</div>
-        <Heading level={2}>Follow and verify locally</Heading>
-        <p className="max-w-3xl text-sm leading-relaxed text-gray-600">
-          Start with the official Makati Web Portal. A direct Facebook link is shown only where a public page could be matched confidently; otherwise use the Facebook search link and confirm the page identity before relying on a post or contact detail.
-        </p>
-        <div className="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4">
-          <a href={barangay.officialPageUrl || makatiBarangayDirectory} target="_blank" rel="noreferrer" className="rounded-2xl border border-primary-100 bg-[#fffdf8] p-5 hover:border-primary-300">
-            <Landmark className="h-5 w-5 text-primary-700" />
-            <h3 className="mt-3 font-extrabold text-gray-950">Official Makati page</h3>
-            <span className="mt-3 inline-flex items-center gap-1 text-sm font-bold text-primary-700">Open city source <ExternalLink className="h-3.5 w-3.5" /></span>
-          </a>
-          <a href={barangay.facebookUrl || 'https://www.facebook.com/search/pages/?q=' + encodeURIComponent('Barangay ' + barangay.name + ' Makati')} target="_blank" rel="noreferrer" className="rounded-2xl border border-primary-100 bg-[#fffdf8] p-5 hover:border-primary-300">
-            <Users className="h-5 w-5 text-primary-700" />
-            <h3 className="mt-3 font-extrabold text-gray-950">{barangay.facebookUrl ? 'Facebook page' : 'Find official Facebook page'}</h3>
-            <span className="mt-3 inline-flex items-center gap-1 text-sm font-bold text-primary-700">{barangay.facebookUrl ? 'Open public page' : 'Search Facebook' } <ExternalLink className="h-3.5 w-3.5" /></span>
-          </a>
         </div>
+      </section>
 
-        <div className="section-eyebrow">Community</div>
-        <Heading level={2}>Local links</Heading>
-
-        {barangay.heritageMarkers && barangay.heritageMarkers.length > 0 && (
-          <>
-            <h3 className="mt-6 font-extrabold text-lg text-gray-950">NHCP / NCCA heritage records</h3>
-            <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600">
-              These are registry records, not a claim that every marker remains installed or publicly accessible today. Open the source record for status, location and marker details.
-            </p>
-            <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-4">
-              {barangay.heritageMarkers.map(marker => (
-                <a key={marker.name} href={marker.href} target="_blank" rel="noreferrer" className="rounded-2xl border border-secondary-200 bg-secondary-50 p-5 hover:border-primary-300">
-                  <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">{marker.agency} · {marker.status}</div>
-                  <h3 className="mt-2 font-extrabold text-gray-950">{marker.name}</h3>
-                  {marker.location && <div className="mt-2 text-sm text-gray-600">{marker.location}</div>}
-                  <span className="mt-3 inline-flex items-center gap-1 text-sm font-bold text-primary-700">Open registry record <ExternalLink className="h-3.5 w-3.5" /></span>
-                </a>
-              ))}
-            </div>
-          </>
-        )}
-
-        {barangay.notablePlaces && barangay.notablePlaces.length > 0 && (
-          <>
-            <h3 className="mt-6 font-extrabold text-lg text-gray-950">Prominent places and institutions</h3>
-            <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-4">
-              {barangay.notablePlaces.map(place => (
-                <a key={place.name} href={place.href} target="_blank" rel="noreferrer" className="rounded-2xl border border-gray-200 bg-[#fffdf8] p-5 hover:border-primary-300">
-                  <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">{place.type}</div>
-                  <h3 className="mt-2 font-extrabold text-gray-950">{place.name}</h3>
-                  <span className="mt-3 inline-flex items-center gap-1 text-sm font-bold text-primary-700">Open link <ExternalLink className="h-3.5 w-3.5" /></span>
-                </a>
-              ))}
-            </div>
-          </>
-        )}
-
-        {barangay.associations && barangay.associations.length > 0 ? (
-          <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-            {barangay.associations.map(association => (
-              <a
-                key={association.name}
-                href={association.href}
-                target="_blank"
-                rel="noreferrer"
-                className="rounded-2xl border border-gray-200 bg-white p-5 hover:border-primary-300"
+      {communityLinks.length > 0 && (
+        <section className="bg-white py-14">
+          <div className="container px-5 md:px-6 lg:px-8">
+            <div className="section-eyebrow">Around the barangay</div>
+            <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+              <h2 className="text-3xl font-extrabold tracking-tight text-gray-950">
+                Community links
+              </h2>
+              <Link
+                to={'/history?query=' + encodeURIComponent(barangay.name)}
+                className="inline-flex items-center gap-1 text-sm font-bold text-primary-700"
               >
-                <Landmark className="h-5 w-5 text-primary-700" />
-                <h3 className="mt-3 font-extrabold text-gray-950">
-                  {association.name}
-                </h3>
-                <span className="mt-3 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
-                  {association.linkLabel}{' '}
-                  <ExternalLink className="h-3.5 w-3.5" />
-                </span>
-              </a>
-            ))}
+                Search Makati history <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+            <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+              {communityLinks.map(item => (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="rounded-2xl border border-gray-200 bg-[#fffdf8] p-5 hover:border-primary-300"
+                >
+                  <Landmark className="h-5 w-5 text-primary-700" />
+                  <h3 className="mt-3 font-extrabold text-gray-950">{item.label}</h3>
+                  <p className="mt-1 text-sm text-gray-600">{item.description}</p>
+                </a>
+              ))}
+            </div>
           </div>
-        ) : (
-          <div className="mt-5 rounded-2xl border border-gray-200 bg-[#fffdf8] p-5 text-sm text-gray-600">
-            No village or homeowners-association link has been verified for
-            this profile yet.
-          </div>
-        )}
-      </Section>
-
-      <Section id="more" className="bg-[#fffdf8]">
-        <div className="section-eyebrow">Keep exploring</div>
-        <Heading level={2}>More about {barangay.name}</Heading>
-        <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Link
-            to={'/history?query=' + encodeURIComponent(barangay.name)}
-            className="rounded-2xl border border-gray-200 bg-white p-5 hover:border-primary-300"
-          >
-            <h3 className="font-extrabold text-gray-950">History references</h3>
-            <p className="mt-1 text-sm text-gray-600">
-              Search the sourced Makati timeline for this barangay.
-            </p>
-          </Link>
-          <Link
-            to="/services"
-            className="rounded-2xl border border-gray-200 bg-white p-5 hover:border-primary-300"
-          >
-            <h3 className="font-extrabold text-gray-950">City services</h3>
-            <p className="mt-1 text-sm text-gray-600">
-              Find Makati services, documents and official channels.
-            </p>
-          </Link>
-          <a
-            href={psaBarangaySource}
-            target="_blank"
-            rel="noreferrer"
-            className="rounded-2xl border border-gray-200 bg-white p-5 hover:border-primary-300"
-          >
-            <h3 className="font-extrabold text-gray-950">PSA source</h3>
-            <p className="mt-1 text-sm text-gray-600">
-              Open the current Philippine Standard Geographic Code record.
-            </p>
-          </a>
-        </div>
-      </Section>
+        </section>
+      )}
     </>
   );
 }
