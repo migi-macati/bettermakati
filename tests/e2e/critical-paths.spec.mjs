@@ -212,7 +212,7 @@ test('barangays page is a focused selection gateway', async ({ page }) => {
 test('barangay landing page uses the persistent BetterBarangay context bar', async ({ page }) => {
   await page.goto(baseURL + '/barangays/poblacion');
   await expect(page.getByRole('heading', { level: 1 })).toContainText('BetterPoblacion');
-  await expect(page.getByLabel('BetterBarangay view')).toBeVisible();
+  await expect(page.getByRole('region', { name: 'BetterBarangay view' })).toBeVisible();
   await expect(page.getByLabel('Choose BetterBarangay view')).toHaveValue('poblacion');
   await expect(page.getByRole('link', { name: /Homepage/i })).toHaveAttribute('href', '/barangays/poblacion');
   await expect(page.getByRole('heading', { name: /What do you need in Poblacion/i })).toBeVisible();
@@ -221,7 +221,7 @@ test('barangay landing page uses the persistent BetterBarangay context bar', asy
 
 test('sliceable city pages always expose the persistent BetterBarangay bar', async ({ page }) => {
   await page.goto(baseURL + '/services');
-  await expect(page.getByLabel('BetterBarangay view')).toBeVisible();
+  await expect(page.getByRole('region', { name: 'BetterBarangay view' })).toBeVisible();
   await expect(page.getByText('BetterBarangay View', { exact: true })).toBeVisible();
   await expect(page.getByLabel('Choose BetterBarangay view')).toHaveValue('');
   await page.getByLabel('Choose BetterBarangay view').selectOption('poblacion');
@@ -231,7 +231,7 @@ test('sliceable city pages always expose the persistent BetterBarangay bar', asy
 
 test('scoped city pages show the selected BetterBarangay in the persistent bar', async ({ page }) => {
   await page.goto(baseURL + '/services?barangay=carmona');
-  await expect(page.getByLabel('BetterBarangay view')).toBeVisible();
+  await expect(page.getByRole('region', { name: 'BetterBarangay view' })).toBeVisible();
   await expect(page.getByText('BetterCarmona', { exact: true })).toBeVisible();
   await expect(page.getByLabel('Choose BetterBarangay view')).toHaveValue('carmona');
   await expect(page.getByText('Deep dive into a BetterBarangay', { exact: true })).toHaveCount(0);
