@@ -13,6 +13,7 @@ import SEO from '../components/SEO';
 import LastReviewed from '../components/ui/LastReviewed';
 import SharePage from '../components/ui/SharePage';
 import SectionNav from '../components/ui/SectionNav';
+import CitizenSummary from '../components/ui/CitizenSummary';
 import {
   election2025CouncilWinners,
   election2025Electorate,
@@ -20,6 +21,13 @@ import {
   election2025Sources,
   percent,
 } from '../data/election2025';
+import {
+  barangayMayoralResults2025,
+  barangayResultSource2025,
+  historicalCandidateShare,
+  historicalValidVotes,
+  makatiMayoralHistory,
+} from '../data/electionHistory';
 
 const electionCalendar =
   'https://www.comelec.gov.ph/php-tpls-attachments/2025BSKE/Resolutions/com_res_11191.pdf';
@@ -94,6 +102,8 @@ export default function Elections() {
         <LastReviewed note="Election dates and results are linked to COMELEC sources." />
         <SectionNav items={[
           { label: '2025 results', href: '#results-2025' },
+          { label: 'By barangay', href: '#barangay-results-2025' },
+          { label: '1998–2025 history', href: '#mayoral-history' },
           { label: 'Council', href: '#council-results' },
           { label: '2026 BSKE', href: '#bske-2026' },
           { label: 'Voter tools', href: '#voter-tools' },
@@ -349,6 +359,221 @@ export default function Elections() {
             </a>
           </div>
         </div>
+      </Section>
+
+      <Section id="barangay-results-2025" className="bg-[#f5f8f2]">
+        <div className="section-eyebrow">2025 mayoral vote by barangay</div>
+        <Heading level={2}>How the 23 current barangays voted</Heading>
+        <p className="mt-3 max-w-4xl text-sm leading-relaxed text-gray-600">
+          Published reporting identifies which mayoral candidate carried each of Makati&apos;s current 23 barangays. Exact barangay vote totals are shown only where the accessible published text exposes them; BetterMakati does not fill the remaining precinct aggregates from inference.
+        </p>
+
+        <CitizenSummary
+          className="mt-6"
+          eyebrow="Citywide pattern"
+          title="Nancy Binay carried 19 barangays; Luis Campos carried four"
+          points={[
+            {
+              label: 'Nancy Binay',
+              text: 'Carried 19 of the current 23 barangays, including both Guadalupe barangays and the larger 1st District barangays identified in published reporting.',
+            },
+            {
+              label: 'Luis Campos Jr.',
+              text: 'Carried Carmona, Pinagkaisahan, Singkamas and Valenzuela. Published reporting describes all four margins as under five percentage points.',
+            },
+            {
+              label: 'Verified example · San Lorenzo',
+              text: (
+                <>
+                  Nancy Binay <strong>3,294</strong> · Luis Campos Jr. <strong>2,521</strong>.
+                </>
+              ),
+            },
+            {
+              label: 'Verified example · Guadalupe Nuevo',
+              text: (
+                <>
+                  Nancy Binay <strong>10,260</strong> · Luis Campos Jr. <strong>10,083</strong>.
+                </>
+              ),
+            },
+          ]}
+          note="This barangay layer currently describes the mayoral race only. Citywide 2025 results above remain based on the COMELEC Media Server result table."
+          actions={
+            <a
+              href={barangayResultSource2025.url}
+              target="_blank"
+              rel="noreferrer"
+              className="text-sm font-bold text-primary-700 underline underline-offset-2"
+            >
+              Barangay-result source <ExternalLink className="inline h-3.5 w-3.5" />
+            </a>
+          }
+        />
+
+        <div className="mt-6 overflow-x-auto rounded-2xl border border-gray-200 bg-white">
+          <table className="w-full min-w-[760px] text-left">
+            <thead className="bg-gray-50 text-sm">
+              <tr>
+                <th className="px-4 py-3 font-bold">Barangay</th>
+                <th className="px-4 py-3 font-bold">Candidate who carried barangay</th>
+                <th className="px-4 py-3 font-bold text-right">Nancy Binay</th>
+                <th className="px-4 py-3 font-bold text-right">Luis Campos Jr.</th>
+                <th className="px-4 py-3 font-bold">Data shown</th>
+              </tr>
+            </thead>
+            <tbody>
+              {barangayMayoralResults2025.map(result => (
+                <tr key={result.slug} className="border-t">
+                  <td className="px-4 py-3">
+                    <Link
+                      to={'/barangays/' + result.slug + '#election-2025'}
+                      className="font-bold text-primary-700"
+                    >
+                      {result.barangay}
+                    </Link>
+                  </td>
+                  <td className="px-4 py-3 font-semibold text-gray-950">
+                    {result.carriedBy}
+                  </td>
+                  <td className="px-4 py-3 text-right">
+                    {result.nancyVotes === undefined ? '—' : number(result.nancyVotes)}
+                  </td>
+                  <td className="px-4 py-3 text-right">
+                    {result.camposVotes === undefined ? '—' : number(result.camposVotes)}
+                  </td>
+                  <td className="px-4 py-3 text-sm text-gray-600">
+                    {result.exactVotesVerified ? 'Published vote totals' : 'Barangay winner verified'}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <p className="mt-3 text-xs leading-relaxed text-gray-500">
+          A dash does not mean zero votes. It means BetterMakati has not yet matched a reliable public precinct aggregate for that barangay.
+        </p>
+      </Section>
+
+      <Section id="mayoral-history" className="bg-white">
+        <div className="section-eyebrow">Ten regular city elections</div>
+        <Heading level={2}>Makati mayoral history, 1998–2025</Heading>
+        <p className="mt-3 max-w-4xl text-sm leading-relaxed text-gray-600">
+          This series keeps the candidate vote counts for ten regular Makati city elections in one place. The percentage below is calculated from the candidate votes listed for each race so the denominator is consistent within this table.
+        </p>
+
+        <div className="mt-6 rounded-2xl border border-secondary-200 bg-secondary-50 p-5">
+          <div className="font-extrabold text-gray-950">Boundary break before 2025</div>
+          <p className="mt-2 text-sm leading-relaxed text-gray-700">
+            The 1998–2022 elections used the Makati electorate that still included the Embo barangays. The 2025 election was the first regular city election after those 10 barangays were no longer part of Makati. Raw vote totals and electorate size should therefore not be treated as a continuous like-for-like series across that break.
+          </p>
+        </div>
+
+        <div className="mt-6 overflow-x-auto rounded-2xl border border-gray-200 bg-white">
+          <table className="w-full min-w-[980px] text-left">
+            <thead className="bg-gray-50 text-sm">
+              <tr>
+                <th className="px-4 py-3 font-bold">Election</th>
+                <th className="px-4 py-3 font-bold">Winner</th>
+                <th className="px-4 py-3 font-bold text-right">Votes</th>
+                <th className="px-4 py-3 font-bold text-right">Share of listed candidate votes</th>
+                <th className="px-4 py-3 font-bold">Runner-up</th>
+                <th className="px-4 py-3 font-bold text-right">Vote margin</th>
+                <th className="px-4 py-3 font-bold">Source</th>
+              </tr>
+            </thead>
+            <tbody>
+              {makatiMayoralHistory.map(race => {
+                const winner = race.candidates.find(candidate => candidate.name === race.winner)!;
+                const sorted = [...race.candidates].sort((a, b) => b.votes - a.votes);
+                const runnerUp = sorted[1];
+                return (
+                  <tr key={race.year} className="border-t align-top">
+                    <td className="px-4 py-3 font-extrabold text-gray-950">
+                      {race.year}
+                    </td>
+                    <td className="px-4 py-3">
+                      <div className="font-bold text-gray-950">{winner.name}</div>
+                      <div className="text-xs text-gray-500">{winner.party}</div>
+                    </td>
+                    <td className="px-4 py-3 text-right font-semibold">
+                      {number(winner.votes)}
+                    </td>
+                    <td className="px-4 py-3 text-right">
+                      {percentage(historicalCandidateShare(winner, race))}
+                    </td>
+                    <td className="px-4 py-3">
+                      <div className="font-semibold text-gray-900">{runnerUp?.name || '—'}</div>
+                      <div className="text-xs text-gray-500">{runnerUp?.party || ''}</div>
+                    </td>
+                    <td className="px-4 py-3 text-right">
+                      {runnerUp ? number(winner.votes - runnerUp.votes) : '—'}
+                    </td>
+                    <td className="px-4 py-3 text-sm">
+                      <a
+                        href={race.sourceUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="font-bold text-primary-700 underline underline-offset-2"
+                      >
+                        {race.sourceQuality === 'official'
+                          ? 'Official / COMELEC-linked'
+                          : race.sourceQuality === 'academic'
+                            ? 'UP CIDS dataset'
+                            : 'Archival secondary'}
+                        <ExternalLink className="ml-1 inline h-3.5 w-3.5" />
+                      </a>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+
+        <details className="mt-5 rounded-2xl border border-gray-200 bg-[#fffdf8]">
+          <summary className="cursor-pointer px-5 py-4 font-extrabold text-gray-950">
+            See all candidates in each mayoral race
+          </summary>
+          <div className="border-t border-gray-200 p-5">
+            <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+              {makatiMayoralHistory.map(race => (
+                <article key={'detail-' + race.year} className="rounded-xl border border-gray-200 bg-white p-4">
+                  <div className="flex items-center justify-between gap-3">
+                    <h3 className="font-extrabold text-gray-950">{race.year}</h3>
+                    <span className="text-xs text-gray-500">
+                      {number(historicalValidVotes(race))} listed candidate votes
+                    </span>
+                  </div>
+                  <div className="mt-3 space-y-2">
+                    {[...race.candidates]
+                      .sort((a, b) => b.votes - a.votes)
+                      .map(candidate => (
+                        <div key={candidate.name} className="flex items-start justify-between gap-4 text-sm">
+                          <div>
+                            <span className="font-bold text-gray-900">{candidate.name}</span>
+                            <span className="text-gray-500"> · {candidate.party}</span>
+                          </div>
+                          <div className="text-right whitespace-nowrap">
+                            <div className="font-bold text-gray-950">{number(candidate.votes)}</div>
+                            <div className="text-xs text-gray-500">
+                              {percentage(historicalCandidateShare(candidate, race))}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                  </div>
+                  {race.geographyNote && (
+                    <p className="mt-3 text-xs leading-relaxed text-gray-500">
+                      {race.geographyNote}
+                    </p>
+                  )}
+                </article>
+              ))}
+            </div>
+          </div>
+        </details>
       </Section>
 
       <Section id="bske-2026" className="bg-[#f5f8f2]">
