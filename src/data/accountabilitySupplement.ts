@@ -385,6 +385,121 @@ export const procurementProjectEntries: AccountabilityEntry[] =
     },
   }));
 
+
+export const publicCommitmentEntries: AccountabilityEntry[] = [
+  {
+    id: 'commitment-makati-life-full-operations',
+    title: 'Bring Makati Life Medical Center into full operation',
+    type: 'commitment',
+    status: 'completed',
+    summary:
+      'Public reporting in 2022 said completion and full operations were targeted for the first quarter of 2024. Makati Life became fully operational on 24 April 2025.',
+    responsibleBodies: ['City Government of Makati', 'Makati Life Medical Center'],
+    period: '2022–2025',
+    targetDate: 'Q1 2024',
+    location: 'Barangay Bel-Air, Makati City',
+    relatedHref: '/accountability?type=commitment',
+    lastVerified: reviewed,
+    sources: [
+      {
+        label: 'PNA report on Makati Life target for full operations',
+        url: 'https://www.pna.gov.ph/articles/1173348',
+        publisher: 'Philippine News Agency',
+        publishedOrPeriod: '22 April 2022',
+      },
+      {
+        label: 'PIA report confirming full operations',
+        url: 'https://pia.gov.ph/news/first-for-ph-lgus-makati-launches-integrated-digital-healthcare-system/',
+        publisher: 'Philippine Information Agency',
+        publishedOrPeriod: '20 June 2025',
+      },
+    ],
+    commitment: {
+      commitmentText:
+        'Complete Makati Life Medical Center and bring it into full operation by the first quarter of 2024.',
+      announcedDate: '2022-04-22',
+      target: 'Q1 2024',
+      outcomeStatus: 'delivered-late',
+      evidenceDate: '2025-04-24',
+      outcome:
+        'Later public reporting confirms the hospital became fully operational on 24 April 2025, after the originally reported Q1 2024 target.',
+    },
+  },
+  {
+    id: 'commitment-free-pet-ct-yellow-card',
+    title: 'Provide free digital PET/CT scans to Yellow Card holders',
+    type: 'commitment',
+    status: 'reported',
+    summary:
+      'The city announced in May 2024 that Yellow Card holders and eligible dependents would gain free digital PET/CT access by Q3 2024. Later reporting confirms the scanner was in Makati Life and that Yellow Card holders receive Makati Life services free, but the exact start date of the PET/CT benefit remains unverified.',
+    responsibleBodies: ['City Government of Makati', 'Makati Life Medical Center'],
+    period: '2024–2025',
+    targetDate: 'Q3 2024',
+    location: 'Makati Life Medical Center',
+    relatedHref: '/accountability?type=commitment',
+    lastVerified: reviewed,
+    sources: [
+      {
+        label: 'GMA report on free PET/CT commitment',
+        url: 'https://www.gmanetwork.com/news/topstories/metro/905473/makati-digital-pet-ct-scan-access/story/',
+        publisher: 'GMA Integrated News',
+        publishedOrPeriod: '2 May 2024',
+      },
+      {
+        label: 'Makati Life full-opening report',
+        url: 'https://mb.com.ph/25/4/2025/makati-lgu-opens-life-medical-center',
+        publisher: 'Manila Bulletin',
+        publishedOrPeriod: '25 April 2025',
+      },
+    ],
+    commitment: {
+      commitmentText:
+        'Make digital PET/CT scan services free for Yellow Card holders and eligible dependents by the third quarter of 2024.',
+      announcedDate: '2024-05-02',
+      target: 'Q3 2024',
+      outcomeStatus: 'delivered',
+      evidenceDate: '2025-04-24',
+      outcome:
+        'By the hospital’s full opening, public reporting said Yellow Card holders received Makati Life services and medicines free and confirmed the hospital had acquired the AI-powered PET/CT scanner. The cited later source does not establish the exact date the free PET/CT benefit first became available.',
+    },
+  },
+  {
+    id: 'commitment-renewable-energy-government-buildings',
+    title: 'Transition Makati government buildings to renewable energy',
+    type: 'commitment',
+    status: 'in-progress',
+    summary:
+      'The city says its goal is to power all government buildings with renewable energy. By July 2026, 11 major facilities had switched to 100% renewable power and the city reported reaching 60.92% of its 2026 clean-energy target.',
+    responsibleBodies: ['City Government of Makati'],
+    period: '2026',
+    relatedHref: '/accountability?type=commitment',
+    lastVerified: reviewed,
+    sources: [
+      {
+        label: 'Makati renewable-energy transition update',
+        url: 'https://mb.com.ph/2026/07/02/11-makati-cityowned-facilities-switch-to-100-renewable-energy',
+        publisher: 'Manila Bulletin',
+        publishedOrPeriod: '2 July 2026',
+      },
+      {
+        label: 'Renewable-energy progress report',
+        url: 'https://businessmirror.com.ph/2026/07/02/makati-leads-phl-in-green-transition-11-major-facilities-now-fully-powered-by-re/',
+        publisher: 'BusinessMirror',
+        publishedOrPeriod: '2 July 2026',
+      },
+    ],
+    commitment: {
+      commitmentText:
+        'Transition city government buildings to renewable energy.',
+      announcedDate: '2026-07-02',
+      outcomeStatus: 'in-progress',
+      evidenceDate: '2026-07-02',
+      outcome:
+        'Eleven major government facilities were reported as fully powered by renewable energy, representing 60.92% of the city’s clean-energy target for 2026. The cited sources do not state a final deadline for converting every government building.',
+    },
+  },
+];
+
 const sef2024Url =
   'https://www.depedncr.com.ph/wp-content/uploads/2025/05/SEF-MAKATI-CITY-4th-Quarter-2024.pdf';
 
