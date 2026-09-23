@@ -158,11 +158,18 @@ test('failed civic feed does not imply zero reports', async ({ page }) => {
 });
 
 
+test('barangay profile uses one contextual local-edition header', async ({ page }) => {
+  await page.goto(baseURL + '/barangays/poblacion');
+  await expect(page.locator('span').filter({ hasText: 'BetterPoblacion' }).first()).toBeVisible();
+  await expect(page.getByRole('navigation', { name: 'Barangay local navigation' })).toHaveCount(1);
+  await expect(page.getByLabel('Switch barangay edition')).toHaveValue('poblacion');
+});
+
 test('barangay dashboard carries local scope into Civic Map', async ({ page }) => {
   await page.goto(baseURL + '/barangays/poblacion');
   await page.getByRole('link', { name: 'Map & reports' }).click();
   await expect(page).toHaveURL(/\/civic-map\?barangay=poblacion/);
-  await expect(page.getByLabel('Change barangay scope')).toHaveValue('poblacion');
+  await expect(page.getByLabel('Switch barangay edition')).toHaveValue('poblacion');
   await expect(page.getByText(/mapped assets in Barangay Poblacion/i)).toBeVisible();
   await expect(page.getByText('Makati Poblacion Park', { exact: true })).toBeVisible();
   await expect(page.getByText(/Ayala Avenue — Paseo de Roxas to V\.A\. Rufino/i)).toHaveCount(0);
@@ -172,13 +179,13 @@ test('barangay services open with Barangay level selected', async ({ page }) => 
   await page.goto(baseURL + '/barangays/poblacion');
   await page.getByRole('navigation', { name: 'Barangay local navigation' }).getByRole('link', { name: 'Services', exact: true }).click();
   await expect(page).toHaveURL(/\/services\?barangay=poblacion/);
-  await expect(page.getByLabel('Change barangay scope')).toHaveValue('poblacion');
+  await expect(page.getByLabel('Switch barangay edition')).toHaveValue('poblacion');
   await expect(page.getByRole('button', { name: 'Barangay', exact: true })).toHaveAttribute('aria-pressed', 'true');
 });
 
 test('barangay statistics show local population context', async ({ page }) => {
   await page.goto(baseURL + '/statistics?barangay=poblacion');
-  await expect(page.getByLabel('Change barangay scope')).toHaveValue('poblacion');
+  await expect(page.getByLabel('Switch barangay edition')).toHaveValue('poblacion');
   await expect(page.getByText('17,088', { exact: true })).toBeVisible();
   await expect(page.getByText('Barangay population', { exact: true })).toBeVisible();
 });

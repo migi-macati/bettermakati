@@ -1,3 +1,15 @@
+export interface BarangayFacility {
+  name: string;
+  type: 'Government' | 'Health' | 'Education' | 'Safety' | 'Community' | 'Park';
+  href: string;
+  address?: string;
+  phone?: string;
+  email?: string;
+  source?: string;
+  sourceLabel?: string;
+  note?: string;
+}
+
 export interface BarangayProfile {
   slug: string;
   name: string;
@@ -26,13 +38,206 @@ export const commonBarangayServiceIds = [
   'barangay-id', 'barangay-mediation',
 ];
 export const makatiCitizenCharterSource = 'https://www.makati-eboss.ph/files/references/Makati%20Citizens%20Charter%202023.pdf';
+export const philHealthYakapClinics2026Source = 'https://www.philhealth.gov.ph/partners/providers/facilities/accredited/YAKAP.pdf';
+export const makatiBarangayBoundaryMap = 'https://www.makati.gov.ph/content/downloads/3/2521?f=Barangay+Boundary+Map';
+export const makatiBarangayClusterMap = 'https://www.makati.gov.ph/content/downloads/3/2522?f=Barangay+Cluster+Map';
 
-export const barangayFacilities = (name: string) => [
-  { name: `${name} Barangay Hall`, type: 'Government', href: barangayMapsUrl(name) },
-  { name: `${name} Health Center`, type: 'Health', href: 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(`${name} Health Center Makati`) },
-  { name: `${name} public schools`, type: 'Education', href: 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(`public school ${name} Makati`) },
-  { name: `${name} police / fire facilities`, type: 'Safety', href: 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(`${name} Makati police fire station`) },
-];
+const mapsSearch = (query: string) =>
+  'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(query);
+
+const yakapHealthCenters: Record<string, BarangayFacility[]> = {
+  bangkal: [{
+    name: 'Bangkal Health Center',
+    type: 'Health',
+    href: mapsSearch('1126 Rodriguez Street, Bangkal, Makati City'),
+    address: '1126 Rodriguez Street, Bangkal, Makati City',
+    phone: '7001-5595',
+    email: 'bangkalhealthcenter@gmail.com',
+    source: philHealthYakapClinics2026Source,
+    sourceLabel: 'PhilHealth YAKAP list · May 31, 2026',
+    note: 'Government YAKAP clinic · accreditation listed through Dec. 31, 2026',
+  }],
+  carmona: [{
+    name: 'Carmona Health Center',
+    type: 'Health',
+    href: mapsSearch('3002 H. Santos Street, Barangay Carmona, Makati City'),
+    address: '3002 H. Santos Street, Barangay Carmona, Makati City',
+    phone: '0960-246-7297',
+    email: 'consultscarmona@makati.gov.ph',
+    source: philHealthYakapClinics2026Source,
+    sourceLabel: 'PhilHealth YAKAP list · May 31, 2026',
+    note: 'Government YAKAP clinic · accreditation listed through Dec. 31, 2026',
+  }],
+  'guadalupe-nuevo': [{
+    name: 'Guadalupe Nuevo Health Center',
+    type: 'Health',
+    href: mapsSearch('La Consolacion cor. Nuestra Señora, Guadalupe Nuevo, Makati City'),
+    address: 'La Consolacion cor. Nuestra Señora, Guadalupe Nuevo, Makati City',
+    phone: '7001-9871',
+    email: 'consultguadnuevo@makati.gov.ph',
+    source: philHealthYakapClinics2026Source,
+    sourceLabel: 'PhilHealth YAKAP list · May 31, 2026',
+    note: 'Government YAKAP clinic · accreditation listed through Dec. 31, 2026',
+  }],
+  'guadalupe-viejo': [{
+    name: 'Guadalupe Viejo Health Center',
+    type: 'Health',
+    href: mapsSearch('Camia St. cor. Gumamela St., Guadalupe Viejo, Makati City'),
+    address: 'Camia St. cor. Gumamela St., Guadalupe Viejo, Makati City',
+    phone: '8672-0032',
+    email: 'guadaviejo.mhd1@gmail.com',
+    source: philHealthYakapClinics2026Source,
+    sourceLabel: 'PhilHealth YAKAP list · May 31, 2026',
+    note: 'Government YAKAP clinic · accreditation listed through Dec. 31, 2026',
+  }],
+  kasilawan: [{
+    name: 'Kasilawan Health Center',
+    type: 'Health',
+    href: mapsSearch('2094 E. Pascua Street, Barangay Kasilawan, Makati City'),
+    address: '2094 E. Pascua Street, Barangay Kasilawan, Makati City',
+    phone: '7003-233',
+    email: 'consultskasilawan@makati.gov.ph',
+    source: philHealthYakapClinics2026Source,
+    sourceLabel: 'PhilHealth YAKAP list · May 31, 2026',
+    note: 'Government YAKAP clinic · accreditation listed through Dec. 31, 2026',
+  }],
+  'la-paz': [{
+    name: 'La Paz Health Center',
+    type: 'Health',
+    href: mapsSearch('815 Archimedes Street, Barangay La Paz, Makati City'),
+    address: '815 Archimedes Street, Barangay La Paz, Makati City',
+    phone: '0977-852-6593',
+    email: 'consultslapaz@makati.gov.ph',
+    source: philHealthYakapClinics2026Source,
+    sourceLabel: 'PhilHealth YAKAP list · May 31, 2026',
+    note: 'Government YAKAP clinic · accreditation listed through Dec. 31, 2026',
+  }],
+  olympia: [{
+    name: 'Olympia Health Center',
+    type: 'Health',
+    href: mapsSearch('8674 Fortuna Street, Barangay Olympia, Makati City'),
+    address: '8674 Fortuna Street, Barangay Olympia, Makati City',
+    email: 'consultsolympia@makati.gov.ph',
+    source: philHealthYakapClinics2026Source,
+    sourceLabel: 'PhilHealth YAKAP list · May 31, 2026',
+    note: 'Government YAKAP clinic · accreditation listed through Dec. 31, 2026',
+  }],
+  palanan: [{
+    name: 'Palanan Health Center',
+    type: 'Health',
+    href: mapsSearch('4513 Casino Street, Barangay Palanan, Makati City'),
+    address: '4513 Casino Street, Barangay Palanan, Makati City',
+    phone: '0915-196-9359',
+    email: 'ConsultsPalanan@makati.gov.ph',
+    source: philHealthYakapClinics2026Source,
+    sourceLabel: 'PhilHealth YAKAP list · May 31, 2026',
+    note: 'Government YAKAP clinic · accreditation listed through Dec. 31, 2027',
+  }],
+  pinagkaisahan: [{
+    name: 'Pinagkaisahan Health Center',
+    type: 'Health',
+    href: mapsSearch('2886 Danlig cor. Tolentino Street, Barangay Pinagkaisahan, Makati City'),
+    address: '2886 Danlig cor. Tolentino Street, Barangay Pinagkaisahan, Makati City',
+    phone: '8821-8809 / 881-8128',
+    email: 'consultspinagkaisahan@makati.gov.ph',
+    source: philHealthYakapClinics2026Source,
+    sourceLabel: 'PhilHealth YAKAP list · May 31, 2026',
+    note: 'Government YAKAP clinic · accreditation listed through Dec. 31, 2026',
+  }],
+  'pio-del-pilar': [
+    {
+      name: 'Pio PC Health Center',
+      type: 'Health',
+      href: mapsSearch('1st Circle Washington Street, Barangay Pio del Pilar, Makati City'),
+      address: '1st Circle Washington Street, Barangay Pio del Pilar, Makati City',
+      phone: '8700-12141',
+      email: 'bangkalhealthcenter@gmail.com',
+      source: philHealthYakapClinics2026Source,
+      sourceLabel: 'PhilHealth YAKAP list · May 31, 2026',
+      note: 'Government YAKAP clinic · accreditation listed through Dec. 31, 2026',
+    },
+    {
+      name: 'Pio RHU Health Center',
+      type: 'Health',
+      href: mapsSearch('1500 Apolinario cor. Arguelles St., Pio del Pilar, Makati City'),
+      address: '1500 Apolinario cor. Arguelles St., Pio del Pilar, Makati City',
+      email: 'consultspiorhu@makati.gov.ph',
+      source: philHealthYakapClinics2026Source,
+      sourceLabel: 'PhilHealth YAKAP list · May 31, 2026',
+      note: 'Government YAKAP clinic · accreditation listed through Dec. 31, 2026',
+    },
+  ],
+  poblacion: [{
+    name: 'Poblacion Health Center',
+    type: 'Health',
+    href: mapsSearch('A. Bonifacio Street, Barangay Poblacion, Makati City'),
+    address: 'A. Bonifacio Street, Barangay Poblacion, Makati City',
+    phone: '0922-657-6349 / 0969-279-9793',
+    email: 'ConsultsPoblacion@makati.gov.ph',
+    source: philHealthYakapClinics2026Source,
+    sourceLabel: 'PhilHealth YAKAP list · May 31, 2026',
+    note: 'Government YAKAP clinic · accreditation listed through Dec. 31, 2026',
+  }],
+  'san-isidro': [{
+    name: 'San Isidro Health Center',
+    type: 'Health',
+    href: mapsSearch('2701 Guatemala St., Barangay San Isidro, Makati City'),
+    address: '2701 Guatemala St., Barangay San Isidro, Makati City',
+    phone: '8845-0260 / 0949-340-3393',
+    email: 'sanisidro.mhd1@gmail.com',
+    source: philHealthYakapClinics2026Source,
+    sourceLabel: 'PhilHealth YAKAP list · May 31, 2026',
+    note: 'Government YAKAP clinic · accreditation listed through Dec. 31, 2026',
+  }],
+  singkamas: [{
+    name: 'Singkamas Health Center',
+    type: 'Health',
+    href: mapsSearch('3816 F. Nazario Street, Barangay Singkamas, Makati City'),
+    address: '3816 F. Nazario Street, Barangay Singkamas, Makati City',
+    phone: '2700-20545',
+    email: 'consultssingkamas@makati.gov.ph',
+    source: philHealthYakapClinics2026Source,
+    sourceLabel: 'PhilHealth YAKAP list · May 31, 2026',
+    note: 'Government YAKAP clinic · accreditation listed through Dec. 31, 2026',
+  }],
+  'santa-cruz': [{
+    name: 'Sta. Cruz Health Center',
+    type: 'Health',
+    href: mapsSearch('3942 Yague St., Barangay Sta. Cruz, Makati City'),
+    address: '3942 Yague St., Barangay Sta. Cruz, Makati City',
+    phone: '0917-544-4191',
+    email: 'ConsultsStaCruz@makati.gov.ph',
+    source: philHealthYakapClinics2026Source,
+    sourceLabel: 'PhilHealth YAKAP list · May 31, 2026',
+    note: 'Government YAKAP clinic · accreditation listed through Dec. 31, 2026',
+  }],
+  tejeros: [{
+    name: 'Tejeros Health Center',
+    type: 'Health',
+    href: mapsSearch('2903 H. Santos Street, Barangay Tejeros, Makati City'),
+    address: '2903 H. Santos Street, Barangay Tejeros, Makati City',
+    phone: '0969-179-2519 / 0908-223-4607',
+    email: 'consultstejeros@makati.gov.ph',
+    source: philHealthYakapClinics2026Source,
+    sourceLabel: 'PhilHealth YAKAP list · May 31, 2026',
+    note: 'Government YAKAP clinic · accreditation listed through Dec. 31, 2026',
+  }],
+};
+
+export const barangayFacilities = (slug: string, name: string): BarangayFacility[] => {
+  const barangay = barangays.find(item => item.slug === slug);
+  const hall: BarangayFacility = {
+    name: `${name} Barangay Hall`,
+    type: 'Government',
+    href: barangayMapsUrl(name),
+    address: barangay?.hallAddress,
+    phone: barangay?.hallPhone,
+    email: barangay?.hallEmail,
+    source: barangay?.hallSource || barangay?.officialPageUrl,
+    sourceLabel: 'Official Makati barangay page',
+  };
+  return [hall, ...(yakapHealthCenters[slug] ?? [])];
+};
 
 export const barangays: BarangayProfile[] = [
   { slug: 'bangkal', name: 'Bangkal', population2024: 18013, legislativeDistrict: '1st District', officialPageUrl: 'https://www.makati.gov.ph/barangay/bangkal/29', notablePlaces: [{ name: 'Don Bosco Technical Institute – Makati', href: 'https://www.donboscomakati.edu.ph/', type: 'Institution' }] },
