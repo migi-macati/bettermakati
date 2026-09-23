@@ -2,7 +2,6 @@ import { useMemo, useState } from 'react';
 import {
   AlertCircle,
   ArrowRight,
-  CheckCircle2,
   ChevronDown,
   CircleHelp,
   ClipboardList,
@@ -41,14 +40,6 @@ const typeLabel: Record<AccountabilityEntry['type'], string> = {
   service: 'Service standard',
   audit: 'Audit',
   commitment: 'Public commitment',
-};
-
-const typeDescription: Record<AccountabilityEntry['type'], string> = {
-  project: 'Follow a project or purchase from award toward delivery.',
-  fiscal: 'See approved budgets, funds and reported actuals.',
-  service: 'Check a published government service standard.',
-  audit: 'See a COA observation and whether follow-through is documented.',
-  commitment: 'Track a public promise or target against later evidence.',
 };
 
 const recordYear = (entry: AccountabilityEntry) => {
