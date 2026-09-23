@@ -597,7 +597,7 @@ export default function ProjectsBudget() {
       </Section>
 
       <Section className="bg-[#f5f8f2]">
-        <div className="section-eyebrow">Actual 2025 Revenue</div>
+        <div className="section-eyebrow">DBM / BLGF 2025 Revenue</div>
         <Heading level={2}>Where city receipts came from</Heading>
         <p className="mt-2 text-xs text-gray-500">
           Source:{' '}
@@ -607,7 +607,7 @@ export default function ProjectsBudget() {
             rel="noreferrer"
             className="font-bold text-primary-700 underline underline-offset-2"
           >
-            DBM / BLGF actuals <ArrowUpRight className="inline h-3 w-3" />
+            DBM / BLGF statement <ArrowUpRight className="inline h-3 w-3" />
           </a>
         </p>
 
@@ -636,7 +636,7 @@ export default function ProjectsBudget() {
             <thead className="bg-gray-50">
               <tr>
                 <th className="px-4 py-3 font-bold">Local revenue source</th>
-                <th className="px-4 py-3 font-bold text-right">2025 actual</th>
+                <th className="px-4 py-3 font-bold text-right">2025 reported</th>
               </tr>
             </thead>
             <tbody>
@@ -654,7 +654,7 @@ export default function ProjectsBudget() {
       </Section>
 
       <Section className="bg-white">
-        <div className="section-eyebrow">Actual 2025 Spending</div>
+        <div className="section-eyebrow">DBM / BLGF 2025 Spending</div>
         <Heading level={2}>Where reported expenditures went</Heading>
         <p className="mt-2 text-xs text-gray-500">
           Source:{' '}
@@ -670,7 +670,7 @@ export default function ProjectsBudget() {
 
         <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-5 mt-7">
           <HorizontalBarChart
-            title="Actual spending by function"
+            title="Reported spending by function"
             items={actualSpendingByFunction.map(item => ({
               label: item.label,
               value: item.amountM,
@@ -735,7 +735,7 @@ export default function ProjectsBudget() {
           .
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-7">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-7">
           {dedicatedFunds2026.map(item => (
             <a
               key={item.label}
@@ -761,7 +761,7 @@ export default function ProjectsBudget() {
           <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-5">
             <div>
               <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
-                20% Development Fund project
+                2025 20% Development Fund project follow-through
               </div>
               <h3 className="font-extrabold text-xl text-gray-950 mt-2">
                 {developmentFundProject.name}
@@ -853,6 +853,38 @@ export default function ProjectsBudget() {
           </div>
         </div>
 
+        {sefRecord && (
+          <div className="mt-8 rounded-2xl border border-secondary-100 bg-[#fff8e6] p-6">
+            <div className="section-eyebrow">Special Education Fund</div>
+            <h3 className="mt-1 text-xl font-extrabold text-gray-950">{sefRecord.title}</h3>
+            <p className="mt-2 text-sm leading-relaxed text-gray-700">{sefRecord.summary}</p>
+            <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-3">
+              <div className="rounded-xl bg-white p-4">
+                <div className="text-xs text-gray-500">Reported receipts</div>
+                <div className="mt-1 text-xl font-extrabold text-gray-950">{peso(sefRecord.reportedAmountM || 0)}</div>
+              </div>
+              <div className="rounded-xl bg-white p-4">
+                <div className="text-xs text-gray-500">Reported disbursements</div>
+                <div className="mt-1 text-xl font-extrabold text-gray-950">{peso(sefRecord.actualAmountM || 0)}</div>
+              </div>
+              <div className="rounded-xl bg-white p-4">
+                <div className="text-xs text-gray-500">Reported year-end balance</div>
+                <div className="mt-1 text-xl font-extrabold text-gray-950">
+                  {peso((sefRecord.reportedAmountM || 0) - (sefRecord.actualAmountM || 0))}
+                </div>
+              </div>
+            </div>
+            <a
+              href={sefRecord.sources[0]?.url}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700 underline underline-offset-2"
+            >
+              Open SEF utilization source <ArrowUpRight className="h-3.5 w-3.5" />
+            </a>
+          </div>
+        )}
+
         <div className="mt-8 rounded-2xl border border-gray-200 bg-white p-6">
           <div className="flex items-center gap-2">
             <Building2 className="h-5 w-5 text-primary-700" />
@@ -861,7 +893,7 @@ export default function ProjectsBudget() {
             </h3>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-5">
-            {capitalBudgetLines2026.map(item => (
+            {capitalBudgetLines2026.filter(item => item.amountM > 0).map(item => (
               <div key={item.label} className="rounded-xl bg-gray-50 p-4">
                 <div className="text-xl font-extrabold text-primary-800">
                   {peso(item.amountM)}
@@ -877,21 +909,34 @@ export default function ProjectsBudget() {
 
       <Section className="bg-white">
         <div className="section-eyebrow">Budget Explorer</div>
-        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <Heading level={2}>Budget line items</Heading>
-            <p className="text-gray-600">
-              Major citywide line items extracted from the 2026 Annual Budget Report.
+            <Heading level={2}>All citywide summary budget lines</Heading>
+            <p className="mt-1 max-w-3xl text-gray-600">
+              {selectedBudgetLines2026.length} object-of-expenditure lines from the five-page citywide summary of the 2026 Annual Budget Report. Department-level sheets remain in the original 82-page report.
             </p>
+            <div className="mt-3 flex flex-wrap gap-2 text-xs font-bold">
+              <span className="rounded-full bg-primary-50 px-3 py-1.5 text-primary-800">
+                {selectedBudgetLines2026.length} lines indexed
+              </span>
+              <span className={budgetLineReconciles
+                ? 'rounded-full bg-success-50 px-3 py-1.5 text-success-800'
+                : 'rounded-full bg-warning-50 px-3 py-1.5 text-warning-800'
+              }>
+                {budgetLineReconciles
+                  ? 'Line items reconcile to ₱21.0B'
+                  : 'Line-item total needs reconciliation'}
+              </span>
+            </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-2">
+          <div className="flex flex-col gap-2 sm:flex-row">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
               <input
                 value={lineQuery}
                 onChange={event => setLineQuery(event.target.value)}
-                placeholder="Search line items"
+                placeholder="Search line or account code"
                 className="rounded-xl border border-gray-300 py-2.5 pl-9 pr-3 text-sm outline-none focus:border-primary-500"
               />
             </div>
@@ -899,38 +944,50 @@ export default function ProjectsBudget() {
               value={lineFilter}
               onChange={event => setLineFilter(event.target.value)}
               className="rounded-xl border border-gray-300 bg-white px-3 py-2.5 text-sm"
+              aria-label="Filter budget line category"
             >
               <option>All</option>
               <option>Personal Services</option>
               <option>Operating</option>
               <option>Capital</option>
+              <option>Financial Expenses</option>
+              <option>Special Purpose</option>
             </select>
           </div>
         </div>
 
-        <div className="mt-6 overflow-x-auto rounded-2xl border border-gray-200">
-          <table className="w-full min-w-[680px] text-left">
+        <div className="mt-4 text-sm text-gray-500">
+          Showing {visibleLines.length} of {selectedBudgetLines2026.length} lines
+        </div>
+
+        <div className="mt-3 overflow-x-auto rounded-2xl border border-gray-200">
+          <table className="w-full min-w-[820px] text-left">
             <thead className="bg-gray-50">
               <tr>
                 <th className="px-4 py-3 font-bold">Category</th>
+                <th className="px-4 py-3 font-bold">Account code</th>
                 <th className="px-4 py-3 font-bold">Budget line</th>
-                <th className="px-4 py-3 font-bold text-right">2025 amount</th>
+                <th className="px-4 py-3 font-bold text-right">2026 proposed</th>
               </tr>
             </thead>
             <tbody>
               {visibleLines.map(item => (
                 <tr key={item.group + item.label} className="border-t">
-                  <td className="px-4 py-3 text-sm text-gray-500">
-                    {item.group}
-                  </td>
-                  <td className="px-4 py-3 font-medium text-gray-900">
-                    {item.label}
-                  </td>
+                  <td className="px-4 py-3 text-sm text-gray-500">{item.group}</td>
+                  <td className="px-4 py-3 font-mono text-xs text-gray-500">{item.accountCode || '—'}</td>
+                  <td className="px-4 py-3 font-medium text-gray-900">{item.label}</td>
                   <td className="px-4 py-3 text-right font-bold text-gray-950">
-                    {pesoExact(item.amountM)}
+                    {item.amountM === 0 ? '—' : pesoExact(item.amountM)}
                   </td>
                 </tr>
               ))}
+              {visibleLines.length === 0 && (
+                <tr>
+                  <td colSpan={4} className="px-4 py-8 text-center text-sm text-gray-600">
+                    No budget line matches this search.
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
