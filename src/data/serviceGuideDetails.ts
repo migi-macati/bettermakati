@@ -972,7 +972,7 @@ export const serviceGuideDetails: Record<string, ServiceGuideDetail> = {
       'Track and claim or receive the passport using the selected release method.',
     ],
     fees: [{ label: 'Passport fee', amount: 'See current DFA appointment/consular fee schedule', note: 'BetterMakati does not hard-code a fee that may vary by processing and site.' }],
-  },,
+  },
   'pwd-id': {
     verification: 'partial',
     sourceLabel: 'Makati Social Welfare Department Citizen’s Charter — Application for PWD ID',
