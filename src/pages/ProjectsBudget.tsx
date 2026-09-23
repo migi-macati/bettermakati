@@ -5,7 +5,6 @@ import {
   Building2,
   FileBarChart,
   HardHat,
-  Landmark,
   PiggyBank,
   ReceiptText,
   Search,
