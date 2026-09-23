@@ -514,5 +514,23 @@
     "label": "PNP National Police Clearance System",
     "url": "https://pnpclearance.ph/",
     "kind": "service-detail"
+  },
+  {
+    "id": "makati-pwd-id-guide",
+    "label": "Makati PWD ID Citizen’s Charter",
+    "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/481/pdf/Makati%20Social%20Welfare%20Department.pdf",
+    "kind": "service-detail"
+  },
+  {
+    "id": "makati-burial-assistance-guide",
+    "label": "Makati burial assistance under Blu Card guide",
+    "url": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1581041559045.pdf",
+    "kind": "service-detail"
+  },
+  {
+    "id": "makatizen-card-guide",
+    "label": "Makatizen Card application guide",
+    "url": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1581041433613.pdf",
+    "kind": "service-detail"
   }
 ]
