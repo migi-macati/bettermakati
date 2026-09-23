@@ -50,13 +50,13 @@ if (sourceCount < directoryIds.length) {
   problems.push(`Only ${sourceCount} sourceUrl fields for ${directoryIds.length} services.`);
 }
 
-if (directoryIds.length < 144) {
-  problems.push(`Service directory unexpectedly shrank to ${directoryIds.length}. Wave 1.2 baseline is 144 indexed services.`);
+if (directoryIds.length < 151) {
+  problems.push(`Service directory unexpectedly shrank to ${directoryIds.length}. Wave 1.2 baseline is 151 indexed services.`);
 }
 
 const cityServiceCount = (directory.match(/level:\s*'City'/g) ?? []).length;
-if (cityServiceCount < 66) {
-  problems.push(`City-service coverage unexpectedly shrank to ${cityServiceCount}. Wave 1.2 baseline is 66 city services.`);
+if (cityServiceCount < 73) {
+  problems.push(`City-service coverage unexpectedly shrank to ${cityServiceCount}. Wave 1.2 baseline is 73 city services.`);
 }
 
 if (detailIds.length < 48) {
