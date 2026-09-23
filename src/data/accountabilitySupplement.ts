@@ -19,6 +19,13 @@ interface ProcurementSeed {
   sourceUrl: string;
   sourceLabel: string;
   location?: string;
+  publicEvidence?: {
+    label: string;
+    url: string;
+    publisher: string;
+    date: string;
+    detail: string;
+  };
 }
 
 const procurementSeeds: ProcurementSeed[] = [
@@ -93,6 +100,14 @@ const procurementSeeds: ProcurementSeed[] = [
     bidDate: '2025-05-14',
     sourceUrl: procurementQ22025Source,
     sourceLabel: '2025 Q2 Bid Results — Goods and Services',
+    publicEvidence: {
+      label: 'Rosas ng Sampiro Festival 2025 occurrence',
+      url: 'https://www.veritasph.net/tularan-ang-mahal-na-birheng-maria-paanyaya-ni-cardinal-advincula-sa-mananampalataya/',
+      publisher: 'VeritasPH',
+      date: '2025-06-08',
+      detail:
+        'Independent reporting documents the Rosas ng Sampiro Festival taking place at the Makati Coliseum. This supports event occurrence, but does not by itself prove supplier acceptance, final payment or contract close-out.',
+    },
   },
   {
     id: '2025-q2-bs25-04-0438',
@@ -243,6 +258,14 @@ const procurementSeeds: ProcurementSeed[] = [
     bidDate: '2024-07-08',
     sourceUrl: procurementQ32024Source,
     sourceLabel: '2024 Q3 Bid Results',
+    publicEvidence: {
+      label: 'Makati first Pride event documented',
+      url: 'https://tribune.net.ph/2025/02/23/a-year-of-philippine-lgbtiq-milestones',
+      publisher: 'Daily Tribune',
+      date: '2024-07-27',
+      detail:
+        'A later report documents a city-government-led Makati Pride event, “Spread the Love, Makati!”, held in Poblacion on 27 July 2024. It is relevant execution evidence for the city Pride activity, but does not independently establish that this specific procurement contract was fully performed or accepted.',
+    },
   },
   {
     id: '2024-q3-bs24-06-m18',
@@ -305,6 +328,16 @@ export const procurementProjectEntries: AccountabilityEntry[] =
         publisher: 'City Government of Makati',
         publishedOrPeriod: seed.period,
       },
+      ...(seed.publicEvidence
+        ? [
+            {
+              label: seed.publicEvidence.label,
+              url: seed.publicEvidence.url,
+              publisher: seed.publicEvidence.publisher,
+              publishedOrPeriod: seed.publicEvidence.date,
+            },
+          ]
+        : []),
     ],
     procurement: {
       referenceNo: seed.referenceNo,
@@ -322,18 +355,32 @@ export const procurementProjectEntries: AccountabilityEntry[] =
         {
           label: 'Contract / notice of award',
           status: 'source-gap',
-          detail: 'A separate contract or notice-of-award record is not yet linked in BetterMakati.',
+          detail:
+            'Exact-reference public search through 23 September 2026 did not surface a separately indexed contract or notice-of-award document.',
         },
         {
           label: 'Notice to proceed',
           status: 'source-gap',
-          detail: 'No linked notice-to-proceed record yet.',
+          detail:
+            'Exact-reference public search through 23 September 2026 did not surface a separately indexed notice-to-proceed document.',
         },
-        {
-          label: 'Implementation / completion',
-          status: 'source-gap',
-          detail: 'No linked implementation or completion record yet.',
-        },
+        ...(seed.publicEvidence
+          ? [
+              {
+                label: 'Public occurrence / implementation evidence',
+                status: 'documented' as const,
+                date: seed.publicEvidence.date,
+                detail: seed.publicEvidence.detail,
+              },
+            ]
+          : [
+              {
+                label: 'Implementation / completion',
+                status: 'source-gap' as const,
+                detail:
+                  'Targeted public search through 23 September 2026 did not surface a project-specific implementation, acceptance or completion record.',
+              },
+            ]),
       ],
     },
   }));
@@ -503,7 +550,7 @@ export const auditFindingEntries: AccountabilityEntry[] = [
       },
     ],
     notes: [
-      'BetterMakati has indexed the official report but has not yet extracted every observation and management response from this management letter.',
+      'The official COA landing page confirms the 2024 SEF compliance-management letter. Targeted public search on 23 September 2026 did not expose the report text or a directly retrievable PDF in the searchable index, so BetterMakati does not paraphrase observation-level findings that it cannot verify from the report itself.',
     ],
   },
 ];
