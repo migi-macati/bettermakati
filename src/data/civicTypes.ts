@@ -30,6 +30,22 @@ export interface AuditTrace {
   followUpStatus?: string;
 }
 
+
+export type CommitmentOutcomeStatus =
+  | 'in-progress'
+  | 'delivered'
+  | 'delivered-late'
+  | 'source-gap';
+
+export interface CommitmentTrace {
+  commitmentText: string;
+  announcedDate?: string;
+  target?: string;
+  outcomeStatus: CommitmentOutcomeStatus;
+  evidenceDate?: string;
+  outcome: string;
+}
+
 export type AccountabilityStatus =
   | 'planned'
   | 'in-progress'
@@ -58,6 +74,7 @@ export interface AccountabilityEntry {
   notes?: string[];
   procurement?: ProcurementTrace;
   audit?: AuditTrace;
+  commitment?: CommitmentTrace;
 }
 
 export interface CoverageGap {
