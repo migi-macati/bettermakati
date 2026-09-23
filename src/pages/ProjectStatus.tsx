@@ -21,7 +21,7 @@ import { Heading } from '../components/ui/Heading';
 import LastReviewed from '../components/ui/LastReviewed';
 import SharePage from '../components/ui/SharePage';
 import { accountabilityCoverageGaps, accountabilityEntries } from '../data/accountability';
-import { barangays, barangayCoverageSummary, barangayProfilesReviewed } from '../data/barangays';
+import { barangayCoverageSummary, barangayProfilesReviewed } from '../data/barangays';
 import { electedOfficials } from '../data/electedOfficials';
 import {
   doctrineFoundations,
