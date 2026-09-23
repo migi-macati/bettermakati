@@ -7,7 +7,7 @@ const criticalRoutes = [
   ['/services', /Find a government service/i],
   ['/government-offices', /Government offices for Makati/i],
   ['/government', /Makati City Government/i],
-  ['/barangays', /Barangays/i],
+  ['/barangays', /Choose a barangay/i],
   ['/barangays/poblacion', /Poblacion/i],
   ['/projects-budget', /Where Makati’s money comes from and goes/i],
   ['/statistics', /Makati/i],
