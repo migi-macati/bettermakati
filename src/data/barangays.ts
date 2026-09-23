@@ -248,7 +248,11 @@ export const barangayFacilities = (slug: string, name: string): BarangayFacility
     source: barangay?.hallSource || barangay?.officialPageUrl,
     sourceLabel:
       barangay?.hallSourceLabel ||
-      (barangay?.hallSource ? 'Verified barangay contact source' : 'Makati barangay page'),
+      (barangay?.hallSource?.includes('makati.gov.ph')
+        ? 'Makati barangay page'
+        : barangay?.hallSource
+          ? 'Verified barangay contact source'
+          : 'Makati barangay page'),
   };
   return [hall, ...(yakapHealthCenters[slug] ?? [])];
 };
