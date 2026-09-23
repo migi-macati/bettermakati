@@ -19,8 +19,10 @@ import SectionNav from '../components/ui/SectionNav';
 import {
   barangays,
   barangayMapsUrl,
+  barangayFacilities,
   findBarangay,
   commonBarangayServiceIds,
+  makatiCitizenCharterSource,
   makatiBarangayDirectory,
   psaBarangaySource,
 } from '../data/barangays';
@@ -60,6 +62,7 @@ export default function BarangayProfile() {
     official => official.district === barangay.legislativeDistrict
   );
   const barangayServices = serviceDirectory.filter(service => commonBarangayServiceIds.includes(service.id));
+  const localFacilities = barangayFacilities(barangay.name);
 
   return (
     <>
@@ -107,6 +110,7 @@ export default function BarangayProfile() {
             { label: 'Overview', href: '#overview' },
             { label: 'Representation', href: '#representation' },
             { label: 'Services', href: '#services' },
+            { label: 'Facilities', href: '#facilities' },
             { label: 'Community', href: '#community' },
             { label: 'More information', href: '#more' },
           ]}
@@ -267,6 +271,24 @@ export default function BarangayProfile() {
         </div>
       </Section>
 
+      <Section id="facilities" className="bg-white">
+        <div className="section-eyebrow">Barangay facilities</div>
+        <Heading level={2}>Places to start locally</Heading>
+        <p className="max-w-3xl text-sm leading-relaxed text-gray-600">
+          These links help locate the barangay hall, health center, public schools and nearby safety facilities. The map links are discovery aids; confirm the exact facility, hours and jurisdiction with the barangay or Makati department. The city Citizen&apos;s Charter is the source for the facility/service framework.
+        </p>
+        <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          {localFacilities.map(facility => (
+            <a key={facility.name} href={facility.href} target="_blank" rel="noreferrer" className="rounded-xl border border-primary-100 bg-[#fffdf8] p-4 hover:border-primary-300">
+              <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">{facility.type}</div>
+              <div className="mt-1 font-extrabold text-gray-950">{facility.name}</div>
+              <span className="mt-3 inline-flex items-center gap-1 text-sm font-bold text-primary-700">Open map <ExternalLink className="h-3.5 w-3.5" /></span>
+            </a>
+          ))}
+        </div>
+        <a href={makatiCitizenCharterSource} target="_blank" rel="noreferrer" className="mt-5 inline-flex items-center gap-1 text-sm font-bold text-primary-700 underline underline-offset-2">Open Makati Citizen&apos;s Charter <ExternalLink className="h-3.5 w-3.5" /></a>
+      </Section>
+
       <Section className="bg-[#fffdf8]">
         <div className="section-eyebrow">Local government access</div>
         <Heading level={2}>Barangay hall contact</Heading>
@@ -311,6 +333,25 @@ export default function BarangayProfile() {
 
         <div className="section-eyebrow">Community</div>
         <Heading level={2}>Local links</Heading>
+
+        {barangay.heritageMarkers && barangay.heritageMarkers.length > 0 && (
+          <>
+            <h3 className="mt-6 font-extrabold text-lg text-gray-950">NHCP / NCCA heritage records</h3>
+            <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600">
+              These are registry records, not a claim that every marker remains installed or publicly accessible today. Open the source record for status, location and marker details.
+            </p>
+            <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-4">
+              {barangay.heritageMarkers.map(marker => (
+                <a key={marker.name} href={marker.href} target="_blank" rel="noreferrer" className="rounded-2xl border border-secondary-200 bg-secondary-50 p-5 hover:border-primary-300">
+                  <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">{marker.agency} · {marker.status}</div>
+                  <h3 className="mt-2 font-extrabold text-gray-950">{marker.name}</h3>
+                  {marker.location && <div className="mt-2 text-sm text-gray-600">{marker.location}</div>}
+                  <span className="mt-3 inline-flex items-center gap-1 text-sm font-bold text-primary-700">Open registry record <ExternalLink className="h-3.5 w-3.5" /></span>
+                </a>
+              ))}
+            </div>
+          </>
+        )}
 
         {barangay.notablePlaces && barangay.notablePlaces.length > 0 && (
           <>
