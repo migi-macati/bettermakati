@@ -17,6 +17,8 @@ const criticalRoutes = [
   ['/today', /Makati/i],
   ['/city-monitor', /City Monitor/i],
   ['/records', /Public Records/i],
+  ['/reports', /Understand what the data says about Makati/i],
+  ['/reports/makati-overview', /What the information across BetterMakati says about the city/i],
   ['/participate', /Participate/i],
   ['/hotlines', /Hotlines|Emergency/i],
   ['/civic-map', /Help improve public places/i],
@@ -72,6 +74,15 @@ test('homepage exposes and opens barangay editions', async ({ page }) => {
   await expect(page.getByRole('heading', { level: 1 })).toContainText(/BetterPoblacion/i);
 });
 
+
+test('homepage overview teaser opens the cited Makati report', async ({ page }) => {
+  await page.goto(baseURL + '/');
+  await page.getByRole('link', { name: /Makati Overview/i }).click();
+  await expect(page).toHaveURL(/\/reports\/makati-overview$/);
+  await expect(page.getByRole('heading', { level: 1 })).toContainText(/What the information across BetterMakati says about the city/i);
+  await expect(page.getByRole('link', { name: /\[1\] Projects & Budget/i })).toBeVisible();
+});
+
 test('homepage universal search tolerates a simple typo', async ({ page }) => {
   await page.goto(baseURL + '/');
   const search = page.getByPlaceholder(/Try Yellow Card, Poblacion, budget, cinema/i);
@@ -99,7 +110,7 @@ test('service directory opens BetterMakati guide before external handoff', async
 
 test('mobile homepage and services have no material horizontal overflow', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  for (const route of ['/', '/services', '/barangays', '/barangays/poblacion', '/civic-map', '/civic-map/poblacion-park', '/civic-map/reports']) {
+  for (const route of ['/', '/services', '/barangays', '/barangays/poblacion', '/reports', '/reports/makati-overview', '/civic-map', '/civic-map/poblacion-park', '/civic-map/reports']) {
     await page.goto(baseURL + route);
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     expect(overflow, `Horizontal overflow on ${route}`).toBeLessThanOrEqual(2);
