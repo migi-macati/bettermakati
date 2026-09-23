@@ -20,6 +20,8 @@ import { Heading } from '../components/ui/Heading';
 import LastReviewed from '../components/ui/LastReviewed';
 import SharePage from '../components/ui/SharePage';
 import CivicMapEmbed from '../components/civic/CivicMapEmbed';
+import BarangayScopeBar from '../components/barangay/BarangayScopeBar';
+import { useBarangayScope } from '../hooks/useBarangayScope';
 import {
   civicAssets,
   civicAssetTypeLabels,
@@ -49,6 +51,7 @@ export default function CivicMap() {
   const [type, setType] = useState<'all' | CivicAssetType>('all');
   const [feed, setFeed] = useState<FeedItem[]>([]);
   const [feedState, setFeedState] = useState<'loading' | 'ready' | 'failed'>('loading');
+  const { barangay } = useBarangayScope();
 
   useEffect(() => {
     const load = async () => {
@@ -69,13 +72,18 @@ export default function CivicMap() {
     const needle = query.trim().toLowerCase();
     return civicAssets.filter(asset => {
       const typeMatch = type === 'all' || asset.type === type;
+      const localNames = (asset.barangay ?? '')
+        .split('/')
+        .map(value => value.trim().toLowerCase());
+      const barangayMatch =
+        !barangay || localNames.includes(barangay.name.toLowerCase());
       const text = [asset.title, asset.subtitle, asset.barangay, asset.tags.join(' ')]
         .filter(Boolean)
         .join(' ')
         .toLowerCase();
-      return typeMatch && (!needle || text.includes(needle));
+      return barangayMatch && typeMatch && (!needle || text.includes(needle));
     });
-  }, [query, type]);
+  }, [barangay, query, type]);
 
   const activeReports = feed.filter(item => item.kind === 'report' && item.state === 'open').length;
   const proposals = feed.filter(item => item.kind === 'proposal' && item.state === 'open').length;
@@ -105,6 +113,8 @@ export default function CivicMap() {
           </div>
         </div>
 
+        <BarangayScopeBar note="Mapped places and infrastructure are filtered to this barangay when location data is available." />
+
         <div className="mt-5 flex flex-wrap gap-3">
           <a href="#places" className="brand-btn-primary">Choose a place <ArrowRight className="h-4 w-4" /></a>
           <a href="#how-it-works" className="brand-btn-secondary">How it works</a>
@@ -133,8 +143,8 @@ export default function CivicMap() {
 
         <div className="mt-7 grid grid-cols-2 gap-3 md:grid-cols-4">
           <div className="rounded-2xl border border-primary-100 bg-white p-4">
-            <div className="text-2xl font-extrabold text-gray-950">{civicAssets.length}</div>
-            <div className="text-xs font-bold text-gray-600">pilot mapped assets</div>
+            <div className="text-2xl font-extrabold text-gray-950">{visible.length}</div>
+            <div className="text-xs font-bold text-gray-600">{barangay ? 'mapped assets in scope' : 'pilot mapped assets'}</div>
           </div>
           <div className="rounded-2xl border border-primary-100 bg-white p-4">
             <div className="text-2xl font-extrabold text-gray-950">{feedState === 'ready' ? activeReports : '—'}</div>
@@ -163,7 +173,9 @@ export default function CivicMap() {
               Long roads are split into block-level segments so reports stay local. Side-specific sidewalk data can be added when the condition differs across the street.
             </p>
           </div>
-          <div className="text-sm text-gray-500">{visible.length} of {civicAssets.length} pilot assets</div>
+          <div className="text-sm text-gray-500">
+            {barangay ? `${visible.length} mapped assets in Barangay ${barangay.name}` : `${visible.length} of ${civicAssets.length} pilot assets`}
+          </div>
         </div>
 
         <div className="mt-6 grid gap-3 md:grid-cols-[1fr_18rem]">
