@@ -56,7 +56,7 @@ export default function Barangays() {
     <>
       <SEO
         title="Barangays"
-        description="The 23 barangays of Makati City with individual profiles and 2024 POPCEN population."
+        description="The 23 barangays of Makati City with local dashboards for services, government, projects, accountability, maps and community information."
       />
 
       <Section className="bg-[#fffdf8]">
@@ -72,8 +72,8 @@ export default function Barangays() {
           >
             23 barangays
           </a>
-          . Open a profile for population, district, map and available community
-          links.
+          . Open a local dashboard for services, officials, projects, accountability,
+          public places, participation and community information.
         </Text>
 
         <PhotoCarousel
@@ -151,7 +151,29 @@ export default function Barangays() {
           </button>
         </div>
 
-        <div className="overflow-x-auto rounded-2xl border border-gray-200 bg-white">
+        <div className="grid gap-3 md:hidden">
+          {visibleBarangays.map(barangay => (
+            <Link
+              key={barangay.slug}
+              to={'/barangays/' + barangay.slug}
+              className="rounded-2xl border border-primary-100 bg-white p-5 hover:border-primary-300"
+            >
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <div className="text-lg font-extrabold text-gray-950">{barangay.name}</div>
+                  <div className="mt-1 text-sm text-gray-600">{barangay.legislativeDistrict}</div>
+                </div>
+                <ArrowRight className="mt-1 h-5 w-5 shrink-0 text-primary-700" />
+              </div>
+              <div className="mt-4 text-2xl font-extrabold text-primary-800">
+                {barangay.population2024.toLocaleString('en-PH')}
+              </div>
+              <div className="text-xs text-gray-500">2024 population · open local dashboard</div>
+            </Link>
+          ))}
+        </div>
+
+        <div className="hidden overflow-x-auto rounded-2xl border border-gray-200 bg-white md:block">
           <table className="w-full min-w-[560px] text-left">
             <thead className="bg-gray-50">
               <tr>
@@ -185,7 +207,7 @@ export default function Barangays() {
                       to={'/barangays/' + barangay.slug}
                       className="inline-flex items-center gap-1 text-sm font-bold text-primary-700"
                     >
-                      Profile <ArrowRight className="h-3.5 w-3.5" />
+                      Dashboard <ArrowRight className="h-3.5 w-3.5" />
                     </Link>
                   </td>
                 </tr>
