@@ -8,7 +8,6 @@ import SharePage from '../components/ui/SharePage';
 import CitizenSummary from '../components/ui/CitizenSummary';
 import { HorizontalBarChart } from '../components/budget/BudgetCharts';
 import CityComparison from '../components/statistics/CityComparison';
-import BarangayScopeBar from '../components/barangay/BarangayScopeBar';
 import { useBarangayScope } from '../hooks/useBarangayScope';
 import { barangays } from '../data/barangays';
 
@@ -84,7 +83,6 @@ export default function Statistics() {
           <Heading>Makati Statistics</Heading>
           <SharePage title="Makati Statistics | BetterMakati" />
         </div>
-        <BarangayScopeBar note="Barangay population uses the 2024 POPCEN. Citywide economic and historical series remain visible where no comparable barangay series is available." />
         <LastReviewed note="Population and GDP figures use PSA sources and stated geographic definitions." />
 
         {barangay && (
