@@ -1,5 +1,5 @@
 import { makatiHistory } from './makatiHistory';
-import { barangays as barangayProfiles } from './barangays';
+import { barangays as barangayProfiles, barangayFacilities } from './barangays';
 import { electedOfficials } from './electedOfficials';
 import { serviceDirectory } from './serviceDirectory';
 import { governmentServiceOffices } from './governmentServiceOffices';
@@ -578,14 +578,36 @@ const contactItems: SearchItem[] = [
   },
 ];
 
-const barangayItems: SearchItem[] = barangayProfiles.map(barangay => ({
-  title: `Barangay ${barangay.name}`,
-  group: 'Barangay',
-  category: 'Barangays',
-  description: `Barangay profile, 2024 population, ${barangay.legislativeDistrict}, and 2025 mayoral result.`,
-  href: `/barangays/${barangay.slug}`,
-  keywords: `${barangay.name} barangay hall local neighborhood population district profile 2025 election mayor result voting`,
-}));
+const barangayItems: SearchItem[] = barangayProfiles.map(barangay => {
+  const facilities = barangayFacilities(barangay.slug, barangay.name);
+  const people = [
+    barangay.officials?.punongBarangay,
+    barangay.officials?.skChairperson,
+    barangay.officials?.secretary,
+    barangay.officials?.treasurer,
+    ...(barangay.officials?.kagawads ?? []),
+  ].filter(Boolean);
+  const localPlaces = [
+    ...facilities.map(item => item.name),
+    ...(barangay.notablePlaces?.map(item => item.name) ?? []),
+    ...(barangay.associations?.map(item => item.name) ?? []),
+    ...(barangay.heritageMarkers?.map(item => item.name) ?? []),
+  ];
+
+  return {
+    title: `Barangay ${barangay.name}`,
+    group: 'Barangay',
+    category: 'Barangays',
+    description: `Local services, current barangay officials, 2024 population, ${barangay.legislativeDistrict}, facilities, civic records and 2025 mayoral context.`,
+    href: `/barangays/${barangay.slug}`,
+    keywords: [
+      barangay.name,
+      'barangay hall local neighborhood population district profile council captain kagawad sk chairperson services facilities 2025 election mayor result voting',
+      ...people,
+      ...localPlaces,
+    ].join(' '),
+  };
+});
 
 const officeItems: SearchItem[] = governmentServiceOffices.map(office => ({
   title: office.name,
