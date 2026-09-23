@@ -34,6 +34,8 @@ export interface BarangayProfile {
     secondarySource?: string;
     lastVerified?: string;
     note?: string;
+    statusSource?: string;
+    statusSourceLabel?: string;
   };
   heritageMarkers?: Array<{ name: string; agency: 'NHCP' | 'NCCA'; status: string; href: string; location?: string }>;
   notablePlaces?: Array<{ name: string; href: string; type: 'Institution' | 'Establishment' | 'Heritage'; source?: string }>;
@@ -304,6 +306,9 @@ const barangayOfficialData: Record<string, NonNullable<BarangayProfile['official
     sourceLabel: "Barangay Directory roster cross-check",
     secondarySource: "https://www.makati.gov.ph/barangay",
     lastVerified: barangayProfilesReviewed,
+    note: "DILG reported Natalia Georgianna M. Tupaz suspended for six months under a March 23, 2026 city resolution and said she had tendered a resignation on March 8 subject to acceptance. The roster source continues to list her as SK chairperson; BetterMakati has not inferred a later status without a subsequent official record.",
+    statusSource: "https://calabarzon.dilg.gov.ph/remulla-to-suspended-makati-sk-chairs-mahiya-naman-kayo/",
+    statusSourceLabel: "DILG suspension report · April 27, 2026",
   },
   'forbes-park': {
     punongBarangay: "Evangeline Tankiang Manotok",
@@ -376,6 +381,9 @@ const barangayOfficialData: Record<string, NonNullable<BarangayProfile['official
     sourceLabel: "Barangay Directory roster cross-check",
     secondarySource: "https://www.makati.gov.ph/barangay",
     lastVerified: barangayProfilesReviewed,
+    note: "DILG reported Cecilia Louise P. Yabut suspended for three months under an April 6, 2026 city resolution. The roster source continues to list her as SK chairperson; BetterMakati has not found a later official status record in the current source set.",
+    statusSource: "https://calabarzon.dilg.gov.ph/remulla-to-suspended-makati-sk-chairs-mahiya-naman-kayo/",
+    statusSourceLabel: "DILG suspension report · April 27, 2026",
   },
   'olympia': {
     punongBarangay: "Reynaldo A. Yulo",
