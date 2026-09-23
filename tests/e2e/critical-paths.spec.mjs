@@ -17,8 +17,11 @@ const criticalRoutes = [
   ['/today', /Makati/i],
   ['/city-monitor', /City Monitor/i],
   ['/records', /Public Records/i],
-  ['/reports', /Reports & Insights/i],
-  ['/reports/makati-overview', /Four signals from Makati’s latest city data/i],
+  ['/reports', /Featured Reports & Insights/i],
+  ['/reports/2026-budget-operating-expenses', /Operating expenses account for nearly three-quarters/i],
+  ['/reports/2025-local-revenue', /Makati generated 93\.5% of its reported 2025 receipts locally/i],
+  ['/reports/2025-social-services', /Social services absorbed 55\.2% of Makati’s reported 2025 expenditure/i],
+  ['/reports/2024-barangay-population', /Three barangays contain 37\.6% of Makati’s 2024 population/i],
   ['/participate', /Participate/i],
   ['/hotlines', /Hotlines|Emergency/i],
   ['/civic-map', /Help improve public places/i],
@@ -75,27 +78,54 @@ test('homepage exposes and opens barangay editions', async ({ page }) => {
 });
 
 
-test('homepage featured insights shows one card for the Makati Overview report', async ({ page }) => {
+test('homepage featured reports carousel shows one report article per card', async ({ page }) => {
   await page.goto(baseURL + '/');
-  await expect(page.getByRole('heading', { name: /Reports worth reading/i })).toBeVisible();
-  await expect(page.getByRole('heading', { name: /Four signals from Makati’s latest city data/i })).toBeVisible();
-  await expect(page.getByText('23 September 2026', { exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Featured Reports & Insights', exact: true })).toBeVisible();
+  await expect(
+    page.getByRole('heading', {
+      name: /Operating expenses account for nearly three-quarters of Makati’s 2026 budget increase/i,
+    })
+  ).toBeVisible();
+  await expect(
+    page.getByText(/The proposed city budget rises by ₱2 billion to ₱21 billion/i)
+  ).toBeVisible();
 
   await page.getByRole('link', { name: 'Read more', exact: true }).click();
-  await expect(page).toHaveURL(/\/reports\/makati-overview$/);
+  await expect(page).toHaveURL(/\/reports\/2026-budget-operating-expenses$/);
   await expect(page.getByRole('heading', { level: 1 })).toContainText(
-    /Four signals from Makati’s latest city data/i
+    /Operating expenses account for nearly three-quarters/i
   );
-  await expect(page.getByRole('link', { name: '[1] Projects & Budget', exact: true })).toBeVisible();
 });
 
-test('reports page is a clean report library without explanatory evidence-base copy', async ({ page }) => {
+test('homepage featured reports carousel advances to a different report page', async ({ page }) => {
+  await page.goto(baseURL + '/');
+  await page.getByRole('button', { name: 'Next featured report' }).click();
+  await expect(
+    page.getByRole('heading', {
+      name: /Makati generated 93\.5% of its reported 2025 receipts locally/i,
+    })
+  ).toBeVisible();
+  await expect(
+    page.getByText(/Local taxes, fees, charges and other local receipts contributed ₱23\.05 billion/i)
+  ).toBeVisible();
+});
+
+test('reports page lists standalone articles and never shows Makati Overview', async ({ page }) => {
   await page.goto(baseURL + '/reports');
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Reports & Insights');
-  await expect(page.getByRole('link', { name: /Four signals from Makati’s latest city data/i })).toBeVisible();
-  await expect(page.getByText('Evidence base', { exact: true })).toHaveCount(0);
-  await expect(page.getByText(/These are not reports/i)).toHaveCount(0);
-  await expect(page.getByText(/Reports cite BetterMakati pages first/i)).toHaveCount(0);
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Featured Reports & Insights');
+  await expect(page.getByText('Makati Overview', { exact: true })).toHaveCount(0);
+  await expect(page.getByRole('link', { name: /Operating expenses account for nearly three-quarters/i })).toBeVisible();
+  await expect(page.getByRole('link', { name: /Makati generated 93\.5%/i })).toBeVisible();
+  await expect(page.getByRole('link', { name: /Social services absorbed 55\.2%/i })).toBeVisible();
+  await expect(page.getByRole('link', { name: /Three barangays contain 37\.6%/i })).toBeVisible();
+});
+
+test('featured report article is a single narrative synthesis with internal citations', async ({ page }) => {
+  await page.goto(baseURL + '/reports/2025-social-services');
+  await expect(page.locator('article p')).toHaveCount(3);
+  await expect(page.getByRole('heading', { level: 1 })).toContainText(/Social services absorbed 55\.2%/i);
+  await expect(page.getByRole('link', { name: /Source 1: Projects & Budget/i }).first()).toBeVisible();
+  await expect(page.getByText('Key findings', { exact: true })).toHaveCount(0);
 });
 
 test('homepage universal search tolerates a simple typo', async ({ page }) => {
@@ -125,7 +155,7 @@ test('service directory opens BetterMakati guide before external handoff', async
 
 test('mobile homepage and services have no material horizontal overflow', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  for (const route of ['/', '/services', '/barangays', '/barangays/poblacion', '/reports', '/reports/makati-overview', '/civic-map', '/civic-map/poblacion-park', '/civic-map/reports']) {
+  for (const route of ['/', '/services', '/barangays', '/barangays/poblacion', '/reports', '/reports/2026-budget-operating-expenses', '/reports/2025-local-revenue', '/civic-map', '/civic-map/poblacion-park', '/civic-map/reports']) {
     await page.goto(baseURL + route);
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     expect(overflow, `Horizontal overflow on ${route}`).toBeLessThanOrEqual(2);
