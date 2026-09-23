@@ -40,6 +40,7 @@ export default function BetterBarangayContextBar() {
   return (
     <div
       className="border-t border-primary-800 bg-primary-900 text-white"
+      role="region"
       aria-label="BetterBarangay view"
     >
       <div className="container flex min-h-12 items-center justify-between gap-3 px-4 py-1.5">
