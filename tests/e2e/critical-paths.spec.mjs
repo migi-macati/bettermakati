@@ -165,6 +165,24 @@ test('barangay profile uses one contextual local-edition header', async ({ page 
   await expect(page.getByLabel('Switch barangay edition')).toHaveValue('poblacion');
 });
 
+test('barangay edition does not persist onto unrelated citywide pages', async ({ page }) => {
+  await page.goto(baseURL + '/services?barangay=poblacion');
+  await expect(page.getByLabel('Switch barangay edition')).toHaveValue('poblacion');
+
+  await page.goto(baseURL + '/history');
+  await expect(page.getByLabel('Switch barangay edition')).toHaveCount(0);
+
+  await page.goto(baseURL + '/services');
+  await expect(page.getByLabel('Switch barangay edition')).toHaveCount(0);
+  await expect(page.getByLabel('Change barangay scope')).toHaveValue('');
+});
+
+test('citywide civic reports do not show a barangay edition header', async ({ page }) => {
+  await page.goto(baseURL + '/civic-map/reports?barangay=poblacion');
+  await expect(page.getByLabel('Switch barangay edition')).toHaveCount(0);
+  await expect(page.getByRole('heading', { level: 1 })).toContainText(/Civic Map reports/i);
+});
+
 test('barangay dashboard carries local scope into Civic Map', async ({ page }) => {
   await page.goto(baseURL + '/barangays/poblacion');
   await page.getByRole('link', { name: 'Map & reports' }).click();
