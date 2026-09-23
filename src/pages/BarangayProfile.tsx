@@ -411,9 +411,20 @@ export default function BarangayProfile() {
                   </div>
 
                   {barangay.officials.note && (
-                    <p className="mt-4 rounded-xl border border-secondary-200 bg-secondary-50 p-4 text-xs leading-relaxed text-gray-700">
-                      {barangay.officials.note}
-                    </p>
+                    <div className="mt-4 rounded-xl border border-secondary-200 bg-secondary-50 p-4 text-xs leading-relaxed text-gray-700">
+                      <p>{barangay.officials.note}</p>
+                      {barangay.officials.statusSource && (
+                        <a
+                          href={barangay.officials.statusSource}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="mt-2 inline-flex items-center gap-1 font-bold text-primary-700 underline underline-offset-2"
+                        >
+                          {barangay.officials.statusSourceLabel ?? 'Status source'}
+                          <ExternalLink className="h-3.5 w-3.5" />
+                        </a>
+                      )}
+                    </div>
                   )}
 
                   <div className="mt-5 flex flex-wrap gap-3 text-sm">
