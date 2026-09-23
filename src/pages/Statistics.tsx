@@ -5,6 +5,7 @@ import SEO from '../components/SEO';
 import LastReviewed from '../components/ui/LastReviewed';
 import SectionNav from '../components/ui/SectionNav';
 import SharePage from '../components/ui/SharePage';
+import CitizenSummary from '../components/ui/CitizenSummary';
 import { HorizontalBarChart } from '../components/budget/BudgetCharts';
 import CityComparison from '../components/statistics/CityComparison';
 
@@ -39,6 +40,11 @@ const populationTrend = [
 ];
 
 const people = (value: number) => new Intl.NumberFormat('en-PH').format(value);
+
+const population2010 = populationTrend[0].population;
+const population2024 = populationTrend[populationTrend.length - 1].population;
+const populationGrowthSince2010 =
+  ((population2024 - population2010) / population2010) * 100;
 
 const populationCsv = [
   'Census year,Population,Annual growth percent',
@@ -101,6 +107,48 @@ export default function Statistics() {
             </a>
           ))}
         </div>
+
+        <CitizenSummary
+          className="mt-6"
+          eyebrow="What the numbers show"
+          title="Makati’s comparable population has grown, but boundary changes matter"
+          summary="Using PSA figures restated to Makati’s current 23-barangay boundary, the city’s population increased from 263,683 in 2010 to 309,770 in 2024."
+          points={[
+            {
+              label: 'Long-term change',
+              text: (
+                <>
+                  That is an increase of <strong>{people(population2024 - population2010)} people</strong>, or about <strong>{populationGrowthSince2010.toFixed(1)}%</strong>, over 14 years.
+                </>
+              ),
+            },
+            {
+              label: 'Recent pace',
+              text: (
+                <>
+                  PSA’s average annual growth rate rises from <strong>0.93%</strong> for 2015–2020 to <strong>1.37%</strong> for 2020–2024.
+                </>
+              ),
+            },
+            {
+              label: 'Boundary caution',
+              text: (
+                <>
+                  Older Makati totals that still include the 10 barangays transferred to Taguig are <strong>not directly comparable</strong> with this 23-barangay series.
+                </>
+              ),
+            },
+            {
+              label: 'Economic indicator',
+              text: (
+                <>
+                  The <strong>₱3.89M GDP per person</strong> figure measures economic output per resident. It is not household income, salary or personal wealth.
+                </>
+              ),
+            },
+          ]}
+          note="BetterMakati keeps definitions beside the figures so trends are compared on the same geography and basis."
+        />
       </Section>
 
       <Section id="population-trend" className="bg-white">
