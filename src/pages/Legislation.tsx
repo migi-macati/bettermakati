@@ -12,6 +12,7 @@ import { Heading } from '../components/ui/Heading';
 import SEO from '../components/SEO';
 import LastReviewed from '../components/ui/LastReviewed';
 import SharePage from '../components/ui/SharePage';
+import CitizenSummary from '../components/ui/CitizenSummary';
 
 const officialArchive =
   'https://www.makati.gov.ph/content/resolutions-and-ordinances/author';
@@ -109,6 +110,32 @@ export default function Legislation() {
             ))}
           </div>
         </form>
+
+        <CitizenSummary
+          className="mt-6"
+          eyebrow="How to follow a local rule"
+          title="Do not stop at finding one ordinance or resolution"
+          summary="A useful legislative record connects the issue, the controlling text and what happened after the council acted."
+          points={[
+            {
+              label: '1 · Find the measure',
+              text: 'Search by topic, ordinance/resolution number, title or year.',
+            },
+            {
+              label: '2 · Read the controlling text',
+              text: 'Open the official record and check whether later amendments, implementing rules or related measures change how it should be read.',
+            },
+            {
+              label: '3 · Follow the lifecycle',
+              text: 'Use City Monitor when stage information is available: filing, committee action, readings, approval, mayoral action and implementation are distinct events.',
+            },
+            {
+              label: '4 · Connect it to impact',
+              text: 'Where the measure changes a service, budget, project or public commitment, BetterMakati should link the legislative record to that citizen-facing outcome.',
+            },
+          ]}
+          note="BetterMakati summarizes for navigation and understanding; the original ordinance, resolution and later amendments remain the controlling legal record."
+        />
       </Section>
 
       <Section className="bg-[#f5f8f2]">
