@@ -16,6 +16,7 @@ import LastReviewed from '../components/ui/LastReviewed';
 import CivicMapEmbed from '../components/civic/CivicMapEmbed';
 import CivicContributionForm from '../components/civic/CivicContributionForm';
 import CivicDiscussion from '../components/civic/CivicDiscussion';
+import { useBarangayScope, withBarangayScope } from '../hooks/useBarangayScope';
 import {
   civicAssets,
   civicAssetTypeLabels,
@@ -26,12 +27,17 @@ import {
 export default function CivicAsset() {
   const { assetId } = useParams();
   const [revision, setRevision] = useState(0);
+  const { barangaySlug, isExplicitScope } = useBarangayScope();
+  const mapHref = withBarangayScope(
+    '/civic-map',
+    isExplicitScope ? barangaySlug : undefined
+  );
   const asset = civicAssets.find(item => item.id === assetId);
 
   if (!asset) {
     return (
       <Section className="bg-[#fffdf8]">
-        <Link to="/civic-map" className="inline-flex items-center gap-1 text-sm font-bold text-primary-700">
+        <Link to={mapHref} className="inline-flex items-center gap-1 text-sm font-bold text-primary-700">
           <ArrowLeft className="h-4 w-4" /> Back to Civic Map
         </Link>
         <Heading className="mt-5">Civic asset not found</Heading>
@@ -56,7 +62,7 @@ export default function CivicAsset() {
           className="mb-7"
           items={[
             { label: 'Home', href: '/' },
-            { label: 'Civic Map', href: '/civic-map' },
+            { label: 'Civic Map', href: mapHref },
             { label: asset.title, href: '/civic-map/' + asset.id },
           ]}
         />
@@ -97,7 +103,7 @@ export default function CivicAsset() {
             </div>
           </div>
 
-          <Link to="/civic-map" className="brand-btn-secondary shrink-0">
+          <Link to={mapHref} className="brand-btn-secondary shrink-0">
             <ArrowLeft className="h-4 w-4" /> Civic Map
           </Link>
         </div>
