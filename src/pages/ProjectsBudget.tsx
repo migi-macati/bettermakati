@@ -138,15 +138,57 @@ export default function ProjectsBudget() {
   const { barangay } = useBarangayScope();
   const [lineFilter, setLineFilter] = useState('All');
   const [lineQuery, setLineQuery] = useState('');
+  const [procurementQuery, setProcurementQuery] = useState('');
+  const [procurementPeriod, setProcurementPeriod] = useState('All');
 
   const visibleLines = useMemo(() => {
     const q = lineQuery.trim().toLowerCase();
     return selectedBudgetLines2026.filter(item => {
       const groupMatch = lineFilter === 'All' || item.group === lineFilter;
-      const queryMatch = !q || item.label.toLowerCase().includes(q);
+      const queryMatch =
+        !q ||
+        item.label.toLowerCase().includes(q) ||
+        item.accountCode?.toLowerCase().includes(q);
       return groupMatch && queryMatch;
     });
   }, [lineFilter, lineQuery]);
+
+  const visibleProcurement = useMemo(() => {
+    const q = procurementQuery.trim().toLowerCase();
+    return procurementProjectEntries
+      .filter(item => procurementPeriod === 'All' || item.period === procurementPeriod)
+      .filter(item => {
+        if (!q) return true;
+        return [
+          item.title,
+          item.procurement?.referenceNo,
+          item.procurement?.supplier,
+          item.location,
+        ]
+          .filter(Boolean)
+          .join(' ')
+          .toLowerCase()
+          .includes(q);
+      })
+      .sort((a, b) => (b.procurement?.bidDate || '').localeCompare(a.procurement?.bidDate || ''));
+  }, [procurementPeriod, procurementQuery]);
+
+  const procurementPeriods = [...new Set(procurementProjectEntries.map(item => item.period))];
+  const procurementApprovedM = procurementProjectEntries.reduce(
+    (sum, item) => sum + (item.procurement?.approvedBudgetM || 0),
+    0
+  );
+  const procurementAwardedM = procurementProjectEntries.reduce(
+    (sum, item) => sum + (item.procurement?.awardedAmountM || 0),
+    0
+  );
+  const budgetLineTotalM = selectedBudgetLines2026.reduce(
+    (sum, item) => sum + item.amountM,
+    0
+  );
+  const budgetLineReconciles =
+    Math.abs(budgetLineTotalM - budgetSummary2026.totalBudgetM) < 0.001;
+  const sefRecord = specialEducationFundEntries[0];
 
   const perResident = Math.round(
     (budgetSummary2026.totalBudgetM * 1_000_000) / cityPopulation
