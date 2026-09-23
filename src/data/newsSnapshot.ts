@@ -18,4 +18,3 @@ export const newsSnapshot: NewsItem[] = [
     sourceUrl: 'https://www.makati.gov.ph/content/news',
   },
 ];
-

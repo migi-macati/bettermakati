@@ -20,6 +20,7 @@ import {
   barangays,
   barangayMapsUrl,
   findBarangay,
+  makatiBarangayDirectory,
   psaBarangaySource,
 } from '../data/barangays';
 import {
@@ -261,6 +262,24 @@ export default function BarangayProfile() {
       </Section>
 
       <Section id="community" className="bg-white">
+        <div className="section-eyebrow">Official channels</div>
+        <Heading level={2}>Follow and verify locally</Heading>
+        <p className="max-w-3xl text-sm leading-relaxed text-gray-600">
+          Start with the official Makati Web Portal. A direct Facebook link is shown only where a public page could be matched confidently; otherwise use the Facebook search link and confirm the page identity before relying on a post or contact detail.
+        </p>
+        <div className="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <a href={barangay.officialPageUrl || makatiBarangayDirectory} target="_blank" rel="noreferrer" className="rounded-2xl border border-primary-100 bg-[#fffdf8] p-5 hover:border-primary-300">
+            <Landmark className="h-5 w-5 text-primary-700" />
+            <h3 className="mt-3 font-extrabold text-gray-950">Official Makati page</h3>
+            <span className="mt-3 inline-flex items-center gap-1 text-sm font-bold text-primary-700">Open city source <ExternalLink className="h-3.5 w-3.5" /></span>
+          </a>
+          <a href={barangay.facebookUrl || 'https://www.facebook.com/search/pages/?q=' + encodeURIComponent('Barangay ' + barangay.name + ' Makati')} target="_blank" rel="noreferrer" className="rounded-2xl border border-primary-100 bg-[#fffdf8] p-5 hover:border-primary-300">
+            <Users className="h-5 w-5 text-primary-700" />
+            <h3 className="mt-3 font-extrabold text-gray-950">{barangay.facebookUrl ? 'Facebook page' : 'Find official Facebook page'}</h3>
+            <span className="mt-3 inline-flex items-center gap-1 text-sm font-bold text-primary-700">{barangay.facebookUrl ? 'Open public page' : 'Search Facebook' } <ExternalLink className="h-3.5 w-3.5" /></span>
+          </a>
+        </div>
+
         <div className="section-eyebrow">Community</div>
         <Heading level={2}>Local links</Heading>
 
@@ -331,4 +350,3 @@ export default function BarangayProfile() {
     </>
   );
 }
-
