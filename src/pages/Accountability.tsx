@@ -16,6 +16,8 @@ import {
   WalletCards,
 } from 'lucide-react';
 import { Link, useSearchParams } from 'react-router';
+import BarangayScopeBar from '../components/barangay/BarangayScopeBar';
+import { useBarangayScope } from '../hooks/useBarangayScope';
 import SEO from '../components/SEO';
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
@@ -193,7 +195,7 @@ type SortMode = 'newest' | 'oldest' | 'amount-desc' | 'title';
 
 export default function Accountability() {
   const [params] = useSearchParams();
-  const barangayContext = params.get('barangay');
+  const { barangay } = useBarangayScope();
   const requestedType = params.get('type');
   const initialType = ['project', 'fiscal', 'service', 'audit', 'commitment'].includes(
     requestedType || ''
@@ -207,29 +209,48 @@ export default function Accountability() {
   const [evidence, setEvidence] = useState<EvidenceFilter>('All');
   const [sort, setSort] = useState<SortMode>('newest');
 
+  const locallyTaggedEntries = useMemo(() => {
+    if (!barangay) return accountabilityEntries;
+    const needle = barangay.name.toLowerCase();
+    return accountabilityEntries.filter(entry =>
+      [
+        entry.title,
+        entry.summary,
+        entry.location,
+        ...entry.responsibleBodies,
+        ...entry.sources.map(source => source.label),
+      ]
+        .filter(Boolean)
+        .join(' ')
+        .toLowerCase()
+        .includes(needle)
+    );
+  }, [barangay]);
+
+  const scopedEntries =
+    barangay && locallyTaggedEntries.length > 0
+      ? locallyTaggedEntries
+      : accountabilityEntries;
+
   const years = useMemo(
     () =>
       Array.from(
-        new Set(
-          accountabilityEntries
-            .map(recordYear)
-            .filter(Boolean)
-        )
+        new Set(scopedEntries.map(recordYear).filter(Boolean))
       ).sort((a, b) => b - a),
-    []
+    [scopedEntries]
   );
 
   const stats = useMemo(() => {
-    const projects = accountabilityEntries.filter(entry => entry.type === 'project');
-    const procurements = accountabilityEntries.filter(entry => entry.procurement);
-    const audits = accountabilityEntries.filter(entry => entry.audit);
-    const services = accountabilityEntries.filter(entry => entry.type === 'service');
-    const commitments = accountabilityEntries.filter(
+    const projects = scopedEntries.filter(entry => entry.type === 'project');
+    const procurements = scopedEntries.filter(entry => entry.procurement);
+    const audits = scopedEntries.filter(entry => entry.audit);
+    const services = scopedEntries.filter(entry => entry.type === 'service');
+    const commitments = scopedEntries.filter(
       entry => entry.type === 'commitment'
     );
-    const missingEvidence = accountabilityEntries.filter(hasEvidenceGap);
+    const missingEvidence = scopedEntries.filter(hasEvidenceGap);
     const laterEvidence = procurements.filter(hasLaterEvidence);
-    const completed = accountabilityEntries.filter(
+    const completed = scopedEntries.filter(
       entry => entry.status === 'completed'
     );
 
@@ -243,12 +264,12 @@ export default function Accountability() {
       laterEvidence: laterEvidence.length,
       completed: completed.length,
     };
-  }, []);
+  }, [scopedEntries]);
 
   const visible = useMemo(() => {
     const needle = query.trim().toLowerCase();
 
-    return accountabilityEntries
+    return scopedEntries
       .filter(entry => {
         const typeMatch = type === 'All' || entry.type === type;
         const yearMatch = year === 'All' || String(recordYear(entry)) === year;
@@ -287,7 +308,7 @@ export default function Accountability() {
         if (sort === 'title') return a.title.localeCompare(b.title);
         return recordYear(b) - recordYear(a);
       });
-  }, [query, type, year, evidence, sort]);
+  }, [query, type, year, evidence, sort, scopedEntries]);
 
   const chooseQuestion = (nextType: AccountabilityEntry['type']) => {
     setType(nextType);
@@ -333,17 +354,27 @@ export default function Accountability() {
           note="A missing source means BetterMakati has not located public evidence for that step. It is not a finding of wrongdoing or non-performance."
         />
 
-        {barangayContext && (
-          <div className="mt-6 rounded-xl border border-secondary-200 bg-secondary-50 p-4 text-sm leading-relaxed text-gray-700">
-            <strong>Barangay {barangayContext.replaceAll('-', ' ')}</strong> is selected. Barangay-specific accountability records are still incomplete, so citywide records remain visible.
+        <BarangayScopeBar
+          note={
+            barangay
+              ? locallyTaggedEntries.length > 0
+                ? `Showing ${locallyTaggedEntries.length} accountability record${locallyTaggedEntries.length === 1 ? '' : 's'} that explicitly mention Barangay ${barangay.name}.`
+                : `No ledger record currently identifies Barangay ${barangay.name} explicitly, so citywide records remain visible rather than being falsely attributed locally.`
+              : undefined
+          }
+        />
+
+        {barangay && locallyTaggedEntries.length === 0 && (
+          <div className="mt-3 text-sm text-gray-600">
             <Link
               to={`/get-involved?type=source&barangay=${encodeURIComponent(
-                barangayContext
+                barangay.slug
               )}#submission`}
-              className="ml-1 font-bold text-primary-700 underline underline-offset-2"
+              className="font-bold text-primary-700 underline underline-offset-2"
             >
-              Share a local public record.
+              Share a local public record
             </Link>
+            {' '}to improve barangay-level coverage.
           </div>
         )}
 
