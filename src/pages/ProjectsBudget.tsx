@@ -198,13 +198,13 @@ export default function ProjectsBudget() {
     <>
       <SEO
         title="Projects & Budget"
-        description="Makati City budget, revenue, spending, development funds and public financial records."
+        description="Makati City budget plans, reported revenue and spending, development funds, procurement records and audit follow-through."
         jsonLd={{
           '@context': 'https://schema.org',
           '@type': 'Dataset',
           name: 'Makati city finance and project records',
           description:
-            'Budget plans, actual receipts, expenditures, project and public financial records for Makati City.',
+            'Budget plans, reported receipts and expenditures, project, procurement and public financial records for Makati City.',
           spatialCoverage: 'Makati City, Philippines',
           temporalCoverage: '2014/2026',
         }}
@@ -259,7 +259,7 @@ export default function ProjectsBudget() {
         <div className="mt-5 grid grid-cols-1 lg:grid-cols-2 gap-4">
         <Link
           to="/accountability#2025-medical-supplies-development-fund"
-          className="mt-5 flex flex-col gap-3 rounded-2xl border border-primary-200 bg-primary-50 p-5 transition hover:border-primary-400 sm:flex-row sm:items-center sm:justify-between"
+          className="flex flex-col gap-3 rounded-2xl border border-primary-200 bg-primary-50 p-5 transition hover:border-primary-400 sm:flex-row sm:items-center sm:justify-between"
         >
           <div>
             <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
@@ -664,7 +664,7 @@ export default function ProjectsBudget() {
             rel="noreferrer"
             className="font-bold text-primary-700 underline underline-offset-2"
           >
-            DBM / BLGF actuals <ArrowUpRight className="inline h-3 w-3" />
+            DBM / BLGF statement <ArrowUpRight className="inline h-3 w-3" />
           </a>
         </p>
 
@@ -1004,63 +1004,262 @@ export default function ProjectsBudget() {
       </Section>
 
       <Section id="procurement" className="bg-[#fffdf8]">
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
-          <Link
-            to="/accountability?type=project"
-            className="rounded-2xl border border-primary-200 bg-primary-50 p-6 hover:border-primary-400 hover:shadow-sm transition"
-          >
-            <WalletCards className="h-6 w-6 text-primary-700" />
-            <h2 className="font-extrabold text-lg text-gray-950 mt-4">
-              Structured procurement records
-            </h2>
-            <p className="text-sm text-gray-600 mt-1">
-              Follow approved budget, winning bidder, bid amount and the next missing contract or implementation stage.
+        <div className="section-eyebrow">Structured procurement</div>
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <Heading level={2}>Bid results BetterMakati can follow</Heading>
+            <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-700">
+              These records come from published city bid-result disclosures already structured in BetterMakati. An award record is not the same as a completed contract, delivered project or final payment.
             </p>
-          </Link>
+          </div>
+          <div className="flex flex-wrap gap-3">
+            <Link to="/accountability?type=project" className="brand-btn-primary">
+              Open full project ledger
+            </Link>
+            <a
+              href={budgetSources.procurement}
+              target="_blank"
+              rel="noreferrer"
+              className="brand-btn-secondary"
+            >
+              Search PhilGEPS <ArrowUpRight className="h-4 w-4" />
+            </a>
+          </div>
+        </div>
 
-          <a
-            href={budgetSources.procurement}
-            target="_blank"
-            rel="noreferrer"
-            className="rounded-2xl border border-gray-200 bg-white p-6 hover:border-primary-300 hover:shadow-sm transition"
-          >
-            <ShoppingCart className="h-6 w-6 text-primary-700" />
-            <h2 className="font-extrabold text-lg text-gray-950 mt-4">
-              PhilGEPS
-            </h2>
-            <p className="text-sm text-gray-600 mt-1">
-              Search the national procurement portal for bid and award notices.
-            </p>
-          </a>
+        <div className="mt-6 grid grid-cols-2 gap-4 lg:grid-cols-4">
+          <Metric
+            label="Structured bid-result records"
+            value={procurementProjectEntries.length.toLocaleString('en-PH')}
+            detail="Currently ingested into BetterMakati"
+            icon={ShoppingCart}
+          />
+          <Metric
+            label="Approved budgets represented"
+            value={peso(procurementApprovedM)}
+            detail="Sum of ABCs in the structured records"
+            icon={WalletCards}
+          />
+          <Metric
+            label="Winning bids represented"
+            value={peso(procurementAwardedM)}
+            detail="Sum of reported winning bid amounts"
+            icon={ReceiptText}
+          />
+          <Metric
+            label="ABC less winning bids"
+            value={peso(procurementApprovedM - procurementAwardedM)}
+            detail="Arithmetic difference only; not claimed as realized savings"
+            icon={PiggyBank}
+          />
+        </div>
 
-          <Link
-            id="audit"
-            to="/accountability?type=audit"
-            className="rounded-2xl border border-secondary-200 bg-secondary-50 p-6 hover:border-secondary-400 hover:shadow-sm transition"
+        <div className="mt-7 flex flex-col gap-2 sm:flex-row">
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+            <input
+              type="search"
+              value={procurementQuery}
+              onChange={event => setProcurementQuery(event.target.value)}
+              placeholder="Search project, supplier or reference"
+              className="w-full rounded-xl border border-gray-300 py-2.5 pl-9 pr-3 text-sm outline-none focus:border-primary-500"
+            />
+          </div>
+          <select
+            value={procurementPeriod}
+            onChange={event => setProcurementPeriod(event.target.value)}
+            className="rounded-xl border border-gray-300 bg-white px-3 py-2.5 text-sm"
+            aria-label="Filter procurement period"
           >
-            <Landmark className="h-6 w-6 text-secondary-800" />
-            <h2 className="font-extrabold text-lg text-gray-950 mt-4">
-              Audit findings & follow-through
-            </h2>
-            <p className="text-sm text-gray-600 mt-1">
-              Read structured COA observations, recommendations, management responses and unresolved follow-up gaps.
-            </p>
-          </Link>
+            <option>All</option>
+            {procurementPeriods.map(period => (
+              <option key={period}>{period}</option>
+            ))}
+          </select>
+        </div>
 
-          <a
-            href={budgetSources.audit}
-            target="_blank"
-            rel="noreferrer"
-            className="rounded-2xl border border-gray-200 bg-white p-6 hover:border-primary-300 hover:shadow-sm transition"
-          >
-            <Landmark className="h-6 w-6 text-primary-700" />
-            <h2 className="font-extrabold text-lg text-gray-950 mt-4">
-              COA reports
-            </h2>
-            <p className="text-sm text-gray-600 mt-1">
-              Open the Commission on Audit annual-audit source collection.
+        <div className="mt-4 text-sm text-gray-500">
+          Showing {visibleProcurement.length} of {procurementProjectEntries.length} structured records
+        </div>
+
+        <div className="mt-3 overflow-x-auto rounded-2xl border border-gray-200 bg-white">
+          <table className="w-full min-w-[1120px] text-left">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-4 py-3 font-bold">Period</th>
+                <th className="px-4 py-3 font-bold">Reference</th>
+                <th className="px-4 py-3 font-bold">Procurement</th>
+                <th className="px-4 py-3 font-bold text-right">ABC</th>
+                <th className="px-4 py-3 font-bold text-right">Winning bid</th>
+                <th className="px-4 py-3 font-bold">Supplier</th>
+                <th className="px-4 py-3 font-bold">Evidence trail</th>
+              </tr>
+            </thead>
+            <tbody>
+              {visibleProcurement.map(item => {
+                const documented =
+                  item.procurement?.stages.filter(stage => stage.status === 'documented').length || 0;
+                const gaps =
+                  item.procurement?.stages.filter(stage => stage.status === 'source-gap').length || 0;
+                return (
+                  <tr key={item.id} className="border-t align-top">
+                    <td className="px-4 py-4 text-sm text-gray-600">{item.period}</td>
+                    <td className="px-4 py-4 font-mono text-xs text-gray-600">
+                      {item.procurement?.referenceNo || '—'}
+                    </td>
+                    <td className="px-4 py-4">
+                      <Link
+                        to={'/accountability?type=project#' + item.id}
+                        className="font-bold text-primary-800 hover:underline"
+                      >
+                        {item.title}
+                      </Link>
+                      {item.location && (
+                        <div className="mt-1 text-xs text-gray-500">{item.location}</div>
+                      )}
+                    </td>
+                    <td className="px-4 py-4 text-right font-semibold">
+                      {item.procurement?.approvedBudgetM !== undefined
+                        ? peso(item.procurement.approvedBudgetM)
+                        : '—'}
+                    </td>
+                    <td className="px-4 py-4 text-right font-semibold">
+                      {item.procurement?.awardedAmountM !== undefined
+                        ? peso(item.procurement.awardedAmountM)
+                        : '—'}
+                    </td>
+                    <td className="px-4 py-4 text-sm text-gray-700">
+                      {item.procurement?.supplier || '—'}
+                    </td>
+                    <td className="px-4 py-4 text-xs text-gray-600">
+                      <span className="font-bold text-success-800">{documented} documented</span>
+                      {' · '}
+                      <span className={gaps ? 'font-bold text-warning-800' : 'text-gray-500'}>
+                        {gaps} source gap{gaps === 1 ? '' : 's'}
+                      </span>
+                    </td>
+                  </tr>
+                );
+              })}
+              {visibleProcurement.length === 0 && (
+                <tr>
+                  <td colSpan={7} className="px-4 py-8 text-center text-sm text-gray-600">
+                    No structured procurement record matches this search.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+
+        <p className="mt-3 text-xs leading-relaxed text-gray-500">
+          Coverage is not a complete procurement registry. BetterMakati publishes the later contract, notice-to-proceed, implementation or completion stage only when a source has been linked to the same procurement record.
+        </p>
+      </Section>
+
+      <Section id="audit" className="bg-white">
+        <div className="section-eyebrow">Audit & follow-through</div>
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <Heading level={2}>Structured COA findings</Heading>
+            <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-700">
+              BetterMakati separates the audit finding, recommendation, management response and later follow-up where the cited records support each field.
             </p>
-          </a>
+          </div>
+          <div className="flex flex-wrap gap-3">
+            <Link to="/accountability?type=audit" className="brand-btn-primary">
+              Open audit ledger
+            </Link>
+            <a
+              href={budgetSources.audit}
+              target="_blank"
+              rel="noreferrer"
+              className="brand-btn-secondary"
+            >
+              COA reports <ArrowUpRight className="h-4 w-4" />
+            </a>
+          </div>
+        </div>
+
+        <div className="mt-7 space-y-4">
+          {auditFindingEntries.map(item => (
+            <article key={item.id} className="rounded-2xl border border-gray-200 bg-[#fffdf8] p-6">
+              <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
+                <div>
+                  <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+                    {item.period}
+                  </div>
+                  <h3 className="mt-1 text-lg font-extrabold text-gray-950">{item.title}</h3>
+                  <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-700">
+                    {item.summary}
+                  </p>
+                </div>
+                {item.reportedAmountM !== undefined && (
+                  <div className="shrink-0 rounded-xl bg-white px-4 py-3 text-right">
+                    <div className="text-xs text-gray-500">Amount cited</div>
+                    <div className="mt-1 text-xl font-extrabold text-gray-950">
+                      {peso(item.reportedAmountM)}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {item.audit && (
+                <div className="mt-5 grid gap-3 lg:grid-cols-2">
+                  <div className="rounded-xl border border-gray-200 bg-white p-4">
+                    <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">
+                      COA finding
+                    </div>
+                    <p className="mt-2 text-sm leading-relaxed text-gray-700">{item.audit.finding}</p>
+                  </div>
+                  <div className="rounded-xl border border-gray-200 bg-white p-4">
+                    <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">
+                      Recommendation
+                    </div>
+                    <p className="mt-2 text-sm leading-relaxed text-gray-700">
+                      {item.audit.recommendation || 'No recommendation has been structured from the linked public source.'}
+                    </p>
+                  </div>
+                  <div className="rounded-xl border border-gray-200 bg-white p-4">
+                    <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">
+                      Management response
+                    </div>
+                    <p className="mt-2 text-sm leading-relaxed text-gray-700">
+                      {item.audit.managementResponse || 'No management response has been linked in BetterMakati.'}
+                    </p>
+                  </div>
+                  <div className="rounded-xl border border-gray-200 bg-white p-4">
+                    <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">
+                      Follow-up
+                    </div>
+                    <p className="mt-2 text-sm leading-relaxed text-gray-700">
+                      {item.audit.followUpStatus || 'A later resolution record has not yet been linked.'}
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              {item.notes?.length ? (
+                <ul className="mt-4 space-y-1 text-xs leading-relaxed text-gray-500">
+                  {item.notes.map(note => <li key={note}>{note}</li>)}
+                </ul>
+              ) : null}
+
+              <div className="mt-4 flex flex-wrap gap-3 text-xs">
+                {item.sources.map(source => (
+                  <a
+                    key={source.url}
+                    href={source.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="font-bold text-primary-700 underline underline-offset-2"
+                  >
+                    {source.label} <ArrowUpRight className="inline h-3 w-3" />
+                  </a>
+                ))}
+              </div>
+            </article>
+          ))}
         </div>
       </Section>
     </>
