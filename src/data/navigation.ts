@@ -34,9 +34,8 @@ export const mainNavigation: NavigationItem[] = [
     children: [
       { label: 'Accountability Ledger', href: '/accountability' },
       { label: 'Projects & Budget', href: '/projects-budget' },
-      { label: 'Project Tracker', href: '/projects-budget#projects' },
-      { label: 'Procurement', href: '/projects-budget#procurement' },
-      { label: 'Audit Reports', href: '/projects-budget#audit' },
+      { label: 'Procurement Tracker', href: '/accountability?type=project' },
+      { label: 'Audit & Follow-through', href: '/accountability?type=audit' },
       { label: 'Public Records', href: '/records' },
       { label: 'Integrity & Public Interest', href: '/integrity' },
       { label: 'Open Government Audit', href: '/open-government' },
