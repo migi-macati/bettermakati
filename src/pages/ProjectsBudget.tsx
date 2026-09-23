@@ -18,6 +18,7 @@ import SEO from '../components/SEO';
 import LastReviewed from '../components/ui/LastReviewed';
 import SharePage from '../components/ui/SharePage';
 import SectionNav from '../components/ui/SectionNav';
+import CitizenSummary from '../components/ui/CitizenSummary';
 import {
   DonutChart,
   FiscalTrendChart,
@@ -27,6 +28,7 @@ import {
   actualSpendingByFunction,
   actualFiscalHistory,
   annualBudgetDocuments,
+  budgetByType,
   budgetByType2026,
   budgetSources,
   budgetSummary,
@@ -66,6 +68,25 @@ const pesoMillions = (millions: number) =>
   }).format(millions) + 'M';
 
 const pct = (value: number) => (value < 0.1 ? '<0.1%' : value.toFixed(1) + '%');
+
+const budgetPlanComparison = [
+  {
+    label: 'Total budget',
+    amount2025M: budgetSummary.totalBudgetM,
+    amount2026M: budgetSummary2026.totalBudgetM,
+  },
+  ...budgetByType2026
+    .filter(item => item.label !== 'Financial Expenses')
+    .map(item => ({
+      label: item.label,
+      amount2025M:
+        budgetByType.find(previous => previous.label === item.label)?.amountM ?? 0,
+      amount2026M: item.amountM,
+    })),
+];
+
+const percentChange = (from: number, to: number) =>
+  from === 0 ? null : ((to - from) / from) * 100;
 
 function ShareBar({ share }: { share: number }) {
   return (
@@ -219,6 +240,92 @@ export default function ProjectsBudget() {
             detail="After reported payables and continuing appropriations"
             icon={PiggyBank}
           />
+        </div>
+
+        <CitizenSummary
+          className="mt-6"
+          eyebrow="2026 budget in brief"
+          title="Operating and capital spending grow faster than the total budget"
+          summary="Makati’s 2026 proposed budget is ₱21.0B, compared with the ₱19.0B 2025 budget plan currently structured in BetterMakati. All major spending groups increase in peso terms, but they do not grow at the same pace."
+          points={[
+            {
+              label: 'Overall',
+              text: (
+                <>
+                  The total plan increases by <strong>₱2.0B (+10.5%)</strong>.
+                </>
+              ),
+            },
+            {
+              label: 'Operating costs',
+              text: (
+                <>
+                  MOOE rises by about <strong>₱1.49B (+16.5%)</strong>, accounting for roughly three-fourths of the net increase in the total plan.
+                </>
+              ),
+            },
+            {
+              label: 'Capital',
+              text: (
+                <>
+                  Capital outlay increases by about <strong>₱217.0M (+18.1%)</strong>, faster than the overall budget, but remains about <strong>6.7%</strong> of the 2026 plan.
+                </>
+              ),
+            },
+            {
+              label: 'Personnel',
+              text: (
+                <>
+                  Personal Services increases by about <strong>₱141.0M (+2.2%)</strong>. Its share of the budget falls from about <strong>34.2%</strong> to <strong>31.6%</strong>.
+                </>
+              ),
+            },
+          ]}
+          note="This compares budget plans, not actual spending. The 2026 report labels the budget-year figures as proposed; 2025 actual receipts and expenditures are shown separately below."
+          actions={
+            <a
+              href={budgetSources.annualBudget2026}
+              target="_blank"
+              rel="noreferrer"
+              className="text-sm font-bold text-primary-700 underline underline-offset-2"
+            >
+              2026 source <ArrowUpRight className="inline h-3.5 w-3.5" />
+            </a>
+          }
+        />
+
+        <div className="mt-6 overflow-x-auto rounded-2xl border border-gray-200 bg-white">
+          <table className="w-full min-w-[700px] text-left">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-4 py-3 font-bold">Budget component</th>
+                <th className="px-4 py-3 font-bold text-right">2025 plan</th>
+                <th className="px-4 py-3 font-bold text-right">2026 proposed</th>
+                <th className="px-4 py-3 font-bold text-right">Change</th>
+              </tr>
+            </thead>
+            <tbody>
+              {budgetPlanComparison.map(item => {
+                const change = percentChange(item.amount2025M, item.amount2026M);
+                return (
+                  <tr key={item.label} className="border-t">
+                    <td className="px-4 py-3 font-semibold text-gray-900">
+                      {item.label}
+                    </td>
+                    <td className="px-4 py-3 text-right">
+                      {peso(item.amount2025M)}
+                    </td>
+                    <td className="px-4 py-3 text-right font-bold text-gray-950">
+                      {peso(item.amount2026M)}
+                    </td>
+                    <td className="px-4 py-3 text-right font-semibold">
+                      {change === null ? '—' : (change >= 0 ? '+' : '') + change.toFixed(1) + '%'}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
 
         <div className="mt-5 flex flex-wrap gap-3 text-sm">
