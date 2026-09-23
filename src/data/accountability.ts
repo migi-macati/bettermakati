@@ -3,9 +3,12 @@ import {
   annualBudgetDocuments,
   budgetSources,
   budgetSummary,
+  budgetSummary2026,
   dedicatedFunds,
+  dedicatedFunds2026,
   developmentFundProject,
   selectedBudgetLines,
+  selectedBudgetLines2026,
 } from './budget2025';
 import { cityMonitorRecords } from './cityMonitor';
 import { serviceDirectory } from './serviceDirectory';
@@ -70,7 +73,11 @@ const fiscalYearEntries: AccountabilityEntry[] = annualBudgetDocuments.map(
       responsibleBodies: ['City Government of Makati'],
       period: String(document.year),
       plannedAmountM:
-        document.year === 2025 ? budgetSummary.totalBudgetM : undefined,
+        document.year === 2026
+          ? budgetSummary2026.totalBudgetM
+          : document.year === 2025
+            ? budgetSummary.totalBudgetM
+            : undefined,
       reportedAmountM: actual?.receiptsM,
       actualAmountM: actual?.expendituresM,
       relatedHref: '/projects-budget#budget',
@@ -105,55 +112,107 @@ const fiscalYearEntries: AccountabilityEntry[] = annualBudgetDocuments.map(
   }
 );
 
-const dedicatedFundEntries: AccountabilityEntry[] = dedicatedFunds.map((fund): AccountabilityEntry => ({
-  id: `2025-fund-${slugify(fund.label)}`,
-  title: `2025 ${fund.label}`,
-  type: 'fiscal',
-  status: 'planned',
-  summary: `${fund.description}. The amount shown is an approved 2025 appropriation, not evidence that the full amount was spent.`,
-  responsibleBodies: ['City Government of Makati'],
-  period: '2025',
-  plannedAmountM: fund.amountM,
-  relatedHref: '/projects-budget#budget',
-  lastVerified: accountabilityReviewed,
-  sources: [
-    {
-      label: 'CY 2025 Annual Budget',
-      url: fund.href,
-      publisher: 'City Government of Makati',
-      publishedOrPeriod: '2025',
-    },
-  ],
-}));
-
-const majorBudgetEntries: AccountabilityEntry[] = selectedBudgetLines
-  .filter(item => item.amountM >= 250 || item.group === 'Capital')
-  .map((item): AccountabilityEntry => ({
-    id: `2025-budget-${slugify(item.label)}`,
-    title: `2025 appropriation: ${item.label}`,
+const dedicatedFundEntries: AccountabilityEntry[] = [
+  ...dedicatedFunds2026.map((fund): AccountabilityEntry => ({
+    id: `2026-fund-${slugify(fund.label)}`,
+    title: `2026 ${fund.label}`,
     type: 'fiscal',
     status: 'planned',
-    summary: `${item.group} line in the 2025 annual budget. This records the approved appropriation and should not be read as evidence that the full amount was obligated or spent.`,
+    summary: `${fund.description}. The amount shown is part of the 2026 budget-year proposal and is not evidence that the full amount has been obligated or spent.`,
+    responsibleBodies: ['City Government of Makati'],
+    period: '2026',
+    plannedAmountM: fund.amountM,
+    relatedHref: '/projects-budget#budget',
+    lastVerified: accountabilityReviewed,
+    sources: [
+      {
+        label: 'CY 2026 Annual Budget Report',
+        url: fund.href,
+        publisher: 'City Government of Makati',
+        publishedOrPeriod: '2026',
+      },
+    ],
+  })),
+  ...dedicatedFunds.map((fund): AccountabilityEntry => ({
+    id: `2025-fund-${slugify(fund.label)}`,
+    title: `2025 ${fund.label}`,
+    type: 'fiscal',
+    status: 'planned',
+    summary: `${fund.description}. The amount shown is an approved 2025 appropriation, not evidence that the full amount was spent.`,
     responsibleBodies: ['City Government of Makati'],
     period: '2025',
-    plannedAmountM: item.amountM,
+    plannedAmountM: fund.amountM,
     relatedHref: '/projects-budget#budget',
     lastVerified: accountabilityReviewed,
     sources: [
       {
         label: 'CY 2025 Annual Budget',
-        url: budgetSources.annualBudget,
+        url: fund.href,
         publisher: 'City Government of Makati',
         publishedOrPeriod: '2025',
       },
     ],
-    notes:
-      item.group === 'Capital'
-        ? [
-            'This is a capital-outlay budget line, not yet a project-level contract or implementation record.',
-          ]
-        : undefined,
-  }));
+  })),
+];
+
+const majorBudgetEntries: AccountabilityEntry[] = [
+  ...selectedBudgetLines2026
+    .filter(item => item.amountM >= 250 || item.group === 'Capital')
+    .map((item): AccountabilityEntry => ({
+      id: `2026-budget-${slugify(item.label)}`,
+      title: `2026 budget proposal: ${item.label}`,
+      type: 'fiscal',
+      status: 'planned',
+      summary: `${item.group} line in the 2026 Annual Budget Report. This is a budget-year proposed amount and should not be read as evidence of obligation, disbursement or delivery.`,
+      responsibleBodies: ['City Government of Makati'],
+      period: '2026',
+      plannedAmountM: item.amountM,
+      relatedHref: '/projects-budget#budget',
+      lastVerified: accountabilityReviewed,
+      sources: [
+        {
+          label: 'CY 2026 Annual Budget Report',
+          url: budgetSources.annualBudget2026,
+          publisher: 'City Government of Makati',
+          publishedOrPeriod: '2026',
+        },
+      ],
+      notes:
+        item.group === 'Capital'
+          ? [
+              'This is a capital-outlay budget line, not yet a project-level contract or implementation record.',
+            ]
+          : undefined,
+    })),
+  ...selectedBudgetLines
+    .filter(item => item.amountM >= 250 || item.group === 'Capital')
+    .map((item): AccountabilityEntry => ({
+      id: `2025-budget-${slugify(item.label)}`,
+      title: `2025 appropriation: ${item.label}`,
+      type: 'fiscal',
+      status: 'planned',
+      summary: `${item.group} line in the 2025 annual budget. This records the approved appropriation and should not be read as evidence that the full amount was obligated or spent.`,
+      responsibleBodies: ['City Government of Makati'],
+      period: '2025',
+      plannedAmountM: item.amountM,
+      relatedHref: '/projects-budget#budget',
+      lastVerified: accountabilityReviewed,
+      sources: [
+        {
+          label: 'CY 2025 Annual Budget',
+          url: budgetSources.annualBudget,
+          publisher: 'City Government of Makati',
+          publishedOrPeriod: '2025',
+        },
+      ],
+      notes:
+        item.group === 'Capital'
+          ? [
+              'This is a capital-outlay budget line, not yet a project-level contract or implementation record.',
+            ]
+          : undefined,
+    })),
+];
 
 const procurementEntries: AccountabilityEntry[] = cityMonitorRecords
   .filter(record => record.type === 'procurement')
