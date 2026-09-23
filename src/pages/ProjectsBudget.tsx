@@ -24,6 +24,8 @@ import {
   FiscalTrendChart,
   HorizontalBarChart,
 } from '../components/budget/BudgetCharts';
+import BarangayScopeBar from '../components/barangay/BarangayScopeBar';
+import { useBarangayScope, withBarangayScope } from '../hooks/useBarangayScope';
 import {
   actualSpendingByFunction,
   actualFiscalHistory,
@@ -123,6 +125,7 @@ function Metric({
 }
 
 export default function ProjectsBudget() {
+  const { barangay } = useBarangayScope();
   const [lineFilter, setLineFilter] = useState('All');
   const [lineQuery, setLineQuery] = useState('');
 
@@ -164,6 +167,42 @@ export default function ProjectsBudget() {
           <SharePage title="Makati Projects & Budget | BetterMakati" />
         </div>
         <LastReviewed note="Budget plans and actuals remain separated; each dataset links to its public source." />
+
+        <BarangayScopeBar
+          note={
+            barangay
+              ? `City budget records below remain citywide unless a public source explicitly identifies Barangay ${barangay.name}. Use the local accountability and map links for records that can be tied to place.`
+              : undefined
+          }
+        />
+
+        {barangay && (
+          <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <Link
+              to={withBarangayScope('/accountability', barangay.slug)}
+              className="rounded-2xl border border-primary-100 bg-white p-5 hover:border-primary-300"
+            >
+              <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+                Local evidence
+              </div>
+              <div className="mt-1 font-extrabold text-gray-950">
+                Accountability records mentioning {barangay.name}
+              </div>
+            </Link>
+            <Link
+              to={withBarangayScope('/civic-map', barangay.slug)}
+              className="rounded-2xl border border-primary-100 bg-white p-5 hover:border-primary-300"
+            >
+              <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+                Place-based view
+              </div>
+              <div className="mt-1 font-extrabold text-gray-950">
+                Infrastructure and reports in {barangay.name}
+              </div>
+            </Link>
+          </div>
+        )}
+
         <SectionNav items={[
           { label: 'Overview', href: '#budget' },
           { label: 'Projects', href: '#projects' },
