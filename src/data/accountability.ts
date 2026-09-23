@@ -67,9 +67,12 @@ const fiscalYearEntries: AccountabilityEntry[] = annualBudgetDocuments.map(
       title: `${document.year} city fiscal record`,
       type: 'fiscal',
       status: 'reported',
-      summary: hasActuals
-        ? 'The annual budget document is indexed together with DBM/BLGF reported receipts and expenditures for the same year.'
-        : 'The annual budget document is indexed. Comparable receipts and expenditures are not yet structured in this ledger for the same year.',
+      summary:
+        document.year === 2026
+          ? 'The 2026 Annual Budget Report records a ₱21.0B budget-year proposed appropriation. Comparable full-year 2026 receipts and expenditures are not yet available in the DBM/BLGF actual series.'
+          : hasActuals
+            ? 'The annual budget document is indexed together with DBM/BLGF reported receipts and expenditures for the same year.'
+            : 'The annual budget document is indexed. Comparable receipts and expenditures are not yet structured in this ledger for the same year.',
       responsibleBodies: ['City Government of Makati'],
       period: String(document.year),
       plannedAmountM:
@@ -102,9 +105,14 @@ const fiscalYearEntries: AccountabilityEntry[] = annualBudgetDocuments.map(
       ],
       notes: [
         'Budget authority and reported actual receipts/expenditures answer different questions and are kept separate.',
-        ...(document.year !== 2025
+        ...(document.year !== 2025 && document.year !== 2026
           ? [
               'The total approved budget amount for this year has not yet been normalized into the ledger, so the original annual-budget document remains the controlling source.',
+            ]
+          : []),
+        ...(document.year === 2026
+          ? [
+              'The ₱21.0B figure is the Budget Year (Proposed) total in the 2026 Annual Budget Report; it is not presented here as actual expenditure.',
             ]
           : []),
       ],
