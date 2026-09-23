@@ -222,7 +222,7 @@ test('barangay landing page uses the persistent BetterBarangay context bar', asy
 test('sliceable city pages always expose the persistent BetterBarangay bar', async ({ page }) => {
   await page.goto(baseURL + '/services');
   await expect(page.getByRole('region', { name: 'BetterBarangay view' })).toBeVisible();
-  await expect(page.getByText('BetterBarangay View', { exact: true })).toBeVisible();
+  await expect(page.getByRole('region', { name: 'BetterBarangay view' }).locator('span').filter({ hasText: 'BetterBarangay View' }).first()).toBeVisible();
   await expect(page.getByLabel('Choose BetterBarangay view')).toHaveValue('');
   await page.getByLabel('Choose BetterBarangay view').selectOption('poblacion');
   await expect(page).toHaveURL(/\/services\?barangay=poblacion/);
@@ -232,7 +232,7 @@ test('sliceable city pages always expose the persistent BetterBarangay bar', asy
 test('scoped city pages show the selected BetterBarangay in the persistent bar', async ({ page }) => {
   await page.goto(baseURL + '/services?barangay=carmona');
   await expect(page.getByRole('region', { name: 'BetterBarangay view' })).toBeVisible();
-  await expect(page.getByText('BetterCarmona', { exact: true })).toBeVisible();
+  await expect(page.getByRole('region', { name: 'BetterBarangay view' }).locator('span').filter({ hasText: 'BetterCarmona' }).first()).toBeVisible();
   await expect(page.getByLabel('Choose BetterBarangay view')).toHaveValue('carmona');
   await expect(page.getByText('Deep dive into a BetterBarangay', { exact: true })).toHaveCount(0);
 });
