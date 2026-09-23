@@ -8,6 +8,7 @@ const routes = [
   '/services/guide/community-tax-certificate',
   '/government',
   '/barangays',
+  '/barangays/poblacion',
   '/projects-budget',
   '/history',
   '/visit',

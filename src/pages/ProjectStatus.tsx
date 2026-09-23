@@ -21,7 +21,7 @@ import { Heading } from '../components/ui/Heading';
 import LastReviewed from '../components/ui/LastReviewed';
 import SharePage from '../components/ui/SharePage';
 import { accountabilityCoverageGaps, accountabilityEntries } from '../data/accountability';
-import { barangays } from '../data/barangays';
+import { barangayCoverageSummary, barangayProfilesReviewed } from '../data/barangays';
 import { electedOfficials } from '../data/electedOfficials';
 import {
   doctrineFoundations,
@@ -153,9 +153,39 @@ export default function ProjectStatus() {
     },
     {
       label: 'Barangay profiles',
-      value: barangays.length.toLocaleString('en-PH'),
+      value: `${barangayCoverageSummary.profiles}/23`,
       detail: 'Current Makati barangays represented in BetterMakati',
       icon: Users,
+    },
+    {
+      label: 'Barangay council rosters',
+      value: `${barangayCoverageSummary.councilRosters}/23`,
+      detail: `Current 2023–2026 council rosters indexed; last reviewed ${barangayProfilesReviewed}`,
+      icon: BadgeCheck,
+    },
+    {
+      label: 'Barangay hall contacts',
+      value: `${barangayCoverageSummary.hallContacts}/23`,
+      detail: 'Profiles with at least one verified hall address, phone or email',
+      icon: Building2,
+    },
+    {
+      label: 'Barangays with verified YAKAP clinics',
+      value: `${barangayCoverageSummary.verifiedHealthFacilityBarangays}/23`,
+      detail: 'Barangays with a PhilHealth YAKAP-accredited government health center in the current local facility index',
+      icon: ShieldCheck,
+    },
+    {
+      label: 'Specific Makati barangay pages',
+      value: `${barangayCoverageSummary.specificOfficialPages}/23`,
+      detail: 'Profiles linked to a barangay-specific Makati Web Portal page rather than the citywide barangay directory',
+      icon: Building2,
+    },
+    {
+      label: 'Verified official social channels',
+      value: `${barangayCoverageSummary.verifiedSocialChannels}/23`,
+      detail: 'Barangay social accounts BetterMakati could verify without guessing from similarly named or unofficial pages',
+      icon: MessagesSquare,
     },
     {
       label: 'Elected-official profiles',

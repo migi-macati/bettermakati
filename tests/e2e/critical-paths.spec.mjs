@@ -267,6 +267,29 @@ test('scoped city pages show the selected BetterBarangay in the persistent bar',
   await expect(page.getByText('Deep dive into a BetterBarangay', { exact: true })).toHaveCount(0);
 });
 
+test('barangay homepage exposes council services election and local accountability', async ({ page }) => {
+  await page.goto(baseURL + '/barangays/poblacion');
+  await expect(page.getByRole('heading', { name: /Common barangay transactions/i })).toBeVisible();
+  await expect(page.getByRole('heading', { name: /Current barangay council/i })).toBeVisible();
+  await expect(page.getByText(/Jose Mikhail Ranillo Villena/i)).toBeVisible();
+  await expect(page.getByRole('heading', { name: /2025 mayoral result/i })).toBeVisible();
+  await expect(page.getByRole('heading', { name: /Locally tagged public records/i })).toBeVisible();
+});
+
+test('barangay gateway search finds a barangay through an official name', async ({ page }) => {
+  await page.goto(baseURL + '/barangays');
+  await page.getByPlaceholder(/Search barangay, official or local place/i).fill('Jose Mikhail');
+  await expect(page.getByRole('link', { name: /BetterPoblacion/i })).toBeVisible();
+  await expect(page.getByRole('link', { name: /BetterBangkal/i })).toHaveCount(0);
+});
+
+test('site search indexes barangay officials', async ({ page }) => {
+  await page.goto(baseURL + '/');
+  const search = page.getByPlaceholder(/Try Yellow Card, Poblacion, budget, cinema/i);
+  await search.fill('Jose Mikhail Villena');
+  await expect(page.getByText('Barangay Poblacion', { exact: true }).first()).toBeVisible();
+});
+
 test('barangay homepage launches scoped Civic Map', async ({ page }) => {
   await page.goto(baseURL + '/barangays/poblacion');
   await page.getByRole('link', { name: 'Open local Civic Map' }).click();
