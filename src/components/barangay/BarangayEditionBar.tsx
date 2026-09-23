@@ -54,7 +54,7 @@ export default function BarangayEditionBar() {
 
   return (
     <div className="border-t border-primary-800 bg-primary-900 text-white">
-      <div className="container flex min-h-13 items-center gap-2 px-3 sm:px-4">
+      <div className="container flex min-h-[52px] items-center gap-2 px-3 sm:px-4">
         <div className="relative shrink-0 border-r border-white/20 pr-2 sm:pr-3">
           <div className="pointer-events-none flex min-h-11 items-center gap-1.5 rounded-lg px-2">
             <span className="text-base font-black tracking-tight sm:text-lg">
