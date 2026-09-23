@@ -97,17 +97,22 @@
     "path": "/projects-budget",
     "label": "Projects & budget",
     "status": "partial",
-    "reviewedAt": "2026-09-20",
+    "reviewedAt": "2026-09-24",
     "checks": [
-      "budget",
-      "actuals",
-      "projects",
-      "procurement",
-      "audit",
+      "2025-adopted-vs-current-estimate",
+      "2026-budget-summary",
+      "citywide-line-reconciliation",
+      "reported-receipts-expenditures",
+      "development-fund-follow-through",
+      "special-education-fund-utilization",
+      "structured-procurement",
+      "audit-follow-through",
       "trend-view"
     ],
     "gaps": [
-      "Coverage is limited by what Makati, DBM, COA and PhilGEPS publish in machine-readable or extractable form."
+      "The 103 citywide summary lines from the five-page 2026 budget summary are structured and reconcile to ₱21.0B; department-level pages in the full 82-page report are not yet normalized into searchable line records.",
+      "Structured procurement coverage includes the public bid-result disclosures already ingested; many records still lack a separately linked contract, notice to proceed, implementation or completion source.",
+      "Audit follow-through is structured only where an official or attributable public record can be linked; BetterMakati does not yet have a definitive current-year inventory of resolved and unresolved COA recommendations."
     ]
   },
   {
