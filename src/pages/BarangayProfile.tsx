@@ -16,8 +16,6 @@ import { Heading } from '../components/ui/Heading';
 import SEO from '../components/SEO';
 import LastReviewed from '../components/ui/LastReviewed';
 import SharePage from '../components/ui/SharePage';
-import SectionNav from '../components/ui/SectionNav';
-import BarangayLocalNav from '../components/barangay/BarangayLocalNav';
 import {
   barangays,
   barangayMapsUrl,
@@ -68,7 +66,7 @@ export default function BarangayProfile() {
     official => official.district === barangay.legislativeDistrict
   );
   const barangayServices = serviceDirectory.filter(service => commonBarangayServiceIds.includes(service.id));
-  const localFacilities = barangayFacilities(barangay.name);
+  const localFacilities = barangayFacilities(barangay.slug, barangay.name);
   const barangayElection2025 = findBarangayMayoralResult2025(barangay.slug);
 
   return (
@@ -112,20 +110,6 @@ export default function BarangayProfile() {
           <SharePage title={'Barangay ' + barangay.name + ' | BetterMakati'} />
         </div>
         <LastReviewed note="Population uses PSA 2024 POPCEN; time-sensitive contacts should be checked with official sources." />
-
-        <BarangayLocalNav slug={barangay.slug} />
-
-        <SectionNav
-          items={[
-            { label: 'Overview', href: '#overview' },
-            { label: 'Representation', href: '#representation' },
-            { label: '2025 election', href: '#election-2025' },
-            { label: 'Services', href: '#services' },
-            { label: 'Facilities', href: '#facilities' },
-            { label: 'Community', href: '#community' },
-            { label: 'More information', href: '#more' },
-          ]}
-        />
 
         <div className="mt-5 flex flex-wrap gap-3">
           <Link to={'/today?barangay=' + barangay.slug} className="brand-btn-primary">
@@ -358,15 +342,43 @@ export default function BarangayProfile() {
         <div className="section-eyebrow">Barangay facilities</div>
         <Heading level={2}>Places to start locally</Heading>
         <p className="max-w-3xl text-sm leading-relaxed text-gray-600">
-          These links help locate the barangay hall, health center, public schools and nearby safety facilities. The map links are discovery aids; confirm the exact facility, hours and jurisdiction with the barangay or Makati department. The city Citizen&apos;s Charter is the source for the facility/service framework.
+          Verified local facilities are shown as records, with their source where available. We do not create placeholder schools, police stations or clinics when a facility has not yet been matched confidently.
         </p>
-        <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+        <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
           {localFacilities.map(facility => (
-            <a key={facility.name} href={facility.href} target="_blank" rel="noreferrer" className="rounded-xl border border-primary-100 bg-[#fffdf8] p-4 hover:border-primary-300">
+            <div key={facility.name} className="rounded-2xl border border-primary-100 bg-[#fffdf8] p-5">
               <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">{facility.type}</div>
-              <div className="mt-1 font-extrabold text-gray-950">{facility.name}</div>
-              <span className="mt-3 inline-flex items-center gap-1 text-sm font-bold text-primary-700">Open map <ExternalLink className="h-3.5 w-3.5" /></span>
-            </a>
+              <div className="mt-1 text-lg font-extrabold text-gray-950">{facility.name}</div>
+              {facility.address && (
+                <div className="mt-3 flex gap-2 text-sm text-gray-700">
+                  <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary-700" />
+                  <span>{facility.address}</span>
+                </div>
+              )}
+              {facility.phone && (
+                <div className="mt-2 flex gap-2 text-sm text-gray-700">
+                  <Phone className="mt-0.5 h-4 w-4 shrink-0 text-primary-700" />
+                  <span>{facility.phone}</span>
+                </div>
+              )}
+              {facility.email && (
+                <div className="mt-2 flex gap-2 text-sm text-gray-700">
+                  <Mail className="mt-0.5 h-4 w-4 shrink-0 text-primary-700" />
+                  <a href={'mailto:' + facility.email} className="break-all font-semibold text-primary-700 underline underline-offset-2">{facility.email}</a>
+                </div>
+              )}
+              {facility.note && <p className="mt-3 text-xs leading-relaxed text-gray-500">{facility.note}</p>}
+              <div className="mt-4 flex flex-wrap gap-3">
+                <a href={facility.href} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-sm font-bold text-primary-700">
+                  Open map <ExternalLink className="h-3.5 w-3.5" />
+                </a>
+                {facility.source && (
+                  <a href={facility.source} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-sm font-bold text-primary-700">
+                    {facility.sourceLabel || 'Source'} <ExternalLink className="h-3.5 w-3.5" />
+                  </a>
+                )}
+              </div>
+            </div>
           ))}
         </div>
         <a href={makatiCitizenCharterSource} target="_blank" rel="noreferrer" className="mt-5 inline-flex items-center gap-1 text-sm font-bold text-primary-700 underline underline-offset-2">Open Makati Citizen&apos;s Charter <ExternalLink className="h-3.5 w-3.5" /></a>
