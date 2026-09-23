@@ -21,7 +21,7 @@ import LastReviewed from '../components/ui/LastReviewed';
 import SharePage from '../components/ui/SharePage';
 import CivicMapEmbed from '../components/civic/CivicMapEmbed';
 import BarangayScopeBar from '../components/barangay/BarangayScopeBar';
-import { useBarangayScope } from '../hooks/useBarangayScope';
+import { useBarangayScope, withBarangayScope } from '../hooks/useBarangayScope';
 import {
   civicAssets,
   civicAssetTypeLabels,
@@ -107,7 +107,7 @@ export default function CivicMap() {
           </div>
           <div className="flex flex-wrap items-center gap-2">
             <Link to="/civic-map/reports" className="brand-btn-secondary">
-              Weekly & monthly reports
+              {barangay ? 'Citywide reports' : 'Weekly & monthly reports'}
             </Link>
             <SharePage title="BetterMakati Civic Map" />
           </div>
@@ -209,7 +209,7 @@ export default function CivicMap() {
             return (
               <Link
                 key={asset.id}
-                to={'/civic-map/' + asset.id}
+                to={withBarangayScope('/civic-map/' + asset.id, barangay?.slug)}
                 className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
               >
                 <div className="flex flex-wrap items-center gap-2 text-xs font-bold">
