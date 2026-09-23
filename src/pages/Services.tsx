@@ -159,11 +159,11 @@ const Services: React.FC = () => {
           <Text className="mt-2 max-w-3xl text-gray-600">
             City, barangay and major national services used by people and businesses in Makati.
           </Text>
+          <BarangayScopeBar note="Barangay-level services are brought forward first. City and national services remain available through the government-level filter." />
           <LastReviewed
             note="Requirements can change. Open the linked official source before acting."
             className="mt-4"
           />
-          <BarangayScopeBar note="When a barangay is selected, barangay-level services are brought forward first. City and national services remain available by changing the government-level filter." />
 
           {barangay && (
             <div className="mt-4 rounded-2xl border border-primary-100 bg-white p-5">
