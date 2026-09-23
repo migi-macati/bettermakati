@@ -2,7 +2,6 @@ import {
   ArrowRight,
   BarChart3,
   ClipboardCheck,
-  FileText,
   MapPinned,
   ReceiptText,
   Vote,
