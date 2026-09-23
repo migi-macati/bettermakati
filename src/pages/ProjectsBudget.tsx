@@ -31,6 +31,8 @@ import {
   annualBudgetDocuments,
   budgetByType,
   budgetByType2026,
+  budgetByTypeCurrentEstimate2025,
+  budgetCurrentEstimate2025,
   budgetSources,
   budgetSummary,
   budgetSummary2026,
@@ -42,6 +44,11 @@ import {
   revenueSources,
   selectedBudgetLines2026,
 } from '../data/budget2025';
+import {
+  auditFindingEntries,
+  procurementProjectEntries,
+  specialEducationFundEntries,
+} from '../data/accountabilitySupplement';
 
 const peso = (millions: number) => {
   const sign = millions < 0 ? '−' : '';
@@ -73,16 +80,20 @@ const pct = (value: number) => (value < 0.1 ? '<0.1%' : value.toFixed(1) + '%');
 const budgetPlanComparison = [
   {
     label: 'Total budget',
-    amount2025M: budgetSummary.totalBudgetM,
-    amount2026M: budgetSummary2026.totalBudgetM,
+    adopted2025M: budgetSummary.totalBudgetM,
+    estimate2025M: budgetCurrentEstimate2025.totalAppropriationM,
+    proposed2026M: budgetSummary2026.totalBudgetM,
   },
   ...budgetByType2026
     .filter(item => item.label !== 'Financial Expenses')
     .map(item => ({
       label: item.label,
-      amount2025M:
+      adopted2025M:
         budgetByType.find(previous => previous.label === item.label)?.amountM ?? 0,
-      amount2026M: item.amountM,
+      estimate2025M:
+        budgetByTypeCurrentEstimate2025.find(previous => previous.label === item.label)
+          ?.amountM ?? 0,
+      proposed2026M: item.amountM,
     })),
 ];
 
