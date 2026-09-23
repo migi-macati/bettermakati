@@ -90,7 +90,7 @@ test('homepage featured insights carousel opens the cited report finding', async
     /Four signals from Makati’s latest city data/i
   );
   await expect(page.locator('#budget-growth')).toBeVisible();
-  await expect(page.getByRole('link', { name: /\[1\] Projects & Budget/i })).toBeVisible();
+  await expect(page.getByRole('link', { name: '[1] Projects & Budget', exact: true })).toBeVisible();
 });
 
 test('homepage featured insights can be advanced manually', async ({ page }) => {
