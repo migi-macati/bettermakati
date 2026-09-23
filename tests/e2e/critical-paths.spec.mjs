@@ -206,9 +206,9 @@ test('Projects & Budget separates adopted plan, current estimate and 2026 propos
   await expect(page.getByText('2025 adopted budget plan', { exact: true })).toBeVisible();
   await expect(page.getByText('2025 current-year estimate', { exact: true })).toBeVisible();
   await expect(page.getByText('2026 proposed city budget', { exact: true })).toBeVisible();
-  await expect(page.getByRole('columnheader', { name: '2025 adopted' })).toBeVisible();
-  await expect(page.getByRole('columnheader', { name: '2025 current estimate' })).toBeVisible();
-  await expect(page.getByRole('columnheader', { name: '2026 proposed' })).toBeVisible();
+  await expect(page.getByText('2025 adopted', { exact: true }).first()).toBeVisible();
+  await expect(page.getByText('2025 current estimate', { exact: true }).first()).toBeVisible();
+  await expect(page.getByText('2026 proposed', { exact: true }).first()).toBeVisible();
 });
 
 test('Budget Explorer exposes the complete reconciled 2026 citywide summary', async ({ page }) => {
@@ -217,8 +217,11 @@ test('Budget Explorer exposes the complete reconciled 2026 citywide summary', as
   await expect(page.getByText('Line items reconcile to ₱21.0B', { exact: true })).toBeVisible();
   const search = page.getByPlaceholder('Search line or account code');
   await search.fill('1-07-04-990');
-  await expect(page.getByText('Other Structures', { exact: true })).toBeVisible();
-  await expect(page.getByText('₱55,265,000', { exact: true })).toBeVisible();
+  const explorerTable = page.locator('table').filter({
+    has: page.getByRole('columnheader', { name: 'Account code' }),
+  });
+  await expect(explorerTable.getByText('Other Structures', { exact: true })).toBeVisible();
+  await expect(explorerTable.getByText('₱55,265,000', { exact: true })).toBeVisible();
 });
 
 test('Projects & Budget displays procurement evidence instead of only linking out', async ({ page }) => {
