@@ -21,7 +21,7 @@ import { Heading } from '../components/ui/Heading';
 import LastReviewed from '../components/ui/LastReviewed';
 import SharePage from '../components/ui/SharePage';
 import { accountabilityCoverageGaps, accountabilityEntries } from '../data/accountability';
-import { barangayCoverageSummary, barangayProfilesReviewed } from '../data/barangays';
+import { barangayCoverageGaps, barangayCoverageSummary, barangayProfilesReviewed } from '../data/barangays';
 import { electedOfficials } from '../data/electedOfficials';
 import {
   doctrineFoundations,
@@ -288,6 +288,52 @@ export default function ProjectStatus() {
               </div>
             );
           })}
+        </div>
+      </Section>
+
+      <Section className="bg-[#f5f8f2]">
+        <div className="section-eyebrow">BetterBarangay coverage</div>
+        <Heading level={2}>What is still missing by barangay</Heading>
+        <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-700">
+          These are source-coverage gaps, not assumptions about whether a service, facility or channel exists. BetterMakati leaves a field open when a reliable current public source has not been verified.
+        </p>
+
+        <div className="mt-6 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+          {barangayCoverageGaps.map(item => (
+            <details
+              key={item.slug}
+              className="rounded-2xl border border-primary-100 bg-white p-5"
+            >
+              <summary className="cursor-pointer font-extrabold text-gray-950">
+                {item.name}
+                <span className="ml-2 text-xs font-bold text-gray-500">
+                  {item.missing.length === 0
+                    ? 'No tracked profile gap'
+                    : item.missing.length + ' open'}
+                </span>
+              </summary>
+              {item.missing.length > 0 ? (
+                <ul className="mt-4 space-y-2 text-sm text-gray-700">
+                  {item.missing.map(gap => (
+                    <li key={gap} className="flex gap-2">
+                      <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-secondary-700" />
+                      <span>{gap}</span>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="mt-4 text-sm text-gray-600">
+                  No gap is currently flagged against the BetterBarangay minimum profile fields.
+                </p>
+              )}
+              <Link
+                to={'/barangays/' + item.slug}
+                className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700"
+              >
+                Open BetterBarangay <ExternalLink className="h-3.5 w-3.5" />
+              </Link>
+            </details>
+          ))}
         </div>
       </Section>
 
