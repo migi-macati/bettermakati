@@ -20,7 +20,6 @@ export const mainNavigation: NavigationItem[] = [
     href: '/government',
     children: [
       { label: 'Government', href: '/government' },
-      { label: 'Barangays', href: '/barangays' },
       { label: 'Elections & Voting', href: '/elections' },
       { label: 'Makati Statistics', href: '/statistics' },
       { label: 'Legislation', href: '/legislation' },
@@ -28,6 +27,7 @@ export const mainNavigation: NavigationItem[] = [
       { label: 'History of Makati', href: '/history' },
     ],
   },
+  { label: 'Barangays', href: '/barangays' },
   {
     label: 'Accountability',
     href: '/accountability',
