@@ -12,7 +12,6 @@ import {
   MessageSquarePlus,
   Phone,
   Search,
-  Users,
   Wrench,
 } from 'lucide-react';
 import { Link, useParams } from 'react-router';
