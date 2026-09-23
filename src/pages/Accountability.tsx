@@ -789,7 +789,7 @@ export default function Accountability() {
                     {entry.type === 'fiscal' && (
                       <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
                         <div className="rounded-xl bg-gray-50 p-4">
-                          <span className="text-xs text-gray-500">Approved budget</span>
+                          <span className="text-xs text-gray-500">Budget / plan amount</span>
                           <div className="font-extrabold text-gray-950">
                             {money(entry.plannedAmountM)}
                           </div>
