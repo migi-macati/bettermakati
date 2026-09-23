@@ -154,6 +154,34 @@ const Home: React.FC = () => {
       <Hero />
       <CapabilityCarousel />
 
+
+      <section className="border-b border-primary-100 bg-white py-7">
+        <div className="container px-5 md:px-6 lg:px-8">
+          <Link
+            to="/reports/makati-overview"
+            className="flex flex-col gap-5 rounded-2xl border border-primary-200 bg-[#fffdf8] p-5 transition hover:border-primary-500 hover:shadow-sm md:flex-row md:items-center md:justify-between md:p-6"
+          >
+            <div className="max-w-4xl">
+              <div className="section-eyebrow">Reports & insights</div>
+              <h2 className="text-2xl font-extrabold tracking-tight text-gray-950 md:text-3xl">
+                Makati Overview
+              </h2>
+              <p className="mt-2 text-sm leading-relaxed text-gray-600 md:text-base">
+                A cited synthesis of what BetterMakati&apos;s budgets, statistics,
+                barangay data, elections, accountability records and public documents
+                say about the city right now.
+              </p>
+              <div className="mt-2 text-xs font-semibold text-gray-500">
+                Updated 23 September 2026 · BetterMakati pages cited first
+              </div>
+            </div>
+            <span className="inline-flex shrink-0 items-center gap-2 text-sm font-bold text-primary-700">
+              Read the overview <ArrowRight className="h-4 w-4" />
+            </span>
+          </Link>
+        </div>
+      </section>
+
       <section className="border-b border-primary-100 bg-[#f5f8f2] py-8">
         <div className="container px-5 md:px-6 lg:px-8">
           <div className="rounded-2xl border border-primary-200 bg-white p-5 md:p-6">
