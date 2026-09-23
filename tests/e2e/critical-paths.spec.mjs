@@ -54,6 +54,24 @@ for (const [route, heading] of criticalRoutes) {
   });
 }
 
+test('Barangays is a top-level main navigation option', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto(baseURL + '/');
+  await expect(page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'Barangays', exact: true })).toBeVisible();
+
+  await page.getByRole('button', { name: 'City', exact: true }).click();
+  const cityPanel = page.locator('#desktop-panel-city');
+  await expect(cityPanel.getByRole('link', { name: 'Barangays', exact: true })).toHaveCount(0);
+});
+
+test('homepage exposes and opens barangay editions', async ({ page }) => {
+  await page.goto(baseURL + '/');
+  await expect(page.getByRole('heading', { name: /Go deeper into your barangay/i })).toBeVisible();
+  await page.getByLabel('Choose a barangay edition').selectOption('poblacion');
+  await expect(page).toHaveURL(/\/barangays\/poblacion$/);
+  await expect(page.getByRole('heading', { level: 1 })).toContainText(/BetterPoblacion/i);
+});
+
 test('homepage universal search tolerates a simple typo', async ({ page }) => {
   await page.goto(baseURL + '/');
   const search = page.getByPlaceholder(/Try Yellow Card, Poblacion, budget, cinema/i);

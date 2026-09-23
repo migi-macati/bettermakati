@@ -1,4 +1,4 @@
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import {
   ArrowRight,
   Store,
@@ -24,6 +24,7 @@ import CapabilityCarousel from '../components/home/CapabilityCarousel';
 import PhotoCarousel from '../components/ui/PhotoCarousel';
 import { homeImageSet } from '../data/cityImages';
 import SEO from '../components/SEO';
+import { barangays } from '../data/barangays';
 
 const quickServices = [
   {
@@ -140,6 +141,8 @@ const stats = [
 ];
 
 const Home: React.FC = () => {
+  const navigate = useNavigate();
+
   return (
     <>
       <SEO
@@ -150,6 +153,50 @@ const Home: React.FC = () => {
 
       <Hero />
       <CapabilityCarousel />
+
+      <section className="border-b border-primary-100 bg-[#f5f8f2] py-8">
+        <div className="container px-5 md:px-6 lg:px-8">
+          <div className="rounded-2xl border border-primary-200 bg-white p-5 md:p-6">
+            <div className="grid gap-5 lg:grid-cols-[1fr_auto] lg:items-center">
+              <div>
+                <div className="section-eyebrow">Barangay editions</div>
+                <h2 className="text-2xl font-extrabold tracking-tight text-gray-950 md:text-3xl">
+                  Go deeper into your barangay
+                </h2>
+                <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600 md:text-base">
+                  BetterMakati also has local barangay homepages. Open BetterBangkal,
+                  BetterPoblacion, BetterBel-Air and the other barangay editions for
+                  local services, contacts, public places, projects, statistics,
+                  reporting and participation.
+                </p>
+              </div>
+
+              <div className="flex flex-col gap-2 sm:flex-row lg:min-w-[26rem]">
+                <label className="flex-1">
+                  <span className="sr-only">Choose a barangay edition</span>
+                  <select
+                    defaultValue=""
+                    onChange={event => {
+                      if (event.target.value) navigate('/barangays/' + event.target.value);
+                    }}
+                    className="min-h-11 w-full rounded-xl border border-primary-200 bg-white px-3 py-2 text-sm font-bold text-gray-800 outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                  >
+                    <option value="">Choose a barangay</option>
+                    {barangays.map(barangay => (
+                      <option key={barangay.slug} value={barangay.slug}>
+                        {barangay.name}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <Link to="/barangays" className="brand-btn-secondary justify-center whitespace-nowrap">
+                  View all barangays <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <section className="bg-[#fffdf8] py-14">
         <div className="container px-5 md:px-6 lg:px-8">
