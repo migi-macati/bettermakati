@@ -17,6 +17,7 @@ import SEO from '../components/SEO';
 import LastReviewed from '../components/ui/LastReviewed';
 import SharePage from '../components/ui/SharePage';
 import SectionNav from '../components/ui/SectionNav';
+import BarangayLocalNav from '../components/barangay/BarangayLocalNav';
 import {
   barangays,
   barangayMapsUrl,
@@ -103,13 +104,16 @@ export default function BarangayProfile() {
           <div>
             <Heading>{barangay.name}</Heading>
             <p className="max-w-2xl text-gray-600">
-              Population, city representation, map and available community
-              resources for Barangay {barangay.name}.
+              Your local BetterMakati view for services, government, projects,
+              accountability, participation, public places and community information
+              in Barangay {barangay.name}.
             </p>
           </div>
           <SharePage title={'Barangay ' + barangay.name + ' | BetterMakati'} />
         </div>
         <LastReviewed note="Population uses PSA 2024 POPCEN; time-sensitive contacts should be checked with official sources." />
+
+        <BarangayLocalNav slug={barangay.slug} />
 
         <SectionNav
           items={[

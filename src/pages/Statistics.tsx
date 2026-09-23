@@ -8,6 +8,9 @@ import SharePage from '../components/ui/SharePage';
 import CitizenSummary from '../components/ui/CitizenSummary';
 import { HorizontalBarChart } from '../components/budget/BudgetCharts';
 import CityComparison from '../components/statistics/CityComparison';
+import BarangayScopeBar from '../components/barangay/BarangayScopeBar';
+import { useBarangayScope } from '../hooks/useBarangayScope';
+import { barangays } from '../data/barangays';
 
 const psaUrl = 'https://psa.gov.ph/classification/psgc/barangays/1380300000';
 const populationSource =
@@ -54,6 +57,12 @@ const populationCsv = [
 ].join('\n');
 
 export default function Statistics() {
+  const { barangay } = useBarangayScope();
+  const cityPopulation = barangays.reduce((sum, item) => sum + item.population2024, 0);
+  const barangayPopulationShare = barangay
+    ? (barangay.population2024 / cityPopulation) * 100
+    : null;
+
   return (
     <>
       <SEO
@@ -76,6 +85,34 @@ export default function Statistics() {
           <SharePage title="Makati Statistics | BetterMakati" />
         </div>
         <LastReviewed note="Population and GDP figures use PSA sources and stated geographic definitions." />
+
+        <BarangayScopeBar note="Barangay population is shown from the 2024 POPCEN. Citywide economic and historical series remain visible where no comparable barangay series is available." />
+
+        {barangay && (
+          <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
+            <div className="stat-card">
+              <div className="text-2xl md:text-3xl font-extrabold text-primary-800">
+                {barangay.population2024.toLocaleString('en-PH')}
+              </div>
+              <div className="mt-1 font-semibold text-gray-900">Barangay population</div>
+              <div className="mt-1 text-xs text-gray-500">2024 POPCEN</div>
+            </div>
+            <div className="stat-card">
+              <div className="text-2xl md:text-3xl font-extrabold text-primary-800">
+                {barangayPopulationShare?.toFixed(1)}%
+              </div>
+              <div className="mt-1 font-semibold text-gray-900">Share of Makati population</div>
+              <div className="mt-1 text-xs text-gray-500">Current 23-barangay boundary</div>
+            </div>
+            <div className="stat-card">
+              <div className="text-xl md:text-2xl font-extrabold text-primary-800">
+                {barangay.legislativeDistrict}
+              </div>
+              <div className="mt-1 font-semibold text-gray-900">Legislative district</div>
+              <div className="mt-1 text-xs text-gray-500">Makati City</div>
+            </div>
+          </div>
+        )}
 
         <SectionNav
           items={[
