@@ -72,12 +72,11 @@ export default function Participate() {
           </div>
           <SharePage title="Participate in Makati | BetterMakati" />
         </div>
+        <BarangayScopeBar note="Official participation opportunities remain source-led. Local actions below stay tied to the selected barangay." />
         <LastReviewed
           date={participationReviewed}
           note="Official opportunities and BetterMakati submissions are labeled separately."
         />
-
-        <BarangayScopeBar note="Official participation opportunities remain source-led. Local actions below stay tied to the selected barangay." />
 
         {barangay && (
           <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-3">
