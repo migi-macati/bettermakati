@@ -28,15 +28,20 @@ import {
   actualFiscalHistory,
   annualBudgetDocuments,
   budgetByType,
+  budgetByType2026,
   budgetSources,
   budgetSummary,
+  budgetSummary2026,
   capitalBudgetLines,
+  capitalBudgetLines2026,
   cityPopulation,
   dedicatedFunds,
+  dedicatedFunds2026,
   developmentFundProject,
   localRevenueBreakdown,
   revenueSources,
   selectedBudgetLines,
+  selectedBudgetLines2026,
 } from '../data/budget2025';
 
 const peso = (millions: number) => {
@@ -106,7 +111,7 @@ export default function ProjectsBudget() {
 
   const visibleLines = useMemo(() => {
     const q = lineQuery.trim().toLowerCase();
-    return selectedBudgetLines.filter(item => {
+    return selectedBudgetLines2026.filter(item => {
       const groupMatch = lineFilter === 'All' || item.group === lineFilter;
       const queryMatch = !q || item.label.toLowerCase().includes(q);
       return groupMatch && queryMatch;
@@ -114,7 +119,7 @@ export default function ProjectsBudget() {
   }, [lineFilter, lineQuery]);
 
   const perResident = Math.round(
-    (budgetSummary.totalBudgetM * 1_000_000) / cityPopulation
+    (budgetSummary2026.totalBudgetM * 1_000_000) / cityPopulation
   );
 
   return (
@@ -135,7 +140,7 @@ export default function ProjectsBudget() {
 
       <Section id="budget" className="bg-[#fffdf8]">
         <div className="section-eyebrow">
-          2025 budget detail · records through 2026
+          2026 budget plan · actuals through 2025
         </div>
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <Heading>Where Makati’s money comes from and goes</Heading>
@@ -191,8 +196,8 @@ export default function ProjectsBudget() {
 
         <div className="mt-8 grid grid-cols-2 lg:grid-cols-4 gap-4">
           <Metric
-            label="2025 city budget"
-            value={peso(budgetSummary.totalBudgetM)}
+            label="2026 proposed city budget"
+            value={peso(budgetSummary2026.totalBudgetM)}
             detail={
               'About ' +
               pesoExact(perResident / 1_000_000) +
@@ -222,12 +227,12 @@ export default function ProjectsBudget() {
 
         <div className="mt-5 flex flex-wrap gap-3 text-sm">
           <a
-            href={budgetSources.annualBudget}
+            href={budgetSources.annualBudget2026}
             target="_blank"
             rel="noreferrer"
             className="font-bold text-primary-700 underline underline-offset-2"
           >
-            2025 Annual Budget <ArrowUpRight className="inline h-3.5 w-3.5" />
+            2026 Annual Budget Report <ArrowUpRight className="inline h-3.5 w-3.5" />
           </a>
           <a
             href={budgetSources.actuals}
@@ -326,24 +331,24 @@ export default function ProjectsBudget() {
 
       <Section className="bg-white">
         <div className="section-eyebrow">Budget Plan</div>
-        <Heading level={2}>How the ₱19.0B budget is allocated</Heading>
+        <Heading level={2}>How the ₱21.0B 2026 budget is allocated</Heading>
         <p className="mt-2 text-xs text-gray-500">
           Source:{' '}
           <a
-            href={budgetSources.annualBudget}
+            href={budgetSources.annualBudget2026}
             target="_blank"
             rel="noreferrer"
             className="font-bold text-primary-700 underline underline-offset-2"
           >
-            2025 Annual Budget <ArrowUpRight className="inline h-3 w-3" />
+            2026 Annual Budget Report <ArrowUpRight className="inline h-3 w-3" />
           </a>
         </p>
 
         <div className="grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-5 mt-7">
           <DonutChart
             title="Budget composition"
-            center="₱19.0B"
-            items={budgetByType.map(item => ({
+            center="₱21.0B"
+            items={budgetByType2026.map(item => ({
               label: item.label,
               value: item.amountM,
               share: item.share,
@@ -351,7 +356,7 @@ export default function ProjectsBudget() {
           />
 
           <div className="grid grid-cols-1 gap-4">
-            {budgetByType.map(item => (
+            {budgetByType2026.map(item => (
               <div
                 key={item.label}
                 className="rounded-2xl border border-gray-200 bg-white p-5"
@@ -507,21 +512,21 @@ export default function ProjectsBudget() {
         <div className="section-eyebrow">Projects & Dedicated Funds</div>
         <Heading level={2}>Development and capital spending</Heading>
         <p className="mt-2 text-xs text-gray-500">
-          Dedicated fund cards link to the original disclosure record.
+          Dedicated fund cards use the current 2026 budget report.
           Capital-outlay lines are from the{' '}
           <a
-            href={budgetSources.annualBudget}
+            href={budgetSources.annualBudget2026}
             target="_blank"
             rel="noreferrer"
             className="font-bold text-primary-700 underline underline-offset-2"
           >
-            2025 Annual Budget <ArrowUpRight className="inline h-3 w-3" />
+            2026 Annual Budget Report <ArrowUpRight className="inline h-3 w-3" />
           </a>
           .
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-7">
-          {dedicatedFunds.map(item => (
+          {dedicatedFunds2026.map(item => (
             <a
               key={item.label}
               href={item.href}
@@ -642,11 +647,11 @@ export default function ProjectsBudget() {
           <div className="flex items-center gap-2">
             <Building2 className="h-5 w-5 text-primary-700" />
             <h3 className="font-extrabold text-lg text-gray-950">
-              2025 capital-outlay lines
+              2026 capital-outlay lines
             </h3>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-5">
-            {capitalBudgetLines.map(item => (
+            {capitalBudgetLines2026.map(item => (
               <div key={item.label} className="rounded-xl bg-gray-50 p-4">
                 <div className="text-xl font-extrabold text-primary-800">
                   {peso(item.amountM)}
@@ -666,7 +671,7 @@ export default function ProjectsBudget() {
           <div>
             <Heading level={2}>Budget line items</Heading>
             <p className="text-gray-600">
-              Citywide line items extracted from the 2025 annual-budget summary.
+              Major citywide line items extracted from the 2026 Annual Budget Report.
             </p>
           </div>
 
@@ -721,12 +726,12 @@ export default function ProjectsBudget() {
         </div>
 
         <a
-          href={budgetSources.annualBudget}
+          href={budgetSources.annualBudget2026}
           target="_blank"
           rel="noreferrer"
           className="mt-5 inline-flex items-center gap-1 text-sm font-bold text-primary-700 underline underline-offset-2"
         >
-          Open the original 82-page annual budget{' '}
+          Open the original 82-page 2026 Annual Budget Report{' '}
           <ArrowUpRight className="h-3.5 w-3.5" />
         </a>
       </Section>
