@@ -30,7 +30,7 @@ const money = (millions?: number) => {
 };
 
 const ledgerCsv = [
-  'id,type,status,title,period,responsible_bodies,target_date,location,planned_amount_m,reported_amount_m,actual_amount_m,completion_pct,last_verified',
+  'id,type,status,title,period,responsible_bodies,target_date,location,planned_amount_m,reported_amount_m,actual_amount_m,completion_pct,procurement_reference,supplier,bid_date,audit_follow_up,last_verified',
   ...accountabilityEntries.map(entry =>
     [
       entry.id,
@@ -45,6 +45,10 @@ const ledgerCsv = [
       entry.reportedAmountM ?? '',
       entry.actualAmountM ?? '',
       entry.completionPct ?? '',
+      entry.procurement?.referenceNo ?? '',
+      entry.procurement?.supplier ?? '',
+      entry.procurement?.bidDate ?? '',
+      entry.audit?.followUpStatus ?? '',
       entry.lastVerified,
     ]
       .map(value => '"' + String(value).replaceAll('"', '""') + '"')
@@ -68,6 +72,11 @@ export default function Accountability() {
         entry.period,
         entry.location,
         ...entry.responsibleBodies,
+        entry.procurement?.referenceNo,
+        entry.procurement?.supplier,
+        entry.audit?.finding,
+        entry.audit?.recommendation,
+        entry.audit?.managementResponse,
       ]
         .filter(Boolean)
         .join(' ')
@@ -227,8 +236,8 @@ export default function Accountability() {
                   <div className="mt-1 font-bold text-gray-950">
                     {entry.completionPct !== undefined
                       ? entry.completionPct.toFixed(0) + '% reported completion'
-                      : entry.status === 'reported'
-                        ? 'Plan + actuals available'
+                      : entry.status === 'reported' && entry.type === 'fiscal'
+                        ? 'Published fiscal record'
                         : accountabilityStatusLabel[entry.status]}
                   </div>
                 </div>
@@ -263,6 +272,116 @@ export default function Accountability() {
                     <div className="font-extrabold text-gray-950">
                       {money(entry.actualAmountM)}
                     </div>
+                  </div>
+                </div>
+              )}
+
+              {entry.procurement && (
+                <div className="mt-4 rounded-2xl border border-primary-100 bg-white p-5">
+                  <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+                    Procurement trace
+                  </div>
+                  <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                    <div className="rounded-xl bg-gray-50 p-4">
+                      <div className="text-xs text-gray-500">Reference</div>
+                      <div className="mt-1 font-extrabold text-gray-950">
+                        {entry.procurement.referenceNo}
+                      </div>
+                    </div>
+                    <div className="rounded-xl bg-gray-50 p-4">
+                      <div className="text-xs text-gray-500">Approved budget</div>
+                      <div className="mt-1 font-extrabold text-gray-950">
+                        {money(entry.procurement.approvedBudgetM)}
+                      </div>
+                    </div>
+                    <div className="rounded-xl bg-gray-50 p-4">
+                      <div className="text-xs text-gray-500">Winning bid</div>
+                      <div className="mt-1 font-extrabold text-gray-950">
+                        {money(entry.procurement.awardedAmountM)}
+                      </div>
+                    </div>
+                    <div className="rounded-xl bg-gray-50 p-4">
+                      <div className="text-xs text-gray-500">Supplier / bidder</div>
+                      <div className="mt-1 font-extrabold text-gray-950">
+                        {entry.procurement.supplier || '—'}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="mt-4 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3">
+                    {entry.procurement.stages.map(stage => (
+                      <div
+                        key={stage.label}
+                        className={
+                          'rounded-xl border p-4 ' +
+                          (stage.status === 'documented'
+                            ? 'border-primary-100 bg-primary-50'
+                            : 'border-secondary-200 bg-secondary-50')
+                        }
+                      >
+                        <div className="text-xs font-bold uppercase tracking-[0.06em] text-gray-500">
+                          {stage.status === 'documented' ? 'Documented' : 'Source gap'}
+                        </div>
+                        <div className="mt-1 font-extrabold text-gray-950">
+                          {stage.label}
+                        </div>
+                        {stage.date && (
+                          <div className="mt-1 text-xs text-gray-500">{stage.date}</div>
+                        )}
+                        {stage.detail && (
+                          <p className="mt-2 text-xs leading-relaxed text-gray-600">
+                            {stage.detail}
+                          </p>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {entry.audit && (
+                <div className="mt-4 rounded-2xl border border-secondary-200 bg-white p-5">
+                  <div className="text-xs font-bold uppercase tracking-[0.08em] text-secondary-800">
+                    Audit follow-through
+                  </div>
+                  <div className="mt-4 space-y-3">
+                    <div className="rounded-xl bg-gray-50 p-4">
+                      <div className="text-xs font-bold uppercase tracking-[0.06em] text-gray-500">
+                        Finding / observation
+                      </div>
+                      <p className="mt-2 text-sm leading-relaxed text-gray-700">
+                        {entry.audit.finding}
+                      </p>
+                    </div>
+                    {entry.audit.recommendation && (
+                      <div className="rounded-xl bg-gray-50 p-4">
+                        <div className="text-xs font-bold uppercase tracking-[0.06em] text-gray-500">
+                          COA recommendation
+                        </div>
+                        <p className="mt-2 text-sm leading-relaxed text-gray-700">
+                          {entry.audit.recommendation}
+                        </p>
+                      </div>
+                    )}
+                    {entry.audit.managementResponse && (
+                      <div className="rounded-xl bg-gray-50 p-4">
+                        <div className="text-xs font-bold uppercase tracking-[0.06em] text-gray-500">
+                          Management response
+                        </div>
+                        <p className="mt-2 text-sm leading-relaxed text-gray-700">
+                          {entry.audit.managementResponse}
+                        </p>
+                      </div>
+                    )}
+                    {entry.audit.followUpStatus && (
+                      <div className="rounded-xl border border-secondary-200 bg-secondary-50 p-4">
+                        <div className="text-xs font-bold uppercase tracking-[0.06em] text-secondary-800">
+                          Follow-up status
+                        </div>
+                        <p className="mt-2 text-sm leading-relaxed text-gray-700">
+                          {entry.audit.followUpStatus}
+                        </p>
+                      </div>
+                    )}
                   </div>
                 </div>
               )}
