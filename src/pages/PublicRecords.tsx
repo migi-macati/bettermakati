@@ -18,6 +18,7 @@ import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
 import LastReviewed from '../components/ui/LastReviewed';
 import SharePage from '../components/ui/SharePage';
+import CitizenSummary from '../components/ui/CitizenSummary';
 
 const recordGroups = [
   {
@@ -139,6 +140,35 @@ export default function PublicRecords() {
         </div>
         <LastReviewed
           note="Coverage gaps are shown where the index is incomplete."
+        />
+
+        <CitizenSummary
+          className="mt-6"
+          eyebrow="Start with the question"
+          title="Use the record to verify; use BetterMakati’s structured pages to understand"
+          points={[
+            {
+              label: 'Understand',
+              text: 'Open the topic page first when you want the budget story, a population trend, election context or legislative explanation.',
+            },
+            {
+              label: 'Verify',
+              text: 'Open the cited original document when you need the controlling source, exact wording, legal text or official table.',
+            },
+            {
+              label: 'Follow through',
+              text: 'Use the Accountability Ledger when the question is what happened after a budget, award, audit finding or public commitment.',
+            },
+            {
+              label: 'Fill a gap',
+              text: 'If a public record is missing, send the source so it can be reviewed and connected to the relevant citizen-facing page.',
+            },
+          ]}
+          actions={
+            <Link to="/accountability" className="text-sm font-bold text-primary-700 underline underline-offset-2">
+              Follow an issue <ArrowRight className="inline h-3.5 w-3.5" />
+            </Link>
+          }
         />
 
         <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
