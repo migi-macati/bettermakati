@@ -81,7 +81,7 @@ test('service directory opens BetterMakati guide before external handoff', async
 
 test('mobile homepage and services have no material horizontal overflow', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  for (const route of ['/', '/services', '/civic-map', '/civic-map/poblacion-park', '/civic-map/reports']) {
+  for (const route of ['/', '/services', '/barangays', '/barangays/poblacion', '/civic-map', '/civic-map/poblacion-park', '/civic-map/reports']) {
     await page.goto(baseURL + route);
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     expect(overflow, `Horizontal overflow on ${route}`).toBeLessThanOrEqual(2);
