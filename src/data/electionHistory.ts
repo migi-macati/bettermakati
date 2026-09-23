@@ -1,4 +1,9 @@
-export type ElectionSourceQuality = 'official' | 'academic' | 'archival-secondary';
+export type ElectionSourceQuality =
+  | 'official'
+  | 'comelec-media'
+  | 'academic'
+  | 'mixed'
+  | 'archival-secondary';
 
 export interface HistoricalCandidateResult {
   name: string;
@@ -30,7 +35,7 @@ export const makatiMayoralHistory: HistoricalMayoralRace[] = [
     ],
     sourceUrl: 'https://ph.rappler.com/elections/2025/local-race/ncr-makati-city',
     sourceLabel: 'COMELEC Media Server results as published by Rappler',
-    sourceQuality: 'official',
+    sourceQuality: 'comelec-media',
     geographyNote:
       'First regular city election after the 10 Embo barangays were no longer included in Makati. Direct vote-total comparisons with earlier elections therefore use a different electorate and geography.',
   },
@@ -62,8 +67,8 @@ export const makatiMayoralHistory: HistoricalMayoralRace[] = [
     ],
     sourceUrl:
       'https://www.comelec.gov.ph/php-tpls-attachments/2019NLE/ElectionResults/2019NLE_LIst_of_Elected_CityMun_Candidates.pdf',
-    sourceLabel: 'COMELEC 2019 List of Elected City/Municipal Candidates',
-    sourceQuality: 'official',
+    sourceLabel: 'COMELEC elected-candidate list; complete candidate totals cross-checked against archival result tables',
+    sourceQuality: 'mixed',
   },
   {
     year: 2016,
@@ -119,7 +124,7 @@ export const makatiMayoralHistory: HistoricalMayoralRace[] = [
     sourceUrl:
       'https://www.comelec.gov.ph/php-tpls-attachments/ListElectedCandidates/2007_list_of_elected_city_municipal_candidates.pdf',
     sourceLabel: 'COMELEC 2007 List of Elected City/Municipal Candidates; archival totals cross-checked against published result tables',
-    sourceQuality: 'official',
+    sourceQuality: 'mixed',
   },
   {
     year: 2004,
