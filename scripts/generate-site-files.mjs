@@ -58,6 +58,28 @@ const civicAssetIds = [...civicAssetBlock.matchAll(/\bid:\s*'([^']+)'/g)].map(ma
 const serviceDirectoryText = await readFile('src/data/serviceDirectory.ts', 'utf8');
 const serviceIds = [...serviceDirectoryText.matchAll(/\bid:\s*'([^']+)'/g)].map(match => match[1]);
 
+const cityMonitorText = await readFile('src/data/cityMonitor.ts', 'utf8');
+const cityMonitorBaseBlock =
+  cityMonitorText.split('const baseCityMonitorRecords')[1]?.split(
+    'const procurementMonitorRecords'
+  )[0] ?? '';
+const cityMonitorBaseIds = [
+  ...cityMonitorBaseBlock.matchAll(/\bid:\s*'([^']+)'/g),
+].map(match => match[1]);
+
+const accountabilitySupplementText = await readFile(
+  'src/data/accountabilitySupplement.ts',
+  'utf8'
+);
+const procurementSeedBlock =
+  accountabilitySupplementText.split('const procurementSeeds: ProcurementSeed[] = [')[1]?.split(
+    'export const procurementProjectEntries'
+  )[0] ?? '';
+const procurementMonitorIds = [
+  ...procurementSeedBlock.matchAll(/\bid:\s*'([^']+)'/g),
+].map(match => 'monitor-procurement-' + match[1]);
+const cityMonitorRecordIds = [...cityMonitorBaseIds, ...procurementMonitorIds];
+
 const serviceRoutes = [];
 const serviceRoot = 'content/services';
 for (const category of await readdir(serviceRoot)) {
@@ -92,6 +114,7 @@ const routes = [
   ...officialSlugs.map(slug => '/officials/' + slug),
   ...civicAssetIds.map(id => '/civic-map/' + id),
   ...serviceIds.map(id => '/services/guide/' + id),
+  ...cityMonitorRecordIds.map(id => '/city-monitor/' + id),
   ...filteredServiceRoutes,
 ];
 
