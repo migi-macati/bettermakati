@@ -18,6 +18,7 @@ import LastReviewed from '../components/ui/LastReviewed';
 import SharePage from '../components/ui/SharePage';
 import SectionNav from '../components/ui/SectionNav';
 import CitizenSummary from '../components/ui/CitizenSummary';
+import OfficeBudgetDetail from '../components/budget/OfficeBudgetDetail';
 import {
   DonutChart,
   FiscalTrendChart,
@@ -1005,6 +1006,8 @@ export default function ProjectsBudget() {
             </tbody>
           </table>
         </div>
+
+        <OfficeBudgetDetail />
 
         <div className="mt-10 border-t border-gray-200 pt-10">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
