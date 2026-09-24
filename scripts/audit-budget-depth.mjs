@@ -91,6 +91,44 @@ if (!liga || liga.amountM !== 0 || !liga.note) {
   );
 }
 
+const officeDetailSection =
+  budget.split('export const officeBudgetDetails2026:')[1]?.split(
+    'export const selectedBudgetLines2026'
+  )[0] ?? '';
+const officeDetailJson = officeDetailSection
+  .slice(officeDetailSection.indexOf('=') + 1)
+  .trim()
+  .replace(/;\s*$/, '');
+
+let officeDetails = [];
+try {
+  officeDetails = JSON.parse(officeDetailJson);
+} catch {
+  problems.push('2026 office line-item detail is not parseable as structured data.');
+}
+
+if (officeDetails.length < 5) {
+  problems.push(
+    `Expected at least 5 normalized office line-item schedules; found ${officeDetails.length}.`
+  );
+}
+
+const officeTotalByName = new Map(officeRows.map(item => [item.office, item.amountM]));
+for (const detail of officeDetails) {
+  const target = officeTotalByName.get(detail.office);
+  const detailTotal = (detail.lines || []).reduce(
+    (sum, item) => sum + Number(item.amountM || 0),
+    0
+  );
+  if (target === undefined) {
+    problems.push(`Normalized office detail has no matching office total: ${detail.office}.`);
+  } else if (!closeEnough(detailTotal, target)) {
+    problems.push(
+      `${detail.office} detail sums to ${detailTotal.toFixed(3)}M; expected ${target.toFixed(3)}M.`
+    );
+  }
+}
+
 if (!/totalAppropriationM:\s*24373\.87333413/.test(budget)) {
   problems.push(
     '2025 Current Year (Estimate) total is missing or no longer matches the official 2026 budget report.'
@@ -129,5 +167,5 @@ if (problems.length) {
 }
 
 console.log(
-  `Budget-depth audit passed: ${rows.length} citywide 2026 lines and ${officeRows.length} office totals each reconcile to ₱21.0B; ${procurementReferences.length} procurement records; ${auditIds.length} audit findings; SEF record present.`
+  `Budget-depth audit passed: ${rows.length} citywide 2026 lines and ${officeRows.length} office totals each reconcile to ₱21.0B; ${officeDetails.length} office line-item schedules reconcile individually; ${procurementReferences.length} procurement records; ${auditIds.length} audit findings; SEF record present.`
 );
