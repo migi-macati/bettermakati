@@ -1,38 +1,106 @@
 import { createHash } from 'node:crypto';
 import { readFile, writeFile } from 'node:fs/promises';
 
+const args = new Map(
+  process.argv.slice(2).map(item => {
+    const [key, value = ''] = item.replace(/^--/, '').split('=');
+    return [key, value];
+  })
+);
+
+const cadence = args.get('cadence') || 'all';
+if (!['daily', 'weekly', 'monthly', 'all'].includes(cadence)) {
+  throw new Error('cadence must be daily, weekly, monthly or all');
+}
+
 const watchlist = JSON.parse(
   await readFile('data/source-watchlist.json', 'utf8')
 );
 const timeoutMs = 20000;
-let previous = { sources: [] };
+const concurrency = 6;
+const statePath = 'data/source-watch-state.json';
+
+let previous = { version: 2, checkedAt: null, cadence: null, sources: [] };
 try {
-  previous = JSON.parse(await readFile('data/source-watch.json', 'utf8'));
+  previous = JSON.parse(await readFile(statePath, 'utf8'));
 } catch (error) {
   if (error.code !== 'ENOENT') throw error;
 }
-const previousByUrl = new Map(
-  previous.sources.map(source => [source.url, source])
+
+const previousById = new Map(
+  (Array.isArray(previous.sources) ? previous.sources : []).map(source => [
+    source.id,
+    source,
+  ])
 );
+
+const blankState = source => ({
+  ...source,
+  status: 'not-checked',
+  statusCode: null,
+  contentType: '',
+  contentLength: 0,
+  sha256: '',
+  lastSuccessfulHash: '',
+  change: 'not-checked',
+  lastCheckedAt: null,
+  lastSuccessfulAt: null,
+  lastChangedAt: null,
+});
 
 const fetchSource = async source => {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), timeoutMs);
+  const checkedAt = new Date().toISOString();
+  const old = previousById.get(source.id) || blankState(source);
+
   try {
     const response = await fetch(source.url, {
       signal: controller.signal,
       redirect: 'follow',
-      headers: { 'user-agent': 'BetterMakati-source-check/1.0' },
+      headers: { 'user-agent': 'BetterMakati-source-check/2.0' },
     });
-    const body = await response.arrayBuffer();
-    const hash = createHash('sha256').update(Buffer.from(body)).digest('hex');
+
+    const contentType = response.headers.get('content-type') || '';
+    const headerLength = Number(response.headers.get('content-length') || 0);
+    let contentLength = Number.isFinite(headerLength) ? headerLength : 0;
+    let sha256 = '';
+    let change = response.ok ? 'reachable' : 'check-failed';
+    let lastSuccessfulHash = old.lastSuccessfulHash || old.sha256 || '';
+    let lastChangedAt = old.lastChangedAt || null;
+
+    if (response.ok && source.monitoringMode === 'content-hash') {
+      const body = await response.arrayBuffer();
+      contentLength = body.byteLength;
+      sha256 = createHash('sha256').update(Buffer.from(body)).digest('hex');
+      const baseline = old.lastSuccessfulHash || old.sha256 || '';
+      change = !baseline
+        ? 'new-baseline'
+        : baseline === sha256
+          ? 'unchanged'
+          : 'content-changed';
+      lastSuccessfulHash = sha256;
+      if (change === 'content-changed') lastChangedAt = checkedAt;
+    } else {
+      try {
+        await response.body?.cancel();
+      } catch {
+        // The status code is sufficient for reachability monitoring.
+      }
+    }
+
     return {
       ...source,
       status: response.ok ? 'ok' : 'http-error',
       statusCode: response.status,
-      contentType: response.headers.get('content-type') || '',
-      contentLength: body.byteLength,
-      sha256: hash,
+      contentType,
+      contentLength,
+      sha256,
+      lastSuccessfulHash,
+      change,
+      lastCheckedAt: checkedAt,
+      lastSuccessfulAt: response.ok ? checkedAt : old.lastSuccessfulAt || null,
+      lastChangedAt,
     };
   } catch (error) {
     return {
@@ -42,6 +110,11 @@ const fetchSource = async source => {
       contentType: '',
       contentLength: 0,
       sha256: '',
+      lastSuccessfulHash: old.lastSuccessfulHash || old.sha256 || '',
+      change: 'check-failed',
+      lastCheckedAt: checkedAt,
+      lastSuccessfulAt: old.lastSuccessfulAt || null,
+      lastChangedAt: old.lastChangedAt || null,
       error: error instanceof Error ? error.name : 'UnknownError',
     };
   } finally {
@@ -49,92 +122,145 @@ const fetchSource = async source => {
   }
 };
 
-const results = [];
-for (const source of watchlist) {
-  const result = await fetchSource(source);
-  const old = previousByUrl.get(source.url);
-  const baseline = old?.lastSuccessfulHash || old?.sha256;
-  result.change =
-    result.status !== 'ok'
-      ? 'check-failed'
-      : !baseline
-        ? 'new-baseline'
-        : baseline === result.sha256
-          ? 'unchanged'
-          : 'content-changed';
-  result.lastSuccessfulHash =
-    result.status === 'ok' ? result.sha256 : baseline || '';
-  results.push(result);
-  console.log(`${result.status.padEnd(12)} ${source.label}`);
+const selected = watchlist.filter(
+  source => cadence === 'all' || source.cadence === cadence
+);
+
+const checked = [];
+for (let index = 0; index < selected.length; index += concurrency) {
+  const batch = selected.slice(index, index + concurrency);
+  const batchResults = await Promise.all(batch.map(fetchSource));
+  checked.push(...batchResults);
+  for (const result of batchResults) {
+    console.log(
+      `${result.status.padEnd(12)} ${String(result.monitoringMode).padEnd(14)} ${result.label}`
+    );
+  }
 }
 
+const checkedById = new Map(checked.map(source => [source.id, source]));
+const sources = watchlist.map(source => {
+  const current = checkedById.get(source.id);
+  if (current) return current;
+  const old = previousById.get(source.id);
+  return old ? { ...source, ...old, ...source } : blankState(source);
+});
+
+const runAt = new Date().toISOString();
+const summary = {
+  checked: checked.length,
+  ok: checked.filter(result => result.status === 'ok').length,
+  failed: checked.filter(result => result.status !== 'ok').length,
+  changed: checked.filter(result => result.change === 'content-changed').length,
+  newBaselines: checked.filter(result => result.change === 'new-baseline').length,
+  reachabilityOnly: checked.filter(
+    result => result.monitoringMode === 'reachability' && result.status === 'ok'
+  ).length,
+};
+
 await writeFile(
-  'data/source-watch.json',
-  `${JSON.stringify({ version: 1, sources: results }, null, 2)}\n`
+  statePath,
+  JSON.stringify(
+    {
+      version: 2,
+      checkedAt: runAt,
+      cadence,
+      summary,
+      sources,
+    },
+    null,
+    2
+  ) + '\n'
 );
 
-const changed = results.filter(
-  result => result.status !== 'ok' || result.change === 'content-changed'
-);
-let history = { version: 1, runs: [] };
+let history = { version: 2, runs: [] };
 try {
   history = JSON.parse(await readFile('data/source-watch-history.json', 'utf8'));
 } catch (error) {
   if (error.code !== 'ENOENT') throw error;
 }
 
-const checkedAt = new Date().toISOString();
+const mapItem = result => ({
+  id: result.id,
+  label: result.label,
+  url: result.url,
+  kind: result.kind,
+  cadence: result.cadence,
+  monitoringMode: result.monitoringMode,
+});
+
 const historyRun = {
-  checkedAt,
-  changed: results
+  checkedAt: runAt,
+  cadence,
+  summary,
+  changed: checked
     .filter(result => result.change === 'content-changed')
-    .map(result => ({
-      id: result.id,
-      label: result.label,
-      url: result.url,
-      kind: result.kind,
-    })),
-  failed: results
+    .map(mapItem),
+  failed: checked
     .filter(result => result.status !== 'ok')
     .map(result => ({
-      id: result.id,
-      label: result.label,
-      url: result.url,
-      kind: result.kind,
+      ...mapItem(result),
       status: result.status,
       statusCode: result.statusCode,
     })),
-  newBaselines: results
+  newBaselines: checked
     .filter(result => result.change === 'new-baseline')
-    .map(result => ({
-      id: result.id,
-      label: result.label,
-      url: result.url,
-      kind: result.kind,
-    })),
+    .map(mapItem),
 };
 
-history.runs = [historyRun, ...(Array.isArray(history.runs) ? history.runs : [])].slice(0, 52);
+history.runs = [
+  historyRun,
+  ...(Array.isArray(history.runs) ? history.runs : []),
+].slice(0, 400);
+
 await writeFile(
   'data/source-watch-history.json',
-  `${JSON.stringify(history, null, 2)}\n`
+  JSON.stringify({ version: 2, runs: history.runs }, null, 2) + '\n'
 );
 
+const changed = historyRun.changed;
+const failed = historyRun.failed;
+const baselines = historyRun.newBaselines;
+
 const report = [
-  '# Weekly BetterMakati source check',
+  '# BetterMakati source freshness check',
   '',
-  `Checked: ${checkedAt}`,
+  `Checked: ${runAt}`,
+  `Cadence: ${cadence}`,
+  `Sources checked: ${summary.checked} of ${watchlist.length}`,
+  `Successful checks: ${summary.ok}`,
+  `Failed checks: ${summary.failed}`,
+  `Stable-document content changes requiring review: ${summary.changed}`,
+  `New stable-document baselines: ${summary.newBaselines}`,
+  `Reachability-only successes: ${summary.reachabilityOnly}`,
   '',
-  changed.length
-    ? 'Source content changed or a check failed. Review the results below before updating site claims:'
-    : 'No changes to established baselines were detected. New sources establish a baseline on their first successful check.',
+  '## Review queue',
   '',
-  ...results.map(
-    result =>
-      `- **${result.label}** — ${result.change}; ${result.status} (${result.statusCode ?? 'no response'}): ${result.url}`
-  ),
+  ...(changed.length
+    ? changed.map(
+        item =>
+          `- **Content changed:** ${item.label} — review the stable source document before changing any BetterMakati claim: ${item.url}`
+      )
+    : ['- No stable-document content change was detected in this run.']),
+  ...(failed.length
+    ? failed.map(
+        item =>
+          `- **Check failed:** ${item.label} — ${item.status} (${item.statusCode ?? 'no response'}): ${item.url}`
+      )
+    : ['- No source check failed in this run.']),
+  ...(baselines.length
+    ? baselines.map(
+        item =>
+          `- **New baseline:** ${item.label} — future stable-document checks can now detect byte-level changes: ${item.url}`
+      )
+    : []),
   '',
-  'A changed hash means the source changed; it does not by itself prove that the extracted figures should be replaced. Review the source and update the corresponding site data deliberately.',
+  'Dynamic portals use reachability monitoring unless explicitly classified otherwise. A reachable page does not prove that its content is unchanged, and a changed stable-document hash does not by itself establish what changed or whether any BetterMakati claim should be updated.',
   '',
 ].join('\n');
+
 await writeFile('data/source-watch-report.md', report);
+
+console.log(
+  `Source freshness run complete: ${summary.checked} checked, ${summary.ok} successful, ${summary.failed} failed, ${summary.changed} stable-document changes.`
+);
