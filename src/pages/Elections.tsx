@@ -20,7 +20,6 @@ import SectionNav from '../components/ui/SectionNav';
 import CitizenSummary from '../components/ui/CitizenSummary';
 import {
   election2025CouncilCandidates,
-  election2025CouncilWinners,
   election2025Electorate,
   election2025SingleSeatRaces,
   election2025Sources,
@@ -129,12 +128,21 @@ const mayoralHistoryCsv = [
 ].join('\n');
 
 export default function Elections() {
-  const district1Council = election2025CouncilWinners.filter(
-    item => item.jurisdiction === 'district1'
-  );
-  const district2Council = election2025CouncilWinners.filter(
-    item => item.jurisdiction === 'district2'
-  );
+  const bskePhase = getBskePhase();
+  const councilDistricts = [
+    {
+      label: '1st District',
+      jurisdiction: 'district1' as const,
+      candidates: election2025CouncilCandidates.district1,
+      electorate: election2025Electorate.district1,
+    },
+    {
+      label: '2nd District',
+      jurisdiction: 'district2' as const,
+      candidates: election2025CouncilCandidates.district2,
+      electorate: election2025Electorate.district2,
+    },
+  ];
 
   return (
     <>
@@ -158,14 +166,19 @@ export default function Elections() {
           <Heading>Elections & Voting</Heading>
           <SharePage title="Elections & Voting | BetterMakati" />
         </div>
-        <LastReviewed note="Election dates and results are linked to COMELEC sources." />
+        <LastReviewed
+          date={electionsReviewed}
+          note="Current election dates and rules use COMELEC and statutory sources; older result sources are labeled by quality."
+        />
         <SectionNav items={[
+          { label: 'Coverage', href: '#election-coverage' },
           { label: '2025 results', href: '#results-2025' },
           { label: 'By barangay', href: '#barangay-results-2025' },
           { label: '1998–2025 history', href: '#mayoral-history' },
           { label: 'Council', href: '#council-results' },
           { label: '2026 BSKE', href: '#bske-2026' },
           { label: 'Voter tools', href: '#voter-tools' },
+          { label: 'Data & sources', href: '#election-data' },
           { label: 'Candidates', href: '#candidates' },
         ]} />
         <p className="mt-5 max-w-3xl text-gray-700 leading-relaxed">
@@ -189,21 +202,61 @@ export default function Elections() {
           <div className="rounded-2xl border border-primary-100 bg-white p-6">
             <UserCheck className="h-6 w-6 text-primary-700" />
             <div className="mt-4 text-sm font-bold uppercase tracking-[0.08em] text-primary-700">
-              Registration status
+              Current BSKE phase
             </div>
             <div className="mt-1 text-2xl font-extrabold text-gray-950">
-              Regular registration closed
+              {bskePhase.label}
             </div>
-            <p className="mt-2 text-sm text-gray-600">
-              The non-BARMM registration period ended May 18, 2026. Registered
-              voters can still verify their record and polling place through
-              COMELEC.
-            </p>
+            <p className="mt-2 text-sm text-gray-600">{bskePhase.detail}</p>
           </div>
         </div>
       </Section>
 
-      <Section id="results-2025" className="bg-white">
+      <Section id="election-coverage" className="bg-white">
+        <div className="section-eyebrow">Coverage</div>
+        <Heading level={2}>What BetterMakati currently has</Heading>
+        <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-600">
+          The page separates complete structured result sets from partial barangay data and future records that do not yet exist.
+        </p>
+
+        <div className="mt-6 overflow-x-auto rounded-2xl border border-gray-200 bg-white">
+          <table className="w-full min-w-[980px] text-left">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-4 py-3 font-bold">Election layer</th>
+                <th className="px-4 py-3 font-bold">Status</th>
+                <th className="px-4 py-3 font-bold">Coverage</th>
+                <th className="px-4 py-3 font-bold">Included</th>
+                <th className="px-4 py-3 font-bold">Known limit</th>
+              </tr>
+            </thead>
+            <tbody>
+              {electionCoverageAreas.map(area => (
+                <tr key={area.id} className="border-t align-top">
+                  <td className="px-4 py-4 font-extrabold text-gray-950">{area.label}</td>
+                  <td className="px-4 py-4">
+                    <span className={
+                      'rounded-full border px-2.5 py-1 text-xs font-bold ' +
+                      (area.status === 'structured'
+                        ? 'border-success-200 bg-success-50 text-success-800'
+                        : area.status === 'pending'
+                          ? 'border-secondary-200 bg-secondary-50 text-secondary-900'
+                          : 'border-primary-200 bg-primary-50 text-primary-800')
+                    }>
+                      {area.status === 'structured' ? 'Structured' : area.status === 'pending' ? 'Pending source' : 'Partial'}
+                    </span>
+                  </td>
+                  <td className="px-4 py-4 text-sm font-semibold text-gray-800">{area.countLabel}</td>
+                  <td className="px-4 py-4 text-sm leading-relaxed text-gray-700">{area.included}</td>
+                  <td className="px-4 py-4 text-sm leading-relaxed text-gray-600">{area.limit}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </Section>
+
+      <Section id="results-2025" className="bg-[#fffdf8]">
         <div className="section-eyebrow">Latest completed election</div>
         <Heading level={2}>2025 Makati election results</Heading>
         <p className="mt-3 max-w-4xl text-sm leading-relaxed text-gray-600">
