@@ -8,7 +8,7 @@
     "failed": 0,
     "changed": 0,
     "newBaselines": 0,
-    "manualReview": 0
+    "reachabilityOnly": 0
   },
   "sources": [
     {
