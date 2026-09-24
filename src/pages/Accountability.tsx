@@ -23,9 +23,11 @@ import { Heading } from '../components/ui/Heading';
 import LastReviewed from '../components/ui/LastReviewed';
 import SharePage from '../components/ui/SharePage';
 import {
+  accountabilityCoverageAreas,
   accountabilityCoverageGaps,
   accountabilityEntries,
   accountabilityReviewed,
+  accountabilitySourceCount,
   accountabilityStatusLabel,
 } from '../data/accountability';
 import type { AccountabilityEntry } from '../data/civicTypes';
@@ -161,7 +163,7 @@ const publicRecordSummary = (entry: AccountabilityEntry) => {
 };
 
 const ledgerCsv = [
-  'id,type,status,title,period,responsible_bodies,target_date,location,planned_amount_m,reported_amount_m,actual_amount_m,completion_pct,procurement_reference,supplier,bid_date,next_missing_evidence,commitment_outcome,audit_follow_up,last_verified',
+  'id,type,status,title,period,responsible_bodies,target_date,location,barangay_slug,planned_amount_m,reported_amount_m,actual_amount_m,completion_pct,procurement_reference,supplier,bid_date,documented_procurement_stages,total_procurement_stages,next_missing_evidence,commitment_outcome,audit_follow_up,source_count,source_urls,last_verified',
   ...accountabilityEntries.map(entry =>
     [
       entry.id,
@@ -172,6 +174,7 @@ const ledgerCsv = [
       entry.responsibleBodies.join(' / '),
       entry.targetDate || '',
       entry.location || '',
+      entry.barangaySlug || '',
       entry.plannedAmountM ?? '',
       entry.reportedAmountM ?? '',
       entry.actualAmountM ?? '',
@@ -179,9 +182,13 @@ const ledgerCsv = [
       entry.procurement?.referenceNo ?? '',
       entry.procurement?.supplier ?? '',
       entry.procurement?.bidDate ?? '',
+      entry.procurement?.stages.filter(stage => stage.status === 'documented').length ?? '',
+      entry.procurement?.stages.length ?? '',
       firstMissingEvidence(entry) ?? '',
       commitmentOutcomeLabel(entry) ?? '',
       entry.audit?.followUpStatus ?? '',
+      entry.sources.length,
+      entry.sources.map(source => source.url).join(' | '),
       entry.lastVerified,
     ]
       .map(value => '"' + String(value).replaceAll('"', '""') + '"')
@@ -210,26 +217,12 @@ export default function Accountability() {
 
   const locallyTaggedEntries = useMemo(() => {
     if (!barangay) return accountabilityEntries;
-    const needle = barangay.name.toLowerCase();
-    return accountabilityEntries.filter(entry =>
-      [
-        entry.title,
-        entry.summary,
-        entry.location,
-        ...entry.responsibleBodies,
-        ...entry.sources.map(source => source.label),
-      ]
-        .filter(Boolean)
-        .join(' ')
-        .toLowerCase()
-        .includes(needle)
+    return accountabilityEntries.filter(
+      entry => entry.barangaySlug === barangay.slug
     );
   }, [barangay]);
 
-  const scopedEntries =
-    barangay && locallyTaggedEntries.length > 0
-      ? locallyTaggedEntries
-      : accountabilityEntries;
+  const scopedEntries = barangay ? locallyTaggedEntries : accountabilityEntries;
 
   const years = useMemo(
     () =>
