@@ -225,7 +225,7 @@ test('Budget Explorer exposes the complete reconciled 2026 citywide summary', as
 
 test('Projects & Budget displays procurement evidence instead of only linking out', async ({ page }) => {
   await page.goto(baseURL + '/projects-budget');
-  await expect(page.getByRole('heading', { name: 'Bid results BetterMakati can follow' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Bid results and award records' })).toBeVisible();
   await expect(page.getByText('21', { exact: true }).first()).toBeVisible();
   const search = page.getByPlaceholder('Search project, supplier or reference');
   await search.fill('BS25-04-0419');
@@ -244,18 +244,14 @@ test('Projects & Budget displays structured audit follow-through', async ({ page
 
 test('Accountability Ledger publishes its actual coverage and known limits', async ({ page }) => {
   await page.goto(baseURL + '/accountability');
-  await expect(page.getByRole('heading', { name: 'What the ledger currently covers' })).toBeVisible();
-  await expect(page.getByText(/unique public source URLs/i)).toBeVisible();
-  for (const area of [
-    'Budget & spending',
-    'Projects & procurement',
-    'Audit',
-    'Service standards',
-    'Public commitments',
-  ]) {
-    await expect(page.getByRole('cell', { name: area, exact: true })).toBeVisible();
-  }
-  await expect(page.getByText('What evidence is missing next', { exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Follow public money, projects and promises' })).toBeVisible();
+  await expect(page.getByText('structured records in this view', { exact: true })).toBeVisible();
+  await expect(page.getByText('records with a follow-up evidence gap', { exact: true })).toBeVisible();
+  await expect(page.getByText('projects / procurements tracked', { exact: true })).toBeVisible();
+  await expect(page.getByText('structured audit observations', { exact: true })).toBeVisible();
+  await expect(page.getByText('published service standards', { exact: true })).toBeVisible();
+  await expect(page.getByText('public commitments indexed', { exact: true })).toBeVisible();
+  await expect(page.getByText('Follow-up gaps', { exact: true })).toBeVisible();
 });
 
 test('Accountability record cards expose provenance and the next evidence gap', async ({ page }) => {
@@ -288,14 +284,14 @@ test('Accountability Bel-Air slice keeps local Makati Life commitments together'
 
 test('Accountability never falls back to citywide records for an empty barangay slice', async ({ page }) => {
   await page.goto(baseURL + '/accountability?barangay=bangkal');
-  await expect(page.getByText(/No Accountability Ledger record is yet explicitly tagged to Bangkal/i)).toBeVisible();
+  await expect(page.getByText(/No Accountability Ledger record is currently tagged to Bangkal/i)).toBeVisible();
   await expect(page.getByText('No matching record yet', { exact: true })).toBeVisible();
   await expect(page.getByText('2026 city fiscal record', { exact: true })).toHaveCount(0);
 });
 
 test('Public Records exposes a normalized searchable source catalog', async ({ page }) => {
   await page.goto(baseURL + '/records');
-  await expect(page.getByRole('heading', { name: 'What is actually indexed' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Public Records' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Search the public record catalog' })).toBeVisible();
   await expect(page.getByRole('cell', { name: 'Budget & fiscal', exact: true })).toBeVisible();
   await expect(page.getByRole('cell', { name: 'Services & directories', exact: true })).toBeVisible();
