@@ -1,4 +1,4 @@
-name: Weekly content freshness
+name: Weekly news snapshot refresh
 
 on:
   schedule:
@@ -29,9 +29,6 @@ jobs:
       - name: Refresh Google News snapshot
         run: npm run update:news
 
-      - name: Check official source watchlist
-        run: npm run check:sources
-
       - name: Verify the site build
         run: npm run build
 
@@ -42,10 +39,8 @@ jobs:
           branch: automation/weekly-content-refresh
           delete-branch: true
           commit-message: 'chore: refresh Makati news and source watch'
-          title: 'Weekly content freshness refresh'
-          body-path: data/source-watch-report.md
+          title: 'Weekly Makati news snapshot refresh'
+          body: |
+            Automated refresh of the fallback Makati news snapshot. Live /api/news remains the primary feed.
           add-paths: |
             src/data/newsSnapshot.ts
-            data/source-watch.json
-            data/source-watch-history.json
-            data/source-watch-report.md
