@@ -176,7 +176,7 @@ test('Saan Ako Lalapit common need reaches the structured PWD guide', async ({ p
 
 test('mobile homepage and services have no material horizontal overflow', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  for (const route of ['/', '/services', '/community-tools/saan-ako-lalapit', '/projects-budget', '/accountability', '/accountability?barangay=bel-air', '/records', '/elections', '/barangays', '/barangays/poblacion', '/reports', '/reports/2026-budget-operating-expenses', '/reports/2025-local-revenue', '/civic-map', '/civic-map/poblacion-park', '/civic-map/reports']) {
+  for (const route of ['/', '/services', '/community-tools/saan-ako-lalapit', '/projects-budget', '/accountability', '/accountability?barangay=bel-air', '/records', '/elections', '/city-monitor', '/barangays', '/barangays/poblacion', '/reports', '/reports/2026-budget-operating-expenses', '/reports/2025-local-revenue', '/civic-map', '/civic-map/poblacion-park', '/civic-map/reports']) {
     await page.goto(baseURL + route);
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     expect(overflow, `Horizontal overflow on ${route}`).toBeLessThanOrEqual(2);
@@ -388,6 +388,61 @@ test('Elections provides downloadable local, barangay and historical datasets', 
     'download',
     'bettermakati-mayoral-history-1998-2025.csv'
   );
+});
+
+test('City Monitor publishes honest stream coverage and source limits', async ({ page }) => {
+  await page.goto(baseURL + '/city-monitor');
+  await expect(page.getByRole('heading', { name: 'What City Monitor can and cannot see yet' })).toBeVisible();
+  for (const stream of [
+    'City Council sessions',
+    'Legislation',
+    'Mayor & executive',
+    'Procurement',
+    'Projects',
+    'Publications',
+    'Consultations & hearings',
+    'Official notices',
+  ]) {
+    await expect(page.getByRole('cell', { name: stream, exact: true })).toBeVisible();
+  }
+  await expect(page.getByText(/dynamically rendered/i).first()).toBeVisible();
+});
+
+test('City Monitor exposes the editorial review queue and monitoring modes', async ({ page }) => {
+  await page.goto(baseURL + '/city-monitor');
+  await expect(page.getByRole('heading', { name: 'Detected changes awaiting interpretation' })).toBeVisible();
+  await expect(page.getByText('content-change detection', { exact: true })).toBeVisible();
+  await expect(page.getByText('reachability only', { exact: true }).first()).toBeVisible();
+  await expect(page.getByText('manual review', { exact: true })).toBeVisible();
+});
+
+test('City Monitor indexes structured procurement as permanent records', async ({ page }) => {
+  await page.goto(baseURL + '/city-monitor');
+  const search = page.getByPlaceholder('Search records');
+  await search.fill('BS25-04-0419');
+  await expect(page.getByText('Instructional materials for Makati public elementary and secondary schools', { exact: true })).toBeVisible();
+  await expect(page.getByText(/Epigraphy Inc\./)).toBeVisible();
+  await expect(page.getByText(/Reference:/)).toBeVisible();
+});
+
+test('City Monitor procurement record has a permanent detail page and evidence link', async ({ page }) => {
+  await page.goto(baseURL + '/city-monitor/monitor-procurement-2025-q2-bs25-04-0419');
+  await expect(page.getByRole('heading', { level: 1, name: 'Instructional materials for Makati public elementary and secondary schools' })).toBeVisible();
+  await expect(page.getByText('BS25-04-0419', { exact: false })).toBeVisible();
+  await expect(page.getByRole('link', { name: /Original source/i })).toBeVisible();
+});
+
+test('City Monitor publishes machine-readable source health and history', async ({ page }) => {
+  await page.goto(baseURL + '/city-monitor');
+  const state = await page.request.get(baseURL + '/city-monitor-source-state.json');
+  expect(state.ok()).toBeTruthy();
+  const stateBody = await state.json();
+  expect(Array.isArray(stateBody.sources)).toBeTruthy();
+
+  const history = await page.request.get(baseURL + '/city-monitor-source-history.json');
+  expect(history.ok()).toBeTruthy();
+  const historyBody = await history.json();
+  expect(Array.isArray(historyBody.runs)).toBeTruthy();
 });
 
 test('owner task: project spending is reachable from homepage capability examples', async ({ page }) => {
