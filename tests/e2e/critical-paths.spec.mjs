@@ -16,6 +16,7 @@ const criticalRoutes = [
   ['/visit', /Explore the city/i],
   ['/mobility', /Getting around/i],
   ['/today', /Makati/i],
+  ['/live', /What’s happening now/i],
   ['/city-monitor', /City Monitor/i],
   ['/records', /Public Records/i],
   ['/reports', /Featured Reports & Insights/i],
@@ -176,7 +177,7 @@ test('Saan Ako Lalapit common need reaches the structured PWD guide', async ({ p
 
 test('mobile homepage and services have no material horizontal overflow', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  for (const route of ['/', '/services', '/community-tools/saan-ako-lalapit', '/projects-budget', '/accountability', '/accountability?barangay=bel-air', '/records', '/elections', '/city-monitor', '/briefs', '/barangays', '/barangays/poblacion', '/reports', '/reports/2026-budget-operating-expenses', '/reports/2025-local-revenue', '/civic-map', '/civic-map/poblacion-park', '/civic-map/reports']) {
+  for (const route of ['/', '/services', '/community-tools/saan-ako-lalapit', '/projects-budget', '/accountability', '/accountability?barangay=bel-air', '/records', '/elections', '/city-monitor', '/briefs', '/today', '/live', '/barangays', '/barangays/poblacion', '/reports', '/reports/2026-budget-operating-expenses', '/reports/2025-local-revenue', '/civic-map', '/civic-map/poblacion-park', '/civic-map/reports']) {
     await page.goto(baseURL + route);
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     expect(overflow, `Horizontal overflow on ${route}`).toBeLessThanOrEqual(2);
@@ -388,6 +389,29 @@ test('Elections provides downloadable local, barangay and historical datasets', 
     'download',
     'bettermakati-mayoral-history-1998-2025.csv'
   );
+});
+
+test('Today in Makati combines current and validated layers', async ({ page }) => {
+  await page.goto(baseURL + '/today');
+  await expect(page.getByRole('heading', { level: 1, name: 'Today in Makati' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Current conditions & civic freshness' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Latest published brief' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'City Monitor' })).toBeVisible();
+  await expect(page.getByText(/News coverage is separate from validated City Monitor records/i)).toBeVisible();
+  await expect(page.getByLabel('Choose my barangay')).toBeVisible();
+});
+
+test('Live Makati labels source authority and check status', async ({ page }) => {
+  await page.goto(baseURL + '/live');
+  await expect(page.getByRole('heading', { level: 1, name: 'What’s happening now' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'What BetterMakati has actually checked' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Source directory' })).toBeVisible();
+  await expect(page.getByText('Official government', { exact: true }).first()).toBeVisible();
+  await expect(page.getByText(/direct link means BetterMakati is routing you to the provider/i)).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Today in Makati', exact: true })).toBeVisible();
+
+  const state = await page.request.get(baseURL + '/city-monitor-source-state.json');
+  expect(state.ok()).toBeTruthy();
 });
 
 test('City Monitor publishes honest stream coverage and source limits', async ({ page }) => {
