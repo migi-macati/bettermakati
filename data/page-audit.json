@@ -115,6 +115,8 @@
       "citywide-line-reconciliation",
       "36-office-appropriations",
       "office-total-reconciliation",
+      "office-line-item-drilldown",
+      "office-line-item-reconciliation",
       "reported-receipts-expenditures",
       "development-fund-follow-through",
       "special-education-fund-utilization",
@@ -123,7 +125,7 @@
       "trend-view"
     ],
     "gaps": [
-      "All 36 office and department total appropriations are indexed and reconcile to ₱21.0B. Office-level object-of-expenditure detail within those forms is not yet normalized line by line.",
+      "All 36 office and department total appropriations are indexed and reconcile to ₱21.0B. Line-item schedules are normalized and individually reconciled for 5 offices; 31 office schedules remain to be transcribed.",
       "Structured procurement coverage includes the public bid-result disclosures already ingested; many records still lack a separately linked contract, notice to proceed, implementation or completion source.",
       "Audit follow-through is structured only where an official or attributable public record can be linked; BetterMakati does not yet have a definitive current-year inventory of resolved and unresolved COA recommendations."
     ]
