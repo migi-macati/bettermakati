@@ -5,7 +5,7 @@ export const procurementQ22025Source =
 export const procurementQ32024Source =
   'https://www.makati.gov.ph/assets/uploads/staticmenu/docs/online_forms/pdf/Q3%20Bid%20Results%20FDP.pdf';
 
-const reviewed = '23 September 2026';
+const reviewed = '24 September 2026';
 
 interface ProcurementSeed {
   id: string;
