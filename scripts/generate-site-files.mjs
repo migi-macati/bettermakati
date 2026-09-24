@@ -205,6 +205,61 @@ try {
 }
 
 try {
+  const civicBriefsText = await readFile('data/civic-briefs.json', 'utf8');
+  await writeFile('public/civic-briefs.json', civicBriefsText);
+
+  const parsed = JSON.parse(civicBriefsText);
+  const briefs = (Array.isArray(parsed.briefs) ? parsed.briefs : []).slice(0, 60);
+  const escapeXml = value =>
+    String(value)
+      .replaceAll('&', '&amp;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;')
+      .replaceAll('"', '&quot;')
+      .replaceAll("'", '&apos;');
+
+  const rss = [
+    '<?xml version="1.0" encoding="UTF-8"?>',
+    '<rss version="2.0">',
+    '<channel>',
+    '<title>BetterMakati Civic Briefs</title>',
+    '<link>' + base + '/briefs</link>',
+    '<description>Daily, weekly and monthly source-backed civic summaries generated only from validated City Monitor records. Source-change signals remain separate until reviewed.</description>',
+    ...briefs.map(brief => [
+      '<item>',
+      '<title>' + escapeXml(brief.title + ' — ' + brief.periodEnd) + '</title>',
+      '<link>' + escapeXml(base + '/briefs?brief=' + encodeURIComponent(brief.id)) + '</link>',
+      '<guid isPermaLink="false">' + escapeXml('civic-brief-' + brief.id) + '</guid>',
+      '<pubDate>' + new Date(brief.publishedAt).toUTCString() + '</pubDate>',
+      '<description>' +
+        escapeXml(
+          String(brief.recordIds?.length ?? 0) +
+            ' validated records; ' +
+            String(brief.reviewSignals?.length ?? 0) +
+            ' source-change signals awaiting review.'
+        ) +
+        '</description>',
+      '</item>',
+    ].join('')),
+    '</channel>',
+    '</rss>',
+    '',
+  ].join('\n');
+  await writeFile('public/civic-briefs.rss.xml', rss);
+} catch {
+  await writeFile(
+    'public/civic-briefs.json',
+    JSON.stringify({ version: 1, briefs: [] }, null, 2) + '\n'
+  );
+  await writeFile(
+    'public/civic-briefs.rss.xml',
+    '<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>BetterMakati Civic Briefs</title><link>' +
+      base +
+      '/briefs</link><description>No Civic Brief archive has been published yet.</description></channel></rss>\n'
+  );
+}
+
+try {
   const pageAudit = await readFile('data/page-audit.json', 'utf8');
   await writeFile('public/page-audit.json', pageAudit);
 } catch {
