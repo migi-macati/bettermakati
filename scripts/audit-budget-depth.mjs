@@ -107,9 +107,9 @@ try {
   problems.push('2026 office line-item detail is not parseable as structured data.');
 }
 
-if (officeDetails.length < 5) {
+if (officeDetails.length < 10) {
   problems.push(
-    `Expected at least 5 normalized office line-item schedules; found ${officeDetails.length}.`
+    `Expected at least 10 normalized office line-item schedules; found ${officeDetails.length}.`
   );
 }
 
