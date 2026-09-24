@@ -25,7 +25,7 @@ export default function OfficeBudgetDetail() {
   const reconciles =
     Boolean(detail && publishedTotal) &&
     Math.abs(detailTotalM - (publishedTotal?.amountM ?? 0)) < 0.001;
-  const groups = (['Personal Services', 'Operating', 'Capital', 'Financial Expenses'] as const)
+  const groups = (['Personal Services', 'Operating', 'Capital', 'Financial Expenses', 'Special Purpose'] as const)
     .map(group => ({
       group,
       amountM:
