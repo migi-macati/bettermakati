@@ -48,6 +48,31 @@ interface WatchedSource {
   label: string;
   url: string;
   kind?: string;
+  cadence: 'daily' | 'weekly' | 'monthly';
+  monitoringMode: 'content-hash' | 'reachability';
+}
+
+interface SourceWatchStateSource extends WatchedSource {
+  status: 'ok' | 'http-error' | 'unreachable' | 'not-checked';
+  statusCode?: number | null;
+  change: 'reachable' | 'unchanged' | 'content-changed' | 'new-baseline' | 'check-failed' | 'not-checked';
+  lastCheckedAt?: string | null;
+  lastSuccessfulAt?: string | null;
+  lastChangedAt?: string | null;
+}
+
+interface SourceWatchState {
+  checkedAt?: string | null;
+  cadence?: string | null;
+  summary?: {
+    checked: number;
+    ok: number;
+    failed: number;
+    changed: number;
+    newBaselines: number;
+    reachabilityOnly?: number;
+  };
+  sources?: SourceWatchStateSource[];
 }
 
 const sourceClassOptions: Array<'All' | PublicRecordSourceClass> = [
@@ -84,6 +109,7 @@ const catalogCsv = [
 export default function PublicRecords() {
   const [watchRuns, setWatchRuns] = useState<SourceWatchRun[]>([]);
   const [watchedSources, setWatchedSources] = useState<WatchedSource[]>([]);
+  const [watchState, setWatchState] = useState<SourceWatchState>({});
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState('All');
   const [sourceClass, setSourceClass] = useState<'All' | PublicRecordSourceClass>('All');
@@ -92,31 +118,55 @@ export default function PublicRecords() {
   useEffect(() => {
     const load = async () => {
       try {
-        const [historyResponse, indexResponse] = await Promise.all([
+        const [historyResponse, indexResponse, stateResponse] = await Promise.all([
           fetch('/source-watch-history.json', { cache: 'no-store' }),
           fetch('/source-watch-index.json', { cache: 'no-store' }),
+          fetch('/source-watch-state.json', { cache: 'no-store' }),
         ]);
         const history = await historyResponse.json();
         const index = await indexResponse.json();
+        const state = await stateResponse.json();
         if (historyResponse.ok && Array.isArray(history.runs)) {
           setWatchRuns(history.runs);
         }
         if (indexResponse.ok && Array.isArray(index)) {
           setWatchedSources(index);
         }
+        if (stateResponse.ok && Array.isArray(state.sources)) {
+          setWatchState(state);
+        }
       } catch {
         setWatchRuns([]);
         setWatchedSources([]);
+        setWatchState({});
       }
     };
     void load();
   }, []);
 
   const latestRun = watchRuns[0];
-  const watchedUrls = useMemo(
-    () => new Set(watchedSources.map(source => source.url)),
+  const watchedSourceByUrl = useMemo(
+    () => new Map(watchedSources.map(source => [source.url, source])),
     [watchedSources]
   );
+  const watchStateByUrl = useMemo(
+    () => new Map((watchState.sources ?? []).map(source => [source.url, source])),
+    [watchState.sources]
+  );
+  const watchedUrls = useMemo(
+    () => new Set(watchedSourceByUrl.keys()),
+    [watchedSourceByUrl]
+  );
+
+  const watchStatusLabel = (url: string) => {
+    const state = watchStateByUrl.get(url);
+    if (!state || state.status === 'not-checked') return 'Awaiting first scheduled check';
+    if (state.status !== 'ok') {
+      return 'Latest check failed' + (state.statusCode ? ' (' + state.statusCode + ')' : '');
+    }
+    if (!state.lastCheckedAt) return 'Reachable';
+    return 'Last checked ' + new Date(state.lastCheckedAt).toLocaleString('en-PH');
+  };
 
   const visibleRecords = useMemo(() => {
     const needle = query.trim().toLowerCase();
@@ -355,7 +405,9 @@ export default function PublicRecords() {
                     <span className="rounded-full bg-gray-100 px-2.5 py-1 text-gray-700">{record.sourceClass}</span>
                     <span className="rounded-full bg-gray-100 px-2.5 py-1 text-gray-700">{record.format}</span>
                     {watchedUrls.has(record.url) && (
-                      <span className="rounded-full bg-success-50 px-2.5 py-1 text-success-800">Monitored</span>
+                      <span className="rounded-full bg-success-50 px-2.5 py-1 text-success-800">
+                        Monitored · {watchedSourceByUrl.get(record.url)?.cadence}
+                      </span>
                     )}
                   </div>
 
@@ -367,6 +419,14 @@ export default function PublicRecords() {
 
                   {record.usedBy.length > 0 && (
                     <div className="mt-3 text-xs text-gray-500">Used by BetterMakati: {record.usedBy.join(' · ')}</div>
+                  )}
+                  {watchedUrls.has(record.url) && (
+                    <div className="mt-2 text-xs leading-relaxed text-gray-500">
+                      Freshness: {watchStatusLabel(record.url)} ·{' '}
+                      {watchedSourceByUrl.get(record.url)?.monitoringMode === 'content-hash'
+                        ? 'stable-document content check'
+                        : 'reachability check only'}
+                    </div>
                   )}
                 </div>
 
@@ -399,34 +459,87 @@ export default function PublicRecords() {
 
       <Section className="bg-white">
         <div className="section-eyebrow">Freshness</div>
-        <Heading level={2}>Public source-watch history</Heading>
+        <Heading level={2}>Source freshness monitor</Heading>
         <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-600">
-          BetterMakati publishes the source-watch list and recent checks. A changed hash means the source changed; it does not by itself establish what changed or whether any site claim should be updated.
+          BetterMakati checks public sources on daily, weekly or monthly cadences. Stable documents can be content-hashed; dynamic portals are normally checked only for reachability so changing page shells are not mistaken for substantive updates.
         </p>
 
+        <div className="mt-6 grid grid-cols-2 gap-3 lg:grid-cols-4">
+          <div className="rounded-xl border border-primary-100 bg-[#fffdf8] p-4">
+            <div className="text-2xl font-extrabold text-gray-950">{watchedSources.length || '—'}</div>
+            <div className="text-sm text-gray-600">sources configured</div>
+          </div>
+          <div className="rounded-xl border border-primary-100 bg-[#fffdf8] p-4">
+            <div className="text-2xl font-extrabold text-gray-950">
+              {(watchState.sources ?? []).filter(source => source.status === 'ok').length || '—'}
+            </div>
+            <div className="text-sm text-gray-600">latest source-specific checks successful</div>
+          </div>
+          <div className="rounded-xl border border-secondary-200 bg-secondary-50 p-4">
+            <div className="text-2xl font-extrabold text-gray-950">{latestRun?.changed.length ?? 0}</div>
+            <div className="text-sm text-gray-600">stable-document changes awaiting review</div>
+          </div>
+          <div className="rounded-xl border border-error-200 bg-error-50 p-4">
+            <div className="text-2xl font-extrabold text-gray-950">
+              {(watchState.sources ?? []).filter(source => source.status === 'http-error' || source.status === 'unreachable').length}
+            </div>
+            <div className="text-sm text-gray-600">latest source-specific checks failed</div>
+          </div>
+        </div>
+
+        <div className="mt-5 rounded-2xl border border-primary-100 bg-[#fffdf8] p-5">
+          <div className="grid gap-4 md:grid-cols-3">
+            {(['daily', 'weekly', 'monthly'] as const).map(cadence => (
+              <div key={cadence}>
+                <div className="text-2xl font-extrabold text-gray-950">
+                  {watchedSources.filter(source => source.cadence === cadence).length}
+                </div>
+                <div className="text-sm font-bold capitalize text-gray-800">{cadence}</div>
+                <div className="mt-1 text-xs text-gray-500">
+                  {cadence === 'daily'
+                    ? 'Fast-moving civic, procurement and election sources.'
+                    : cadence === 'weekly'
+                      ? 'Service, mobility, participation and reference sources.'
+                      : 'Fiscal, statistical, audit and foundational sources.'}
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="mt-4 border-t border-primary-100 pt-4 text-xs leading-relaxed text-gray-600">
+            {watchState.checkedAt
+              ? 'Latest automation run: ' + new Date(watchState.checkedAt).toLocaleString('en-PH') + ' · ' + (watchState.cadence || 'all') + ' cadence.'
+              : 'Automation is configured; the first scheduled freshness run has not yet been published.'}
+          </div>
+        </div>
+
         <div className="mt-5 flex flex-wrap gap-3">
+          <a href="/source-watch-state.json" download className="brand-btn-secondary">
+            <Database className="h-4 w-4" /> Current source state
+          </a>
           <a href="/source-watch-index.json" download className="brand-btn-secondary">
-            <Database className="h-4 w-4" /> Download monitored-source index
+            <Database className="h-4 w-4" /> Monitored-source index
           </a>
           <a href="/source-watch-history.json" download className="brand-btn-secondary">
-            <Download className="h-4 w-4" /> Download source-watch history
+            <Download className="h-4 w-4" /> Check history
           </a>
         </div>
 
         {!latestRun ? (
           <div className="mt-6 rounded-2xl border border-gray-200 bg-[#fffdf8] p-5 text-sm text-gray-600">
             <RefreshCw className="h-5 w-5 text-primary-700" />
-            <p className="mt-3">No completed public source-watch run is in the published history yet.</p>
+            <p className="mt-3">
+              No completed general source-freshness run is in the published history yet. The configured cadence and monitoring mode are already visible above.
+            </p>
           </div>
         ) : (
           <div className="mt-6 rounded-2xl border border-primary-100 bg-[#fffdf8] p-6">
             <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
-              Latest check · {new Date(latestRun.checkedAt).toLocaleString('en-PH')}
+              Latest run · {new Date(latestRun.checkedAt).toLocaleString('en-PH')}
             </div>
             <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
               <div className="rounded-xl border border-gray-200 bg-white p-4">
                 <div className="text-2xl font-extrabold text-gray-950">{latestRun.changed.length}</div>
-                <div className="text-sm text-gray-600">content changes</div>
+                <div className="text-sm text-gray-600">content changes for review</div>
               </div>
               <div className="rounded-xl border border-gray-200 bg-white p-4">
                 <div className="text-2xl font-extrabold text-gray-950">{latestRun.failed.length}</div>
@@ -434,7 +547,7 @@ export default function PublicRecords() {
               </div>
               <div className="rounded-xl border border-gray-200 bg-white p-4">
                 <div className="text-2xl font-extrabold text-gray-950">{latestRun.newBaselines.length}</div>
-                <div className="text-sm text-gray-600">new baselines</div>
+                <div className="text-sm text-gray-600">new document baselines</div>
               </div>
             </div>
 
@@ -449,7 +562,7 @@ export default function PublicRecords() {
                     className="flex items-start gap-3 rounded-xl border border-secondary-200 bg-secondary-50 p-4"
                   >
                     <RefreshCw className="mt-0.5 h-4 w-4 shrink-0 text-secondary-800" />
-                    <span className="text-sm text-gray-700"><strong>{item.label}</strong> changed and requires review.</span>
+                    <span className="text-sm text-gray-700"><strong>{item.label}</strong> changed and requires editorial review.</span>
                   </a>
                 ))}
                 {latestRun.failed.map(item => (
