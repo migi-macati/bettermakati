@@ -14,6 +14,8 @@ const routes = [
   '/projects-budget',
   '/history',
   '/visit',
+  '/today',
+  '/live',
 ];
 
 for (const route of routes) {
