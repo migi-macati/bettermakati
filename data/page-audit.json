@@ -81,16 +81,27 @@
     "path": "/elections",
     "label": "Elections",
     "status": "partial",
-    "reviewedAt": "2026-09-20",
+    "reviewedAt": "2026-09-24",
     "checks": [
-      "official-results",
-      "registration",
-      "calendar",
-      "official-profiles",
-      "neutral-sourcing"
+      "2025-citywide-results",
+      "complete-council-candidate-fields",
+      "turnout",
+      "23-barangay-mayoral-layer",
+      "1998-2025-mayoral-history",
+      "source-quality-labels",
+      "2026-bske-calendar",
+      "2026-bske-term-law",
+      "2026-bske-implementing-rules",
+      "precinct-finder",
+      "candidate-source-guardrail",
+      "downloadable-election-data",
+      "coverage-matrix"
     ],
     "gaps": [
-      "Election procedures and calendars need continuous COMELEC monitoring as new resolutions are issued."
+      "The 2025 barangay mayoral layer identifies which candidate carried all 23 current Makati barangays, but exact vote pairs are currently verified for only San Lorenzo and Guadalupe Nuevo.",
+      "Barangay-level 2025 totals for vice mayor, House and council races are not yet normalized.",
+      "The 2026 BSKE candidate directory is intentionally pending because certificate-of-candidacy filing opens on September 28, 2026 and BetterMakati will not infer a candidate list before an official COMELEC source exists.",
+      "Older mayoral elections use academic, mixed or archival-secondary sources where a stable official digital result table is unavailable; those source-quality limits are displayed with the records."
     ]
   },
   {
