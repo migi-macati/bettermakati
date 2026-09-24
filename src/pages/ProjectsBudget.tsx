@@ -217,10 +217,7 @@ export default function ProjectsBudget() {
           <Heading>Where Makati’s money comes from and goes</Heading>
           <SharePage title="Makati Projects & Budget | BetterMakati" />
         </div>
-        <LastReviewed
-          date="2026-09-24"
-          note="Adopted plans, the city’s current-year estimate, and DBM/BLGF receipts and expenditures are shown as separate datasets."
-        />
+        <LastReviewed date="2026-09-24" />
 
         {barangay && (
           <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -378,7 +375,7 @@ export default function ProjectsBudget() {
               ),
             },
           ]}
-          note="The three columns answer different questions. The 2025 adopted plan is the original budget authority; the city’s 2025 current-year estimate is the later estimate printed in the 2026 budget report; the DBM/BLGF 2025 statement below reports receipts and expenditures on a separate fiscal table."
+          note="2025 adopted budget, 2025 current-year estimate and DBM/BLGF actuals are separate fiscal series."
           actions={
             <a
               href={budgetSources.annualBudget2026}
@@ -1006,9 +1003,10 @@ export default function ProjectsBudget() {
         <div className="section-eyebrow">Structured procurement</div>
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <Heading level={2}>Bid results BetterMakati can follow</Heading>
+            <Heading level={2}>Bid results and award records</Heading>
             <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-700">
-              These records come from published city bid-result disclosures already structured in BetterMakati. An award record is not the same as a completed contract, delivered project or final payment.
+              Published city bid-result disclosures by period, reference number, ABC,
+              winning bid, supplier and linked evidence.
             </p>
           </div>
           <div className="flex flex-wrap gap-3">
@@ -1151,9 +1149,6 @@ export default function ProjectsBudget() {
           </table>
         </div>
 
-        <p className="mt-3 text-xs leading-relaxed text-gray-500">
-          Coverage is not a complete procurement registry. BetterMakati publishes the later contract, notice-to-proceed, implementation or completion stage only when a source has been linked to the same procurement record.
-        </p>
       </Section>
 
       <Section id="audit" className="bg-white">
@@ -1162,7 +1157,8 @@ export default function ProjectsBudget() {
           <div>
             <Heading level={2}>Structured COA findings</Heading>
             <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-700">
-              BetterMakati separates the audit finding, recommendation, management response and later follow-up where the cited records support each field.
+              COA findings with the recommendation, management response and later
+              follow-up where available.
             </p>
           </div>
           <div className="flex flex-wrap gap-3">

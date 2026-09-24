@@ -266,7 +266,7 @@ export default function ProjectStatus() {
     {
       label: 'Published accountability gaps',
       value: accountabilityCoverageGaps.length.toLocaleString('en-PH'),
-      detail: 'Known ledger coverage gaps shown rather than concealed',
+      detail: 'Known gaps in the current Accountability Ledger',
       icon: AlertCircle,
     },
     {
@@ -316,10 +316,7 @@ export default function ProjectStatus() {
           </div>
           <SharePage title="BetterMakati Status" />
         </div>
-        <LastReviewed
-          date={doctrineReviewed}
-          note="Counts reflect the current BetterMakati data model."
-        />
+        <LastReviewed date={doctrineReviewed} />
 
         <div className="mt-6 flex flex-col gap-3 rounded-2xl border border-success-200 bg-success-50 p-5 sm:flex-row sm:items-center sm:justify-between">
           <div>
@@ -381,7 +378,7 @@ export default function ProjectStatus() {
               <div>
                 <div className="font-extrabold text-gray-950">{item.category}</div>
                 <div className="mt-1 text-xs text-gray-500">
-                  {item.indexed - item.structured} indexed service{item.indexed - item.structured === 1 ? '' : 's'} still use the source-first fallback guide.
+                  {item.indexed - item.structured} indexed service{item.indexed - item.structured === 1 ? '' : 's'} without a structured guide.
                 </div>
               </div>
               <div className="flex flex-wrap gap-2 text-xs font-bold">
@@ -413,7 +410,7 @@ export default function ProjectStatus() {
         <div className="section-eyebrow">BetterBarangay coverage</div>
         <Heading level={2}>What is still missing by barangay</Heading>
         <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-700">
-          These are source-coverage gaps, not assumptions about whether a service, facility or channel exists. BetterMakati leaves a field open when a reliable current public source has not been verified.
+          Open profile fields that still need a current public source.
         </p>
 
         <div className="mt-6 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
@@ -591,7 +588,7 @@ export default function ProjectStatus() {
         <div className="section-eyebrow">Page audit</div>
         <Heading level={2}>Major-page completeness & freshness</Heading>
         <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600">
-          BetterMakati now keeps an explicit review record for the major citizen journeys. A page can be reviewed while still publishing known coverage gaps.
+          Review status and open gaps for major citizen journeys.
         </p>
 
         {pageAuditFailed ? (
@@ -664,7 +661,7 @@ export default function ProjectStatus() {
               Open doctrine & audit
             </Link>
             <Link to="/get-involved?type=correction#submission" className="brand-btn-secondary">
-              Challenge this status page
+              Submit a correction
             </Link>
             <a
               href="https://github.com/migi-macati/bettermakati"

@@ -88,11 +88,7 @@ export default function History() {
           <Heading>Many histories. One Makati.</Heading>
           <SharePage title="History of Makati | BetterMakati" />
         </div>
-        <LastReviewed
-          label="Timeline review"
-          date={historyReviewed}
-          note="Coverage remains a growing research chronology."
-        />
+        <LastReviewed label="Timeline review" date={historyReviewed} />
         <p className="mt-5 max-w-3xl text-lg leading-relaxed text-gray-700">
           Beyond the skyline: explore the communities, institutions, conflicts
           and decisions that shaped San Pedro Macati and the modern city.
@@ -135,47 +131,6 @@ export default function History() {
             </div>
           ))}
         </div>
-        <details className="mt-6 rounded-xl border border-gray-200 bg-white p-5">
-          <summary className="cursor-pointer font-bold text-primary-800">
-            How to read this timeline · names, dates and evidence
-          </summary>
-          <div className="mt-4 space-y-3 text-sm leading-relaxed text-gray-700">
-            <p>
-              <strong>San Pedro Macati</strong> follows the name in{' '}
-              <a
-                className="underline"
-                href="https://lawphil.net/statutes/acts/act1914/act_2390_1914.html"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Act 2390
-              </a>
-              . The familiar ebbing-river naming story is a tradition recounted
-              in the city profile, not a verified account of a specific
-              encounter.
-            </p>
-            <p>
-              <strong>Legal record</strong> identifies an act, order or
-              judgment. <strong>Institutional history</strong> is an
-              organization’s retrospective account.{' '}
-              <strong>Scholarly account</strong> identifies research, including
-              interpretation of older records. These are different forms of
-              evidence, not interchangeable certifications.
-            </p>
-            <p>
-              Exact dates appear only where the cited source supports them.
-              Period entries are positioned by chronological context. Historical
-              territorial references do not describe today’s boundaries. Event
-              dates, enactment, ratification and implementation are
-              distinguished.
-            </p>
-            <p>
-              Editorial review: {historyReviewed}. Coverage is still incomplete;
-              this is not a claim to have verified every event or every
-              competing account.
-            </p>
-          </div>
-        </details>
         <div
           className="mt-10 rounded-2xl border border-gray-200 bg-white p-5"
           role="search"
@@ -334,11 +289,10 @@ export default function History() {
         )}
         <aside className="mt-12 rounded-2xl bg-primary-50 p-6 sm:p-8">
           <h2 className="text-xl font-extrabold text-primary-950">
-            Help complete the record
+            Research gaps
           </h2>
           <p className="mt-3 text-sm leading-relaxed text-gray-700">
-            Comprehensive history includes what is still missing. These are
-            research priorities, not established timeline claims:
+            Priorities for further research:
           </p>
           <ul className="mt-4 list-disc space-y-3 pl-5 text-sm leading-relaxed text-gray-700">
             {historyResearchGaps.map(gap => (
