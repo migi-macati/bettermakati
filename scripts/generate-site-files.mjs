@@ -117,6 +117,15 @@ await writeFile('public/sitemap.xml', xml);
 try {
   const cityMonitorHistory = await readFile('data/city-monitor-source-history.json', 'utf8');
   await writeFile('public/city-monitor-source-history.json', cityMonitorHistory);
+  try {
+    const cityMonitorState = await readFile('data/city-monitor-source-state.json', 'utf8');
+    await writeFile('public/city-monitor-source-state.json', cityMonitorState);
+  } catch {
+    await writeFile(
+      'public/city-monitor-source-state.json',
+      JSON.stringify({ version: 2, checkedAt: null, sources: [] }, null, 2) + '\n'
+    );
+  }
 
   const parsed = JSON.parse(cityMonitorHistory);
   const items = (Array.isArray(parsed.runs) ? parsed.runs : [])
@@ -160,7 +169,11 @@ try {
 } catch {
   await writeFile(
     'public/city-monitor-source-history.json',
-    JSON.stringify({ version: 1, runs: [] }, null, 2) + '\n'
+    JSON.stringify({ version: 2, runs: [] }, null, 2) + '\n'
+  );
+  await writeFile(
+    'public/city-monitor-source-state.json',
+    JSON.stringify({ version: 2, checkedAt: null, sources: [] }, null, 2) + '\n'
   );
   await writeFile(
     'public/city-monitor.rss.xml',
