@@ -192,16 +192,40 @@
     "path": "/today",
     "label": "Today in Makati",
     "status": "reviewed",
-    "reviewedAt": "2026-09-20",
+    "reviewedAt": "2026-09-24",
     "checks": [
-      "hotlines",
-      "weather",
-      "advisories",
-      "events",
-      "local-context"
+      "barangay-preference",
+      "weather-freshness",
+      "latest-civic-brief",
+      "city-monitor-health",
+      "news-separation",
+      "events-and-hotlines",
+      "emergency-routing"
     ],
     "gaps": [
-      "Live signals depend on upstream availability."
+      "Weather, news and published civic feeds depend on upstream availability and can refresh at different times.",
+      "Barangay context is currently a browser-saved preference; it does not infer or require the user's precise location.",
+      "Today surfaces the latest published Civic Brief and City Monitor status but does not treat raw news headlines or source-change signals as validated government activity."
+    ]
+  },
+  {
+    "path": "/live",
+    "label": "Live Makati",
+    "status": "reviewed",
+    "reviewedAt": "2026-09-24",
+    "checks": [
+      "weather-observation-time",
+      "official-warning-handoff",
+      "source-health",
+      "authority-labels",
+      "monitor-vs-direct-link",
+      "utility-provider-links",
+      "emergency-routing"
+    ],
+    "gaps": [
+      "Open-Meteo weather and air-quality readings are third-party observations; PAGASA remains the controlling source for official warnings.",
+      "Only city sources already covered by City Monitor receive a published BetterMakati check status. Utility, district and hazard links are direct handoffs unless separately monitored.",
+      "A source being reachable does not establish that no new advisory, outage or incident exists; users are routed to the original provider for current operational status."
     ]
   },
   {
