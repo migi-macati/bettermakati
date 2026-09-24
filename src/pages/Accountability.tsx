@@ -1,9 +1,7 @@
 import { useMemo, useState } from 'react';
 import {
-  AlertCircle,
   ArrowRight,
   ChevronDown,
-  CircleHelp,
   ClipboardList,
   Download,
   ExternalLink,
@@ -13,7 +11,6 @@ import {
   Search,
   ShieldCheck,
   Target,
-  WalletCards,
 } from 'lucide-react';
 import { Link, useSearchParams } from 'react-router';
 import { useBarangayScope } from '../hooks/useBarangayScope';
@@ -23,11 +20,8 @@ import { Heading } from '../components/ui/Heading';
 import LastReviewed from '../components/ui/LastReviewed';
 import SharePage from '../components/ui/SharePage';
 import {
-  accountabilityCoverageAreas,
-  accountabilityCoverageGaps,
   accountabilityEntries,
   accountabilityReviewed,
-  accountabilitySourceCount,
   accountabilityStatusLabel,
 } from '../data/accountability';
 import type { AccountabilityEntry } from '../data/civicTypes';
@@ -368,15 +362,12 @@ export default function Accountability() {
           <div>
             <Heading>Follow public money, projects and promises</Heading>
             <p className="mt-2 max-w-3xl text-gray-700 leading-relaxed">
-              Start with a question. BetterMakati connects public records over time so you can see what was planned, what evidence came later, and what is still missing.
+              Browse budgets, procurement, audit findings, service standards and public commitments in one ledger.
             </p>
           </div>
           <SharePage title="Makati Accountability Ledger | BetterMakati" />
         </div>
-        <LastReviewed
-          date={accountabilityReviewed}
-          note="A missing source means BetterMakati has not located public evidence for that step. It is not a finding of wrongdoing or non-performance."
-        />
+        <LastReviewed date={accountabilityReviewed} />
 
         {barangay && (
           <div className="mt-4 rounded-xl border border-primary-100 bg-white p-4 text-sm leading-relaxed text-gray-700">
@@ -388,8 +379,8 @@ export default function Accountability() {
               </>
             ) : (
               <>
-                No Accountability Ledger record is yet explicitly tagged to{' '}
-                <strong>{barangay.name}</strong>. BetterMakati does not substitute the citywide ledger when local evidence is missing.
+                No Accountability Ledger record is currently tagged to{' '}
+                <strong>{barangay.name}</strong>.
               </>
             )}
             <div className="mt-2 flex flex-wrap gap-3">
@@ -488,71 +479,6 @@ export default function Accountability() {
           </div>
         </div>
 
-        <div className="mt-7 rounded-2xl border border-gray-200 bg-white p-5 md:p-6">
-          <div className="flex items-start gap-3">
-            <CircleHelp className="mt-0.5 h-5 w-5 shrink-0 text-primary-700" />
-            <div>
-              <div className="font-extrabold text-gray-950">
-                How to read this ledger
-              </div>
-              <p className="mt-1 max-w-4xl text-sm leading-relaxed text-gray-600">
-                The goal is a chain: <strong>plan → budget → bid/award → contract/NTP → delivery → audit/outcome</strong>. A record stops where the public evidence stops. “Source gap” means the next document or proof has not been found yet.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {!barangay && (
-          <div className="mt-7 overflow-hidden rounded-2xl border border-gray-200 bg-white">
-            <div className="border-b border-gray-200 p-5 md:p-6">
-              <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
-                Coverage at a glance
-              </div>
-              <h2 className="mt-1 text-xl font-extrabold text-gray-950">
-                What the ledger currently covers
-              </h2>
-              <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-600">
-                {accountabilityEntries.length} structured records currently point to{' '}
-                {accountabilitySourceCount} unique public source URLs. The ledger is selective by design: it connects records that can support follow-through rather than copying every document into one page.
-              </p>
-            </div>
-            <div className="overflow-x-auto">
-              <table className="w-full min-w-[980px] text-left">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-5 py-3 font-bold">Area</th>
-                    <th className="px-5 py-3 font-bold text-right">Records</th>
-                    <th className="px-5 py-3 font-bold">Current period / source scope</th>
-                    <th className="px-5 py-3 font-bold">What is included</th>
-                    <th className="px-5 py-3 font-bold">Known limit</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {accountabilityCoverageAreas.map(area => (
-                    <tr key={area.id} className="border-t align-top">
-                      <td className="px-5 py-4 font-extrabold text-gray-950">
-                        {area.label}
-                      </td>
-                      <td className="px-5 py-4 text-right font-extrabold text-primary-800">
-                        {area.recordCount}
-                      </td>
-                      <td className="px-5 py-4 text-sm leading-relaxed text-gray-700">
-                        {area.period}
-                      </td>
-                      <td className="px-5 py-4 text-sm leading-relaxed text-gray-700">
-                        {area.included}
-                      </td>
-                      <td className="px-5 py-4 text-sm leading-relaxed text-gray-600">
-                        {area.limit}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        )}
-
         <div className="mt-7 grid grid-cols-2 lg:grid-cols-3 gap-3">
           <div className="rounded-2xl border border-primary-100 bg-white p-5">
             <div className="text-3xl font-extrabold text-gray-950">
@@ -617,7 +543,7 @@ export default function Accountability() {
         {gapBreakdown.length > 0 && (
           <div className="mt-4 rounded-2xl border border-secondary-200 bg-secondary-50 p-5">
             <div className="text-xs font-bold uppercase tracking-[0.08em] text-secondary-900">
-              What evidence is missing next
+              Follow-up gaps
             </div>
             <div className="mt-3 flex flex-wrap gap-2">
               {gapBreakdown.map(item => (
@@ -653,7 +579,7 @@ export default function Accountability() {
         <div className="section-eyebrow">Explore the evidence</div>
         <Heading level={2}>Find a record</Heading>
         <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600">
-          Search in plain language. You can also filter for records where the next public document is still missing.
+          Search in plain language or filter by record type, year and follow-up status.
         </p>
 
         <div className="mt-6 grid grid-cols-1 gap-3 lg:grid-cols-[minmax(0,1.5fr)_repeat(4,minmax(0,0.7fr))]">
@@ -1118,84 +1044,6 @@ export default function Accountability() {
         </div>
       </Section>
 
-      <Section className="bg-[#f5f8f2]">
-        <div className="section-eyebrow">Help improve the public record</div>
-        <Heading level={2}>Where evidence is still incomplete</Heading>
-        <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-700">
-          These are gaps in BetterMakati’s public-record coverage, not findings against the city, an office, supplier or official.
-        </p>
-
-        <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-2">
-          {accountabilityCoverageGaps.map(gap => (
-            <article
-              key={gap.id}
-              className="rounded-2xl border border-secondary-200 bg-white p-5"
-            >
-              <AlertCircle className="h-5 w-5 text-secondary-800" />
-              <h3 className="mt-3 font-extrabold text-gray-950">{gap.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-gray-600">
-                {gap.description}
-              </p>
-              <p className="mt-3 text-sm leading-relaxed text-gray-700">
-                <strong>Why it matters:</strong> {gap.whyItMatters}
-              </p>
-              <div className="mt-3 text-xs text-gray-500">
-                Last checked: {gap.lastChecked}
-              </div>
-              {gap.checkedSources?.length ? (
-                <div className="mt-3">
-                  <div className="text-xs font-bold uppercase tracking-[0.06em] text-gray-500">
-                    Checked against
-                  </div>
-                  <div className="mt-1 flex flex-wrap gap-x-3 gap-y-1 text-xs">
-                    {gap.checkedSources.map(source => (
-                      <a
-                        key={source.url}
-                        href={source.url}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="font-bold text-primary-700 underline underline-offset-2"
-                      >
-                        {source.label} <ExternalLink className="inline h-3 w-3" />
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              ) : null}
-              <Link
-                to={`/get-involved?type=source&gap=${encodeURIComponent(
-                  gap.id
-                )}#submission`}
-                className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700 underline underline-offset-2"
-              >
-                Share evidence for this gap
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </article>
-          ))}
-        </div>
-
-        <div className="mt-7 rounded-2xl border border-primary-100 bg-white p-6">
-          <WalletCards className="h-5 w-5 text-primary-700" />
-          <h3 className="mt-3 text-lg font-extrabold text-gray-950">
-            Want the original records instead?
-          </h3>
-          <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600">
-            The ledger is the citizen-facing explanation and follow-through layer. The Public Records index is where you can browse the underlying source collections.
-          </p>
-          <div className="mt-4 flex flex-wrap gap-3">
-            <Link to="/records" className="brand-btn-secondary">
-              Public Records
-            </Link>
-            <Link to="/projects-budget" className="brand-btn-secondary">
-              Projects & Budget
-            </Link>
-            <Link to="/integrity" className="brand-btn-secondary">
-              Integrity & Audit
-            </Link>
-          </div>
-        </div>
-      </Section>
     </>
   );
 }

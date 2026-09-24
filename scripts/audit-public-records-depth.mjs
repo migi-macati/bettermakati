@@ -91,7 +91,6 @@ for (const marker of [
   'Search the public record catalog',
   'Official only',
   'Download catalog CSV',
-  'What is actually indexed',
   'source-watch-index.json',
   'source-watch-history.json',
   'unique source URLs indexed',

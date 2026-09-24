@@ -76,9 +76,7 @@ if (page.includes('const needle = barangay.name.toLowerCase()')) {
 }
 
 for (const marker of [
-  'What the ledger currently covers',
-  'What evidence is missing next',
-  'unique public source URLs',
+  'Follow-up gaps',
   'source_urls',
   'barangay_slug',
 ]) {

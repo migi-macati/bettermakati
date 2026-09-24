@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import {
   AlertCircle,
-  ArrowRight,
   Database,
   Download,
   ExternalLink,
@@ -18,10 +17,8 @@ import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
 import LastReviewed from '../components/ui/LastReviewed';
 import SharePage from '../components/ui/SharePage';
-import CitizenSummary from '../components/ui/CitizenSummary';
 import {
   publicRecordCategories,
-  publicRecordCoverage,
   publicRecordOfficialCount,
   publicRecords,
   publicRecordsReviewed,
@@ -210,48 +207,13 @@ export default function PublicRecords() {
           <div>
             <Heading>Public Records</Heading>
             <p className="mt-2 max-w-4xl text-gray-700 leading-relaxed">
-              Search the evidence behind BetterMakati, open the original source, and see where coverage is still incomplete.
+              Search documents, datasets and public portals used across BetterMakati.
             </p>
           </div>
           <SharePage title="Makati Public Records | BetterMakati" />
         </div>
 
-        <LastReviewed
-          date={publicRecordsReviewed}
-          note="The catalog includes official records and clearly labeled contextual sources. For legal or transactional use, rely on the issuing public body’s original record."
-        />
-
-        <CitizenSummary
-          className="mt-6"
-          eyebrow="How to use this page"
-          title="Find the source, then choose the right BetterMakati layer"
-          points={[
-            {
-              label: 'Verify',
-              text: 'Open the original record when you need controlling legal text, an official table, a published budget, procurement disclosure or agency guidance.',
-            },
-            {
-              label: 'Understand',
-              text: 'Use the related BetterMakati page when you need the record explained, compared or placed in context.',
-            },
-            {
-              label: 'Follow through',
-              text: 'Use the Accountability Ledger when you want to know what evidence came after a budget, award, audit finding or public commitment.',
-            },
-            {
-              label: 'Check freshness',
-              text: 'Monitored sources are rechecked on the site’s source-watch workflow; a detected change is a review signal, not an automatic factual update.',
-            },
-          ]}
-          actions={
-            <Link
-              to="/accountability"
-              className="text-sm font-bold text-primary-700 underline underline-offset-2"
-            >
-              Open Accountability Ledger <ArrowRight className="inline h-3.5 w-3.5" />
-            </Link>
-          }
-        />
+        <LastReviewed date={publicRecordsReviewed} note="For legal or transactional use, rely on the issuing public body’s original record." />
 
         <div className="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
           <div className="rounded-2xl border border-primary-100 bg-white p-5">
@@ -273,36 +235,6 @@ export default function PublicRecords() {
         </div>
       </Section>
 
-      <Section className="bg-white">
-        <div className="section-eyebrow">Coverage</div>
-        <Heading level={2}>What is actually indexed</Heading>
-        <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-600">
-          The catalog is assembled from the source trails already used across BetterMakati. Counts are unique URLs, not claims that every public document in the category has been collected.
-        </p>
-
-        <div className="mt-6 overflow-x-auto rounded-2xl border border-gray-200">
-          <table className="w-full min-w-[980px] text-left">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-4 py-3 font-bold">Record area</th>
-                <th className="px-4 py-3 font-bold text-right">Indexed</th>
-                <th className="px-4 py-3 font-bold">Included now</th>
-                <th className="px-4 py-3 font-bold">Known limit</th>
-              </tr>
-            </thead>
-            <tbody>
-              {publicRecordCoverage.map(area => (
-                <tr key={area.category} className="border-t align-top">
-                  <td className="px-4 py-4 font-extrabold text-gray-950">{area.category}</td>
-                  <td className="px-4 py-4 text-right font-extrabold text-primary-800">{area.count}</td>
-                  <td className="px-4 py-4 text-sm leading-relaxed text-gray-700">{area.included}</td>
-                  <td className="px-4 py-4 text-sm leading-relaxed text-gray-600">{area.limit}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </Section>
 
       <Section className="bg-[#f5f8f2]">
         <div className="section-eyebrow">Evidence index</div>
