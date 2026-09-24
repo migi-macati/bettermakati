@@ -434,7 +434,7 @@ export default function Elections() {
         <div className="section-eyebrow">2025 mayoral vote by barangay</div>
         <Heading level={2}>How the 23 current barangays voted</Heading>
         <p className="mt-3 max-w-4xl text-sm leading-relaxed text-gray-600">
-          Published reporting identifies which mayoral candidate carried each of Makati&apos;s current 23 barangays. Exact barangay vote totals are shown only where the accessible published text exposes them; BetterMakati does not fill the remaining precinct aggregates from inference.
+          Published reporting identifies which mayoral candidate carried each of Makati&apos;s current 23 barangays. Exact barangay vote totals appear only where the accessible published source provides them.
         </p>
 
         <CitizenSummary
@@ -521,7 +521,7 @@ export default function Elections() {
         </div>
 
         <p className="mt-3 text-xs leading-relaxed text-gray-500">
-          A dash does not mean zero votes. It means BetterMakati has not yet matched a reliable public precinct aggregate for that barangay.
+          A dash means no reliable public precinct aggregate is currently matched for that barangay.
         </p>
       </Section>
 
@@ -655,7 +655,7 @@ export default function Elections() {
           <div>
             <Heading level={2}>Calendar & legal framework</Heading>
             <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-600">
-              BetterMakati keeps the operative COMELEC calendar beside the statute and implementing rules so a schedule change or legal transition can be traced to its source.
+              COMELEC calendar, governing statute and implementing rules.
             </p>
           </div>
           <div className="rounded-xl border border-secondary-200 bg-white px-4 py-3">
