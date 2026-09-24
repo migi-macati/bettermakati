@@ -24,6 +24,7 @@ import SharePage from '../components/ui/SharePage';
 import CitizenSummary from '../components/ui/CitizenSummary';
 import {
   cityMonitorCoverageAreas,
+  cityMonitorCoverageGaps,
   cityMonitorHistoricalRecordCount,
   cityMonitorRecords,
   cityMonitorReviewed,
@@ -362,18 +363,55 @@ export default function CityMonitor() {
           </div>
         ) : (
           <div className="mt-6 rounded-2xl border border-gray-200 bg-white p-5 text-sm text-gray-600">
-            The daily monitor has not published its first actionable source update yet.
+            The daily monitor has not published its first source-check run yet.
           </div>
         )}
+
+        <div className="mt-8 rounded-2xl border border-gray-200 bg-white p-6">
+          <div className="section-eyebrow">Editorial review queue</div>
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <h3 className="text-xl font-extrabold text-gray-950">Detected changes awaiting interpretation</h3>
+              <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-600">
+                A source change enters this queue only as a detection signal. It becomes a permanent City Monitor record only after the underlying official item, date, stage and meaning are verified.
+              </p>
+            </div>
+            <div className="text-sm font-bold text-primary-800">{reviewQueue.length} open source{reviewQueue.length === 1 ? '' : 's'}</div>
+          </div>
+
+          {reviewQueue.length > 0 ? (
+            <div className="mt-5 space-y-3">
+              {reviewQueue.map(item => (
+                <a
+                  key={item.id}
+                  href={item.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex flex-col gap-2 rounded-xl border border-secondary-200 bg-secondary-50 p-4 sm:flex-row sm:items-start sm:justify-between"
+                >
+                  <div>
+                    <div className="font-extrabold text-gray-950">{item.label}</div>
+                    <div className="mt-1 text-xs text-gray-600">{item.stream} · detected {item.detections} time{item.detections === 1 ? '' : 's'} in the last 30 runs</div>
+                  </div>
+                  <div className="shrink-0 text-xs font-bold text-secondary-900">
+                    Last detected {new Date(item.lastDetected).toLocaleString('en-PH')}
+                  </div>
+                </a>
+              ))}
+            </div>
+          ) : (
+            <div className="mt-5 rounded-xl border border-gray-200 bg-[#fffdf8] p-4 text-sm text-gray-600">
+              No content-change signal is currently waiting in the published review queue.
+            </div>
+          )}
+        </div>
       </Section>
 
       <Section className="bg-white">
         <div className="section-eyebrow">Validated civic records</div>
         <Heading level={2}>Structured records</Heading>
         <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-600">
-          Current records will appear here only after the underlying source is
-          verified. Historical records below demonstrate the schema and remain
-          clearly labelled as historical.
+          Every item here is a permanent, source-backed record. Current activity is added only after review; the existing archive is strongest in procurement because those bid-result disclosures are already structured elsewhere in BetterMakati.
         </p>
 
         <div className="mt-6 flex flex-col gap-3 md:flex-row">
@@ -398,6 +436,10 @@ export default function CityMonitor() {
               <option key={option.value} value={option.value}>{option.label}</option>
             ))}
           </select>
+        </div>
+
+        <div className="mt-4 text-sm text-gray-500">
+          Showing <strong className="text-gray-900">{visibleRecords.length}</strong> of {cityMonitorRecords.length} validated records
         </div>
 
         <div className="mt-6 space-y-4">
@@ -452,6 +494,11 @@ export default function CityMonitor() {
               </article>
             );
           })}
+          {visibleRecords.length === 0 && (
+            <div className="rounded-2xl border border-gray-200 bg-[#fffdf8] p-6 text-center text-sm text-gray-600">
+              No validated record matches this search or stream.
+            </div>
+          )}
         </div>
       </Section>
 
@@ -459,11 +506,13 @@ export default function CityMonitor() {
         <div className="section-eyebrow">Lifecycle rules</div>
         <Heading level={2}>Track the process, not only the final PDF</Heading>
 
-        <div className="mt-6 rounded-2xl border border-secondary-200 bg-secondary-50 p-5">
-          <h3 className="font-extrabold text-gray-950">Known source gaps</h3>
-          <p className="mt-2 text-sm leading-relaxed text-gray-700">
-            No complete current City Council calendar, measure-stage history or normalized city-publications feed is indexed yet.
-          </p>
+        <div className="mt-6 grid grid-cols-1 gap-3 lg:grid-cols-2">
+          {cityMonitorCoverageGaps.map(gap => (
+            <div key={gap.id} className="rounded-2xl border border-secondary-200 bg-secondary-50 p-5">
+              <h3 className="font-extrabold text-gray-950">{gap.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-gray-700">{gap.description}</p>
+            </div>
+          ))}
         </div>
 
         <div className="mt-6 grid grid-cols-1 xl:grid-cols-3 gap-4">
@@ -500,25 +549,50 @@ export default function CityMonitor() {
         <div className="section-eyebrow">Monitored official channels</div>
         <Heading level={2}>Source directory</Heading>
         <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {cityMonitorSources.map(source => (
-            <a
-              key={source.id}
-              href={source.url}
-              target="_blank"
-              rel="noreferrer"
-              className="rounded-2xl border border-gray-200 bg-white p-5 hover:border-primary-300"
-            >
-              <FileText className="h-5 w-5 text-primary-700" />
-              <div className="mt-3 text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
-                {source.cadence} check
-              </div>
-              <h3 className="mt-1 font-extrabold text-gray-950">{source.label}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-gray-600">{source.monitoringNote}</p>
-              <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
-                Open source <ExternalLink className="h-3.5 w-3.5" />
-              </span>
-            </a>
-          ))}
+          {cityMonitorSources.map(source => {
+            const state = sourceStateById.get(source.id);
+            const modeLabel =
+              source.monitoringMode === 'content-hash'
+                ? 'content-change detection'
+                : source.monitoringMode === 'reachability'
+                  ? 'reachability only'
+                  : 'manual review';
+            return (
+              <a
+                key={source.id}
+                href={source.url}
+                target="_blank"
+                rel="noreferrer"
+                className="rounded-2xl border border-gray-200 bg-white p-5 hover:border-primary-300"
+              >
+                <FileText className="h-5 w-5 text-primary-700" />
+                <div className="mt-3 flex flex-wrap gap-2 text-xs font-bold">
+                  <span className="rounded-full bg-primary-50 px-2.5 py-1 text-primary-800">{source.cadence}</span>
+                  <span className="rounded-full bg-gray-100 px-2.5 py-1 text-gray-700">{modeLabel}</span>
+                  {state && (
+                    <span className={
+                      'rounded-full px-2.5 py-1 ' +
+                      (state.status === 'ok'
+                        ? 'bg-success-50 text-success-800'
+                        : state.status === 'manual-review'
+                          ? 'bg-secondary-50 text-secondary-900'
+                          : 'bg-error-50 text-error-800')
+                    }>
+                      {state.status === 'ok' ? 'last check OK' : state.status === 'manual-review' ? 'manual channel' : 'check issue'}
+                    </span>
+                  )}
+                </div>
+                <h3 className="mt-2 font-extrabold text-gray-950">{source.label}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-gray-600">{source.monitoringNote}</p>
+                {!state && (
+                  <p className="mt-2 text-xs text-gray-500">Not yet present in the latest published source-state file.</p>
+                )}
+                <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
+                  Open source <ExternalLink className="h-3.5 w-3.5" />
+                </span>
+              </a>
+            );
+          })}
         </div>
       </Section>
     </>
