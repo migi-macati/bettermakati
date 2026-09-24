@@ -208,15 +208,27 @@
     "path": "/city-monitor",
     "label": "City Monitor",
     "status": "partial",
-    "reviewedAt": "2026-09-20",
+    "reviewedAt": "2026-09-24",
     "checks": [
+      "eight-stream-coverage",
       "source-directory",
-      "change-detection",
-      "validated-records",
-      "provenance"
+      "monitoring-mode-labels",
+      "daily-source-check",
+      "published-source-health",
+      "change-history",
+      "editorial-review-queue",
+      "validated-permanent-records",
+      "procurement-record-ingestion",
+      "lifecycle-rules",
+      "provenance",
+      "rss"
     ],
     "gaps": [
-      "A changed source still requires human interpretation before a substantive public record is published."
+      "No reliable current source has yet been normalized for every 2026 City Council session date, agenda, attendance, vote and minutes record.",
+      "The official legislation archive establishes enacted measures but does not yet expose a complete filing-to-effectivity lifecycle as structured data.",
+      "The Makati portal's news, events and speech collection pages are dynamically rendered, so the automated monitor treats them as reachability/discovery channels rather than claiming reliable content-change detection.",
+      "There is no single official current project-status feed or normalized publication feed covering all city projects and publications.",
+      "A detected source change still requires editorial verification before BetterMakati publishes it as a substantive civic record."
     ]
   },
   {
