@@ -26,6 +26,7 @@ const criticalRoutes = [
   ['/reports/2024-barangay-population', /Three barangays contain 37\.6% of Makati’s 2024 population/i],
   ['/participate', /Participate/i],
   ['/hotlines', /Hotlines|Emergency/i],
+  ['/status', /BetterMakati Status/i],
   ['/civic-map', /Help improve public places/i],
   ['/civic-map/reports', /Civic Map reports/i],
 ];
@@ -177,7 +178,7 @@ test('Saan Ako Lalapit common need reaches the structured PWD guide', async ({ p
 
 test('mobile homepage and services have no material horizontal overflow', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  for (const route of ['/', '/services', '/community-tools/saan-ako-lalapit', '/projects-budget', '/accountability', '/accountability?barangay=bel-air', '/records', '/elections', '/city-monitor', '/briefs', '/today', '/live', '/barangays', '/barangays/poblacion', '/reports', '/reports/2026-budget-operating-expenses', '/reports/2025-local-revenue', '/civic-map', '/civic-map/poblacion-park', '/civic-map/reports']) {
+  for (const route of ['/', '/services', '/community-tools/saan-ako-lalapit', '/projects-budget', '/accountability', '/accountability?barangay=bel-air', '/records', '/elections', '/city-monitor', '/briefs', '/today', '/live', '/status', '/barangays', '/barangays/poblacion', '/reports', '/reports/2026-budget-operating-expenses', '/reports/2025-local-revenue', '/civic-map', '/civic-map/poblacion-park', '/civic-map/reports']) {
     await page.goto(baseURL + route);
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     expect(overflow, `Horizontal overflow on ${route}`).toBeLessThanOrEqual(2);
@@ -345,6 +346,40 @@ test('Public Records publishes machine-readable catalog and source-watch downloa
   const body = await response.json();
   expect(Array.isArray(body)).toBeTruthy();
   expect(body.length).toBeGreaterThanOrEqual(92);
+});
+
+test('Public Records exposes current source freshness state', async ({ page }) => {
+  await page.goto(baseURL + '/records');
+  await expect(page.getByRole('heading', { name: 'Source freshness monitor' })).toBeVisible();
+  await expect(page.getByText('97', { exact: true }).first()).toBeVisible();
+  await expect(page.getByText(/dynamic portals are normally checked only for reachability/i)).toBeVisible();
+  await expect(page.getByRole('link', { name: /Current source state/i })).toHaveAttribute(
+    'href',
+    '/source-watch-state.json'
+  );
+
+  const state = await page.request.get(baseURL + '/source-watch-state.json');
+  expect(state.ok()).toBeTruthy();
+  const body = await state.json();
+  expect(body.version).toBe(2);
+  expect(Array.isArray(body.sources)).toBeTruthy();
+  expect(body.sources.length).toBeGreaterThanOrEqual(90);
+  expect(new Set(body.sources.map(item => item.cadence))).toEqual(
+    new Set(['daily', 'weekly', 'monthly'])
+  );
+  expect(new Set(body.sources.map(item => item.monitoringMode))).toEqual(
+    new Set(['content-hash', 'reachability'])
+  );
+});
+
+test('BetterMakati Status exposes source freshness automation', async ({ page }) => {
+  await page.goto(baseURL + '/status');
+  await expect(page.getByRole('heading', { name: 'Source freshness automation' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Open source freshness' })).toHaveAttribute(
+    'href',
+    '/records'
+  );
+  await expect(page.getByText(/cadence-aware monitor is configured/i)).toBeVisible();
 });
 
 test('Elections publishes a coverage matrix with complete and partial layers', async ({ page }) => {
