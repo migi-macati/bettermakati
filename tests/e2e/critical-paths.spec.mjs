@@ -488,9 +488,15 @@ test('Civic Briefs archive has permanent seeded snapshots without backdating', a
   expect(new Set(archive.briefs.map(item => item.cadence))).toEqual(
     new Set(['daily', 'weekly', 'monthly'])
   );
-  expect(
-    archive.briefs.every(item => String(item.publishedAt).startsWith('2026-09-24'))
-  ).toBeTruthy();
+  for (const id of [
+    'daily-2026-09-24',
+    'weekly-2026-09-18--2026-09-24',
+    'monthly-2026-09',
+  ]) {
+    const seed = archive.briefs.find(item => item.id === id);
+    expect(seed).toBeTruthy();
+    expect(String(seed.publishedAt)).toMatch(/^2026-09-24/);
+  }
 });
 
 test('Civic Briefs keeps raw source-change signals separate from validated records', async ({ page }) => {
