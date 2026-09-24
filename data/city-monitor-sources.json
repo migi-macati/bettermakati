@@ -1,35 +1,61 @@
 {
-  "version": 1,
+  "version": 2,
   "sources": [
     {
       "id": "makati-legislation",
       "label": "Makati resolutions & ordinances",
       "url": "https://www.makati.gov.ph/content/resolutions-and-ordinances/author",
-      "stream": "legislation"
+      "stream": "legislation",
+      "monitoringMode": "reachability"
     },
     {
       "id": "makati-mayor-speeches",
       "label": "Mayor's Corner — Speeches",
       "url": "https://www.makati.gov.ph/content/mayors-corner/speeches/803",
-      "stream": "executive-speech"
+      "stream": "executive-speech",
+      "monitoringMode": "reachability"
+    },
+    {
+      "id": "mymakati-broadcasts",
+      "label": "MyMakati official social broadcasts",
+      "url": "https://www.facebook.com/mymakativerified",
+      "stream": "council-session",
+      "monitoringMode": "manual-review"
     },
     {
       "id": "makati-events",
       "label": "Makati Events",
       "url": "https://www.makati.gov.ph/content/events",
-      "stream": "events"
+      "stream": "consultation",
+      "monitoringMode": "reachability"
     },
     {
       "id": "makati-news",
       "label": "Makati News",
       "url": "https://www.makati.gov.ph/content/news",
-      "stream": "official-notice"
+      "stream": "official-notice",
+      "monitoringMode": "reachability"
+    },
+    {
+      "id": "makati-full-disclosure",
+      "label": "Makati full-disclosure and procurement records",
+      "url": "https://www.makati.gov.ph/",
+      "stream": "procurement",
+      "monitoringMode": "reachability"
     },
     {
       "id": "philgeps",
       "label": "PhilGEPS",
       "url": "https://notices.philgeps.gov.ph/",
-      "stream": "procurement"
+      "stream": "procurement",
+      "monitoringMode": "content-hash"
+    },
+    {
+      "id": "makati-publications",
+      "label": "Makati official publications",
+      "url": "https://www.makati.gov.ph/",
+      "stream": "publication",
+      "monitoringMode": "reachability"
     }
   ]
 }

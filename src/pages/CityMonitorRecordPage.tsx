@@ -56,7 +56,7 @@ export default function CityMonitorRecordPage() {
         <Heading>{record.title}</Heading>
         <p className="mt-3 max-w-4xl text-gray-700 leading-relaxed">{record.summary}</p>
 
-        <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-3">
+        <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
           <div className="rounded-xl border border-primary-100 bg-white p-4">
             <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">Date</div>
             <div className="mt-1 font-extrabold text-gray-950">{record.date}</div>
@@ -69,16 +69,43 @@ export default function CityMonitorRecordPage() {
             <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">Source publisher</div>
             <div className="mt-1 font-extrabold text-gray-950">{record.sourcePublisher}</div>
           </div>
+          {record.referenceNo && (
+            <div className="rounded-xl border border-primary-100 bg-white p-4">
+              <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">Reference</div>
+              <div className="mt-1 font-extrabold text-gray-950">{record.referenceNo}</div>
+            </div>
+          )}
+          {record.stage && (
+            <div className="rounded-xl border border-primary-100 bg-white p-4">
+              <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">Evidence stage</div>
+              <div className="mt-1 font-extrabold text-gray-950">{record.stage}</div>
+            </div>
+          )}
+          {record.amount !== undefined && (
+            <div className="rounded-xl border border-primary-100 bg-white p-4">
+              <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">Reported amount</div>
+              <div className="mt-1 font-extrabold text-gray-950">
+                ₱{record.amount.toLocaleString('en-PH', { maximumFractionDigits: 2 })}
+              </div>
+            </div>
+          )}
         </div>
 
-        <a
-          href={record.sourceUrl}
-          target="_blank"
-          rel="noreferrer"
-          className="brand-btn-primary mt-6"
-        >
-          Original source <ExternalLink className="h-4 w-4" />
-        </a>
+        <div className="mt-6 flex flex-wrap gap-3">
+          <a
+            href={record.sourceUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="brand-btn-primary"
+          >
+            Original source <ExternalLink className="h-4 w-4" />
+          </a>
+          {record.relatedHref && (
+            <Link to={record.relatedHref} className="brand-btn-secondary">
+              Related BetterMakati record
+            </Link>
+          )}
+        </div>
       </Section>
 
       {(record.summaryBullets?.length || record.measures?.length) && (
