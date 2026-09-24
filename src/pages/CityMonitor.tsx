@@ -548,6 +548,20 @@ export default function CityMonitor() {
       <Section className="bg-white">
         <div className="section-eyebrow">Monitored official channels</div>
         <Heading level={2}>Source directory</Heading>
+        <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-600">
+          Monitoring mode matters: content-change detection can flag a changed page body; reachability checks only confirm that a dynamic source can still be reached; manual-review channels are never presented as automatically monitored content.
+        </p>
+        <div className="mt-5 flex flex-wrap gap-3">
+          <a href="/city-monitor-source-state.json" className="brand-btn-secondary">
+            Source health JSON
+          </a>
+          <a href="/city-monitor-source-history.json" className="brand-btn-secondary">
+            Check history JSON
+          </a>
+          <a href="/city-monitor.rss.xml" className="brand-btn-secondary">
+            Source-change RSS
+          </a>
+        </div>
         <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {cityMonitorSources.map(source => {
             const state = sourceStateById.get(source.id);
