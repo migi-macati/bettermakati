@@ -77,6 +77,8 @@ for (const marker of [
   'npm run build',
   'data/source-watch-state.json',
   'git pull --rebase origin main',
+  'Source freshness review queue',
+  'issues: write',
 ]) {
   if (!workflow.includes(marker)) problems.push('Source freshness workflow lost required behavior: ' + marker);
 }
