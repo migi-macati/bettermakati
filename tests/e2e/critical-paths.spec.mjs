@@ -545,14 +545,10 @@ test('Civic Briefs archive has permanent seeded snapshots without backdating', a
   }
 });
 
-test('Civic Briefs keeps raw source-change signals separate from validated records', async ({ page }) => {
+test('Civic Briefs exposes its review queue separately from published activity', async ({ page }) => {
   await page.goto(baseURL + '/briefs');
-  await expect(
-    page.getByText(/These are monitoring signals, not city actions/i)
-  ).toBeVisible();
-  await expect(
-    page.getByText(/Raw source changes stay outside the brief until they are verified/i)
-  ).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Source-review queue' })).toBeVisible();
+  await expect(page.getByText(/source changes awaiting review/i).first()).toBeVisible();
 });
 
 test('Civic Briefs exposes barangay relevance without hiding citywide records', async ({ page }) => {

@@ -35,7 +35,7 @@ for (const marker of [
   'Permanent brief archive',
   'Share-ready text',
   'Barangay relevance',
-  'No newly validated City Monitor records',
+  'No City Monitor records for this period',
 ]) {
   if (!page.includes(marker)) {
     problems.push('Civic Briefs page is missing required feature: ' + marker);

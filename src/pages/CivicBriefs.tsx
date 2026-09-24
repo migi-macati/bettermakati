@@ -220,7 +220,7 @@ export default function CivicBriefs() {
     <>
       <SEO
         title={briefMeta.label}
-        description="Daily, weekly and monthly BetterMakati civic briefs generated from validated City Monitor records, with source-change signals kept separate until reviewed."
+        description="Daily, weekly and monthly Makati civic briefs from City Monitor records."
       />
 
       <Section className="bg-[#fffdf8]">
@@ -229,16 +229,13 @@ export default function CivicBriefs() {
           <div>
             <Heading>Civic Briefs</Heading>
             <p className="mt-2 max-w-3xl text-gray-700">
-              Short, source-backed updates from City Monitor. Raw source changes stay outside the brief until they are verified.
+              Daily, weekly and monthly updates from City Monitor.
             </p>
           </div>
           <SharePage title={briefMeta.label + ' | BetterMakati'} />
         </div>
 
-        <LastReviewed
-          date={civicBriefsReviewed}
-          note="The website is the permanent source record; social posts should point back to the corresponding brief or City Monitor record."
-        />
+        <LastReviewed date={civicBriefsReviewed} />
 
         <div className="mt-7 flex flex-wrap gap-2">
           {(Object.keys(civicBriefCadence) as CivicBriefCadence[]).map(value => (
@@ -295,7 +292,7 @@ export default function CivicBriefs() {
             <p className="mt-2 text-xs leading-relaxed text-gray-500">
               {selectedBarangay
                 ? 'Shows citywide records plus records explicitly tagged to Barangay ' + selectedBarangay.name + '.'
-                : 'Local tags appear only when a validated record has a documented barangay connection.'}
+                : 'Choose a barangay to highlight locally tagged records.'}
             </p>
           </div>
         </div>
@@ -367,10 +364,7 @@ export default function CivicBriefs() {
         {records.length === 0 ? (
           <div className="mt-6 rounded-2xl border border-gray-200 bg-white p-6">
             <ShieldCheck className="h-5 w-5 text-primary-700" />
-            <h3 className="mt-3 font-extrabold text-gray-950">No newly validated City Monitor records</h3>
-            <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600">
-              BetterMakati does not fill a quiet period with unverified announcements. Source-change signals, if any, remain in the review queue below.
-            </p>
+            <h3 className="mt-3 font-extrabold text-gray-950">No City Monitor records for this period</h3>
           </div>
         ) : (
           <div className="mt-6 space-y-8">
@@ -465,11 +459,8 @@ export default function CivicBriefs() {
       )}
 
       <Section className="bg-white">
-        <div className="section-eyebrow">Not yet validated</div>
+        <div className="section-eyebrow">Review queue</div>
         <Heading level={2}>Source-review queue</Heading>
-        <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-600">
-          These are monitoring signals, not city actions. They stay separate from the brief until a source-backed City Monitor record is created.
-        </p>
 
         {reviewSignals.length === 0 && failedChecks.length === 0 ? (
           <div className="mt-6 rounded-2xl border border-gray-200 bg-[#fffdf8] p-5 text-sm text-gray-600">
@@ -581,7 +572,7 @@ export default function CivicBriefs() {
             <Copy className="h-5 w-5 text-primary-700" />
             <h3 className="mt-3 font-extrabold text-gray-950">Share-ready text</h3>
             <p className="mt-2 text-sm leading-relaxed text-gray-600">
-              Copies the brief title, period, validated-record count, up to five headlines, review-signal count and the current permalink.
+              Copies the brief title, period, headline summary and permalink.
             </p>
             <button type="button" onClick={copyBriefText} className="brand-btn-primary mt-4">
               {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
