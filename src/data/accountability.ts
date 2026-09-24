@@ -21,7 +21,7 @@ import {
 } from './accountabilitySupplement';
 import type { AccountabilityEntry, CoverageGap } from './civicTypes';
 
-export const accountabilityReviewed = '23 September 2026';
+export const accountabilityReviewed = '24 September 2026';
 
 const slugify = (value: string) =>
   value
@@ -363,6 +363,73 @@ export const accountabilityEntries: AccountabilityEntry[] = [
   ...auditFindingEntries,
   ...auditEntries,
 ];
+
+export interface AccountabilityCoverageArea {
+  id: AccountabilityEntry['type'];
+  label: string;
+  period: string;
+  included: string;
+  limit: string;
+  recordCount: number;
+}
+
+const coverageAreaSeed: Array<Omit<AccountabilityCoverageArea, 'recordCount'>> = [
+  {
+    id: 'fiscal',
+    label: 'Budget & spending',
+    period: '2014–2026 budget archive; reported fiscal series through 2025',
+    included:
+      'Annual budget records, selected major appropriations, dedicated funds, Special Education Fund utilization and reported receipts/expenditures.',
+    limit:
+      'The Accountability Ledger is a follow-through layer, not a duplicate of every budget line. The complete 2026 citywide summary is searchable on Projects & Budget.',
+  },
+  {
+    id: 'project',
+    label: 'Projects & procurement',
+    period: 'Structured bid-result records currently cover 2024 Q3 and 2025 Q2 plus linked project evidence',
+    included:
+      'Approved budget, winning bidder, winning amount, bid date and later contract/implementation evidence when it can be linked to the same record.',
+    limit:
+      'Many awards still lack a separately linked contract, notice to proceed, implementation or completion document.',
+  },
+  {
+    id: 'audit',
+    label: 'Audit',
+    period: 'Finding-level records currently span selected 2017, 2018 and 2024 audit material',
+    included:
+      'COA observation, recommendation, management response and later follow-up when the cited public record supports each field.',
+    limit:
+      'A definitive current inventory of resolved and unresolved Makati COA recommendations has not yet been normalized.',
+  },
+  {
+    id: 'service',
+    label: 'Service standards',
+    period: 'Current verified city service guides',
+    included:
+      'Published processing-time standards from city service guides that have structured, verified details in BetterMakati.',
+    limit:
+      'These are published standards, not independently measured transaction performance.',
+  },
+  {
+    id: 'commitment',
+    label: 'Public commitments',
+    period: 'Selected source-backed commitments with later evidence',
+    included:
+      'A sourced promise or target, stated deadline when available, and later evidence that supports an outcome update.',
+    limit:
+      'Speeches, plans, ordinances and announcements have not yet been comprehensively normalized into a citywide promise inventory.',
+  },
+];
+
+export const accountabilityCoverageAreas: AccountabilityCoverageArea[] =
+  coverageAreaSeed.map(area => ({
+    ...area,
+    recordCount: accountabilityEntries.filter(entry => entry.type === area.id).length,
+  }));
+
+export const accountabilitySourceCount = new Set(
+  accountabilityEntries.flatMap(entry => entry.sources.map(source => source.url))
+).size;
 
 export const accountabilityCoverageGaps: CoverageGap[] = [
   {
