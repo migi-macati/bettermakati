@@ -377,53 +377,56 @@ export default function Elections() {
 
         <div id="council-results" className="mt-10 scroll-mt-28">
           <div className="section-eyebrow">City Council</div>
-          <Heading level={3}>Elected councilors</Heading>
+          <Heading level={3}>Full 2025 council candidate results</Heading>
           <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-600">
-            Eight councilors are elected from each district. “Share of voters”
-            is the candidate’s votes divided by the number of people who cast a
-            ballot in that district. Because each voter could select up to eight
-            councilors, these percentages do not add to 100%.
+            Eight councilors were elected from each district. The tables below now include every candidate in the published COMELEC Media Server result table, not only the winners. “Share of ballots cast” divides a candidate’s votes by the number of voters who cast a ballot in that district; because each voter could choose up to eight councilors, these percentages do not add to 100%.
           </p>
 
-          {[
-            ['1st District', district1Council],
-            ['2nd District', district2Council],
-          ].map(([label, winners]) => (
-            <div key={label as string} className="mt-7">
-              <h3 className="font-extrabold text-lg text-gray-950">
-                {label as string}
-              </h3>
+          {councilDistricts.map(district => (
+            <div key={district.jurisdiction} className="mt-7">
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+                <div>
+                  <h3 className="font-extrabold text-lg text-gray-950">{district.label}</h3>
+                  <p className="mt-1 text-xs text-gray-500">
+                    {number(district.electorate.ballotsCast)} ballots cast · {number(district.electorate.registeredVoters)} registered voters
+                  </p>
+                </div>
+                <div className="text-xs font-bold text-primary-700">
+                  {district.candidates.length} candidates · 8 elected
+                </div>
+              </div>
+
               <div className="mt-3 overflow-x-auto rounded-2xl border border-gray-200 bg-white">
-                <table className="w-full min-w-[680px] text-left">
+                <table className="w-full min-w-[760px] text-left">
                   <thead className="bg-gray-50 text-sm">
                     <tr>
                       <th className="px-4 py-3 font-bold">Rank</th>
-                      <th className="px-4 py-3 font-bold">Elected councilor</th>
+                      <th className="px-4 py-3 font-bold">Candidate</th>
+                      <th className="px-4 py-3 font-bold">Result</th>
                       <th className="px-4 py-3 font-bold text-right">Votes</th>
-                      <th className="px-4 py-3 font-bold text-right">
-                        Share of district voters
-                      </th>
-                      <th className="px-4 py-3 font-bold text-right">
-                        Share of 2024 district population
-                      </th>
+                      <th className="px-4 py-3 font-bold text-right">Share of ballots cast</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {(winners as typeof district1Council).map(item => (
-                      <tr key={item.officialSlug} className="border-t">
-                        <td className="px-4 py-3 font-bold">{item.rank}</td>
+                    {district.candidates.map(candidate => (
+                      <tr key={candidate.name} className="border-t">
+                        <td className="px-4 py-3 font-bold">{candidate.rank}</td>
                         <td className="px-4 py-3">
-                          <div className="font-bold text-gray-950">{item.name}</div>
-                          <div className="text-xs text-gray-500">{item.party}</div>
+                          <div className="font-bold text-gray-950">{candidate.name}</div>
+                          <div className="text-xs text-gray-500">{candidate.party}</div>
                         </td>
-                        <td className="px-4 py-3 text-right font-bold">
-                          {number(item.votes)}
+                        <td className="px-4 py-3">
+                          {candidate.elected ? (
+                            <span className="inline-flex items-center gap-1 rounded-full border border-success-200 bg-success-50 px-2.5 py-1 text-xs font-bold text-success-800">
+                              <CheckCircle2 className="h-3.5 w-3.5" /> Elected
+                            </span>
+                          ) : (
+                            <span className="text-sm text-gray-500">Not elected</span>
+                          )}
                         </td>
+                        <td className="px-4 py-3 text-right font-bold">{number(candidate.votes)}</td>
                         <td className="px-4 py-3 text-right">
-                          {percentage(item.voterShare)}
-                        </td>
-                        <td className="px-4 py-3 text-right">
-                          {percentage(item.populationShare)}
+                          {percentage(percent(candidate.votes, district.electorate.ballotsCast))}
                         </td>
                       </tr>
                     ))}
