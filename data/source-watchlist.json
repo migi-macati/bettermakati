@@ -552,14 +552,6 @@
     "monitoringMode": "reachability"
   },
   {
-    "id": "dfa-passport-system",
-    "label": "DFA passport appointment and requirements",
-    "url": "https://passport.gov.ph/",
-    "kind": "service-detail",
-    "cadence": "weekly",
-    "monitoringMode": "reachability"
-  },
-  {
     "id": "makati-real-property-tax-division",
     "label": "Makati Real Property Tax Division Citizen's Charter",
     "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/481/pdf/Real%20Property%20Tax%20Division.pdf",
@@ -651,14 +643,6 @@
     "id": "tesda-registered-programs",
     "label": "TESDA registered TVET programs",
     "url": "https://www.tesda.gov.ph/About/TESDA/26",
-    "kind": "service-detail",
-    "cadence": "weekly",
-    "monitoringMode": "reachability"
-  },
-  {
-    "id": "gsis-benefits-detail",
-    "label": "GSIS active-member benefits",
-    "url": "https://www.gsis.gov.ph/active-members/benefits/",
     "kind": "service-detail",
     "cadence": "weekly",
     "monitoringMode": "reachability"
