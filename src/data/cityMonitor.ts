@@ -52,6 +52,8 @@ export interface CityMonitorRecord {
   amount?: number;
   people?: string[];
   relatedHref?: string;
+  barangaySlug?: string;
+  location?: string;
   summaryBullets?: string[];
   documents?: Array<{
     label: string;
@@ -239,6 +241,8 @@ const procurementMonitorRecords: CityMonitorRecord[] =
       sourceUrl: source?.url || '',
       sourcePublisher: source?.publisher || 'City Government of Makati',
       relatedHref: '/accountability?type=project#' + entry.id,
+      barangaySlug: entry.barangaySlug,
+      location: entry.location,
       summaryBullets: [
         procurement.approvedBudgetM !== undefined
           ? 'Approved budget for contract: ₱' +
