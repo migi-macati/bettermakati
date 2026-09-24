@@ -1,0 +1,85 @@
+name: Publish Civic Briefs
+
+on:
+  schedule:
+    # 09:05 Philippine time every day.
+    - cron: '5 1 * * *'
+    # 09:10 Philippine time every Monday.
+    - cron: '10 1 * * 1'
+    # 09:15 Philippine time on the first day of every month.
+    - cron: '15 1 1 * *'
+  workflow_dispatch:
+    inputs:
+      cadence:
+        description: Brief cadence to publish
+        required: true
+        default: daily
+        type: choice
+        options:
+          - daily
+          - weekly
+          - monthly
+
+permissions:
+  contents: write
+
+concurrency:
+  group: civic-briefs-publisher
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Select brief cadence
+        id: cadence
+        shell: bash
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            cadence="${{ inputs.cadence }}"
+          else
+            case "${{ github.event.schedule }}" in
+              '5 1 * * *') cadence="daily" ;;
+              '10 1 * * 1') cadence="weekly" ;;
+              '15 1 1 * *') cadence="monthly" ;;
+              *) cadence="daily" ;;
+            esac
+          fi
+          echo "cadence=$cadence" >> "$GITHUB_OUTPUT"
+
+      - name: Publish source-backed brief snapshot
+        run: node scripts/generate-civic-brief.mjs --cadence=${{ steps.cadence.outputs.cadence }}
+
+      - name: Verify production build
+        run: npm run build
+
+      - name: Commit a new brief when created
+        shell: bash
+        run: |
+          git add data/civic-briefs.json
+
+          if git diff --cached --quiet; then
+            echo "No new Civic Brief snapshot to publish."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore: publish ${{ steps.cadence.outputs.cadence }} Civic Brief"
+
+          git pull --rebase origin main
+          git push origin HEAD:main

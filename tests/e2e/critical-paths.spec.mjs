@@ -176,7 +176,7 @@ test('Saan Ako Lalapit common need reaches the structured PWD guide', async ({ p
 
 test('mobile homepage and services have no material horizontal overflow', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  for (const route of ['/', '/services', '/community-tools/saan-ako-lalapit', '/projects-budget', '/accountability', '/accountability?barangay=bel-air', '/records', '/elections', '/city-monitor', '/barangays', '/barangays/poblacion', '/reports', '/reports/2026-budget-operating-expenses', '/reports/2025-local-revenue', '/civic-map', '/civic-map/poblacion-park', '/civic-map/reports']) {
+  for (const route of ['/', '/services', '/community-tools/saan-ako-lalapit', '/projects-budget', '/accountability', '/accountability?barangay=bel-air', '/records', '/elections', '/city-monitor', '/briefs', '/barangays', '/barangays/poblacion', '/reports', '/reports/2026-budget-operating-expenses', '/reports/2025-local-revenue', '/civic-map', '/civic-map/poblacion-park', '/civic-map/reports']) {
     await page.goto(baseURL + route);
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     expect(overflow, `Horizontal overflow on ${route}`).toBeLessThanOrEqual(2);
@@ -462,6 +462,90 @@ test('City Monitor publishes machine-readable source health and history', async 
   expect(await sitemap.text()).toContain(
     '/city-monitor/monitor-procurement-2025-q2-bs25-04-0419'
   );
+});
+
+test('Civic Briefs exposes daily weekly and monthly publication modes', async ({ page }) => {
+  await page.goto(baseURL + '/briefs');
+  await expect(page.getByRole('heading', { level: 1, name: 'Civic Briefs' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Daily', exact: true })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Weekly', exact: true })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Monthly', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'What changed in the civic record' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Source-review queue' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Permanent brief archive' })).toBeVisible();
+});
+
+test('Civic Briefs archive has permanent seeded snapshots without backdating', async ({ page }) => {
+  await page.goto(baseURL + '/briefs?brief=daily-2026-09-24');
+  await expect(page.getByText('Published brief', { exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 2, name: 'Daily Civic Brief', exact: true }).first()).toBeVisible();
+
+  const response = await page.request.get(baseURL + '/civic-briefs.json');
+  expect(response.ok()).toBeTruthy();
+  const archive = await response.json();
+  expect(Array.isArray(archive.briefs)).toBeTruthy();
+  expect(archive.briefs.length).toBeGreaterThanOrEqual(3);
+  expect(new Set(archive.briefs.map(item => item.cadence))).toEqual(
+    new Set(['daily', 'weekly', 'monthly'])
+  );
+  for (const id of [
+    'daily-2026-09-24',
+    'weekly-2026-09-18--2026-09-24',
+    'monthly-2026-09',
+  ]) {
+    const seed = archive.briefs.find(item => item.id === id);
+    expect(seed).toBeTruthy();
+    expect(String(seed.publishedAt)).toMatch(/^2026-09-24/);
+  }
+});
+
+test('Civic Briefs keeps raw source-change signals separate from validated records', async ({ page }) => {
+  await page.goto(baseURL + '/briefs');
+  await expect(
+    page.getByText(/These are monitoring signals, not city actions/i)
+  ).toBeVisible();
+  await expect(
+    page.getByText(/Raw source changes stay outside the brief until they are verified/i)
+  ).toBeVisible();
+});
+
+test('Civic Briefs exposes barangay relevance without hiding citywide records', async ({ page }) => {
+  await page.goto(baseURL + '/briefs');
+  const selector = page.getByLabel('Filter Civic Brief by barangay relevance');
+  await expect(selector).toBeVisible();
+  await selector.selectOption('poblacion');
+  await expect(page).toHaveURL(/barangay=poblacion/);
+  await expect(
+    page.getByText(/Shows citywide records plus records explicitly tagged to Barangay Poblacion/i)
+  ).toBeVisible();
+});
+
+test('Civic Briefs monthly view exposes neutral activity and procurement summaries', async ({ page }) => {
+  await page.goto(baseURL + '/briefs?period=monthly');
+  await expect(page.getByRole('heading', { level: 2, name: 'State of Makati', exact: true }).first()).toBeVisible();
+  await expect(page.getByText('Procurement represented in validated records', { exact: true })).toBeVisible();
+  await expect(page.getByText('Validated activity by stream', { exact: true })).toBeVisible();
+  await expect(page.getByText(/It is not total city spending or proof of payment/i)).toBeVisible();
+});
+
+test('Civic Briefs publishes archive and RSS distribution feeds', async ({ page }) => {
+  await page.goto(baseURL + '/briefs');
+  await expect(page.getByRole('link', { name: /Civic Briefs RSS/i })).toHaveAttribute(
+    'href',
+    '/civic-briefs.rss.xml'
+  );
+  await expect(page.getByRole('button', { name: /Copy brief text/i })).toBeVisible();
+  const distribution = page.locator('section').filter({
+    has: page.getByRole('heading', { name: 'Share the brief' }),
+  });
+  await expect(distribution.getByRole('link', { name: 'Facebook', exact: true })).toHaveAttribute(
+    'href',
+    'https://www.facebook.com/bettermakati'
+  );
+
+  const rss = await page.request.get(baseURL + '/civic-briefs.rss.xml');
+  expect(rss.ok()).toBeTruthy();
+  expect(await rss.text()).toContain('BetterMakati Civic Briefs');
 });
 
 test('owner task: project spending is reachable from homepage capability examples', async ({ page }) => {

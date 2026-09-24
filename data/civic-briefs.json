@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "briefs": [
+    {
+      "id": "daily-2026-09-24",
+      "cadence": "daily",
+      "title": "Daily Civic Brief",
+      "periodStart": "2026-09-24",
+      "periodEnd": "2026-09-24",
+      "publishedAt": "2026-09-24T10:58:00Z",
+      "recordIds": [],
+      "reviewSignals": [],
+      "failedChecks": []
+    },
+    {
+      "id": "weekly-2026-09-18--2026-09-24",
+      "cadence": "weekly",
+      "title": "The Makati Brief",
+      "periodStart": "2026-09-18",
+      "periodEnd": "2026-09-24",
+      "publishedAt": "2026-09-24T10:58:00Z",
+      "recordIds": [],
+      "reviewSignals": [],
+      "failedChecks": []
+    },
+    {
+      "id": "monthly-2026-09",
+      "cadence": "monthly",
+      "title": "State of Makati",
+      "periodStart": "2026-09-01",
+      "periodEnd": "2026-09-24",
+      "publishedAt": "2026-09-24T10:58:00Z",
+      "recordIds": [],
+      "reviewSignals": [],
+      "failedChecks": []
+    }
+  ]
+}
