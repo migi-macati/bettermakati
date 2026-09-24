@@ -1,9 +1,12 @@
 import {
   CalendarDays,
   CheckCircle2,
+  Database,
+  Download,
   ExternalLink,
   FileText,
   MapPin,
+  ShieldCheck,
   UserCheck,
   Vote,
 } from 'lucide-react';
@@ -16,6 +19,7 @@ import SharePage from '../components/ui/SharePage';
 import SectionNav from '../components/ui/SectionNav';
 import CitizenSummary from '../components/ui/CitizenSummary';
 import {
+  election2025CouncilCandidates,
   election2025CouncilWinners,
   election2025Electorate,
   election2025SingleSeatRaces,
@@ -29,46 +33,100 @@ import {
   historicalValidVotes,
   makatiMayoralHistory,
 } from '../data/electionHistory';
-
-const electionCalendar =
-  'https://www.comelec.gov.ph/php-tpls-attachments/2025BSKE/Resolutions/com_res_11191.pdf';
-const registrationResolution =
-  'https://www.comelec.gov.ph/php-tpls-attachments/2025BSKE/Resolutions/com_res_11177.pdf';
-const precinctFinder = 'https://precinctfinder.comelec.gov.ph/voter_precinct';
-const comelec = 'https://www.comelec.gov.ph/';
-
-const milestones = [
-  {
-    date: 'May 18, 2026',
-    title: 'Local voter registration closed',
-    detail:
-      'The regular non-BARMM registration period for the 2026 Barangay and Sangguniang Kabataan Elections ended on this date.',
-    href: registrationResolution,
-  },
-  {
-    date: 'September 28 – October 5, 2026',
-    title: 'Filing of certificates of candidacy',
-    detail:
-      'COMELEC’s official calendar sets this period for filing COCs for the 2026 BSKE.',
-    href: electionCalendar,
-  },
-  {
-    date: 'October 22 – 31, 2026',
-    title: 'Campaign period',
-    detail:
-      'The official campaign period for barangay and SK candidates.',
-    href: electionCalendar,
-  },
-  {
-    date: 'November 2, 2026',
-    title: 'Election day',
-    detail: 'Voting is scheduled from 7:00 AM to 3:00 PM.',
-    href: electionCalendar,
-  },
-];
+import {
+  bskeMilestones,
+  bskeRuleCards,
+  electionCivicSources,
+  electionCoverageAreas,
+  electionDataSources,
+  electionsReviewed,
+  getBskePhase,
+} from '../data/electionCivic';
 
 const number = (value: number) => value.toLocaleString('en-PH');
 const percentage = (value: number) => value.toFixed(2) + '%';
+
+const election2025Csv = [
+  'race,jurisdiction,candidate,party,votes,elected,share_of_valid_votes,share_of_ballots_cast,source_url',
+  ...election2025SingleSeatRaces.flatMap(race => {
+    const electorate = election2025Electorate[race.jurisdiction];
+    return race.candidates.map(candidate =>
+      [
+        race.label,
+        electorate.label,
+        candidate.name,
+        candidate.party,
+        candidate.votes,
+        candidate.elected ? 'yes' : 'no',
+        percent(candidate.votes, race.validVotes).toFixed(2),
+        percent(candidate.votes, electorate.ballotsCast).toFixed(2),
+        election2025Sources.localResults,
+      ]
+        .map(value => '"' + String(value).replaceAll('"', '""') + '"')
+        .join(',')
+    );
+  }),
+  ...(
+    [
+      ['1st District City Councilor', 'district1'],
+      ['2nd District City Councilor', 'district2'],
+    ] as const
+  ).flatMap(([raceLabel, jurisdiction]) => {
+    const electorate = election2025Electorate[jurisdiction];
+    return election2025CouncilCandidates[jurisdiction].map(candidate =>
+      [
+        raceLabel,
+        electorate.label,
+        candidate.name,
+        candidate.party,
+        candidate.votes,
+        candidate.elected ? 'yes' : 'no',
+        '',
+        percent(candidate.votes, electorate.ballotsCast).toFixed(2),
+        election2025Sources.localResults,
+      ]
+        .map(value => '"' + String(value).replaceAll('"', '""') + '"')
+        .join(',')
+    );
+  }),
+].join('\n');
+
+const barangay2025Csv = [
+  'barangay,carried_by,nancy_binay_votes,luis_campos_jr_votes,exact_votes_verified,source_url',
+  ...barangayMayoralResults2025.map(result =>
+    [
+      result.barangay,
+      result.carriedBy,
+      result.nancyVotes ?? '',
+      result.camposVotes ?? '',
+      result.exactVotesVerified ? 'yes' : 'no',
+      barangayResultSource2025.url,
+    ]
+      .map(value => '"' + String(value).replaceAll('"', '""') + '"')
+      .join(',')
+  ),
+].join('\n');
+
+const mayoralHistoryCsv = [
+  'year,election_date,winner,candidate,party,votes,share_of_listed_candidate_votes,source_quality,source_url',
+  ...makatiMayoralHistory.flatMap(race =>
+    race.candidates.map(candidate =>
+      [
+        race.year,
+        race.electionDate,
+        race.winner,
+        candidate.name,
+        candidate.party,
+        candidate.votes,
+        historicalCandidateShare(candidate, race).toFixed(2),
+        race.sourceQuality,
+        race.sourceUrl,
+      ]
+        .map(value => '"' + String(value).replaceAll('"', '""') + '"')
+        .join(',')
+    )
+  ),
+].join('\n');
 
 export default function Elections() {
   const district1Council = election2025CouncilWinners.filter(
