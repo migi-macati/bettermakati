@@ -38,7 +38,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: automation/weekly-content-refresh
           delete-branch: true
-          commit-message: 'chore: refresh Makati news and source watch'
+          commit-message: 'chore: refresh Makati news snapshot'
           title: 'Weekly Makati news snapshot refresh'
           body: |
             Automated refresh of the fallback Makati news snapshot. Live /api/news remains the primary feed.
