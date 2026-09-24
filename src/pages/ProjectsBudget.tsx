@@ -507,9 +507,7 @@ export default function ProjectsBudget() {
           </div>
           <p className="mt-3 text-xs leading-relaxed text-gray-500">
             Values are reported by DBM/BLGF in millions of pesos. “Receipts less
-            expenditures” is a direct arithmetic comparison, not an accounting
-            surplus or deficit. BetterMakati preserves the values as published and
-            does not relabel the DBM/BLGF series as audited city financial statements.
+            expenditures” is the arithmetic difference between the two published series.
           </p>
         </div>
 
@@ -1006,9 +1004,9 @@ export default function ProjectsBudget() {
         <div className="section-eyebrow">Structured procurement</div>
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <Heading level={2}>Bid results BetterMakati can follow</Heading>
+            <Heading level={2}>Published bid results</Heading>
             <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-700">
-              These records come from published city bid-result disclosures already structured in BetterMakati. An award record is not the same as a completed contract, delivered project or final payment.
+              Award-stage records from published city bid-result disclosures.
             </p>
           </div>
           <div className="flex flex-wrap gap-3">
@@ -1030,7 +1028,7 @@ export default function ProjectsBudget() {
           <Metric
             label="Structured bid-result records"
             value={procurementProjectEntries.length.toLocaleString('en-PH')}
-            detail="Currently ingested into BetterMakati"
+            detail="Published city bid-result records"
             icon={ShoppingCart}
           />
           <Metric
@@ -1151,9 +1149,6 @@ export default function ProjectsBudget() {
           </table>
         </div>
 
-        <p className="mt-3 text-xs leading-relaxed text-gray-500">
-          Coverage is not a complete procurement registry. BetterMakati publishes the later contract, notice-to-proceed, implementation or completion stage only when a source has been linked to the same procurement record.
-        </p>
       </Section>
 
       <Section id="audit" className="bg-white">
@@ -1162,7 +1157,7 @@ export default function ProjectsBudget() {
           <div>
             <Heading level={2}>Structured COA findings</Heading>
             <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-700">
-              BetterMakati separates the audit finding, recommendation, management response and later follow-up where the cited records support each field.
+              COA findings, recommendations, management responses and follow-up records from cited public sources.
             </p>
           </div>
           <div className="flex flex-wrap gap-3">
@@ -1216,7 +1211,7 @@ export default function ProjectsBudget() {
                       Recommendation
                     </div>
                     <p className="mt-2 text-sm leading-relaxed text-gray-700">
-                      {item.audit.recommendation || 'No recommendation has been structured from the linked public source.'}
+                      {item.audit.recommendation || 'No recommendation linked.'}
                     </p>
                   </div>
                   <div className="rounded-xl border border-gray-200 bg-white p-4">
@@ -1224,7 +1219,7 @@ export default function ProjectsBudget() {
                       Management response
                     </div>
                     <p className="mt-2 text-sm leading-relaxed text-gray-700">
-                      {item.audit.managementResponse || 'No management response has been linked in BetterMakati.'}
+                      {item.audit.managementResponse || 'No management response linked.'}
                     </p>
                   </div>
                   <div className="rounded-xl border border-gray-200 bg-white p-4">
