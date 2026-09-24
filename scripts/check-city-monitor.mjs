@@ -1,53 +1,69 @@
 import { createHash } from 'node:crypto';
 import { readFile, writeFile } from 'node:fs/promises';
 
-const config = JSON.parse(
-  await readFile('data/city-monitor-sources.json', 'utf8')
-);
+const config = JSON.parse(await readFile('data/city-monitor-sources.json', 'utf8'));
 
-let previous = { version: 1, sources: [] };
+let previous = { version: 2, sources: [] };
 try {
-  previous = JSON.parse(
-    await readFile('data/city-monitor-source-state.json', 'utf8')
-  );
+  previous = JSON.parse(await readFile('data/city-monitor-source-state.json', 'utf8'));
 } catch (error) {
   if (error.code !== 'ENOENT') throw error;
 }
 
-let history = { version: 1, runs: [] };
+let history = { version: 2, runs: [] };
 try {
-  history = JSON.parse(
-    await readFile('data/city-monitor-source-history.json', 'utf8')
-  );
+  history = JSON.parse(await readFile('data/city-monitor-source-history.json', 'utf8'));
 } catch (error) {
   if (error.code !== 'ENOENT') throw error;
 }
 
-const previousById = new Map(
-  previous.sources.map(source => [source.id, source])
-);
+const previousById = new Map(previous.sources.map(source => [source.id, source]));
 const timeoutMs = 20000;
 
 const normalizeText = text =>
   text
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, ' ')
+    .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, ' ')
+    .replace(/\b\d{1,2}:\d{2}(?::\d{2})?\s*(?:AM|PM)?\b/gi, ' ')
+    .replace(/\b[\d,]+\s+Visitors\b/gi, ' ')
     .replace(/\s+/g, ' ')
-    .replace(/\b\d{1,2}:\d{2}(?::\d{2})?\s*(?:AM|PM)?\b/gi, '')
     .trim();
 
 const check = async source => {
+  const mode = source.monitoringMode || 'content-hash';
+  const old = previousById.get(source.id);
+
+  if (mode === 'manual-review') {
+    return {
+      ...source,
+      status: 'manual-review',
+      statusCode: null,
+      contentType: '',
+      contentLength: 0,
+      sha256: old?.sha256 || '',
+      lastSuccessfulHash: old?.lastSuccessfulHash || old?.sha256 || '',
+      change: 'manual-review',
+    };
+  }
+
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), timeoutMs);
   try {
     const response = await fetch(source.url, {
       redirect: 'follow',
       signal: controller.signal,
-      headers: { 'user-agent': 'BetterMakati-city-monitor/1.0' },
+      headers: { 'user-agent': 'BetterMakati-city-monitor/2.0' },
     });
     const raw = await response.text();
     const normalized = normalizeText(raw);
     const sha256 = createHash('sha256').update(normalized).digest('hex');
-    const old = previousById.get(source.id);
     const baseline = old?.lastSuccessfulHash || old?.sha256 || '';
+
+    let change = 'unchanged';
+    if (!response.ok) change = 'check-failed';
+    else if (mode === 'reachability') change = baseline ? 'reachable' : 'new-baseline';
+    else if (!baseline) change = 'new-baseline';
+    else if (baseline !== sha256) change = 'content-changed';
 
     return {
       ...source,
@@ -57,17 +73,9 @@ const check = async source => {
       contentLength: raw.length,
       sha256,
       lastSuccessfulHash: response.ok ? sha256 : baseline,
-      change:
-        !response.ok
-          ? 'check-failed'
-          : !baseline
-            ? 'new-baseline'
-            : baseline === sha256
-              ? 'unchanged'
-              : 'content-changed',
+      change,
     };
   } catch (error) {
-    const old = previousById.get(source.id);
     return {
       ...source,
       status: 'unreachable',
@@ -89,53 +97,40 @@ for (const source of config.sources) {
   const result = await check(source);
   results.push(result);
   console.log(
-    `${result.change.padEnd(15)} ${result.status.padEnd(12)} ${result.label}`
+    `${result.change.padEnd(16)} ${result.status.padEnd(14)} ${result.label}`
   );
 }
 
 const checkedAt = new Date().toISOString();
 const run = {
   checkedAt,
+  checked: results.filter(item => item.status !== 'manual-review').length,
+  unchanged: results.filter(item => item.change === 'unchanged' || item.change === 'reachable').length,
   changed: results
     .filter(item => item.change === 'content-changed')
-    .map(({ id, label, url, stream }) => ({ id, label, url, stream })),
+    .map(({ id, label, url, stream, monitoringMode }) => ({ id, label, url, stream, monitoringMode })),
   failed: results
-    .filter(item => item.status !== 'ok')
-    .map(({ id, label, url, stream, status, statusCode }) => ({
-      id,
-      label,
-      url,
-      stream,
-      status,
-      statusCode,
+    .filter(item => item.status === 'http-error' || item.status === 'unreachable')
+    .map(({ id, label, url, stream, monitoringMode, status, statusCode }) => ({
+      id, label, url, stream, monitoringMode, status, statusCode,
     })),
   newBaselines: results
     .filter(item => item.change === 'new-baseline')
-    .map(({ id, label, url, stream }) => ({ id, label, url, stream })),
+    .map(({ id, label, url, stream, monitoringMode }) => ({ id, label, url, stream, monitoringMode })),
+  manualReview: results
+    .filter(item => item.change === 'manual-review')
+    .map(({ id, label, url, stream, monitoringMode }) => ({ id, label, url, stream, monitoringMode })),
 };
 
-const actionable =
-  run.changed.length > 0 ||
-  run.failed.length > 0 ||
-  run.newBaselines.length > 0;
-
-if (!actionable) {
-  console.log('No actionable City Monitor changes. Repository files remain unchanged.');
-  process.exit(0);
-}
-
-history.runs = [
-  run,
-  ...(Array.isArray(history.runs) ? history.runs : []),
-].slice(0, 120);
+history.runs = [run, ...(Array.isArray(history.runs) ? history.runs : [])].slice(0, 120);
 
 await writeFile(
   'data/city-monitor-source-state.json',
-  JSON.stringify({ version: 1, checkedAt, sources: results }, null, 2) + '\n'
+  JSON.stringify({ version: 2, checkedAt, sources: results }, null, 2) + '\n'
 );
 await writeFile(
   'data/city-monitor-source-history.json',
-  JSON.stringify(history, null, 2) + '\n'
+  JSON.stringify({ version: 2, runs: history.runs }, null, 2) + '\n'
 );
 
 const report = [
@@ -143,34 +138,23 @@ const report = [
   '',
   `Checked: ${checkedAt}`,
   '',
-  actionable
-    ? 'One or more official source channels changed or could not be checked. These are review candidates, not automatically interpreted civic events.'
-    : 'No established source-channel changes were detected.',
+  `Automatic checks: ${run.checked}. Unchanged/reachable: ${run.unchanged}. Changed: ${run.changed.length}. Failed: ${run.failed.length}. Manual-review channels: ${run.manualReview.length}.`,
   '',
-  '## Changed sources',
+  '## Changed sources requiring editorial review',
   '',
-  ...(run.changed.length
-    ? run.changed.map(item => `- **${item.label}** — ${item.url}`)
-    : ['- None']),
+  ...(run.changed.length ? run.changed.map(item => `- **${item.label}** — ${item.url}`) : ['- None']),
   '',
-  '## Failed checks',
+  '## Failed automatic checks',
   '',
-  ...(run.failed.length
-    ? run.failed.map(
-        item =>
-          `- **${item.label}** — ${item.status} (${item.statusCode ?? 'no response'}): ${item.url}`
-      )
-    : ['- None']),
+  ...(run.failed.length ? run.failed.map(item => `- **${item.label}** — ${item.status} (${item.statusCode ?? 'no response'}): ${item.url}`) : ['- None']),
   '',
-  '## New baselines',
+  '## Manual-review channels',
   '',
-  ...(run.newBaselines.length
-    ? run.newBaselines.map(item => `- **${item.label}** — ${item.url}`)
-    : ['- None']),
+  ...(run.manualReview.length ? run.manualReview.map(item => `- **${item.label}** — ${item.url}`) : ['- None']),
   '',
   '### Editorial rule',
   '',
-  'A changed source hash is only a detection signal. Before publishing a City Monitor record, verify the underlying official record, identify the correct event type and date, and preserve the source. Do not infer that an ordinance advanced, a contract was awarded, or a speech occurred from a hash change alone.',
+  'A changed source hash is only a detection signal. Reachability-only and manual-review channels do not claim content-change detection. Before publishing a City Monitor record, verify the underlying official record, identify the correct event type and date, preserve the source, and link any measurable commitment or follow-through to Accountability.',
   '',
 ].join('\n');
 
