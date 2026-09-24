@@ -412,8 +412,8 @@ export default function ServiceGuide() {
           date={detail?.lastVerified}
           note={
             detail
-              ? 'BetterMakati checked the structured transaction details against the cited official source. The issuing agency still controls current requirements.'
-              : 'Source-first guide. BetterMakati has not yet completed a field-by-field transaction verification for this service.'
+              ? 'Verified against the cited official source. Check the issuing agency for current requirements.'
+              : 'Source-first guide; field-by-field transaction verification pending.'
           }
           className="mt-5"
         />
@@ -679,7 +679,7 @@ export default function ServiceGuide() {
         ) : (
           <div className="mt-5 rounded-2xl border border-gray-200 bg-white p-5">
             <p className="text-sm leading-relaxed text-gray-700">
-              BetterMakati has not yet verified a dedicated walk-in office for this exact service. Use the official service source below before travelling.
+              Dedicated walk-in office not yet verified for this exact service. Check the official service source before travelling.
             </p>
           </div>
         )}
