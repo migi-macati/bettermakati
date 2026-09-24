@@ -758,6 +758,13 @@ export default function Accountability() {
                   <p className="mt-1 text-sm leading-relaxed text-gray-700">
                     {publicRecordSummary(entry)}
                   </p>
+                  <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs text-gray-500">
+                    <span>
+                      {entry.sources.length} source{entry.sources.length === 1 ? '' : 's'} linked
+                    </span>
+                    <span>Last verified: {entry.lastVerified}</span>
+                    {entry.barangaySlug && <span>Local tag: {entry.barangaySlug}</span>}
+                  </div>
                 </div>
 
                 <div className="mt-4 grid grid-cols-2 gap-3 lg:grid-cols-4">
@@ -774,15 +781,9 @@ export default function Accountability() {
                     </div>
                   </div>
                   <div className="rounded-xl border border-gray-200 bg-white p-4">
-                    <div className="text-xs text-gray-500">Amount shown</div>
+                    <div className="text-xs text-gray-500">{amountShownLabel(entry)}</div>
                     <div className="mt-1 text-sm font-extrabold text-gray-950">
-                      {entry.reportedAmountM !== undefined
-                        ? money(entry.reportedAmountM)
-                        : entry.plannedAmountM !== undefined
-                          ? money(entry.plannedAmountM)
-                          : entry.actualAmountM !== undefined
-                            ? money(entry.actualAmountM)
-                            : 'Not stated'}
+                      {amountShownValue(entry)}
                     </div>
                   </div>
                   <div className="rounded-xl border border-gray-200 bg-white p-4">
