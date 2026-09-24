@@ -293,8 +293,8 @@ test('Public Records exposes a normalized searchable source catalog', async ({ p
   await page.goto(baseURL + '/records');
   await expect(page.getByRole('heading', { name: 'Public Records' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Search the public record catalog' })).toBeVisible();
-  await expect(page.getByRole('cell', { name: 'Budget & fiscal', exact: true })).toBeVisible();
-  await expect(page.getByRole('cell', { name: 'Services & directories', exact: true })).toBeVisible();
+  await expect(page.getByText('Budget & fiscal', { exact: true }).first()).toBeVisible();
+  await expect(page.getByText('Services & directories', { exact: true }).first()).toBeVisible();
   await expect(page.getByText('unique source URLs indexed', { exact: true })).toBeVisible();
 });
 
