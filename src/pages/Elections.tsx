@@ -179,7 +179,7 @@ export default function Elections() {
           { label: 'Candidates', href: '#candidates' },
         ]} />
         <p className="mt-5 max-w-3xl text-gray-700 leading-relaxed">
-          Voting information and election results for Makati. Check COMELEC for current dates, candidate records and precinct information. No endorsements.
+          Voting information and election results for Makati. Check COMELEC for current dates, candidate records and precinct information.
         </p>
 
         <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -754,7 +754,7 @@ export default function Elections() {
         <div className="section-eyebrow">Data & provenance</div>
         <Heading level={2}>Download the structured election data</Heading>
         <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-600">
-          BetterMakati keeps raw candidate totals and source URLs in the downloads so the displayed summaries can be checked independently.
+          Downloads include candidate totals and source URLs.
         </p>
 
         <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
