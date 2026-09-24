@@ -382,13 +382,11 @@ test('BetterMakati Status exposes source freshness automation', async ({ page })
   await expect(page.getByText(/cadence-aware monitor is configured/i)).toBeVisible();
 });
 
-test('Elections publishes a coverage matrix with complete and partial layers', async ({ page }) => {
+test('Elections publishes structured results and current BSKE information', async ({ page }) => {
   await page.goto(baseURL + '/elections');
-  await expect(page.getByRole('heading', { name: 'What BetterMakati currently has' })).toBeVisible();
-  await expect(page.getByRole('cell', { name: '2025 city & district results', exact: true })).toBeVisible();
-  await expect(page.getByText('4 single-seat races · 35 council candidates', { exact: true })).toBeVisible();
-  await expect(page.getByRole('cell', { name: '2025 mayoral result by barangay', exact: true })).toBeVisible();
-  await expect(page.getByText('23 barangay winners · 2 exact vote pairs', { exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: '2025 Makati election results' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'How the 23 current barangays voted' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Makati mayoral history, 1998–2025' })).toBeVisible();
 });
 
 test('Elections exposes the full 2025 council candidate fields', async ({ page }) => {
@@ -407,7 +405,7 @@ test('Elections publishes 2026 BSKE legal framework and candidate-source guardra
   await expect(page.getByText('Barangay term limit', { exact: true })).toBeVisible();
   await expect(page.getByText('SK transition', { exact: true })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Candidate directory status' })).toBeVisible();
-  await expect(page.getByText(/social-media announcements and declarations of intent are not treated as a certified candidate list/i)).toBeVisible();
+  await expect(page.getByText(/Official Makati candidate list pending COMELEC publication/i)).toBeVisible();
 });
 
 test('Elections provides downloadable local, barangay and historical datasets', async ({ page }) => {
@@ -449,27 +447,16 @@ test('Live Makati labels source authority and check status', async ({ page }) =>
   expect(state.ok()).toBeTruthy();
 });
 
-test('City Monitor publishes honest stream coverage and source limits', async ({ page }) => {
+test('City Monitor publishes permanent records and source status', async ({ page }) => {
   await page.goto(baseURL + '/city-monitor');
-  await expect(page.getByRole('heading', { name: 'What City Monitor can and cannot see yet' })).toBeVisible();
-  for (const stream of [
-    'City Council sessions',
-    'Legislation',
-    'Mayor & executive',
-    'Procurement',
-    'Projects',
-    'Publications',
-    'Consultations & hearings',
-    'Official notices',
-  ]) {
-    await expect(page.getByRole('cell', { name: stream, exact: true })).toBeVisible();
-  }
-  await expect(page.getByText(/dynamically rendered/i).first()).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Structured records' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Source directory' })).toBeVisible();
+  await expect(page.getByLabel('Filter City Monitor stream')).toBeVisible();
 });
 
 test('City Monitor exposes the editorial review queue and monitoring modes', async ({ page }) => {
   await page.goto(baseURL + '/city-monitor');
-  await expect(page.getByRole('heading', { name: 'Detected changes awaiting interpretation' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Source changes awaiting review' })).toBeVisible();
   await expect(page.getByText('content-change detection', { exact: true })).toBeVisible();
   await expect(page.getByText('reachability only', { exact: true }).first()).toBeVisible();
   await expect(page.getByText('manual review', { exact: true })).toBeVisible();

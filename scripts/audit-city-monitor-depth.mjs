@@ -78,8 +78,7 @@ for (const type of [
 }
 
 for (const marker of [
-  'What City Monitor can and cannot see yet',
-  'Detected changes awaiting interpretation',
+  'Source changes awaiting review',
   'validated permanent records',
   'content-change detection',
   'reachability only',

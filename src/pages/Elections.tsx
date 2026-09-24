@@ -36,7 +36,6 @@ import {
   bskeMilestones,
   bskeRuleCards,
   electionCivicSources,
-  electionCoverageAreas,
   electionDataSources,
   electionsReviewed,
   getBskePhase,
@@ -171,8 +170,7 @@ export default function Elections() {
           note="Current election dates and rules use COMELEC and statutory sources; older result sources are labeled by quality."
         />
         <SectionNav items={[
-          { label: 'Coverage', href: '#election-coverage' },
-          { label: '2025 results', href: '#results-2025' },
+                { label: '2025 results', href: '#results-2025' },
           { label: 'By barangay', href: '#barangay-results-2025' },
           { label: '1998–2025 history', href: '#mayoral-history' },
           { label: 'Council', href: '#council-results' },
@@ -212,49 +210,6 @@ export default function Elections() {
         </div>
       </Section>
 
-      <Section id="election-coverage" className="bg-white">
-        <div className="section-eyebrow">Coverage</div>
-        <Heading level={2}>What BetterMakati currently has</Heading>
-        <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-600">
-          The page separates complete structured result sets from partial barangay data and future records that do not yet exist.
-        </p>
-
-        <div className="mt-6 overflow-x-auto rounded-2xl border border-gray-200 bg-white">
-          <table className="w-full min-w-[980px] text-left">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-4 py-3 font-bold">Election layer</th>
-                <th className="px-4 py-3 font-bold">Status</th>
-                <th className="px-4 py-3 font-bold">Coverage</th>
-                <th className="px-4 py-3 font-bold">Included</th>
-                <th className="px-4 py-3 font-bold">Known limit</th>
-              </tr>
-            </thead>
-            <tbody>
-              {electionCoverageAreas.map(area => (
-                <tr key={area.id} className="border-t align-top">
-                  <td className="px-4 py-4 font-extrabold text-gray-950">{area.label}</td>
-                  <td className="px-4 py-4">
-                    <span className={
-                      'rounded-full border px-2.5 py-1 text-xs font-bold ' +
-                      (area.status === 'structured'
-                        ? 'border-success-200 bg-success-50 text-success-800'
-                        : area.status === 'pending'
-                          ? 'border-secondary-200 bg-secondary-50 text-secondary-900'
-                          : 'border-primary-200 bg-primary-50 text-primary-800')
-                    }>
-                      {area.status === 'structured' ? 'Structured' : area.status === 'pending' ? 'Pending source' : 'Partial'}
-                    </span>
-                  </td>
-                  <td className="px-4 py-4 text-sm font-semibold text-gray-800">{area.countLabel}</td>
-                  <td className="px-4 py-4 text-sm leading-relaxed text-gray-700">{area.included}</td>
-                  <td className="px-4 py-4 text-sm leading-relaxed text-gray-600">{area.limit}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </Section>
 
       <Section id="results-2025" className="bg-[#fffdf8]">
         <div className="section-eyebrow">Latest completed election</div>
@@ -871,14 +826,6 @@ export default function Elections() {
           </table>
         </div>
 
-        <div className="mt-5 rounded-2xl border border-gray-200 bg-white p-5">
-          <div className="flex items-start gap-3">
-            <Database className="mt-0.5 h-5 w-5 shrink-0 text-primary-700" />
-            <p className="text-sm leading-relaxed text-gray-600">
-              Historical source labels are deliberately preserved. “Academic,” “official + archival,” and “archival secondary” are provenance descriptions, not judgments about candidates or political choices.
-            </p>
-          </div>
-        </div>
       </Section>
 
       <Section id="candidates" className="bg-white">
@@ -889,7 +836,7 @@ export default function Elections() {
             {bskePhase.label}
           </div>
           <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-700">
-            BetterMakati will publish a Makati-by-barangay candidate directory only from an official COMELEC candidate source. Campaign materials, social-media announcements and declarations of intent are not treated as a certified candidate list.
+            Official Makati candidate list pending COMELEC publication. Certificate-of-candidacy filing runs September 28–October 5, 2026.
           </p>
           <div className="mt-4 flex flex-wrap gap-3">
             <a

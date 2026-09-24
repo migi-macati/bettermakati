@@ -21,10 +21,7 @@ import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
 import LastReviewed from '../components/ui/LastReviewed';
 import SharePage from '../components/ui/SharePage';
-import CitizenSummary from '../components/ui/CitizenSummary';
 import {
-  cityMonitorCoverageAreas,
-  cityMonitorCoverageGaps,
   cityMonitorHistoricalRecordCount,
   cityMonitorRecords,
   cityMonitorReviewed,
@@ -32,9 +29,6 @@ import {
   cityMonitorSources,
   cityMonitorValidatedRecordCount,
   cityMonitorTypeLabel,
-  legislativeLifecycle,
-  procurementLifecycle,
-  speechWorkflow,
   type CityMonitorRecord,
   type CityMonitorType,
 } from '../data/cityMonitor';
@@ -74,37 +68,6 @@ const typeIcon: Record<CityMonitorType, ComponentType<{ className?: string }>> =
   publication: Newspaper,
   consultation: CalendarDays,
   'official-notice': Radio,
-};
-
-const recordInterpretation = (record: CityMonitorRecord) => {
-  if (record.type === 'procurement') {
-    if (record.status === 'awarded') {
-      return 'The public record establishes an award and the reported winning amount. It does not by itself establish that a contract was executed, work was completed or payment was made.';
-    }
-    return 'This procurement record establishes only the stage shown by the cited source. Later stages require separate public evidence.';
-  }
-
-  if (record.type === 'council-session') {
-    return 'This establishes the documented volume or occurrence of council activity. It does not by itself show the substance, vote or later implementation of each measure.';
-  }
-
-  if (record.type === 'legislation') {
-    return 'This establishes the legislative action shown by the source. Check the original measure and later records for amendments, effectivity and implementation.';
-  }
-
-  if (record.type === 'executive-speech') {
-    return 'Statements and commitments are attributed to the official source. Delivery is tracked separately when later evidence is available.';
-  }
-
-  if (record.type === 'project') {
-    return 'The record shows the latest sourced project stage. Budget, procurement, implementation and completion should be read as separate evidence points.';
-  }
-
-  if (record.type === 'consultation') {
-    return 'This confirms a participation opportunity or event. It does not establish what influence public input ultimately had on the decision.';
-  }
-
-  return 'This record summarizes the cited official source. Open the original source for controlling details and later updates.';
 };
 
 const streamOptions: Array<{ value: 'all' | CityMonitorType; label: string }> = [
@@ -242,55 +205,6 @@ export default function CityMonitor() {
         </div>
       </Section>
 
-      <Section className="bg-white">
-        <div className="section-eyebrow">Coverage</div>
-        <Heading level={2}>What City Monitor can and cannot see yet</Heading>
-        <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-600">
-          Each stream has its own source quality. BetterMakati distinguishes an active source, a partial source trail, and a true source gap instead of presenting every stream as equally complete.
-        </p>
-
-        <div className="mt-6 overflow-x-auto rounded-2xl border border-gray-200 bg-white">
-          <table className="w-full min-w-[1040px] text-left">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-4 py-3 font-bold">Stream</th>
-                <th className="px-4 py-3 font-bold">Coverage</th>
-                <th className="px-4 py-3 font-bold text-right">Sources</th>
-                <th className="px-4 py-3 font-bold text-right">Records</th>
-                <th className="px-4 py-3 font-bold">Included</th>
-                <th className="px-4 py-3 font-bold">Known limit</th>
-              </tr>
-            </thead>
-            <tbody>
-              {cityMonitorCoverageAreas.map(area => (
-                <tr key={area.type} className="border-t align-top">
-                  <td className="px-4 py-4 font-extrabold text-gray-950">{area.label}</td>
-                  <td className="px-4 py-4">
-                    <span className={
-                      'rounded-full border px-2.5 py-1 text-xs font-bold ' +
-                      (area.coverage === 'active-source'
-                        ? 'border-success-200 bg-success-50 text-success-800'
-                        : area.coverage === 'source-gap'
-                          ? 'border-secondary-200 bg-secondary-50 text-secondary-900'
-                          : 'border-primary-200 bg-primary-50 text-primary-800')
-                    }>
-                      {area.coverage === 'active-source'
-                        ? 'Active source'
-                        : area.coverage === 'source-gap'
-                          ? 'Source gap'
-                          : 'Partial'}
-                    </span>
-                  </td>
-                  <td className="px-4 py-4 text-right font-bold">{area.sourceCount}</td>
-                  <td className="px-4 py-4 text-right font-bold">{area.recordCount}</td>
-                  <td className="px-4 py-4 text-sm leading-relaxed text-gray-700">{area.included}</td>
-                  <td className="px-4 py-4 text-sm leading-relaxed text-gray-600">{area.limit}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </Section>
 
       <Section className="bg-[#f5f8f2]">
         <div className="section-eyebrow">Daily source watch</div>
@@ -339,8 +253,7 @@ export default function CityMonitor() {
                   >
                     <Radio className="mt-0.5 h-4 w-4 shrink-0 text-secondary-800" />
                     <span className="text-sm text-gray-700">
-                      <strong>{item.label}</strong> changed. Review pending before
-                      any substantive City Monitor event is published.
+                      <strong>{item.label}</strong> changed. Review pending.
                     </span>
                   </a>
                 ))}
@@ -371,10 +284,7 @@ export default function CityMonitor() {
           <div className="section-eyebrow">Editorial review queue</div>
           <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <h3 className="text-xl font-extrabold text-gray-950">Detected changes awaiting interpretation</h3>
-              <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-600">
-                A source change enters this queue only as a detection signal. It becomes a permanent City Monitor record only after the underlying official item, date, stage and meaning are verified.
-              </p>
+              <h3 className="text-xl font-extrabold text-gray-950">Source changes awaiting review</h3>
             </div>
             <div className="text-sm font-bold text-primary-800">{reviewQueue.length} open source{reviewQueue.length === 1 ? '' : 's'}</div>
           </div>
@@ -411,7 +321,7 @@ export default function CityMonitor() {
         <div className="section-eyebrow">Validated civic records</div>
         <Heading level={2}>Structured records</Heading>
         <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-600">
-          Every item here is a permanent, source-backed record. Current activity is added only after review; the existing archive is strongest in procurement because those bid-result disclosures are already structured elsewhere in BetterMakati.
+          Search permanent City Monitor records by topic or stream.
         </p>
 
         <div className="mt-6 flex flex-col gap-3 md:flex-row">
@@ -462,12 +372,6 @@ export default function CityMonitor() {
                   <time className="text-sm text-gray-500" dateTime={record.date}>{record.date}</time>
                 </div>
                 <p className="mt-4 max-w-4xl text-sm leading-relaxed text-gray-700">{record.summary}</p>
-                <CitizenSummary
-                  className="mt-4"
-                  eyebrow="What this tells you"
-                  title={cityMonitorTypeLabel[record.type]}
-                  summary={recordInterpretation(record)}
-                />
                 {record.referenceNo && (
                   <div className="mt-3 text-sm text-gray-600">
                     Reference: <strong>{record.referenceNo}</strong>
@@ -502,54 +406,12 @@ export default function CityMonitor() {
         </div>
       </Section>
 
-      <Section className="bg-[#f5f8f2]">
-        <div className="section-eyebrow">Lifecycle rules</div>
-        <Heading level={2}>Track the process, not only the final PDF</Heading>
-
-        <div className="mt-6 grid grid-cols-1 gap-3 lg:grid-cols-2">
-          {cityMonitorCoverageGaps.map(gap => (
-            <div key={gap.id} className="rounded-2xl border border-secondary-200 bg-secondary-50 p-5">
-              <h3 className="font-extrabold text-gray-950">{gap.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-gray-700">{gap.description}</p>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-6 grid grid-cols-1 xl:grid-cols-3 gap-4">
-          <div className="rounded-2xl border border-primary-100 bg-white p-6">
-            <ScrollText className="h-5 w-5 text-primary-700" />
-            <h3 className="mt-3 font-extrabold text-gray-950">Legislation</h3>
-            <ol className="mt-3 space-y-2 text-sm text-gray-700">
-              {legislativeLifecycle.map((item, index) => <li key={item}>{index + 1}. {item}</li>)}
-            </ol>
-          </div>
-          <div className="rounded-2xl border border-primary-100 bg-white p-6">
-            <ShoppingCart className="h-5 w-5 text-primary-700" />
-            <h3 className="mt-3 font-extrabold text-gray-950">Procurement</h3>
-            <ol className="mt-3 space-y-2 text-sm text-gray-700">
-              {procurementLifecycle.map((item, index) => <li key={item}>{index + 1}. {item}</li>)}
-            </ol>
-          </div>
-          <div className="rounded-2xl border border-primary-100 bg-white p-6">
-            <Megaphone className="h-5 w-5 text-primary-700" />
-            <h3 className="mt-3 font-extrabold text-gray-950">Speeches & SOCA</h3>
-            <ol className="mt-3 space-y-2 text-sm text-gray-700">
-              {speechWorkflow.map((item, index) => <li key={item}>{index + 1}. {item}</li>)}
-            </ol>
-            <p className="mt-4 text-xs leading-relaxed text-gray-500">
-              An official written text is labeled “Official transcript.” A
-              BetterMakati transcript from audio/video must say whether it is
-              automated or human-reviewed and preserve the official recording.
-            </p>
-          </div>
-        </div>
-      </Section>
 
       <Section className="bg-white">
         <div className="section-eyebrow">Monitored official channels</div>
         <Heading level={2}>Source directory</Heading>
         <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-600">
-          Monitoring mode matters: content-change detection can flag a changed page body; reachability checks only confirm that a dynamic source can still be reached; manual-review channels are never presented as automatically monitored content.
+          Official channels used by City Monitor.
         </p>
         <div className="mt-5 flex flex-wrap gap-3">
           <a href="/city-monitor-source-state.json" className="brand-btn-secondary">

@@ -114,11 +114,10 @@ for (const marker of [
 }
 
 for (const marker of [
-  'What BetterMakati currently has',
   'Full 2025 council candidate results',
   'Download the structured election data',
   'Candidate directory status',
-  'Campaign materials, social-media announcements and declarations of intent are not treated as a certified candidate list',
+  'Official Makati candidate list pending COMELEC publication.',
 ]) {
   if (!electionsPage.includes(marker)) {
     problems.push('Elections page is missing required feature: ' + marker);
