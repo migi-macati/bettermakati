@@ -237,8 +237,8 @@ test('Budget Explorer exposes reconciled 2026 office appropriations', async ({ p
 test('Budget Explorer exposes reconciled office line-item drill-down', async ({ page }) => {
   await page.goto(baseURL + '/projects-budget');
   await expect(page.getByRole('heading', { name: 'Object-of-expenditure detail' })).toBeVisible();
-  await expect(page.getByText('5 of 36 offices normalized', { exact: true })).toBeVisible();
-  await expect(page.getByText('Selected office reconciles', { exact: true })).toBeVisible();
+  await expect(page.getByText('5 of 36 offices with line-item detail', { exact: true })).toBeVisible();
+  await expect(page.getByText('Matches published office total', { exact: true })).toBeVisible();
   const office = page.getByRole('combobox', { name: 'Select office budget detail' });
   await office.selectOption("City Administrator's Office");
   await expect(page.getByRole('cell', { name: 'Training Expenses', exact: true }).first()).toBeVisible();
