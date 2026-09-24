@@ -535,7 +535,10 @@ test('Civic Briefs publishes archive and RSS distribution feeds', async ({ page 
     '/civic-briefs.rss.xml'
   );
   await expect(page.getByRole('button', { name: /Copy brief text/i })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Facebook', exact: true })).toHaveAttribute(
+  const distribution = page.locator('section').filter({
+    has: page.getByRole('heading', { name: 'Share the brief' }),
+  });
+  await expect(distribution.getByRole('link', { name: 'Facebook', exact: true })).toHaveAttribute(
     'href',
     'https://www.facebook.com/bettermakati'
   );
