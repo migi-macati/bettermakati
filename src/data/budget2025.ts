@@ -249,7 +249,7 @@ export const officeBudgetTotals2026 = [
   { office: "Youth and Sports Development Department", amountM: 186.765, pages: "81–82", pageStart: 81 },
 ];
 
-export type OfficeBudgetDetailGroup2026 = 'Personal Services' | 'Operating' | 'Capital' | 'Financial Expenses';
+export type OfficeBudgetDetailGroup2026 = 'Personal Services' | 'Operating' | 'Capital' | 'Financial Expenses' | 'Special Purpose';
 
 export interface OfficeBudgetLine2026 {
   group: OfficeBudgetDetailGroup2026;
@@ -3536,6 +3536,728 @@ export const officeBudgetDetails2026: Array<{
         "label": "Furniture and Fixtures",
         "amountM": 0.3,
         "page": 36
+      }
+    ]
+  },
+{
+    "office": "International Relations Department",
+    "pages": "37–38",
+    "lines": [
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-01-010",
+        "label": "Salaries and Wages - Regular",
+        "amountM": 13.182,
+        "page": 37
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-01-020",
+        "label": "Salaries and Wages - Casual/Contractual",
+        "amountM": 4.863,
+        "page": 37
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-02-010",
+        "label": "Personnel Economic Relief Allowance (PERA)",
+        "amountM": 0.936,
+        "page": 37
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-02-020",
+        "label": "Representation Allowance (RA)",
+        "amountM": 0.216,
+        "page": 37
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-02-030",
+        "label": "Transportation Allowance (TA)",
+        "amountM": 0.216,
+        "page": 37
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-02-040",
+        "label": "Clothing/Uniform Allowance",
+        "amountM": 0.252,
+        "page": 37
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-02-130",
+        "label": "Overtime and Night Pay",
+        "amountM": 0.05,
+        "page": 37
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-02-140",
+        "label": "Year End Bonus",
+        "amountM": 1.388,
+        "page": 37
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-02-150",
+        "label": "Cash Gift",
+        "amountM": 0.19,
+        "page": 37
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-02-990",
+        "label": "Other Bonuses and Allowances",
+        "amountM": 1.437,
+        "page": 37
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-03-010",
+        "label": "Retirement and Life Insurance Contributions",
+        "amountM": 2.024,
+        "page": 37
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-03-020",
+        "label": "Pag-IBIG Contributions",
+        "amountM": 0.084,
+        "page": 37
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-03-030",
+        "label": "PhilHealth Contributions",
+        "amountM": 0.414,
+        "page": 37
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-03-040",
+        "label": "Employees Compensation Insurance Premiums",
+        "amountM": 0.042,
+        "page": 37
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-04-030",
+        "label": "Terminal Leave Benefits",
+        "amountM": 0.249,
+        "page": 37
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-04-990",
+        "label": "Other Personnel Benefits",
+        "amountM": 1.966,
+        "page": 37
+      },
+      {
+        "group": "Operating",
+        "accountCode": "5-02-01-010",
+        "label": "Traveling Expenses - Local",
+        "amountM": 0.03,
+        "page": 37
+      },
+      {
+        "group": "Operating",
+        "accountCode": "5-02-01-020",
+        "label": "Traveling Expenses - Foreign",
+        "amountM": 0.18,
+        "page": 37
+      },
+      {
+        "group": "Operating",
+        "accountCode": "5-02-02-010",
+        "label": "Training Expenses",
+        "amountM": 0.563,
+        "page": 37
+      },
+      {
+        "group": "Operating",
+        "accountCode": "5-02-03-210",
+        "label": "Semi-Expendable Machinery and Equipment Expenses",
+        "amountM": 0.055,
+        "page": 37
+      },
+      {
+        "group": "Operating",
+        "accountCode": "5-02-03-990",
+        "label": "Other Supplies and Materials Expenses",
+        "amountM": 1.926,
+        "page": 37
+      },
+      {
+        "group": "Operating",
+        "accountCode": "5-02-05-020",
+        "label": "Telephone Expenses",
+        "amountM": 0.03,
+        "page": 37
+      },
+      {
+        "group": "Operating",
+        "accountCode": "5-02-11-990",
+        "label": "Other Professional Services",
+        "amountM": 10.7,
+        "page": 38
+      },
+      {
+        "group": "Operating",
+        "accountCode": "5-02-99-060",
+        "label": "Membership Dues and Contributions to Organizations",
+        "amountM": 0.02,
+        "page": 38
+      },
+      {
+        "group": "Operating",
+        "accountCode": "5-02-99-990",
+        "label": "Other Maintenance and Operating Expenses",
+        "amountM": 2.005,
+        "page": 38
+      },
+      {
+        "group": "Capital",
+        "accountCode": "1-07-05-030",
+        "label": "Information and Communication Technology Equipment",
+        "amountM": 0.072,
+        "page": 38
+      }
+    ]
+  },
+  {
+    "office": "Law Department",
+    "pages": "39–40",
+    "lines": [
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-01-010",
+        "label": "Salaries and Wages - Regular",
+        "amountM": 20.232,
+        "page": 39
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-01-020",
+        "label": "Salaries and Wages - Casual/Contractual",
+        "amountM": 16.872,
+        "page": 39
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-02-010",
+        "label": "Personnel Economic Relief Allowance (PERA)",
+        "amountM": 2.292,
+        "page": 39
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-02-020",
+        "label": "Representation Allowance (RA)",
+        "amountM": 0.216,
+        "page": 39
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-02-030",
+        "label": "Transportation Allowance (TA)",
+        "amountM": 0.216,
+        "page": 39
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-02-040",
+        "label": "Clothing/Uniform Allowance",
+        "amountM": 0.665,
+        "page": 39
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-02-100",
+        "label": "Honoraria",
+        "amountM": 0.672,
+        "page": 39
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-02-130",
+        "label": "Overtime and Night Pay",
+        "amountM": 0.35,
+        "page": 39
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-02-140",
+        "label": "Year End Bonus",
+        "amountM": 2.997,
+        "page": 39
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-02-150",
+        "label": "Cash Gift",
+        "amountM": 0.475,
+        "page": 39
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-02-990",
+        "label": "Other Bonuses and Allowances",
+        "amountM": 3.371,
+        "page": 39
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-03-010",
+        "label": "Retirement and Life Insurance Contributions",
+        "amountM": 4.155,
+        "page": 39
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-03-020",
+        "label": "Pag-IBIG Contributions",
+        "amountM": 0.226,
+        "page": 39
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-03-030",
+        "label": "PhilHealth Contributions",
+        "amountM": 0.857,
+        "page": 39
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-03-040",
+        "label": "Employees Compensation Insurance Premiums",
+        "amountM": 0.113,
+        "page": 39
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-04-030",
+        "label": "Terminal Leave Benefits",
+        "amountM": 1.159,
+        "page": 39
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-04-990",
+        "label": "Other Personnel Benefits",
+        "amountM": 4.463,
+        "page": 39
+      },
+      {
+        "group": "Operating",
+        "accountCode": "5-02-02-010",
+        "label": "Training Expenses",
+        "amountM": 2.423,
+        "page": 39
+      },
+      {
+        "group": "Operating",
+        "accountCode": "5-02-03-010",
+        "label": "Office Supplies Expenses",
+        "amountM": 0.008,
+        "page": 39
+      },
+      {
+        "group": "Operating",
+        "accountCode": "5-02-03-210",
+        "label": "Semi-Expendable Machinery and Equipment Expenses",
+        "amountM": 0.021,
+        "page": 40
+      },
+      {
+        "group": "Operating",
+        "accountCode": "5-02-05-010",
+        "label": "Postage and Courier Services",
+        "amountM": 0.02,
+        "page": 40
+      },
+      {
+        "group": "Operating",
+        "accountCode": "5-02-11-990",
+        "label": "Other Professional Services",
+        "amountM": 43.647,
+        "page": 40
+      },
+      {
+        "group": "Operating",
+        "accountCode": "5-02-13-050",
+        "label": "Repairs and Maintenance - Machinery and Equipment",
+        "amountM": 0.15,
+        "page": 40
+      },
+      {
+        "group": "Operating",
+        "accountCode": "5-02-99-990",
+        "label": "Other Maintenance and Operating Expenses",
+        "amountM": 21.19,
+        "page": 40
+      }
+    ]
+  },
+  {
+    "office": "Liga ng mga Barangay",
+    "pages": "42",
+    "lines": []
+  },
+  {
+    "office": "Makati Action Center",
+    "pages": "43–44",
+    "lines": [
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-01-010",
+        "label": "Salaries and Wages - Regular",
+        "amountM": 67.762,
+        "page": 43
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-01-020",
+        "label": "Salaries and Wages - Casual/Contractual",
+        "amountM": 128.149,
+        "page": 43
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-02-010",
+        "label": "Personnel Economic Relief Allowance (PERA)",
+        "amountM": 19.416,
+        "page": 43
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-02-040",
+        "label": "Clothing/Uniform Allowance",
+        "amountM": 5.663,
+        "page": 43
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-02-130",
+        "label": "Overtime and Night Pay",
+        "amountM": 12,
+        "page": 43
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-02-140",
+        "label": "Year End Bonus",
+        "amountM": 15.913,
+        "page": 43
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-02-150",
+        "label": "Cash Gift",
+        "amountM": 4.045,
+        "page": 43
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-02-990",
+        "label": "Other Bonuses and Allowances",
+        "amountM": 20.408,
+        "page": 43
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-03-010",
+        "label": "Retirement and Life Insurance Contributions",
+        "amountM": 22.299,
+        "page": 43
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-03-020",
+        "label": "Pag-IBIG Contributions",
+        "amountM": 1.942,
+        "page": 43
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-03-030",
+        "label": "PhilHealth Contributions",
+        "amountM": 4.646,
+        "page": 43
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-03-040",
+        "label": "Employees Compensation Insurance Premiums",
+        "amountM": 0.971,
+        "page": 43
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-04-030",
+        "label": "Terminal Leave Benefits",
+        "amountM": 10.988,
+        "page": 43
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-04-990",
+        "label": "Other Personnel Benefits",
+        "amountM": 28.468,
+        "page": 43
+      },
+      {
+        "group": "Operating",
+        "accountCode": "5-02-01-010",
+        "label": "Traveling Expenses - Local",
+        "amountM": 0.012,
+        "page": 43
+      },
+      {
+        "group": "Operating",
+        "accountCode": "5-02-03-080",
+        "label": "Medical, Dental and Laboratory Supplies Expenses",
+        "amountM": 0.099,
+        "page": 43
+      },
+      {
+        "group": "Operating",
+        "accountCode": "5-02-03-210",
+        "label": "Semi-Expendable Machinery and Equipment Expenses",
+        "amountM": 0.18,
+        "page": 43
+      },
+      {
+        "group": "Operating",
+        "accountCode": "5-02-03-990",
+        "label": "Other Supplies and Materials Expenses",
+        "amountM": 0.921,
+        "page": 43
+      },
+      {
+        "group": "Operating",
+        "accountCode": "5-02-05-020",
+        "label": "Telephone Expenses",
+        "amountM": 0.05,
+        "page": 44
+      },
+      {
+        "group": "Operating",
+        "accountCode": "5-02-13-050",
+        "label": "Repairs and Maintenance - Machinery and Equipment",
+        "amountM": 0.17,
+        "page": 44
+      },
+      {
+        "group": "Operating",
+        "accountCode": "5-02-99-020",
+        "label": "Printing and Publication Expenses",
+        "amountM": 0.034,
+        "page": 44
+      },
+      {
+        "group": "Operating",
+        "accountCode": "5-02-99-990",
+        "label": "Other Maintenance and Operating Expenses",
+        "amountM": 0.568,
+        "page": 44
+      },
+      {
+        "group": "Capital",
+        "accountCode": "1-07-05-030",
+        "label": "Information and Communication Technology Equipment",
+        "amountM": 0.1,
+        "page": 44
+      }
+    ]
+  },
+  {
+    "office": "Makati Disaster Risk Reduction and Management Office",
+    "pages": "45–46",
+    "lines": [
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-01-010",
+        "label": "Salaries and Wages - Regular",
+        "amountM": 90.993,
+        "page": 45
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-01-020",
+        "label": "Salaries and Wages - Casual/Contractual",
+        "amountM": 47.752,
+        "page": 45
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-02-010",
+        "label": "Personnel Economic Relief Allowance (PERA)",
+        "amountM": 8.124,
+        "page": 45
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-02-020",
+        "label": "Representation Allowance (RA)",
+        "amountM": 0.102,
+        "page": 45
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-02-030",
+        "label": "Transportation Allowance (TA)",
+        "amountM": 0.102,
+        "page": 45
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-02-040",
+        "label": "Clothing/Uniform Allowance",
+        "amountM": 2.268,
+        "page": 45
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-02-130",
+        "label": "Overtime and Night Pay",
+        "amountM": 5,
+        "page": 45
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-02-140",
+        "label": "Year End Bonus",
+        "amountM": 10.719,
+        "page": 45
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-02-150",
+        "label": "Cash Gift",
+        "amountM": 1.765,
+        "page": 45
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-02-990",
+        "label": "Other Bonuses and Allowances",
+        "amountM": 11.046,
+        "page": 45
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-03-010",
+        "label": "Retirement and Life Insurance Contributions",
+        "amountM": 14.622,
+        "page": 45
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-03-020",
+        "label": "Pag-IBIG Contributions",
+        "amountM": 0.782,
+        "page": 45
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-03-030",
+        "label": "PhilHealth Contributions",
+        "amountM": 3.016,
+        "page": 45
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-03-040",
+        "label": "Employees Compensation Insurance Premiums",
+        "amountM": 0.391,
+        "page": 45
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-04-030",
+        "label": "Terminal Leave Benefits",
+        "amountM": 3.699,
+        "page": 45
+      },
+      {
+        "group": "Personal Services",
+        "accountCode": "5-01-04-990",
+        "label": "Other Personnel Benefits",
+        "amountM": 14.25,
+        "page": 45
+      },
+      {
+        "group": "Operating",
+        "accountCode": "5-02-01-010",
+        "label": "Traveling Expenses - Local",
+        "amountM": 0.01,
+        "page": 45
+      },
+      {
+        "group": "Operating",
+        "accountCode": "5-02-03-010",
+        "label": "Office Supplies Expenses",
+        "amountM": 0.049,
+        "page": 45
+      },
+      {
+        "group": "Operating",
+        "accountCode": "5-02-03-220",
+        "label": "Semi-Expendable Furniture, Fixtures and Books Expenses",
+        "amountM": 0.33,
+        "page": 45
+      },
+      {
+        "group": "Operating",
+        "accountCode": "5-02-03-990",
+        "label": "Other Supplies and Materials Expenses",
+        "amountM": 0.495,
+        "page": 45
+      },
+      {
+        "group": "Operating",
+        "accountCode": "5-02-05-020",
+        "label": "Telephone Expenses",
+        "amountM": 0.005,
+        "page": 45
+      },
+      {
+        "group": "Operating",
+        "accountCode": "5-02-05-030",
+        "label": "Internet Subscription Expenses",
+        "amountM": 0.65,
+        "page": 46
+      },
+      {
+        "group": "Operating",
+        "accountCode": "5-02-12-990",
+        "label": "Other General Services",
+        "amountM": 0.005,
+        "page": 46
+      },
+      {
+        "group": "Operating",
+        "accountCode": "5-02-99-990",
+        "label": "Other Maintenance and Operating Expenses",
+        "amountM": 3.689,
+        "page": 46
+      },
+      {
+        "group": "Special Purpose",
+        "accountCode": "—",
+        "label": "30% Quick Response Fund (QRF)",
+        "amountM": 300,
+        "page": 46
+      },
+      {
+        "group": "Special Purpose",
+        "accountCode": "—",
+        "label": "70% Disaster Preparedness & Mitigation Fund",
+        "amountM": 700,
+        "page": 46
       }
     ]
   }
