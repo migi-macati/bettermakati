@@ -427,20 +427,18 @@ test('Elections provides downloadable local, barangay and historical datasets', 
 test('Today in Makati combines current and validated layers', async ({ page }) => {
   await page.goto(baseURL + '/today');
   await expect(page.getByRole('heading', { level: 1, name: 'Today in Makati' })).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Current conditions & civic freshness' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Current conditions' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Latest published brief' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'City Monitor' })).toBeVisible();
-  await expect(page.getByText(/News coverage is separate from validated City Monitor records/i)).toBeVisible();
   await expect(page.getByLabel('Choose my barangay')).toBeVisible();
 });
 
 test('Live Makati labels source authority and check status', async ({ page }) => {
   await page.goto(baseURL + '/live');
   await expect(page.getByRole('heading', { level: 1, name: 'What’s happening now' })).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'What BetterMakati has actually checked' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Source checks' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Source directory' })).toBeVisible();
   await expect(page.getByText('Official government', { exact: true }).first()).toBeVisible();
-  await expect(page.getByText(/direct link means BetterMakati is routing you to the provider/i)).toBeVisible();
   await expect(page.locator('#main-content').getByRole('link', { name: 'Today in Makati', exact: true })).toBeVisible();
 
   const state = await page.request.get(baseURL + '/city-monitor-source-state.json');

@@ -248,7 +248,7 @@ export default function Today() {
     <>
       <SEO
         title="Today in Makati"
-        description="A daily Makati dashboard combining local context, current conditions, validated civic briefs, source health, news, events and emergency links."
+        description="A daily Makati dashboard for weather, civic updates, news, events and emergency links."
       />
 
       <Section className="bg-[#fffdf8]">
@@ -259,10 +259,7 @@ export default function Today() {
           One starting point for what you may need to know today, with timestamps and
           source boundaries kept visible.
         </p>
-        <LastReviewed
-          date={todayReviewed}
-          note="Live conditions, news and civic feeds can update independently; each section shows its own source or timestamp."
-        />
+        <LastReviewed date={todayReviewed} />
 
         <div className="mt-7 rounded-2xl border border-primary-100 bg-white p-5 md:p-6">
           <div className="flex items-center gap-2 font-extrabold text-gray-950">
@@ -284,7 +281,7 @@ export default function Today() {
             </select>
           </label>
           <p className="mt-3 text-xs text-gray-500">
-            Saved only in this browser. BetterMakati does not require precise location for this view.
+            Saved in this browser.
           </p>
         </div>
 
@@ -321,7 +318,7 @@ export default function Today() {
 
       <Section className="bg-[#f5f8f2]">
         <div className="section-eyebrow">Today at a glance</div>
-        <Heading level={2}>Current conditions & civic freshness</Heading>
+        <Heading level={2}>Current conditions</Heading>
 
         <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
           <Link to="/live" className="rounded-2xl border border-primary-100 bg-white p-5">
@@ -392,7 +389,7 @@ export default function Today() {
                 <p className="mt-3 max-w-3xl text-sm leading-relaxed text-gray-600">
                   {latestBrief.recordIds.length
                     ? latestBrief.recordIds.length + ' validated City Monitor record' + (latestBrief.recordIds.length === 1 ? '' : 's') + ' in this published snapshot.'
-                    : 'No newly validated City Monitor record was published in this snapshot. BetterMakati leaves a quiet period quiet rather than filling it with unverified activity.'}
+                    : 'No City Monitor record was published in this snapshot.'}
                 </p>
               </div>
               <div className="shrink-0 text-xs text-gray-500">
@@ -425,9 +422,6 @@ export default function Today() {
             <Radio className="h-5 w-5 text-primary-700" />
             <div className="mt-3 text-3xl font-extrabold text-gray-950">{monitorChanges}</div>
             <div className="font-bold text-gray-800">source-change signals in the latest monitor run</div>
-            <p className="mt-2 text-sm leading-relaxed text-gray-600">
-              A detected source change is a review signal, not a confirmed government action.
-            </p>
             {latestRun?.checkedAt && (
               <div className="mt-2 text-xs text-gray-500">
                 Checked {formatTimestamp(latestRun.checkedAt)}
@@ -475,9 +469,6 @@ export default function Today() {
       <Section className="bg-white">
         <div className="section-eyebrow">Makati in the news</div>
         <Heading level={2}>Recent coverage</Heading>
-        <p className="mt-2 max-w-3xl text-sm text-gray-600">
-          News coverage is separate from validated City Monitor records and official source checks.
-        </p>
         <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-3">
           {news.length > 0 ? news.map(item => (
             <a

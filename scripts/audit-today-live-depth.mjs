@@ -15,10 +15,8 @@ for (const marker of [
   "fetch('/city-monitor-source-state.json'",
   "fetch('/api/news')",
   'Latest published brief',
-  'Current conditions & civic freshness',
+  'Current conditions',
   'Choose my barangay',
-  'A detected source change is a review signal',
-  'News coverage is separate from validated City Monitor records',
 ]) {
   if (!today.includes(marker)) {
     problems.push('Today in Makati lost required Wave 2.3 feature: ' + marker);
@@ -27,13 +25,12 @@ for (const marker of [
 
 for (const marker of [
   "fetch('/city-monitor-source-state.json'",
-  'What BetterMakati has actually checked',
+  'Source checks',
   'Source directory',
   'Open-Meteo',
   'PAGASA NCR',
   'sourceStatusLabel',
   'liveSourceAuthorityLabel',
-  'direct link means BetterMakati is routing you to the provider',
 ]) {
   if (!live.includes(marker)) {
     problems.push('Live Makati lost required Wave 2.3 feature: ' + marker);

@@ -322,7 +322,7 @@ export default function LiveMakati() {
 
       <Section className="bg-[#f5f8f2]">
         <div className="section-eyebrow">Freshness</div>
-        <Heading level={2}>What BetterMakati has actually checked</Heading>
+        <Heading level={2}>Source checks</Heading>
 
         <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-3">
           <div className="rounded-2xl border border-primary-100 bg-white p-5">
@@ -331,9 +331,6 @@ export default function LiveMakati() {
               {monitorStateFailed ? '—' : healthyMonitorSources + '/' + monitorSources.length}
             </div>
             <div className="font-bold text-gray-800">City Monitor sources reachable</div>
-            <p className="mt-2 text-sm text-gray-600">
-              This is source reachability or monitor status, not proof that no new advisory exists.
-            </p>
           </div>
 
           <div className="rounded-2xl border border-primary-100 bg-white p-5">
@@ -342,9 +339,6 @@ export default function LiveMakati() {
               {monitorStateFailed ? '—' : monitoredReachable + '/' + monitoredLiveSources.length}
             </div>
             <div className="font-bold text-gray-800">Live-directory city sources reachable</div>
-            <p className="mt-2 text-sm text-gray-600">
-              Only sources already covered by City Monitor receive an automated status here.
-            </p>
           </div>
 
           <div className="rounded-2xl border border-primary-100 bg-white p-5">
@@ -369,10 +363,6 @@ export default function LiveMakati() {
       <Section className="bg-white">
         <div className="section-eyebrow">Advisories & utilities</div>
         <Heading level={2}>Source directory</Heading>
-        <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-600">
-          A direct link means BetterMakati is routing you to the provider; it does not mean
-          BetterMakati has independently confirmed the current status of that service.
-        </p>
 
         <div className="mt-7 space-y-8">
           {sourcesByCategory.map(group => (
