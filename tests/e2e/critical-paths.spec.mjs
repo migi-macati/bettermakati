@@ -319,10 +319,14 @@ test('Public Records search reaches an older original annual budget', async ({ p
 test('Public Records distinguishes official and contextual evidence', async ({ page }) => {
   await page.goto(baseURL + '/records');
   await page.getByLabel('Filter records by source class').selectOption('Media / secondary');
-  await expect(page.getByText('Media / secondary', { exact: true }).first()).toBeVisible();
+  await expect(
+    page.locator('article').filter({ hasText: 'Media / secondary' }).first()
+  ).toBeVisible();
   await page.getByLabel('Filter records by source class').selectOption('All');
-  await page.getByText('Official only', { exact: true }).click();
-  await expect(page.getByText('Media / secondary', { exact: true })).toHaveCount(0);
+  await page.getByRole('checkbox').check();
+  await expect(
+    page.locator('article').filter({ hasText: 'Media / secondary' })
+  ).toHaveCount(0);
 });
 
 test('Public Records publishes machine-readable catalog and source-watch downloads', async ({ page }) => {
