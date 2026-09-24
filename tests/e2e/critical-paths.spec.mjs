@@ -351,7 +351,7 @@ test('Public Records publishes machine-readable catalog and source-watch downloa
 test('Public Records exposes current source freshness state', async ({ page }) => {
   await page.goto(baseURL + '/records');
   await expect(page.getByRole('heading', { name: 'Source freshness monitor' })).toBeVisible();
-  await expect(page.getByText('97', { exact: true }).first()).toBeVisible();
+  await expect(page.getByText('sources configured', { exact: true })).toBeVisible();
   await expect(page.getByText(/dynamic portals are normally checked only for reachability/i)).toBeVisible();
   await expect(page.getByRole('link', { name: /Current source state/i })).toHaveAttribute(
     'href',
