@@ -45,7 +45,7 @@ export default function OfficeBudgetDetail() {
           </h3>
           <div className="mt-3 flex flex-wrap gap-2 text-xs font-bold">
             <span className="rounded-full bg-primary-50 px-3 py-1.5 text-primary-800">
-              {officeBudgetDetails2026.length} of {officeBudgetTotals2026.length} offices normalized
+              {officeBudgetDetails2026.length} of {officeBudgetTotals2026.length} offices with line-item detail
             </span>
             <span
               className={
@@ -54,7 +54,7 @@ export default function OfficeBudgetDetail() {
                   : 'rounded-full bg-warning-50 px-3 py-1.5 text-warning-800'
               }
             >
-              {reconciles ? 'Selected office reconciles' : 'Selected office needs reconciliation'}
+              {reconciles ? 'Matches published office total' : 'Check against published office total'}
             </span>
           </div>
         </div>
