@@ -16,6 +16,8 @@ const routes = [
   '/visit',
   '/today',
   '/live',
+  '/records',
+  '/status',
 ];
 
 for (const route of routes) {
