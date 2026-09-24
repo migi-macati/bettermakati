@@ -221,7 +221,8 @@
       "procurement-record-ingestion",
       "lifecycle-rules",
       "provenance",
-      "rss"
+      "rss",
+      "permanent-record-sitemap"
     ],
     "gaps": [
       "No reliable current source has yet been normalized for every 2026 City Council session date, agenda, attendance, vote and minutes record.",
