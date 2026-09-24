@@ -23,6 +23,13 @@ for (const marker of [
   'Official activity',
   'Projects & procurement',
   'Participation opportunities',
+]) {
+  if (!data.includes(marker)) {
+    problems.push('Civic Brief section model is missing: ' + marker);
+  }
+}
+
+for (const marker of [
   'Accountability-linked developments',
   'Source-review queue',
   'Permanent brief archive',
