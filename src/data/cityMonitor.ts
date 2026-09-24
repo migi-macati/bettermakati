@@ -116,7 +116,7 @@ export const cityMonitorSources: CityMonitorSource[] = [
   {
     id: 'makati-events',
     label: 'Makati Events',
-    stream: 'multi',
+    stream: 'consultation',
     url: 'https://www.makati.gov.ph/content/events',
     publisher: 'City Government of Makati',
     cadence: 'daily',
