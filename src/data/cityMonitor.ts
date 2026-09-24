@@ -1,3 +1,5 @@
+import { procurementProjectEntries } from './accountabilitySupplement';
+
 export type CityMonitorType =
   | 'council-session'
   | 'legislation'
@@ -18,6 +20,11 @@ export type CityMonitorStatus =
   | 'completed'
   | 'archived';
 
+export type CityMonitorMonitoringMode =
+  | 'content-hash'
+  | 'reachability'
+  | 'manual-review';
+
 export interface CityMonitorSource {
   id: string;
   label: string;
@@ -25,6 +32,7 @@ export interface CityMonitorSource {
   url: string;
   publisher: string;
   cadence: 'daily' | 'weekly' | 'event-driven';
+  monitoringMode: CityMonitorMonitoringMode;
   monitoringNote: string;
 }
 
@@ -69,7 +77,7 @@ export interface CityMonitorRecord {
   }>;
 }
 
-export const cityMonitorReviewed = '19 September 2026';
+export const cityMonitorReviewed = '24 September 2026';
 
 export const cityMonitorSources: CityMonitorSource[] = [
   {
@@ -79,6 +87,7 @@ export const cityMonitorSources: CityMonitorSource[] = [
     url: 'https://www.makati.gov.ph/content/resolutions-and-ordinances/author',
     publisher: 'City Government of Makati',
     cadence: 'daily',
+    monitoringMode: 'reachability',
     monitoringNote:
       'Watch for new or changed legislative records. BetterMakati should not infer a legislative stage that the source does not establish.',
   },
@@ -89,6 +98,7 @@ export const cityMonitorSources: CityMonitorSource[] = [
     url: 'https://www.makati.gov.ph/content/mayors-corner/speeches/803',
     publisher: 'City Government of Makati',
     cadence: 'daily',
+    monitoringMode: 'reachability',
     monitoringNote:
       'Watch for newly published speeches or official text. BetterMakati transcripts must be labeled separately from official transcripts.',
   },
@@ -99,6 +109,7 @@ export const cityMonitorSources: CityMonitorSource[] = [
     url: 'https://www.facebook.com/mymakativerified',
     publisher: 'City Government of Makati',
     cadence: 'event-driven',
+    monitoringMode: 'manual-review',
     monitoringNote:
       'Historical city records identify MyMakati as a council-session streaming channel. Social-platform access can be inconsistent, so session claims still require a current official post or recording.',
   },
@@ -109,6 +120,7 @@ export const cityMonitorSources: CityMonitorSource[] = [
     url: 'https://www.makati.gov.ph/content/events',
     publisher: 'City Government of Makati',
     cadence: 'daily',
+    monitoringMode: 'reachability',
     monitoringNote:
       'Use for official event discovery, including possible hearings, public activities and announced government events.',
   },
@@ -119,6 +131,7 @@ export const cityMonitorSources: CityMonitorSource[] = [
     url: 'https://www.makati.gov.ph/content/news',
     publisher: 'City Government of Makati',
     cadence: 'daily',
+    monitoringMode: 'reachability',
     monitoringNote:
       'Official announcements remain distinct from independent media coverage in Makati in the News.',
   },
@@ -129,6 +142,7 @@ export const cityMonitorSources: CityMonitorSource[] = [
     url: 'https://www.makati.gov.ph/',
     publisher: 'City Government of Makati',
     cadence: 'daily',
+    monitoringMode: 'reachability',
     monitoringNote:
       'Use city disclosure records together with PhilGEPS for bid results, procurement documents and project-linked evidence.',
   },
@@ -139,6 +153,7 @@ export const cityMonitorSources: CityMonitorSource[] = [
     url: 'https://notices.philgeps.gov.ph/',
     publisher: 'Philippine Government Electronic Procurement System',
     cadence: 'daily',
+    monitoringMode: 'content-hash',
     monitoringNote:
       'Primary national procurement portal. Specific Makati notices should be linked to the corresponding City Monitor procurement record.',
   },
@@ -149,12 +164,13 @@ export const cityMonitorSources: CityMonitorSource[] = [
     url: 'https://www.makati.gov.ph/',
     publisher: 'City Government of Makati',
     cadence: 'weekly',
+    monitoringMode: 'reachability',
     monitoringNote:
       'Monitor the city portal for annual reports, plans, newsletters, Ulat sa Bayan and other official publications.',
   },
 ];
 
-export const cityMonitorRecords: CityMonitorRecord[] = [
+const baseCityMonitorRecords: CityMonitorRecord[] = [
   {
     id: '2020-council-legislative-activity',
     type: 'council-session',
@@ -188,6 +204,176 @@ export const cityMonitorRecords: CityMonitorRecord[] = [
     relatedHref: '/projects-budget#procurement',
   },
 ];
+
+
+const procurementMonitorRecords: CityMonitorRecord[] =
+  procurementProjectEntries.map(entry => {
+    const procurement = entry.procurement!;
+    const source = entry.sources[0];
+    return {
+      id: 'monitor-' + entry.id,
+      type: 'procurement',
+      title: entry.title,
+      summary:
+        'The city bid-results disclosure reports ' +
+        (procurement.supplier || 'a winning bidder') +
+        ' at ₱' +
+        ((procurement.awardedAmountM || 0) * 1_000_000).toLocaleString('en-PH', {
+          maximumFractionDigits: 2,
+        }) +
+        ' against an approved budget for contract of ₱' +
+        ((procurement.approvedBudgetM || 0) * 1_000_000).toLocaleString('en-PH', {
+          maximumFractionDigits: 2,
+        }) +
+        '. Later contract, notice-to-proceed, implementation and completion stages require separate evidence.',
+      date: procurement.bidDate || entry.period,
+      status: 'awarded',
+      historical: true,
+      stage: 'Bid result disclosed',
+      referenceNo: procurement.referenceNo,
+      amount:
+        procurement.awardedAmountM === undefined
+          ? undefined
+          : procurement.awardedAmountM * 1_000_000,
+      sourceLabel: source?.label || 'City procurement record',
+      sourceUrl: source?.url || '',
+      sourcePublisher: source?.publisher || 'City Government of Makati',
+      relatedHref: '/accountability?type=project#' + entry.id,
+      summaryBullets: [
+        procurement.approvedBudgetM !== undefined
+          ? 'Approved budget for contract: ₱' +
+            (procurement.approvedBudgetM * 1_000_000).toLocaleString('en-PH', {
+              maximumFractionDigits: 2,
+            })
+          : 'Approved budget for contract not stated in the structured record.',
+        procurement.awardedAmountM !== undefined
+          ? 'Winning bid: ₱' +
+            (procurement.awardedAmountM * 1_000_000).toLocaleString('en-PH', {
+              maximumFractionDigits: 2,
+            })
+          : 'Winning bid amount not stated in the structured record.',
+        procurement.supplier
+          ? 'Reported winning bidder: ' + procurement.supplier
+          : 'Winning bidder not stated in the structured record.',
+      ],
+      documents: source
+        ? [
+            {
+              label: source.label,
+              url: source.url,
+              kind: 'procurement' as const,
+            },
+          ]
+        : undefined,
+    };
+  });
+
+export const cityMonitorRecords: CityMonitorRecord[] = [
+  ...baseCityMonitorRecords,
+  ...procurementMonitorRecords,
+].sort((a, b) => b.date.localeCompare(a.date));
+
+export interface CityMonitorCoverageArea {
+  type: CityMonitorType;
+  label: string;
+  sourceCount: number;
+  recordCount: number;
+  coverage: 'active-source' | 'partial' | 'source-gap';
+  included: string;
+  limit: string;
+}
+
+const coverageSeed: Array<
+  Omit<CityMonitorCoverageArea, 'sourceCount' | 'recordCount'>
+> = [
+  {
+    type: 'council-session',
+    label: 'City Council sessions',
+    coverage: 'source-gap',
+    included:
+      'Historical session-volume evidence and the official MyMakati broadcast channel used for session discovery.',
+    limit:
+      'No reliable current source has yet been normalized for every 2026 session date, agenda, attendance, vote and minutes record.',
+  },
+  {
+    type: 'legislation',
+    label: 'Legislation',
+    coverage: 'partial',
+    included:
+      'The official Makati resolutions-and-ordinances archive is monitored as the enacted-measure source.',
+    limit:
+      'Filing, referral, readings, committee action, voting and mayoral-action timestamps are not yet exposed as one complete structured lifecycle.',
+  },
+  {
+    type: 'executive-speech',
+    label: 'Mayor & executive',
+    coverage: 'partial',
+    included:
+      'The official Mayor’s Corner speech channel is monitored for newly published speeches and official text.',
+    limit:
+      'The city page is dynamically rendered, so reachability can be checked automatically but substantive additions still require source review.',
+  },
+  {
+    type: 'procurement',
+    label: 'Procurement',
+    coverage: 'active-source',
+    included:
+      'PhilGEPS and city bid-result disclosures, including structured award records already linked to Projects & Budget and Accountability.',
+    limit:
+      'Contracts, notices to proceed, implementation and completion evidence remain incomplete for many awards.',
+  },
+  {
+    type: 'project',
+    label: 'Projects',
+    coverage: 'partial',
+    included:
+      'Project follow-through is linked from procurement and Accountability records when later public evidence exists.',
+    limit:
+      'There is no single current official project-status feed covering all city capital and service-delivery projects.',
+  },
+  {
+    type: 'publication',
+    label: 'Publications',
+    coverage: 'partial',
+    included:
+      'Annual reports, plans, Ulat sa Bayan and other official publication channels are monitored for discovery.',
+    limit:
+      'The city portal does not expose one normalized publication feed with stable item metadata.',
+  },
+  {
+    type: 'consultation',
+    label: 'Consultations & hearings',
+    coverage: 'partial',
+    included:
+      'The official Makati Events channel is monitored for public events and possible participation opportunities.',
+    limit:
+      'A complete hearing/consultation calendar with agenda, submissions and resulting action is not yet available as a structured source.',
+  },
+  {
+    type: 'official-notice',
+    label: 'Official notices',
+    coverage: 'partial',
+    included:
+      'The official Makati News channel is monitored separately from independent news coverage.',
+    limit:
+      'The portal is dynamically rendered; automated checks can establish availability but review is still needed to identify and validate a substantive new notice.',
+  },
+];
+
+export const cityMonitorCoverageAreas: CityMonitorCoverageArea[] =
+  coverageSeed.map(area => ({
+    ...area,
+    sourceCount: cityMonitorSources.filter(
+      source => source.stream === area.type || source.stream === 'multi'
+    ).length,
+    recordCount: cityMonitorRecords.filter(record => record.type === area.type).length,
+  }));
+
+export const cityMonitorSourceCount = cityMonitorSources.length;
+export const cityMonitorValidatedRecordCount = cityMonitorRecords.length;
+export const cityMonitorHistoricalRecordCount = cityMonitorRecords.filter(
+  record => record.historical
+).length;
 
 export const cityMonitorCoverageGaps = [
   {
