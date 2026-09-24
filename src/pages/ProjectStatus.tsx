@@ -46,6 +46,25 @@ interface SourceWatchRun {
   newBaselines: Array<{ id: string; label: string; url: string }>;
 }
 
+interface SourceWatchState {
+  checkedAt?: string | null;
+  cadence?: string | null;
+  summary?: {
+    checked: number;
+    ok: number;
+    failed: number;
+    changed: number;
+    newBaselines: number;
+    reachabilityOnly?: number;
+  };
+  sources?: Array<{
+    id: string;
+    cadence: 'daily' | 'weekly' | 'monthly';
+    monitoringMode: 'content-hash' | 'reachability';
+    status: 'ok' | 'http-error' | 'unreachable' | 'not-checked';
+  }>;
+}
+
 interface PageAuditRow {
   path: string;
   label: string;
@@ -67,6 +86,7 @@ interface CommunityInput {
 
 export default function ProjectStatus() {
   const [sourceRuns, setSourceRuns] = useState<SourceWatchRun[]>([]);
+  const [sourceState, setSourceState] = useState<SourceWatchState>({});
   const [communityInput, setCommunityInput] = useState<CommunityInput[]>([]);
   const [sourceFeedFailed, setSourceFeedFailed] = useState(false);
   const [inputFeedFailed, setInputFeedFailed] = useState(false);
@@ -78,9 +98,15 @@ export default function ProjectStatus() {
   useEffect(() => {
     const load = async () => {
       try {
-        const response = await fetch('/source-watch-history.json', { cache: 'no-store' });
-        const data = await response.json();
-        if (response.ok && Array.isArray(data.runs)) setSourceRuns(data.runs);
+        const [historyResponse, stateResponse] = await Promise.all([
+          fetch('/source-watch-history.json', { cache: 'no-store' }),
+          fetch('/source-watch-state.json', { cache: 'no-store' }),
+        ]);
+        const history = await historyResponse.json();
+        const state = await stateResponse.json();
+        if (historyResponse.ok && Array.isArray(history.runs)) setSourceRuns(history.runs);
+        else setSourceFeedFailed(true);
+        if (stateResponse.ok && Array.isArray(state.sources)) setSourceState(state);
         else setSourceFeedFailed(true);
       } catch {
         setSourceFeedFailed(true);
@@ -458,39 +484,44 @@ export default function ProjectStatus() {
         <div className="mt-6 grid grid-cols-1 xl:grid-cols-3 gap-4">
           <div className="rounded-2xl border border-primary-100 bg-white p-6">
             <RefreshCw className="h-5 w-5 text-primary-700" />
-            <h3 className="mt-3 font-extrabold text-gray-950">Source-watch history</h3>
+            <h3 className="mt-3 font-extrabold text-gray-950">Source freshness automation</h3>
             {sourceFeedFailed ? (
               <p className="mt-2 text-sm text-gray-600">
                 The published source-watch history could not be read from this deployment.
               </p>
-            ) : latestSourceRun ? (
+            ) : (
               <>
                 <p className="mt-2 text-sm text-gray-600">
-                  Last published run:{' '}
-                  <strong>{new Date(latestSourceRun.checkedAt).toLocaleString('en-PH')}</strong>
+                  {sourceState.checkedAt
+                    ? <>Last automation run: <strong>{new Date(sourceState.checkedAt).toLocaleString('en-PH')}</strong> · {sourceState.cadence || 'all'}.</>
+                    : 'The cadence-aware monitor is configured; its first scheduled run has not yet published a state update.'}
                 </p>
-                <div className="mt-4 grid grid-cols-3 gap-2 text-center">
+                <div className="mt-4 grid grid-cols-2 gap-2 text-center">
                   <div className="rounded-xl bg-[#fffdf8] p-3">
-                    <div className="text-xl font-extrabold">{latestSourceRun.changed.length}</div>
-                    <div className="text-xs text-gray-500">changed</div>
+                    <div className="text-xl font-extrabold">{sourceState.sources?.length ?? '—'}</div>
+                    <div className="text-xs text-gray-500">configured</div>
                   </div>
                   <div className="rounded-xl bg-[#fffdf8] p-3">
-                    <div className="text-xl font-extrabold">{latestSourceRun.failed.length}</div>
-                    <div className="text-xs text-gray-500">failed</div>
+                    <div className="text-xl font-extrabold">
+                      {sourceState.sources?.filter(source => source.status === 'ok').length ?? '—'}
+                    </div>
+                    <div className="text-xs text-gray-500">last check OK</div>
                   </div>
                   <div className="rounded-xl bg-[#fffdf8] p-3">
-                    <div className="text-xl font-extrabold">{latestSourceRun.newBaselines.length}</div>
-                    <div className="text-xs text-gray-500">baselines</div>
+                    <div className="text-xl font-extrabold">{latestSourceRun?.changed.length ?? 0}</div>
+                    <div className="text-xs text-gray-500">review changes</div>
+                  </div>
+                  <div className="rounded-xl bg-[#fffdf8] p-3">
+                    <div className="text-xl font-extrabold">
+                      {sourceState.sources?.filter(source => source.status === 'http-error' || source.status === 'unreachable').length ?? 0}
+                    </div>
+                    <div className="text-xs text-gray-500">check failures</div>
                   </div>
                 </div>
               </>
-            ) : (
-              <p className="mt-2 text-sm text-gray-600">
-                No completed public source-watch run has been published yet.
-              </p>
             )}
             <Link to="/records" className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
-              Open source history
+              Open source freshness
             </Link>
           </div>
 
