@@ -104,6 +104,10 @@ for (const marker of [
   }
 }
 
+if (!generator.includes("...cityMonitorRecordIds.map(id => '/city-monitor/' + id)")) {
+  problems.push('Permanent City Monitor record routes are no longer included in the sitemap.');
+}
+
 if (!generator.includes("'public/city-monitor-source-state.json'")) {
   problems.push('Generated site files no longer publish City Monitor source health.');
 }
