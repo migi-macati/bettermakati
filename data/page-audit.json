@@ -322,15 +322,19 @@
       "related-context-links",
       "catalog-csv",
       "published-source-watch-index",
+      "cadence-aware-source-watch",
+      "published-current-source-state",
+      "monitoring-mode-labels",
+      "per-record-freshness",
       "source-watch-history",
       "coverage-matrix",
       "known-gaps"
     ],
     "gaps": [
       "The catalog normalizes source URLs already used across BetterMakati; it is not yet an exhaustive inventory of every Makati public document published by every office.",
-      "The Makati resolutions and ordinances archive is indexed as a collection, but individual measures are not yet normalized into a complete measure-by-measure records database.",
-      "Barangay budgets, procurement, ordinances, resolutions and project records remain uneven across the 23 barangays.",
-      "Older election and historical coverage sometimes relies on academic, institutional or archival-secondary sources where a stable official digital record is not available; these are explicitly labeled rather than presented as official records."
+      "A successful reachability check establishes that a dynamic portal responded; it does not prove that the portal's substantive content is unchanged.",
+      "Stable-document hash changes and failed checks are review signals. BetterMakati does not automatically rewrite site claims from a machine-detected change.",
+      "Barangay budgets, procurement, ordinances, resolutions and project records remain uneven across the 23 barangays."
     ]
   },
   {
@@ -382,6 +386,25 @@
     "gaps": [
       "Pilot asset coverage is intentionally small; verified public-transport route/stop objects still need expansion.",
       "Referral lifecycle events can now be recorded, but delivery to government remains intentionally human-reviewed rather than automatic."
+    ]
+  },
+  {
+    "path": "/status",
+    "label": "BetterMakati Status",
+    "status": "partial",
+    "reviewedAt": "2026-09-24",
+    "checks": [
+      "service-coverage",
+      "barangay-gaps",
+      "open-government-audit",
+      "source-freshness-state",
+      "city-monitor-freshness",
+      "page-audit",
+      "community-input"
+    ],
+    "gaps": [
+      "Live status cards depend on published machine-readable feeds and display an unavailable state when an upstream feed cannot be read.",
+      "Source freshness reports monitoring health and review signals; it does not imply that every public record used by BetterMakati is in the automated watchlist."
     ]
   }
 ]

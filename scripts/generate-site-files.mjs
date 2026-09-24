@@ -267,6 +267,33 @@ try {
 }
 
 try {
+  const sourceState = await readFile('data/source-watch-state.json', 'utf8');
+  await writeFile('public/source-watch-state.json', sourceState);
+} catch {
+  await writeFile(
+    'public/source-watch-state.json',
+    JSON.stringify(
+      {
+        version: 2,
+        checkedAt: null,
+        cadence: null,
+        summary: {
+          checked: 0,
+          ok: 0,
+          failed: 0,
+          changed: 0,
+          newBaselines: 0,
+          reachabilityOnly: 0,
+        },
+        sources: [],
+      },
+      null,
+      2
+    ) + '\n'
+  );
+}
+
+try {
   const sourceHistory = await readFile('data/source-watch-history.json', 'utf8');
   await writeFile('public/source-watch-history.json', sourceHistory);
 } catch {
