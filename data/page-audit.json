@@ -235,15 +235,28 @@
   {
     "path": "/records",
     "label": "Public Records",
-    "status": "reviewed",
-    "reviewedAt": "2026-09-20",
+    "status": "partial",
+    "reviewedAt": "2026-09-24",
     "checks": [
-      "source-index",
-      "structured-data",
-      "original-record-links",
-      "download-paths"
+      "normalized-source-catalog",
+      "search",
+      "category-filter",
+      "source-class-filter",
+      "official-vs-contextual-label",
+      "original-source-links",
+      "related-context-links",
+      "catalog-csv",
+      "published-source-watch-index",
+      "source-watch-history",
+      "coverage-matrix",
+      "known-gaps"
     ],
-    "gaps": []
+    "gaps": [
+      "The catalog normalizes source URLs already used across BetterMakati; it is not yet an exhaustive inventory of every Makati public document published by every office.",
+      "The Makati resolutions and ordinances archive is indexed as a collection, but individual measures are not yet normalized into a complete measure-by-measure records database.",
+      "Barangay budgets, procurement, ordinances, resolutions and project records remain uneven across the 23 barangays.",
+      "Older election and historical coverage sometimes relies on academic, institutional or archival-secondary sources where a stable official digital record is not available; these are explicitly labeled rather than presented as official records."
+    ]
   },
   {
     "path": "/participate",
