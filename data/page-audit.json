@@ -212,16 +212,24 @@
     "path": "/accountability",
     "label": "Accountability Ledger",
     "status": "partial",
-    "reviewedAt": "2026-09-20",
+    "reviewedAt": "2026-09-24",
     "checks": [
-      "commitments",
-      "responsibility",
-      "resources",
-      "evidence",
+      "coverage-matrix",
+      "fiscal-follow-through",
+      "procurement-evidence-chain",
+      "audit-follow-through",
+      "service-standards",
+      "public-commitments",
+      "explicit-barangay-scope",
+      "source-provenance",
+      "downloadable-ledger",
       "known-gaps"
     ],
     "gaps": [
-      "No definitive citywide inventory exists yet against which ledger completeness can be measured."
+      "Procurement coverage is structured for the bid-result records already ingested, but many awards still lack a separately linked contract, notice to proceed, implementation or completion record.",
+      "Finding-level COA records are structured selectively; a definitive current inventory of resolved and unresolved Makati audit recommendations is not yet normalized.",
+      "Public commitments are source-backed but still selective rather than a comprehensive inventory of promises and measurable targets across speeches, plans, ordinances and announcements.",
+      "Barangay accountability now uses only explicit local tags and never falls back to citywide records, but fiscal, procurement and project evidence remains sparse for many of the 23 barangays."
     ]
   },
   {

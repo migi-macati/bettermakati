@@ -23,9 +23,11 @@ import { Heading } from '../components/ui/Heading';
 import LastReviewed from '../components/ui/LastReviewed';
 import SharePage from '../components/ui/SharePage';
 import {
+  accountabilityCoverageAreas,
   accountabilityCoverageGaps,
   accountabilityEntries,
   accountabilityReviewed,
+  accountabilitySourceCount,
   accountabilityStatusLabel,
 } from '../data/accountability';
 import type { AccountabilityEntry } from '../data/civicTypes';
@@ -97,6 +99,27 @@ const firstMissingEvidence = (entry: AccountabilityEntry) => {
   return undefined;
 };
 
+const amountShownLabel = (entry: AccountabilityEntry) => {
+  if (entry.procurement?.awardedAmountM !== undefined) return 'Winning bid';
+  if (entry.type === 'fiscal' && entry.reportedAmountM !== undefined)
+    return 'Reported receipts';
+  if (entry.plannedAmountM !== undefined) return 'Budget / plan';
+  if (entry.actualAmountM !== undefined) return 'Reported expenditures';
+  if (entry.reportedAmountM !== undefined) return 'Reported amount';
+  return 'Amount';
+};
+
+const amountShownValue = (entry: AccountabilityEntry) => {
+  if (entry.procurement?.awardedAmountM !== undefined)
+    return money(entry.procurement.awardedAmountM);
+  if (entry.type === 'fiscal' && entry.reportedAmountM !== undefined)
+    return money(entry.reportedAmountM);
+  if (entry.plannedAmountM !== undefined) return money(entry.plannedAmountM);
+  if (entry.actualAmountM !== undefined) return money(entry.actualAmountM);
+  if (entry.reportedAmountM !== undefined) return money(entry.reportedAmountM);
+  return 'Not stated';
+};
+
 const commitmentOutcomeLabel = (entry: AccountabilityEntry) => {
   switch (entry.commitment?.outcomeStatus) {
     case 'delivered-late':
@@ -161,7 +184,7 @@ const publicRecordSummary = (entry: AccountabilityEntry) => {
 };
 
 const ledgerCsv = [
-  'id,type,status,title,period,responsible_bodies,target_date,location,planned_amount_m,reported_amount_m,actual_amount_m,completion_pct,procurement_reference,supplier,bid_date,next_missing_evidence,commitment_outcome,audit_follow_up,last_verified',
+  'id,type,status,title,period,responsible_bodies,target_date,location,barangay_slug,planned_amount_m,reported_amount_m,actual_amount_m,completion_pct,procurement_reference,supplier,bid_date,documented_procurement_stages,total_procurement_stages,next_missing_evidence,commitment_outcome,audit_follow_up,source_count,source_urls,last_verified',
   ...accountabilityEntries.map(entry =>
     [
       entry.id,
@@ -172,6 +195,7 @@ const ledgerCsv = [
       entry.responsibleBodies.join(' / '),
       entry.targetDate || '',
       entry.location || '',
+      entry.barangaySlug || '',
       entry.plannedAmountM ?? '',
       entry.reportedAmountM ?? '',
       entry.actualAmountM ?? '',
@@ -179,9 +203,13 @@ const ledgerCsv = [
       entry.procurement?.referenceNo ?? '',
       entry.procurement?.supplier ?? '',
       entry.procurement?.bidDate ?? '',
+      entry.procurement?.stages.filter(stage => stage.status === 'documented').length ?? '',
+      entry.procurement?.stages.length ?? '',
       firstMissingEvidence(entry) ?? '',
       commitmentOutcomeLabel(entry) ?? '',
       entry.audit?.followUpStatus ?? '',
+      entry.sources.length,
+      entry.sources.map(source => source.url).join(' | '),
       entry.lastVerified,
     ]
       .map(value => '"' + String(value).replaceAll('"', '""') + '"')
@@ -210,26 +238,12 @@ export default function Accountability() {
 
   const locallyTaggedEntries = useMemo(() => {
     if (!barangay) return accountabilityEntries;
-    const needle = barangay.name.toLowerCase();
-    return accountabilityEntries.filter(entry =>
-      [
-        entry.title,
-        entry.summary,
-        entry.location,
-        ...entry.responsibleBodies,
-        ...entry.sources.map(source => source.label),
-      ]
-        .filter(Boolean)
-        .join(' ')
-        .toLowerCase()
-        .includes(needle)
+    return accountabilityEntries.filter(
+      entry => entry.barangaySlug === barangay.slug
     );
   }, [barangay]);
 
-  const scopedEntries =
-    barangay && locallyTaggedEntries.length > 0
-      ? locallyTaggedEntries
-      : accountabilityEntries;
+  const scopedEntries = barangay ? locallyTaggedEntries : accountabilityEntries;
 
   const years = useMemo(
     () =>
@@ -263,6 +277,18 @@ export default function Accountability() {
       laterEvidence: laterEvidence.length,
       completed: completed.length,
     };
+  }, [scopedEntries]);
+
+  const gapBreakdown = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const entry of scopedEntries) {
+      const missing = firstMissingEvidence(entry);
+      if (!missing) continue;
+      counts.set(missing, (counts.get(missing) || 0) + 1);
+    }
+    return [...counts.entries()]
+      .map(([label, count]) => ({ label, count }))
+      .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label));
   }, [scopedEntries]);
 
   const visible = useMemo(() => {
@@ -352,17 +378,36 @@ export default function Accountability() {
           note="A missing source means BetterMakati has not located public evidence for that step. It is not a finding of wrongdoing or non-performance."
         />
 
-        {barangay && locallyTaggedEntries.length === 0 && (
-          <div className="mt-3 text-sm text-gray-600">
-            <Link
-              to={`/get-involved?type=source&barangay=${encodeURIComponent(
-                barangay.slug
-              )}#submission`}
-              className="font-bold text-primary-700 underline underline-offset-2"
-            >
-              Share a local public record
-            </Link>
-            {' '}to improve barangay-level coverage.
+        {barangay && (
+          <div className="mt-4 rounded-xl border border-primary-100 bg-white p-4 text-sm leading-relaxed text-gray-700">
+            {locallyTaggedEntries.length > 0 ? (
+              <>
+                Showing <strong>{locallyTaggedEntries.length}</strong> record
+                {locallyTaggedEntries.length === 1 ? '' : 's'} explicitly tagged to{' '}
+                <strong>{barangay.name}</strong>. Citywide records are excluded from this barangay slice.
+              </>
+            ) : (
+              <>
+                No Accountability Ledger record is yet explicitly tagged to{' '}
+                <strong>{barangay.name}</strong>. BetterMakati does not substitute the citywide ledger when local evidence is missing.
+              </>
+            )}
+            <div className="mt-2 flex flex-wrap gap-3">
+              <Link
+                to="/accountability"
+                className="font-bold text-primary-700 underline underline-offset-2"
+              >
+                View citywide ledger
+              </Link>
+              <Link
+                to={`/get-involved?type=source&barangay=${encodeURIComponent(
+                  barangay.slug
+                )}#submission`}
+                className="font-bold text-primary-700 underline underline-offset-2"
+              >
+                Share a local public record
+              </Link>
+            </div>
           </div>
         )}
 
@@ -457,13 +502,64 @@ export default function Accountability() {
           </div>
         </div>
 
-        <div className="mt-7 grid grid-cols-2 lg:grid-cols-4 gap-3">
+        {!barangay && (
+          <div className="mt-7 overflow-hidden rounded-2xl border border-gray-200 bg-white">
+            <div className="border-b border-gray-200 p-5 md:p-6">
+              <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+                Coverage at a glance
+              </div>
+              <h2 className="mt-1 text-xl font-extrabold text-gray-950">
+                What the ledger currently covers
+              </h2>
+              <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-600">
+                {accountabilityEntries.length} structured records currently point to{' '}
+                {accountabilitySourceCount} unique public source URLs. The ledger is selective by design: it connects records that can support follow-through rather than copying every document into one page.
+              </p>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full min-w-[980px] text-left">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-5 py-3 font-bold">Area</th>
+                    <th className="px-5 py-3 font-bold text-right">Records</th>
+                    <th className="px-5 py-3 font-bold">Current period / source scope</th>
+                    <th className="px-5 py-3 font-bold">What is included</th>
+                    <th className="px-5 py-3 font-bold">Known limit</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {accountabilityCoverageAreas.map(area => (
+                    <tr key={area.id} className="border-t align-top">
+                      <td className="px-5 py-4 font-extrabold text-gray-950">
+                        {area.label}
+                      </td>
+                      <td className="px-5 py-4 text-right font-extrabold text-primary-800">
+                        {area.recordCount}
+                      </td>
+                      <td className="px-5 py-4 text-sm leading-relaxed text-gray-700">
+                        {area.period}
+                      </td>
+                      <td className="px-5 py-4 text-sm leading-relaxed text-gray-700">
+                        {area.included}
+                      </td>
+                      <td className="px-5 py-4 text-sm leading-relaxed text-gray-600">
+                        {area.limit}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+
+        <div className="mt-7 grid grid-cols-2 lg:grid-cols-3 gap-3">
           <div className="rounded-2xl border border-primary-100 bg-white p-5">
             <div className="text-3xl font-extrabold text-gray-950">
-              {stats.projects}
+              {scopedEntries.length}
             </div>
             <div className="mt-1 text-sm text-gray-600">
-              projects / procurements tracked
+              structured records in this view
             </div>
           </div>
           <button
@@ -486,6 +582,14 @@ export default function Accountability() {
           </button>
           <div className="rounded-2xl border border-primary-100 bg-white p-5">
             <div className="text-3xl font-extrabold text-gray-950">
+              {stats.projects}
+            </div>
+            <div className="mt-1 text-sm text-gray-600">
+              projects / procurements tracked
+            </div>
+          </div>
+          <div className="rounded-2xl border border-primary-100 bg-white p-5">
+            <div className="text-3xl font-extrabold text-gray-950">
               {stats.audits}
             </div>
             <div className="mt-1 text-sm text-gray-600">
@@ -494,17 +598,37 @@ export default function Accountability() {
           </div>
           <div className="rounded-2xl border border-primary-100 bg-white p-5">
             <div className="text-3xl font-extrabold text-gray-950">
+              {stats.services}
+            </div>
+            <div className="mt-1 text-sm text-gray-600">
+              published service standards
+            </div>
+          </div>
+          <div className="rounded-2xl border border-primary-100 bg-white p-5">
+            <div className="text-3xl font-extrabold text-gray-950">
               {stats.commitments}
             </div>
             <div className="mt-1 text-sm text-gray-600">
-              public commitments currently indexed
+              public commitments indexed
             </div>
           </div>
         </div>
 
-        {stats.commitments === 0 && (
-          <div className="mt-4 rounded-xl border border-secondary-200 bg-secondary-50 p-4 text-sm leading-relaxed text-gray-700">
-            <strong>Known coverage gap:</strong> public promises and measurable targets are not yet systematically indexed. BetterMakati will only add a commitment when an official source clearly states who committed to what and, where available, by when.
+        {gapBreakdown.length > 0 && (
+          <div className="mt-4 rounded-2xl border border-secondary-200 bg-secondary-50 p-5">
+            <div className="text-xs font-bold uppercase tracking-[0.08em] text-secondary-900">
+              What evidence is missing next
+            </div>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {gapBreakdown.map(item => (
+                <span
+                  key={item.label}
+                  className="rounded-full border border-secondary-200 bg-white px-3 py-1.5 text-sm text-gray-700"
+                >
+                  <strong className="text-gray-950">{item.count}</strong> {item.label}
+                </span>
+              ))}
+            </div>
           </div>
         )}
 
@@ -664,6 +788,13 @@ export default function Accountability() {
                   <p className="mt-1 text-sm leading-relaxed text-gray-700">
                     {publicRecordSummary(entry)}
                   </p>
+                  <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs text-gray-500">
+                    <span>
+                      {entry.sources.length} source{entry.sources.length === 1 ? '' : 's'} linked
+                    </span>
+                    <span>Last verified: {entry.lastVerified}</span>
+                    {entry.barangaySlug && <span>Local tag: {entry.barangaySlug}</span>}
+                  </div>
                 </div>
 
                 <div className="mt-4 grid grid-cols-2 gap-3 lg:grid-cols-4">
@@ -680,15 +811,9 @@ export default function Accountability() {
                     </div>
                   </div>
                   <div className="rounded-xl border border-gray-200 bg-white p-4">
-                    <div className="text-xs text-gray-500">Amount shown</div>
+                    <div className="text-xs text-gray-500">{amountShownLabel(entry)}</div>
                     <div className="mt-1 text-sm font-extrabold text-gray-950">
-                      {entry.reportedAmountM !== undefined
-                        ? money(entry.reportedAmountM)
-                        : entry.plannedAmountM !== undefined
-                          ? money(entry.plannedAmountM)
-                          : entry.actualAmountM !== undefined
-                            ? money(entry.actualAmountM)
-                            : 'Not stated'}
+                      {amountShownValue(entry)}
                     </div>
                   </div>
                   <div className="rounded-xl border border-gray-200 bg-white p-4">
@@ -1017,6 +1142,26 @@ export default function Accountability() {
               <div className="mt-3 text-xs text-gray-500">
                 Last checked: {gap.lastChecked}
               </div>
+              {gap.checkedSources?.length ? (
+                <div className="mt-3">
+                  <div className="text-xs font-bold uppercase tracking-[0.06em] text-gray-500">
+                    Checked against
+                  </div>
+                  <div className="mt-1 flex flex-wrap gap-x-3 gap-y-1 text-xs">
+                    {gap.checkedSources.map(source => (
+                      <a
+                        key={source.url}
+                        href={source.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="font-bold text-primary-700 underline underline-offset-2"
+                      >
+                        {source.label} <ExternalLink className="inline h-3 w-3" />
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              ) : null}
               <Link
                 to={`/get-involved?type=source&gap=${encodeURIComponent(
                   gap.id

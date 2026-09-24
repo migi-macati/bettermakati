@@ -176,7 +176,7 @@ test('Saan Ako Lalapit common need reaches the structured PWD guide', async ({ p
 
 test('mobile homepage and services have no material horizontal overflow', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  for (const route of ['/', '/services', '/community-tools/saan-ako-lalapit', '/projects-budget', '/barangays', '/barangays/poblacion', '/reports', '/reports/2026-budget-operating-expenses', '/reports/2025-local-revenue', '/civic-map', '/civic-map/poblacion-park', '/civic-map/reports']) {
+  for (const route of ['/', '/services', '/community-tools/saan-ako-lalapit', '/projects-budget', '/accountability', '/accountability?barangay=bel-air', '/barangays', '/barangays/poblacion', '/reports', '/reports/2026-budget-operating-expenses', '/reports/2025-local-revenue', '/civic-map', '/civic-map/poblacion-park', '/civic-map/reports']) {
     await page.goto(baseURL + route);
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     expect(overflow, `Horizontal overflow on ${route}`).toBeLessThanOrEqual(2);
@@ -238,6 +238,57 @@ test('Projects & Budget displays structured audit follow-through', async ({ page
   await expect(page.getByText('Recommendation', { exact: true }).first()).toBeVisible();
   await expect(page.getByText('Follow-up', { exact: true }).first()).toBeVisible();
   await expect(page.getByRole('heading', { name: /development-fund use for loan and interest payments/i })).toBeVisible();
+});
+
+test('Accountability Ledger publishes its actual coverage and known limits', async ({ page }) => {
+  await page.goto(baseURL + '/accountability');
+  await expect(page.getByRole('heading', { name: 'What the ledger currently covers' })).toBeVisible();
+  await expect(page.getByText(/unique public source URLs/i)).toBeVisible();
+  for (const area of [
+    'Budget & spending',
+    'Projects & procurement',
+    'Audit',
+    'Service standards',
+    'Public commitments',
+  ]) {
+    await expect(page.getByRole('cell', { name: area, exact: true })).toBeVisible();
+  }
+  await expect(page.getByText('What evidence is missing next', { exact: true })).toBeVisible();
+});
+
+test('Accountability record cards expose provenance and the next evidence gap', async ({ page }) => {
+  await page.goto(baseURL + '/accountability?type=project');
+  const search = page.getByPlaceholder(/Search project, supplier, office, reference number/i);
+  await search.fill('BS25-04-0419');
+  const card = page.locator('article').filter({
+    has: page.getByText('Instructional materials for Makati public elementary and secondary schools', { exact: true }),
+  });
+  await expect(card).toBeVisible();
+  await expect(card.getByText(/source linked|sources linked/i)).toBeVisible();
+  await expect(card.getByText(/Last verified:/i)).toBeVisible();
+  await expect(card.getByText('Next evidence missing', { exact: true })).toBeVisible();
+});
+
+test('Accountability barangay slice uses only explicit local tags', async ({ page }) => {
+  await page.goto(baseURL + '/accountability?barangay=poblacion');
+  await expect(page.getByText(/explicitly tagged to Poblacion/i)).toBeVisible();
+  await expect(page.getByText('Events management services for Pride March 2024', { exact: true })).toBeVisible();
+  await expect(page.getByText('2026 city fiscal record', { exact: true })).toHaveCount(0);
+});
+
+test('Accountability Bel-Air slice keeps local Makati Life commitments together', async ({ page }) => {
+  await page.goto(baseURL + '/accountability?barangay=bel-air');
+  await expect(page.getByText(/explicitly tagged to Bel-Air/i)).toBeVisible();
+  await expect(page.getByText('Bring Makati Life Medical Center into full operation', { exact: true })).toBeVisible();
+  await expect(page.getByText('Provide free digital PET/CT scans to Yellow Card holders', { exact: true })).toBeVisible();
+  await expect(page.getByText('2026 city fiscal record', { exact: true })).toHaveCount(0);
+});
+
+test('Accountability never falls back to citywide records for an empty barangay slice', async ({ page }) => {
+  await page.goto(baseURL + '/accountability?barangay=bangkal');
+  await expect(page.getByText(/No Accountability Ledger record is yet explicitly tagged to Bangkal/i)).toBeVisible();
+  await expect(page.getByText('No matching record yet', { exact: true })).toBeVisible();
+  await expect(page.getByText('2026 city fiscal record', { exact: true })).toHaveCount(0);
 });
 
 test('owner task: project spending is reachable from homepage capability examples', async ({ page }) => {

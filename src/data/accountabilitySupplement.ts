@@ -5,7 +5,7 @@ export const procurementQ22025Source =
 export const procurementQ32024Source =
   'https://www.makati.gov.ph/assets/uploads/staticmenu/docs/online_forms/pdf/Q3%20Bid%20Results%20FDP.pdf';
 
-const reviewed = '23 September 2026';
+const reviewed = '24 September 2026';
 
 interface ProcurementSeed {
   id: string;
@@ -19,6 +19,7 @@ interface ProcurementSeed {
   sourceUrl: string;
   sourceLabel: string;
   location?: string;
+  barangaySlug?: string;
   publicEvidence?: {
     label: string;
     url: string;
@@ -258,6 +259,7 @@ const procurementSeeds: ProcurementSeed[] = [
     bidDate: '2024-07-08',
     sourceUrl: procurementQ32024Source,
     sourceLabel: '2024 Q3 Bid Results',
+    barangaySlug: 'poblacion',
     publicEvidence: {
       label: 'Makati first Pride event documented',
       url: 'https://tribune.net.ph/2025/02/23/a-year-of-philippine-lgbtiq-milestones',
@@ -317,6 +319,7 @@ export const procurementProjectEntries: AccountabilityEntry[] =
     responsibleBodies: ['City Government of Makati'],
     period: seed.period,
     location: seed.location,
+    barangaySlug: seed.barangaySlug,
     plannedAmountM: seed.approvedBudgetM,
     reportedAmountM: seed.awardedAmountM,
     relatedHref: '/projects-budget#procurement',
@@ -398,6 +401,7 @@ export const publicCommitmentEntries: AccountabilityEntry[] = [
     period: '2022–2025',
     targetDate: 'Q1 2024',
     location: 'Barangay Bel-Air, Makati City',
+    barangaySlug: 'bel-air',
     relatedHref: '/accountability?type=commitment',
     lastVerified: reviewed,
     sources: [
@@ -436,6 +440,7 @@ export const publicCommitmentEntries: AccountabilityEntry[] = [
     period: '2024–2025',
     targetDate: 'Q3 2024',
     location: 'Makati Life Medical Center',
+    barangaySlug: 'bel-air',
     relatedHref: '/accountability?type=commitment',
     lastVerified: reviewed,
     sources: [
