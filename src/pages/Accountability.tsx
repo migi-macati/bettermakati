@@ -279,6 +279,18 @@ export default function Accountability() {
     };
   }, [scopedEntries]);
 
+  const gapBreakdown = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const entry of scopedEntries) {
+      const missing = firstMissingEvidence(entry);
+      if (!missing) continue;
+      counts.set(missing, (counts.get(missing) || 0) + 1);
+    }
+    return [...counts.entries()]
+      .map(([label, count]) => ({ label, count }))
+      .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label));
+  }, [scopedEntries]);
+
   const visible = useMemo(() => {
     const needle = query.trim().toLowerCase();
 
@@ -601,6 +613,24 @@ export default function Accountability() {
             </div>
           </div>
         </div>
+
+        {gapBreakdown.length > 0 && (
+          <div className="mt-4 rounded-2xl border border-secondary-200 bg-secondary-50 p-5">
+            <div className="text-xs font-bold uppercase tracking-[0.08em] text-secondary-900">
+              What evidence is missing next
+            </div>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {gapBreakdown.map(item => (
+                <span
+                  key={item.label}
+                  className="rounded-full border border-secondary-200 bg-white px-3 py-1.5 text-sm text-gray-700"
+                >
+                  <strong className="text-gray-950">{item.count}</strong> {item.label}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
 
         <div className="mt-5 flex flex-wrap gap-3">
           <a
@@ -1112,6 +1142,26 @@ export default function Accountability() {
               <div className="mt-3 text-xs text-gray-500">
                 Last checked: {gap.lastChecked}
               </div>
+              {gap.checkedSources?.length ? (
+                <div className="mt-3">
+                  <div className="text-xs font-bold uppercase tracking-[0.06em] text-gray-500">
+                    Checked against
+                  </div>
+                  <div className="mt-1 flex flex-wrap gap-x-3 gap-y-1 text-xs">
+                    {gap.checkedSources.map(source => (
+                      <a
+                        key={source.url}
+                        href={source.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="font-bold text-primary-700 underline underline-offset-2"
+                      >
+                        {source.label} <ExternalLink className="inline h-3 w-3" />
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              ) : null}
               <Link
                 to={`/get-involved?type=source&gap=${encodeURIComponent(
                   gap.id
