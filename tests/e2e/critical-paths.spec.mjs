@@ -176,7 +176,7 @@ test('Saan Ako Lalapit common need reaches the structured PWD guide', async ({ p
 
 test('mobile homepage and services have no material horizontal overflow', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  for (const route of ['/', '/services', '/community-tools/saan-ako-lalapit', '/projects-budget', '/accountability', '/accountability?barangay=bel-air', '/records', '/barangays', '/barangays/poblacion', '/reports', '/reports/2026-budget-operating-expenses', '/reports/2025-local-revenue', '/civic-map', '/civic-map/poblacion-park', '/civic-map/reports']) {
+  for (const route of ['/', '/services', '/community-tools/saan-ako-lalapit', '/projects-budget', '/accountability', '/accountability?barangay=bel-air', '/records', '/elections', '/barangays', '/barangays/poblacion', '/reports', '/reports/2026-budget-operating-expenses', '/reports/2025-local-revenue', '/civic-map', '/civic-map/poblacion-park', '/civic-map/reports']) {
     await page.goto(baseURL + route);
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     expect(overflow, `Horizontal overflow on ${route}`).toBeLessThanOrEqual(2);
@@ -344,6 +344,50 @@ test('Public Records publishes machine-readable catalog and source-watch downloa
   const body = await response.json();
   expect(Array.isArray(body)).toBeTruthy();
   expect(body.length).toBeGreaterThanOrEqual(92);
+});
+
+test('Elections publishes a coverage matrix with complete and partial layers', async ({ page }) => {
+  await page.goto(baseURL + '/elections');
+  await expect(page.getByRole('heading', { name: 'What BetterMakati currently has' })).toBeVisible();
+  await expect(page.getByRole('cell', { name: '2025 city & district results', exact: true })).toBeVisible();
+  await expect(page.getByText('4 single-seat races · 35 council candidates', { exact: true })).toBeVisible();
+  await expect(page.getByRole('cell', { name: '2025 mayoral result by barangay', exact: true })).toBeVisible();
+  await expect(page.getByText('23 barangay winners · 2 exact vote pairs', { exact: true })).toBeVisible();
+});
+
+test('Elections exposes the full 2025 council candidate fields', async ({ page }) => {
+  await page.goto(baseURL + '/elections#council-results');
+  await expect(page.getByRole('heading', { name: 'Full 2025 council candidate results' })).toBeVisible();
+  await expect(page.getByText('Rene Andrei Saguisag', { exact: true })).toBeVisible();
+  await expect(page.getByText('Bodik Baniqued', { exact: true })).toBeVisible();
+  await expect(page.getByText('Herman Marco “Tito Kanin” Garcia', { exact: true })).toBeVisible();
+  await expect(page.getByText('Reynante Saludo', { exact: true })).toBeVisible();
+});
+
+test('Elections publishes 2026 BSKE legal framework and candidate-source guardrail', async ({ page }) => {
+  await page.goto(baseURL + '/elections#bske-2026');
+  await expect(page.getByRole('heading', { name: 'Calendar & legal framework' })).toBeVisible();
+  await expect(page.getByText('Four-year term', { exact: true })).toBeVisible();
+  await expect(page.getByText('Barangay term limit', { exact: true })).toBeVisible();
+  await expect(page.getByText('SK transition', { exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Candidate directory status' })).toBeVisible();
+  await expect(page.getByText(/social-media announcements and declarations of intent are not treated as a certified candidate list/i)).toBeVisible();
+});
+
+test('Elections provides downloadable local, barangay and historical datasets', async ({ page }) => {
+  await page.goto(baseURL + '/elections#election-data');
+  await expect(page.getByRole('link', { name: /2025 local results CSV/i })).toHaveAttribute(
+    'download',
+    'bettermakati-election-2025-local-results.csv'
+  );
+  await expect(page.getByRole('link', { name: /2025 barangay mayor CSV/i })).toHaveAttribute(
+    'download',
+    'bettermakati-election-2025-barangay-mayor.csv'
+  );
+  await expect(page.getByRole('link', { name: /Mayoral history CSV/i })).toHaveAttribute(
+    'download',
+    'bettermakati-mayoral-history-1998-2025.csv'
+  );
 });
 
 test('owner task: project spending is reachable from homepage capability examples', async ({ page }) => {
