@@ -223,6 +223,17 @@ test('Budget Explorer exposes the complete reconciled 2026 citywide summary', as
   await expect(page.getByRole('cell', { name: '₱55,265,000', exact: true })).toBeVisible();
 });
 
+test('Budget Explorer exposes reconciled 2026 office appropriations', async ({ page }) => {
+  await page.goto(baseURL + '/projects-budget');
+  await expect(page.getByText('36 office totals indexed', { exact: true })).toBeVisible();
+  await expect(page.getByText('Office totals reconcile to ₱21.0B', { exact: true })).toBeVisible();
+  const search = page.getByPlaceholder('Search office or department');
+  await search.fill('Ospital ng Makati');
+  await expect(page.getByRole('cell', { name: 'Ospital ng Makati', exact: true })).toBeVisible();
+  await expect(page.getByRole('cell', { name: '₱3,530,707,000', exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: /pp\. 65–66/i })).toBeVisible();
+});
+
 test('Projects & Budget displays procurement evidence instead of only linking out', async ({ page }) => {
   await page.goto(baseURL + '/projects-budget');
   await expect(page.getByRole('heading', { name: 'Bid results and award records' })).toBeVisible();
@@ -293,8 +304,8 @@ test('Public Records exposes a normalized searchable source catalog', async ({ p
   await page.goto(baseURL + '/records');
   await expect(page.getByRole('heading', { name: 'Public Records' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Search the public record catalog' })).toBeVisible();
-  await expect(page.getByText('Budget & fiscal', { exact: true }).first()).toBeVisible();
-  await expect(page.getByText('Services & directories', { exact: true }).first()).toBeVisible();
+  await expect(page.getByRole('option', { name: 'Budget & fiscal', exact: true })).toHaveCount(1);
+  await expect(page.getByRole('option', { name: 'Services & directories', exact: true })).toHaveCount(1);
   await expect(page.getByText('unique source URLs indexed', { exact: true })).toBeVisible();
 });
 

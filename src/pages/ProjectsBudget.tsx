@@ -40,6 +40,7 @@ import {
   dedicatedFunds2026,
   developmentFundProject,
   localRevenueBreakdown,
+  officeBudgetTotals2026,
   revenueSources,
   selectedBudgetLines2026,
 } from '../data/budget2025';
@@ -135,6 +136,7 @@ function Metric({
 
 export default function ProjectsBudget() {
   const { barangay } = useBarangayScope();
+  const [officeQuery, setOfficeQuery] = useState('');
   const [lineFilter, setLineFilter] = useState('All');
   const [lineQuery, setLineQuery] = useState('');
   const [procurementQuery, setProcurementQuery] = useState('');
@@ -151,6 +153,13 @@ export default function ProjectsBudget() {
       return groupMatch && queryMatch;
     });
   }, [lineFilter, lineQuery]);
+
+  const visibleOffices = useMemo(() => {
+    const q = officeQuery.trim().toLowerCase();
+    return officeBudgetTotals2026
+      .filter(item => !q || item.office.toLowerCase().includes(q))
+      .sort((a, b) => b.amountM - a.amountM || a.office.localeCompare(b.office));
+  }, [officeQuery]);
 
   const visibleProcurement = useMemo(() => {
     const q = procurementQuery.trim().toLowerCase();
@@ -187,6 +196,12 @@ export default function ProjectsBudget() {
   );
   const budgetLineReconciles =
     Math.abs(budgetLineTotalM - budgetSummary2026.totalBudgetM) < 0.001;
+  const officeBudgetTotalM = officeBudgetTotals2026.reduce(
+    (sum, item) => sum + item.amountM,
+    0
+  );
+  const officeTotalsReconcile =
+    Math.abs(officeBudgetTotalM - budgetSummary2026.totalBudgetM) < 0.001;
   const sefRecord = specialEducationFundEntries[0];
 
   const perResident = Math.round(
@@ -907,85 +922,176 @@ export default function ProjectsBudget() {
         <div className="section-eyebrow">Budget Explorer</div>
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <Heading level={2}>All citywide summary budget lines</Heading>
+            <Heading level={2}>2026 appropriations by office</Heading>
             <p className="mt-1 max-w-3xl text-gray-600">
-              {selectedBudgetLines2026.length} object-of-expenditure lines from the five-page citywide summary of the 2026 Annual Budget Report. Department-level sheets remain in the original 82-page report.
+              Proposed appropriations from all {officeBudgetTotals2026.length} office and department forms in the 2026 Annual Budget Report.
             </p>
             <div className="mt-3 flex flex-wrap gap-2 text-xs font-bold">
               <span className="rounded-full bg-primary-50 px-3 py-1.5 text-primary-800">
-                {selectedBudgetLines2026.length} lines indexed
+                {officeBudgetTotals2026.length} office totals indexed
               </span>
-              <span className={budgetLineReconciles
+              <span className={officeTotalsReconcile
                 ? 'rounded-full bg-success-50 px-3 py-1.5 text-success-800'
                 : 'rounded-full bg-warning-50 px-3 py-1.5 text-warning-800'
               }>
-                {budgetLineReconciles
-                  ? 'Line items reconcile to ₱21.0B'
-                  : 'Line-item total needs reconciliation'}
+                {officeTotalsReconcile
+                  ? 'Office totals reconcile to ₱21.0B'
+                  : 'Office totals need reconciliation'}
               </span>
             </div>
           </div>
 
-          <div className="flex flex-col gap-2 sm:flex-row">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
-              <input
-                value={lineQuery}
-                onChange={event => setLineQuery(event.target.value)}
-                placeholder="Search line or account code"
-                className="rounded-xl border border-gray-300 py-2.5 pl-9 pr-3 text-sm outline-none focus:border-primary-500"
-              />
-            </div>
-            <select
-              value={lineFilter}
-              onChange={event => setLineFilter(event.target.value)}
-              className="rounded-xl border border-gray-300 bg-white px-3 py-2.5 text-sm"
-              aria-label="Filter budget line category"
-            >
-              <option>All</option>
-              <option>Personal Services</option>
-              <option>Operating</option>
-              <option>Capital</option>
-              <option>Financial Expenses</option>
-              <option>Special Purpose</option>
-            </select>
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+            <input
+              value={officeQuery}
+              onChange={event => setOfficeQuery(event.target.value)}
+              placeholder="Search office or department"
+              className="w-full rounded-xl border border-gray-300 py-2.5 pl-9 pr-3 text-sm outline-none focus:border-primary-500 lg:w-72"
+            />
           </div>
         </div>
 
         <div className="mt-4 text-sm text-gray-500">
-          Showing {visibleLines.length} of {selectedBudgetLines2026.length} lines
+          Showing {visibleOffices.length} of {officeBudgetTotals2026.length} offices
         </div>
 
         <div className="mt-3 overflow-x-auto rounded-2xl border border-gray-200">
-          <table className="w-full min-w-[820px] text-left">
+          <table className="w-full min-w-[760px] text-left">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-4 py-3 font-bold">Category</th>
-                <th className="px-4 py-3 font-bold">Account code</th>
-                <th className="px-4 py-3 font-bold">Budget line</th>
+                <th className="px-4 py-3 font-bold">Office / department</th>
                 <th className="px-4 py-3 font-bold text-right">2026 proposed</th>
+                <th className="px-4 py-3 font-bold text-right">Share of ₱21.0B</th>
+                <th className="px-4 py-3 font-bold">Source pages</th>
               </tr>
             </thead>
             <tbody>
-              {visibleLines.map(item => (
-                <tr key={item.group + item.label} className="border-t">
-                  <td className="px-4 py-3 text-sm text-gray-500">{item.group}</td>
-                  <td className="px-4 py-3 font-mono text-xs text-gray-500">{item.accountCode || '—'}</td>
-                  <td className="px-4 py-3 font-medium text-gray-900">{item.label}</td>
+              {visibleOffices.map(item => (
+                <tr key={item.office} className="border-t align-top">
+                  <td className="px-4 py-3">
+                    <div className="font-semibold text-gray-900">{item.office}</div>
+                    {'note' in item && item.note && (
+                      <div className="mt-1 text-xs text-gray-500">{item.note}</div>
+                    )}
+                  </td>
                   <td className="px-4 py-3 text-right font-bold text-gray-950">
                     {item.amountM === 0 ? '—' : pesoExact(item.amountM)}
                   </td>
+                  <td className="px-4 py-3 text-right text-sm text-gray-700">
+                    {item.amountM === 0
+                      ? '—'
+                      : ((item.amountM / budgetSummary2026.totalBudgetM) * 100).toFixed(1) + '%'}
+                  </td>
+                  <td className="px-4 py-3 text-sm">
+                    <a
+                      href={budgetSources.annualBudget2026 + '#page=' + item.pageStart}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="font-bold text-primary-700 underline underline-offset-2"
+                    >
+                      pp. {item.pages} <ArrowUpRight className="inline h-3.5 w-3.5" />
+                    </a>
+                  </td>
                 </tr>
               ))}
-              {visibleLines.length === 0 && (
+              {visibleOffices.length === 0 && (
                 <tr>
                   <td colSpan={4} className="px-4 py-8 text-center text-sm text-gray-600">
-                    No budget line matches this search.
+                    No office matches this search.
                   </td>
                 </tr>
               )}
             </tbody>
           </table>
+        </div>
+
+        <div className="mt-10 border-t border-gray-200 pt-10">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+              <h3 className="text-xl font-extrabold text-gray-950">
+                Citywide object-of-expenditure lines
+              </h3>
+              <p className="mt-1 max-w-3xl text-gray-600">
+                {selectedBudgetLines2026.length} citywide summary lines from the 2026 Annual Budget Report.
+                The office table above publishes each office total; office-level object lines remain in the original report.
+              </p>
+              <div className="mt-3 flex flex-wrap gap-2 text-xs font-bold">
+                <span className="rounded-full bg-primary-50 px-3 py-1.5 text-primary-800">
+                  {selectedBudgetLines2026.length} lines indexed
+                </span>
+                <span className={budgetLineReconciles
+                  ? 'rounded-full bg-success-50 px-3 py-1.5 text-success-800'
+                  : 'rounded-full bg-warning-50 px-3 py-1.5 text-warning-800'
+                }>
+                  {budgetLineReconciles
+                    ? 'Line items reconcile to ₱21.0B'
+                    : 'Line-item total needs reconciliation'}
+                </span>
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-2 sm:flex-row">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+                <input
+                  value={lineQuery}
+                  onChange={event => setLineQuery(event.target.value)}
+                  placeholder="Search line or account code"
+                  className="rounded-xl border border-gray-300 py-2.5 pl-9 pr-3 text-sm outline-none focus:border-primary-500"
+                />
+              </div>
+              <select
+                value={lineFilter}
+                onChange={event => setLineFilter(event.target.value)}
+                className="rounded-xl border border-gray-300 bg-white px-3 py-2.5 text-sm"
+                aria-label="Filter budget line category"
+              >
+                <option>All</option>
+                <option>Personal Services</option>
+                <option>Operating</option>
+                <option>Capital</option>
+                <option>Financial Expenses</option>
+                <option>Special Purpose</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="mt-4 text-sm text-gray-500">
+            Showing {visibleLines.length} of {selectedBudgetLines2026.length} lines
+          </div>
+
+          <div className="mt-3 overflow-x-auto rounded-2xl border border-gray-200">
+            <table className="w-full min-w-[820px] text-left">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-4 py-3 font-bold">Category</th>
+                  <th className="px-4 py-3 font-bold">Account code</th>
+                  <th className="px-4 py-3 font-bold">Budget line</th>
+                  <th className="px-4 py-3 font-bold text-right">2026 proposed</th>
+                </tr>
+              </thead>
+              <tbody>
+                {visibleLines.map(item => (
+                  <tr key={item.group + item.label} className="border-t">
+                    <td className="px-4 py-3 text-sm text-gray-500">{item.group}</td>
+                    <td className="px-4 py-3 font-mono text-xs text-gray-500">{item.accountCode || '—'}</td>
+                    <td className="px-4 py-3 font-medium text-gray-900">{item.label}</td>
+                    <td className="px-4 py-3 text-right font-bold text-gray-950">
+                      {item.amountM === 0 ? '—' : pesoExact(item.amountM)}
+                    </td>
+                  </tr>
+                ))}
+                {visibleLines.length === 0 && (
+                  <tr>
+                    <td colSpan={4} className="px-4 py-8 text-center text-sm text-gray-600">
+                      No budget line matches this search.
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
 
         <a

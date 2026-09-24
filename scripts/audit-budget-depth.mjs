@@ -54,6 +54,43 @@ if (!closeEnough(total, 21000)) {
   );
 }
 
+const officeBlock =
+  budget.split('export const officeBudgetTotals2026 = [')[1]?.split(
+    'export const selectedBudgetLines2026'
+  )[0] ?? '';
+
+const officeRows = [
+  ...officeBlock.matchAll(
+    /\{ office: "([^"]+)", amountM: ([0-9.]+), pages: "([^"]+)", pageStart: ([0-9]+)(?:, note: "([^"]+)")? \}/g
+  ),
+].map(match => ({
+  office: match[1],
+  amountM: Number(match[2]),
+  pages: match[3],
+  pageStart: Number(match[4]),
+  note: match[5] || null,
+}));
+
+if (officeRows.length !== 36) {
+  problems.push(
+    `Expected 36 office/department 2026 appropriation totals; found ${officeRows.length}.`
+  );
+}
+
+const officeTotal = officeRows.reduce((sum, item) => sum + item.amountM, 0);
+if (!closeEnough(officeTotal, 21000)) {
+  problems.push(
+    `2026 office appropriation total is ${officeTotal.toFixed(3)}M; expected 21000.000M.`
+  );
+}
+
+const liga = officeRows.find(item => item.office === 'Liga ng mga Barangay');
+if (!liga || liga.amountM !== 0 || !liga.note) {
+  problems.push(
+    'Liga ng mga Barangay must remain explicitly recorded as having no 2026 proposed appropriation shown on its office sheet.'
+  );
+}
+
 if (!/totalAppropriationM:\s*24373\.87333413/.test(budget)) {
   problems.push(
     '2025 Current Year (Estimate) total is missing or no longer matches the official 2026 budget report.'
@@ -92,5 +129,5 @@ if (problems.length) {
 }
 
 console.log(
-  `Budget-depth audit passed: ${rows.length} citywide 2026 lines reconcile to ₱21.0B; ${procurementReferences.length} procurement records; ${auditIds.length} audit findings; SEF record present.`
+  `Budget-depth audit passed: ${rows.length} citywide 2026 lines and ${officeRows.length} office totals each reconcile to ₱21.0B; ${procurementReferences.length} procurement records; ${auditIds.length} audit findings; SEF record present.`
 );
