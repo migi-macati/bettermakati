@@ -29,7 +29,6 @@ import {
   cityMonitorSources,
   cityMonitorValidatedRecordCount,
   cityMonitorTypeLabel,
-  type CityMonitorRecord,
   type CityMonitorType,
 } from '../data/cityMonitor';
 
