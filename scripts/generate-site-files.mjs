@@ -185,6 +185,13 @@ try {
   );
 }
 
+try {
+  const sourceWatchlist = await readFile('data/source-watchlist.json', 'utf8');
+  await writeFile('public/source-watch-index.json', sourceWatchlist);
+} catch {
+  await writeFile('public/source-watch-index.json', '[]\n');
+}
+
 await writeFile(
   'public/robots.txt',
   ['User-agent: *', 'Allow: /', 'Disallow: /search', 'Sitemap: ' + base + '/sitemap.xml', ''].join('\n')

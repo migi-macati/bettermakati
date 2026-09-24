@@ -176,7 +176,7 @@ test('Saan Ako Lalapit common need reaches the structured PWD guide', async ({ p
 
 test('mobile homepage and services have no material horizontal overflow', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  for (const route of ['/', '/services', '/community-tools/saan-ako-lalapit', '/projects-budget', '/accountability', '/accountability?barangay=bel-air', '/barangays', '/barangays/poblacion', '/reports', '/reports/2026-budget-operating-expenses', '/reports/2025-local-revenue', '/civic-map', '/civic-map/poblacion-park', '/civic-map/reports']) {
+  for (const route of ['/', '/services', '/community-tools/saan-ako-lalapit', '/projects-budget', '/accountability', '/accountability?barangay=bel-air', '/records', '/barangays', '/barangays/poblacion', '/reports', '/reports/2026-budget-operating-expenses', '/reports/2025-local-revenue', '/civic-map', '/civic-map/poblacion-park', '/civic-map/reports']) {
     await page.goto(baseURL + route);
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     expect(overflow, `Horizontal overflow on ${route}`).toBeLessThanOrEqual(2);
@@ -289,6 +289,61 @@ test('Accountability never falls back to citywide records for an empty barangay 
   await expect(page.getByText(/No Accountability Ledger record is yet explicitly tagged to Bangkal/i)).toBeVisible();
   await expect(page.getByText('No matching record yet', { exact: true })).toBeVisible();
   await expect(page.getByText('2026 city fiscal record', { exact: true })).toHaveCount(0);
+});
+
+test('Public Records exposes a normalized searchable source catalog', async ({ page }) => {
+  await page.goto(baseURL + '/records');
+  await expect(page.getByRole('heading', { name: 'What is actually indexed' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Search the public record catalog' })).toBeVisible();
+  await expect(page.getByRole('cell', { name: 'Budget & fiscal', exact: true })).toBeVisible();
+  await expect(page.getByRole('cell', { name: 'Services & directories', exact: true })).toBeVisible();
+  await expect(page.getByText('unique source URLs indexed', { exact: true })).toBeVisible();
+});
+
+test('Public Records search reaches an older original annual budget', async ({ page }) => {
+  await page.goto(baseURL + '/records');
+  const search = page.getByPlaceholder(/Search budget, ordinance, COA, COMELEC/i);
+  await search.fill('Makati Annual Budget 2014');
+  const card = page.locator('article').filter({
+    has: page.getByRole('heading', { name: 'Makati Annual Budget 2014', exact: true }),
+  });
+  await expect(card).toBeVisible();
+  await expect(card.getByText('City government', { exact: true })).toBeVisible();
+  await expect(card.getByText('PDF', { exact: true })).toBeVisible();
+  await expect(card.getByRole('link', { name: /Open source/i })).toHaveAttribute(
+    'href',
+    /executive_budget_2014\.pdf/
+  );
+});
+
+test('Public Records distinguishes official and contextual evidence', async ({ page }) => {
+  await page.goto(baseURL + '/records');
+  await page.getByLabel('Filter records by source class').selectOption('Media / secondary');
+  await expect(
+    page.locator('article').filter({ hasText: 'Media / secondary' }).first()
+  ).toBeVisible();
+  await page.getByLabel('Filter records by source class').selectOption('All');
+  await page.getByRole('checkbox').check();
+  await expect(
+    page.locator('article').filter({ hasText: 'Media / secondary' })
+  ).toHaveCount(0);
+});
+
+test('Public Records publishes machine-readable catalog and source-watch downloads', async ({ page }) => {
+  await page.goto(baseURL + '/records');
+  await expect(page.getByRole('link', { name: /Download catalog CSV/i })).toHaveAttribute(
+    'download',
+    'bettermakati-public-records.csv'
+  );
+  await expect(page.getByRole('link', { name: /Download monitored-source index/i })).toHaveAttribute(
+    'href',
+    '/source-watch-index.json'
+  );
+  const response = await page.request.get(baseURL + '/source-watch-index.json');
+  expect(response.ok()).toBeTruthy();
+  const body = await response.json();
+  expect(Array.isArray(body)).toBeTruthy();
+  expect(body.length).toBeGreaterThanOrEqual(92);
 });
 
 test('owner task: project spending is reachable from homepage capability examples', async ({ page }) => {
