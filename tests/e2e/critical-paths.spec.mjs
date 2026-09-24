@@ -337,7 +337,7 @@ test('Public Records publishes machine-readable catalog and source-watch downloa
     'download',
     'bettermakati-public-records.csv'
   );
-  await expect(page.getByRole('link', { name: /Download monitored-source index/i })).toHaveAttribute(
+  await expect(page.getByRole('link', { name: /Monitored-source index/i })).toHaveAttribute(
     'href',
     '/source-watch-index.json'
   );
@@ -443,7 +443,7 @@ test('Live Makati labels source authority and check status', async ({ page }) =>
   await expect(page.getByRole('heading', { name: 'Source directory' })).toBeVisible();
   await expect(page.getByText('Official government', { exact: true }).first()).toBeVisible();
   await expect(page.getByText(/direct link means BetterMakati is routing you to the provider/i)).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Today in Makati', exact: true })).toBeVisible();
+  await expect(page.locator('#main-content').getByRole('link', { name: 'Today in Makati', exact: true })).toBeVisible();
 
   const state = await page.request.get(baseURL + '/city-monitor-source-state.json');
   expect(state.ok()).toBeTruthy();
