@@ -434,6 +434,19 @@ test('City Monitor procurement record has a permanent detail page and evidence l
 
 test('City Monitor publishes machine-readable source health and history', async ({ page }) => {
   await page.goto(baseURL + '/city-monitor');
+  await expect(page.getByRole('link', { name: 'Source health JSON' })).toHaveAttribute(
+    'href',
+    '/city-monitor-source-state.json'
+  );
+  await expect(page.getByRole('link', { name: 'Check history JSON' })).toHaveAttribute(
+    'href',
+    '/city-monitor-source-history.json'
+  );
+  await expect(page.getByRole('link', { name: 'Source-change RSS' })).toHaveAttribute(
+    'href',
+    '/city-monitor.rss.xml'
+  );
+
   const state = await page.request.get(baseURL + '/city-monitor-source-state.json');
   expect(state.ok()).toBeTruthy();
   const stateBody = await state.json();
@@ -443,6 +456,12 @@ test('City Monitor publishes machine-readable source health and history', async 
   expect(history.ok()).toBeTruthy();
   const historyBody = await history.json();
   expect(Array.isArray(historyBody.runs)).toBeTruthy();
+
+  const sitemap = await page.request.get(baseURL + '/sitemap.xml');
+  expect(sitemap.ok()).toBeTruthy();
+  expect(await sitemap.text()).toContain(
+    '/city-monitor/monitor-procurement-2025-q2-bs25-04-0419'
+  );
 });
 
 test('owner task: project spending is reachable from homepage capability examples', async ({ page }) => {
