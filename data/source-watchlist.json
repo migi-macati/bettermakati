@@ -550,5 +550,35 @@
     "label": "Makati Special Education Fund utilization Q4 2024",
     "url": "https://www.depedncr.com.ph/wp-content/uploads/2025/05/SEF-MAKATI-CITY-4th-Quarter-2024.pdf",
     "kind": "fiscal"
+  },
+  {
+    "id": "comelec-2026-bske-filing-rules",
+    "label": "COMELEC 2026 BSKE certificate-of-candidacy filing rules",
+    "url": "https://www.comelec.gov.ph/php-tpls-attachments/2025BSKE/Resolutions/com_res11196.pdf",
+    "kind": "election"
+  },
+  {
+    "id": "comelec-2026-bske-term-rules",
+    "label": "COMELEC implementing rules for RA 12232",
+    "url": "https://www.comelec.gov.ph/php-tpls-attachments/2025BSKE/Resolutions/com_res_11207.pdf",
+    "kind": "election"
+  },
+  {
+    "id": "lawphil-ra-12232",
+    "label": "Republic Act No. 12232 barangay and SK term law",
+    "url": "https://lawphil.net/statutes/repacts/ra2025/ra_12232_2025.html",
+    "kind": "election-law"
+  },
+  {
+    "id": "comelec-precinct-finder",
+    "label": "COMELEC precinct finder",
+    "url": "https://precinctfinder.comelec.gov.ph/voter_precinct",
+    "kind": "election-tool"
+  },
+  {
+    "id": "comelec-makati-2025-candidate-list",
+    "label": "COMELEC 2025 Makati certified candidate list",
+    "url": "https://www.comelec.gov.ph/php-tpls-attachments/2025NLE/COC_2025NLE/CLC2025_NCR/CITY_OF_MAKATI.pdf",
+    "kind": "election"
   }
 ]
