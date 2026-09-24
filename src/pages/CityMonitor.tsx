@@ -209,13 +209,85 @@ export default function CityMonitor() {
           note="Source changes are reviewed before a record is added."
         />
 
+        <div className="mt-7 grid grid-cols-2 gap-4 lg:grid-cols-4">
+          <div className="rounded-2xl border border-primary-100 bg-white p-5">
+            <div className="text-3xl font-extrabold text-gray-950">{cityMonitorValidatedRecordCount}</div>
+            <div className="mt-1 text-sm text-gray-600">validated permanent records</div>
+          </div>
+          <div className="rounded-2xl border border-primary-100 bg-white p-5">
+            <div className="text-3xl font-extrabold text-gray-950">{cityMonitorSourceCount}</div>
+            <div className="mt-1 text-sm text-gray-600">official source channels</div>
+          </div>
+          <div className="rounded-2xl border border-primary-100 bg-white p-5">
+            <div className="text-3xl font-extrabold text-gray-950">{cityMonitorHistoricalRecordCount}</div>
+            <div className="mt-1 text-sm text-gray-600">historical records already indexed</div>
+          </div>
+          <div className="rounded-2xl border border-primary-100 bg-white p-5">
+            <div className="text-3xl font-extrabold text-gray-950">{reviewQueue.length}</div>
+            <div className="mt-1 text-sm text-gray-600">source-change items awaiting review</div>
+          </div>
+        </div>
+
         <div className="mt-6 flex flex-wrap gap-3">
           <Link to="/briefs" className="brand-btn-primary">
             Civic Briefs <ArrowRight className="h-4 w-4" />
           </Link>
+          <Link to="/records" className="brand-btn-secondary">
+            Public Records
+          </Link>
           <Link to="/news" className="brand-btn-secondary">
             Makati in the News
           </Link>
+        </div>
+      </Section>
+
+      <Section className="bg-white">
+        <div className="section-eyebrow">Coverage</div>
+        <Heading level={2}>What City Monitor can and cannot see yet</Heading>
+        <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-600">
+          Each stream has its own source quality. BetterMakati distinguishes an active source, a partial source trail, and a true source gap instead of presenting every stream as equally complete.
+        </p>
+
+        <div className="mt-6 overflow-x-auto rounded-2xl border border-gray-200 bg-white">
+          <table className="w-full min-w-[1040px] text-left">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-4 py-3 font-bold">Stream</th>
+                <th className="px-4 py-3 font-bold">Coverage</th>
+                <th className="px-4 py-3 font-bold text-right">Sources</th>
+                <th className="px-4 py-3 font-bold text-right">Records</th>
+                <th className="px-4 py-3 font-bold">Included</th>
+                <th className="px-4 py-3 font-bold">Known limit</th>
+              </tr>
+            </thead>
+            <tbody>
+              {cityMonitorCoverageAreas.map(area => (
+                <tr key={area.type} className="border-t align-top">
+                  <td className="px-4 py-4 font-extrabold text-gray-950">{area.label}</td>
+                  <td className="px-4 py-4">
+                    <span className={
+                      'rounded-full border px-2.5 py-1 text-xs font-bold ' +
+                      (area.coverage === 'active-source'
+                        ? 'border-success-200 bg-success-50 text-success-800'
+                        : area.coverage === 'source-gap'
+                          ? 'border-secondary-200 bg-secondary-50 text-secondary-900'
+                          : 'border-primary-200 bg-primary-50 text-primary-800')
+                    }>
+                      {area.coverage === 'active-source'
+                        ? 'Active source'
+                        : area.coverage === 'source-gap'
+                          ? 'Source gap'
+                          : 'Partial'}
+                    </span>
+                  </td>
+                  <td className="px-4 py-4 text-right font-bold">{area.sourceCount}</td>
+                  <td className="px-4 py-4 text-right font-bold">{area.recordCount}</td>
+                  <td className="px-4 py-4 text-sm leading-relaxed text-gray-700">{area.included}</td>
+                  <td className="px-4 py-4 text-sm leading-relaxed text-gray-600">{area.limit}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </Section>
 
@@ -235,18 +307,22 @@ export default function CityMonitor() {
             <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
               Latest published monitor update · {new Date(latestRun.checkedAt).toLocaleString('en-PH')}
             </div>
-            <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div className="mt-4 grid grid-cols-2 lg:grid-cols-4 gap-3">
+              <div className="rounded-xl border border-gray-200 bg-[#fffdf8] p-4">
+                <div className="text-2xl font-extrabold text-gray-950">{latestRun.checked ?? sourceState.sources.length}</div>
+                <div className="text-sm text-gray-600">automatic checks</div>
+              </div>
               <div className="rounded-xl border border-gray-200 bg-[#fffdf8] p-4">
                 <div className="text-2xl font-extrabold text-gray-950">{latestRun.changed.length}</div>
-                <div className="text-sm text-gray-600">changed sources</div>
+                <div className="text-sm text-gray-600">content changes</div>
               </div>
               <div className="rounded-xl border border-gray-200 bg-[#fffdf8] p-4">
                 <div className="text-2xl font-extrabold text-gray-950">{latestRun.failed.length}</div>
                 <div className="text-sm text-gray-600">failed checks</div>
               </div>
               <div className="rounded-xl border border-gray-200 bg-[#fffdf8] p-4">
-                <div className="text-2xl font-extrabold text-gray-950">{latestRun.newBaselines.length}</div>
-                <div className="text-sm text-gray-600">new baselines</div>
+                <div className="text-2xl font-extrabold text-gray-950">{latestRun.manualReview?.length ?? cityMonitorSources.filter(source => source.monitoringMode === 'manual-review').length}</div>
+                <div className="text-sm text-gray-600">manual-review channels</div>
               </div>
             </div>
 
