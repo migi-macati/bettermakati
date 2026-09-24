@@ -233,6 +233,33 @@
     ]
   },
   {
+    "path": "/briefs",
+    "label": "Civic Briefs",
+    "status": "partial",
+    "reviewedAt": "2026-09-24",
+    "checks": [
+      "daily-weekly-monthly-cadence",
+      "scheduled-publication",
+      "permanent-archive",
+      "validated-city-monitor-only",
+      "source-change-separation",
+      "official-projects-participation-sections",
+      "accountability-linkage",
+      "barangay-relevance",
+      "permanent-record-links",
+      "monthly-stream-summary",
+      "monthly-procurement-summary",
+      "share-ready-text",
+      "rss"
+    ],
+    "gaps": [
+      "The archive begins on 24 September 2026; earlier daily/weekly/monthly briefs were not backdated or fabricated.",
+      "A brief can only be as current as the permanent City Monitor records that have passed editorial verification; raw source-change signals remain outside validated brief content.",
+      "Barangay relevance is shown only when a permanent City Monitor record has an explicit barangay tag; citywide records remain visible in a barangay view.",
+      "Automated publication creates website/RSS snapshots and share-ready copy, but it does not automatically post to BetterMakati social accounts."
+    ]
+  },
+  {
     "path": "/accountability",
     "label": "Accountability Ledger",
     "status": "partial",
