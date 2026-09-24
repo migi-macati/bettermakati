@@ -23,9 +23,13 @@ import LastReviewed from '../components/ui/LastReviewed';
 import SharePage from '../components/ui/SharePage';
 import CitizenSummary from '../components/ui/CitizenSummary';
 import {
+  cityMonitorCoverageAreas,
+  cityMonitorHistoricalRecordCount,
   cityMonitorRecords,
   cityMonitorReviewed,
+  cityMonitorSourceCount,
   cityMonitorSources,
+  cityMonitorValidatedRecordCount,
   cityMonitorTypeLabel,
   legislativeLifecycle,
   procurementLifecycle,
@@ -36,9 +40,28 @@ import {
 
 interface MonitorRun {
   checkedAt: string;
+  checked?: number;
+  unchanged?: number;
   changed: Array<{ id: string; label: string; url: string; stream: string }>;
   failed: Array<{ id: string; label: string; url: string; stream: string }>;
   newBaselines: Array<{ id: string; label: string; url: string; stream: string }>;
+  manualReview?: Array<{ id: string; label: string; url: string; stream: string }>;
+}
+
+interface MonitorSourceState {
+  id: string;
+  label: string;
+  url: string;
+  stream: string;
+  monitoringMode?: 'content-hash' | 'reachability' | 'manual-review';
+  status: string;
+  statusCode?: number | null;
+  change: string;
+}
+
+interface MonitorState {
+  checkedAt?: string | null;
+  sources: MonitorSourceState[];
 }
 
 const typeIcon: Record<CityMonitorType, ComponentType<{ className?: string }>> = {
@@ -95,17 +118,23 @@ export default function CityMonitor() {
   const [stream, setStream] = useState<'all' | CityMonitorType>('all');
   const [query, setQuery] = useState('');
   const [runs, setRuns] = useState<MonitorRun[]>([]);
+  const [sourceState, setSourceState] = useState<MonitorState>({ sources: [] });
   const [historyFailed, setHistoryFailed] = useState(false);
 
   useEffect(() => {
     const load = async () => {
       try {
-        const response = await fetch('/city-monitor-source-history.json', {
-          cache: 'no-store',
-        });
-        const data = await response.json();
-        if (!response.ok || !Array.isArray(data.runs)) throw new Error('history');
-        setRuns(data.runs);
+        const [historyResponse, stateResponse] = await Promise.all([
+          fetch('/city-monitor-source-history.json', { cache: 'no-store' }),
+          fetch('/city-monitor-source-state.json', { cache: 'no-store' }),
+        ]);
+        const history = await historyResponse.json();
+        const state = await stateResponse.json();
+        if (!historyResponse.ok || !Array.isArray(history.runs)) throw new Error('history');
+        setRuns(history.runs);
+        if (stateResponse.ok && Array.isArray(state.sources)) {
+          setSourceState(state);
+        }
       } catch {
         setHistoryFailed(true);
       }
@@ -114,6 +143,30 @@ export default function CityMonitor() {
   }, []);
 
   const latestRun = runs[0];
+
+  const reviewQueue = useMemo(() => {
+    const byId = new Map<string, { id: string; label: string; url: string; stream: string; lastDetected: string; detections: number }>();
+    for (const run of runs.slice(0, 30)) {
+      for (const item of run.changed || []) {
+        const existing = byId.get(item.id);
+        if (existing) {
+          existing.detections += 1;
+        } else {
+          byId.set(item.id, {
+            ...item,
+            lastDetected: run.checkedAt,
+            detections: 1,
+          });
+        }
+      }
+    }
+    return [...byId.values()].sort((a, b) => b.lastDetected.localeCompare(a.lastDetected));
+  }, [runs]);
+
+  const sourceStateById = useMemo(
+    () => new Map(sourceState.sources.map(source => [source.id, source])),
+    [sourceState.sources]
+  );
 
   const visibleRecords = useMemo(() => {
     const needle = query.trim().toLowerCase();
