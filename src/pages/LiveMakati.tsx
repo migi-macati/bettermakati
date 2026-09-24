@@ -11,7 +11,6 @@ import {
   Radio,
   ShieldAlert,
   Waves,
-  Zap,
 } from 'lucide-react';
 import { Link } from 'react-router';
 import Section from '../components/ui/Section';
