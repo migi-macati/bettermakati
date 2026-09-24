@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run generate:site && npm run check:content && npm run check:barangays && npm run check:civic-map && npm run check:brand && npm run audit:services && npm run audit:budget && npm run audit:accountability && npm run audit:records && npm run audit:pages && tsc -b && vite build && node scripts/postbuild-routes.mjs && node scripts/check-built-metadata.mjs",
+    "build": "npm run generate:site && npm run check:content && npm run check:barangays && npm run check:civic-map && npm run check:brand && npm run audit:services && npm run audit:budget && npm run audit:accountability && npm run audit:records && npm run audit:elections && npm run audit:pages && tsc -b && vite build && node scripts/postbuild-routes.mjs && node scripts/check-built-metadata.mjs",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
@@ -28,8 +28,9 @@
     "audit:budget": "node scripts/audit-budget-depth.mjs",
     "audit:accountability": "node scripts/audit-accountability-depth.mjs",
     "audit:records": "node scripts/audit-public-records-depth.mjs",
+    "audit:elections": "node scripts/audit-elections-depth.mjs",
     "audit:pages": "node scripts/audit-page-freshness.mjs",
-    "quality": "npm run lint && npm run check:content && npm run check:barangays && npm run check:civic-map && npm run check:brand && npm run audit:services && npm run audit:budget && npm run audit:accountability && npm run audit:records && npm run audit:pages",
+    "quality": "npm run lint && npm run check:content && npm run check:barangays && npm run check:civic-map && npm run check:brand && npm run audit:services && npm run audit:budget && npm run audit:accountability && npm run audit:records && npm run audit:elections && npm run audit:pages",
     "check:barangays": "node scripts/check-barangays.mjs"
   },
   "lint-staged": {

@@ -117,6 +117,60 @@ export const election2025SingleSeatRaces: SingleSeatRace[] = [
   },
 ];
 
+export interface CouncilCandidateResult {
+  name: string;
+  party: string;
+  votes: number;
+  rank: number;
+  elected: boolean;
+}
+
+export const election2025CouncilCandidates = {
+  district1: [
+    { name: 'Virjhong Hilario Sr.', party: 'Makatizens United Party', votes: 96429, rank: 1, elected: true },
+    { name: 'Alcine Yabut', party: 'Makatizens United Party', votes: 85688, rank: 2, elected: true },
+    { name: 'Martin Arenas', party: 'Makatizens United Party', votes: 73694, rank: 3, elected: true },
+    { name: 'Mayeth Casal-Uy', party: 'United Nationalist Alliance', votes: 71820, rank: 4, elected: true },
+    { name: 'Arlene Ortega', party: 'United Nationalist Alliance', votes: 68815, rank: 5, elected: true },
+    { name: 'Ferdie Eusebio', party: 'United Nationalist Alliance', votes: 66729, rank: 6, elected: true },
+    { name: 'Armando Padilla', party: 'Makatizens United Party', votes: 64531, rank: 7, elected: true },
+    { name: 'Dino Imperial', party: 'United Nationalist Alliance', votes: 64326, rank: 8, elected: true },
+    { name: 'Rene Andrei Saguisag', party: 'Makatizens United Party', votes: 64298, rank: 9, elected: false },
+    { name: 'Rolando “Duka” Alvarez Jr.', party: 'Makatizens United Party', votes: 63677, rank: 10, elected: false },
+    { name: 'Jose “Joey” Villena IV', party: 'Makatizens United Party', votes: 62742, rank: 11, elected: false },
+    { name: 'Carmina Ortega', party: 'Makatizens United Party', votes: 60029, rank: 12, elected: false },
+    { name: 'Romeo Medina', party: 'United Nationalist Alliance', votes: 59505, rank: 13, elected: false },
+    { name: 'Lennie Cosing', party: 'United Nationalist Alliance', votes: 51146, rank: 14, elected: false },
+    { name: 'Jessy Trinidad', party: 'Independent', votes: 20961, rank: 15, elected: false },
+    { name: 'Manny Dizon', party: 'Independent', votes: 14317, rank: 16, elected: false },
+    { name: 'Vic Calinawan', party: 'Independent', votes: 9892, rank: 17, elected: false },
+    { name: 'Dan Jason Cuaresma', party: 'Independent', votes: 9503, rank: 18, elected: false },
+    { name: 'JCL Lingad', party: 'Independent', votes: 8930, rank: 19, elected: false },
+    { name: 'Herman Marco “Tito Kanin” Garcia', party: 'Independent', votes: 8132, rank: 20, elected: false },
+  ] satisfies CouncilCandidateResult[],
+  district2: [
+    { name: 'Ina Sarosa', party: 'Makatizens United Party', votes: 21787, rank: 1, elected: true },
+    { name: 'Doris Arayon', party: 'Makatizens United Party', votes: 19632, rank: 2, elected: true },
+    { name: 'Hein Angeles', party: 'Makatizens United Party', votes: 18367, rank: 3, elected: true },
+    { name: 'Badet Sese', party: 'United Nationalist Alliance', votes: 18295, rank: 4, elected: true },
+    { name: 'Bong Ariones', party: 'Makatizens United Party', votes: 17386, rank: 5, elected: true },
+    { name: 'Levy Ramboyong', party: 'United Nationalist Alliance', votes: 17123, rank: 6, elected: true },
+    { name: 'King Yabut Jr.', party: 'United Nationalist Alliance', votes: 16619, rank: 7, elected: true },
+    { name: 'Bel Vitales', party: 'Makatizens United Party', votes: 15874, rank: 8, elected: true },
+    { name: 'Bodik Baniqued', party: 'Makatizens United Party', votes: 15630, rank: 9, elected: false },
+    { name: 'Ruth Tolentino', party: 'United Nationalist Alliance', votes: 15599, rank: 10, elected: false },
+    { name: 'Jeff Baluyut', party: 'United Nationalist Alliance', votes: 15579, rank: 11, elected: false },
+    { name: 'Ed Marquez', party: 'Makatizens United Party', votes: 15459, rank: 12, elected: false },
+    { name: 'Maffy Soler Calimbahin', party: 'Makatizens United Party', votes: 14666, rank: 13, elected: false },
+    { name: 'Mario Hechanova', party: 'United Nationalist Alliance', votes: 13326, rank: 14, elected: false },
+    { name: 'Reynante Saludo', party: 'Independent', votes: 2552, rank: 15, elected: false },
+  ] satisfies CouncilCandidateResult[],
+} as const;
+
+export const election2025CouncilCandidateCount =
+  election2025CouncilCandidates.district1.length +
+  election2025CouncilCandidates.district2.length;
+
 interface CouncilWinnerInput {
   officialSlug: string;
   name: string;

@@ -1,9 +1,12 @@
 import {
   CalendarDays,
   CheckCircle2,
+  Database,
+  Download,
   ExternalLink,
   FileText,
   MapPin,
+  ShieldCheck,
   UserCheck,
   Vote,
 } from 'lucide-react';
@@ -16,7 +19,7 @@ import SharePage from '../components/ui/SharePage';
 import SectionNav from '../components/ui/SectionNav';
 import CitizenSummary from '../components/ui/CitizenSummary';
 import {
-  election2025CouncilWinners,
+  election2025CouncilCandidates,
   election2025Electorate,
   election2025SingleSeatRaces,
   election2025Sources,
@@ -29,54 +32,117 @@ import {
   historicalValidVotes,
   makatiMayoralHistory,
 } from '../data/electionHistory';
-
-const electionCalendar =
-  'https://www.comelec.gov.ph/php-tpls-attachments/2025BSKE/Resolutions/com_res_11191.pdf';
-const registrationResolution =
-  'https://www.comelec.gov.ph/php-tpls-attachments/2025BSKE/Resolutions/com_res_11177.pdf';
-const precinctFinder = 'https://precinctfinder.comelec.gov.ph/voter_precinct';
-const comelec = 'https://www.comelec.gov.ph/';
-
-const milestones = [
-  {
-    date: 'May 18, 2026',
-    title: 'Local voter registration closed',
-    detail:
-      'The regular non-BARMM registration period for the 2026 Barangay and Sangguniang Kabataan Elections ended on this date.',
-    href: registrationResolution,
-  },
-  {
-    date: 'September 28 – October 5, 2026',
-    title: 'Filing of certificates of candidacy',
-    detail:
-      'COMELEC’s official calendar sets this period for filing COCs for the 2026 BSKE.',
-    href: electionCalendar,
-  },
-  {
-    date: 'October 22 – 31, 2026',
-    title: 'Campaign period',
-    detail:
-      'The official campaign period for barangay and SK candidates.',
-    href: electionCalendar,
-  },
-  {
-    date: 'November 2, 2026',
-    title: 'Election day',
-    detail: 'Voting is scheduled from 7:00 AM to 3:00 PM.',
-    href: electionCalendar,
-  },
-];
+import {
+  bskeMilestones,
+  bskeRuleCards,
+  electionCivicSources,
+  electionCoverageAreas,
+  electionDataSources,
+  electionsReviewed,
+  getBskePhase,
+} from '../data/electionCivic';
 
 const number = (value: number) => value.toLocaleString('en-PH');
 const percentage = (value: number) => value.toFixed(2) + '%';
 
+const election2025Csv = [
+  'race,jurisdiction,candidate,party,votes,elected,share_of_valid_votes,share_of_ballots_cast,source_url',
+  ...election2025SingleSeatRaces.flatMap(race => {
+    const electorate = election2025Electorate[race.jurisdiction];
+    return race.candidates.map(candidate =>
+      [
+        race.label,
+        electorate.label,
+        candidate.name,
+        candidate.party,
+        candidate.votes,
+        candidate.elected ? 'yes' : 'no',
+        percent(candidate.votes, race.validVotes).toFixed(2),
+        percent(candidate.votes, electorate.ballotsCast).toFixed(2),
+        election2025Sources.localResults,
+      ]
+        .map(value => '"' + String(value).replaceAll('"', '""') + '"')
+        .join(',')
+    );
+  }),
+  ...(
+    [
+      ['1st District City Councilor', 'district1'],
+      ['2nd District City Councilor', 'district2'],
+    ] as const
+  ).flatMap(([raceLabel, jurisdiction]) => {
+    const electorate = election2025Electorate[jurisdiction];
+    return election2025CouncilCandidates[jurisdiction].map(candidate =>
+      [
+        raceLabel,
+        electorate.label,
+        candidate.name,
+        candidate.party,
+        candidate.votes,
+        candidate.elected ? 'yes' : 'no',
+        '',
+        percent(candidate.votes, electorate.ballotsCast).toFixed(2),
+        election2025Sources.localResults,
+      ]
+        .map(value => '"' + String(value).replaceAll('"', '""') + '"')
+        .join(',')
+    );
+  }),
+].join('\n');
+
+const barangay2025Csv = [
+  'barangay,carried_by,nancy_binay_votes,luis_campos_jr_votes,exact_votes_verified,source_url',
+  ...barangayMayoralResults2025.map(result =>
+    [
+      result.barangay,
+      result.carriedBy,
+      result.nancyVotes ?? '',
+      result.camposVotes ?? '',
+      result.exactVotesVerified ? 'yes' : 'no',
+      barangayResultSource2025.url,
+    ]
+      .map(value => '"' + String(value).replaceAll('"', '""') + '"')
+      .join(',')
+  ),
+].join('\n');
+
+const mayoralHistoryCsv = [
+  'year,election_date,winner,candidate,party,votes,share_of_listed_candidate_votes,source_quality,source_url',
+  ...makatiMayoralHistory.flatMap(race =>
+    race.candidates.map(candidate =>
+      [
+        race.year,
+        race.electionDate,
+        race.winner,
+        candidate.name,
+        candidate.party,
+        candidate.votes,
+        historicalCandidateShare(candidate, race).toFixed(2),
+        race.sourceQuality,
+        race.sourceUrl,
+      ]
+        .map(value => '"' + String(value).replaceAll('"', '""') + '"')
+        .join(',')
+    )
+  ),
+].join('\n');
+
 export default function Elections() {
-  const district1Council = election2025CouncilWinners.filter(
-    item => item.jurisdiction === 'district1'
-  );
-  const district2Council = election2025CouncilWinners.filter(
-    item => item.jurisdiction === 'district2'
-  );
+  const bskePhase = getBskePhase();
+  const councilDistricts = [
+    {
+      label: '1st District',
+      jurisdiction: 'district1' as const,
+      candidates: election2025CouncilCandidates.district1,
+      electorate: election2025Electorate.district1,
+    },
+    {
+      label: '2nd District',
+      jurisdiction: 'district2' as const,
+      candidates: election2025CouncilCandidates.district2,
+      electorate: election2025Electorate.district2,
+    },
+  ];
 
   return (
     <>
@@ -100,14 +166,19 @@ export default function Elections() {
           <Heading>Elections & Voting</Heading>
           <SharePage title="Elections & Voting | BetterMakati" />
         </div>
-        <LastReviewed note="Election dates and results are linked to COMELEC sources." />
+        <LastReviewed
+          date={electionsReviewed}
+          note="Current election dates and rules use COMELEC and statutory sources; older result sources are labeled by quality."
+        />
         <SectionNav items={[
+          { label: 'Coverage', href: '#election-coverage' },
           { label: '2025 results', href: '#results-2025' },
           { label: 'By barangay', href: '#barangay-results-2025' },
           { label: '1998–2025 history', href: '#mayoral-history' },
           { label: 'Council', href: '#council-results' },
           { label: '2026 BSKE', href: '#bske-2026' },
           { label: 'Voter tools', href: '#voter-tools' },
+          { label: 'Data & sources', href: '#election-data' },
           { label: 'Candidates', href: '#candidates' },
         ]} />
         <p className="mt-5 max-w-3xl text-gray-700 leading-relaxed">
@@ -131,21 +202,61 @@ export default function Elections() {
           <div className="rounded-2xl border border-primary-100 bg-white p-6">
             <UserCheck className="h-6 w-6 text-primary-700" />
             <div className="mt-4 text-sm font-bold uppercase tracking-[0.08em] text-primary-700">
-              Registration status
+              Current BSKE phase
             </div>
             <div className="mt-1 text-2xl font-extrabold text-gray-950">
-              Regular registration closed
+              {bskePhase.label}
             </div>
-            <p className="mt-2 text-sm text-gray-600">
-              The non-BARMM registration period ended May 18, 2026. Registered
-              voters can still verify their record and polling place through
-              COMELEC.
-            </p>
+            <p className="mt-2 text-sm text-gray-600">{bskePhase.detail}</p>
           </div>
         </div>
       </Section>
 
-      <Section id="results-2025" className="bg-white">
+      <Section id="election-coverage" className="bg-white">
+        <div className="section-eyebrow">Coverage</div>
+        <Heading level={2}>What BetterMakati currently has</Heading>
+        <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-600">
+          The page separates complete structured result sets from partial barangay data and future records that do not yet exist.
+        </p>
+
+        <div className="mt-6 overflow-x-auto rounded-2xl border border-gray-200 bg-white">
+          <table className="w-full min-w-[980px] text-left">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-4 py-3 font-bold">Election layer</th>
+                <th className="px-4 py-3 font-bold">Status</th>
+                <th className="px-4 py-3 font-bold">Coverage</th>
+                <th className="px-4 py-3 font-bold">Included</th>
+                <th className="px-4 py-3 font-bold">Known limit</th>
+              </tr>
+            </thead>
+            <tbody>
+              {electionCoverageAreas.map(area => (
+                <tr key={area.id} className="border-t align-top">
+                  <td className="px-4 py-4 font-extrabold text-gray-950">{area.label}</td>
+                  <td className="px-4 py-4">
+                    <span className={
+                      'rounded-full border px-2.5 py-1 text-xs font-bold ' +
+                      (area.status === 'structured'
+                        ? 'border-success-200 bg-success-50 text-success-800'
+                        : area.status === 'pending'
+                          ? 'border-secondary-200 bg-secondary-50 text-secondary-900'
+                          : 'border-primary-200 bg-primary-50 text-primary-800')
+                    }>
+                      {area.status === 'structured' ? 'Structured' : area.status === 'pending' ? 'Pending source' : 'Partial'}
+                    </span>
+                  </td>
+                  <td className="px-4 py-4 text-sm font-semibold text-gray-800">{area.countLabel}</td>
+                  <td className="px-4 py-4 text-sm leading-relaxed text-gray-700">{area.included}</td>
+                  <td className="px-4 py-4 text-sm leading-relaxed text-gray-600">{area.limit}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </Section>
+
+      <Section id="results-2025" className="bg-[#fffdf8]">
         <div className="section-eyebrow">Latest completed election</div>
         <Heading level={2}>2025 Makati election results</Heading>
         <p className="mt-3 max-w-4xl text-sm leading-relaxed text-gray-600">
@@ -266,53 +377,56 @@ export default function Elections() {
 
         <div id="council-results" className="mt-10 scroll-mt-28">
           <div className="section-eyebrow">City Council</div>
-          <Heading level={3}>Elected councilors</Heading>
+          <Heading level={3}>Full 2025 council candidate results</Heading>
           <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-600">
-            Eight councilors are elected from each district. “Share of voters”
-            is the candidate’s votes divided by the number of people who cast a
-            ballot in that district. Because each voter could select up to eight
-            councilors, these percentages do not add to 100%.
+            Eight councilors were elected from each district. The tables below now include every candidate in the published COMELEC Media Server result table, not only the winners. “Share of ballots cast” divides a candidate’s votes by the number of voters who cast a ballot in that district; because each voter could choose up to eight councilors, these percentages do not add to 100%.
           </p>
 
-          {[
-            ['1st District', district1Council],
-            ['2nd District', district2Council],
-          ].map(([label, winners]) => (
-            <div key={label as string} className="mt-7">
-              <h3 className="font-extrabold text-lg text-gray-950">
-                {label as string}
-              </h3>
+          {councilDistricts.map(district => (
+            <div key={district.jurisdiction} className="mt-7">
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+                <div>
+                  <h3 className="font-extrabold text-lg text-gray-950">{district.label}</h3>
+                  <p className="mt-1 text-xs text-gray-500">
+                    {number(district.electorate.ballotsCast)} ballots cast · {number(district.electorate.registeredVoters)} registered voters
+                  </p>
+                </div>
+                <div className="text-xs font-bold text-primary-700">
+                  {district.candidates.length} candidates · 8 elected
+                </div>
+              </div>
+
               <div className="mt-3 overflow-x-auto rounded-2xl border border-gray-200 bg-white">
-                <table className="w-full min-w-[680px] text-left">
+                <table className="w-full min-w-[760px] text-left">
                   <thead className="bg-gray-50 text-sm">
                     <tr>
                       <th className="px-4 py-3 font-bold">Rank</th>
-                      <th className="px-4 py-3 font-bold">Elected councilor</th>
+                      <th className="px-4 py-3 font-bold">Candidate</th>
+                      <th className="px-4 py-3 font-bold">Result</th>
                       <th className="px-4 py-3 font-bold text-right">Votes</th>
-                      <th className="px-4 py-3 font-bold text-right">
-                        Share of district voters
-                      </th>
-                      <th className="px-4 py-3 font-bold text-right">
-                        Share of 2024 district population
-                      </th>
+                      <th className="px-4 py-3 font-bold text-right">Share of ballots cast</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {(winners as typeof district1Council).map(item => (
-                      <tr key={item.officialSlug} className="border-t">
-                        <td className="px-4 py-3 font-bold">{item.rank}</td>
+                    {district.candidates.map(candidate => (
+                      <tr key={candidate.name} className="border-t">
+                        <td className="px-4 py-3 font-bold">{candidate.rank}</td>
                         <td className="px-4 py-3">
-                          <div className="font-bold text-gray-950">{item.name}</div>
-                          <div className="text-xs text-gray-500">{item.party}</div>
+                          <div className="font-bold text-gray-950">{candidate.name}</div>
+                          <div className="text-xs text-gray-500">{candidate.party}</div>
                         </td>
-                        <td className="px-4 py-3 text-right font-bold">
-                          {number(item.votes)}
+                        <td className="px-4 py-3">
+                          {candidate.elected ? (
+                            <span className="inline-flex items-center gap-1 rounded-full border border-success-200 bg-success-50 px-2.5 py-1 text-xs font-bold text-success-800">
+                              <CheckCircle2 className="h-3.5 w-3.5" /> Elected
+                            </span>
+                          ) : (
+                            <span className="text-sm text-gray-500">Not elected</span>
+                          )}
                         </td>
+                        <td className="px-4 py-3 text-right font-bold">{number(candidate.votes)}</td>
                         <td className="px-4 py-3 text-right">
-                          {percentage(item.voterShare)}
-                        </td>
-                        <td className="px-4 py-3 text-right">
-                          {percentage(item.populationShare)}
+                          {percentage(percent(candidate.votes, district.electorate.ballotsCast))}
                         </td>
                       </tr>
                     ))}
@@ -583,29 +697,53 @@ export default function Elections() {
 
       <Section id="bske-2026" className="bg-[#f5f8f2]">
         <div className="section-eyebrow">2026 BSKE</div>
-        <Heading level={2}>Key dates</Heading>
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <Heading level={2}>Calendar & legal framework</Heading>
+            <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-600">
+              BetterMakati keeps the operative COMELEC calendar beside the statute and implementing rules so a schedule change or legal transition can be traced to its source.
+            </p>
+          </div>
+          <div className="rounded-xl border border-secondary-200 bg-white px-4 py-3">
+            <div className="text-xs font-bold uppercase tracking-[0.08em] text-secondary-900">
+              Current phase
+            </div>
+            <div className="mt-1 font-extrabold text-gray-950">{bskePhase.label}</div>
+            <div className="mt-1 max-w-sm text-xs leading-relaxed text-gray-600">{bskePhase.detail}</div>
+          </div>
+        </div>
+
         <div className="mt-7 grid grid-cols-1 lg:grid-cols-2 gap-4">
-          {milestones.map(item => (
-            <article
-              key={item.title}
-              className="rounded-2xl border border-primary-100 bg-white p-5"
-            >
-              <div className="text-sm font-extrabold text-primary-800">
-                {item.date}
-              </div>
-              <h3 className="mt-1 font-extrabold text-lg text-gray-950">
-                {item.title}
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-gray-600">
-                {item.detail}
-              </p>
+          {bskeMilestones.map(item => (
+            <article key={item.title} className="rounded-2xl border border-primary-100 bg-white p-5">
+              <div className="text-sm font-extrabold text-primary-800">{item.date}</div>
+              <h3 className="mt-1 font-extrabold text-lg text-gray-950">{item.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-gray-600">{item.detail}</p>
               <a
                 href={item.href}
                 target="_blank"
                 rel="noreferrer"
                 className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700"
               >
-                Official COMELEC source <ExternalLink className="h-3.5 w-3.5" />
+                Open official source <ExternalLink className="h-3.5 w-3.5" />
+              </a>
+            </article>
+          ))}
+        </div>
+
+        <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2">
+          {bskeRuleCards.map(item => (
+            <article key={item.title} className="rounded-2xl border border-gray-200 bg-white p-5">
+              <ShieldCheck className="h-5 w-5 text-primary-700" />
+              <h3 className="mt-3 font-extrabold text-gray-950">{item.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-gray-600">{item.body}</p>
+              <a
+                href={item.href}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-4 inline-flex items-center gap-1 text-xs font-bold text-primary-700"
+              >
+                {item.sourceLabel} <ExternalLink className="h-3.5 w-3.5" />
               </a>
             </article>
           ))}
@@ -615,39 +753,36 @@ export default function Elections() {
       <Section id="voter-tools" className="bg-white">
         <div className="section-eyebrow">Before election day</div>
         <Heading level={2}>Check your record and polling place</Heading>
+        <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-600">
+          Voter status, precinct assignment and late election changes should be checked directly with COMELEC.
+        </p>
         <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
           <a
-            href={precinctFinder}
+            href={electionCivicSources.precinctFinder}
             target="_blank"
             rel="noreferrer"
             className="rounded-2xl border border-gray-200 bg-white p-5 hover:border-primary-300"
           >
             <MapPin className="h-5 w-5 text-primary-700" />
-            <h3 className="mt-3 font-extrabold text-gray-950">
-              COMELEC Precinct Finder
-            </h3>
-            <p className="mt-1 text-sm text-gray-600">
-              Verify voter status, precinct number and voting center.
-            </p>
+            <h3 className="mt-3 font-extrabold text-gray-950">COMELEC Precinct Finder</h3>
+            <p className="mt-1 text-sm text-gray-600">Verify voter status, precinct number and voting center.</p>
           </a>
 
           <a
-            href={electionCalendar}
+            href={electionCivicSources.bskeCalendar}
             target="_blank"
             rel="noreferrer"
             className="rounded-2xl border border-gray-200 bg-white p-5 hover:border-primary-300"
           >
             <FileText className="h-5 w-5 text-primary-700" />
-            <h3 className="mt-3 font-extrabold text-gray-950">
-              Official election calendar
-            </h3>
+            <h3 className="mt-3 font-extrabold text-gray-950">Official election calendar</h3>
             <p className="mt-1 text-sm text-gray-600">
               COMELEC Resolution No. 11191 for the November 2, 2026 BSKE.
             </p>
           </a>
 
           <a
-            href={comelec}
+            href={electionCivicSources.comelec}
             target="_blank"
             rel="noreferrer"
             className="rounded-2xl border border-gray-200 bg-white p-5 hover:border-primary-300"
@@ -655,23 +790,126 @@ export default function Elections() {
             <CheckCircle2 className="h-5 w-5 text-primary-700" />
             <h3 className="mt-3 font-extrabold text-gray-950">COMELEC</h3>
             <p className="mt-1 text-sm text-gray-600">
-              Use COMELEC for certified candidate lists, resolutions and late
-              changes.
+              Use the election authority for certified candidate lists, resolutions, precinct information and late changes.
             </p>
           </a>
         </div>
       </Section>
 
-      <Section id="candidates" className="bg-[#fffdf8]">
-        <div className="section-eyebrow">Candidates</div>
-        <Heading level={2}>Candidate information</Heading>
-        <p className="mt-3 max-w-3xl text-gray-700 leading-relaxed">
-          Filing of certificates of candidacy is scheduled for September 28 to
-          October 5, 2026. BetterMakati will publish a Makati-by-barangay
-          candidate directory only after COMELEC releases certified candidate
-          information. Until then, no candidate list is inferred from campaign
-          materials, social media or declarations of intent.
+      <Section id="election-data" className="bg-[#fffdf8]">
+        <div className="section-eyebrow">Data & provenance</div>
+        <Heading level={2}>Download the structured election data</Heading>
+        <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-600">
+          BetterMakati keeps raw candidate totals and source URLs in the downloads so the displayed summaries can be checked independently.
         </p>
+
+        <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
+          <a
+            href={'data:text/csv;charset=utf-8,' + encodeURIComponent(election2025Csv)}
+            download="bettermakati-election-2025-local-results.csv"
+            className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300"
+          >
+            <Download className="h-5 w-5 text-primary-700" />
+            <h3 className="mt-3 font-extrabold text-gray-950">2025 local results CSV</h3>
+            <p className="mt-2 text-sm leading-relaxed text-gray-600">
+              Mayor, vice mayor, House districts and all candidates in both city-council districts.
+            </p>
+          </a>
+
+          <a
+            href={'data:text/csv;charset=utf-8,' + encodeURIComponent(barangay2025Csv)}
+            download="bettermakati-election-2025-barangay-mayor.csv"
+            className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300"
+          >
+            <Download className="h-5 w-5 text-primary-700" />
+            <h3 className="mt-3 font-extrabold text-gray-950">2025 barangay mayor CSV</h3>
+            <p className="mt-2 text-sm leading-relaxed text-gray-600">
+              The candidate who carried each current barangay, with exact totals only where verified.
+            </p>
+          </a>
+
+          <a
+            href={'data:text/csv;charset=utf-8,' + encodeURIComponent(mayoralHistoryCsv)}
+            download="bettermakati-mayoral-history-1998-2025.csv"
+            className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300"
+          >
+            <Download className="h-5 w-5 text-primary-700" />
+            <h3 className="mt-3 font-extrabold text-gray-950">Mayoral history CSV</h3>
+            <p className="mt-2 text-sm leading-relaxed text-gray-600">
+              Ten regular elections, candidate totals, calculated shares and source-quality labels.
+            </p>
+          </a>
+        </div>
+
+        <div className="mt-8 overflow-x-auto rounded-2xl border border-gray-200 bg-white">
+          <table className="w-full min-w-[760px] text-left">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-4 py-3 font-bold">Source</th>
+                <th className="px-4 py-3 font-bold">Role</th>
+                <th className="px-4 py-3 font-bold">Open</th>
+              </tr>
+            </thead>
+            <tbody>
+              {electionDataSources.map(source => (
+                <tr key={source.href} className="border-t">
+                  <td className="px-4 py-4 font-bold text-gray-950">{source.label}</td>
+                  <td className="px-4 py-4 text-sm text-gray-600">{source.kind}</td>
+                  <td className="px-4 py-4">
+                    <a
+                      href={source.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-1 text-sm font-bold text-primary-700"
+                    >
+                      Source <ExternalLink className="h-3.5 w-3.5" />
+                    </a>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <div className="mt-5 rounded-2xl border border-gray-200 bg-white p-5">
+          <div className="flex items-start gap-3">
+            <Database className="mt-0.5 h-5 w-5 shrink-0 text-primary-700" />
+            <p className="text-sm leading-relaxed text-gray-600">
+              Historical source labels are deliberately preserved. “Academic,” “official + archival,” and “archival secondary” are provenance descriptions, not judgments about candidates or political choices.
+            </p>
+          </div>
+        </div>
+      </Section>
+
+      <Section id="candidates" className="bg-white">
+        <div className="section-eyebrow">2026 candidates</div>
+        <Heading level={2}>Candidate directory status</Heading>
+        <div className="mt-5 rounded-2xl border border-secondary-200 bg-secondary-50 p-6">
+          <div className="text-xs font-bold uppercase tracking-[0.08em] text-secondary-900">
+            {bskePhase.label}
+          </div>
+          <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-700">
+            BetterMakati will publish a Makati-by-barangay candidate directory only from an official COMELEC candidate source. Campaign materials, social-media announcements and declarations of intent are not treated as a certified candidate list.
+          </p>
+          <div className="mt-4 flex flex-wrap gap-3">
+            <a
+              href={electionCivicSources.filingRules}
+              target="_blank"
+              rel="noreferrer"
+              className="brand-btn-secondary"
+            >
+              COC filing rules <ExternalLink className="h-4 w-4" />
+            </a>
+            <a
+              href={electionCivicSources.comelec}
+              target="_blank"
+              rel="noreferrer"
+              className="brand-btn-primary"
+            >
+              Check COMELEC <ExternalLink className="h-4 w-4" />
+            </a>
+          </div>
+        </div>
       </Section>
     </>
   );
