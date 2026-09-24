@@ -249,7 +249,7 @@ export const officeBudgetTotals2026 = [
   { office: "Youth and Sports Development Department", amountM: 186.765, pages: "81–82", pageStart: 81 },
 ];
 
-export type OfficeBudgetDetailGroup2026 = 'Personal Services' | 'Operating' | 'Capital';
+export type OfficeBudgetDetailGroup2026 = 'Personal Services' | 'Operating' | 'Capital' | 'Financial Expenses';
 
 export interface OfficeBudgetLine2026 {
   group: OfficeBudgetDetailGroup2026;
