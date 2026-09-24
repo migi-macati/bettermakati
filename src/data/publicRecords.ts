@@ -6,6 +6,7 @@ import {
 } from './budget2025';
 import { cityMonitorSources } from './cityMonitor';
 import { election2025Sources } from './election2025';
+import { electionCivicSources } from './electionCivic';
 import {
   barangayResultSource2025,
   makatiMayoralHistory,
@@ -319,6 +320,67 @@ add({
   relatedHref: '/elections',
   usedBy: 'Elections',
 });
+for (const [key, source] of Object.entries(electionCivicSources)) {
+  const meta: Record<string, { title: string; publisher: string; period: string; description: string; sourceClass?: PublicRecordSourceClass }> = {
+    bskeCalendar: {
+      title: 'COMELEC 2026 BSKE calendar',
+      publisher: 'Commission on Elections',
+      period: '2026',
+      description: 'Official calendar of activities for the November 2, 2026 Barangay and Sangguniang Kabataan Elections.',
+    },
+    registrationRules: {
+      title: 'COMELEC 2026 BSKE voter-registration rules',
+      publisher: 'Commission on Elections',
+      period: '2025–2026',
+      description: 'Official rules governing the continuing registration period for the 2026 BSKE.',
+    },
+    filingRules: {
+      title: 'COMELEC 2026 BSKE certificate-of-candidacy filing rules',
+      publisher: 'Commission on Elections',
+      period: '2026',
+      description: 'Official amended filing rules for certificates of candidacy in the 2026 BSKE.',
+    },
+    termLaw: {
+      title: 'Republic Act No. 12232',
+      publisher: 'Republic of the Philippines / Lawphil',
+      period: '2025',
+      description: 'Statute setting four-year barangay and SK terms and the November 2026 election schedule.',
+      sourceClass: 'Court / statute',
+    },
+    termRules: {
+      title: 'COMELEC Resolution No. 11207',
+      publisher: 'Commission on Elections',
+      period: '2026',
+      description: 'COMELEC implementing rules for Republic Act No. 12232, including the 2026 transition.',
+    },
+    precinctFinder: {
+      title: 'COMELEC Precinct Finder',
+      publisher: 'Commission on Elections',
+      period: 'Current',
+      description: 'Official voter-status, precinct and voting-center lookup tool.',
+    },
+    comelec: {
+      title: 'COMELEC official website',
+      publisher: 'Commission on Elections',
+      period: 'Current',
+      description: 'Primary election-authority portal for resolutions, candidate records and late changes.',
+    },
+  };
+  const item = meta[key];
+  if (!item) continue;
+  add({
+    title: item.title,
+    url: source,
+    publisher: item.publisher,
+    category: 'Elections',
+    period: item.period,
+    description: item.description,
+    relatedHref: '/elections',
+    usedBy: 'Elections',
+    sourceClass: item.sourceClass,
+  });
+}
+
 add({
   title: 'PSA Makati barangay population classification',
   url: election2025Sources.population,
