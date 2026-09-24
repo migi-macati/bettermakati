@@ -328,8 +328,7 @@ export default function BarangayProfile() {
               </div>
               {!barangay.hallAddress && !barangay.hallPhone && !barangay.hallEmail && (
                 <p className="mt-4 text-sm leading-relaxed text-gray-600">
-                  BetterMakati has not yet verified a direct hall contact for this barangay.
-                  Use the official Makati barangay page for the latest contact information.
+                  Direct hall contact not yet verified. Use the official Makati barangay page.
                 </p>
               )}
               <div className="mt-5 flex flex-wrap gap-3">
@@ -466,9 +465,6 @@ export default function BarangayProfile() {
               <h2 className="text-3xl font-extrabold tracking-tight text-gray-950">
                 Verified local facilities
               </h2>
-              <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600">
-                BetterMakati lists facilities only when a usable public source or verified location is available.
-              </p>
             </div>
           </div>
           <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -567,7 +563,7 @@ export default function BarangayProfile() {
                   )}
                   {!electionResult.exactVotesVerified && (
                     <p className="mt-3 text-xs leading-relaxed text-gray-500">
-                      The current source establishes which candidate carried the barangay but does not expose an exact local vote total in BetterMakati’s indexed text.
+                      Exact barangay vote total is not available in the indexed source.
                     </p>
                   )}
                   <div className="mt-5 flex flex-wrap gap-3">
@@ -629,8 +625,7 @@ export default function BarangayProfile() {
               ) : (
                 <div className="mt-5 rounded-2xl border border-secondary-200 bg-secondary-50 p-6">
                   <p className="text-sm leading-relaxed text-gray-700">
-                    No Accountability Ledger record is currently tagged specifically to Barangay {barangay.name}.
-                    Citywide records remain available, while missing barangay budgets, projects and procurement should stay visible as a coverage gap rather than be inferred.
+                    No barangay-specific Accountability Ledger record is currently linked for {barangay.name}.
                   </p>
                   <div className="mt-4 flex flex-wrap gap-3">
                     <Link

@@ -212,7 +212,7 @@ export default function ProjectStatus() {
     {
       label: 'Barangay profiles',
       value: `${barangayCoverageSummary.profiles}/23`,
-      detail: 'Current Makati barangays represented in BetterMakati',
+      detail: 'Current Makati barangays represented',
       icon: Users,
     },
     {
@@ -242,7 +242,7 @@ export default function ProjectStatus() {
     {
       label: 'Verified official social channels',
       value: `${barangayCoverageSummary.verifiedSocialChannels}/23`,
-      detail: 'Barangay social accounts BetterMakati could verify without guessing from similarly named or unofficial pages',
+      detail: 'Barangay social accounts verified against public official sources',
       icon: MessagesSquare,
     },
     {
@@ -254,7 +254,7 @@ export default function ProjectStatus() {
     {
       label: 'Searchable civic entries',
       value: searchIndex.length.toLocaleString('en-PH'),
-      detail: 'Items in BetterMakati’s local search index',
+      detail: 'Items in the local search index',
       icon: Search,
     },
     {
@@ -266,7 +266,7 @@ export default function ProjectStatus() {
     {
       label: 'Published accountability gaps',
       value: accountabilityCoverageGaps.length.toLocaleString('en-PH'),
-      detail: 'Known ledger coverage gaps shown rather than concealed',
+      detail: 'Known open ledger-source gaps',
       icon: AlertCircle,
     },
     {
@@ -284,8 +284,36 @@ export default function ProjectStatus() {
     {
       label: 'Methodology gaps',
       value: knownDoctrineGaps.toLocaleString('en-PH'),
-      detail: 'Open items in the BetterMakati methodology audit',
+      detail: 'Open items in the methodology audit',
       icon: Gauge,
+    },
+  ];
+
+  const openSourceDependencies = [
+    {
+      area: 'City Council calendar',
+      status: 'Open source gap',
+      detail: 'No current official source covers every 2026 session date, agenda, attendance, vote and minutes record.',
+    },
+    {
+      area: 'Legislative lifecycle',
+      status: 'Partial source coverage',
+      detail: 'The official archive covers enacted ordinances and resolutions; full stage history is not available for every measure.',
+    },
+    {
+      area: 'Project status',
+      status: 'Open source gap',
+      detail: 'No single official citywide feed covers the current status of all capital and service-delivery projects.',
+    },
+    {
+      area: 'Official publications',
+      status: 'Partial source coverage',
+      detail: 'Annual reports, plans and other publications are distributed across the city portal rather than one stable publication feed.',
+    },
+    {
+      area: '2026 BSKE candidates',
+      status: 'Pending COMELEC',
+      detail: 'COC filing is September 28–October 5, 2026; the candidate directory awaits an official COMELEC list.',
     },
   ];
 
@@ -328,7 +356,7 @@ export default function ProjectStatus() {
               Publicly launched
             </div>
             <p className="mt-1 text-sm leading-relaxed text-success-900">
-              BetterMakati is active at <strong>bettermakati.org</strong> and remains under continuous maintenance.
+              <strong>bettermakati.org</strong>
             </p>
           </div>
           <div className="text-xs font-bold text-success-800">Launched September 21, 2026</div>
@@ -351,7 +379,7 @@ export default function ProjectStatus() {
 
       <Section className="bg-white">
         <div className="section-eyebrow">Service coverage</div>
-        <Heading level={2}>How complete are the service guides?</Heading>
+        <Heading level={2}>Service guide coverage</Heading>
 
         <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           <div className="rounded-2xl border border-gray-200 bg-[#fffdf8] p-5">
@@ -413,7 +441,7 @@ export default function ProjectStatus() {
         <div className="section-eyebrow">BetterBarangay coverage</div>
         <Heading level={2}>What is still missing by barangay</Heading>
         <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-700">
-          These are source-coverage gaps, not assumptions about whether a service, facility or channel exists. BetterMakati leaves a field open when a reliable current public source has not been verified.
+          Unverified profile fields by barangay.
         </p>
 
         <div className="mt-6 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
@@ -451,6 +479,23 @@ export default function ProjectStatus() {
                 Open BetterBarangay <ExternalLink className="h-3.5 w-3.5" />
               </Link>
             </details>
+          ))}
+        </div>
+      </Section>
+
+      <Section className="bg-white">
+        <div className="section-eyebrow">Source dependencies</div>
+        <Heading level={2}>Open source gaps</Heading>
+        <div className="mt-6 overflow-hidden rounded-2xl border border-gray-200 bg-white">
+          {openSourceDependencies.map(item => (
+            <div
+              key={item.area}
+              className="grid gap-2 border-b border-gray-200 p-4 last:border-b-0 md:grid-cols-[220px_190px_1fr] md:items-start"
+            >
+              <div className="font-extrabold text-gray-950">{item.area}</div>
+              <div className="text-sm font-bold text-secondary-800">{item.status}</div>
+              <div className="text-sm leading-relaxed text-gray-600">{item.detail}</div>
+            </div>
           ))}
         </div>
       </Section>
@@ -590,9 +635,6 @@ export default function ProjectStatus() {
       <Section className="bg-white">
         <div className="section-eyebrow">Page audit</div>
         <Heading level={2}>Major-page completeness & freshness</Heading>
-        <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600">
-          BetterMakati now keeps an explicit review record for the major citizen journeys. A page can be reviewed while still publishing known coverage gaps.
-        </p>
 
         {pageAuditFailed ? (
           <div className="mt-6 rounded-xl border border-warning-200 bg-warning-50 p-4 text-sm text-warning-900">

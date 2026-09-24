@@ -162,7 +162,7 @@ const publicRecordSummary = (entry: AccountabilityEntry) => {
   }
 
   if (entry.type === 'service') {
-    return 'The published service standard is documented. BetterMakati has not independently measured actual service performance.';
+    return 'Published service standard; actual service performance is not independently measured.';
   }
 
   if (entry.commitment) {
@@ -174,7 +174,7 @@ const publicRecordSummary = (entry: AccountabilityEntry) => {
 
   return entry.status === 'completed'
     ? 'The cited public source reports this as complete.'
-    : 'This record shows the latest public evidence BetterMakati has located.';
+    : 'Latest cited public evidence.';
 };
 
 const ledgerCsv = [

@@ -12,7 +12,6 @@ import { Heading } from '../components/ui/Heading';
 import SEO from '../components/SEO';
 import LastReviewed from '../components/ui/LastReviewed';
 import SharePage from '../components/ui/SharePage';
-import CitizenSummary from '../components/ui/CitizenSummary';
 
 const officialArchive =
   'https://www.makati.gov.ph/content/resolutions-and-ordinances/author';
@@ -110,32 +109,6 @@ export default function Legislation() {
             ))}
           </div>
         </form>
-
-        <CitizenSummary
-          className="mt-6"
-          eyebrow="How to follow a local rule"
-          title="Do not stop at finding one ordinance or resolution"
-          summary="A useful legislative record connects the issue, the controlling text and what happened after the council acted."
-          points={[
-            {
-              label: '1 · Find the measure',
-              text: 'Search by topic, ordinance/resolution number, title or year.',
-            },
-            {
-              label: '2 · Read the controlling text',
-              text: 'Open the official record and check whether later amendments, implementing rules or related measures change how it should be read.',
-            },
-            {
-              label: '3 · Follow the lifecycle',
-              text: 'Use City Monitor when stage information is available: filing, committee action, readings, approval, mayoral action and implementation are distinct events.',
-            },
-            {
-              label: '4 · Connect it to impact',
-              text: 'Where the measure changes a service, budget, project or public commitment, BetterMakati should link the legislative record to that citizen-facing outcome.',
-            },
-          ]}
-          note="BetterMakati summarizes for navigation and understanding; the original ordinance, resolution and later amendments remain the controlling legal record."
-        />
       </Section>
 
       <Section className="bg-[#f5f8f2]">
@@ -182,16 +155,14 @@ export default function Legislation() {
       </Section>
 
       <Section className="bg-white">
-        <div className="section-eyebrow">How to read the record</div>
+        <div className="section-eyebrow">Record types</div>
         <Heading level={2}>Ordinance or resolution?</Heading>
         <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="rounded-2xl border border-gray-200 bg-white p-5">
             <FileSearch className="h-5 w-5 text-primary-700" />
             <h3 className="mt-3 font-extrabold text-gray-950">Ordinance</h3>
             <p className="mt-2 text-sm leading-relaxed text-gray-600">
-              A local law enacted by the Sangguniang Panlungsod. For a legal or
-              transactional question, open the original ordinance and any later
-              amendments rather than relying only on a summary.
+              A local law enacted by the Sangguniang Panlungsod.
             </p>
           </div>
           <div className="rounded-2xl border border-gray-200 bg-white p-5">
@@ -205,9 +176,6 @@ export default function Legislation() {
           </div>
         </div>
 
-        <div className="mt-6 rounded-2xl border border-secondary-200 bg-secondary-50 p-5 text-sm leading-relaxed text-gray-700">
-          For legal or transactional use, rely on the original ordinance or resolution and later amendments.
-        </div>
       </Section>
 
       <Section className="bg-[#fffdf8]">

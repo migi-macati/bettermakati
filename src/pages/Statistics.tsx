@@ -181,7 +181,6 @@ export default function Statistics() {
               ),
             },
           ]}
-          note="BetterMakati keeps definitions beside the figures so trends are compared on the same geography and basis."
         />
       </Section>
 

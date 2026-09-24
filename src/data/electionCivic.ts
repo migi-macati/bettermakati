@@ -96,7 +96,7 @@ export const electionCoverageAreas: ElectionCoverageArea[] = [
     included:
       'COMELEC calendar, registration rules, legal basis for the four-year term, filing rules, term-limit transition and precinct-verification tool.',
     limit:
-      'As of the review date, COC filing had not yet opened. BetterMakati will not publish or infer a Makati candidate directory before an official COMELEC candidate source exists.',
+      'COC filing opens September 28 and runs through October 5, 2026. No official Makati candidate list is available yet.',
   },
 ];
 
@@ -173,7 +173,7 @@ export const bskeRuleCards = [
   {
     title: 'Candidate filing',
     body:
-      'COMELEC Resolution No. 11196 amends the certificate-of-candidacy filing rules for the November 2026 BSKE. BetterMakati links the official rule rather than paraphrasing candidate eligibility beyond what is needed for public navigation.',
+      'COMELEC Resolution No. 11196 contains the certificate-of-candidacy filing rules for the November 2026 BSKE.',
     href: electionCivicSources.filingRules,
     sourceLabel: 'COMELEC Resolution No. 11196',
   },

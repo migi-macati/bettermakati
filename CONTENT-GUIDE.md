@@ -181,6 +181,15 @@ A: [Clear, helpful answer]
 - Write in third person
 - Use passive voice unnecessarily
 
+### Editorial discipline
+
+- Lead with the fact, task, source, or action the visitor came for.
+- Do not make pages justify BetterMakati's existence or narrate the editorial process.
+- Do not repeat methodology, coverage disclaimers, or defensive guardrails across journey pages.
+- Put project-wide methodology, coverage limits, and source-system status on **Status**, **Open Government**, or **About**.
+- Keep a local caution only when it materially changes how a figure, legal record, safety instruction, or source should be interpreted. Write it in the shortest factual form.
+- Prefer labels such as **Source**, **Last reviewed**, **Pending official source**, and **Open source gap** over explanatory paragraphs.
+
 ### Formatting Best Practices
 
 #### Tables

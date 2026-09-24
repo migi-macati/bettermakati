@@ -60,7 +60,7 @@ export default function History() {
             {
               reviewed: historyReviewed,
               scope:
-                'Research chronology; incomplete coverage. See individual notes.',
+                'Source-linked research chronology.',
               events,
             },
             null,
@@ -88,11 +88,7 @@ export default function History() {
           <Heading>Many histories. One Makati.</Heading>
           <SharePage title="History of Makati | BetterMakati" />
         </div>
-        <LastReviewed
-          label="Timeline review"
-          date={historyReviewed}
-          note="Coverage remains a growing research chronology."
-        />
+        <LastReviewed label="Timeline review" date={historyReviewed} />
         <p className="mt-5 max-w-3xl text-lg leading-relaxed text-gray-700">
           Beyond the skyline: explore the communities, institutions, conflicts
           and decisions that shaped San Pedro Macati and the modern city.
@@ -112,7 +108,7 @@ export default function History() {
             {
               icon: Landmark,
               value: `${makatiHistory.length} milestones`,
-              text: 'A growing research chronology',
+              text: 'Searchable chronology',
             },
             {
               icon: BookOpen,
@@ -137,7 +133,7 @@ export default function History() {
         </div>
         <details className="mt-6 rounded-xl border border-gray-200 bg-white p-5">
           <summary className="cursor-pointer font-bold text-primary-800">
-            How to read this timeline · names, dates and evidence
+            Source notes
           </summary>
           <div className="mt-4 space-y-3 text-sm leading-relaxed text-gray-700">
             <p>
@@ -168,11 +164,6 @@ export default function History() {
               territorial references do not describe today’s boundaries. Event
               dates, enactment, ratification and implementation are
               distinguished.
-            </p>
-            <p>
-              Editorial review: {historyReviewed}. Coverage is still incomplete;
-              this is not a claim to have verified every event or every
-              competing account.
             </p>
           </div>
         </details>
@@ -337,8 +328,7 @@ export default function History() {
             Help complete the record
           </h2>
           <p className="mt-3 text-sm leading-relaxed text-gray-700">
-            Comprehensive history includes what is still missing. These are
-            research priorities, not established timeline claims:
+            Open research questions:
           </p>
           <ul className="mt-4 list-disc space-y-3 pl-5 text-sm leading-relaxed text-gray-700">
             {historyResearchGaps.map(gap => (
