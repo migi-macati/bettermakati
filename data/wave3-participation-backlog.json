@@ -207,9 +207,11 @@
         "3C-1e3",
         "3C-1e4",
         "3C-1e",
-        "3C-1f1"
+        "3C-1f1",
+        "3C-1f2",
+        "3C-1f"
       ],
-      "current": "3C-1f2",
+      "current": "3C-1g",
       "substeps": [
         "3C-1a",
         "3C-1b",
@@ -266,7 +268,19 @@
         "3C-1f2"
       ],
       "communityCoreImplementationFile": "data/wave3-civic-map-community-core-implementation.json",
-      "communityCoreImplementationStatus": "complete"
+      "communityCoreImplementationStatus": "complete",
+      "childCareImplementationFile": "data/wave3-civic-map-child-care-implementation.json",
+      "childCareImplementationStatus": "complete-with-one-unresolved-host-point",
+      "childCareImplementationSummary": {
+        "currentServices": 23,
+        "servicesRepresented": 22,
+        "unresolvedServices": 1,
+        "distinctHostLocations": 19,
+        "representedHostLocations": 18,
+        "existingHostAssetsReused": 10,
+        "newHostAssetsAdded": 8,
+        "provisionalExactPointAssets": 1
+      }
     },
     {
       "id": "3C-2",
@@ -721,9 +735,9 @@
     }
   ],
   "immediateNext": {
-    "id": "3C-1f2",
-    "title": "Implement co-location-aware day-care and child-minding coverage",
-    "maximumScope": "22 current day-care centers + 1 current child-minding center. Reconcile each against host barangay/community buildings first, then add only distinct useful assets. No unrelated facility families."
+    "id": "3C-1g",
+    "title": "Close facility completeness audit",
+    "maximumScope": "Reconcile every 3C-1 facility family to a final disposition, verify Civic Map/checker coverage, preserve unresolved Singkamas Day Care exact point and any other explicit holds, and close only to the supported named/mappable set."
   },
   "reopenedExecutionOrder": [
     "3C-2a",
@@ -739,7 +753,7 @@
       "status": "in-progress",
       "title": "Public infrastructure/facility completeness from Makati publications",
       "executeAfter": "3C-2g unless user reprioritizes",
-      "current": "3C-1f2"
+      "current": "3C-1g"
     },
     "3C-2": {
       "status": "in-progress",
