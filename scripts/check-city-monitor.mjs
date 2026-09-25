@@ -126,18 +126,46 @@ const run = {
   unchanged: results.filter(item => item.change === 'unchanged' || item.change === 'reachable').length,
   changed: results
     .filter(item => item.change === 'content-changed')
-    .map(({ id, label, url, stream, monitoringMode }) => ({ id, label, url, stream, monitoringMode })),
+    .map(({ id, label, url, stream, monitoringMode, affectedPages }) => ({
+      id,
+      label,
+      url,
+      stream,
+      monitoringMode,
+      affectedPages: Array.isArray(affectedPages) ? affectedPages : [],
+    })),
   failed: results
     .filter(item => item.status === 'http-error' || item.status === 'unreachable')
-    .map(({ id, label, url, stream, monitoringMode, status, statusCode }) => ({
-      id, label, url, stream, monitoringMode, status, statusCode,
+    .map(({ id, label, url, stream, monitoringMode, affectedPages, status, statusCode }) => ({
+      id,
+      label,
+      url,
+      stream,
+      monitoringMode,
+      affectedPages: Array.isArray(affectedPages) ? affectedPages : [],
+      status,
+      statusCode,
     })),
   newBaselines: results
     .filter(item => item.change === 'new-baseline')
-    .map(({ id, label, url, stream, monitoringMode }) => ({ id, label, url, stream, monitoringMode })),
+    .map(({ id, label, url, stream, monitoringMode, affectedPages }) => ({
+      id,
+      label,
+      url,
+      stream,
+      monitoringMode,
+      affectedPages: Array.isArray(affectedPages) ? affectedPages : [],
+    })),
   manualReview: results
     .filter(item => item.change === 'manual-review')
-    .map(({ id, label, url, stream, monitoringMode }) => ({ id, label, url, stream, monitoringMode })),
+    .map(({ id, label, url, stream, monitoringMode, affectedPages }) => ({
+      id,
+      label,
+      url,
+      stream,
+      monitoringMode,
+      affectedPages: Array.isArray(affectedPages) ? affectedPages : [],
+    })),
 };
 
 history.runs = [run, ...(Array.isArray(history.runs) ? history.runs : [])].slice(0, 120);
@@ -160,11 +188,21 @@ const report = [
   '',
   '## Changed sources requiring editorial review',
   '',
-  ...(run.changed.length ? run.changed.map(item => `- **${item.label}** — ${item.url}`) : ['- None']),
+  ...(run.changed.length
+    ? run.changed.map(
+        item =>
+          `- **${item.label}** — review ${item.affectedPages.join(', ') || '/city-monitor'}: ${item.url}`
+      )
+    : ['- None']),
   '',
   '## Failed automatic checks',
   '',
-  ...(run.failed.length ? run.failed.map(item => `- **${item.label}** — ${item.status} (${item.statusCode ?? 'no response'}): ${item.url}`) : ['- None']),
+  ...(run.failed.length
+    ? run.failed.map(
+        item =>
+          `- **${item.label}** — ${item.status} (${item.statusCode ?? 'no response'}). Review ${item.affectedPages.join(', ') || '/city-monitor'} if the failure persists: ${item.url}`
+      )
+    : ['- None']),
   '',
   '## Manual-review channels',
   '',
