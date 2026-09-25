@@ -75,11 +75,12 @@
       "23-hall-addresses",
       "barangay-official-websites",
       "barangay-email-coverage",
-      "official-social-channel-coverage"
+      "official-social-channel-coverage",
+      "barangay-published-service-details"
     ],
     "gaps": [
-      "All 23 current barangays now have a hall address in the structured profile. Hall email coverage is 14 of 23; verified standalone barangay websites cover 6 of 23 and verified official Facebook channels cover 5 of 23.",
-      "Common barangay transactions are available across all barangay homepages, but barangay-specific fees, requirements, turnaround times and local process variations still need field-by-field verification where published."
+      "Hall addresses are structured for all 23 current barangays. Email, standalone website and official social-channel coverage remains uneven and is kept off the main barangay gateway.",
+      "Locally published service details are now surfaced where a barangay exposes a usable official service source, including Bel-Air, Olympia, Pio Del Pilar, Poblacion and San Lorenzo; other barangays still use the citywide common-transaction layer until barangay-specific requirements are published and verified."
     ]
   },
   {
