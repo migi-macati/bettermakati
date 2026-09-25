@@ -31,7 +31,8 @@ for (const marker of [
 
 for (const marker of [
   'Accountability-linked developments',
-  'Source-review queue',
+  'Freshness review queue',
+  '/records#freshness-review-queue',
   'Permanent brief archive',
   'Share-ready text',
   'Barangay relevance',
