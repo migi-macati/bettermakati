@@ -81,7 +81,7 @@
         "type": "Alias[]?",
         "itemShape": {
           "name": "string",
-          "kind": "current-alternate | former-name | historical-name | abbreviation | local-name",
+          "kind": "current-alternate | former-name | historical-name | abbreviation | local-name | unclassified",
           "note": "string?"
         },
         "description": "Alternative names for the same place identity. A predecessor or successor is not an alias unless the evidence supports continuous identity."
@@ -381,5 +381,8 @@
       "Do not reopen completed place research.",
       "Stop after data-layer refactor and focused type/build validation."
     ]
-  }
+  },
+  "implementationNotes": [
+    "W3R-2b adds alias kind 'unclassified' as a migration-safe state so legacy alias strings are preserved without guessing whether they are current, former, historical, abbreviations or local names."
+  ]
 }
