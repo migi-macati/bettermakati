@@ -1,0 +1,474 @@
+{
+  "schemaVersion": 1,
+  "classifiedAt": "2026-09-25",
+  "workstream": "Wave 3A-2 — Participation capability classification",
+  "basis": "Compared the intended Wave 3B–3I scope against data/wave3-participation-inventory.json and the current implementation. This step classifies only; it does not change participation behavior.",
+  "statusDefinitions": {
+    "complete": "The intended capability is implemented end-to-end enough for the current BetterMakati scope.",
+    "partial": "A functional implementation exists, but an intended part of the capability is materially incomplete.",
+    "missing": "The intended capability is not implemented in a meaningful usable form.",
+    "intentionallyDeferred": "The capability is deliberately not automated or expanded until reliable data, volume, authority, or governance exists."
+  },
+  "summary": {
+    "complete": 20,
+    "partial": 10,
+    "missing": 4,
+    "intentionallyDeferred": 4
+  },
+  "workstreams": [
+    {
+      "id": "3B",
+      "title": "Participation Hub",
+      "overall": "partial",
+      "capabilities": [
+        {
+          "id": "3B-1-official-vs-bettermakati",
+          "capability": "Distinguish official participation from BetterMakati community input",
+          "status": "complete",
+          "evidence": [
+            "/participate visibly separates Official participation and BetterMakati community input."
+          ]
+        },
+        {
+          "id": "3B-1-task-entrypoints",
+          "capability": "Task-led entry points for reporting, suggestions, corrections, sources, volunteering and official participation",
+          "status": "partial",
+          "evidence": [
+            "/participate directly exposes proposals, source submissions and corrections.",
+            "/get-involved exposes proposal, idea, source, correction, volunteer and contact actions.",
+            "Public-place reporting is prominently exposed from /participate only when a barangay scope is active, rather than as a universal participation-hub action."
+          ],
+          "gap": "The participation hub does not yet present the complete intended task set from one citywide starting point."
+        },
+        {
+          "id": "3B-2-routing",
+          "capability": "Each participation choice routes to a functional destination",
+          "status": "complete",
+          "evidence": [
+            "General contributions route to /get-involved and /api/feedback.",
+            "Public-realm reporting routes to Civic Map.",
+            "Official city opportunities link to the responsible public source.",
+            "Cross-LGU and external civic actions have explicit handoffs."
+          ]
+        },
+        {
+          "id": "3B-3-barangay-context",
+          "capability": "Carry BetterBarangay context into participation actions",
+          "status": "partial",
+          "evidence": [
+            "/participate reads barangay query scope.",
+            "Civic Map retains barangay query scope.",
+            "Participation generates a barangay-scoped source-submission URL."
+          ],
+          "gap": "Get Involved does not initialize its barangay field from the barangay query parameter, so that generated context is currently lost at the form."
+        },
+        {
+          "id": "3B-official-opportunity-discovery",
+          "capability": "Show current official consultations, hearings, assemblies and similar opportunities",
+          "status": "partial",
+          "evidence": [
+            "The data model and UI are implemented.",
+            "The current indexed opportunity list is empty and links users to official Makati events when no opportunity is available."
+          ],
+          "gap": "No complete authoritative current citywide consultation calendar has been located."
+        },
+        {
+          "id": "3B-4-mobile-accessibility",
+          "capability": "Dedicated mobile/accessibility QA for the participation hub",
+          "status": "missing",
+          "evidence": [
+            "No dedicated Wave 3 participation-hub mobile/accessibility test suite is recorded."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "3C",
+      "title": "Civic Reporting",
+      "overall": "partial",
+      "capabilities": [
+        {
+          "id": "3C-1-categories",
+          "capability": "Useful issue and improvement categories",
+          "status": "complete",
+          "evidence": [
+            "33 issue categories and 17 proposal categories are defined, including streets, accessibility, drainage, transport, parks and public facilities."
+          ]
+        },
+        {
+          "id": "3C-2-report-form",
+          "capability": "Functional report/proposal/review/update form",
+          "status": "complete",
+          "evidence": [
+            "Asset pages accept reports, proposals, ratings/reviews and updates through /api/civic.",
+            "Input cleaning, length limits, evidence URLs, public aliases and validation are implemented."
+          ]
+        },
+        {
+          "id": "3C-3-geographic-handling",
+          "capability": "Barangay, asset, point/segment and long-street geographic handling",
+          "status": "partial",
+          "evidence": [
+            "Civic assets carry barangay and coordinates.",
+            "Street segments support from/to and side metadata.",
+            "Duplicate checks use asset/category and coordinates where present."
+          ],
+          "gap": "The live seed map has only six assets, so the geographic model is much broader than actual city coverage."
+        },
+        {
+          "id": "3C-4-emergency-handling",
+          "capability": "Keep emergency cases out of BetterMakati and route immediately to the appropriate emergency channel",
+          "status": "complete",
+          "evidence": [
+            "Emergency categories are explicitly defined.",
+            "/api/civic rejects emergency submissions and returns a 911 handoff.",
+            "Asset pages visibly tell users to call 911 for immediate danger."
+          ]
+        },
+        {
+          "id": "3C-5-duplicate-consolidation",
+          "capability": "Detect and consolidate likely duplicate public-realm cases",
+          "status": "complete",
+          "evidence": [
+            "Open reports/proposals on the same asset/category are checked for proximity and return existing cases before creating a duplicate."
+          ]
+        },
+        {
+          "id": "3C-6-confirmation",
+          "capability": "Clear post-submission confirmation and tracking",
+          "status": "complete",
+          "evidence": [
+            "Successful native submissions return a public GitHub reference and URL.",
+            "Fallback GitHub issue URLs are supplied when native storage is unavailable."
+          ]
+        },
+        {
+          "id": "3C-citywide-coverage",
+          "capability": "Meaningful citywide Civic Map asset coverage",
+          "status": "partial",
+          "evidence": [
+            "Only six seed assets are currently mapped/piloted."
+          ],
+          "gap": "Asset and especially verified public-transport route/stop coverage still need expansion."
+        }
+      ]
+    },
+    {
+      "id": "3D",
+      "title": "Referral Lifecycle",
+      "overall": "complete-with-deferred-automation",
+      "capabilities": [
+        {
+          "id": "3D-1-status-model",
+          "capability": "Distinct lifecycle states from community submission through resolution",
+          "status": "complete",
+          "evidence": [
+            "Supported admin states are reviewed, forwarded, acknowledged, action-reported and community-verified-resolved.",
+            "Unverified and community-corroborated evidence states remain distinct from official lifecycle events."
+          ]
+        },
+        {
+          "id": "3D-2-data-structure",
+          "capability": "Store lifecycle events with destination/channel/reference evidence",
+          "status": "complete",
+          "evidence": [
+            "/api/civic-admin records authority, channel, external reference, note and timestamp as machine-readable GitHub comments."
+          ]
+        },
+        {
+          "id": "3D-3-public-status",
+          "capability": "Present meaningful public lifecycle status without overstating government action",
+          "status": "complete",
+          "evidence": [
+            "Civic reporting distinguishes community corroboration, BetterMakati review/referral, authority acknowledgement/action and community-verified resolution."
+          ]
+        },
+        {
+          "id": "3D-4-human-review",
+          "capability": "Require human review before referral to government",
+          "status": "complete",
+          "evidence": [
+            "Referral eligibility is surfaced as a queue rather than automatically sent.",
+            "Forwarded is recorded separately from acknowledged."
+          ]
+        },
+        {
+          "id": "3D-auto-forwarding",
+          "capability": "Automatic delivery of eligible cases to government channels",
+          "status": "intentionallyDeferred",
+          "reason": "Reliable destination, authorization, evidence and accountability rules should be established before automated forwarding."
+        }
+      ]
+    },
+    {
+      "id": "3E",
+      "title": "Suggestions, Corrections & Source Contributions",
+      "overall": "partial",
+      "capabilities": [
+        {
+          "id": "3E-1-page-correction",
+          "capability": "Page-specific correction path",
+          "status": "complete",
+          "evidence": [
+            "PageHelp exposes Suggest a correction on most standard pages and pre-fills the current route in the subject."
+          ]
+        },
+        {
+          "id": "3E-2-suggestions",
+          "capability": "General idea/proposal submission",
+          "status": "complete",
+          "evidence": [
+            "Get Involved supports both proposal and idea submission types with public GitHub tracking/fallback."
+          ]
+        },
+        {
+          "id": "3E-3-source-contribution",
+          "capability": "Submit a public source or record",
+          "status": "complete",
+          "evidence": [
+            "Get Involved supports a Source submission with optional URL and area/barangay."
+          ]
+        },
+        {
+          "id": "3E-4-general-deduplication",
+          "capability": "Deduplicate general corrections, ideas and source submissions",
+          "status": "missing",
+          "evidence": [
+            "/api/feedback creates a new GitHub issue for a valid submission.",
+            "Duplicate detection exists for Civic Map cases, not the general feedback workflow."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "3F",
+      "title": "Get Involved",
+      "overall": "complete",
+      "capabilities": [
+        {
+          "id": "3F-1-contribution-paths",
+          "capability": "Concrete contribution paths instead of generic civic-engagement copy",
+          "status": "complete",
+          "evidence": [
+            "The page offers proposal, idea, source, correction, volunteer and contact actions that all feed the structured form."
+          ]
+        },
+        {
+          "id": "3F-2-native-submission",
+          "capability": "Native BetterMakati submission with transparent public tracking",
+          "status": "complete",
+          "evidence": [
+            "/api/feedback writes to GitHub when configured and returns a public tracking URL."
+          ]
+        },
+        {
+          "id": "3F-3-fallback",
+          "capability": "Submission fallback when native storage is unavailable",
+          "status": "complete",
+          "evidence": [
+            "A pre-filled public GitHub issue link is generated without discarding the user's text."
+          ]
+        },
+        {
+          "id": "3F-4-ecosystem-handoffs",
+          "capability": "Relevant BetterLGU/OpenBayan participation handoffs",
+          "status": "complete",
+          "evidence": [
+            "Get Involved links to BetterLGU and OpenBayan for out-of-scope journeys."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "3G",
+      "title": "Barangay Participation",
+      "overall": "partial",
+      "capabilities": [
+        {
+          "id": "3G-1-scoped-civic-map",
+          "capability": "Barangay-scoped public-realm participation",
+          "status": "complete",
+          "evidence": [
+            "Participation can launch Civic Map scoped to the selected barangay.",
+            "Civic Map filters assets using the BetterBarangay query scope."
+          ]
+        },
+        {
+          "id": "3G-2-barangay-contact",
+          "capability": "Surface barangay government contact near participation actions",
+          "status": "complete",
+          "evidence": [
+            "Barangay-scoped Participation surfaces the verified barangay hall email where available or the official barangay page."
+          ]
+        },
+        {
+          "id": "3G-3-scoped-general-contribution",
+          "capability": "Carry barangay context into general source/correction/proposal forms",
+          "status": "partial",
+          "gap": "The upstream URL includes barangay, but Get Involved does not prefill the barangay field from it."
+        },
+        {
+          "id": "3G-4-barangay-activity",
+          "capability": "Barangay-specific issue/activity summaries based on real submissions",
+          "status": "partial",
+          "evidence": [
+            "Civic Map can scope assets and cases, but coverage is too small to provide a meaningful citywide barangay activity layer yet."
+          ],
+          "gap": "Sparse asset/submission coverage limits usefulness outside current pilot areas."
+        }
+      ]
+    },
+    {
+      "id": "3H",
+      "title": "Participation Feedback Loop",
+      "overall": "partial",
+      "capabilities": [
+        {
+          "id": "3H-1-simple-counts",
+          "capability": "Simple public participation counts by recent period",
+          "status": "complete",
+          "evidence": [
+            "Civic Reports publishes weekly new cases/proposals/open/corroborated/referral/resolution signals and monthly case/proposal/review counts."
+          ]
+        },
+        {
+          "id": "3H-2-resolution-evidence",
+          "capability": "Separate community resolution signals from verified lifecycle resolution",
+          "status": "complete",
+          "evidence": [
+            "Community resolved comments are counted separately.",
+            "Community-verified-resolved is an authenticated lifecycle event and closes the civic case."
+          ]
+        },
+        {
+          "id": "3H-3-periodic-synthesis",
+          "capability": "Weekly/monthly public participation synthesis",
+          "status": "complete",
+          "evidence": [
+            "Civic Map Reports provides weekly operational and monthly public-realm summaries."
+          ]
+        },
+        {
+          "id": "3H-4-general-participation-metrics",
+          "capability": "Measure response time, conversion and outcomes across all BetterMakati participation channels",
+          "status": "missing",
+          "evidence": [
+            "page-audit.json explicitly records the lack of longitudinal response-time and participation-conversion measurement."
+          ]
+        },
+        {
+          "id": "3H-low-volume-headline-metrics",
+          "capability": "Publish headline popularity/engagement metrics before enough observations exist",
+          "status": "intentionallyDeferred",
+          "reason": "The site already avoids treating small community samples as representative."
+        }
+      ]
+    },
+    {
+      "id": "3I",
+      "title": "Participation QA",
+      "overall": "partial",
+      "capabilities": [
+        {
+          "id": "3I-1-existing-critical-paths",
+          "capability": "Basic browser coverage for Civic Map participation journeys",
+          "status": "complete",
+          "evidence": [
+            "Critical-path tests cover Civic Map reports, failed-feed behavior, barangay → scoped Civic Map and national infrastructure handoffs."
+          ]
+        },
+        {
+          "id": "3I-2-full-page-audit-coverage",
+          "capability": "Human page-audit coverage for every major participation surface",
+          "status": "missing",
+          "evidence": [
+            "/get-involved, /civic-map/reports and /contact are not currently listed in page-audit.json."
+          ]
+        },
+        {
+          "id": "3I-3-end-to-end-submission",
+          "capability": "End-to-end browser tests for POST submission, fallback, tracking and lifecycle transitions",
+          "status": "missing",
+          "evidence": [
+            "No complete E2E POST submission/lifecycle suite is recorded."
+          ]
+        },
+        {
+          "id": "3I-4-mobile-accessibility",
+          "capability": "Dedicated mobile, keyboard, label, focus and error-state QA across the participation journey",
+          "status": "partial",
+          "evidence": [
+            "Site-wide QA infrastructure exists, but the participation workstream does not yet have dedicated coverage for the full journey."
+          ]
+        },
+        {
+          "id": "3I-5-privacy-boundary",
+          "capability": "Avoid unnecessary personal data and warn against sensitive submissions",
+          "status": "complete",
+          "evidence": [
+            "General submissions do not require identity/contact fields.",
+            "Get Involved explicitly warns against passwords, IDs, medical information and other sensitive personal data.",
+            "Civic submissions allow a public alias rather than requiring identity."
+          ]
+        }
+      ]
+    }
+  ],
+  "intentionalDeferrals": [
+    {
+      "capability": "Automatic government forwarding",
+      "reason": "Human review protects against wrong jurisdiction, weak evidence, unsafe automation and false claims of official receipt."
+    },
+    {
+      "capability": "Complete official consultation calendar",
+      "reason": "Deferred as a completeness claim until a sufficiently authoritative and comprehensive current source exists.",
+      "currentClassification": "The discovery interface is partial; inventing missing opportunities is not permitted."
+    },
+    {
+      "capability": "Headline community ratings without sufficient sample size/recency",
+      "reason": "The Civic Map already withholds representative-looking headline scores until evidence volume is sufficient."
+    },
+    {
+      "capability": "Rich barangay activity comparisons before coverage is adequate",
+      "reason": "Sparse pilot assets/submissions would make cross-barangay comparison misleading."
+    }
+  ],
+  "prioritySignalsFor3A3": [
+    {
+      "priority": "high",
+      "gaps": [
+        "Participation hub lacks one complete citywide task-led entry set.",
+        "Barangay scope is dropped when Get Involved opens.",
+        "Major participation pages are absent from page-audit.json.",
+        "No dedicated end-to-end submission/lifecycle browser coverage."
+      ]
+    },
+    {
+      "priority": "medium",
+      "gaps": [
+        "General feedback has no duplicate detection.",
+        "Civic Map actual asset coverage remains very small relative to its data model.",
+        "Participation response time/conversion/outcome metrics are not measured longitudinally."
+      ]
+    },
+    {
+      "priority": "source-dependent",
+      "gaps": [
+        "No complete authoritative current official participation calendar."
+      ]
+    }
+  ],
+  "architectureDecision": {
+    "generalFeedbackVsCivicMap": "keep-separate",
+    "rationale": [
+      "General BetterMakati corrections/sources/ideas are project-governance inputs.",
+      "Civic Map reports/proposals/ratings are public-realm case records with geographic, evidence, corroboration and referral semantics.",
+      "Merging the backends would erase a meaningful workflow distinction. The UX should instead make the choice clear."
+    ]
+  },
+  "nextStep": {
+    "id": "3A-3",
+    "title": "Freeze the Wave 3 gap list and execution order",
+    "output": "Turn the classifications into a small, non-overlapping implementation backlog. Do not begin 3B implementation in the same step."
+  }
+}
