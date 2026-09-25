@@ -182,8 +182,10 @@ const sources = watchlist.map(source => {
 });
 
 const runAt = new Date().toISOString();
+const delegatedCount = watchlist.filter(source => source.owner === 'city-monitor').length;
 const summary = {
   checked: checked.length,
+  delegated: delegatedCount,
   ok: checked.filter(result => result.status === 'ok').length,
   failed: checked.filter(result => result.status !== 'ok').length,
   changed: checked.filter(result => result.change === 'content-changed').length,
@@ -263,7 +265,8 @@ const report = [
   '',
   `Checked: ${runAt}`,
   `Cadence: ${cadence}`,
-  `Sources checked: ${summary.checked} of ${watchlist.length}`,
+  `Sources checked by general freshness: ${summary.checked}`,
+  `Delegated to City Monitor: ${delegatedCount} of ${watchlist.length} catalog sources`,
   `Successful checks: ${summary.ok}`,
   `Failed checks: ${summary.failed}`,
   `Stable-document content changes requiring review: ${summary.changed}`,
