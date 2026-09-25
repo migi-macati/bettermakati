@@ -382,6 +382,10 @@ export default function ServiceGuide() {
   const prepare = guidance?.prepare || prepareByType[item.type] || prepareByType.Other;
   const steps = guidance?.steps || standardSteps(item);
   const destinationIsExternal = item.href.startsWith('http');
+  const betterGovOwnsNationalGuide =
+    item.level === 'National' &&
+    item.nationalIntegration?.betterGov.status === 'listed' &&
+    !detail;
 
   return (
     <>
@@ -414,7 +418,8 @@ export default function ServiceGuide() {
         />
       </Section>
 
-      <Section className="bg-white">
+      {!betterGovOwnsNationalGuide && (
+        <Section className="bg-white">
         {detail ? (
           <>
             <div>
@@ -582,7 +587,8 @@ export default function ServiceGuide() {
             )}
           </>
         )}
-      </Section>
+        </Section>
+      )}
 
       <Section className="bg-[#f5f8f2]">
         <div className="section-eyebrow">Where to go</div>
