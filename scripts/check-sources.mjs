@@ -225,6 +225,7 @@ const mapItem = result => ({
   kind: result.kind,
   cadence: result.cadence,
   monitoringMode: result.monitoringMode,
+  affectedPages: Array.isArray(result.affectedPages) ? result.affectedPages : [],
 });
 
 const historyRun = {
@@ -278,13 +279,13 @@ const report = [
   ...(changed.length
     ? changed.map(
         item =>
-          `- **Content changed:** ${item.label} — review the stable source document before changing any BetterMakati claim: ${item.url}`
+          `- **Content changed:** ${item.label} — review ${item.affectedPages.join(', ') || 'the dependent BetterMakati page'} before changing any claim: ${item.url}`
       )
     : ['- No stable-document content change was detected in this run.']),
   ...(failed.length
     ? failed.map(
         item =>
-          `- **Check failed:** ${item.label} — ${item.status} (${item.statusCode ?? 'no response'}): ${item.url}`
+          `- **Check failed:** ${item.label} — ${item.status} (${item.statusCode ?? 'no response'}). Review ${item.affectedPages.join(', ') || 'the dependent BetterMakati page'} if the failure persists: ${item.url}`
       )
     : ['- No source check failed in this run.']),
   ...(baselines.length
