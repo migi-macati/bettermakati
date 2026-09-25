@@ -11,7 +11,7 @@ permissions:
   issues: write
 
 concurrency:
-  group: freshness-main-writer
+  group: scheduled-main-writer
   cancel-in-progress: false
 
 jobs:
