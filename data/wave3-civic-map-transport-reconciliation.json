@@ -222,140 +222,280 @@
           "association": "ACPTSA",
           "from": "Ayala",
           "to": "Pateros",
-          "currentStatus": "not-yet-verified"
+          "currentStatus": "current-corridor-association-continuity-unresolved",
+          "currentEvidence": [
+            {
+              "label": "Current LTFRB-labelled Ayala–Pateros via J.P. Rizal route feed",
+              "url": "https://moovitapp.com/index/en/public_transit-line-JEEP-Manila-1022-9969-7638077-0"
+            }
+          ],
+          "reconciliationNotes": "Ayala–Pateros remains current; ACPTSA itself is not independently verified as the current operator/cooperative."
         },
         {
           "publishedNo": 2,
           "association": "PABALADJOAI",
           "from": "Ayala",
           "to": "Pateros",
-          "currentStatus": "not-yet-verified"
+          "currentStatus": "current-corridor-association-continuity-unresolved",
+          "currentEvidence": [
+            {
+              "label": "Current LTFRB-labelled Ayala–Pateros via J.P. Rizal route feed",
+              "url": "https://moovitapp.com/index/en/public_transit-line-JEEP-Manila-1022-9969-7638077-0"
+            }
+          ],
+          "reconciliationNotes": "Same current corridor as row 1; PABALADJOAI continuity is not independently verified."
         },
         {
           "publishedNo": 3,
           "association": "AJODA",
           "from": "Ayala",
           "to": "Washington",
-          "currentStatus": "not-yet-verified"
+          "currentStatus": "current-corridor-association-continuity-unresolved",
+          "currentEvidence": [
+            {
+              "label": "Current LTFRB-labelled Ayala–Washington route feed",
+              "url": "https://moovitapp.com/index/en/public_transit-line-JEEP-Manila-1022-9969-7637816-1"
+            }
+          ],
+          "reconciliationNotes": "Ayala–Washington remains current; AJODA continuity is not independently verified."
         },
         {
           "publishedNo": 4,
           "association": "AZADA",
           "from": "Ayala",
           "to": "Zapote",
-          "currentStatus": "not-yet-verified"
+          "currentStatus": "current-corridor-association-continuity-unresolved",
+          "currentEvidence": [
+            {
+              "label": "Current LTFRB-labelled Ayala–Zapote route feed",
+              "url": "https://moovitapp.com/index/en/public_transit-line-JEEP-Manila-1022-9969-7637785-0"
+            }
+          ],
+          "reconciliationNotes": "Ayala–Zapote remains current; AZADA continuity is not independently verified."
         },
         {
           "publishedNo": 5,
           "association": "GIAMADA",
           "from": "Ayala",
           "to": "Guadalupe Ibabaw",
-          "currentStatus": "not-yet-verified"
+          "currentStatus": "current-corridor-association-continuity-unresolved",
+          "currentEvidence": [
+            {
+              "label": "Current Guadalupe Public Market route feed includes Guadalupe Ibabaw–Ayala",
+              "url": "https://moovitapp.com/index/en/public_transit-Guadalupe_Public_Market-Manila-site_39782418-1022"
+            }
+          ],
+          "reconciliationNotes": "Current route feed identifies Guadalupe Ibabaw–Ayala; GIAMADA continuity is not independently verified."
         },
         {
           "publishedNo": 6,
           "association": "AMODA",
           "from": "Ayala",
           "to": "Mantrade",
-          "currentStatus": "not-yet-verified"
+          "currentStatus": "current-corridor-association-continuity-unresolved",
+          "currentEvidence": [
+            {
+              "label": "Current LTFRB-labelled Ayala–Mantrade via Pasong Tamo route feed",
+              "url": "https://moovitapp.com/index/en/public_transit-line-jeep-Manila-1022-9969-7638136-1"
+            }
+          ],
+          "reconciliationNotes": "Ayala–Mantrade via Pasong Tamo remains current; AMODA continuity is not independently verified."
         },
         {
           "publishedNo": 7,
           "association": "BEWODA",
           "from": "Bel-Air",
           "to": "Washington",
-          "currentStatus": "not-yet-verified"
+          "currentStatus": "current-corridor-association-continuity-unresolved",
+          "currentEvidence": [
+            {
+              "label": "Current LTFRB-labelled Bel-Air–Washington route feed",
+              "url": "https://moovitapp.com/index/en/public_transit-line-jeep-Manila-1022-9969-7637819-0"
+            }
+          ],
+          "reconciliationNotes": "Bel-Air–Washington remains current; BEWODA continuity is not independently verified."
         },
         {
           "publishedNo": 8,
           "association": "GUAPODA",
           "from": "Guadalupe",
           "to": "Cartimar",
-          "currentStatus": "not-yet-verified"
+          "currentStatus": "current-corridor-association-continuity-unresolved",
+          "currentEvidence": [
+            {
+              "label": "Current LTFRB-labelled Guadalupe–Cartimar route feed",
+              "url": "https://moovitapp.com/index/en/public_transit-line-JEEP-Manila-1022-9969-7637873-0"
+            }
+          ],
+          "reconciliationNotes": "Guadalupe–Cartimar remains current; GUAPODA continuity is not independently verified."
         },
         {
           "publishedNo": 9,
           "association": "GUACEMPAJODA",
           "from": "Guadalupe",
           "to": "Pateros",
-          "currentStatus": "not-yet-verified"
+          "currentStatus": "current-corridor-association-continuity-unresolved",
+          "currentEvidence": [
+            {
+              "label": "Current LTFRB-labelled Guadalupe–Pateros route feed",
+              "url": "https://moovitapp.com/index/en/public_transit-line-jeep-Manila-1022-9969-7638088-0"
+            }
+          ],
+          "reconciliationNotes": "Guadalupe–Pateros remains current; GUACEMPAJODA continuity is not independently verified."
         },
         {
           "publishedNo": 10,
           "association": "JOPREXJODA",
           "from": "Guadalupe",
           "to": "Pateros",
-          "currentStatus": "not-yet-verified"
+          "currentStatus": "current-corridor-association-continuity-unresolved",
+          "currentEvidence": [
+            {
+              "label": "Current LTFRB-labelled Guadalupe–Pateros route feed",
+              "url": "https://moovitapp.com/index/en/public_transit-line-jeep-Manila-1022-9969-7638088-0"
+            }
+          ],
+          "reconciliationNotes": "Guadalupe–Pateros remains current; JOPREXJODA continuity is not independently verified."
         },
         {
           "publishedNo": 11,
           "association": "HIPADA",
           "from": "Guadalupe",
           "to": "Pateros",
-          "currentStatus": "not-yet-verified"
+          "currentStatus": "current-corridor-association-continuity-unresolved",
+          "currentEvidence": [
+            {
+              "label": "Current LTFRB-labelled Guadalupe–Pateros route feed",
+              "url": "https://moovitapp.com/index/en/public_transit-line-jeep-Manila-1022-9969-7638088-0"
+            }
+          ],
+          "reconciliationNotes": "Guadalupe–Pateros remains current; HIPADA continuity is not independently verified."
         },
         {
           "publishedNo": 12,
           "association": "HIPAJODA",
           "from": "Guadalupe",
           "to": "Pateros",
-          "currentStatus": "not-yet-verified"
+          "currentStatus": "current-corridor-association-continuity-unresolved",
+          "currentEvidence": [
+            {
+              "label": "Current LTFRB-labelled Guadalupe–Pateros route feed",
+              "url": "https://moovitapp.com/index/en/public_transit-line-jeep-Manila-1022-9969-7638088-0"
+            }
+          ],
+          "reconciliationNotes": "Guadalupe–Pateros remains current; HIPAJODA continuity is not independently verified."
         },
         {
           "publishedNo": 13,
           "association": "GUADAKABUDOA",
           "from": "Guadalupe",
           "to": "Buting",
-          "currentStatus": "not-yet-verified"
+          "currentStatus": "current-corridor-association-continuity-unresolved",
+          "currentEvidence": [
+            {
+              "label": "Current LTFRB-labelled Guadalupe–Buting route feed",
+              "url": "https://moovitapp.com/index/en/public_transit-line-JEEP-Manila-1022-9969-7637774-0"
+            }
+          ],
+          "reconciliationNotes": "Guadalupe–Buting remains current; GUADAKABUDOA continuity is not independently verified."
         },
         {
           "publishedNo": 14,
           "association": "GUAWBUJODA",
           "from": "Guadalupe",
           "to": "FTI",
-          "currentStatus": "not-yet-verified"
+          "currentStatus": "current-corridor-association-continuity-unresolved",
+          "currentEvidence": [
+            {
+              "label": "Current Guadalupe FTI terminal/route feed, updated Sept. 2026",
+              "url": "https://moovitapp.com/index/en/public_transit-Guadalupe_Jeepney_Terminal-Manila-site_181961412-1022"
+            }
+          ],
+          "reconciliationNotes": "Guadalupe–FTI remains current; GUAWBUJODA continuity is not independently verified."
         },
         {
           "publishedNo": 15,
           "association": "GUAFTIODAI-O",
           "from": "Guadalupe",
           "to": "FTI",
-          "currentStatus": "not-yet-verified"
+          "currentStatus": "current-corridor-association-continuity-unresolved",
+          "currentEvidence": [
+            {
+              "label": "Current Guadalupe FTI terminal/route feed, updated Sept. 2026",
+              "url": "https://moovitapp.com/index/en/public_transit-Guadalupe_Jeepney_Terminal-Manila-site_181961412-1022"
+            }
+          ],
+          "reconciliationNotes": "Guadalupe–FTI remains current; GUAFTIODAI-O continuity is not independently verified."
         },
         {
           "publishedNo": 16,
           "association": "GUAFTIODAI-TRIANGLE",
           "from": "Guadalupe",
           "to": "FTI",
-          "currentStatus": "not-yet-verified"
+          "currentStatus": "current-corridor-association-continuity-unresolved",
+          "currentEvidence": [
+            {
+              "label": "Current Guadalupe FTI terminal/route feed, updated Sept. 2026",
+              "url": "https://moovitapp.com/index/en/public_transit-Guadalupe_Jeepney_Terminal-Manila-site_181961412-1022"
+            }
+          ],
+          "reconciliationNotes": "Guadalupe–FTI remains current; GUAFTIODAI-TRIANGLE continuity is not independently verified."
         },
         {
           "publishedNo": 17,
           "association": "TEPVJODAI",
           "from": "Guadalupe",
           "to": "Housing",
-          "currentStatus": "not-yet-verified"
+          "currentStatus": "current-corridor-endpoint-label-modernized-association-unresolved",
+          "currentEvidence": [
+            {
+              "label": "Current AFP/PNP Housing–Guadalupe route feed, updated Sept. 2026",
+              "url": "https://moovitapp.com/index/en/public_transit-Afp_Pnp_Housing_Phase_1-Manila-site_46069250-1022"
+            }
+          ],
+          "reconciliationNotes": "The current route is explicitly AFP/PNP Housing (Taguig)–Guadalupe; the 2020 shorthand 'Housing' is treated as corridor lineage, not exact unchanged naming."
         },
         {
           "publishedNo": 18,
           "association": "TUBOJODA",
           "from": "Guadalupe",
           "to": "Fort Bonifacio Gate 3",
-          "currentStatus": "not-yet-verified"
+          "currentStatus": "current-corridor-association-continuity-unresolved",
+          "currentEvidence": [
+            {
+              "label": "Current LTFRB-labelled Fort Bonifacio Gate III–Guadalupe route feed",
+              "url": "https://moovitapp.com/index/en/public_transit-line-jeep-Manila-1022-9969-7638268-1"
+            }
+          ],
+          "reconciliationNotes": "Fort Bonifacio Gate III–Guadalupe remains current; TUBOJODA continuity is not independently verified."
         },
         {
           "publishedNo": 19,
           "association": "GLMATJODA",
           "from": "Guadalupe",
           "to": "L. Guinto",
-          "currentStatus": "not-yet-verified"
+          "currentStatus": "current-corridor-current-variant-mapping-unresolved",
+          "currentEvidence": [
+            {
+              "label": "Current LTFRB-labelled Guadalupe Market–L. Guinto via P. Gil route feed",
+              "url": "https://moovitapp.com/index/en/public_transit-line-JEEP-Manila-1022-9969-7638269-1"
+            }
+          ],
+          "reconciliationNotes": "Guadalupe Market–L. Guinto remains current, but the old GLMATJODA association cannot be tied with confidence to the current via-P. Gil versus other variant."
         },
         {
           "publishedNo": 20,
           "association": "LABGUADJODA",
           "from": "Guadalupe",
           "to": "L. Guinto",
-          "currentStatus": "not-yet-verified"
+          "currentStatus": "current-corridor-current-variant-mapping-unresolved",
+          "currentEvidence": [
+            {
+              "label": "Current LTFRB-labelled Guadalupe Market–L. Guinto via P. Gil route feed",
+              "url": "https://moovitapp.com/index/en/public_transit-line-JEEP-Manila-1022-9969-7638269-1"
+            }
+          ],
+          "reconciliationNotes": "Guadalupe Market–L. Guinto remains current, but LABGUADJODA cannot be tied with confidence to a specific current variant."
         },
         {
           "publishedNo": 21,
@@ -483,7 +623,12 @@
           "to": "Libertad",
           "currentStatus": "not-yet-verified"
         }
-      ]
+      ],
+      "reconciliationBatches": [
+        "data/wave3-civic-map-jeepney-routes-reconciliation-a.json"
+      ],
+      "rowsReconciled": 20,
+      "rowsRemaining": 18
     },
     {
       "family": "Other 2020 transport modes",
