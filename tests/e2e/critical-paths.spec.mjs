@@ -623,6 +623,13 @@ test('Public Records exposes current source freshness state', async ({ page }) =
   );
   expect(delegated.every(item => item.delegated === true)).toBeTruthy();
   expect(catalog.find(item => item.id === 'philgeps')?.monitoringMode).toBe('content-hash');
+  expect(catalog.find(item => item.id === 'comelec-2026-bske-calendar')?.affectedPages).toContain('/elections');
+  expect(catalog.find(item => item.id === 'makati-budget-2026')?.affectedPages).toEqual(
+    expect.arrayContaining(['/projects-budget', '/accountability'])
+  );
+  expect(catalog.find(item => item.id === 'philgeps')?.affectedPages).toEqual(
+    expect.arrayContaining(['/projects-budget', '/accountability', '/city-monitor'])
+  );
 });
 
 test('BetterMakati Status exposes source freshness automation', async ({ page }) => {
@@ -711,6 +718,24 @@ test('City Monitor exposes the editorial review queue and monitoring modes', asy
   await expect(page.getByText('content-change detection', { exact: true })).toBeVisible();
   await expect(page.getByText('reachability only', { exact: true }).first()).toBeVisible();
   await expect(page.getByText('manual review', { exact: true })).toBeVisible();
+
+  const stateResponse = await page.request.get(baseURL + '/city-monitor-source-state.json');
+  expect(stateResponse.ok()).toBeTruthy();
+  const state = await stateResponse.json();
+  const philgeps = state.sources.find(item => item.id === 'philgeps');
+  expect(philgeps?.affectedPages).toEqual(
+    expect.arrayContaining(['/projects-budget', '/accountability', '/city-monitor'])
+  );
+
+  const historyResponse = await page.request.get(baseURL + '/city-monitor-source-history.json');
+  expect(historyResponse.ok()).toBeTruthy();
+  const history = await historyResponse.json();
+  const latestPhilgepsSignal = history.runs
+    .flatMap(run => [...(run.changed || []), ...(run.failed || [])])
+    .find(item => item.id === 'philgeps');
+  if (latestPhilgepsSignal) {
+    expect(latestPhilgepsSignal.affectedPages).toContain('/projects-budget');
+  }
 });
 
 test('City Monitor indexes structured procurement as permanent records', async ({ page }) => {
