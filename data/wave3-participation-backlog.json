@@ -790,7 +790,7 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Disposition current Wave 3 capabilities",
       "maximumScope": "Create one audit classifying each existing Wave 3 capability as KEEP, REFRAME, REPLACE, DEFER or RETIRE. No code or UX changes.",
-      "status": "next",
+      "status": "complete",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
@@ -804,7 +804,7 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Define shared Place Registry schema",
       "maximumScope": "Schema/design record only. Define canonical place fields and Civic-Map-specific fields. No code migration.",
-      "status": "planned",
+      "status": "next",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
@@ -1365,9 +1365,9 @@
     }
   ],
   "immediateNext": {
-    "id": "W3R-1",
-    "title": "Disposition current Wave 3 capabilities",
-    "maximumScope": "Create one audit classifying each existing Wave 3 capability as KEEP, REFRAME, REPLACE, DEFER or RETIRE. No code or UX changes."
+    "id": "W3R-2a",
+    "title": "Define shared Place Registry schema",
+    "maximumScope": "Schema/design record only. Define canonical place fields, lifecycle/provenance relationships and which fields remain participation-specific. No code migration."
   },
   "reopenedExecutionOrder": [
     "3C-2a",
@@ -1430,8 +1430,10 @@
       "Pause metrics and final QA until redesigned workflows stabilize."
     ],
     "completed": [
-      "W3R-0"
+      "W3R-0",
+      "W3R-1"
     ],
-    "current": "W3R-1"
+    "current": "W3R-2a",
+    "capabilityDispositionAuditFile": "data/wave3-capability-disposition-audit.json"
   }
 }
