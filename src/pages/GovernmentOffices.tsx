@@ -5,6 +5,7 @@ import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
 import LastReviewed from '../components/ui/LastReviewed';
 import { governmentServiceOffices } from '../data/governmentServiceOffices';
+import { placeRegistryById } from '../data/placeRegistry';
 
 const mapsUrl = (query: string) =>
   'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(query);
@@ -74,9 +75,19 @@ export default function GovernmentOffices() {
 
       <Section className="bg-white">
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-          {visible.map(office => (
+          {visible.map(office => {
+            const place = office.placeId ? placeRegistryById.get(office.placeId) : undefined;
+
+            return (
             <article key={office.id} id={office.id} className="scroll-mt-28 rounded-2xl border border-gray-200 bg-white p-5">
-              <div className="text-xs font-bold text-primary-700">{office.scope}</div>
+              <div className="flex flex-wrap items-center gap-2 text-xs font-bold">
+                <span className="text-primary-700">{office.scope}</span>
+                {place && (
+                  <span className="rounded-full bg-primary-50 px-2.5 py-1 text-primary-800">
+                    Place Registry
+                  </span>
+                )}
+              </div>
               <h2 className="mt-2 text-lg font-extrabold text-gray-950">{office.name}</h2>
               <div className="mt-1 text-sm font-semibold text-gray-500">{office.agency}</div>
               <div className="mt-4 flex gap-2 text-sm leading-relaxed text-gray-700">
@@ -103,9 +114,18 @@ export default function GovernmentOffices() {
                 <a href={office.sourceUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 font-bold text-primary-700 underline underline-offset-2">
                   Agency source <ExternalLink className="h-3.5 w-3.5" />
                 </a>
+                {place && (
+                  <a
+                    href={'/civic-map/' + place.id}
+                    className="font-bold text-primary-700 underline underline-offset-2"
+                  >
+                    Place details
+                  </a>
+                )}
               </div>
             </article>
-          ))}
+            );
+          })}
         </div>
       </Section>
     </>
