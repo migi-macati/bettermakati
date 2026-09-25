@@ -199,7 +199,21 @@
       "stopWhen": "The civic-space batch is complete and verified.",
       "excludes": [
         "Transport network expansion"
-      ]
+      ],
+      "status": "complete",
+      "completedAt": "2026-09-25",
+      "commits": [
+        "a61473e8bfe86672a51cd93bc22a32704a0049f2",
+        "0816060bf84ac70f8e7d0aceafa3ad6871edc2e8"
+      ],
+      "result": {
+        "addedAssets": [
+          "Ayala Triangle Gardens",
+          "Washington SyCip Park",
+          "Legazpi Active Park"
+        ],
+        "totalCivicAssets": 13
+      }
     },
     {
       "id": "3C-3",
@@ -478,8 +492,8 @@
     }
   ],
   "immediateNext": {
-    "id": "3C-2",
-    "title": "Expand Civic Map parks and civic-space assets",
-    "maximumScope": "One bounded verified parks/civic-space batch only. No transport expansion yet."
+    "id": "3C-3",
+    "title": "Research verified public-transport objects",
+    "maximumScope": "Research and freeze a source-backed transport expansion list only. Do not add transport assets yet."
   }
 }
