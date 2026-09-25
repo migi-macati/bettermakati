@@ -27,10 +27,13 @@
       "office-context",
       "city-permits-transaction-batch",
       "city-health-laboratory-transaction-batch",
-      "anti-sermon-service-ui"
+      "anti-sermon-service-ui",
+      "assessment-services-batch",
+      "civil-registry-transaction-batch",
+      "social-welfare-transaction-batch"
     ],
     "gaps": [
-      "63 of 151 indexed services now have field-by-field transaction guides. The remaining 88 are concentrated in long-tail city permits, barangay transactions and national-agency services that still need source-specific requirements, fees, processing times or current-channel verification."
+      "76 of 151 indexed services now have field-by-field transaction guides. The remaining 75 are concentrated in ancillary building permits, barangay transactions, veterinary services and national-agency services that still need source-specific requirements, fees, processing times or current-channel verification."
     ]
   },
   {
