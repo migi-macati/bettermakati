@@ -185,14 +185,15 @@
     "unresolved": "Remain visible in the audit and prevent a false completeness claim."
   },
   "immediateNext": {
-    "id": "3C-2c2",
-    "title": "Verify current public parks — batch 2",
-    "maximumScope": "Research seven remaining high-priority current public-park candidates only. No Civic Map changes."
+    "id": "3C-2c3",
+    "title": "Resolve older DES public-park entries and aliases",
+    "maximumScope": "Research six older DES park entries only. No Civic Map changes."
   },
   "completedSubsteps": [
     "3C-2a",
     "3C-2b",
-    "3C-2c1"
+    "3C-2c1",
+    "3C-2c2"
   ],
   "inventoryFile": "data/wave3-civic-map-parks-inventory.json",
   "geographyFile": "data/wave3-civic-map-parks-geography.json",
@@ -204,12 +205,13 @@
     "boundaryUncertain": 0
   },
   "currentVerificationFiles": [
-    "data/wave3-civic-map-parks-current-verification-1.json"
+    "data/wave3-civic-map-parks-current-verification-1.json",
+    "data/wave3-civic-map-parks-current-verification-2.json"
   ],
   "currentVerificationSummary": {
-    "researched": 6,
-    "verifiedCurrentPublic": 4,
-    "heldAliasResolution": 1,
+    "researched": 13,
+    "verifiedCurrentPublic": 8,
+    "heldAliasOrIdentityResolution": 4,
     "heldCurrentStatusUnverified": 1
   }
 }
