@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "implementedAt": "2026-09-25",
+  "workstream": "Wave 3C-2d — Implement verified current public parks",
+  "scope": "Verified government-maintained/public parks within present-day Makati only. Private/public-access park reconciliation remains in 3C-2e/2f.",
+  "summary": {
+    "verifiedCurrentPublicParks": 13,
+    "newlyAdded": 12,
+    "correctedExisting": 1,
+    "unresolvedExcluded": 3
+  },
+  "implementedAssets": [
+    "magallanes-interchange-park",
+    "kennely-ann-lacia-binay-park-guadalupe-nuevo",
+    "guadalupe-viejo-cloverleaf-park",
+    "poblacion-park",
+    "valenzuela-park",
+    "poblacion-linear-park",
+    "plaza-cristo-rey",
+    "riverside-carmona",
+    "buendia-plaza",
+    "freedom-park",
+    "edsa-buendia-park",
+    "guadalupe-nuevo-linear-park",
+    "edsa-pinagkaisahan-park"
+  ],
+  "correctedExistingAsset": {
+    "id": "poblacion-park",
+    "oldPoint": {
+      "lat": 14.56593,
+      "lng": 121.03155
+    },
+    "correctedPoint": {
+      "lat": 14.5673,
+      "lng": 121.03373
+    },
+    "coordinateProvenance": "OpenStreetMap way 1412520420"
+  },
+  "representativePointCaveats": [
+    {
+      "id": "edsa-buendia-park",
+      "treatment": "Representative point at the verified EDSA–Sen. Gil J. Puyat project area; the reviewed official sources verify the park and project location but do not provide a surveyed park centroid."
+    },
+    {
+      "id": "guadalupe-nuevo-linear-park",
+      "treatment": "Representative point on one verified current Guadalupe Linear Park segment; the asset is multi-segment and should not be interpreted as a single-point footprint."
+    },
+    {
+      "id": "edsa-pinagkaisahan-park",
+      "treatment": "Representative point from the current Pinagkaisahan Park listing in the Kalayaan/EDSA corridor; the historical alias lineage is preserved rather than treated as separate current pins."
+    }
+  ],
+  "unresolvedExcludedFromCurrentMap": [
+    {
+      "id": "post-office-pocket-park",
+      "reason": "No distinct current official/map identity tied to the historical park name."
+    },
+    {
+      "id": "makati-city-hall-park",
+      "reason": "No newer distinct park identity or geometry established."
+    },
+    {
+      "id": "playground-park-poblacion",
+      "reason": "Probable subfacility or duplicate of Makati Poblacion Park; separate present identity not established."
+    }
+  ],
+  "implementationGuards": {
+    "file": "scripts/check-civic-map.mjs",
+    "rules": [
+      "Require all 13 verified current public-park IDs.",
+      "Require official source and coordinate provenance for each verified current public park.",
+      "Reject accidental mapping of the three unresolved historical park records as distinct current assets."
+    ]
+  },
+  "retainedBehavior": [
+    "Park-specific Civic Map rating criteria continue to apply through criteriaForAsset('park').",
+    "Historical/current aliases are searchable and shown on asset detail pages.",
+    "Existing private/public-access CBD parks remain untouched pending 3C-2e/2f."
+  ],
+  "nextStep": {
+    "id": "3C-2e",
+    "title": "Reconcile private and public-access green spaces"
+  }
+}
