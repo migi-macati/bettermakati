@@ -1,0 +1,247 @@
+{
+  "schemaVersion": 1,
+  "verifiedAt": "2026-09-25",
+  "workstream": "Wave 3C-2c4 — Public-park verification closure",
+  "scope": "Final research disposition only. No Civic Map additions or edits in this step.",
+  "closureRules": [
+    "A current park can enter the implementation set when current existence is supported and its historical Makati inventory record can be reconciled without creating a likely duplicate.",
+    "Historical names that appear to be predecessors/aliases are retained in provenance and do not automatically become separate Civic Map assets.",
+    "Official inventory entries with no distinct current identity remain unresolved and do not block implementation of the verified set.",
+    "Exact point geometry may still be verified immediately before coding where the current park is unquestionably extant but a precise mapped point is not yet frozen."
+  ],
+  "resolvedHolds": [
+    {
+      "id": "pinagkaisahan-park-lineage",
+      "currentAssetName": "EDSA-Pinagkaisahan Park",
+      "disposition": "implement-one-current-asset-preserve-historical-lineage",
+      "currentStatus": "verified-current-public",
+      "barangay": "Pinagkaisahan",
+      "evidence": [
+        {
+          "source": "Makati 2010 DES inventory",
+          "finding": "Pinagkaisahan Underpass Park appears as a 265 sq m public park."
+        },
+        {
+          "source": "Makati 2018 bid results",
+          "finding": "DES procured pesticide/termite treatment for 'Kalayaan / R4 Linear Park', showing a maintained park in the same Pinagkaisahan/EDSA-Kalayaan corridor."
+        },
+        {
+          "source": "Makati Facts and Figures 2020",
+          "finding": "Kalayaan Avenue Park (Pinagkaisahan) appears in the public-park inventory."
+        },
+        {
+          "source": "PIA reporting on Makati/MMDA Adopt-A-Park, February 2023",
+          "finding": "EDSA-Pinagkaisahan Park was inaugurated as a Makati/MMDA park designed by Makati DES."
+        },
+        {
+          "source": "Current local business/map data",
+          "finding": "Pinagkaisahan Park remains a current 24-hour park on Kalayaan Avenue with a Makati City contact."
+        }
+      ],
+      "aliasTreatment": {
+        "Pinagkaisahan Underpass Park": "historical predecessor/lineage candidate; do not expose as a separate current asset",
+        "Kalayaan / R4 Linear Park": "intermediate operational name/lineage evidence",
+        "Kalayaan Avenue Park (Pinagkaisahan)": "historical/current-era name in 2020 city inventory",
+        "EDSA-Pinagkaisahan Park": "current implementation name"
+      },
+      "confidence": "high for current park; moderate for exact one-to-one historical alias lineage",
+      "pointStatus": "verify exact current park point immediately before coding"
+    },
+    {
+      "id": "makati-des-linear-park",
+      "historicalName": "Makati DES Linear Park",
+      "disposition": "do-not-implement-separately-probable-poblacion-riverfront-lineage",
+      "currentStatus": "historical-identity-not-fully-proven",
+      "evidence": [
+        {
+          "source": "Makati 2010 DES inventory",
+          "finding": "Makati DES Linear Park appears as a separate 3,672 sq m park."
+        },
+        {
+          "source": "Government Procurement Policy Board CPES 2005-2007",
+          "finding": "A project named Makati DES Linear Park was implemented by/under PRRC, linking the asset to Pasig River rehabilitation."
+        },
+        {
+          "source": "Government Procurement Policy Board CPES 2016",
+          "finding": "PRRC recorded construction/improvement of a Linear Park along Pasig River in Makati Poblacion."
+        },
+        {
+          "source": "Current local map data",
+          "finding": "A current 'Makati Linear Park' exists, while Poblacion Linear Park is independently verified on the Makati riverfront."
+        }
+      ],
+      "conclusion": "Evidence strongly places Makati DES Linear Park in the Pasig River linear-park program and makes a Poblacion riverfront successor likely, but the reviewed records do not prove the exact one-to-one successor identity. Preserve as historical provenance; do not add a duplicate current pin.",
+      "confidence": "moderate"
+    }
+  ],
+  "unresolvedNotImplemented": [
+    {
+      "id": "post-office-pocket-park",
+      "officialHistoricalStatus": "Makati public park in the 2020 named inventory and urban-greening map.",
+      "currentEvidence": "Makati Central Post Office remains at Malugay/Gil Puyat, and a current Sen. Gil Puyat Linear Park exists nearby, but no source proves that this is the Post Office Pocket Park successor.",
+      "disposition": "unresolved-current-distinct-status",
+      "blocker": "No distinct current official/map identity tied to the historical park name.",
+      "doNotImplementAsSeparateAsset": true
+    },
+    {
+      "id": "makati-city-hall-park",
+      "officialHistoricalStatus": "Makati public park in the 2020 named inventory and urban-greening map.",
+      "currentEvidence": "The City Hall complex remains active, but current search does not expose a distinct park object separate from the grounds.",
+      "disposition": "unresolved-current-distinct-status",
+      "blocker": "No newer distinct park identity or geometry.",
+      "doNotImplementAsSeparateAsset": true
+    },
+    {
+      "id": "playground-park-poblacion",
+      "officialHistoricalStatus": "Separate public-park entry in Makati Facts and Figures 2020.",
+      "currentEvidence": "Current Makati Poblacion Park includes playground use, but no distinct present 'Playground Park' object was found.",
+      "disposition": "probable-subfacility-or-duplicate-unresolved",
+      "blocker": "Insufficient evidence that it remains a separate park rather than part of Makati Poblacion Park.",
+      "doNotImplementAsSeparateAsset": true
+    }
+  ],
+  "finalVerifiedCurrentPublicImplementationSet": [
+    {
+      "id": "magallanes-interchange-park",
+      "currentName": "Magallanes Interchange Park",
+      "pointStatus": "verified"
+    },
+    {
+      "id": "kennely-ann-lacia-binay-park-guadalupe-nuevo",
+      "currentName": "Kennely Ann Lacia Binay Park / Guadalupe Nuevo Cloverleaf Park",
+      "pointStatus": "verified"
+    },
+    {
+      "id": "guadalupe-viejo-cloverleaf-park",
+      "currentName": "Guadalupe Viejo Cloverleaf Park",
+      "pointStatus": "verified"
+    },
+    {
+      "id": "poblacion-park",
+      "currentName": "Makati Poblacion Park",
+      "pointStatus": "verified-correct-existing-coordinate"
+    },
+    {
+      "id": "valenzuela-park",
+      "currentName": "Valenzuela Linear Park",
+      "pointStatus": "verified"
+    },
+    {
+      "id": "poblacion-linear-park",
+      "currentName": "Poblacion Linear Park",
+      "pointStatus": "verified"
+    },
+    {
+      "id": "plaza-cristo-rey",
+      "currentName": "Plaza Cristo Rey",
+      "pointStatus": "verified"
+    },
+    {
+      "id": "riverside-carmona",
+      "currentName": "Carmona Linear Park",
+      "pointStatus": "verified"
+    },
+    {
+      "id": "buendia-plaza",
+      "currentName": "Buendia Plaza",
+      "historicalAliases": [
+        "Gil Puyat - SLEX"
+      ],
+      "pointStatus": "verified"
+    },
+    {
+      "id": "freedom-park",
+      "currentName": "Buendia Freedom Park",
+      "historicalAliases": [
+        "Freedom Park",
+        "Ayala Freedom Park"
+      ],
+      "pointStatus": "verified"
+    },
+    {
+      "id": "edsa-buendia-park",
+      "currentName": "EDSA-Buendia Park",
+      "pointStatus": "verify-exact-point-before-coding"
+    },
+    {
+      "id": "guadalupe-nuevo-linear-park",
+      "currentName": "Guadalupe Linear Park",
+      "pointStatus": "linear-multisegment-use-representative-point-or-segment-model"
+    },
+    {
+      "id": "edsa-pinagkaisahan-park",
+      "currentName": "EDSA-Pinagkaisahan Park",
+      "historicalAliases": [
+        "Pinagkaisahan Underpass Park",
+        "Kalayaan / R4 Linear Park",
+        "Kalayaan Avenue Park (Pinagkaisahan)"
+      ],
+      "pointStatus": "verify-exact-point-before-coding"
+    }
+  ],
+  "existingCivicMapImpact": {
+    "existingVerifiedPublicParkAssets": [
+      "poblacion-park"
+    ],
+    "requiredCorrection": {
+      "id": "poblacion-park",
+      "issue": "Existing Civic Map coordinate is materially displaced from current park geometry.",
+      "currentSeed": {
+        "lat": 14.56593,
+        "lng": 121.03155
+      },
+      "researchedCurrentPoint": {
+        "lat": 14.5673,
+        "lng": 121.03373
+      }
+    },
+    "newVerifiedPublicAssetsToImplement": 12
+  },
+  "publicParkResearchDisposition": {
+    "verifiedCurrentImplementationSet": 13,
+    "unresolvedNotImplemented": 3,
+    "formerMakatiExcludedFromCurrentCoverage": 10,
+    "historicalAliasesOrPredecessorsNotImplementedSeparately": [
+      "Gil Puyat - SLEX",
+      "Pinagkaisahan Underpass Park",
+      "Kalayaan / R4 Linear Park",
+      "Kalayaan Avenue Park (Pinagkaisahan)",
+      "Makati DES Linear Park"
+    ]
+  },
+  "sources": [
+    {
+      "label": "Makati Facts and Figures 2020",
+      "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/45/561/pdf/Facts%20and%20FIgures%202020.pdf"
+    },
+    {
+      "label": "Makati Urban Greening profile",
+      "url": "https://www.makati.gov.ph/assets/uploads/downloads/938/883/pdf/93802202019132921.pdf"
+    },
+    {
+      "label": "Makati 2018 bid results",
+      "url": "https://www.makati.gov.ph/assets/uploads/staticmenu/files/bid_result_1st_quarter_2018.pdf"
+    },
+    {
+      "label": "Makati 2022 Annual Procurement Plan",
+      "url": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/online_forms/pdf/2022%20APP%20Final.pdf"
+    },
+    {
+      "label": "PIA — Makati/MMDA Adopt-A-Park 2023",
+      "url": "https://mirror.pia.gov.ph/news/2023/02/22/mmda-unveils-three-adopt-a-park-project-sites-in-makati"
+    },
+    {
+      "label": "GPPB CPES 2005-2007",
+      "url": "https://www.gppb.gov.ph/wp-content/uploads/2023/06/CPES-Report-%E2%80%93-January-1-2005-to-December-31-2007-2007-12-31.pdf"
+    },
+    {
+      "label": "GPPB CPES 2016-2018",
+      "url": "https://www.gppb.gov.ph/wp-content/uploads/2023/06/CPES-Report-28th-Release-2019-03-05.pdf"
+    }
+  ],
+  "nextStep": {
+    "id": "3C-2d",
+    "title": "Implement verified current public parks",
+    "scope": "Add the 12 missing verified current public park assets, correct Poblacion Park's coordinate, preserve historical aliases in metadata, and leave the three unresolved entries out of the map with audit dispositions."
+  }
+}
