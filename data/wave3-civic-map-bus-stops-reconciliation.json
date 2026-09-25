@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 1,
+  "reconciledAt": "2026-09-25",
+  "workstream": "Wave 3C-3c — Makati bus-stop reconciliation",
+  "scope": "Research/reconciliation only. No bus-stop Civic Map assets are added in this step.",
+  "controllingBaseline": {
+    "source": "Makati City Basic Facts and Figures 2023",
+    "sourceUrl": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1720150266681.pdf",
+    "sourceOffice": "Department of Engineering and Public Works (DEPW)",
+    "geography": "Present-day Makati; source says excluding the 10 transferred barangays",
+    "busStops": 32
+  },
+  "countHistory": [
+    {
+      "year": 2022,
+      "geography": "33-barangay Makati before final boundary transfer implementation in city statistics",
+      "busStops": 17,
+      "sourceUrl": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1697591839520.pdf",
+      "sourceOffice": "DEPW / DOTr"
+    },
+    {
+      "year": 2023,
+      "geography": "23-barangay present-day Makati",
+      "busStops": 32,
+      "sourceUrl": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1720150266681.pdf",
+      "sourceOffice": "DEPW"
+    }
+  ],
+  "historicalInfrastructureLineage": {
+    "source": "City Government of Makati infrastructure inventory, 1986–2017",
+    "sourceUrl": "https://www.makati.gov.ph/assets/uploads/downloads/965/916/pdf/96503142019092745.pdf",
+    "waitingSheds": 36,
+    "finding": "DEPW historically tracked 36 waiting sheds as other structures. The publication does not name the sheds and does not establish that waiting shed is equivalent to the later bus-stop metric."
+  },
+  "regulatoryDefinitionContext": {
+    "source": "Makati City Ordinance 2019-A-102 — Environmental Health Code",
+    "sourceUrl": "https://www.makati.gov.ph/assets/uploads/downloads/2/181/pdf/Makati%20City%20Ordinance%202019-A-102.pdf",
+    "finding": "The ordinance regulates bus/jeepney/PUV stops and sheds/waiting areas as separate terminal-related categories. This is another reason not to equate the historical waiting-shed count with the 2023 bus-stop count."
+  },
+  "currentNamedInventorySearch": {
+    "result": "not-found-in-indexed-authoritative-records",
+    "sourcesChecked": [
+      "Makati Basic Facts and Figures 2022",
+      "Makati Basic Facts and Figures 2023",
+      "DEPW infrastructure/buildings-and-structures inventory",
+      "Makati physical/infrastructure profile and CLUP profile material",
+      "Makati Environmental Health Code",
+      "Makati procurement/indexed city records searched for bus stop, bus shed, waiting shed, loading/unloading and bus bay terminology",
+      "Current Makati repository data for previously sourced bus-stop inventories"
+    ],
+    "note": "The reviewed authoritative material publishes counts and regulatory categories but not a current named 32-stop roster with addresses/coordinates."
+  },
+  "existingCivicMapCrosswalk": {
+    "currentBusRelatedAssets": [
+      "edsa-busway-guadalupe",
+      "edsa-busway-buendia",
+      "edsa-busway-ayala",
+      "one-ayala-terminal"
+    ],
+    "countAgainst32Denominator": 0,
+    "reason": "No authoritative source reviewed establishes that the three EDSA Busway stations or One Ayala Terminal are members of DEPW's 32-stop inventory. They remain valid current supplemental transport assets, but are not used to reverse-engineer the city denominator."
+  },
+  "reconciliationDecision": {
+    "namedCurrentBusStopsFrozen": 0,
+    "currentHeadlineCount": 32,
+    "disposition": "headline-only-unresolved",
+    "implementationAllowed": false,
+    "rule": "Do not create any of the 32 DEPW bus-stop assets until a named current roster, geospatial layer, engineering schedule, or equivalent source-backed list is obtained."
+  },
+  "anomalyAssessment": {
+    "observation": "The published count rises from 17 in 2022 to 32 in 2023 even though the 2023 city statistics exclude the 10 transferred barangays.",
+    "interpretation": "This indicates a likely inventory update, reclassification, data correction, or changed counting basis; the available sources do not explain which.",
+    "guardrail": "Do not infer that the 15-stop increase represents newly built stops, Busway stations, transferred-area adjustments, or waiting sheds without documentary evidence."
+  },
+  "unresolvedEvidenceTargets": [
+    "DEPW named bus-stop GIS/inventory layer",
+    "DEPW engineering or maintenance schedule listing the 32 stops",
+    "Public Safety Department / traffic-management loading-unloading zone inventory tied to bus stops",
+    "Current city transport plan appendix with stop-level names",
+    "A current official geospatial/open-data dataset"
+  ],
+  "nextStep": {
+    "id": "3C-3d",
+    "title": "Reconcile historical jeepney routes",
+    "scope": "Research only. Crosswalk the 38 Makati Facts and Figures 2020 jeepney-route rows against current LTFRB/operator/terminal evidence, classify current/changed/obsolete/uncertain routes, and do not create single-point route assets."
+  }
+}
