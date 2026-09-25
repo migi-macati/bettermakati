@@ -13,6 +13,7 @@ const status = await readFile('src/pages/ProjectStatus.tsx', 'utf8');
 const pageAudit = JSON.parse(await readFile('data/page-audit.json', 'utf8'));
 const tests = await readFile('tests/e2e/critical-paths.spec.mjs', 'utf8');
 const pkg = JSON.parse(await readFile('package.json', 'utf8'));
+const app = await readFile('src/App.tsx', 'utf8');
 
 const problems = [];
 const validCadence = new Set(['daily', 'weekly', 'monthly']);
@@ -33,6 +34,15 @@ for (const source of watchlist) {
   if (!validCadence.has(source.cadence)) problems.push('Invalid cadence for ' + source.id);
   if (!validMode.has(source.monitoringMode)) problems.push('Invalid monitoring mode for ' + source.id);
   if (!validOwners.has(source.owner)) problems.push('Invalid or missing owner for ' + source.id);
+  if (!Array.isArray(source.affectedPages) || source.affectedPages.length === 0) {
+    problems.push('Watched source has no affected pages: ' + source.id);
+  } else {
+    for (const page of source.affectedPages) {
+      if (!app.includes(`path="${page}"`)) {
+        problems.push('Watched source points to an unrouted affected page: ' + source.id + ' -> ' + page);
+      }
+    }
+  }
   if (ids.has(source.id)) problems.push('Duplicate watched-source id: ' + source.id);
   if (urls.has(source.url)) problems.push('Duplicate watched-source URL: ' + source.url);
   ids.add(source.id);
@@ -85,6 +95,10 @@ for (const id of delegatedToCityMonitor) {
     problems.push('Delegated source is missing from City Monitor config: ' + id);
   } else if (source.monitoringMode !== cityOwned.monitoringMode) {
     problems.push('Delegated source monitoring mode does not match City Monitor owner: ' + id);
+  } else if (
+    JSON.stringify(source.affectedPages) !== JSON.stringify(cityOwned.affectedPages)
+  ) {
+    problems.push('Delegated source affected pages do not match City Monitor owner: ' + id);
   }
 }
 const unexpectedCityOwned = watchlist
@@ -112,6 +126,7 @@ for (const marker of [
   "cadenceIsDue",
   "source.owner && source.owner !== 'general-source-freshness'",
   "const publishRequired = checked.some(semanticStateChanged)",
+  "affectedPages: Array.isArray(result.affectedPages)",
   "source.monitoringMode === 'content-hash'",
   "result.change === 'content-changed'",
   "response.body?.cancel()",
