@@ -43,7 +43,10 @@
         "Do not redesign Get Involved form.",
         "Do not expand Civic Map assets.",
         "Do not add new official opportunities."
-      ]
+      ],
+      "status": "complete",
+      "completedAt": "2026-09-25",
+      "commit": "e51452f03dfd927236f462325392ddd932cbd908"
     },
     {
       "id": "3B-2",
@@ -439,8 +442,8 @@
     }
   ],
   "immediateNext": {
-    "id": "3B-1",
-    "title": "Complete the Participation Hub task set",
-    "maximumScope": "One page, its existing links/data only, one focused browser verification. No backend work."
+    "id": "3B-2",
+    "title": "Preserve barangay context into Get Involved",
+    "maximumScope": "Get Involved query-prefill fix plus one focused regression test. No backend changes."
   }
 }
