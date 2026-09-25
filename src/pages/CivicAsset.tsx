@@ -83,6 +83,11 @@ export default function CivicAsset() {
             </div>
             <Heading className="mt-3">{asset.title}</Heading>
             <p className="mt-2 text-lg leading-relaxed text-gray-700">{asset.subtitle}</p>
+            {asset.aliases && asset.aliases.length > 0 && (
+              <p className="mt-2 text-sm text-gray-500">
+                Also listed as: {asset.aliases.join(' · ')}
+              </p>
+            )}
 
             <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-sm text-gray-600">
               {asset.barangay && (
