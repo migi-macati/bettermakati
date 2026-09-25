@@ -59,6 +59,10 @@ jobs:
       - name: Check configured public sources
         run: node scripts/check-sources.mjs --cadence=${{ steps.cadence.outputs.cadence }}
 
+      - name: Build consolidated freshness review queue
+        run: npm run build:freshness-queue
+
+
       - name: Check whether published freshness state changed
         id: publish
         shell: bash
@@ -79,9 +83,8 @@ jobs:
         run: |
           node - <<'NODE'
           const fs = require('fs');
-          const state = JSON.parse(fs.readFileSync('data/source-watch-state.json', 'utf8'));
-          const summary = state.summary || {};
-          const needsReview = Number(summary.changed || 0) + Number(summary.failed || 0) > 0;
+          const queue = JSON.parse(fs.readFileSync('data/freshness-review-queue.json', 'utf8'));
+          const needsReview = Number(queue.summary?.open || 0) > 0;
           fs.appendFileSync(process.env.GITHUB_OUTPUT, 'needs_review=' + String(needsReview) + '\n');
           NODE
 
@@ -91,8 +94,8 @@ jobs:
         with:
           script: |
             const fs = require('fs');
-            const title = 'Source freshness review queue';
-            const report = fs.readFileSync('data/source-watch-report.md', 'utf8');
+            const title = 'Freshness review queue';
+            const report = fs.readFileSync('data/freshness-review-queue.md', 'utf8');
             const { data: issues } = await github.rest.issues.listForRepo({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -124,7 +127,7 @@ jobs:
         if: steps.publish.outputs.publish_required == 'true'
         shell: bash
         run: |
-          git add data/source-watch-state.json data/source-watch-history.json data/source-watch-report.md
+          git add data/source-watch-state.json data/source-watch-history.json data/source-watch-report.md data/freshness-review-queue.json data/freshness-review-queue.md
 
           if git diff --cached --quiet; then
             echo "No source-freshness state change to publish."
