@@ -176,6 +176,7 @@ const procurementSeeds: ProcurementSeed[] = [
     bidDate: '2025-05-14',
     sourceUrl: procurementQ22025Source,
     sourceLabel: '2025 Q2 Bid Results — Goods and Services',
+    followUpCheckedOn: '25 September 2026',
   },
   {
     id: '2025-q2-bs25-05-mme08c',
@@ -250,6 +251,7 @@ const procurementSeeds: ProcurementSeed[] = [
     bidDate: '2024-07-08',
     sourceUrl: procurementQ32024Source,
     sourceLabel: '2024 Q3 Bid Results',
+    followUpCheckedOn: '25 September 2026',
     location: 'Various schools in Makati City',
   },
   {
@@ -308,6 +310,7 @@ const procurementSeeds: ProcurementSeed[] = [
     bidDate: '2024-07-17',
     sourceUrl: procurementQ32024Source,
     sourceLabel: '2024 Q3 Bid Results',
+    followUpCheckedOn: '25 September 2026',
     location: 'Districts I and II, Makati City',
   },
 ];
