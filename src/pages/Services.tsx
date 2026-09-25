@@ -344,7 +344,7 @@ const Services: React.FC = () => {
                 Browse BetterGov services
               </h3>
               <p className="mt-1 text-sm leading-relaxed text-gray-600">
-                Find national government services beyond the Makati directory.
+                Search national government services.
               </p>
               <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
                 Open BetterGov <ExternalLink className="h-4 w-4" />
@@ -363,7 +363,7 @@ const Services: React.FC = () => {
                 Find another LGU
               </h3>
               <p className="mt-1 text-sm leading-relaxed text-gray-600">
-                Not from Makati, or need something from another LGU? Check the BetterLGU Directory.
+                Not from Makati or need another LGU? Search the BetterLGU Directory.
               </p>
               <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
                 Open BetterLGU <ExternalLink className="h-4 w-4" />
