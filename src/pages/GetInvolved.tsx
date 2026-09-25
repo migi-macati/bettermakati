@@ -55,7 +55,7 @@ const actionCards = [
   },
 ];
 
-type SubmitState = 'idle' | 'submitting' | 'success' | 'fallback' | 'error';
+type SubmitState = 'idle' | 'submitting' | 'success' | 'duplicate' | 'fallback' | 'error';
 
 export default function GetInvolved() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -101,8 +101,19 @@ export default function GetInvolved() {
       const data = response.status === 204 ? {} : await response.json();
 
       if (response.ok) {
-        setStatus('success');
         setTrackingUrl(data.url || '');
+
+        if (data.duplicate) {
+          setStatus('duplicate');
+          setMessage(
+            data.reference
+              ? 'A matching open BetterMakati item already exists as #' + data.reference + '. No new item was created.'
+              : 'A matching open BetterMakati item already exists. No new item was created.'
+          );
+          return;
+        }
+
+        setStatus('success');
         setMessage(
           data.reference
             ? 'Submitted. Reference #' + data.reference + '.'
@@ -325,6 +336,8 @@ export default function GetInvolved() {
                 className={`mt-5 rounded-xl border p-4 text-sm ${
                   status === 'success'
                     ? 'border-success-200 bg-success-50 text-success-800'
+                    : status === 'duplicate'
+                      ? 'border-secondary-200 bg-secondary-50 text-secondary-900'
                     : status === 'error'
                       ? 'border-error-200 bg-error-50 text-error-800'
                       : 'border-secondary-200 bg-secondary-50 text-secondary-900'
@@ -340,6 +353,16 @@ export default function GetInvolved() {
                     className="mt-3 inline-flex items-center gap-1 font-bold underline underline-offset-2"
                   >
                     Track this publicly <ExternalLink className="h-3.5 w-3.5" />
+                  </a>
+                )}
+                {status === 'duplicate' && trackingUrl && (
+                  <a
+                    href={trackingUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="mt-3 inline-flex items-center gap-1 font-bold underline underline-offset-2"
+                  >
+                    Open existing item <ExternalLink className="h-3.5 w-3.5" />
                   </a>
                 )}
                 {status === 'fallback' && fallbackUrl && (
