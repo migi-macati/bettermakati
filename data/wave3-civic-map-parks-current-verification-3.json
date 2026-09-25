@@ -1,0 +1,226 @@
+{
+  "schemaVersion": 1,
+  "verifiedAt": "2026-09-25",
+  "workstream": "Wave 3C-2c3 — Older DES public-park alias and status resolution",
+  "scope": "Research/alias/status resolution only. No Civic Map asset additions, removals, renames or coordinate edits in this step.",
+  "methodology": [
+    "Use the 2010 DES inventory as the historical baseline.",
+    "Prefer later Makati procurement/operations records to establish continuity.",
+    "Use current public map/business evidence to identify present names and geometry, but not to override official ownership/status evidence.",
+    "Merge historical/current names only when name, location and continuity evidence converge; otherwise preserve separate records."
+  ],
+  "sources": [
+    {
+      "id": "des-2010",
+      "publisher": "City Government of Makati — Department of Environmental Services",
+      "url": "https://www.makati.gov.ph/assets/uploads/downloads/143/17/pdf/14301122015121448.pdf",
+      "role": "Historical 12-park DES inventory."
+    },
+    {
+      "id": "makati-facts-2020",
+      "publisher": "City Government of Makati",
+      "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/45/561/pdf/Facts%20and%20FIgures%202020.pdf",
+      "role": "Later named public-park inventory and locations."
+    },
+    {
+      "id": "makati-app-2022",
+      "publisher": "City Government of Makati",
+      "url": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/online_forms/pdf/2022%20APP%20Final.pdf",
+      "role": "Operational maintenance continuity for Buendia Plaza, Ayala Freedom Park and EDSA-Buendia Park."
+    },
+    {
+      "id": "pia-adopt-a-park-2023",
+      "publisher": "Philippine Information Agency",
+      "url": "https://mirror.pia.gov.ph/news/2023/02/22/mmda-unveils-three-adopt-a-park-project-sites-in-makati",
+      "role": "Government reporting that Makati/MMDA inaugurated EDSA-Buendia Park and EDSA-Pinagkaisahan Park in 2023."
+    }
+  ],
+  "parks": [
+    {
+      "id": "buendia-plaza",
+      "historicalNames": [
+        "Buendia Plaza",
+        "Gil Puyat - SLEX"
+      ],
+      "currentName": "Buendia Plaza",
+      "resolutionStatus": "resolved-current-public-continuity",
+      "ownershipManagement": "City Government of Makati",
+      "currentBarangay": "Palanan",
+      "evidenceChain": [
+        "2010 DES inventory lists Buendia Plaza.",
+        "2020 Makati inventory replaces the name in the comparable public-park set with 'Gil Puyat - SLEX' at Mayapis Street, Barangay San Antonio.",
+        "2022 Makati APP again budgets recurring maintenance under the name Buendia Plaza.",
+        "Current map geometry identifies Buendia Plaza on Mayapis Street with City Government of Makati as operator."
+      ],
+      "currentMapEvidence": {
+        "lat": 14.55828,
+        "lng": 121.00776,
+        "mapFeature": "OpenStreetMap way 71493416",
+        "address": "Mayapis Street, Makati City",
+        "note": "Current map barangay label resolves to Palanan. The 2020 city table labels the Mayapis site San Antonio; retain this historical/current barangay discrepancy for exact boundary review rather than rewriting the source."
+      },
+      "aliasDecision": {
+        "Buendia Plaza ↔ Gil Puyat - SLEX": "high-confidence same-site continuity, but Makati did not publish an explicit alias statement in the reviewed documents."
+      },
+      "implementationReadiness": "ready-with-boundary-note"
+    },
+    {
+      "id": "freedom-park",
+      "historicalNames": [
+        "Freedom Park",
+        "Ayala Freedom Park"
+      ],
+      "currentName": "Buendia Freedom Park",
+      "aliases": [
+        "Liwasang Buendia"
+      ],
+      "resolutionStatus": "resolved-probable-current-public-continuity",
+      "ownershipManagement": "City of Makati",
+      "evidenceChain": [
+        "2010 DES inventory lists Freedom Park.",
+        "2022 Makati APP budgets recurring maintenance for Ayala Freedom Park.",
+        "Current park listings identify Buendia Freedom Park on Sen. Gil J. Puyat/Ayala Avenue Extension and use the Makati City website/contact."
+      ],
+      "currentMapEvidence": {
+        "lat": 14.561597,
+        "lng": 121.0150772,
+        "mapFeature": "OpenStreetMap way 38317305 / current business listing",
+        "address": "Ayala Avenue Extension / Sen. Gil J. Puyat Avenue, Makati City"
+      },
+      "aliasDecision": {
+        "Freedom Park → Ayala Freedom Park": "strong official continuity by 2010/2022 naming.",
+        "Ayala Freedom Park → Buendia Freedom Park": "probable current-name continuity based on current site identity/location; no reviewed Makati document explicitly publishes the rename."
+      },
+      "implementationReadiness": "ready-with-alias-note"
+    },
+    {
+      "id": "edsa-buendia-park",
+      "historicalNames": [
+        "EDSA Buendia Park",
+        "Edsa-Buendia Park"
+      ],
+      "currentName": "EDSA-Buendia Park",
+      "resolutionStatus": "verified-current-public",
+      "ownershipManagement": "Makati City / MMDA Adopt-A-Park partnership",
+      "evidenceChain": [
+        "2010 DES inventory lists EDSA Buendia Park.",
+        "2022 Makati APP budgets recurring maintenance for Edsa-Buendia Park.",
+        "Makati and MMDA inaugurated the improved EDSA-Buendia Park in February 2023; the park was designed by Makati DES and turned over to the local government."
+      ],
+      "currentMapEvidence": {
+        "status": "current-site-confirmed-point-not-frozen",
+        "note": "Current government reporting confirms the site at EDSA-Buendia, but this research pass did not identify a sufficiently precise distinct park geometry to freeze a Civic Map point."
+      },
+      "implementationReadiness": "ready-after-point-verification"
+    },
+    {
+      "id": "guadalupe-nuevo-linear-park",
+      "historicalNames": [
+        "Guadalupe Nuevo Linear Park"
+      ],
+      "currentName": "Guadalupe Linear Park",
+      "resolutionStatus": "resolved-current-public-continuity",
+      "ownershipManagement": "City of Makati",
+      "currentBarangay": "Guadalupe Nuevo",
+      "evidenceChain": [
+        "2010 DES inventory separately lists Guadalupe Nuevo Linear Park.",
+        "Current map geometry identifies multiple contiguous Guadalupe Linear Park segments on J.P. Rizal Street adjacent to Guadalupe Nuevo Cloverleaf Park, operated by City of Makati.",
+        "The current geometry/location is consistent with the 2010 Guadalupe Nuevo linear-park identity and remains distinct from the cloverleaf park."
+      ],
+      "currentMapEvidence": {
+        "representativePoints": [
+          {
+            "lat": 14.56796,
+            "lng": 121.04657,
+            "mapFeature": "OpenStreetMap way 1119737875"
+          },
+          {
+            "lat": 14.56824,
+            "lng": 121.04517,
+            "mapFeature": "OpenStreetMap way 1412510214"
+          }
+        ],
+        "address": "J.P. Rizal Street, Makati City",
+        "note": "The present park is linear/multi-segment; implementation should avoid pretending the whole park is represented by one arbitrary point if segment geometry can be supported."
+      },
+      "implementationReadiness": "ready-with-linear-geometry-note"
+    },
+    {
+      "id": "pinagkaisahan-underpass-park",
+      "historicalNames": [
+        "Pinagkaisahan Underpass Park"
+      ],
+      "laterRelatedNames": [
+        "Kalayaan Avenue Park (Pinagkaisahan)",
+        "EDSA-Pinagkaisahan Park",
+        "Pinagkaisahan Park"
+      ],
+      "resolutionStatus": "current-public-space-verified-lineage-unresolved",
+      "ownershipManagement": "City of Makati / MMDA for the 2023 EDSA-Pinagkaisahan improvement",
+      "currentBarangay": "Pinagkaisahan",
+      "evidenceChain": [
+        "2010 DES inventory lists Pinagkaisahan Underpass Park.",
+        "2020 Makati inventory separately lists Kalayaan Avenue Park (Pinagkaisahan).",
+        "Makati and MMDA inaugurated EDSA-Pinagkaisahan Park in 2023, designed by Makati DES.",
+        "A current public park listing identifies Pinagkaisahan Park on Kalayaan Avenue."
+      ],
+      "aliasDecision": {
+        "Pinagkaisahan Underpass Park ↔ Kalayaan Avenue Park": "plausible same-corridor continuity, not proven.",
+        "Kalayaan Avenue Park ↔ EDSA-Pinagkaisahan Park": "plausible redevelopment/adjacent-site relationship, not proven."
+      },
+      "implementationReadiness": "hold-lineage-resolution",
+      "requiredAction": "Use a Makati project plan, site plan, procurement description or official map to determine whether these names represent one evolving park, adjacent parks, or distinct assets."
+    },
+    {
+      "id": "makati-des-linear-park",
+      "historicalNames": [
+        "Makati DES Linear Park"
+      ],
+      "resolutionStatus": "unresolved",
+      "ownershipManagement": "Department of Environmental Services in 2010",
+      "evidenceChain": [
+        "2010 DES inventory lists Makati DES Linear Park at 3,672 sq m.",
+        "The reviewed later Makati named inventories and 2022 maintenance list do not identify a direct successor under this name.",
+        "The 2010 inventory separately lists Guadalupe Nuevo Linear Park and Valenzuela Linear Park, so this record cannot safely be collapsed into either one."
+      ],
+      "currentMapEvidence": {
+        "status": "not-resolved",
+        "note": "No sufficiently reliable current site/name successor was found in this batch."
+      },
+      "implementationReadiness": "hold-unresolved",
+      "requiredAction": "Search later DES/DEPW project lists, old park maps/site plans and procurement descriptions for a location or rename."
+    }
+  ],
+  "summary": {
+    "researched": 6,
+    "resolvedCurrentContinuity": 3,
+    "verifiedCurrentPointPending": 1,
+    "currentSpaceLineageUnresolved": 1,
+    "unresolved": 1,
+    "implementationReadyOrNearReady": 4,
+    "held": 2
+  },
+  "implicationsForEarlierBatches": [
+    {
+      "id": "gil-puyat-slex",
+      "action": "Treat as the 2020 naming/location phase of the Buendia Plaza record rather than a separate future Civic Map asset, subject to preserving the source-era name in provenance."
+    },
+    {
+      "id": "kalayaan-avenue-park-pinagkaisahan",
+      "action": "Keep on hold together with Pinagkaisahan Underpass Park until the lineage with EDSA-Pinagkaisahan Park is resolved."
+    }
+  ],
+  "findings": [
+    "Buendia Plaza is a surviving public park and the evidence strongly supports continuity with the 2020 Gil Puyat-SLEX entry at the same Mayapis corridor.",
+    "Freedom Park has a credible present identity as Buendia Freedom Park, with Ayala Freedom Park as the documented 2022 intermediate name.",
+    "EDSA-Buendia Park is unquestionably current after the 2023 Makati/MMDA reinauguration.",
+    "Guadalupe Nuevo Linear Park survives as Guadalupe Linear Park and remains distinct from the Guadalupe Nuevo Cloverleaf Park.",
+    "Pinagkaisahan has a real current park lineage, but the names cannot yet be collapsed safely.",
+    "Makati DES Linear Park remains unresolved and blocks a fully closed historical-name audit."
+  ],
+  "nextStep": {
+    "id": "3C-2c4",
+    "title": "Close public-park verification research",
+    "scope": "Resolve remaining held/current-status cases across batches 1–3, prioritize Post Office Pocket Park, Makati City Hall Park, Playground Park Poblacion, Pinagkaisahan lineage and Makati DES Linear Park; then freeze the implementation set. No Civic Map changes."
+  }
+}
