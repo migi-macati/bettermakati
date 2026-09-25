@@ -288,6 +288,55 @@ export default function Participate() {
         </div>
       </Section>
 
+      <Section className="bg-[#f5f8f2]">
+        <div className="section-eyebrow">Beyond Makati</div>
+        <Heading level={2}>Continue elsewhere</Heading>
+        <div className="mt-6 grid gap-4 md:grid-cols-3">
+          <a
+            href="https://lgu.bettergov.ph/"
+            target="_blank"
+            rel="noreferrer"
+            className="rounded-2xl border border-primary-100 bg-white p-5 hover:border-primary-300"
+          >
+            <h3 className="font-extrabold text-gray-950">Another LGU</h3>
+            <p className="mt-2 text-sm text-gray-600">
+              Find a local civic portal in the BetterLGU Directory.
+            </p>
+            <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
+              Open BetterLGU <ExternalLink className="h-3.5 w-3.5" />
+            </span>
+          </a>
+          <a
+            href="https://petition.ph/"
+            target="_blank"
+            rel="noreferrer"
+            className="rounded-2xl border border-primary-100 bg-white p-5 hover:border-primary-300"
+          >
+            <h3 className="font-extrabold text-gray-950">Build public support</h3>
+            <p className="mt-2 text-sm text-gray-600">
+              Start or find a public petition on Petitions.ph.
+            </p>
+            <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
+              Open Petitions.ph <ExternalLink className="h-3.5 w-3.5" />
+            </span>
+          </a>
+          <a
+            href="https://www.openbayan.org/"
+            target="_blank"
+            rel="noreferrer"
+            className="rounded-2xl border border-primary-100 bg-white p-5 hover:border-primary-300"
+          >
+            <h3 className="font-extrabold text-gray-950">Other civic-tech projects</h3>
+            <p className="mt-2 text-sm text-gray-600">
+              Browse community public-interest projects on OpenBayan.
+            </p>
+            <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
+              Open OpenBayan <ExternalLink className="h-3.5 w-3.5" />
+            </span>
+          </a>
+        </div>
+      </Section>
+
       <Section className="bg-[#fffdf8]">
         <div className="section-eyebrow">Close the loop</div>
         <Heading level={2}>What remains missing</Heading>

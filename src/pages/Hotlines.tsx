@@ -1,6 +1,7 @@
 import {
   AlertTriangle,
   Building2,
+  ExternalLink,
   HeartPulse,
   PhoneCall,
   ShieldAlert,
@@ -139,6 +140,20 @@ export default function Hotlines() {
               </div>
             );
           })}
+        </div>
+
+        <div className="mt-6 rounded-2xl border border-primary-100 bg-[#fffdf8] p-5">
+          <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+            Outside Makati
+          </div>
+          <a
+            href="https://hotlines.bettergov.ph/"
+            target="_blank"
+            rel="noreferrer"
+            className="mt-2 inline-flex items-center gap-1 font-extrabold text-primary-800 underline underline-offset-2"
+          >
+            Browse nationwide hotlines <ExternalLink className="h-4 w-4" />
+          </a>
         </div>
       </Section>
     </>

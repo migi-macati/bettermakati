@@ -1321,3 +1321,26 @@ test('ecosystem navigation exposes national and cross-LGU exits without replacin
   await expect(page.getByRole('link', { name: /BetterLGU/i })).toBeVisible();
   await expect(page.getByRole('link', { name: /OpenBayan/i })).toBeVisible();
 });
+
+test('ecosystem fallbacks appear in search, participation and hotlines', async ({ page }) => {
+  await page.goto(baseURL + '/search');
+  const search = page.getByPlaceholder(/Yellow Card, Poblacion, budget, cinema/i);
+  await search.fill('service-that-does-not-exist-xyz');
+  await expect(page.getByRole('link', { name: 'Search BetterGov', exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Find another LGU', exact: true })).toBeVisible();
+
+  await page.goto(baseURL + '/participate');
+  await expect(page.getByRole('link', { name: /Open BetterLGU/i })).toBeVisible();
+  await expect(page.getByRole('link', { name: /Open Petitions\.ph/i })).toBeVisible();
+  await expect(page.getByRole('link', { name: /Open OpenBayan/i })).toBeVisible();
+
+  await page.goto(baseURL + '/get-involved');
+  await expect(page.getByRole('link', { name: /BetterLGU Directory/i })).toBeVisible();
+  await expect(page.getByRole('link', { name: /Open OpenBayan/i })).toBeVisible();
+
+  await page.goto(baseURL + '/hotlines');
+  await expect(page.getByRole('link', { name: /Browse nationwide hotlines/i })).toHaveAttribute(
+    'href',
+    'https://hotlines.bettergov.ph/'
+  );
+});

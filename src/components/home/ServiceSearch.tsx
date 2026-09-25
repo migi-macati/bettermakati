@@ -416,19 +416,37 @@ export default function ServiceSearch({
                 <p className="mt-1 text-sm text-gray-500">
                   Try another keyword, or tell BetterMakati what information is missing.
                 </p>
-                <button
-                  type="button"
-                  onClick={() =>
-                    navigate(
-                      '/get-involved?type=idea&tool=saan-ako-lalapit&subject=' +
-                        encodeURIComponent('Missing search result: ' + query) +
-                        '#submission'
-                    )
-                  }
-                  className="mt-3 text-sm font-bold text-primary-700 underline underline-offset-2"
-                >
-                  Report a missing result
-                </button>
+                <div className="mt-4 flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
+                  <a
+                    href={'https://bettergov.ph/services?search=' + encodeURIComponent(query)}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-sm font-bold text-primary-700 underline underline-offset-2"
+                  >
+                    Search BetterGov
+                  </a>
+                  <a
+                    href="https://lgu.bettergov.ph/"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-sm font-bold text-primary-700 underline underline-offset-2"
+                  >
+                    Find another LGU
+                  </a>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      navigate(
+                        '/get-involved?type=idea&tool=saan-ako-lalapit&subject=' +
+                          encodeURIComponent('Missing search result: ' + query) +
+                          '#submission'
+                      )
+                    }
+                    className="text-sm font-bold text-primary-700 underline underline-offset-2"
+                  >
+                    Report a missing result
+                  </button>
+                </div>
               </div>
             )}
           </div>

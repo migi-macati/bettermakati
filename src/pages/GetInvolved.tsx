@@ -175,6 +175,49 @@ export default function GetInvolved() {
         </div>
       </Section>
 
+      <Section className="bg-white">
+        <div className="grid gap-4 md:grid-cols-2">
+          <a
+            href="https://lgu.bettergov.ph/"
+            target="_blank"
+            rel="noreferrer"
+            className="rounded-2xl border border-primary-100 bg-[#fffdf8] p-5 hover:border-primary-300"
+          >
+            <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+              Working outside Makati?
+            </div>
+            <h2 className="mt-2 text-lg font-extrabold text-gray-950">
+              Find another BetterLGU project
+            </h2>
+            <p className="mt-1 text-sm text-gray-600">
+              Check whether your city or municipality already has a local civic portal.
+            </p>
+            <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
+              BetterLGU Directory <ExternalLink className="h-3.5 w-3.5" />
+            </span>
+          </a>
+          <a
+            href="https://www.openbayan.org/"
+            target="_blank"
+            rel="noreferrer"
+            className="rounded-2xl border border-primary-100 bg-[#fffdf8] p-5 hover:border-primary-300"
+          >
+            <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+              Looking for another project?
+            </div>
+            <h2 className="mt-2 text-lg font-extrabold text-gray-950">
+              Browse OpenBayan
+            </h2>
+            <p className="mt-1 text-sm text-gray-600">
+              Find other Philippine civic-tech and public-interest projects.
+            </p>
+            <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
+              Open OpenBayan <ExternalLink className="h-3.5 w-3.5" />
+            </span>
+          </a>
+        </div>
+      </Section>
+
       <Section id="submission" className="bg-[#f5f8f2]">
         <div className="max-w-3xl mx-auto">
           <div className="section-eyebrow">Submission</div>
