@@ -114,7 +114,7 @@
             "Duplicate checks use asset/category and coordinates where present.",
             "Government-service, park and transport batches expanded the Civic Map to 21 assets by 25 September 2026."
           ],
-          "gap": "Park coverage is reopened because official Makati sources publish broader 12-, 16- and 18-park inventories that have not yet been fully reconciled to current Makati geography."
+          "gap": "Park completeness is being rebuilt from Makati's official named/count inventories. Government-service and transport coverage will also be reopened against Makati-published infrastructure and transport inventories before final closure."
         },
         {
           "id": "3C-4-emergency-handling",
@@ -151,9 +151,18 @@
             "Civic Map has 21 mapped/pilot assets after government-service, preliminary park and transport expansions.",
             "Eight transport assets are now mapped: four MRT-3 stations, One Ayala Terminal and three EDSA Busway stations."
           ],
-          "gap": "Parks remain incomplete: the prior three-CBD-park batch is only preliminary. Official Makati park inventories must be reconciled against the current 23-barangay city and separated into public vs private/public-access layers."
+          "gap": "Existing 21 Civic Map assets are retained, but 3C-1, 3C-2 and 3C-3 are under publication-first completeness review. Official Makati inventories must be reconciled before citywide coverage can be called complete."
         }
-      ]
+      ],
+      "reopenedCompletenessReview": {
+        "revisedAt": "2026-09-25",
+        "principle": "Makati-publication-first completeness review",
+        "workstreams": {
+          "3C-1": "reopened-planned: reconcile Makati-published public infrastructure/facility inventories before closure",
+          "3C-2": "in-progress: official park inventory crosswalk completed; geography reconciliation next",
+          "3C-3": "reopened-planned: reconcile Makati-published transport inventories/counts against current networks before closure"
+        }
+      }
     },
     {
       "id": "3D",
@@ -469,9 +478,9 @@
     ]
   },
   "nextStep": {
-    "id": "3C-2a",
-    "title": "Reconcile official Makati park inventories",
-    "output": "Build the official 12/16/18-park source crosswalk only; do not add Civic Map park assets in the same step."
+    "id": "3C-2b",
+    "title": "Reconcile parks to current Makati geography",
+    "output": "Classify every official-inventory park entry as current Makati, former Makati, boundary-uncertain or unresolved. No Civic Map additions in the same step."
   },
   "summaryNote": "Counts cover the 40 explicitly classified capabilities in workstreams 3B–3I. The separate intentionalDeferrals list also records broader scope constraints that are not all standalone capability rows.",
   "auditPhase": {
