@@ -384,5 +384,42 @@
   },
   "implementationNotes": [
     "W3R-2b adds alias kind 'unclassified' as a migration-safe state so legacy alias strings are preserved without guessing whether they are current, former, historical, abbreviations or local names."
-  ]
+  ],
+  "selectorApi": {
+    "implementedIn": "src/data/placeRegistry.ts",
+    "workstream": "W3R-2c",
+    "selectors": [
+      {
+        "name": "placesByBarangay",
+        "contract": "Normalized exact barangay matching with lookup-only support for legacy slash-delimited composite labels; does not rewrite canonical geography."
+      },
+      {
+        "name": "placesByCategory",
+        "contract": "Matches primaryCategory and secondaryCategories after normalized exact comparison."
+      },
+      {
+        "name": "placesByService",
+        "contract": "Matches canonical serviceId when present or normalized service label."
+      },
+      {
+        "name": "placesByLifecycle",
+        "contract": "Exact PlaceLifecycleStatus match; migrated W3R-2b records currently remain unknown unless separately evidenced."
+      },
+      {
+        "name": "placesWithinDistance",
+        "contract": "Returns point-backed places within a maximum great-circle distance in kilometers, ordered nearest first; uses a mean Earth radius and is not route-distance or survey-grade geometry."
+      }
+    ],
+    "companionHelpers": [
+      "placeHasBarangay",
+      "placeOffersService",
+      "placeDistanceKm"
+    ],
+    "uiChanges": 0
+  },
+  "nextImplementationStep": {
+    "id": "W3R-3a",
+    "title": "Reuse places in BetterBarangay",
+    "constraint": "Barangay Profile only. Surface verified local places/facilities from the registry."
+  }
 }
