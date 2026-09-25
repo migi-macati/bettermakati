@@ -23,6 +23,76 @@ const isAllowed = req => {
 const clean = (value, max = 5000) =>
   String(value || '').replace(/\u0000/g, '').trim().slice(0, max);
 
+const normalizeText = value =>
+  clean(value, 8000)
+    .toLowerCase()
+    .replace(/\s+/g, ' ')
+    .trim();
+
+const normalizeUrl = value => {
+  const raw = clean(value, 1000);
+  if (!raw) return '';
+  try {
+    const url = new URL(raw);
+    url.hash = '';
+    const normalized = url.toString().replace(/\/$/, '');
+    return normalized.toLowerCase();
+  } catch {
+    return raw.replace(/\/$/, '').toLowerCase();
+  }
+};
+
+const metadataValue = (body, label) => {
+  const prefix = '**' + label + ':**';
+  return String(body || '')
+    .split('\n')
+    .find(line => line.startsWith(prefix))
+    ?.slice(prefix.length)
+    .trim() || '';
+};
+
+const submissionDetails = body => {
+  const lines = String(body || '').split('\n');
+  const firstContentIndex = lines.findIndex(
+    (line, index) =>
+      index > 0 &&
+      line.trim() &&
+      !line.startsWith('_Submitted through the BetterMakati website._') &&
+      !line.startsWith('**Community tool:**') &&
+      !line.startsWith('**Barangay / area:**') &&
+      !line.startsWith('**Source / URL:**')
+  );
+  return firstContentIndex >= 0 ? lines.slice(firstContentIndex).join('\n').trim() : '';
+};
+
+const strongDuplicate = (issue, payload, label) => {
+  if (!issue || issue.pull_request || issue.state !== 'open') return false;
+
+  const expectedTitle = '[' + label + '] ' + payload.subject;
+  if (normalizeText(issue.title) !== normalizeText(expectedTitle)) return false;
+
+  const issueBody = String(issue.body || '');
+  if (
+    payload.tool &&
+    normalizeText(metadataValue(issueBody, 'Community tool')) !== normalizeText(payload.tool)
+  ) {
+    return false;
+  }
+  if (
+    payload.barangay &&
+    normalizeText(metadataValue(issueBody, 'Barangay / area')) !== normalizeText(payload.barangay)
+  ) {
+    return false;
+  }
+
+  const incomingSource = normalizeUrl(payload.sourceUrl);
+  if (incomingSource) {
+    return normalizeUrl(metadataValue(issueBody, 'Source / URL')) === incomingSource;
+  }
+
+  return normalizeText(submissionDetails(issueBody)) === normalizeText(payload.details);
+};
+
 const githubFallback = ({ type, subject, details, sourceUrl, barangay, tool }) => {
   const label =
     type === 'proposal'
@@ -111,6 +181,34 @@ export default async function handler(req, res) {
   ].filter(Boolean).join('\n');
 
   try {
+    const issuesResponse = await fetch(
+      'https://api.github.com/repos/' + repository + '/issues?state=open&per_page=100',
+      {
+        headers: {
+          Authorization: 'Bearer ' + token,
+          Accept: 'application/vnd.github+json',
+          'X-GitHub-Api-Version': '2022-11-28',
+          'User-Agent': 'BetterMakati-feedback/1.0',
+        },
+      }
+    );
+
+    if (issuesResponse.ok) {
+      const issues = await issuesResponse.json();
+      const duplicate = Array.isArray(issues)
+        ? issues.find(issue => strongDuplicate(issue, payload, label))
+        : null;
+
+      if (duplicate) {
+        return res.status(200).json({
+          ok: true,
+          duplicate: true,
+          reference: duplicate.number,
+          url: duplicate.html_url,
+        });
+      }
+    }
+
     const response = await fetch('https://api.github.com/repos/' + repository + '/issues', {
       method: 'POST',
       headers: {
