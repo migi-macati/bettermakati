@@ -1,0 +1,495 @@
+{
+  "schemaVersion": 1,
+  "reconciledAt": "2026-09-25",
+  "workstream": "Wave 3C-1d — Community, social-welfare and city-owned facility reconciliation",
+  "scope": "Research/reconciliation only. No Civic Map assets are added or removed in this step.",
+  "controllingSource": {
+    "source": "Makati City Basic Facts and Figures 2023",
+    "sourceUrl": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1720150266681.pdf",
+    "geography": "Present-day Makati; starred social-welfare counts exclude the 10 transferred barangays",
+    "currentCounts": {
+      "dayCareCenters": 22,
+      "childMindingCenters": 1,
+      "socialDevelopmentCenter": 1,
+      "makatiYouthHome": 1,
+      "youthCenter": 1,
+      "seniorCitizenCenter": 1
+    }
+  },
+  "dayCareReconciliation": {
+    "namedSource": {
+      "source": "Makati Facts and Figures 2020 — Day Care Services",
+      "sourceUrl": "https://www.makati.gov.ph/assets/uploads/downloads/2/45/561/pdf/Facts%20and%20FIgures%202020.pdf",
+      "totalNamedDayCareCenters": 40,
+      "totalNamedChildMindingCenters": 4
+    },
+    "currentMakati": {
+      "dayCareCenters": 22,
+      "childMindingCenters": 1,
+      "dayCareSites": [
+        {
+          "id": "bangkal-day-care-center",
+          "name": "Bangkal Day Care Center",
+          "barangay": "Bangkal",
+          "historicalAddress2020": "Ground Floor, Barangay Hall, Lim Street",
+          "currentStatus": "current-network-identity-supported",
+          "continuityBasis": "Present-day geography filtering of Makati's 2020 named list yields exactly 22 day-care centers, matching the City Government's 2023 post-transfer total.",
+          "addressDisposition": "Use 2020 address as provenance only; re-freeze the current entrance/building point during implementation because many centers are co-located inside barangay halls or other public buildings.",
+          "implementationDisposition": "ready-for-current-point-verification"
+        },
+        {
+          "id": "carmona-day-care-center",
+          "name": "Carmona Day Care Center",
+          "barangay": "Carmona",
+          "historicalAddress2020": "2nd Floor, Carmona Complex",
+          "currentStatus": "current-network-identity-supported",
+          "continuityBasis": "Present-day geography filtering of Makati's 2020 named list yields exactly 22 day-care centers, matching the City Government's 2023 post-transfer total.",
+          "addressDisposition": "Use 2020 address as provenance only; re-freeze the current entrance/building point during implementation because many centers are co-located inside barangay halls or other public buildings.",
+          "implementationDisposition": "ready-for-current-point-verification"
+        },
+        {
+          "id": "kasilawan-day-care-center",
+          "name": "Kasilawan Day Care Center",
+          "barangay": "Kasilawan",
+          "historicalAddress2020": "Ground Floor, Old Barangay Hall, A.P. Reyes Street",
+          "currentStatus": "current-network-identity-supported",
+          "continuityBasis": "Present-day geography filtering of Makati's 2020 named list yields exactly 22 day-care centers, matching the City Government's 2023 post-transfer total.",
+          "addressDisposition": "Use 2020 address as provenance only; re-freeze the current entrance/building point during implementation because many centers are co-located inside barangay halls or other public buildings.",
+          "implementationDisposition": "ready-for-current-point-verification"
+        },
+        {
+          "id": "la-paz-day-care-center",
+          "name": "La Paz Day Care Center",
+          "barangay": "La Paz",
+          "historicalAddress2020": "2nd Floor, La Paz Barangay Hall, Dumas Street corner Archimedes Street",
+          "currentStatus": "current-network-identity-supported",
+          "continuityBasis": "Present-day geography filtering of Makati's 2020 named list yields exactly 22 day-care centers, matching the City Government's 2023 post-transfer total.",
+          "addressDisposition": "Use 2020 address as provenance only; re-freeze the current entrance/building point during implementation because many centers are co-located inside barangay halls or other public buildings.",
+          "implementationDisposition": "ready-for-current-point-verification"
+        },
+        {
+          "id": "olympia-day-care-center",
+          "name": "Olympia Day Care Center",
+          "barangay": "Olympia",
+          "historicalAddress2020": "Ground Floor, Barangay Hall, Honradez Street",
+          "currentStatus": "current-network-identity-supported",
+          "continuityBasis": "Present-day geography filtering of Makati's 2020 named list yields exactly 22 day-care centers, matching the City Government's 2023 post-transfer total.",
+          "addressDisposition": "Use 2020 address as provenance only; re-freeze the current entrance/building point during implementation because many centers are co-located inside barangay halls or other public buildings.",
+          "implementationDisposition": "ready-for-current-point-verification"
+        },
+        {
+          "id": "palanan-1-day-care-center",
+          "name": "Palanan 1 Day Care Center",
+          "barangay": "Palanan",
+          "historicalAddress2020": "Ground Floor, Palanan Barangay Hall, Casino Street",
+          "currentStatus": "current-network-identity-supported",
+          "continuityBasis": "Present-day geography filtering of Makati's 2020 named list yields exactly 22 day-care centers, matching the City Government's 2023 post-transfer total.",
+          "addressDisposition": "Use 2020 address as provenance only; re-freeze the current entrance/building point during implementation because many centers are co-located inside barangay halls or other public buildings.",
+          "implementationDisposition": "ready-for-current-point-verification"
+        },
+        {
+          "id": "palanan-2-day-care-center",
+          "name": "Palanan 2 Day Care Center",
+          "barangay": "Palanan",
+          "historicalAddress2020": "Ground Floor, Palanan Barangay Hall, Casino Street",
+          "currentStatus": "current-network-identity-supported",
+          "continuityBasis": "Present-day geography filtering of Makati's 2020 named list yields exactly 22 day-care centers, matching the City Government's 2023 post-transfer total.",
+          "addressDisposition": "Use 2020 address as provenance only; re-freeze the current entrance/building point during implementation because many centers are co-located inside barangay halls or other public buildings.",
+          "implementationDisposition": "ready-for-current-point-verification"
+        },
+        {
+          "id": "pio-del-pilar-day-care-center",
+          "name": "Pio del Pilar Day Care Center",
+          "barangay": "Pio del Pilar",
+          "historicalAddress2020": "J. Victor Street along Dela Rosa",
+          "currentStatus": "current-network-identity-supported",
+          "continuityBasis": "Present-day geography filtering of Makati's 2020 named list yields exactly 22 day-care centers, matching the City Government's 2023 post-transfer total.",
+          "addressDisposition": "Use 2020 address as provenance only; re-freeze the current entrance/building point during implementation because many centers are co-located inside barangay halls or other public buildings.",
+          "implementationDisposition": "ready-for-current-point-verification"
+        },
+        {
+          "id": "south-poblacion-day-care-center",
+          "name": "South Poblacion Day Care Center",
+          "barangay": "Poblacion",
+          "historicalAddress2020": "2nd Floor, Likod Simbahan, Burgos Street",
+          "currentStatus": "current-network-identity-supported",
+          "continuityBasis": "Present-day geography filtering of Makati's 2020 named list yields exactly 22 day-care centers, matching the City Government's 2023 post-transfer total.",
+          "addressDisposition": "Use 2020 address as provenance only; re-freeze the current entrance/building point during implementation because many centers are co-located inside barangay halls or other public buildings.",
+          "implementationDisposition": "ready-for-current-point-verification"
+        },
+        {
+          "id": "north-poblacion-day-care-center",
+          "name": "North Poblacion Day Care Center",
+          "barangay": "Poblacion",
+          "historicalAddress2020": "3rd Floor, Makati Sporting Building, Bonifacio Street",
+          "currentStatus": "current-network-identity-supported",
+          "continuityBasis": "Present-day geography filtering of Makati's 2020 named list yields exactly 22 day-care centers, matching the City Government's 2023 post-transfer total.",
+          "addressDisposition": "Use 2020 address as provenance only; re-freeze the current entrance/building point during implementation because many centers are co-located inside barangay halls or other public buildings.",
+          "implementationDisposition": "ready-for-current-point-verification"
+        },
+        {
+          "id": "san-antonio-day-care-center",
+          "name": "San Antonio Day Care Center",
+          "barangay": "San Antonio",
+          "historicalAddress2020": "3rd Floor, San Antonio Barangay Hall, Caong Street",
+          "currentStatus": "current-network-identity-supported",
+          "continuityBasis": "Present-day geography filtering of Makati's 2020 named list yields exactly 22 day-care centers, matching the City Government's 2023 post-transfer total.",
+          "addressDisposition": "Use 2020 address as provenance only; re-freeze the current entrance/building point during implementation because many centers are co-located inside barangay halls or other public buildings.",
+          "implementationDisposition": "ready-for-current-point-verification"
+        },
+        {
+          "id": "san-isidro-day-care-center",
+          "name": "San Isidro Day Care Center",
+          "barangay": "San Isidro",
+          "historicalAddress2020": "2nd Floor, San Isidro Barangay Hall",
+          "currentStatus": "current-network-identity-supported",
+          "continuityBasis": "Present-day geography filtering of Makati's 2020 named list yields exactly 22 day-care centers, matching the City Government's 2023 post-transfer total.",
+          "addressDisposition": "Use 2020 address as provenance only; re-freeze the current entrance/building point during implementation because many centers are co-located inside barangay halls or other public buildings.",
+          "implementationDisposition": "ready-for-current-point-verification"
+        },
+        {
+          "id": "tejeros-day-care-center",
+          "name": "Tejeros Day Care Center",
+          "barangay": "Tejeros",
+          "historicalAddress2020": "2nd Floor, Tejeros Barangay Hall, H. Santos Street",
+          "currentStatus": "current-network-identity-supported",
+          "continuityBasis": "Present-day geography filtering of Makati's 2020 named list yields exactly 22 day-care centers, matching the City Government's 2023 post-transfer total.",
+          "addressDisposition": "Use 2020 address as provenance only; re-freeze the current entrance/building point during implementation because many centers are co-located inside barangay halls or other public buildings.",
+          "implementationDisposition": "ready-for-current-point-verification"
+        },
+        {
+          "id": "makati-homes-tejeros-day-care-center",
+          "name": "Makati Homes Tejeros Day Care Center",
+          "barangay": "Tejeros",
+          "historicalAddress2020": "Ground Floor, Social Development Center, Malolos Street",
+          "currentStatus": "current-network-identity-supported",
+          "continuityBasis": "Present-day geography filtering of Makati's 2020 named list yields exactly 22 day-care centers, matching the City Government's 2023 post-transfer total.",
+          "addressDisposition": "Use 2020 address as provenance only; re-freeze the current entrance/building point during implementation because many centers are co-located inside barangay halls or other public buildings.",
+          "implementationDisposition": "ready-for-current-point-verification"
+        },
+        {
+          "id": "singkamas-day-care-center",
+          "name": "Singkamas Day Care Center",
+          "barangay": "Singkamas",
+          "historicalAddress2020": "Ground Floor, F. Benitez Elementary School, F. Nazario Street",
+          "currentStatus": "current-network-identity-supported",
+          "continuityBasis": "Present-day geography filtering of Makati's 2020 named list yields exactly 22 day-care centers, matching the City Government's 2023 post-transfer total.",
+          "addressDisposition": "Use 2020 address as provenance only; re-freeze the current entrance/building point during implementation because many centers are co-located inside barangay halls or other public buildings.",
+          "implementationDisposition": "ready-for-current-point-verification"
+        },
+        {
+          "id": "sta-cruz-day-care-center",
+          "name": "Sta. Cruz Day Care Center",
+          "barangay": "Sta. Cruz",
+          "historicalAddress2020": "2nd Floor, Barangay Hall, Zapote corner Davila Street",
+          "currentStatus": "current-network-identity-supported",
+          "continuityBasis": "Present-day geography filtering of Makati's 2020 named list yields exactly 22 day-care centers, matching the City Government's 2023 post-transfer total.",
+          "addressDisposition": "Use 2020 address as provenance only; re-freeze the current entrance/building point during implementation because many centers are co-located inside barangay halls or other public buildings.",
+          "implementationDisposition": "ready-for-current-point-verification"
+        },
+        {
+          "id": "valenzuela-day-care-center",
+          "name": "Valenzuela Day Care Center",
+          "barangay": "Valenzuela",
+          "historicalAddress2020": "Ground Floor, beside Barangay Hall, Honradez Street",
+          "currentStatus": "current-network-identity-supported",
+          "continuityBasis": "Present-day geography filtering of Makati's 2020 named list yields exactly 22 day-care centers, matching the City Government's 2023 post-transfer total.",
+          "addressDisposition": "Use 2020 address as provenance only; re-freeze the current entrance/building point during implementation because many centers are co-located inside barangay halls or other public buildings.",
+          "implementationDisposition": "ready-for-current-point-verification"
+        },
+        {
+          "id": "guadalupe-nuevo-1-day-care-center",
+          "name": "Guadalupe Nuevo 1 Day Care Center",
+          "barangay": "Guadalupe Nuevo",
+          "historicalAddress2020": "3rd Floor, Barangay Hall Building, Guadalupe Nuevo",
+          "currentStatus": "current-network-identity-supported",
+          "continuityBasis": "Present-day geography filtering of Makati's 2020 named list yields exactly 22 day-care centers, matching the City Government's 2023 post-transfer total.",
+          "addressDisposition": "Use 2020 address as provenance only; re-freeze the current entrance/building point during implementation because many centers are co-located inside barangay halls or other public buildings.",
+          "implementationDisposition": "ready-for-current-point-verification"
+        },
+        {
+          "id": "guadalupe-nuevo-2-day-care-center",
+          "name": "Guadalupe Nuevo 2 Day Care Center",
+          "barangay": "Guadalupe Nuevo",
+          "historicalAddress2020": "3rd Floor, Barangay Hall Building, Guadalupe Nuevo",
+          "currentStatus": "current-network-identity-supported",
+          "continuityBasis": "Present-day geography filtering of Makati's 2020 named list yields exactly 22 day-care centers, matching the City Government's 2023 post-transfer total.",
+          "addressDisposition": "Use 2020 address as provenance only; re-freeze the current entrance/building point during implementation because many centers are co-located inside barangay halls or other public buildings.",
+          "implementationDisposition": "ready-for-current-point-verification"
+        },
+        {
+          "id": "guadalupe-viejo-1-day-care-center",
+          "name": "Guadalupe Viejo 1 Day Care Center",
+          "barangay": "Guadalupe Viejo",
+          "historicalAddress2020": "1st Floor, Barangay Hall, Camia Street",
+          "currentStatus": "current-network-identity-supported",
+          "continuityBasis": "Present-day geography filtering of Makati's 2020 named list yields exactly 22 day-care centers, matching the City Government's 2023 post-transfer total.",
+          "addressDisposition": "Use 2020 address as provenance only; re-freeze the current entrance/building point during implementation because many centers are co-located inside barangay halls or other public buildings.",
+          "implementationDisposition": "ready-for-current-point-verification"
+        },
+        {
+          "id": "guadalupe-viejo-2-day-care-center",
+          "name": "Guadalupe Viejo 2 Day Care Center",
+          "barangay": "Guadalupe Viejo",
+          "historicalAddress2020": "2nd Floor, Barangay Hall, Camia Street",
+          "currentStatus": "current-network-identity-supported",
+          "continuityBasis": "Present-day geography filtering of Makati's 2020 named list yields exactly 22 day-care centers, matching the City Government's 2023 post-transfer total.",
+          "addressDisposition": "Use 2020 address as provenance only; re-freeze the current entrance/building point during implementation because many centers are co-located inside barangay halls or other public buildings.",
+          "implementationDisposition": "ready-for-current-point-verification"
+        },
+        {
+          "id": "pinagkaisahan-day-care-center",
+          "name": "Pinagkaisahan Day Care Center",
+          "barangay": "Pinagkaisahan",
+          "historicalAddress2020": "Ground Floor, Barangay Hall, Danlig Street",
+          "currentStatus": "current-network-identity-supported",
+          "continuityBasis": "Present-day geography filtering of Makati's 2020 named list yields exactly 22 day-care centers, matching the City Government's 2023 post-transfer total.",
+          "addressDisposition": "Use 2020 address as provenance only; re-freeze the current entrance/building point during implementation because many centers are co-located inside barangay halls or other public buildings.",
+          "implementationDisposition": "ready-for-current-point-verification"
+        }
+      ],
+      "childMindingSite": {
+        "id": "kasilawan-child-minding-center",
+        "name": "Kasilawan Child Minding Center",
+        "barangay": "Kasilawan",
+        "historicalAddress2020": "Ground Floor, Old Barangay Hall, A.P. Reyes Street",
+        "currentStatus": "current-network-identity-supported",
+        "continuityBasis": "It is the only 2020 child-minding center inside present-day Makati after boundary reconciliation, exactly matching the 2023 current count of one.",
+        "addressDisposition": "Re-freeze current building point during implementation.",
+        "implementationDisposition": "ready-for-current-point-verification"
+      }
+    },
+    "formerMakatiNowTaguig": {
+      "dayCareCenters": 18,
+      "childMindingCenters": 3,
+      "dayCareNames": [
+        "Cembo 1 Day Care Center",
+        "Cembo 2 Day Care Center",
+        "Comembo 1 Day Care Center",
+        "Comembo 2 Day Care Center",
+        "East Rembo Day Care Center",
+        "Bahay Bulilit East Rembo Day Care Center",
+        "Pembo 1 Day Care Center",
+        "Pembo 2 Day Care Center",
+        "Pembo 3 Day Care Center",
+        "Pitogo 1 Day Care Center",
+        "Pitogo 2 Day Care Center",
+        "Rizal 1 Day Care Center",
+        "Rizal 2 Day Care Center",
+        "Rizal 3 Day Care Center",
+        "South Cembo Day Care Center",
+        "Southside 1 Day Care Center",
+        "Southside 2 Day Care Center",
+        "West Rembo Day Care Center"
+      ],
+      "childMindingNames": [
+        "Pembo Child Minding Center",
+        "Rizal Pabahay Child Minding Center",
+        "Southside Fox Child Minding Center"
+      ],
+      "disposition": "Preserve as historical provenance; exclude from present-day Makati completeness."
+    },
+    "exactCountCheck": {
+      "dayCare": "22 current + 18 transferred = 40 named in 2020; current 22 equals 2023 post-transfer count",
+      "childMinding": "1 current + 3 transferred = 4 named in 2020; current 1 equals 2023 post-transfer count"
+    },
+    "coLocationRule": "A day-care or child-minding service inside a barangay hall/community building may be represented as a distinct service asset only if the user journey benefits from a separate destination. Avoid duplicate-building pins that differ only by counter/service name."
+  },
+  "socialWelfareFacilities": [
+    {
+      "id": "makati-social-development-center",
+      "currentName": "Makati Social Development Center",
+      "barangay": "Tejeros",
+      "address": "Barasoain Street corner Malolos Street, Barangay Tejeros, Makati City",
+      "currentStatus": "verified-current",
+      "evidence": [
+        {
+          "source": "Makati City Basic Facts and Figures 2023",
+          "url": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1720150266681.pdf",
+          "finding": "Counts one Social Development Center in current Makati."
+        },
+        {
+          "source": "City Government of Makati 2021 Supplemental Procurement Plan",
+          "url": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/online_forms/pdf/2021%20SPP%20Consolidated%20PDF.pdf",
+          "finding": "Funds a fire-protection upgrade for the Social Development Center at Barasoain corner Malolos, Tejeros."
+        },
+        {
+          "source": "Makati Social Welfare Department Citizen's Charter",
+          "url": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/securing_social_services_%28citizens_charter%2920190104113800.pdf",
+          "finding": "MSWD refers children needing temporary shelter to the Makati Youth Home or Social Development Center."
+        }
+      ],
+      "coLocatedServices": [
+        "Makati Homes Tejeros Day Care Center"
+      ],
+      "implementationDisposition": "ready-for-current-point-freeze"
+    },
+    {
+      "id": "makati-youth-home",
+      "currentName": "Bahay Pag-asa (Makati Youth Home)",
+      "aliases": [
+        "Makati Youth Home",
+        "Makati Youth Homes"
+      ],
+      "barangay": "La Paz",
+      "address": "Fabella Compound, Onyx corner Sunrise Streets, Barangay La Paz, Makati City",
+      "currentStatus": "verified-current-operational",
+      "evidence": [
+        {
+          "source": "Makati City Basic Facts and Figures 2023",
+          "url": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1720150266681.pdf",
+          "finding": "Counts one Makati Youth Home."
+        },
+        {
+          "source": "DSWD list of LGU-managed centers with valid accreditation",
+          "url": "https://standards.dswd.gov.ph/wp-content/uploads/2023/05/List-of-LGU-Managed-Centers-with-Valid-Accre.-05252023.pdf",
+          "finding": "Lists Bahay Pag-asa (Makati Youth Home) at Fabella Compound, Onyx Street, La Paz, with Level 2 accreditation."
+        },
+        {
+          "source": "Juvenile Justice and Welfare Council Bahay Pag-asa profile",
+          "url": "https://storage.googleapis.com/efoi-v2-prod/media/documents/BPA_Nationwide_as_of_December_31_2023_lmeTQ65.pdf",
+          "finding": "Identifies Makati Youth Home at Fabella Compound, Onyx corner Sunrise, as operational and LGU-run."
+        }
+      ],
+      "implementationDisposition": "ready-for-current-point-freeze"
+    },
+    {
+      "id": "makati-youth-center",
+      "currentName": "Makati Youth Center",
+      "address": "1150 J.P. Rizal Avenue, Makati City",
+      "barangay": null,
+      "currentStatus": "verified-current-facility-exact-barangay-pending",
+      "evidence": [
+        {
+          "source": "Makati City Basic Facts and Figures 2023",
+          "url": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1720150266681.pdf",
+          "finding": "Counts one Youth Center."
+        },
+        {
+          "source": "City Government of Makati 2021 Annual Procurement Plan",
+          "url": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/online_forms/pdf/APP%20Compiled.pdf",
+          "finding": "Includes Makati Youth Center in the city's housekeeping-maintenance program."
+        },
+        {
+          "source": "Current Waze place listing",
+          "url": "https://www.waze.com/live-map/directions/makati-youth-center-building-jose-p-rizal-ave-1150?to=place.w.79298706.793249201.5700860",
+          "finding": "Current map listing identifies Makati Youth Center Building at 1150 J.P. Rizal Avenue."
+        }
+      ],
+      "implementationDisposition": "ready-after-barangay-and-exact-point-freeze",
+      "note": "Do not guess the barangay from the street address; freeze it from current parcel/building evidence in 3C-1f."
+    },
+    {
+      "id": "sm-felicidad-sy-center-for-the-elderly",
+      "currentName": "SM Felicidad Sy Center for the Elderly",
+      "aliases": [
+        "Felicidad Sy Elderly Center",
+        "Senior Citizen Center"
+      ],
+      "barangay": "Tejeros",
+      "address": "J.P. Rizal Street, Barangay Tejeros, Makati City",
+      "currentStatus": "current-identity-supported",
+      "evidence": [
+        {
+          "source": "Makati City Basic Facts and Figures 2023",
+          "url": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1720150266681.pdf",
+          "finding": "Counts one Senior Citizen Center."
+        },
+        {
+          "source": "City Government of Makati 2021 Annual Procurement Plan",
+          "url": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/online_forms/pdf/APP%20Compiled.pdf",
+          "finding": "Includes Tejeros Wellness Center & Felicidad Sy Elderly Center among maintained city facilities."
+        }
+      ],
+      "implementationDisposition": "ready-after-current-entrance-point-freeze"
+    }
+  ],
+  "cityOwnedCommunityFacilities": [
+    {
+      "id": "poblacion-public-market",
+      "currentName": "Poblacion Public Market",
+      "barangay": "Poblacion",
+      "historicalCityOwnedStatus": "City Government-owned public market / economic enterprise",
+      "currentStatus": "current-continuity-supported",
+      "evidence": [
+        {
+          "source": "Makati Facts and Figures 2020",
+          "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/45/561/pdf/Facts%20and%20FIgures%202020.pdf",
+          "finding": "Lists Poblacion Public Market as a city-owned enterprise with 314 stalls."
+        },
+        {
+          "source": "City Government of Makati 2022 Annual Procurement Plan",
+          "url": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/online_forms/pdf/2022%20APP%20Final.pdf",
+          "finding": "Includes a Poblacion Public Market health and sanitation project."
+        }
+      ],
+      "implementationDisposition": "ready-after-current-address-and-point-freeze",
+      "note": "Cembo Talipapa is excluded from present-day Makati after the boundary transfer."
+    },
+    {
+      "id": "makati-city-hall",
+      "currentName": "Makati City Hall",
+      "currentStatus": "already-mapped-retain",
+      "civicMapId": "makati-city-hall"
+    },
+    {
+      "id": "museo-ng-makati",
+      "currentName": "Museo ng Makati",
+      "currentStatus": "already-mapped-retain",
+      "civicMapId": "museo-ng-makati"
+    }
+  ],
+  "unresolvedOrDeferred": [
+    {
+      "id": "makati-drop-in-center-olympia",
+      "evidence": {
+        "source": "City Government of Makati 2021 Supplemental Procurement Plan",
+        "url": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/online_forms/pdf/2021%20SPP%20Consolidated%20PDF.pdf",
+        "finding": "Listed as a proposed Makati Drop-in Center on J.P. Rizal Street, Olympia."
+      },
+      "disposition": "hold-until-current-completion-and-operating-status-is-verified",
+      "reason": "A proposed construction line is not enough to assert a current operating public facility."
+    },
+    {
+      "id": "tejeros-wellness-center",
+      "disposition": "hold-as-possible-colocated-facility",
+      "reason": "Official maintenance records pair it with the Felicidad Sy Elderly Center; do not create a separate Civic Map asset until current separate public-facing function/entrance is verified."
+    }
+  ],
+  "adjacentFacilityFamilyFor3C1f": {
+    "name": "Barangay halls and community complexes",
+    "disposition": "separate implementation family",
+    "reason": "Many day-care centers are physically inside barangay halls. Mapping halls and embedded services requires co-location-aware implementation to avoid duplicate-building clutter.",
+    "rule": "Reuse BetterBarangay's source-backed current barangay facility data where possible rather than inventing a second directory."
+  },
+  "implementationReadiness": {
+    "dayCareNetwork": {
+      "currentNamed": 22,
+      "childMindingCurrentNamed": 1,
+      "currentPointVerificationStillRequired": 23
+    },
+    "socialWelfareCore": {
+      "readyOrNearlyReady": 4,
+      "exactPointOrBarangayFreezeStillNeeded": [
+        "makati-youth-center",
+        "sm-felicidad-sy-center-for-the-elderly"
+      ]
+    },
+    "cityOwnedMarket": {
+      "readyAfterPointFreeze": 1
+    }
+  },
+  "findings": [
+    "The 2020 named day-care inventory reconciles exactly to the 2023 post-transfer counts: 22 current day-care centers and one current child-minding center.",
+    "All 18 day-care centers and three child-minding centers removed by the geography filter are in the transferred barangays; no unnamed replacement facility is needed to explain the 2023 totals.",
+    "The Social Development Center, Makati Youth Home, Youth Center and Senior Citizen Center each remain one-facility categories in the 2023 city statistics.",
+    "Makati Youth Home has the strongest current external operating evidence through DSWD/JJWC accreditation and operational records.",
+    "Poblacion Public Market remains the current-Makati city-owned market candidate; Cembo Talipapa is outside current Makati.",
+    "Co-located day-care, barangay-hall and social-welfare services should not automatically become duplicate building pins."
+  ],
+  "nextStep": {
+    "id": "3C-1e1",
+    "title": "Implement current health centers — batch A",
+    "scope": "Add the first 9 verified MHD health-center sites with exact current map points, source/address provenance and health-center criteria. No fire, police or community assets in the same step."
+  }
+}
