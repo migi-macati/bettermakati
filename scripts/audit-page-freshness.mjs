@@ -1,4 +1,4 @@
-import { readFile } from 'node:fs/promises';
+import { readFile, readdir } from 'node:fs/promises';
 
 const audit = JSON.parse(await readFile('data/page-audit.json', 'utf8'));
 const freshness = JSON.parse(
@@ -8,6 +8,10 @@ const reviewQueue = JSON.parse(
   await readFile('data/freshness-review-queue.json', 'utf8')
 );
 const app = await readFile('src/App.tsx', 'utf8');
+const sourceFiles = (await readdir('src', { recursive: true }))
+  .filter(file => String(file).endsWith('.tsx'))
+  .map(file => 'src/' + file);
+
 const today = new Date();
 const maxAgeDays = 120;
 const problems = [];
@@ -179,6 +183,17 @@ if (
   freshness.untrackedAffectedPages.length
 ) {
   problems.push('Page freshness summary untrackedAffectedPages count is incorrect.');
+}
+
+for (const file of sourceFiles) {
+  const source = await readFile(file, 'utf8');
+  for (const match of source.matchAll(/<LastReviewed\b([\s\S]*?)\/>/g)) {
+    if (!/\bdate\s*=/.test(match[1])) {
+      problems.push(
+        'LastReviewed must use an explicit human review date: ' + file
+      );
+    }
+  }
 }
 
 if (problems.length) {
