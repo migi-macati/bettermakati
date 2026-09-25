@@ -159,6 +159,7 @@ for (const marker of [
   'stable-document content check',
   'reachability check only',
   'Current source state',
+  'Monitored by City Monitor',
 ]) {
   if (!records.includes(marker)) problems.push('Public Records lost source freshness UX: ' + marker);
 }
@@ -186,6 +187,8 @@ for (const [label, row, checks] of [
 
 for (const marker of [
   "test('Public Records exposes current source freshness state'",
+  "item.owner === 'city-monitor'",
+  "catalog.find(item => item.id === 'philgeps')?.monitoringMode",
   "test('BetterMakati Status exposes source freshness automation'",
 ]) {
   if (!tests.includes(marker)) problems.push('Source freshness browser coverage missing: ' + marker);
