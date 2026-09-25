@@ -596,7 +596,10 @@
       "stopWhen": "Metric definitions and publication thresholds are frozen.",
       "excludes": [
         "Do not publish headline metrics in this step."
-      ]
+      ],
+      "status": "superseded-paused",
+      "supersededBy": "W3R-10a",
+      "revisionNote": "Metrics must be redefined after the Place Registry/reporting/observation redesign."
     },
     {
       "id": "3H-2",
@@ -616,7 +619,10 @@
       "dependencies": [
         "3H-1"
       ],
-      "stopWhen": "The machine data exposes the defined fields with no public aggregate claims yet."
+      "stopWhen": "The machine data exposes the defined fields with no public aggregate claims yet.",
+      "status": "superseded-paused",
+      "supersededBy": "W3R-10c",
+      "revisionNote": "Instrumentation is deferred until revised metrics and workflows are frozen."
     },
     {
       "id": "3I-1",
@@ -639,7 +645,10 @@
         "3H-2"
       ],
       "stopWhen": "All major participation surfaces are covered by page audit and dependency-aware freshness.",
-      "note": "Scheduled late so audit rows describe the stabilized Wave 3 implementation rather than moving targets."
+      "note": "Scheduled late so audit rows describe the stabilized Wave 3 implementation rather than moving targets.",
+      "status": "deferred-redesign",
+      "supersededBy": "W3R-11a",
+      "revisionNote": "Human audit should evaluate stabilized redesigned participation surfaces."
     },
     {
       "id": "3I-2",
@@ -659,7 +668,10 @@
       "dependencies": [
         "3I-1"
       ],
-      "stopWhen": "The audit runs in quality/build and catches the Wave 3 architectural invariants."
+      "stopWhen": "The audit runs in quality/build and catches the Wave 3 architectural invariants.",
+      "status": "deferred-redesign",
+      "supersededBy": "W3R-11b",
+      "revisionNote": "Architecture audit is rewritten around Place Registry integrity plus redesigned participation invariants."
     },
     {
       "id": "3I-3",
@@ -680,7 +692,10 @@
       "dependencies": [
         "3I-2"
       ],
-      "stopWhen": "General BetterMakati input has end-to-end regression coverage."
+      "stopWhen": "General BetterMakati input has end-to-end regression coverage.",
+      "status": "deferred-redesign",
+      "supersededBy": "W3R-11c",
+      "revisionNote": "General participation E2E remains required but moves after redesigned workflows stabilize."
     },
     {
       "id": "3I-4",
@@ -701,7 +716,10 @@
       "dependencies": [
         "3I-3"
       ],
-      "stopWhen": "Civic Map's submission and lifecycle semantics have focused regression coverage."
+      "stopWhen": "Civic Map's submission and lifecycle semantics have focused regression coverage.",
+      "status": "deferred-redesign",
+      "supersededBy": "W3R-11d",
+      "revisionNote": "Civic Map lifecycle tests are replaced by nearby reporting/place matching/observations/lifecycle tests."
     },
     {
       "id": "3I-5",
@@ -723,7 +741,10 @@
       "dependencies": [
         "3I-4"
       ],
-      "stopWhen": "Targeted participation QA passes and no Wave 3-specific accessibility/mobile defect remains."
+      "stopWhen": "Targeted participation QA passes and no Wave 3-specific accessibility/mobile defect remains.",
+      "status": "deferred-redesign",
+      "supersededBy": "W3R-11e",
+      "revisionNote": "Mobile/accessibility QA should cover the redesigned experience, not the current ratings-first flow."
     },
     {
       "id": "3I-6",
@@ -745,7 +766,540 @@
       "dependencies": [
         "3I-5"
       ],
-      "stopWhen": "Wave 3 completion state is evidence-based and the next major wave can start."
+      "stopWhen": "Wave 3 completion state is evidence-based and the next major wave can start.",
+      "status": "superseded",
+      "supersededBy": "W3R-11f",
+      "revisionNote": "Final Wave 3 classification must supersede the old capability model."
+    },
+    {
+      "id": "W3R-0",
+      "title": "Revise Wave 3 backlog",
+      "priority": "medium",
+      "ownerWorkstream": "Wave 3 Revision",
+      "goal": "Revise Wave 3 backlog",
+      "maximumScope": "Planning/backlog files only. Freeze the old ratings-first direction, preserve completed work, pause superseded tasks, and establish the bounded redesign sequence.",
+      "status": "complete",
+      "planFile": "data/wave3-redesign-plan.json",
+      "dependencies": [],
+      "stopWhen": "Planning/backlog files only. Freeze the old ratings-first direction, preserve completed work, pause superseded tasks, and establish the bounded redesign sequence."
+    },
+    {
+      "id": "W3R-1",
+      "title": "Disposition current Wave 3 capabilities",
+      "priority": "high",
+      "ownerWorkstream": "Wave 3 Revision",
+      "goal": "Disposition current Wave 3 capabilities",
+      "maximumScope": "Create one audit classifying each existing Wave 3 capability as KEEP, REFRAME, REPLACE, DEFER or RETIRE. No code or UX changes.",
+      "status": "next",
+      "planFile": "data/wave3-redesign-plan.json",
+      "dependencies": [
+        "previous W3R step"
+      ],
+      "stopWhen": "Create one audit classifying each existing Wave 3 capability as KEEP, REFRAME, REPLACE, DEFER or RETIRE. No code or UX changes."
+    },
+    {
+      "id": "W3R-2a",
+      "title": "Define shared Place Registry schema",
+      "priority": "medium",
+      "ownerWorkstream": "Wave 3 Revision",
+      "goal": "Define shared Place Registry schema",
+      "maximumScope": "Schema/design record only. Define canonical place fields and Civic-Map-specific fields. No code migration.",
+      "status": "planned",
+      "planFile": "data/wave3-redesign-plan.json",
+      "dependencies": [
+        "previous W3R step"
+      ],
+      "stopWhen": "Schema/design record only. Define canonical place fields and Civic-Map-specific fields. No code migration."
+    },
+    {
+      "id": "W3R-2b",
+      "title": "Introduce Place Registry data layer",
+      "priority": "medium",
+      "ownerWorkstream": "Wave 3 Revision",
+      "goal": "Introduce Place Registry data layer",
+      "maximumScope": "Data-layer refactor only. Preserve all current place IDs and page behavior; Civic Map may temporarily re-export the same records.",
+      "status": "planned",
+      "planFile": "data/wave3-redesign-plan.json",
+      "dependencies": [
+        "previous W3R step"
+      ],
+      "stopWhen": "Data-layer refactor only. Preserve all current place IDs and page behavior; Civic Map may temporarily re-export the same records."
+    },
+    {
+      "id": "W3R-2c",
+      "title": "Add Place Registry selectors",
+      "priority": "medium",
+      "ownerWorkstream": "Wave 3 Revision",
+      "goal": "Add Place Registry selectors",
+      "maximumScope": "Shared helpers only: by barangay, category, service, coordinates/distance and lifecycle. No visible UI changes.",
+      "status": "planned",
+      "planFile": "data/wave3-redesign-plan.json",
+      "dependencies": [
+        "previous W3R step"
+      ],
+      "stopWhen": "Shared helpers only: by barangay, category, service, coordinates/distance and lifecycle. No visible UI changes."
+    },
+    {
+      "id": "W3R-3a",
+      "title": "Reuse places in BetterBarangay",
+      "priority": "medium",
+      "ownerWorkstream": "Wave 3 Revision",
+      "goal": "Reuse places in BetterBarangay",
+      "maximumScope": "Barangay Profile only. Surface verified local places/facilities from the registry.",
+      "status": "planned",
+      "planFile": "data/wave3-redesign-plan.json",
+      "dependencies": [
+        "previous W3R step"
+      ],
+      "stopWhen": "Barangay Profile only. Surface verified local places/facilities from the registry."
+    },
+    {
+      "id": "W3R-3b",
+      "title": "Reuse places in Mobility",
+      "priority": "medium",
+      "ownerWorkstream": "Wave 3 Revision",
+      "goal": "Reuse places in Mobility",
+      "maximumScope": "Mobility page only. Replace duplicated MRT, Busway, ferry and terminal facts where appropriate.",
+      "status": "planned",
+      "planFile": "data/wave3-redesign-plan.json",
+      "dependencies": [
+        "previous W3R step"
+      ],
+      "stopWhen": "Mobility page only. Replace duplicated MRT, Busway, ferry and terminal facts where appropriate."
+    },
+    {
+      "id": "W3R-3c",
+      "title": "Reuse places in Services and Government Offices",
+      "priority": "medium",
+      "ownerWorkstream": "Wave 3 Revision",
+      "goal": "Reuse places in Services and Government Offices",
+      "maximumScope": "Services and Government Offices only. Connect service guides to relevant verified physical locations.",
+      "status": "planned",
+      "planFile": "data/wave3-redesign-plan.json",
+      "dependencies": [
+        "previous W3R step"
+      ],
+      "stopWhen": "Services and Government Offices only. Connect service guides to relevant verified physical locations."
+    },
+    {
+      "id": "W3R-3d",
+      "title": "Add place results to Saan Ako Lalapit",
+      "priority": "medium",
+      "ownerWorkstream": "Wave 3 Revision",
+      "goal": "Add place results to Saan Ako Lalapit",
+      "maximumScope": "Concern Finder only. Where appropriate, answer both which service and where the user can go.",
+      "status": "planned",
+      "planFile": "data/wave3-redesign-plan.json",
+      "dependencies": [
+        "previous W3R step"
+      ],
+      "stopWhen": "Concern Finder only. Where appropriate, answer both which service and where the user can go."
+    },
+    {
+      "id": "W3R-4a",
+      "title": "Reframe Civic Map entry experience",
+      "priority": "medium",
+      "ownerWorkstream": "Wave 3 Revision",
+      "goal": "Reframe Civic Map entry experience",
+      "maximumScope": "Civic Map landing only. Center Report something, Check a place, Suggest an improvement and Help document Makati. Remove ratings-first positioning.",
+      "status": "planned",
+      "planFile": "data/wave3-redesign-plan.json",
+      "dependencies": [
+        "previous W3R step"
+      ],
+      "stopWhen": "Civic Map landing only. Center Report something, Check a place, Suggest an improvement and Help document Makati. Remove ratings-first positioning."
+    },
+    {
+      "id": "W3R-4b",
+      "title": "Simplify place detail experience",
+      "priority": "medium",
+      "ownerWorkstream": "Wave 3 Revision",
+      "goal": "Simplify place detail experience",
+      "maximumScope": "CivicAsset page only plus tiny shared UI if essential. Remove generic rating-first language while retaining factual details, reports, improvements and source provenance.",
+      "status": "planned",
+      "planFile": "data/wave3-redesign-plan.json",
+      "dependencies": [
+        "previous W3R step"
+      ],
+      "stopWhen": "CivicAsset page only plus tiny shared UI if essential. Remove generic rating-first language while retaining factual details, reports, improvements and source provenance."
+    },
+    {
+      "id": "W3R-5a",
+      "title": "Specify Report something near me",
+      "priority": "medium",
+      "ownerWorkstream": "Wave 3 Revision",
+      "goal": "Specify Report something near me",
+      "maximumScope": "Flow specification only: location, nearby place/street, issue, details/evidence, submit, fallback. No implementation.",
+      "status": "planned",
+      "planFile": "data/wave3-redesign-plan.json",
+      "dependencies": [
+        "previous W3R step"
+      ],
+      "stopWhen": "Flow specification only: location, nearby place/street, issue, details/evidence, submit, fallback. No implementation."
+    },
+    {
+      "id": "W3R-5b",
+      "title": "Implement nearby place matching",
+      "priority": "medium",
+      "ownerWorkstream": "Wave 3 Revision",
+      "goal": "Implement nearby place matching",
+      "maximumScope": "Location-to-nearby-place selection only. Do not modify report submission yet.",
+      "status": "planned",
+      "planFile": "data/wave3-redesign-plan.json",
+      "dependencies": [
+        "previous W3R step"
+      ],
+      "stopWhen": "Location-to-nearby-place selection only. Do not modify report submission yet."
+    },
+    {
+      "id": "W3R-5c",
+      "title": "Connect nearby reporting to existing civic submission",
+      "priority": "medium",
+      "ownerWorkstream": "Wave 3 Revision",
+      "goal": "Connect nearby reporting to existing civic submission",
+      "maximumScope": "Reporting flow only. Preserve emergency handling, duplicate detection, barangay context, evidence and tracking. Stop after focused E2E validation.",
+      "status": "planned",
+      "planFile": "data/wave3-redesign-plan.json",
+      "dependencies": [
+        "previous W3R step"
+      ],
+      "stopWhen": "Reporting flow only. Preserve emergency handling, duplicate detection, barangay context, evidence and tracking. Stop after focused E2E validation."
+    },
+    {
+      "id": "W3R-5d",
+      "title": "Reconnect case lifecycle to redesigned reporting",
+      "priority": "medium",
+      "ownerWorkstream": "Wave 3 Revision",
+      "goal": "Reconnect case lifecycle to redesigned reporting",
+      "maximumScope": "Lifecycle display/relationships only. Preserve reviewed, forwarded, acknowledged, action-reported and community-verified-resolved semantics. No automatic forwarding.",
+      "status": "planned",
+      "planFile": "data/wave3-redesign-plan.json",
+      "dependencies": [
+        "previous W3R step"
+      ],
+      "stopWhen": "Lifecycle display/relationships only. Preserve reviewed, forwarded, acknowledged, action-reported and community-verified-resolved semantics. No automatic forwarding."
+    },
+    {
+      "id": "W3R-6a",
+      "title": "Define structured observations",
+      "priority": "medium",
+      "ownerWorkstream": "Wave 3 Revision",
+      "goal": "Define structured observations",
+      "maximumScope": "Observation schema only by place/asset family. No UI.",
+      "status": "planned",
+      "planFile": "data/wave3-redesign-plan.json",
+      "dependencies": [
+        "previous W3R step"
+      ],
+      "stopWhen": "Observation schema only by place/asset family. No UI."
+    },
+    {
+      "id": "W3R-6b",
+      "title": "Replace generic ratings with observations",
+      "priority": "medium",
+      "ownerWorkstream": "Wave 3 Revision",
+      "goal": "Replace generic ratings with observations",
+      "maximumScope": "One reusable observation form. No derived scores.",
+      "status": "planned",
+      "planFile": "data/wave3-redesign-plan.json",
+      "dependencies": [
+        "previous W3R step"
+      ],
+      "stopWhen": "One reusable observation form. No derived scores."
+    },
+    {
+      "id": "W3R-6c",
+      "title": "Add place condition summaries",
+      "priority": "medium",
+      "ownerWorkstream": "Wave 3 Revision",
+      "goal": "Add place condition summaries",
+      "maximumScope": "Display recent structured observations and freshness only. Do not publish composite scores.",
+      "status": "planned",
+      "planFile": "data/wave3-redesign-plan.json",
+      "dependencies": [
+        "previous W3R step"
+      ],
+      "stopWhen": "Display recent structured observations and freshness only. Do not publish composite scores."
+    },
+    {
+      "id": "W3R-7a",
+      "title": "Define civic audit campaigns",
+      "priority": "medium",
+      "ownerWorkstream": "Wave 3 Revision",
+      "goal": "Define civic audit campaigns",
+      "maximumScope": "Campaign schema/workflow only: geography, place set, questions, period and completion. No generalized campaign UI.",
+      "status": "planned",
+      "planFile": "data/wave3-redesign-plan.json",
+      "dependencies": [
+        "previous W3R step"
+      ],
+      "stopWhen": "Campaign schema/workflow only: geography, place set, questions, period and completion. No generalized campaign UI."
+    },
+    {
+      "id": "W3R-7b",
+      "title": "Pilot one civic audit",
+      "priority": "medium",
+      "ownerWorkstream": "Wave 3 Revision",
+      "goal": "Pilot one civic audit",
+      "maximumScope": "One geography and one audit theme only, such as BetterPoblacion sidewalks or Makati park accessibility.",
+      "status": "planned",
+      "planFile": "data/wave3-redesign-plan.json",
+      "dependencies": [
+        "previous W3R step"
+      ],
+      "stopWhen": "One geography and one audit theme only, such as BetterPoblacion sidewalks or Makati park accessibility."
+    },
+    {
+      "id": "W3R-7c",
+      "title": "Publish one audit output",
+      "priority": "medium",
+      "ownerWorkstream": "Wave 3 Revision",
+      "goal": "Publish one audit output",
+      "maximumScope": "One report/output template from pilot observations. Validate usefulness before expanding campaign machinery.",
+      "status": "planned",
+      "planFile": "data/wave3-redesign-plan.json",
+      "dependencies": [
+        "previous W3R step"
+      ],
+      "stopWhen": "One report/output template from pilot observations. Validate usefulness before expanding campaign machinery."
+    },
+    {
+      "id": "W3R-8a",
+      "title": "Revise Participation Hub",
+      "priority": "medium",
+      "ownerWorkstream": "Wave 3 Revision",
+      "goal": "Revise Participation Hub",
+      "maximumScope": "Participate page only. Align entry points to official participation, local problem reporting, place improvements, documentation, corrections/sources, BetterMakati ideas and volunteering.",
+      "status": "planned",
+      "planFile": "data/wave3-redesign-plan.json",
+      "dependencies": [
+        "previous W3R step"
+      ],
+      "stopWhen": "Participate page only. Align entry points to official participation, local problem reporting, place improvements, documentation, corrections/sources, BetterMakati ideas and volunteering."
+    },
+    {
+      "id": "W3R-8b",
+      "title": "Revise Get Involved",
+      "priority": "medium",
+      "ownerWorkstream": "Wave 3 Revision",
+      "goal": "Revise Get Involved",
+      "maximumScope": "Get Involved only. Preserve general submissions and add civic-audit volunteering/handoffs where appropriate.",
+      "status": "planned",
+      "planFile": "data/wave3-redesign-plan.json",
+      "dependencies": [
+        "previous W3R step"
+      ],
+      "stopWhen": "Get Involved only. Preserve general submissions and add civic-audit volunteering/handoffs where appropriate."
+    },
+    {
+      "id": "W3R-8c",
+      "title": "Revise BetterBarangay participation",
+      "priority": "medium",
+      "ownerWorkstream": "Wave 3 Revision",
+      "goal": "Revise BetterBarangay participation",
+      "maximumScope": "Barangay participation integration only: local places, issues, improvements, civic audits and barangay contact.",
+      "status": "planned",
+      "planFile": "data/wave3-redesign-plan.json",
+      "dependencies": [
+        "previous W3R step"
+      ],
+      "stopWhen": "Barangay participation integration only: local places, issues, improvements, civic audits and barangay contact."
+    },
+    {
+      "id": "W3R-9a",
+      "title": "Add places to global Search",
+      "priority": "medium",
+      "ownerWorkstream": "Wave 3 Revision",
+      "goal": "Add places to global Search",
+      "maximumScope": "Global Search only. Places become first-class searchable results.",
+      "status": "planned",
+      "planFile": "data/wave3-redesign-plan.json",
+      "dependencies": [
+        "previous W3R step"
+      ],
+      "stopWhen": "Global Search only. Places become first-class searchable results."
+    },
+    {
+      "id": "W3R-9b",
+      "title": "Reuse places in Visit Makati and Heritage",
+      "priority": "medium",
+      "ownerWorkstream": "Wave 3 Revision",
+      "goal": "Reuse places in Visit Makati and Heritage",
+      "maximumScope": "Visit and Heritage only. Reuse canonical place facts without duplicating coordinates/addresses.",
+      "status": "planned",
+      "planFile": "data/wave3-redesign-plan.json",
+      "dependencies": [
+        "previous W3R step"
+      ],
+      "stopWhen": "Visit and Heritage only. Reuse canonical place facts without duplicating coordinates/addresses."
+    },
+    {
+      "id": "W3R-9c",
+      "title": "Connect places to Projects and Accountability",
+      "priority": "medium",
+      "ownerWorkstream": "Wave 3 Revision",
+      "goal": "Connect places to Projects and Accountability",
+      "maximumScope": "Relationship model plus a small verified example set only. No mass fuzzy matching.",
+      "status": "planned",
+      "planFile": "data/wave3-redesign-plan.json",
+      "dependencies": [
+        "previous W3R step"
+      ],
+      "stopWhen": "Relationship model plus a small verified example set only. No mass fuzzy matching."
+    },
+    {
+      "id": "W3R-9d",
+      "title": "Connect City Monitor items to places",
+      "priority": "medium",
+      "ownerWorkstream": "Wave 3 Revision",
+      "goal": "Connect City Monitor items to places",
+      "maximumScope": "One-way explicit relationships only for clearly named places. No automated fuzzy matching.",
+      "status": "planned",
+      "planFile": "data/wave3-redesign-plan.json",
+      "dependencies": [
+        "previous W3R step"
+      ],
+      "stopWhen": "One-way explicit relationships only for clearly named places. No automated fuzzy matching."
+    },
+    {
+      "id": "W3R-9e",
+      "title": "Add reusable Near me utility",
+      "priority": "medium",
+      "ownerWorkstream": "Wave 3 Revision",
+      "goal": "Add reusable Near me utility",
+      "maximumScope": "One shared nearby-place component/helper after registry reuse is proven elsewhere.",
+      "status": "planned",
+      "planFile": "data/wave3-redesign-plan.json",
+      "dependencies": [
+        "previous W3R step"
+      ],
+      "stopWhen": "One shared nearby-place component/helper after registry reuse is proven elsewhere."
+    },
+    {
+      "id": "W3R-10a",
+      "title": "Redefine participation outcome metrics",
+      "priority": "medium",
+      "ownerWorkstream": "Wave 3 Revision",
+      "goal": "Redefine participation outcome metrics",
+      "maximumScope": "Metric definitions only: routing, review, acknowledgement, action, resolution, observation freshness, audit coverage and repeat contribution. No instrumentation.",
+      "status": "planned",
+      "planFile": "data/wave3-redesign-plan.json",
+      "dependencies": [
+        "previous W3R step"
+      ],
+      "stopWhen": "Metric definitions only: routing, review, acknowledgement, action, resolution, observation freshness, audit coverage and repeat contribution. No instrumentation."
+    },
+    {
+      "id": "W3R-10b",
+      "title": "Define metric publication thresholds",
+      "priority": "medium",
+      "ownerWorkstream": "Wave 3 Revision",
+      "goal": "Define metric publication thresholds",
+      "maximumScope": "Separate internal operational metrics from public metrics and set minimum sample/time thresholds. No dashboards.",
+      "status": "planned",
+      "planFile": "data/wave3-redesign-plan.json",
+      "dependencies": [
+        "previous W3R step"
+      ],
+      "stopWhen": "Separate internal operational metrics from public metrics and set minimum sample/time thresholds. No dashboards."
+    },
+    {
+      "id": "W3R-10c",
+      "title": "Instrument redesigned participation outcomes",
+      "priority": "medium",
+      "ownerWorkstream": "Wave 3 Revision",
+      "goal": "Instrument redesigned participation outcomes",
+      "maximumScope": "API/data instrumentation only for fields defined in W3R-10a/10b. No headline aggregates.",
+      "status": "planned",
+      "planFile": "data/wave3-redesign-plan.json",
+      "dependencies": [
+        "previous W3R step"
+      ],
+      "stopWhen": "API/data instrumentation only for fields defined in W3R-10a/10b. No headline aggregates."
+    },
+    {
+      "id": "W3R-11a",
+      "title": "Run human page audit on redesigned participation",
+      "priority": "medium",
+      "ownerWorkstream": "Wave 3 Revision",
+      "goal": "Run human page audit on redesigned participation",
+      "maximumScope": "Participation, Get Involved, Civic Map/place pages and reports only.",
+      "status": "planned",
+      "planFile": "data/wave3-redesign-plan.json",
+      "dependencies": [
+        "previous W3R step"
+      ],
+      "stopWhen": "Participation, Get Involved, Civic Map/place pages and reports only."
+    },
+    {
+      "id": "W3R-11b",
+      "title": "Add Place Registry integrity audit",
+      "priority": "medium",
+      "ownerWorkstream": "Wave 3 Revision",
+      "goal": "Add Place Registry integrity audit",
+      "maximumScope": "Guard duplicate IDs, barangays, coordinates, lifecycle states, provenance and broken relationships. No browser testing.",
+      "status": "planned",
+      "planFile": "data/wave3-redesign-plan.json",
+      "dependencies": [
+        "previous W3R step"
+      ],
+      "stopWhen": "Guard duplicate IDs, barangays, coordinates, lifecycle states, provenance and broken relationships. No browser testing."
+    },
+    {
+      "id": "W3R-11c",
+      "title": "Test general participation journeys",
+      "priority": "medium",
+      "ownerWorkstream": "Wave 3 Revision",
+      "goal": "Test general participation journeys",
+      "maximumScope": "General submission, duplicate, fallback, tracking and barangay-context E2E only.",
+      "status": "planned",
+      "planFile": "data/wave3-redesign-plan.json",
+      "dependencies": [
+        "previous W3R step"
+      ],
+      "stopWhen": "General submission, duplicate, fallback, tracking and barangay-context E2E only."
+    },
+    {
+      "id": "W3R-11d",
+      "title": "Test public-place participation journeys",
+      "priority": "medium",
+      "ownerWorkstream": "Wave 3 Revision",
+      "goal": "Test public-place participation journeys",
+      "maximumScope": "Nearby reporting, place matching, duplicate case, lifecycle, observation and pilot audit E2E only.",
+      "status": "planned",
+      "planFile": "data/wave3-redesign-plan.json",
+      "dependencies": [
+        "previous W3R step"
+      ],
+      "stopWhen": "Nearby reporting, place matching, duplicate case, lifecycle, observation and pilot audit E2E only."
+    },
+    {
+      "id": "W3R-11e",
+      "title": "Run mobile and accessibility pass",
+      "priority": "medium",
+      "ownerWorkstream": "Wave 3 Revision",
+      "goal": "Run mobile and accessibility pass",
+      "maximumScope": "Redesigned Wave 3 surfaces only. Fix only defects found.",
+      "status": "planned",
+      "planFile": "data/wave3-redesign-plan.json",
+      "dependencies": [
+        "previous W3R step"
+      ],
+      "stopWhen": "Redesigned Wave 3 surfaces only. Fix only defects found."
+    },
+    {
+      "id": "W3R-11f",
+      "title": "Reclassify and close Wave 3",
+      "priority": "medium",
+      "ownerWorkstream": "Wave 3 Revision",
+      "goal": "Reclassify and close Wave 3",
+      "maximumScope": "Supersede the old capability classification with an evidence-based redesigned Wave 3 classification, record deferrals, and close only what is actually complete.",
+      "status": "planned",
+      "planFile": "data/wave3-redesign-plan.json",
+      "dependencies": [
+        "previous W3R step"
+      ],
+      "stopWhen": "Supersede the old capability classification with an evidence-based redesigned Wave 3 classification, record deferrals, and close only what is actually complete."
     }
   ],
   "executionOrder": [
@@ -811,9 +1365,9 @@
     }
   ],
   "immediateNext": {
-    "id": "3H-1",
-    "title": "Define participation outcome metrics",
-    "scope": "Define metrics and publication thresholds only. Do not instrument or publish aggregates yet."
+    "id": "W3R-1",
+    "title": "Disposition current Wave 3 capabilities",
+    "maximumScope": "Create one audit classifying each existing Wave 3 capability as KEEP, REFRAME, REPLACE, DEFER or RETIRE. No code or UX changes."
   },
   "reopenedExecutionOrder": [
     "3C-2a",
@@ -862,5 +1416,22 @@
       "pnrNscrLifecycleFile": "data/wave3-civic-map-pnr-nscr-lifecycle.json",
       "closureAuditFile": "data/wave3-civic-map-transport-completeness-audit.json"
     }
+  },
+  "wave3Revision": {
+    "status": "active",
+    "revisedAt": "2026-09-25",
+    "planFile": "data/wave3-redesign-plan.json",
+    "title": "Places, Reporting & Civic Participation",
+    "doctrine": [
+      "Treat the 88 verified Civic Map assets as shared place infrastructure.",
+      "Civic Map becomes one consumer of the Place Registry.",
+      "Retire ratings-first participation and replace it with task-led reporting, place checking, improvements and structured observations.",
+      "Preserve completed 3C research/implementation and 3D lifecycle semantics.",
+      "Pause metrics and final QA until redesigned workflows stabilize."
+    ],
+    "completed": [
+      "W3R-0"
+    ],
+    "current": "W3R-1"
   }
 }
