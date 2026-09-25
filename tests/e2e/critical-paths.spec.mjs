@@ -794,6 +794,13 @@ test('barangay homepages show locally published service details without replacin
   await page.goto(baseURL + '/barangays/san-lorenzo');
   await expect(page.getByRole('heading', { name: 'Barangay One Stop Service', exact: true })).toBeVisible();
   await expect(page.getByText(/1 October 2026 · 9:00 AM–3:00 PM/i)).toBeVisible();
+
+  await page.goto(baseURL + '/barangays/poblacion');
+  await expect(page.getByRole('heading', { name: 'Business clearance', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Birth and death reporting', exact: true })).toBeVisible();
+
+  await page.goto(baseURL + '/barangays/pio-del-pilar');
+  await expect(page.getByRole('heading', { name: 'Barangay services portal', exact: true })).toBeVisible();
 });
 
 test('barangay gateway search finds a barangay through an official name', async ({ page }) => {
