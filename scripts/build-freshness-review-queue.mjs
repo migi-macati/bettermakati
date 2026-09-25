@@ -14,6 +14,7 @@ const sourceHistory = await readJson('data/source-watch-history.json', { runs: [
 const cityState = await readJson('data/city-monitor-source-state.json', { sources: [] });
 const cityHistory = await readJson('data/city-monitor-source-history.json', { runs: [] });
 const cityConfig = await readJson('data/city-monitor-sources.json', { sources: [] });
+const pageAudit = await readJson('data/page-audit.json', []);
 const existing = await readJson('data/freshness-review-queue.json', {
   version: 1,
   generatedAt: null,
@@ -233,6 +234,56 @@ await writeFile(
   JSON.stringify(output, null, 2) + '\n'
 );
 
+const openSignalsByPage = new Map();
+for (const item of open) {
+  for (const page of item.affectedPages || []) {
+    const signals = openSignalsByPage.get(page) || [];
+    signals.push({
+      key: item.key,
+      system: item.system,
+      signal: item.signal,
+      signalLabel: item.signalLabel,
+      sourceId: item.sourceId,
+      label: item.label,
+      url: item.url,
+      detectedAt: item.latestDetectedAt || item.firstDetectedAt || null,
+      lastSuccessfulAt: item.lastSuccessfulAt || null,
+      action: item.action,
+    });
+    openSignalsByPage.set(page, signals);
+  }
+}
+
+const pageFreshnessState = {
+  version: 1,
+  generatedAt,
+  summary: {
+    pages: pageAudit.length,
+    current: pageAudit.filter(page => !(openSignalsByPage.get(page.path) || []).length).length,
+    needsReview: pageAudit.filter(page => (openSignalsByPage.get(page.path) || []).length > 0).length,
+  },
+  pages: pageAudit.map(page => {
+    const dependencySignals = (openSignalsByPage.get(page.path) || []).sort((a, b) =>
+      String(b.detectedAt || '').localeCompare(String(a.detectedAt || ''))
+    );
+    return {
+      path: page.path,
+      label: page.label,
+      editorialStatus: page.status,
+      reviewedAt: page.reviewedAt,
+      freshnessStatus: dependencySignals.length ? 'needs-review' : 'current',
+      needsReview: dependencySignals.length > 0,
+      dependencySignals,
+      latestDependencySignalAt: dependencySignals[0]?.detectedAt || null,
+    };
+  }),
+};
+
+await writeFile(
+  'data/page-freshness-state.json',
+  JSON.stringify(pageFreshnessState, null, 2) + '\n'
+);
+
 const lines = [
   '# BetterMakati freshness review queue',
   '',
@@ -260,5 +311,7 @@ console.log(
     summary.open +
     ' open items across ' +
     summary.affectedPages +
-    ' affected pages.'
+    ' affected pages; ' +
+    pageFreshnessState.summary.needsReview +
+    ' audited pages need dependency review.'
 );
