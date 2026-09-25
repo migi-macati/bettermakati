@@ -1318,8 +1318,8 @@ export const serviceGuideDetails: Record<string, ServiceGuideDetail> = {
   },
   'barangay-business-clearance': {
     verification: 'partial',
-    sourceLabel: 'Makati eBOSS new-business requirements / current Barangay Bel-Air business-clearance service',
-    sourceUrl: 'https://www.makati-eboss.ph/',
+    sourceLabel: 'Current Barangay Bel-Air business-clearance service',
+    sourceUrl: 'https://belair.itdcsystems.com/services/business-clearance',
     lastVerified: '2026-09-25',
     whoMayAvail: 'Business owners operating within a Makati barangay and applying for a barangay business clearance.',
     requirements: [
@@ -1339,8 +1339,8 @@ export const serviceGuideDetails: Record<string, ServiceGuideDetail> = {
   },
   'barangay-indigency': {
     verification: 'partial',
-    sourceLabel: 'Makati MSWD requirements / current Barangay Bel-Air Certificate of Indigency service',
-    sourceUrl: 'https://www.makati.gov.ph/assets/uploads/downloads/2/481/pdf/Makati%20Social%20Welfare%20Department.pdf',
+    sourceLabel: 'Current Barangay Bel-Air Certificate of Indigency service',
+    sourceUrl: 'https://belair.itdcsystems.com/services/certificate-of-indigency',
     lastVerified: '2026-09-25',
     whoMayAvail: 'Residents requesting a barangay indigency certificate for a social-welfare, medical, educational or other qualifying public-service transaction.',
     requirements: [
