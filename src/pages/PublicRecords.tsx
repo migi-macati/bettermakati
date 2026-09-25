@@ -216,6 +216,46 @@ export default function PublicRecords() {
 
         <LastReviewed date={publicRecordsReviewed} note="For legal or transactional use, rely on the issuing public body’s original record." />
 
+        <div className="mt-5 rounded-2xl border border-primary-100 bg-white p-5">
+          <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+            National record tools
+          </div>
+          <div className="mt-3 flex flex-wrap gap-x-5 gap-y-3 text-sm font-bold">
+            <a
+              href="https://transparency.bettergov.ph/"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1 text-primary-700 underline underline-offset-2"
+            >
+              Transparency Portal <ExternalLink className="h-3.5 w-3.5" />
+            </a>
+            <a
+              href="https://philgeps.bettergov.ph/"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1 text-primary-700 underline underline-offset-2"
+            >
+              PhilGEPS Browser <ExternalLink className="h-3.5 w-3.5" />
+            </a>
+            <a
+              href="https://saln.bettergov.ph/"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1 text-primary-700 underline underline-offset-2"
+            >
+              SALN Tracker <ExternalLink className="h-3.5 w-3.5" />
+            </a>
+            <a
+              href="https://juris.ph/"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1 text-primary-700 underline underline-offset-2"
+            >
+              Juris <ExternalLink className="h-3.5 w-3.5" />
+            </a>
+          </div>
+        </div>
+
         <div className="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
           <div className="rounded-2xl border border-primary-100 bg-white p-5">
             <div className="text-3xl font-extrabold text-gray-950">{publicRecords.length}</div>

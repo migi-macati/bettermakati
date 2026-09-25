@@ -1369,3 +1369,33 @@ test('projects and budget exposes related national evidence without replacing Ma
   await expect(page.getByRole('link', { name: /2026 Annual Budget Report/i }).first()).toBeVisible();
   await expect(page.getByRole('heading', { name: /Bid results and award records/i })).toBeVisible();
 });
+
+test('accountability and public records expose national evidence tools without replacing local sources', async ({ page }) => {
+  await page.goto(baseURL + '/accountability');
+  const accountabilityEvidence = page.getByText('National evidence', { exact: true }).locator('..');
+  await expect(accountabilityEvidence.getByRole('link', { name: /Transparency records/i })).toHaveAttribute(
+    'href',
+    'https://transparency.bettergov.ph/'
+  );
+  await expect(accountabilityEvidence.getByRole('link', { name: /Procurement records/i })).toHaveAttribute(
+    'href',
+    'https://philgeps.bettergov.ph/'
+  );
+  await expect(accountabilityEvidence.getByRole('link', { name: /SALN records/i })).toHaveAttribute(
+    'href',
+    'https://saln.bettergov.ph/'
+  );
+  await expect(accountabilityEvidence.getByRole('link', { name: /Laws & jurisprudence/i })).toHaveAttribute(
+    'href',
+    'https://juris.ph/'
+  );
+  await expect(page.getByRole('heading', { name: /Follow public money, projects and promises/i })).toBeVisible();
+
+  await page.goto(baseURL + '/records');
+  const nationalTools = page.getByText('National record tools', { exact: true }).locator('..');
+  await expect(nationalTools.getByRole('link', { name: /Transparency Portal/i })).toBeVisible();
+  await expect(nationalTools.getByRole('link', { name: /PhilGEPS Browser/i })).toBeVisible();
+  await expect(nationalTools.getByRole('link', { name: /SALN Tracker/i })).toBeVisible();
+  await expect(nationalTools.getByRole('link', { name: /^Juris$/i })).toBeVisible();
+  await expect(page.getByRole('heading', { name: /Search the public record catalog/i })).toBeVisible();
+});

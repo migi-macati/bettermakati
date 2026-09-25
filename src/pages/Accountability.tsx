@@ -369,6 +369,46 @@ export default function Accountability() {
         </div>
         <LastReviewed date={accountabilityReviewed} />
 
+        <div className="mt-5 rounded-2xl border border-primary-100 bg-white p-5">
+          <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+            National evidence
+          </div>
+          <div className="mt-3 flex flex-wrap gap-x-5 gap-y-3 text-sm font-bold">
+            <a
+              href="https://transparency.bettergov.ph/"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1 text-primary-700 underline underline-offset-2"
+            >
+              Transparency records <ExternalLink className="h-3.5 w-3.5" />
+            </a>
+            <a
+              href="https://philgeps.bettergov.ph/"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1 text-primary-700 underline underline-offset-2"
+            >
+              Procurement records <ExternalLink className="h-3.5 w-3.5" />
+            </a>
+            <a
+              href="https://saln.bettergov.ph/"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1 text-primary-700 underline underline-offset-2"
+            >
+              SALN records <ExternalLink className="h-3.5 w-3.5" />
+            </a>
+            <a
+              href="https://juris.ph/"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1 text-primary-700 underline underline-offset-2"
+            >
+              Laws & jurisprudence <ExternalLink className="h-3.5 w-3.5" />
+            </a>
+          </div>
+        </div>
+
         {barangay && (
           <div className="mt-4 rounded-xl border border-primary-100 bg-white p-4 text-sm leading-relaxed text-gray-700">
             {locallyTaggedEntries.length > 0 ? (
