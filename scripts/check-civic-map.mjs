@@ -32,15 +32,66 @@ for (const id of requiredGovernmentServiceAssets) {
   }
 }
 
-const requiredParkAssets = [
+const requiredPublicParkAssets = [
+  'magallanes-interchange-park',
+  'kennely-ann-lacia-binay-park-guadalupe-nuevo',
+  'guadalupe-viejo-cloverleaf-park',
+  'poblacion-park',
+  'valenzuela-park',
+  'poblacion-linear-park',
+  'plaza-cristo-rey',
+  'riverside-carmona',
+  'buendia-plaza',
+  'freedom-park',
+  'edsa-buendia-park',
+  'guadalupe-nuevo-linear-park',
+  'edsa-pinagkaisahan-park',
+];
+
+for (const id of requiredPublicParkAssets) {
+  if (!assetIds.includes(id)) {
+    problems.push('Missing verified current public-park Civic Map asset: ' + id);
+    continue;
+  }
+  const start = assetBlock.indexOf("id: '" + id + "'");
+  const end = assetBlock.indexOf('\n  },', start);
+  const row = start >= 0 && end >= 0 ? assetBlock.slice(start, end) : '';
+  for (const marker of [
+    "type: 'park'",
+    'address:',
+    'sourceUrl:',
+    'sourceLabel:',
+    'coordinateSourceUrl:',
+    'coordinateSourceLabel:',
+    "status: 'mapped'",
+  ]) {
+    if (!row.includes(marker)) {
+      problems.push(id + ' is missing verified public-park metadata: ' + marker);
+    }
+  }
+}
+
+const unresolvedPublicParkAssets = [
+  'post-office-pocket-park',
+  'makati-city-hall-park',
+  'playground-park-poblacion',
+];
+
+for (const id of unresolvedPublicParkAssets) {
+  if (assetIds.includes(id)) {
+    problems.push('Unresolved historical park must not be mapped as a distinct current asset: ' + id);
+  }
+}
+
+const requiredPrivatePublicAccessParkAssets = [
   'ayala-triangle-gardens',
   'washington-sycip-park',
   'legazpi-active-park',
 ];
 
-for (const id of requiredParkAssets) {
+for (const id of requiredPrivatePublicAccessParkAssets) {
   if (!assetIds.includes(id)) {
-    problems.push('Missing verified park Civic Map asset: ' + id);
+    problems.push('Missing existing private/public-access park Civic Map asset: ' + id);
     continue;
   }
   const start = assetBlock.indexOf("id: '" + id + "'");
@@ -48,7 +99,7 @@ for (const id of requiredParkAssets) {
   const row = start >= 0 && end >= 0 ? assetBlock.slice(start, end) : '';
   for (const marker of ["type: 'park'", 'address:', 'sourceUrl:', 'sourceLabel:', "status: 'mapped'"]) {
     if (!row.includes(marker)) {
-      problems.push(id + ' is missing verified park metadata: ' + marker);
+      problems.push(id + ' is missing park metadata: ' + marker);
     }
   }
 }
