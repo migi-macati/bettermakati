@@ -1290,6 +1290,17 @@ export const serviceDirectory: ServiceDirectoryItem[] = [
     href: 'https://www.sss.gov.ph/',
     sourceUrl: 'https://www.sss.gov.ph/',
     keywords: 'sss membership number contribution benefits mysss',
+    nationalIntegration: {
+      officialActionUrl: 'https://www.sss.gov.ph/',
+      officialSourceUrl: 'https://www.sss.gov.ph/',
+      betterGov: {
+        status: 'partial',
+        auditedAt: '2026-09-25',
+      },
+      makatiContext: {
+        officeIds: ['sss-makati-gil-puyat', 'sss-makati-chino-roces', 'sss-makati-guadalupe', 'sss-makati-jp-rizal'],
+      },
+    },
   },
   {
     id: 'philhealth-services',
@@ -1302,6 +1313,17 @@ export const serviceDirectory: ServiceDirectoryItem[] = [
     href: 'https://www.philhealth.gov.ph/',
     sourceUrl: 'https://www.philhealth.gov.ph/',
     keywords: 'philhealth membership mdr health insurance member data record',
+    nationalIntegration: {
+      officialActionUrl: 'https://www.philhealth.gov.ph/',
+      officialSourceUrl: 'https://www.philhealth.gov.ph/',
+      betterGov: {
+        status: 'missing',
+        auditedAt: '2026-09-25',
+      },
+      makatiContext: {
+        officeIds: ['philhealth-makati'],
+      },
+    },
   },
   {
     id: 'pagibig-services',
@@ -1314,6 +1336,19 @@ export const serviceDirectory: ServiceDirectoryItem[] = [
     href: 'https://www.pagibigfundservices.com/virtualpagibig/',
     sourceUrl: 'https://www.pagibigfund.gov.ph/',
     keywords: 'pagibig membership mid virtual pagibig contribution loan housing',
+    nationalIntegration: {
+      officialActionUrl: 'https://www.pagibigfundservices.com/virtualpagibig/Membership.aspx',
+      officialSourceUrl: 'https://www.pagibigfund.gov.ph/',
+      betterGov: {
+        status: 'listed',
+        listingUrl: 'https://bettergov.ph/services?search=Pag-IBIG%20Member%27s%20Information',
+        matchedService: "Register your Pag-IBIG Member's Information",
+        auditedAt: '2026-09-25',
+      },
+      makatiContext: {
+        officeIds: ['pagibig-paseo', 'pagibig-magallanes', 'pagibig-jupiter', 'pagibig-petron', 'pagibig-guadalupe', 'pagibig-jp-rizal'],
+      },
+    },
   },
   {
     id: 'sss-contributions-prn',
@@ -1326,6 +1361,17 @@ export const serviceDirectory: ServiceDirectoryItem[] = [
     href: 'https://www.sss.gov.ph/',
     sourceUrl: 'https://www.sss.gov.ph/contact-us/',
     keywords: 'sss contribution payment prn mysss voluntary self employed employer',
+    nationalIntegration: {
+      officialActionUrl: 'https://www.sss.gov.ph/',
+      officialSourceUrl: 'https://www.sss.gov.ph/contact-us/',
+      betterGov: {
+        status: 'missing',
+        auditedAt: '2026-09-25',
+      },
+      makatiContext: {
+        officeIds: ['sss-makati-gil-puyat', 'sss-makati-chino-roces', 'sss-makati-guadalupe', 'sss-makati-jp-rizal'],
+      },
+    },
   },
   {
     id: 'sss-sickness-benefit',
@@ -1364,6 +1410,17 @@ export const serviceDirectory: ServiceDirectoryItem[] = [
     href: 'https://www.sss.gov.ph/benefits/',
     sourceUrl: 'https://www.sss.gov.ph/benefits/',
     keywords: 'sss disability permanent partial total pension lump sum claim',
+    nationalIntegration: {
+      officialActionUrl: 'https://www.sss.gov.ph/benefits/',
+      officialSourceUrl: 'https://www.sss.gov.ph/benefits/',
+      betterGov: {
+        status: 'missing',
+        auditedAt: '2026-09-25',
+      },
+      makatiContext: {
+        officeIds: ['sss-makati-gil-puyat', 'sss-makati-chino-roces', 'sss-makati-guadalupe', 'sss-makati-jp-rizal'],
+      },
+    },
   },
   {
     id: 'sss-retirement-benefit',
@@ -1389,6 +1446,17 @@ export const serviceDirectory: ServiceDirectoryItem[] = [
     href: 'https://www.sss.gov.ph/death-benefit/',
     sourceUrl: 'https://www.sss.gov.ph/death-benefit/',
     keywords: 'sss death benefit beneficiary pension lump sum deceased member',
+    nationalIntegration: {
+      officialActionUrl: 'https://www.sss.gov.ph/death-benefit/',
+      officialSourceUrl: 'https://www.sss.gov.ph/death-benefit/',
+      betterGov: {
+        status: 'missing',
+        auditedAt: '2026-09-25',
+      },
+      makatiContext: {
+        officeIds: ['sss-makati-gil-puyat', 'sss-makati-chino-roces', 'sss-makati-guadalupe', 'sss-makati-jp-rizal'],
+      },
+    },
   },
   {
     id: 'sss-funeral-benefit',
@@ -1401,6 +1469,17 @@ export const serviceDirectory: ServiceDirectoryItem[] = [
     href: 'https://www.sss.gov.ph/funeral-benefit/',
     sourceUrl: 'https://www.sss.gov.ph/funeral-benefit/',
     keywords: 'sss funeral benefit burial expenses deceased member claim',
+    nationalIntegration: {
+      officialActionUrl: 'https://www.sss.gov.ph/funeral-benefit/',
+      officialSourceUrl: 'https://www.sss.gov.ph/funeral-benefit/',
+      betterGov: {
+        status: 'missing',
+        auditedAt: '2026-09-25',
+      },
+      makatiContext: {
+        officeIds: ['sss-makati-gil-puyat', 'sss-makati-chino-roces', 'sss-makati-guadalupe', 'sss-makati-jp-rizal'],
+      },
+    },
   },
   {
     id: 'sss-unemployment-benefit',
@@ -1413,6 +1492,17 @@ export const serviceDirectory: ServiceDirectoryItem[] = [
     href: 'https://www.sss.gov.ph/benefits/',
     sourceUrl: 'https://www.sss.gov.ph/benefits/',
     keywords: 'sss unemployment involuntary separation job loss cash benefit',
+    nationalIntegration: {
+      officialActionUrl: 'https://www.sss.gov.ph/benefits/',
+      officialSourceUrl: 'https://www.sss.gov.ph/benefits/',
+      betterGov: {
+        status: 'missing',
+        auditedAt: '2026-09-25',
+      },
+      makatiContext: {
+        officeIds: ['sss-makati-gil-puyat', 'sss-makati-chino-roces', 'sss-makati-guadalupe', 'sss-makati-jp-rizal'],
+      },
+    },
   },
   {
     id: 'sss-salary-loan',
@@ -1425,6 +1515,19 @@ export const serviceDirectory: ServiceDirectoryItem[] = [
     href: 'https://www.sss.gov.ph/',
     sourceUrl: 'https://www.sss.gov.ph/',
     keywords: 'sss salary loan member loan mysss borrow',
+    nationalIntegration: {
+      officialActionUrl: 'https://www.sss.gov.ph/salary-loan/',
+      officialSourceUrl: 'https://www.sss.gov.ph/salary-loan/',
+      betterGov: {
+        status: 'listed',
+        listingUrl: 'https://bettergov.ph/services?search=SSS%20Salary%20Loan',
+        matchedService: 'Apply for SSS Salary Loan',
+        auditedAt: '2026-09-25',
+      },
+      makatiContext: {
+        officeIds: ['sss-makati-gil-puyat', 'sss-makati-chino-roces', 'sss-makati-guadalupe', 'sss-makati-jp-rizal'],
+      },
+    },
   },
   {
     id: 'sss-ec-claim',
@@ -1477,6 +1580,17 @@ export const serviceDirectory: ServiceDirectoryItem[] = [
     href: 'https://www.pagibigfund.gov.ph/',
     sourceUrl: 'https://www.pagibigfund.gov.ph/',
     keywords: 'pagibig calamity loan disaster emergency state calamity',
+    nationalIntegration: {
+      officialActionUrl: 'https://www.pagibigfund.gov.ph/',
+      officialSourceUrl: 'https://www.pagibigfund.gov.ph/',
+      betterGov: {
+        status: 'partial',
+        auditedAt: '2026-09-25',
+      },
+      makatiContext: {
+        officeIds: ['pagibig-paseo', 'pagibig-magallanes', 'pagibig-jupiter', 'pagibig-petron', 'pagibig-guadalupe', 'pagibig-jp-rizal'],
+      },
+    },
   },
   {
     id: 'pagibig-housing-loan',
@@ -1502,6 +1616,17 @@ export const serviceDirectory: ServiceDirectoryItem[] = [
     href: 'https://www.pagibigfund.gov.ph/',
     sourceUrl: 'https://www.pagibigfund.gov.ph/',
     keywords: 'pagibig provident benefit claim savings withdrawal retirement disability critical illness death',
+    nationalIntegration: {
+      officialActionUrl: 'https://www.pagibigfund.gov.ph/',
+      officialSourceUrl: 'https://www.pagibigfund.gov.ph/',
+      betterGov: {
+        status: 'missing',
+        auditedAt: '2026-09-25',
+      },
+      makatiContext: {
+        officeIds: ['pagibig-paseo', 'pagibig-magallanes', 'pagibig-jupiter', 'pagibig-petron', 'pagibig-guadalupe', 'pagibig-jp-rizal'],
+      },
+    },
   },
 
   {
@@ -1515,6 +1640,17 @@ export const serviceDirectory: ServiceDirectoryItem[] = [
     href: 'https://www.philhealth.gov.ph/services/',
     sourceUrl: 'https://www.philhealth.gov.ph/services/',
     keywords: 'philhealth contribution premium payment member portal spa',
+    nationalIntegration: {
+      officialActionUrl: 'https://www.philhealth.gov.ph/services/',
+      officialSourceUrl: 'https://www.philhealth.gov.ph/services/',
+      betterGov: {
+        status: 'partial',
+        auditedAt: '2026-09-25',
+      },
+      makatiContext: {
+        officeIds: ['philhealth-makati'],
+      },
+    },
   },
   {
     id: 'philhealth-yakap',

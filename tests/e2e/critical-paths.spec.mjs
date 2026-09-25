@@ -1109,3 +1109,39 @@ test('national service handoff batch A covers PSA, LTO registration and PRC rene
   );
   await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toHaveCount(0);
 });
+
+test('national service handoff batch B1 covers SSS, PhilHealth and Pag-IBIG', async ({ page }) => {
+  await page.goto(baseURL + '/services/guide/sss-salary-loan');
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://www.sss.gov.ph/salary-loan/'
+  );
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toBeVisible();
+  await expect(page.getByText('SSS Makati – Gil Puyat', { exact: true })).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/sss-death-benefit');
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://www.sss.gov.ph/death-benefit/'
+  );
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toHaveCount(0);
+
+  await page.goto(baseURL + '/services/guide/philhealth-services');
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://www.philhealth.gov.ph/'
+  );
+  await expect(page.getByText('PhilHealth Makati Local Health Insurance Office', { exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toHaveCount(0);
+
+  await page.goto(baseURL + '/services/guide/pagibig-services');
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://www.pagibigfundservices.com/virtualpagibig/Membership.aspx'
+  );
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toBeVisible();
+  await expect(page.getByText('Pag-IBIG Makati CBD – Paseo de Roxas', { exact: true })).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/pagibig-calamity-loan');
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toHaveCount(0);
+});
