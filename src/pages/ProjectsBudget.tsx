@@ -142,6 +142,7 @@ export default function ProjectsBudget() {
   const [lineQuery, setLineQuery] = useState('');
   const [procurementQuery, setProcurementQuery] = useState('');
   const [procurementPeriod, setProcurementPeriod] = useState('All');
+  const [procurementEvidence, setProcurementEvidence] = useState('All');
 
   const visibleLines = useMemo(() => {
     const q = lineQuery.trim().toLowerCase();
@@ -167,6 +168,15 @@ export default function ProjectsBudget() {
     return procurementProjectEntries
       .filter(item => procurementPeriod === 'All' || item.period === procurementPeriod)
       .filter(item => {
+        const hasFollowUpEvidence =
+          item.procurement?.stages.some(
+            stage => stage.status === 'documented' && stage.label !== 'Bid result'
+          ) || false;
+        if (procurementEvidence === 'Follow-up evidence') return hasFollowUpEvidence;
+        if (procurementEvidence === 'Bid result only') return !hasFollowUpEvidence;
+        return true;
+      })
+      .filter(item => {
         if (!q) return true;
         return [
           item.title,
@@ -180,7 +190,7 @@ export default function ProjectsBudget() {
           .includes(q);
       })
       .sort((a, b) => (b.procurement?.bidDate || '').localeCompare(a.procurement?.bidDate || ''));
-  }, [procurementPeriod, procurementQuery]);
+  }, [procurementEvidence, procurementPeriod, procurementQuery]);
 
   const procurementPeriods = [...new Set(procurementProjectEntries.map(item => item.period))];
   const procurementApprovedM = procurementProjectEntries.reduce(
@@ -1181,6 +1191,16 @@ export default function ProjectsBudget() {
             {procurementPeriods.map(period => (
               <option key={period}>{period}</option>
             ))}
+          </select>
+          <select
+            value={procurementEvidence}
+            onChange={event => setProcurementEvidence(event.target.value)}
+            className="rounded-xl border border-gray-300 bg-white px-3 py-2.5 text-sm"
+            aria-label="Filter procurement evidence"
+          >
+            <option>All</option>
+            <option>Follow-up evidence</option>
+            <option>Bid result only</option>
           </select>
         </div>
 
