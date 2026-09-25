@@ -1279,7 +1279,7 @@ export const serviceGuideDetails: Record<string, ServiceGuideDetail> = {
   'occupancy-permit': {
     verification: 'partial',
     sourceLabel: 'Makati Citizens Charter 2023 / Urban Development zoning requirements for occupancy applications',
-    sourceUrl: 'https://www.makati-eboss.ph/files/references/Makati%20Citizens%20Charter%202023.pdf',
+    sourceUrl: 'https://makati-eboss.ph/files/references/Makati%20Citizens%20Charter%202023.pdf',
     lastVerified: '2026-09-25',
     whoMayAvail: 'Owners or authorized applicants seeking authority to occupy/use a completed or otherwise qualifying building or structure in Makati.',
     requirements: [
