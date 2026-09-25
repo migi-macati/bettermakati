@@ -4,6 +4,8 @@ const watchlist = JSON.parse(await readFile('data/source-watchlist.json', 'utf8'
 const state = JSON.parse(await readFile('data/source-watch-state.json', 'utf8'));
 const history = JSON.parse(await readFile('data/source-watch-history.json', 'utf8'));
 const checker = await readFile('scripts/check-sources.mjs', 'utf8');
+const queueBuilder = await readFile('scripts/build-freshness-review-queue.mjs', 'utf8');
+const reviewQueue = JSON.parse(await readFile('data/freshness-review-queue.json', 'utf8'));
 const workflow = await readFile('.github/workflows/source-freshness.yml', 'utf8');
 const weeklyNews = await readFile('.github/workflows/weekly-content-refresh.yml', 'utf8');
 const cityMonitorConfig = JSON.parse(await readFile('data/city-monitor-sources.json', 'utf8'));
@@ -121,6 +123,37 @@ if (history.version !== 2 || !Array.isArray(history.runs)) {
   problems.push('Source freshness history must use version 2.');
 }
 
+if (
+  reviewQueue.version !== 1 ||
+  !reviewQueue.summary ||
+  !Array.isArray(reviewQueue.items)
+) {
+  problems.push('Freshness review queue must use version 1 with summary and items.');
+}
+for (const item of reviewQueue.items) {
+  for (const field of ['key', 'status', 'system', 'signal', 'sourceId', 'label', 'url', 'affectedPages', 'action']) {
+    if (item[field] === undefined || item[field] === null) {
+      problems.push('Freshness review item is missing ' + field + ': ' + JSON.stringify(item));
+    }
+  }
+  if (!Array.isArray(item.affectedPages) || item.affectedPages.length === 0) {
+    problems.push('Freshness review item has no affected pages: ' + item.key);
+  }
+}
+for (const marker of [
+  "data/freshness-review-queue.json",
+  "data/freshness-review-queue.md",
+  "signal === 'content-changed'",
+  "signal === 'check-failed'",
+  "signal === 'manual-review'",
+  "lastSuccessfulAt",
+  "status === 'resolved'",
+]) {
+  if (!queueBuilder.includes(marker)) {
+    problems.push('Freshness review queue builder lost required behavior: ' + marker);
+  }
+}
+
 for (const marker of [
   "const cadence = args.get('cadence') || 'all'",
   "cadenceIsDue",
@@ -151,7 +184,9 @@ for (const marker of [
   'npm run build',
   'data/source-watch-state.json',
   'git pull --rebase origin main',
-  'Source freshness review queue',
+  'npm run build:freshness-queue',
+  'Freshness review queue',
+  'data/freshness-review-queue.json',
   'issues: write',
 ]) {
   if (!workflow.includes(marker)) problems.push('Source freshness workflow lost required behavior: ' + marker);
@@ -164,6 +199,7 @@ for (const marker of [
   "'public/source-watch-state.json'",
   "'public/source-watch-history.json'",
   "'public/source-watch-index.json'",
+  "'public/freshness-review-queue.json'",
 ]) {
   if (!generator.includes(marker)) problems.push('Generated site files lost source freshness publication: ' + marker);
 }
@@ -175,6 +211,10 @@ for (const marker of [
   'reachability check only',
   'Current source state',
   'Monitored by City Monitor',
+  "fetch('/freshness-review-queue.json'",
+  'Freshness review queue',
+  'Last successful check:',
+  '<strong>Action:</strong>',
 ]) {
   if (!records.includes(marker)) problems.push('Public Records lost source freshness UX: ' + marker);
 }
@@ -211,6 +251,7 @@ for (const marker of [
   if (!tests.includes(marker)) problems.push('Source freshness browser coverage missing: ' + marker);
 }
 
+if (!pkg.scripts?.['build:freshness-queue']) problems.push('package.json is missing build:freshness-queue.');
 if (!pkg.scripts?.['audit:source-freshness']) problems.push('package.json is missing audit:source-freshness.');
 if (!String(pkg.scripts?.build || '').includes('audit:source-freshness')) problems.push('Production build does not run audit:source-freshness.');
 if (!String(pkg.scripts?.quality || '').includes('audit:source-freshness')) problems.push('Quality command does not run audit:source-freshness.');
