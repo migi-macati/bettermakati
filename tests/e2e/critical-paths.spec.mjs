@@ -684,6 +684,10 @@ test('barangays page is a focused selection gateway', async ({ page }) => {
   await expect(page.getByRole('heading', { level: 1 })).toContainText('Choose a barangay');
   await expect(page.getByRole('link', { name: /BetterPoblacion/i })).toBeVisible();
   await expect(page.getByText(/How population is distributed/i)).toHaveCount(0);
+  await expect(page.getByText('barangay profiles', { exact: true })).toHaveCount(0);
+  await expect(page.getByText('current council rosters', { exact: true })).toHaveCount(0);
+  await expect(page.getByText('hall contacts', { exact: true })).toHaveCount(0);
+  await expect(page.getByText('verified YAKAP clinic coverage', { exact: true })).toHaveCount(0);
 });
 
 test('barangay landing page uses the persistent BetterBarangay context bar', async ({ page }) => {
@@ -774,6 +778,22 @@ test('BetterBarangay official channels and emails are exposed across the larger 
   await page.goto(baseURL + '/barangays/san-lorenzo');
   await expect(page.getByRole('link', { name: /Barangay website/i })).toHaveAttribute('href', 'https://sanloph.com/');
   await expect(page.getByRole('link', { name: /Official social channel/i })).toHaveAttribute('href', 'https://www.facebook.com/Barangaysanlorenzo');
+});
+
+test('barangay homepages show locally published service details without replacing common transactions', async ({ page }) => {
+  await page.goto(baseURL + '/barangays/bel-air');
+  await expect(page.getByRole('heading', { name: 'Services in Bel-Air', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Individual barangay clearance', exact: true })).toBeVisible();
+  await expect(page.getByText(/Building-administrator certification for Salcedo Village/i)).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Common transactions', exact: true })).toBeVisible();
+
+  await page.goto(baseURL + '/barangays/olympia');
+  await expect(page.getByRole('heading', { name: 'CCTV record request', exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: /Barangay Olympia online services/i }).first()).toBeVisible();
+
+  await page.goto(baseURL + '/barangays/san-lorenzo');
+  await expect(page.getByRole('heading', { name: 'Barangay One Stop Service', exact: true })).toBeVisible();
+  await expect(page.getByText(/1 October 2026 · 9:00 AM–3:00 PM/i)).toBeVisible();
 });
 
 test('barangay gateway search finds a barangay through an official name', async ({ page }) => {
