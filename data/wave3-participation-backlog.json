@@ -181,10 +181,10 @@
     },
     {
       "id": "3C-2",
-      "title": "Expand Civic Map parks and civic-space assets",
+      "title": "Complete Makati parks and civic-space coverage",
       "priority": "medium",
       "ownerWorkstream": "3C",
-      "goal": "Add another bounded asset family after government-service assets.",
+      "goal": "Reconcile Makati's official park inventories against current 23-barangay geography, implement all verified current public parks, then separately complete private/public-access parks.",
       "changes": [
         "Add verified parks, community spaces, markets or public toilets only where location/source confidence is sufficient.",
         "Apply the existing rating criteria appropriate to each asset type."
@@ -200,20 +200,35 @@
       "excludes": [
         "Transport network expansion"
       ],
-      "status": "complete",
-      "completedAt": "2026-09-25",
+      "status": "reopened",
       "commits": [
         "a61473e8bfe86672a51cd93bc22a32704a0049f2",
         "0816060bf84ac70f8e7d0aceafa3ad6871edc2e8"
       ],
-      "result": {
-        "addedAssets": [
+      "reopenedAt": "2026-09-25",
+      "revisionReason": "Official Makati sources publish much broader public-park inventories. The previous three-park CBD batch is retained as preliminary private/public-access coverage, not completion.",
+      "previousPreliminaryBatch": {
+        "commits": [
+          "a61473e8bfe86672a51cd93bc22a32704a0049f2",
+          "0816060bf84ac70f8e7d0aceafa3ad6871edc2e8"
+        ],
+        "assets": [
           "Ayala Triangle Gardens",
           "Washington SyCip Park",
           "Legazpi Active Park"
         ],
-        "totalCivicAssets": 13
-      }
+        "disposition": "retain assets; reclassify within revised public/private park framework"
+      },
+      "substeps": [
+        "3C-2a",
+        "3C-2b",
+        "3C-2c",
+        "3C-2d",
+        "3C-2e",
+        "3C-2f",
+        "3C-2g"
+      ],
+      "planFile": "data/wave3-civic-map-parks-plan.json"
     },
     {
       "id": "3C-3",
@@ -558,8 +573,17 @@
     }
   ],
   "immediateNext": {
-    "id": "3H-1",
-    "title": "Define participation outcome metrics",
-    "maximumScope": "One machine-readable metrics definition file only. No instrumentation or public dashboard changes yet."
-  }
+    "id": "3C-2a",
+    "title": "Reconcile official Makati park inventories",
+    "maximumScope": "Build the official 12/16/18-park crosswalk only. No Civic Map additions yet."
+  },
+  "reopenedExecutionOrder": [
+    "3C-2a",
+    "3C-2b",
+    "3C-2c",
+    "3C-2d",
+    "3C-2e",
+    "3C-2f",
+    "3C-2g"
+  ]
 }
