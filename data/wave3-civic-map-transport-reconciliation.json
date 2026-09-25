@@ -212,19 +212,21 @@
           "finding": "Current station list includes both Guadalupe and Valenzuela among Pasig River Ferry stations."
         }
       ],
-      "civicMapDisposition": "verified-current-missing-assets",
-      "missingAssets": [
+      "civicMapDisposition": "complete-current-named-set",
+      "missingAssets": [],
+      "nextAction": "Freeze exact current station points and implement as a two-asset bounded batch.",
+      "mappedAssets": [
         "pasig-ferry-guadalupe",
         "pasig-ferry-valenzuela"
       ],
-      "nextAction": "Freeze exact current station points and implement as a two-asset bounded batch."
+      "implementationFile": "data/wave3-civic-map-ferry-implementation.json"
     },
     {
       "family": "Public utility jeepney routes",
       "historicalNamedRows": 38,
       "source": "Makati Facts and Figures 2020 / Public Safety Department",
-      "currentStatus": "route-by-route current status not established",
-      "civicMapDisposition": "historical-named-inventory-needs-current-reconciliation",
+      "currentStatus": "route-by-route reconciliation complete",
+      "civicMapDisposition": "reconciled-no-point-route-assets",
       "geometryConstraint": "Civic Map currently models transport routes as a type but assets still use a single lat/lng point; a route cannot be faithfully represented as one point.",
       "nextAction": "Crosswalk the 38 historical rows against current LTFRB/operator/terminal evidence. For current routes, either add route geometry support or expose them as services at verified terminals/stops rather than fake route pins.",
       "rows": [
@@ -816,5 +818,6 @@
     "scope": "Freeze exact current points for Guadalupe and Valenzuela Pasig River Ferry stations, add the two current transport-stop assets with MMDA/current-service provenance, validate, and stop."
   },
   "busStopReconciliationFile": "data/wave3-civic-map-bus-stops-reconciliation.json",
-  "pnrNscrLifecycleFile": "data/wave3-civic-map-pnr-nscr-lifecycle.json"
+  "pnrNscrLifecycleFile": "data/wave3-civic-map-pnr-nscr-lifecycle.json",
+  "closureReady": true
 }
