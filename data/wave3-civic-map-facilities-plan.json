@@ -18,7 +18,9 @@
     "3C-1d",
     "3C-1e1",
     "3C-1e2",
-    "3C-1e3"
+    "3C-1e3",
+    "3C-1e4",
+    "3C-1e"
   ],
   "substeps": [
     {
@@ -63,7 +65,12 @@
       "id": "3C-1f",
       "title": "Implement verified community/social/city-owned facilities",
       "implementation": true,
-      "splitRule": "Only source-backed current public-facing destinations; no speculative day-care or outpost pins."
+      "splitRule": "Only source-backed current public-facing destinations; no speculative day-care or outpost pins.",
+      "splitInto": [
+        "3C-1f1",
+        "3C-1f2"
+      ],
+      "splitReason": "Implement core social/city-owned facilities first, then co-location-aware day-care/child-minding assets separately."
     },
     {
       "id": "3C-1g",
@@ -82,9 +89,9 @@
   ],
   "inventoryFile": "data/wave3-civic-map-facilities-inventory.json",
   "immediateNext": {
-    "id": "3C-1e4",
-    "title": "Implement current police facilities",
-    "maximumScope": "Makati Police headquarters + Sub-Stations 1–7 only. Freeze exact current points, preserve historical addresses where needed, block transferred Sub-Stations 8 and 9, and validate. No day-care/social-welfare assets."
+    "id": "3C-1f1",
+    "title": "Implement core social and city-owned facilities",
+    "maximumScope": "Makati Social Development Center, Makati Youth Home, Makati Youth Center, SM Felicidad Sy Center for the Elderly, and Poblacion Public Market only. Freeze exact current points; no day-care/barangay-hall assets yet."
   },
   "healthCenterVerificationStatus": "complete",
   "healthCenterVerificationFile": "data/wave3-civic-map-health-centers-verification.json",
@@ -137,5 +144,15 @@
     "centralAuditedRetained": 1,
     "ambiguousNewCentralBlocked": true,
     "formerMakatiExcluded": 2
-  }
+  },
+  "policeFacilityImplementationStatus": "complete",
+  "policeFacilityImplementationFile": "data/wave3-civic-map-police-facilities-implementation.json",
+  "policeFacilityImplementationSummary": {
+    "officialCurrentCount": 8,
+    "mappedCurrent": 8,
+    "headquarters": 1,
+    "substations": 7,
+    "transferredExcluded": 2
+  },
+  "protectiveAndHealthImplementationStatus": "complete"
 }
