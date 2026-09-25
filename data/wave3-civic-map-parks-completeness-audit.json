@@ -1,0 +1,567 @@
+{
+  "schemaVersion": 1,
+  "auditedAt": "2026-09-25",
+  "workstream": "Wave 3C-2g — Park completeness closure audit",
+  "closureStatus": "complete-for-verified-named-mappable-set",
+  "scope": "Reconcile every named park record found in the reviewed official Makati inventories, plus verified supplemental current public-access green spaces, against the present-day Civic Map. This does not convert unnamed annual headline counts into invented park identities.",
+  "completenessDefinition": [
+    "Every named official-source park record has a documented final disposition.",
+    "Every verified current government/public park that can be identified as a distinct present-day asset is mapped once.",
+    "Every verified current privately managed park intended for ordinary public access is mapped once.",
+    "Historical aliases and naming lineages are merged rather than duplicated.",
+    "Gated/private-community amenities remain documented but outside the default public-access Civic Map layer.",
+    "Former-Makati assets are excluded from current Makati.",
+    "Unresolved identities remain unresolved and are blocked from becoming speculative pins.",
+    "Future green spaces are not mapped as currently usable."
+  ],
+  "officialNamedInventory": {
+    "totalRecords": 43,
+    "dispositionCounts": {
+      "mapped-government-public": 12,
+      "merged-historical-alias": 1,
+      "former-makati-now-taguig": 10,
+      "merged-historical-lineage": 2,
+      "unresolved-no-distinct-current-pin": 3,
+      "unresolved-private-current-successor": 1,
+      "unresolved-possible-subfacility-or-duplicate": 1,
+      "mapped-public-access-private-managed": 5,
+      "private-community-controlled-audit-only": 7,
+      "unresolved-private-current-identity": 1
+    },
+    "records": [
+      {
+        "id": "magallanes-interchange-park",
+        "canonicalName": "Magallanes Interchange Park",
+        "finalDisposition": "mapped-government-public",
+        "civicMapAssetId": "magallanes-interchange-park",
+        "sourceAppearances": [
+          "des2010",
+          "urban18",
+          "public2020",
+          "app2022"
+        ]
+      },
+      {
+        "id": "buendia-plaza",
+        "canonicalName": "Buendia Plaza",
+        "finalDisposition": "mapped-government-public",
+        "civicMapAssetId": "buendia-plaza",
+        "sourceAppearances": [
+          "des2010",
+          "app2022"
+        ]
+      },
+      {
+        "id": "gil-puyat-slex",
+        "canonicalName": "Gil Puyat - SLEX",
+        "finalDisposition": "merged-historical-alias",
+        "civicMapAssetId": "buendia-plaza",
+        "sourceAppearances": [
+          "urban18",
+          "public2020"
+        ]
+      },
+      {
+        "id": "makati-park-and-garden",
+        "canonicalName": "Makati Park and Garden",
+        "finalDisposition": "former-makati-now-taguig",
+        "civicMapAssetId": null,
+        "sourceAppearances": [
+          "des2010",
+          "urban18",
+          "public2020"
+        ]
+      },
+      {
+        "id": "poblacion-park",
+        "canonicalName": "Poblacion Park",
+        "finalDisposition": "mapped-government-public",
+        "civicMapAssetId": "poblacion-park",
+        "sourceAppearances": [
+          "des2010",
+          "urban18",
+          "public2020"
+        ]
+      },
+      {
+        "id": "kennely-ann-lacia-binay-park-guadalupe-nuevo",
+        "canonicalName": "Kennely Ann Lacia Binay Park / Guadalupe Nuevo Cloverleaf Park",
+        "finalDisposition": "mapped-government-public",
+        "civicMapAssetId": "kennely-ann-lacia-binay-park-guadalupe-nuevo",
+        "sourceAppearances": [
+          "des2010",
+          "urban18",
+          "public2020",
+          "app2022"
+        ]
+      },
+      {
+        "id": "guadalupe-viejo-cloverleaf-park",
+        "canonicalName": "Guadalupe Viejo Cloverleaf Park",
+        "finalDisposition": "mapped-government-public",
+        "civicMapAssetId": "guadalupe-viejo-cloverleaf-park",
+        "sourceAppearances": [
+          "des2010",
+          "urban18",
+          "public2020",
+          "app2022"
+        ]
+      },
+      {
+        "id": "freedom-park",
+        "canonicalName": "Freedom Park / Ayala Freedom Park",
+        "finalDisposition": "mapped-government-public",
+        "civicMapAssetId": "freedom-park",
+        "sourceAppearances": [
+          "des2010",
+          "app2022"
+        ]
+      },
+      {
+        "id": "pinagkaisahan-underpass-park",
+        "canonicalName": "Pinagkaisahan Underpass Park",
+        "finalDisposition": "merged-historical-lineage",
+        "civicMapAssetId": "edsa-pinagkaisahan-park",
+        "sourceAppearances": [
+          "des2010"
+        ]
+      },
+      {
+        "id": "edsa-buendia-park",
+        "canonicalName": "EDSA-Buendia Park",
+        "finalDisposition": "mapped-government-public",
+        "civicMapAssetId": "edsa-buendia-park",
+        "sourceAppearances": [
+          "des2010",
+          "app2022"
+        ]
+      },
+      {
+        "id": "guadalupe-nuevo-linear-park",
+        "canonicalName": "Guadalupe Nuevo Linear Park",
+        "finalDisposition": "mapped-government-public",
+        "civicMapAssetId": "guadalupe-nuevo-linear-park",
+        "sourceAppearances": [
+          "des2010"
+        ]
+      },
+      {
+        "id": "valenzuela-park",
+        "canonicalName": "Valenzuela Park",
+        "finalDisposition": "mapped-government-public",
+        "civicMapAssetId": "valenzuela-park",
+        "sourceAppearances": [
+          "des2010",
+          "urban18",
+          "public2020"
+        ]
+      },
+      {
+        "id": "makati-des-linear-park",
+        "canonicalName": "Makati DES Linear Park",
+        "finalDisposition": "unresolved-no-distinct-current-pin",
+        "civicMapAssetId": null,
+        "sourceAppearances": [
+          "des2010"
+        ]
+      },
+      {
+        "id": "post-office-pocket-park",
+        "canonicalName": "Post Office Pocket Park",
+        "finalDisposition": "unresolved-no-distinct-current-pin",
+        "civicMapAssetId": null,
+        "sourceAppearances": [
+          "urban18",
+          "public2020"
+        ]
+      },
+      {
+        "id": "makati-city-hall-park",
+        "canonicalName": "Makati City Hall Park",
+        "finalDisposition": "unresolved-no-distinct-current-pin",
+        "civicMapAssetId": null,
+        "sourceAppearances": [
+          "urban18",
+          "public2020"
+        ]
+      },
+      {
+        "id": "ayala-edsa-park",
+        "canonicalName": "Ayala - EDSA Park",
+        "finalDisposition": "unresolved-private-current-successor",
+        "civicMapAssetId": null,
+        "sourceAppearances": [
+          "urban18",
+          "private2020"
+        ]
+      },
+      {
+        "id": "cembo-linear-park",
+        "canonicalName": "Cembo Linear Park",
+        "finalDisposition": "former-makati-now-taguig",
+        "civicMapAssetId": null,
+        "sourceAppearances": [
+          "urban18",
+          "public2020"
+        ]
+      },
+      {
+        "id": "poblacion-linear-park",
+        "canonicalName": "Poblacion Linear Park",
+        "finalDisposition": "mapped-government-public",
+        "civicMapAssetId": "poblacion-linear-park",
+        "sourceAppearances": [
+          "urban18",
+          "public2020"
+        ]
+      },
+      {
+        "id": "plaza-cristo-rey",
+        "canonicalName": "Plaza Cristo Rey",
+        "finalDisposition": "mapped-government-public",
+        "civicMapAssetId": "plaza-cristo-rey",
+        "sourceAppearances": [
+          "public2020"
+        ]
+      },
+      {
+        "id": "east-rembo-park",
+        "canonicalName": "East Rembo Park",
+        "finalDisposition": "former-makati-now-taguig",
+        "civicMapAssetId": null,
+        "sourceAppearances": [
+          "public2020"
+        ]
+      },
+      {
+        "id": "kalayaan-avenue-park-pinagkaisahan",
+        "canonicalName": "Kalayaan Avenue Park (Pinagkaisahan)",
+        "finalDisposition": "merged-historical-lineage",
+        "civicMapAssetId": "edsa-pinagkaisahan-park",
+        "sourceAppearances": [
+          "public2020"
+        ]
+      },
+      {
+        "id": "playground-park-poblacion",
+        "canonicalName": "Playground Park at Brgy. Poblacion",
+        "finalDisposition": "unresolved-possible-subfacility-or-duplicate",
+        "civicMapAssetId": null,
+        "sourceAppearances": [
+          "public2020"
+        ]
+      },
+      {
+        "id": "riverside-carmona",
+        "canonicalName": "Riverside Carmona",
+        "finalDisposition": "mapped-government-public",
+        "civicMapAssetId": "riverside-carmona",
+        "sourceAppearances": [
+          "public2020"
+        ]
+      },
+      {
+        "id": "greenbelt-park",
+        "canonicalName": "Greenbelt Park",
+        "finalDisposition": "mapped-public-access-private-managed",
+        "civicMapAssetId": "greenbelt-park",
+        "sourceAppearances": [
+          "urban18",
+          "private2020"
+        ]
+      },
+      {
+        "id": "bel-air-park-near-barangay-hall",
+        "canonicalName": "Bel-Air Park near Barangay Hall",
+        "finalDisposition": "private-community-controlled-audit-only",
+        "civicMapAssetId": null,
+        "sourceAppearances": [
+          "urban18",
+          "private2020"
+        ]
+      },
+      {
+        "id": "ayala-triangle",
+        "canonicalName": "Ayala Triangle",
+        "finalDisposition": "mapped-public-access-private-managed",
+        "civicMapAssetId": "ayala-triangle-gardens",
+        "sourceAppearances": [
+          "urban18",
+          "private2020"
+        ]
+      },
+      {
+        "id": "legazpi-active-park",
+        "canonicalName": "Legazpi Active Park",
+        "finalDisposition": "mapped-public-access-private-managed",
+        "civicMapAssetId": "legazpi-active-park",
+        "sourceAppearances": [
+          "urban18",
+          "private2020"
+        ]
+      },
+      {
+        "id": "velasquez-park",
+        "canonicalName": "Velasquez Park",
+        "finalDisposition": "mapped-public-access-private-managed",
+        "civicMapAssetId": "jaime-velasquez-park",
+        "sourceAppearances": [
+          "urban18",
+          "private2020"
+        ]
+      },
+      {
+        "id": "track-30th-bgc",
+        "canonicalName": "Track 30th - BGC",
+        "finalDisposition": "former-makati-now-taguig",
+        "civicMapAssetId": null,
+        "sourceAppearances": [
+          "urban18",
+          "private2020"
+        ]
+      },
+      {
+        "id": "bonifacio-high-street-7th",
+        "canonicalName": "Bonifacio High Street Park - 7th Avenue",
+        "finalDisposition": "former-makati-now-taguig",
+        "civicMapAssetId": null,
+        "sourceAppearances": [
+          "private2020"
+        ]
+      },
+      {
+        "id": "bonifacio-high-street-8th",
+        "canonicalName": "Bonifacio High Street Park - 8th Avenue",
+        "finalDisposition": "former-makati-now-taguig",
+        "civicMapAssetId": null,
+        "sourceAppearances": [
+          "private2020"
+        ]
+      },
+      {
+        "id": "bonifacio-high-street-9th",
+        "canonicalName": "Bonifacio High Street Park - 9th Avenue",
+        "finalDisposition": "former-makati-now-taguig",
+        "civicMapAssetId": null,
+        "sourceAppearances": [
+          "private2020"
+        ]
+      },
+      {
+        "id": "bonifacio-high-street-11th",
+        "canonicalName": "Bonifacio High Street Park - 11th Avenue",
+        "finalDisposition": "former-makati-now-taguig",
+        "civicMapAssetId": null,
+        "sourceAppearances": [
+          "private2020"
+        ]
+      },
+      {
+        "id": "de-jesus-oval-park",
+        "canonicalName": "De Jesus Oval Park",
+        "finalDisposition": "former-makati-now-taguig",
+        "civicMapAssetId": null,
+        "sourceAppearances": [
+          "private2020"
+        ]
+      },
+      {
+        "id": "forbes-park-and-pavillion",
+        "canonicalName": "Forbes Park and Pavillion",
+        "finalDisposition": "private-community-controlled-audit-only",
+        "civicMapAssetId": null,
+        "sourceAppearances": [
+          "private2020"
+        ]
+      },
+      {
+        "id": "glorietta-4-park",
+        "canonicalName": "Glorietta 4 Park",
+        "finalDisposition": "mapped-public-access-private-managed",
+        "civicMapAssetId": "glorietta-4-park",
+        "sourceAppearances": [
+          "private2020"
+        ]
+      },
+      {
+        "id": "mahogany-park",
+        "canonicalName": "Mahogany Park",
+        "finalDisposition": "private-community-controlled-audit-only",
+        "civicMapAssetId": null,
+        "sourceAppearances": [
+          "private2020"
+        ]
+      },
+      {
+        "id": "park-at-san-lorenzo-assumption",
+        "canonicalName": "Park at San Lorenzo near Assumption College",
+        "finalDisposition": "private-community-controlled-audit-only",
+        "civicMapAssetId": null,
+        "sourceAppearances": [
+          "private2020"
+        ]
+      },
+      {
+        "id": "bel-air-park-hercules",
+        "canonicalName": "Bel-Air Park at Hercules St.",
+        "finalDisposition": "private-community-controlled-audit-only",
+        "civicMapAssetId": null,
+        "sourceAppearances": [
+          "private2020"
+        ]
+      },
+      {
+        "id": "san-felipe-park",
+        "canonicalName": "San Felipe Park",
+        "finalDisposition": "private-community-controlled-audit-only",
+        "civicMapAssetId": null,
+        "sourceAppearances": [
+          "private2020"
+        ]
+      },
+      {
+        "id": "senior-citizen-park",
+        "canonicalName": "Senior Citizen Park",
+        "finalDisposition": "unresolved-private-current-identity",
+        "civicMapAssetId": null,
+        "sourceAppearances": [
+          "private2020"
+        ]
+      },
+      {
+        "id": "terra-28th-park",
+        "canonicalName": "Terra 28th Park",
+        "finalDisposition": "former-makati-now-taguig",
+        "civicMapAssetId": null,
+        "sourceAppearances": [
+          "private2020"
+        ]
+      },
+      {
+        "id": "urdaneta-park",
+        "canonicalName": "Urdaneta Park",
+        "finalDisposition": "private-community-controlled-audit-only",
+        "civicMapAssetId": null,
+        "sourceAppearances": [
+          "private2020"
+        ]
+      }
+    ]
+  },
+  "currentCivicMapParkLayer": {
+    "governmentPublicAssets": 13,
+    "publicAccessPrivateManagedAssets": 7,
+    "totalMappedCurrentPublicFacingParks": 20,
+    "governmentPublicIds": [
+      "magallanes-interchange-park",
+      "kennely-ann-lacia-binay-park-guadalupe-nuevo",
+      "guadalupe-viejo-cloverleaf-park",
+      "poblacion-park",
+      "valenzuela-park",
+      "poblacion-linear-park",
+      "plaza-cristo-rey",
+      "riverside-carmona",
+      "buendia-plaza",
+      "freedom-park",
+      "edsa-buendia-park",
+      "guadalupe-nuevo-linear-park",
+      "edsa-pinagkaisahan-park"
+    ],
+    "publicAccessPrivateManagedIds": [
+      "ayala-triangle-gardens",
+      "washington-sycip-park",
+      "legazpi-active-park",
+      "greenbelt-park",
+      "jaime-velasquez-park",
+      "palm-promenade-park",
+      "glorietta-4-park"
+    ]
+  },
+  "supplementalCurrentSpaces": {
+    "mapped": [
+      {
+        "id": "washington-sycip-park",
+        "disposition": "mapped-public-access-private-managed",
+        "note": "Current public-access CBD park not present as a separate entry in the 2020 private-park table."
+      },
+      {
+        "id": "palm-promenade-park",
+        "disposition": "mapped-public-access-private-managed",
+        "note": "Current public-access CBD promenade supported by estate-management sources."
+      }
+    ],
+    "future": [
+      {
+        "id": "dela-rosa-gardens",
+        "disposition": "future-do-not-map-until-open",
+        "note": "Forthcoming green space; excluded from current usable-park layer."
+      }
+    ]
+  },
+  "unresolvedCurrentOrLineageRecords": [
+    "makati-des-linear-park",
+    "post-office-pocket-park",
+    "makati-city-hall-park",
+    "playground-park-poblacion",
+    "ayala-edsa-park",
+    "senior-citizen-park"
+  ],
+  "controlledPrivateCommunityRecords": [
+    "bel-air-park-near-barangay-hall",
+    "forbes-park-and-pavillion",
+    "mahogany-park",
+    "park-at-san-lorenzo-assumption",
+    "bel-air-park-hercules",
+    "san-felipe-park",
+    "urdaneta-park"
+  ],
+  "formerMakatiRecords": [
+    "makati-park-and-garden",
+    "cembo-linear-park",
+    "east-rembo-park",
+    "track-30th-bgc",
+    "bonifacio-high-street-7th",
+    "bonifacio-high-street-8th",
+    "bonifacio-high-street-9th",
+    "bonifacio-high-street-11th",
+    "de-jesus-oval-park",
+    "terra-28th-park"
+  ],
+  "mergedHistoricalRecords": [
+    {
+      "id": "gil-puyat-slex",
+      "currentAsset": "buendia-plaza"
+    },
+    {
+      "id": "pinagkaisahan-underpass-park",
+      "currentAsset": "edsa-pinagkaisahan-park"
+    },
+    {
+      "id": "kalayaan-avenue-park-pinagkaisahan",
+      "currentAsset": "edsa-pinagkaisahan-park"
+    }
+  ],
+  "headlineCountCaveat": {
+    "latestReviewed": "Makati City Basic Facts and Figures 2023",
+    "reportedCounts": {
+      "governmentPublic": 15,
+      "private": 17
+    },
+    "namedListAvailableInReviewedDocument": false,
+    "treatment": "Use as a headline statistic with source/vintage context only. Do not infer unnamed assets or use the count as proof that the current named Civic Map is missing a specific park.",
+    "consequence": "The park workstream is closed for the verified named/mappable set, while future official named inventories can expand or revise it."
+  },
+  "integrityClosure": [
+    "All 13 government/public park assets require government-public access classification and full source/coordinate provenance.",
+    "All 7 private/public-access assets require public-access-private-managed classification and full source/coordinate provenance.",
+    "Unresolved historical public records cannot appear as distinct current pins.",
+    "Historical alias/lineage IDs cannot appear as duplicate pins.",
+    "All 10 former-Makati named records are barred from the current Makati park layer.",
+    "Future Dela Rosa Gardens and controlled/private-community records are barred from the public-access layer."
+  ],
+  "nextStep": {
+    "id": "3C-1-reopen",
+    "title": "Reopen 3C-1 with official-source-first methodology",
+    "scope": "Apply the same Makati-government-publication-first reconciliation method before claiming completeness for the 3C-1 asset class."
+  }
+}
