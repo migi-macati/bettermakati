@@ -1822,7 +1822,7 @@ const placeAssertionsFor = (asset: CivicAsset): PlaceAssertion[] => {
  * every current ID and page behavior remain stable. The flat civicAssets export stays available
  * as a compatibility view while other site surfaces begin adopting placeRegistry in later steps.
  */
-export const placeRegistry: PlaceRegistryRecord[] = civicAssets.map(asset => ({
+export const placeRegistry: PlaceRegistryRecord[] = civicAssets.map((asset): PlaceRegistryRecord => ({
   id: asset.id,
   name: asset.title,
   summary: asset.subtitle,
