@@ -58,7 +58,7 @@ export default function NationalServiceHandoff({
 
       {showBetterGov && (
         <div className="mt-6 border-t border-gray-200 pt-4 text-xs leading-relaxed text-gray-500">
-          National directory:{' '}
+          Also on BetterGov:{' '}
           <a
             href={betterGov.listingUrl}
             target="_blank"
