@@ -12,7 +12,8 @@
     "coLocatedCounters": "Do not create separate assets for every department or counter within the same public building unless it functions as a distinct destination."
   },
   "completedSubsteps": [
-    "3C-1a"
+    "3C-1a",
+    "3C-1b"
   ],
   "substeps": [
     {
@@ -69,8 +70,18 @@
   ],
   "inventoryFile": "data/wave3-civic-map-facilities-inventory.json",
   "immediateNext": {
-    "id": "3C-1b",
-    "title": "Verify current public health facilities",
-    "maximumScope": "18 current Makati health centers + separately counted 24/7 health center, research/reconciliation only. No Civic Map additions."
+    "id": "3C-1c",
+    "title": "Verify current protective-service facilities",
+    "maximumScope": "11 fire stations + 8 police facilities; reconcile current names, addresses, post-transfer control and point provenance. Research only, no Civic Map additions."
+  },
+  "healthCenterVerificationStatus": "complete",
+  "healthCenterVerificationFile": "data/wave3-civic-map-health-centers-verification.json",
+  "healthCenterVerificationSummary": {
+    "mhdNetworkVerifiedCurrent": 18,
+    "philHealthYakap2026": 16,
+    "additionalCurrentViaPhilHealthDots": 1,
+    "additionalCurrentViaDohNtp": 1,
+    "palanan24x7CoLocated": true,
+    "supplementalSanLorenzoClinicSystem": "separate-from-mhd18-denominator"
   }
 }
