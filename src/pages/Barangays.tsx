@@ -7,7 +7,6 @@ import LastReviewed from '../components/ui/LastReviewed';
 import SEO from '../components/SEO';
 import {
   barangays,
-  barangayCoverageSummary,
   barangayProfilesReviewed,
 } from '../data/barangays';
 
@@ -51,28 +50,9 @@ export default function Barangays() {
         </p>
         <LastReviewed
           date={barangayProfilesReviewed}
-          note="All 23 current Makati barangays are represented. Council rosters are for the 2023–2026 term."
+          note="Population uses the 2024 POPCEN. Council rosters are for the 2023–2026 term."
           className="mt-4"
         />
-
-        <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
-          <div className="rounded-2xl border border-primary-100 bg-white p-4">
-            <div className="text-2xl font-extrabold text-primary-800">{barangayCoverageSummary.profiles}/23</div>
-            <div className="mt-1 text-xs font-bold text-gray-600">barangay profiles</div>
-          </div>
-          <div className="rounded-2xl border border-primary-100 bg-white p-4">
-            <div className="text-2xl font-extrabold text-primary-800">{barangayCoverageSummary.councilRosters}/23</div>
-            <div className="mt-1 text-xs font-bold text-gray-600">current council rosters</div>
-          </div>
-          <div className="rounded-2xl border border-primary-100 bg-white p-4">
-            <div className="text-2xl font-extrabold text-primary-800">{barangayCoverageSummary.hallContacts}/23</div>
-            <div className="mt-1 text-xs font-bold text-gray-600">hall contacts</div>
-          </div>
-          <div className="rounded-2xl border border-primary-100 bg-white p-4">
-            <div className="text-2xl font-extrabold text-primary-800">{barangayCoverageSummary.verifiedHealthFacilityBarangays}/23</div>
-            <div className="mt-1 text-xs font-bold text-gray-600">verified YAKAP clinic coverage</div>
-          </div>
-        </div>
 
         <label className="relative mt-7 block max-w-xl">
           <span className="sr-only">Search barangays, officials or local places</span>
