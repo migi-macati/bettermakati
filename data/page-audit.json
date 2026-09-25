@@ -32,10 +32,15 @@
       "civil-registry-transaction-batch",
       "social-welfare-transaction-batch",
       "ancillary-building-permits-batch",
-      "veterinary-pet-services-batch"
+      "veterinary-pet-services-batch",
+      "business-permit-change-guides",
+      "temporary-sanitary-permit-guide",
+      "peso-cooperative-guides",
+      "barangay-jobseeker-mediation-guides",
+      "senior-support-guides"
     ],
     "gaps": [
-      "85 of 151 indexed services now have field-by-field transaction guides. The remaining 66 are concentrated in barangay transactions, other long-tail city services and national-agency services that still need source-specific requirements, fees, processing times or current-channel verification."
+      "96 of 151 indexed services now have field-by-field transaction guides. The remaining 55 are concentrated in several barangay transactions, a few city permit/property services, and national-agency services that still need source-specific requirements, fees, processing times or current-channel verification."
     ]
   },
   {
