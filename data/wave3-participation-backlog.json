@@ -249,7 +249,8 @@
       "completedSubsteps": [
         "3C-2a",
         "3C-2b",
-        "3C-2c1"
+        "3C-2c1",
+        "3C-2c2"
       ],
       "inventoryFile": "data/wave3-civic-map-parks-inventory.json",
       "geographyFile": "data/wave3-civic-map-parks-geography.json",
@@ -260,12 +261,13 @@
         "unresolved": 2
       },
       "currentVerificationFiles": [
-        "data/wave3-civic-map-parks-current-verification-1.json"
+        "data/wave3-civic-map-parks-current-verification-1.json",
+        "data/wave3-civic-map-parks-current-verification-2.json"
       ],
       "currentVerificationSummary": {
-        "researched": 6,
-        "verifiedCurrentPublic": 4,
-        "heldAliasResolution": 1,
+        "researched": 13,
+        "verifiedCurrentPublic": 8,
+        "heldAliasOrIdentityResolution": 4,
         "heldCurrentStatusUnverified": 1
       }
     },
@@ -627,9 +629,9 @@
     }
   ],
   "immediateNext": {
-    "id": "3C-2c2",
-    "title": "Verify current public parks — batch 2",
-    "maximumScope": "Makati City Hall Park, Valenzuela Park, Poblacion Linear Park, Plaza Cristo Rey, Kalayaan Avenue Park, Playground Park at Brgy. Poblacion, Riverside Carmona. Research only."
+    "id": "3C-2c3",
+    "title": "Resolve older DES public-park entries and aliases",
+    "maximumScope": "Buendia Plaza, Freedom Park/Ayala Freedom Park, Pinagkaisahan Underpass Park, EDSA-Buendia Park, Guadalupe Nuevo Linear Park, Makati DES Linear Park. Research only."
   },
   "reopenedExecutionOrder": [
     "3C-2a",
@@ -648,7 +650,7 @@
     },
     "3C-2": {
       "status": "in-progress",
-      "current": "3C-2c2"
+      "current": "3C-2c3"
     },
     "3C-3": {
       "status": "reopened-planned",
