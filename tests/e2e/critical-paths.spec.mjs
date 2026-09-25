@@ -237,13 +237,18 @@ test('Budget Explorer exposes reconciled 2026 office appropriations', async ({ p
 test('Budget Explorer exposes reconciled office line-item drill-down', async ({ page }) => {
   await page.goto(baseURL + '/projects-budget');
   await expect(page.getByRole('heading', { name: 'Object-of-expenditure detail' })).toBeVisible();
-  await expect(page.getByText('10 of 36 offices with line-item detail', { exact: true })).toBeVisible();
+  await expect(page.getByText('36 of 36 offices with line-item detail', { exact: true })).toBeVisible();
   await expect(page.getByText('Matches published office total', { exact: true })).toBeVisible();
   const office = page.getByRole('combobox', { name: 'Select office budget detail' });
   await office.selectOption("City Administrator's Office");
   await expect(page.getByRole('cell', { name: 'Training Expenses', exact: true }).first()).toBeVisible();
   await expect(page.getByRole('cell', { name: '₱131,699,000', exact: true })).toBeVisible();
   await expect(page.getByRole('link', { name: 'p. 14', exact: true }).first()).toBeVisible();
+
+  await office.selectOption('Youth and Sports Development Department');
+  await expect(page.getByRole('cell', { name: 'Sports Equipment', exact: true })).toBeVisible();
+  await expect(page.getByRole('cell', { name: '₱1,838,000', exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'p. 82', exact: true }).first()).toBeVisible();
 });
 
 test('Projects & Budget displays procurement evidence instead of only linking out', async ({ page }) => {
