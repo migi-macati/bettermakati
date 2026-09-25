@@ -1878,7 +1878,7 @@ const normalizePlaceSelectorText = (value: string) =>
   value
     .trim()
     .toLocaleLowerCase('en-PH')
-    .replace(/\bsta\.?\b/g, 'santa')
+    .replace(/\bsta\.?(?=\s|$)/g, 'santa')
     .replace(/\s+/g, ' ');
 
 const legacyBarangayParts = (value: string) =>
