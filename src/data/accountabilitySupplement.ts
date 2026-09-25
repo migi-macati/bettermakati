@@ -122,6 +122,7 @@ const procurementSeeds: ProcurementSeed[] = [
     bidDate: '2025-05-14',
     sourceUrl: procurementQ22025Source,
     sourceLabel: '2025 Q2 Bid Results — Goods and Services',
+    followUpCheckedOn: '25 September 2026',
   },
   {
     id: '2025-q2-bs25-04-0417',
@@ -215,6 +216,7 @@ const procurementSeeds: ProcurementSeed[] = [
     bidDate: '2025-06-16',
     sourceUrl: procurementQ22025Source,
     sourceLabel: '2025 Q2 Bid Results — Goods and Services',
+    followUpCheckedOn: '25 September 2026',
   },
   {
     id: '2025-q2-bs25-05-oe13',
@@ -227,6 +229,7 @@ const procurementSeeds: ProcurementSeed[] = [
     bidDate: '2025-06-16',
     sourceUrl: procurementQ22025Source,
     sourceLabel: '2025 Q2 Bid Results — Goods and Services',
+    followUpCheckedOn: '25 September 2026',
   },
   {
     id: '2025-q2-bs25-05-0573',
