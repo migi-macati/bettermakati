@@ -1,6 +1,7 @@
 import { readFile } from 'node:fs/promises';
 
 const budget = await readFile('src/data/budget2025.ts', 'utf8');
+const budgetRemaining = await readFile('src/data/budgetOfficeDetails2026Remaining.ts', 'utf8');
 const accountability = await readFile('src/data/accountabilitySupplement.ts', 'utf8');
 
 const lineBlock =
@@ -95,25 +96,57 @@ const officeDetailSection =
   budget.split('export const officeBudgetDetails2026:')[1]?.split(
     'export const selectedBudgetLines2026'
   )[0] ?? '';
-const officeDetailJson = officeDetailSection
+const localOfficeDetailJson = officeDetailSection
   .slice(officeDetailSection.indexOf('=') + 1)
   .trim()
-  .replace(/;\s*$/, '');
+  .replace(/,\s*\.\.\.officeBudgetDetails2026Remaining\s*\]\s*;?$/, ']');
+
+const remainingRawJson =
+  budgetRemaining.split('const raw: Array<[office: string, pages: string, lines: RawLine[]]> = ')[1]?.split(
+    ';\n\nexport const officeBudgetDetails2026Remaining'
+  )[0] ?? '[]';
 
 let officeDetails = [];
 try {
-  officeDetails = JSON.parse(officeDetailJson);
+  const localOfficeDetails = JSON.parse(localOfficeDetailJson);
+  const remainingRaw = JSON.parse(remainingRawJson);
+  const remainingOfficeDetails = remainingRaw.map(([office, pages, lines]) => ({
+    office,
+    pages,
+    lines: lines.map(([, , amountM]) => ({ amountM })),
+  }));
+  officeDetails = [...localOfficeDetails, ...remainingOfficeDetails];
 } catch {
   problems.push('2026 office line-item detail is not parseable as structured data.');
 }
 
-if (officeDetails.length < 10) {
+if (officeDetails.length !== 36) {
   problems.push(
-    `Expected at least 10 normalized office line-item schedules; found ${officeDetails.length}.`
+    `Expected 36 normalized office line-item schedules; found ${officeDetails.length}.`
+  );
+}
+
+const officeDetailLineCount = officeDetails.reduce(
+  (sum, detail) => sum + (detail.lines || []).length,
+  0
+);
+if (officeDetailLineCount !== 1052) {
+  problems.push(
+    `Expected 1052 normalized office budget lines; found ${officeDetailLineCount}.`
   );
 }
 
 const officeTotalByName = new Map(officeRows.map(item => [item.office, item.amountM]));
+const normalizedOfficeTotal = officeDetails.reduce(
+  (sum, detail) =>
+    sum + (detail.lines || []).reduce((lineSum, item) => lineSum + Number(item.amountM || 0), 0),
+  0
+);
+if (!closeEnough(normalizedOfficeTotal, 21000)) {
+  problems.push(
+    `Normalized office budget lines sum to ${normalizedOfficeTotal.toFixed(3)}M; expected 21000.000M.`
+  );
+}
 for (const detail of officeDetails) {
   const target = officeTotalByName.get(detail.office);
   const detailTotal = (detail.lines || []).reduce(
