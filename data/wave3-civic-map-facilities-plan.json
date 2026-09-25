@@ -14,7 +14,8 @@
   "completedSubsteps": [
     "3C-1a",
     "3C-1b",
-    "3C-1c"
+    "3C-1c",
+    "3C-1d"
   ],
   "substeps": [
     {
@@ -46,7 +47,14 @@
       "id": "3C-1e",
       "title": "Implement verified health and protective-service facilities",
       "implementation": true,
-      "splitRule": "Implement in bounded source-coherent batches; health, fire and police should not be one giant commit."
+      "splitRule": "Implement in bounded source-coherent batches; health, fire and police should not be one giant commit.",
+      "splitInto": [
+        "3C-1e1",
+        "3C-1e2",
+        "3C-1e3",
+        "3C-1e4"
+      ],
+      "splitReason": "Keep coordinate verification and implementation bounded: two 9-site health batches, then fire, then police."
     },
     {
       "id": "3C-1f",
@@ -71,9 +79,9 @@
   ],
   "inventoryFile": "data/wave3-civic-map-facilities-inventory.json",
   "immediateNext": {
-    "id": "3C-1d",
-    "title": "Reconcile community, social-welfare and city-owned facilities",
-    "maximumScope": "Day-care/child-minding network, Social Development Center, Makati Youth Home, Youth Center, Senior Citizen Center, Poblacion Public Market and citywide civic anchors. Research/reconciliation only; no Civic Map additions."
+    "id": "3C-1e1",
+    "title": "Implement current health centers — batch A",
+    "maximumScope": "First 9 verified MHD health-center sites only. Freeze exact current points, add source/address provenance and validate. No fire, police, day-care or social-welfare assets."
   },
   "healthCenterVerificationStatus": "complete",
   "healthCenterVerificationFile": "data/wave3-civic-map-health-centers-verification.json",
@@ -95,5 +103,16 @@
     "policeAlreadyMapped": 0,
     "policeMissingReady": 8,
     "transferredPoliceSubstationsExcluded": 2
+  },
+  "communityFacilitiesReconciliationStatus": "complete",
+  "communityFacilitiesReconciliationFile": "data/wave3-civic-map-community-facilities-reconciliation.json",
+  "communityFacilitiesReconciliationSummary": {
+    "currentDayCareCenters": 22,
+    "currentChildMindingCenters": 1,
+    "transferredDayCareCentersExcluded": 18,
+    "transferredChildMindingCentersExcluded": 3,
+    "currentCoreSocialWelfareFacilities": 4,
+    "currentCityOwnedMarketCandidate": 1,
+    "unresolvedProposedOrColocated": 2
   }
 }
