@@ -17,7 +17,7 @@
   {
     "path": "/services",
     "label": "Services",
-    "status": "partial",
+    "status": "reviewed",
     "reviewedAt": "2026-09-25",
     "checks": [
       "directory",
@@ -39,12 +39,15 @@
       "barangay-jobseeker-mediation-guides",
       "senior-support-guides",
       "all-city-barangay-services-structured",
+      "local-service-source-watch",
       "81-local-service-guides",
-      "local-service-source-watch"
+      "70-national-services-covered",
+      "national-structured-guide-or-official-handoff",
+      "46-national-handoff-records",
+      "bettergov-overlap-audit",
+      "official-national-action-source-metadata"
     ],
-    "gaps": [
-      "All 81 indexed Makati city and barangay services now have structured transaction guides. The remaining 46 without field-by-field guides are national-agency services that still need current source-specific requirements, fees, processing times or channel verification."
-    ]
+    "gaps": []
   },
   {
     "path": "/government-offices",

@@ -19,6 +19,18 @@ const localServiceIds = serviceBlocks
   .filter(block => /level:\s*'(City|Barangay)'/.test(block))
   .map(block => block.match(/\bid:\s*'([^']+)'/)?.[1])
   .filter(Boolean);
+const nationalServiceBlocks = serviceBlocks.filter(block =>
+  /level:\s*'National'/.test(block)
+);
+const nationalServiceIds = nationalServiceBlocks
+  .map(block => block.match(/\bid:\s*'([^']+)'/)?.[1])
+  .filter(Boolean);
+const nationalHandoffBlocks = nationalServiceBlocks.filter(block =>
+  /nationalIntegration:\s*\{/.test(block)
+);
+const nationalHandoffIds = nationalHandoffBlocks
+  .map(block => block.match(/\bid:\s*'([^']+)'/)?.[1])
+  .filter(Boolean);
 
 const problems = [];
 const watchedUrls = new Set(watchlist.map(item => item.url));
@@ -49,6 +61,37 @@ if (missingLocalDetails.length) {
       missingLocalDetails.join(', ')
   );
 }
+
+const missingNationalCoverage = nationalServiceBlocks
+  .filter(block => {
+    const id = block.match(/\bid:\s*'([^']+)'/)?.[1];
+    return id && !detailIds.includes(id) && !/nationalIntegration:\s*\{/.test(block);
+  })
+  .map(block => block.match(/\bid:\s*'([^']+)'/)?.[1])
+  .filter(Boolean);
+if (missingNationalCoverage.length) {
+  problems.push(
+    'National services without a structured guide or official handoff: ' +
+      missingNationalCoverage.join(', ')
+  );
+}
+
+const invalidNationalHandoffs = nationalHandoffBlocks
+  .filter(
+    block =>
+      !/officialActionUrl:\s*'https?:\/\//.test(block) ||
+      !/officialSourceUrl:\s*'https?:\/\//.test(block) ||
+      !/betterGov:\s*\{[\s\S]*?status:\s*'(listed|partial|missing|submitted)'/.test(block)
+  )
+  .map(block => block.match(/\bid:\s*'([^']+)'/)?.[1])
+  .filter(Boolean);
+if (invalidNationalHandoffs.length) {
+  problems.push(
+    'National handoffs missing official action/source or BetterGov status metadata: ' +
+      invalidNationalHandoffs.join(', ')
+  );
+}
+
 const duplicateIds = directoryIds.filter((id, index) => directoryIds.indexOf(id) !== index);
 if (duplicateIds.length) problems.push('Duplicate service IDs: ' + [...new Set(duplicateIds)].join(', '));
 
@@ -70,6 +113,10 @@ if (cityServiceCount < 73) {
   problems.push(`City-service coverage unexpectedly shrank to ${cityServiceCount}. Wave 1.2 baseline is 73 city services.`);
 }
 
+if (nationalServiceIds.length < 70) {
+  problems.push(`National-service coverage unexpectedly shrank to ${nationalServiceIds.length}. Current baseline is 70 national services.`);
+}
+
 if (detailIds.length < 48) {
   problems.push(`Structured service-guide coverage is too low: ${detailIds.length}. Wave 1.2 minimum is 48.`);
 }
@@ -84,6 +131,11 @@ if (problems.length) {
   process.exit(1);
 }
 
+const nationalStructuredCount = nationalServiceIds.filter(id => detailIds.includes(id)).length;
+const nationalLocalContextCount = nationalHandoffBlocks.filter(block =>
+  /makatiContext:\s*\{/.test(block)
+).length;
+
 console.log(
-  `Service-depth audit passed: ${directoryIds.length} indexed services (${cityServiceCount} city); ${localServiceIds.length} city/barangay services all structured; ${detailIds.length} structured guides; ${verifiedCount} verified; ${featuredIds.length} featured services all structured; ${detailSourceUrls.length} detailed sources watched.`
+  `Service-depth audit passed: ${directoryIds.length} indexed services (${cityServiceCount} city, ${nationalServiceIds.length} national); ${localServiceIds.length} city/barangay services all structured; all national services have either a structured guide or official handoff (${nationalStructuredCount} structured, ${nationalHandoffIds.length} handoff records, ${nationalLocalContextCount} handoffs with Makati context); ${verifiedCount} verified detailed guides; ${detailSourceUrls.length} detailed sources watched.`
 );
