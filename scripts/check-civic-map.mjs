@@ -208,6 +208,106 @@ for (const id of requiredCoreCommunityAssets) {
   }
 }
 
+const requiredChildCareHostAssets = [
+  'bangkal-barangay-hall',
+  'carmona-community-complex',
+  'guadalupe-nuevo-barangay-hall',
+  'san-antonio-barangay-hall',
+  'valenzuela-barangay-hall',
+  'south-poblacion-day-care-center',
+  'north-poblacion-day-care-center',
+  'pio-del-pilar-day-care-center',
+];
+
+for (const id of requiredChildCareHostAssets) {
+  if (!assetIds.includes(id)) {
+    problems.push('Missing child-care host Civic Map asset: ' + id);
+    continue;
+  }
+  const start = assetBlock.indexOf("id: '" + id + "'");
+  const end = assetBlock.indexOf('\n  },', start);
+  const row = start >= 0 && end >= 0 ? assetBlock.slice(start, end) : '';
+  for (const marker of [
+    "type: 'community-center'",
+    'servicesAtLocation:',
+    'address:',
+    'sourceUrl:',
+    'sourceLabel:',
+    'coordinateSourceUrl:',
+    'coordinateSourceLabel:',
+  ]) {
+    if (!row.includes(marker)) {
+      problems.push(id + ' is missing child-care host metadata: ' + marker);
+    }
+  }
+}
+
+const childCareServiceNames = [...assetBlock.matchAll(/servicesAtLocation:\s*\[([^\]]*)\]/g)]
+  .flatMap(match => [...match[1].matchAll(/'([^']+)'/g)].map(item => item[1]));
+const duplicateChildCareServices = childCareServiceNames.filter(
+  (name, index) => childCareServiceNames.indexOf(name) !== index
+);
+if (duplicateChildCareServices.length) {
+  problems.push('Duplicate co-located Civic Map services: ' + [...new Set(duplicateChildCareServices)].join(', '));
+}
+
+const requiredCurrentChildCareServices = [
+  'Bangkal Day Care Center',
+  'Carmona Day Care Center',
+  'Kasilawan Day Care Center',
+  'Kasilawan Child Minding Center',
+  'La Paz Day Care Center',
+  'Olympia Day Care Center',
+  'Palanan 1 Day Care Center',
+  'Palanan 2 Day Care Center',
+  'Pio del Pilar Day Care Center',
+  'South Poblacion Day Care Center',
+  'North Poblacion Day Care Center',
+  'San Antonio Day Care Center',
+  'San Isidro Day Care Center',
+  'Tejeros Day Care Center',
+  'Makati Homes Tejeros Day Care Center',
+  'Sta. Cruz Day Care Center',
+  'Valenzuela Day Care Center',
+  'Guadalupe Nuevo 1 Day Care Center',
+  'Guadalupe Nuevo 2 Day Care Center',
+  'Guadalupe Viejo 1 Day Care Center',
+  'Guadalupe Viejo 2 Day Care Center',
+  'Pinagkaisahan Day Care Center',
+];
+
+for (const service of requiredCurrentChildCareServices) {
+  if (!childCareServiceNames.includes(service)) {
+    problems.push('Missing current Makati child-care service coverage: ' + service);
+  }
+}
+
+if (childCareServiceNames.includes('Singkamas Day Care Center')) {
+  problems.push('Singkamas Day Care Center must remain unresolved until its exact Francisco Benitez III ES host point is frozen.');
+}
+
+const blockedDuplicateChildCareAssets = [
+  'kasilawan-day-care-center',
+  'kasilawan-child-minding-center',
+  'la-paz-day-care-center',
+  'olympia-day-care-center',
+  'palanan-1-day-care-center',
+  'palanan-2-day-care-center',
+  'san-isidro-day-care-center',
+  'tejeros-day-care-center',
+  'makati-homes-tejeros-day-care-center',
+  'sta-cruz-day-care-center',
+  'guadalupe-viejo-1-day-care-center',
+  'guadalupe-viejo-2-day-care-center',
+  'pinagkaisahan-day-care-center',
+];
+
+for (const id of blockedDuplicateChildCareAssets) {
+  if (assetIds.includes(id)) {
+    problems.push('Co-located child-care service must not be a duplicate Civic Map pin: ' + id);
+  }
+}
+
 const requiredGovernmentServiceAssets = [
   'psa-makati-crs',
   'lto-makati-district',
