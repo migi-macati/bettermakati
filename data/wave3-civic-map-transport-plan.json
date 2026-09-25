@@ -11,7 +11,8 @@
     "3C-3c",
     "3C-3d1",
     "3C-3d2",
-    "3C-3d"
+    "3C-3d",
+    "3C-3e"
   ],
   "substeps": [
     {
@@ -46,20 +47,20 @@
     {
       "id": "3C-3e",
       "title": "Resolve PNR/NSCR lifecycle representation",
-      "status": "next",
+      "status": "complete",
       "scope": "Decide how suspended PNR stations and future NSCR successors should appear without implying current service."
     },
     {
       "id": "3C-3f",
       "title": "Close transport completeness audit",
-      "status": "planned",
+      "status": "next",
       "scope": "Disposition every reviewed transport inventory item/family and validate the implemented current layer."
     }
   ],
   "immediateNext": {
-    "id": "3C-3e",
-    "title": "Resolve PNR/NSCR lifecycle representation",
-    "scope": "Research/design only. Determine how suspended Dela Rosa, Pasay Road and EDSA PNR stations should appear, identify current/future NSCR station relationships without assuming one-to-one successors, and do not imply current PNR commuter service."
+    "id": "3C-3f",
+    "title": "Close transport completeness audit",
+    "scope": "Disposition every reviewed transport family, validate current Civic Map coverage, preserve unresolved 32-stop and three jeepney-route questions, and close only to the verified current named/mappable set."
   },
   "ferryImplementationStatus": "complete",
   "ferryImplementationFile": "data/wave3-civic-map-ferry-implementation.json",
@@ -87,5 +88,14 @@
     "unresolvedNoExactCurrentRoute": 3,
     "routeAssetsAdded": 0
   },
-  "jeepneyRouteReconciliationB": "data/wave3-civic-map-jeepney-routes-reconciliation-b.json"
+  "jeepneyRouteReconciliationB": "data/wave3-civic-map-jeepney-routes-reconciliation-b.json",
+  "pnrNscrLifecycleStatus": "complete",
+  "pnrNscrLifecycleFile": "data/wave3-civic-map-pnr-nscr-lifecycle.json",
+  "pnrNscrLifecycleSummary": {
+    "legacyPnrStations": 3,
+    "currentOperatingLegacyPnr": 0,
+    "futureNscrMakatiStations": 2,
+    "currentOperatingFutureNscr": 0,
+    "codeChanges": 0
+  }
 }
