@@ -72,10 +72,10 @@
     "url": "https://notices.philgeps.gov.ph/",
     "kind": "procurement",
     "cadence": "daily",
-    "monitoringMode": "reachability",
+    "monitoringMode": "content-hash",
     "owner": "city-monitor",
     "delegated": true,
-    "ownerReason": "City Monitor owns this procurement discovery signal and applies content-change detection."
+    "ownerReason": "City Monitor owns this procurement discovery signal and applies normalized content-change detection."
   },
   {
     "id": "comelec-2026-bske-calendar",
