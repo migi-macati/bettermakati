@@ -840,12 +840,31 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Add Place Registry selectors",
       "maximumScope": "Shared helpers only: by barangay, category, service, coordinates/distance and lifecycle. No visible UI changes.",
-      "status": "next",
+      "status": "complete",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
       ],
-      "stopWhen": "Shared helpers only: by barangay, category, service, coordinates/distance and lifecycle. No visible UI changes."
+      "stopWhen": "Shared helpers only: by barangay, category, service, coordinates/distance and lifecycle. No visible UI changes.",
+      "implementationFile": "src/data/placeRegistry.ts",
+      "validation": {
+        "staticIntegrity": "check-place-registry reports 8 required selector/helper exports and all 88 preserved IDs with no problems.",
+        "datasetBehavior": {
+          "PoblacionMatches": 13,
+          "SanLorenzoCompositeCompatible": true,
+          "BelAirCompositeCompatible": true,
+          "parkCount": 20,
+          "healthCenterCount": 18,
+          "transportStopCount": 9,
+          "serviceExamples": [
+            "Bangkal Day Care Center → bangkal-barangay-hall",
+            "Pio del Pilar Day Care Center → pio-del-pilar-day-care-center"
+          ],
+          "distanceExample": "From Makati Poblacion Park, Poblacion Fire Sub-Station is ~0.068 km and Poblacion Public Market ~0.211 km; results sort nearest first."
+        },
+        "typeCheck": "Selector implementation passes isolated TypeScript strict/noEmit checking.",
+        "ci": "Repo CI still stops at the same three pre-existing unused-import ESLint errors before later quality/build steps; latest run reports no new lint errors in placeRegistry.ts, check-place-registry.mjs or package.json."
+      }
     },
     {
       "id": "W3R-3a",
@@ -854,7 +873,7 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Reuse places in BetterBarangay",
       "maximumScope": "Barangay Profile only. Surface verified local places/facilities from the registry.",
-      "status": "planned",
+      "status": "next",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
@@ -1373,9 +1392,9 @@
     }
   ],
   "immediateNext": {
-    "id": "W3R-2c",
-    "title": "Add Place Registry selectors",
-    "maximumScope": "Shared helpers only: by barangay, category, service, coordinates/distance and lifecycle. No visible UI changes."
+    "id": "W3R-3a",
+    "title": "Reuse places in BetterBarangay",
+    "maximumScope": "Barangay Profile only. Surface verified local places/facilities from the registry."
   },
   "reopenedExecutionOrder": [
     "3C-2a",
