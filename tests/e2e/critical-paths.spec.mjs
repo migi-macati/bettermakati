@@ -280,6 +280,9 @@ test('Projects & Budget displays structured audit follow-through', async ({ page
   await expect(page.getByText('Recommendation', { exact: true }).first()).toBeVisible();
   await expect(page.getByText('Follow-up', { exact: true }).first()).toBeVisible();
   await expect(page.getByRole('heading', { name: /development-fund use for loan and interest payments/i })).toBeVisible();
+  await expect(page.getByText('Last checked 25 September 2026', { exact: true }).first()).toBeVisible();
+  await expect(page.getByRole('link', { name: /Makati status report of unliquidated cash advances/i })).toBeVisible();
+  await expect(page.getByRole('link', { name: /Makati Special Education Fund Utilization/i }).first()).toBeVisible();
 });
 
 test('Accountability Ledger publishes its actual coverage and known limits', async ({ page }) => {
