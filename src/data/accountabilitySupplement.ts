@@ -582,7 +582,7 @@ export const auditFindingEntries: AccountabilityEntry[] = [
     period: '2017 audit / reported 2018',
     reportedAmountM: 391.491,
     relatedHref: '/integrity',
-    lastVerified: reviewed,
+    lastVerified: '25 September 2026',
     sources: [
       {
         label: 'COA annual audit reports',
@@ -593,7 +593,13 @@ export const auditFindingEntries: AccountabilityEntry[] = [
         label: 'GMA News report quoting the COA finding and city response',
         url: 'https://www.gmanetwork.com/news/topstories/metro/665703/coa-questions-why-makati-city-used-dev-t-funds-to-repay-loans/story/',
         publisher: 'GMA News',
-        publishedOrPeriod: '31 August 2018',
+        publishedOrPeriod: '28 August 2018',
+      },
+      {
+        label: 'Makati City response to the 2017 COA finding',
+        url: 'https://www.gmanetwork.com/news/topstories/metro/666053/makati-lgu-exec-legality-of-p391-m-dev-t-funds-use-not-in-question/story/',
+        publisher: 'GMA News',
+        publishedOrPeriod: '30 August 2018',
       },
     ],
     audit: {
@@ -602,9 +608,9 @@ export const auditFindingEntries: AccountabilityEntry[] = [
       recommendation:
         'COA recommended that management ensure the 20% Development Fund is used for its intended purposes.',
       managementResponse:
-        'The city said the projects were classified as development projects and stated that it would prepare a supplemental budget to return the development-fund amounts used for loan payments.',
+        'The city said the projects were classified as development projects, that the full ₱391.491M had been accounted for, and that it would prepare a supplemental budget to return development-fund amounts used for loan payments.',
       followUpStatus:
-        'Later resolution of this specific recommendation has not yet been linked in BetterMakati.',
+        'The 2018 Makati audit executive summary says that, across 23 recommendations from the 2016 and 2017 audits, 16 were fully implemented, four partially implemented and three not acted on. The published executive summary does not map this specific 2017 recommendation to one of those statuses, so BetterMakati does not mark it closed.',
     },
   },
   {
@@ -622,13 +628,19 @@ export const auditFindingEntries: AccountabilityEntry[] = [
     period: '2018',
     reportedAmountM: 4.9,
     relatedHref: '/integrity',
-    lastVerified: reviewed,
+    lastVerified: '25 September 2026',
     sources: [
       {
         label: 'COA 2018 local-government annual audit archive — Makati City',
         url: coaArchive2018,
         publisher: 'Commission on Audit',
         publishedOrPeriod: '2018',
+      },
+      {
+        label: 'Makati status report of unliquidated cash advances as of 31 December 2018',
+        url: 'https://www.makati.gov.ph/assets/uploads/staticmenu/files/cashadvances.pdf',
+        publisher: 'City Government of Makati',
+        publishedOrPeriod: '31 December 2018; liquidation remarks updated in January-February 2019',
       },
     ],
     audit: {
@@ -637,7 +649,7 @@ export const auditFindingEntries: AccountabilityEntry[] = [
       recommendation:
         'COA recommended discontinuing the practice and limiting such advances to designated Special Disbursing Officers in accordance with COA Circular No. 97-002.',
       followUpStatus:
-        'A later implementation-status record for this specific recommendation has not yet been linked.',
+        'The city’s year-end 2018 cash-advance status report shows later liquidation controls for specific DepEd-Makati advances, including supporting documents returned for compliance and cash balances returned in January-February 2019. The report does not identify or certify closure of the ₱4.9M COA finding, so its exact implementation status remains unverified.',
     },
   },
   {
@@ -655,13 +667,25 @@ export const auditFindingEntries: AccountabilityEntry[] = [
     period: '2018',
     reportedAmountM: 30.793,
     relatedHref: '/integrity',
-    lastVerified: reviewed,
+    lastVerified: '25 September 2026',
     sources: [
       {
         label: 'COA 2018 local-government annual audit archive — Makati City',
         url: coaArchive2018,
         publisher: 'Commission on Audit',
         publishedOrPeriod: '2018',
+      },
+      {
+        label: 'Makati Special Education Fund Utilization — Q4 2024',
+        url: sef2024Url,
+        publisher: 'City Government of Makati / DepEd NCR',
+        publishedOrPeriod: 'Year ended 31 December 2024',
+      },
+      {
+        label: 'Makati City Compliance Audit Report 2024',
+        url: coaCompliance2024,
+        publisher: 'Commission on Audit',
+        publishedOrPeriod: '2024 audit; published 2025',
       },
     ],
     audit: {
@@ -670,7 +694,7 @@ export const auditFindingEntries: AccountabilityEntry[] = [
       recommendation:
         'COA recommended that management require the Local School Board to re-evaluate the budget against the authorized uses of the SEF.',
       followUpStatus:
-        'A later implementation-status record for this specific recommendation has not yet been linked.',
+        'By 2024, Makati was publishing the standardized FDP Form 11 SEF utilization report and COA had conducted a dedicated compliance audit of SEF monitoring, transparency and accountability. The retrievable public records do not include an item-level COA implementation-status row explicitly closing the 2018 ₱30.793M finding, so BetterMakati leaves the recommendation unresolved rather than inferring closure.',
     },
   },
   {
@@ -679,21 +703,27 @@ export const auditFindingEntries: AccountabilityEntry[] = [
     type: 'audit',
     status: 'reported',
     summary:
-      'COA published a management letter on its compliance audit of monitoring, transparency and accountability in Makati’s allocation and utilization of the Special Education Fund for calendar year 2024.',
+      'COA lists a management letter on monitoring, transparency and accountability in Makati’s 2024 Special Education Fund. The separate year-end FDP Form 11 reports ₱4.118B in receipts, ₱2.872B in disbursements and a ₱1.245B year-end balance.',
     responsibleBodies: ['Commission on Audit', 'City Government of Makati'],
     period: '2024',
     relatedHref: '/integrity',
-    lastVerified: reviewed,
+    lastVerified: '25 September 2026',
     sources: [
       {
         label: 'Makati City Compliance Audit Report 2024',
         url: coaCompliance2024,
         publisher: 'Commission on Audit',
-        publishedOrPeriod: '2024 audit; published 2025',
+        publishedOrPeriod: '2024 audit; COA page created 3 September 2025',
+      },
+      {
+        label: 'Makati Special Education Fund Utilization — Q4 2024',
+        url: sef2024Url,
+        publisher: 'City Government of Makati / DepEd NCR',
+        publishedOrPeriod: 'Year ended 31 December 2024',
       },
     ],
     notes: [
-      'The official COA landing page confirms the 2024 SEF compliance-management letter. Targeted public search on 23 September 2026 did not expose the report text or a directly retrievable PDF in the searchable index, so BetterMakati does not paraphrase observation-level findings that it cannot verify from the report itself.',
+      'COA’s public landing page confirms the 1.76 MB management letter, but its finding-level text is not exposed by the currently retrievable public index/download path. Observation-level findings and recommendations therefore remain pending source retrieval.',
     ],
   },
 ];
