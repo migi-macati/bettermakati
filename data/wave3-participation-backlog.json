@@ -203,9 +203,10 @@
         "3C-1c",
         "3C-1d",
         "3C-1e1",
-        "3C-1e2"
+        "3C-1e2",
+        "3C-1e3"
       ],
-      "current": "3C-1e3",
+      "current": "3C-1e4",
       "substeps": [
         "3C-1a",
         "3C-1b",
@@ -252,7 +253,9 @@
       ],
       "healthCenterImplementationA": "data/wave3-civic-map-health-centers-implementation-a.json",
       "healthCenterImplementationB": "data/wave3-civic-map-health-centers-implementation-b.json",
-      "healthCenterImplementationStatus": "complete"
+      "healthCenterImplementationStatus": "complete",
+      "fireStationImplementationFile": "data/wave3-civic-map-fire-stations-implementation.json",
+      "fireStationImplementationStatus": "complete"
     },
     {
       "id": "3C-2",
@@ -707,9 +710,9 @@
     }
   ],
   "immediateNext": {
-    "id": "3C-1e3",
-    "title": "Implement current fire stations",
-    "maximumScope": "10 missing verified fire-station assets plus audit/correct the already-mapped Makati Central Fire Station. No police, day-care or social-welfare assets."
+    "id": "3C-1e4",
+    "title": "Implement current police facilities",
+    "maximumScope": "Makati Police headquarters + Sub-Stations 1–7 only. Freeze exact current points, preserve historical addresses where needed, block transferred Sub-Stations 8 and 9, and validate. No day-care/social-welfare assets."
   },
   "reopenedExecutionOrder": [
     "3C-2a",
@@ -725,7 +728,7 @@
       "status": "in-progress",
       "title": "Public infrastructure/facility completeness from Makati publications",
       "executeAfter": "3C-2g unless user reprioritizes",
-      "current": "3C-1e3"
+      "current": "3C-1e4"
     },
     "3C-2": {
       "status": "in-progress",
