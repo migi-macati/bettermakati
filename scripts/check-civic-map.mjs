@@ -467,6 +467,34 @@ for (const id of privateParkAssetsNotForCurrentCivicMap) {
   }
 }
 
+const requiredMakatiFerryAssets = [
+  'pasig-ferry-guadalupe',
+  'pasig-ferry-valenzuela',
+];
+
+for (const id of requiredMakatiFerryAssets) {
+  if (!assetIds.includes(id)) {
+    problems.push('Missing verified Makati Pasig River Ferry Civic Map asset: ' + id);
+    continue;
+  }
+  const start = assetBlock.indexOf("id: '" + id + "'");
+  const end = assetBlock.indexOf('\n  },', start);
+  const row = start >= 0 && end >= 0 ? assetBlock.slice(start, end) : '';
+  for (const marker of [
+    "type: 'transport-stop'",
+    'address:',
+    'sourceUrl:',
+    'sourceLabel:',
+    'coordinateSourceUrl:',
+    'coordinateSourceLabel:',
+    "status: 'mapped'",
+  ]) {
+    if (!row.includes(marker)) {
+      problems.push(id + ' is missing verified ferry-station metadata: ' + marker);
+    }
+  }
+}
+
 const requiredTransportAssets = [
   'mrt3-guadalupe',
   'mrt3-buendia',
