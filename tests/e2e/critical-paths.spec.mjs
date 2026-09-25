@@ -1399,3 +1399,28 @@ test('accountability and public records expose national evidence tools without r
   await expect(nationalTools.getByRole('link', { name: /^Juris$/i })).toBeVisible();
   await expect(page.getByRole('heading', { name: /Search the public record catalog/i })).toBeVisible();
 });
+
+test('government and legislation expose national legislative references without replacing Makati records', async ({ page }) => {
+  await page.goto(baseURL + '/government');
+  await expect(page.getByRole('link', { name: /National legislative records/i })).toHaveAttribute(
+    'href',
+    'https://open-congress-api.bettergov.ph/'
+  );
+  await expect(page.getByRole('link', { name: /National government directory/i })).toHaveAttribute(
+    'href',
+    'https://bettergov.ph/government'
+  );
+  await expect(page.getByRole('heading', { name: 'House of Representatives', exact: true })).toBeVisible();
+
+  await page.goto(baseURL + '/legislation');
+  await expect(page.getByRole('heading', { name: 'National laws & Congress', exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Open Congress', exact: true })).toHaveAttribute(
+    'href',
+    'https://open-congress-api.bettergov.ph/'
+  );
+  await expect(page.getByRole('link', { name: 'Juris', exact: true })).toHaveAttribute(
+    'href',
+    'https://juris.ph/'
+  );
+  await expect(page.getByRole('link', { name: /Official archive/i })).toBeVisible();
+});

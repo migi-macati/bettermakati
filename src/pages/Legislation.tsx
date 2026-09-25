@@ -155,6 +155,29 @@ export default function Legislation() {
       </Section>
 
       <Section className="bg-white">
+        <div className="section-eyebrow">National context</div>
+        <Heading level={2}>National laws & Congress</Heading>
+        <div className="mt-5 flex flex-wrap gap-x-5 gap-y-3 text-sm font-bold">
+          <a
+            href="https://open-congress-api.bettergov.ph/"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-1 text-primary-700 underline underline-offset-2"
+          >
+            Open Congress <ExternalLink className="h-3.5 w-3.5" />
+          </a>
+          <a
+            href="https://juris.ph/"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-1 text-primary-700 underline underline-offset-2"
+          >
+            Juris <ExternalLink className="h-3.5 w-3.5" />
+          </a>
+        </div>
+      </Section>
+
+      <Section className="bg-white">
         <div className="section-eyebrow">Record types</div>
         <Heading level={2}>Ordinance or resolution?</Heading>
         <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">

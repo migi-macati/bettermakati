@@ -155,6 +155,24 @@ export default function Government() {
             <OfficialCard key={official.slug} official={official} />
           ))}
         </div>
+        <div className="mt-5 flex flex-wrap gap-x-5 gap-y-3 text-sm font-bold">
+          <a
+            href="https://open-congress-api.bettergov.ph/"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-1 text-primary-700 underline underline-offset-2"
+          >
+            National legislative records <ExternalLink className="h-3.5 w-3.5" />
+          </a>
+          <a
+            href="https://bettergov.ph/government"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-1 text-primary-700 underline underline-offset-2"
+          >
+            National government directory <ExternalLink className="h-3.5 w-3.5" />
+          </a>
+        </div>
       </Section>
 
       <Section className="bg-[#f5f8f2]">
