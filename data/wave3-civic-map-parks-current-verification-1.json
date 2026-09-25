@@ -1,0 +1,218 @@
+{
+  "schemaVersion": 1,
+  "verifiedAt": "2026-09-25",
+  "workstream": "Wave 3C-2c1 — Current public-park verification, batch 1",
+  "scope": "Research/verification only. No Civic Map asset additions, removals or coordinate edits in this step.",
+  "methodology": [
+    "Start from Makati City Government's named park inventories and operational/procurement records.",
+    "Use current local/map evidence only to verify present existence, point geometry and public-facing identity.",
+    "Do not equate historical and current park names unless the evidence supports the alias.",
+    "Separate current existence from exact coordinate readiness."
+  ],
+  "sources": [
+    {
+      "id": "makati-facts-2020",
+      "publisher": "City Government of Makati",
+      "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/45/561/pdf/Facts%20and%20FIgures%202020.pdf",
+      "role": "Official named public-park inventory and locations."
+    },
+    {
+      "id": "makati-des-charter",
+      "publisher": "City Government of Makati — Department of Environmental Services",
+      "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/481/pdf/Department%20of%20Environmental%20Services.pdf",
+      "role": "Operational evidence for Parks and Green Division offices at Magallanes Interchange Park and Kennely Ann Lacia Binay Park."
+    },
+    {
+      "id": "makati-app-2022",
+      "publisher": "City Government of Makati",
+      "url": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/online_forms/pdf/2022%20APP%20Final.pdf",
+      "role": "Maintenance/procurement evidence for Magallanes Interchange Park, Buendia Plaza, EDSA-Buendia Park, Kennely Ann L. Binay Park and Guadalupe Viejo Cloverleaf Park."
+    },
+    {
+      "id": "makati-urban-greening",
+      "publisher": "City Government of Makati",
+      "url": "https://www.makati.gov.ph/assets/uploads/downloads/938/883/pdf/93802202019132921.pdf",
+      "role": "Government-maintained park classification and mapped named park layer."
+    }
+  ],
+  "parks": [
+    {
+      "id": "magallanes-interchange-park",
+      "currentName": "Magallanes Interchange Park",
+      "verificationStatus": "verified-current-public",
+      "ownershipManagement": "City of Makati / Department of Environmental Services Parks and Green Division",
+      "barangay": "Magallanes",
+      "officialAddress": "Magallanes Interchange Park, Makati City",
+      "officialEvidence": [
+        "makati-facts-2020",
+        "makati-des-charter",
+        "makati-app-2022"
+      ],
+      "currentMapEvidence": {
+        "status": "verified",
+        "lat": 14.54053,
+        "lng": 121.01752,
+        "mapFeature": "OpenStreetMap way 738819169",
+        "note": "Current public map data continues to identify the site as Magallanes Interchange Park in Makati."
+      },
+      "implementationReadiness": "ready",
+      "notes": [
+        "DES currently uses the park as the Parks and Green Division District I office.",
+        "2022 APP contains recurring fountain/fixture maintenance for this named park."
+      ]
+    },
+    {
+      "id": "kennely-ann-lacia-binay-park-guadalupe-nuevo",
+      "currentName": "Kennely Ann Lacia Binay Park",
+      "aliases": [
+        "Guadalupe Nuevo Cloverleaf Park"
+      ],
+      "verificationStatus": "verified-current-public",
+      "ownershipManagement": "City of Makati / Department of Environmental Services Parks and Green Division",
+      "barangay": "Guadalupe Nuevo",
+      "officialAddress": "J.P. Rizal Avenue, Guadalupe Nuevo, Makati City",
+      "officialEvidence": [
+        "makati-facts-2020",
+        "makati-des-charter",
+        "makati-app-2022"
+      ],
+      "currentMapEvidence": {
+        "status": "verified",
+        "lat": 14.56741,
+        "lng": 121.04618,
+        "mapFeature": "OpenStreetMap way 30756145",
+        "note": "Current map geometry identifies the Guadalupe Nuevo Cloverleaf Park and City of Makati as operator."
+      },
+      "implementationReadiness": "ready",
+      "notes": [
+        "The current DES Citizen's Charter names this park as the Parks and Green Division District II office.",
+        "The 2022 APP explicitly pairs Kennely Ann L. Binay Park with the parenthetical name Guadalupe Nuevo Cloverleaf Park."
+      ]
+    },
+    {
+      "id": "guadalupe-viejo-cloverleaf-park",
+      "currentName": "Guadalupe Viejo Cloverleaf Park",
+      "verificationStatus": "verified-current-public",
+      "ownershipManagement": "City of Makati",
+      "barangay": "Guadalupe Viejo",
+      "officialAddress": "J.P. Rizal Avenue, Guadalupe Viejo, Makati City",
+      "officialEvidence": [
+        "makati-facts-2020",
+        "makati-app-2022"
+      ],
+      "currentMapEvidence": {
+        "status": "verified",
+        "lat": 14.56784,
+        "lng": 121.04525,
+        "mapFeature": "OpenStreetMap way 30328237",
+        "note": "Current map geometry identifies the park and City of Makati as operator."
+      },
+      "implementationReadiness": "ready",
+      "notes": [
+        "The 2022 APP budgets maintenance for Guadalupe Viejo Cloverleaf Park together with Kennely Ann L. Binay Park."
+      ]
+    },
+    {
+      "id": "poblacion-park",
+      "currentName": "Makati Poblacion Park",
+      "aliases": [
+        "Poblacion Park"
+      ],
+      "verificationStatus": "verified-current-public",
+      "ownershipManagement": "City Government of Makati / DES Parks and Green Division",
+      "barangay": "Poblacion",
+      "officialAddress": "Riverside J.P. Rizal Street, Poblacion, Makati City",
+      "officialEvidence": [
+        "makati-facts-2020",
+        "makati-urban-greening"
+      ],
+      "currentMapEvidence": {
+        "status": "verified",
+        "lat": 14.5673,
+        "lng": 121.03373,
+        "mapFeature": "OpenStreetMap way 1412520420",
+        "note": "Current map/business records identify Makati Poblacion Park, City Government of Makati as operator, and Riverside J.P. Rizal as address."
+      },
+      "implementationReadiness": "ready-with-coordinate-correction",
+      "currentCivicMapIssue": {
+        "existingLat": 14.56593,
+        "existingLng": 121.03155,
+        "issue": "Existing seed coordinate appears materially displaced from current park geometry.",
+        "requiredAction": "Recheck and replace the Civic Map coordinate during 3C-2d implementation."
+      }
+    },
+    {
+      "id": "gil-puyat-slex",
+      "historicalOfficialName": "Gil Puyat - SLEX",
+      "likelyCurrentIdentity": "Buendia Plaza Park",
+      "verificationStatus": "current-space-verified-alias-unresolved",
+      "ownershipManagement": "City of Makati appears likely; exact current formal park identity still needs documentary alias confirmation.",
+      "barangay": "San Antonio",
+      "officialAddress": "Mayapis Street, Barangay San Antonio, Makati City",
+      "officialEvidence": [
+        "makati-facts-2020"
+      ],
+      "laterOfficialEvidence": {
+        "source": "makati-app-2022",
+        "name": "Buendia Plaza",
+        "note": "The APP budgets recurring maintenance for Buendia Plaza but does not explicitly state that it is the same site as the 2020 'Gil Puyat - SLEX' entry."
+      },
+      "currentMapEvidence": {
+        "status": "verified-name-at-address",
+        "currentName": "Buendia Plaza Park",
+        "address": "2 Mayapis St., Makati City 1229",
+        "note": "A current public business/map listing identifies Buendia Plaza Park at Mayapis Street and uses a City of Makati contact number."
+      },
+      "implementationReadiness": "hold-for-alias-resolution",
+      "requiredAction": "Prove or reject the Gil Puyat-SLEX = Buendia Plaza relationship before creating or renaming a Civic Map asset."
+    },
+    {
+      "id": "post-office-pocket-park",
+      "historicalOfficialName": "Post Office Pocket Park",
+      "verificationStatus": "official-historical-current-status-unverified",
+      "ownershipManagement": "Listed as a public park by Makati in 2020; current operating identity not yet independently verified.",
+      "barangay": null,
+      "officialAddress": "Malugay Street corner Ayala Avenue Extension, Makati City",
+      "officialEvidence": [
+        "makati-facts-2020",
+        "makati-urban-greening"
+      ],
+      "currentMapEvidence": {
+        "status": "park-not-found-as-distinct-current-map-object",
+        "nearbyVerifiedLandmark": "Makati Central Post Office remains at Malugay / Sen. Gil J. Puyat area.",
+        "note": "Current local search finds the post office and nearby parking facilities but not a distinct Post Office Pocket Park object."
+      },
+      "implementationReadiness": "hold-current-status-unverified",
+      "requiredAction": "Search newer DES/DEPW/APP/project records or current imagery/map evidence before treating the park as extant or removed."
+    }
+  ],
+  "summary": {
+    "researched": 6,
+    "verifiedCurrentPublic": 4,
+    "currentSpaceAliasUnresolved": 1,
+    "officialHistoricalCurrentStatusUnverified": 1,
+    "readyForImplementation": 3,
+    "readyWithCoordinateCorrection": 1,
+    "held": 2
+  },
+  "findings": [
+    "Magallanes Interchange Park, Kennely Ann Lacia Binay Park, Guadalupe Viejo Cloverleaf Park and Makati Poblacion Park have sufficient current evidence to remain in the public-park completeness set.",
+    "Gil Puyat-SLEX should not yet be merged with Buendia Plaza even though the location/name evidence strongly suggests a relationship.",
+    "Post Office Pocket Park remains an official historical/current-candidate record but does not yet have enough current evidence for implementation.",
+    "The existing Civic Map Poblacion Park coordinate should be rechecked and likely corrected during implementation."
+  ],
+  "nextStep": {
+    "id": "3C-2c2",
+    "title": "Verify current public parks — batch 2",
+    "candidates": [
+      "Makati City Hall Park",
+      "Valenzuela Park",
+      "Poblacion Linear Park",
+      "Plaza Cristo Rey",
+      "Kalayaan Avenue Park (Pinagkaisahan)",
+      "Playground Park at Brgy. Poblacion",
+      "Riverside Carmona"
+    ],
+    "scope": "Research/verification only. No Civic Map implementation."
+  }
+}
