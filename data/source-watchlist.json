@@ -838,5 +838,61 @@
     "kind": "barangay-service",
     "cadence": "weekly",
     "monitoringMode": "reachability"
+  },
+  {
+    "id": "bettergov-openhalalan-dataset",
+    "label": "BetterGov OpenHalalan dataset catalog record",
+    "url": "https://data.bettergov.ph/api/v1/datasets/25",
+    "kind": "ecosystem-dependency",
+    "cadence": "weekly",
+    "monitoringMode": "reachability"
+  },
+  {
+    "id": "openhalalan-makati-2022-source",
+    "label": "OpenHalalan 2022 Makati raw election extract source",
+    "url": "https://raw.githubusercontent.com/RobertRLeung/OpenHalalan/main/data/raw_data/2022/NATIONAL_CAPITAL_REGION/NCR_-_FOURTH_DISTRICT/NATIONAL_CAPITAL_REGION_NCR_-_FOURTH_DISTRICT_CITY_OF_MAKATI.csv",
+    "kind": "ecosystem-dependency",
+    "cadence": "weekly",
+    "monitoringMode": "content-hash"
+  },
+  {
+    "id": "bettergov-open-congress-api",
+    "label": "BetterGov Open Congress API",
+    "url": "https://open-congress-api.bettergov.ph/api/ping",
+    "kind": "ecosystem-dependency",
+    "cadence": "weekly",
+    "monitoringMode": "reachability"
+  },
+  {
+    "id": "open-congress-hb-1293-source",
+    "label": "Open Congress source — HB 1293 (19th Congress)",
+    "url": "https://raw.githubusercontent.com/bettergovph/open-congress-data/main/data/document/hb/19/01K6D89C4S8D2KYJJRKTQRGAQX.toml",
+    "kind": "ecosystem-dependency",
+    "cadence": "weekly",
+    "monitoringMode": "content-hash"
+  },
+  {
+    "id": "open-congress-hb-1294-source",
+    "label": "Open Congress source — HB 1294 (19th Congress)",
+    "url": "https://raw.githubusercontent.com/bettergovph/open-congress-data/main/data/document/hb/19/01K6D89C4S8D2KYJJRKTQRGAQY.toml",
+    "kind": "ecosystem-dependency",
+    "cadence": "weekly",
+    "monitoringMode": "content-hash"
+  },
+  {
+    "id": "open-congress-hb-6100-source",
+    "label": "Open Congress source — HB 6100 (19th Congress)",
+    "url": "https://raw.githubusercontent.com/bettergovph/open-congress-data/main/data/document/hb/19/01K6D89D2ZM1B69D8JRFWX1MPY.toml",
+    "kind": "ecosystem-dependency",
+    "cadence": "weekly",
+    "monitoringMode": "content-hash"
+  },
+  {
+    "id": "bettergov-transparency-procurement",
+    "label": "BetterGov procurement browser",
+    "url": "https://transparency.bettergov.ph/procurement",
+    "kind": "ecosystem-dependency",
+    "cadence": "daily",
+    "monitoringMode": "reachability"
   }
 ]
