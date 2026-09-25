@@ -77,7 +77,7 @@ export default function CivicMap() {
         .map(value => value.trim().toLowerCase());
       const barangayMatch =
         !barangay || localNames.includes(barangay.name.toLowerCase());
-      const text = [asset.title, asset.subtitle, asset.barangay, (asset.aliases ?? []).join(' '), asset.tags.join(' ')]
+      const text = [asset.title, asset.subtitle, asset.barangay, (asset.aliases ?? []).join(' '), (asset.servicesAtLocation ?? []).join(' '), asset.tags.join(' ')]
         .filter(Boolean)
         .join(' ')
         .toLowerCase();
