@@ -233,7 +233,6 @@
     "civicBriefNote": "Civic Brief publication is intentionally content-producing, but repeated runs can also change publishedAt."
   },
   "editorialBlindSpots": [
-    "Source-change review queues identify changed/failed sources but do not identify which BetterMakati pages depend on each source.",
     "Page freshness is based on review age, not source dependencies.",
     "General Source Freshness and City Monitor duplicate four URLs, creating duplicate checks and potentially duplicate signals.",
     "The PhilGEPS overlap uses different monitoring modes, so ownership and semantics need to be explicit before deduplication.",
@@ -255,7 +254,8 @@
     {
       "id": "2.4D",
       "title": "Map sources to affected pages",
-      "objective": "Make changed/failed sources identify the BetterMakati pages and records requiring editorial review."
+      "objective": "Make changed/failed sources identify the BetterMakati pages and records requiring editorial review.",
+      "status": "complete"
     },
     {
       "id": "2.4E",
@@ -313,6 +313,20 @@
         "Build audits and browser tests protect the ownership split."
       ],
       "result": "112-source public catalog retained; 108 sources actively checked by general freshness; 4 delegated to City Monitor; no duplicate active freshness check for those four URLs."
+    },
+    {
+      "step": "2.4D",
+      "completedAt": "2026-09-25",
+      "title": "Map sources to affected pages",
+      "changes": [
+        "Added affectedPages to all 112 source-watch catalog entries.",
+        "Added affectedPages to all 8 City Monitor source channels.",
+        "Changed, failed and manual-review signals now carry page dependencies into history and reports.",
+        "Enriched currently committed source state and City Monitor state/history so mappings are available before the next scheduled run.",
+        "Build audits reject missing or unrouted page dependencies and mismatched delegated-source mappings.",
+        "Browser tests verify representative election, budget and PhilGEPS dependencies."
+      ],
+      "result": "Every configured freshness source now points to at least one routed BetterMakati page requiring review when that source changes or fails."
     }
   ],
   "sourceOwnership": {
@@ -344,6 +358,38 @@
         ],
         "reason": "Different purposes: upstream dependency availability versus user-facing outbound-link integrity."
       }
+    ]
+  },
+  "pageDependencies": {
+    "model": "Each watched source declares affectedPages using routed BetterMakati page paths. These paths travel with change/failure signals into state/history and machine-generated review reports.",
+    "generalCatalogSources": 112,
+    "cityMonitorSources": 8,
+    "uniqueAffectedPages": [
+      "/accountability",
+      "/barangays",
+      "/briefs",
+      "/city-monitor",
+      "/civic-map",
+      "/elections",
+      "/hotlines",
+      "/integrity",
+      "/legislation",
+      "/mobility",
+      "/open-government",
+      "/participate",
+      "/projects-budget",
+      "/records",
+      "/reports",
+      "/services",
+      "/statistics",
+      "/today"
+    ],
+    "precisionRule": "Dependencies are page-level unless the repository has a stable explicit finer-grained identifier. Do not infer exact records or service guides from a broad source.",
+    "signalBehavior": [
+      "General freshness changed/failed signals carry affectedPages.",
+      "City Monitor changed/failed/new-baseline/manual-review signals carry affectedPages.",
+      "Review reports name the affected page paths.",
+      "Delegated sources use the same affectedPages in the public source catalog and City Monitor owner config."
     ]
   }
 }
