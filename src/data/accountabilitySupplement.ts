@@ -42,6 +42,7 @@ const procurementSeeds: ProcurementSeed[] = [
     bidDate: '2025-04-02',
     sourceUrl: procurementQ22025Source,
     sourceLabel: '2025 Q2 Bid Results — Goods and Services',
+    followUpCheckedOn: '25 September 2026',
   },
   {
     id: '2025-q2-bs25-03-os04a',
@@ -190,6 +191,7 @@ const procurementSeeds: ProcurementSeed[] = [
     bidDate: '2025-06-16',
     sourceUrl: procurementQ22025Source,
     sourceLabel: '2025 Q2 Bid Results — Goods and Services',
+    followUpCheckedOn: '25 September 2026',
     location: 'Ospital ng Makati',
   },
   {
@@ -242,6 +244,7 @@ const procurementSeeds: ProcurementSeed[] = [
     bidDate: '2025-06-16',
     sourceUrl: procurementQ22025Source,
     sourceLabel: '2025 Q2 Bid Results — Goods and Services',
+    followUpCheckedOn: '25 September 2026',
   },
   {
     id: '2024-q3-bs24-05-0533',
