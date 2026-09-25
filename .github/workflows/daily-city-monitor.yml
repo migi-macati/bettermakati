@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: write
+  issues: write
 
 concurrency:
   group: daily-city-monitor
@@ -34,6 +35,10 @@ jobs:
       - name: Check official City Monitor sources
         run: npm run check:city-monitor
 
+      - name: Build consolidated freshness review queue
+        run: npm run build:freshness-queue
+
+
       - name: Check whether published monitor state changed
         id: publish
         shell: bash
@@ -48,6 +53,50 @@ jobs:
           NODE
 
 
+      - name: Detect consolidated editorial review queue
+        id: review
+        shell: bash
+        run: |
+          node - <<'NODE'
+          const fs = require('fs');
+          const queue = JSON.parse(fs.readFileSync('data/freshness-review-queue.json', 'utf8'));
+          fs.appendFileSync(
+            process.env.GITHUB_OUTPUT,
+            'needs_review=' + String(Number(queue.summary?.open || 0) > 0) + '\n'
+          );
+          NODE
+
+      - name: Open or update freshness review issue
+        if: steps.review.outputs.needs_review == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const title = 'Freshness review queue';
+            const report = fs.readFileSync('data/freshness-review-queue.md', 'utf8');
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              per_page: 100,
+            });
+            const existing = issues.find(issue => !issue.pull_request && issue.title === title);
+            if (existing) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: existing.number,
+                body: report,
+              });
+            } else {
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title,
+                body: report,
+              });
+            }
+
       - name: Verify production build
         if: steps.publish.outputs.publish_required == 'true'
         run: npm run build
@@ -56,7 +105,7 @@ jobs:
         if: steps.publish.outputs.publish_required == 'true'
         shell: bash
         run: |
-          git add             data/city-monitor-source-state.json             data/city-monitor-source-history.json             data/city-monitor-report.md
+          git add             data/city-monitor-source-state.json             data/city-monitor-source-history.json             data/city-monitor-report.md             data/freshness-review-queue.json             data/freshness-review-queue.md
 
           if git diff --cached --quiet; then
             echo "No actionable City Monitor changes to publish."
