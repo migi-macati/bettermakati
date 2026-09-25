@@ -32,6 +32,27 @@ for (const id of requiredGovernmentServiceAssets) {
   }
 }
 
+const requiredParkAssets = [
+  'ayala-triangle-gardens',
+  'washington-sycip-park',
+  'legazpi-active-park',
+];
+
+for (const id of requiredParkAssets) {
+  if (!assetIds.includes(id)) {
+    problems.push('Missing verified park Civic Map asset: ' + id);
+    continue;
+  }
+  const start = assetBlock.indexOf("id: '" + id + "'");
+  const end = assetBlock.indexOf('\n  },', start);
+  const row = start >= 0 && end >= 0 ? assetBlock.slice(start, end) : '';
+  for (const marker of ["type: 'park'", 'address:', 'sourceUrl:', 'sourceLabel:', "status: 'mapped'"]) {
+    if (!row.includes(marker)) {
+      problems.push(id + ' is missing verified park metadata: ' + marker);
+    }
+  }
+}
+
 const coordinates = [...assetBlock.matchAll(/lat:\s*([0-9.]+),\s*\n\s*lng:\s*([0-9.]+)/g)].map(match => ({
   lat: Number(match[1]),
   lng: Number(match[2]),
@@ -69,7 +90,7 @@ if (duplicateProposals.length) {
   problems.push('Duplicate Civic Map proposal category IDs: ' + [...new Set(duplicateProposals)].join(', '));
 }
 
-if (assetIds.length < 10) problems.push('Civic Map needs at least ten mapped/pilot assets after the government-service expansion.');
+if (assetIds.length < 13) problems.push('Civic Map needs at least thirteen mapped/pilot assets after the parks expansion.');
 if (issueIds.length < 20) problems.push('Civic Map issue taxonomy appears unexpectedly small.');
 if (proposalIds.length < 10) problems.push('Civic Map proposal taxonomy appears unexpectedly small.');
 
