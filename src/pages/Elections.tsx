@@ -795,6 +795,38 @@ export default function Elections() {
           </a>
         </div>
 
+        <div className="mt-6 rounded-2xl border border-primary-100 bg-white p-5">
+          <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+            Related national records
+          </div>
+          <div className="mt-3 flex flex-wrap gap-x-5 gap-y-3 text-sm font-bold">
+            <a
+              href="https://data.bettergov.ph/"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1 text-primary-700 underline underline-offset-2"
+            >
+              Open Data Portal <ExternalLink className="h-3.5 w-3.5" />
+            </a>
+            <a
+              href="https://visualizations.bettergov.ph/dynasty"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1 text-primary-700 underline underline-offset-2"
+            >
+              Political Dynasty Tracker <ExternalLink className="h-3.5 w-3.5" />
+            </a>
+            <a
+              href="https://saln.bettergov.ph/"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1 text-primary-700 underline underline-offset-2"
+            >
+              SALN Tracker <ExternalLink className="h-3.5 w-3.5" />
+            </a>
+          </div>
+        </div>
+
         <div className="mt-8 overflow-x-auto rounded-2xl border border-gray-200 bg-white">
           <table className="w-full min-w-[760px] text-left">
             <thead className="bg-gray-50">

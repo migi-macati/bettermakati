@@ -1424,3 +1424,23 @@ test('government and legislation expose national legislative references without 
   );
   await expect(page.getByRole('link', { name: /Official archive/i })).toBeVisible();
 });
+
+test('elections exposes related national records without replacing COMELEC sources', async ({ page }) => {
+  await page.goto(baseURL + '/elections#election-data');
+
+  const related = page.getByText('Related national records', { exact: true }).locator('..');
+  await expect(related.getByRole('link', { name: 'Open Data Portal', exact: true })).toHaveAttribute(
+    'href',
+    'https://data.bettergov.ph/'
+  );
+  await expect(related.getByRole('link', { name: 'Political Dynasty Tracker', exact: true })).toHaveAttribute(
+    'href',
+    'https://visualizations.bettergov.ph/dynasty'
+  );
+  await expect(related.getByRole('link', { name: 'SALN Tracker', exact: true })).toHaveAttribute(
+    'href',
+    'https://saln.bettergov.ph/'
+  );
+  await expect(page.getByRole('link', { name: /COMELEC/i }).first()).toBeVisible();
+  await expect(page.getByRole('heading', { name: /Download the structured election data/i })).toBeVisible();
+});
