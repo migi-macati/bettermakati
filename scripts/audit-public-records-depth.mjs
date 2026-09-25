@@ -93,6 +93,10 @@ for (const marker of [
   'Download catalog CSV',
   'source-watch-index.json',
   'source-watch-history.json',
+  'freshness-review-queue.json',
+  'Freshness review queue',
+  'Last successful check:',
+  '<strong>Action:</strong>',
   'unique source URLs indexed',
 ]) {
   if (!page.includes(marker)) {
@@ -102,6 +106,9 @@ for (const marker of [
 
 if (!generator.includes("writeFile('public/source-watch-index.json'")) {
   problems.push('Generated site files no longer publish the source-watch index.');
+}
+if (!generator.includes("writeFile('public/freshness-review-queue.json'")) {
+  problems.push('Generated site files no longer publish the consolidated freshness review queue.');
 }
 
 if (!catalog.includes("export const publicRecordsReviewed = '24 September 2026';")) {
