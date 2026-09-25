@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "implementedAt": "2026-09-25",
+  "workstream": "Wave 3C-1e4 — Implement current Makati police facilities",
+  "scope": "Implement Makati City Police Station headquarters plus Sub-Stations 1–7; exclude transferred Sub-Stations 8 and 9.",
+  "assets": [
+    "makati-city-police-station",
+    "makati-police-substation-1",
+    "makati-police-substation-2",
+    "makati-police-substation-3",
+    "makati-police-substation-4",
+    "makati-police-substation-5",
+    "makati-police-substation-6",
+    "makati-police-substation-7"
+  ],
+  "result": {
+    "currentPoliceFacilitiesMapped": 8,
+    "headquartersMapped": 1,
+    "substationsMapped": 7,
+    "official2023CountMatched": true,
+    "transferredSubstationsExcluded": 2
+  },
+  "headquartersResolution": {
+    "currentAsset": "makati-city-police-station",
+    "currentAddress": "Malugay Street corner Mayapis Street, Barangay San Antonio, Makati City",
+    "coordinateSource": "OpenStreetMap way 1473296370",
+    "currentOperationalEvidence": "2025 Makati Police Station activity at Makati Police Headquarters, Malugay corner Mayapis; 2025 City Government procurement for Makati Central Police Headquarters Building.",
+    "historicalLegacyAddress": "Ayala Avenue Extension / Yakal Street",
+    "legacyDisposition": "historical only; do not create a second headquarters pin"
+  },
+  "substationAddressNotes": {
+    "substation5": "Mapped to Park Square/East Street public-facing site.",
+    "substation6": "Current listings use P. Gomez corner San Mateo; older city inventory used San Rafael. Current address is used, historical address preserved in audit source.",
+    "substation7": "Current point is the Guadalupe Nuevo Sub-Station 7 at Nuestra Señora de Antipolo."
+  },
+  "blockedAssets": [
+    "makati-police-substation-8",
+    "makati-police-substation-9"
+  ],
+  "nextStep": {
+    "id": "3C-1f",
+    "title": "Implement verified community/social/city-owned facilities",
+    "scope": "Implement only source-backed current public-facing community/social/city-owned destinations in bounded batches, resolving co-location before adding day-care or barangay-hall assets."
+  }
+}
