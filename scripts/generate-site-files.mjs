@@ -294,6 +294,31 @@ try {
 }
 
 try {
+  const reviewQueue = await readFile('data/freshness-review-queue.json', 'utf8');
+  await writeFile('public/freshness-review-queue.json', reviewQueue);
+} catch {
+  await writeFile(
+    'public/freshness-review-queue.json',
+    JSON.stringify(
+      {
+        version: 1,
+        generatedAt: null,
+        summary: {
+          open: 0,
+          contentChanged: 0,
+          failed: 0,
+          manualReview: 0,
+          affectedPages: 0,
+        },
+        items: [],
+      },
+      null,
+      2
+    ) + '\n'
+  );
+}
+
+try {
   const sourceHistory = await readFile('data/source-watch-history.json', 'utf8');
   await writeFile('public/source-watch-history.json', sourceHistory);
 } catch {
