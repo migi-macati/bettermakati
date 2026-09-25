@@ -20,6 +20,7 @@ interface ProcurementSeed {
   sourceLabel: string;
   location?: string;
   barangaySlug?: string;
+  followUpCheckedOn?: string;
   publicEvidence?: {
     label: string;
     url: string;
@@ -134,6 +135,7 @@ const procurementSeeds: ProcurementSeed[] = [
     sourceUrl: procurementQ22025Source,
     sourceLabel: '2025 Q2 Bid Results — Goods and Services',
     location: 'Public elementary and secondary schools in Makati City',
+    followUpCheckedOn: '25 September 2026',
   },
   {
     id: '2025-q2-bs25-04-0419',
@@ -147,6 +149,7 @@ const procurementSeeds: ProcurementSeed[] = [
     sourceUrl: procurementQ22025Source,
     sourceLabel: '2025 Q2 Bid Results — Goods and Services',
     location: 'Public elementary and secondary schools in Makati City',
+    followUpCheckedOn: '25 September 2026',
   },
   {
     id: '2025-q2-bs25-04-0420',
@@ -160,6 +163,7 @@ const procurementSeeds: ProcurementSeed[] = [
     sourceUrl: procurementQ22025Source,
     sourceLabel: '2025 Q2 Bid Results — Goods and Services',
     location: 'Public elementary schools in Makati City',
+    followUpCheckedOn: '25 September 2026',
   },
   {
     id: '2025-q2-bs25-04-0422',
@@ -323,7 +327,7 @@ export const procurementProjectEntries: AccountabilityEntry[] =
     plannedAmountM: seed.approvedBudgetM,
     reportedAmountM: seed.awardedAmountM,
     relatedHref: '/projects-budget#procurement',
-    lastVerified: reviewed,
+    lastVerified: seed.followUpCheckedOn ?? reviewed,
     sources: [
       {
         label: seed.sourceLabel,
@@ -348,6 +352,7 @@ export const procurementProjectEntries: AccountabilityEntry[] =
       awardedAmountM: seed.awardedAmountM,
       supplier: seed.supplier,
       bidDate: seed.bidDate,
+      evidenceCheckedOn: seed.followUpCheckedOn ?? '23 September 2026',
       stages: [
         {
           label: 'Bid result',
@@ -359,13 +364,13 @@ export const procurementProjectEntries: AccountabilityEntry[] =
           label: 'Contract / notice of award',
           status: 'source-gap',
           detail:
-            'Exact-reference public search through 23 September 2026 did not surface a separately indexed contract or notice-of-award document.',
+            `Exact-reference public search through ${seed.followUpCheckedOn ?? '23 September 2026'} did not surface a separately indexed contract or notice-of-award document.`,
         },
         {
           label: 'Notice to proceed',
           status: 'source-gap',
           detail:
-            'Exact-reference public search through 23 September 2026 did not surface a separately indexed notice-to-proceed document.',
+            `Exact-reference public search through ${seed.followUpCheckedOn ?? '23 September 2026'} did not surface a separately indexed notice-to-proceed document.`,
         },
         ...(seed.publicEvidence
           ? [
@@ -381,7 +386,7 @@ export const procurementProjectEntries: AccountabilityEntry[] =
                 label: 'Implementation / completion',
                 status: 'source-gap' as const,
                 detail:
-                  'Targeted public search through 23 September 2026 did not surface a project-specific implementation, acceptance or completion record.',
+                  `Targeted public search through ${seed.followUpCheckedOn ?? '23 September 2026'} did not surface a project-specific implementation, acceptance or completion record.`,
               },
             ]),
       ],
