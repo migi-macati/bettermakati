@@ -1,0 +1,292 @@
+{
+  "schemaVersion": 1,
+  "researchedAt": "2026-09-25",
+  "workstream": "Wave 3C-3 — Verified public-transport object research",
+  "scope": "Research and freeze source-backed Makati transport objects only. No Civic Map transport assets are added in this step.",
+  "researchPrinciples": [
+    "Prefer current official operator, regulator, government or asset-owner sources.",
+    "Verify that the service/asset exists before treating it as a Civic Map candidate.",
+    "Do not invent point precision when a source proves the station/service but not a precise map coordinate.",
+    "Do not create a transport-route asset under the current point-only CivicAsset geometry because a single lat/lng would misrepresent a route.",
+    "Where two transport assets overlap physically, preserve mode-specific semantics but verify distinct points before adding separate pins."
+  ],
+  "sources": [
+    {
+      "id": "dotr-mrt3-about",
+      "publisher": "Department of Transportation — MRT-3",
+      "url": "https://www.dotrmrt3.gov.ph/about-us",
+      "checkedAt": "2026-09-25",
+      "supports": [
+        "MRT-3 has four Makati stations: Guadalupe, Buendia, Ayala and Magallanes.",
+        "Current station schedules are published for those stations."
+      ],
+      "authority": "official operator"
+    },
+    {
+      "id": "dotr-mrt3-station-map",
+      "publisher": "Department of Transportation — MRT-3",
+      "url": "https://www.dotrmrt3.gov.ph/station-map.pdf",
+      "checkedAt": "2026-09-25",
+      "supports": [
+        "Station sequence and named MRT-3 stops, including the four Makati stations."
+      ],
+      "authority": "official operator"
+    },
+    {
+      "id": "pia-edsa-busway-2026",
+      "publisher": "Philippine Information Agency",
+      "url": "https://pia.gov.ph/news/dotr-dict-launch-free-wi-fi-for-all-covering-17-edsa-busway-stations/",
+      "checkedAt": "2026-09-25",
+      "supports": [
+        "Guadalupe, Buendia and Ayala were operating EDSA Busway stations in January 2026."
+      ],
+      "authority": "government information source reporting DOTr/DICT rollout"
+    },
+    {
+      "id": "pco-edsa-busway-2024",
+      "publisher": "Presidential Communications Office / MMDA",
+      "url": "https://pco.gov.ph/other_releases/dotr-mmda-inaugurate-new-and-improved-edsa-busway-stations-and-smart-traffic-surveillance-system/",
+      "checkedAt": "2026-09-25",
+      "supports": [
+        "Guadalupe, Ayala and Buendia are established EDSA Busway stations and were among stations improved by DOTr/MMDA."
+      ],
+      "authority": "government source"
+    },
+    {
+      "id": "ayala-one-ayala-terminal",
+      "publisher": "Ayala Land / Ayala Malls",
+      "url": "https://groundbreakers.ayalaland.com.ph/articles/the-ultimate-mixed-use-development-in-makati-cbd-enhancing-connectivity-with-ease-and-convenience.html",
+      "checkedAt": "2026-09-25",
+      "supports": [
+        "One Ayala contains an intermodal terminal.",
+        "The terminal serves P2P buses, UBE Express, city buses including EDSA Carousel, PUJs and UV Express.",
+        "The second level connects to MRT-3 Ayala Station.",
+        "The EDSA Busway Ayala stop is integrated with the One Ayala transport complex."
+      ],
+      "authority": "official asset owner/developer"
+    }
+  ],
+  "readyForImplementation": [
+    {
+      "id": "mrt3-guadalupe",
+      "title": "MRT-3 Guadalupe Station",
+      "type": "transport-stop",
+      "mode": "rail",
+      "city": "Makati",
+      "sourceIds": [
+        "dotr-mrt3-about",
+        "dotr-mrt3-station-map"
+      ],
+      "confidence": "high",
+      "geometryDecision": "point",
+      "pointPrecision": "Verify station-center/entrance coordinate immediately before implementation; official sources confirm station identity/location along EDSA but do not publish a canonical lat/lng in the reviewed material.",
+      "recommendedBatch": "3C-4a",
+      "tags": [
+        "MRT-3",
+        "rail",
+        "EDSA",
+        "transfer"
+      ]
+    },
+    {
+      "id": "mrt3-buendia",
+      "title": "MRT-3 Buendia Station",
+      "type": "transport-stop",
+      "mode": "rail",
+      "city": "Makati",
+      "sourceIds": [
+        "dotr-mrt3-about",
+        "dotr-mrt3-station-map"
+      ],
+      "confidence": "high",
+      "geometryDecision": "point",
+      "pointPrecision": "Verify station-center/entrance coordinate immediately before implementation.",
+      "recommendedBatch": "3C-4a",
+      "tags": [
+        "MRT-3",
+        "rail",
+        "EDSA",
+        "Sen. Gil Puyat",
+        "transfer"
+      ]
+    },
+    {
+      "id": "mrt3-ayala",
+      "title": "MRT-3 Ayala Station",
+      "type": "transport-stop",
+      "mode": "rail",
+      "city": "Makati",
+      "sourceIds": [
+        "dotr-mrt3-about",
+        "dotr-mrt3-station-map",
+        "ayala-one-ayala-terminal"
+      ],
+      "confidence": "high",
+      "geometryDecision": "point",
+      "pointPrecision": "Verify station-center/entrance coordinate immediately before implementation.",
+      "recommendedBatch": "3C-4a",
+      "tags": [
+        "MRT-3",
+        "rail",
+        "EDSA",
+        "Ayala Avenue",
+        "One Ayala",
+        "transfer"
+      ]
+    },
+    {
+      "id": "mrt3-magallanes",
+      "title": "MRT-3 Magallanes Station",
+      "type": "transport-stop",
+      "mode": "rail",
+      "city": "Makati",
+      "sourceIds": [
+        "dotr-mrt3-about",
+        "dotr-mrt3-station-map"
+      ],
+      "confidence": "high",
+      "geometryDecision": "point",
+      "pointPrecision": "Verify station-center/entrance coordinate immediately before implementation.",
+      "recommendedBatch": "3C-4a",
+      "tags": [
+        "MRT-3",
+        "rail",
+        "EDSA",
+        "Magallanes",
+        "transfer"
+      ]
+    },
+    {
+      "id": "one-ayala-terminal",
+      "title": "One Ayala Terminal",
+      "type": "transport-terminal",
+      "mode": "intermodal",
+      "city": "Makati",
+      "sourceIds": [
+        "ayala-one-ayala-terminal"
+      ],
+      "confidence": "high",
+      "geometryDecision": "point",
+      "pointPrecision": "Use the transport-hub/terminal point rather than a generic mall centroid; verify against a current map before implementation.",
+      "recommendedBatch": "3C-4a",
+      "tags": [
+        "terminal",
+        "P2P",
+        "EDSA Busway",
+        "city bus",
+        "PUJ",
+        "UV Express",
+        "UBE Express",
+        "MRT-3 transfer"
+      ]
+    }
+  ],
+  "verifiedButHoldForSecondBatch": [
+    {
+      "id": "edsa-busway-guadalupe",
+      "title": "EDSA Busway Guadalupe Station",
+      "type": "transport-stop",
+      "mode": "busway",
+      "sourceIds": [
+        "pia-edsa-busway-2026",
+        "pco-edsa-busway-2024"
+      ],
+      "confidence": "high",
+      "holdReason": "The station is verified, but it is physically close to MRT-3 Guadalupe. Verify a distinct median-platform point so Civic Map does not render a misleading duplicate station pin.",
+      "recommendedBatch": "3C-4b"
+    },
+    {
+      "id": "edsa-busway-buendia",
+      "title": "EDSA Busway Buendia Station",
+      "type": "transport-stop",
+      "mode": "busway",
+      "sourceIds": [
+        "pia-edsa-busway-2026",
+        "pco-edsa-busway-2024"
+      ],
+      "confidence": "high",
+      "holdReason": "The station is verified, but it is physically close to MRT-3 Buendia. Verify a distinct busway-platform point before implementation.",
+      "recommendedBatch": "3C-4b"
+    },
+    {
+      "id": "edsa-busway-ayala",
+      "title": "EDSA Busway Ayala Station",
+      "type": "transport-stop",
+      "mode": "busway",
+      "sourceIds": [
+        "pia-edsa-busway-2026",
+        "pco-edsa-busway-2024",
+        "ayala-one-ayala-terminal"
+      ],
+      "confidence": "high",
+      "holdReason": "Ayala Busway is integrated with the One Ayala transport complex. Do not add a separate point until the UI can distinguish the busway platform from One Ayala Terminal without confusing users.",
+      "recommendedBatch": "3C-4b"
+    }
+  ],
+  "deferFromCurrentPointModel": [
+    {
+      "id": "mrt3-makati-segment",
+      "title": "MRT-3 Makati segment",
+      "type": "transport-route",
+      "sourceIds": [
+        "dotr-mrt3-about",
+        "dotr-mrt3-station-map"
+      ],
+      "reason": "The route is verified, but CivicAsset currently stores one lat/lng rather than route geometry. A point would misrepresent a linear rail route."
+    },
+    {
+      "id": "edsa-busway-makati-segment",
+      "title": "EDSA Busway Makati segment",
+      "type": "transport-route",
+      "sourceIds": [
+        "pia-edsa-busway-2026",
+        "pco-edsa-busway-2024"
+      ],
+      "reason": "The route is verified, but the current Civic Map data model has no polyline/route geometry."
+    }
+  ],
+  "notApprovedYet": [
+    {
+      "candidate": "Individual jeepney and UV Express routes from One Ayala",
+      "reason": "One Ayala verifies that these modes use the terminal, but the reviewed authoritative sources do not provide a sufficiently stable current route-by-route inventory for Civic Map."
+    },
+    {
+      "candidate": "MRT Buendia–Mandaluyong City Hall road route",
+      "reason": "An LTFRB route list was found from 2022, but that is not recent enough to treat the route as current without a newer confirmation."
+    },
+    {
+      "candidate": "Century City E-Bus route",
+      "reason": "It appears on the current Mobility page, but this research step prioritizes public-system/operator assets with stronger official/regulatory evidence before private-estate shuttle objects."
+    }
+  ],
+  "implementationPlan": {
+    "3C-4a": {
+      "title": "Add verified rail/intermodal transport assets",
+      "assets": [
+        "mrt3-guadalupe",
+        "mrt3-buendia",
+        "mrt3-ayala",
+        "mrt3-magallanes",
+        "one-ayala-terminal"
+      ],
+      "prerequisite": "Verify current point coordinates immediately before coding; use source/address metadata on every asset.",
+      "maximumScope": "Five assets only."
+    },
+    "3C-4b": {
+      "title": "Add EDSA Busway Makati stations",
+      "assets": [
+        "edsa-busway-guadalupe",
+        "edsa-busway-buendia",
+        "edsa-busway-ayala"
+      ],
+      "prerequisite": "Verify distinct busway platform/station points and confirm the UI can distinguish them from adjacent MRT/One Ayala assets.",
+      "maximumScope": "Three assets only."
+    }
+  },
+  "conclusion": "The transport expansion should begin with four official MRT-3 Makati stations plus One Ayala Terminal. EDSA Busway Guadalupe, Buendia and Ayala are also verified current assets, but should be implemented separately after precise mode-specific points are checked. Route objects remain deferred until Civic Map supports route geometry.",
+  "nextStep": {
+    "id": "3C-4a",
+    "title": "Add verified rail/intermodal transport assets",
+    "scope": "Implement the five approved first-batch objects only after current coordinate verification."
+  }
+}
