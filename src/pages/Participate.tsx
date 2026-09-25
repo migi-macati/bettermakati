@@ -3,7 +3,12 @@ import {
   ArrowRight,
   CheckCircle2,
   ExternalLink,
+  FileSearch,
+  HandHeart,
+  Lightbulb,
+  MapPinned,
   MessagesSquare,
+  PencilLine,
   Scale,
   Send,
   Users,
@@ -76,6 +81,66 @@ export default function Participate() {
           note="Official opportunities and BetterMakati submissions are labeled separately."
         />
 
+        <div className="mt-7">
+          <div className="section-eyebrow">Start here</div>
+          <Heading level={2}>What do you want to do?</Heading>
+          <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
+            <a
+              href="#official-opportunities"
+              className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
+            >
+              <Scale className="h-5 w-5 text-primary-700" />
+              <div className="mt-3 font-extrabold text-gray-950">Join an official consultation</div>
+              <p className="mt-1 text-sm text-gray-600">Check hearings, consultations and other published opportunities.</p>
+            </a>
+
+            <Link
+              to={withBarangayScope('/civic-map', barangay?.slug)}
+              className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
+            >
+              <MapPinned className="h-5 w-5 text-primary-700" />
+              <div className="mt-3 font-extrabold text-gray-950">Report or improve a public place</div>
+              <p className="mt-1 text-sm text-gray-600">Use the Civic Map for non-emergency problems, ratings and improvement proposals.</p>
+            </Link>
+
+            <Link
+              to="/get-involved?type=proposal#submission"
+              className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
+            >
+              <Lightbulb className="h-5 w-5 text-primary-700" />
+              <div className="mt-3 font-extrabold text-gray-950">Propose or suggest something</div>
+              <p className="mt-1 text-sm text-gray-600">Send a BetterMakati proposal, civic-tool idea or project improvement.</p>
+            </Link>
+
+            <Link
+              to="/get-involved?type=correction#submission"
+              className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
+            >
+              <PencilLine className="h-5 w-5 text-primary-700" />
+              <div className="mt-3 font-extrabold text-gray-950">Correct BetterMakati information</div>
+              <p className="mt-1 text-sm text-gray-600">Flag something that is wrong, stale or incomplete.</p>
+            </Link>
+
+            <Link
+              to="/get-involved?type=source#submission"
+              className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
+            >
+              <FileSearch className="h-5 w-5 text-primary-700" />
+              <div className="mt-3 font-extrabold text-gray-950">Share a public source</div>
+              <p className="mt-1 text-sm text-gray-600">Send a public record, dataset, notice or useful official link.</p>
+            </Link>
+
+            <Link
+              to="/get-involved?type=volunteer#submission"
+              className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
+            >
+              <HandHeart className="h-5 w-5 text-primary-700" />
+              <div className="mt-3 font-extrabold text-gray-950">Volunteer or contact BetterMakati</div>
+              <p className="mt-1 text-sm text-gray-600">Offer research, data, design or development help, or send a project message.</p>
+            </Link>
+          </div>
+        </div>
+
         {barangay && (
           <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-3">
             <a
@@ -147,7 +212,7 @@ export default function Participate() {
         </div>
       </Section>
 
-      <Section className="bg-white">
+      <Section className="bg-white" id="official-opportunities">
         <div className="section-eyebrow">Open official opportunities</div>
         <Heading level={2}>Participate before a decision</Heading>
 
