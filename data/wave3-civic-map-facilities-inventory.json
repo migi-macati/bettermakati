@@ -1,0 +1,241 @@
+{
+  "schemaVersion": 1,
+  "reconciledAt": "2026-09-25",
+  "workstream": "Wave 3C-1a — Official Makati public-facility inventory baseline",
+  "scope": "Research and source reconciliation only. No Civic Map facilities are added or removed in this step.",
+  "inclusionRule": "Track physical, public-facing government/service facilities that are meaningful destinations or civic assets. Do not create separate map assets for every department/counter inside one building, generic personnel counts, or private facilities.",
+  "sourcePriority": [
+    "Current City Government of Makati named facility pages/directories",
+    "Makati City Basic Facts and Figures 2023 for post-transfer current counts",
+    "Makati Facts and Figures 2020 and older city plans for named historical inventories",
+    "Other official government sources for boundary/control transfers or current operating verification"
+  ],
+  "currentHeadlineBaseline": {
+    "source": "Makati City Basic Facts and Figures 2023",
+    "sourceUrl": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1720150266681.pdf",
+    "geography": "Current Makati excluding the 10 transferred barangays where noted",
+    "facilities": {
+      "healthCenters": 18,
+      "birthingHomes": 2,
+      "socialHygieneClinics": 1,
+      "diagnosticLaboratories": 5,
+      "hospitals": 0,
+      "twentyFourSevenHealthCenters": 1,
+      "policeCentral": 1,
+      "policeSubstations": 7,
+      "fireCentral": 1,
+      "fireSubstations": 10,
+      "mapsaOutposts": 16,
+      "bantayBayanOutposts": 17,
+      "dayCareCenters": 22,
+      "childMindingCenters": 1,
+      "socialDevelopmentCenters": 1,
+      "makatiYouthHomes": 1,
+      "youthCenters": 1,
+      "seniorCitizenCenters": 1
+    },
+    "note": "Headline counts establish current scale but do not by themselves identify every current facility."
+  },
+  "namedFacilitySources": [
+    {
+      "id": "health-centers-directory",
+      "family": "health-center",
+      "source": "City Government of Makati — Barangay Health Centers",
+      "sourceUrl": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1568103121130.pdf",
+      "vintage": "2019-era city directory",
+      "namedTotal": 26,
+      "currentMakatiNamedAfterBoundaryReconciliation": 18,
+      "formerMakatiNowTaguigNamed": 8,
+      "finding": "The directory's 13 District I centers plus five District II centers in Guadalupe Nuevo, Guadalupe Viejo, Pinagkaisahan, Poblacion and Valenzuela produce 18 current-Makati names, matching the 2023 headline count of 18 health centers.",
+      "currentMakatiNames": [
+        "Bangkal Health Center",
+        "Carmona Health Center",
+        "Kasilawan Health Center",
+        "La Paz Health Center",
+        "Olympia Health Center",
+        "Palanan Health Center",
+        "Pio Puericulture Center",
+        "Rural Health Unit (RHU) — Pio del Pilar",
+        "San Antonio Health Center",
+        "San Isidro Health Center",
+        "Singkamas Health Center",
+        "Sta. Cruz Health Center",
+        "Tejeros Health Center",
+        "Guadalupe Nuevo Health Center",
+        "Guadalupe Viejo Health Center",
+        "Pinagkaisahan Health Center",
+        "Poblacion Health Center",
+        "Valenzuela Health Center"
+      ],
+      "formerMakatiNowTaguigNames": [
+        "Cembo Health Center",
+        "Comembo Health Center",
+        "East Rembo Health Center",
+        "Pembo Health Center",
+        "Pitogo Health Center",
+        "Rizal Health Center",
+        "South Cembo Health Center",
+        "West Rembo Health Center"
+      ],
+      "caveat": "Current operating status/address still requires per-site verification before implementation."
+    },
+    {
+      "id": "health-infrastructure-2020",
+      "family": "health",
+      "source": "Makati Facts and Figures 2020 — Public Health Infrastructures",
+      "sourceUrl": "https://www.makati.gov.ph/assets/uploads/downloads/2/45/561/pdf/Facts%20and%20FIgures%202020.pdf",
+      "namedTotal": 36,
+      "finding": "Broader list includes medical/dental centers, satellites, Ospital ng Makati and facilities later transferred to Taguig. It is provenance and alias evidence, not the current 18-center denominator.",
+      "caveat": "Reconcile facility type and successor names against the narrower 2023 categories before mapping."
+    },
+    {
+      "id": "fire-stations-current",
+      "family": "fire-station",
+      "source": "City Government of Makati — Fire Stations Hotlines",
+      "sourceUrl": "https://www.makati.gov.ph/content/makati-hotlines-firestations",
+      "namedTotal": 11,
+      "currentMakatiNamed": 11,
+      "names": [
+        "Makati Central Fire Station",
+        "Ayala Satellite",
+        "Bel-Air FSS",
+        "Bangkal Fire Sub-Station",
+        "Guadalupe Fire Sub-Station",
+        "La Paz Fire Sub-Station",
+        "Pio del Pilar Fire Sub-Station",
+        "Palanan Fire Sub-Station",
+        "Poblacion Fire Sub-Station",
+        "Tejeros Fire Sub-Station",
+        "Valenzuela Fire Sub-Station"
+      ],
+      "finding": "The current named city webpage contains one central station plus ten satellite/substations, exactly matching the 2023 headline count.",
+      "existingCivicMapMatch": [
+        "Makati Central Fire Station"
+      ]
+    },
+    {
+      "id": "police-directory-historical",
+      "family": "police-station",
+      "source": "City Government of Makati — Reporting a Crime and Asking for Police Assistance",
+      "sourceUrl": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/public_safety20190104112026.pdf",
+      "namedHistoricalTotal": 11,
+      "historicalNames": [
+        "Makati Police Department / Headquarters",
+        "Precinct #1 — Olympia",
+        "Precinct #2 — Palanan",
+        "Precinct #3 — San Isidro",
+        "Precinct #4 — Bangkal",
+        "Precinct #5 — San Lorenzo / Ayala Center",
+        "Precinct #6 — Poblacion",
+        "Precinct #7 — Guadalupe Nuevo",
+        "Precinct #8 — West Rembo",
+        "Precinct #9 — Comembo",
+        "Precinct #10 — Rizal"
+      ],
+      "currentMakatiCandidateSet": [
+        "Makati Police Department / Headquarters",
+        "Precinct #1 — Olympia",
+        "Precinct #2 — Palanan",
+        "Precinct #3 — San Isidro",
+        "Precinct #4 — Bangkal",
+        "Precinct #5 — San Lorenzo / Ayala Center",
+        "Precinct #6 — Poblacion",
+        "Precinct #7 — Guadalupe Nuevo"
+      ],
+      "formerMakatiNowTaguig": [
+        "Precinct #8 — West Rembo",
+        "Precinct #9 — Comembo",
+        "Precinct #10 — Rizal"
+      ],
+      "finding": "Removing the three precincts situated in transferred barangays yields one headquarters plus seven current-Makati precinct/substation candidates, matching the 2023 headline count.",
+      "secondaryTransferEvidence": {
+        "source": "NAPOLCOM resolution index",
+        "sourceUrl": "https://napolcom.gov.ph/resoindex.html",
+        "finding": "NAPOLCOM records transfer of administrative/operational control for PCPs in the 10 transferred barangays and later transfer of Makati Police Sub-Stations 8 and 9 to Taguig."
+      },
+      "caveat": "Current precinct numbering, names and exact sites must be reverified before implementation."
+    },
+    {
+      "id": "city-owned-markets-2020",
+      "family": "public-market",
+      "source": "Makati Facts and Figures 2020 — City-Owned Enterprises / Public Markets",
+      "sourceUrl": "https://www.makati.gov.ph/assets/uploads/downloads/2/45/561/pdf/Facts%20and%20FIgures%202020.pdf",
+      "namedTotal": 2,
+      "currentMakatiCandidates": [
+        "Poblacion Public Market"
+      ],
+      "formerMakatiNowTaguig": [
+        "Cembo Talipapa"
+      ],
+      "finding": "Only Poblacion Public Market remains within present-day Makati from this city-owned-enterprise list.",
+      "caveat": "Verify current operating status and site before implementation."
+    },
+    {
+      "id": "day-care-2020",
+      "family": "day-care-center",
+      "source": "Makati Facts and Figures 2020 — Day Care Services",
+      "sourceUrl": "https://www.makati.gov.ph/assets/uploads/downloads/2/45/561/pdf/Facts%20and%20FIgures%202020.pdf",
+      "finding": "Detailed named day-care and child-minding locations exist, but the list predates the boundary transfer and does not cleanly reconcile to the 2023 count of 22 day-care centers plus one child-minding center without a site-by-site continuity check.",
+      "disposition": "defer-to-3C-1d-reconciliation"
+    },
+    {
+      "id": "social-welfare-2023",
+      "family": "community-social-facility",
+      "source": "Makati City Basic Facts and Figures 2023 — Social Welfare",
+      "sourceUrl": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1720150266681.pdf",
+      "currentCounts": {
+        "socialDevelopmentCenter": 1,
+        "makatiYouthHome": 1,
+        "youthCenter": 1,
+        "seniorCitizenCenter": 1
+      },
+      "finding": "Current counts are authoritative, but the Basic Facts sheet does not provide names/addresses beyond facility type.",
+      "disposition": "verify-named-current-sites-in-3C-1d"
+    }
+  ],
+  "existingCivicMapCrosswalk": {
+    "makatiInventoryMatches": [
+      {
+        "id": "makati-central-fire-station",
+        "disposition": "retain-audit-current-details",
+        "family": "fire-station"
+      }
+    ],
+    "localFacilitiesNeedingFamilyAudit": [
+      {
+        "id": "makati-city-hall",
+        "disposition": "retain; audit as citywide public-office anchor"
+      },
+      {
+        "id": "museo-ng-makati",
+        "disposition": "retain; cultural/heritage facility outside the current service-count baselines"
+      }
+    ],
+    "supplementalNationalGovernmentServices": [
+      {
+        "id": "psa-makati-crs",
+        "disposition": "retain but exclude from Makati-LGU facility completeness denominator"
+      },
+      {
+        "id": "lto-makati-district",
+        "disposition": "retain but exclude from Makati-LGU facility completeness denominator"
+      },
+      {
+        "id": "sec-headquarters",
+        "disposition": "retain but exclude from Makati-LGU facility completeness denominator"
+      }
+    ]
+  },
+  "findings": [
+    "The original four-facility 3C-1 batch was a pilot, not a completeness baseline.",
+    "Health centers and fire stations have unusually strong named baselines whose current-Makati counts line up with the 2023 official headline counts.",
+    "Police facilities have a workable historical named list, but current numbering/locations need verification after the 2023-2024 jurisdiction transfers.",
+    "Day-care/community facilities require a separate continuity reconciliation because the detailed named list predates the transfer and does not trivially equal the 2023 current count.",
+    "Makati-LGU facility completeness and supplemental national-government service coverage must remain separate counts."
+  ],
+  "nextStep": {
+    "id": "3C-1b",
+    "title": "Reconcile and verify the 18 current Makati health centers",
+    "scope": "Freeze current names, addresses, operating continuity and mappable locations for the 18 health-center baseline plus separately identify the 24/7 health center. No Civic Map additions yet."
+  }
+}
