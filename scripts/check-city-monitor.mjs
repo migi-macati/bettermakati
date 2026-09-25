@@ -19,6 +19,42 @@ try {
 
 const previousById = new Map(previous.sources.map(source => [source.id, source]));
 const timeoutMs = 20000;
+const maxFetchAttempts = 2;
+
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+const shouldRetryStatus = status => status === 429 || status >= 500;
+
+const fetchWithRetry = async (url, headers) => {
+  let lastError;
+  for (let attempt = 1; attempt <= maxFetchAttempts; attempt += 1) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), timeoutMs);
+    try {
+      const response = await fetch(url, {
+        redirect: 'follow',
+        signal: controller.signal,
+        headers,
+      });
+      if (attempt < maxFetchAttempts && shouldRetryStatus(response.status)) {
+        try {
+          await response.body?.cancel();
+        } catch {
+          // Ignore cleanup errors before retrying.
+        }
+        await sleep(attempt * 1000);
+        continue;
+      }
+      return response;
+    } catch (error) {
+      lastError = error;
+      if (attempt >= maxFetchAttempts) throw error;
+      await sleep(attempt * 1000);
+    } finally {
+      clearTimeout(timeout);
+    }
+  }
+  throw lastError || new Error('City Monitor fetch failed');
+};
 
 const normalizeText = text =>
   text
@@ -46,13 +82,9 @@ const check = async source => {
     };
   }
 
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), timeoutMs);
   try {
-    const response = await fetch(source.url, {
-      redirect: 'follow',
-      signal: controller.signal,
-      headers: { 'user-agent': 'BetterMakati-city-monitor/2.0' },
+    const response = await fetchWithRetry(source.url, {
+      'user-agent': 'BetterMakati-city-monitor/2.0',
     });
     const raw = await response.text();
     const normalized = normalizeText(raw);
@@ -87,8 +119,6 @@ const check = async source => {
       change: 'check-failed',
       error: error instanceof Error ? error.name : 'UnknownError',
     };
-  } finally {
-    clearTimeout(timeout);
   }
 };
 
