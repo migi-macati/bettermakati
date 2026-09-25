@@ -32,7 +32,43 @@ const watchlist = JSON.parse(
 );
 const timeoutMs = 20000;
 const concurrency = 6;
+const maxFetchAttempts = 2;
 const statePath = 'data/source-watch-state.json';
+
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+const shouldRetryStatus = status => status === 429 || status >= 500;
+
+const fetchWithRetry = async (url, headers) => {
+  let lastError;
+  for (let attempt = 1; attempt <= maxFetchAttempts; attempt += 1) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), timeoutMs);
+    try {
+      const response = await fetch(url, {
+        signal: controller.signal,
+        redirect: 'follow',
+        headers,
+      });
+      if (attempt < maxFetchAttempts && shouldRetryStatus(response.status)) {
+        try {
+          await response.body?.cancel();
+        } catch {
+          // Ignore cleanup errors before retrying.
+        }
+        await sleep(attempt * 1000);
+        continue;
+      }
+      return response;
+    } catch (error) {
+      lastError = error;
+      if (attempt >= maxFetchAttempts) throw error;
+      await sleep(attempt * 1000);
+    } finally {
+      clearTimeout(timeout);
+    }
+  }
+  throw lastError || new Error('Source fetch failed');
+};
 
 let previous = { version: 2, checkedAt: null, cadence: null, sources: [] };
 try {
@@ -63,16 +99,12 @@ const blankState = source => ({
 });
 
 const fetchSource = async source => {
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), timeoutMs);
   const checkedAt = new Date().toISOString();
   const old = previousById.get(source.id) || blankState(source);
 
   try {
-    const response = await fetch(source.url, {
-      signal: controller.signal,
-      redirect: 'follow',
-      headers: { 'user-agent': 'BetterMakati-source-check/2.0' },
+    const response = await fetchWithRetry(source.url, {
+      'user-agent': 'BetterMakati-source-check/2.0',
     });
 
     const contentType = response.headers.get('content-type') || '';
@@ -131,8 +163,6 @@ const fetchSource = async source => {
       lastChangedAt: old.lastChangedAt || null,
       error: error instanceof Error ? error.name : 'UnknownError',
     };
-  } finally {
-    clearTimeout(timeout);
   }
 };
 
