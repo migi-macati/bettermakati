@@ -1,0 +1,297 @@
+{
+  "version": 1,
+  "generatedAt": "2026-09-25T00:43:52.454Z",
+  "summary": {
+    "pages": 21,
+    "current": 17,
+    "needsReview": 4
+  },
+  "pages": [
+    {
+      "path": "/",
+      "label": "Home",
+      "editorialStatus": "reviewed",
+      "reviewedAt": "2026-09-20",
+      "freshnessStatus": "current",
+      "needsReview": false,
+      "dependencySignals": [],
+      "latestDependencySignalAt": null
+    },
+    {
+      "path": "/services",
+      "label": "Services",
+      "editorialStatus": "reviewed",
+      "reviewedAt": "2026-09-25",
+      "freshnessStatus": "current",
+      "needsReview": false,
+      "dependencySignals": [],
+      "latestDependencySignalAt": null
+    },
+    {
+      "path": "/government-offices",
+      "label": "Government service offices",
+      "editorialStatus": "reviewed",
+      "reviewedAt": "2026-09-20",
+      "freshnessStatus": "current",
+      "needsReview": false,
+      "dependencySignals": [],
+      "latestDependencySignalAt": null
+    },
+    {
+      "path": "/government",
+      "label": "Government",
+      "editorialStatus": "partial",
+      "reviewedAt": "2026-09-20",
+      "freshnessStatus": "current",
+      "needsReview": false,
+      "dependencySignals": [],
+      "latestDependencySignalAt": null
+    },
+    {
+      "path": "/barangays",
+      "label": "Barangays",
+      "editorialStatus": "reviewed",
+      "reviewedAt": "2026-09-25",
+      "freshnessStatus": "current",
+      "needsReview": false,
+      "dependencySignals": [],
+      "latestDependencySignalAt": null
+    },
+    {
+      "path": "/elections",
+      "label": "Elections",
+      "editorialStatus": "partial",
+      "reviewedAt": "2026-09-24",
+      "freshnessStatus": "current",
+      "needsReview": false,
+      "dependencySignals": [],
+      "latestDependencySignalAt": null
+    },
+    {
+      "path": "/projects-budget",
+      "label": "Projects & budget",
+      "editorialStatus": "reviewed",
+      "reviewedAt": "2026-09-25",
+      "freshnessStatus": "needs-review",
+      "needsReview": true,
+      "dependencySignals": [
+        {
+          "key": "city-monitor:philgeps:content-changed",
+          "system": "city-monitor",
+          "signal": "content-changed",
+          "signalLabel": "Content changed",
+          "sourceId": "philgeps",
+          "label": "PhilGEPS",
+          "url": "https://notices.philgeps.gov.ph/",
+          "detectedAt": "2026-09-25T00:43:52.454Z",
+          "lastSuccessfulAt": "2026-09-25T00:43:52.454Z",
+          "action": "Compare the changed source with each affected page, verify the underlying fact, then update only claims the source actually changes."
+        }
+      ],
+      "latestDependencySignalAt": "2026-09-25T00:43:52.454Z"
+    },
+    {
+      "path": "/statistics",
+      "label": "Statistics",
+      "editorialStatus": "reviewed",
+      "reviewedAt": "2026-09-20",
+      "freshnessStatus": "current",
+      "needsReview": false,
+      "dependencySignals": [],
+      "latestDependencySignalAt": null
+    },
+    {
+      "path": "/history",
+      "label": "History",
+      "editorialStatus": "partial",
+      "reviewedAt": "2026-09-20",
+      "freshnessStatus": "current",
+      "needsReview": false,
+      "dependencySignals": [],
+      "latestDependencySignalAt": null
+    },
+    {
+      "path": "/visit",
+      "label": "Visit Makati",
+      "editorialStatus": "reviewed",
+      "reviewedAt": "2026-09-20",
+      "freshnessStatus": "current",
+      "needsReview": false,
+      "dependencySignals": [],
+      "latestDependencySignalAt": null
+    },
+    {
+      "path": "/mobility",
+      "label": "Mobility",
+      "editorialStatus": "reviewed",
+      "reviewedAt": "2026-09-20",
+      "freshnessStatus": "current",
+      "needsReview": false,
+      "dependencySignals": [],
+      "latestDependencySignalAt": null
+    },
+    {
+      "path": "/today",
+      "label": "Today in Makati",
+      "editorialStatus": "reviewed",
+      "reviewedAt": "2026-09-24",
+      "freshnessStatus": "current",
+      "needsReview": false,
+      "dependencySignals": [],
+      "latestDependencySignalAt": null
+    },
+    {
+      "path": "/live",
+      "label": "Live Makati",
+      "editorialStatus": "reviewed",
+      "reviewedAt": "2026-09-24",
+      "freshnessStatus": "current",
+      "needsReview": false,
+      "dependencySignals": [],
+      "latestDependencySignalAt": null
+    },
+    {
+      "path": "/city-monitor",
+      "label": "City Monitor",
+      "editorialStatus": "partial",
+      "reviewedAt": "2026-09-25",
+      "freshnessStatus": "needs-review",
+      "needsReview": true,
+      "dependencySignals": [
+        {
+          "key": "city-monitor:philgeps:content-changed",
+          "system": "city-monitor",
+          "signal": "content-changed",
+          "signalLabel": "Content changed",
+          "sourceId": "philgeps",
+          "label": "PhilGEPS",
+          "url": "https://notices.philgeps.gov.ph/",
+          "detectedAt": "2026-09-25T00:43:52.454Z",
+          "lastSuccessfulAt": "2026-09-25T00:43:52.454Z",
+          "action": "Compare the changed source with each affected page, verify the underlying fact, then update only claims the source actually changes."
+        },
+        {
+          "key": "city-monitor:mymakati-broadcasts:manual-review",
+          "system": "city-monitor",
+          "signal": "manual-review",
+          "signalLabel": "Manual review",
+          "sourceId": "mymakati-broadcasts",
+          "label": "MyMakati official social broadcasts",
+          "url": "https://www.facebook.com/mymakativerified",
+          "detectedAt": "2026-09-25T00:43:52.454Z",
+          "lastSuccessfulAt": null,
+          "action": "Open the source manually and review new official content relevant to the affected pages before publishing a civic record."
+        }
+      ],
+      "latestDependencySignalAt": "2026-09-25T00:43:52.454Z"
+    },
+    {
+      "path": "/briefs",
+      "label": "Civic Briefs",
+      "editorialStatus": "partial",
+      "reviewedAt": "2026-09-25",
+      "freshnessStatus": "needs-review",
+      "needsReview": true,
+      "dependencySignals": [
+        {
+          "key": "city-monitor:philgeps:content-changed",
+          "system": "city-monitor",
+          "signal": "content-changed",
+          "signalLabel": "Content changed",
+          "sourceId": "philgeps",
+          "label": "PhilGEPS",
+          "url": "https://notices.philgeps.gov.ph/",
+          "detectedAt": "2026-09-25T00:43:52.454Z",
+          "lastSuccessfulAt": "2026-09-25T00:43:52.454Z",
+          "action": "Compare the changed source with each affected page, verify the underlying fact, then update only claims the source actually changes."
+        },
+        {
+          "key": "city-monitor:mymakati-broadcasts:manual-review",
+          "system": "city-monitor",
+          "signal": "manual-review",
+          "signalLabel": "Manual review",
+          "sourceId": "mymakati-broadcasts",
+          "label": "MyMakati official social broadcasts",
+          "url": "https://www.facebook.com/mymakativerified",
+          "detectedAt": "2026-09-25T00:43:52.454Z",
+          "lastSuccessfulAt": null,
+          "action": "Open the source manually and review new official content relevant to the affected pages before publishing a civic record."
+        }
+      ],
+      "latestDependencySignalAt": "2026-09-25T00:43:52.454Z"
+    },
+    {
+      "path": "/accountability",
+      "label": "Accountability Ledger",
+      "editorialStatus": "partial",
+      "reviewedAt": "2026-09-24",
+      "freshnessStatus": "needs-review",
+      "needsReview": true,
+      "dependencySignals": [
+        {
+          "key": "city-monitor:philgeps:content-changed",
+          "system": "city-monitor",
+          "signal": "content-changed",
+          "signalLabel": "Content changed",
+          "sourceId": "philgeps",
+          "label": "PhilGEPS",
+          "url": "https://notices.philgeps.gov.ph/",
+          "detectedAt": "2026-09-25T00:43:52.454Z",
+          "lastSuccessfulAt": "2026-09-25T00:43:52.454Z",
+          "action": "Compare the changed source with each affected page, verify the underlying fact, then update only claims the source actually changes."
+        }
+      ],
+      "latestDependencySignalAt": "2026-09-25T00:43:52.454Z"
+    },
+    {
+      "path": "/records",
+      "label": "Public Records",
+      "editorialStatus": "partial",
+      "reviewedAt": "2026-09-25",
+      "freshnessStatus": "current",
+      "needsReview": false,
+      "dependencySignals": [],
+      "latestDependencySignalAt": null
+    },
+    {
+      "path": "/participate",
+      "label": "Participation",
+      "editorialStatus": "reviewed",
+      "reviewedAt": "2026-09-20",
+      "freshnessStatus": "current",
+      "needsReview": false,
+      "dependencySignals": [],
+      "latestDependencySignalAt": null
+    },
+    {
+      "path": "/hotlines",
+      "label": "Hotlines",
+      "editorialStatus": "reviewed",
+      "reviewedAt": "2026-09-20",
+      "freshnessStatus": "current",
+      "needsReview": false,
+      "dependencySignals": [],
+      "latestDependencySignalAt": null
+    },
+    {
+      "path": "/civic-map",
+      "label": "Civic Map",
+      "editorialStatus": "partial",
+      "reviewedAt": "2026-09-21",
+      "freshnessStatus": "current",
+      "needsReview": false,
+      "dependencySignals": [],
+      "latestDependencySignalAt": null
+    },
+    {
+      "path": "/status",
+      "label": "BetterMakati Status",
+      "editorialStatus": "partial",
+      "reviewedAt": "2026-09-24",
+      "freshnessStatus": "current",
+      "needsReview": false,
+      "dependencySignals": [],
+      "latestDependencySignalAt": null
+    }
+  ]
+}
