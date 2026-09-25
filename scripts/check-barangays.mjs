@@ -1,6 +1,8 @@
 import { readFile } from 'node:fs/promises';
 
 const source = await readFile('src/data/barangays.ts', 'utf8');
+const profilePage = await readFile('src/pages/BarangayProfile.tsx', 'utf8');
+const registrySource = await readFile('src/data/placeRegistry.ts', 'utf8');
 const problems = [];
 
 const profileStart = source.indexOf('const barangayBaseProfiles');
@@ -90,6 +92,22 @@ if (!source.includes('barangayCoverageSummary')) {
 }
 if (!source.includes('barangayCoverageGaps')) {
   problems.push('BetterBarangay coverage-gap reporting is missing.');
+}
+
+for (const marker of [
+  "placesByBarangay(barangay.name)",
+  "place.verification.status === 'verified'",
+  "civicAssetTypeLabels[place.primaryCategory]",
+  "to={'/civic-map/' + place.id}",
+  "place.servicesAtLocation?.slice(0, 3)",
+]) {
+  if (!profilePage.includes(marker)) {
+    problems.push('BetterBarangay Place Registry integration is missing: ' + marker);
+  }
+}
+
+if (!registrySource.includes(".replace(/\\bsta\\.?\\b/g, 'santa')")) {
+  problems.push('Place Registry barangay matching must normalize Sta. Cruz / Santa Cruz.');
 }
 
 if (problems.length) {
