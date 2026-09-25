@@ -14,6 +14,7 @@ import {
   GraduationCap,
   HeartPulse,
   House,
+  MapPin,
   Search,
   Users,
 } from 'lucide-react';
@@ -32,6 +33,10 @@ import {
 import PhotoCarousel from '../components/ui/PhotoCarousel';
 import { servicesImageSet } from '../data/cityImages';
 import { useBarangayScope } from '../hooks/useBarangayScope';
+import {
+  civicAssetTypeLabels,
+  placesByBarangay,
+} from '../data/placeRegistry';
 
 const normalize = (value: string) =>
   value
@@ -80,6 +85,17 @@ const Services: React.FC = () => {
   const [directoryLevel, setDirectoryLevel] = useState<'All' | ServiceLevel>('All');
   const [directoryCategory, setDirectoryCategory] = useState('All');
   const { barangay } = useBarangayScope();
+  const localServicePlaces = barangay
+    ? placesByBarangay(barangay.name).filter(
+        place =>
+          place.verification.status === 'verified' &&
+          (
+            place.primaryCategory === 'health-center' ||
+            place.primaryCategory === 'community-center' ||
+            place.tags.includes('service')
+          )
+      )
+    : [];
   const subcategories: Subcategory[] = categoryIndex.pages;
 
   const categoryData = serviceCategories.categories.find(c => c.slug === category);
@@ -187,6 +203,52 @@ const Services: React.FC = () => {
                 <Link to={'/barangays/' + barangay.slug} className="brand-btn-secondary">
                   Barangay dashboard
                 </Link>
+              </div>
+            </div>
+          )}
+
+          {barangay && localServicePlaces.length > 0 && (
+            <div className="mt-4 rounded-2xl border border-primary-100 bg-white p-5">
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+                <div>
+                  <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+                    Service locations
+                  </div>
+                  <div className="mt-1 text-lg font-extrabold text-gray-950">
+                    In Barangay {barangay.name}
+                  </div>
+                </div>
+                <Link
+                  to={'/civic-map?barangay=' + encodeURIComponent(barangay.slug)}
+                  className="inline-flex items-center gap-1 text-sm font-bold text-primary-700"
+                >
+                  Open local map <MapPin className="h-4 w-4" />
+                </Link>
+              </div>
+
+              <div className="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+                {localServicePlaces.map(place => (
+                  <Link
+                    key={place.id}
+                    to={'/civic-map/' + place.id}
+                    className="rounded-xl border border-gray-200 p-4 transition hover:border-primary-300"
+                  >
+                    <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+                      {civicAssetTypeLabels[place.primaryCategory]}
+                    </div>
+                    <div className="mt-1 font-extrabold text-gray-950">{place.name}</div>
+                    {place.location.address && (
+                      <div className="mt-1 text-sm leading-relaxed text-gray-600">
+                        {place.location.address}
+                      </div>
+                    )}
+                    {(place.servicesAtLocation?.length ?? 0) > 0 && (
+                      <div className="mt-2 text-xs text-gray-500">
+                        {place.servicesAtLocation?.slice(0, 2).map(service => service.label).join(' · ')}
+                      </div>
+                    )}
+                  </Link>
+                ))}
               </div>
             </div>
           )}
