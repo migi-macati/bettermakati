@@ -12,6 +12,7 @@ export interface GovernmentServiceOffice {
   sourceUrl: string;
   mapsQuery: string;
   note?: string;
+  placeId?: string;
 }
 
 export const governmentServiceOffices: GovernmentServiceOffice[] = [
@@ -166,6 +167,7 @@ export const governmentServiceOffices: GovernmentServiceOffice[] = [
   },
   {
     id: 'psa-makati-crs',
+    placeId: 'psa-makati-crs',
     name: 'PSA Makati City CRS Outlet',
     agency: 'Philippine Statistics Authority',
     scope: 'In Makati',
@@ -177,6 +179,7 @@ export const governmentServiceOffices: GovernmentServiceOffice[] = [
   },
   {
     id: 'bfp-makati-city',
+    placeId: 'makati-central-fire-station',
     name: 'BFP Makati City Fire Station',
     agency: 'Bureau of Fire Protection',
     scope: 'In Makati',
@@ -200,6 +203,7 @@ export const governmentServiceOffices: GovernmentServiceOffice[] = [
   },
   {
     id: 'lto-makati',
+    placeId: 'lto-makati-district',
     name: 'LTO Makati District Office',
     agency: 'Land Transportation Office',
     scope: 'In Makati',
@@ -234,6 +238,7 @@ export const governmentServiceOffices: GovernmentServiceOffice[] = [
   },
   {
     id: 'sec-headquarters',
+    placeId: 'sec-headquarters',
     name: 'Securities and Exchange Commission Headquarters',
     agency: 'Securities and Exchange Commission',
     scope: 'In Makati',
