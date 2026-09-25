@@ -1,29 +1,147 @@
 import { readFile } from 'node:fs/promises';
 
 const audit = JSON.parse(await readFile('data/page-audit.json', 'utf8'));
+const freshness = JSON.parse(
+  await readFile('data/page-freshness-state.json', 'utf8')
+);
+const reviewQueue = JSON.parse(
+  await readFile('data/freshness-review-queue.json', 'utf8')
+);
 const app = await readFile('src/App.tsx', 'utf8');
 const today = new Date();
 const maxAgeDays = 120;
 const problems = [];
 
+if (
+  freshness.version !== 1 ||
+  !freshness.summary ||
+  !Array.isArray(freshness.pages)
+) {
+  problems.push(
+    'Page freshness state must use version 1 with summary and pages.'
+  );
+}
+
+if (freshness.pages.length !== audit.length) {
+  problems.push(
+    'Page freshness state must cover every page-audit row: ' +
+      freshness.pages.length +
+      ' of ' +
+      audit.length +
+      '.'
+  );
+}
+
+if (
+  freshness.generatedAt !== reviewQueue.generatedAt
+) {
+  problems.push(
+    'Page freshness state is not synchronized with the freshness review queue.'
+  );
+}
+
+const openQueueItems = (reviewQueue.items || []).filter(
+  item => item.status === 'open'
+);
+const expectedSignalsByPage = new Map();
+for (const item of openQueueItems) {
+  for (const page of item.affectedPages || []) {
+    const signals = expectedSignalsByPage.get(page) || [];
+    signals.push(item);
+    expectedSignalsByPage.set(page, signals);
+  }
+}
+
+const freshnessByPath = new Map();
+for (const page of freshness.pages) {
+  if (freshnessByPath.has(page.path)) {
+    problems.push('Duplicate page freshness state: ' + page.path);
+  }
+  freshnessByPath.set(page.path, page);
+}
+
 for (const page of audit) {
   if (!page.path || !page.label || !page.reviewedAt || !page.status) {
-    problems.push('Page audit row is missing required fields: ' + JSON.stringify(page));
+    problems.push(
+      'Page audit row is missing required fields: ' + JSON.stringify(page)
+    );
     continue;
   }
   if (page.path !== '/' && !app.includes(`path="${page.path}"`)) {
     problems.push('Audited path is not routed in App.tsx: ' + page.path);
   }
-  const ageDays = Math.floor((today - new Date(page.reviewedAt + 'T00:00:00Z')) / 86400000);
+
+  const ageDays = Math.floor(
+    (today - new Date(page.reviewedAt + 'T00:00:00Z')) / 86400000
+  );
   if (ageDays > maxAgeDays) {
     problems.push(`${page.path} page audit is stale (${ageDays} days).`);
   }
+
   if (!Array.isArray(page.checks) || page.checks.length < 2) {
     problems.push(page.path + ' has an insufficient audit checklist.');
   }
   if (!Array.isArray(page.gaps)) {
     problems.push(page.path + ' must publish gaps as an array.');
   }
+
+  const state = freshnessByPath.get(page.path);
+  if (!state) {
+    problems.push('Missing dependency-aware freshness state for ' + page.path);
+    continue;
+  }
+
+  if (state.reviewedAt !== page.reviewedAt) {
+    problems.push(
+      page.path +
+        ' derived freshness state changed the human reviewedAt date.'
+    );
+  }
+  if (state.editorialStatus !== page.status) {
+    problems.push(
+      page.path + ' derived freshness state changed editorial completeness.'
+    );
+  }
+
+  const expectedSignals = expectedSignalsByPage.get(page.path) || [];
+  const expectedNeedsReview = expectedSignals.length > 0;
+  if (state.needsReview !== expectedNeedsReview) {
+    problems.push(
+      page.path + ' dependency-review flag does not match the open review queue.'
+    );
+  }
+  if (
+    state.freshnessStatus !==
+    (expectedNeedsReview ? 'needs-review' : 'current')
+  ) {
+    problems.push(page.path + ' has an invalid derived freshness status.');
+  }
+
+  const actualSignalKeys = new Set(
+    (state.dependencySignals || []).map(signal => signal.key)
+  );
+  const expectedSignalKeys = new Set(expectedSignals.map(item => item.key));
+  if (
+    actualSignalKeys.size !== expectedSignalKeys.size ||
+    [...expectedSignalKeys].some(key => !actualSignalKeys.has(key))
+  ) {
+    problems.push(
+      page.path + ' dependency signals do not match the open review queue.'
+    );
+  }
+}
+
+const derivedNeedsReview = freshness.pages.filter(
+  page => page.needsReview
+).length;
+if (freshness.summary.pages !== audit.length) {
+  problems.push('Page freshness summary page count is incorrect.');
+}
+if (freshness.summary.needsReview !== derivedNeedsReview) {
+  problems.push('Page freshness summary needsReview count is incorrect.');
+}
+if (freshness.summary.current !== audit.length - derivedNeedsReview) {
+  problems.push('Page freshness summary current count is incorrect.');
 }
 
 if (problems.length) {
@@ -32,4 +150,6 @@ if (problems.length) {
 }
 
 const partial = audit.filter(page => page.status === 'partial').length;
-console.log(`Page-freshness audit passed: ${audit.length} major pages reviewed; ${partial} publish known completeness gaps.`);
+console.log(
+  `Page-freshness audit passed: ${audit.length} major pages reviewed; ${partial} publish known completeness gaps; ${derivedNeedsReview} need dependency review without changing human reviewedAt dates.`
+);
