@@ -49,6 +49,41 @@ if (assetIds.includes('palanan-24-7-health-center')) {
   problems.push('Palanan 24/7 is a service designation at Palanan Health Center and must not be a duplicate asset.');
 }
 
+const requiredHealthCenterBatchB = [
+  'pio-pc-health-center',
+  'pio-rhu-health-center',
+  'poblacion-health-center',
+  'san-isidro-health-center',
+  'singkamas-health-center',
+  'sta-cruz-health-center',
+  'tejeros-health-center',
+  'san-antonio-health-center',
+  'valenzuela-health-center',
+];
+
+for (const id of requiredHealthCenterBatchB) {
+  if (!assetIds.includes(id)) {
+    problems.push('Missing verified Makati health-center Civic Map asset: ' + id);
+    continue;
+  }
+  const start = assetBlock.indexOf("id: '" + id + "'");
+  const end = assetBlock.indexOf('\n  },', start);
+  const row = start >= 0 && end >= 0 ? assetBlock.slice(start, end) : '';
+  for (const marker of [
+    "type: 'health-center'",
+    'address:',
+    'sourceUrl:',
+    'sourceLabel:',
+    'coordinateSourceUrl:',
+    'coordinateSourceLabel:',
+    "status: 'mapped'",
+  ]) {
+    if (!row.includes(marker)) {
+      problems.push(id + ' is missing verified health-center metadata: ' + marker);
+    }
+  }
+}
+
 const requiredGovernmentServiceAssets = [
   'psa-makati-crs',
   'lto-makati-district',
