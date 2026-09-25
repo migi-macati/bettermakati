@@ -58,6 +58,7 @@ for (const id of requiredPublicParkAssets) {
   const row = start >= 0 && end >= 0 ? assetBlock.slice(start, end) : '';
   for (const marker of [
     "type: 'park'",
+    "accessClass: 'government-public'",
     'address:',
     'sourceUrl:',
     'sourceLabel:',
@@ -75,11 +76,36 @@ const unresolvedPublicParkAssets = [
   'post-office-pocket-park',
   'makati-city-hall-park',
   'playground-park-poblacion',
+  'makati-des-linear-park',
+];
+
+const mergedHistoricalPublicParkAliases = [
+  'gil-puyat-slex',
+  'pinagkaisahan-underpass-park',
+  'kalayaan-avenue-park-pinagkaisahan',
+];
+
+const formerMakatiPublicParkAssets = [
+  'makati-park-and-garden',
+  'cembo-linear-park',
+  'east-rembo-park',
 ];
 
 for (const id of unresolvedPublicParkAssets) {
   if (assetIds.includes(id)) {
     problems.push('Unresolved historical park must not be mapped as a distinct current asset: ' + id);
+  }
+}
+
+for (const id of mergedHistoricalPublicParkAliases) {
+  if (assetIds.includes(id)) {
+    problems.push('Historical park alias/lineage must not be mapped as a duplicate current asset: ' + id);
+  }
+}
+
+for (const id of formerMakatiPublicParkAssets) {
+  if (assetIds.includes(id)) {
+    problems.push('Former-Makati public park must not be mapped as a current Makati asset: ' + id);
   }
 }
 
