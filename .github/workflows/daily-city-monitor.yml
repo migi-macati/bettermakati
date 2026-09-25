@@ -11,7 +11,7 @@ permissions:
   issues: write
 
 concurrency:
-  group: daily-city-monitor
+  group: freshness-main-writer
   cancel-in-progress: false
 
 jobs:
@@ -60,7 +60,7 @@ jobs:
           script: |
             const fs = require('fs');
             const title = 'Freshness review queue';
-            const report = fs.readFileSync('data/freshness-review-queue.md             data/page-freshness-state.json             data/freshness-history.json', 'utf8');
+            const report = fs.readFileSync('data/freshness-review-queue.md', 'utf8');
             const queue = JSON.parse(fs.readFileSync('data/freshness-review-queue.json', 'utf8'));
             const openCount = Number(queue.summary?.open || 0);
             const { data: issues } = await github.rest.issues.listForRepo({
@@ -110,7 +110,14 @@ jobs:
         if: steps.publish.outputs.publish_required == 'true'
         shell: bash
         run: |
-          git add             data/city-monitor-source-state.json             data/city-monitor-source-history.json             data/city-monitor-report.md             data/freshness-review-queue.json             data/freshness-review-queue.md
+          git add \
+            data/city-monitor-source-state.json \
+            data/city-monitor-source-history.json \
+            data/city-monitor-report.md \
+            data/freshness-review-queue.json \
+            data/freshness-review-queue.md \
+            data/page-freshness-state.json \
+            data/freshness-history.json
 
           if git diff --cached --quiet; then
             echo "No actionable City Monitor changes to publish."
