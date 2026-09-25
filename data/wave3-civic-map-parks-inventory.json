@@ -1,0 +1,642 @@
+{
+  "schemaVersion": 1,
+  "reconciledAt": "2026-09-25",
+  "workstream": "Wave 3C-2a — Official Makati park inventory crosswalk",
+  "scope": "Source reconciliation only. No Civic Map park assets are added or removed in this step.",
+  "methodology": [
+    "Treat City Government of Makati publications as the primary inventory layer.",
+    "Preserve each publication's own count, classification and geography rather than forcing them into one master count.",
+    "Normalize only obvious spelling/name variants. Do not merge differently named parks without documentary evidence.",
+    "Keep named inventories separate from annual headline counts because the underlying inclusion rules differ by year.",
+    "Use procurement/operations documents as persistence evidence, not as proof that a list is exhaustive."
+  ],
+  "headlineCounts": [
+    {
+      "period": "2010",
+      "publicOrGovernmentCount": 12,
+      "privateCount": null,
+      "geography": "then-current Makati",
+      "source": "DES inventory in CLUP Volume 1 Part 1",
+      "sourceUrl": "https://www.makati.gov.ph/assets/uploads/downloads/143/17/pdf/14301122015121448.pdf",
+      "note": "Named inventory; total land area 82,429 sq m."
+    },
+    {
+      "period": "2018",
+      "publicOrGovernmentCount": 14,
+      "privateCount": 16,
+      "geography": "then-current Makati",
+      "source": "Makati Basic Facts and Figures 2018",
+      "sourceUrl": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1579227244645.pdf"
+    },
+    {
+      "period": "2019",
+      "publicOrGovernmentCount": 15,
+      "privateCount": 16,
+      "geography": "then-current Makati",
+      "source": "Makati Basic Facts and Figures 2019",
+      "sourceUrl": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1599802444544.pdf"
+    },
+    {
+      "period": "2020",
+      "publicOrGovernmentCount": 14,
+      "privateCount": 16,
+      "geography": "then-current Makati",
+      "source": "Makati Basic Facts and Figures 2020-B5",
+      "sourceUrl": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1624235188300.pdf"
+    },
+    {
+      "period": "2020",
+      "publicOrGovernmentCount": 14,
+      "privateCount": null,
+      "geography": "then-current Makati",
+      "source": "Makati Annual Report 2020",
+      "sourceUrl": "https://www.makati.gov.ph/assets/uploads/downloads/2/55/601/pdf/Annual%20Report%202020.pdf",
+      "note": "States city maintains 14 public parks totaling 156,781.55 sq m."
+    },
+    {
+      "period": "2020 publication",
+      "publicOrGovernmentCount": 16,
+      "privateCount": 21,
+      "geography": "then-current Makati",
+      "source": "Makati Facts and Figures 2020 — named lists",
+      "sourceUrl": "https://www.makati.gov.ph/assets/uploads/downloads/2/45/561/pdf/Facts%20and%20FIgures%202020.pdf",
+      "note": "Detailed named tables contain 16 public parks and 21 private parks; this differs from the Basic Facts headline count."
+    },
+    {
+      "period": "urban-greening profile",
+      "publicOrGovernmentCount": 12,
+      "privateCount": 6,
+      "totalCount": 18,
+      "geography": "then-current Makati",
+      "source": "Makati Urban Greening / Ecological Profile",
+      "sourceUrl": "https://www.makati.gov.ph/assets/uploads/downloads/938/883/pdf/93802202019132921.pdf",
+      "note": "Narrative states 18 parks, six private and 12 government-maintained; accompanying map labels 18 locations."
+    },
+    {
+      "period": "2022",
+      "publicOrGovernmentCount": 25,
+      "privateCount": 36,
+      "geography": "then-current Makati",
+      "source": "Makati Basic Facts and Figures 2022",
+      "sourceUrl": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1697591839520.pdf",
+      "note": "Headline counts only; no park-by-park list in the reviewed Basic Facts document."
+    },
+    {
+      "period": "2023",
+      "publicOrGovernmentCount": 15,
+      "privateCount": 17,
+      "geography": "Makati excluding 10 transferred barangays",
+      "source": "Makati City Basic Facts and Figures 2023",
+      "sourceUrl": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1720150266681.pdf",
+      "note": "DES count explicitly excludes the 10 transferred barangays."
+    }
+  ],
+  "namedSources": {
+    "des2010": {
+      "label": "DES 2010 Inventory of Parks",
+      "sourceUrl": "https://www.makati.gov.ph/assets/uploads/downloads/143/17/pdf/14301122015121448.pdf",
+      "names": [
+        "Magallanes Interchange Park",
+        "Buendia Plaza",
+        "Makati Park and Garden",
+        "Poblacion Park",
+        "Kenken Lacia Binay Park",
+        "Guadalupe Viejo Park",
+        "Freedom Park",
+        "Pinagkaisahan Underpass Park",
+        "EDSA Buendia Park",
+        "Guadalupe Nuevo Linear Park",
+        "Valenzuela Linear Park",
+        "Makati DES Linear Park"
+      ]
+    },
+    "urban18": {
+      "label": "Urban Greening map — 18 parks",
+      "sourceUrl": "https://www.makati.gov.ph/assets/uploads/downloads/938/883/pdf/93802202019132921.pdf",
+      "names": [
+        "Magallanes Interchange",
+        "Gil Puyat-SLEX",
+        "Makati Park & Garden",
+        "Poblacion Park",
+        "Guadalupe Viejo Cloverleaf",
+        "Guadalupe Nuevo Cloverleaf",
+        "Post Office Pocket Park",
+        "Makati City Hall Park",
+        "Ayala-EDSA Park",
+        "Cembo Linear Park",
+        "Valenzuela Park",
+        "Poblacion Linear Park",
+        "Greenbelt Park",
+        "Bel-Air Park",
+        "Ayala Triangle",
+        "Legaspi Active Park",
+        "Velasquez Park",
+        "Track 30th, BGC"
+      ]
+    },
+    "public2020": {
+      "label": "Makati Facts and Figures 2020 — Public Parks",
+      "sourceUrl": "https://www.makati.gov.ph/assets/uploads/downloads/2/45/561/pdf/Facts%20and%20FIgures%202020.pdf",
+      "names": [
+        "Magallanes Interchange Park",
+        "Gil Puyat - SLEX",
+        "Makati Parks and Garden",
+        "Poblacion Park",
+        "Guadalupe Viejo Cloverleaf (Kennely Ann Binay Park)",
+        "Guadalupe Nuevo Cloverleaf (Kennely Ann Binay Park)",
+        "Post Office Pocket Park",
+        "Makati City Hall Park",
+        "Cembo Linear Park",
+        "Valenzuela Park",
+        "Poblacion Linear Park",
+        "Plaza Cristo Rey",
+        "East Rembo Park",
+        "Kalayaan Avenue Park (Pinagkaisahan)",
+        "Playground Park at Brgy. Poblacion",
+        "Riverside Carmona"
+      ]
+    },
+    "private2020": {
+      "label": "Makati Facts and Figures 2020 — Private Parks",
+      "sourceUrl": "https://www.makati.gov.ph/assets/uploads/downloads/2/45/561/pdf/Facts%20and%20FIgures%202020.pdf",
+      "names": [
+        "Ayala - EDSA Park",
+        "Greenbelt Park",
+        "Bel-Air Park near Barangay Hall",
+        "Ayala Triangle",
+        "Legaspi Active Park",
+        "Velasquez Park",
+        "Track 30th - BGC",
+        "Bonifacio High Street Park - 7th Avenue",
+        "Bonifacio High Street Park - 8th Avenue",
+        "Bonifacio High Street Park - 9th Avenue",
+        "Bonifacio High Street Park - 11th Avenue",
+        "De Jesus Oval Park",
+        "Forbes Park and Pavillion",
+        "Glorietta 4 Park",
+        "Mahogany Park",
+        "Park at San Lorenzo near Assumption College",
+        "Bel-Air Park at Hercules St.",
+        "San Felipe Park",
+        "Senior Citizen Park",
+        "Terra 28th Park",
+        "Urdaneta Park"
+      ]
+    },
+    "app2022": {
+      "label": "2022 Annual Procurement Plan — fountain/fixture maintenance park names",
+      "sourceUrl": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/online_forms/pdf/2022%20APP%20Final.pdf",
+      "names": [
+        "Magallanes Interchange Park",
+        "Buendia Plaza",
+        "Ayala Freedom Park",
+        "Edsa-Buendia Park",
+        "Kennely Ann L. Binay Park (Guadalupe Nuevo Cloverleaf Park)",
+        "Guadalupe Viejo Cloverleaf Park"
+      ],
+      "role": "Persistence/operations evidence only; not an exhaustive park inventory."
+    }
+  },
+  "canonicalCrosswalk": [
+    {
+      "id": "magallanes-interchange-park",
+      "canonicalName": "Magallanes Interchange Park",
+      "appearances": [
+        "des2010",
+        "urban18",
+        "public2020",
+        "app2022"
+      ],
+      "aliasConfidence": "exact/high"
+    },
+    {
+      "id": "buendia-plaza",
+      "canonicalName": "Buendia Plaza",
+      "appearances": [
+        "des2010",
+        "app2022"
+      ],
+      "aliasConfidence": "exact/high",
+      "possibleRelation": [
+        "gil-puyat-slex"
+      ],
+      "mergeStatus": "do-not-merge-yet"
+    },
+    {
+      "id": "gil-puyat-slex",
+      "canonicalName": "Gil Puyat - SLEX",
+      "appearances": [
+        "urban18",
+        "public2020"
+      ],
+      "aliasConfidence": "exact/high",
+      "possibleRelation": [
+        "buendia-plaza"
+      ],
+      "mergeStatus": "do-not-merge-yet"
+    },
+    {
+      "id": "makati-park-and-garden",
+      "canonicalName": "Makati Park and Garden",
+      "appearances": [
+        "des2010",
+        "urban18",
+        "public2020"
+      ],
+      "aliases": [
+        "Makati Parks and Garden",
+        "Makati Park & Garden"
+      ],
+      "aliasConfidence": "high"
+    },
+    {
+      "id": "poblacion-park",
+      "canonicalName": "Poblacion Park",
+      "appearances": [
+        "des2010",
+        "urban18",
+        "public2020"
+      ],
+      "aliasConfidence": "exact/high"
+    },
+    {
+      "id": "kennely-ann-lacia-binay-park-guadalupe-nuevo",
+      "canonicalName": "Kennely Ann Lacia Binay Park / Guadalupe Nuevo Cloverleaf Park",
+      "appearances": [
+        "des2010",
+        "urban18",
+        "public2020",
+        "app2022"
+      ],
+      "aliases": [
+        "Kenken Lacia Binay Park",
+        "Guadalupe Nuevo Cloverleaf"
+      ],
+      "aliasConfidence": "high"
+    },
+    {
+      "id": "guadalupe-viejo-cloverleaf-park",
+      "canonicalName": "Guadalupe Viejo Cloverleaf Park",
+      "appearances": [
+        "des2010",
+        "urban18",
+        "public2020",
+        "app2022"
+      ],
+      "aliases": [
+        "Guadalupe Viejo Park"
+      ],
+      "aliasConfidence": "high"
+    },
+    {
+      "id": "freedom-park",
+      "canonicalName": "Freedom Park / Ayala Freedom Park",
+      "appearances": [
+        "des2010",
+        "app2022"
+      ],
+      "aliases": [
+        "Ayala Freedom Park"
+      ],
+      "aliasConfidence": "probable",
+      "mergeStatus": "verify-location"
+    },
+    {
+      "id": "pinagkaisahan-underpass-park",
+      "canonicalName": "Pinagkaisahan Underpass Park",
+      "appearances": [
+        "des2010"
+      ],
+      "aliasConfidence": "exact/high",
+      "possibleRelation": [
+        "kalayaan-avenue-park-pinagkaisahan"
+      ],
+      "mergeStatus": "do-not-merge-yet"
+    },
+    {
+      "id": "edsa-buendia-park",
+      "canonicalName": "EDSA-Buendia Park",
+      "appearances": [
+        "des2010",
+        "app2022"
+      ],
+      "aliasConfidence": "exact/high"
+    },
+    {
+      "id": "guadalupe-nuevo-linear-park",
+      "canonicalName": "Guadalupe Nuevo Linear Park",
+      "appearances": [
+        "des2010"
+      ],
+      "aliasConfidence": "exact/high",
+      "mergeStatus": "distinct-from-kennely-in-2010-source"
+    },
+    {
+      "id": "valenzuela-park",
+      "canonicalName": "Valenzuela Park",
+      "appearances": [
+        "des2010",
+        "urban18",
+        "public2020"
+      ],
+      "aliases": [
+        "Valenzuela Linear Park"
+      ],
+      "aliasConfidence": "probable",
+      "mergeStatus": "verify-location"
+    },
+    {
+      "id": "makati-des-linear-park",
+      "canonicalName": "Makati DES Linear Park",
+      "appearances": [
+        "des2010"
+      ],
+      "aliasConfidence": "exact/high",
+      "mergeStatus": "unresolved"
+    },
+    {
+      "id": "post-office-pocket-park",
+      "canonicalName": "Post Office Pocket Park",
+      "appearances": [
+        "urban18",
+        "public2020"
+      ],
+      "aliasConfidence": "exact/high"
+    },
+    {
+      "id": "makati-city-hall-park",
+      "canonicalName": "Makati City Hall Park",
+      "appearances": [
+        "urban18",
+        "public2020"
+      ],
+      "aliasConfidence": "exact/high"
+    },
+    {
+      "id": "ayala-edsa-park",
+      "canonicalName": "Ayala - EDSA Park",
+      "appearances": [
+        "urban18",
+        "private2020"
+      ],
+      "aliasConfidence": "exact/high"
+    },
+    {
+      "id": "cembo-linear-park",
+      "canonicalName": "Cembo Linear Park",
+      "appearances": [
+        "urban18",
+        "public2020"
+      ],
+      "aliasConfidence": "exact/high"
+    },
+    {
+      "id": "poblacion-linear-park",
+      "canonicalName": "Poblacion Linear Park",
+      "appearances": [
+        "urban18",
+        "public2020"
+      ],
+      "aliasConfidence": "exact/high"
+    },
+    {
+      "id": "plaza-cristo-rey",
+      "canonicalName": "Plaza Cristo Rey",
+      "appearances": [
+        "public2020"
+      ],
+      "aliasConfidence": "exact/high"
+    },
+    {
+      "id": "east-rembo-park",
+      "canonicalName": "East Rembo Park",
+      "appearances": [
+        "public2020"
+      ],
+      "aliasConfidence": "exact/high"
+    },
+    {
+      "id": "kalayaan-avenue-park-pinagkaisahan",
+      "canonicalName": "Kalayaan Avenue Park (Pinagkaisahan)",
+      "appearances": [
+        "public2020"
+      ],
+      "aliasConfidence": "exact/high",
+      "possibleRelation": [
+        "pinagkaisahan-underpass-park"
+      ],
+      "mergeStatus": "do-not-merge-yet"
+    },
+    {
+      "id": "playground-park-poblacion",
+      "canonicalName": "Playground Park at Brgy. Poblacion",
+      "appearances": [
+        "public2020"
+      ],
+      "aliasConfidence": "exact/high"
+    },
+    {
+      "id": "riverside-carmona",
+      "canonicalName": "Riverside Carmona",
+      "appearances": [
+        "public2020"
+      ],
+      "aliasConfidence": "exact/high"
+    },
+    {
+      "id": "greenbelt-park",
+      "canonicalName": "Greenbelt Park",
+      "appearances": [
+        "urban18",
+        "private2020"
+      ],
+      "aliasConfidence": "exact/high"
+    },
+    {
+      "id": "bel-air-park-near-barangay-hall",
+      "canonicalName": "Bel-Air Park near Barangay Hall",
+      "appearances": [
+        "urban18",
+        "private2020"
+      ],
+      "aliases": [
+        "Bel-Air Park"
+      ],
+      "aliasConfidence": "probable"
+    },
+    {
+      "id": "ayala-triangle",
+      "canonicalName": "Ayala Triangle",
+      "appearances": [
+        "urban18",
+        "private2020"
+      ],
+      "aliasConfidence": "exact/high"
+    },
+    {
+      "id": "legazpi-active-park",
+      "canonicalName": "Legazpi Active Park",
+      "appearances": [
+        "urban18",
+        "private2020"
+      ],
+      "aliases": [
+        "Legaspi Active Park"
+      ],
+      "aliasConfidence": "high"
+    },
+    {
+      "id": "velasquez-park",
+      "canonicalName": "Velasquez Park",
+      "appearances": [
+        "urban18",
+        "private2020"
+      ],
+      "aliasConfidence": "exact/high"
+    },
+    {
+      "id": "track-30th-bgc",
+      "canonicalName": "Track 30th - BGC",
+      "appearances": [
+        "urban18",
+        "private2020"
+      ],
+      "aliases": [
+        "Track 30th, BGC"
+      ],
+      "aliasConfidence": "high"
+    },
+    {
+      "id": "bonifacio-high-street-7th",
+      "canonicalName": "Bonifacio High Street Park - 7th Avenue",
+      "appearances": [
+        "private2020"
+      ],
+      "aliasConfidence": "exact/high"
+    },
+    {
+      "id": "bonifacio-high-street-8th",
+      "canonicalName": "Bonifacio High Street Park - 8th Avenue",
+      "appearances": [
+        "private2020"
+      ],
+      "aliasConfidence": "exact/high"
+    },
+    {
+      "id": "bonifacio-high-street-9th",
+      "canonicalName": "Bonifacio High Street Park - 9th Avenue",
+      "appearances": [
+        "private2020"
+      ],
+      "aliasConfidence": "exact/high"
+    },
+    {
+      "id": "bonifacio-high-street-11th",
+      "canonicalName": "Bonifacio High Street Park - 11th Avenue",
+      "appearances": [
+        "private2020"
+      ],
+      "aliasConfidence": "exact/high"
+    },
+    {
+      "id": "de-jesus-oval-park",
+      "canonicalName": "De Jesus Oval Park",
+      "appearances": [
+        "private2020"
+      ],
+      "aliasConfidence": "exact/high"
+    },
+    {
+      "id": "forbes-park-and-pavillion",
+      "canonicalName": "Forbes Park and Pavillion",
+      "appearances": [
+        "private2020"
+      ],
+      "aliasConfidence": "exact/high"
+    },
+    {
+      "id": "glorietta-4-park",
+      "canonicalName": "Glorietta 4 Park",
+      "appearances": [
+        "private2020"
+      ],
+      "aliasConfidence": "exact/high"
+    },
+    {
+      "id": "mahogany-park",
+      "canonicalName": "Mahogany Park",
+      "appearances": [
+        "private2020"
+      ],
+      "aliasConfidence": "exact/high"
+    },
+    {
+      "id": "park-at-san-lorenzo-assumption",
+      "canonicalName": "Park at San Lorenzo near Assumption College",
+      "appearances": [
+        "private2020"
+      ],
+      "aliasConfidence": "exact/high"
+    },
+    {
+      "id": "bel-air-park-hercules",
+      "canonicalName": "Bel-Air Park at Hercules St.",
+      "appearances": [
+        "private2020"
+      ],
+      "aliasConfidence": "exact/high"
+    },
+    {
+      "id": "san-felipe-park",
+      "canonicalName": "San Felipe Park",
+      "appearances": [
+        "private2020"
+      ],
+      "aliasConfidence": "exact/high"
+    },
+    {
+      "id": "senior-citizen-park",
+      "canonicalName": "Senior Citizen Park",
+      "appearances": [
+        "private2020"
+      ],
+      "aliasConfidence": "exact/high"
+    },
+    {
+      "id": "terra-28th-park",
+      "canonicalName": "Terra 28th Park",
+      "appearances": [
+        "private2020"
+      ],
+      "aliasConfidence": "exact/high"
+    },
+    {
+      "id": "urdaneta-park",
+      "canonicalName": "Urdaneta Park",
+      "appearances": [
+        "private2020"
+      ],
+      "aliasConfidence": "exact/high"
+    }
+  ],
+  "findings": [
+    "There is no single stable official Makati park count across the reviewed publications.",
+    "Detailed named inventories and annual headline counts conflict even within the 2020 publication period, so BetterMakati must retain source/vintage context.",
+    "The 2010 DES inventory contains names absent from the 2020 public-park table; 2022 procurement proves several older names remained operationally relevant.",
+    "The 2020 detailed public/private tables use classifications that differ from the older 18-park urban-greening map.",
+    "The 2023 DES count explicitly excludes the 10 transferred barangays, making it the best headline count currently found for post-transfer geography, but it does not provide a named 15-park list."
+  ],
+  "unresolvedAliasQuestions": [
+    "Buendia Plaza vs Gil Puyat - SLEX",
+    "Freedom Park vs Ayala Freedom Park — likely same naming lineage, exact location still to verify",
+    "Pinagkaisahan Underpass Park vs Kalayaan Avenue Park (Pinagkaisahan)",
+    "Valenzuela Linear Park vs Valenzuela Park",
+    "Makati DES Linear Park — later name/status unresolved",
+    "Ayala-EDSA Park ownership/classification changed or differs by source"
+  ],
+  "nextStep": {
+    "id": "3C-2b",
+    "title": "Reconcile park inventory to current Makati geography",
+    "scope": "Classify every crosswalk entry as current Makati, former Makati, boundary-uncertain or unresolved. No Civic Map additions yet."
+  }
+}
