@@ -6,56 +6,64 @@
       "label": "Makati resolutions & ordinances",
       "url": "https://www.makati.gov.ph/content/resolutions-and-ordinances/author",
       "stream": "legislation",
-      "monitoringMode": "reachability"
+      "monitoringMode": "reachability",
+      "owner": "city-monitor"
     },
     {
       "id": "makati-mayor-speeches",
       "label": "Mayor's Corner — Speeches",
       "url": "https://www.makati.gov.ph/content/mayors-corner/speeches/803",
       "stream": "executive-speech",
-      "monitoringMode": "reachability"
+      "monitoringMode": "reachability",
+      "owner": "city-monitor"
     },
     {
       "id": "mymakati-broadcasts",
       "label": "MyMakati official social broadcasts",
       "url": "https://www.facebook.com/mymakativerified",
       "stream": "council-session",
-      "monitoringMode": "manual-review"
+      "monitoringMode": "manual-review",
+      "owner": "city-monitor"
     },
     {
       "id": "makati-events",
       "label": "Makati Events",
       "url": "https://www.makati.gov.ph/content/events",
       "stream": "consultation",
-      "monitoringMode": "reachability"
+      "monitoringMode": "reachability",
+      "owner": "city-monitor"
     },
     {
       "id": "makati-news",
       "label": "Makati News",
       "url": "https://www.makati.gov.ph/content/news",
       "stream": "official-notice",
-      "monitoringMode": "reachability"
+      "monitoringMode": "reachability",
+      "owner": "city-monitor"
     },
     {
       "id": "makati-full-disclosure",
       "label": "Makati full-disclosure and procurement records",
       "url": "https://www.makati.gov.ph/",
       "stream": "procurement",
-      "monitoringMode": "reachability"
+      "monitoringMode": "reachability",
+      "owner": "city-monitor"
     },
     {
       "id": "philgeps",
       "label": "PhilGEPS",
       "url": "https://notices.philgeps.gov.ph/",
       "stream": "procurement",
-      "monitoringMode": "content-hash"
+      "monitoringMode": "content-hash",
+      "owner": "city-monitor"
     },
     {
       "id": "makati-publications",
       "label": "Makati official publications",
       "url": "https://www.makati.gov.ph/",
       "stream": "publication",
-      "monitoringMode": "reachability"
+      "monitoringMode": "reachability",
+      "owner": "city-monitor"
     }
   ]
 }
