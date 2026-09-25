@@ -40,6 +40,7 @@ for (const source of watchlist) {
   const stableUrl = String(source.url).toLowerCase().split(/[?#]/)[0];
   const hashableStableExtensions = ['.pdf', '.csv', '.toml', '.json', '.geojson'];
   if (
+    source.owner === 'general-source-freshness' &&
     source.monitoringMode === 'content-hash' &&
     !hashableStableExtensions.some(extension => stableUrl.endsWith(extension))
   ) {
@@ -79,8 +80,11 @@ for (const id of delegatedToCityMonitor) {
   if (source.owner !== 'city-monitor' || source.delegated !== true) {
     problems.push('Delegated source is not marked City Monitor-owned: ' + id);
   }
-  if (!cityMonitorById.has(id)) {
+  const cityOwned = cityMonitorById.get(id);
+  if (!cityOwned) {
     problems.push('Delegated source is missing from City Monitor config: ' + id);
+  } else if (source.monitoringMode !== cityOwned.monitoringMode) {
+    problems.push('Delegated source monitoring mode does not match City Monitor owner: ' + id);
   }
 }
 const unexpectedCityOwned = watchlist
