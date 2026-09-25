@@ -9,7 +9,9 @@
     "3C-3a",
     "3C-3b",
     "3C-3c",
-    "3C-3d1"
+    "3C-3d1",
+    "3C-3d2",
+    "3C-3d"
   ],
   "substeps": [
     {
@@ -33,7 +35,7 @@
     {
       "id": "3C-3d",
       "title": "Reconcile historical jeepney routes",
-      "status": "in-progress",
+      "status": "complete",
       "scope": "Crosswalk 38 2020 route rows against current LTFRB/operator evidence and decide route-vs-terminal representation.",
       "splitInto": [
         "3C-3d1",
@@ -44,7 +46,7 @@
     {
       "id": "3C-3e",
       "title": "Resolve PNR/NSCR lifecycle representation",
-      "status": "planned",
+      "status": "next",
       "scope": "Decide how suspended PNR stations and future NSCR successors should appear without implying current service."
     },
     {
@@ -55,9 +57,9 @@
     }
   ],
   "immediateNext": {
-    "id": "3C-3d2",
-    "title": "Reconcile remaining Makati jeepney routes",
-    "scope": "Rows 21–39 only (18 published rows because number 36 is absent). Classify current/changed/obsolete/uncertain corridors and association continuity; no route assets."
+    "id": "3C-3e",
+    "title": "Resolve PNR/NSCR lifecycle representation",
+    "scope": "Research/design only. Determine how suspended Dela Rosa, Pasay Road and EDSA PNR stations should appear, identify current/future NSCR station relationships without assuming one-to-one successors, and do not imply current PNR commuter service."
   },
   "ferryImplementationStatus": "complete",
   "ferryImplementationFile": "data/wave3-civic-map-ferry-implementation.json",
@@ -76,13 +78,14 @@
     "historicalWaitingSheds": 36,
     "civicMapAssetsAdded": 0
   },
-  "jeepneyRouteReconciliationStatus": "in-progress",
+  "jeepneyRouteReconciliationStatus": "complete",
   "jeepneyRouteReconciliationA": "data/wave3-civic-map-jeepney-routes-reconciliation-a.json",
   "jeepneyRouteReconciliationSummary": {
     "rowsTotal": 38,
-    "rowsReconciled": 20,
-    "rowsRemaining": 18,
-    "currentCorridorEvidenceInBatchA": 20,
+    "rowsReconciled": 38,
+    "currentOrSuccessorCorridorEvidence": 35,
+    "unresolvedNoExactCurrentRoute": 3,
     "routeAssetsAdded": 0
-  }
+  },
+  "jeepneyRouteReconciliationB": "data/wave3-civic-map-jeepney-routes-reconciliation-b.json"
 }
