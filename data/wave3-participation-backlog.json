@@ -130,6 +130,12 @@
       "stopWhen": "Duplicate responses are clearly distinguished from newly created submissions.",
       "excludes": [
         "Do not redesign the entire submission form."
+      ],
+      "status": "complete",
+      "completedAt": "2026-09-25",
+      "commits": [
+        "d739913175a36a3c1795dc586b8e6264ba9a5010",
+        "37be8930e55289b2d45c7d15d3d7a23c8a026280"
       ]
     },
     {
@@ -456,8 +462,8 @@
     }
   ],
   "immediateNext": {
-    "id": "3E-2",
-    "title": "Clarify duplicate-result UX",
-    "maximumScope": "Get Involved duplicate-response messaging only. No backend or Civic Map changes."
+    "id": "3C-1",
+    "title": "Expand Civic Map government-service assets",
+    "maximumScope": "One bounded verified facility batch only. Reuse existing BetterMakati facility data where possible; no transport/street expansion yet."
   }
 }
