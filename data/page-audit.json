@@ -76,11 +76,12 @@
       "barangay-official-websites",
       "barangay-email-coverage",
       "official-social-channel-coverage",
-      "barangay-published-service-details"
+      "barangay-published-service-details",
+      "barangay-health-service-layer"
     ],
     "gaps": [
-      "Hall addresses are structured for all 23 current barangays. Email, standalone website and official social-channel coverage remains uneven and is kept off the main barangay gateway.",
-      "Locally published service details are now surfaced where a barangay exposes a usable official service source, including Bel-Air, Olympia, Pio Del Pilar, Poblacion and San Lorenzo; other barangays still use the citywide common-transaction layer until barangay-specific requirements are published and verified."
+      "Locally published service information is now available on 18 of 23 barangay homepages through barangay service portals or current accredited health-facility records. Dasmariñas, Forbes Park, Magallanes, Urdaneta and Valenzuela still rely on the common transaction layer where no comparable current barangay-specific service source has been verified.",
+      "Email, standalone website and official social-channel coverage remains uneven; those completeness metrics are kept in the audit/status layer rather than promoted on the barangay gateway."
     ]
   },
   {
