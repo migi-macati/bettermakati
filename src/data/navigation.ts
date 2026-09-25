@@ -129,6 +129,8 @@ export const footerNavigation = {
           label: 'GitHub',
           href: 'https://github.com/migi-macati/bettermakati',
         },
+        { label: 'National services — BetterGov', href: 'https://bettergov.ph/services' },
+        { label: 'Other LGUs — BetterLGU', href: 'https://lgu.bettergov.ph/' },
         { label: 'Official Makati Portal', href: 'https://www.makati.gov.ph/' },
       ],
     },

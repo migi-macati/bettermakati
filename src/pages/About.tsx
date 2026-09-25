@@ -24,8 +24,8 @@ export default function About() {
         <Heading>BetterMakati</Heading>
         <Text className="mb-3 max-w-4xl">
           BetterMakati is an independent, open-source civic information and
-          participation platform for Makati and part of the BetterLGU community.
-          It is not an official City Government of Makati website.
+          participation platform for Makati. It is not an official City Government
+          of Makati website.
         </Text>
         <Text className="max-w-4xl">
           Public information is organized into searchable services, records,
@@ -219,6 +219,30 @@ export default function About() {
           </a>
           <a href="/status" className="brand-btn-secondary">
             BetterMakati Status
+          </a>
+          <a
+            href="https://bettergov.ph/"
+            target="_blank"
+            rel="noreferrer"
+            className="brand-btn-secondary"
+          >
+            BetterGov <ExternalLink className="h-4 w-4" />
+          </a>
+          <a
+            href="https://lgu.bettergov.ph/"
+            target="_blank"
+            rel="noreferrer"
+            className="brand-btn-secondary"
+          >
+            BetterLGU <ExternalLink className="h-4 w-4" />
+          </a>
+          <a
+            href="https://www.openbayan.org/"
+            target="_blank"
+            rel="noreferrer"
+            className="brand-btn-secondary"
+          >
+            OpenBayan <ExternalLink className="h-4 w-4" />
           </a>
           <a
             href="https://github.com/migi-macati/bettermakati"

@@ -327,6 +327,51 @@ const Services: React.FC = () => {
           </div>
         </Section>
 
+        <Section className="bg-[#fffdf8]">
+          <div className="section-eyebrow">Beyond Makati</div>
+          <Heading level={2}>Need somewhere else?</Heading>
+          <div className="mt-6 grid gap-4 md:grid-cols-2">
+            <a
+              href="https://bettergov.ph/services"
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
+            >
+              <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+                National government
+              </div>
+              <h3 className="mt-2 text-lg font-extrabold text-gray-950">
+                Browse BetterGov services
+              </h3>
+              <p className="mt-1 text-sm leading-relaxed text-gray-600">
+                Find national government services beyond the Makati directory.
+              </p>
+              <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
+                Open BetterGov <ExternalLink className="h-4 w-4" />
+              </span>
+            </a>
+            <a
+              href="https://lgu.bettergov.ph/"
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
+            >
+              <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+                Another city or municipality
+              </div>
+              <h3 className="mt-2 text-lg font-extrabold text-gray-950">
+                Find another LGU
+              </h3>
+              <p className="mt-1 text-sm leading-relaxed text-gray-600">
+                Not from Makati, or need something from another LGU? Check the BetterLGU Directory.
+              </p>
+              <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
+                Open BetterLGU <ExternalLink className="h-4 w-4" />
+              </span>
+            </a>
+          </div>
+        </Section>
+
         <Section id="digital" className="bg-[#f5f8f2]">
           <div className="section-eyebrow">Official digital channels</div>
           <div className="flex flex-wrap gap-3">

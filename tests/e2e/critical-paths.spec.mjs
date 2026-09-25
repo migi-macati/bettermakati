@@ -1298,3 +1298,26 @@ test('national service handoff batch D2 covers OWWA, TESDA, PHLPost, DPWH and CO
   );
   await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toHaveCount(0);
 });
+
+test('ecosystem navigation exposes national and cross-LGU exits without replacing Makati services', async ({ page }) => {
+  await page.goto(baseURL + '/services');
+  await expect(page.getByRole('heading', { name: 'Need somewhere else?', exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: /Browse BetterGov services/i })).toHaveAttribute(
+    'href',
+    'https://bettergov.ph/services'
+  );
+  await expect(page.getByRole('link', { name: /Find another LGU/i })).toHaveAttribute(
+    'href',
+    'https://lgu.bettergov.ph/'
+  );
+  await expect(page.getByRole('link', { name: /Open guide/i }).first()).toBeVisible();
+
+  const footer = page.locator('footer');
+  await expect(footer.getByRole('link', { name: 'National services — BetterGov', exact: true })).toBeVisible();
+  await expect(footer.getByRole('link', { name: 'Other LGUs — BetterLGU', exact: true })).toBeVisible();
+
+  await page.goto(baseURL + '/about');
+  await expect(page.getByRole('link', { name: /BetterGov/i })).toBeVisible();
+  await expect(page.getByRole('link', { name: /BetterLGU/i })).toBeVisible();
+  await expect(page.getByRole('link', { name: /OpenBayan/i })).toBeVisible();
+});
