@@ -600,6 +600,14 @@ test('Public Records exposes current source freshness state', async ({ page }) =
     'href',
     '/source-watch-state.json'
   );
+  await expect(page.getByRole('link', { name: /Freshness history/i })).toHaveAttribute(
+    'href',
+    '/freshness-history.json'
+  );
+  await expect(page.getByRole('link', { name: /Page freshness/i })).toHaveAttribute(
+    'href',
+    '/page-freshness-state.json'
+  );
 
   const state = await page.request.get(baseURL + '/source-watch-state.json');
   expect(state.ok()).toBeTruthy();
@@ -640,6 +648,19 @@ test('Public Records exposes current source freshness state', async ({ page }) =
   expect(queueResponse.ok()).toBeTruthy();
   const queue = await queueResponse.json();
   expect(queue.version).toBe(1);
+
+  const historyResponse = await page.request.get(baseURL + '/freshness-history.json');
+  expect(historyResponse.ok()).toBeTruthy();
+  const freshnessHistory = await historyResponse.json();
+  expect(freshnessHistory.version).toBe(1);
+  expect(Array.isArray(freshnessHistory.events)).toBeTruthy();
+  expect(freshnessHistory.events.length).toBeGreaterThanOrEqual(1);
+  expect(
+    freshnessHistory.events.every(item =>
+      ['general-source-freshness', 'city-monitor'].includes(item.system)
+    )
+  ).toBeTruthy();
+
   expect(queue.summary.open).toBeGreaterThanOrEqual(1);
   expect(Array.isArray(queue.items)).toBeTruthy();
   const openItems = queue.items.filter(item => item.status === 'open');
@@ -688,14 +709,25 @@ test('Page freshness state tracks open source dependencies without changing revi
   expect(projects?.dependencySignals.some(item => item.sourceId === 'philgeps')).toBeTruthy();
 });
 
-test('BetterMakati Status exposes source freshness automation', async ({ page }) => {
+test('BetterMakati Status exposes consolidated freshness health', async ({ page }) => {
   await page.goto(baseURL + '/status');
   await expect(page.getByRole('heading', { name: 'Source freshness automation' })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Open source freshness' })).toHaveAttribute(
     'href',
     '/records'
   );
-  await expect(page.getByText(/cadence-aware monitor is configured/i)).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Review queue', exact: true })).toHaveAttribute(
+    'href',
+    '/records#freshness-review-queue'
+  );
+  await expect(page.getByRole('link', { name: 'Freshness history', exact: true })).toHaveAttribute(
+    'href',
+    '/freshness-history.json'
+  );
+  await expect(page.getByText('open review items', { exact: true })).toBeVisible();
+  await expect(page.getByText('pages need review', { exact: true })).toBeVisible();
+  await expect(page.getByText('pages current', { exact: true })).toBeVisible();
+  await expect(page.getByText('Needs source review', { exact: true }).first()).toBeVisible();
 });
 
 test('Elections publishes structured results and current BSKE information', async ({ page }) => {
