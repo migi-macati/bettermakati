@@ -111,9 +111,10 @@
           "evidence": [
             "Civic assets carry barangay and coordinates.",
             "Street segments support from/to and side metadata.",
-            "Duplicate checks use asset/category and coordinates where present."
+            "Duplicate checks use asset/category and coordinates where present.",
+            "Government-service, park and transport batches expanded the Civic Map to 21 assets by 25 September 2026."
           ],
-          "gap": "The live seed map has only six assets, so the geographic model is much broader than actual city coverage."
+          "gap": "Park coverage is reopened because official Makati sources publish broader 12-, 16- and 18-park inventories that have not yet been fully reconciled to current Makati geography."
         },
         {
           "id": "3C-4-emergency-handling",
@@ -147,9 +148,10 @@
           "capability": "Meaningful citywide Civic Map asset coverage",
           "status": "partial",
           "evidence": [
-            "Only six seed assets are currently mapped/piloted."
+            "Civic Map has 21 mapped/pilot assets after government-service, preliminary park and transport expansions.",
+            "Eight transport assets are now mapped: four MRT-3 stations, One Ayala Terminal and three EDSA Busway stations."
           ],
-          "gap": "Asset and especially verified public-transport route/stop coverage still need expansion."
+          "gap": "Parks remain incomplete: the prior three-CBD-park batch is only preliminary. Official Makati park inventories must be reconciled against the current 23-barangay city and separated into public vs private/public-access layers."
         }
       ]
     },
@@ -467,9 +469,9 @@
     ]
   },
   "nextStep": {
-    "id": "3B-1",
-    "title": "Complete the Participation Hub task set",
-    "output": "Make /participate a complete citywide task-led starting point using existing functional routes and handoffs only."
+    "id": "3C-2a",
+    "title": "Reconcile official Makati park inventories",
+    "output": "Build the official 12/16/18-park source crosswalk only; do not add Civic Map park assets in the same step."
   },
   "summaryNote": "Counts cover the 40 explicitly classified capabilities in workstreams 3B–3I. The separate intentionalDeferrals list also records broader scope constraints that are not all standalone capability rows.",
   "auditPhase": {
