@@ -7,7 +7,12 @@
       "url": "https://www.makati.gov.ph/content/resolutions-and-ordinances/author",
       "stream": "legislation",
       "monitoringMode": "reachability",
-      "owner": "city-monitor"
+      "owner": "city-monitor",
+      "affectedPages": [
+        "/legislation",
+        "/city-monitor",
+        "/briefs"
+      ]
     },
     {
       "id": "makati-mayor-speeches",
@@ -15,7 +20,12 @@
       "url": "https://www.makati.gov.ph/content/mayors-corner/speeches/803",
       "stream": "executive-speech",
       "monitoringMode": "reachability",
-      "owner": "city-monitor"
+      "owner": "city-monitor",
+      "affectedPages": [
+        "/city-monitor",
+        "/briefs",
+        "/accountability"
+      ]
     },
     {
       "id": "mymakati-broadcasts",
@@ -23,7 +33,11 @@
       "url": "https://www.facebook.com/mymakativerified",
       "stream": "council-session",
       "monitoringMode": "manual-review",
-      "owner": "city-monitor"
+      "owner": "city-monitor",
+      "affectedPages": [
+        "/city-monitor",
+        "/briefs"
+      ]
     },
     {
       "id": "makati-events",
@@ -31,7 +45,12 @@
       "url": "https://www.makati.gov.ph/content/events",
       "stream": "consultation",
       "monitoringMode": "reachability",
-      "owner": "city-monitor"
+      "owner": "city-monitor",
+      "affectedPages": [
+        "/city-monitor",
+        "/briefs",
+        "/today"
+      ]
     },
     {
       "id": "makati-news",
@@ -39,7 +58,12 @@
       "url": "https://www.makati.gov.ph/content/news",
       "stream": "official-notice",
       "monitoringMode": "reachability",
-      "owner": "city-monitor"
+      "owner": "city-monitor",
+      "affectedPages": [
+        "/city-monitor",
+        "/briefs",
+        "/today"
+      ]
     },
     {
       "id": "makati-full-disclosure",
@@ -47,7 +71,12 @@
       "url": "https://www.makati.gov.ph/",
       "stream": "procurement",
       "monitoringMode": "reachability",
-      "owner": "city-monitor"
+      "owner": "city-monitor",
+      "affectedPages": [
+        "/projects-budget",
+        "/accountability",
+        "/city-monitor"
+      ]
     },
     {
       "id": "philgeps",
@@ -55,7 +84,13 @@
       "url": "https://notices.philgeps.gov.ph/",
       "stream": "procurement",
       "monitoringMode": "content-hash",
-      "owner": "city-monitor"
+      "owner": "city-monitor",
+      "affectedPages": [
+        "/projects-budget",
+        "/accountability",
+        "/city-monitor",
+        "/briefs"
+      ]
     },
     {
       "id": "makati-publications",
@@ -63,7 +98,12 @@
       "url": "https://www.makati.gov.ph/",
       "stream": "publication",
       "monitoringMode": "reachability",
-      "owner": "city-monitor"
+      "owner": "city-monitor",
+      "affectedPages": [
+        "/city-monitor",
+        "/briefs",
+        "/reports"
+      ]
     }
   ]
 }
