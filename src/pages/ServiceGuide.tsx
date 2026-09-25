@@ -7,8 +7,6 @@ import {
   Building2,
   CheckCircle2,
   FileText,
-  BadgeCheck,
-  AlertTriangle,
   Clock3,
   WalletCards,
 } from 'lucide-react';
@@ -410,11 +408,7 @@ export default function ServiceGuide() {
         </div>
         <LastReviewed
           date={detail?.lastVerified}
-          note={
-            detail
-              ? 'BetterMakati checked the structured transaction details against the cited official source. The issuing agency still controls current requirements.'
-              : 'Source-first guide. BetterMakati has not yet completed a field-by-field transaction verification for this service.'
-          }
+          note={detail?.sourceLabel}
           className="mt-5"
         />
       </Section>
@@ -422,23 +416,9 @@ export default function ServiceGuide() {
       <Section className="bg-white">
         {detail ? (
           <>
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-              <div>
-                <div className="section-eyebrow">Transaction guide</div>
-                <Heading level={2}>What you need to complete this</Heading>
-              </div>
-              <div className={
-                detail.verification === 'verified'
-                  ? 'inline-flex w-fit items-center gap-2 rounded-full bg-success-50 px-3 py-2 text-xs font-bold text-success-800'
-                  : 'inline-flex w-fit items-center gap-2 rounded-full bg-warning-50 px-3 py-2 text-xs font-bold text-warning-800'
-              }>
-                {detail.verification === 'verified' ? (
-                  <BadgeCheck className="h-4 w-4" />
-                ) : (
-                  <AlertTriangle className="h-4 w-4" />
-                )}
-                {detail.verification === 'verified' ? 'Structured details verified' : 'Partially verified'}
-              </div>
+            <div>
+              <div className="section-eyebrow">Transaction guide</div>
+              <Heading level={2}>What you need to complete this</Heading>
             </div>
 
             {(detail.classification || detail.transactionType || detail.processingTime) && (
@@ -550,7 +530,7 @@ export default function ServiceGuide() {
             ) : null}
 
             <div className="mt-7 text-xs leading-relaxed text-gray-500">
-              Checked {detail.lastVerified}. Structured from{' '}
+              Source:{' '}
               <a
                 href={detail.sourceUrl}
                 target="_blank"
@@ -559,15 +539,12 @@ export default function ServiceGuide() {
               >
                 {detail.sourceLabel}
               </a>
-              .
+              {' '}· checked {detail.lastVerified}
             </div>
           </>
         ) : (
           <>
-            <div className="rounded-xl border border-warning-200 bg-warning-50 p-4 text-sm leading-relaxed text-warning-900">
-              <strong>Guide depth:</strong> BetterMakati has indexed this service and its official source, but the field-by-field requirements, fees and processing time have not yet been independently structured and checked.
-            </div>
-            <div className="mt-7 grid grid-cols-1 gap-6 lg:grid-cols-2">
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
               <div>
                 <div className="section-eyebrow">Prepare</div>
                 <Heading level={2}>Before you start</Heading>
@@ -679,7 +656,7 @@ export default function ServiceGuide() {
         ) : (
           <div className="mt-5 rounded-2xl border border-gray-200 bg-white p-5">
             <p className="text-sm leading-relaxed text-gray-700">
-              BetterMakati has not yet verified a dedicated walk-in office for this exact service. Use the official service source below before travelling.
+              A dedicated walk-in office is not listed for this service. Use the official service source below before travelling.
             </p>
           </div>
         )}
