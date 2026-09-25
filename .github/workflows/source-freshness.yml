@@ -23,7 +23,7 @@ permissions:
   issues: write
 
 concurrency:
-  group: source-freshness-monitor
+  group: freshness-main-writer
   cancel-in-progress: false
 
 jobs:
