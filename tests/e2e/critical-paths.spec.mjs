@@ -753,6 +753,29 @@ test('expanded BetterBarangay hall contact batch renders current locations', asy
   }
 });
 
+test('BetterBarangay official channels and emails are exposed across the larger batch', async ({ page }) => {
+  const emailChecks = [
+    ['/barangays/bel-air', 'belair_admin@barangaybelair.ph'],
+    ['/barangays/pio-del-pilar', 'bpiodelpilarsecoffice2020@gmail.com'],
+    ['/barangays/san-antonio', 'makatisanantonio@yahoo.com'],
+    ['/barangays/san-isidro', 'sanisidromkt@gmail.com'],
+    ['/barangays/tejeros', 'barangay_tejeros@yahoo.com.ph'],
+  ];
+
+  for (const [route, email] of emailChecks) {
+    await page.goto(baseURL + route);
+    await expect(page.getByRole('link', { name: email, exact: true })).toBeVisible();
+  }
+
+  await page.goto(baseURL + '/barangays/poblacion');
+  await expect(page.getByText('J.P. Rizal cor. D.M. Rivera Street, Makati City', { exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: /Barangay website/i })).toHaveAttribute('href', 'https://epoblacion.net/');
+
+  await page.goto(baseURL + '/barangays/san-lorenzo');
+  await expect(page.getByRole('link', { name: /Barangay website/i })).toHaveAttribute('href', 'https://sanloph.com/');
+  await expect(page.getByRole('link', { name: /Official social channel/i })).toHaveAttribute('href', 'https://www.facebook.com/Barangaysanlorenzo');
+});
+
 test('barangay gateway search finds a barangay through an official name', async ({ page }) => {
   await page.goto(baseURL + '/barangays');
   await page.getByPlaceholder(/Search barangay, official or local place/i).fill('Jose Mikhail');
