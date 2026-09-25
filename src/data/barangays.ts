@@ -548,10 +548,28 @@ const barangayOfficialData: Record<string, NonNullable<BarangayProfile['official
 };
 
 const barangayContactSupplement: Record<string, Partial<BarangayProfile>> = {
-  'bangkal': { hallPhone: "7751-0787", hallSource: barangayRosterSource('bangkal'), hallSourceLabel: 'Barangay Directory contact cross-check', },
+  'bangkal': {
+    hallAddress: "3440 Gen. Lim Street, Bangkal, Makati City",
+    hallPhone: "7751-0787",
+    facebookUrl: "https://www.facebook.com/BrgyBangkal1233",
+    hallSource: "https://www.waze.com/live-map/directions/ph/ncr/makati-city/bangkal-barangay-hall?to=place.ChIJNU-Q3z_JlzMRJMtxZ3yvj0o",
+    hallSourceLabel: "Waze place listing cross-check",
+  },
   'bel-air': { hallAddress: "Hydra Street, Bel-Air Village, Makati City", hallPhone: "(02) 8895-4011 / (02) 8895-4012", hallSource: "https://belair.itdcsystems.com/", hallSourceLabel: "Barangay Bel-Air website", },
-  'carmona': { hallPhone: "(02) 8650-4427", hallSource: barangayRosterSource('carmona'), hallSourceLabel: 'Barangay Directory contact cross-check', },
-  'forbes-park': { hallPhone: "(02) 8887-0461", hallSource: barangayRosterSource('forbes-park'), hallSourceLabel: 'Barangay Directory contact cross-check', },
+  'carmona': {
+    hallAddress: "A.P. Reyes Avenue, Barangay Carmona, Makati City",
+    hallPhone: "(02) 8650-4427",
+    hallEmail: "barangaycarmona2013@gmail.com",
+    facebookUrl: "https://www.facebook.com/barangaycarmonaofficial2k13",
+    hallSource: "https://barangaycarmonaofficial.wordpress.com/contact-us/",
+    hallSourceLabel: "Barangay Carmona official contact page",
+  },
+  'forbes-park': {
+    hallAddress: "Kalayaan Road corner Pandan Street, Forbes Park, Makati City",
+    hallPhone: "(02) 8887-0461",
+    hallSource: "https://barangays.contactnumbersph.com/barangay-forbes-park/",
+    hallSourceLabel: "Barangay hall directory cross-check",
+  },
   'guadalupe-nuevo': { hallPhone: "(02) 8882-1992", hallSource: barangayRosterSource('guadalupe-nuevo'), hallSourceLabel: 'Barangay Directory contact cross-check', },
   'guadalupe-viejo': { hallPhone: "(02) 8672-0032", hallSource: barangayRosterSource('guadalupe-viejo'), hallSourceLabel: 'Barangay Directory contact cross-check', },
   'kasilawan': { hallPhone: "(02) 7505-3583", hallSource: barangayRosterSource('kasilawan'), hallSourceLabel: 'Barangay Directory contact cross-check', },
