@@ -1,0 +1,226 @@
+{
+  "schemaVersion": 1,
+  "verifiedAt": "2026-09-25",
+  "workstream": "Wave 3C-2c2 — Current public-park verification, batch 2",
+  "scope": "Research/verification only. No Civic Map asset additions, removals or coordinate edits in this step.",
+  "methodology": [
+    "Retain Makati City publications as the authority for the historical/public-park inventory.",
+    "Use newer Makati plans, MMDA/PIA government reporting and current map geometry to establish present existence and current identity.",
+    "Do not collapse a historical park name into a newer nearby park unless location/name continuity is sufficiently supported.",
+    "Treat a missing distinct current map object as a hold, not evidence that the park no longer exists."
+  ],
+  "sources": [
+    {
+      "id": "makati-facts-2020",
+      "publisher": "City Government of Makati",
+      "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/45/561/pdf/Facts%20and%20FIgures%202020.pdf",
+      "role": "Official named public-park inventory and locations."
+    },
+    {
+      "id": "makati-urban-greening",
+      "publisher": "City Government of Makati",
+      "url": "https://www.makati.gov.ph/assets/uploads/downloads/938/883/pdf/93802202019132921.pdf",
+      "role": "Government-maintained/public park map and classification."
+    },
+    {
+      "id": "makati-cultural-plan",
+      "publisher": "City Government of Makati",
+      "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/541/pdf/Final%20Makati%20Cultural%20Development%20Plan.pdf",
+      "role": "Current city heritage-planning evidence retaining Plaza Cristo Rey and Poblacion Park as heritage landmarks/sites."
+    },
+    {
+      "id": "pia-adopt-a-park-2023",
+      "publisher": "Philippine Information Agency",
+      "url": "https://mirror.pia.gov.ph/news/2023/02/22/mmda-unveils-three-adopt-a-park-project-sites-in-makati",
+      "role": "Government reporting that Makati and MMDA inaugurated EDSA-Pinagkaisahan Park in 2023."
+    }
+  ],
+  "parks": [
+    {
+      "id": "makati-city-hall-park",
+      "historicalOfficialName": "Makati City Hall Park",
+      "verificationStatus": "official-public-current-distinct-status-unverified",
+      "ownershipManagement": "Listed by Makati as a public park in 2020 and on the official urban-greening park map.",
+      "barangay": "Poblacion",
+      "officialAddress": "J.P. Rizal Avenue, Barangay Poblacion, Makati City",
+      "officialEvidence": [
+        "makati-facts-2020",
+        "makati-urban-greening"
+      ],
+      "currentMapEvidence": {
+        "status": "distinct-park-object-not-found",
+        "nearbyVerifiedAsset": "Makati City Hall complex remains active at J.P. Rizal/Poblacion.",
+        "note": "Current map/business search resolves Makati City Hall and Building II but not a separately named Makati City Hall Park."
+      },
+      "implementationReadiness": "hold-current-distinct-status",
+      "requiredAction": "Find a newer DES/DEPW/City Hall grounds source or map feature that confirms whether Makati City Hall Park remains a distinct park asset."
+    },
+    {
+      "id": "valenzuela-park",
+      "currentName": "Valenzuela Linear Park",
+      "aliases": [
+        "Valenzuela Park"
+      ],
+      "verificationStatus": "verified-current-public",
+      "ownershipManagement": "City Government of Makati",
+      "barangay": "Valenzuela",
+      "officialAddress": "A. Bonifacio Street, Barangay Valenzuela, Makati City",
+      "officialEvidence": [
+        "makati-facts-2020"
+      ],
+      "currentMapEvidence": {
+        "status": "verified",
+        "lat": 14.57395,
+        "lng": 121.02554,
+        "mapFeature": "OpenStreetMap way 700453675",
+        "operator": "City Government of Makati",
+        "note": "Current map geometry identifies Valenzuela Linear Park at A. Bonifacio Street, matching the official Makati park location."
+      },
+      "implementationReadiness": "ready",
+      "notes": [
+        "The 2010 DES inventory used the name Valenzuela Linear Park; the 2020 Makati list shortened it to Valenzuela Park. Current map identity supports the older linear-park name."
+      ]
+    },
+    {
+      "id": "poblacion-linear-park",
+      "currentName": "Poblacion Linear Park",
+      "verificationStatus": "verified-current-public",
+      "ownershipManagement": "City Government of Makati",
+      "barangay": "Poblacion",
+      "officialAddress": "A. Bonifacio Street / Pasig River edge, Barangay Poblacion, Makati City",
+      "officialEvidence": [
+        "makati-facts-2020"
+      ],
+      "currentMapEvidence": {
+        "status": "verified",
+        "lat": 14.571,
+        "lng": 121.02926,
+        "mapFeature": "OpenStreetMap way 1412680007",
+        "operator": "City Government of Makati",
+        "note": "Current map geometry identifies Poblacion Linear Park, address in Poblacion, Makati. The regional label sometimes resolves to Mandaluyong because the asset sits on the Pasig River edge; the feature address/operator identify Makati."
+      },
+      "implementationReadiness": "ready",
+      "notes": [
+        "Public historical/current references describe it as the riverfront extension of Makati Poblacion Park."
+      ]
+    },
+    {
+      "id": "plaza-cristo-rey",
+      "currentName": "Plaza Cristo Rey",
+      "verificationStatus": "verified-current-public-heritage",
+      "ownershipManagement": "City-recognized public heritage plaza; exact operating department is not established by the reviewed current source.",
+      "barangay": "Poblacion",
+      "officialAddress": "D.M. Rivera / P. Gomez area, Barangay Poblacion, Makati City",
+      "officialEvidence": [
+        "makati-facts-2020",
+        "makati-cultural-plan"
+      ],
+      "currentMapEvidence": {
+        "status": "verified",
+        "lat": 14.5664,
+        "lng": 121.03139,
+        "mapFeature": "OpenStreetMap way 405673649",
+        "note": "Current park geometry identifies Plaza Cristo Rey beside Sts. Peter and Paul Parish Church in Poblacion."
+      },
+      "implementationReadiness": "ready",
+      "notes": [
+        "Makati's current Cultural Development Plan continues to identify Plaza Cristo Rey as a heritage landmark within the Poblacion heritage core."
+      ]
+    },
+    {
+      "id": "kalayaan-avenue-park-pinagkaisahan",
+      "historicalOfficialName": "Kalayaan Avenue Park (Pinagkaisahan)",
+      "verificationStatus": "current-public-space-verified-alias-unresolved",
+      "ownershipManagement": "City of Makati / MMDA for the currently verified EDSA-Pinagkaisahan park improvement.",
+      "barangay": "Pinagkaisahan",
+      "officialAddress": "Kalayaan Avenue, Barangay Pinagkaisahan, Makati City",
+      "officialEvidence": [
+        "makati-facts-2020"
+      ],
+      "laterGovernmentEvidence": {
+        "currentName": "EDSA-Pinagkaisahan Park",
+        "source": "pia-adopt-a-park-2023",
+        "note": "Makati DES designed and Makati/MMDA inaugurated EDSA-Pinagkaisahan Park in February 2023."
+      },
+      "currentMapEvidence": {
+        "status": "current-park-in-barangay-verified-point-not-frozen",
+        "note": "Current public park references identify EDSA-Pinagkaisahan Park in Pinagkaisahan, but the reviewed evidence does not prove it is the same site as the 2020 Kalayaan Avenue Park."
+      },
+      "implementationReadiness": "hold-for-alias-and-point-resolution",
+      "requiredAction": "Establish whether Kalayaan Avenue Park and EDSA-Pinagkaisahan Park are the same park or distinct assets before implementation."
+    },
+    {
+      "id": "playground-park-poblacion",
+      "historicalOfficialName": "Playground Park at Brgy. Poblacion",
+      "verificationStatus": "official-public-current-identity-unresolved",
+      "ownershipManagement": "Listed as a public park by Makati in 2020.",
+      "barangay": "Poblacion",
+      "officialAddress": "J.P. Rizal Avenue, Barangay Poblacion, Makati City",
+      "officialEvidence": [
+        "makati-facts-2020"
+      ],
+      "currentMapEvidence": {
+        "status": "distinct-current-object-not-found",
+        "nearbyVerifiedAsset": "Makati Poblacion Park currently contains a children's playground.",
+        "note": "No distinct current 'Playground Park' object was found; treating it as the playground inside Makati Poblacion Park would create a duplicate unless documentary evidence proves that relationship."
+      },
+      "implementationReadiness": "hold-identity-unresolved",
+      "requiredAction": "Trace barangay/DES/DEPW records or current site plans to determine whether this remains a separate park or is part of Makati Poblacion Park."
+    },
+    {
+      "id": "riverside-carmona",
+      "currentName": "Carmona Linear Park",
+      "aliases": [
+        "Riverside Carmona",
+        "Barangay Carmona Riverside Linear Park"
+      ],
+      "verificationStatus": "verified-current-public",
+      "ownershipManagement": "City Government of Makati",
+      "barangay": "Carmona",
+      "officialAddress": "H. Santos Street / Pasig River edge, Barangay Carmona, Makati City",
+      "officialEvidence": [
+        "makati-facts-2020"
+      ],
+      "currentMapEvidence": {
+        "status": "verified",
+        "lat": 14.57827,
+        "lng": 121.01869,
+        "mapFeature": "OpenStreetMap way 1412675420",
+        "operator": "City Government of Makati",
+        "note": "Current map geometry identifies Carmona Linear Park on H. Santos Street, the same location used by Makati's 2020 'Riverside Carmona' entry."
+      },
+      "implementationReadiness": "ready",
+      "notes": [
+        "The current name/address/operator and the historical 'Riverside Carmona' location support treating Carmona Linear Park as the present identity of the Makati inventory entry."
+      ]
+    }
+  ],
+  "summary": {
+    "researched": 7,
+    "verifiedCurrentPublic": 4,
+    "heldCurrentDistinctStatus": 1,
+    "heldAliasResolution": 1,
+    "heldIdentityResolution": 1,
+    "readyForImplementation": 4,
+    "held": 3
+  },
+  "findings": [
+    "Valenzuela Linear Park, Poblacion Linear Park, Plaza Cristo Rey and Carmona Linear Park have sufficient present-day evidence for implementation.",
+    "Makati City Hall Park remains an official public-park record but needs a distinct current park confirmation.",
+    "Kalayaan Avenue Park should not yet be renamed or merged with EDSA-Pinagkaisahan Park.",
+    "Playground Park at Brgy. Poblacion should not be duplicated against Makati Poblacion Park until its current identity is resolved."
+  ],
+  "nextStep": {
+    "id": "3C-2c3",
+    "title": "Resolve older DES public-park entries and aliases",
+    "candidates": [
+      "Buendia Plaza",
+      "Freedom Park / Ayala Freedom Park",
+      "Pinagkaisahan Underpass Park",
+      "EDSA-Buendia Park",
+      "Guadalupe Nuevo Linear Park",
+      "Makati DES Linear Park"
+    ],
+    "scope": "Research/alias/status resolution only. No Civic Map implementation."
+  }
+}
