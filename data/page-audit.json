@@ -37,10 +37,13 @@
       "temporary-sanitary-permit-guide",
       "peso-cooperative-guides",
       "barangay-jobseeker-mediation-guides",
-      "senior-support-guides"
+      "senior-support-guides",
+      "all-city-barangay-services-structured",
+      "81-local-service-guides",
+      "local-service-source-watch"
     ],
     "gaps": [
-      "96 of 151 indexed services now have field-by-field transaction guides. The remaining 55 are concentrated in several barangay transactions, a few city permit/property services, and national-agency services that still need source-specific requirements, fees, processing times or current-channel verification."
+      "All 81 indexed Makati city and barangay services now have structured transaction guides. The remaining 46 without field-by-field guides are national-agency services that still need current source-specific requirements, fees, processing times or channel verification."
     ]
   },
   {
