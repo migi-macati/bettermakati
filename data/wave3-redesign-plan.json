@@ -1,0 +1,319 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-09-25",
+  "title": "Wave 3 Revision — Places, Reporting & Civic Participation",
+  "status": "active",
+  "revisionReason": "Reframe Civic Map from a ratings-first destination into one consumer of a shared Makati place registry, while preserving completed asset research, reporting infrastructure, emergency handling, duplicate detection, lifecycle semantics and general participation workflows.",
+  "productDoctrine": [
+    "The verified asset inventory is shared civic-place infrastructure, not a set of objects people are expected to rate.",
+    "Civic Map is one interface over the place registry, not the owner of the data.",
+    "Public-realm participation should start from a user job: report something, check a place, suggest an improvement or help document Makati.",
+    "Generic star-style ratings are retired as a primary interaction; structured observations replace them where useful.",
+    "Location and nearby-place matching should reduce the need for users to search for an asset before reporting.",
+    "Completed source reconciliation for facilities, parks and transport remains authoritative provenance and is not reopened by this redesign.",
+    "Existing case lifecycle semantics remain valid and should be reused.",
+    "Metrics and QA are deferred until redesigned workflows stabilize."
+  ],
+  "preservedCompletedWork": [
+    "3B-1 Participation Hub task set",
+    "3B-2 Barangay context preservation",
+    "3E-1 General-feedback duplicate detection",
+    "3E-2 Duplicate-result UX",
+    "3C-1 Facility completeness reconciliation and implementation",
+    "3C-2 Park completeness reconciliation and implementation",
+    "3C-3 Transport completeness reconciliation",
+    "3C-4 Verified transport implementation",
+    "3D referral/case lifecycle semantics",
+    "General feedback submission, fallback and public tracking",
+    "Emergency 911 routing and non-emergency guardrails",
+    "Civic case duplicate detection and public tracking"
+  ],
+  "explicitlyNotReopened": [
+    "18 Makati Health Department health-center verification",
+    "Fire and police reconciliation",
+    "Child-care reconciliation",
+    "Park inventory and geography reconciliation",
+    "Transport inventory, ferry, jeepney-route and PNR/NSCR research",
+    "General-feedback deduplication",
+    "Emergency handling",
+    "Submission fallback",
+    "Existing case lifecycle evidence states"
+  ],
+  "supersededExistingTasks": [
+    {
+      "id": "3H-1",
+      "disposition": "paused-and-superseded",
+      "replacement": "W3R-10a"
+    },
+    {
+      "id": "3H-2",
+      "disposition": "paused-and-superseded",
+      "replacement": "W3R-10c"
+    },
+    {
+      "id": "3I-1",
+      "disposition": "deferred-and-rewritten",
+      "replacement": "W3R-11a"
+    },
+    {
+      "id": "3I-2",
+      "disposition": "deferred-and-rewritten",
+      "replacement": "W3R-11b"
+    },
+    {
+      "id": "3I-3",
+      "disposition": "deferred-and-rewritten",
+      "replacement": "W3R-11c"
+    },
+    {
+      "id": "3I-4",
+      "disposition": "deferred-and-rewritten",
+      "replacement": "W3R-11d"
+    },
+    {
+      "id": "3I-5",
+      "disposition": "deferred-and-rewritten",
+      "replacement": "W3R-11e"
+    },
+    {
+      "id": "3I-6",
+      "disposition": "superseded",
+      "replacement": "W3R-11f"
+    }
+  ],
+  "workstreams": [
+    {
+      "id": "W3R-0",
+      "title": "Revise Wave 3 backlog",
+      "status": "complete",
+      "maximumScope": "Planning/backlog files only. Freeze the old ratings-first direction, preserve completed work, pause superseded tasks, and establish the bounded redesign sequence."
+    },
+    {
+      "id": "W3R-1",
+      "title": "Disposition current Wave 3 capabilities",
+      "status": "next",
+      "maximumScope": "Create one audit classifying each existing Wave 3 capability as KEEP, REFRAME, REPLACE, DEFER or RETIRE. No code or UX changes."
+    },
+    {
+      "id": "W3R-2a",
+      "title": "Define shared Place Registry schema",
+      "status": "planned",
+      "maximumScope": "Schema/design record only. Define canonical place fields and Civic-Map-specific fields. No code migration."
+    },
+    {
+      "id": "W3R-2b",
+      "title": "Introduce Place Registry data layer",
+      "status": "planned",
+      "maximumScope": "Data-layer refactor only. Preserve all current place IDs and page behavior; Civic Map may temporarily re-export the same records."
+    },
+    {
+      "id": "W3R-2c",
+      "title": "Add Place Registry selectors",
+      "status": "planned",
+      "maximumScope": "Shared helpers only: by barangay, category, service, coordinates/distance and lifecycle. No visible UI changes."
+    },
+    {
+      "id": "W3R-3a",
+      "title": "Reuse places in BetterBarangay",
+      "status": "planned",
+      "maximumScope": "Barangay Profile only. Surface verified local places/facilities from the registry."
+    },
+    {
+      "id": "W3R-3b",
+      "title": "Reuse places in Mobility",
+      "status": "planned",
+      "maximumScope": "Mobility page only. Replace duplicated MRT, Busway, ferry and terminal facts where appropriate."
+    },
+    {
+      "id": "W3R-3c",
+      "title": "Reuse places in Services and Government Offices",
+      "status": "planned",
+      "maximumScope": "Services and Government Offices only. Connect service guides to relevant verified physical locations."
+    },
+    {
+      "id": "W3R-3d",
+      "title": "Add place results to Saan Ako Lalapit",
+      "status": "planned",
+      "maximumScope": "Concern Finder only. Where appropriate, answer both which service and where the user can go."
+    },
+    {
+      "id": "W3R-4a",
+      "title": "Reframe Civic Map entry experience",
+      "status": "planned",
+      "maximumScope": "Civic Map landing only. Center Report something, Check a place, Suggest an improvement and Help document Makati. Remove ratings-first positioning."
+    },
+    {
+      "id": "W3R-4b",
+      "title": "Simplify place detail experience",
+      "status": "planned",
+      "maximumScope": "CivicAsset page only plus tiny shared UI if essential. Remove generic rating-first language while retaining factual details, reports, improvements and source provenance."
+    },
+    {
+      "id": "W3R-5a",
+      "title": "Specify Report something near me",
+      "status": "planned",
+      "maximumScope": "Flow specification only: location, nearby place/street, issue, details/evidence, submit, fallback. No implementation."
+    },
+    {
+      "id": "W3R-5b",
+      "title": "Implement nearby place matching",
+      "status": "planned",
+      "maximumScope": "Location-to-nearby-place selection only. Do not modify report submission yet."
+    },
+    {
+      "id": "W3R-5c",
+      "title": "Connect nearby reporting to existing civic submission",
+      "status": "planned",
+      "maximumScope": "Reporting flow only. Preserve emergency handling, duplicate detection, barangay context, evidence and tracking. Stop after focused E2E validation."
+    },
+    {
+      "id": "W3R-5d",
+      "title": "Reconnect case lifecycle to redesigned reporting",
+      "status": "planned",
+      "maximumScope": "Lifecycle display/relationships only. Preserve reviewed, forwarded, acknowledged, action-reported and community-verified-resolved semantics. No automatic forwarding."
+    },
+    {
+      "id": "W3R-6a",
+      "title": "Define structured observations",
+      "status": "planned",
+      "maximumScope": "Observation schema only by place/asset family. No UI."
+    },
+    {
+      "id": "W3R-6b",
+      "title": "Replace generic ratings with observations",
+      "status": "planned",
+      "maximumScope": "One reusable observation form. No derived scores."
+    },
+    {
+      "id": "W3R-6c",
+      "title": "Add place condition summaries",
+      "status": "planned",
+      "maximumScope": "Display recent structured observations and freshness only. Do not publish composite scores."
+    },
+    {
+      "id": "W3R-7a",
+      "title": "Define civic audit campaigns",
+      "status": "planned",
+      "maximumScope": "Campaign schema/workflow only: geography, place set, questions, period and completion. No generalized campaign UI."
+    },
+    {
+      "id": "W3R-7b",
+      "title": "Pilot one civic audit",
+      "status": "planned",
+      "maximumScope": "One geography and one audit theme only, such as BetterPoblacion sidewalks or Makati park accessibility."
+    },
+    {
+      "id": "W3R-7c",
+      "title": "Publish one audit output",
+      "status": "planned",
+      "maximumScope": "One report/output template from pilot observations. Validate usefulness before expanding campaign machinery."
+    },
+    {
+      "id": "W3R-8a",
+      "title": "Revise Participation Hub",
+      "status": "planned",
+      "maximumScope": "Participate page only. Align entry points to official participation, local problem reporting, place improvements, documentation, corrections/sources, BetterMakati ideas and volunteering."
+    },
+    {
+      "id": "W3R-8b",
+      "title": "Revise Get Involved",
+      "status": "planned",
+      "maximumScope": "Get Involved only. Preserve general submissions and add civic-audit volunteering/handoffs where appropriate."
+    },
+    {
+      "id": "W3R-8c",
+      "title": "Revise BetterBarangay participation",
+      "status": "planned",
+      "maximumScope": "Barangay participation integration only: local places, issues, improvements, civic audits and barangay contact."
+    },
+    {
+      "id": "W3R-9a",
+      "title": "Add places to global Search",
+      "status": "planned",
+      "maximumScope": "Global Search only. Places become first-class searchable results."
+    },
+    {
+      "id": "W3R-9b",
+      "title": "Reuse places in Visit Makati and Heritage",
+      "status": "planned",
+      "maximumScope": "Visit and Heritage only. Reuse canonical place facts without duplicating coordinates/addresses."
+    },
+    {
+      "id": "W3R-9c",
+      "title": "Connect places to Projects and Accountability",
+      "status": "planned",
+      "maximumScope": "Relationship model plus a small verified example set only. No mass fuzzy matching."
+    },
+    {
+      "id": "W3R-9d",
+      "title": "Connect City Monitor items to places",
+      "status": "planned",
+      "maximumScope": "One-way explicit relationships only for clearly named places. No automated fuzzy matching."
+    },
+    {
+      "id": "W3R-9e",
+      "title": "Add reusable Near me utility",
+      "status": "planned",
+      "maximumScope": "One shared nearby-place component/helper after registry reuse is proven elsewhere."
+    },
+    {
+      "id": "W3R-10a",
+      "title": "Redefine participation outcome metrics",
+      "status": "planned",
+      "maximumScope": "Metric definitions only: routing, review, acknowledgement, action, resolution, observation freshness, audit coverage and repeat contribution. No instrumentation."
+    },
+    {
+      "id": "W3R-10b",
+      "title": "Define metric publication thresholds",
+      "status": "planned",
+      "maximumScope": "Separate internal operational metrics from public metrics and set minimum sample/time thresholds. No dashboards."
+    },
+    {
+      "id": "W3R-10c",
+      "title": "Instrument redesigned participation outcomes",
+      "status": "planned",
+      "maximumScope": "API/data instrumentation only for fields defined in W3R-10a/10b. No headline aggregates."
+    },
+    {
+      "id": "W3R-11a",
+      "title": "Run human page audit on redesigned participation",
+      "status": "planned",
+      "maximumScope": "Participation, Get Involved, Civic Map/place pages and reports only."
+    },
+    {
+      "id": "W3R-11b",
+      "title": "Add Place Registry integrity audit",
+      "status": "planned",
+      "maximumScope": "Guard duplicate IDs, barangays, coordinates, lifecycle states, provenance and broken relationships. No browser testing."
+    },
+    {
+      "id": "W3R-11c",
+      "title": "Test general participation journeys",
+      "status": "planned",
+      "maximumScope": "General submission, duplicate, fallback, tracking and barangay-context E2E only."
+    },
+    {
+      "id": "W3R-11d",
+      "title": "Test public-place participation journeys",
+      "status": "planned",
+      "maximumScope": "Nearby reporting, place matching, duplicate case, lifecycle, observation and pilot audit E2E only."
+    },
+    {
+      "id": "W3R-11e",
+      "title": "Run mobile and accessibility pass",
+      "status": "planned",
+      "maximumScope": "Redesigned Wave 3 surfaces only. Fix only defects found."
+    },
+    {
+      "id": "W3R-11f",
+      "title": "Reclassify and close Wave 3",
+      "status": "planned",
+      "maximumScope": "Supersede the old capability classification with an evidence-based redesigned Wave 3 classification, record deferrals, and close only what is actually complete."
+    }
+  ],
+  "immediateNext": {
+    "id": "W3R-1",
+    "title": "Disposition current Wave 3 capabilities",
+    "maximumScope": "Create one audit classifying each existing Wave 3 capability as KEEP, REFRAME, REPLACE, DEFER or RETIRE. No code or UX changes."
+  }
+}
