@@ -1363,7 +1363,7 @@ test('ecosystem fallbacks preserve the query and leave an internal recovery path
 
   await page.getByRole('button', { name: 'Report a missing result', exact: true }).click();
   await expect(page).toHaveURL(/\/get-involved\?type=idea&tool=saan-ako-lalapit&subject=Missing(?:%20|\+)search(?:%20|\+)result/);
-  await expect(page.getByRole('heading', { level: 1 })).toContainText(/Get involved|Contribute/i);
+  await expect(page.getByRole('heading', { level: 1 })).toContainText(/Help improve BetterMakati/i);
 
   await page.goto(baseURL + '/participate');
   for (const name of [/Open BetterLGU/i, /Open Petitions\.ph/i, /Open OpenBayan/i]) {
@@ -1425,7 +1425,12 @@ test('accountability and public records expose national evidence tools without r
   await page.goto(baseURL + '/records');
   const nationalTools = page.getByText('National record tools', { exact: true }).locator('..');
   await expect(nationalTools.getByRole('link', { name: /Transparency Portal/i })).toBeVisible();
-  await expect(nationalTools.getByRole('link', { name: /PhilGEPS Browser/i })).toBeVisible();
+  const procurementBrowser = nationalTools.getByRole('link', { name: /PhilGEPS Browser/i });
+  await expect(procurementBrowser).toHaveAttribute(
+    'href',
+    'https://transparency.bettergov.ph/procurement'
+  );
+  await expect(procurementBrowser).toHaveAttribute('target', '_blank');
   await expect(nationalTools.getByRole('link', { name: /SALN Tracker/i })).toBeVisible();
   await expect(nationalTools.getByRole('link', { name: /^Juris$/i })).toBeVisible();
   await expect(page.getByRole('heading', { name: /Search the public record catalog/i })).toBeVisible();
