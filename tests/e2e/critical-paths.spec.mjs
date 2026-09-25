@@ -737,6 +737,22 @@ test('first BetterBarangay contact batch exposes verified hall details', async (
   await expect(page.getByText('Kalayaan Road corner Pandan Street, Forbes Park, Makati City', { exact: true })).toBeVisible();
 });
 
+test('expanded BetterBarangay hall contact batch renders current locations', async ({ page }) => {
+  const checks = [
+    ['/barangays/guadalupe-nuevo', 'Orense Street, Guadalupe Nuevo, Makati City'],
+    ['/barangays/kasilawan', '2094 E. Pascua Street, Kasilawan, Makati City'],
+    ['/barangays/pio-del-pilar', '6845 Washington Street, Pio Del Pilar, Makati City'],
+    ['/barangays/san-isidro', '2701 Guatemala Street, San Isidro, Makati City'],
+    ['/barangays/singkamas', '3816 F. Nazario Street, Singkamas, Makati City'],
+    ['/barangays/valenzuela', 'Hormiga Street corner Pililia Street, Valenzuela, Makati City'],
+  ];
+
+  for (const [route, address] of checks) {
+    await page.goto(baseURL + route);
+    await expect(page.getByText(address, { exact: true })).toBeVisible();
+  }
+});
+
 test('barangay gateway search finds a barangay through an official name', async ({ page }) => {
   await page.goto(baseURL + '/barangays');
   await page.getByPlaceholder(/Search barangay, official or local place/i).fill('Jose Mikhail');
