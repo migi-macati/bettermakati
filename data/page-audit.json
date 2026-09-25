@@ -363,7 +363,9 @@
       "source-watch-history",
       "coverage-matrix",
       "known-gaps",
-      "consolidated-freshness-review-queue"
+      "consolidated-freshness-review-queue",
+      "consolidated-freshness-history",
+      "page-freshness-state"
     ],
     "gaps": [
       "The catalog normalizes source URLs already used across BetterMakati; it is not yet an exhaustive inventory of every Makati public document published by every office.",
@@ -427,7 +429,7 @@
     "path": "/status",
     "label": "BetterMakati Status",
     "status": "partial",
-    "reviewedAt": "2026-09-24",
+    "reviewedAt": "2026-09-25",
     "checks": [
       "service-coverage",
       "barangay-gaps",
@@ -435,7 +437,10 @@
       "source-freshness-state",
       "city-monitor-freshness",
       "page-audit",
-      "community-input"
+      "community-input",
+      "dependency-aware-page-freshness",
+      "consolidated-freshness-history",
+      "freshness-review-summary"
     ],
     "gaps": [
       "Live status cards depend on published machine-readable feeds and display an unavailable state when an upstream feed cannot be read.",
