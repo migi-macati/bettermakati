@@ -1170,6 +1170,36 @@ test('site search indexes barangay officials', async ({ page }) => {
   await expect(page.getByText('Barangay Poblacion', { exact: true }).first()).toBeVisible();
 });
 
+test('Get Involved distinguishes an existing duplicate from a new submission', async ({ page }) => {
+  await page.route('**/api/feedback', route =>
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        ok: true,
+        duplicate: true,
+        reference: 321,
+        url: 'https://github.com/migi-macati/bettermakati/issues/321',
+      }),
+    })
+  );
+
+  await page.goto(baseURL + '/get-involved?type=correction#submission');
+  await page.getByLabel('Subject').fill('Incorrect City Hall telephone number');
+  await page.getByLabel('Details').fill('The listed number appears to be outdated.');
+  await page.getByRole('button', { name: 'Send to BetterMakati' }).click();
+
+  await expect(page.getByRole('status')).toContainText(
+    'A matching open BetterMakati item already exists as #321. No new item was created.'
+  );
+  await expect(page.getByRole('link', { name: 'Open existing item' })).toHaveAttribute(
+    'href',
+    'https://github.com/migi-macati/bettermakati/issues/321'
+  );
+  await expect(page.getByLabel('Subject')).toHaveValue('Incorrect City Hall telephone number');
+  await expect(page.getByLabel('Details')).toHaveValue('The listed number appears to be outdated.');
+});
+
 test('barangay-scoped Participation prefills Get Involved barangay context', async ({ page }) => {
   await page.goto(baseURL + '/participate?barangay=bel-air');
   await page.getByRole('link', { name: /Add a local public source/i }).click();
