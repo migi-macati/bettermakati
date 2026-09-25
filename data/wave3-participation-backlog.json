@@ -904,12 +904,27 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Reuse places in Mobility",
       "maximumScope": "Mobility page only. Replace duplicated MRT, Busway, ferry and terminal facts where appropriate.",
-      "status": "next",
+      "status": "complete",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
       ],
-      "stopWhen": "Mobility page only. Replace duplicated MRT, Busway, ferry and terminal facts where appropriate."
+      "stopWhen": "Mobility page only. Replace duplicated MRT, Busway, ferry and terminal facts where appropriate.",
+      "implementationFile": "src/pages/Mobility.tsx",
+      "validation": {
+        "integration": "Mobility now selects verified transport-stop and transport-terminal records from the shared Place Registry.",
+        "verifiedAnchors": 10,
+        "breakdown": {
+          "mrt3": 4,
+          "edsaBusway": 3,
+          "pasigRiverFerry": 2,
+          "intermodalTerminal": 1
+        },
+        "canonicalLinks": "Each transport anchor links to its canonical /civic-map/:id place page and its registry provenance source.",
+        "shortcut": "The former generic Google terminal search shortcut now jumps to the registry-backed transport inventory on the Mobility page.",
+        "guardrail": "scripts/check-place-registry.mjs now verifies 10 transport rows and guards the Mobility selector/filter/place-link integration.",
+        "ci": "Latest CI still stops at the same three pre-existing unused-import ESLint errors before downstream checks/build. No new lint/parser errors are reported in Mobility.tsx, placeRegistry.ts or check-place-registry.mjs."
+      }
     },
     {
       "id": "W3R-3c",
@@ -918,7 +933,7 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Reuse places in Services and Government Offices",
       "maximumScope": "Services and Government Offices only. Connect service guides to relevant verified physical locations.",
-      "status": "planned",
+      "status": "next",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
@@ -1409,9 +1424,9 @@
     }
   ],
   "immediateNext": {
-    "id": "W3R-3b",
-    "title": "Reuse places in Mobility",
-    "maximumScope": "Mobility page only. Reuse shared transport stops/terminals from the Place Registry; no new transport research."
+    "id": "W3R-3c",
+    "title": "Reuse places in Services and Government Offices",
+    "maximumScope": "Services and Government Offices surfaces only. Reuse relevant Place Registry records without merging governmentServiceOffices into the registry."
   },
   "reopenedExecutionOrder": [
     "3C-2a",
