@@ -10,6 +10,45 @@ if (duplicateAssets.length) {
   problems.push('Duplicate Civic Map asset IDs: ' + [...new Set(duplicateAssets)].join(', '));
 }
 
+const requiredHealthCenterBatchA = [
+  'bangkal-health-center',
+  'carmona-health-center',
+  'guadalupe-nuevo-health-center',
+  'guadalupe-viejo-health-center',
+  'kasilawan-health-center',
+  'la-paz-health-center',
+  'olympia-health-center',
+  'palanan-health-center',
+  'pinagkaisahan-health-center',
+];
+
+for (const id of requiredHealthCenterBatchA) {
+  if (!assetIds.includes(id)) {
+    problems.push('Missing verified Makati health-center Civic Map asset: ' + id);
+    continue;
+  }
+  const start = assetBlock.indexOf("id: '" + id + "'");
+  const end = assetBlock.indexOf('\n  },', start);
+  const row = start >= 0 && end >= 0 ? assetBlock.slice(start, end) : '';
+  for (const marker of [
+    "type: 'health-center'",
+    'address:',
+    'sourceUrl:',
+    'sourceLabel:',
+    'coordinateSourceUrl:',
+    'coordinateSourceLabel:',
+    "status: 'mapped'",
+  ]) {
+    if (!row.includes(marker)) {
+      problems.push(id + ' is missing verified health-center metadata: ' + marker);
+    }
+  }
+}
+
+if (assetIds.includes('palanan-24-7-health-center')) {
+  problems.push('Palanan 24/7 is a service designation at Palanan Health Center and must not be a duplicate asset.');
+}
+
 const requiredGovernmentServiceAssets = [
   'psa-makati-crs',
   'lto-makati-district',
