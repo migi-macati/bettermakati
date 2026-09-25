@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "implementedAt": "2026-09-25",
+  "workstream": "Wave 3C-1e2 — Implement current health centers, batch B",
+  "scope": "Remaining nine verified Makati Health Department community health-center sites.",
+  "assets": [
+    "pio-pc-health-center",
+    "pio-rhu-health-center",
+    "poblacion-health-center",
+    "san-isidro-health-center",
+    "singkamas-health-center",
+    "sta-cruz-health-center",
+    "tejeros-health-center",
+    "san-antonio-health-center",
+    "valenzuela-health-center"
+  ],
+  "coordinateNotes": {
+    "pioPc": "Current First Circle/Washington map destination resolves to 14.552676, 121.011615.",
+    "pioRhu": "Current Waze listing uses plus code G2X6+QH2 at Apolinario/Arguelles; decoded point center is 14.549388, 121.011391.",
+    "rule": "All sites use a current named map point/building matched to the verified facility address; no barangay centroids."
+  },
+  "result": {
+    "batchAssetsAdded": 9,
+    "totalMhdHealthCenterAssetsImplemented": 18,
+    "officialMhdHealthCenterNetworkImplementationStatus": "complete"
+  },
+  "nextStep": {
+    "id": "3C-1e3",
+    "title": "Implement current fire stations",
+    "scope": "10 missing verified fire-station assets plus audit/correct Makati Central Fire Station if needed. No police or community assets."
+  }
+}
