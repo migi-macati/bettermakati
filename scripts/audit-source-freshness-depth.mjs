@@ -204,6 +204,8 @@ for (const marker of [
   "test('Public Records exposes current source freshness state'",
   "item.owner === 'city-monitor'",
   "catalog.find(item => item.id === 'philgeps')?.monitoringMode",
+  "catalog.find(item => item.id === 'comelec-2026-bske-calendar')?.affectedPages",
+  "catalog.find(item => item.id === 'makati-budget-2026')?.affectedPages",
   "test('BetterMakati Status exposes source freshness automation'",
 ]) {
   if (!tests.includes(marker)) problems.push('Source freshness browser coverage missing: ' + marker);
