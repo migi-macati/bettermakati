@@ -48,6 +48,8 @@ interface WatchedSource {
   kind?: string;
   cadence: 'daily' | 'weekly' | 'monthly';
   monitoringMode: 'content-hash' | 'reachability';
+  owner?: 'general-source-freshness' | 'city-monitor';
+  delegated?: boolean;
 }
 
 interface SourceWatchStateSource extends WatchedSource {
@@ -157,6 +159,8 @@ export default function PublicRecords() {
   );
 
   const watchStatusLabel = (url: string) => {
+    const watched = watchedSourceByUrl.get(url);
+    if (watched?.owner === 'city-monitor') return 'Monitored by City Monitor';
     const state = watchStateByUrl.get(url);
     if (!state || state.status === 'not-checked') return 'Awaiting first scheduled check';
     if (state.status !== 'ok') {
