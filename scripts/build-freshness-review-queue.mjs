@@ -19,10 +19,17 @@ const existing = await readJson('data/freshness-review-queue.json', {
   generatedAt: null,
   items: [],
 });
+const resolutions = await readJson('data/freshness-review-resolutions.json', {
+  version: 1,
+  resolutions: [],
+});
 
 const sourceStateById = new Map((sourceState.sources || []).map(item => [item.id, item]));
 const cityStateById = new Map((cityState.sources || []).map(item => [item.id, item]));
 const existingByKey = new Map((existing.items || []).map(item => [item.key, item]));
+const resolutionByKey = new Map(
+  (resolutions.resolutions || []).map(item => [item.key, item])
+);
 
 const latestTimestamp = (...values) =>
   values.filter(Boolean).sort().at(-1) || null;
@@ -146,13 +153,13 @@ const openItems = [];
 for (const candidate of candidates) {
   const key = candidate.system + ':' + candidate.item.id + ':' + candidate.signal;
   const previous = existingByKey.get(key);
+  const resolution = resolutionByKey.get(key);
   const detectedAt = candidate.latestDetectedAt || candidate.firstDetectedAt || null;
 
   if (
-    previous?.status === 'resolved' &&
-    previous.resolvedAt &&
+    resolution?.resolvedAt &&
     detectedAt &&
-    previous.resolvedAt >= detectedAt
+    resolution.resolvedAt >= detectedAt
   ) {
     continue;
   }
@@ -175,11 +182,12 @@ for (const candidate of candidates) {
     label: candidate.item.label,
     url: candidate.item.url,
     affectedPages,
-    firstDetectedAt: previous?.status === 'open'
-      ? previous.firstDetectedAt || candidate.firstDetectedAt
-      : candidate.firstDetectedAt,
+    firstDetectedAt:
+      resolution?.resolvedAt && detectedAt && resolution.resolvedAt < detectedAt
+        ? detectedAt
+        : previous?.firstDetectedAt || candidate.firstDetectedAt,
     latestDetectedAt: detectedAt,
-    detections: Math.max(candidate.detections || 1, previous?.status === 'open' ? previous.detections || 1 : 1),
+    detections: Math.max(candidate.detections || 1, previous?.detections || 1),
     lastCheckedAt:
       state.lastCheckedAt ||
       (candidate.system === 'city-monitor' ? cityState.checkedAt : sourceState.checkedAt) ||
@@ -193,15 +201,9 @@ for (const candidate of candidates) {
   });
 }
 
-const openKeys = new Set(openItems.map(item => item.key));
-const resolvedItems = (existing.items || [])
-  .filter(item => item.status === 'resolved' && !openKeys.has(item.key))
-  .slice(0, 100);
-
-const items = [...openItems, ...resolvedItems].sort((a, b) => {
-  if (a.status !== b.status) return a.status === 'open' ? -1 : 1;
-  return String(b.latestDetectedAt || '').localeCompare(String(a.latestDetectedAt || ''));
-});
+const items = [...openItems].sort((a, b) =>
+  String(b.latestDetectedAt || '').localeCompare(String(a.latestDetectedAt || ''))
+);
 
 const generatedAt = latestTimestamp(
   sourceState.checkedAt,
