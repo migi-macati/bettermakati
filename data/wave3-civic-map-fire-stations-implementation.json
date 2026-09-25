@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "implementedAt": "2026-09-25",
+  "workstream": "Wave 3C-1e3 — Implement current Makati fire stations",
+  "scope": "Implement the 10 missing verified current fire-station assets and audit the existing Makati Central Fire Station.",
+  "assets": [
+    "makati-central-fire-station",
+    "ayala-fire-satellite",
+    "bel-air-fire-substation",
+    "bangkal-fire-substation",
+    "guadalupe-fire-substation",
+    "la-paz-fire-substation",
+    "pio-del-pilar-fire-substation",
+    "palanan-fire-substation",
+    "poblacion-fire-substation",
+    "tejeros-fire-substation",
+    "valenzuela-fire-substation"
+  ],
+  "result": {
+    "currentFireStationsMapped": 11,
+    "existingAuditedAndRetained": 1,
+    "newlyAdded": 10,
+    "officialCurrentCountMatched": true
+  },
+  "centralStationAudit": {
+    "retainedCivicMapAsset": "makati-central-fire-station",
+    "retainedAddress": "Old Makati City Fire Station, Ayala Avenue Extension corner Malugay Street, Barangay San Antonio, Makati City",
+    "reason": "The current City Government of Makati Fire Stations Hotlines page still explicitly identifies Makati Central Fire Station at this site.",
+    "alternateCurrentMapFeature": {
+      "id": "new-makati-central-fire-station",
+      "address": "Mayapis Street corner Sen. Gil J. Puyat Avenue, Makati City",
+      "currentMapStatus": "exists-as-current-map-feature",
+      "civicMapDisposition": "blocked-as-duplicate-until-official-operational-role-is-clear"
+    }
+  },
+  "excludedFormerMakati": [
+    "west-rembo-fire-substation",
+    "comembo-fire-substation"
+  ],
+  "coordinateRule": "Use current station building/map records or current address-matched map listings. No barangay centroids.",
+  "nextStep": {
+    "id": "3C-1e4",
+    "title": "Implement current police facilities",
+    "scope": "Implement Makati Police headquarters plus Sub-Stations 1–7 with current point/address provenance. Exclude transferred Sub-Stations 8 and 9."
+  }
+}
