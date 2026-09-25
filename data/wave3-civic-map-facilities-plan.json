@@ -15,7 +15,8 @@
     "3C-1a",
     "3C-1b",
     "3C-1c",
-    "3C-1d"
+    "3C-1d",
+    "3C-1e1"
   ],
   "substeps": [
     {
@@ -79,9 +80,9 @@
   ],
   "inventoryFile": "data/wave3-civic-map-facilities-inventory.json",
   "immediateNext": {
-    "id": "3C-1e1",
-    "title": "Implement current health centers — batch A",
-    "maximumScope": "First 9 verified MHD health-center sites only. Freeze exact current points, add source/address provenance and validate. No fire, police, day-care or social-welfare assets."
+    "id": "3C-1e2",
+    "title": "Implement current health centers — batch B",
+    "maximumScope": "Remaining 9 verified MHD health-center sites only. Freeze exact current points, add source/address provenance and validate. No fire, police, day-care or social-welfare assets."
   },
   "healthCenterVerificationStatus": "complete",
   "healthCenterVerificationFile": "data/wave3-civic-map-health-centers-verification.json",
@@ -114,5 +115,12 @@
     "currentCoreSocialWelfareFacilities": 4,
     "currentCityOwnedMarketCandidate": 1,
     "unresolvedProposedOrColocated": 2
+  },
+  "healthCenterImplementation": {
+    "status": "in-progress",
+    "batchA": "complete",
+    "batchAFile": "data/wave3-civic-map-health-centers-implementation-a.json",
+    "batchAAssets": 9,
+    "batchBAssetsRemaining": 9
   }
 }
