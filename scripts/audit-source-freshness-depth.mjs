@@ -6,6 +6,7 @@ const history = JSON.parse(await readFile('data/source-watch-history.json', 'utf
 const checker = await readFile('scripts/check-sources.mjs', 'utf8');
 const queueBuilder = await readFile('scripts/build-freshness-review-queue.mjs', 'utf8');
 const reviewQueue = JSON.parse(await readFile('data/freshness-review-queue.json', 'utf8'));
+const reviewResolutions = JSON.parse(await readFile('data/freshness-review-resolutions.json', 'utf8'));
 const workflow = await readFile('.github/workflows/source-freshness.yml', 'utf8');
 const weeklyNews = await readFile('.github/workflows/weekly-content-refresh.yml', 'utf8');
 const cityMonitorConfig = JSON.parse(await readFile('data/city-monitor-sources.json', 'utf8'));
@@ -130,6 +131,13 @@ if (
 ) {
   problems.push('Freshness review queue must use version 1 with summary and items.');
 }
+if (
+  reviewResolutions.version !== 1 ||
+  !Array.isArray(reviewResolutions.resolutions)
+) {
+  problems.push('Freshness review resolutions must use version 1 with a resolutions array.');
+}
+
 for (const item of reviewQueue.items) {
   for (const field of ['key', 'status', 'system', 'signal', 'sourceId', 'label', 'url', 'affectedPages', 'action']) {
     if (item[field] === undefined || item[field] === null) {
@@ -147,7 +155,8 @@ for (const marker of [
   "signal === 'check-failed'",
   "signal === 'manual-review'",
   "lastSuccessfulAt",
-  "status === 'resolved'",
+  "data/freshness-review-resolutions.json",
+  "resolutionByKey",
 ]) {
   if (!queueBuilder.includes(marker)) {
     problems.push('Freshness review queue builder lost required behavior: ' + marker);
@@ -230,7 +239,7 @@ for (const marker of [
 const recordsAudit = pageAudit.find(item => item.path === '/records');
 const statusAudit = pageAudit.find(item => item.path === '/status');
 for (const [label, row, checks] of [
-  ['/records', recordsAudit, ['cadence-aware-source-watch', 'published-current-source-state', 'monitoring-mode-labels', 'per-record-freshness']],
+  ['/records', recordsAudit, ['cadence-aware-source-watch', 'published-current-source-state', 'monitoring-mode-labels', 'per-record-freshness', 'consolidated-freshness-review-queue']],
   ['/status', statusAudit, ['source-freshness-state', 'page-audit']],
 ]) {
   if (!row) {
