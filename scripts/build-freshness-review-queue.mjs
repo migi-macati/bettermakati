@@ -25,6 +25,9 @@ const resolutions = await readJson('data/freshness-review-resolutions.json', {
   resolutions: [],
 });
 
+const latestTimestamp = (...values) =>
+  values.filter(Boolean).sort().at(-1) || null;
+
 const normalizeHistoryItem = item => ({
   sourceId: item.id,
   label: item.label,
@@ -83,9 +86,6 @@ const existingByKey = new Map((existing.items || []).map(item => [item.key, item
 const resolutionByKey = new Map(
   (resolutions.resolutions || []).map(item => [item.key, item])
 );
-
-const latestTimestamp = (...values) =>
-  values.filter(Boolean).sort().at(-1) || null;
 
 const actionFor = signal => {
   if (signal === 'content-changed') {
