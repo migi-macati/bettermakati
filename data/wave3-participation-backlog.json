@@ -251,7 +251,9 @@
         "3C-2b",
         "3C-2c1",
         "3C-2c2",
-        "3C-2c3"
+        "3C-2c3",
+        "3C-2c4",
+        "3C-2c"
       ],
       "inventoryFile": "data/wave3-civic-map-parks-inventory.json",
       "geographyFile": "data/wave3-civic-map-parks-geography.json",
@@ -264,7 +266,8 @@
       "currentVerificationFiles": [
         "data/wave3-civic-map-parks-current-verification-1.json",
         "data/wave3-civic-map-parks-current-verification-2.json",
-        "data/wave3-civic-map-parks-current-verification-3.json"
+        "data/wave3-civic-map-parks-current-verification-3.json",
+        "data/wave3-civic-map-parks-current-verification-final.json"
       ],
       "currentVerificationSummary": {
         "researched": 13,
@@ -275,6 +278,17 @@
         "olderDesCurrentPointPending": 1,
         "olderDesHeldLineage": 1,
         "olderDesUnresolved": 1
+      },
+      "publicParkVerification": {
+        "status": "complete",
+        "verifiedCurrent": 13,
+        "missingToAdd": 12,
+        "existingCoordinateCorrection": "poblacion-park",
+        "unresolvedNotImplemented": [
+          "post-office-pocket-park",
+          "makati-city-hall-park",
+          "playground-park-poblacion"
+        ]
       }
     },
     {
@@ -635,9 +649,9 @@
     }
   ],
   "immediateNext": {
-    "id": "3C-2c4",
-    "title": "Close public-park verification research",
-    "maximumScope": "Resolve Post Office Pocket Park, Makati City Hall Park, Playground Park Poblacion, Pinagkaisahan lineage, Makati DES Linear Park, and any remaining exact-point gaps. Freeze implementation set only."
+    "id": "3C-2d",
+    "title": "Implement verified current public parks",
+    "maximumScope": "12 missing verified public parks + Poblacion Park coordinate correction only. No private/public-access layer yet."
   },
   "reopenedExecutionOrder": [
     "3C-2a",
@@ -656,7 +670,7 @@
     },
     "3C-2": {
       "status": "in-progress",
-      "current": "3C-2c4"
+      "current": "3C-2d"
     },
     "3C-3": {
       "status": "reopened-planned",
