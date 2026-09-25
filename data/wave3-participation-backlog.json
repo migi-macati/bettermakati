@@ -247,9 +247,17 @@
       ],
       "planFile": "data/wave3-civic-map-parks-plan.json",
       "completedSubsteps": [
-        "3C-2a"
+        "3C-2a",
+        "3C-2b"
       ],
-      "inventoryFile": "data/wave3-civic-map-parks-inventory.json"
+      "inventoryFile": "data/wave3-civic-map-parks-inventory.json",
+      "geographyFile": "data/wave3-civic-map-parks-geography.json",
+      "geographySummary": {
+        "total": 43,
+        "currentMakati": 31,
+        "formerMakatiNowTaguig": 10,
+        "unresolved": 2
+      }
     },
     {
       "id": "3C-3",
@@ -609,9 +617,9 @@
     }
   ],
   "immediateNext": {
-    "id": "3C-2b",
-    "title": "Reconcile parks to current Makati geography",
-    "maximumScope": "Classify all official-inventory park entries by current/former/boundary-uncertain Makati geography. No Civic Map additions."
+    "id": "3C-2c",
+    "title": "Verify current public parks",
+    "maximumScope": "Research/verification only: current status, current name, access/ownership, barangay/address, and coordinate provenance. No Civic Map implementation yet."
   },
   "reopenedExecutionOrder": [
     "3C-2a",
@@ -630,7 +638,7 @@
     },
     "3C-2": {
       "status": "in-progress",
-      "current": "3C-2b"
+      "current": "3C-2c"
     },
     "3C-3": {
       "status": "reopened-planned",
