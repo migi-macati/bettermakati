@@ -490,8 +490,8 @@ export default function ProjectStatus() {
               <>
                 <p className="mt-2 text-sm text-gray-600">
                   {sourceState.checkedAt
-                    ? <>Last automation run: <strong>{new Date(sourceState.checkedAt).toLocaleString('en-PH')}</strong> · {sourceState.cadence || 'all'}.</>
-                    : 'The cadence-aware monitor is configured; its first scheduled run has not yet published a state update.'}
+                    ? <>Last published check: <strong>{new Date(sourceState.checkedAt).toLocaleString('en-PH')}</strong> · {sourceState.cadence || 'all'}.</>
+                    : 'The cadence-aware monitor is configured; its first publishable state has not yet been released.'}
                 </p>
                 <div className="mt-4 grid grid-cols-2 gap-2 text-center">
                   <div className="rounded-xl bg-[#fffdf8] p-3">
