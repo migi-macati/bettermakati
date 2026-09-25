@@ -1422,7 +1422,7 @@ test('ecosystem fallbacks preserve the query and leave an internal recovery path
 test('projects and budget exposes related national evidence without replacing Makati records', async ({ page }) => {
   await page.goto(baseURL + '/projects-budget');
 
-  const nationalContext = page.getByText('National context', { exact: true }).locator('..');
+  const nationalContext = page.getByText('Related national records', { exact: true }).locator('..');
   await expect(nationalContext.getByRole('link', { name: /2026 national budget/i })).toHaveAttribute(
     'href',
     'https://2026-budget.bettergov.ph/'
@@ -1446,7 +1446,7 @@ test('projects and budget exposes related national evidence without replacing Ma
 
 test('accountability and public records expose national evidence tools without replacing local sources', async ({ page }) => {
   await page.goto(baseURL + '/accountability');
-  const accountabilityEvidence = page.getByText('National evidence', { exact: true }).locator('..');
+  const accountabilityEvidence = page.getByText('Related national records', { exact: true }).locator('..');
   await expect(accountabilityEvidence.getByRole('link', { name: /Transparency records/i })).toHaveAttribute(
     'href',
     'https://transparency.bettergov.ph/'
@@ -1492,6 +1492,7 @@ test('government and legislation expose national legislative references without 
   await expect(page.getByRole('heading', { name: 'House of Representatives', exact: true })).toBeVisible();
 
   await page.goto(baseURL + '/legislation');
+  await expect(page.getByText('Related national sources', { exact: true })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'National laws & Congress', exact: true })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Open Congress', exact: true })).toHaveAttribute(
     'href',
@@ -1544,7 +1545,7 @@ test('civic map exposes national infrastructure references without redirecting l
 test('statistics and reports expose national context without replacing Makati sources', async ({ page }) => {
   await page.goto(baseURL + '/statistics');
 
-  const dataContext = page.getByText('National data context', { exact: true }).locator('..');
+  const dataContext = page.getByText('Related national data', { exact: true }).locator('..');
   await expect(dataContext.getByRole('link', { name: 'Open Data Portal', exact: true })).toHaveAttribute(
     'href',
     'https://data.bettergov.ph/'
@@ -1560,7 +1561,7 @@ test('statistics and reports expose national context without replacing Makati so
   await expect(page.getByText('2024 POPCEN', { exact: true }).first()).toBeVisible();
 
   await page.goto(baseURL + '/reports');
-  const reportContext = page.getByText('National context', { exact: true }).locator('..');
+  const reportContext = page.getByText('Related national data', { exact: true }).locator('..');
   await expect(reportContext.getByRole('link', { name: /National data research/i })).toHaveAttribute(
     'href',
     'https://visualizations.bettergov.ph/'
