@@ -1071,6 +1071,23 @@ test('national service handoff prioritizes official agencies and references Bett
   );
 });
 
+test('fully covered national services hand off cleanly while partial coverage keeps local guidance', async ({ page }) => {
+  await page.goto(baseURL + '/services/guide/national-id');
+  await expect(page.getByRole('heading', { name: 'Before you start', exact: true })).toHaveCount(0);
+  await expect(page.getByRole('heading', { name: 'How to start', exact: true })).toHaveCount(0);
+  await expect(page.getByRole('heading', { name: /Continue with Philippine Statistics Authority/i })).toBeVisible();
+
+  const official = page.getByRole('link', { name: /Open official service/i });
+  const directory = page.getByRole('link', { name: 'BetterGov.ph', exact: true });
+  await expect(official).toHaveAttribute('target', '_blank');
+  await expect(directory).toHaveAttribute('target', '_blank');
+
+  await page.goto(baseURL + '/services/guide/sec-company-registration');
+  await expect(page.getByRole('heading', { name: 'Before you start', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'How to start', exact: true })).toBeVisible();
+});
+
+
 test('national service handoff batch A covers PSA, LTO registration and PRC renewal', async ({ page }) => {
   await page.goto(baseURL + '/services/guide/psa-marriage-certificate');
   await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
@@ -1302,47 +1319,61 @@ test('national service handoff batch D2 covers OWWA, TESDA, PHLPost, DPWH and CO
 test('ecosystem navigation exposes national and cross-LGU exits without replacing Makati services', async ({ page }) => {
   await page.goto(baseURL + '/services');
   await expect(page.getByRole('heading', { name: 'Need somewhere else?', exact: true })).toBeVisible();
-  await expect(page.getByRole('link', { name: /Browse BetterGov services/i })).toHaveAttribute(
-    'href',
-    'https://bettergov.ph/services'
-  );
-  await expect(page.getByRole('link', { name: /Find another LGU/i })).toHaveAttribute(
-    'href',
-    'https://lgu.bettergov.ph/'
-  );
+
+  const betterGov = page.getByRole('link', { name: /Browse BetterGov services/i });
+  await expect(betterGov).toHaveAttribute('href', 'https://bettergov.ph/services');
+  await expect(betterGov).toHaveAttribute('target', '_blank');
+
+  const betterLgu = page.getByRole('link', { name: /Find another LGU/i });
+  await expect(betterLgu).toHaveAttribute('href', 'https://lgu.bettergov.ph/');
+  await expect(betterLgu).toHaveAttribute('target', '_blank');
+
   await expect(page.getByRole('link', { name: /Open guide/i }).first()).toBeVisible();
 
   const footer = page.locator('footer');
-  await expect(footer.getByRole('link', { name: 'National services — BetterGov', exact: true })).toBeVisible();
-  await expect(footer.getByRole('link', { name: 'Other LGUs — BetterLGU', exact: true })).toBeVisible();
+  const footerBetterGov = footer.getByRole('link', { name: 'National services — BetterGov', exact: true });
+  const footerBetterLgu = footer.getByRole('link', { name: 'Other LGUs — BetterLGU', exact: true });
+  await expect(footerBetterGov).toHaveAttribute('href', 'https://bettergov.ph/services');
+  await expect(footerBetterGov).toHaveAttribute('target', '_blank');
+  await expect(footerBetterLgu).toHaveAttribute('href', 'https://lgu.bettergov.ph/');
+  await expect(footerBetterLgu).toHaveAttribute('target', '_blank');
 
   await page.goto(baseURL + '/about');
-  await expect(page.getByRole('link', { name: /BetterGov/i })).toBeVisible();
-  await expect(page.getByRole('link', { name: /BetterLGU/i })).toBeVisible();
-  await expect(page.getByRole('link', { name: /OpenBayan/i })).toBeVisible();
+  for (const name of [/BetterGov/i, /BetterLGU/i, /OpenBayan/i]) {
+    await expect(page.getByRole('link', { name }).first()).toHaveAttribute('target', '_blank');
+  }
 });
 
-test('ecosystem fallbacks appear in search, participation and hotlines', async ({ page }) => {
+test('ecosystem fallbacks preserve the query and leave an internal recovery path', async ({ page }) => {
   await page.goto(baseURL + '/search');
   const search = page.getByPlaceholder(/Yellow Card, Poblacion, budget, cinema/i);
-  await search.fill('service-that-does-not-exist-xyz');
-  await expect(page.getByRole('link', { name: 'Search BetterGov', exact: true })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Find another LGU', exact: true })).toBeVisible();
+  const missingQuery = 'service-that-does-not-exist-xyz';
+  await search.fill(missingQuery);
+
+  const betterGov = page.getByRole('link', { name: 'Search BetterGov', exact: true });
+  await expect(betterGov).toHaveAttribute(
+    'href',
+    'https://bettergov.ph/services?search=' + encodeURIComponent(missingQuery)
+  );
+  await expect(betterGov).toHaveAttribute('target', '_blank');
+
+  const betterLgu = page.getByRole('link', { name: 'Find another LGU', exact: true });
+  await expect(betterLgu).toHaveAttribute('href', 'https://lgu.bettergov.ph/');
+  await expect(betterLgu).toHaveAttribute('target', '_blank');
+
+  await page.getByRole('button', { name: 'Report a missing result', exact: true }).click();
+  await expect(page).toHaveURL(/\/get-involved\?type=idea&tool=saan-ako-lalapit&subject=Missing(?:%20|\+)search(?:%20|\+)result/);
+  await expect(page.getByRole('heading', { level: 1 })).toContainText(/Get involved|Contribute/i);
 
   await page.goto(baseURL + '/participate');
-  await expect(page.getByRole('link', { name: /Open BetterLGU/i })).toBeVisible();
-  await expect(page.getByRole('link', { name: /Open Petitions\.ph/i })).toBeVisible();
-  await expect(page.getByRole('link', { name: /Open OpenBayan/i })).toBeVisible();
-
-  await page.goto(baseURL + '/get-involved');
-  await expect(page.getByRole('link', { name: /BetterLGU Directory/i })).toBeVisible();
-  await expect(page.getByRole('link', { name: /Open OpenBayan/i })).toBeVisible();
+  for (const name of [/Open BetterLGU/i, /Open Petitions\.ph/i, /Open OpenBayan/i]) {
+    await expect(page.getByRole('link', { name })).toHaveAttribute('target', '_blank');
+  }
 
   await page.goto(baseURL + '/hotlines');
-  await expect(page.getByRole('link', { name: /Browse nationwide hotlines/i })).toHaveAttribute(
-    'href',
-    'https://hotlines.bettergov.ph/'
-  );
+  const nationwide = page.getByRole('link', { name: /Browse nationwide hotlines/i });
+  await expect(nationwide).toHaveAttribute('href', 'https://hotlines.bettergov.ph/');
+  await expect(nationwide).toHaveAttribute('target', '_blank');
 });
 
 test('projects and budget exposes related national evidence without replacing Makati records', async ({ page }) => {
@@ -1355,7 +1386,7 @@ test('projects and budget exposes related national evidence without replacing Ma
   );
   await expect(nationalContext.getByRole('link', { name: /Procurement browser/i })).toHaveAttribute(
     'href',
-    'https://philgeps.bettergov.ph/'
+    'https://transparency.bettergov.ph/procurement'
   );
   await expect(nationalContext.getByRole('link', { name: /Transparency records/i })).toHaveAttribute(
     'href',
@@ -1379,7 +1410,7 @@ test('accountability and public records expose national evidence tools without r
   );
   await expect(accountabilityEvidence.getByRole('link', { name: /Procurement records/i })).toHaveAttribute(
     'href',
-    'https://philgeps.bettergov.ph/'
+    'https://transparency.bettergov.ph/procurement'
   );
   await expect(accountabilityEvidence.getByRole('link', { name: /SALN records/i })).toHaveAttribute(
     'href',
