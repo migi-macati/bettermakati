@@ -804,12 +804,13 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Define shared Place Registry schema",
       "maximumScope": "Schema/design record only. Define canonical place fields and Civic-Map-specific fields. No code migration.",
-      "status": "next",
+      "status": "complete",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
       ],
-      "stopWhen": "Schema/design record only. Define canonical place fields and Civic-Map-specific fields. No code migration."
+      "stopWhen": "Schema/design record only. Define canonical place fields and Civic-Map-specific fields. No code migration.",
+      "designFile": "data/place-registry-schema.json"
     },
     {
       "id": "W3R-2b",
@@ -818,7 +819,7 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Introduce Place Registry data layer",
       "maximumScope": "Data-layer refactor only. Preserve all current place IDs and page behavior; Civic Map may temporarily re-export the same records.",
-      "status": "planned",
+      "status": "next",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
@@ -1365,9 +1366,9 @@
     }
   ],
   "immediateNext": {
-    "id": "W3R-2a",
-    "title": "Define shared Place Registry schema",
-    "maximumScope": "Schema/design record only. Define canonical place fields, lifecycle/provenance relationships and which fields remain participation-specific. No code migration."
+    "id": "W3R-2b",
+    "title": "Introduce Place Registry data layer",
+    "maximumScope": "Data-layer refactor only. Preserve all current place IDs and page behavior; Civic Map may temporarily re-export the same records."
   },
   "reopenedExecutionOrder": [
     "3C-2a",
