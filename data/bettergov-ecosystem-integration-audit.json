@@ -152,8 +152,8 @@
     },
     {
       "id": "philgeps",
-      "name": "PhilGEPS Browser",
-      "url": "https://philgeps.bettergov.ph/",
+      "name": "PhilGEPS procurement browser",
+      "url": "https://transparency.bettergov.ph/procurement",
       "status": "live",
       "source": "official-projects-page",
       "decision": "deep-link",
@@ -163,7 +163,7 @@
         "records",
         "city-monitor"
       ],
-      "notes": "Strong evidence handoff for procurement records. Prefer direct record links when identifiers can be matched."
+      "notes": "Procurement handoff now uses the live BetterGov Transparency procurement browser. Prefer direct official PhilGEPS notice links only when the numeric PhilGEPS refid has been independently matched."
     },
     {
       "id": "political-dynasty",
