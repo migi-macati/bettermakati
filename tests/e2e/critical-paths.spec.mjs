@@ -337,6 +337,49 @@ test('Saan Ako Lalapit common need reaches the structured PWD guide', async ({ p
   await expect(page.getByText('Six 1x1 ID pictures', { exact: true })).toBeVisible();
 });
 
+test('ecosystem handoffs are mobile-safe with usable touch targets', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+
+  const routes = [
+    '/services',
+    '/search?q=service-that-does-not-exist-xyz',
+    '/services/guide/national-id',
+    '/participate',
+    '/get-involved',
+    '/hotlines',
+    '/about',
+    '/projects-budget',
+    '/accountability',
+    '/records',
+    '/legislation',
+  ];
+
+  for (const route of routes) {
+    await page.goto(baseURL + route);
+    const overflow = await page.evaluate(
+      () => document.documentElement.scrollWidth - document.documentElement.clientWidth
+    );
+    expect(overflow, `Horizontal overflow on ecosystem route ${route}`).toBeLessThanOrEqual(2);
+  }
+
+  await page.goto(baseURL + '/services/guide/national-id');
+  const official = page.getByRole('link', { name: /Open official service/i });
+  const betterGov = page.getByRole('link', { name: 'BetterGov.ph', exact: true });
+  const officialBox = await official.boundingBox();
+  const betterGovBox = await betterGov.boundingBox();
+  expect(officialBox?.height ?? 0, 'Official-service target should be at least 44px tall').toBeGreaterThanOrEqual(44);
+  expect(betterGovBox?.height ?? 0, 'BetterGov directory target should be at least 32px tall').toBeGreaterThanOrEqual(32);
+
+  await page.goto(baseURL + '/search');
+  const search = page.getByPlaceholder(/Yellow Card, Poblacion, budget, cinema/i);
+  await search.fill('service-that-does-not-exist-xyz');
+  for (const name of ['Search BetterGov', 'Find another LGU']) {
+    const link = page.getByRole('link', { name, exact: true });
+    const box = await link.boundingBox();
+    expect(box?.height ?? 0, `${name} target should be at least 44px tall`).toBeGreaterThanOrEqual(44);
+  }
+});
+
 test('mobile homepage and services have no material horizontal overflow', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   for (const route of ['/', '/services', '/community-tools/saan-ako-lalapit', '/projects-budget', '/accountability', '/accountability?barangay=bel-air', '/records', '/elections', '/city-monitor', '/briefs', '/today', '/live', '/status', '/barangays', '/barangays/poblacion', '/reports', '/reports/2026-budget-operating-expenses', '/reports/2025-local-revenue', '/civic-map', '/civic-map/poblacion-park', '/civic-map/reports']) {
