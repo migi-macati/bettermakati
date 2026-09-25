@@ -521,8 +521,11 @@ export default function PublicRecords() {
           <a href="/source-watch-index.json" download className="brand-btn-secondary">
             <Database className="h-4 w-4" /> Monitored-source index
           </a>
-          <a href="/source-watch-history.json" download className="brand-btn-secondary">
-            <Download className="h-4 w-4" /> Check history
+          <a href="/freshness-history.json" download className="brand-btn-secondary">
+            <Download className="h-4 w-4" /> Freshness history
+          </a>
+          <a href="/page-freshness-state.json" download className="brand-btn-secondary">
+            <Database className="h-4 w-4" /> Page freshness
           </a>
         </div>
 
