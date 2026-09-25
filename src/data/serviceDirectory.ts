@@ -1097,6 +1097,16 @@ export const serviceDirectory: ServiceDirectoryItem[] = [
     href: 'https://philsys.gov.ph/',
     sourceUrl: 'https://psa.gov.ph/',
     keywords: 'national id philsys digital national id identification',
+    nationalIntegration: {
+      officialActionUrl: 'https://philsys.gov.ph/',
+      officialSourceUrl: 'https://psa.gov.ph/',
+      betterGov: {
+        status: 'listed',
+        listingUrl: 'https://bettergov.ph/services?search=National%20ID',
+        matchedService: 'Register to the Philippine Identification System (PhilSys) or National ID',
+        auditedAt: '2026-09-25',
+      },
+    },
   },
   {
     id: 'passport',
@@ -1110,6 +1120,16 @@ export const serviceDirectory: ServiceDirectoryItem[] = [
     sourceUrl: 'https://passport.gov.ph/',
     keywords: 'passport dfa appointment renewal new passport travel',
     featured: true,
+    nationalIntegration: {
+      officialActionUrl: 'https://passport.gov.ph/',
+      officialSourceUrl: 'https://passport.gov.ph/',
+      betterGov: {
+        status: 'listed',
+        listingUrl: 'https://bettergov.ph/services?search=Passport%20Application%20Appointment',
+        matchedService: 'Schedule Passport Application Appointment',
+        auditedAt: '2026-09-25',
+      },
+    },
   },
   {
     id: 'drivers-license',
@@ -1122,6 +1142,20 @@ export const serviceDirectory: ServiceDirectoryItem[] = [
     href: 'https://portal.lto.gov.ph/',
     sourceUrl: 'https://lto.gov.ph/',
     keywords: 'drivers driver license renewal lto ltms',
+    nationalIntegration: {
+      officialActionUrl: 'https://portal.lto.gov.ph/',
+      officialSourceUrl: 'https://lto.gov.ph/',
+      betterGov: {
+        status: 'listed',
+        listingUrl: 'https://bettergov.ph/services?search=Driver%27s%20License',
+        matchedService: "Get a Driver's License",
+        auditedAt: '2026-09-25',
+      },
+      makatiContext: {
+        summary: 'LTO Makati District Office is on Pililia Street in Barangay Valenzuela. Confirm the current transaction and appointment requirements before visiting.',
+        officeIds: ['lto-makati'],
+      },
+    },
   },
   {
     id: 'vehicle-registration',

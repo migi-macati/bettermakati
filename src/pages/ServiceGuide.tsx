@@ -18,6 +18,7 @@ import LastReviewed from '../components/ui/LastReviewed';
 import { serviceDirectory, type ServiceDirectoryItem } from '../data/serviceDirectory';
 import { officesForAgency } from '../data/governmentServiceOffices';
 import { serviceGuideDetails } from '../data/serviceGuideDetails';
+import NationalServiceHandoff from '../components/services/NationalServiceHandoff';
 
 const mapsUrl = (query: string) =>
   'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(query);
@@ -662,29 +663,36 @@ export default function ServiceGuide() {
         )}
       </Section>
 
-      <Section className="bg-white">
-        <div className="section-eyebrow">Official transaction</div>
-        <Heading level={2}>Continue with the issuing agency</Heading>
-        <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600">
-          Check the agency page for current eligibility, forms, fees, schedules and any appointment requirement.
-        </p>
-        <div className="mt-5 flex flex-wrap gap-3">
-          {destinationIsExternal ? (
-            <a href={item.href} target="_blank" rel="noreferrer" className="brand-btn-primary">
-              Continue to official service <ExternalLink className="h-4 w-4" />
-            </a>
-          ) : (
-            <Link to={item.href} className="brand-btn-primary">
-              Open detailed BetterMakati guide
-            </Link>
-          )}
-          {item.sourceUrl !== item.href && (
-            <a href={item.sourceUrl} target="_blank" rel="noreferrer" className="brand-btn-secondary">
-              Official source <FileText className="h-4 w-4" />
-            </a>
-          )}
-        </div>
-      </Section>
+      {item.level === 'National' && item.nationalIntegration ? (
+        <NationalServiceHandoff
+          agency={item.agency}
+          integration={item.nationalIntegration}
+        />
+      ) : (
+        <Section className="bg-white">
+          <div className="section-eyebrow">Official transaction</div>
+          <Heading level={2}>Continue with the issuing agency</Heading>
+          <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600">
+            Check the agency page for current eligibility, forms, fees, schedules and any appointment requirement.
+          </p>
+          <div className="mt-5 flex flex-wrap gap-3">
+            {destinationIsExternal ? (
+              <a href={item.href} target="_blank" rel="noreferrer" className="brand-btn-primary">
+                Continue to official service <ExternalLink className="h-4 w-4" />
+              </a>
+            ) : (
+              <Link to={item.href} className="brand-btn-primary">
+                Open detailed BetterMakati guide
+              </Link>
+            )}
+            {item.sourceUrl !== item.href && (
+              <a href={item.sourceUrl} target="_blank" rel="noreferrer" className="brand-btn-secondary">
+                Official source <FileText className="h-4 w-4" />
+              </a>
+            )}
+          </div>
+        </Section>
+      )}
     </>
   );
 }

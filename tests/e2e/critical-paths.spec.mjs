@@ -1029,3 +1029,44 @@ test('barangay context does not follow users to unrelated citywide pages', async
   await expect(page.getByLabel('Choose BetterBarangay view')).toHaveValue('');
 });
 
+test('national service handoff prioritizes official agencies and references BetterGov', async ({ page }) => {
+  await page.goto(baseURL + '/services/guide/national-id');
+  await expect(
+    page.getByRole('heading', { name: 'Continue with Philippine Statistics Authority', exact: true })
+  ).toBeVisible();
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://philsys.gov.ph/'
+  );
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toHaveAttribute(
+    'href',
+    /bettergov\.ph\/services\?search=National%20ID/
+  );
+
+  await page.goto(baseURL + '/services/guide/passport');
+  await expect(
+    page.getByRole('heading', { name: 'Continue with Department of Foreign Affairs', exact: true })
+  ).toBeVisible();
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://passport.gov.ph/'
+  );
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toHaveAttribute(
+    'href',
+    /bettergov\.ph\/services\?search=Passport%20Application%20Appointment/
+  );
+
+  await page.goto(baseURL + '/services/guide/drivers-license');
+  await expect(
+    page.getByRole('heading', { name: 'Continue with Land Transportation Office', exact: true })
+  ).toBeVisible();
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://portal.lto.gov.ph/'
+  );
+  await expect(page.getByText(/LTO Makati District Office is on Pililia Street/i)).toBeVisible();
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toHaveAttribute(
+    'href',
+    /bettergov\.ph\/services\?search=Driver%27s%20License/
+  );
+});
