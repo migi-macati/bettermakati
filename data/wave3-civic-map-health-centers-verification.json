@@ -1,0 +1,537 @@
+{
+  "schemaVersion": 1,
+  "verifiedAt": "2026-09-25",
+  "workstream": "Wave 3C-1b — Current Makati public health-facility verification",
+  "scope": "Research/reconciliation only. No Civic Map health-center assets are added in this step.",
+  "controllingCounts": {
+    "source": "Makati City Basic Facts and Figures 2023",
+    "sourceUrl": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1720150266681.pdf",
+    "healthCenters": 18,
+    "twentyFourSevenHealthCenter": 1,
+    "note": "The 2023 city statistic is retained as the MHD-network denominator. Newer evidence is used to identify the current named sites."
+  },
+  "methodology": [
+    "Use the 2026 PhilHealth YAKAP list as strongest current operating evidence where a Makati city health center appears with a current address.",
+    "Use 2026 PhilHealth TB DOTS accreditation and the current DOH NTP directory to fill current MHD-network sites absent from YAKAP.",
+    "Use older Makati Health Department directories only for historical continuity and alias/address comparison.",
+    "Do not count the Makati Health Department employee clinic at City Hall as one of the 18 barangay/community health centers.",
+    "Treat barangay-run or supplementary public clinics separately from the MHD 18 unless a city source explicitly places them in that denominator.",
+    "Do not create a second Civic Map pin for a service designation operating at the same physical health-center site."
+  ],
+  "mhdHealthCenterNetwork": {
+    "verifiedCurrentCount": 18,
+    "countMatches2023Headline": true,
+    "sites": [
+      {
+        "id": "bangkal-health-center",
+        "name": "Bangkal Health Center",
+        "barangay": "Bangkal",
+        "address": "1126 Rodriguez Street, Barangay Bangkal, Makati City",
+        "networkClass": "Makati Health Department health-center network",
+        "currentStatus": "verified-current",
+        "currentEvidence": {
+          "sourceUrl": "https://www.philhealth.gov.ph/partners/providers/facilities/accredited/YAKAP.pdf",
+          "sourceLabel": "PhilHealth YAKAP CY 2026"
+        },
+        "historicalContinuity": {
+          "sourceUrl": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1568103121130.pdf",
+          "sourceLabel": "City Government of Makati — Barangay Health Centers directory",
+          "status": "continuity-supported"
+        },
+        "locationVerification": {
+          "status": "street-address-frozen",
+          "coordinateDisposition": "Exact latitude/longitude to be frozen in implementation from a current map point matched to this verified address; do not use barangay centroid.",
+          "searchQuery": "Bangkal Health Center, 1126 Rodriguez Street, Barangay Bangkal, Makati City"
+        },
+        "implementationDisposition": "ready-for-coordinate-point-freeze"
+      },
+      {
+        "id": "carmona-health-center",
+        "name": "Carmona Health Center",
+        "barangay": "Carmona",
+        "address": "3002 H. Santos Street, Barangay Carmona, Makati City",
+        "networkClass": "Makati Health Department health-center network",
+        "currentStatus": "verified-current",
+        "currentEvidence": {
+          "sourceUrl": "https://www.philhealth.gov.ph/partners/providers/facilities/accredited/YAKAP.pdf",
+          "sourceLabel": "PhilHealth YAKAP CY 2026"
+        },
+        "historicalContinuity": {
+          "sourceUrl": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1568103121130.pdf",
+          "sourceLabel": "City Government of Makati — Barangay Health Centers directory",
+          "status": "continuity-supported"
+        },
+        "locationVerification": {
+          "status": "street-address-frozen",
+          "coordinateDisposition": "Exact latitude/longitude to be frozen in implementation from a current map point matched to this verified address; do not use barangay centroid.",
+          "searchQuery": "Carmona Health Center, 3002 H. Santos Street, Barangay Carmona, Makati City"
+        },
+        "implementationDisposition": "ready-for-coordinate-point-freeze"
+      },
+      {
+        "id": "guadalupe-nuevo-health-center",
+        "name": "Guadalupe Nuevo Health Center",
+        "barangay": "Guadalupe Nuevo",
+        "address": "La Consolacion corner Nuestra Señora de Guadalupe, Barangay Guadalupe Nuevo, Makati City",
+        "networkClass": "Makati Health Department health-center network",
+        "currentStatus": "verified-current",
+        "currentEvidence": {
+          "sourceUrl": "https://www.philhealth.gov.ph/partners/providers/facilities/accredited/YAKAP.pdf",
+          "sourceLabel": "PhilHealth YAKAP CY 2026"
+        },
+        "historicalContinuity": {
+          "sourceUrl": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1568103121130.pdf",
+          "sourceLabel": "City Government of Makati — Barangay Health Centers directory",
+          "status": "continuity-supported"
+        },
+        "locationVerification": {
+          "status": "street-address-frozen",
+          "coordinateDisposition": "Exact latitude/longitude to be frozen in implementation from a current map point matched to this verified address; do not use barangay centroid.",
+          "searchQuery": "Guadalupe Nuevo Health Center, La Consolacion corner Nuestra Señora de Guadalupe, Barangay Guadalupe Nuevo, Makati City"
+        },
+        "implementationDisposition": "ready-for-coordinate-point-freeze"
+      },
+      {
+        "id": "guadalupe-viejo-health-center",
+        "name": "Guadalupe Viejo Health Center",
+        "barangay": "Guadalupe Viejo",
+        "address": "Camia Street corner Gumamela Street, Barangay Guadalupe Viejo, Makati City",
+        "networkClass": "Makati Health Department health-center network",
+        "currentStatus": "verified-current",
+        "currentEvidence": {
+          "sourceUrl": "https://www.philhealth.gov.ph/partners/providers/facilities/accredited/YAKAP.pdf",
+          "sourceLabel": "PhilHealth YAKAP CY 2026"
+        },
+        "historicalContinuity": {
+          "sourceUrl": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1568103121130.pdf",
+          "sourceLabel": "City Government of Makati — Barangay Health Centers directory",
+          "status": "continuity-supported"
+        },
+        "locationVerification": {
+          "status": "street-address-frozen",
+          "coordinateDisposition": "Exact latitude/longitude to be frozen in implementation from a current map point matched to this verified address; do not use barangay centroid.",
+          "searchQuery": "Guadalupe Viejo Health Center, Camia Street corner Gumamela Street, Barangay Guadalupe Viejo, Makati City"
+        },
+        "implementationDisposition": "ready-for-coordinate-point-freeze"
+      },
+      {
+        "id": "kasilawan-health-center",
+        "name": "Kasilawan Health Center",
+        "barangay": "Kasilawan",
+        "address": "2094 E. Pascua Street, Barangay Kasilawan, Makati City",
+        "networkClass": "Makati Health Department health-center network",
+        "currentStatus": "verified-current",
+        "currentEvidence": {
+          "sourceUrl": "https://www.philhealth.gov.ph/partners/providers/facilities/accredited/YAKAP.pdf",
+          "sourceLabel": "PhilHealth YAKAP CY 2026"
+        },
+        "historicalContinuity": {
+          "sourceUrl": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1568103121130.pdf",
+          "sourceLabel": "City Government of Makati — Barangay Health Centers directory",
+          "status": "continuity-supported"
+        },
+        "locationVerification": {
+          "status": "street-address-frozen",
+          "coordinateDisposition": "Exact latitude/longitude to be frozen in implementation from a current map point matched to this verified address; do not use barangay centroid.",
+          "searchQuery": "Kasilawan Health Center, 2094 E. Pascua Street, Barangay Kasilawan, Makati City"
+        },
+        "implementationDisposition": "ready-for-coordinate-point-freeze"
+      },
+      {
+        "id": "la-paz-health-center",
+        "name": "La Paz Health Center",
+        "barangay": "La Paz",
+        "address": "815 Archimedes Street, Barangay La Paz, Makati City",
+        "networkClass": "Makati Health Department health-center network",
+        "currentStatus": "verified-current",
+        "currentEvidence": {
+          "sourceUrl": "https://www.philhealth.gov.ph/partners/providers/facilities/accredited/YAKAP.pdf",
+          "sourceLabel": "PhilHealth YAKAP CY 2026"
+        },
+        "historicalContinuity": {
+          "sourceUrl": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1568103121130.pdf",
+          "sourceLabel": "City Government of Makati — Barangay Health Centers directory",
+          "status": "continuity-supported"
+        },
+        "locationVerification": {
+          "status": "street-address-frozen",
+          "coordinateDisposition": "Exact latitude/longitude to be frozen in implementation from a current map point matched to this verified address; do not use barangay centroid.",
+          "searchQuery": "La Paz Health Center, 815 Archimedes Street, Barangay La Paz, Makati City"
+        },
+        "implementationDisposition": "ready-for-coordinate-point-freeze"
+      },
+      {
+        "id": "olympia-health-center",
+        "name": "Olympia Health Center",
+        "barangay": "Olympia",
+        "address": "8674 Fortuna Street, Barangay Olympia, Makati City",
+        "networkClass": "Makati Health Department health-center network",
+        "currentStatus": "verified-current",
+        "currentEvidence": {
+          "sourceUrl": "https://www.philhealth.gov.ph/partners/providers/facilities/accredited/YAKAP.pdf",
+          "sourceLabel": "PhilHealth YAKAP CY 2026"
+        },
+        "historicalContinuity": {
+          "sourceUrl": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1568103121130.pdf",
+          "sourceLabel": "City Government of Makati — Barangay Health Centers directory",
+          "status": "continuity-supported"
+        },
+        "locationVerification": {
+          "status": "street-address-frozen",
+          "coordinateDisposition": "Exact latitude/longitude to be frozen in implementation from a current map point matched to this verified address; do not use barangay centroid.",
+          "searchQuery": "Olympia Health Center, 8674 Fortuna Street, Barangay Olympia, Makati City"
+        },
+        "implementationDisposition": "ready-for-coordinate-point-freeze"
+      },
+      {
+        "id": "palanan-health-center",
+        "name": "Palanan Health Center",
+        "barangay": "Palanan",
+        "address": "4513 Casino Street, Barangay Palanan, Makati City",
+        "networkClass": "Makati Health Department health-center network",
+        "currentStatus": "verified-current",
+        "currentEvidence": {
+          "sourceUrl": "https://www.philhealth.gov.ph/partners/providers/facilities/accredited/YAKAP.pdf",
+          "sourceLabel": "PhilHealth YAKAP CY 2026"
+        },
+        "historicalContinuity": {
+          "sourceUrl": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1568103121130.pdf",
+          "sourceLabel": "City Government of Makati — Barangay Health Centers directory",
+          "status": "continuity-supported"
+        },
+        "locationVerification": {
+          "status": "street-address-frozen",
+          "coordinateDisposition": "Exact latitude/longitude to be frozen in implementation from a current map point matched to this verified address; do not use barangay centroid.",
+          "searchQuery": "Palanan Health Center, 4513 Casino Street, Barangay Palanan, Makati City"
+        },
+        "implementationDisposition": "ready-for-coordinate-point-freeze"
+      },
+      {
+        "id": "pinagkaisahan-health-center",
+        "name": "Pinagkaisahan Health Center",
+        "barangay": "Pinagkaisahan",
+        "address": "2886 Danlig Street corner Tolentino Street, Barangay Pinagkaisahan, Makati City",
+        "networkClass": "Makati Health Department health-center network",
+        "currentStatus": "verified-current",
+        "currentEvidence": {
+          "sourceUrl": "https://www.philhealth.gov.ph/partners/providers/facilities/accredited/YAKAP.pdf",
+          "sourceLabel": "PhilHealth YAKAP CY 2026"
+        },
+        "historicalContinuity": {
+          "sourceUrl": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1568103121130.pdf",
+          "sourceLabel": "City Government of Makati — Barangay Health Centers directory",
+          "status": "continuity-supported"
+        },
+        "locationVerification": {
+          "status": "street-address-frozen",
+          "coordinateDisposition": "Exact latitude/longitude to be frozen in implementation from a current map point matched to this verified address; do not use barangay centroid.",
+          "searchQuery": "Pinagkaisahan Health Center, 2886 Danlig Street corner Tolentino Street, Barangay Pinagkaisahan, Makati City"
+        },
+        "implementationDisposition": "ready-for-coordinate-point-freeze"
+      },
+      {
+        "id": "pio-pc-health-center",
+        "name": "Pio PC Health Center",
+        "barangay": "Pio del Pilar",
+        "address": "1st Circle, Washington Street, Barangay Pio del Pilar, Makati City",
+        "networkClass": "Makati Health Department health-center network",
+        "currentStatus": "verified-current",
+        "currentEvidence": {
+          "sourceUrl": "https://www.philhealth.gov.ph/partners/providers/facilities/accredited/YAKAP.pdf",
+          "sourceLabel": "PhilHealth YAKAP CY 2026"
+        },
+        "historicalContinuity": {
+          "sourceUrl": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1568103121130.pdf",
+          "sourceLabel": "City Government of Makati — Barangay Health Centers directory",
+          "status": "continuity-supported"
+        },
+        "locationVerification": {
+          "status": "street-address-frozen",
+          "coordinateDisposition": "Exact latitude/longitude to be frozen in implementation from a current map point matched to this verified address; do not use barangay centroid.",
+          "searchQuery": "Pio PC Health Center, 1st Circle, Washington Street, Barangay Pio del Pilar, Makati City"
+        },
+        "implementationDisposition": "ready-for-coordinate-point-freeze"
+      },
+      {
+        "id": "pio-rhu-health-center",
+        "name": "Pio RHU Health Center",
+        "barangay": "Pio del Pilar",
+        "address": "1500 Apolinario Street corner Arguelles Street, Barangay Pio del Pilar, Makati City",
+        "networkClass": "Makati Health Department health-center network",
+        "currentStatus": "verified-current",
+        "currentEvidence": {
+          "sourceUrl": "https://www.philhealth.gov.ph/partners/providers/facilities/accredited/YAKAP.pdf",
+          "sourceLabel": "PhilHealth YAKAP CY 2026"
+        },
+        "historicalContinuity": {
+          "sourceUrl": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1568103121130.pdf",
+          "sourceLabel": "City Government of Makati — Barangay Health Centers directory",
+          "status": "continuity-supported"
+        },
+        "locationVerification": {
+          "status": "street-address-frozen",
+          "coordinateDisposition": "Exact latitude/longitude to be frozen in implementation from a current map point matched to this verified address; do not use barangay centroid.",
+          "searchQuery": "Pio RHU Health Center, 1500 Apolinario Street corner Arguelles Street, Barangay Pio del Pilar, Makati City"
+        },
+        "implementationDisposition": "ready-for-coordinate-point-freeze"
+      },
+      {
+        "id": "poblacion-health-center",
+        "name": "Poblacion Health Center",
+        "barangay": "Poblacion",
+        "address": "A. Bonifacio Street, Barangay Poblacion, Makati City",
+        "networkClass": "Makati Health Department health-center network",
+        "currentStatus": "verified-current",
+        "currentEvidence": {
+          "sourceUrl": "https://www.philhealth.gov.ph/partners/providers/facilities/accredited/YAKAP.pdf",
+          "sourceLabel": "PhilHealth YAKAP CY 2026"
+        },
+        "historicalContinuity": {
+          "sourceUrl": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1568103121130.pdf",
+          "sourceLabel": "City Government of Makati — Barangay Health Centers directory",
+          "status": "continuity-supported"
+        },
+        "locationVerification": {
+          "status": "street-address-frozen",
+          "coordinateDisposition": "Exact latitude/longitude to be frozen in implementation from a current map point matched to this verified address; do not use barangay centroid.",
+          "searchQuery": "Poblacion Health Center, A. Bonifacio Street, Barangay Poblacion, Makati City"
+        },
+        "implementationDisposition": "ready-for-coordinate-point-freeze"
+      },
+      {
+        "id": "san-isidro-health-center",
+        "name": "San Isidro Health Center",
+        "barangay": "San Isidro",
+        "address": "2701 Guatemala Street, Barangay San Isidro, Makati City",
+        "networkClass": "Makati Health Department health-center network",
+        "currentStatus": "verified-current",
+        "currentEvidence": {
+          "sourceUrl": "https://www.philhealth.gov.ph/partners/providers/facilities/accredited/YAKAP.pdf",
+          "sourceLabel": "PhilHealth YAKAP CY 2026"
+        },
+        "historicalContinuity": {
+          "sourceUrl": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1568103121130.pdf",
+          "sourceLabel": "City Government of Makati — Barangay Health Centers directory",
+          "status": "continuity-supported"
+        },
+        "locationVerification": {
+          "status": "street-address-frozen",
+          "coordinateDisposition": "Exact latitude/longitude to be frozen in implementation from a current map point matched to this verified address; do not use barangay centroid.",
+          "searchQuery": "San Isidro Health Center, 2701 Guatemala Street, Barangay San Isidro, Makati City"
+        },
+        "implementationDisposition": "ready-for-coordinate-point-freeze"
+      },
+      {
+        "id": "singkamas-health-center",
+        "name": "Singkamas Health Center",
+        "barangay": "Singkamas",
+        "address": "3816 F. Nazario Street, Barangay Singkamas, Makati City",
+        "networkClass": "Makati Health Department health-center network",
+        "currentStatus": "verified-current",
+        "currentEvidence": {
+          "sourceUrl": "https://www.philhealth.gov.ph/partners/providers/facilities/accredited/YAKAP.pdf",
+          "sourceLabel": "PhilHealth YAKAP CY 2026"
+        },
+        "historicalContinuity": {
+          "sourceUrl": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1568103121130.pdf",
+          "sourceLabel": "City Government of Makati — Barangay Health Centers directory",
+          "status": "continuity-supported"
+        },
+        "locationVerification": {
+          "status": "street-address-frozen",
+          "coordinateDisposition": "Exact latitude/longitude to be frozen in implementation from a current map point matched to this verified address; do not use barangay centroid.",
+          "searchQuery": "Singkamas Health Center, 3816 F. Nazario Street, Barangay Singkamas, Makati City"
+        },
+        "implementationDisposition": "ready-for-coordinate-point-freeze"
+      },
+      {
+        "id": "sta-cruz-health-center",
+        "name": "Sta. Cruz Health Center",
+        "barangay": "Sta. Cruz",
+        "address": "3942 Yague Street, Barangay Sta. Cruz, Makati City",
+        "networkClass": "Makati Health Department health-center network",
+        "currentStatus": "verified-current",
+        "currentEvidence": {
+          "sourceUrl": "https://www.philhealth.gov.ph/partners/providers/facilities/accredited/YAKAP.pdf",
+          "sourceLabel": "PhilHealth YAKAP CY 2026"
+        },
+        "historicalContinuity": {
+          "sourceUrl": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1568103121130.pdf",
+          "sourceLabel": "City Government of Makati — Barangay Health Centers directory",
+          "status": "continuity-supported"
+        },
+        "locationVerification": {
+          "status": "street-address-frozen",
+          "coordinateDisposition": "Exact latitude/longitude to be frozen in implementation from a current map point matched to this verified address; do not use barangay centroid.",
+          "searchQuery": "Sta. Cruz Health Center, 3942 Yague Street, Barangay Sta. Cruz, Makati City"
+        },
+        "implementationDisposition": "ready-for-coordinate-point-freeze"
+      },
+      {
+        "id": "tejeros-health-center",
+        "name": "Tejeros Health Center",
+        "barangay": "Tejeros",
+        "address": "2903 H. Santos Street, Barangay Tejeros, Makati City",
+        "networkClass": "Makati Health Department health-center network",
+        "currentStatus": "verified-current",
+        "currentEvidence": {
+          "sourceUrl": "https://www.philhealth.gov.ph/partners/providers/facilities/accredited/YAKAP.pdf",
+          "sourceLabel": "PhilHealth YAKAP CY 2026"
+        },
+        "historicalContinuity": {
+          "sourceUrl": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1568103121130.pdf",
+          "sourceLabel": "City Government of Makati — Barangay Health Centers directory",
+          "status": "continuity-supported"
+        },
+        "locationVerification": {
+          "status": "street-address-frozen",
+          "coordinateDisposition": "Exact latitude/longitude to be frozen in implementation from a current map point matched to this verified address; do not use barangay centroid.",
+          "searchQuery": "Tejeros Health Center, 2903 H. Santos Street, Barangay Tejeros, Makati City"
+        },
+        "implementationDisposition": "ready-for-coordinate-point-freeze"
+      },
+      {
+        "id": "san-antonio-health-center",
+        "name": "San Antonio Health Center",
+        "barangay": "San Antonio",
+        "address": "8456 Mayapis Street, San Antonio Village, Barangay San Antonio, Makati City",
+        "networkClass": "Makati Health Department health-center network",
+        "currentStatus": "verified-current",
+        "currentEvidence": {
+          "sourceUrl": "https://www.philhealth.gov.ph/partners/providers/facilities/accredited/DOTS_053126.pdf",
+          "sourceLabel": "PhilHealth TB DOTS CY 2026"
+        },
+        "historicalContinuity": {
+          "sourceUrl": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1568103121130.pdf",
+          "sourceLabel": "City Government of Makati — Barangay Health Centers directory",
+          "status": "continuity-supported"
+        },
+        "locationVerification": {
+          "status": "street-address-frozen",
+          "coordinateDisposition": "Exact latitude/longitude to be frozen in implementation from a current map point matched to this verified address; do not use barangay centroid.",
+          "searchQuery": "San Antonio Health Center, 8456 Mayapis Street, San Antonio Village, Barangay San Antonio, Makati City"
+        },
+        "implementationDisposition": "ready-for-coordinate-point-freeze"
+      },
+      {
+        "id": "valenzuela-health-center",
+        "name": "Valenzuela Health Center",
+        "barangay": "Valenzuela",
+        "address": "Baler Street corner Pililia Street, Barangay Valenzuela, Makati City",
+        "networkClass": "Makati Health Department health-center network",
+        "currentStatus": "verified-current",
+        "currentEvidence": {
+          "sourceUrl": "https://ntp.doh.gov.ph/view-facility/?id=13370",
+          "sourceLabel": "DOH National TB Control Program current facility directory"
+        },
+        "historicalContinuity": {
+          "sourceUrl": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1568103121130.pdf",
+          "sourceLabel": "City Government of Makati — Barangay Health Centers directory",
+          "status": "continuity-supported"
+        },
+        "locationVerification": {
+          "status": "street-address-frozen",
+          "coordinateDisposition": "Exact latitude/longitude to be frozen in implementation from a current map point matched to this verified address; do not use barangay centroid.",
+          "searchQuery": "Valenzuela Health Center, Baler Street corner Pililia Street, Barangay Valenzuela, Makati City"
+        },
+        "implementationDisposition": "ready-for-coordinate-point-freeze"
+      }
+    ],
+    "sourceCoverage": {
+      "philHealthYakap2026": 16,
+      "philHealthDots2026Additional": 1,
+      "dohNtpCurrentDirectoryAdditional": 1
+    }
+  },
+  "twentyFourSevenHealthCenter": {
+    "id": "palanan-24-7-health-center",
+    "currentName": "Palanan 24/7 Health Center",
+    "barangay": "Palanan",
+    "currentStatus": "verified-current-service-designation",
+    "physicalSite": "palanan-health-center",
+    "distinctMapAsset": false,
+    "address": "4513 Casino Street, Barangay Palanan, Makati City",
+    "evidence": [
+      {
+        "sourceUrl": "https://www.makati.gov.ph/assets/uploads/downloads/2/841/842/pdf/Makati%20eLCCAP%202024-2054.pdf",
+        "sourceLabel": "City Government of Makati — Enhanced Local Climate Change Action Plan 2024–2054",
+        "finding": "Lists both Palanan 24/7 Health Center and Palanan Health Center in Barangay Palanan."
+      },
+      {
+        "sourceUrl": "https://www.makati.gov.ph/assets/uploads/downloads/2/481/pdf/Makati%20Citizen%27s%20Charter%20-%20FOR%20PRINT.pdf",
+        "sourceLabel": "City Government of Makati — Citizen's Charter",
+        "finding": "Lists Palanan Health Center and the 24/7 service at the same Casino Street location/contact."
+      },
+      {
+        "sourceUrl": "https://www.philhealth.gov.ph/partners/providers/facilities/accredited/YAKAP.pdf",
+        "sourceLabel": "PhilHealth YAKAP CY 2026",
+        "finding": "Current Palanan Health Center address is 4513 Casino Street."
+      }
+    ],
+    "implementationDisposition": "Represent as 24/7 service metadata/alias on Palanan Health Center unless later evidence proves a separate physical site."
+  },
+  "supplementalPublicClinics": {
+    "sanLorenzo": {
+      "status": "verified-current-public-clinic-system-outside-mhd18-denominator",
+      "evidence": [
+        {
+          "sourceUrl": "https://www.makati.gov.ph/assets/uploads/downloads/2/841/842/pdf/Makati%20eLCCAP%202024-2054.pdf",
+          "sourceLabel": "City Government of Makati — Enhanced Local Climate Change Action Plan 2024–2054",
+          "finding": "Lists San Lorenzo Health Center as a current health facility in Barangay San Lorenzo."
+        },
+        {
+          "sourceUrl": "https://www.sanloph.com/index.php",
+          "sourceLabel": "Barangay San Lorenzo official site",
+          "finding": "Current barangay directory identifies a main Medical and Dental Clinic and a Legazpi satellite clinic."
+        }
+      ],
+      "physicalSites": [
+        {
+          "id": "san-lorenzo-main-medical-dental-clinic",
+          "address": "Amorsolo Street / Barangay San Lorenzo main clinic area, Makati City",
+          "exactAddressStatus": "needs-current-point-and-street-number-freeze"
+        },
+        {
+          "id": "san-lorenzo-legazpi-satellite-clinic",
+          "address": "Legazpi Park, Gamboa Street corner Salcedo Street, Legazpi Village, Barangay San Lorenzo, Makati City",
+          "exactAddressStatus": "current-site-verified"
+        }
+      ],
+      "countingDisposition": "Do not use these sites to inflate the official 18 MHD health-center count; consider them in 3C-1d/1f as supplemental barangay/community public clinics."
+    },
+    "makatiHealthDepartmentEmployeeClinic": {
+      "status": "current-but-not-community-health-center-denominator",
+      "address": "7th Floor, Makati City Hall, J.P. Rizal Street, Poblacion, Makati City",
+      "currentEvidence": {
+        "sourceUrl": "https://www.philhealth.gov.ph/partners/providers/facilities/accredited/YAKAP.pdf",
+        "sourceLabel": "PhilHealth YAKAP CY 2026"
+      },
+      "implementationDisposition": "Treat as a specialized/employee clinic only if Civic Map scope later includes internal government clinics."
+    }
+  },
+  "reconciliationFindings": [
+    "The 18-center 2023 headline can be matched to 18 currently evidenced MHD-network sites without using the City Hall employee clinic.",
+    "Sixteen of the 18 are directly listed in the May 31, 2026 PhilHealth YAKAP roster.",
+    "San Antonio is separately current in PhilHealth's May 31, 2026 TB DOTS roster.",
+    "Valenzuela remains a current City of Makati public Rural Health Unit/Health Center in the DOH National TB Control Program directory.",
+    "Both Pio PC and Pio RHU remain current, so they must stay as separate physical sites.",
+    "Palanan's 24/7 designation is co-located with Palanan Health Center and should not become a duplicate pin.",
+    "San Lorenzo has current public medical/dental clinic sites, but the reviewed evidence does not place them inside the official MHD 18-center denominator; keep them as a separate public-clinic layer pending implementation scope."
+  ],
+  "implementationReadiness": {
+    "readyHealthCenterSites": 18,
+    "duplicatePinsToAvoid": [
+      "palanan-24-7-health-center"
+    ],
+    "supplementalClinicsForLaterScope": [
+      "san-lorenzo-main-medical-dental-clinic",
+      "san-lorenzo-legazpi-satellite-clinic"
+    ],
+    "coordinateRule": "Use the verified street addresses above to match exact current map points during 3C-1e. No barangay-centroid or guessed coordinates."
+  },
+  "nextStep": {
+    "id": "3C-1c",
+    "title": "Verify current protective-service facilities",
+    "scope": "Reconcile the 11 current fire stations and 8 current police facilities, including post-transfer identity/numbering and exact current locations. Research only; no Civic Map additions."
+  }
+}
