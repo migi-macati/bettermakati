@@ -70,6 +70,12 @@
       "stopWhen": "A barangay-scoped source/correction journey reaches Get Involved with the barangay prefilled.",
       "excludes": [
         "Do not create a new barangay submission backend."
+      ],
+      "status": "complete",
+      "completedAt": "2026-09-25",
+      "commits": [
+        "62ce722b87a69d96b0df8c0e129279ac21ad1bbd",
+        "c0854ef52150b05defff4908fca53c66cc7495bd"
       ]
     },
     {
@@ -442,8 +448,8 @@
     }
   ],
   "immediateNext": {
-    "id": "3B-2",
-    "title": "Preserve barangay context into Get Involved",
-    "maximumScope": "Get Involved query-prefill fix plus one focused regression test. No backend changes."
+    "id": "3E-1",
+    "title": "Add general-feedback duplicate detection",
+    "maximumScope": "api/feedback.js plus one focused regression test. No Civic Map changes."
   }
 }
