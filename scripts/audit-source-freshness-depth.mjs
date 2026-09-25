@@ -7,6 +7,7 @@ const checker = await readFile('scripts/check-sources.mjs', 'utf8');
 const queueBuilder = await readFile('scripts/build-freshness-review-queue.mjs', 'utf8');
 const reviewQueue = JSON.parse(await readFile('data/freshness-review-queue.json', 'utf8'));
 const reviewResolutions = JSON.parse(await readFile('data/freshness-review-resolutions.json', 'utf8'));
+const pageFreshnessState = JSON.parse(await readFile('data/page-freshness-state.json', 'utf8'));
 const workflow = await readFile('.github/workflows/source-freshness.yml', 'utf8');
 const weeklyNews = await readFile('.github/workflows/weekly-content-refresh.yml', 'utf8');
 const cityMonitorConfig = JSON.parse(await readFile('data/city-monitor-sources.json', 'utf8'));
@@ -138,6 +139,14 @@ if (
   problems.push('Freshness review resolutions must use version 1 with a resolutions array.');
 }
 
+if (
+  pageFreshnessState.version !== 1 ||
+  !pageFreshnessState.summary ||
+  !Array.isArray(pageFreshnessState.pages)
+) {
+  problems.push('Page freshness state must use version 1 with summary and pages.');
+}
+
 for (const item of reviewQueue.items) {
   for (const field of ['key', 'status', 'system', 'signal', 'sourceId', 'label', 'url', 'affectedPages', 'action']) {
     if (item[field] === undefined || item[field] === null) {
@@ -157,6 +166,9 @@ for (const marker of [
   "lastSuccessfulAt",
   "data/freshness-review-resolutions.json",
   "resolutionByKey",
+  "data/page-freshness-state.json",
+  "freshnessStatus",
+  "dependencySignals",
 ]) {
   if (!queueBuilder.includes(marker)) {
     problems.push('Freshness review queue builder lost required behavior: ' + marker);
@@ -196,6 +208,7 @@ for (const marker of [
   'npm run build:freshness-queue',
   'Freshness review queue',
   'data/freshness-review-queue.json',
+  'data/page-freshness-state.json',
   'issues: write',
 ]) {
   if (!workflow.includes(marker)) problems.push('Source freshness workflow lost required behavior: ' + marker);
@@ -209,6 +222,7 @@ for (const marker of [
   "'public/source-watch-history.json'",
   "'public/source-watch-index.json'",
   "'public/freshness-review-queue.json'",
+  "'public/page-freshness-state.json'",
 ]) {
   if (!generator.includes(marker)) problems.push('Generated site files lost source freshness publication: ' + marker);
 }
@@ -255,12 +269,17 @@ for (const marker of [
   "catalog.find(item => item.id === 'philgeps')?.monitoringMode",
   "catalog.find(item => item.id === 'comelec-2026-bske-calendar')?.affectedPages",
   "catalog.find(item => item.id === 'makati-budget-2026')?.affectedPages",
+  "test('Page freshness state tracks open source dependencies without changing review dates'",
+  "page.request.get(baseURL + '/page-freshness-state.json')",
   "test('BetterMakati Status exposes source freshness automation'",
 ]) {
   if (!tests.includes(marker)) problems.push('Source freshness browser coverage missing: ' + marker);
 }
 
 if (!pkg.scripts?.['build:freshness-queue']) problems.push('package.json is missing build:freshness-queue.');
+if (!String(pkg.scripts?.['generate:site'] || '').includes('build:freshness-queue')) {
+  problems.push('generate:site must rebuild dependency-aware page freshness before publishing.');
+}
 if (!pkg.scripts?.['audit:source-freshness']) problems.push('package.json is missing audit:source-freshness.');
 if (!String(pkg.scripts?.build || '').includes('audit:source-freshness')) problems.push('Production build does not run audit:source-freshness.');
 if (!String(pkg.scripts?.quality || '').includes('audit:source-freshness')) problems.push('Quality command does not run audit:source-freshness.');
