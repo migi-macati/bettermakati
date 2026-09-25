@@ -8,7 +8,8 @@
   "completedSubsteps": [
     "3C-3a",
     "3C-3b",
-    "3C-3c"
+    "3C-3c",
+    "3C-3d1"
   ],
   "substeps": [
     {
@@ -32,8 +33,13 @@
     {
       "id": "3C-3d",
       "title": "Reconcile historical jeepney routes",
-      "status": "next",
-      "scope": "Crosswalk 38 2020 route rows against current LTFRB/operator evidence and decide route-vs-terminal representation."
+      "status": "in-progress",
+      "scope": "Crosswalk 38 2020 route rows against current LTFRB/operator evidence and decide route-vs-terminal representation.",
+      "splitInto": [
+        "3C-3d1",
+        "3C-3d2"
+      ],
+      "splitReason": "Bound the 38-row historical route crosswalk into Ayala/Guadalupe and remaining-route batches."
     },
     {
       "id": "3C-3e",
@@ -49,9 +55,9 @@
     }
   ],
   "immediateNext": {
-    "id": "3C-3d",
-    "title": "Reconcile historical jeepney routes",
-    "scope": "Research only. Crosswalk the 38 Makati Facts and Figures 2020 jeepney-route rows against current LTFRB/operator/terminal evidence, classify current/changed/obsolete/uncertain routes, and do not create single-point route assets."
+    "id": "3C-3d2",
+    "title": "Reconcile remaining Makati jeepney routes",
+    "scope": "Rows 21–39 only (18 published rows because number 36 is absent). Classify current/changed/obsolete/uncertain corridors and association continuity; no route assets."
   },
   "ferryImplementationStatus": "complete",
   "ferryImplementationFile": "data/wave3-civic-map-ferry-implementation.json",
@@ -69,5 +75,14 @@
     "publishedCount2022": 17,
     "historicalWaitingSheds": 36,
     "civicMapAssetsAdded": 0
+  },
+  "jeepneyRouteReconciliationStatus": "in-progress",
+  "jeepneyRouteReconciliationA": "data/wave3-civic-map-jeepney-routes-reconciliation-a.json",
+  "jeepneyRouteReconciliationSummary": {
+    "rowsTotal": 38,
+    "rowsReconciled": 20,
+    "rowsRemaining": 18,
+    "currentCorridorEvidenceInBatchA": 20,
+    "routeAssetsAdded": 0
   }
 }
