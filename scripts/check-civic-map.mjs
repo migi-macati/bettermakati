@@ -1,9 +1,10 @@
 import { readFile } from 'node:fs/promises';
 
-const text = await readFile('src/data/placeRegistry.ts', 'utf8');
+const placeText = await readFile('src/data/placeRegistry.ts', 'utf8');
+const civicMapText = await readFile('src/data/civicMap.ts', 'utf8');
 const problems = [];
 
-const assetBlock = text.split('export const civicAssets')[1]?.split('const geometryTypeFor')[0] ?? '';
+const assetBlock = placeText.split('export const civicAssets')[1]?.split('const geometryTypeFor')[0] ?? '';
 const assetIds = [...assetBlock.matchAll(/\bid:\s*'([^']+)'/g)].map(match => match[1]);
 const duplicateAssets = assetIds.filter((id, index) => assetIds.indexOf(id) !== index);
 if (duplicateAssets.length) {
@@ -585,7 +586,7 @@ for (const { lat, lng } of coordinates) {
   }
 }
 
-const issueBlock = text.split('export const civicIssueCategories')[1]?.split('export const civicProposalCategories')[0] ?? '';
+const issueBlock = civicMapText.split('export const civicIssueCategories')[1]?.split('export const civicProposalCategories')[0] ?? '';
 const issueIds = [...issueBlock.matchAll(/\bid:\s*'([^']+)'/g)].map(match => match[1]);
 const duplicateIssues = issueIds.filter((id, index) => issueIds.indexOf(id) !== index);
 if (duplicateIssues.length) {
@@ -602,7 +603,7 @@ for (const row of emergencyRows) {
   }
 }
 
-const proposalBlock = text.split('export const civicProposalCategories')[1]?.split('export const issueCategoriesForAsset')[0] ?? '';
+const proposalBlock = civicMapText.split('export const civicProposalCategories')[1]?.split('export const issueCategoriesForAsset')[0] ?? '';
 const proposalIds = [...proposalBlock.matchAll(/\bid:\s*'([^']+)'/g)].map(match => match[1]);
 const duplicateProposals = proposalIds.filter((id, index) => proposalIds.indexOf(id) !== index);
 if (duplicateProposals.length) {
