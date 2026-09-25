@@ -2,6 +2,9 @@ import { readFile } from 'node:fs/promises';
 
 const text = await readFile('src/data/placeRegistry.ts', 'utf8');
 const mobilityPage = await readFile('src/pages/Mobility.tsx', 'utf8');
+const servicesPage = await readFile('src/pages/Services.tsx', 'utf8');
+const governmentOfficesPage = await readFile('src/pages/GovernmentOffices.tsx', 'utf8');
+const governmentOfficesSource = await readFile('src/data/governmentServiceOffices.ts', 'utf8');
 const problems = [];
 
 const requiredExports = [
@@ -75,6 +78,61 @@ for (const marker of [
   }
 }
 
+const governmentOfficePlaceIds = [
+  ...governmentOfficesSource.matchAll(/placeId:\s*'([^']+)'/g),
+].map(match => match[1]);
+const expectedGovernmentOfficePlaceIds = [
+  'psa-makati-crs',
+  'makati-central-fire-station',
+  'lto-makati-district',
+  'sec-headquarters',
+];
+
+if (governmentOfficePlaceIds.length !== expectedGovernmentOfficePlaceIds.length) {
+  problems.push(
+    'Expected ' +
+      expectedGovernmentOfficePlaceIds.length +
+      ' explicit government-office place links but found ' +
+      governmentOfficePlaceIds.length +
+      '.'
+  );
+}
+
+for (const placeId of expectedGovernmentOfficePlaceIds) {
+  if (!governmentOfficePlaceIds.includes(placeId)) {
+    problems.push('Missing explicit government-office place link: ' + placeId);
+  }
+  if (!assetIds.includes(placeId)) {
+    problems.push('Government-office place link targets a missing registry place: ' + placeId);
+  }
+}
+
+for (const marker of [
+  "placesByBarangay(barangay.name)",
+  "place.primaryCategory === 'health-center'",
+  "place.primaryCategory === 'community-center'",
+  "place.tags.includes('service')",
+  "to={'/civic-map/' + place.id}",
+  "withBarangayScope('/civic-map', barangay.slug)",
+]) {
+  if (!servicesPage.includes(marker)) {
+    problems.push('Services Place Registry integration is missing: ' + marker);
+  }
+}
+
+for (const marker of [
+  'placeRegistryById.get(office.placeId)',
+  "to={'/civic-map/' + place.id}",
+]) {
+  if (!governmentOfficesPage.includes(marker)) {
+    problems.push('Government Offices Place Registry integration is missing: ' + marker);
+  }
+}
+
+if (governmentOfficesPage.includes('Place Registry')) {
+  problems.push('Government Offices must not expose Place Registry implementation language in the UI.');
+}
+
 if (problems.length) {
   console.error(problems.join('\n'));
   process.exit(1);
@@ -82,5 +140,5 @@ if (problems.length) {
 
 console.log(
   'Place Registry selectors passed static integrity checks: ' +
-  requiredExports.length + ' selector exports, ' + assetIds.length + ' preserved place IDs, and ' + verifiedTransportRows.length + ' verified Mobility transport anchors.'
+  requiredExports.length + ' selector exports, ' + assetIds.length + ' preserved place IDs, ' + verifiedTransportRows.length + ' verified Mobility transport anchors, and ' + governmentOfficePlaceIds.length + ' explicit government-office place links.'
 );
