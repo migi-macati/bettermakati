@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "revisedAt": "2026-09-25",
   "workstream": "Wave 3C-2 — Makati parks and civic-space completeness",
-  "status": "in-progress",
+  "status": "complete",
   "reason": "The original 3C-2 added only three CBD parks. Official Makati sources publish substantially broader park inventories, so that batch was preliminary and did not satisfy the completeness goal.",
   "authoritativeBaseline": {
     "primary": {
@@ -185,9 +185,9 @@
     "unresolved": "Remain visible in the audit and prevent a false completeness claim."
   },
   "immediateNext": {
-    "id": "3C-2g",
-    "title": "Close park completeness",
-    "maximumScope": "Audit the combined public and private/public-access park layers against all reconciled inventories and current Makati geography; report final dispositions and enforce the complete verified set without inventing unresolved assets."
+    "id": "3C-1-reopen",
+    "title": "Reopen 3C-1 using official-source-first reconciliation",
+    "maximumScope": "Search Makati Government publications first, crosswalk their named inventory against the existing 3C-1 Civic Map layer, classify every discrepancy, and stop after the reconciliation/audit before implementation."
   },
   "completedSubsteps": [
     "3C-2a",
@@ -199,7 +199,8 @@
     "3C-2c",
     "3C-2d",
     "3C-2e",
-    "3C-2f"
+    "3C-2f",
+    "3C-2g"
   ],
   "inventoryFile": "data/wave3-civic-map-parks-inventory.json",
   "geographyFile": "data/wave3-civic-map-parks-geography.json",
@@ -256,5 +257,18 @@
     "controlledPrivateCommunityExcluded": 7,
     "unresolvedExcluded": 2,
     "formerMakatiExcluded": 7
-  }
+  },
+  "completenessStatus": "complete-for-verified-named-mappable-set",
+  "completenessAuditFile": "data/wave3-civic-map-parks-completeness-audit.json",
+  "finalCoverage": {
+    "officialNamedRecordsDispositioned": 43,
+    "currentGovernmentPublicParksMapped": 13,
+    "currentPrivatePublicAccessParksMapped": 7,
+    "currentPublicFacingParkAssetsMapped": 20,
+    "unresolvedCurrentOrLineageRecords": 6,
+    "controlledPrivateCommunityAuditOnly": 7,
+    "formerMakatiExcluded": 10,
+    "futureSpacesExcludedUntilOpen": 1
+  },
+  "completenessCaveat": "The reviewed 2023 Makati Basic Facts publication gives headline counts of 15 government/public and 17 private parks but no named list. Closure therefore means every verified named/mappable record is accounted for, not that BetterMakati has inferred identities for unnamed headline-count entries."
 }
