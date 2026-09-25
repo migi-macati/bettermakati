@@ -74,11 +74,8 @@ export default function BetterBarangayContextBar() {
           to={barangay ? '/barangays/' + barangay.slug : '/barangays'}
           className="inline-flex min-h-10 shrink-0 items-center gap-1 rounded-lg px-2 text-sm font-bold text-white hover:bg-white/10 sm:px-3"
         >
-          <span className="hidden sm:inline">
-            {barangay ? 'Barangay homepage' : 'Barangays'}
-          </span>
-          <span className="sm:hidden">
-            {barangay ? 'Homepage' : 'Barangays'}
+          <span>
+            {barangay ? 'Barangay Homepage' : 'Barangays'}
           </span>
           <ArrowRight className="h-4 w-4" aria-hidden="true" />
         </Link>
