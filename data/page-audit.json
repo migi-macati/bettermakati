@@ -64,7 +64,7 @@
   {
     "path": "/barangays",
     "label": "Barangays",
-    "status": "partial",
+    "status": "reviewed",
     "reviewedAt": "2026-09-25",
     "checks": [
       "23-barangays",
@@ -77,11 +77,12 @@
       "barangay-email-coverage",
       "official-social-channel-coverage",
       "barangay-published-service-details",
-      "barangay-health-service-layer"
+      "barangay-health-service-layer",
+      "18-local-service-layers"
     ],
     "gaps": [
-      "Locally published service information is now available on 18 of 23 barangay homepages through barangay service portals or current accredited health-facility records. Dasmariñas, Forbes Park, Magallanes, Urdaneta and Valenzuela still rely on the common transaction layer where no comparable current barangay-specific service source has been verified.",
-      "Email, standalone website and official social-channel coverage remains uneven; those completeness metrics are kept in the audit/status layer rather than promoted on the barangay gateway."
+      "Five barangays — Dasmariñas, Forbes Park, Magallanes, Urdaneta and Valenzuela — do not currently have a comparable current barangay-specific service source that BetterMakati can verify, so their homepages retain the common transaction layer instead of inferred local requirements.",
+      "Email, standalone website and official social-channel coverage remains uneven where the barangay has not published a stable current channel."
     ]
   },
   {
