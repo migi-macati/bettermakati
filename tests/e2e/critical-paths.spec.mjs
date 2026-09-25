@@ -189,6 +189,35 @@ test('expanded Makati city service guides expose transaction details', async ({ 
   await expect(page.getByText(/₱45 per instrument/i)).toBeVisible();
 });
 
+test('property civil registry and social service guides expose official transaction details', async ({ page }) => {
+  await page.goto(baseURL + '/services/guide/tax-declaration');
+  await expect(page.getByText(/₱200 per Tax Declaration/i)).toBeVisible();
+  await expect(page.getByText(/3 days for land\/improvement\/machinery/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/notice-of-assessment');
+  await expect(page.getByText(/15 minutes in the cited Citizen’s Charter/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/local-civil-registry-copy');
+  await expect(page.getByText(/rush processing of 1 hour/i)).toBeVisible();
+  await expect(page.getByText(/Government-issued ID of the requesting party/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/civil-registry-correction');
+  await expect(page.getByText(/₱3,000 in the cited guide/i).first()).toBeVisible();
+  await expect(page.getByText(/at least two public or private documents/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/pwd-mobility-device');
+  await expect(page.getByText(/Whole-body picture/i)).toBeVisible();
+  await expect(page.getByText(/one day for applicant validation/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/pwd-car-tag');
+  await expect(page.getByText(/Vehicle Official Receipt and Certificate of Registration/i)).toBeVisible();
+  await expect(page.getByText(/₱50 in the cited charter/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/disaster-financial-assistance');
+  await expect(page.getByText(/Barangay Fire Incident Report/i)).toBeVisible();
+  await expect(page.getByText(/actual\/current Makati residents/i)).toBeVisible();
+});
+
 test('Saan Ako Lalapit is task-first and service-only', async ({ page }) => {
   await page.goto(baseURL + '/community-tools/saan-ako-lalapit');
   await expect(page.getByRole('heading', { level: 1 })).toContainText('Saan Ako Lalapit?');
