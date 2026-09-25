@@ -1,0 +1,490 @@
+{
+  "auditedAt": "2026-09-25",
+  "scope": "BetterMakati national services that do not yet have BetterMakati field-by-field guides",
+  "scopeCount": 46,
+  "betterMakatiBaseCommit": "f19588b3140c9bf8e8efed7b94951d10cfa2198d",
+  "betterGovBaseCommit": "c76a927179527688e809296875f3e65775a7ccc5",
+  "classification": {
+    "listed": "BetterGov has a service entry that materially represents the same user task.",
+    "partial": "BetterGov has an entry covering a material part of the task or an adjacent step in the same workflow, but not the full BetterMakati service scope.",
+    "missing": "No BetterGov service entry found that materially helps complete the BetterMakati user task."
+  },
+  "summary": {
+    "listed": 15,
+    "partial": 6,
+    "missing": 25
+  },
+  "services": [
+    {
+      "id": "bfp-fsic-occupancy",
+      "title": "Fire Safety Inspection Certificate (occupancy)",
+      "agency": "Bureau of Fire Protection",
+      "status": "missing",
+      "note": "No BFP occupancy/FSIC service entry found in BetterGov."
+    },
+    {
+      "id": "psa-marriage-certificate",
+      "title": "PSA marriage certificate",
+      "agency": "Philippine Statistics Authority",
+      "status": "listed",
+      "betterGovMatches": [
+        {
+          "service": "Request a Marriage Certificate via PSA Serbilis",
+          "betterGovUrl": "https://bettergov.ph/services?search=Request%20a%20Marriage%20Certificate%20via%20PSA%20Serbilis",
+          "targetUrl": "https://www.psaserbilis.com.ph/MarriageCertificate"
+        }
+      ]
+    },
+    {
+      "id": "psa-death-certificate",
+      "title": "PSA death certificate",
+      "agency": "Philippine Statistics Authority",
+      "status": "listed",
+      "betterGovMatches": [
+        {
+          "service": "Request a Death Certificate via PSA Serbilis",
+          "betterGovUrl": "https://bettergov.ph/services?search=Request%20a%20Death%20Certificate%20via%20PSA%20Serbilis",
+          "targetUrl": "https://www.psaserbilis.com.ph/DeathCertificate"
+        }
+      ]
+    },
+    {
+      "id": "psa-cenomar",
+      "title": "CENOMAR / Certificate of No Marriage",
+      "agency": "Philippine Statistics Authority",
+      "status": "listed",
+      "betterGovMatches": [
+        {
+          "service": "Request a Certificate of No Marriage Record (CENOMAR) via PSA Serbilis",
+          "betterGovUrl": "https://bettergov.ph/services?search=Request%20a%20Certificate%20of%20No%20Marriage%20Record%20(CENOMAR)%20via%20PSA%20Serbilis",
+          "targetUrl": "https://www.psaserbilis.com.ph/CENOMARCertificate"
+        }
+      ]
+    },
+    {
+      "id": "national-id",
+      "title": "National ID",
+      "agency": "Philippine Statistics Authority",
+      "status": "listed",
+      "betterGovMatches": [
+        {
+          "service": "Register to the Philippine Identification System (PhilSys) or National ID",
+          "betterGovUrl": "https://bettergov.ph/services?search=Register%20to%20the%20Philippine%20Identification%20System%20(PhilSys)%20or%20National%20ID",
+          "targetUrl": "https://register.philsys.gov.ph/#/eng"
+        }
+      ]
+    },
+    {
+      "id": "passport",
+      "title": "Philippine passport",
+      "agency": "Department of Foreign Affairs",
+      "status": "listed",
+      "betterGovMatches": [
+        {
+          "service": "Schedule Passport Application Appointment",
+          "betterGovUrl": "https://bettergov.ph/services?search=Schedule%20Passport%20Application%20Appointment",
+          "targetUrl": "https://www.passport.gov.ph/appointment"
+        }
+      ],
+      "note": "BetterGov represents the core passport application handoff through the DFA appointment service."
+    },
+    {
+      "id": "drivers-license",
+      "title": "Driver’s license",
+      "agency": "Land Transportation Office",
+      "status": "listed",
+      "betterGovMatches": [
+        {
+          "service": "Get a Driver's License",
+          "betterGovUrl": "https://bettergov.ph/services?search=Get%20a%20Driver's%20License",
+          "targetUrl": "https://portal.lto.gov.ph/ords/f?p=1200:HOME::::::"
+        },
+        {
+          "service": "Renew your Driver's License",
+          "betterGovUrl": "https://bettergov.ph/services?search=Renew%20your%20Driver's%20License",
+          "targetUrl": "https://portal.lto.gov.ph/ords/f?p=1200:HOME::::::"
+        }
+      ]
+    },
+    {
+      "id": "vehicle-registration",
+      "title": "Motor vehicle registration / renewal",
+      "agency": "Land Transportation Office",
+      "status": "missing",
+      "note": "BetterGov transport services include driver licensing but no motor vehicle registration/renewal entry."
+    },
+    {
+      "id": "prc-id",
+      "title": "PRC professional ID / license renewal",
+      "agency": "Professional Regulation Commission",
+      "status": "missing",
+      "note": "BetterGov has PRC verification, oath-form, room-assignment and CPD entries, but no professional ID/license renewal service."
+    },
+    {
+      "id": "dti-business-name",
+      "title": "DTI business name registration",
+      "agency": "Department of Trade and Industry",
+      "status": "listed",
+      "betterGovMatches": [
+        {
+          "service": "Register a Business Name",
+          "betterGovUrl": "https://bettergov.ph/services?search=Register%20a%20Business%20Name",
+          "targetUrl": "https://bnrs.dti.gov.ph/registration"
+        }
+      ]
+    },
+    {
+      "id": "sec-company-registration",
+      "title": "SEC company registration",
+      "agency": "Securities and Exchange Commission",
+      "status": "partial",
+      "betterGovMatches": [
+        {
+          "service": "Calculate Registration Fee of Stock Corporation",
+          "betterGovUrl": "https://bettergov.ph/services?search=Calculate%20Registration%20Fee%20of%20Stock%20Corporation",
+          "targetUrl": "https://www.sec.gov.ph/online-services/registration-calculator/#gsc.tab=0"
+        }
+      ],
+      "note": "BetterGov covers an adjacent registration step but does not list the SEC company-registration transaction itself."
+    },
+    {
+      "id": "bir-tin-registration",
+      "title": "BIR TIN / taxpayer registration",
+      "agency": "Bureau of Internal Revenue",
+      "status": "listed",
+      "betterGovMatches": [
+        {
+          "service": "Register for a Taxpayer Identification Number (TIN)",
+          "betterGovUrl": "https://bettergov.ph/services?search=Register%20for%20a%20Taxpayer%20Identification%20Number%20(TIN)",
+          "targetUrl": "https://orus.bir.gov.ph/home"
+        }
+      ]
+    },
+    {
+      "id": "sss-services",
+      "title": "SSS membership and records",
+      "agency": "Social Security System",
+      "status": "partial",
+      "betterGovMatches": [
+        {
+          "service": "Update SSS Information",
+          "betterGovUrl": "https://bettergov.ph/services?search=Update%20SSS%20Information",
+          "targetUrl": "https://www.sss.gov.ph/register-to-mysss/"
+        },
+        {
+          "service": "Get a MySSS Card",
+          "betterGovUrl": "https://bettergov.ph/services?search=Get%20a%20MySSS%20Card",
+          "targetUrl": "https://www.sss.gov.ph/mysss-card/"
+        }
+      ],
+      "note": "BetterGov covers records/account-related actions but not the full membership-and-records scope."
+    },
+    {
+      "id": "philhealth-services",
+      "title": "PhilHealth membership / MDR",
+      "agency": "Philippine Health Insurance Corporation",
+      "status": "missing",
+      "note": "BetterGov has PhilHealth eligibility, provider and employer-contribution entries, but no membership/MDR transaction."
+    },
+    {
+      "id": "pagibig-services",
+      "title": "Pag-IBIG membership and Virtual Pag-IBIG",
+      "agency": "Pag-IBIG Fund",
+      "status": "listed",
+      "betterGovMatches": [
+        {
+          "service": "Register your Pag-IBIG Member's Information",
+          "betterGovUrl": "https://bettergov.ph/services?search=Register%20your%20Pag-IBIG%20Member's%20Information",
+          "targetUrl": "https://www.pagibigfundservices.com/virtualpagibig/Membership.aspx"
+        }
+      ]
+    },
+    {
+      "id": "sss-contributions-prn",
+      "title": "SSS contributions and PRN",
+      "agency": "Social Security System",
+      "status": "missing",
+      "note": "No BetterGov entry found for generating/using an SSS PRN or paying member contributions."
+    },
+    {
+      "id": "sss-disability-benefit",
+      "title": "SSS disability benefit",
+      "agency": "Social Security System",
+      "status": "missing",
+      "note": "No SSS disability-benefit service entry found in BetterGov."
+    },
+    {
+      "id": "sss-death-benefit",
+      "title": "SSS death benefit",
+      "agency": "Social Security System",
+      "status": "missing",
+      "note": "No SSS death-benefit service entry found in BetterGov."
+    },
+    {
+      "id": "sss-funeral-benefit",
+      "title": "SSS funeral benefit",
+      "agency": "Social Security System",
+      "status": "missing",
+      "note": "No SSS funeral-benefit service entry found in BetterGov."
+    },
+    {
+      "id": "sss-unemployment-benefit",
+      "title": "SSS unemployment benefit",
+      "agency": "Social Security System",
+      "status": "missing",
+      "note": "No SSS unemployment-benefit service entry found in BetterGov."
+    },
+    {
+      "id": "sss-salary-loan",
+      "title": "SSS salary loan",
+      "agency": "Social Security System",
+      "status": "listed",
+      "betterGovMatches": [
+        {
+          "service": "Apply for SSS Salary Loan",
+          "betterGovUrl": "https://bettergov.ph/services?search=Apply%20for%20SSS%20Salary%20Loan",
+          "targetUrl": "https://www.sss.gov.ph/salary-loan/"
+        }
+      ]
+    },
+    {
+      "id": "pagibig-calamity-loan",
+      "title": "Pag-IBIG calamity loan",
+      "agency": "Pag-IBIG Fund",
+      "status": "partial",
+      "betterGovMatches": [
+        {
+          "service": "Pay Pag-IBIG Calamity Loan Online",
+          "betterGovUrl": "https://bettergov.ph/services?search=Pay%20Pag-IBIG%20Calamity%20Loan%20Online",
+          "targetUrl": "https://www.pagibigfundservices.com/virtualpagibig/OPF.aspx?PT=CL"
+        }
+      ],
+      "note": "BetterGov covers calamity-loan payment, not the loan application/availment task."
+    },
+    {
+      "id": "pagibig-provident-claim",
+      "title": "Pag-IBIG provident benefits claim",
+      "agency": "Pag-IBIG Fund",
+      "status": "missing",
+      "note": "No provident-benefits claim service entry found in BetterGov."
+    },
+    {
+      "id": "philhealth-contributions",
+      "title": "PhilHealth contributions and payment",
+      "agency": "Philippine Health Insurance Corporation",
+      "status": "partial",
+      "betterGovMatches": [
+        {
+          "service": "Report PhilHealth Premium Contributions of your Employees",
+          "betterGovUrl": "https://bettergov.ph/services?search=Report%20PhilHealth%20Premium%20Contributions%20of%20your%20Employees",
+          "targetUrl": "https://www.philhealth.gov.ph/partners/employers/pay_procedures.php"
+        }
+      ],
+      "note": "BetterGov covers employer reporting but not the broader contribution/payment task."
+    },
+    {
+      "id": "ecc-medical-reimbursement",
+      "title": "EC medical reimbursement",
+      "agency": "Employees’ Compensation Commission",
+      "status": "missing",
+      "note": "No EC medical-reimbursement service entry found in BetterGov."
+    },
+    {
+      "id": "ecc-rehabilitation",
+      "title": "ECC rehabilitation / KaGabay services",
+      "agency": "Employees’ Compensation Commission",
+      "status": "missing",
+      "note": "No ECC rehabilitation/KaGabay service entry found in BetterGov."
+    },
+    {
+      "id": "ecc-death-funeral",
+      "title": "EC death and funeral benefits",
+      "agency": "Employees’ Compensation Commission",
+      "status": "missing",
+      "note": "No EC death/funeral-benefit service entry found in BetterGov."
+    },
+    {
+      "id": "deped-makati-cav",
+      "title": "DepEd certification, authentication and verification of school records",
+      "agency": "Department of Education – Schools Division Office Makati",
+      "status": "missing",
+      "note": "No DepEd Makati CAV school-records service entry found in BetterGov."
+    },
+    {
+      "id": "deped-makati-record-correction",
+      "title": "Correct entries in Makati school records",
+      "agency": "Department of Education – Schools Division Office Makati",
+      "status": "missing",
+      "note": "No DepEd Makati school-record correction service entry found in BetterGov."
+    },
+    {
+      "id": "gsis-benefits",
+      "title": "GSIS benefits for government employees",
+      "agency": "Government Service Insurance System",
+      "status": "missing",
+      "note": "BetterGov lists GSIS membership-record viewing, but no benefits transaction that materially covers this task."
+    },
+    {
+      "id": "gsis-loans",
+      "title": "GSIS member loans",
+      "agency": "Government Service Insurance System",
+      "status": "missing",
+      "note": "No GSIS loan application/filing service entry found in BetterGov."
+    },
+    {
+      "id": "owwa-membership",
+      "title": "OWWA membership and records",
+      "agency": "Overseas Workers Welfare Administration",
+      "status": "missing",
+      "note": "BetterGov has an OWWA scholarship entry but no membership/records transaction."
+    },
+    {
+      "id": "owwa-welfare-assistance",
+      "title": "OWWA Welfare Assistance Program",
+      "agency": "Overseas Workers Welfare Administration",
+      "status": "missing",
+      "note": "No OWWA Welfare Assistance Program service entry found in BetterGov."
+    },
+    {
+      "id": "owwa-scholarships",
+      "title": "OWWA scholarships and education assistance",
+      "agency": "Overseas Workers Welfare Administration",
+      "status": "listed",
+      "betterGovMatches": [
+        {
+          "service": "Apply for OWWA Scholarship",
+          "betterGovUrl": "https://bettergov.ph/services?search=Apply%20for%20OWWA%20Scholarship",
+          "targetUrl": "https://scholarship.owwa.gov.ph/"
+        }
+      ]
+    },
+    {
+      "id": "owwa-reintegration",
+      "title": "OWWA reintegration assistance",
+      "agency": "Overseas Workers Welfare Administration",
+      "status": "missing",
+      "note": "No OWWA reintegration-assistance service entry found in BetterGov."
+    },
+    {
+      "id": "doh-licensed-facility-check",
+      "title": "Check DOH-licensed health facilities in NCR",
+      "agency": "Department of Health – Metro Manila Center for Health Development",
+      "status": "missing",
+      "note": "No NCR DOH licensed-facility lookup entry found in BetterGov."
+    },
+    {
+      "id": "doh-health-facility-licensing",
+      "title": "DOH health facility licensing and regulatory services",
+      "agency": "Department of Health – Metro Manila Center for Health Development",
+      "status": "missing",
+      "note": "No NCR DOH health-facility licensing/regulatory service entry found in BetterGov."
+    },
+    {
+      "id": "dole-labor-assistance",
+      "title": "DOLE labor standards complaint / assistance",
+      "agency": "Department of Labor and Employment",
+      "status": "missing",
+      "note": "BetterGov has union-related DOLE services but no labor-standards complaint/assistance entry."
+    },
+    {
+      "id": "dole-cshp",
+      "title": "Construction Safety and Health Program submission",
+      "agency": "Department of Labor and Employment",
+      "status": "missing",
+      "note": "No DOLE Construction Safety and Health Program submission service entry found in BetterGov."
+    },
+    {
+      "id": "dti-consumer-complaint",
+      "title": "DTI consumer complaint / assistance",
+      "agency": "Department of Trade and Industry",
+      "status": "listed",
+      "betterGovMatches": [
+        {
+          "service": "File Complaints on Consumer Affair Service",
+          "betterGovUrl": "https://bettergov.ph/services?search=File%20Complaints%20on%20Consumer%20Affair%20Service",
+          "targetUrl": "https://fairtrade.dti.gov.ph/faq/how-to-file-a-consumer-complaint/"
+        }
+      ]
+    },
+    {
+      "id": "sec-company-filings",
+      "title": "SEC company filings and reports",
+      "agency": "Securities and Exchange Commission",
+      "status": "listed",
+      "betterGovMatches": [
+        {
+          "service": "Submit your Company’s General Information Sheet and/or Audited Financial Statements Online to SEC",
+          "betterGovUrl": "https://bettergov.ph/services?search=Submit%20your%20Company%E2%80%99s%20General%20Information%20Sheet%20and%2For%20Audited%20Financial%20Statements%20Online%20to%20SEC",
+          "targetUrl": "https://www.sec.gov.ph/online-services/sec-express-system/"
+        }
+      ]
+    },
+    {
+      "id": "sec-company-records",
+      "title": "SEC company records and verification",
+      "agency": "Securities and Exchange Commission",
+      "status": "listed",
+      "betterGovMatches": [
+        {
+          "service": "Request Securing Copies of Corporate and Partnership Documents",
+          "betterGovUrl": "https://bettergov.ph/services?search=Request%20Securing%20Copies%20of%20Corporate%20and%20Partnership%20Documents",
+          "targetUrl": "https://secexpress.ph/"
+        },
+        {
+          "service": "Check Status of your Requested Documents from SEC",
+          "betterGovUrl": "https://bettergov.ph/services?search=Check%20Status%20of%20your%20Requested%20Documents%20from%20SEC",
+          "targetUrl": "https://secexpress.ph/check-status"
+        }
+      ]
+    },
+    {
+      "id": "tesda-scholarship",
+      "title": "TESDA scholarship and training assistance",
+      "agency": "Technical Education and Skills Development Authority",
+      "status": "listed",
+      "betterGovMatches": [
+        {
+          "service": "Apply for TESDA Scholarship",
+          "betterGovUrl": "https://bettergov.ph/services?search=Apply%20for%20TESDA%20Scholarship",
+          "targetUrl": "https://tesdaonlineprogram.com/how-to-apply-for-a-scholarship-in-tesda/"
+        }
+      ],
+      "note": "Overlap is based on BetterGov's current catalogue entry; source-quality review is a separate task."
+    },
+    {
+      "id": "phlpost-services",
+      "title": "PHLPost mailing and postal services",
+      "agency": "Philippine Postal Corporation",
+      "status": "partial",
+      "betterGovMatches": [
+        {
+          "service": "Track PhilPost Package",
+          "betterGovUrl": "https://bettergov.ph/services?search=Track%20PhilPost%20Package",
+          "targetUrl": "https://tracking.phlpost.gov.ph/"
+        }
+      ],
+      "note": "BetterGov covers package tracking, but not the broader mailing/postal-service scope."
+    },
+    {
+      "id": "dpwh-infrastructure-concern",
+      "title": "DPWH national road / infrastructure concern",
+      "agency": "Department of Public Works and Highways",
+      "status": "missing",
+      "note": "BetterGov has DPWH document/status and accreditation entries but no citizen road/infrastructure-concern service."
+    },
+    {
+      "id": "comelec-voter-services",
+      "title": "COMELEC voter services",
+      "agency": "Commission on Elections",
+      "status": "partial",
+      "betterGovMatches": [
+        {
+          "service": "Register as an Overseas Voter",
+          "betterGovUrl": "https://bettergov.ph/services?search=Register%20as%20an%20Overseas%20Voter",
+          "targetUrl": "https://dfa.gov.ph/ovs"
+        }
+      ],
+      "note": "BetterGov covers overseas voter registration only, not the broader COMELEC voter-services scope relevant to Makati residents."
+    }
+  ]
+}
