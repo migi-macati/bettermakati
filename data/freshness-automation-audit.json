@@ -195,7 +195,9 @@
           "Source freshness monitor — daily cadence",
           "Daily City Monitor"
         ],
-        "risk": "Both can rewrite generated state and commit to main."
+        "risk": "Both can rewrite generated state and commit to main.",
+        "status": "resolved-or-controlled",
+        "resolution": "Source Freshness moved to 08:00, City Monitor remains 08:30, and all direct-main writers share one lock."
       },
       {
         "windowManila": "09:00–09:30 Monday",
@@ -205,7 +207,9 @@
           "Civic Brief weekly — 09:10",
           "External link integrity — 09:30"
         ],
-        "risk": "Multiple build/check/commit-or-PR jobs are clustered within 30 minutes."
+        "risk": "Multiple build/check/commit-or-PR jobs are clustered within 30 minutes.",
+        "status": "resolved-or-controlled",
+        "resolution": "Direct main writers are serialized by the shared scheduled-main-writer lock; PR-only and read-only jobs do not share the lock."
       },
       {
         "condition": "Monday that is also the first day of a month",
@@ -219,7 +223,9 @@
           "Civic Brief monthly — 09:15",
           "External link integrity — 09:30"
         ],
-        "risk": "Maximum automation burst and highest chance of concurrent main-branch churn."
+        "risk": "Maximum automation burst and highest chance of concurrent main-branch churn.",
+        "status": "resolved-or-controlled",
+        "resolution": "Direct main writers are serialized by the shared scheduled-main-writer lock; PR-only and read-only jobs do not share the lock."
       }
     ]
   },
@@ -230,13 +236,13 @@
       "general-source-freshness",
       "city-monitor"
     ],
-    "civicBriefNote": "Civic Brief publication is intentionally content-producing, but repeated runs can also change publishedAt."
+    "civicBriefNote": "Civic Brief publication is intentionally content-producing, but repeated runs can also change publishedAt.",
+    "status": "mitigated",
+    "currentBehavior": "Freshness workflows publish only semantic source-state changes; scheduled direct-main writers are serialized and no-op freshness runs do not commit."
   },
   "editorialBlindSpots": [
-    "Page freshness is based on review age, not source dependencies.",
-    "General Source Freshness and City Monitor duplicate four URLs, creating duplicate checks and potentially duplicate signals.",
-    "The PhilGEPS overlap uses different monitoring modes, so ownership and semantics need to be explicit before deduplication.",
-    "The LastReviewed component has a static fallback date; later page-freshness work should ensure missing explicit dates cannot silently look reviewed."
+    "Reachability-only monitoring establishes availability, not whether a dynamic page's substantive content changed.",
+    "Manual-review channels still require human inspection before BetterMakati can publish a substantive civic update."
   ],
   "nextSteps": [
     {
@@ -278,7 +284,8 @@
     {
       "id": "2.4H",
       "title": "Harden automation",
-      "objective": "Test concurrency, retries, rebases, duplicate issues, recovery and no-op behavior; then protect the architecture with audits."
+      "objective": "Test concurrency, retries, rebases, duplicate issues, recovery and no-op behavior; then protect the architecture with audits.",
+      "status": "complete"
     }
   ],
   "implementationUpdates": [
@@ -380,6 +387,24 @@
         "Fixed the freshness-history builder timestamp-helper ordering before automated regeneration could encounter it."
       ],
       "result": "Status and Public Records now consume the same consolidated freshness model while retaining concise task-led UI."
+    },
+    {
+      "step": "2.4H",
+      "completedAt": "2026-09-25",
+      "title": "Harden freshness automation",
+      "changes": [
+        "Repaired a malformed City Monitor freshness-review report path and restored all derived freshness files to its staged publish set.",
+        "Serialized Source Freshness, City Monitor and Civic Briefs through one scheduled-main-writer concurrency group.",
+        "Bound all three direct-main scheduled publishers to a 20-minute runtime.",
+        "Added one transient source-fetch retry for network errors, HTTP 429 and HTTP 5xx responses.",
+        "Added three-attempt fetch/rebase/push publishing with safe failure on rebase conflicts and no force-push.",
+        "Moved review-issue synchronization after successful publication so GitHub issues cannot get ahead of the published site state.",
+        "Added duplicate freshness-issue cleanup using one canonical open issue.",
+        "Preserved recovery behavior: source status recovery is a semantic change and can clear failed review items and close the review issue.",
+        "Preserved no-op behavior: unchanged freshness runs do not build, commit, deploy or update the issue.",
+        "Added a dedicated hardening audit to both build and quality."
+      ],
+      "currentIssueCheck": "No open GitHub issue titled Freshness review queue existed when checked during hardening."
     }
   ],
   "sourceOwnership": {
@@ -535,5 +560,44 @@
       ]
     },
     "uiRule": "Show health, affected pages and history access directly; do not explain the internal freshness architecture in page copy."
+  },
+  "workstreamStatus": "complete",
+  "hardening": {
+    "directMainWriters": [
+      ".github/workflows/source-freshness.yml",
+      ".github/workflows/daily-city-monitor.yml",
+      ".github/workflows/civic-briefs.yml"
+    ],
+    "concurrency": {
+      "group": "scheduled-main-writer",
+      "cancelInProgress": false,
+      "rule": "All scheduled workflows that commit directly to main are serialized through one lock."
+    },
+    "runtime": {
+      "timeoutMinutes": 20,
+      "sourceFetchAttempts": 2,
+      "transientFetchRetry": "Network errors, HTTP 429 and HTTP 5xx are retried once; ordinary 4xx responses are not retried."
+    },
+    "publishing": {
+      "attempts": 3,
+      "sequence": [
+        "build",
+        "commit",
+        "fetch/rebase",
+        "push",
+        "issue sync"
+      ],
+      "forcePush": false,
+      "conflictBehavior": "Abort the rebase and fail rather than overwrite main.",
+      "movedMainBehavior": "Fetch, rebase and retry push up to three times."
+    },
+    "issueSync": {
+      "title": "Freshness review queue",
+      "timing": "Only after a generated-state commit was successfully pushed.",
+      "duplicateBehavior": "Use the lowest-numbered open exact-title issue as canonical and close duplicates.",
+      "recoveryBehavior": "When a material recovery publishes a zero-item queue, close the canonical issue."
+    },
+    "noOpBehavior": "Unchanged source state does not build, commit, deploy or update the review issue.",
+    "ciGuard": "scripts/audit-freshness-automation-hardening.mjs runs in both build and quality."
   }
 }
