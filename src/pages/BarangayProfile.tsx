@@ -256,15 +256,9 @@ export default function BarangayProfile() {
         <div className="container px-5 md:px-6 lg:px-8">
           <div className="section-eyebrow">Barangay services</div>
           <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-            <div>
-              <h2 className="text-3xl font-extrabold tracking-tight text-gray-950">
-                Common barangay transactions
-              </h2>
-              <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600">
-                These services are commonly handled or initiated at the barangay level.
-                Requirements can vary by transaction; open the service directory for the cited source and next step.
-              </p>
-            </div>
+            <h2 className="text-3xl font-extrabold tracking-tight text-gray-950">
+              Services in {barangay.name}
+            </h2>
             <Link
               to={withBarangayScope('/services', barangay.slug)}
               className="inline-flex items-center gap-1 text-sm font-bold text-primary-700"
@@ -272,20 +266,67 @@ export default function BarangayProfile() {
               All local services <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
-          <div className="mt-6 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
-            {services.map(service => (
-              <Link
-                key={service.id}
-                to={withBarangayScope('/services', barangay.slug)}
-                className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300"
-              >
-                <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
-                  {service.type}
-                </div>
-                <h3 className="mt-2 font-extrabold text-gray-950">{service.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-gray-600">{service.description}</p>
-              </Link>
-            ))}
+
+          {(barangay.publishedServices?.length ?? 0) > 0 && (
+            <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+              {barangay.publishedServices?.map(service => (
+                <article
+                  key={service.title}
+                  className="rounded-2xl border border-primary-100 bg-white p-5"
+                >
+                  <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+                    {service.type}
+                  </div>
+                  <h3 className="mt-2 text-lg font-extrabold text-gray-950">
+                    {service.title}
+                  </h3>
+                  {service.availability && (
+                    <div className="mt-2 text-sm font-semibold text-gray-800">
+                      {service.availability}
+                    </div>
+                  )}
+                  {service.summary && (
+                    <p className="mt-2 text-sm leading-relaxed text-gray-600">
+                      {service.summary}
+                    </p>
+                  )}
+                  {(service.requirements?.length ?? 0) > 0 && (
+                    <ul className="mt-3 space-y-1.5 text-sm text-gray-700">
+                      {service.requirements?.map(requirement => (
+                        <li key={requirement}>• {requirement}</li>
+                      ))}
+                    </ul>
+                  )}
+                  <a
+                    href={service.sourceUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700 underline underline-offset-2"
+                  >
+                    {service.sourceLabel} <ExternalLink className="h-3.5 w-3.5" />
+                  </a>
+                </article>
+              ))}
+            </div>
+          )}
+
+          <div className={(barangay.publishedServices?.length ?? 0) > 0 ? 'mt-10' : 'mt-6'}>
+            <h3 className="text-lg font-extrabold text-gray-950">Common transactions</h3>
+            <div className="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+              {services.map(service => (
+                <Link
+                  key={service.id}
+                  to={withBarangayScope('/services', barangay.slug)}
+                  className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300"
+                >
+                  <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+                    {service.type}
+                  </div>
+                  <h4 className="mt-2 font-extrabold text-gray-950">{service.title}</h4>
+                  <p className="mt-2 text-sm leading-relaxed text-gray-600">{service.description}</p>
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
       </section>
