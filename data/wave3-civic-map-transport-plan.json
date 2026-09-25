@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-09-25",
+  "workstream": "Wave 3C-3 — Transport completeness from Makati publications",
+  "status": "in-progress",
+  "methodology": "Official Makati inventory/count first; current operator verification second; implementation only after discrepancy classification.",
+  "reconciliationFile": "data/wave3-civic-map-transport-reconciliation.json",
+  "completedSubsteps": [
+    "3C-3a"
+  ],
+  "substeps": [
+    {
+      "id": "3C-3a",
+      "title": "Reconcile Makati transport inventories",
+      "status": "complete",
+      "scope": "Official counts/named inventories vs current Civic Map; no implementation."
+    },
+    {
+      "id": "3C-3b",
+      "title": "Implement current ferry stations",
+      "status": "next",
+      "scope": "Guadalupe + Valenzuela only."
+    },
+    {
+      "id": "3C-3c",
+      "title": "Reconcile the 32 current bus stops",
+      "status": "planned",
+      "scope": "Find/verify named city stop inventory; research only before any implementation."
+    },
+    {
+      "id": "3C-3d",
+      "title": "Reconcile historical jeepney routes",
+      "status": "planned",
+      "scope": "Crosswalk 38 2020 route rows against current LTFRB/operator evidence and decide route-vs-terminal representation."
+    },
+    {
+      "id": "3C-3e",
+      "title": "Resolve PNR/NSCR lifecycle representation",
+      "status": "planned",
+      "scope": "Decide how suspended PNR stations and future NSCR successors should appear without implying current service."
+    },
+    {
+      "id": "3C-3f",
+      "title": "Close transport completeness audit",
+      "status": "planned",
+      "scope": "Disposition every reviewed transport inventory item/family and validate the implemented current layer."
+    }
+  ],
+  "immediateNext": {
+    "id": "3C-3b",
+    "title": "Implement the two current Makati ferry stations",
+    "scope": "Freeze exact current points for Guadalupe and Valenzuela Pasig River Ferry stations, add the two current transport-stop assets with MMDA/current-service provenance, validate, and stop."
+  }
+}
