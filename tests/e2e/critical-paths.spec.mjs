@@ -1170,6 +1170,14 @@ test('site search indexes barangay officials', async ({ page }) => {
   await expect(page.getByText('Barangay Poblacion', { exact: true }).first()).toBeVisible();
 });
 
+test('barangay-scoped Participation prefills Get Involved barangay context', async ({ page }) => {
+  await page.goto(baseURL + '/participate?barangay=bel-air');
+  await page.getByRole('link', { name: /Add a local public source/i }).click();
+  await expect(page).toHaveURL(/\/get-involved\?type=source&barangay=bel-air#submission/);
+  await expect(page.getByLabel('Barangay / area')).toHaveValue('Bel-Air');
+  await expect(page.getByLabel('Submission type')).toHaveValue('source');
+});
+
 test('barangay homepage launches scoped Civic Map', async ({ page }) => {
   await page.goto(baseURL + '/barangays/poblacion');
   await page.getByRole('link', { name: 'Open local Civic Map' }).click();
