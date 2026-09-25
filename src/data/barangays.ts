@@ -10,6 +10,16 @@ export interface BarangayFacility {
   note?: string;
 }
 
+export interface BarangayPublishedService {
+  title: string;
+  type: 'Clearance' | 'Certificate' | 'ID' | 'Social service' | 'Health' | 'Other';
+  summary?: string;
+  requirements?: string[];
+  availability?: string;
+  sourceUrl: string;
+  sourceLabel: string;
+}
+
 export interface BarangayProfile {
   slug: string;
   name: string;
@@ -41,6 +51,7 @@ export interface BarangayProfile {
   heritageMarkers?: Array<{ name: string; agency: 'NHCP' | 'NCCA'; status: string; href: string; location?: string }>;
   notablePlaces?: Array<{ name: string; href: string; type: 'Institution' | 'Establishment' | 'Heritage'; source?: string }>;
   associations?: Array<{ name: string; href: string; linkLabel: string }>;
+  publishedServices?: BarangayPublishedService[];
 }
 
 export const psaBarangaySource = 'https://psa.gov.ph/classification/psgc/barangays/1380300000';
@@ -651,7 +662,32 @@ const barangayContactSupplement: Record<string, Partial<BarangayProfile>> = {
 
 const barangayBaseProfiles: BarangayProfile[] = [
   { slug: 'bangkal', name: 'Bangkal', population2024: 18013, legislativeDistrict: '1st District', officialPageUrl: 'https://www.makati.gov.ph/barangay/bangkal/29', notablePlaces: [{ name: 'Don Bosco Technical Institute – Makati', href: 'https://www.donboscomakati.edu.ph/', type: 'Institution' }] },
-  { slug: 'bel-air', name: 'Bel-Air', population2024: 39354, legislativeDistrict: '1st District', officialPageUrl: 'https://www.makati.gov.ph/barangay/bel--air/30', websiteUrl: 'https://barangaybelair.ph/', hallEmail: 'belair_admin@barangaybelair.ph', heritageMarkers: [{ name: 'Nielson Tower', agency: 'NHCP', status: 'Level II – Historical marker', href: 'https://philhistoricsites.nhcp.gov.ph/registry_database/nielson-tower/', location: 'Ayala Triangle Gardens, Makati Avenue cor. Ayala Avenue, Barangay Bel-Air' }], notablePlaces: [{ name: 'Nielson Tower / Blackbird', href: 'https://philhistoricsites.nhcp.gov.ph/registry_database/nielson-tower/', type: 'Heritage', source: 'NHCP / Makati Museum and Cultural Affairs Office' }], associations: [{ name: 'Bel-Air Village Association (BAVA)', href: 'https://www.bava.ph/', linkLabel: 'Website' }, { name: 'Makati Central Estate Association (MACEA)', href: 'https://macea.com.ph/', linkLabel: 'Estate association' }] },
+  { slug: 'bel-air', name: 'Bel-Air', population2024: 39354, legislativeDistrict: '1st District', officialPageUrl: 'https://www.makati.gov.ph/barangay/bel--air/30', websiteUrl: 'https://barangaybelair.ph/', hallEmail: 'belair_admin@barangaybelair.ph', publishedServices: [
+    {
+      title: 'Individual barangay clearance',
+      type: 'Clearance',
+      summary: 'Personal barangay clearance for employment, government and other transactions.',
+      requirements: ['Barangay ID or village ID', 'Building-administrator certification for Salcedo Village, Malugay Area and Jazz Residences'],
+      sourceUrl: 'https://barangaybelair.ph/clearances/',
+      sourceLabel: 'Barangay Bel-Air · Clearances',
+    },
+    {
+      title: 'Business barangay clearance',
+      type: 'Clearance',
+      summary: 'New and renewal business-clearance applications.',
+      requirements: ['DTI or SEC registration', 'Lease agreement or proof of ownership', 'Business Community Tax Certificate'],
+      sourceUrl: 'https://barangaybelair.ph/clearances/',
+      sourceLabel: 'Barangay Bel-Air · Clearances',
+    },
+    {
+      title: 'Residency and special-purpose certificates',
+      type: 'Certificate',
+      summary: 'Residency certifications for marriage, good moral character, solo-parent, school, utilities and other listed purposes.',
+      requirements: ['Letter stating the purpose', 'Valid ID', 'Building-administrator residency certification for Salcedo, Malugay and Jazz residents when applicable'],
+      sourceUrl: 'https://barangaybelair.ph/clearances/',
+      sourceLabel: 'Barangay Bel-Air · Clearances',
+    },
+  ], heritageMarkers: [{ name: 'Nielson Tower', agency: 'NHCP', status: 'Level II – Historical marker', href: 'https://philhistoricsites.nhcp.gov.ph/registry_database/nielson-tower/', location: 'Ayala Triangle Gardens, Makati Avenue cor. Ayala Avenue, Barangay Bel-Air' }], notablePlaces: [{ name: 'Nielson Tower / Blackbird', href: 'https://philhistoricsites.nhcp.gov.ph/registry_database/nielson-tower/', type: 'Heritage', source: 'NHCP / Makati Museum and Cultural Affairs Office' }], associations: [{ name: 'Bel-Air Village Association (BAVA)', href: 'https://www.bava.ph/', linkLabel: 'Website' }, { name: 'Makati Central Estate Association (MACEA)', href: 'https://macea.com.ph/', linkLabel: 'Estate association' }] },
   { slug: 'carmona', name: 'Carmona', population2024: 3034, legislativeDistrict: '1st District', officialPageUrl: 'https://www.makati.gov.ph/barangay/carmona/31', websiteUrl: 'https://barangaycarmonaofficial.wordpress.com/', officials: { punongBarangay: 'Ricardo Perfecto B. Garcia', source: 'https://www.makati.gov.ph/barangay/carmona/31' }, associations: [{ name: 'Circuit Makati', href: 'https://circuitmakati.com/', linkLabel: 'Estate website' }], notablePlaces: [{ name: 'Circuit Makati', href: 'https://circuitmakati.com/', type: 'Establishment' }] },
   { slug: 'dasmarinas', name: 'Dasmariñas', population2024: 4320, legislativeDistrict: '1st District', officialPageUrl: 'https://www.makati.gov.ph/barangay/dasmari%C3%B1as/32', officials: { punongBarangay: 'Wellington James S. Lim', source: 'https://www.makati.gov.ph/barangay/dasmari%C3%B1as/32' }, hallAddress: '1419 Kampanilla Street, Makati City', hallPhone: '(02) 8893-0215 / (02) 8893-0102 / (02) 8812-3335 / (02) 8817-2603', hallEmail: 'brgy.dasmarinas1971@gmail.com', hallSource: 'https://www.makati.gov.ph/barangay/dasmari%C3%B1as/32', associations: [{ name: 'Dasmariñas Village Association (DVA)', href: 'https://dva.org.ph/', linkLabel: 'Website' }] },
   { slug: 'forbes-park', name: 'Forbes Park', population2024: 4183, legislativeDistrict: '1st District', officialPageUrl: 'https://www.makati.gov.ph/barangay/forbes-park/23', associations: [{ name: 'Forbes Park Association (FPA)', href: 'https://www.forbesparkassociation.com/', linkLabel: 'Website' }], notablePlaces: [{ name: 'Manila Polo Club', href: 'https://www.manilapoloclub.com/', type: 'Institution' }] },
@@ -660,14 +696,44 @@ const barangayBaseProfiles: BarangayProfile[] = [
   { slug: 'kasilawan', name: 'Kasilawan', population2024: 5007, legislativeDistrict: '1st District', officialPageUrl: 'https://www.makati.gov.ph/barangay/kasilawan/24' },
   { slug: 'la-paz', name: 'La Paz', population2024: 6682, legislativeDistrict: '1st District', officialPageUrl: 'https://www.makati.gov.ph/barangay/la-paz/25?page=406', hallAddress: '815 Archimedes Street, La Paz, Makati City', hallPhone: '(02) 8895-2755 / (02) 8735-5703 / 0939-522-7443', hallEmail: 'barangaylapaz815@gmail.com', hallSource: 'https://www.makati.gov.ph/barangay/la-paz/25?page=406', notablePlaces: [{ name: 'Makati Cinema Square', href: 'https://www.google.com/maps/search/?api=1&query=Makati+Cinema+Square', type: 'Establishment' }] },
   { slug: 'magallanes', name: 'Magallanes', population2024: 5473, legislativeDistrict: '1st District', officialPageUrl: 'https://www.makati.gov.ph/barangay/magallanes/26', associations: [{ name: 'Magallanes Village Association (MVA)', href: 'https://www.google.com/maps/search/?api=1&query=Magallanes%20Village%20Association%20Makati', linkLabel: 'Map' }] },
-  { slug: 'olympia', name: 'Olympia', population2024: 19035, legislativeDistrict: '1st District', officialPageUrl: 'https://www.makati.gov.ph/barangay/olympia/27?page=438', websiteUrl: 'https://www.barangayolympia.site/', officials: { punongBarangay: 'Reynaldo A. Yulo', source: 'https://www.makati.gov.ph/barangay/olympia/27?page=438' }, hallAddress: 'Fortuna Street, Makati City', hallPhone: '(02) 8897-9718 / (02) 8897-5019 / (02) 8897-9764 / (02) 8805-5096 / (02) 8551-8892 / (02) 8785-0626 / 0968-349-4634', hallEmail: 'barangayolympiamakati@gmail.com', hallSource: 'https://www.makati.gov.ph/barangay/olympia/27?page=438' },
+  { slug: 'olympia', name: 'Olympia', population2024: 19035, legislativeDistrict: '1st District', officialPageUrl: 'https://www.makati.gov.ph/barangay/olympia/27?page=438', websiteUrl: 'https://www.barangayolympia.site/', publishedServices: [
+    { title: 'Barangay clearance', type: 'Clearance', sourceUrl: 'https://barangayolympia.site/homepage', sourceLabel: 'Barangay Olympia online services' },
+    { title: 'Certificate of indigency', type: 'Certificate', sourceUrl: 'https://barangayolympia.site/homepage', sourceLabel: 'Barangay Olympia online services' },
+    { title: 'Business clearance', type: 'Clearance', sourceUrl: 'https://barangayolympia.site/homepage', sourceLabel: 'Barangay Olympia online services' },
+    { title: 'Barangay ID', type: 'ID', sourceUrl: 'https://barangayolympia.site/homepage', sourceLabel: 'Barangay Olympia online services' },
+    { title: 'First-time jobseeker certification', type: 'Certificate', sourceUrl: 'https://barangayolympia.site/homepage', sourceLabel: 'Barangay Olympia online services' },
+    { title: 'CCTV record request', type: 'Other', sourceUrl: 'https://barangayolympia.site/homepage', sourceLabel: 'Barangay Olympia online services' },
+  ], officials: { punongBarangay: 'Reynaldo A. Yulo', source: 'https://www.makati.gov.ph/barangay/olympia/27?page=438' }, hallAddress: 'Fortuna Street, Makati City', hallPhone: '(02) 8897-9718 / (02) 8897-5019 / (02) 8897-9764 / (02) 8805-5096 / (02) 8551-8892 / (02) 8785-0626 / 0968-349-4634', hallEmail: 'barangayolympiamakati@gmail.com', hallSource: 'https://www.makati.gov.ph/barangay/olympia/27?page=438' },
   { slug: 'palanan', name: 'Palanan', population2024: 11934, legislativeDistrict: '1st District', officialPageUrl: 'https://www.makati.gov.ph/barangay/palanan/28', officials: { punongBarangay: 'John Benedict C. Corcuera', source: 'https://www.makati.gov.ph/barangay/palanan/28' } },
   { slug: 'pinagkaisahan', name: 'Pinagkaisahan', population2024: 5323, legislativeDistrict: '2nd District', officialPageUrl: 'https://www.makati.gov.ph/barangay/pinagkaisahan/16?tab=239', officials: { punongBarangay: 'Shyla Marie Ramos (Acting)', source: 'https://www.makati.gov.ph/barangay/pinagkaisahan/16?tab=239' }, hallAddress: '2886 Danlig St. cor. Tolentino Streets, Makati City', hallPhone: '(02) 8881-4536 / (02) 8821-4530 / (02) 8881-4403', hallEmail: 'brgy.pinagkaisahan.makati@gmail.com', hallSource: 'https://www.makati.gov.ph/barangay/pinagkaisahan/16?tab=239' },
   { slug: 'pio-del-pilar', name: 'Pio Del Pilar', population2024: 55572, legislativeDistrict: '1st District', officialPageUrl: 'https://www.makati.gov.ph/barangay/pio-del-pilar/33', websiteUrl: 'https://brgypiodelpilarmakati.com.ph/staging/', hallEmail: 'bpiodelpilarsecoffice2020@gmail.com', officials: { punongBarangay: 'Hazel Ann S. Lacia', source: 'https://www.makati.gov.ph/barangay/pio-del-pilar/33' } },
   { slug: 'poblacion', name: 'Poblacion', population2024: 17088, legislativeDistrict: '1st District', officialPageUrl: 'https://www.makati.gov.ph/barangay/poblacion/34?tab=682', websiteUrl: 'https://epoblacion.net/', officials: { punongBarangay: 'Jose Mikhail R. Villena', source: 'https://www.makati.gov.ph/barangay/poblacion/34?tab=682' }, heritageMarkers: [{ name: 'Makati', agency: 'NHCP', status: 'Level II – Historical marker', href: 'https://philhistoricsites.nhcp.gov.ph/registry_database/makati/', location: 'Old Makati City Hall Building, J.P. Rizal Avenue cor. Angono Street' }, { name: 'San Pedro Macati', agency: 'NHCP', status: 'Level II – Historical marker', href: 'https://philhistoricsites.nhcp.gov.ph/registry_database/san-pedro-macati/', location: 'Saints Peter and Paul Church' }, { name: 'Museo ng Makati', agency: 'NCCA', status: 'Important Cultural Property / registered property', href: 'https://talapamana.ncca.gov.ph/index.php/component/content/article/talapamana-metro-manila?Itemid=101&catid=12', location: 'Makati, Metro Manila' }], hallAddress: 'J.P. Rizal cor. D.M. Rivera Street, Makati City', hallPhone: '(02) 8808-8087 / (02) 8681-4034', hallEmail: 'barangaypobmak@gmail.com', hallSource: 'https://epoblacion.net/home/about', hallSourceLabel: 'Barangay Poblacion website', associations: [{ name: 'Century City', href: 'https://www.centurycitymall.com.ph/', linkLabel: 'Estate / mall website' }, { name: 'Rockwell Center', href: 'https://e-rockwell.com/', linkLabel: 'Estate website' }, { name: 'Makati Central Estate Association (MACEA)', href: 'https://macea.com.ph/', linkLabel: 'Estate association' }], notablePlaces: [{ name: 'Museo ng Makati', href: 'https://www.google.com/maps/search/?api=1&query=Museo+ng+Makati', type: 'Institution' }, { name: 'Saints Peter and Paul Parish', href: 'https://www.google.com/maps/search/?api=1&query=Saints+Peter+and+Paul+Parish+Makati', type: 'Heritage' }] },
   { slug: 'san-antonio', name: 'San Antonio', population2024: 18012, legislativeDistrict: '1st District', officialPageUrl: 'https://www.makati.gov.ph/barangay/san-antonio/35', officials: { punongBarangay: 'Restituto E. Cajes', source: 'https://www.makati.gov.ph/barangay/san-antonio/35' }, notablePlaces: [{ name: 'San Antonio National High School', href: 'https://www.google.com/maps/search/?api=1&query=San+Antonio+National+High+School+Makati', type: 'Institution' }, { name: 'National Shrine of the Sacred Heart', href: 'https://www.google.com/maps/search/?api=1&query=National+Shrine+of+the+Sacred+Heart+Makati', type: 'Heritage' }] },
   { slug: 'san-isidro', name: 'San Isidro', population2024: 6260, legislativeDistrict: '1st District', officialPageUrl: makatiBarangayDirectory },
-  { slug: 'san-lorenzo', name: 'San Lorenzo', population2024: 14793, legislativeDistrict: '1st District', officialPageUrl: 'https://www.makati.gov.ph/barangay/san-lorenzo/37', websiteUrl: 'https://sanloph.com/', facebookUrl: 'https://www.facebook.com/Barangaysanlorenzo', officials: { punongBarangay: 'Jose Emmanuel A. Recto', source: 'https://www.makati.gov.ph/barangay/san-lorenzo/37' }, hallAddress: '65 Amorsolo Street, Makati City', hallPhone: '(02) 8893-3811 / (02) 8241-9319', hallEmail: 'brgysanlorenzo.makati@gmail.com', hallSource: 'https://sanloph.com/', hallSourceLabel: 'Barangay San Lorenzo website', associations: [{ name: 'San Lorenzo Village Association (SLVA)', href: 'https://www.myslv.ph/', linkLabel: 'Website' }, { name: 'Makati Central Estate Association (MACEA)', href: 'https://macea.com.ph/', linkLabel: 'Estate association' }] },
+  { slug: 'san-lorenzo', name: 'San Lorenzo', population2024: 14793, legislativeDistrict: '1st District', officialPageUrl: 'https://www.makati.gov.ph/barangay/san-lorenzo/37', websiteUrl: 'https://sanloph.com/', facebookUrl: 'https://www.facebook.com/Barangaysanlorenzo', publishedServices: [
+    {
+      title: 'Barangay clearance and permits',
+      type: 'Clearance',
+      summary: 'Personal and business barangay clearances are handled by Barangay San Lorenzo, including through its Legazpi satellite office.',
+      sourceUrl: 'https://www.sanloph.com/index.php/component/content/article/barangay-clearance-and-permits',
+      sourceLabel: 'Barangay San Lorenzo · Clearance and permits',
+    },
+    {
+      title: 'Barangay social services',
+      type: 'Social service',
+      summary: 'Barangay assistance includes local processing support for solo-parent, senior-citizen and related city services.',
+      sourceUrl: 'https://sanloph.com/index.php/component/content/article/barangay-services?catid=8',
+      sourceLabel: 'Barangay San Lorenzo · Social Services',
+    },
+    {
+      title: 'Barangay One Stop Service',
+      type: 'Other',
+      availability: '1 October 2026 · 9:00 AM–3:00 PM · Barangay Hall Function Room',
+      summary: 'Scheduled access to SSS, Pag-IBIG, PhilHealth, PSA certificates, Makati Health Plus, Makatizen Card, BIR consultations and selected city IDs.',
+      sourceUrl: 'https://sanloph.com/index.php/component/content/article/barangay-one-stop-shop-october-2026?catid=8',
+      sourceLabel: 'Barangay San Lorenzo · One Stop Service',
+    },
+  ], officials: { punongBarangay: 'Jose Emmanuel A. Recto', source: 'https://www.makati.gov.ph/barangay/san-lorenzo/37' }, hallAddress: '65 Amorsolo Street, Makati City', hallPhone: '(02) 8893-3811 / (02) 8241-9319', hallEmail: 'brgysanlorenzo.makati@gmail.com', hallSource: 'https://sanloph.com/', hallSourceLabel: 'Barangay San Lorenzo website', associations: [{ name: 'San Lorenzo Village Association (SLVA)', href: 'https://www.myslv.ph/', linkLabel: 'Website' }, { name: 'Makati Central Estate Association (MACEA)', href: 'https://macea.com.ph/', linkLabel: 'Estate association' }] },
   { slug: 'santa-cruz', name: 'Santa Cruz', population2024: 6744, legislativeDistrict: '1st District', officialPageUrl: 'https://www.makati.gov.ph/barangay/sta.-cruz/39?page=622', officials: { punongBarangay: 'Kit H. Taguiang', source: 'https://www.makati.gov.ph/barangay/sta.-cruz/39?page=622' } },
   { slug: 'singkamas', name: 'Singkamas', population2024: 7485, legislativeDistrict: '1st District', officialPageUrl: 'https://www.makati.gov.ph/barangay/singkamas/38?tab=598', facebookUrl: 'https://www.facebook.com/barangaysingkamas.serbisyo' },
   { slug: 'tejeros', name: 'Tejeros', population2024: 16019, legislativeDistrict: '1st District', officialPageUrl: 'https://www.makati.gov.ph/barangay/tejeros/7?page=92', heritageMarkers: [{ name: 'Dambana ng Banal na Krus', agency: 'NHCP', status: 'Level II – Historical marker', href: 'https://philhistoricsites.nhcp.gov.ph/registry_database/dambana-ng-banal-na-krus/', location: 'Holy Cross Parish Church, 211 J.P. Rizal Avenue, Barangay Tejeros' }], notablePlaces: [{ name: 'Holy Cross Parish Church (Dambana ng Banal na Krus)', href: 'https://philhistoricsites.nhcp.gov.ph/registry_database/dambana-ng-banal-na-krus/', type: 'Heritage', source: 'NHCP' }] },
