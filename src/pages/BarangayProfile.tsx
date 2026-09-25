@@ -30,6 +30,11 @@ import {
 } from '../data/barangays';
 import { serviceDirectory } from '../data/serviceDirectory';
 import {
+  civicAssetTypeLabels,
+  placesByBarangay,
+  type PlaceRegistryRecord,
+} from '../data/placeRegistry';
+import {
   accountabilityEntries,
   accountabilityStatusLabel,
 } from '../data/accountability';
@@ -40,6 +45,12 @@ import {
 import { withBarangayScope } from '../hooks/useBarangayScope';
 
 const compactEditionName = (name: string) => name.replace(/\s+/g, '');
+const normalizePlaceName = (name: string) =>
+  name.trim().toLocaleLowerCase('en-PH').replace(/\s+/g, ' ');
+
+const primaryPlaceSource = (place: PlaceRegistryRecord) =>
+  place.provenance.sources.find(source => source.kind !== 'reference-map') ??
+  place.provenance.sources[0];
 
 export default function BarangayProfile() {
   const { slug } = useParams();
@@ -61,6 +72,18 @@ export default function BarangayProfile() {
   const cityPopulation = barangays.reduce((sum, item) => sum + item.population2024, 0);
   const populationShare = (barangay.population2024 / cityPopulation) * 100;
   const facilities = barangayFacilities(barangay.slug, barangay.name);
+  const localPlaces = placesByBarangay(barangay.name).filter(
+    place => place.verification.status === 'verified'
+  );
+  const facilityByName = new Map(
+    facilities.map(facility => [normalizePlaceName(facility.name), facility])
+  );
+  const registryPlaceNames = new Set(
+    localPlaces.map(place => normalizePlaceName(place.name))
+  );
+  const facilityFallbacks = facilities.filter(
+    facility => !registryPlaceNames.has(normalizePlaceName(facility.name))
+  );
   const services = serviceDirectory.filter(item =>
     commonBarangayServiceIds.includes(item.id)
   );
@@ -511,31 +534,116 @@ export default function BarangayProfile() {
 
       <section className="bg-[#f5f8f2] py-14">
         <div className="container px-5 md:px-6 lg:px-8">
-          <div className="section-eyebrow">Public facilities</div>
+          <div className="section-eyebrow">Places & facilities</div>
           <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-            <div>
-              <h2 className="text-3xl font-extrabold tracking-tight text-gray-950">
-                Verified local facilities
-              </h2>
-              <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600">
-                BetterMakati lists facilities only when a usable public source or verified location is available.
-              </p>
-            </div>
+            <h2 className="text-3xl font-extrabold tracking-tight text-gray-950">
+              In {barangay.name}
+            </h2>
+            <Link
+              to={withBarangayScope('/civic-map', barangay.slug)}
+              className="inline-flex items-center gap-1 text-sm font-bold text-primary-700"
+            >
+              Open barangay map <ArrowRight className="h-4 w-4" />
+            </Link>
           </div>
+
           <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {facilities.map(facility => (
-              <div
-                key={facility.name}
+            {localPlaces.map(place => {
+              const facility = facilityByName.get(normalizePlaceName(place.name));
+              const source = primaryPlaceSource(place);
+              const isHealth = place.primaryCategory === 'health-center';
+
+              return (
+                <article
+                  key={place.id}
+                  className="rounded-2xl border border-primary-100 bg-white p-5"
+                >
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+                      {civicAssetTypeLabels[place.primaryCategory]}
+                    </div>
+                    {isHealth ? (
+                      <HeartPulse className="h-4 w-4 text-primary-700" />
+                    ) : (
+                      <MapPin className="h-4 w-4 text-primary-700" />
+                    )}
+                  </div>
+
+                  <h3 className="mt-2 font-extrabold text-gray-950">{place.name}</h3>
+                  {place.location.address && (
+                    <p className="mt-2 text-sm leading-relaxed text-gray-600">
+                      {place.location.address}
+                    </p>
+                  )}
+
+                  {(place.servicesAtLocation?.length ?? 0) > 0 && (
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      {place.servicesAtLocation?.slice(0, 3).map(service => (
+                        <span
+                          key={service.serviceId ?? service.label}
+                          className="rounded-full bg-primary-50 px-2.5 py-1 text-xs font-semibold text-primary-800"
+                        >
+                          {service.label}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+
+                  {facility?.phone && (
+                    <p className="mt-3 text-sm text-gray-700">{facility.phone}</p>
+                  )}
+                  {facility?.email && (
+                    <a
+                      href={'mailto:' + facility.email}
+                      className="mt-2 block break-all text-sm font-semibold text-primary-700 underline underline-offset-2"
+                    >
+                      {facility.email}
+                    </a>
+                  )}
+
+                  <div className="mt-4 flex flex-wrap gap-3">
+                    <Link
+                      to={'/civic-map/' + place.id}
+                      className="text-sm font-bold text-primary-700 underline underline-offset-2"
+                    >
+                      Place details <ArrowRight className="inline h-3.5 w-3.5" />
+                    </Link>
+                    {source && (
+                      <a
+                        href={source.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-sm font-bold text-primary-700 underline underline-offset-2"
+                      >
+                        Source <ExternalLink className="inline h-3.5 w-3.5" />
+                      </a>
+                    )}
+                  </div>
+                </article>
+              );
+            })}
+
+            {facilityFallbacks.map(facility => (
+              <article
+                key={'facility-' + facility.name}
                 className="rounded-2xl border border-primary-100 bg-white p-5"
               >
                 <div className="flex items-center justify-between gap-3">
                   <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
                     {facility.type}
                   </div>
-                  {facility.type === 'Health' && <HeartPulse className="h-4 w-4 text-primary-700" />}
+                  {facility.type === 'Health' ? (
+                    <HeartPulse className="h-4 w-4 text-primary-700" />
+                  ) : (
+                    <Building2 className="h-4 w-4 text-primary-700" />
+                  )}
                 </div>
                 <h3 className="mt-2 font-extrabold text-gray-950">{facility.name}</h3>
-                {facility.address && <p className="mt-2 text-sm text-gray-600">{facility.address}</p>}
+                {facility.address && (
+                  <p className="mt-2 text-sm leading-relaxed text-gray-600">
+                    {facility.address}
+                  </p>
+                )}
                 {facility.phone && <p className="mt-2 text-sm text-gray-700">{facility.phone}</p>}
                 {facility.email && (
                   <a
@@ -546,16 +654,26 @@ export default function BarangayProfile() {
                   </a>
                 )}
                 <div className="mt-4 flex flex-wrap gap-3">
-                  <a href={facility.href} target="_blank" rel="noreferrer" className="text-sm font-bold text-primary-700 underline underline-offset-2">
+                  <a
+                    href={facility.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-sm font-bold text-primary-700 underline underline-offset-2"
+                  >
                     Map <ExternalLink className="inline h-3.5 w-3.5" />
                   </a>
                   {facility.source && (
-                    <a href={facility.source} target="_blank" rel="noreferrer" className="text-sm font-bold text-primary-700 underline underline-offset-2">
-                      {facility.sourceLabel ?? 'Source'} <ExternalLink className="inline h-3.5 w-3.5" />
+                    <a
+                      href={facility.source}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-sm font-bold text-primary-700 underline underline-offset-2"
+                    >
+                      Source <ExternalLink className="inline h-3.5 w-3.5" />
                     </a>
                   )}
                 </div>
-              </div>
+              </article>
             ))}
           </div>
         </div>
