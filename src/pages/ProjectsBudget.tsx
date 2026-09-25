@@ -281,7 +281,7 @@ export default function ProjectsBudget() {
 
         <div className="mt-5 rounded-2xl border border-primary-100 bg-white p-5">
           <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
-            National context
+            Related national records
           </div>
           <div className="mt-3 flex flex-wrap gap-x-5 gap-y-3 text-sm font-bold">
             <a
