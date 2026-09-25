@@ -425,7 +425,7 @@
       "excludes": [
         "Do not add transport assets in the same research step."
       ],
-      "status": "reopened-planned",
+      "status": "in-progress",
       "completedAt": "2026-09-25",
       "commit": "475c50b1ae3e61e68ad5ca8a65485ff750d7368b",
       "result": {
@@ -447,7 +447,7 @@
         ]
       },
       "reopenedAt": "2026-09-25",
-      "revisionReason": "Apply the Makati-publication-first methodology: Makati publications report transport inventories and counts beyond the already-added MRT/Busway/One Ayala assets.",
+      "revisionReason": "Apply official-Makati-publication-first reconciliation before treating the eight implemented transport assets as complete.",
       "previousTransportWork": {
         "disposition": "retain the eight verified transport assets; audit them and missing objects against Makati publications before closure",
         "evidenceExamples": [
@@ -460,6 +460,12 @@
         "Reconcile them to current operators, current routes/stops and present-day 23-barangay geography.",
         "Preserve official-city inventory provenance separately from operator/current-network verification.",
         "Add missing verified current transport assets only after the crosswalk is complete."
+      ],
+      "current": "3C-3b",
+      "planFile": "data/wave3-civic-map-transport-plan.json",
+      "reconciliationFile": "data/wave3-civic-map-transport-reconciliation.json",
+      "completedSubsteps": [
+        "3C-3a"
       ]
     },
     {
@@ -762,9 +768,9 @@
     }
   ],
   "immediateNext": {
-    "id": "3C-3-reopen",
-    "title": "Reopen transport completeness using official-source-first reconciliation",
-    "maximumScope": "Extract Makati-published transport inventories/counts first, crosswalk them against the existing Civic Map/current operators and present-day 23-barangay geography, classify every discrepancy, and stop after reconciliation before implementation."
+    "id": "3C-3b",
+    "title": "Implement the two current Makati ferry stations",
+    "scope": "Freeze exact current points for Guadalupe and Valenzuela Pasig River Ferry stations, add the two current transport-stop assets with MMDA/current-service provenance, validate, and stop."
   },
   "reopenedExecutionOrder": [
     "3C-2a",
@@ -788,10 +794,15 @@
       "current": "complete"
     },
     "3C-3": {
-      "status": "reopened-planned",
+      "status": "in-progress",
       "title": "Transport completeness from Makati publications",
       "executeAfter": "reopened 3C-1 unless user reprioritizes",
-      "current": "3C-3-reopen"
+      "current": "3C-3b",
+      "planFile": "data/wave3-civic-map-transport-plan.json",
+      "reconciliationFile": "data/wave3-civic-map-transport-reconciliation.json",
+      "completedSubsteps": [
+        "3C-3a"
+      ]
     }
   }
 }
