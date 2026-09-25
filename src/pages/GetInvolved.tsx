@@ -187,10 +187,10 @@ export default function GetInvolved() {
               Working outside Makati?
             </div>
             <h2 className="mt-2 text-lg font-extrabold text-gray-950">
-              Find another BetterLGU project
+              Find another local civic portal
             </h2>
             <p className="mt-1 text-sm text-gray-600">
-              Check whether your city or municipality already has a local civic portal.
+              Search the BetterLGU Directory by city or municipality.
             </p>
             <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
               BetterLGU Directory <ExternalLink className="h-3.5 w-3.5" />
