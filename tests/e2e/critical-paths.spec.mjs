@@ -1492,3 +1492,14 @@ test('statistics and reports expose national context without replacing Makati so
   );
   await expect(page.getByRole('link', { name: /Read more/i }).first()).toBeVisible();
 });
+
+test('2022 Makati mayoral history uses the cached OpenHalalan extract with BetterGov provenance', async ({ page }) => {
+  await page.goto(baseURL + '/elections#mayoral-history');
+
+  const row2022 = page.locator('tbody tr').filter({ hasText: '2022' }).filter({ hasText: 'Abby Binay' }).first();
+  await expect(row2022).toContainText('338,819');
+  await expect(row2022.getByRole('link', { name: /OpenHalalan via BetterGov/i })).toHaveAttribute(
+    'href',
+    'https://data.bettergov.ph/datasets/25'
+  );
+});

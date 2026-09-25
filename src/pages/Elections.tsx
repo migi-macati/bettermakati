@@ -594,7 +594,9 @@ export default function Elections() {
                               ? 'UP CIDS dataset'
                               : race.sourceQuality === 'mixed'
                                 ? 'Official + archival'
-                                : 'Archival secondary'}
+                                : race.sourceQuality === 'open-data'
+                                  ? 'OpenHalalan via BetterGov'
+                                  : 'Archival secondary'}
                         <ExternalLink className="ml-1 inline h-3.5 w-3.5" />
                       </a>
                     </td>

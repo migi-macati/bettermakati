@@ -1,8 +1,11 @@
+import { openHalalanMakati2022Mayor } from './openHalalanMakati';
+
 export type ElectionSourceQuality =
   | 'official'
   | 'comelec-media'
   | 'academic'
   | 'mixed'
+  | 'open-data'
   | 'archival-secondary';
 
 export interface HistoricalCandidateResult {
@@ -43,13 +46,15 @@ export const makatiMayoralHistory: HistoricalMayoralRace[] = [
     year: 2022,
     electionDate: '2022-05-09',
     winner: 'Abby Binay',
-    candidates: [
-      { name: 'Abby Binay', party: 'Makatizens United Party', votes: 338819 },
-      { name: 'Joel Hernandez', party: 'Independent', votes: 16640 },
-    ],
-    sourceUrl: 'https://whatalife.ph/election-results-in-rich-cities-2022/',
-    sourceLabel: '2022 results reported from COMELEC returns',
-    sourceQuality: 'archival-secondary',
+    candidates: openHalalanMakati2022Mayor.candidates.map(candidate => ({
+      name: candidate.name,
+      party: candidate.party,
+      votes: candidate.votes,
+    })),
+    sourceUrl: openHalalanMakati2022Mayor.catalogUrl,
+    sourceLabel:
+      'OpenHalalan via BetterGov Open Data; underlying Makati tally from COMELEC 2022 results',
+    sourceQuality: 'open-data',
     geographyNote:
       'This election still included the Embo barangays then voting as part of Makati.',
   },
