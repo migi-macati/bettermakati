@@ -139,13 +139,29 @@
     {
       "id": "W3R-3a",
       "title": "Reuse places in BetterBarangay",
-      "status": "next",
-      "maximumScope": "Barangay Profile only. Surface verified local places/facilities from the registry."
+      "status": "complete",
+      "maximumScope": "Barangay Profile only. Surface verified local places/facilities from the registry.",
+      "validation": {
+        "integration": "BarangayProfile now uses placesByBarangay and only surfaces registry records with verification.status === verified.",
+        "deduplication": "Matching legacy facility rows enrich registry places with phone/email; matched facilities are removed from fallback cards, avoiding duplicate health-center entries.",
+        "fallback": "Unmatched barangayFacilities remain available, preserving barangay halls and coverage where the registry has no verified local place yet.",
+        "representativeCoverage": {
+          "Poblacion": 9,
+          "SantaCruz": 1,
+          "SanLorenzo": 11,
+          "GuadalupeNuevo": 7,
+          "ForbesPark": 0,
+          "Urdaneta": 0
+        },
+        "santaCruzNormalization": "Sta. Cruz and Santa Cruz now normalize to the same barangay selector key.",
+        "guardrail": "scripts/check-barangays.mjs now guards registry selector use, verified-only display, place detail links, co-located service display and Santa Cruz normalization.",
+        "ci": "Latest CI still stops at the same three pre-existing unused-import ESLint errors before downstream checks/build. No new lint errors are reported in BarangayProfile.tsx, placeRegistry.ts or check-barangays.mjs."
+      }
     },
     {
       "id": "W3R-3b",
       "title": "Reuse places in Mobility",
-      "status": "planned",
+      "status": "next",
       "maximumScope": "Mobility page only. Replace duplicated MRT, Busway, ferry and terminal facts where appropriate."
     },
     {
@@ -336,9 +352,9 @@
     }
   ],
   "immediateNext": {
-    "id": "W3R-3a",
-    "title": "Reuse places in BetterBarangay",
-    "maximumScope": "Barangay Profile only. Surface verified local places/facilities from the registry."
+    "id": "W3R-3b",
+    "title": "Reuse places in Mobility",
+    "maximumScope": "Mobility page only. Reuse shared transport stops/terminals from the Place Registry; no new transport research."
   },
   "capabilityDispositionAuditFile": "data/wave3-capability-disposition-audit.json",
   "completedSteps": [
@@ -346,7 +362,8 @@
     "W3R-1",
     "W3R-2a",
     "W3R-2b",
-    "W3R-2c"
+    "W3R-2c",
+    "W3R-3a"
   ],
   "placeRegistrySchemaFile": "data/place-registry-schema.json",
   "placeRegistryDataFile": "src/data/placeRegistry.ts"
