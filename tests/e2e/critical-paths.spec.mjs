@@ -648,6 +648,44 @@ test('Public Records exposes current source freshness state', async ({ page }) =
   expect(openItems.some(item => item.lastSuccessfulAt !== undefined)).toBeTruthy();
 });
 
+test('Page freshness state tracks open source dependencies without changing review dates', async ({ page }) => {
+  const [pageStateResponse, pageAuditResponse, queueResponse] = await Promise.all([
+    page.request.get(baseURL + '/page-freshness-state.json'),
+    page.request.get(baseURL + '/page-audit.json'),
+    page.request.get(baseURL + '/freshness-review-queue.json'),
+  ]);
+  expect(pageStateResponse.ok()).toBeTruthy();
+  expect(pageAuditResponse.ok()).toBeTruthy();
+  expect(queueResponse.ok()).toBeTruthy();
+
+  const pageState = await pageStateResponse.json();
+  const pageAudit = await pageAuditResponse.json();
+  const queue = await queueResponse.json();
+
+  expect(pageState.version).toBe(1);
+  expect(pageState.pages.length).toBe(pageAudit.length);
+  expect(pageState.summary.needsReview).toBeGreaterThanOrEqual(1);
+
+  const auditByPath = new Map(pageAudit.map(item => [item.path, item]));
+  for (const item of pageState.pages) {
+    expect(item.reviewedAt).toBe(auditByPath.get(item.path)?.reviewedAt);
+  }
+
+  const affectedPages = new Set(
+    queue.items
+      .filter(item => item.status === 'open')
+      .flatMap(item => item.affectedPages)
+  );
+  expect(
+    new Set(pageState.pages.filter(item => item.needsReview).map(item => item.path))
+  ).toEqual(affectedPages);
+
+  const projects = pageState.pages.find(item => item.path === '/projects-budget');
+  expect(projects?.needsReview).toBeTruthy();
+  expect(projects?.reviewedAt).toBe('2026-09-25');
+  expect(projects?.dependencySignals.some(item => item.sourceId === 'philgeps')).toBeTruthy();
+});
+
 test('BetterMakati Status exposes source freshness automation', async ({ page }) => {
   await page.goto(baseURL + '/status');
   await expect(page.getByRole('heading', { name: 'Source freshness automation' })).toBeVisible();
