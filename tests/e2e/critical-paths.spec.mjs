@@ -728,12 +728,17 @@ test('City Monitor publishes permanent records and source status', async ({ page
   await expect(page.getByLabel('Filter City Monitor stream')).toBeVisible();
 });
 
-test('City Monitor exposes the editorial review queue and monitoring modes', async ({ page }) => {
+test('City Monitor routes editorial review to the unified queue and exposes monitoring modes', async ({ page }) => {
   await page.goto(baseURL + '/city-monitor');
-  await expect(page.getByRole('heading', { name: 'Source changes awaiting review' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Freshness review queue' })).toBeVisible();
+  await expect(page.getByRole('link', { name: /Open review queue/i })).toHaveAttribute(
+    'href',
+    '/records#freshness-review-queue'
+  );
   await expect(page.getByText('content-change detection', { exact: true })).toBeVisible();
   await expect(page.getByText('reachability only', { exact: true }).first()).toBeVisible();
   await expect(page.getByText('manual review', { exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Source changes awaiting review' })).toHaveCount(0);
 
   const stateResponse = await page.request.get(baseURL + '/city-monitor-source-state.json');
   expect(stateResponse.ok()).toBeTruthy();
