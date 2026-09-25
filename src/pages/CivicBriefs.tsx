@@ -459,45 +459,14 @@ export default function CivicBriefs() {
       )}
 
       <Section className="bg-white">
-        <div className="section-eyebrow">Review queue</div>
-        <Heading level={2}>Source-review queue</Heading>
-
-        {reviewSignals.length === 0 && failedChecks.length === 0 ? (
-          <div className="mt-6 rounded-2xl border border-gray-200 bg-[#fffdf8] p-5 text-sm text-gray-600">
-            No published source-change or failed-check signal falls inside this period.
-          </div>
-        ) : (
-          <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-2">
-            {reviewSignals.slice(0, 20).map((signal, index) => (
-              <a
-                key={signal.id + '-' + signal.checkedAt + '-' + index}
-                href={signal.url}
-                target="_blank"
-                rel="noreferrer"
-                className="rounded-xl border border-secondary-200 bg-secondary-50 p-4"
-              >
-                <Radio className="h-4 w-4 text-secondary-800" />
-                <div className="mt-2 font-bold text-gray-950">{signal.label}</div>
-                <div className="mt-1 text-xs text-gray-600">
-                  {signal.stream} · detected {new Date(signal.checkedAt).toLocaleString('en-PH', { timeZone: 'Asia/Manila' })}
-                </div>
-              </a>
-            ))}
-            {failedChecks.slice(0, 20).map((signal, index) => (
-              <a
-                key={'failed-' + signal.id + '-' + signal.checkedAt + '-' + index}
-                href={signal.url}
-                target="_blank"
-                rel="noreferrer"
-                className="rounded-xl border border-error-200 bg-error-50 p-4"
-              >
-                <Radio className="h-4 w-4 text-error-700" />
-                <div className="mt-2 font-bold text-gray-950">{signal.label}</div>
-                <div className="mt-1 text-xs text-gray-600">Source check failed · {signal.stream}</div>
-              </a>
-            ))}
-          </div>
-        )}
+        <div className="section-eyebrow">Editorial review</div>
+        <Heading level={2}>Freshness review queue</Heading>
+        <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600">
+          This brief keeps period-specific signal counts above. Review actions are managed in the consolidated queue.
+        </p>
+        <Link to="/records#freshness-review-queue" className="brand-btn-primary mt-5">
+          Open review queue <ArrowRight className="h-4 w-4" />
+        </Link>
       </Section>
 
       <Section className="bg-[#fffdf8]">
