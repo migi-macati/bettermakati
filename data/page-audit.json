@@ -126,7 +126,7 @@
     ],
     "gaps": [
       "Structured procurement coverage includes the public bid-result disclosures already ingested; many records still lack a separately linked contract, notice to proceed, implementation or completion source.",
-      "Audit follow-through is structured only where an official or attributable public record can be linked; BetterMakati does not yet have a definitive current-year inventory of resolved and unresolved COA recommendations."
+      "The 2017–2018 audit findings now have dated follow-up traces, but no official item-level COA closure table has been located for those specific recommendations; the 2024 SEF compliance report body is not currently retrievable through the public indexed download path."
     ]
   },
   {
@@ -305,7 +305,7 @@
     ],
     "gaps": [
       "Procurement coverage is structured for the bid-result records already ingested, but many awards still lack a separately linked contract, notice to proceed, implementation or completion record.",
-      "Finding-level COA records are structured selectively; a definitive current inventory of resolved and unresolved Makati audit recommendations is not yet normalized.",
+      "The 2017–2018 Makati findings now carry dated follow-up traces, but the exact COA-validated closure status of those recommendations is not exposed in the retrievable public records; the 2024 SEF compliance report is indexed but its finding-level body remains unavailable through the current public download path.",
       "Public commitments are source-backed but still selective rather than a comprehensive inventory of promises and measurable targets across speeches, plans, ordinances and announcements.",
       "Barangay accountability now uses only explicit local tags and never falls back to citywide records, but fiscal, procurement and project evidence remains sparse for many of the 23 barangays."
     ]
