@@ -272,7 +272,8 @@
     {
       "id": "2.4G",
       "title": "Integrate status and history",
-      "objective": "Expose consolidated freshness health to Status/Public Records without architecture-heavy UI copy."
+      "objective": "Expose consolidated freshness health to Status/Public Records without architecture-heavy UI copy.",
+      "status": "complete"
     },
     {
       "id": "2.4H",
@@ -364,6 +365,21 @@
         "Added browser and build-audit coverage for dependency flags and review-date preservation."
       ],
       "result": "Page review age and source-change review are now separate dimensions: human review dates remain stable while unresolved dependency signals independently flag pages for re-review."
+    },
+    {
+      "step": "2.4G",
+      "completedAt": "2026-09-25",
+      "title": "Integrate status and history",
+      "changes": [
+        "Created a consolidated freshness history merging General Source Freshness and City Monitor published runs.",
+        "Published /freshness-history.json and keep it synchronized from both freshness workflows.",
+        "BetterMakati Status now shows open review items, pages needing source review, dependency-current pages and the affected page list.",
+        "Status links directly to the canonical review queue and freshness history.",
+        "Public Records now exposes consolidated freshness history and page-freshness state instead of presenting the general source-watch history as the primary history feed.",
+        "Updated page audits, browser tests and source/public-record audits to protect the integration.",
+        "Fixed the freshness-history builder timestamp-helper ordering before automated regeneration could encounter it."
+      ],
+      "result": "Status and Public Records now consume the same consolidated freshness model while retaining concise task-led UI."
     }
   ],
   "sourceOwnership": {
@@ -478,5 +494,46 @@
       "Every LastReviewed component use must provide an explicit human date; the component has no fallback date.",
       "Normal site generation rebuilds the freshness queue and page-freshness state before publishing."
     ]
+  },
+  "statusAndHistory": {
+    "consolidatedHistory": {
+      "data": "data/freshness-history.json",
+      "publicFeed": "/freshness-history.json",
+      "sources": [
+        "general-source-freshness",
+        "city-monitor"
+      ],
+      "currentSummary": {
+        "events": 2,
+        "changed": 1,
+        "failed": 0,
+        "newBaselines": 7,
+        "manualReview": 1
+      }
+    },
+    "statusSurface": {
+      "route": "/status",
+      "shows": [
+        "open review items",
+        "pages needing source review",
+        "dependency-current pages",
+        "affected page list"
+      ],
+      "links": [
+        "/records#freshness-review-queue",
+        "/freshness-history.json"
+      ]
+    },
+    "publicRecordsSurface": {
+      "route": "/records",
+      "links": [
+        "/source-watch-state.json",
+        "/source-watch-index.json",
+        "/freshness-history.json",
+        "/page-freshness-state.json",
+        "/freshness-review-queue.json"
+      ]
+    },
+    "uiRule": "Show health, affected pages and history access directly; do not explain the internal freshness architecture in page copy."
   }
 }
