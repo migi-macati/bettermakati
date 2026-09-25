@@ -250,6 +250,40 @@ test('ancillary building and veterinary guides expose transaction details', asyn
   await expect(page.getByText(/Animal Welfare Accreditation/i)).toBeVisible();
 });
 
+test('city and barangay long-tail guides expose current transaction details', async ({ page }) => {
+  await page.goto(baseURL + '/services/guide/business-permit-transfer');
+  await expect(page.getByText(/Transfer – Ownership/i)).toBeVisible();
+  await expect(page.getByText(/Locational Clearance for a transfer to a new Makati location/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/temporary-sanitary-permit');
+  await expect(page.getByText(/valid for three months from issuance/i)).toBeVisible();
+  await expect(page.getByText(/EHS Form No. 110/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/senior-national-id');
+  await expect(page.getByText(/2–3 days for home validation/i)).toBeVisible();
+  await expect(page.getByText(/White Card application form/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/peso-job-referral');
+  await expect(page.getByText(/Two updated resumes \/ bio-data/i)).toBeVisible();
+  await expect(page.getByText(/referral or recommendation letter/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/cooperative-services');
+  await expect(page.getByText(/Letter of Request/i).first()).toBeVisible();
+  await expect(page.getByText(/4–8 hours for the actual seminar\/training/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/barangay-first-time-jobseeker');
+  await expect(page.getByText(/Fees waived once under RA 11261/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/barangay-mediation');
+  await expect(page.getByText(/Pangkat ng Tagapagkasundo/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/senior-birthday-cake');
+  await expect(page.getByText('Blu Card ID', { exact: true })).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/senior-pwd-medicine-distribution');
+  await expect(page.getByText(/Registration with the Health Emergency & Management System/i)).toBeVisible();
+});
+
 test('Saan Ako Lalapit is task-first and service-only', async ({ page }) => {
   await page.goto(baseURL + '/community-tools/saan-ako-lalapit');
   await expect(page.getByRole('heading', { level: 1 })).toContainText('Saan Ako Lalapit?');
