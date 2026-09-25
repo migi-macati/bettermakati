@@ -60,7 +60,7 @@ jobs:
           script: |
             const fs = require('fs');
             const title = 'Freshness review queue';
-            const report = fs.readFileSync('data/freshness-review-queue.md             data/page-freshness-state.json', 'utf8');
+            const report = fs.readFileSync('data/freshness-review-queue.md             data/page-freshness-state.json             data/freshness-history.json', 'utf8');
             const queue = JSON.parse(fs.readFileSync('data/freshness-review-queue.json', 'utf8'));
             const openCount = Number(queue.summary?.open || 0);
             const { data: issues } = await github.rest.issues.listForRepo({
