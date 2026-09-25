@@ -4,7 +4,8 @@
   "summary": {
     "pages": 21,
     "current": 17,
-    "needsReview": 4
+    "needsReview": 4,
+    "untrackedAffectedPages": 0
   },
   "pages": [
     {
@@ -293,5 +294,6 @@
       "dependencySignals": [],
       "latestDependencySignalAt": null
     }
-  ]
+  ],
+  "untrackedAffectedPages": []
 }
