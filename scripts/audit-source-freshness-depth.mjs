@@ -8,6 +8,7 @@ const queueBuilder = await readFile('scripts/build-freshness-review-queue.mjs', 
 const reviewQueue = JSON.parse(await readFile('data/freshness-review-queue.json', 'utf8'));
 const reviewResolutions = JSON.parse(await readFile('data/freshness-review-resolutions.json', 'utf8'));
 const pageFreshnessState = JSON.parse(await readFile('data/page-freshness-state.json', 'utf8'));
+const freshnessHistory = JSON.parse(await readFile('data/freshness-history.json', 'utf8'));
 const workflow = await readFile('.github/workflows/source-freshness.yml', 'utf8');
 const weeklyNews = await readFile('.github/workflows/weekly-content-refresh.yml', 'utf8');
 const cityMonitorConfig = JSON.parse(await readFile('data/city-monitor-sources.json', 'utf8'));
@@ -148,6 +149,14 @@ if (
   problems.push('Page freshness state must use version 1 with summary and pages.');
 }
 
+if (
+  freshnessHistory.version !== 1 ||
+  !freshnessHistory.summary ||
+  !Array.isArray(freshnessHistory.events)
+) {
+  problems.push('Freshness history must use version 1 with summary and events.');
+}
+
 for (const item of reviewQueue.items) {
   for (const field of ['key', 'status', 'system', 'signal', 'sourceId', 'label', 'url', 'affectedPages', 'action']) {
     if (item[field] === undefined || item[field] === null) {
@@ -171,6 +180,8 @@ for (const marker of [
   "freshnessStatus",
   "dependencySignals",
   "untrackedAffectedPages",
+  "data/freshness-history.json",
+  "historyEvents",
 ]) {
   if (!queueBuilder.includes(marker)) {
     problems.push('Freshness review queue builder lost required behavior: ' + marker);
@@ -211,6 +222,7 @@ for (const marker of [
   'Freshness review queue',
   'data/freshness-review-queue.json',
   'data/page-freshness-state.json',
+  'data/freshness-history.json',
   'issues: write',
 ]) {
   if (!workflow.includes(marker)) problems.push('Source freshness workflow lost required behavior: ' + marker);
@@ -225,6 +237,7 @@ for (const marker of [
   "'public/source-watch-index.json'",
   "'public/freshness-review-queue.json'",
   "'public/page-freshness-state.json'",
+  "'public/freshness-history.json'",
 ]) {
   if (!generator.includes(marker)) problems.push('Generated site files lost source freshness publication: ' + marker);
 }
@@ -240,6 +253,8 @@ for (const marker of [
   'Freshness review queue',
   'Last successful check:',
   '<strong>Action:</strong>',
+  '/freshness-history.json',
+  '/page-freshness-state.json',
 ]) {
   if (!records.includes(marker)) problems.push('Public Records lost source freshness UX: ' + marker);
 }
@@ -248,6 +263,10 @@ for (const marker of [
   "fetch('/source-watch-state.json'",
   'Source freshness automation',
   'Open source freshness',
+  "fetch('/page-freshness-state.json'",
+  "fetch('/freshness-review-queue.json'",
+  '/freshness-history.json',
+  'pages need review',
 ]) {
   if (!status.includes(marker)) problems.push('BetterMakati Status lost source freshness state: ' + marker);
 }
