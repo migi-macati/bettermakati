@@ -1162,3 +1162,38 @@ test('national service handoff batch B2 covers GSIS benefits and loans', async (
   );
   await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toHaveCount(0);
 });
+
+test('national service handoff batch C1 covers BIR, DTI and SEC', async ({ page }) => {
+  await page.goto(baseURL + '/services/guide/bir-tin-registration');
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://orus.bir.gov.ph/home'
+  );
+  await expect(page.getByText(/Makati taxpayers are divided among several BIR Revenue District Offices/i)).toBeVisible();
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/dti-business-name');
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://bnrs.dti.gov.ph/'
+  );
+  await expect(page.getByText('DTI Negosyo Center – Makati', { exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/sec-company-registration');
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://esparc.sec.gov.ph/application'
+  );
+  await expect(page.getByText('Securities and Exchange Commission Headquarters', { exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toHaveCount(0);
+
+  await page.goto(baseURL + '/services/guide/dti-consumer-complaint');
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/sec-company-filings');
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/sec-company-records');
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toBeVisible();
+});

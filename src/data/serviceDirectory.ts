@@ -1254,6 +1254,19 @@ export const serviceDirectory: ServiceDirectoryItem[] = [
     href: 'https://bnrs.dti.gov.ph/',
     sourceUrl: 'https://www.dti.gov.ph/',
     keywords: 'dti business name registration bnrs sole proprietorship',
+    nationalIntegration: {
+      officialActionUrl: 'https://bnrs.dti.gov.ph/',
+      officialSourceUrl: 'https://www.dti.gov.ph/',
+      betterGov: {
+        status: 'listed',
+        listingUrl: 'https://bettergov.ph/services?search=Register%20a%20Business%20Name',
+        matchedService: 'Register a Business Name',
+        auditedAt: '2026-09-25',
+      },
+      makatiContext: {
+        officeIds: ['dti-negosyo-makati'],
+      },
+    },
   },
   {
     id: 'sec-company-registration',
@@ -1266,6 +1279,17 @@ export const serviceDirectory: ServiceDirectoryItem[] = [
     href: 'https://esparc.sec.gov.ph/application',
     sourceUrl: 'https://www.sec.gov.ph/',
     keywords: 'sec company corporation partnership registration esparc one person corporation',
+    nationalIntegration: {
+      officialActionUrl: 'https://esparc.sec.gov.ph/application',
+      officialSourceUrl: 'https://www.sec.gov.ph/',
+      betterGov: {
+        status: 'partial',
+        auditedAt: '2026-09-25',
+      },
+      makatiContext: {
+        officeIds: ['sec-headquarters'],
+      },
+    },
   },
   {
     id: 'bir-tin-registration',
@@ -1278,6 +1302,20 @@ export const serviceDirectory: ServiceDirectoryItem[] = [
     href: 'https://orus.bir.gov.ph/home',
     sourceUrl: 'https://www.bir.gov.ph/',
     keywords: 'bir tin taxpayer registration orus tax id',
+    nationalIntegration: {
+      officialActionUrl: 'https://orus.bir.gov.ph/home',
+      officialSourceUrl: 'https://www.bir.gov.ph/',
+      betterGov: {
+        status: 'listed',
+        listingUrl: 'https://bettergov.ph/services?search=Taxpayer%20Identification%20Number',
+        matchedService: 'Register for a Taxpayer Identification Number (TIN)',
+        auditedAt: '2026-09-25',
+      },
+      makatiContext: {
+        summary: 'Makati taxpayers are divided among several BIR Revenue District Offices. Confirm your RDO before an in-person transaction.',
+        officeIds: ['bir-rr8a'],
+      },
+    },
   },
   {
     id: 'sss-services',
@@ -2003,6 +2041,19 @@ export const serviceDirectory: ServiceDirectoryItem[] = [
     href: 'https://consumercare.dti.gov.ph/',
     sourceUrl: 'https://www.dti.gov.ph/',
     keywords: 'dti consumer complaint refund warranty seller product consumer care makati',
+    nationalIntegration: {
+      officialActionUrl: 'https://consumercare.dti.gov.ph/',
+      officialSourceUrl: 'https://www.dti.gov.ph/',
+      betterGov: {
+        status: 'listed',
+        listingUrl: 'https://bettergov.ph/services?search=Consumer%20Complaint',
+        matchedService: 'File Complaints on Consumer Affair Service',
+        auditedAt: '2026-09-25',
+      },
+      makatiContext: {
+        officeIds: ['dti-negosyo-makati'],
+      },
+    },
   },
   {
     id: 'sec-company-filings',
@@ -2015,6 +2066,19 @@ export const serviceDirectory: ServiceDirectoryItem[] = [
     href: 'https://www.sec.gov.ph/',
     sourceUrl: 'https://www.sec.gov.ph/',
     keywords: 'sec efast filings annual financial statement gis corporate report makati headquarters',
+    nationalIntegration: {
+      officialActionUrl: 'https://www.sec.gov.ph/',
+      officialSourceUrl: 'https://www.sec.gov.ph/',
+      betterGov: {
+        status: 'listed',
+        listingUrl: 'https://bettergov.ph/services?search=General%20Information%20Sheet%20Audited%20Financial%20Statements',
+        matchedService: 'Submit your Company’s General Information Sheet and/or Audited Financial Statements Online to SEC',
+        auditedAt: '2026-09-25',
+      },
+      makatiContext: {
+        officeIds: ['sec-headquarters'],
+      },
+    },
   },
   {
     id: 'sec-company-records',
@@ -2027,6 +2091,19 @@ export const serviceDirectory: ServiceDirectoryItem[] = [
     href: 'https://www.sec.gov.ph/',
     sourceUrl: 'https://www.sec.gov.ph/',
     keywords: 'sec company records verification certificate corporate information makati',
+    nationalIntegration: {
+      officialActionUrl: 'https://www.sec.gov.ph/',
+      officialSourceUrl: 'https://www.sec.gov.ph/',
+      betterGov: {
+        status: 'listed',
+        listingUrl: 'https://bettergov.ph/services?search=Corporate%20Partnership%20Documents',
+        matchedService: 'Request Securing Copies of Corporate and Partnership Documents',
+        auditedAt: '2026-09-25',
+      },
+      makatiContext: {
+        officeIds: ['sec-headquarters'],
+      },
+    },
   },
   {
     id: 'tesda-training',
