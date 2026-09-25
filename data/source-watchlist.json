@@ -5,7 +5,10 @@
     "url": "https://www.makati.gov.ph/content/news",
     "kind": "official-news",
     "cadence": "daily",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "city-monitor",
+    "delegated": true,
+    "ownerReason": "City Monitor owns this official Makati activity/discovery channel."
   },
   {
     "id": "makati-events",
@@ -13,7 +16,10 @@
     "url": "https://www.makati.gov.ph/content/events",
     "kind": "official-events",
     "cadence": "daily",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "city-monitor",
+    "delegated": true,
+    "ownerReason": "City Monitor owns this official Makati activity/discovery channel."
   },
   {
     "id": "makati-budget-2026",
@@ -21,7 +27,8 @@
     "url": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/online_forms/pdf/Annual%20Budget%20Report%202026.pdf",
     "kind": "budget",
     "cadence": "monthly",
-    "monitoringMode": "content-hash"
+    "monitoringMode": "content-hash",
+    "owner": "general-source-freshness"
   },
   {
     "id": "dbm-f14-2026",
@@ -29,7 +36,8 @@
     "url": "https://www.dbm.gov.ph/wp-content/uploads/BESF/BESF2026/F14.pdf",
     "kind": "actuals",
     "cadence": "monthly",
-    "monitoringMode": "content-hash"
+    "monitoringMode": "content-hash",
+    "owner": "general-source-freshness"
   },
   {
     "id": "psa-population",
@@ -37,7 +45,8 @@
     "url": "https://openstat.psa.gov.ph/PXWeb/pxweb/en/DB/DB__1A__PO_2024/0211A6DAPG0.px/",
     "kind": "statistics",
     "cadence": "monthly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "psa-ppa",
@@ -45,7 +54,8 @@
     "url": "https://psa.gov.ph/content/2024-economic-performance-provinces-and-highly-urbanized-cities-philippines-capita-gross",
     "kind": "statistics",
     "cadence": "monthly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "coa-audit",
@@ -53,7 +63,8 @@
     "url": "https://www.coa.gov.ph/reports/annual-audit-reports/",
     "kind": "audit",
     "cadence": "monthly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "philgeps",
@@ -61,7 +72,10 @@
     "url": "https://notices.philgeps.gov.ph/",
     "kind": "procurement",
     "cadence": "daily",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "city-monitor",
+    "delegated": true,
+    "ownerReason": "City Monitor owns this procurement discovery signal and applies content-change detection."
   },
   {
     "id": "comelec-2026-bske-calendar",
@@ -69,7 +83,8 @@
     "url": "https://www.comelec.gov.ph/php-tpls-attachments/2025BSKE/Resolutions/com_res_11191.pdf",
     "kind": "election",
     "cadence": "daily",
-    "monitoringMode": "content-hash"
+    "monitoringMode": "content-hash",
+    "owner": "general-source-freshness"
   },
   {
     "id": "comelec-2026-bske-registration",
@@ -77,7 +92,8 @@
     "url": "https://www.comelec.gov.ph/php-tpls-attachments/2025BSKE/Resolutions/com_res_11177.pdf",
     "kind": "election",
     "cadence": "daily",
-    "monitoringMode": "content-hash"
+    "monitoringMode": "content-hash",
+    "owner": "general-source-freshness"
   },
   {
     "id": "comelec-home",
@@ -85,7 +101,8 @@
     "url": "https://www.comelec.gov.ph/",
     "kind": "election",
     "cadence": "daily",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "comelec-2025-results",
@@ -93,7 +110,8 @@
     "url": "https://2025electionresults.comelec.gov.ph/",
     "kind": "election-results",
     "cadence": "daily",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "makati-legislation",
@@ -101,7 +119,10 @@
     "url": "https://www.makati.gov.ph/content/resolutions-and-ordinances/author",
     "kind": "legislation",
     "cadence": "daily",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "city-monitor",
+    "delegated": true,
+    "ownerReason": "City Monitor owns this official Makati activity/discovery channel."
   },
   {
     "id": "makati-action-center",
@@ -109,7 +130,8 @@
     "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/481/pdf/Makati%20Action%20Center.pdf",
     "kind": "services",
     "cadence": "weekly",
-    "monitoringMode": "content-hash"
+    "monitoringMode": "content-hash",
+    "owner": "general-source-freshness"
   },
   {
     "id": "macea-circulars",
@@ -117,7 +139,8 @@
     "url": "https://macea.com.ph/memorandum-circular/",
     "kind": "estate-advisory",
     "cadence": "daily",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "mrt3",
@@ -125,7 +148,8 @@
     "url": "https://www.dotrmrt3.gov.ph/about-us",
     "kind": "mobility",
     "cadence": "weekly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "resilient-makati-consultations",
@@ -133,7 +157,8 @@
     "url": "https://resilient.makati.gov.ph/mod/page/view.php?forceview=1&id=30",
     "kind": "participation",
     "cadence": "weekly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "makati-cdp",
@@ -141,7 +166,8 @@
     "url": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1580795672692.pdf",
     "kind": "planning-participation",
     "cadence": "monthly",
-    "monitoringMode": "content-hash"
+    "monitoringMode": "content-hash",
+    "owner": "general-source-freshness"
   },
   {
     "id": "oecd-open-government-recommendation",
@@ -149,7 +175,8 @@
     "url": "https://www.oecd.org/en/publications/open-government-for-stronger-democracies_5478db5b-en/full-report/component-4.html",
     "kind": "open-government-standard",
     "cadence": "monthly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "ogp-foundations",
@@ -157,7 +184,8 @@
     "url": "https://www.opengovpartnership.org/national-handbook/foundations/",
     "kind": "open-government-standard",
     "cadence": "monthly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "ogp-participation-standards",
@@ -165,7 +193,8 @@
     "url": "https://www.opengovpartnership.org/national-handbook/standards/",
     "kind": "open-government-standard",
     "cadence": "monthly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "ra-6713",
@@ -173,7 +202,8 @@
     "url": "https://lawphil.net/statutes/repacts/ra1989/pdf/ra_6713_1989.pdf",
     "kind": "integrity-law",
     "cadence": "monthly",
-    "monitoringMode": "content-hash"
+    "monitoringMode": "content-hash",
+    "owner": "general-source-freshness"
   },
   {
     "id": "ra-12009",
@@ -181,7 +211,8 @@
     "url": "https://lawphil.net/statutes/repacts/ra2024/ra_12009_2024.html",
     "kind": "procurement-law",
     "cadence": "monthly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "ra-12009-irr",
@@ -189,7 +220,8 @@
     "url": "https://lawphil.net/statutes/repacts/ra2025/irr_12009_2025.html",
     "kind": "procurement-law",
     "cadence": "monthly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "gppb-beneficial-ownership",
@@ -197,7 +229,8 @@
     "url": "https://www.gppb.gov.ph/enhancing-transparency-beneficial-ownership-disclosure-under-ra-12009/",
     "kind": "integrity-procurement",
     "cadence": "monthly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "gppb-2026-irr-advisory",
@@ -205,7 +238,8 @@
     "url": "https://www.gppb.gov.ph/public-advisory-no-09-2026/",
     "kind": "procurement-law",
     "cadence": "monthly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "makati-citizens-charter",
@@ -213,7 +247,8 @@
     "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/481/pdf/Makati%20Citizen%27s%20Charter%20-%20FOR%20PRINT.pdf",
     "kind": "services",
     "cadence": "weekly",
-    "monitoringMode": "content-hash"
+    "monitoringMode": "content-hash",
+    "owner": "general-source-freshness"
   },
   {
     "id": "makati-permits-clearances",
@@ -221,7 +256,8 @@
     "url": "https://www.makati.gov.ph/assets/uploads/downloads/402/243/pdf/40207032015120611.pdf",
     "kind": "services",
     "cadence": "weekly",
-    "monitoringMode": "content-hash"
+    "monitoringMode": "content-hash",
+    "owner": "general-source-freshness"
   },
   {
     "id": "makati-taxes-fees",
@@ -229,7 +265,8 @@
     "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/48/281/pdf/Taxes%20and%20Fees.pdf",
     "kind": "services",
     "cadence": "weekly",
-    "monitoringMode": "content-hash"
+    "monitoringMode": "content-hash",
+    "owner": "general-source-freshness"
   },
   {
     "id": "makati-civil-registry",
@@ -237,7 +274,8 @@
     "url": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1581042114419.pdf",
     "kind": "services",
     "cadence": "weekly",
-    "monitoringMode": "content-hash"
+    "monitoringMode": "content-hash",
+    "owner": "general-source-freshness"
   },
   {
     "id": "makati-social-welfare",
@@ -245,7 +283,8 @@
     "url": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/securing_social_services_%28citizens_charter%2920190104113800.pdf",
     "kind": "services",
     "cadence": "weekly",
-    "monitoringMode": "content-hash"
+    "monitoringMode": "content-hash",
+    "owner": "general-source-freshness"
   },
   {
     "id": "pnp-clearance",
@@ -253,7 +292,8 @@
     "url": "https://www.pnpclearance.ph/",
     "kind": "national-services",
     "cadence": "weekly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "nbi-clearance",
@@ -261,7 +301,8 @@
     "url": "https://nbi.gov.ph/how-to-apply-nbi-clearance/",
     "kind": "national-services",
     "cadence": "weekly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "bfp-fsic",
@@ -269,7 +310,8 @@
     "url": "https://bfp.gov.ph/wp-content/uploads/2020/12/3-BFP-Citizens-Charter-Handbook-for-Printing.pdf",
     "kind": "national-services",
     "cadence": "weekly",
-    "monitoringMode": "content-hash"
+    "monitoringMode": "content-hash",
+    "owner": "general-source-freshness"
   },
   {
     "id": "psa-frontline",
@@ -277,7 +319,8 @@
     "url": "https://psa.gov.ph/",
     "kind": "national-services",
     "cadence": "weekly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "dfa-passport",
@@ -285,7 +328,8 @@
     "url": "https://passport.gov.ph/",
     "kind": "national-services",
     "cadence": "weekly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "makati-sanitation-code",
@@ -293,7 +337,8 @@
     "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/181/pdf/Makati%20City%20Ordinance%202019-A-102.pdf",
     "kind": "services",
     "cadence": "weekly",
-    "monitoringMode": "content-hash"
+    "monitoringMode": "content-hash",
+    "owner": "general-source-freshness"
   },
   {
     "id": "makati-veterinary-services",
@@ -301,7 +346,8 @@
     "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/481/pdf/Makati%20Veterinary%20Services%20Department.pdf",
     "kind": "services",
     "cadence": "weekly",
-    "monitoringMode": "content-hash"
+    "monitoringMode": "content-hash",
+    "owner": "general-source-freshness"
   },
   {
     "id": "makati-assessment-services",
@@ -309,7 +355,8 @@
     "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/481/pdf/Assessment%20Department.pdf",
     "kind": "services",
     "cadence": "weekly",
-    "monitoringMode": "content-hash"
+    "monitoringMode": "content-hash",
+    "owner": "general-source-freshness"
   },
   {
     "id": "makati-business-permit-form",
@@ -317,7 +364,8 @@
     "url": "https://www.makati.gov.ph/assets/uploads/online_forms/pdf/522/business%20permit%20form%202025%20update1111.pdf",
     "kind": "services",
     "cadence": "weekly",
-    "monitoringMode": "content-hash"
+    "monitoringMode": "content-hash",
+    "owner": "general-source-freshness"
   },
   {
     "id": "sss-benefits",
@@ -325,7 +373,8 @@
     "url": "https://www.sss.gov.ph/benefits/",
     "kind": "national-services",
     "cadence": "weekly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "pagibig-services",
@@ -333,7 +382,8 @@
     "url": "https://www.pagibigfund.gov.ph/",
     "kind": "national-services",
     "cadence": "weekly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "philhealth-services",
@@ -341,7 +391,8 @@
     "url": "https://www.philhealth.gov.ph/services/",
     "kind": "national-services",
     "cadence": "weekly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "ecc-contact",
@@ -349,7 +400,8 @@
     "url": "https://ecc.gov.ph/contact-us/",
     "kind": "national-services",
     "cadence": "weekly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "deped-makati",
@@ -357,7 +409,8 @@
     "url": "https://depedmakati.ph/",
     "kind": "national-services",
     "cadence": "weekly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "dswd-satellite-offices",
@@ -365,7 +418,8 @@
     "url": "https://www.dswd.gov.ph/dswd-directory-satellite-offices/",
     "kind": "national-services",
     "cadence": "weekly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "doh-mmchd",
@@ -373,7 +427,8 @@
     "url": "https://ncroffice.doh.gov.ph/CitizensCharter",
     "kind": "national-services",
     "cadence": "weekly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "psa-crs-outlets",
@@ -381,7 +436,8 @@
     "url": "https://psa.gov.ph/directory/census-serbilis-center-metro-manila",
     "kind": "national-services",
     "cadence": "weekly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "gsis-benefits",
@@ -389,7 +445,8 @@
     "url": "https://www.gsis.gov.ph/active-members/benefits/",
     "kind": "national-services",
     "cadence": "weekly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "dole-makati-pasay",
@@ -397,7 +454,8 @@
     "url": "https://ncr.dole.gov.ph/contact/",
     "kind": "national-services",
     "cadence": "weekly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "sec-headquarters",
@@ -405,7 +463,8 @@
     "url": "https://www.sec.gov.ph/",
     "kind": "national-services",
     "cadence": "weekly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "tesda-pasmak",
@@ -413,7 +472,8 @@
     "url": "https://tesda.gov.ph/directory/regions",
     "kind": "national-services",
     "cadence": "weekly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "phlpost-locator",
@@ -421,7 +481,8 @@
     "url": "https://phlpost.gov.ph/post-office-locator/",
     "kind": "national-services",
     "cadence": "weekly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "dti-services",
@@ -429,7 +490,8 @@
     "url": "https://www.dti.gov.ph/",
     "kind": "national-services",
     "cadence": "weekly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "dpwh-home",
@@ -437,7 +499,8 @@
     "url": "https://www.dpwh.gov.ph/dpwh/",
     "kind": "national-services",
     "cadence": "weekly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "pcso-medical-assistance",
@@ -445,7 +508,8 @@
     "url": "https://onlinemap.pcso.gov.ph/",
     "kind": "national-services",
     "cadence": "weekly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "owwa-ncr",
@@ -453,7 +517,8 @@
     "url": "https://owwa.gov.ph/key-officials-regional-welfare-offices/",
     "kind": "national-services",
     "cadence": "weekly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "owwa-wap",
@@ -461,7 +526,8 @@
     "url": "https://owwa.gov.ph/welfare-assistance-program-wap/",
     "kind": "national-services",
     "cadence": "weekly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "unified-911",
@@ -469,7 +535,8 @@
     "url": "https://ncr.dilg.gov.ph/dilg-leads-nationwide-campaign-for-unified-911-emergency-hotline/",
     "kind": "civic-map-routing",
     "cadence": "weekly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "ltfrb-ncr-complaints",
@@ -477,7 +544,8 @@
     "url": "https://ptops-ncr.ltfrb.gov.ph/en",
     "kind": "civic-map-routing",
     "cadence": "weekly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "makati-marriage-license",
@@ -485,7 +553,8 @@
     "url": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1602120937269.pdf",
     "kind": "service-detail",
     "cadence": "weekly",
-    "monitoringMode": "content-hash"
+    "monitoringMode": "content-hash",
+    "owner": "general-source-freshness"
   },
   {
     "id": "makati-yellow-card",
@@ -493,7 +562,8 @@
     "url": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1715048169416.pdf",
     "kind": "service-detail",
     "cadence": "weekly",
-    "monitoringMode": "content-hash"
+    "monitoringMode": "content-hash",
+    "owner": "general-source-freshness"
   },
   {
     "id": "sss-sickness-benefit",
@@ -501,7 +571,8 @@
     "url": "https://www.sss.gov.ph/sickness-benefit/",
     "kind": "service-detail",
     "cadence": "weekly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "sss-maternity-benefit",
@@ -509,7 +580,8 @@
     "url": "https://www.sss.gov.ph/maternity-benefit/",
     "kind": "service-detail",
     "cadence": "weekly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "sss-retirement-benefit",
@@ -517,7 +589,8 @@
     "url": "https://www.sss.gov.ph/retirement-benefit/",
     "kind": "service-detail",
     "cadence": "weekly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "pagibig-mpl-v08",
@@ -525,7 +598,8 @@
     "url": "https://www.pagibigfund.gov.ph/document/pdf/dlforms/providentrelated/SLF065_MultiPurposeLoanApplicationForm_V08.pdf",
     "kind": "service-detail",
     "cadence": "weekly",
-    "monitoringMode": "content-hash"
+    "monitoringMode": "content-hash",
+    "owner": "general-source-freshness"
   },
   {
     "id": "pagibig-mp2-v06",
@@ -533,7 +607,8 @@
     "url": "https://www.pagibigfund.gov.ph/document/pdf/dlforms/providentrelated/PFF226_ModifiedPagIBIGIIEnrollmentForm_V06.pdf",
     "kind": "service-detail",
     "cadence": "weekly",
-    "monitoringMode": "content-hash"
+    "monitoringMode": "content-hash",
+    "owner": "general-source-freshness"
   },
   {
     "id": "philhealth-yakap-detail",
@@ -541,7 +616,8 @@
     "url": "https://www.philhealth.gov.ph/yakap/",
     "kind": "service-detail",
     "cadence": "weekly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "nbi-first-time-jobseekers",
@@ -549,7 +625,8 @@
     "url": "https://nbi.gov.ph/citizens-charter/nbi-clearance-first-time-job-seekers/",
     "kind": "service-detail",
     "cadence": "weekly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "makati-real-property-tax-division",
@@ -557,7 +634,8 @@
     "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/481/pdf/Real%20Property%20Tax%20Division.pdf",
     "kind": "service-detail",
     "cadence": "weekly",
-    "monitoringMode": "content-hash"
+    "monitoringMode": "content-hash",
+    "owner": "general-source-freshness"
   },
   {
     "id": "umak-admissions",
@@ -565,7 +643,8 @@
     "url": "https://www.umak.edu.ph/admissions/",
     "kind": "service-detail",
     "cadence": "weekly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "umak-scholarships",
@@ -573,7 +652,8 @@
     "url": "https://www.umak.edu.ph/admissions/scholarships/",
     "kind": "service-detail",
     "cadence": "weekly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "makati-solo-parent-guide",
@@ -581,7 +661,8 @@
     "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/48/281/pdf/Solo%20Parent.pdf",
     "kind": "service-detail",
     "cadence": "weekly",
-    "monitoringMode": "content-hash"
+    "monitoringMode": "content-hash",
+    "owner": "general-source-freshness"
   },
   {
     "id": "sss-employees-compensation",
@@ -589,7 +670,8 @@
     "url": "https://www.sss.gov.ph/employees-compensation-program/",
     "kind": "service-detail",
     "cadence": "weekly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "philhealth-benefits",
@@ -597,7 +679,8 @@
     "url": "https://www.philhealth.gov.ph/benefits/",
     "kind": "service-detail",
     "cadence": "weekly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "ecc-faq",
@@ -605,7 +688,8 @@
     "url": "https://ecc.gov.ph/frequently-asked-questions/",
     "kind": "service-detail",
     "cadence": "weekly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "psa-birth-certificate",
@@ -613,7 +697,8 @@
     "url": "https://psa.gov.ph/birth-certificate",
     "kind": "service-detail",
     "cadence": "weekly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "bir-online-services",
@@ -621,7 +706,8 @@
     "url": "https://www.bir.gov.ph/",
     "kind": "service-detail",
     "cadence": "weekly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "dole-sena",
@@ -629,7 +715,8 @@
     "url": "https://ncr.dole.gov.ph/single-entry-approach-sena/",
     "kind": "service-detail",
     "cadence": "weekly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "dti-negosyo-center-detail",
@@ -637,7 +724,8 @@
     "url": "https://www.dti.gov.ph/negosyo-center/",
     "kind": "service-detail",
     "cadence": "weekly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "tesda-registered-programs",
@@ -645,7 +733,8 @@
     "url": "https://www.tesda.gov.ph/About/TESDA/26",
     "kind": "service-detail",
     "cadence": "weekly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "deped-makati-contact-detail",
@@ -653,7 +742,8 @@
     "url": "https://depedmakati.ph/index.php/contact-us/",
     "kind": "service-detail",
     "cadence": "weekly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "dswd-aics-faq",
@@ -661,7 +751,8 @@
     "url": "https://aics.dswd.gov.ph/about-us/faqs/",
     "kind": "service-detail",
     "cadence": "weekly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "pnp-clearance-detail",
@@ -669,7 +760,8 @@
     "url": "https://pnpclearance.ph/",
     "kind": "service-detail",
     "cadence": "weekly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "makati-pwd-id-guide",
@@ -677,7 +769,8 @@
     "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/481/pdf/Makati%20Social%20Welfare%20Department.pdf",
     "kind": "service-detail",
     "cadence": "weekly",
-    "monitoringMode": "content-hash"
+    "monitoringMode": "content-hash",
+    "owner": "general-source-freshness"
   },
   {
     "id": "makati-burial-assistance-guide",
@@ -685,7 +778,8 @@
     "url": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1581041559045.pdf",
     "kind": "service-detail",
     "cadence": "weekly",
-    "monitoringMode": "content-hash"
+    "monitoringMode": "content-hash",
+    "owner": "general-source-freshness"
   },
   {
     "id": "makatizen-card-guide",
@@ -693,7 +787,8 @@
     "url": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1581041433613.pdf",
     "kind": "service-detail",
     "cadence": "weekly",
-    "monitoringMode": "content-hash"
+    "monitoringMode": "content-hash",
+    "owner": "general-source-freshness"
   },
   {
     "id": "makati-q2-2025-bid-results",
@@ -701,7 +796,8 @@
     "url": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/online_forms/pdf/Q2%20Bids.pdf",
     "kind": "procurement",
     "cadence": "daily",
-    "monitoringMode": "content-hash"
+    "monitoringMode": "content-hash",
+    "owner": "general-source-freshness"
   },
   {
     "id": "makati-q3-2024-bid-results",
@@ -709,7 +805,8 @@
     "url": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/online_forms/pdf/Q3%20Bid%20Results%20FDP.pdf",
     "kind": "procurement",
     "cadence": "daily",
-    "monitoringMode": "content-hash"
+    "monitoringMode": "content-hash",
+    "owner": "general-source-freshness"
   },
   {
     "id": "makati-sef-q4-2024",
@@ -717,7 +814,8 @@
     "url": "https://www.depedncr.com.ph/wp-content/uploads/2025/05/SEF-MAKATI-CITY-4th-Quarter-2024.pdf",
     "kind": "fiscal",
     "cadence": "monthly",
-    "monitoringMode": "content-hash"
+    "monitoringMode": "content-hash",
+    "owner": "general-source-freshness"
   },
   {
     "id": "comelec-2026-bske-filing-rules",
@@ -725,7 +823,8 @@
     "url": "https://www.comelec.gov.ph/php-tpls-attachments/2025BSKE/Resolutions/com_res11196.pdf",
     "kind": "election",
     "cadence": "daily",
-    "monitoringMode": "content-hash"
+    "monitoringMode": "content-hash",
+    "owner": "general-source-freshness"
   },
   {
     "id": "comelec-2026-bske-term-rules",
@@ -733,7 +832,8 @@
     "url": "https://www.comelec.gov.ph/php-tpls-attachments/2025BSKE/Resolutions/com_res_11207.pdf",
     "kind": "election",
     "cadence": "daily",
-    "monitoringMode": "content-hash"
+    "monitoringMode": "content-hash",
+    "owner": "general-source-freshness"
   },
   {
     "id": "lawphil-ra-12232",
@@ -741,7 +841,8 @@
     "url": "https://lawphil.net/statutes/repacts/ra2025/ra_12232_2025.html",
     "kind": "election-law",
     "cadence": "daily",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "comelec-precinct-finder",
@@ -749,7 +850,8 @@
     "url": "https://precinctfinder.comelec.gov.ph/voter_precinct",
     "kind": "election-tool",
     "cadence": "daily",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "comelec-makati-2025-candidate-list",
@@ -757,7 +859,8 @@
     "url": "https://www.comelec.gov.ph/php-tpls-attachments/2025NLE/COC_2025NLE/CLC2025_NCR/CITY_OF_MAKATI.pdf",
     "kind": "election",
     "cadence": "daily",
-    "monitoringMode": "content-hash"
+    "monitoringMode": "content-hash",
+    "owner": "general-source-freshness"
   },
   {
     "id": "makati-peso-job-referral",
@@ -765,7 +868,8 @@
     "url": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1581041779505.pdf",
     "kind": "services",
     "cadence": "weekly",
-    "monitoringMode": "content-hash"
+    "monitoringMode": "content-hash",
+    "owner": "general-source-freshness"
   },
   {
     "id": "ra-11261-first-time-jobseeker",
@@ -773,7 +877,8 @@
     "url": "https://lawphil.net/statutes/repacts/ra2019/ra_11261_2019.html",
     "kind": "services-law",
     "cadence": "monthly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "dilg-katarungang-pambarangay-manual",
@@ -781,7 +886,8 @@
     "url": "https://car.dilg.gov.ph/wp-content/uploads/2024/11/AHRC-KP-Project-Enhanced-KP-Training-Manual-Signed.pdf",
     "kind": "services",
     "cadence": "monthly",
-    "monitoringMode": "content-hash"
+    "monitoringMode": "content-hash",
+    "owner": "general-source-freshness"
   },
   {
     "id": "makati-citizens-charter-2023-eboss",
@@ -789,7 +895,8 @@
     "url": "https://makati-eboss.ph/files/references/Makati%20Citizens%20Charter%202023.pdf",
     "kind": "services",
     "cadence": "weekly",
-    "monitoringMode": "content-hash"
+    "monitoringMode": "content-hash",
+    "owner": "general-source-freshness"
   },
   {
     "id": "makati-addressing-system",
@@ -797,7 +904,8 @@
     "url": "https://mas.makati.gov.ph/",
     "kind": "services",
     "cadence": "weekly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "belair-business-clearance",
@@ -805,7 +913,8 @@
     "url": "https://belair.itdcsystems.com/services/business-clearance",
     "kind": "barangay-service",
     "cadence": "weekly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "belair-indigency",
@@ -813,7 +922,8 @@
     "url": "https://belair.itdcsystems.com/services/certificate-of-indigency",
     "kind": "barangay-service",
     "cadence": "weekly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "makati-solo-parent-form-2024",
@@ -821,7 +931,8 @@
     "url": "https://www.makati.gov.ph/assets/uploads/downloads/1/782/pdf/SOLO%20PARENT%20APPLICATION%20FORMS%20REVISED%20AS%20OF%2005-01-2024.pdf",
     "kind": "services",
     "cadence": "weekly",
-    "monitoringMode": "content-hash"
+    "monitoringMode": "content-hash",
+    "owner": "general-source-freshness"
   },
   {
     "id": "belair-residency",
@@ -829,7 +940,8 @@
     "url": "https://belair.itdcsystems.com/services/certificate-of-residency",
     "kind": "barangay-service",
     "cadence": "weekly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "belair-barangay-id",
@@ -837,7 +949,8 @@
     "url": "https://belair.itdcsystems.com/services/barangay-id",
     "kind": "barangay-service",
     "cadence": "weekly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "bettergov-openhalalan-dataset",
@@ -845,7 +958,8 @@
     "url": "https://data.bettergov.ph/api/v1/datasets/25",
     "kind": "ecosystem-dependency",
     "cadence": "weekly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "openhalalan-makati-2022-source",
@@ -853,7 +967,8 @@
     "url": "https://raw.githubusercontent.com/RobertRLeung/OpenHalalan/main/data/raw_data/2022/NATIONAL_CAPITAL_REGION/NCR_-_FOURTH_DISTRICT/NATIONAL_CAPITAL_REGION_NCR_-_FOURTH_DISTRICT_CITY_OF_MAKATI.csv",
     "kind": "ecosystem-dependency",
     "cadence": "weekly",
-    "monitoringMode": "content-hash"
+    "monitoringMode": "content-hash",
+    "owner": "general-source-freshness"
   },
   {
     "id": "bettergov-open-congress-api",
@@ -861,7 +976,8 @@
     "url": "https://open-congress-api.bettergov.ph/api/ping",
     "kind": "ecosystem-dependency",
     "cadence": "weekly",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   },
   {
     "id": "open-congress-hb-1293-source",
@@ -869,7 +985,8 @@
     "url": "https://raw.githubusercontent.com/bettergovph/open-congress-data/main/data/document/hb/19/01K6D89C4S8D2KYJJRKTQRGAQX.toml",
     "kind": "ecosystem-dependency",
     "cadence": "weekly",
-    "monitoringMode": "content-hash"
+    "monitoringMode": "content-hash",
+    "owner": "general-source-freshness"
   },
   {
     "id": "open-congress-hb-1294-source",
@@ -877,7 +994,8 @@
     "url": "https://raw.githubusercontent.com/bettergovph/open-congress-data/main/data/document/hb/19/01K6D89C4S8D2KYJJRKTQRGAQY.toml",
     "kind": "ecosystem-dependency",
     "cadence": "weekly",
-    "monitoringMode": "content-hash"
+    "monitoringMode": "content-hash",
+    "owner": "general-source-freshness"
   },
   {
     "id": "open-congress-hb-6100-source",
@@ -885,7 +1003,8 @@
     "url": "https://raw.githubusercontent.com/bettergovph/open-congress-data/main/data/document/hb/19/01K6D89D2ZM1B69D8JRFWX1MPY.toml",
     "kind": "ecosystem-dependency",
     "cadence": "weekly",
-    "monitoringMode": "content-hash"
+    "monitoringMode": "content-hash",
+    "owner": "general-source-freshness"
   },
   {
     "id": "bettergov-transparency-procurement",
@@ -893,6 +1012,7 @@
     "url": "https://transparency.bettergov.ph/procurement",
     "kind": "ecosystem-dependency",
     "cadence": "daily",
-    "monitoringMode": "reachability"
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness"
   }
 ]
