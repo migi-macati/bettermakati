@@ -180,16 +180,28 @@ export default function CivicAsset() {
               ))}
             </div>
 
-            {asset.sourceUrl && (
-              <a
-                href={asset.sourceUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="mt-5 inline-flex items-center text-sm font-bold text-primary-700 underline underline-offset-2"
-              >
-                {asset.sourceLabel || 'Official location source'}
-              </a>
-            )}
+            <div className="mt-5 flex flex-wrap gap-x-4 gap-y-2">
+              {asset.sourceUrl && (
+                <a
+                  href={asset.sourceUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center text-sm font-bold text-primary-700 underline underline-offset-2"
+                >
+                  {asset.sourceLabel || 'Official asset source'}
+                </a>
+              )}
+              {asset.coordinateSourceUrl && (
+                <a
+                  href={asset.coordinateSourceUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center text-sm text-gray-600 underline underline-offset-2"
+                >
+                  {asset.coordinateSourceLabel || 'Map coordinate source'}
+                </a>
+              )}
+            </div>
 
             <div className="mt-5 rounded-xl border border-primary-100 bg-primary-50 p-4 text-xs leading-relaxed text-gray-700">
               Headline scores will only be shown after enough independent responses are available. Sample size and recency will always accompany public ratings.
