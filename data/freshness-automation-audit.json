@@ -260,7 +260,8 @@
     {
       "id": "2.4E",
       "title": "Consolidate the review queue",
-      "objective": "Present source, signal, affected page, last successful check and required editorial action in one actionable queue."
+      "objective": "Present source, signal, affected page, last successful check and required editorial action in one actionable queue.",
+      "status": "complete"
     },
     {
       "id": "2.4F",
@@ -327,6 +328,26 @@
         "Browser tests verify representative election, budget and PhilGEPS dependencies."
       ],
       "result": "Every configured freshness source now points to at least one routed BetterMakati page requiring review when that source changes or fails."
+    },
+    {
+      "step": "2.4E",
+      "completedAt": "2026-09-25",
+      "title": "Consolidate the review queue",
+      "changes": [
+        "Created a persistent machine-readable freshness review queue combining General Source Freshness and City Monitor signals.",
+        "Each open item includes source, signal type, affected pages, last successful check, last checked time and required editorial action.",
+        "Created a separate resolution-state file so machine-generated queue data is never hand-edited.",
+        "Content-change items persist until explicitly resolved; failed checks clear on recovery.",
+        "Public Records is the canonical actionable queue surface.",
+        "City Monitor and Civic Briefs now route review actions to Public Records instead of maintaining separate queues.",
+        "Both automation workflows build the same queue and sync the same GitHub issue only when material state changes.",
+        "The shared GitHub issue auto-closes when no open review items remain."
+      ],
+      "currentOpenItems": 2,
+      "currentSignals": [
+        "PhilGEPS — content changed",
+        "MyMakati official social broadcasts — manual review"
+      ]
     }
   ],
   "sourceOwnership": {
@@ -391,5 +412,28 @@
       "Review reports name the affected page paths.",
       "Delegated sources use the same affectedPages in the public source catalog and City Monitor owner config."
     ]
+  },
+  "reviewQueue": {
+    "canonicalSurface": "/records#freshness-review-queue",
+    "machineFeed": "/freshness-review-queue.json",
+    "generatedState": "data/freshness-review-queue.json",
+    "resolutionState": "data/freshness-review-resolutions.json",
+    "issueTitle": "Freshness review queue",
+    "itemFields": [
+      "source",
+      "signal",
+      "affectedPages",
+      "lastSuccessfulAt",
+      "lastCheckedAt",
+      "action"
+    ],
+    "persistenceRules": [
+      "Content-change items persist across later runs until a resolution timestamp is recorded.",
+      "A newer content-change signal reopens an item resolved before the new detection.",
+      "Failed-check items remain open only while the current published source state is failed.",
+      "Manual-review channels remain actionable until resolved and reopen after a newer published monitor state."
+    ],
+    "uiRule": "Public Records is the only actionable list. City Monitor and Civic Briefs link to it instead of maintaining duplicate review lists.",
+    "githubIssueRule": "Both freshness workflows sync the same GitHub issue only on material published changes and close it when the queue reaches zero."
   }
 }
