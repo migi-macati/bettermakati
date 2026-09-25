@@ -198,9 +198,10 @@
       "planFile": "data/wave3-civic-map-facilities-plan.json",
       "inventoryFile": "data/wave3-civic-map-facilities-inventory.json",
       "completedSubsteps": [
-        "3C-1a"
+        "3C-1a",
+        "3C-1b"
       ],
-      "current": "3C-1b",
+      "current": "3C-1c",
       "substeps": [
         "3C-1a",
         "3C-1b",
@@ -209,7 +210,16 @@
         "3C-1e",
         "3C-1f",
         "3C-1g"
-      ]
+      ],
+      "healthCenterVerificationFile": "data/wave3-civic-map-health-centers-verification.json",
+      "healthCenterVerificationSummary": {
+        "mhdNetworkVerifiedCurrent": 18,
+        "philHealthYakap2026": 16,
+        "additionalCurrentViaPhilHealthDots": 1,
+        "additionalCurrentViaDohNtp": 1,
+        "palanan24x7CoLocated": true,
+        "supplementalSanLorenzoClinicSystem": "separate-from-mhd18-denominator"
+      }
     },
     {
       "id": "3C-2",
@@ -664,9 +674,9 @@
     }
   ],
   "immediateNext": {
-    "id": "3C-1b",
-    "title": "Verify current public health facilities",
-    "maximumScope": "18 current Makati health centers plus the separately counted 24/7 health center; research/reconciliation only, no Civic Map additions."
+    "id": "3C-1c",
+    "title": "Verify current protective-service facilities",
+    "maximumScope": "11 fire stations + 8 police facilities; reconcile current names, addresses, post-transfer control and point provenance. Research only, no Civic Map additions."
   },
   "reopenedExecutionOrder": [
     "3C-2a",
@@ -682,7 +692,7 @@
       "status": "in-progress",
       "title": "Public infrastructure/facility completeness from Makati publications",
       "executeAfter": "3C-2g unless user reprioritizes",
-      "current": "3C-1b"
+      "current": "3C-1c"
     },
     "3C-2": {
       "status": "in-progress",
