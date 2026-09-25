@@ -1873,3 +1873,122 @@ export const placeRegistry: PlaceRegistryRecord[] = civicAssets.map((asset): Pla
 }));
 
 export const placeRegistryById = new Map(placeRegistry.map(place => [place.id, place]));
+
+const normalizePlaceSelectorText = (value: string) =>
+  value.trim().toLocaleLowerCase('en-PH').replace(/\s+/g, ' ');
+
+const legacyBarangayParts = (value: string) =>
+  value
+    .split(/\s*\/\s*/)
+    .map(part => normalizePlaceSelectorText(part))
+    .filter(Boolean);
+
+/**
+ * Returns whether a place is associated with the requested barangay.
+ *
+ * Registry barangay values are matched exactly after normalization. During the W3R-2 migration,
+ * some legacy Civic Map records still carry composite labels such as "San Lorenzo / Bel-Air".
+ * Those labels are split for lookup compatibility only; the registry record itself is not rewritten
+ * or treated as verified multi-barangay geometry by this helper.
+ */
+export const placeHasBarangay = (place: PlaceRegistryRecord, barangay: string) => {
+  const target = normalizePlaceSelectorText(barangay);
+  if (!target) return false;
+
+  return place.location.barangays.some(value => {
+    const normalized = normalizePlaceSelectorText(value);
+    return normalized === target || legacyBarangayParts(value).includes(target);
+  });
+};
+
+export const placesByBarangay = (
+  barangay: string,
+  places: readonly PlaceRegistryRecord[] = placeRegistry
+) => places.filter(place => placeHasBarangay(place, barangay));
+
+export const placesByCategory = (
+  category: PlaceCategory | string,
+  places: readonly PlaceRegistryRecord[] = placeRegistry
+) => {
+  const target = normalizePlaceSelectorText(category);
+  if (!target) return [];
+
+  return places.filter(place =>
+    normalizePlaceSelectorText(place.primaryCategory) === target ||
+    place.secondaryCategories?.some(item => normalizePlaceSelectorText(item) === target)
+  );
+};
+
+export const placeOffersService = (
+  place: PlaceRegistryRecord,
+  service: string
+) => {
+  const target = normalizePlaceSelectorText(service);
+  if (!target) return false;
+
+  return place.servicesAtLocation?.some(item =>
+    (item.serviceId && normalizePlaceSelectorText(item.serviceId) === target) ||
+    normalizePlaceSelectorText(item.label) === target
+  ) ?? false;
+};
+
+export const placesByService = (
+  service: string,
+  places: readonly PlaceRegistryRecord[] = placeRegistry
+) => places.filter(place => placeOffersService(place, service));
+
+export const placesByLifecycle = (
+  status: PlaceLifecycleStatus,
+  places: readonly PlaceRegistryRecord[] = placeRegistry
+) => places.filter(place => place.lifecycle.status === status);
+
+export interface PlaceDistanceResult {
+  place: PlaceRegistryRecord;
+  distanceKm: number;
+}
+
+const degreesToRadians = (degrees: number) => degrees * Math.PI / 180;
+
+/**
+ * Great-circle distance between two WGS84 latitude/longitude points.
+ * Uses a mean Earth radius of 6,371.0088 km and is intended for nearby-place selection,
+ * not survey-grade measurement or route distance.
+ */
+export const placeDistanceKm = (
+  from: Pick<PlacePoint, 'lat' | 'lng'>,
+  to: Pick<PlacePoint, 'lat' | 'lng'>
+) => {
+  const earthRadiusKm = 6371.0088;
+  const lat1 = degreesToRadians(from.lat);
+  const lat2 = degreesToRadians(to.lat);
+  const deltaLat = degreesToRadians(to.lat - from.lat);
+  const deltaLng = degreesToRadians(to.lng - from.lng);
+
+  const a =
+    Math.sin(deltaLat / 2) ** 2 +
+    Math.cos(lat1) * Math.cos(lat2) * Math.sin(deltaLng / 2) ** 2;
+  const clamped = Math.min(1, Math.max(0, a));
+  return earthRadiusKm * 2 * Math.atan2(Math.sqrt(clamped), Math.sqrt(1 - clamped));
+};
+
+export const placesWithinDistance = (
+  origin: Pick<PlacePoint, 'lat' | 'lng'>,
+  maxDistanceKm: number,
+  places: readonly PlaceRegistryRecord[] = placeRegistry
+): PlaceDistanceResult[] => {
+  if (!Number.isFinite(origin.lat) || !Number.isFinite(origin.lng)) return [];
+  if (!Number.isFinite(maxDistanceKm) || maxDistanceKm < 0) return [];
+
+  return places
+    .flatMap(place => {
+      const point = place.location.point;
+      if (!point) return [];
+
+      const distanceKm = placeDistanceKm(origin, point);
+      if (distanceKm > maxDistanceKm) return [];
+
+      return [{ place, distanceKm }];
+    })
+    .sort((a, b) => a.distanceKm - b.distanceKm || a.place.name.localeCompare(b.place.name));
+};
+
