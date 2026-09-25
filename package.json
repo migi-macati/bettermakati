@@ -19,7 +19,7 @@
     "update:news": "node scripts/update-news-snapshot.mjs",
     "check:sources": "node scripts/check-sources.mjs",
     "check:city-monitor": "node scripts/check-city-monitor.mjs",
-    "generate:site": "node scripts/generate-site-files.mjs",
+    "generate:site": "npm run build:freshness-queue && node scripts/generate-site-files.mjs",
     "check:content": "node scripts/check-content.mjs",
     "check:links": "node scripts/check-links.mjs",
     "check:civic-map": "node scripts/check-civic-map.mjs",
