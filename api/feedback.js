@@ -35,10 +35,9 @@ const normalizeUrl = value => {
   try {
     const url = new URL(raw);
     url.hash = '';
-    const normalized = url.toString().replace(/\/$/, '');
-    return normalized.toLowerCase();
+    return url.toString().replace(/\/$/, '');
   } catch {
-    return raw.replace(/\/$/, '').toLowerCase();
+    return raw.replace(/\/$/, '');
   }
 };
 
