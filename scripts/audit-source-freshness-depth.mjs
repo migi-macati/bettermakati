@@ -274,8 +274,8 @@ for (const marker of [
 const recordsAudit = pageAudit.find(item => item.path === '/records');
 const statusAudit = pageAudit.find(item => item.path === '/status');
 for (const [label, row, checks] of [
-  ['/records', recordsAudit, ['cadence-aware-source-watch', 'published-current-source-state', 'monitoring-mode-labels', 'per-record-freshness', 'consolidated-freshness-review-queue']],
-  ['/status', statusAudit, ['source-freshness-state', 'page-audit']],
+  ['/records', recordsAudit, ['cadence-aware-source-watch', 'published-current-source-state', 'monitoring-mode-labels', 'per-record-freshness', 'consolidated-freshness-review-queue', 'consolidated-freshness-history', 'page-freshness-state']],
+  ['/status', statusAudit, ['source-freshness-state', 'page-audit', 'dependency-aware-page-freshness', 'consolidated-freshness-history', 'freshness-review-summary']],
 ]) {
   if (!row) {
     problems.push('Page audit missing ' + label);
@@ -292,7 +292,7 @@ for (const marker of [
   "catalog.find(item => item.id === 'makati-budget-2026')?.affectedPages",
   "test('Page freshness state tracks open source dependencies without changing review dates'",
   "page.request.get(baseURL + '/page-freshness-state.json')",
-  "test('BetterMakati Status exposes source freshness automation'",
+  "test('BetterMakati Status exposes consolidated freshness health'",
 ]) {
   if (!tests.includes(marker)) problems.push('Source freshness browser coverage missing: ' + marker);
 }
