@@ -218,6 +218,38 @@ test('property civil registry and social service guides expose official transact
   await expect(page.getByText(/actual\/current Makati residents/i)).toBeVisible();
 });
 
+test('ancillary building and veterinary guides expose transaction details', async ({ page }) => {
+  await page.goto(baseURL + '/services/guide/mechanical-permit');
+  await expect(page.getByText('Mechanical Permit Form', { exact: true })).toBeVisible();
+  await expect(page.getByText(/Equipment and technical specifications for air-conditioning/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/electronics-permit');
+  await expect(page.getByText(/Electronics \/ Auxiliary plans/i)).toBeVisible();
+  await expect(page.getByText(/DOH Radiation Evaluation \/ Clearance/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/sanitary-plumbing-permit');
+  await expect(page.getByText('Design analysis', { exact: true })).toBeVisible();
+  await expect(page.getByText(/1 day for preliminary evaluation\/ocular inspection/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/anti-rabies-vaccination');
+  await expect(page.getByText(/Pet registration\/vaccination card/i).first()).toBeVisible();
+  await expect(page.getByText(/5 minutes for assessment\/vaccination/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/pet-registration-microchip');
+  await expect(page.getByText(/Proof of Makati City residency/i)).toBeVisible();
+  await expect(page.getByText(/pet passport/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/pet-consultation-neutering');
+  await expect(page.getByText(/at least two weeks before surgery/i)).toBeVisible();
+  await expect(page.getByText(/at least 8 months old/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/veterinary-inspection-certificate');
+  await expect(page.getByText(/₱500 for large-scale \/ ₱300 for small-scale/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/veterinary-clearance');
+  await expect(page.getByText(/Animal Welfare Accreditation/i)).toBeVisible();
+});
+
 test('Saan Ako Lalapit is task-first and service-only', async ({ page }) => {
   await page.goto(baseURL + '/community-tools/saan-ako-lalapit');
   await expect(page.getByRole('heading', { level: 1 })).toContainText('Saan Ako Lalapit?');
