@@ -1070,3 +1070,42 @@ test('national service handoff prioritizes official agencies and references Bett
     /bettergov\.ph\/services\?search=Driver%27s%20License/
   );
 });
+
+test('national service handoff batch A covers PSA, LTO registration and PRC renewal', async ({ page }) => {
+  await page.goto(baseURL + '/services/guide/psa-marriage-certificate');
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://www.psaserbilis.com.ph/MarriageCertificate'
+  );
+  await expect(page.getByText(/PSA Makati City CRS Outlet is at 5\/F Ayala Malls Circuit/i)).toBeVisible();
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/psa-death-certificate');
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://www.psaserbilis.com.ph/DeathCertificate'
+  );
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/psa-cenomar');
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://www.psaserbilis.com.ph/CENOMARCertificate'
+  );
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/vehicle-registration');
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://portal.lto.gov.ph/'
+  );
+  await expect(page.getByText(/LTO Makati District Office is on Pililia Street/i)).toBeVisible();
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toHaveCount(0);
+
+  await page.goto(baseURL + '/services/guide/prc-id');
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://online.prc.gov.ph/'
+  );
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toHaveCount(0);
+});

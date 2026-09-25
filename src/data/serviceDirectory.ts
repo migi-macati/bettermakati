@@ -1061,6 +1061,20 @@ export const serviceDirectory: ServiceDirectoryItem[] = [
     href: 'https://psaserbilis.com.ph/',
     sourceUrl: 'https://psa.gov.ph/',
     keywords: 'psa marriage certificate civil registry serbilis',
+    nationalIntegration: {
+      officialActionUrl: 'https://www.psaserbilis.com.ph/MarriageCertificate',
+      officialSourceUrl: 'https://psa.gov.ph/',
+      betterGov: {
+        status: 'listed',
+        listingUrl: 'https://bettergov.ph/services?search=Marriage%20Certificate%20PSA%20Serbilis',
+        matchedService: 'Request a Marriage Certificate via PSA Serbilis',
+        auditedAt: '2026-09-25',
+      },
+      makatiContext: {
+        summary: 'PSA Makati City CRS Outlet is at 5/F Ayala Malls Circuit in Barangay Carmona.',
+        officeIds: ['psa-makati-crs'],
+      },
+    },
   },
   {
     id: 'psa-death-certificate',
@@ -1073,6 +1087,20 @@ export const serviceDirectory: ServiceDirectoryItem[] = [
     href: 'https://psaserbilis.com.ph/',
     sourceUrl: 'https://psa.gov.ph/',
     keywords: 'psa death certificate civil registry serbilis',
+    nationalIntegration: {
+      officialActionUrl: 'https://www.psaserbilis.com.ph/DeathCertificate',
+      officialSourceUrl: 'https://psa.gov.ph/',
+      betterGov: {
+        status: 'listed',
+        listingUrl: 'https://bettergov.ph/services?search=Death%20Certificate%20PSA%20Serbilis',
+        matchedService: 'Request a Death Certificate via PSA Serbilis',
+        auditedAt: '2026-09-25',
+      },
+      makatiContext: {
+        summary: 'PSA Makati City CRS Outlet is at 5/F Ayala Malls Circuit in Barangay Carmona.',
+        officeIds: ['psa-makati-crs'],
+      },
+    },
   },
   {
     id: 'psa-cenomar',
@@ -1085,6 +1113,20 @@ export const serviceDirectory: ServiceDirectoryItem[] = [
     href: 'https://psaserbilis.com.ph/',
     sourceUrl: 'https://psa.gov.ph/',
     keywords: 'cenomar no marriage psa certificate civil registry',
+    nationalIntegration: {
+      officialActionUrl: 'https://www.psaserbilis.com.ph/CENOMARCertificate',
+      officialSourceUrl: 'https://psa.gov.ph/',
+      betterGov: {
+        status: 'listed',
+        listingUrl: 'https://bettergov.ph/services?search=CENOMAR%20PSA%20Serbilis',
+        matchedService: 'Request a Certificate of No Marriage Record (CENOMAR) via PSA Serbilis',
+        auditedAt: '2026-09-25',
+      },
+      makatiContext: {
+        summary: 'PSA Makati City CRS Outlet is at 5/F Ayala Malls Circuit in Barangay Carmona.',
+        officeIds: ['psa-makati-crs'],
+      },
+    },
   },
   {
     id: 'national-id',
@@ -1168,6 +1210,18 @@ export const serviceDirectory: ServiceDirectoryItem[] = [
     href: 'https://portal.lto.gov.ph/',
     sourceUrl: 'https://lto.gov.ph/',
     keywords: 'vehicle registration renewal car motorcycle lto ltms',
+    nationalIntegration: {
+      officialActionUrl: 'https://portal.lto.gov.ph/',
+      officialSourceUrl: 'https://lto.gov.ph/',
+      betterGov: {
+        status: 'missing',
+        auditedAt: '2026-09-25',
+      },
+      makatiContext: {
+        summary: 'LTO Makati District Office is on Pililia Street in Barangay Valenzuela. Confirm whether your vehicle-registration transaction can be handled there before visiting.',
+        officeIds: ['lto-makati'],
+      },
+    },
   },
   {
     id: 'prc-id',
@@ -1180,6 +1234,14 @@ export const serviceDirectory: ServiceDirectoryItem[] = [
     href: 'https://online.prc.gov.ph/',
     sourceUrl: 'https://www.prc.gov.ph/',
     keywords: 'prc professional id license renewal board exam leris',
+    nationalIntegration: {
+      officialActionUrl: 'https://online.prc.gov.ph/',
+      officialSourceUrl: 'https://www.prc.gov.ph/',
+      betterGov: {
+        status: 'missing',
+        auditedAt: '2026-09-25',
+      },
+    },
   },
   {
     id: 'dti-business-name',
