@@ -630,6 +630,22 @@ test('Public Records exposes current source freshness state', async ({ page }) =
   expect(catalog.find(item => item.id === 'philgeps')?.affectedPages).toEqual(
     expect.arrayContaining(['/projects-budget', '/accountability', '/city-monitor'])
   );
+
+  await expect(page.getByRole('heading', { name: 'Freshness review queue' })).toBeVisible();
+  await expect(page.getByRole('link', { name: /Download review queue/i })).toHaveAttribute(
+    'href',
+    '/freshness-review-queue.json'
+  );
+  const queueResponse = await page.request.get(baseURL + '/freshness-review-queue.json');
+  expect(queueResponse.ok()).toBeTruthy();
+  const queue = await queueResponse.json();
+  expect(queue.version).toBe(1);
+  expect(queue.summary.open).toBeGreaterThanOrEqual(1);
+  expect(Array.isArray(queue.items)).toBeTruthy();
+  const openItems = queue.items.filter(item => item.status === 'open');
+  expect(openItems.every(item => Array.isArray(item.affectedPages) && item.affectedPages.length > 0)).toBeTruthy();
+  expect(openItems.every(item => typeof item.action === 'string' && item.action.length > 0)).toBeTruthy();
+  expect(openItems.some(item => item.lastSuccessfulAt !== undefined)).toBeTruthy();
 });
 
 test('BetterMakati Status exposes source freshness automation', async ({ page }) => {
