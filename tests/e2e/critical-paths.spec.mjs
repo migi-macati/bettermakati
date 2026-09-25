@@ -1444,3 +1444,20 @@ test('elections exposes related national records without replacing COMELEC sourc
   await expect(page.getByRole('link', { name: /COMELEC/i }).first()).toBeVisible();
   await expect(page.getByRole('heading', { name: /Download the structured election data/i })).toBeVisible();
 });
+
+test('civic map exposes national infrastructure references without redirecting local reports', async ({ page }) => {
+  await page.goto(baseURL + '/civic-map');
+
+  const nationalInfrastructure = page.getByText('National infrastructure', { exact: true }).locator('..');
+  await expect(nationalInfrastructure.getByRole('link', { name: /Bisto\.ph infrastructure reports/i })).toHaveAttribute(
+    'href',
+    'https://bisto.ph/'
+  );
+  await expect(nationalInfrastructure.getByRole('link', { name: /Flood-control project browser/i })).toHaveAttribute(
+    'href',
+    'https://bettergov.ph/flood-control-projects'
+  );
+
+  await expect(page.getByRole('link', { name: /Choose a place/i })).toHaveAttribute('href', '#places');
+  await expect(page.getByRole('heading', { name: /Help improve public places/i })).toBeVisible();
+});

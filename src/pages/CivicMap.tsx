@@ -4,6 +4,7 @@ import {
   ArrowRight,
   Bus,
   CircleDot,
+  ExternalLink,
   MapPinned,
   MessagesSquare,
   Route,
@@ -122,6 +123,30 @@ export default function CivicMap() {
           note="Pilot methodology and seed assets. BetterMakati is independent and is not an official government reporting platform."
           className="mt-5"
         />
+
+        <div className="mt-5 rounded-2xl border border-primary-100 bg-white p-5">
+          <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+            National infrastructure
+          </div>
+          <div className="mt-3 flex flex-wrap gap-x-5 gap-y-3 text-sm font-bold">
+            <a
+              href="https://bisto.ph/"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1 text-primary-700 underline underline-offset-2"
+            >
+              Bisto.ph infrastructure reports <ExternalLink className="h-3.5 w-3.5" />
+            </a>
+            <a
+              href="https://bettergov.ph/flood-control-projects"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1 text-primary-700 underline underline-offset-2"
+            >
+              Flood-control project browser <ExternalLink className="h-3.5 w-3.5" />
+            </a>
+          </div>
+        </div>
 
         <div className="mt-6 rounded-2xl border-2 border-error-200 bg-error-50 p-5">
           <div className="flex gap-3">
