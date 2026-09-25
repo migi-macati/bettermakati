@@ -137,6 +137,7 @@ const fetchSource = async source => {
 };
 
 const selected = watchlist.filter(source => {
+  if (source.owner && source.owner !== 'general-source-freshness') return false;
   if (cadence === 'all') return true;
   if (cadence === 'due') return cadenceIsDue(source.cadence);
   return source.cadence === cadence;
