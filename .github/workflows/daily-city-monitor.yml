@@ -53,8 +53,56 @@ jobs:
           NODE
 
 
-      - name: Sync freshness review issue
+      - name: Verify production build
         if: steps.publish.outputs.publish_required == 'true'
+        run: npm run build
+
+      - name: Publish monitor state when changed
+        id: publish_git
+        if: steps.publish.outputs.publish_required == 'true'
+        shell: bash
+        run: |
+          git add \
+            data/city-monitor-source-state.json \
+            data/city-monitor-source-history.json \
+            data/city-monitor-report.md \
+            data/freshness-review-queue.json \
+            data/freshness-review-queue.md \
+            data/page-freshness-state.json \
+            data/freshness-history.json
+
+          if git diff --cached --quiet; then
+            echo "published=false" >> "$GITHUB_OUTPUT"
+            echo "No material freshness state change to publish."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore: refresh City Monitor source state"
+
+          for attempt in 1 2 3; do
+            git fetch origin main
+            if ! git rebase origin/main; then
+              git rebase --abort || true
+              echo "Generated freshness state conflicted with main; refusing to overwrite."
+              exit 1
+            fi
+
+            if git push origin HEAD:main; then
+              echo "published=true" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+
+            echo "Push attempt $attempt failed because main moved; retrying after rebase."
+            sleep $((attempt * 5))
+          done
+
+          echo "Unable to publish generated freshness state after 3 attempts."
+          exit 1
+
+      - name: Sync freshness review issue
+        if: steps.publish_git.outputs.published == 'true'
         uses: actions/github-script@v7
         with:
           script: |
@@ -69,14 +117,34 @@ jobs:
               state: 'open',
               per_page: 100,
             });
-            const existing = issues.find(issue => !issue.pull_request && issue.title === title);
+            const matches = issues
+              .filter(issue => !issue.pull_request && issue.title === title)
+              .sort((a, b) => a.number - b.number);
+            const canonical = matches[0];
+
+            for (const duplicate of matches.slice(1)) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: duplicate.number,
+                body: canonical
+                  ? 'Closing duplicate freshness review queue. Continue in #' + canonical.number + '.'
+                  : 'Closing duplicate freshness review queue.',
+              });
+              await github.rest.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: duplicate.number,
+                state: 'closed',
+              });
+            }
 
             if (openCount > 0) {
-              if (existing) {
+              if (canonical) {
                 await github.rest.issues.createComment({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
-                  issue_number: existing.number,
+                  issue_number: canonical.number,
                   body: report,
                 });
               } else {
@@ -87,49 +155,17 @@ jobs:
                   body: report,
                 });
               }
-            } else if (existing) {
+            } else if (canonical) {
               await github.rest.issues.createComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                issue_number: existing.number,
+                issue_number: canonical.number,
                 body: 'Freshness review queue cleared. No open items remain in the latest published state.',
               });
               await github.rest.issues.update({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                issue_number: existing.number,
+                issue_number: canonical.number,
                 state: 'closed',
               });
             }
-
-      - name: Verify production build
-        if: steps.publish.outputs.publish_required == 'true'
-        run: npm run build
-
-      - name: Publish monitor state when changed
-        if: steps.publish.outputs.publish_required == 'true'
-        shell: bash
-        run: |
-          git add \
-            data/city-monitor-source-state.json \
-            data/city-monitor-source-history.json \
-            data/city-monitor-report.md \
-            data/freshness-review-queue.json \
-            data/freshness-review-queue.md \
-            data/page-freshness-state.json \
-            data/freshness-history.json
-
-          if git diff --cached --quiet; then
-            echo "No actionable City Monitor changes to publish."
-            exit 0
-          fi
-
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-          git commit -m "chore: refresh City Monitor source state"
-
-          # Do not force-push. If main changed during this run, rebase the
-          # generated commit on the latest main and fail safely on conflicts.
-          git pull --rebase origin main
-          git push origin HEAD:main
