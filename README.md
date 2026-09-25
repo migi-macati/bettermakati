@@ -37,6 +37,8 @@ BetterMakati uses a five-radical open-government doctrine:
 
 The doctrine is supported by **inclusion, privacy, accessibility, evidence, open data, civic space, institutionalization and evaluation**. The site publishes a living self-audit against the doctrine and the OECD Recommendation on Open Government, plus a BetterMakati Status page that exposes our own coverage and measurement gaps.
 
+**Anti-sermon rule:** product pages should not narrate their own completeness, quality, usefulness or virtue. Let the feature, data and citations speak for themselves. Coverage counts, methodology, caveats about BetterMakati itself and other meta-status belong only where they help the user complete the task, or in dedicated Status/methodology surfaces. Do not repeat guardrails on every page.
+
 The main products supporting these principles are the **Public Records index**, **Accountability Ledger**, **Participation Hub**, **Today in Makati / My Makati**, **Integrity & Public Interest**, **Open Government Doctrine**, and **BetterMakati Status**.
 
 ## Data and sourcing
