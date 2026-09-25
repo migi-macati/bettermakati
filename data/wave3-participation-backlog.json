@@ -235,7 +235,28 @@
       "stopWhen": "A source-backed transport expansion list exists.",
       "excludes": [
         "Do not add transport assets in the same research step."
-      ]
+      ],
+      "status": "complete",
+      "completedAt": "2026-09-25",
+      "commit": "475c50b1ae3e61e68ad5ca8a65485ff750d7368b",
+      "result": {
+        "readyForImplementation": [
+          "MRT-3 Guadalupe Station",
+          "MRT-3 Buendia Station",
+          "MRT-3 Ayala Station",
+          "MRT-3 Magallanes Station",
+          "One Ayala Terminal"
+        ],
+        "secondBatch": [
+          "EDSA Busway Guadalupe Station",
+          "EDSA Busway Buendia Station",
+          "EDSA Busway Ayala Station"
+        ],
+        "deferredRouteObjects": [
+          "MRT-3 Makati segment",
+          "EDSA Busway Makati segment"
+        ]
+      }
     },
     {
       "id": "3C-4",
@@ -255,7 +276,12 @@
         "3C-3"
       ],
       "stopWhen": "The first approved transport batch is implemented and validated.",
-      "splitRule": "If the approved list is large, continue as 3C-4a, 3C-4b, etc., one source family per user 'Next'."
+      "splitRule": "If the approved list is large, continue as 3C-4a, 3C-4b, etc., one source family per user 'Next'.",
+      "splitInto": [
+        "3C-4a",
+        "3C-4b"
+      ],
+      "splitReason": "Implement rail/intermodal assets first; add busway stations separately after distinct mode-specific points are verified."
     },
     {
       "id": "3H-1",
@@ -492,8 +518,8 @@
     }
   ],
   "immediateNext": {
-    "id": "3C-3",
-    "title": "Research verified public-transport objects",
-    "maximumScope": "Research and freeze a source-backed transport expansion list only. Do not add transport assets yet."
+    "id": "3C-4a",
+    "title": "Add verified rail/intermodal transport assets",
+    "maximumScope": "Five assets only: four MRT-3 Makati stations plus One Ayala Terminal, with current coordinate verification before coding."
   }
 }
