@@ -1875,7 +1875,11 @@ export const placeRegistry: PlaceRegistryRecord[] = civicAssets.map((asset): Pla
 export const placeRegistryById = new Map(placeRegistry.map(place => [place.id, place]));
 
 const normalizePlaceSelectorText = (value: string) =>
-  value.trim().toLocaleLowerCase('en-PH').replace(/\s+/g, ' ');
+  value
+    .trim()
+    .toLocaleLowerCase('en-PH')
+    .replace(/\bsta\.?\b/g, 'santa')
+    .replace(/\s+/g, ' ');
 
 const legacyBarangayParts = (value: string) =>
   value
