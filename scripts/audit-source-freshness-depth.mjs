@@ -142,7 +142,8 @@ if (
 if (
   pageFreshnessState.version !== 1 ||
   !pageFreshnessState.summary ||
-  !Array.isArray(pageFreshnessState.pages)
+  !Array.isArray(pageFreshnessState.pages) ||
+  !Array.isArray(pageFreshnessState.untrackedAffectedPages)
 ) {
   problems.push('Page freshness state must use version 1 with summary and pages.');
 }
@@ -169,6 +170,7 @@ for (const marker of [
   "data/page-freshness-state.json",
   "freshnessStatus",
   "dependencySignals",
+  "untrackedAffectedPages",
 ]) {
   if (!queueBuilder.includes(marker)) {
     problems.push('Freshness review queue builder lost required behavior: ' + marker);
