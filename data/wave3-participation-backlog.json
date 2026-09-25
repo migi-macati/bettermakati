@@ -819,12 +819,19 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Introduce Place Registry data layer",
       "maximumScope": "Data-layer refactor only. Preserve all current place IDs and page behavior; Civic Map may temporarily re-export the same records.",
-      "status": "next",
+      "status": "complete",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
       ],
-      "stopWhen": "Data-layer refactor only. Preserve all current place IDs and page behavior; Civic Map may temporarily re-export the same records."
+      "stopWhen": "Data-layer refactor only. Preserve all current place IDs and page behavior; Civic Map may temporarily re-export the same records.",
+      "implementationFile": "src/data/placeRegistry.ts",
+      "validation": {
+        "idParity": "88 of 88 Civic Map place IDs preserved in the same order; no additions, losses or duplicates.",
+        "civicMapIntegrity": "Focused integrity audit passed: 88 assets, 33 issue categories, 17 proposal categories and 7 emergency categories.",
+        "ci": "Latest CI reaches dependency audit, then stops at the same three pre-existing unused-import ESLint errors present before W3R-2b. No new lint/parser errors are reported for placeRegistry.ts, civicMap.ts or check-civic-map.mjs; the repo-wide Build step remains skipped by that baseline lint failure.",
+        "deployment": "Vercel status is blocked by the existing account build-rate limit, not a code diagnostic."
+      }
     },
     {
       "id": "W3R-2c",
@@ -833,7 +840,7 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Add Place Registry selectors",
       "maximumScope": "Shared helpers only: by barangay, category, service, coordinates/distance and lifecycle. No visible UI changes.",
-      "status": "planned",
+      "status": "next",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
@@ -1366,9 +1373,9 @@
     }
   ],
   "immediateNext": {
-    "id": "W3R-2b",
-    "title": "Introduce Place Registry data layer",
-    "maximumScope": "Data-layer refactor only. Preserve all current place IDs and page behavior; Civic Map may temporarily re-export the same records."
+    "id": "W3R-2c",
+    "title": "Add Place Registry selectors",
+    "maximumScope": "Shared helpers only: by barangay, category, service, coordinates/distance and lifecycle. No visible UI changes."
   },
   "reopenedExecutionOrder": [
     "3C-2a",
