@@ -1,0 +1,528 @@
+{
+  "schemaVersion": 1,
+  "reconciledAt": "2026-09-25",
+  "workstream": "Wave 3C-3a — Official-source-first Makati transport reconciliation",
+  "scope": "Audit/reconciliation only. No Civic Map transport assets are added or removed in this step.",
+  "sourcePriority": [
+    "City Government of Makati current/post-transfer counts and named transport inventories",
+    "Current national/operator sources for service status",
+    "Historical city plans only for lineage and naming",
+    "Current map geometry only after operating identity is established"
+  ],
+  "officialMakatiBaselines": {
+    "basicFacts2023": {
+      "source": "Makati City Basic Facts and Figures 2023",
+      "sourceUrl": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1720150266681.pdf",
+      "geography": "Present-day Makati; source notes exclusion of 10 transferred barangays",
+      "counts": {
+        "mrtStations": 4,
+        "pnrStations": 3,
+        "busStops": 32
+      },
+      "sourceOffice": "Department of Engineering and Public Works (DEPW)"
+    },
+    "factsAndFigures2020": {
+      "source": "Makati Facts and Figures 2020 — Transportation",
+      "sourceUrl": "https://www.makati.gov.ph/assets/uploads/downloads/2/45/561/pdf/Facts%20and%20FIgures%202020.pdf",
+      "modes": [
+        "Public Utility Buses",
+        "Public Utility Jeepney",
+        "Taxi",
+        "Tricycle",
+        "Motorcycle Taxi",
+        "Pedicab",
+        "UV Express",
+        "Manila Metro Rail Transit (MRT)",
+        "Manila Light Rail Transit (LRT)",
+        "Pasig River Ferry"
+      ],
+      "jeepneyRouteRows": 38,
+      "jeepneyRouteNumberingNote": "Published rows are numbered 1–35 and 37–39; number 36 is absent in the source. Do not infer a missing route.",
+      "ferryStations": [
+        {
+          "name": "Guadalupe Station",
+          "location": "J.P. Rizal Extension, Makati City"
+        },
+        {
+          "name": "Valenzuela Station",
+          "location": "A. Bonifacio Street, Makati City"
+        }
+      ]
+    }
+  },
+  "existingCivicMapCrosswalk": {
+    "currentTransportAssets": 8,
+    "assets": [
+      {
+        "id": "mrt3-guadalupe",
+        "family": "MRT-3",
+        "disposition": "retain-direct-match"
+      },
+      {
+        "id": "mrt3-buendia",
+        "family": "MRT-3",
+        "disposition": "retain-direct-match"
+      },
+      {
+        "id": "mrt3-ayala",
+        "family": "MRT-3",
+        "disposition": "retain-direct-match"
+      },
+      {
+        "id": "mrt3-magallanes",
+        "family": "MRT-3",
+        "disposition": "retain-direct-match"
+      },
+      {
+        "id": "edsa-busway-guadalupe",
+        "family": "EDSA Busway",
+        "disposition": "retain-current-supplemental-operator-asset"
+      },
+      {
+        "id": "edsa-busway-buendia",
+        "family": "EDSA Busway",
+        "disposition": "retain-current-supplemental-operator-asset"
+      },
+      {
+        "id": "edsa-busway-ayala",
+        "family": "EDSA Busway",
+        "disposition": "retain-current-supplemental-operator-asset"
+      },
+      {
+        "id": "one-ayala-terminal",
+        "family": "intermodal terminal",
+        "disposition": "retain-current-supplemental-private-managed-public-transport-asset"
+      }
+    ],
+    "note": "The three EDSA Busway stations are not automatically counted as three of Makati's 32 DEPW bus stops; no source-backed one-to-one crosswalk has been established."
+  },
+  "familyReconciliation": [
+    {
+      "family": "MRT-3 stations",
+      "officialCurrentCount": 4,
+      "namedCurrentSet": [
+        "Guadalupe",
+        "Buendia",
+        "Ayala",
+        "Magallanes"
+      ],
+      "currentStatus": "operating",
+      "evidence": [
+        {
+          "source": "Makati Basic Facts 2023",
+          "url": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1720150266681.pdf"
+        },
+        {
+          "source": "DOTr MRT-3 current station/operator material",
+          "url": "https://www.dotrmrt3.gov.ph/about-us"
+        }
+      ],
+      "civicMapDisposition": "complete-current-named-set",
+      "mapped": 4,
+      "missing": 0
+    },
+    {
+      "family": "PNR stations",
+      "official2023Count": 3,
+      "identified2023Set": [
+        {
+          "name": "Dela Rosa",
+          "city": "Makati"
+        },
+        {
+          "name": "Pasay Road",
+          "city": "Makati"
+        },
+        {
+          "name": "EDSA",
+          "city": "Makati"
+        }
+      ],
+      "identificationEvidence": {
+        "source": "PSA NCR railway station statistics / PNR network records",
+        "note": "The three Makati operating-era station names are Dela Rosa, Pasay Road and EDSA. Older Buendia station is a predecessor/nearby legacy site and must not be double-counted."
+      },
+      "current2026Status": "Metro Commuter passenger operations suspended",
+      "suspension": {
+        "effective": "2024-03-28",
+        "reason": "North-South Commuter Railway construction",
+        "sources": [
+          "https://openstat.psa.gov.ph/PXWeb/pxweb/en/DB/DB__3S__C13/0012H2BNPR0.px/",
+          "https://www.pna.gov.ph/articles/1220375"
+        ]
+      },
+      "civicMapDisposition": "do-not-add-as-current-operating-transport-stops",
+      "followUp": "Preserve as suspended/legacy infrastructure only if Civic Map gets an explicit non-operating/future lifecycle model. Reconcile NSCR successor stations separately; do not assume one-to-one successors."
+    },
+    {
+      "family": "Bus stops",
+      "officialCurrentCount": 32,
+      "source": "Makati Basic Facts 2023 / DEPW",
+      "namedCurrentInventoryFound": false,
+      "civicMapDisposition": "headline-only-unresolved",
+      "note": "Do not manufacture 32 pins from a count. The existing EDSA Busway points remain current supplemental assets but are not counted toward this denominator without a named crosswalk.",
+      "followUp": "Search DEPW/PSD traffic plans, stop-sign inventories, procurement/engineering schedules and other city records for a named current stop list."
+    },
+    {
+      "family": "EDSA Busway stations",
+      "namedCurrentSet": [
+        "Guadalupe",
+        "Buendia",
+        "Ayala"
+      ],
+      "currentStatus": "operating",
+      "civicMapDisposition": "retain-current-supplemental-set",
+      "mapped": 3,
+      "note": "Current national/operator-government evidence supports these points. They are distinct from the 32-stop city headline until crosswalk evidence exists."
+    },
+    {
+      "family": "Pasig River Ferry stations",
+      "historicalMakatiNamedSet": [
+        "Guadalupe Station",
+        "Valenzuela Station"
+      ],
+      "current2026Set": [
+        "Guadalupe Station",
+        "Valenzuela Station"
+      ],
+      "currentStatus": "operating service infrastructure",
+      "currentEvidence": [
+        {
+          "source": "Philippine Information Agency / MMDA advisory",
+          "url": "https://pia.gov.ph/news/mmda-suspends-operations-of-pasig-river-ferry-starting-april-1/",
+          "finding": "April 2026 service resumed after Holy Week maintenance and operated from Guadalupe."
+        },
+        {
+          "source": "DICT/MMDA rollout reported May 2026",
+          "url": "https://www.gmanetwork.com/news/topstories/metro/987624/free-wifi-installed-at-pasig-river-ferry-stations/story/",
+          "finding": "Current station list includes both Guadalupe and Valenzuela among Pasig River Ferry stations."
+        }
+      ],
+      "civicMapDisposition": "verified-current-missing-assets",
+      "missingAssets": [
+        "pasig-ferry-guadalupe",
+        "pasig-ferry-valenzuela"
+      ],
+      "nextAction": "Freeze exact current station points and implement as a two-asset bounded batch."
+    },
+    {
+      "family": "Public utility jeepney routes",
+      "historicalNamedRows": 38,
+      "source": "Makati Facts and Figures 2020 / Public Safety Department",
+      "currentStatus": "route-by-route current status not established",
+      "civicMapDisposition": "historical-named-inventory-needs-current-reconciliation",
+      "geometryConstraint": "Civic Map currently models transport routes as a type but assets still use a single lat/lng point; a route cannot be faithfully represented as one point.",
+      "nextAction": "Crosswalk the 38 historical rows against current LTFRB/operator/terminal evidence. For current routes, either add route geometry support or expose them as services at verified terminals/stops rather than fake route pins.",
+      "rows": [
+        {
+          "publishedNo": 1,
+          "association": "ACPTSA",
+          "from": "Ayala",
+          "to": "Pateros",
+          "currentStatus": "not-yet-verified"
+        },
+        {
+          "publishedNo": 2,
+          "association": "PABALADJOAI",
+          "from": "Ayala",
+          "to": "Pateros",
+          "currentStatus": "not-yet-verified"
+        },
+        {
+          "publishedNo": 3,
+          "association": "AJODA",
+          "from": "Ayala",
+          "to": "Washington",
+          "currentStatus": "not-yet-verified"
+        },
+        {
+          "publishedNo": 4,
+          "association": "AZADA",
+          "from": "Ayala",
+          "to": "Zapote",
+          "currentStatus": "not-yet-verified"
+        },
+        {
+          "publishedNo": 5,
+          "association": "GIAMADA",
+          "from": "Ayala",
+          "to": "Guadalupe Ibabaw",
+          "currentStatus": "not-yet-verified"
+        },
+        {
+          "publishedNo": 6,
+          "association": "AMODA",
+          "from": "Ayala",
+          "to": "Mantrade",
+          "currentStatus": "not-yet-verified"
+        },
+        {
+          "publishedNo": 7,
+          "association": "BEWODA",
+          "from": "Bel-Air",
+          "to": "Washington",
+          "currentStatus": "not-yet-verified"
+        },
+        {
+          "publishedNo": 8,
+          "association": "GUAPODA",
+          "from": "Guadalupe",
+          "to": "Cartimar",
+          "currentStatus": "not-yet-verified"
+        },
+        {
+          "publishedNo": 9,
+          "association": "GUACEMPAJODA",
+          "from": "Guadalupe",
+          "to": "Pateros",
+          "currentStatus": "not-yet-verified"
+        },
+        {
+          "publishedNo": 10,
+          "association": "JOPREXJODA",
+          "from": "Guadalupe",
+          "to": "Pateros",
+          "currentStatus": "not-yet-verified"
+        },
+        {
+          "publishedNo": 11,
+          "association": "HIPADA",
+          "from": "Guadalupe",
+          "to": "Pateros",
+          "currentStatus": "not-yet-verified"
+        },
+        {
+          "publishedNo": 12,
+          "association": "HIPAJODA",
+          "from": "Guadalupe",
+          "to": "Pateros",
+          "currentStatus": "not-yet-verified"
+        },
+        {
+          "publishedNo": 13,
+          "association": "GUADAKABUDOA",
+          "from": "Guadalupe",
+          "to": "Buting",
+          "currentStatus": "not-yet-verified"
+        },
+        {
+          "publishedNo": 14,
+          "association": "GUAWBUJODA",
+          "from": "Guadalupe",
+          "to": "FTI",
+          "currentStatus": "not-yet-verified"
+        },
+        {
+          "publishedNo": 15,
+          "association": "GUAFTIODAI-O",
+          "from": "Guadalupe",
+          "to": "FTI",
+          "currentStatus": "not-yet-verified"
+        },
+        {
+          "publishedNo": 16,
+          "association": "GUAFTIODAI-TRIANGLE",
+          "from": "Guadalupe",
+          "to": "FTI",
+          "currentStatus": "not-yet-verified"
+        },
+        {
+          "publishedNo": 17,
+          "association": "TEPVJODAI",
+          "from": "Guadalupe",
+          "to": "Housing",
+          "currentStatus": "not-yet-verified"
+        },
+        {
+          "publishedNo": 18,
+          "association": "TUBOJODA",
+          "from": "Guadalupe",
+          "to": "Fort Bonifacio Gate 3",
+          "currentStatus": "not-yet-verified"
+        },
+        {
+          "publishedNo": 19,
+          "association": "GLMATJODA",
+          "from": "Guadalupe",
+          "to": "L. Guinto",
+          "currentStatus": "not-yet-verified"
+        },
+        {
+          "publishedNo": 20,
+          "association": "LABGUADJODA",
+          "from": "Guadalupe",
+          "to": "L. Guinto",
+          "currentStatus": "not-yet-verified"
+        },
+        {
+          "publishedNo": 21,
+          "association": "SODJEBELELODA",
+          "from": "Evangelista",
+          "to": "Libertad",
+          "currentStatus": "not-yet-verified"
+        },
+        {
+          "publishedNo": 22,
+          "association": "JODA PRC-KAYAMANAN C",
+          "from": "PRC",
+          "to": "Mantrade",
+          "currentStatus": "not-yet-verified"
+        },
+        {
+          "publishedNo": 23,
+          "association": "PTBT-TODA",
+          "from": "PRC",
+          "to": "Libertad",
+          "currentStatus": "not-yet-verified"
+        },
+        {
+          "publishedNo": 24,
+          "association": "WAKCODA",
+          "from": "Washington",
+          "to": "Mantrade",
+          "currentStatus": "not-yet-verified"
+        },
+        {
+          "publishedNo": 25,
+          "association": "PADJODA",
+          "from": "Washington",
+          "to": "Libertad",
+          "currentStatus": "not-yet-verified"
+        },
+        {
+          "publishedNo": 26,
+          "association": "PADODA",
+          "from": "Dian",
+          "to": "Libertad",
+          "currentStatus": "not-yet-verified"
+        },
+        {
+          "publishedNo": 27,
+          "association": "PRODA",
+          "from": "Pasay Road",
+          "to": "Libertad",
+          "currentStatus": "not-yet-verified"
+        },
+        {
+          "publishedNo": 28,
+          "association": "PASMAKODA",
+          "from": "M. Reyes",
+          "to": "Libertad",
+          "currentStatus": "not-yet-verified"
+        },
+        {
+          "publishedNo": 29,
+          "association": "PTEODA",
+          "from": "Mantrade",
+          "to": "Pasong Tamo Ext.",
+          "currentStatus": "not-yet-verified"
+        },
+        {
+          "publishedNo": 30,
+          "association": "WEBTRANS",
+          "from": "FTI",
+          "to": "Kayaman C",
+          "currentStatus": "not-yet-verified"
+        },
+        {
+          "publishedNo": 31,
+          "association": "MAKATI LOOP",
+          "from": "Ayala",
+          "to": "Makati Avenue-JP RIZAL",
+          "currentStatus": "not-yet-verified"
+        },
+        {
+          "publishedNo": 32,
+          "association": "GIMDJODA",
+          "from": "Delpan",
+          "to": "Guadalupe Ibabaw",
+          "currentStatus": "not-yet-verified"
+        },
+        {
+          "publishedNo": 33,
+          "association": "MALBODA",
+          "from": "Burgos",
+          "to": "L. Guinto",
+          "currentStatus": "not-yet-verified"
+        },
+        {
+          "publishedNo": 34,
+          "association": "PMMODA",
+          "from": "Pateros",
+          "to": "Market-Market",
+          "currentStatus": "not-yet-verified"
+        },
+        {
+          "publishedNo": 35,
+          "association": "EMMJODAI",
+          "from": "McKinley",
+          "to": "Market-Market",
+          "currentStatus": "not-yet-verified"
+        },
+        {
+          "publishedNo": 37,
+          "association": "MAPAJODA (Aircon Jeep)",
+          "from": "Kalayaan",
+          "to": "PICC",
+          "currentStatus": "not-yet-verified"
+        },
+        {
+          "publishedNo": 38,
+          "association": "KAMAJODA",
+          "from": "Kamagong",
+          "to": "Malugay",
+          "currentStatus": "not-yet-verified"
+        },
+        {
+          "publishedNo": 39,
+          "association": "DILODA",
+          "from": "Dominga",
+          "to": "Libertad",
+          "currentStatus": "not-yet-verified"
+        }
+      ]
+    },
+    {
+      "family": "Other 2020 transport modes",
+      "modes": [
+        "Public Utility Buses",
+        "Taxi",
+        "Tricycle",
+        "Motorcycle Taxi",
+        "Pedicab",
+        "UV Express",
+        "LRT"
+      ],
+      "disposition": "mode-presence-is-not-a-facility-inventory",
+      "note": "Do not create generic mode pins. Add only verified physical stops/terminals or route objects supported by current data. LRT has no station physically inside present-day Makati."
+    }
+  ],
+  "adjacentButOutOfScope": [
+    {
+      "family": "Bike lanes",
+      "official2023Count": 9,
+      "disposition": "defer-to-cycling/street-infrastructure workstream",
+      "reason": "This reopened 3C-3 pass is reconciling public-transport stops, stations, terminals and routes; bike-lane geometry belongs with street/cycling infrastructure."
+    }
+  ],
+  "keyFindings": [
+    "The four current MRT-3 Makati stations are already complete in Civic Map.",
+    "Makati's 2023 three-PNR-station count describes operating-era infrastructure, but Metro Commuter service has been suspended since March 28, 2024; these should not be presented as current operating stops.",
+    "The 32 bus-stop headline cannot be safely turned into assets because Makati's current publication does not name the 32 stops.",
+    "The 2020 city transport section contains 38 jeepney-route rows, not 39: its numbering skips 36.",
+    "Guadalupe and Valenzuela ferry stations are the strongest immediate missing current transport assets.",
+    "One Ayala and the three EDSA Busway stations are useful current supplemental assets but should remain separate from Makati's older/current city denominators unless a direct crosswalk is found."
+  ],
+  "completenessDoctrine": [
+    "Current service status and physical-infrastructure existence are separate dimensions.",
+    "A headline count is not permission to invent unnamed points.",
+    "Do not count current national/operator supplemental assets against a Makati city denominator without source-backed equivalence.",
+    "Do not render linear routes as a single point merely to claim coverage.",
+    "Historical names and current successor services must be crosswalked, not merged by proximity alone."
+  ],
+  "nextStep": {
+    "id": "3C-3b",
+    "title": "Implement the two current Makati ferry stations",
+    "scope": "Freeze exact current points for Guadalupe and Valenzuela Pasig River Ferry stations, add the two current transport-stop assets with MMDA/current-service provenance, validate, and stop."
+  }
+}
