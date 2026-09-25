@@ -1778,6 +1778,17 @@ export const serviceDirectory: ServiceDirectoryItem[] = [
     href: 'https://www.gsis.gov.ph/active-members/benefits/',
     sourceUrl: 'https://www.gsis.gov.ph/active-members/benefits/',
     keywords: 'gsis government employee retirement disability survivorship funeral unemployment benefits',
+    nationalIntegration: {
+      officialActionUrl: 'https://www.gsis.gov.ph/active-members/benefits/',
+      officialSourceUrl: 'https://www.gsis.gov.ph/active-members/benefits/',
+      betterGov: {
+        status: 'missing',
+        auditedAt: '2026-09-25',
+      },
+      makatiContext: {
+        officeIds: ['gsis-head-office'],
+      },
+    },
   },
   {
     id: 'gsis-loans',
@@ -1790,6 +1801,17 @@ export const serviceDirectory: ServiceDirectoryItem[] = [
     href: 'https://www.gsis.gov.ph/ginhawa-for-all/online-filing-of-loans/',
     sourceUrl: 'https://www.gsis.gov.ph/ginhawa-for-all/online-filing-of-loans/',
     keywords: 'gsis loan ginhawa emergency policy loan online filing',
+    nationalIntegration: {
+      officialActionUrl: 'https://www.gsis.gov.ph/ginhawa-for-all/online-filing-of-loans/',
+      officialSourceUrl: 'https://www.gsis.gov.ph/ginhawa-for-all/online-filing-of-loans/',
+      betterGov: {
+        status: 'missing',
+        auditedAt: '2026-09-25',
+      },
+      makatiContext: {
+        officeIds: ['gsis-head-office'],
+      },
+    },
   },
   {
     id: 'gsis-ec-claim',

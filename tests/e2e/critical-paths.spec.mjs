@@ -1145,3 +1145,20 @@ test('national service handoff batch B1 covers SSS, PhilHealth and Pag-IBIG', as
   await page.goto(baseURL + '/services/guide/pagibig-calamity-loan');
   await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toHaveCount(0);
 });
+
+test('national service handoff batch B2 covers GSIS benefits and loans', async ({ page }) => {
+  await page.goto(baseURL + '/services/guide/gsis-benefits');
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://www.gsis.gov.ph/active-members/benefits/'
+  );
+  await expect(page.getByText('GSIS Head Office', { exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toHaveCount(0);
+
+  await page.goto(baseURL + '/services/guide/gsis-loans');
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://www.gsis.gov.ph/ginhawa-for-all/online-filing-of-loans/'
+  );
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toHaveCount(0);
+});
