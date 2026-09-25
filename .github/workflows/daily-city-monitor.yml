@@ -34,10 +34,26 @@ jobs:
       - name: Check official City Monitor sources
         run: npm run check:city-monitor
 
+      - name: Check whether published monitor state changed
+        id: publish
+        shell: bash
+        run: |
+          node - <<'NODE'
+          const fs = require('fs');
+          const state = JSON.parse(fs.readFileSync('data/city-monitor-source-state.json', 'utf8'));
+          fs.appendFileSync(
+            process.env.GITHUB_OUTPUT,
+            'publish_required=' + String(Boolean(state.publishRequired)) + '\n'
+          );
+          NODE
+
+
       - name: Verify production build
+        if: steps.publish.outputs.publish_required == 'true'
         run: npm run build
 
       - name: Publish monitor state when changed
+        if: steps.publish.outputs.publish_required == 'true'
         shell: bash
         run: |
           git add             data/city-monitor-source-state.json             data/city-monitor-source-history.json             data/city-monitor-report.md
