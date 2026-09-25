@@ -2,12 +2,9 @@ name: Source freshness monitor
 
 on:
   schedule:
-    # 08:30 Philippine time every day.
-    - cron: '30 0 * * *'
-    # 08:40 Philippine time every Monday.
-    - cron: '40 0 * * 1'
-    # 08:50 Philippine time on the first day of every month.
-    - cron: '50 0 1 * *'
+    # 08:00 Philippine time every day. The checker selects daily sources
+    # plus weekly sources on Mondays and monthly sources on the first day.
+    - cron: '0 0 * * *'
   workflow_dispatch:
     inputs:
       cadence:
@@ -55,17 +52,26 @@ jobs:
           if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
             cadence="${{ inputs.cadence }}"
           else
-            case "${{ github.event.schedule }}" in
-              '30 0 * * *') cadence="daily" ;;
-              '40 0 * * 1') cadence="weekly" ;;
-              '50 0 1 * *') cadence="monthly" ;;
-              *) cadence="all" ;;
-            esac
+            cadence="due"
           fi
           echo "cadence=$cadence" >> "$GITHUB_OUTPUT"
 
       - name: Check configured public sources
         run: node scripts/check-sources.mjs --cadence=${{ steps.cadence.outputs.cadence }}
+
+      - name: Check whether published freshness state changed
+        id: publish
+        shell: bash
+        run: |
+          node - <<'NODE'
+          const fs = require('fs');
+          const state = JSON.parse(fs.readFileSync('data/source-watch-state.json', 'utf8'));
+          fs.appendFileSync(
+            process.env.GITHUB_OUTPUT,
+            'publish_required=' + String(Boolean(state.publishRequired)) + '\n'
+          );
+          NODE
+
 
       - name: Detect editorial review queue
         id: review
@@ -111,9 +117,11 @@ jobs:
             }
 
       - name: Verify production build
+        if: steps.publish.outputs.publish_required == 'true'
         run: npm run build
 
       - name: Publish machine-generated freshness state
+        if: steps.publish.outputs.publish_required == 'true'
         shell: bash
         run: |
           git add data/source-watch-state.json data/source-watch-history.json data/source-watch-report.md
