@@ -34,9 +34,29 @@ for (const source of watchlist) {
   ids.add(source.id);
   urls.add(source.url);
   const stableUrl = String(source.url).toLowerCase().split(/[?#]/)[0];
-  if (source.monitoringMode === 'content-hash' && !stableUrl.endsWith('.pdf')) {
-    problems.push('Content hashing must remain conservative; non-PDF source classified for hashing: ' + source.id);
+  const hashableStableExtensions = ['.pdf', '.csv', '.toml', '.json', '.geojson'];
+  if (
+    source.monitoringMode === 'content-hash' &&
+    !hashableStableExtensions.some(extension => stableUrl.endsWith(extension))
+  ) {
+    problems.push(
+      'Content hashing must remain conservative; dynamic/non-versionable source classified for hashing: ' +
+        source.id
+    );
   }
+}
+
+const requiredEcosystemDependencies = [
+  'bettergov-openhalalan-dataset',
+  'openhalalan-makati-2022-source',
+  'bettergov-open-congress-api',
+  'open-congress-hb-1293-source',
+  'open-congress-hb-1294-source',
+  'open-congress-hb-6100-source',
+  'bettergov-transparency-procurement',
+];
+for (const id of requiredEcosystemDependencies) {
+  if (!ids.has(id)) problems.push('Source watchlist missing ecosystem dependency: ' + id);
 }
 
 for (const cadence of validCadence) {
