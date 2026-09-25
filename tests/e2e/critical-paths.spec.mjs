@@ -613,6 +613,16 @@ test('Public Records exposes current source freshness state', async ({ page }) =
   expect(new Set(body.sources.map(item => item.monitoringMode))).toEqual(
     new Set(['content-hash', 'reachability'])
   );
+
+  const index = await page.request.get(baseURL + '/source-watch-index.json');
+  expect(index.ok()).toBeTruthy();
+  const catalog = await index.json();
+  const delegated = catalog.filter(item => item.owner === 'city-monitor');
+  expect(new Set(delegated.map(item => item.id))).toEqual(
+    new Set(['makati-news', 'makati-events', 'makati-legislation', 'philgeps'])
+  );
+  expect(delegated.every(item => item.delegated === true)).toBeTruthy();
+  expect(catalog.find(item => item.id === 'philgeps')?.monitoringMode).toBe('content-hash');
 });
 
 test('BetterMakati Status exposes source freshness automation', async ({ page }) => {
