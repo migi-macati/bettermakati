@@ -1,0 +1,161 @@
+{
+  "schemaVersion": 1,
+  "reconciledAt": "2026-09-25",
+  "workstream": "Wave 3C-3e — PNR / NSCR lifecycle representation",
+  "scope": "Research/design only. No legacy PNR or future NSCR station assets are added to the default current-operating Civic Map layer in this step.",
+  "currentServiceState": {
+    "pnrMetroCommuter": {
+      "status": "suspended",
+      "effectiveDate": "2024-03-28",
+      "reason": "Tutuban–Alabang and Governor Pascual–Tutuban operations were suspended to accelerate NSCR construction.",
+      "evidence": {
+        "source": "Philippine News Agency reporting DOTr/PNR announcement",
+        "url": "https://www.pna.gov.ph/articles/1220375"
+      }
+    },
+    "nscrSouthMakati": {
+      "status": "under-construction-not-operating",
+      "futureStations": [
+        "Buendia",
+        "EDSA"
+      ],
+      "package": "CP S-03A",
+      "constructionScope": {
+        "buendia": "elevated station",
+        "edsa": "at-grade station"
+      },
+      "evidence": [
+        {
+          "source": "Official NSCR Extension project map",
+          "url": "https://nscr.com.ph/map"
+        },
+        {
+          "source": "PIA report on SCRP contract signing",
+          "url": "https://mirror.pia.gov.ph/news/2023/07/13/remaining-north-south-commuter-railway-civil-works-contracts-signed"
+        },
+        {
+          "source": "Asian Development Bank South Commuter Railway Project",
+          "url": "https://www.adb.org/projects/52220-002/main"
+        }
+      ]
+    }
+  },
+  "legacyMakatiPnrStations": [
+    {
+      "id": "pnr-dela-rosa-legacy",
+      "name": "Dela Rosa",
+      "operatingEraStatus": "former-current-Makati-PNR-stop",
+      "current2026Status": "passenger-service-suspended",
+      "futureRelationship": {
+        "nscrStation": "Buendia",
+        "relationship": "corridor-successor-not-same-identity",
+        "reasoning": "The future NSCR station is officially named Buendia. Dela Rosa had itself replaced the older PNR Buendia stop; the NSCR project revives the Buendia station name in the same general rail corridor. Do not alias Dela Rosa to NSCR Buendia."
+      },
+      "defaultCivicMapDisposition": "exclude-from-current-operating-layer",
+      "futureLifecycleLayerDisposition": "eligible-as-legacy/suspended station if lifecycle UI is implemented"
+    },
+    {
+      "id": "pnr-pasay-road-legacy",
+      "name": "Pasay Road",
+      "operatingEraStatus": "former-current-Makati-PNR-stop",
+      "current2026Status": "passenger-service-suspended",
+      "futureRelationship": {
+        "nscrStation": null,
+        "relationship": "no-named-direct-successor-in-current-nscr-station-set",
+        "reasoning": "Current South Commuter station lists name Buendia and EDSA in Makati but not Pasay Road. Do not infer that either future station is a replacement."
+      },
+      "defaultCivicMapDisposition": "exclude-from-current-operating-layer",
+      "futureLifecycleLayerDisposition": "eligible-as-legacy/suspended station if lifecycle UI is implemented"
+    },
+    {
+      "id": "pnr-edsa-legacy",
+      "name": "EDSA",
+      "operatingEraStatus": "former-current-Makati-PNR-stop",
+      "current2026Status": "passenger-service-suspended",
+      "futureRelationship": {
+        "nscrStation": "EDSA",
+        "relationship": "same-name-corridor-new-station",
+        "reasoning": "The NSCR project includes a future EDSA station in CP S-03A. Preserve the legacy PNR station and future NSCR station as separate lifecycle records rather than one continuously operating asset."
+      },
+      "defaultCivicMapDisposition": "exclude-from-current-operating-layer",
+      "futureLifecycleLayerDisposition": "eligible-as-legacy/suspended station if lifecycle UI is implemented"
+    }
+  ],
+  "futureMakatiNscrStations": [
+    {
+      "id": "nscr-buendia-future",
+      "name": "NSCR Buendia Station",
+      "type": "transport-stop",
+      "lifecycle": "under-construction",
+      "structure": "elevated",
+      "defaultCivicMapDisposition": "exclude-from-current-operating-layer",
+      "relationshipToLegacy": "corridor successor near Dela Rosa/older Buendia lineage; no alias merge"
+    },
+    {
+      "id": "nscr-edsa-future",
+      "name": "NSCR EDSA Station",
+      "type": "transport-stop",
+      "lifecycle": "under-construction",
+      "structure": "at-grade",
+      "defaultCivicMapDisposition": "exclude-from-current-operating-layer",
+      "relationshipToLegacy": "same-name successor to the suspended PNR EDSA corridor; keep distinct lifecycle record"
+    }
+  ],
+  "openingTimeline": {
+    "makatiSpecificOpeningDateFrozen": false,
+    "currentProjectContext": [
+      {
+        "source": "PNA / ED Council",
+        "url": "https://www.pna.gov.ph/articles/1284281",
+        "finding": "The announced December 2027 partial-operations phase is not a Makati segment."
+      },
+      {
+        "source": "PNA / DOTr",
+        "url": "https://www.pna.gov.ph/articles/1256901",
+        "finding": "DOTr has cited full NSCR operation by 2032; this is system-level and is not treated as a guaranteed Makati station opening date."
+      }
+    ],
+    "rule": "Do not publish a Makati Buendia/EDSA opening date until DOTr/NSCR provides a segment- or station-specific operating schedule."
+  },
+  "civicMapModelAssessment": {
+    "currentField": "status: mapped | pilot | needs-verification",
+    "problem": "This field describes mapping/verification state, not whether a transport facility is operating, suspended, under construction, future, or permanently closed.",
+    "decision": "Do not overload the current status field to represent service lifecycle."
+  },
+  "recommendedLifecycleModel": {
+    "futureField": "serviceStatus",
+    "values": [
+      "operating",
+      "temporarily-suspended",
+      "under-construction",
+      "future",
+      "closed"
+    ],
+    "optionalFields": [
+      "serviceStatusAsOf",
+      "serviceStatusSourceUrl",
+      "predecessorAssetId",
+      "successorAssetId"
+    ],
+    "defaultFilterRule": "The normal Civic Map should show operating assets by default. Suspended/closed/future assets should appear only when the user enables a history/future-infrastructure layer or on a relevant project/history page.",
+    "duplicateRule": "Legacy PNR and future NSCR stations may share corridor geography but must remain distinct records when identity or lifecycle differs."
+  },
+  "integrityRulesForFutureImplementation": [
+    "Never show Dela Rosa, Pasay Road or legacy EDSA as currently operating PNR stops while the March 2024 suspension remains in force.",
+    "Never show NSCR Buendia or NSCR EDSA as operating until an authoritative source confirms passenger service.",
+    "Do not alias Dela Rosa to NSCR Buendia.",
+    "Do not invent a Pasay Road NSCR successor.",
+    "Keep legacy PNR EDSA and future NSCR EDSA lifecycle-distinct even if their footprints overlap."
+  ],
+  "result": {
+    "legacyPnrStationsDispositioned": 3,
+    "futureNscrStationsDispositioned": 2,
+    "currentOperatingRailAssetsAdded": 0,
+    "lifecycleSchemaCodeChangesMade": 0
+  },
+  "nextStep": {
+    "id": "3C-3f",
+    "title": "Close transport completeness audit",
+    "scope": "Disposition every reviewed transport family, validate current Civic Map coverage, preserve unresolved 32-stop and three jeepney-route questions, and close only to the verified current named/mappable set."
+  }
+}
