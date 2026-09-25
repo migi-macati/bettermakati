@@ -20,6 +20,7 @@ export interface ProcurementTrace {
   awardedAmountM?: number;
   supplier?: string;
   bidDate?: string;
+  evidenceCheckedOn?: string;
   stages: AccountabilityStage[];
 }
 
