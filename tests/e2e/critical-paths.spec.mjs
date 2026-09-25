@@ -1266,3 +1266,35 @@ test('national service handoff batch D1 covers BFP, ECC and DepEd Makati', async
     'https://depedmakati.ph/index.php/records/'
   );
 });
+
+test('national service handoff batch D2 covers OWWA, TESDA, PHLPost, DPWH and COMELEC', async ({ page }) => {
+  await page.goto(baseURL + '/services/guide/owwa-scholarships');
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://scholarship.owwa.gov.ph/'
+  );
+  await expect(page.getByText('OWWA Regional Welfare Office – NCR', { exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/owwa-welfare-assistance');
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toHaveCount(0);
+
+  await page.goto(baseURL + '/services/guide/tesda-scholarship');
+  await expect(page.getByText('TESDA District Office – PASMAK (Pasay/Makati)', { exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toHaveCount(0);
+
+  await page.goto(baseURL + '/services/guide/phlpost-services');
+  await expect(page.getByText('PHLPost – Makati City Hall', { exact: true })).toBeVisible();
+  await expect(page.getByText('Makati Central Post Office', { exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toHaveCount(0);
+
+  await page.goto(baseURL + '/services/guide/dpwh-infrastructure-concern');
+  await expect(page.getByText('DPWH Metro Manila 2nd District Engineering Office', { exact: true })).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/comelec-voter-services');
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://www.comelec.gov.ph/'
+  );
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toHaveCount(0);
+});

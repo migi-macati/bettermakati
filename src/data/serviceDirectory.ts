@@ -1942,6 +1942,17 @@ export const serviceDirectory: ServiceDirectoryItem[] = [
     href: 'https://owwa.gov.ph/',
     sourceUrl: 'https://owwa.gov.ph/contact-us/',
     keywords: 'owwa membership ofw overseas worker records renewal registration',
+    nationalIntegration: {
+      officialActionUrl: 'https://owwa.gov.ph/',
+      officialSourceUrl: 'https://owwa.gov.ph/contact-us/',
+      betterGov: {
+        status: 'missing',
+        auditedAt: '2026-09-25',
+      },
+      makatiContext: {
+        officeIds: ['owwa-ncr'],
+      },
+    },
   },
   {
     id: 'owwa-social-benefits',
@@ -1967,6 +1978,17 @@ export const serviceDirectory: ServiceDirectoryItem[] = [
     href: 'https://owwa.gov.ph/welfare-assistance-program-wap/',
     sourceUrl: 'https://owwa.gov.ph/welfare-assistance-program-wap/',
     keywords: 'owwa wap welfare assistance calamity bereavement disability medical displacement ofw',
+    nationalIntegration: {
+      officialActionUrl: 'https://owwa.gov.ph/welfare-assistance-program-wap/',
+      officialSourceUrl: 'https://owwa.gov.ph/welfare-assistance-program-wap/',
+      betterGov: {
+        status: 'missing',
+        auditedAt: '2026-09-25',
+      },
+      makatiContext: {
+        officeIds: ['owwa-ncr'],
+      },
+    },
   },
   {
     id: 'owwa-scholarships',
@@ -1979,6 +2001,19 @@ export const serviceDirectory: ServiceDirectoryItem[] = [
     href: 'https://owwa.gov.ph/',
     sourceUrl: 'https://owwa.gov.ph/key-officials-regional-welfare-offices/',
     keywords: 'owwa scholarship edsp odsp elap education training ofw dependent',
+    nationalIntegration: {
+      officialActionUrl: 'https://scholarship.owwa.gov.ph/',
+      officialSourceUrl: 'https://owwa.gov.ph/',
+      betterGov: {
+        status: 'listed',
+        listingUrl: 'https://bettergov.ph/services?search=OWWA%20Scholarship',
+        matchedService: 'Apply for OWWA Scholarship',
+        auditedAt: '2026-09-25',
+      },
+      makatiContext: {
+        officeIds: ['owwa-ncr'],
+      },
+    },
   },
   {
     id: 'owwa-reintegration',
@@ -1991,6 +2026,17 @@ export const serviceDirectory: ServiceDirectoryItem[] = [
     href: 'https://reintegration.owwa.gov.ph/',
     sourceUrl: 'https://reintegration.owwa.gov.ph/services.php',
     keywords: 'owwa reintegration balik pinas livelihood business job returning ofw',
+    nationalIntegration: {
+      officialActionUrl: 'https://reintegration.owwa.gov.ph/',
+      officialSourceUrl: 'https://reintegration.owwa.gov.ph/services.php',
+      betterGov: {
+        status: 'missing',
+        auditedAt: '2026-09-25',
+      },
+      makatiContext: {
+        officeIds: ['owwa-ncr'],
+      },
+    },
   },
 
   {
@@ -2239,6 +2285,19 @@ export const serviceDirectory: ServiceDirectoryItem[] = [
     href: 'https://www.tesda.gov.ph/',
     sourceUrl: 'https://tesda.gov.ph/directory/regions',
     keywords: 'tesda scholarship free training twsp tstep makati pasmak skills',
+    nationalIntegration: {
+      officialActionUrl: 'https://www.tesda.gov.ph/',
+      officialSourceUrl: 'https://tesda.gov.ph/directory/regions',
+      betterGov: {
+        status: 'listed',
+        matchedService: 'Apply for TESDA Scholarship',
+        auditedAt: '2026-09-25',
+      },
+      makatiContext: {
+        officeIds: ['tesda-pasmak'],
+        notes: ['BetterGov currently lists this service but its linked transaction source is not an official TESDA domain, so BetterMakati does not surface that BetterGov link here.'],
+      },
+    },
   },
   {
     id: 'phlpost-services',
@@ -2251,6 +2310,17 @@ export const serviceDirectory: ServiceDirectoryItem[] = [
     href: 'https://phlpost.gov.ph/',
     sourceUrl: 'https://phlpost.gov.ph/post-office-locator/',
     keywords: 'phlpost post office mail parcel postal makati city hall central',
+    nationalIntegration: {
+      officialActionUrl: 'https://phlpost.gov.ph/',
+      officialSourceUrl: 'https://phlpost.gov.ph/post-office-locator/',
+      betterGov: {
+        status: 'partial',
+        auditedAt: '2026-09-25',
+      },
+      makatiContext: {
+        officeIds: ['phlpost-makati-city-hall', 'phlpost-makati-central'],
+      },
+    },
   },
   {
     id: 'dpwh-infrastructure-concern',
@@ -2263,6 +2333,17 @@ export const serviceDirectory: ServiceDirectoryItem[] = [
     href: 'https://www.dpwh.gov.ph/dpwh/',
     sourceUrl: 'https://www.dpwh.gov.ph/dpwh/',
     keywords: 'dpwh road drainage bridge national road infrastructure concern makati metro manila 2nd deo',
+    nationalIntegration: {
+      officialActionUrl: 'https://www.dpwh.gov.ph/dpwh/',
+      officialSourceUrl: 'https://www.dpwh.gov.ph/dpwh/',
+      betterGov: {
+        status: 'missing',
+        auditedAt: '2026-09-25',
+      },
+      makatiContext: {
+        officeIds: ['dpwh-mm2deo'],
+      },
+    },
   },
   {
     id: 'pcso-medical-assistance',
@@ -2374,6 +2455,14 @@ export const serviceDirectory: ServiceDirectoryItem[] = [
     href: 'https://www.comelec.gov.ph/',
     sourceUrl: 'https://www.comelec.gov.ph/',
     keywords: 'comelec voter registration certification precinct election vote',
+    nationalIntegration: {
+      officialActionUrl: 'https://www.comelec.gov.ph/',
+      officialSourceUrl: 'https://www.comelec.gov.ph/',
+      betterGov: {
+        status: 'partial',
+        auditedAt: '2026-09-25',
+      },
+    },
   },
 ];
 
