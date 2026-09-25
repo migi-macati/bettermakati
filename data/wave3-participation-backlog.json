@@ -330,7 +330,7 @@
       "excludes": [
         "Transport network expansion"
       ],
-      "status": "in-progress",
+      "status": "complete",
       "commits": [
         "a61473e8bfe86672a51cd93bc22a32704a0049f2",
         "0816060bf84ac70f8e7d0aceafa3ad6871edc2e8"
@@ -402,7 +402,8 @@
           "makati-city-hall-park",
           "playground-park-poblacion"
         ]
-      }
+      },
+      "current": "complete"
     },
     {
       "id": "3C-3",
@@ -425,7 +426,7 @@
       "excludes": [
         "Do not add transport assets in the same research step."
       ],
-      "status": "in-progress",
+      "status": "complete",
       "completedAt": "2026-09-25",
       "commit": "475c50b1ae3e61e68ad5ca8a65485ff750d7368b",
       "result": {
@@ -461,7 +462,7 @@
         "Preserve official-city inventory provenance separately from operator/current-network verification.",
         "Add missing verified current transport assets only after the crosswalk is complete."
       ],
-      "current": "3C-3f",
+      "current": "complete",
       "planFile": "data/wave3-civic-map-transport-plan.json",
       "reconciliationFile": "data/wave3-civic-map-transport-reconciliation.json",
       "completedSubsteps": [
@@ -471,7 +472,8 @@
         "3C-3d1",
         "3C-3d2",
         "3C-3d",
-        "3C-3e"
+        "3C-3e",
+        "3C-3f"
       ],
       "ferryImplementationFile": "data/wave3-civic-map-ferry-implementation.json",
       "ferryImplementationStatus": "complete",
@@ -480,7 +482,34 @@
       "jeepneyRouteReconciliationA": "data/wave3-civic-map-jeepney-routes-reconciliation-a.json",
       "jeepneyRouteReconciliationB": "data/wave3-civic-map-jeepney-routes-reconciliation-b.json",
       "jeepneyRouteReconciliationStatus": "complete",
-      "pnrNscrLifecycleFile": "data/wave3-civic-map-pnr-nscr-lifecycle.json"
+      "pnrNscrLifecycleFile": "data/wave3-civic-map-pnr-nscr-lifecycle.json",
+      "reopenedCompletedAt": "2026-09-25",
+      "completenessStatus": "complete-for-verified-current-named-mappable-set-with-explicit-unresolved-denominators",
+      "closureAuditFile": "data/wave3-civic-map-transport-completeness-audit.json",
+      "finalCoverage": {
+        "civicMapAssetsAtClosure": 88,
+        "currentTransportAssets": 10,
+        "currentMrtStations": 4,
+        "currentEdsaBuswayStations": 3,
+        "currentFerryStations": 2,
+        "currentIntermodalTerminals": 1,
+        "depwBusStopHeadlineCount": 32,
+        "depwNamedBusStopsFrozen": 0,
+        "jeepneyHistoricalRowsReconciled": 38,
+        "jeepneyRowsWithCurrentOrSuccessorEvidence": 35,
+        "jeepneyRowsWithoutExactCurrentMatch": 3,
+        "legacyPnrStationsExcludedFromCurrentLayer": 3,
+        "futureNscrStationsExcludedFromCurrentLayer": 2,
+        "transportRouteAssets": 0
+      },
+      "explicitHolds": [
+        "32 DEPW bus-stop names/locations",
+        "Jeepney row 24 Washington–Mantrade exact current match",
+        "Jeepney row 29 Mantrade–Pasong Tamo Extension exact current match",
+        "Jeepney row 37 Kalayaan–PICC exact current match",
+        "Makati-specific NSCR passenger opening schedule",
+        "Route-geometry support for linear public-transport routes"
+      ]
     },
     {
       "id": "3C-4",
@@ -782,9 +811,9 @@
     }
   ],
   "immediateNext": {
-    "id": "3C-3f",
-    "title": "Close transport completeness audit",
-    "scope": "Disposition every reviewed transport family, validate current Civic Map coverage, preserve unresolved 32-stop and three jeepney-route questions, and close only to the verified current named/mappable set."
+    "id": "3H-1",
+    "title": "Define participation outcome metrics",
+    "scope": "Define metrics and publication thresholds only. Do not instrument or publish aggregates yet."
   },
   "reopenedExecutionOrder": [
     "3C-2a",
@@ -808,10 +837,10 @@
       "current": "complete"
     },
     "3C-3": {
-      "status": "in-progress",
+      "status": "complete",
       "title": "Transport completeness from Makati publications",
       "executeAfter": "reopened 3C-1 unless user reprioritizes",
-      "current": "3C-3f",
+      "current": "complete",
       "planFile": "data/wave3-civic-map-transport-plan.json",
       "reconciliationFile": "data/wave3-civic-map-transport-reconciliation.json",
       "completedSubsteps": [
@@ -821,7 +850,8 @@
         "3C-3d1",
         "3C-3d2",
         "3C-3d",
-        "3C-3e"
+        "3C-3e",
+        "3C-3f"
       ],
       "ferryImplementationFile": "data/wave3-civic-map-ferry-implementation.json",
       "busStopReconciliationFile": "data/wave3-civic-map-bus-stops-reconciliation.json",
@@ -829,7 +859,8 @@
       "jeepneyRouteReconciliationA": "data/wave3-civic-map-jeepney-routes-reconciliation-a.json",
       "jeepneyRouteReconciliationB": "data/wave3-civic-map-jeepney-routes-reconciliation-b.json",
       "jeepneyRouteReconciliationStatus": "complete",
-      "pnrNscrLifecycleFile": "data/wave3-civic-map-pnr-nscr-lifecycle.json"
+      "pnrNscrLifecycleFile": "data/wave3-civic-map-pnr-nscr-lifecycle.json",
+      "closureAuditFile": "data/wave3-civic-map-transport-completeness-audit.json"
     }
   }
 }
