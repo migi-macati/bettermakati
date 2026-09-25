@@ -467,9 +467,19 @@
     ]
   },
   "nextStep": {
-    "id": "3A-3",
-    "title": "Freeze the Wave 3 gap list and execution order",
-    "output": "Turn the classifications into a small, non-overlapping implementation backlog. Do not begin 3B implementation in the same step."
+    "id": "3B-1",
+    "title": "Complete the Participation Hub task set",
+    "output": "Make /participate a complete citywide task-led starting point using existing functional routes and handoffs only."
   },
-  "summaryNote": "Counts cover the 40 explicitly classified capabilities in workstreams 3B–3I. The separate intentionalDeferrals list also records broader scope constraints that are not all standalone capability rows."
+  "summaryNote": "Counts cover the 40 explicitly classified capabilities in workstreams 3B–3I. The separate intentionalDeferrals list also records broader scope constraints that are not all standalone capability rows.",
+  "auditPhase": {
+    "status": "complete",
+    "completedAt": "2026-09-25",
+    "steps": {
+      "3A-1": "complete",
+      "3A-2": "complete",
+      "3A-3": "complete"
+    },
+    "backlog": "data/wave3-participation-backlog.json"
+  }
 }
