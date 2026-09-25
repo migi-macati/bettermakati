@@ -461,7 +461,7 @@
         "Preserve official-city inventory provenance separately from operator/current-network verification.",
         "Add missing verified current transport assets only after the crosswalk is complete."
       ],
-      "current": "3C-3e",
+      "current": "3C-3f",
       "planFile": "data/wave3-civic-map-transport-plan.json",
       "reconciliationFile": "data/wave3-civic-map-transport-reconciliation.json",
       "completedSubsteps": [
@@ -470,7 +470,8 @@
         "3C-3c",
         "3C-3d1",
         "3C-3d2",
-        "3C-3d"
+        "3C-3d",
+        "3C-3e"
       ],
       "ferryImplementationFile": "data/wave3-civic-map-ferry-implementation.json",
       "ferryImplementationStatus": "complete",
@@ -478,7 +479,8 @@
       "busStopReconciliationStatus": "complete-headline-only-unresolved",
       "jeepneyRouteReconciliationA": "data/wave3-civic-map-jeepney-routes-reconciliation-a.json",
       "jeepneyRouteReconciliationB": "data/wave3-civic-map-jeepney-routes-reconciliation-b.json",
-      "jeepneyRouteReconciliationStatus": "complete"
+      "jeepneyRouteReconciliationStatus": "complete",
+      "pnrNscrLifecycleFile": "data/wave3-civic-map-pnr-nscr-lifecycle.json"
     },
     {
       "id": "3C-4",
@@ -780,9 +782,9 @@
     }
   ],
   "immediateNext": {
-    "id": "3C-3e",
-    "title": "Resolve PNR/NSCR lifecycle representation",
-    "scope": "Research/design only. Determine how suspended Dela Rosa, Pasay Road and EDSA PNR stations should appear, identify current/future NSCR station relationships without assuming one-to-one successors, and do not imply current PNR commuter service."
+    "id": "3C-3f",
+    "title": "Close transport completeness audit",
+    "scope": "Disposition every reviewed transport family, validate current Civic Map coverage, preserve unresolved 32-stop and three jeepney-route questions, and close only to the verified current named/mappable set."
   },
   "reopenedExecutionOrder": [
     "3C-2a",
@@ -809,7 +811,7 @@
       "status": "in-progress",
       "title": "Transport completeness from Makati publications",
       "executeAfter": "reopened 3C-1 unless user reprioritizes",
-      "current": "3C-3e",
+      "current": "3C-3f",
       "planFile": "data/wave3-civic-map-transport-plan.json",
       "reconciliationFile": "data/wave3-civic-map-transport-reconciliation.json",
       "completedSubsteps": [
@@ -818,14 +820,16 @@
         "3C-3c",
         "3C-3d1",
         "3C-3d2",
-        "3C-3d"
+        "3C-3d",
+        "3C-3e"
       ],
       "ferryImplementationFile": "data/wave3-civic-map-ferry-implementation.json",
       "busStopReconciliationFile": "data/wave3-civic-map-bus-stops-reconciliation.json",
       "busStopReconciliationStatus": "complete-headline-only-unresolved",
       "jeepneyRouteReconciliationA": "data/wave3-civic-map-jeepney-routes-reconciliation-a.json",
       "jeepneyRouteReconciliationB": "data/wave3-civic-map-jeepney-routes-reconciliation-b.json",
-      "jeepneyRouteReconciliationStatus": "complete"
+      "jeepneyRouteReconciliationStatus": "complete",
+      "pnrNscrLifecycleFile": "data/wave3-civic-map-pnr-nscr-lifecycle.json"
     }
   }
 }
