@@ -185,16 +185,18 @@
     "unresolved": "Remain visible in the audit and prevent a false completeness claim."
   },
   "immediateNext": {
-    "id": "3C-2c4",
-    "title": "Close public-park verification research",
-    "maximumScope": "Resolve only the remaining holds across batches 1–3 and freeze the implementation set. No Civic Map changes."
+    "id": "3C-2d",
+    "title": "Implement verified current public parks",
+    "maximumScope": "Implement the verified public-park set only: 12 missing assets plus Poblacion Park coordinate correction. Preserve unresolved entries in audit; no private/public-access expansion yet."
   },
   "completedSubsteps": [
     "3C-2a",
     "3C-2b",
     "3C-2c1",
     "3C-2c2",
-    "3C-2c3"
+    "3C-2c3",
+    "3C-2c4",
+    "3C-2c"
   ],
   "inventoryFile": "data/wave3-civic-map-parks-inventory.json",
   "geographyFile": "data/wave3-civic-map-parks-geography.json",
@@ -208,7 +210,8 @@
   "currentVerificationFiles": [
     "data/wave3-civic-map-parks-current-verification-1.json",
     "data/wave3-civic-map-parks-current-verification-2.json",
-    "data/wave3-civic-map-parks-current-verification-3.json"
+    "data/wave3-civic-map-parks-current-verification-3.json",
+    "data/wave3-civic-map-parks-current-verification-final.json"
   ],
   "currentVerificationSummary": {
     "researchedOlderDesEntries": 6,
@@ -216,5 +219,12 @@
     "verifiedCurrentPointPending": 1,
     "heldLineageResolution": 1,
     "unresolvedHistoricalIdentity": 1
+  },
+  "publicParkVerificationStatus": "complete",
+  "publicParkImplementationSet": {
+    "verifiedCurrent": 13,
+    "existingNeedsCorrection": 1,
+    "missingToAdd": 12,
+    "unresolvedNotImplemented": 3
   }
 }
