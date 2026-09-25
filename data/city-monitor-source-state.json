@@ -14,7 +14,13 @@
       "contentLength": 14019,
       "sha256": "8dc808b586137d72b032d81a25324d9e596e8bf4b87b2d4ee2704831f6d6e5ff",
       "lastSuccessfulHash": "8dc808b586137d72b032d81a25324d9e596e8bf4b87b2d4ee2704831f6d6e5ff",
-      "change": "reachable"
+      "change": "reachable",
+      "owner": "city-monitor",
+      "affectedPages": [
+        "/legislation",
+        "/city-monitor",
+        "/briefs"
+      ]
     },
     {
       "id": "makati-mayor-speeches",
@@ -28,7 +34,13 @@
       "contentLength": 14019,
       "sha256": "8dc808b586137d72b032d81a25324d9e596e8bf4b87b2d4ee2704831f6d6e5ff",
       "lastSuccessfulHash": "8dc808b586137d72b032d81a25324d9e596e8bf4b87b2d4ee2704831f6d6e5ff",
-      "change": "reachable"
+      "change": "reachable",
+      "owner": "city-monitor",
+      "affectedPages": [
+        "/city-monitor",
+        "/briefs",
+        "/accountability"
+      ]
     },
     {
       "id": "mymakati-broadcasts",
@@ -42,7 +54,12 @@
       "contentLength": 0,
       "sha256": "",
       "lastSuccessfulHash": "",
-      "change": "manual-review"
+      "change": "manual-review",
+      "owner": "city-monitor",
+      "affectedPages": [
+        "/city-monitor",
+        "/briefs"
+      ]
     },
     {
       "id": "makati-events",
@@ -56,7 +73,13 @@
       "contentLength": 14019,
       "sha256": "8dc808b586137d72b032d81a25324d9e596e8bf4b87b2d4ee2704831f6d6e5ff",
       "lastSuccessfulHash": "8dc808b586137d72b032d81a25324d9e596e8bf4b87b2d4ee2704831f6d6e5ff",
-      "change": "reachable"
+      "change": "reachable",
+      "owner": "city-monitor",
+      "affectedPages": [
+        "/city-monitor",
+        "/briefs",
+        "/today"
+      ]
     },
     {
       "id": "makati-news",
@@ -70,7 +93,13 @@
       "contentLength": 14019,
       "sha256": "8dc808b586137d72b032d81a25324d9e596e8bf4b87b2d4ee2704831f6d6e5ff",
       "lastSuccessfulHash": "8dc808b586137d72b032d81a25324d9e596e8bf4b87b2d4ee2704831f6d6e5ff",
-      "change": "reachable"
+      "change": "reachable",
+      "owner": "city-monitor",
+      "affectedPages": [
+        "/city-monitor",
+        "/briefs",
+        "/today"
+      ]
     },
     {
       "id": "makati-full-disclosure",
@@ -84,7 +113,13 @@
       "contentLength": 14019,
       "sha256": "8dc808b586137d72b032d81a25324d9e596e8bf4b87b2d4ee2704831f6d6e5ff",
       "lastSuccessfulHash": "8dc808b586137d72b032d81a25324d9e596e8bf4b87b2d4ee2704831f6d6e5ff",
-      "change": "new-baseline"
+      "change": "new-baseline",
+      "owner": "city-monitor",
+      "affectedPages": [
+        "/projects-budget",
+        "/accountability",
+        "/city-monitor"
+      ]
     },
     {
       "id": "philgeps",
@@ -98,7 +133,14 @@
       "contentLength": 60955,
       "sha256": "c13c9126548b7e9182bb5993b062ddc5b7ca9a46c90bc1892a68fd12af785508",
       "lastSuccessfulHash": "c13c9126548b7e9182bb5993b062ddc5b7ca9a46c90bc1892a68fd12af785508",
-      "change": "content-changed"
+      "change": "content-changed",
+      "owner": "city-monitor",
+      "affectedPages": [
+        "/projects-budget",
+        "/accountability",
+        "/city-monitor",
+        "/briefs"
+      ]
     },
     {
       "id": "makati-publications",
@@ -112,7 +154,13 @@
       "contentLength": 14019,
       "sha256": "8dc808b586137d72b032d81a25324d9e596e8bf4b87b2d4ee2704831f6d6e5ff",
       "lastSuccessfulHash": "8dc808b586137d72b032d81a25324d9e596e8bf4b87b2d4ee2704831f6d6e5ff",
-      "change": "new-baseline"
+      "change": "new-baseline",
+      "owner": "city-monitor",
+      "affectedPages": [
+        "/city-monitor",
+        "/briefs",
+        "/reports"
+      ]
     }
   ]
 }
