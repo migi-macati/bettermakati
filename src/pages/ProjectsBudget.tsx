@@ -1263,6 +1263,11 @@ export default function ProjectsBudget() {
                       <span className={gaps ? 'font-bold text-warning-800' : 'text-gray-500'}>
                         {gaps} source gap{gaps === 1 ? '' : 's'}
                       </span>
+                      {item.procurement?.evidenceCheckedOn && (
+                        <div className="mt-1 text-gray-500">
+                          Checked {item.procurement.evidenceCheckedOn}
+                        </div>
+                      )}
                     </td>
                   </tr>
                 );
