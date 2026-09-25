@@ -107,7 +107,7 @@
   {
     "path": "/projects-budget",
     "label": "Projects & budget",
-    "status": "partial",
+    "status": "reviewed",
     "reviewedAt": "2026-09-25",
     "checks": [
       "2025-adopted-vs-current-estimate",
@@ -122,11 +122,14 @@
       "special-education-fund-utilization",
       "structured-procurement",
       "audit-follow-through",
-      "trend-view"
+      "trend-view",
+      "21-procurement-evidence-checks-current",
+      "2017-2018-audit-follow-up-traced",
+      "2024-sef-compliance-source-status"
     ],
     "gaps": [
-      "Structured procurement coverage includes the public bid-result disclosures already ingested; many records still lack a separately linked contract, notice to proceed, implementation or completion source.",
-      "The 2017–2018 audit findings now have dated follow-up traces, but no official item-level COA closure table has been located for those specific recommendations; the 2024 SEF compliance report body is not currently retrievable through the public indexed download path."
+      "The 21 structured procurement records have current follow-up checks; many awards still lack a separately published contract, notice to proceed, implementation or completion source.",
+      "The 2017–2018 audit findings have dated follow-up traces, but no official item-level COA closure table has been located for those specific recommendations; the 2024 SEF compliance report body is indexed but not retrievable through the current public download path."
     ]
   },
   {
