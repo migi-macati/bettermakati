@@ -161,7 +161,23 @@
         "Transport routes/stops",
         "Long street segmentation",
         "Private establishments"
-      ]
+      ],
+      "status": "complete",
+      "completedAt": "2026-09-25",
+      "commits": [
+        "638f0be6576ef1727971091c15332743996e238a",
+        "75b788f5bc58ffef3b79cdd51d7d4cfee9e21467",
+        "f3b3e5ddad293a5255a1ecb53ba1dff9e7eec26f"
+      ],
+      "result": {
+        "addedAssets": [
+          "PSA Makati CRS Outlet",
+          "LTO Makati District Office",
+          "Securities and Exchange Commission Headquarters",
+          "Makati Central Fire Station"
+        ],
+        "totalCivicAssets": 10
+      }
     },
     {
       "id": "3C-2",
@@ -462,8 +478,8 @@
     }
   ],
   "immediateNext": {
-    "id": "3C-1",
-    "title": "Expand Civic Map government-service assets",
-    "maximumScope": "One bounded verified facility batch only. Reuse existing BetterMakati facility data where possible; no transport/street expansion yet."
+    "id": "3C-2",
+    "title": "Expand Civic Map parks and civic-space assets",
+    "maximumScope": "One bounded verified parks/civic-space batch only. No transport expansion yet."
   }
 }
