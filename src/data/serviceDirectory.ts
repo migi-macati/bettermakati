@@ -12,6 +12,28 @@ export type ServiceType =
   | 'Education'
   | 'Other';
 
+export type BetterGovListingStatus = 'listed' | 'partial' | 'missing' | 'submitted';
+
+export interface BetterGovServiceReference {
+  status: BetterGovListingStatus;
+  listingUrl?: string;
+  matchedService?: string;
+  auditedAt?: string;
+}
+
+export interface MakatiLocalContext {
+  summary?: string;
+  officeIds?: string[];
+  notes?: string[];
+}
+
+export interface NationalServiceIntegration {
+  officialActionUrl: string;
+  officialSourceUrl: string;
+  betterGov: BetterGovServiceReference;
+  makatiContext?: MakatiLocalContext;
+}
+
 export interface ServiceDirectoryItem {
   id: string;
   title: string;
@@ -24,6 +46,7 @@ export interface ServiceDirectoryItem {
   sourceUrl: string;
   keywords: string;
   featured?: boolean;
+  nationalIntegration?: NationalServiceIntegration;
 }
 
 const makatiPermits =
