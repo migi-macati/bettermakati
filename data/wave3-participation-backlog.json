@@ -281,7 +281,27 @@
         "3C-4a",
         "3C-4b"
       ],
-      "splitReason": "Implement rail/intermodal assets first; add busway stations separately after distinct mode-specific points are verified."
+      "splitReason": "Implement rail/intermodal assets first; add busway stations separately after distinct mode-specific points are verified.",
+      "status": "partial",
+      "completedSubsteps": [
+        "3C-4a"
+      ],
+      "transportBatchA": {
+        "status": "complete",
+        "completedAt": "2026-09-25",
+        "commits": [
+          "f35c6a2ca7b1c8294346990560ce44f617f5f50d",
+          "7c0e5494927149cb7f61f4a858c9af8fcbe5263c",
+          "268346ea633e3f4f53d56e8a7b5012a4c0e12bd9"
+        ],
+        "assets": [
+          "mrt3-guadalupe",
+          "mrt3-buendia",
+          "mrt3-ayala",
+          "mrt3-magallanes",
+          "one-ayala-terminal"
+        ]
+      }
     },
     {
       "id": "3H-1",
@@ -518,8 +538,8 @@
     }
   ],
   "immediateNext": {
-    "id": "3C-4a",
-    "title": "Add verified rail/intermodal transport assets",
-    "maximumScope": "Five assets only: four MRT-3 Makati stations plus One Ayala Terminal, with current coordinate verification before coding."
+    "id": "3C-4b",
+    "title": "Add EDSA Busway Makati stations",
+    "maximumScope": "Three assets only: Guadalupe, Buendia and Ayala Busway stations, after distinct platform-point verification."
   }
 }
