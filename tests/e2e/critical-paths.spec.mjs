@@ -284,6 +284,39 @@ test('city and barangay long-tail guides expose current transaction details', as
   await expect(page.getByText(/Registration with the Health Emergency & Management System/i)).toBeVisible();
 });
 
+test('remaining Makati city and barangay service guides are complete', async ({ page }) => {
+  await page.goto(baseURL + '/services/guide/delivery-vehicle-permit');
+  await expect(page.getByText(/Delivery van\/truck tax and permit fee/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/demolition-permit');
+  await expect(page.getByText(/Duly accomplished demolition-permit application form/i)).toBeVisible();
+  await expect(page.getByText(/Certified true copy of TCT/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/occupancy-permit');
+  await expect(page.getByText(/Unified Application Form for the occupancy application/i)).toBeVisible();
+  await expect(page.getByText(/Valid Barangay Clearance/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/official-address');
+  await expect(page.getByText(/Address Map Viewer/i)).toBeVisible();
+  await expect(page.getByText(/GeoAddress Cleanser/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/barangay-business-clearance');
+  await expect(page.getByText(/Proof of business address/i)).toBeVisible();
+  await expect(page.getByText(/Varies by barangay/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/barangay-indigency');
+  await expect(page.getByText(/social-welfare, medical, educational/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/barangay-solo-parent');
+  await expect(page.getByText(/Latest Barangay Certificate, original/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/barangay-residency');
+  await expect(page.getByText(/Proof of residency when the ID does not show the barangay address/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/barangay-id');
+  await expect(page.getByText(/3–5 working-day processing time/i)).toBeVisible();
+});
+
 test('Saan Ako Lalapit is task-first and service-only', async ({ page }) => {
   await page.goto(baseURL + '/community-tools/saan-ako-lalapit');
   await expect(page.getByRole('heading', { level: 1 })).toContainText('Saan Ako Lalapit?');
