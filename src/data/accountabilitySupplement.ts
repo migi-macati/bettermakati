@@ -107,6 +107,7 @@ const procurementSeeds: ProcurementSeed[] = [
     bidDate: '2025-05-14',
     sourceUrl: procurementQ22025Source,
     sourceLabel: '2025 Q2 Bid Results — Goods and Services',
+    followUpCheckedOn: '25 September 2026',
     publicEvidence: {
       label: 'Rosas ng Sampiro Festival 2025 occurrence',
       url: 'https://www.veritasph.net/tularan-ang-mahal-na-birheng-maria-paanyaya-ni-cardinal-advincula-sa-mananampalataya/',
@@ -276,6 +277,7 @@ const procurementSeeds: ProcurementSeed[] = [
     bidDate: '2024-07-08',
     sourceUrl: procurementQ32024Source,
     sourceLabel: '2024 Q3 Bid Results',
+    followUpCheckedOn: '25 September 2026',
     barangaySlug: 'poblacion',
     publicEvidence: {
       label: 'Makati first Pride event documented',
@@ -310,6 +312,7 @@ const procurementSeeds: ProcurementSeed[] = [
     bidDate: '2024-07-12',
     sourceUrl: procurementQ32024Source,
     sourceLabel: '2024 Q3 Bid Results',
+    followUpCheckedOn: '25 September 2026',
   },
   {
     id: '2024-q3-bs24-06-cons06',
