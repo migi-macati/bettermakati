@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "implementedAt": "2026-09-25",
+  "workstream": "Wave 3C-1e1 — Implement current health centers, batch A",
+  "scope": "First nine verified Makati Health Department community health-center sites only.",
+  "assets": [
+    "bangkal-health-center",
+    "carmona-health-center",
+    "guadalupe-nuevo-health-center",
+    "guadalupe-viejo-health-center",
+    "kasilawan-health-center",
+    "la-paz-health-center",
+    "olympia-health-center",
+    "palanan-health-center",
+    "pinagkaisahan-health-center"
+  ],
+  "duplicatePrevention": {
+    "blockedId": "palanan-24-7-health-center",
+    "reason": "Palanan 24/7 is represented as service metadata/aliases on the single Palanan Health Center asset."
+  },
+  "coordinateNotes": {
+    "olympia": "The verified 8674 Fortuna address is co-located in the Olympia barangay-hall civic compound; the compound building geometry is used instead of inventing a separate point.",
+    "rule": "Coordinates must come from a current named place/building or a current map point matched to the verified address; no barangay centroids."
+  },
+  "nextStep": {
+    "id": "3C-1e2",
+    "title": "Implement current health centers — batch B"
+  }
+}
