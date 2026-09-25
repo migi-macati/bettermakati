@@ -80,6 +80,11 @@ export default function CivicAsset() {
                     ? 'Pilot segment'
                     : 'Needs verification'}
               </span>
+              {asset.accessClass === 'public-access-private-managed' && (
+                <span className="rounded-full bg-secondary-50 px-2.5 py-1 text-secondary-900">
+                  Public access · privately managed
+                </span>
+              )}
             </div>
             <Heading className="mt-3">{asset.title}</Heading>
             <p className="mt-2 text-lg leading-relaxed text-gray-700">{asset.subtitle}</p>
