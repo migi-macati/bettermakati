@@ -93,6 +93,11 @@ export default function CivicAsset() {
                 Also listed as: {asset.aliases.join(' · ')}
               </p>
             )}
+            {asset.servicesAtLocation && asset.servicesAtLocation.length > 0 && (
+              <p className="mt-2 text-sm text-gray-600">
+                Services at this location: {asset.servicesAtLocation.join(' · ')}
+              </p>
+            )}
 
             <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-sm text-gray-600">
               {asset.barangay && (
