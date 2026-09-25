@@ -107,25 +107,6 @@ export default function CityMonitor() {
 
   const latestRun = runs[0];
 
-  const reviewQueue = useMemo(() => {
-    const byId = new Map<string, { id: string; label: string; url: string; stream: string; lastDetected: string; detections: number }>();
-    for (const run of runs.slice(0, 30)) {
-      for (const item of run.changed || []) {
-        const existing = byId.get(item.id);
-        if (existing) {
-          existing.detections += 1;
-        } else {
-          byId.set(item.id, {
-            ...item,
-            lastDetected: run.checkedAt,
-            detections: 1,
-          });
-        }
-      }
-    }
-    return [...byId.values()].sort((a, b) => b.lastDetected.localeCompare(a.lastDetected));
-  }, [runs]);
-
   const sourceStateById = useMemo(
     () => new Map(sourceState.sources.map(source => [source.id, source])),
     [sourceState.sources]
@@ -186,8 +167,8 @@ export default function CityMonitor() {
             <div className="mt-1 text-sm text-gray-600">historical records already indexed</div>
           </div>
           <div className="rounded-2xl border border-primary-100 bg-white p-5">
-            <div className="text-3xl font-extrabold text-gray-950">{reviewQueue.length}</div>
-            <div className="mt-1 text-sm text-gray-600">source-change items awaiting review</div>
+            <div className="text-3xl font-extrabold text-gray-950">{latestRun?.changed.length ?? 0}</div>
+            <div className="mt-1 text-sm text-gray-600">latest change signals</div>
           </div>
         </div>
 
@@ -280,39 +261,14 @@ export default function CityMonitor() {
         )}
 
         <div className="mt-8 rounded-2xl border border-gray-200 bg-white p-6">
-          <div className="section-eyebrow">Editorial review queue</div>
-          <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-            <div>
-              <h3 className="text-xl font-extrabold text-gray-950">Source changes awaiting review</h3>
-            </div>
-            <div className="text-sm font-bold text-primary-800">{reviewQueue.length} open source{reviewQueue.length === 1 ? '' : 's'}</div>
-          </div>
-
-          {reviewQueue.length > 0 ? (
-            <div className="mt-5 space-y-3">
-              {reviewQueue.map(item => (
-                <a
-                  key={item.id}
-                  href={item.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex flex-col gap-2 rounded-xl border border-secondary-200 bg-secondary-50 p-4 sm:flex-row sm:items-start sm:justify-between"
-                >
-                  <div>
-                    <div className="font-extrabold text-gray-950">{item.label}</div>
-                    <div className="mt-1 text-xs text-gray-600">{item.stream} · detected {item.detections} time{item.detections === 1 ? '' : 's'} in the last 30 runs</div>
-                  </div>
-                  <div className="shrink-0 text-xs font-bold text-secondary-900">
-                    Last detected {new Date(item.lastDetected).toLocaleString('en-PH')}
-                  </div>
-                </a>
-              ))}
-            </div>
-          ) : (
-            <div className="mt-5 rounded-xl border border-gray-200 bg-[#fffdf8] p-4 text-sm text-gray-600">
-              No content-change signal is currently waiting in the published review queue.
-            </div>
-          )}
+          <div className="section-eyebrow">Editorial review</div>
+          <h3 className="mt-1 text-xl font-extrabold text-gray-950">Freshness review queue</h3>
+          <p className="mt-2 text-sm text-gray-600">
+            Source-change, failed-check and manual-review items are handled in one queue.
+          </p>
+          <Link to="/records#freshness-review-queue" className="brand-btn-primary mt-5">
+            Open review queue <ArrowRight className="h-4 w-4" />
+          </Link>
         </div>
       </Section>
 
