@@ -1,0 +1,269 @@
+{
+  "schemaVersion": 1,
+  "auditedAt": "2026-09-25",
+  "workstream": "Wave 2.4A — Source Freshness Automation inventory",
+  "scope": "Inventory only. No automation cadence, ownership, commit, or editorial behavior changed in this step.",
+  "systems": [
+    {
+      "id": "general-source-freshness",
+      "owner": "General public sources used across BetterMakati",
+      "config": "data/source-watchlist.json",
+      "checker": "scripts/check-sources.mjs",
+      "workflow": ".github/workflows/source-freshness.yml",
+      "sourceCount": 112,
+      "cadenceCounts": {
+        "daily": 17,
+        "weekly": 78,
+        "monthly": 17
+      },
+      "monitoringModes": {
+        "reachability": 72,
+        "content-hash": 40
+      },
+      "schedulesManila": [
+        "08:30 daily — daily sources",
+        "08:40 Monday — weekly sources",
+        "08:50 first day of month — monthly sources"
+      ],
+      "writes": [
+        "data/source-watch-state.json",
+        "data/source-watch-history.json",
+        "data/source-watch-report.md"
+      ],
+      "reviewBehavior": "Changed stable documents and failed checks open/update the Source freshness review queue issue.",
+      "commitBehavior": "Workflow commits generated freshness state/history/report to main whenever they differ.",
+      "buildBehavior": "Runs npm run build before publishing state.",
+      "operationalState": {
+        "committedCheckedAt": null,
+        "committedHistoryRuns": 0,
+        "status": "configured-but-no-committed-baseline-run"
+      }
+    },
+    {
+      "id": "city-monitor",
+      "owner": "High-value Makati civic activity discovery channels",
+      "config": "data/city-monitor-sources.json",
+      "checker": "scripts/check-city-monitor.mjs",
+      "workflow": ".github/workflows/daily-city-monitor.yml",
+      "sourceCount": 8,
+      "monitoringModes": {
+        "reachability": 6,
+        "content-hash": 1,
+        "manual-review": 1
+      },
+      "schedulesManila": [
+        "08:30 daily"
+      ],
+      "writes": [
+        "data/city-monitor-source-state.json",
+        "data/city-monitor-source-history.json",
+        "data/city-monitor-report.md"
+      ],
+      "commitBehavior": "Workflow commits generated monitor state/history/report to main whenever they differ.",
+      "buildBehavior": "Runs npm run build before publishing state.",
+      "operationalState": {
+        "committedCheckedAt": "2026-09-25T00:43:52.454Z",
+        "committedHistoryRuns": 2,
+        "latestRun": {
+          "automaticChecks": 7,
+          "failed": 0,
+          "changed": [
+            "philgeps"
+          ],
+          "manualReview": [
+            "mymakati-broadcasts"
+          ]
+        },
+        "status": "operational"
+      }
+    },
+    {
+      "id": "external-link-integrity",
+      "owner": "Outbound URL reachability, with a critical BetterGov/BetterLGU ecosystem subset",
+      "config": "data/ecosystem-link-watch.json plus URLs discovered under src/content/data",
+      "checker": "scripts/check-links.mjs",
+      "workflow": ".github/workflows/external-link-check.yml",
+      "criticalEcosystemLinks": 17,
+      "schedulesManila": [
+        "09:30 Monday"
+      ],
+      "writes": [],
+      "commitBehavior": "No repository write or main-branch commit.",
+      "buildBehavior": "Does not build the site.",
+      "status": "configured"
+    },
+    {
+      "id": "page-freshness",
+      "owner": "Editorial review age and declared page completeness",
+      "config": "data/page-audit.json",
+      "checker": "scripts/audit-page-freshness.mjs",
+      "workflow": "Runs inside npm quality/build; no dedicated scheduled workflow",
+      "pageCount": 21,
+      "statuses": {
+        "reviewed": 12,
+        "partial": 9
+      },
+      "currentRule": "Every audited page must have reviewedAt and remain no more than 120 days old.",
+      "writes": [],
+      "commitBehavior": "No automatic write.",
+      "limitation": "Review age is independent of watched-source changes; a source may change without marking affected pages for review."
+    },
+    {
+      "id": "civic-briefs",
+      "owner": "Published daily, weekly and monthly civic brief snapshots",
+      "config": "data/civic-briefs.json",
+      "checker": "scripts/generate-civic-brief.mjs",
+      "workflow": ".github/workflows/civic-briefs.yml",
+      "schedulesManila": [
+        "09:05 daily",
+        "09:10 Monday — weekly brief",
+        "09:15 first day of month — monthly brief"
+      ],
+      "writes": [
+        "data/civic-briefs.json"
+      ],
+      "commitBehavior": "Commits a brief snapshot to main when generated output differs.",
+      "buildBehavior": "Runs npm run build before commit.",
+      "note": "A rerun replaces the same brief id with a new publishedAt timestamp, so a rerun can still produce a repository change."
+    },
+    {
+      "id": "weekly-news-snapshot",
+      "owner": "Fallback Makati Google News snapshot",
+      "config": "src/data/newsSnapshot.ts",
+      "checker": "scripts/update-news-snapshot.mjs",
+      "workflow": ".github/workflows/weekly-content-refresh.yml",
+      "schedulesManila": [
+        "09:00 Monday"
+      ],
+      "writes": [
+        "src/data/newsSnapshot.ts"
+      ],
+      "commitBehavior": "Opens/updates a reviewable pull request instead of directly committing generated news to main.",
+      "buildBehavior": "Runs npm run build before opening/updating the PR."
+    }
+  ],
+  "overlaps": {
+    "generalSourceFreshnessVsCityMonitor": [
+      {
+        "id": "makati-news",
+        "url": "https://www.makati.gov.ph/content/news",
+        "generalMode": "reachability",
+        "cityMonitorMode": "reachability"
+      },
+      {
+        "id": "makati-events",
+        "url": "https://www.makati.gov.ph/content/events",
+        "generalMode": "reachability",
+        "cityMonitorMode": "reachability"
+      },
+      {
+        "id": "makati-legislation",
+        "url": "https://www.makati.gov.ph/content/resolutions-and-ordinances/author",
+        "generalMode": "reachability",
+        "cityMonitorMode": "reachability"
+      },
+      {
+        "id": "philgeps",
+        "url": "https://notices.philgeps.gov.ph/",
+        "generalMode": "reachability",
+        "cityMonitorMode": "content-hash",
+        "note": "Same source is monitored with different semantics."
+      }
+    ],
+    "generalSourceFreshnessVsExternalLinkIntegrity": [
+      {
+        "id": "bettergov-transparency-procurement",
+        "url": "https://transparency.bettergov.ph/procurement",
+        "generalPurpose": "dependency/source freshness reachability",
+        "externalLinkPurpose": "critical outbound-link integrity"
+      }
+    ],
+    "scheduleCollisions": [
+      {
+        "timeManila": "08:30 daily",
+        "workflows": [
+          "Source freshness monitor — daily cadence",
+          "Daily City Monitor"
+        ],
+        "risk": "Both can rewrite generated state and commit to main."
+      },
+      {
+        "windowManila": "09:00–09:30 Monday",
+        "workflows": [
+          "Weekly news snapshot — 09:00",
+          "Civic Brief daily — 09:05",
+          "Civic Brief weekly — 09:10",
+          "External link integrity — 09:30"
+        ],
+        "risk": "Multiple build/check/commit-or-PR jobs are clustered within 30 minutes."
+      },
+      {
+        "condition": "Monday that is also the first day of a month",
+        "workflows": [
+          "Source freshness daily — 08:30",
+          "Source freshness weekly — 08:40",
+          "Source freshness monthly — 08:50",
+          "Weekly news snapshot — 09:00",
+          "Civic Brief daily — 09:05",
+          "Civic Brief weekly — 09:10",
+          "Civic Brief monthly — 09:15",
+          "External link integrity — 09:30"
+        ],
+        "risk": "Maximum automation burst and highest chance of concurrent main-branch churn."
+      }
+    ]
+  },
+  "deploymentChurn": {
+    "finding": "General Source Freshness and City Monitor include run timestamps/history on every execution. Their workflows commit generated files whenever changed, so an unchanged source check can still create a new main-branch commit.",
+    "consequence": "Every automation commit to main can trigger another Vercel deployment, contributing to build-rate pressure even when public site content did not substantively change.",
+    "affectedSystems": [
+      "general-source-freshness",
+      "city-monitor"
+    ],
+    "civicBriefNote": "Civic Brief publication is intentionally content-producing, but repeated runs can also change publishedAt."
+  },
+  "editorialBlindSpots": [
+    "Source-change review queues identify changed/failed sources but do not identify which BetterMakati pages depend on each source.",
+    "Page freshness is based on review age, not source dependencies.",
+    "General Source Freshness and City Monitor duplicate four URLs, creating duplicate checks and potentially duplicate signals.",
+    "The PhilGEPS overlap uses different monitoring modes, so ownership and semantics need to be explicit before deduplication.",
+    "The LastReviewed component has a static fallback date; later page-freshness work should ensure missing explicit dates cannot silently look reviewed."
+  ],
+  "nextSteps": [
+    {
+      "id": "2.4B",
+      "title": "Remove automation collisions",
+      "objective": "Stagger or consolidate schedules and stop no-op generated-state commits from causing unnecessary main-branch deployments."
+    },
+    {
+      "id": "2.4C",
+      "title": "Define source ownership",
+      "objective": "Assign one authoritative freshness owner per source/purpose while preserving genuinely different monitoring semantics."
+    },
+    {
+      "id": "2.4D",
+      "title": "Map sources to affected pages",
+      "objective": "Make changed/failed sources identify the BetterMakati pages and records requiring editorial review."
+    },
+    {
+      "id": "2.4E",
+      "title": "Consolidate the review queue",
+      "objective": "Present source, signal, affected page, last successful check and required editorial action in one actionable queue."
+    },
+    {
+      "id": "2.4F",
+      "title": "Make page freshness dependency-aware",
+      "objective": "Retain human reviewedAt dates while marking pages for review when relevant dependencies change."
+    },
+    {
+      "id": "2.4G",
+      "title": "Integrate status and history",
+      "objective": "Expose consolidated freshness health to Status/Public Records without architecture-heavy UI copy."
+    },
+    {
+      "id": "2.4H",
+      "title": "Harden automation",
+      "objective": "Test concurrency, retries, rebases, duplicate issues, recovery and no-op behavior; then protect the architecture with audits."
+    }
+  ]
+}
