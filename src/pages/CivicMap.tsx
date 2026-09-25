@@ -241,6 +241,11 @@ export default function CivicMap() {
                   <span className={asset.status === 'mapped' ? 'text-success-700' : 'text-secondary-800'}>
                     {asset.status === 'mapped' ? 'Mapped' : asset.status === 'pilot' ? 'Pilot segment' : 'Needs verification'}
                   </span>
+                  {asset.accessClass === 'public-access-private-managed' && (
+                    <span className="rounded-full bg-secondary-50 px-2.5 py-1 text-secondary-900">
+                      Public access · privately managed
+                    </span>
+                  )}
                 </div>
                 <h3 className="mt-3 text-lg font-extrabold text-gray-950">{asset.title}</h3>
                 <p className="mt-1 text-sm text-gray-600">{asset.subtitle}</p>
