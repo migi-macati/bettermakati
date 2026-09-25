@@ -1952,6 +1952,17 @@ export const serviceDirectory: ServiceDirectoryItem[] = [
     href: 'https://ncroffice.doh.gov.ph/RLED',
     sourceUrl: 'https://ncroffice.doh.gov.ph/RLED',
     keywords: 'doh licensed hospital laboratory primary care facility clinic makati ncr verify',
+    nationalIntegration: {
+      officialActionUrl: 'https://ncroffice.doh.gov.ph/RLED',
+      officialSourceUrl: 'https://ncroffice.doh.gov.ph/RLED',
+      betterGov: {
+        status: 'missing',
+        auditedAt: '2026-09-25',
+      },
+      makatiContext: {
+        officeIds: ['doh-mmchd'],
+      },
+    },
   },
   {
     id: 'doh-health-facility-licensing',
@@ -1964,6 +1975,17 @@ export const serviceDirectory: ServiceDirectoryItem[] = [
     href: 'https://ncroffice.doh.gov.ph/CitizensCharter',
     sourceUrl: 'https://ncroffice.doh.gov.ph/CitizensCharter',
     keywords: 'doh licensing health facility hospital laboratory clinic regulatory permit ncr',
+    nationalIntegration: {
+      officialActionUrl: 'https://ncroffice.doh.gov.ph/CitizensCharter',
+      officialSourceUrl: 'https://ncroffice.doh.gov.ph/CitizensCharter',
+      betterGov: {
+        status: 'missing',
+        auditedAt: '2026-09-25',
+      },
+      makatiContext: {
+        officeIds: ['doh-mmchd'],
+      },
+    },
   },
 
   {
@@ -2004,6 +2026,17 @@ export const serviceDirectory: ServiceDirectoryItem[] = [
     href: 'https://clients.ncr.dole.gov.ph/',
     sourceUrl: 'https://ncr.dole.gov.ph/contact/',
     keywords: 'dole complaint labor standards wage working conditions employment makati',
+    nationalIntegration: {
+      officialActionUrl: 'https://clients.ncr.dole.gov.ph/',
+      officialSourceUrl: 'https://ncr.dole.gov.ph/contact/',
+      betterGov: {
+        status: 'missing',
+        auditedAt: '2026-09-25',
+      },
+      makatiContext: {
+        officeIds: ['dole-makati-pasay'],
+      },
+    },
   },
   {
     id: 'dole-cshp',
@@ -2016,6 +2049,17 @@ export const serviceDirectory: ServiceDirectoryItem[] = [
     href: 'https://ncr.dole.gov.ph/',
     sourceUrl: 'https://ncr.dole.gov.ph/news/cshp-applications-at-dole-ncr-field-offices-effective-13-april-2023/',
     keywords: 'dole cshp construction safety health program makati project contractor',
+    nationalIntegration: {
+      officialActionUrl: 'https://ncr.dole.gov.ph/',
+      officialSourceUrl: 'https://ncr.dole.gov.ph/news/cshp-applications-at-dole-ncr-field-offices-effective-13-april-2023/',
+      betterGov: {
+        status: 'missing',
+        auditedAt: '2026-09-25',
+      },
+      makatiContext: {
+        officeIds: ['dole-makati-pasay'],
+      },
+    },
   },
   {
     id: 'dti-negosyo-center',

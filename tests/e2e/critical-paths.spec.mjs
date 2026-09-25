@@ -1197,3 +1197,33 @@ test('national service handoff batch C1 covers BIR, DTI and SEC', async ({ page 
   await page.goto(baseURL + '/services/guide/sec-company-records');
   await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toBeVisible();
 });
+
+test('national service handoff batch C2 covers DOLE and DOH NCR', async ({ page }) => {
+  await page.goto(baseURL + '/services/guide/dole-labor-assistance');
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://clients.ncr.dole.gov.ph/'
+  );
+  await expect(page.getByText('DOLE NCR Makati–Pasay Field Office', { exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toHaveCount(0);
+
+  await page.goto(baseURL + '/services/guide/dole-cshp');
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://ncr.dole.gov.ph/'
+  );
+
+  await page.goto(baseURL + '/services/guide/doh-licensed-facility-check');
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://ncroffice.doh.gov.ph/RLED'
+  );
+  await expect(page.getByText('DOH Metro Manila Center for Health Development', { exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toHaveCount(0);
+
+  await page.goto(baseURL + '/services/guide/doh-health-facility-licensing');
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://ncroffice.doh.gov.ph/CitizensCharter'
+  );
+});
