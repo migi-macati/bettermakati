@@ -101,6 +101,24 @@ for (const source of config.sources) {
   );
 }
 
+const semanticStateChanged = result => {
+  const old = previousById.get(result.id);
+  if (!old) return true;
+  if (old.status !== result.status) return true;
+  if ((old.statusCode ?? null) !== (result.statusCode ?? null)) return true;
+  if ((old.error || '') !== (result.error || '')) return true;
+  if (
+    result.monitoringMode === 'content-hash' &&
+    (old.lastSuccessfulHash || old.sha256 || '') !==
+      (result.lastSuccessfulHash || result.sha256 || '')
+  ) {
+    return true;
+  }
+  return false;
+};
+
+const publishRequired = results.some(semanticStateChanged);
+
 const checkedAt = new Date().toISOString();
 const run = {
   checkedAt,
@@ -126,7 +144,7 @@ history.runs = [run, ...(Array.isArray(history.runs) ? history.runs : [])].slice
 
 await writeFile(
   'data/city-monitor-source-state.json',
-  JSON.stringify({ version: 2, checkedAt, sources: results }, null, 2) + '\n'
+  JSON.stringify({ version: 2, checkedAt, publishRequired, sources: results }, null, 2) + '\n'
 );
 await writeFile(
   'data/city-monitor-source-history.json',
@@ -159,3 +177,5 @@ const report = [
 ].join('\n');
 
 await writeFile('data/city-monitor-report.md', report);
+
+console.log('City Monitor publish required: ' + publishRequired);
