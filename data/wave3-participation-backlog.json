@@ -100,6 +100,14 @@
       "stopWhen": "Strong duplicates reuse an existing issue; unrelated submissions still create a new one.",
       "excludes": [
         "Do not merge /api/feedback with /api/civic."
+      ],
+      "status": "complete",
+      "completedAt": "2026-09-25",
+      "commits": [
+        "cce661ef40ad4efdb5599e31709b94f44bc4b540",
+        "6a4af1fc0a34554448608ddae8b6de8c389f34f0",
+        "1009040cac6bb321473d06899e23af7bdfa663fd",
+        "368bf9433638617905daf0c504d793a85d0d83fc"
       ]
     },
     {
@@ -448,8 +456,8 @@
     }
   ],
   "immediateNext": {
-    "id": "3E-1",
-    "title": "Add general-feedback duplicate detection",
-    "maximumScope": "api/feedback.js plus one focused regression test. No Civic Map changes."
+    "id": "3E-2",
+    "title": "Clarify duplicate-result UX",
+    "maximumScope": "Get Involved duplicate-response messaging only. No backend or Civic Map changes."
   }
 }
