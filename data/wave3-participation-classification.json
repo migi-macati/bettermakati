@@ -10,10 +10,10 @@
     "intentionallyDeferred": "The capability is deliberately not automated or expanded until reliable data, volume, authority, or governance exists."
   },
   "summary": {
-    "complete": 20,
-    "partial": 10,
-    "missing": 4,
-    "intentionallyDeferred": 4
+    "complete": 25,
+    "partial": 8,
+    "missing": 5,
+    "intentionallyDeferred": 2
   },
   "workstreams": [
     {
@@ -470,5 +470,6 @@
     "id": "3A-3",
     "title": "Freeze the Wave 3 gap list and execution order",
     "output": "Turn the classifications into a small, non-overlapping implementation backlog. Do not begin 3B implementation in the same step."
-  }
+  },
+  "summaryNote": "Counts cover the 40 explicitly classified capabilities in workstreams 3B–3I. The separate intentionalDeferrals list also records broader scope constraints that are not all standalone capability rows."
 }
