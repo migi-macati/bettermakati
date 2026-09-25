@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "revisedAt": "2026-09-25",
+  "workstream": "Wave 3C-1 — Public infrastructure/facility completeness from Makati publications",
+  "status": "in-progress",
+  "reason": "The original 3C-1 added four readily verifiable government-service assets but did not inventory Makati's own published public-facility network.",
+  "countingRule": {
+    "makatiLguCompleteness": "Count verified public-facing Makati LGU/protective/community facilities against source-backed Makati facility families.",
+    "nationalGovernmentServices": "Track separately as supplemental services; never use them to inflate Makati-LGU completeness.",
+    "formerMakati": "Preserve for provenance but exclude from current Makati.",
+    "unresolved": "Do not implement speculative current pins.",
+    "coLocatedCounters": "Do not create separate assets for every department or counter within the same public building unless it functions as a distinct destination."
+  },
+  "completedSubsteps": [
+    "3C-1a"
+  ],
+  "substeps": [
+    {
+      "id": "3C-1a",
+      "title": "Reconcile official Makati facility inventories",
+      "status": "complete",
+      "output": "data/wave3-civic-map-facilities-inventory.json",
+      "implementation": false
+    },
+    {
+      "id": "3C-1b",
+      "title": "Verify current public health facilities",
+      "implementation": false,
+      "maximumScope": "The 18 health-center baseline plus the separately counted 24/7 health center. Verify current name, address, barangay, continuity and coordinate provenance; do not add assets yet."
+    },
+    {
+      "id": "3C-1c",
+      "title": "Verify current protective-service facilities",
+      "implementation": false,
+      "maximumScope": "11 fire stations and 8 police facilities. Reconcile post-transfer station identity/numbering and current locations. MAPSA/Bantay Bayan outposts remain a later decision within this step if a reliable named inventory exists."
+    },
+    {
+      "id": "3C-1d",
+      "title": "Reconcile community, social-welfare and city-owned facilities",
+      "implementation": false,
+      "maximumScope": "Day-care/child-minding network, Social Development Center, Makati Youth Home, Youth Center, Senior Citizen Center, Poblacion Public Market and citywide civic anchors. Resolve the 2020 named list against 2023 current counts."
+    },
+    {
+      "id": "3C-1e",
+      "title": "Implement verified health and protective-service facilities",
+      "implementation": true,
+      "splitRule": "Implement in bounded source-coherent batches; health, fire and police should not be one giant commit."
+    },
+    {
+      "id": "3C-1f",
+      "title": "Implement verified community/social/city-owned facilities",
+      "implementation": true,
+      "splitRule": "Only source-backed current public-facing destinations; no speculative day-care or outpost pins."
+    },
+    {
+      "id": "3C-1g",
+      "title": "Close facility completeness audit",
+      "implementation": true,
+      "stopWhen": "Every official named facility in the reviewed families has a current, former-Makati, merged/co-located, deferred or unresolved disposition and integrity guards protect the verified current set."
+    }
+  ],
+  "preliminaryAssetsRetained": [
+    "makati-city-hall",
+    "museo-ng-makati",
+    "psa-makati-crs",
+    "lto-makati-district",
+    "sec-headquarters",
+    "makati-central-fire-station"
+  ],
+  "inventoryFile": "data/wave3-civic-map-facilities-inventory.json",
+  "immediateNext": {
+    "id": "3C-1b",
+    "title": "Verify current public health facilities",
+    "maximumScope": "18 current Makati health centers + separately counted 24/7 health center, research/reconciliation only. No Civic Map additions."
+  }
+}
