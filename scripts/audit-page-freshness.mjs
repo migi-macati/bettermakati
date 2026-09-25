@@ -15,7 +15,8 @@ const problems = [];
 if (
   freshness.version !== 1 ||
   !freshness.summary ||
-  !Array.isArray(freshness.pages)
+  !Array.isArray(freshness.pages) ||
+  !Array.isArray(freshness.untrackedAffectedPages)
 ) {
   problems.push(
     'Page freshness state must use version 1 with summary and pages.'
@@ -49,6 +50,36 @@ for (const item of openQueueItems) {
     const signals = expectedSignalsByPage.get(page) || [];
     signals.push(item);
     expectedSignalsByPage.set(page, signals);
+  }
+}
+
+const auditPaths = new Set(audit.map(page => page.path));
+const expectedUntracked = [...expectedSignalsByPage.keys()]
+  .filter(path => !auditPaths.has(path))
+  .sort();
+const actualUntracked = freshness.untrackedAffectedPages
+  .map(page => page.path)
+  .sort();
+
+if (
+  expectedUntracked.length !== actualUntracked.length ||
+  expectedUntracked.some((path, index) => path !== actualUntracked[index])
+) {
+  problems.push(
+    'Untracked affected pages do not match open dependency signals outside page-audit.json.'
+  );
+}
+for (const page of freshness.untrackedAffectedPages) {
+  if (
+    page.reviewedAt !== null ||
+    page.editorialStatus !== null ||
+    page.needsReview !== true ||
+    page.freshnessStatus !== 'needs-review-untracked'
+  ) {
+    problems.push(
+      'Untracked affected page must remain visibly unaudited and need review: ' +
+        page.path
+    );
   }
 }
 
@@ -143,6 +174,12 @@ if (freshness.summary.needsReview !== derivedNeedsReview) {
 if (freshness.summary.current !== audit.length - derivedNeedsReview) {
   problems.push('Page freshness summary current count is incorrect.');
 }
+if (
+  freshness.summary.untrackedAffectedPages !==
+  freshness.untrackedAffectedPages.length
+) {
+  problems.push('Page freshness summary untrackedAffectedPages count is incorrect.');
+}
 
 if (problems.length) {
   console.error(problems.join('\n'));
@@ -151,5 +188,5 @@ if (problems.length) {
 
 const partial = audit.filter(page => page.status === 'partial').length;
 console.log(
-  `Page-freshness audit passed: ${audit.length} major pages reviewed; ${partial} publish known completeness gaps; ${derivedNeedsReview} need dependency review without changing human reviewedAt dates.`
+  `Page-freshness audit passed: ${audit.length} major pages reviewed; ${partial} publish known completeness gaps; ${derivedNeedsReview} need dependency review without changing human reviewedAt dates; ${freshness.untrackedAffectedPages.length} affected pages are outside the current human audit.`
 );
