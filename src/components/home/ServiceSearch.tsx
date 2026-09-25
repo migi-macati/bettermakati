@@ -421,7 +421,7 @@ export default function ServiceSearch({
                     href={'https://bettergov.ph/services?search=' + encodeURIComponent(query)}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-sm font-bold text-primary-700 underline underline-offset-2"
+                    className="inline-flex min-h-11 items-center text-sm font-bold text-primary-700 underline underline-offset-2"
                   >
                     Search BetterGov
                   </a>
@@ -429,7 +429,7 @@ export default function ServiceSearch({
                     href="https://lgu.bettergov.ph/"
                     target="_blank"
                     rel="noreferrer"
-                    className="text-sm font-bold text-primary-700 underline underline-offset-2"
+                    className="inline-flex min-h-11 items-center text-sm font-bold text-primary-700 underline underline-offset-2"
                   >
                     Find another LGU
                   </a>
@@ -442,7 +442,7 @@ export default function ServiceSearch({
                           '#submission'
                       )
                     }
-                    className="text-sm font-bold text-primary-700 underline underline-offset-2"
+                    className="inline-flex min-h-11 items-center text-sm font-bold text-primary-700 underline underline-offset-2"
                   >
                     Report a missing result
                   </button>
