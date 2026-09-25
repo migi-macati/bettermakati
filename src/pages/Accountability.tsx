@@ -383,7 +383,7 @@ export default function Accountability() {
               Transparency records <ExternalLink className="h-3.5 w-3.5" />
             </a>
             <a
-              href="https://philgeps.bettergov.ph/"
+              href="https://transparency.bettergov.ph/procurement"
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-1 text-primary-700 underline underline-offset-2"
