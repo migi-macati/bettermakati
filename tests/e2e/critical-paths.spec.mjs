@@ -803,6 +803,23 @@ test('barangay homepages show locally published service details without replacin
   await expect(page.getByRole('heading', { name: 'Barangay services portal', exact: true })).toBeVisible();
 });
 
+test('barangay health services expand local service coverage', async ({ page }) => {
+  await page.goto(baseURL + '/barangays/bangkal');
+  await expect(page.getByRole('heading', { name: /Bangkal Health Center — PhilHealth YAKAP clinic/i })).toBeVisible();
+
+  await page.goto(baseURL + '/barangays/san-antonio');
+  await expect(page.getByRole('heading', { name: /San Antonio Health Center — PhilHealth YAKAP clinic/i })).toBeVisible();
+
+  await page.goto(baseURL + '/barangays/palanan');
+  await expect(page.getByRole('heading', { name: 'Animal Bite Treatment Center', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'TB-DOTS services', exact: true })).toBeVisible();
+
+  await page.goto(baseURL + '/barangays/tejeros');
+  await expect(page.getByRole('heading', { name: 'Tejeros Health Center primary care', exact: true })).toBeVisible();
+  await expect(page.getByText('Monday–Friday · 8:00 AM–5:00 PM', { exact: true })).toBeVisible();
+  await expect(page.getByText(/family planning, vaccination, dental care/i)).toBeVisible();
+});
+
 test('barangay gateway search finds a barangay through an official name', async ({ page }) => {
   await page.goto(baseURL + '/barangays');
   await page.getByPlaceholder(/Search barangay, official or local place/i).fill('Jose Mikhail');
