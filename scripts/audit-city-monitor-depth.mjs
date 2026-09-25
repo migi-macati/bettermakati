@@ -96,6 +96,7 @@ for (const marker of [
   "change: 'manual-review'",
   "'data/city-monitor-source-state.json'",
   "'data/city-monitor-source-history.json'",
+  "const publishRequired = results.some(semanticStateChanged)",
   'A changed source hash is only a detection signal.',
 ]) {
   if (!checker.includes(marker)) {
@@ -122,6 +123,9 @@ if (!workflow.includes("cron: '30 0 * * *'")) {
 }
 if (!workflow.includes('npm run check:city-monitor')) {
   problems.push('Daily City Monitor workflow no longer runs the source checker.');
+}
+if (!workflow.includes("if: steps.publish.outputs.publish_required == 'true'")) {
+  problems.push('Daily City Monitor workflow no longer suppresses no-op build/publish runs.');
 }
 
 if (!monitor.includes("export const cityMonitorReviewed = '24 September 2026';")) {
