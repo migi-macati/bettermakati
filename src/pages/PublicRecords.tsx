@@ -163,7 +163,7 @@ export default function PublicRecords() {
       return 'Latest check failed' + (state.statusCode ? ' (' + state.statusCode + ')' : '');
     }
     if (!state.lastCheckedAt) return 'Reachable';
-    return 'Last checked ' + new Date(state.lastCheckedAt).toLocaleString('en-PH');
+    return 'Last published check ' + new Date(state.lastCheckedAt).toLocaleString('en-PH');
   };
 
   const visibleRecords = useMemo(() => {
@@ -480,8 +480,8 @@ export default function PublicRecords() {
           </div>
           <div className="mt-4 border-t border-primary-100 pt-4 text-xs leading-relaxed text-gray-600">
             {watchState.checkedAt
-              ? 'Latest automation run: ' + new Date(watchState.checkedAt).toLocaleString('en-PH') + ' · ' + (watchState.cadence || 'all') + ' cadence.'
-              : 'Automation is configured; the first scheduled freshness run has not yet been published.'}
+              ? 'Latest published check: ' + new Date(watchState.checkedAt).toLocaleString('en-PH') + ' · ' + (watchState.cadence || 'all') + ' cadence.'
+              : 'Automation is configured; the first publishable freshness state has not yet been released.'}
           </div>
         </div>
 
