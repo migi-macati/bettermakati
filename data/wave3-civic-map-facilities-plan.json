@@ -20,7 +20,8 @@
     "3C-1e2",
     "3C-1e3",
     "3C-1e4",
-    "3C-1e"
+    "3C-1e",
+    "3C-1f1"
   ],
   "substeps": [
     {
@@ -89,9 +90,9 @@
   ],
   "inventoryFile": "data/wave3-civic-map-facilities-inventory.json",
   "immediateNext": {
-    "id": "3C-1f1",
-    "title": "Implement core social and city-owned facilities",
-    "maximumScope": "Makati Social Development Center, Makati Youth Home, Makati Youth Center, SM Felicidad Sy Center for the Elderly, and Poblacion Public Market only. Freeze exact current points; no day-care/barangay-hall assets yet."
+    "id": "3C-1f2",
+    "title": "Implement co-location-aware day-care and child-minding coverage",
+    "maximumScope": "22 current day-care centers + 1 current child-minding center. Reconcile each against host barangay/community buildings first, then add only distinct useful assets. No unrelated facility families."
   },
   "healthCenterVerificationStatus": "complete",
   "healthCenterVerificationFile": "data/wave3-civic-map-health-centers-verification.json",
@@ -154,5 +155,15 @@
     "substations": 7,
     "transferredExcluded": 2
   },
-  "protectiveAndHealthImplementationStatus": "complete"
+  "protectiveAndHealthImplementationStatus": "complete",
+  "communityCoreImplementationStatus": "complete",
+  "communityCoreImplementationFile": "data/wave3-civic-map-community-core-implementation.json",
+  "communityCoreImplementationSummary": {
+    "socialDevelopmentCenter": 1,
+    "youthHome": 1,
+    "youthCenter": 1,
+    "seniorCitizenCenter": 1,
+    "publicMarket": 1,
+    "total": 5
+  }
 }
