@@ -285,9 +285,9 @@
   },
   "conclusion": "The transport expansion should begin with four official MRT-3 Makati stations plus One Ayala Terminal. EDSA Busway Guadalupe, Buendia and Ayala are also verified current assets, but should be implemented separately after precise mode-specific points are checked. Route objects remain deferred until Civic Map supports route geometry.",
   "nextStep": {
-    "id": "3C-4b",
-    "title": "Add EDSA Busway Makati stations",
-    "scope": "Verify distinct platform points for Guadalupe, Buendia and Ayala and add only those three assets."
+    "id": "3H-1",
+    "title": "Define participation outcome metrics",
+    "scope": "Define metrics and publication thresholds only. Do not instrument or publish aggregates yet."
   },
   "implementationStatus": {
     "3C-4a": {
@@ -322,6 +322,45 @@
         }
       ],
       "provenance": "Service identity verified from DOTr MRT-3 / Ayala Land; point geometry cross-checked against current OpenStreetMap-derived station/terminal geometry."
+    },
+    "3C-4b": {
+      "status": "complete",
+      "completedAt": "2026-09-25",
+      "assets": [
+        {
+          "id": "edsa-busway-guadalupe",
+          "lat": 14.56824,
+          "lng": 121.04591,
+          "note": "Mapped platform lies at the Makati–Mandaluyong boundary; no Makati barangay tag forced."
+        },
+        {
+          "id": "edsa-busway-buendia",
+          "lat": 14.55506,
+          "lng": 121.0351,
+          "note": "Barangay omitted pending sufficiently reliable exact-boundary verification."
+        },
+        {
+          "id": "edsa-busway-ayala",
+          "lat": 14.54915,
+          "lng": 121.02835
+        }
+      ],
+      "separationChecks": {
+        "edsa-busway-guadalupe → mrt3-guadalupe": "~132 m",
+        "edsa-busway-buendia → mrt3-buendia": "~122 m",
+        "edsa-busway-ayala → mrt3-ayala": "~47 m",
+        "edsa-busway-ayala → one-ayala-terminal": "~128 m"
+      },
+      "provenance": "Current operation verified from Philippine Information Agency reporting of DOTr/DICT EDSA Busway stations; point geometry cross-checked against current OpenStreetMap-derived platform/stop geometry."
+    },
+    "3C-4": {
+      "status": "complete",
+      "completedAt": "2026-09-25",
+      "substeps": [
+        "3C-4a",
+        "3C-4b"
+      ],
+      "totalTransportAssetsAdded": 8
     }
   }
 }
