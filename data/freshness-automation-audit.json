@@ -6,7 +6,7 @@
   "systems": [
     {
       "id": "general-source-freshness",
-      "owner": "General public sources used across BetterMakati",
+      "owner": "General public sources not delegated to a specialized monitor",
       "config": "data/source-watchlist.json",
       "checker": "scripts/check-sources.mjs",
       "workflow": ".github/workflows/source-freshness.yml",
@@ -37,11 +37,21 @@
         "committedCheckedAt": null,
         "committedHistoryRuns": 0,
         "status": "configured-but-no-committed-baseline-run"
+      },
+      "activeSourceCount": 108,
+      "delegatedSourceCount": 4,
+      "catalogMonitoringModes": {
+        "reachability": 71,
+        "content-hash": 41
+      },
+      "activeMonitoringModes": {
+        "reachability": 68,
+        "content-hash": 40
       }
     },
     {
       "id": "city-monitor",
-      "owner": "High-value Makati civic activity discovery channels",
+      "owner": "Makati civic activity/discovery channels, including delegated news, events, legislation and PhilGEPS",
       "config": "data/city-monitor-sources.json",
       "checker": "scripts/check-city-monitor.mjs",
       "workflow": ".github/workflows/daily-city-monitor.yml",
@@ -239,7 +249,8 @@
     {
       "id": "2.4C",
       "title": "Define source ownership",
-      "objective": "Assign one authoritative freshness owner per source/purpose while preserving genuinely different monitoring semantics."
+      "objective": "Assign one authoritative freshness owner per source/purpose while preserving genuinely different monitoring semantics.",
+      "status": "complete"
     },
     {
       "id": "2.4D",
@@ -288,6 +299,51 @@
         "The four general-source/City-Monitor overlaps are unchanged and remain for 2.4C.",
         "Editorial source-to-page dependency mapping remains for 2.4D."
       ]
+    },
+    {
+      "step": "2.4C",
+      "completedAt": "2026-09-25",
+      "title": "Define source ownership",
+      "changes": [
+        "Assigned every source-watch catalog entry to general-source-freshness or city-monitor.",
+        "Delegated Makati news, events, legislation and PhilGEPS to City Monitor.",
+        "The general freshness checker now skips City Monitor-owned sources.",
+        "PhilGEPS public catalog metadata now reflects the owner's content-hash monitoring semantics.",
+        "Public Records labels delegated sources as Monitored by City Monitor instead of Awaiting first scheduled check.",
+        "Build audits and browser tests protect the ownership split."
+      ],
+      "result": "112-source public catalog retained; 108 sources actively checked by general freshness; 4 delegated to City Monitor; no duplicate active freshness check for those four URLs."
     }
-  ]
+  ],
+  "sourceOwnership": {
+    "rule": "Each freshness purpose has one authoritative owner. Public catalog entries may remain visible when delegated, but the general checker skips sources owned by City Monitor.",
+    "delegatedToCityMonitor": [
+      {
+        "id": "makati-news",
+        "mode": "reachability"
+      },
+      {
+        "id": "makati-events",
+        "mode": "reachability"
+      },
+      {
+        "id": "makati-legislation",
+        "mode": "reachability"
+      },
+      {
+        "id": "philgeps",
+        "mode": "content-hash"
+      }
+    ],
+    "intentionalMultiPurposeChecks": [
+      {
+        "url": "https://transparency.bettergov.ph/procurement",
+        "systems": [
+          "general-source-freshness",
+          "external-link-integrity"
+        ],
+        "reason": "Different purposes: upstream dependency availability versus user-facing outbound-link integrity."
+      }
+    ]
+  }
 }
