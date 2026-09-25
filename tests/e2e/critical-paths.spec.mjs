@@ -664,7 +664,9 @@ test('Page freshness state tracks open source dependencies without changing revi
 
   expect(pageState.version).toBe(1);
   expect(pageState.pages.length).toBe(pageAudit.length);
+  expect(Array.isArray(pageState.untrackedAffectedPages)).toBeTruthy();
   expect(pageState.summary.needsReview).toBeGreaterThanOrEqual(1);
+  expect(pageState.summary.untrackedAffectedPages).toBe(pageState.untrackedAffectedPages.length);
 
   const auditByPath = new Map(pageAudit.map(item => [item.path, item]));
   for (const item of pageState.pages) {
