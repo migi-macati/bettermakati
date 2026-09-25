@@ -162,7 +162,7 @@
         "Long street segmentation",
         "Private establishments"
       ],
-      "status": "complete",
+      "status": "reopened-planned",
       "completedAt": "2026-09-25",
       "commits": [
         "638f0be6576ef1727971091c15332743996e238a",
@@ -177,7 +177,24 @@
           "Makati Central Fire Station"
         ],
         "totalCivicAssets": 10
-      }
+      },
+      "reopenedAt": "2026-09-25",
+      "revisionReason": "Apply the Makati-publication-first methodology: inventory official Makati public infrastructure/facility lists before treating the initial four-facility batch as complete.",
+      "previousPreliminaryBatch": {
+        "assets": [
+          "PSA Makati CRS Outlet",
+          "LTO Makati District Office",
+          "Securities and Exchange Commission Headquarters",
+          "Makati Central Fire Station"
+        ],
+        "disposition": "retain assets; audit against official Makati infrastructure/facility inventories before closure"
+      },
+      "revisedMethodology": [
+        "Extract named public infrastructure/facility inventories from Makati Facts & Figures, Basic Facts, Citizen's Charters and department publications.",
+        "Reconcile historical/current geography and operating status.",
+        "Implement verified missing current assets in bounded families.",
+        "Close only when every official-inventory item has a disposition."
+      ]
     },
     {
       "id": "3C-2",
@@ -200,7 +217,7 @@
       "excludes": [
         "Transport network expansion"
       ],
-      "status": "reopened",
+      "status": "in-progress",
       "commits": [
         "a61473e8bfe86672a51cd93bc22a32704a0049f2",
         "0816060bf84ac70f8e7d0aceafa3ad6871edc2e8"
@@ -228,7 +245,11 @@
         "3C-2f",
         "3C-2g"
       ],
-      "planFile": "data/wave3-civic-map-parks-plan.json"
+      "planFile": "data/wave3-civic-map-parks-plan.json",
+      "completedSubsteps": [
+        "3C-2a"
+      ],
+      "inventoryFile": "data/wave3-civic-map-parks-inventory.json"
     },
     {
       "id": "3C-3",
@@ -251,7 +272,7 @@
       "excludes": [
         "Do not add transport assets in the same research step."
       ],
-      "status": "complete",
+      "status": "reopened-planned",
       "completedAt": "2026-09-25",
       "commit": "475c50b1ae3e61e68ad5ca8a65485ff750d7368b",
       "result": {
@@ -271,7 +292,22 @@
           "MRT-3 Makati segment",
           "EDSA Busway Makati segment"
         ]
-      }
+      },
+      "reopenedAt": "2026-09-25",
+      "revisionReason": "Apply the Makati-publication-first methodology: Makati publications report transport inventories and counts beyond the already-added MRT/Busway/One Ayala assets.",
+      "previousTransportWork": {
+        "disposition": "retain the eight verified transport assets; audit them and missing objects against Makati publications before closure",
+        "evidenceExamples": [
+          "Makati Facts and Figures 2020 includes transportation modes, public utility jeep routes and ferry station sections.",
+          "Makati City Basic Facts and Figures 2023 reports 4 MRT stations, 3 PNR stations and 32 bus stops, excluding the 10 transferred barangays."
+        ]
+      },
+      "revisedMethodology": [
+        "Extract Makati-published transport inventories/counts first.",
+        "Reconcile them to current operators, current routes/stops and present-day 23-barangay geography.",
+        "Preserve official-city inventory provenance separately from operator/current-network verification.",
+        "Add missing verified current transport assets only after the crosswalk is complete."
+      ]
     },
     {
       "id": "3C-4",
@@ -573,9 +609,9 @@
     }
   ],
   "immediateNext": {
-    "id": "3C-2a",
-    "title": "Reconcile official Makati park inventories",
-    "maximumScope": "Build the official 12/16/18-park crosswalk only. No Civic Map additions yet."
+    "id": "3C-2b",
+    "title": "Reconcile parks to current Makati geography",
+    "maximumScope": "Classify all official-inventory park entries by current/former/boundary-uncertain Makati geography. No Civic Map additions."
   },
   "reopenedExecutionOrder": [
     "3C-2a",
@@ -585,5 +621,21 @@
     "3C-2e",
     "3C-2f",
     "3C-2g"
-  ]
+  ],
+  "reopenedWorkstreams": {
+    "3C-1": {
+      "status": "reopened-planned",
+      "title": "Public infrastructure/facility completeness from Makati publications",
+      "executeAfter": "3C-2g unless user reprioritizes"
+    },
+    "3C-2": {
+      "status": "in-progress",
+      "current": "3C-2b"
+    },
+    "3C-3": {
+      "status": "reopened-planned",
+      "title": "Transport completeness from Makati publications",
+      "executeAfter": "reopened 3C-1 unless user reprioritizes"
+    }
+  }
 }
