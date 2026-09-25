@@ -266,7 +266,8 @@
     {
       "id": "2.4F",
       "title": "Make page freshness dependency-aware",
-      "objective": "Retain human reviewedAt dates while marking pages for review when relevant dependencies change."
+      "objective": "Retain human reviewedAt dates while marking pages for review when relevant dependencies change.",
+      "status": "complete"
     },
     {
       "id": "2.4G",
@@ -348,6 +349,21 @@
         "PhilGEPS — content changed",
         "MyMakati official social broadcasts — manual review"
       ]
+    },
+    {
+      "step": "2.4F",
+      "completedAt": "2026-09-25",
+      "title": "Make page freshness dependency-aware",
+      "changes": [
+        "Derived page-freshness state from human page audits plus the consolidated freshness review queue.",
+        "Open dependency signals mark affected audited pages needs-review without changing reviewedAt or editorial completeness.",
+        "Published /page-freshness-state.json for machine-readable consumption.",
+        "Added explicit handling for affected routes outside the current human page audit.",
+        "Regenerate dependency-aware page freshness during normal site generation and freshness workflows.",
+        "Removed the LastReviewed fallback date and audit every usage for an explicit human review date.",
+        "Added browser and build-audit coverage for dependency flags and review-date preservation."
+      ],
+      "result": "Page review age and source-change review are now separate dimensions: human review dates remain stable while unresolved dependency signals independently flag pages for re-review."
     }
   ],
   "sourceOwnership": {
@@ -435,5 +451,32 @@
     ],
     "uiRule": "Public Records is the only actionable list. City Monitor and Civic Briefs link to it instead of maintaining duplicate review lists.",
     "githubIssueRule": "Both freshness workflows sync the same GitHub issue only on material published changes and close it when the queue reaches zero."
+  },
+  "pageFreshness": {
+    "source": "data/page-audit.json",
+    "derivedState": "data/page-freshness-state.json",
+    "publicFeed": "/page-freshness-state.json",
+    "rule": "Human reviewedAt and editorial completeness remain authoritative. Open freshness-review dependencies add a separate derived needsReview state and never rewrite the human review date.",
+    "currentSummary": {
+      "auditedPages": 21,
+      "current": 17,
+      "needsReview": 4,
+      "untrackedAffectedPages": 0
+    },
+    "currentNeedsReview": [
+      "/projects-budget",
+      "/accountability",
+      "/city-monitor",
+      "/briefs"
+    ],
+    "currentTrigger": "Open PhilGEPS content-change and MyMakati manual-review signals in the consolidated freshness review queue.",
+    "protections": [
+      "Derived reviewedAt must exactly match page-audit.json.",
+      "Derived editorialStatus must exactly match page-audit.json.",
+      "needsReview must match open queue dependencies.",
+      "Open dependencies outside page-audit.json are exposed as needs-review-untracked instead of being silently treated as current.",
+      "Every LastReviewed component use must provide an explicit human date; the component has no fallback date.",
+      "Normal site generation rebuilds the freshness queue and page-freshness state before publishing."
+    ]
   }
 }
