@@ -74,6 +74,52 @@ interface PageAuditRow {
   gaps: string[];
 }
 
+interface PageFreshnessSignal {
+  key: string;
+  sourceId: string;
+  label: string;
+  signalLabel: string;
+  detectedAt?: string | null;
+}
+
+interface PageFreshnessRow {
+  path: string;
+  label: string;
+  editorialStatus: 'reviewed' | 'partial';
+  reviewedAt: string;
+  freshnessStatus: 'current' | 'needs-review';
+  needsReview: boolean;
+  dependencySignals: PageFreshnessSignal[];
+  latestDependencySignalAt?: string | null;
+}
+
+interface PageFreshnessState {
+  generatedAt?: string | null;
+  summary: {
+    pages: number;
+    current: number;
+    needsReview: number;
+    untrackedAffectedPages: number;
+  };
+  pages: PageFreshnessRow[];
+  untrackedAffectedPages: Array<{
+    path: string;
+    freshnessStatus: 'needs-review-untracked';
+    dependencySignals: PageFreshnessSignal[];
+  }>;
+}
+
+interface FreshnessReviewSummary {
+  generatedAt?: string | null;
+  summary: {
+    open: number;
+    contentChanged: number;
+    failed: number;
+    manualReview: number;
+    affectedPages: number;
+  };
+}
+
 interface CommunityInput {
   number: number;
   title: string;
@@ -93,6 +139,14 @@ export default function ProjectStatus() {
   const [monitorRuns, setMonitorRuns] = useState<SourceWatchRun[]>([]);
   const [monitorFeedFailed, setMonitorFeedFailed] = useState(false);
   const [pageAudit, setPageAudit] = useState<PageAuditRow[]>([]);
+  const [pageFreshness, setPageFreshness] = useState<PageFreshnessState>({
+    summary: { pages: 0, current: 0, needsReview: 0, untrackedAffectedPages: 0 },
+    pages: [],
+    untrackedAffectedPages: [],
+  });
+  const [freshnessReview, setFreshnessReview] = useState<FreshnessReviewSummary>({
+    summary: { open: 0, contentChanged: 0, failed: 0, manualReview: 0, affectedPages: 0 },
+  });
   const [pageAuditFailed, setPageAuditFailed] = useState(false);
 
   useEffect(() => {
@@ -122,10 +176,29 @@ export default function ProjectStatus() {
       }
 
       try {
-        const response = await fetch('/page-audit.json', { cache: 'no-store' });
-        const data = await response.json();
-        if (response.ok && Array.isArray(data)) setPageAudit(data);
+        const [auditResponse, freshnessResponse, reviewResponse] = await Promise.all([
+          fetch('/page-audit.json', { cache: 'no-store' }),
+          fetch('/page-freshness-state.json', { cache: 'no-store' }),
+          fetch('/freshness-review-queue.json', { cache: 'no-store' }),
+        ]);
+        const auditData = await auditResponse.json();
+        const freshnessData = await freshnessResponse.json();
+        const reviewData = await reviewResponse.json();
+
+        if (auditResponse.ok && Array.isArray(auditData)) setPageAudit(auditData);
         else setPageAuditFailed(true);
+
+        if (freshnessResponse.ok && Array.isArray(freshnessData.pages) && freshnessData.summary) {
+          setPageFreshness(freshnessData);
+        } else {
+          setPageAuditFailed(true);
+        }
+
+        if (reviewResponse.ok && reviewData.summary) {
+          setFreshnessReview(reviewData);
+        } else {
+          setPageAuditFailed(true);
+        }
       } catch {
         setPageAuditFailed(true);
       }
@@ -146,6 +219,7 @@ export default function ProjectStatus() {
   const latestMonitorRun = monitorRuns[0];
   const openCommunityInput = communityInput.filter(item => item.state === 'open').length;
   const auditedPagesWithGaps = pageAudit.filter(item => item.gaps.length > 0).length;
+  const pagesNeedingReview = pageFreshness.pages.filter(item => item.needsReview);
   const knownDoctrineGaps = useMemo(
     () =>
       doctrinePrinciples.reduce((sum, item) => sum + item.gaps.length, 0) +
@@ -478,7 +552,33 @@ export default function ProjectStatus() {
       <Section className="bg-[#f5f8f2]">
         <div className="section-eyebrow">Freshness</div>
         <Heading level={2}>Live signals</Heading>
-        <div className="mt-6 grid grid-cols-1 xl:grid-cols-3 gap-4">
+
+        <div className="mt-6 flex flex-col gap-4 rounded-2xl border border-primary-100 bg-white p-5 lg:flex-row lg:items-center lg:justify-between">
+          <div className="flex flex-wrap gap-x-6 gap-y-3">
+            <div>
+              <div className="text-2xl font-extrabold text-gray-950">{freshnessReview.summary.open}</div>
+              <div className="text-xs font-bold text-gray-600">open review items</div>
+            </div>
+            <div>
+              <div className="text-2xl font-extrabold text-gray-950">{pageFreshness.summary.needsReview}</div>
+              <div className="text-xs font-bold text-gray-600">pages need review</div>
+            </div>
+            <div>
+              <div className="text-2xl font-extrabold text-gray-950">{pageFreshness.summary.current}</div>
+              <div className="text-xs font-bold text-gray-600">pages current</div>
+            </div>
+          </div>
+          <div className="flex flex-wrap gap-3">
+            <Link to="/records#freshness-review-queue" className="brand-btn-primary">
+              Review queue
+            </Link>
+            <a href="/freshness-history.json" className="brand-btn-secondary">
+              Freshness history
+            </a>
+          </div>
+        </div>
+
+        <div className="mt-4 grid grid-cols-1 xl:grid-cols-3 gap-4">
           <div className="rounded-2xl border border-primary-100 bg-white p-6">
             <RefreshCw className="h-5 w-5 text-primary-700" />
             <h3 className="mt-3 font-extrabold text-gray-950">Source freshness automation</h3>
@@ -597,7 +697,7 @@ export default function ProjectStatus() {
           </div>
         ) : (
           <>
-            <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-3">
+            <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
               <div className="rounded-xl border border-gray-200 bg-[#fffdf8] p-4">
                 <div className="text-2xl font-extrabold text-gray-950">{pageAudit.length}</div>
                 <div className="text-sm font-bold text-gray-700">major pages reviewed</div>
@@ -609,10 +709,32 @@ export default function ProjectStatus() {
                 <div className="text-sm font-bold text-gray-700">reviewed without listed gaps</div>
               </div>
               <div className="rounded-xl border border-gray-200 bg-[#fffdf8] p-4">
-                <div className="text-2xl font-extrabold text-gray-950">{auditedPagesWithGaps}</div>
-                <div className="text-sm font-bold text-gray-700">publish known gaps</div>
+                <div className="text-2xl font-extrabold text-gray-950">{pageFreshness.summary.current}</div>
+                <div className="text-sm font-bold text-gray-700">dependency-current</div>
+              </div>
+              <div className="rounded-xl border border-secondary-200 bg-secondary-50 p-4">
+                <div className="text-2xl font-extrabold text-gray-950">{pageFreshness.summary.needsReview}</div>
+                <div className="text-sm font-bold text-gray-700">need source review</div>
               </div>
             </div>
+
+            {pagesNeedingReview.length > 0 && (
+              <div className="mt-6 overflow-hidden rounded-2xl border border-secondary-200">
+                {pagesNeedingReview.map(item => (
+                  <div key={item.path} className="border-b border-secondary-100 bg-secondary-50 p-4 last:border-b-0">
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <Link to={item.path} className="font-extrabold text-primary-800 hover:underline">
+                        {item.label}
+                      </Link>
+                      <span className="text-xs font-semibold text-secondary-900">Needs source review</span>
+                    </div>
+                    <div className="mt-1 text-xs text-gray-600">
+                      Reviewed {item.reviewedAt} · {item.dependencySignals.map(signal => signal.label).join(', ')}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
 
             {auditedPagesWithGaps > 0 && (
               <div className="mt-6 overflow-hidden rounded-2xl border border-gray-200">
