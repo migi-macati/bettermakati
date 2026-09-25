@@ -303,8 +303,9 @@ try {
       {
         version: 1,
         generatedAt: null,
-        summary: { pages: 0, current: 0, needsReview: 0 },
+        summary: { pages: 0, current: 0, needsReview: 0, untrackedAffectedPages: 0 },
         pages: [],
+        untrackedAffectedPages: [],
       },
       null,
       2
