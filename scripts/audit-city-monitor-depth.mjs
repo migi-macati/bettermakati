@@ -40,6 +40,17 @@ for (const id of expectedSourceIds) {
   }
 }
 
+
+for (const source of config.sources) {
+  if (source.owner !== 'city-monitor') {
+    problems.push('City Monitor source has wrong or missing owner: ' + source.id);
+  }
+}
+const philgepsSource = config.sources.find(source => source.id === 'philgeps');
+if (philgepsSource?.monitoringMode !== 'content-hash') {
+  problems.push('PhilGEPS must remain City Monitor-owned with content-hash monitoring.');
+}
+
 for (const mode of ['content-hash', 'reachability', 'manual-review']) {
   if (!config.sources.some(source => source.monitoringMode === mode)) {
     problems.push('City Monitor source config is missing monitoring mode: ' + mode);
