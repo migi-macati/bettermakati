@@ -185,9 +185,9 @@
     "unresolved": "Remain visible in the audit and prevent a false completeness claim."
   },
   "immediateNext": {
-    "id": "3C-2d",
-    "title": "Implement verified current public parks",
-    "maximumScope": "Implement the verified public-park set only: 12 missing assets plus Poblacion Park coordinate correction. Preserve unresolved entries in audit; no private/public-access expansion yet."
+    "id": "3C-2e",
+    "title": "Reconcile private and public-access green spaces",
+    "maximumScope": "Reconcile and classify private/public-access parks as a separate layer. Do not change the verified public-park set."
   },
   "completedSubsteps": [
     "3C-2a",
@@ -196,7 +196,8 @@
     "3C-2c2",
     "3C-2c3",
     "3C-2c4",
-    "3C-2c"
+    "3C-2c",
+    "3C-2d"
   ],
   "inventoryFile": "data/wave3-civic-map-parks-inventory.json",
   "geographyFile": "data/wave3-civic-map-parks-geography.json",
@@ -226,5 +227,7 @@
     "existingNeedsCorrection": 1,
     "missingToAdd": 12,
     "unresolvedNotImplemented": 3
-  }
+  },
+  "publicParkImplementationStatus": "complete",
+  "publicParkImplementationFile": "data/wave3-civic-map-parks-implementation.json"
 }
