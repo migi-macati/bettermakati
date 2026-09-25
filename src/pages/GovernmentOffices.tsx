@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { Link } from 'react-router';
 import { ExternalLink, Mail, MapPin, Phone, Search } from 'lucide-react';
 import SEO from '../components/SEO';
 import Section from '../components/ui/Section';
@@ -80,14 +81,7 @@ export default function GovernmentOffices() {
 
             return (
             <article key={office.id} id={office.id} className="scroll-mt-28 rounded-2xl border border-gray-200 bg-white p-5">
-              <div className="flex flex-wrap items-center gap-2 text-xs font-bold">
-                <span className="text-primary-700">{office.scope}</span>
-                {place && (
-                  <span className="rounded-full bg-primary-50 px-2.5 py-1 text-primary-800">
-                    Place Registry
-                  </span>
-                )}
-              </div>
+              <div className="text-xs font-bold text-primary-700">{office.scope}</div>
               <h2 className="mt-2 text-lg font-extrabold text-gray-950">{office.name}</h2>
               <div className="mt-1 text-sm font-semibold text-gray-500">{office.agency}</div>
               <div className="mt-4 flex gap-2 text-sm leading-relaxed text-gray-700">
@@ -115,12 +109,12 @@ export default function GovernmentOffices() {
                   Agency source <ExternalLink className="h-3.5 w-3.5" />
                 </a>
                 {place && (
-                  <a
-                    href={'/civic-map/' + place.id}
+                  <Link
+                    to={'/civic-map/' + place.id}
                     className="font-bold text-primary-700 underline underline-offset-2"
                   >
                     Place details
-                  </a>
+                  </Link>
                 )}
               </div>
             </article>
