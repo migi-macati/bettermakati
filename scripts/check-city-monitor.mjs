@@ -120,6 +120,17 @@ const semanticStateChanged = result => {
 const publishRequired = results.some(semanticStateChanged);
 
 const checkedAt = new Date().toISOString();
+const stateResults = results.map(result => {
+  const old = previousById.get(result.id);
+  return {
+    ...result,
+    lastCheckedAt: checkedAt,
+    lastSuccessfulAt:
+      result.status === 'ok'
+        ? checkedAt
+        : old?.lastSuccessfulAt || null,
+  };
+});
 const run = {
   checkedAt,
   checked: results.filter(item => item.status !== 'manual-review').length,
@@ -172,7 +183,7 @@ history.runs = [run, ...(Array.isArray(history.runs) ? history.runs : [])].slice
 
 await writeFile(
   'data/city-monitor-source-state.json',
-  JSON.stringify({ version: 2, checkedAt, publishRequired, sources: results }, null, 2) + '\n'
+  JSON.stringify({ version: 2, checkedAt, publishRequired, sources: stateResults }, null, 2) + '\n'
 );
 await writeFile(
   'data/city-monitor-source-history.json',
