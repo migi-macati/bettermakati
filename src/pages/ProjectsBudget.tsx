@@ -1374,7 +1374,8 @@ export default function ProjectsBudget() {
                 </ul>
               ) : null}
 
-              <div className="mt-4 flex flex-wrap gap-3 text-xs">
+              <div className="mt-4 flex flex-wrap items-center gap-3 text-xs">
+                <span className="text-gray-500">Last checked {item.lastVerified}</span>
                 {item.sources.map(source => (
                   <a
                     key={source.url}
