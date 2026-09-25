@@ -27,6 +27,9 @@ export interface CivicAsset {
   lat: number;
   lng: number;
   authority?: string;
+  address?: string;
+  sourceUrl?: string;
+  sourceLabel?: string;
   status: 'mapped' | 'pilot' | 'needs-verification';
   street?: string;
   from?: string;
@@ -162,6 +165,66 @@ export const civicAssets: CivicAsset[] = [
     authority: 'City of Makati',
     status: 'mapped',
     tags: ['heritage', 'culture', 'accessibility'],
+  },
+  {
+    id: 'psa-makati-crs',
+    title: 'PSA Makati CRS Outlet',
+    type: 'public-office',
+    subtitle: 'Civil Registration Service outlet',
+    barangay: 'Carmona',
+    lat: 14.575209,
+    lng: 121.019945,
+    authority: 'Philippine Statistics Authority',
+    address: '5/F Ayala Malls Circuit, Hippodromo Street, Barangay Carmona, Makati City',
+    sourceUrl: 'https://psa.gov.ph/directory/census-serbilis-center-metro-manila',
+    sourceLabel: 'Philippine Statistics Authority · Metro Manila CRS outlets',
+    status: 'mapped',
+    tags: ['government', 'civil registry', 'birth certificate', 'marriage certificate', 'death certificate', 'service'],
+  },
+  {
+    id: 'lto-makati-district',
+    title: 'LTO Makati District Office',
+    type: 'public-office',
+    subtitle: 'Land transportation district office',
+    barangay: 'Valenzuela',
+    lat: 14.57241,
+    lng: 121.02497,
+    authority: 'Land Transportation Office',
+    address: 'Butel Building, Pililia Street, Barangay Valenzuela, Makati City',
+    sourceUrl: 'https://lto.gov.ph/wp-content/uploads/2025/09/LTO-CC-2025-Internal.pdf',
+    sourceLabel: 'Land Transportation Office · 2025 Citizen’s Charter directory',
+    status: 'mapped',
+    tags: ['government', 'drivers license', 'motor vehicle', 'transport', 'service'],
+  },
+  {
+    id: 'sec-headquarters',
+    title: 'Securities and Exchange Commission Headquarters',
+    type: 'public-office',
+    subtitle: 'National corporate and securities regulator',
+    barangay: 'Bel-Air',
+    lat: 14.55896,
+    lng: 121.02619,
+    authority: 'Securities and Exchange Commission',
+    address: '7907 Makati Avenue, Salcedo Village, Barangay Bel-Air, Makati City',
+    sourceUrl: 'https://www.sec.gov.ph/',
+    sourceLabel: 'Securities and Exchange Commission',
+    status: 'mapped',
+    tags: ['government', 'business registration', 'corporations', 'securities', 'service'],
+  },
+  {
+    id: 'makati-central-fire-station',
+    title: 'Makati Central Fire Station',
+    type: 'public-office',
+    subtitle: 'Bureau of Fire Protection city fire station',
+    barangay: 'San Antonio',
+    lat: 14.56248,
+    lng: 121.01516,
+    authority: 'Bureau of Fire Protection',
+    address: 'Ayala Avenue Extension corner Malugay Street, Barangay San Antonio, Makati City',
+    sourceUrl: 'https://www.makati.gov.ph/content/makati-hotlines-firestations',
+    sourceLabel: 'City Government of Makati · Fire Stations Hotlines',
+    status: 'mapped',
+    tags: ['government', 'fire safety', 'emergency services', 'public safety'],
   },
 ];
 
@@ -315,4 +378,4 @@ export const civicOfficialChannels = {
   },
 } as const;
 
-export const civicMethodologyReviewed = '2026-09-21';
+export const civicMethodologyReviewed = '2026-09-25';
