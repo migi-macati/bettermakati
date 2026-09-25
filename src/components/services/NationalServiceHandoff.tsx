@@ -63,7 +63,7 @@ export default function NationalServiceHandoff({
             href={betterGov.listingUrl}
             target="_blank"
             rel="noreferrer"
-            className="font-bold text-primary-700 underline underline-offset-2"
+            className="inline-flex min-h-8 items-center font-bold text-primary-700 underline underline-offset-2"
           >
             BetterGov.ph
           </a>
