@@ -3,6 +3,7 @@ import { readFile } from 'node:fs/promises';
 const directory = await readFile('src/data/serviceDirectory.ts', 'utf8');
 const details = await readFile('src/data/serviceGuideDetails.ts', 'utf8');
 const watchlist = JSON.parse(await readFile('data/source-watchlist.json', 'utf8'));
+const serviceGuide = await readFile('src/pages/ServiceGuide.tsx', 'utf8');
 
 const directoryIds = [...directory.matchAll(/\bid:\s*'([^']+)'/g)].map(match => match[1]);
 const detailBlock = details.split('export const serviceGuideDetails')[1] ?? '';
@@ -90,6 +91,16 @@ if (invalidNationalHandoffs.length) {
     'National handoffs missing official action/source or BetterGov status metadata: ' +
       invalidNationalHandoffs.join(', ')
   );
+}
+
+for (const marker of [
+  "const betterGovOwnsNationalGuide =",
+  "item.nationalIntegration?.betterGov.status === 'listed'",
+  "{!betterGovOwnsNationalGuide && (",
+]) {
+  if (!serviceGuide.includes(marker)) {
+    problems.push('National-service deduplication guard missing from ServiceGuide: ' + marker);
+  }
 }
 
 const duplicateIds = directoryIds.filter((id, index) => directoryIds.indexOf(id) !== index);
