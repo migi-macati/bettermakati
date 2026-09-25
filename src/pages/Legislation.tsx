@@ -158,7 +158,7 @@ export default function Legislation() {
       </Section>
 
       <Section className="bg-white">
-        <div className="section-eyebrow">National context</div>
+        <div className="section-eyebrow">Related national sources</div>
         <Heading level={2}>National laws & Congress</Heading>
         <div className="mt-5 flex flex-wrap gap-x-5 gap-y-3 text-sm font-bold">
           <a
