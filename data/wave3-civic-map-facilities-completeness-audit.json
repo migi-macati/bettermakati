@@ -1,0 +1,206 @@
+{
+  "schemaVersion": 1,
+  "closedAt": "2026-09-25",
+  "workstream": "Wave 3C-1 — Public infrastructure/facility completeness from Makati publications",
+  "status": "complete-for-verified-named-mappable-set-with-explicit-deferrals",
+  "closureRule": "A facility family is complete only where the reviewed sources provide a defensible current named set or a named historical set that can be reconciled to current Makati. Headline-only counts are dispositioned but not converted into speculative pins.",
+  "currentCivicMapSnapshot": {
+    "totalAssets": 86,
+    "verifiedMhdHealthCentersMapped": 18,
+    "verifiedCurrentFireStationsMapped": 11,
+    "verifiedCurrentPoliceFacilitiesMapped": 8,
+    "coreSocialAndCityOwnedFacilitiesMapped": 5,
+    "currentChildCareServicesRepresented": 22,
+    "currentChildCareServicesUnresolved": 1,
+    "distinctChildCareHostLocationsRepresented": 18,
+    "totalDistinctChildCareHostLocations": 19,
+    "supplementalNationalGovernmentServiceAssetsRetained": 3
+  },
+  "familyDispositions": [
+    {
+      "family": "Makati Health Department health centers",
+      "sourceBaseline": "18 current health centers",
+      "disposition": "complete-current-named-set",
+      "mapped": 18,
+      "notes": [
+        "All 18 verified current MHD health-center sites are mapped.",
+        "Palanan 24/7 is a service designation at Palanan Health Center, not a duplicate physical asset.",
+        "Eight health centers in transferred barangays remain historical/former-Makati provenance and are excluded."
+      ]
+    },
+    {
+      "family": "Supplemental public clinics",
+      "disposition": "outside-mhd18-denominator-deferred-as-separate-clinic-layer",
+      "notes": [
+        "Barangay San Lorenzo's current medical/dental clinic system is verified but is not used to inflate the official MHD 18-center denominator.",
+        "The Makati Health Department employee clinic at City Hall is a specialized/internal clinic and is not counted as a community health-center asset."
+      ]
+    },
+    {
+      "family": "Fire stations",
+      "sourceBaseline": "1 central + 10 substations/satellite stations",
+      "disposition": "complete-current-named-set",
+      "mapped": 11,
+      "notes": [
+        "All 11 current named stations are mapped.",
+        "West Rembo and Comembo fire stations are former-Makati and excluded.",
+        "A separate map feature labeled New Makati Central Fire Station is held from the current layer until its operational relationship to the officially listed central station is clear."
+      ]
+    },
+    {
+      "family": "Police facilities",
+      "sourceBaseline": "1 headquarters + 7 current substations",
+      "disposition": "complete-current-named-set",
+      "mapped": 8,
+      "notes": [
+        "Current headquarters plus Sub-Stations 1–7 are mapped.",
+        "Transferred Sub-Stations 8 and 9 are blocked from current Makati.",
+        "Historical Precinct 10 in Rizal is preserved only as a former-Makati legacy record from the older inventory."
+      ]
+    },
+    {
+      "family": "Core social-welfare facilities",
+      "sourceBaseline": "1 Social Development Center + 1 Makati Youth Home + 1 Youth Center + 1 Senior Citizen Center",
+      "disposition": "complete-current-named-set",
+      "mapped": 4
+    },
+    {
+      "family": "City-owned public market",
+      "sourceBaseline": "2020 city-owned market list",
+      "disposition": "complete-for-current-geography",
+      "mapped": 1,
+      "notes": [
+        "Poblacion Public Market is mapped.",
+        "Cembo Talipapa is former-Makati and excluded."
+      ]
+    },
+    {
+      "family": "Day-care and child-minding services",
+      "sourceBaseline": "22 current day-care centers + 1 current child-minding center after boundary reconciliation",
+      "disposition": "complete-for-verified-mappable-set-with-one-explicit-unresolved-host",
+      "currentServices": 23,
+      "representedServices": 22,
+      "unresolvedServices": 1,
+      "distinctHostLocations": 19,
+      "representedHostLocations": 18,
+      "notes": [
+        "Co-located services are attached to host Civic Map assets through servicesAtLocation instead of duplicate pins.",
+        "Singkamas Day Care Center at Francisco Benitez III Elementary School remains audit-visible but unmapped because the exact campus/entrance point was not frozen confidently.",
+        "Pio del Pilar Day Care Center is represented at the verified J. Victor/Dela Rosa location with needs-verification status for the exact entrance."
+      ]
+    },
+    {
+      "family": "Former-Makati child-care facilities",
+      "disposition": "historical-provenance-excluded",
+      "dayCareCenters": 18,
+      "childMindingCenters": 3
+    },
+    {
+      "family": "24/7 health-center headline",
+      "sourceBaseline": 1,
+      "disposition": "resolved-as-co-located-service",
+      "asset": "palanan-health-center"
+    },
+    {
+      "family": "Birthing homes",
+      "sourceBaseline": 2,
+      "disposition": "headline-only-deferred",
+      "reason": "The reviewed current baseline provides a count but not a named current physical-site inventory. These may also be services within larger health facilities; no distinct pins are inferred."
+    },
+    {
+      "family": "Social hygiene clinic",
+      "sourceBaseline": 1,
+      "disposition": "headline-only-deferred",
+      "reason": "No named current physical-site inventory was frozen in this workstream; no speculative pin is created."
+    },
+    {
+      "family": "Diagnostic laboratories",
+      "sourceBaseline": 5,
+      "disposition": "headline-only-deferred",
+      "reason": "The reviewed current baseline provides a count but not a named current physical-site list; labs may be co-located with health centers."
+    },
+    {
+      "family": "Hospitals",
+      "sourceBaseline": 0,
+      "disposition": "closed-no-current-makati-site-in-baseline",
+      "reason": "No current Makati hospital asset is inferred from a zero headline count."
+    },
+    {
+      "family": "MAPSA outposts",
+      "sourceBaseline": 16,
+      "disposition": "headline-only-deferred",
+      "reason": "No current named outpost inventory was frozen; outposts are not invented from the headline count."
+    },
+    {
+      "family": "Bantay Bayan outposts",
+      "sourceBaseline": 17,
+      "disposition": "headline-only-deferred",
+      "reason": "No current named outpost inventory was frozen; outposts are not invented from the headline count."
+    },
+    {
+      "family": "Broader 2020 public-health infrastructure list",
+      "disposition": "legacy-provenance-not-current-completeness-denominator",
+      "reason": "The broader historical list mixes health centers, satellites, specialized services and facilities later transferred to Taguig. Current completeness is anchored to narrower current facility families instead of forcing one-to-one successor assumptions."
+    },
+    {
+      "family": "Proposed/uncertain community facilities",
+      "disposition": "held-until-current-operating-status-is-verified",
+      "records": [
+        "Makati Drop-in Center — Olympia",
+        "Tejeros Wellness Center as potentially co-located with Felicidad Sy Elderly Center"
+      ]
+    }
+  ],
+  "retainedSupplementalAssets": [
+    {
+      "id": "psa-makati-crs",
+      "disposition": "retain-supplemental-national-government-service",
+      "completenessDenominator": "excluded-from-Makati-LGU-facility-count"
+    },
+    {
+      "id": "lto-makati-district",
+      "disposition": "retain-supplemental-national-government-service",
+      "completenessDenominator": "excluded-from-Makati-LGU-facility-count"
+    },
+    {
+      "id": "sec-headquarters",
+      "disposition": "retain-supplemental-national-government-service",
+      "completenessDenominator": "excluded-from-Makati-LGU-facility-count"
+    },
+    {
+      "id": "makati-city-hall",
+      "disposition": "retain-citywide-civic-anchor"
+    },
+    {
+      "id": "museo-ng-makati",
+      "disposition": "retain-cultural-civic-anchor-outside-service-family-denominators"
+    }
+  ],
+  "integrityClosure": {
+    "civicMapAssets": 86,
+    "duplicateAssetIds": 0,
+    "childCareServiceNamesRepresented": 22,
+    "duplicateChildCareServiceNames": 0,
+    "requiredHealthCentersGuarded": 18,
+    "requiredFireStationsGuarded": 11,
+    "requiredPoliceFacilitiesGuarded": 8,
+    "requiredCoreCommunityAssetsGuarded": 5,
+    "formerOrAmbiguousAssetsExplicitlyBlocked": [
+      "palanan-24-7-health-center",
+      "new-makati-central-fire-station",
+      "west-rembo-fire-substation",
+      "comembo-fire-substation",
+      "makati-police-substation-8",
+      "makati-police-substation-9"
+    ],
+    "falseCompletionBlocked": [
+      "Singkamas Day Care Center exact host point"
+    ]
+  },
+  "closureCaveat": "This closes 3C-1 for the verified named/mappable facility families reviewed. It does not claim that headline-only facility counts have been reverse-engineered into unnamed assets.",
+  "nextWorkstream": {
+    "id": "3C-3-reopen",
+    "title": "Reopen transport completeness using official-source-first reconciliation",
+    "scope": "Extract Makati-published transport inventories/counts first, reconcile them against current operators and present-day geography, and stop after the audit before adding any missing transport assets."
+  }
+}
