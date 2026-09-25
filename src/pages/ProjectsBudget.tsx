@@ -1017,7 +1017,7 @@ export default function ProjectsBudget() {
               </h3>
               <p className="mt-1 max-w-3xl text-gray-600">
                 {selectedBudgetLines2026.length} citywide summary lines from the 2026 Annual Budget Report.
-                The office table above publishes each office total; office-level object lines remain in the original report.
+                Use the office drill-down above for source-linked object-of-expenditure lines, then search the citywide summary below by account code or budget line.
               </p>
               <div className="mt-3 flex flex-wrap gap-2 text-xs font-bold">
                 <span className="rounded-full bg-primary-50 px-3 py-1.5 text-primary-800">
