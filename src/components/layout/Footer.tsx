@@ -90,7 +90,7 @@ const Footer: React.FC = () => {
 
         <div className="border-t border-white/10 mt-10 pt-6 text-xs text-primary-200">
           <div className="flex flex-wrap items-center justify-between gap-4">
-            <p>© 2026 BetterMakati. Independent BetterLGU civic platform.</p>
+            <p>© 2026 BetterMakati. Independent civic information platform for Makati.</p>
             <div className="flex flex-wrap gap-5">
               <Link
                 to="/about#identity"
