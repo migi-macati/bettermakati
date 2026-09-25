@@ -185,9 +185,9 @@
     "unresolved": "Remain visible in the audit and prevent a false completeness claim."
   },
   "immediateNext": {
-    "id": "3C-2e",
-    "title": "Reconcile private and public-access green spaces",
-    "maximumScope": "Reconcile and classify private/public-access parks as a separate layer. Do not change the verified public-park set."
+    "id": "3C-2f",
+    "title": "Implement private/public-access park layer",
+    "maximumScope": "Reclassify the three existing CBD parks, add the four ready missing public-access privately managed parks, and resolve Glorietta 4 immediately before coding. Do not add gated village parks, unresolved records or former-Makati assets."
   },
   "completedSubsteps": [
     "3C-2a",
@@ -197,7 +197,8 @@
     "3C-2c3",
     "3C-2c4",
     "3C-2c",
-    "3C-2d"
+    "3C-2d",
+    "3C-2e"
   ],
   "inventoryFile": "data/wave3-civic-map-parks-inventory.json",
   "geographyFile": "data/wave3-civic-map-parks-geography.json",
@@ -229,5 +230,19 @@
     "unresolvedNotImplemented": 3
   },
   "publicParkImplementationStatus": "complete",
-  "publicParkImplementationFile": "data/wave3-civic-map-parks-implementation.json"
+  "publicParkImplementationFile": "data/wave3-civic-map-parks-implementation.json",
+  "privatePublicAccessReconciliationStatus": "complete",
+  "privatePublicAccessReconciliationFile": "data/wave3-civic-map-parks-private-reconciliation.json",
+  "privatePublicAccessSummary": {
+    "official2020PrivateEntries": 21,
+    "officialEntriesCurrentMakati": 14,
+    "officialEntriesFormerMakatiNowTaguig": 7,
+    "publicAccessPrivateManagedReadyOrAlreadyMappedFromOfficialBaseline": 4,
+    "publicAccessPrivateManagedHoldFromOfficialBaseline": 1,
+    "controlledPrivateCommunityFromOfficialBaseline": 7,
+    "unresolvedOfficialCurrentMakati": 2,
+    "supplementalCurrentPublicAccessSpaces": 3,
+    "final3C2fPublicAccessSetReadyOrAlreadyMapped": 7,
+    "final3C2fPublicAccessHold": 1
+  }
 }
