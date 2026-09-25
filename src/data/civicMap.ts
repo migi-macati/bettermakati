@@ -18,6 +18,11 @@ export type CivicAssetType =
 
 export type CivicContributionKind = 'report' | 'proposal' | 'review' | 'update';
 
+export type CivicAccessClass =
+  | 'government-public'
+  | 'public-access-private-managed'
+  | 'private-community-controlled';
+
 export interface CivicAsset {
   id: string;
   title: string;
@@ -29,6 +34,7 @@ export interface CivicAsset {
   authority?: string;
   address?: string;
   aliases?: string[];
+  accessClass?: CivicAccessClass;
   sourceUrl?: string;
   sourceLabel?: string;
   coordinateSourceUrl?: string;
@@ -394,10 +400,13 @@ export const civicAssets: CivicAsset[] = [
     lng: 121.02325,
     authority: 'Ayala Land / Makati CBD estate management',
     address: 'Ayala Avenue, Makati Avenue and Paseo de Roxas, Barangay Bel-Air, Makati City',
+    accessClass: 'public-access-private-managed',
     sourceUrl: 'https://ir.ayalaland.com.ph/wp-content/uploads/2026/04/ALI-2025-Integrated-Report.pdf',
     sourceLabel: 'Ayala Land · 2025 Integrated Report',
+    coordinateSourceUrl: 'https://www.openstreetmap.org/way/777918857',
+    coordinateSourceLabel: 'OpenStreetMap · Ayala Triangle Gardens geometry',
     status: 'mapped',
-    tags: ['park', 'green space', 'walking', 'seating', 'shade', 'business district'],
+    tags: ['park', 'green space', 'public access', 'privately managed', 'walking', 'seating', 'shade', 'business district'],
   },
   {
     id: 'washington-sycip-park',
@@ -407,12 +416,15 @@ export const civicAssets: CivicAsset[] = [
     barangay: 'San Lorenzo',
     lat: 14.55382,
     lng: 121.01788,
-    authority: 'Makati Commercial Estate Association / Ayala Land',
+    authority: 'Makati Central Estate Association / Ayala Land',
     address: 'Legazpi Street, Legazpi Village, Barangay San Lorenzo, Makati City',
+    accessClass: 'public-access-private-managed',
     sourceUrl: 'https://ir.ayalaland.com.ph/wp-content/uploads/2026/04/ALI-2025-Integrated-Report.pdf',
     sourceLabel: 'Ayala Land · 2025 Integrated Report',
+    coordinateSourceUrl: 'https://www.openstreetmap.org/way/22674219',
+    coordinateSourceLabel: 'OpenStreetMap · Washington SyCip Park geometry',
     status: 'mapped',
-    tags: ['park', 'green space', 'walking', 'seating', 'shade', 'legazpi village'],
+    tags: ['park', 'green space', 'public access', 'privately managed', 'walking', 'seating', 'shade', 'legazpi village'],
   },
   {
     id: 'legazpi-active-park',
@@ -422,12 +434,90 @@ export const civicAssets: CivicAsset[] = [
     barangay: 'San Lorenzo',
     lat: 14.55417,
     lng: 121.01673,
-    authority: 'Makati Commercial Estate Association / Ayala Land',
+    authority: 'Makati Central Estate Association / Ayala Land / Ayala Property Management',
     address: 'Rada Street at Legazpi Street, Legazpi Village, Barangay San Lorenzo, Makati City',
-    sourceUrl: 'https://ir.ayalaland.com.ph/wp-content/uploads/2026/04/ALI-2025-Integrated-Report.pdf',
-    sourceLabel: 'Ayala Land · 2025 Integrated Report',
+    accessClass: 'public-access-private-managed',
+    sourceUrl: 'https://www.ayalaproperty.com.ph/news-and-updates/apmc-celebrates-with-the-city-as-makatis-first-eco-patch-opens-at-legazpi-active-park',
+    sourceLabel: 'Ayala Property Management · Legazpi Active Park Eco Patch',
+    coordinateSourceUrl: 'https://www.openstreetmap.org/way/35583871',
+    coordinateSourceLabel: 'OpenStreetMap · Legazpi Active Park geometry',
     status: 'mapped',
-    tags: ['park', 'recreation', 'playground', 'walking', 'jogging', 'legazpi village'],
+    tags: ['park', 'recreation', 'public access', 'privately managed', 'playground', 'walking', 'jogging', 'legazpi village'],
+  },
+  {
+    id: 'greenbelt-park',
+    title: 'Greenbelt Park',
+    type: 'park',
+    subtitle: 'Landscaped public-access garden in Ayala Center',
+    barangay: 'San Lorenzo',
+    lat: 14.55285,
+    lng: 121.02207,
+    authority: 'Ayala Malls / Ayala Land',
+    address: 'Greenbelt, Barangay San Lorenzo, Makati City',
+    accessClass: 'public-access-private-managed',
+    sourceUrl: 'https://www.ayalamalls.com/explore/ayala-greenbelt/store/AYALA-GREENBELT-1138189',
+    sourceLabel: 'Ayala Malls · Greenbelt',
+    coordinateSourceUrl: 'https://www.openstreetmap.org/way/31659543',
+    coordinateSourceLabel: 'OpenStreetMap · Greenbelt Park geometry',
+    status: 'mapped',
+    tags: ['park', 'green space', 'public access', 'privately managed', 'Greenbelt', 'Ayala Center', 'San Lorenzo'],
+  },
+  {
+    id: 'jaime-velasquez-park',
+    title: 'Jaime C. Velasquez Park',
+    type: 'park',
+    subtitle: 'Salcedo Village public-access pocket park',
+    barangay: 'Bel-Air',
+    lat: 14.56008,
+    lng: 121.0231,
+    authority: 'Makati Central Estate Association / Ayala Land / Barangay Bel-Air / City of Makati',
+    address: 'Jaime C. Velasquez Street, Salcedo Village, Barangay Bel-Air, Makati City',
+    aliases: ['Jaime Velasquez Park', 'Salcedo Park', 'Velasquez Park'],
+    accessClass: 'public-access-private-managed',
+    sourceUrl: 'https://macea.com.ph/',
+    sourceLabel: 'Makati Central Estate Association · Jaime Velasquez Park',
+    coordinateSourceUrl: 'https://www.openstreetmap.org/way/19683377',
+    coordinateSourceLabel: 'OpenStreetMap · Jaime C. Velasquez Park geometry',
+    status: 'mapped',
+    tags: ['park', 'green space', 'public access', 'privately managed', 'Salcedo Village', 'Bel-Air', 'weekend market'],
+  },
+  {
+    id: 'palm-promenade-park',
+    title: 'Palm Promenade',
+    type: 'park',
+    subtitle: 'Landscaped public-access promenade in Ayala Center',
+    barangay: 'San Lorenzo',
+    lat: 14.54999,
+    lng: 121.02449,
+    authority: 'Ayala Property Management / Makati CBD estate management',
+    address: 'Palm Drive, Ayala Center, Barangay San Lorenzo, Makati City',
+    aliases: ['Palm Promenade Park'],
+    accessClass: 'public-access-private-managed',
+    sourceUrl: 'https://www.ayalaproperty.com.ph/news-and-updates/apmc-celebrates-with-the-city-as-makatis-first-eco-patch-opens-at-legazpi-active-park',
+    sourceLabel: 'Ayala Property Management · Makati green spaces',
+    coordinateSourceUrl: 'https://www.openstreetmap.org/way/263667839',
+    coordinateSourceLabel: 'OpenStreetMap · Palm Promenade geometry',
+    status: 'mapped',
+    tags: ['park', 'promenade', 'green space', 'public access', 'privately managed', 'Palm Drive', 'Ayala Center'],
+  },
+  {
+    id: 'glorietta-4-park',
+    title: 'Glorietta 4 Park / The Plaza',
+    type: 'park',
+    subtitle: 'Redeveloped public-access green space at Glorietta 4',
+    barangay: 'San Lorenzo',
+    lat: 14.55111,
+    lng: 121.02694,
+    authority: 'Ayala Malls / Ayala Land',
+    address: 'Glorietta 4, Ayala Center, Barangay San Lorenzo, Makati City',
+    aliases: ['Glorietta 4 Park', 'The Plaza'],
+    accessClass: 'public-access-private-managed',
+    sourceUrl: 'https://www.bworldonline.com/arts-and-leisure/2025/07/21/686256/ayala-malls-heads-for-refresh-expansion-projects/',
+    sourceLabel: 'BusinessWorld · Ayala Malls Glorietta redevelopment',
+    coordinateSourceUrl: 'https://www.openstreetmap.org/?mlat=14.55111&mlon=121.02694#map=19/14.55111/121.02694',
+    coordinateSourceLabel: 'Current mapped Glorietta 4 Park / The Plaza point',
+    status: 'mapped',
+    tags: ['park', 'plaza', 'green space', 'public access', 'privately managed', 'Glorietta', 'Ayala Center'],
   },
   {
     id: 'psa-makati-crs',
