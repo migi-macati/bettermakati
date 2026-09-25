@@ -1,0 +1,209 @@
+{
+  "schemaVersion": 1,
+  "auditedAt": "2026-09-25",
+  "betterMakatiBaseCommit": "c9eea3006a8382133676ea3854ef18510125d987",
+  "upstream": {
+    "repository": "bettergovph/open-data-portal",
+    "commit": "6f40e204a04fbd7aee1f348523e682282253d165",
+    "portal": "https://data.bettergov.ph/",
+    "repositoryUrl": "https://github.com/bettergovph/open-data-portal",
+    "openApi": "https://data.bettergov.ph/openapi.json",
+    "swagger": "https://data.bettergov.ph/docs",
+    "note": "The live portal catalog is database-backed and newer than the repository seed data. Do not treat scripts/init-db-data.json as the live catalog."
+  },
+  "scope": "API and integration feasibility only. No BetterMakati runtime integration is implemented in this step.",
+  "apiSurface": [
+    {
+      "method": "GET",
+      "path": "/api/v1/datasets",
+      "purpose": "List/search dataset metadata",
+      "query": [
+        "search",
+        "category_id",
+        "publisher_id",
+        "format",
+        "sort",
+        "dir",
+        "limit",
+        "offset"
+      ],
+      "sortValues": [
+        "name",
+        "latest_version_date",
+        "size_bytes"
+      ],
+      "pagination": "offset/limit; dataset list limit is 10-100"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/datasets/{id}",
+      "purpose": "Dataset metadata detail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/resources",
+      "purpose": "List downloadable resources for one dataset",
+      "query": [
+        "dataset_id",
+        "limit",
+        "offset"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/resources/{id}",
+      "purpose": "Resource metadata and download/source URLs"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/publishers",
+      "purpose": "Publisher catalog"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/categories",
+      "purpose": "Category catalog"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/stats",
+      "purpose": "Portal summary statistics"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/ping",
+      "purpose": "Health check"
+    }
+  ],
+  "responseModel": {
+    "dataset": [
+      "id",
+      "name",
+      "description",
+      "publisher_id",
+      "category_id",
+      "tags",
+      "size_bytes",
+      "latest_version_date",
+      "attribution",
+      "license",
+      "license_url",
+      "publisher",
+      "category",
+      "resource_count"
+    ],
+    "resource": [
+      "id",
+      "dataset_id",
+      "name",
+      "description",
+      "mime_type",
+      "size_bytes",
+      "download_url",
+      "source_url"
+    ],
+    "importantConstraint": "The API catalogs datasets and resource files. It does not provide row-level query endpoints over the contents of CSV, Parquet, ZIP, JSON or GeoJSON resources."
+  },
+  "rateLimits": {
+    "configuredPerMinute": {
+      "search": 60,
+      "list": 60,
+      "stats": 60,
+      "detail": 100,
+      "ping": 1000,
+      "default": 100
+    },
+    "discrepancy": "The dataset-list route description says 20 requests/minute while the current rate-limit config sets the search tier to 60 requests/minute. Treat the lower documented number as the conservative assumption until the live API is exercised."
+  },
+  "liveCatalogEvidence": {
+    "checkedAt": "2026-09-25",
+    "note": "The public portal currently exposes datasets added after the repository's seven-item seed catalog.",
+    "examples": [
+      {
+        "name": "OpenHalalan: Philippine National and Local Election Dataset",
+        "lastUpdated": "2026-07-15",
+        "resources": 2,
+        "size": "59.87 MB",
+        "betterMakatiUse": "Potential neutral election-data input after field-level validation; COMELEC remains the authority for official election records."
+      },
+      {
+        "name": "Philippine Barangay Boundaries (Hierarchical GeoJSON)",
+        "lastUpdated": "2026-06-16",
+        "size": "88.07 MB",
+        "betterMakatiUse": "Potential Civic Map boundary input, but the source snapshots are from 2023 and Makati boundaries/codes must be validated before use."
+      },
+      {
+        "name": "Project NOAH Hazard Maps",
+        "lastUpdated": "2026-04-11",
+        "size": "5.17 GB",
+        "betterMakatiUse": "Potential hazard context; too large for direct client ingestion."
+      },
+      {
+        "name": "Philippine Legal Documents Library",
+        "lastUpdated": "2026-01-31",
+        "size": "1.93 GB",
+        "betterMakatiUse": "Potential legal reference input; Juris or official legal sources may be a better user-facing route."
+      },
+      {
+        "name": "DPWH Infrastructure Transparency Dataset",
+        "lastUpdated": "2025-11-29",
+        "size": "20.8 MB",
+        "betterMakatiUse": "Potential Projects & Budget / Civic Map evidence after filtering for Makati."
+      },
+      {
+        "name": "Open PhilGEPS Data",
+        "lastUpdated": "2025-11-13",
+        "size": "500.37 MB",
+        "betterMakatiUse": "Potential procurement evidence; specialized PhilGEPS tooling is likely preferable to loading the full resource."
+      }
+    ]
+  },
+  "technicalFindings": [
+    {
+      "finding": "No row-level data query API",
+      "consequence": "BetterMakati cannot ask the catalog API for only Makati rows from OpenHalalan, DPWH, PhilGEPS or GeoJSON. A resource must be downloaded and filtered/ingested elsewhere, or a specialized project/API used."
+    },
+    {
+      "finding": "No application CORS middleware is present in the inspected worker source",
+      "consequence": "Do not assume direct browser fetches from bettermakati.org to data.bettergov.ph will work. Prefer server-side/build-time ingestion unless live CORS is separately verified."
+    },
+    {
+      "finding": "The live database changes independently of repository seed data",
+      "consequence": "Resolve dataset IDs dynamically by search/name or store a validated external identifier with a refresh check. Do not hard-code seed positions."
+    },
+    {
+      "finding": "Resources range from small metadata files to multi-gigabyte archives",
+      "consequence": "Never fetch arbitrary resources in the browser. Gate integrations by file size, MIME type, provenance, update date and source geography."
+    },
+    {
+      "finding": "Dataset records preserve attribution, license, publisher, source URL and latest-version date",
+      "consequence": "Any ingested BetterMakati data should carry these provenance fields through to the local source record."
+    },
+    {
+      "finding": "FTS search strips special characters and is metadata-oriented",
+      "consequence": "Use it for dataset discovery, not for searching inside dataset contents."
+    }
+  ],
+  "integrationDecision": {
+    "runtimeBrowserApi": "defer",
+    "serverOrBuildTime": "preferred",
+    "reason": "The catalog API is useful for discovery and provenance, but the actual datasets are downloadable resources, some very large, and cross-origin support is not established in the inspected source.",
+    "nextStep": {
+      "id": "2.3D-2",
+      "scope": "Implement exactly one Open Data use case.",
+      "recommendedUseCase": "OpenHalalan source integration for the Elections data/provenance workflow, using a controlled server/build-time extract of Makati rows rather than a live browser dependency.",
+      "guardrails": [
+        "Verify OpenHalalan field definitions and Makati geography before importing anything.",
+        "Keep COMELEC as the authoritative election source where an official record is available.",
+        "Preserve source, license, coverage and incompleteness caveats.",
+        "Do not add rankings, candidate judgments or electoral predictions.",
+        "Cache the extracted Makati subset locally so Elections does not depend on portal uptime."
+      ]
+    }
+  },
+  "sources": [
+    "https://github.com/bettergovph/open-data-portal/tree/6f40e204a04fbd7aee1f348523e682282253d165",
+    "https://data.bettergov.ph/",
+    "https://data.bettergov.ph/datasets/25"
+  ]
+}
