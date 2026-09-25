@@ -273,13 +273,13 @@
       "daily-source-check",
       "published-source-health",
       "change-history",
-      "editorial-review-queue",
       "validated-permanent-records",
       "procurement-record-ingestion",
       "lifecycle-rules",
       "provenance",
       "rss",
-      "permanent-record-sitemap"
+      "permanent-record-sitemap",
+      "unified-freshness-review-handoff"
     ],
     "gaps": [
       "No reliable current source has yet been normalized for every 2026 City Council session date, agenda, attendance, vote and minutes record.",
@@ -307,7 +307,8 @@
       "monthly-stream-summary",
       "monthly-procurement-summary",
       "share-ready-text",
-      "rss"
+      "rss",
+      "unified-freshness-review-handoff"
     ],
     "gaps": [
       "The archive begins on 24 September 2026; earlier daily/weekly/monthly briefs were not backdated or fabricated.",
@@ -361,7 +362,8 @@
       "per-record-freshness",
       "source-watch-history",
       "coverage-matrix",
-      "known-gaps"
+      "known-gaps",
+      "consolidated-freshness-review-queue"
     ],
     "gaps": [
       "The catalog normalizes source URLs already used across BetterMakati; it is not yet an exhaustive inventory of every Makati public document published by every office.",
