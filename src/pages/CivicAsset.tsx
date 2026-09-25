@@ -95,6 +95,11 @@ export default function CivicAsset() {
                   <Building2 className="h-4 w-4 text-primary-700" /> {asset.authority}
                 </span>
               )}
+              {asset.address && (
+                <span className="inline-flex items-center gap-1.5">
+                  <MapPin className="h-4 w-4 text-primary-700" /> {asset.address}
+                </span>
+              )}
               {asset.from && asset.to && (
                 <span className="inline-flex items-center gap-1.5">
                   <Route className="h-4 w-4 text-primary-700" /> {asset.from} ↔ {asset.to}
@@ -174,6 +179,17 @@ export default function CivicAsset() {
                 </div>
               ))}
             </div>
+
+            {asset.sourceUrl && (
+              <a
+                href={asset.sourceUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-5 inline-flex items-center text-sm font-bold text-primary-700 underline underline-offset-2"
+              >
+                {asset.sourceLabel || 'Official location source'}
+              </a>
+            )}
 
             <div className="mt-5 rounded-xl border border-primary-100 bg-primary-50 p-4 text-xs leading-relaxed text-gray-700">
               Headline scores will only be shown after enough independent responses are available. Sample size and recency will always accompany public ratings.
