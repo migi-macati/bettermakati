@@ -1,6 +1,46 @@
 {
-  "version": 1,
+  "version": 2,
   "runs": [
+    {
+      "checkedAt": "2026-09-25T00:43:52.454Z",
+      "checked": 7,
+      "unchanged": 4,
+      "changed": [
+        {
+          "id": "philgeps",
+          "label": "PhilGEPS",
+          "url": "https://notices.philgeps.gov.ph/",
+          "stream": "procurement",
+          "monitoringMode": "content-hash"
+        }
+      ],
+      "failed": [],
+      "newBaselines": [
+        {
+          "id": "makati-full-disclosure",
+          "label": "Makati full-disclosure and procurement records",
+          "url": "https://www.makati.gov.ph/",
+          "stream": "procurement",
+          "monitoringMode": "reachability"
+        },
+        {
+          "id": "makati-publications",
+          "label": "Makati official publications",
+          "url": "https://www.makati.gov.ph/",
+          "stream": "publication",
+          "monitoringMode": "reachability"
+        }
+      ],
+      "manualReview": [
+        {
+          "id": "mymakati-broadcasts",
+          "label": "MyMakati official social broadcasts",
+          "url": "https://www.facebook.com/mymakativerified",
+          "stream": "council-session",
+          "monitoringMode": "manual-review"
+        }
+      ]
+    },
     {
       "checkedAt": "2026-09-22T00:43:21.107Z",
       "changed": [],
