@@ -418,9 +418,9 @@
     "uiChanges": 0
   },
   "nextImplementationStep": {
-    "id": "W3R-3b",
-    "title": "Reuse places in Mobility",
-    "constraint": "Mobility page only. Reuse shared transport stops/terminals from the Place Registry; no new transport research."
+    "id": "W3R-3c",
+    "title": "Reuse places in Services and Government Offices",
+    "constraint": "Services and Government Offices surfaces only. Reuse relevant Place Registry records without absorbing the separate governmentServiceOffices dataset yet."
   },
   "betterBarangayReuse": {
     "workstream": "W3R-3a",
@@ -432,5 +432,16 @@
       "Registry place cards link to canonical place detail pages.",
       "Co-located services are shown from servicesAtLocation."
     ]
+  },
+  "mobilityReuse": {
+    "workstream": "W3R-3b",
+    "implementedIn": "src/pages/Mobility.tsx",
+    "behavior": [
+      "Verified transport stops and terminals are selected from the shared Place Registry.",
+      "MRT-3, EDSA Busway, Pasig River Ferry and One Ayala records remain one canonical dataset shared with Civic Map.",
+      "Mobility cards link to canonical place details and registry provenance.",
+      "No new transport records or route research were introduced in this step."
+    ],
+    "verifiedAnchorCount": 10
   }
 }
