@@ -77,25 +77,16 @@ jobs:
           NODE
 
 
-      - name: Detect editorial review queue
-        id: review
-        shell: bash
-        run: |
-          node - <<'NODE'
-          const fs = require('fs');
-          const queue = JSON.parse(fs.readFileSync('data/freshness-review-queue.json', 'utf8'));
-          const needsReview = Number(queue.summary?.open || 0) > 0;
-          fs.appendFileSync(process.env.GITHUB_OUTPUT, 'needs_review=' + String(needsReview) + '\n');
-          NODE
-
-      - name: Open or update source freshness review issue
-        if: steps.review.outputs.needs_review == 'true'
+      - name: Sync freshness review issue
+        if: steps.publish.outputs.publish_required == 'true'
         uses: actions/github-script@v7
         with:
           script: |
             const fs = require('fs');
             const title = 'Freshness review queue';
             const report = fs.readFileSync('data/freshness-review-queue.md', 'utf8');
+            const queue = JSON.parse(fs.readFileSync('data/freshness-review-queue.json', 'utf8'));
+            const openCount = Number(queue.summary?.open || 0);
             const { data: issues } = await github.rest.issues.listForRepo({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -103,19 +94,35 @@ jobs:
               per_page: 100,
             });
             const existing = issues.find(issue => !issue.pull_request && issue.title === title);
-            if (existing) {
+
+            if (openCount > 0) {
+              if (existing) {
+                await github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: existing.number,
+                  body: report,
+                });
+              } else {
+                await github.rest.issues.create({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  title,
+                  body: report,
+                });
+              }
+            } else if (existing) {
               await github.rest.issues.createComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: existing.number,
-                body: report,
+                body: 'Freshness review queue cleared. No open items remain in the latest published state.',
               });
-            } else {
-              await github.rest.issues.create({
+              await github.rest.issues.update({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                title,
-                body: report,
+                issue_number: existing.number,
+                state: 'closed',
               });
             }
 
