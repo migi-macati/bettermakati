@@ -502,133 +502,258 @@
           "association": "SODJEBELELODA",
           "from": "Evangelista",
           "to": "Libertad",
-          "currentStatus": "not-yet-verified"
+          "currentStatus": "current-corridor-association-continuity-unresolved",
+          "currentEvidence": [
+            {
+              "label": "Current LTFRB-labelled Evangelista–Libertad route feed",
+              "url": "https://moovitapp.com/index/en/public_transit-line-JEEP-Manila-1022-9969-7637910-1"
+            }
+          ],
+          "reconciliationNotes": "Evangelista–Libertad remains current; SODJEBELELODA continuity is not independently verified."
         },
         {
           "publishedNo": 22,
           "association": "JODA PRC-KAYAMANAN C",
           "from": "PRC",
           "to": "Mantrade",
-          "currentStatus": "not-yet-verified"
+          "currentStatus": "current-successor-corridor-endpoint-modernized-association-unresolved",
+          "currentEvidence": [
+            {
+              "label": "Current LTFRB-labelled Kayamanan C–PRC via P. Tamo route feed",
+              "url": "https://moovitapp.com/index/en/public_transit-line-jeep-Manila-1022-9969-7638066-0"
+            }
+          ],
+          "reconciliationNotes": "The old PRC–Mantrade row aligns with the current Kayamanan C–PRC via P. Tamo corridor; endpoint naming/extent has modernized, so this is not treated as an unchanged one-to-one route."
         },
         {
           "publishedNo": 23,
           "association": "PTBT-TODA",
           "from": "PRC",
           "to": "Libertad",
-          "currentStatus": "not-yet-verified"
+          "currentStatus": "current-corridor-association-continuity-unresolved",
+          "currentEvidence": [
+            {
+              "label": "Current LTFRB-labelled Libertad–PRC route feed",
+              "url": "https://moovitapp.com/index/en/public_transit-line-jeep-Manila-1022-9969-7637732-0"
+            }
+          ],
+          "reconciliationNotes": "Libertad–PRC remains current; PTBT-TODA continuity is not independently verified."
         },
         {
           "publishedNo": 24,
           "association": "WAKCODA",
           "from": "Washington",
           "to": "Mantrade",
-          "currentStatus": "not-yet-verified"
+          "currentStatus": "current-status-unresolved-no-exact-route-found",
+          "currentEvidence": [],
+          "reconciliationNotes": "No current exact Washington–Mantrade route was found in the reviewed 2026 route feeds. Washington–Libertad and Mantrade-related services exist separately, but that is not proof the historical through-route survives."
         },
         {
           "publishedNo": 25,
           "association": "PADJODA",
           "from": "Washington",
           "to": "Libertad",
-          "currentStatus": "not-yet-verified"
+          "currentStatus": "current-corridor-association-continuity-unresolved",
+          "currentEvidence": [
+            {
+              "label": "Current LTFRB-labelled Libertad–Washington route feed",
+              "url": "https://moovitapp.com/index/en/public_transit-line-jeep-Manila-1022-9969-7637892-0"
+            }
+          ],
+          "reconciliationNotes": "Washington–Libertad remains current; PADJODA continuity is not independently verified."
         },
         {
           "publishedNo": 26,
           "association": "PADODA",
           "from": "Dian",
           "to": "Libertad",
-          "currentStatus": "not-yet-verified"
+          "currentStatus": "current-corridor-association-continuity-unresolved",
+          "currentEvidence": [
+            {
+              "label": "Current route listings show Dian–Libertad / Libertad–Dian",
+              "url": "https://moovitapp.com/index/en/public_transit-Caong_St-Manila-site_58819355-1022"
+            }
+          ],
+          "reconciliationNotes": "Dian–Libertad remains current; PADODA continuity is not independently verified."
         },
         {
           "publishedNo": 27,
           "association": "PRODA",
           "from": "Pasay Road",
           "to": "Libertad",
-          "currentStatus": "not-yet-verified"
+          "currentStatus": "current-corridor-association-continuity-unresolved",
+          "currentEvidence": [
+            {
+              "label": "Current route listings show Libertad–Pasay Road",
+              "url": "https://moovitapp.com/index/en/public_transit-A_Arnaiz_Ave_Makati_City-Manila-stop_3636460-1022"
+            }
+          ],
+          "reconciliationNotes": "Pasay Road–Libertad remains current; PRODA continuity is not independently verified."
         },
         {
           "publishedNo": 28,
           "association": "PASMAKODA",
           "from": "M. Reyes",
           "to": "Libertad",
-          "currentStatus": "not-yet-verified"
+          "currentStatus": "current-corridor-association-continuity-unresolved",
+          "currentEvidence": [
+            {
+              "label": "Current route listings show Libertad–M. Reyes",
+              "url": "https://moovitapp.com/index/en/public_transit-Capt_M_Reyes_Makati_City_Manila-Manila-stop_3636487-1022"
+            }
+          ],
+          "reconciliationNotes": "M. Reyes–Libertad remains current; PASMAKODA continuity is not independently verified."
         },
         {
           "publishedNo": 29,
           "association": "PTEODA",
           "from": "Mantrade",
           "to": "Pasong Tamo Ext.",
-          "currentStatus": "not-yet-verified"
+          "currentStatus": "current-status-unresolved-possible-subsumed-corridor",
+          "currentEvidence": [
+            {
+              "label": "Current LTFRB-labelled Kayamanan C–PRC via P. Tamo route feed",
+              "url": "https://moovitapp.com/index/en/public_transit-line-jeep-Manila-1022-9969-7638066-0"
+            }
+          ],
+          "reconciliationNotes": "Current Chino Roces/Pasong Tamo services cover the corridor, but no exact Mantrade–Pasong Tamo Extension route was found. Do not equate a shared corridor with survival of the historical PTEODA route."
         },
         {
           "publishedNo": 30,
           "association": "WEBTRANS",
           "from": "FTI",
           "to": "Kayaman C",
-          "currentStatus": "not-yet-verified"
+          "currentStatus": "current-corridor-association-continuity-unresolved",
+          "currentEvidence": [
+            {
+              "label": "Current LTFRB-labelled FTI–Kayaman C route feed",
+              "url": "https://moovitapp.com/index/en/public_transit-line-JEEP-Manila-1022-9969-7637752-1"
+            }
+          ],
+          "reconciliationNotes": "FTI–Kayamanan C remains current; WEBTRANS continuity is not independently verified."
         },
         {
           "publishedNo": 31,
           "association": "MAKATI LOOP",
           "from": "Ayala",
           "to": "Makati Avenue-JP RIZAL",
-          "currentStatus": "not-yet-verified"
+          "currentStatus": "current-successor-route-modified",
+          "currentEvidence": [
+            {
+              "label": "2026 One Ayala route inventory lists Makati Loop–PRC Circuit",
+              "url": "https://www.spot.ph/newsfeatures/mobility/routes-at-one-ayala-2026-a5229-20260422-bsc"
+            }
+          ],
+          "reconciliationNotes": "Makati Loop remains current in 2026 as Makati Loop–PRC Circuit from One Ayala, using Makati Avenue/Buendia–J.P. Rizal–Circuit/Puregold–Landmark. Treat as a modified successor, not unchanged 2020 geometry."
         },
         {
           "publishedNo": 32,
           "association": "GIMDJODA",
           "from": "Delpan",
           "to": "Guadalupe Ibabaw",
-          "currentStatus": "not-yet-verified"
+          "currentStatus": "current-corridor-association-continuity-unresolved",
+          "currentEvidence": [
+            {
+              "label": "Current LTFRB-labelled Del Pan–Guadalupe (Ibabaw) route feed",
+              "url": "https://moovitapp.com/index/en/public_transit-line-JEEP-Manila-1022-9969-7637993-0"
+            }
+          ],
+          "reconciliationNotes": "Del Pan–Guadalupe (Ibabaw) remains current; GIMDJODA continuity is not independently verified."
         },
         {
           "publishedNo": 33,
           "association": "MALBODA",
           "from": "Burgos",
           "to": "L. Guinto",
-          "currentStatus": "not-yet-verified"
+          "currentStatus": "current-corridor-association-continuity-unresolved",
+          "currentEvidence": [
+            {
+              "label": "Current LTFRB-labelled Makati P. Burgos–L. Guinto route feed",
+              "url": "https://moovitapp.com/index/en/public_transit-line-jeep-Manila-1022-9969-7637999-0"
+            }
+          ],
+          "reconciliationNotes": "Makati P. Burgos–L. Guinto remains current; MALBODA continuity is not independently verified."
         },
         {
           "publishedNo": 34,
           "association": "PMMODA",
           "from": "Pateros",
           "to": "Market-Market",
-          "currentStatus": "not-yet-verified"
+          "currentStatus": "current-corridor-association-continuity-unresolved",
+          "currentEvidence": [
+            {
+              "label": "Current LTFRB-labelled Pateros–Market Market route feed",
+              "url": "https://moovitapp.com/index/en/public_transit-line-jeep-Manila-1022-9969-7637935-0"
+            }
+          ],
+          "reconciliationNotes": "Pateros–Market Market remains current; PMMODA continuity is not independently verified."
         },
         {
           "publishedNo": 35,
           "association": "EMMJODAI",
           "from": "McKinley",
           "to": "Market-Market",
-          "currentStatus": "not-yet-verified"
+          "currentStatus": "current-corridor-exact-route-identity-unresolved",
+          "currentEvidence": [
+            {
+              "label": "Current transit data shows jeepney service between McKinley Road/Market Market corridor",
+              "url": "https://fromto.travel/en/philippines/mckinley-road/market-market-mall"
+            }
+          ],
+          "reconciliationNotes": "Current jeepney service connects the McKinley Road/Market Market corridor, but the exact 2020 EMMJODAI McKinley–Market Market route identity/operator could not be frozen one-to-one."
         },
         {
           "publishedNo": 37,
           "association": "MAPAJODA (Aircon Jeep)",
           "from": "Kalayaan",
           "to": "PICC",
-          "currentStatus": "not-yet-verified"
+          "currentStatus": "current-status-unresolved-no-exact-route-found",
+          "currentEvidence": [],
+          "reconciliationNotes": "No current exact Kalayaan–PICC route was found in the reviewed current route feeds. Do not mark obsolete without stronger LTFRB/terminal evidence."
         },
         {
           "publishedNo": 38,
           "association": "KAMAJODA",
           "from": "Kamagong",
           "to": "Malugay",
-          "currentStatus": "not-yet-verified"
+          "currentStatus": "current-corridor-association-continuity-unresolved",
+          "currentEvidence": [
+            {
+              "label": "Current LTFRB-labelled Kamagong–Malugay route feed",
+              "url": "https://moovitapp.com/index/en/public_transit-line-JEEP-Manila-1022-9969-7637929-0"
+            }
+          ],
+          "reconciliationNotes": "Kamagong–Malugay remains current; KAMAJODA continuity is not independently verified."
         },
         {
           "publishedNo": 39,
           "association": "DILODA",
           "from": "Dominga",
           "to": "Libertad",
-          "currentStatus": "not-yet-verified"
+          "currentStatus": "current-corridor-association-continuity-unresolved",
+          "currentEvidence": [
+            {
+              "label": "Current route listings show Dominga–Libertad",
+              "url": "https://moovitapp.com/index/en/public_transit-Taft_Avenue-Manila-street_2659720-1022"
+            }
+          ],
+          "reconciliationNotes": "Dominga–Libertad remains current; DILODA continuity is not independently verified."
         }
       ],
       "reconciliationBatches": [
-        "data/wave3-civic-map-jeepney-routes-reconciliation-a.json"
+        "data/wave3-civic-map-jeepney-routes-reconciliation-a.json",
+        "data/wave3-civic-map-jeepney-routes-reconciliation-b.json"
       ],
-      "rowsReconciled": 20,
-      "rowsRemaining": 18
+      "rowsReconciled": 38,
+      "rowsRemaining": 0,
+      "reconciliationStatus": "complete",
+      "summary": {
+        "rowsTotal": 38,
+        "currentOrSuccessorCorridorEvidence": 35,
+        "unresolvedNoExactCurrentRoute": 3,
+        "obsoleteCorridorsProven": 0,
+        "routeAssetsAdded": 0
+      }
     },
     {
       "family": "Other 2020 transport modes",
