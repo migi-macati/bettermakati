@@ -1,0 +1,192 @@
+{
+  "schemaVersion": 1,
+  "revisedAt": "2026-09-25",
+  "workstream": "Wave 3C-2 — Makati parks and civic-space completeness",
+  "status": "reopened",
+  "reason": "The original 3C-2 added only three CBD parks. Official Makati sources publish substantially broader park inventories, so that batch was preliminary and did not satisfy the completeness goal.",
+  "authoritativeBaseline": {
+    "primary": {
+      "source": "Makati Facts and Figures 2020",
+      "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/45/561/pdf/Facts%20and%20FIgures%202020.pdf",
+      "description": "City inventory listing 16 public parks with locations; source attributed to DEPW in the facilities table.",
+      "publishedPublicParks": [
+        "Magallanes Interchange Park",
+        "Gil Puyat - SLEX",
+        "Makati Parks and Garden",
+        "Poblacion Park",
+        "Guadalupe Viejo Cloverleaf (Kennely Ann Binay Park)",
+        "Guadalupe Nuevo Cloverleaf (Kennely Ann Binay Park)",
+        "Post Office Pocket Park",
+        "Makati City Hall Park",
+        "Cembo Linear Park",
+        "Valenzuela Park",
+        "Poblacion Linear Park",
+        "Plaza Cristo Rey",
+        "East Rembo Park",
+        "Kalayaan Avenue Park (Pinagkaisahan)",
+        "Playground Park at Brgy. Poblacion",
+        "Riverside Carmona"
+      ]
+    },
+    "secondary": [
+      {
+        "source": "Makati Urban Greening / Ecological Profile",
+        "url": "https://www.makati.gov.ph/assets/uploads/downloads/938/883/pdf/93802202019132921.pdf",
+        "description": "City states 18 parks: 12 government-maintained and 6 private, and maps named park/open-space locations."
+      },
+      {
+        "source": "Department of Environmental Services Citizen's Charter",
+        "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/481/pdf/Department%20of%20Environmental%20Services.pdf",
+        "description": "Current operational evidence for Parks and Green Division offices at Magallanes Interchange Park and Kennely Ann Lacia Binay Park, Guadalupe Nuevo."
+      },
+      {
+        "source": "Philippine Statistics Authority PSGC — City of Makati",
+        "url": "https://psa.gov.ph/classification/psgc/barangays/1380300000",
+        "description": "Current Makati geography: 23 barangays; former EMBO barangays are not part of present-day Makati."
+      }
+    ]
+  },
+  "preliminaryWorkAlreadyDone": {
+    "status": "retained-not-complete",
+    "assets": [
+      "Ayala Triangle Gardens",
+      "Washington SyCip Park",
+      "Legazpi Active Park"
+    ],
+    "note": "These remain valid Civic Map assets but are private/public-access CBD green spaces, not a substitute for the City Government's public-park inventory."
+  },
+  "revisedSubsteps": [
+    {
+      "id": "3C-2a",
+      "title": "Reconcile official Makati park inventories",
+      "goal": "Build one canonical crosswalk across the city's 12-, 16- and 18-park lists before touching Civic Map data.",
+      "tasks": [
+        "Extract every named park/open-space entry from the official Makati inventories.",
+        "Normalize obvious spelling and naming variants without assuming two differently named sites are identical.",
+        "Record which source/vintage each name appears in.",
+        "Separate government-maintained/public parks from private/public-access parks where the source does so."
+      ],
+      "output": "data/wave3-civic-map-parks-inventory.json",
+      "implementation": false,
+      "stopWhen": "Every official park name from the reviewed city inventories is represented once in a source crosswalk."
+    },
+    {
+      "id": "3C-2b",
+      "title": "Reconcile parks to current Makati geography",
+      "goal": "Translate historical city inventories into the current 23-barangay Makati boundary.",
+      "tasks": [
+        "Mark parks in West Rembo, Cembo, East Rembo and any other now-outside-Makati location as historical/former-Makati rather than current Makati assets.",
+        "Keep them in the audit for provenance, but exclude them from current-Makati completeness counts.",
+        "Resolve present-day barangay assignment only where supported; do not infer uncertain boundary cases."
+      ],
+      "dependencies": [
+        "3C-2a"
+      ],
+      "implementation": false,
+      "stopWhen": "Every historical inventory entry has current-Makati / former-Makati / boundary-uncertain status."
+    },
+    {
+      "id": "3C-2c",
+      "title": "Verify current public parks",
+      "goal": "Verify the current existence, current name and mappable location of every current-Makati public-park candidate.",
+      "startingCandidates": [
+        "Magallanes Interchange Park",
+        "Gil Puyat - SLEX",
+        "Poblacion Park",
+        "Guadalupe Viejo Cloverleaf / Kennely Ann Binay Park",
+        "Guadalupe Nuevo Cloverleaf / Kennely Ann Binay Park",
+        "Post Office Pocket Park",
+        "Makati City Hall Park",
+        "Valenzuela Park",
+        "Poblacion Linear Park",
+        "Plaza Cristo Rey",
+        "Kalayaan Avenue Park (Pinagkaisahan)",
+        "Playground Park at Brgy. Poblacion",
+        "Riverside Carmona"
+      ],
+      "tasks": [
+        "Prefer current Makati government/DES/DEPW/official barangay evidence.",
+        "Use current map geometry only for point/location verification, not as authority for ownership or operating status.",
+        "Flag renamed, absorbed, redeveloped or unverifiable sites rather than silently dropping them.",
+        "Capture address, barangay, authority, source and coordinate provenance."
+      ],
+      "dependencies": [
+        "3C-2b"
+      ],
+      "implementation": false,
+      "splitRule": "If verification is large, execute in bounded batches such as 3C-2c1, 3C-2c2, etc."
+    },
+    {
+      "id": "3C-2d",
+      "title": "Implement verified current public parks",
+      "goal": "Make the Civic Map complete for verified government-maintained/public parks within present-day Makati.",
+      "tasks": [
+        "Add every verified current public park not already mapped.",
+        "Retain park-specific rating/reporting criteria.",
+        "Display official source and coordinate provenance.",
+        "Add integrity guards against losing verified public-park coverage."
+      ],
+      "dependencies": [
+        "3C-2c"
+      ],
+      "implementation": true,
+      "stopWhen": "Every verified current public park from the reconciled official inventory is represented, or explicitly marked unresolved with a reason."
+    },
+    {
+      "id": "3C-2e",
+      "title": "Reconcile private and public-access green spaces",
+      "goal": "Treat private/public-access parks as a separate layer instead of mixing them into the public-park completeness count.",
+      "tasks": [
+        "Reconcile Ayala Triangle Gardens, Washington SyCip Park, Legazpi Active Park and other officially listed private/public-access parks/open spaces.",
+        "Verify current access/management and present-day Makati location.",
+        "Define a simple ownership/access metadata field if needed so public vs private/public-access is visible in data without sermon copy."
+      ],
+      "dependencies": [
+        "3C-2d"
+      ],
+      "implementation": false,
+      "stopWhen": "The private/public-access park list is normalized and classified."
+    },
+    {
+      "id": "3C-2f",
+      "title": "Implement private/public-access park layer",
+      "goal": "Add verified private/public-access parks without confusing them with government-maintained public parks.",
+      "tasks": [
+        "Add missing verified private/public-access park assets.",
+        "Apply ownership/access metadata consistently.",
+        "Keep the three already-added CBD parks and reclassify them in metadata if necessary."
+      ],
+      "dependencies": [
+        "3C-2e"
+      ],
+      "implementation": true
+    },
+    {
+      "id": "3C-2g",
+      "title": "Close park completeness",
+      "goal": "Audit the final park layer against all official Makati inventories and current Makati geography.",
+      "tasks": [
+        "Report counts for current public parks, private/public-access parks, historical/former-Makati parks and unresolved entries.",
+        "Update Civic Map/page audit gaps.",
+        "Require all verified current park IDs in the Civic Map integrity check.",
+        "Do not claim completeness for any unresolved site."
+      ],
+      "dependencies": [
+        "3C-2f"
+      ],
+      "implementation": true,
+      "stopWhen": "Every official-inventory park has a transparent final disposition."
+    }
+  ],
+  "countingRule": {
+    "publicParkCompleteness": "Only verified government-maintained/public parks inside current Makati count toward public-park completeness.",
+    "privatePublicAccess": "Tracked separately and never used to inflate the public-park count.",
+    "formerMakati": "Preserved as historical inventory records but excluded from current Makati coverage.",
+    "unresolved": "Remain visible in the audit and prevent a false completeness claim."
+  },
+  "immediateNext": {
+    "id": "3C-2a",
+    "title": "Reconcile official Makati park inventories",
+    "maximumScope": "Research/crosswalk only. No Civic Map additions yet."
+  }
+}
