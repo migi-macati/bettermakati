@@ -178,6 +178,36 @@ for (const id of blockedTransferredPoliceAssets) {
   }
 }
 
+const requiredCoreCommunityAssets = [
+  'makati-social-development-center',
+  'makati-youth-home',
+  'makati-youth-center',
+  'sm-felicidad-sy-center-for-the-elderly',
+  'poblacion-public-market',
+];
+
+for (const id of requiredCoreCommunityAssets) {
+  if (!assetIds.includes(id)) {
+    problems.push('Missing verified Makati community/city-owned Civic Map asset: ' + id);
+    continue;
+  }
+  const start = assetBlock.indexOf("id: '" + id + "'");
+  const end = assetBlock.indexOf('\n  },', start);
+  const row = start >= 0 && end >= 0 ? assetBlock.slice(start, end) : '';
+  for (const marker of [
+    'address:',
+    'sourceUrl:',
+    'sourceLabel:',
+    'coordinateSourceUrl:',
+    'coordinateSourceLabel:',
+    "status: 'mapped'",
+  ]) {
+    if (!row.includes(marker)) {
+      problems.push(id + ' is missing verified community/city-owned metadata: ' + marker);
+    }
+  }
+}
+
 const requiredGovernmentServiceAssets = [
   'psa-makati-crs',
   'lto-makati-district',
