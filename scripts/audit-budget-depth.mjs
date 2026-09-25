@@ -102,9 +102,11 @@ const localOfficeDetailJson = officeDetailSection
   .replace(/,\s*\.\.\.officeBudgetDetails2026Remaining\s*\]\s*;?$/, ']');
 
 const remainingRawJson =
-  budgetRemaining.split('const raw: Array<[office: string, pages: string, lines: RawLine[]]> = ')[1]?.split(
-    ';\n\nexport const officeBudgetDetails2026Remaining'
-  )[0] ?? '[]';
+  (
+    budgetRemaining.split('const raw: Array<[office: string, pages: string, lines: RawLine[]]> = ')[1]?.split(
+      ';\n\nexport const officeBudgetDetails2026Remaining'
+    )[0] ?? '[]'
+  ).replace(/,\s*\]$/, '\n]');
 
 let officeDetails = [];
 try {
