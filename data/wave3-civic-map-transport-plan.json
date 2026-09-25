@@ -7,7 +7,8 @@
   "reconciliationFile": "data/wave3-civic-map-transport-reconciliation.json",
   "completedSubsteps": [
     "3C-3a",
-    "3C-3b"
+    "3C-3b",
+    "3C-3c"
   ],
   "substeps": [
     {
@@ -25,13 +26,13 @@
     {
       "id": "3C-3c",
       "title": "Reconcile the 32 current bus stops",
-      "status": "next",
+      "status": "complete",
       "scope": "Find/verify named city stop inventory; research only before any implementation."
     },
     {
       "id": "3C-3d",
       "title": "Reconcile historical jeepney routes",
-      "status": "planned",
+      "status": "next",
       "scope": "Crosswalk 38 2020 route rows against current LTFRB/operator evidence and decide route-vs-terminal representation."
     },
     {
@@ -48,9 +49,9 @@
     }
   ],
   "immediateNext": {
-    "id": "3C-3c",
-    "title": "Reconcile the 32 current bus stops",
-    "scope": "Research only. Find a named current city stop inventory from Makati/DEPW/PSD or equivalent authoritative records, crosswalk it to existing Busway/other stop assets, and do not add speculative bus-stop pins."
+    "id": "3C-3d",
+    "title": "Reconcile historical jeepney routes",
+    "scope": "Research only. Crosswalk the 38 Makati Facts and Figures 2020 jeepney-route rows against current LTFRB/operator/terminal evidence, classify current/changed/obsolete/uncertain routes, and do not create single-point route assets."
   },
   "ferryImplementationStatus": "complete",
   "ferryImplementationFile": "data/wave3-civic-map-ferry-implementation.json",
@@ -58,5 +59,15 @@
     "currentMakatiStations": 2,
     "mapped": 2,
     "missing": 0
+  },
+  "busStopReconciliationStatus": "complete-headline-only-unresolved",
+  "busStopReconciliationFile": "data/wave3-civic-map-bus-stops-reconciliation.json",
+  "busStopReconciliationSummary": {
+    "official2023Count": 32,
+    "namedCurrentRosterFound": false,
+    "namedStopsFrozen": 0,
+    "publishedCount2022": 17,
+    "historicalWaitingSheds": 36,
+    "civicMapAssetsAdded": 0
   }
 }
