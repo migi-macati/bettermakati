@@ -270,6 +270,7 @@ test('Projects & Budget displays and filters procurement evidence', async ({ pag
   await search.fill('BS25-04-0419');
   await expect(page.getByText('Instructional materials for Makati public elementary and secondary schools', { exact: true })).toBeVisible();
   await expect(page.getByText('Epigraphy Inc.', { exact: true })).toBeVisible();
+  await expect(page.getByText('Checked 25 September 2026', { exact: true })).toBeVisible();
 });
 
 test('Projects & Budget displays structured audit follow-through', async ({ page }) => {
