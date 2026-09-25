@@ -1,0 +1,459 @@
+{
+  "schemaVersion": 1,
+  "auditedAt": "2026-09-25",
+  "workstream": "W3R-1 — Disposition current Wave 3 capabilities",
+  "sourceBaseline": "data/wave3-participation-classification.json",
+  "purpose": "Preserve the useful Wave 3 foundation while explicitly separating capabilities that survive unchanged from those that must be reframed, replaced, deferred or retired under the Places, Reporting & Civic Participation model.",
+  "dispositionDefinitions": {
+    "KEEP": "Capability purpose survives unchanged. Existing implementation is preserved unless later integration work is needed.",
+    "REFRAME": "Capability remains useful but its user job, ownership or presentation changes under the Place Registry/task-led model.",
+    "REPLACE": "The old interaction/model itself is superseded by a different mechanism.",
+    "DEFER": "Capability remains valid but should be executed only after redesigned workflows stabilize or governance/data prerequisites exist.",
+    "RETIRE": "Capability is no longer needed and has no successor."
+  },
+  "summary": {
+    "capabilities": 40,
+    "KEEP": 22,
+    "REFRAME": 12,
+    "DEFER": 5,
+    "REPLACE": 1,
+    "RETIRE": 0
+  },
+  "crossCuttingRetirements": [
+    {
+      "concept": "Generic star-style civic asset ratings as a primary participation mechanism",
+      "replacement": "Structured, dated observations tied to useful place conditions",
+      "successor": "W3R-6a to W3R-6c"
+    },
+    {
+      "concept": "Civic Map as the owner of canonical place/asset data",
+      "replacement": "Shared Place Registry consumed by Civic Map, BetterBarangay, Services, Mobility, Search, Visit/Heritage and other relevant surfaces",
+      "successor": "W3R-2a to W3R-3d and W3R-9a to W3R-9e"
+    },
+    {
+      "concept": "Public participation success measured mainly through submission/rating volume",
+      "replacement": "Outcome-oriented case, observation and audit metrics with publication thresholds",
+      "successor": "W3R-10a to W3R-10c"
+    },
+    {
+      "concept": "Requiring users to search for an asset before reporting a local problem",
+      "replacement": "Location/nearby-place-first reporting with manual fallback",
+      "successor": "W3R-5a to W3R-5c"
+    }
+  ],
+  "workstreams": [
+    {
+      "id": "3B",
+      "title": "Participation Hub",
+      "capabilities": [
+        {
+          "workstream": "3B",
+          "id": "3B-1-official-vs-bettermakati",
+          "capability": "Distinguish official participation from BetterMakati community input",
+          "previousStatus": "complete",
+          "disposition": "KEEP",
+          "reason": "Preserve the distinction between official government participation and BetterMakati community input.",
+          "successor": "W3R-8a"
+        },
+        {
+          "workstream": "3B",
+          "id": "3B-1-task-entrypoints",
+          "capability": "Task-led entry points for reporting, suggestions, corrections, sources, volunteering and official participation",
+          "previousStatus": "partial",
+          "disposition": "REFRAME",
+          "reason": "Keep task-led entry, but replace Civic Map-centric choices with report a local problem, suggest a place improvement, help document Makati, corrections/sources, BetterMakati ideas and volunteering.",
+          "successor": "W3R-8a"
+        },
+        {
+          "workstream": "3B",
+          "id": "3B-2-routing",
+          "capability": "Each participation choice routes to a functional destination",
+          "previousStatus": "complete",
+          "disposition": "REFRAME",
+          "reason": "Functional routing remains required, but several destinations will change as reporting, observations and civic audits are redesigned.",
+          "successor": "W3R-8a"
+        },
+        {
+          "workstream": "3B",
+          "id": "3B-3-barangay-context",
+          "capability": "Carry BetterBarangay context into participation actions",
+          "previousStatus": "partial",
+          "disposition": "KEEP",
+          "reason": "Barangay context remains useful across reporting, place discovery, corrections, proposals and audits.",
+          "successor": "W3R-8c"
+        },
+        {
+          "workstream": "3B",
+          "id": "3B-official-opportunity-discovery",
+          "capability": "Show current official consultations, hearings, assemblies and similar opportunities",
+          "previousStatus": "partial",
+          "disposition": "KEEP",
+          "reason": "Current official participation opportunities remain a distinct useful user job; source incompleteness stays an explicit data limitation.",
+          "successor": "W3R-8a"
+        },
+        {
+          "workstream": "3B",
+          "id": "3B-4-mobile-accessibility",
+          "capability": "Dedicated mobile/accessibility QA for the participation hub",
+          "previousStatus": "missing",
+          "disposition": "DEFER",
+          "reason": "Run dedicated mobile/accessibility QA only after the redesigned participation surfaces stabilize.",
+          "successor": "W3R-11e"
+        }
+      ]
+    },
+    {
+      "id": "3C",
+      "title": "Civic Reporting",
+      "capabilities": [
+        {
+          "workstream": "3C",
+          "id": "3C-1-categories",
+          "capability": "Useful issue and improvement categories",
+          "previousStatus": "complete",
+          "disposition": "REFRAME",
+          "reason": "Issue and improvement taxonomies remain useful, but must be simplified around task-led reporting and separated from structured condition observations.",
+          "successor": "W3R-5a"
+        },
+        {
+          "workstream": "3C",
+          "id": "3C-2-report-form",
+          "capability": "Functional report/proposal/review/update form",
+          "previousStatus": "complete",
+          "disposition": "REPLACE",
+          "reason": "The combined report/proposal/rating-review/update interaction is too broad. Preserve reports, proposals and updates in redesigned flows; replace rating/review with structured observations.",
+          "successor": "W3R-5c + W3R-6b"
+        },
+        {
+          "workstream": "3C",
+          "id": "3C-3-geographic-handling",
+          "capability": "Barangay, asset, point/segment and long-street geographic handling",
+          "previousStatus": "partial",
+          "disposition": "REFRAME",
+          "reason": "Move geographic identity from Civic Map-owned assets into the shared Place Registry and add nearby-place matching so users need not find assets manually.",
+          "successor": "W3R-2a to W3R-5b"
+        },
+        {
+          "workstream": "3C",
+          "id": "3C-4-emergency-handling",
+          "capability": "Keep emergency cases out of BetterMakati and route immediately to the appropriate emergency channel",
+          "previousStatus": "complete",
+          "disposition": "KEEP",
+          "reason": "Immediate-danger cases must continue to bypass BetterMakati case submission and route to 911 or the appropriate emergency channel.",
+          "successor": "W3R-5c"
+        },
+        {
+          "workstream": "3C",
+          "id": "3C-5-duplicate-consolidation",
+          "capability": "Detect and consolidate likely duplicate public-realm cases",
+          "previousStatus": "complete",
+          "disposition": "KEEP",
+          "reason": "Duplicate detection is directly useful for place-based reporting and should carry into the redesigned flow.",
+          "successor": "W3R-5c"
+        },
+        {
+          "workstream": "3C",
+          "id": "3C-6-confirmation",
+          "capability": "Clear post-submission confirmation and tracking",
+          "previousStatus": "complete",
+          "disposition": "KEEP",
+          "reason": "Public confirmation/tracking remains important after any report or proposal submission.",
+          "successor": "W3R-5c"
+        },
+        {
+          "workstream": "3C",
+          "id": "3C-citywide-coverage",
+          "capability": "Meaningful citywide Civic Map asset coverage",
+          "previousStatus": "partial",
+          "disposition": "REFRAME",
+          "reason": "Replace 'Civic Map coverage' with Place Registry coverage. The 88 verified assets become shared website infrastructure used by multiple surfaces.",
+          "successor": "W3R-2a to W3R-3d"
+        }
+      ]
+    },
+    {
+      "id": "3D",
+      "title": "Referral Lifecycle",
+      "capabilities": [
+        {
+          "workstream": "3D",
+          "id": "3D-1-status-model",
+          "capability": "Distinct lifecycle states from community submission through resolution",
+          "previousStatus": "complete",
+          "disposition": "KEEP",
+          "reason": "The case lifecycle remains valid independently of Civic Map: reviewed, forwarded, acknowledged, action reported and community-verified resolved.",
+          "successor": "W3R-5d"
+        },
+        {
+          "workstream": "3D",
+          "id": "3D-2-data-structure",
+          "capability": "Store lifecycle events with destination/channel/reference evidence",
+          "previousStatus": "complete",
+          "disposition": "KEEP",
+          "reason": "Destination, channel, reference, evidence and timestamp fields remain necessary for credible case tracking.",
+          "successor": "W3R-5d"
+        },
+        {
+          "workstream": "3D",
+          "id": "3D-3-public-status",
+          "capability": "Present meaningful public lifecycle status without overstating government action",
+          "previousStatus": "complete",
+          "disposition": "KEEP",
+          "reason": "Public status must continue to distinguish BetterMakati/community evidence from documented government action.",
+          "successor": "W3R-5d"
+        },
+        {
+          "workstream": "3D",
+          "id": "3D-4-human-review",
+          "capability": "Require human review before referral to government",
+          "previousStatus": "complete",
+          "disposition": "KEEP",
+          "reason": "Human review remains necessary before referral to avoid wrong jurisdiction, weak evidence and false claims of official receipt.",
+          "successor": "W3R-5d"
+        },
+        {
+          "workstream": "3D",
+          "id": "3D-auto-forwarding",
+          "capability": "Automatic delivery of eligible cases to government channels",
+          "previousStatus": "intentionallyDeferred",
+          "disposition": "DEFER",
+          "reason": "Automatic forwarding remains inappropriate until destination, authorization, evidence and accountability rules are reliable.",
+          "successor": "post-Wave-3 / explicit future decision"
+        }
+      ]
+    },
+    {
+      "id": "3E",
+      "title": "Suggestions, Corrections & Source Contributions",
+      "capabilities": [
+        {
+          "workstream": "3E",
+          "id": "3E-1-page-correction",
+          "capability": "Page-specific correction path",
+          "previousStatus": "complete",
+          "disposition": "KEEP",
+          "reason": "Page-specific correction remains a useful generic BetterMakati contribution path.",
+          "successor": "W3R-8b"
+        },
+        {
+          "workstream": "3E",
+          "id": "3E-2-suggestions",
+          "capability": "General idea/proposal submission",
+          "previousStatus": "complete",
+          "disposition": "KEEP",
+          "reason": "General BetterMakati ideas/proposals remain useful; place-specific improvements will be separated into the place workflow.",
+          "successor": "W3R-8a + W3R-8b"
+        },
+        {
+          "workstream": "3E",
+          "id": "3E-3-source-contribution",
+          "capability": "Submit a public source or record",
+          "previousStatus": "complete",
+          "disposition": "KEEP",
+          "reason": "Submitting public records and source links remains useful across the whole site.",
+          "successor": "W3R-8b"
+        },
+        {
+          "workstream": "3E",
+          "id": "3E-4-general-deduplication",
+          "capability": "Deduplicate general corrections, ideas and source submissions",
+          "previousStatus": "missing",
+          "disposition": "KEEP",
+          "reason": "General feedback deduplication has since been implemented and remains valuable.",
+          "successor": "preserve existing implementation"
+        }
+      ]
+    },
+    {
+      "id": "3F",
+      "title": "Get Involved",
+      "capabilities": [
+        {
+          "workstream": "3F",
+          "id": "3F-1-contribution-paths",
+          "capability": "Concrete contribution paths instead of generic civic-engagement copy",
+          "previousStatus": "complete",
+          "disposition": "REFRAME",
+          "reason": "Keep concrete actions but add civic-audit participation and align public-place actions with the redesigned reporting/observation model.",
+          "successor": "W3R-8b"
+        },
+        {
+          "workstream": "3F",
+          "id": "3F-2-native-submission",
+          "capability": "Native BetterMakati submission with transparent public tracking",
+          "previousStatus": "complete",
+          "disposition": "KEEP",
+          "reason": "Native submission with transparent public tracking remains the preferred general-input path.",
+          "successor": "preserve existing implementation"
+        },
+        {
+          "workstream": "3F",
+          "id": "3F-3-fallback",
+          "capability": "Submission fallback when native storage is unavailable",
+          "previousStatus": "complete",
+          "disposition": "KEEP",
+          "reason": "Fallback must remain available when native submission storage is unavailable.",
+          "successor": "preserve existing implementation"
+        },
+        {
+          "workstream": "3F",
+          "id": "3F-4-ecosystem-handoffs",
+          "capability": "Relevant BetterLGU/OpenBayan participation handoffs",
+          "previousStatus": "complete",
+          "disposition": "KEEP",
+          "reason": "BetterLGU/OpenBayan and other relevant ecosystem handoffs remain useful for out-of-scope journeys.",
+          "successor": "W3R-8b"
+        }
+      ]
+    },
+    {
+      "id": "3G",
+      "title": "Barangay Participation",
+      "capabilities": [
+        {
+          "workstream": "3G",
+          "id": "3G-1-scoped-civic-map",
+          "capability": "Barangay-scoped public-realm participation",
+          "previousStatus": "complete",
+          "disposition": "REFRAME",
+          "reason": "Replace 'barangay-scoped Civic Map' as the main concept with barangay places, local issues, improvements, audit campaigns and official contact.",
+          "successor": "W3R-3a + W3R-8c"
+        },
+        {
+          "workstream": "3G",
+          "id": "3G-2-barangay-contact",
+          "capability": "Surface barangay government contact near participation actions",
+          "previousStatus": "complete",
+          "disposition": "KEEP",
+          "reason": "Local official contact remains useful alongside reports, improvements and participation.",
+          "successor": "W3R-8c"
+        },
+        {
+          "workstream": "3G",
+          "id": "3G-3-scoped-general-contribution",
+          "capability": "Carry barangay context into general source/correction/proposal forms",
+          "previousStatus": "partial",
+          "disposition": "KEEP",
+          "reason": "Barangay context should continue into source/correction/proposal forms; this gap has already been implemented.",
+          "successor": "preserve existing implementation"
+        },
+        {
+          "workstream": "3G",
+          "id": "3G-4-barangay-activity",
+          "capability": "Barangay-specific issue/activity summaries based on real submissions",
+          "previousStatus": "partial",
+          "disposition": "REFRAME",
+          "reason": "Replace sparse map-activity summaries with evidence-based local issues, improvements, place conditions and audit coverage as data becomes available.",
+          "successor": "W3R-8c + W3R-10a"
+        }
+      ]
+    },
+    {
+      "id": "3H",
+      "title": "Participation Feedback Loop",
+      "capabilities": [
+        {
+          "workstream": "3H",
+          "id": "3H-1-simple-counts",
+          "capability": "Simple public participation counts by recent period",
+          "previousStatus": "complete",
+          "disposition": "REFRAME",
+          "reason": "Raw recent counts may remain useful, but the feedback loop should emphasize meaningful case/observation/audit outcomes rather than volume for its own sake.",
+          "successor": "W3R-10a + W3R-10b"
+        },
+        {
+          "workstream": "3H",
+          "id": "3H-2-resolution-evidence",
+          "capability": "Separate community resolution signals from verified lifecycle resolution",
+          "previousStatus": "complete",
+          "disposition": "KEEP",
+          "reason": "Community resolution signals must remain distinct from documented lifecycle resolution.",
+          "successor": "W3R-5d + W3R-10a"
+        },
+        {
+          "workstream": "3H",
+          "id": "3H-3-periodic-synthesis",
+          "capability": "Weekly/monthly public participation synthesis",
+          "previousStatus": "complete",
+          "disposition": "REFRAME",
+          "reason": "Keep synthesis only if it explains meaningful issues, actions, conditions or audit findings; retire rating-centric summaries.",
+          "successor": "W3R-10a + W3R-10b"
+        },
+        {
+          "workstream": "3H",
+          "id": "3H-4-general-participation-metrics",
+          "capability": "Measure response time, conversion and outcomes across all BetterMakati participation channels",
+          "previousStatus": "missing",
+          "disposition": "REFRAME",
+          "reason": "Measure useful outcomes across redesigned workflows: location matching, review, routing, acknowledgement, action, resolution, freshness, audit coverage and repeat contribution.",
+          "successor": "W3R-10a"
+        },
+        {
+          "workstream": "3H",
+          "id": "3H-low-volume-headline-metrics",
+          "capability": "Publish headline popularity/engagement metrics before enough observations exist",
+          "previousStatus": "intentionallyDeferred",
+          "disposition": "KEEP",
+          "reason": "Continue withholding representative-looking rates/scores when sample size, recency or coverage is insufficient.",
+          "successor": "W3R-10b"
+        }
+      ]
+    },
+    {
+      "id": "3I",
+      "title": "Participation QA",
+      "capabilities": [
+        {
+          "workstream": "3I",
+          "id": "3I-1-existing-critical-paths",
+          "capability": "Basic browser coverage for Civic Map participation journeys",
+          "previousStatus": "complete",
+          "disposition": "REFRAME",
+          "reason": "Retain useful baseline tests, but final public-place coverage must test nearby reporting, place matching, observations and lifecycle rather than the old ratings-first flow.",
+          "successor": "W3R-11d"
+        },
+        {
+          "workstream": "3I",
+          "id": "3I-2-full-page-audit-coverage",
+          "capability": "Human page-audit coverage for every major participation surface",
+          "previousStatus": "missing",
+          "disposition": "DEFER",
+          "reason": "Audit the stabilized redesigned participation/place surfaces rather than moving targets.",
+          "successor": "W3R-11a"
+        },
+        {
+          "workstream": "3I",
+          "id": "3I-3-end-to-end-submission",
+          "capability": "End-to-end browser tests for POST submission, fallback, tracking and lifecycle transitions",
+          "previousStatus": "missing",
+          "disposition": "DEFER",
+          "reason": "E2E submission/fallback/tracking coverage remains required but should be finalized after redesigned workflows stabilize.",
+          "successor": "W3R-11c + W3R-11d"
+        },
+        {
+          "workstream": "3I",
+          "id": "3I-4-mobile-accessibility",
+          "capability": "Dedicated mobile, keyboard, label, focus and error-state QA across the participation journey",
+          "previousStatus": "partial",
+          "disposition": "DEFER",
+          "reason": "Run the dedicated mobile, keyboard, focus, label and error-state pass against the redesigned experience.",
+          "successor": "W3R-11e"
+        },
+        {
+          "workstream": "3I",
+          "id": "3I-5-privacy-boundary",
+          "capability": "Avoid unnecessary personal data and warn against sensitive submissions",
+          "previousStatus": "complete",
+          "disposition": "KEEP",
+          "reason": "Continue minimizing personal data and warning against sensitive submissions across all redesigned contribution paths.",
+          "successor": "all redesigned participation flows"
+        }
+      ]
+    }
+  ],
+  "nextStep": {
+    "id": "W3R-2a",
+    "title": "Define shared Place Registry schema",
+    "maximumScope": "Schema/design record only. Define canonical place fields, lifecycle/provenance relationships and which fields remain participation-specific. No code migration."
+  }
+}
