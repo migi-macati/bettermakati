@@ -185,12 +185,21 @@
     "unresolved": "Remain visible in the audit and prevent a false completeness claim."
   },
   "immediateNext": {
-    "id": "3C-2b",
-    "title": "Reconcile parks to current Makati geography",
-    "maximumScope": "Geography/disposition classification only. No Civic Map additions."
+    "id": "3C-2c",
+    "title": "Verify current public parks",
+    "maximumScope": "Current existence/name/access/authority/address/coordinate verification only. Split into bounded research batches if needed; no bulk Civic Map additions."
   },
   "completedSubsteps": [
-    "3C-2a"
+    "3C-2a",
+    "3C-2b"
   ],
-  "inventoryFile": "data/wave3-civic-map-parks-inventory.json"
+  "inventoryFile": "data/wave3-civic-map-parks-inventory.json",
+  "geographyFile": "data/wave3-civic-map-parks-geography.json",
+  "geographySummary": {
+    "total": 43,
+    "currentMakati": 31,
+    "formerMakatiNowTaguig": 10,
+    "unresolved": 2,
+    "boundaryUncertain": 0
+  }
 }
