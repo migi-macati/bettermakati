@@ -254,6 +254,27 @@ for (const item of open) {
   }
 }
 
+const auditedPaths = new Set(pageAudit.map(page => page.path));
+const untrackedAffectedPages = [...openSignalsByPage.entries()]
+  .filter(([path]) => !auditedPaths.has(path))
+  .map(([path, dependencySignals]) => ({
+    path,
+    needsReview: true,
+    freshnessStatus: 'needs-review-untracked',
+    reviewedAt: null,
+    editorialStatus: null,
+    dependencySignals: dependencySignals.sort((a, b) =>
+      String(b.detectedAt || '').localeCompare(String(a.detectedAt || ''))
+    ),
+    latestDependencySignalAt:
+      dependencySignals
+        .map(signal => signal.detectedAt)
+        .filter(Boolean)
+        .sort()
+        .at(-1) || null,
+  }))
+  .sort((a, b) => a.path.localeCompare(b.path));
+
 const pageFreshnessState = {
   version: 1,
   generatedAt,
@@ -261,6 +282,7 @@ const pageFreshnessState = {
     pages: pageAudit.length,
     current: pageAudit.filter(page => !(openSignalsByPage.get(page.path) || []).length).length,
     needsReview: pageAudit.filter(page => (openSignalsByPage.get(page.path) || []).length > 0).length,
+    untrackedAffectedPages: untrackedAffectedPages.length,
   },
   pages: pageAudit.map(page => {
     const dependencySignals = (openSignalsByPage.get(page.path) || []).sort((a, b) =>
@@ -277,6 +299,7 @@ const pageFreshnessState = {
       latestDependencySignalAt: dependencySignals[0]?.detectedAt || null,
     };
   }),
+  untrackedAffectedPages,
 };
 
 await writeFile(
