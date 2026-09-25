@@ -202,6 +202,17 @@ const yakapHealthCenters: Record<string, BarangayFacility[]> = {
     sourceLabel: 'PhilHealth YAKAP list · May 31, 2026',
     note: 'Government YAKAP clinic · accreditation listed through Dec. 31, 2026',
   }],
+  'san-antonio': [{
+    name: 'San Antonio Health Center',
+    type: 'Health',
+    href: mapsSearch('8456 Mayapis Street, San Antonio, Makati City'),
+    address: '8456 Mayapis Street, San Antonio, Makati City',
+    phone: '8897-2626 / 0917-855-9531',
+    email: 'ConsultsSanAntonio@makati.gov.ph',
+    source: philHealthYakapClinics2026Source,
+    sourceLabel: 'PhilHealth YAKAP list · 2026',
+    note: 'Government YAKAP clinic',
+  }],
   'san-isidro': [{
     name: 'San Isidro Health Center',
     type: 'Health',
@@ -268,6 +279,16 @@ export const barangayFacilities = (slug: string, name: string): BarangayFacility
   };
   return [hall, ...(yakapHealthCenters[slug] ?? [])];
 };
+
+const yakapPublishedServicesFor = (slug: string): BarangayPublishedService[] =>
+  (yakapHealthCenters[slug] ?? []).map(facility => ({
+    title: facility.name + ' — PhilHealth YAKAP clinic',
+    type: 'Health',
+    summary: 'Government primary-care facility listed by PhilHealth as an accredited YAKAP clinic.',
+    availability: facility.note,
+    sourceUrl: facility.source || philHealthYakapClinics2026Source,
+    sourceLabel: facility.sourceLabel || 'PhilHealth YAKAP accredited-facility list',
+  }));
 
 export const barangayProfilesReviewed = '25 September 2026';
 
@@ -713,7 +734,22 @@ const barangayBaseProfiles: BarangayProfile[] = [
     { title: 'First-time jobseeker certification', type: 'Certificate', sourceUrl: 'https://barangayolympia.site/homepage', sourceLabel: 'Barangay Olympia online services' },
     { title: 'CCTV record request', type: 'Other', sourceUrl: 'https://barangayolympia.site/homepage', sourceLabel: 'Barangay Olympia online services' },
   ], officials: { punongBarangay: 'Reynaldo A. Yulo', source: 'https://www.makati.gov.ph/barangay/olympia/27?page=438' }, hallAddress: 'Fortuna Street, Makati City', hallPhone: '(02) 8897-9718 / (02) 8897-5019 / (02) 8897-9764 / (02) 8805-5096 / (02) 8551-8892 / (02) 8785-0626 / 0968-349-4634', hallEmail: 'barangayolympiamakati@gmail.com', hallSource: 'https://www.makati.gov.ph/barangay/olympia/27?page=438' },
-  { slug: 'palanan', name: 'Palanan', population2024: 11934, legislativeDistrict: '1st District', officialPageUrl: 'https://www.makati.gov.ph/barangay/palanan/28', officials: { punongBarangay: 'John Benedict C. Corcuera', source: 'https://www.makati.gov.ph/barangay/palanan/28' } },
+  { slug: 'palanan', name: 'Palanan', population2024: 11934, legislativeDistrict: '1st District', officialPageUrl: 'https://www.makati.gov.ph/barangay/palanan/28', publishedServices: [
+    {
+      title: 'Animal Bite Treatment Center',
+      type: 'Health',
+      summary: 'Palanan Health Center is listed by PhilHealth as an accredited Animal Bite Treatment Center.',
+      sourceUrl: 'https://www.philhealth.gov.ph/partners/providers/facilities/accredited/ABPP_053126.pdf',
+      sourceLabel: 'PhilHealth Animal Bite Package providers · May 31, 2026',
+    },
+    {
+      title: 'TB-DOTS services',
+      type: 'Health',
+      summary: 'Palanan Health Center is listed as an accredited TB-DOTS package provider.',
+      sourceUrl: 'https://www.philhealth.gov.ph/partners/providers/facilities/accredited/DOTS_053126.pdf',
+      sourceLabel: 'PhilHealth TB-DOTS providers · May 31, 2026',
+    },
+  ], officials: { punongBarangay: 'John Benedict C. Corcuera', source: 'https://www.makati.gov.ph/barangay/palanan/28' } },
   { slug: 'pinagkaisahan', name: 'Pinagkaisahan', population2024: 5323, legislativeDistrict: '2nd District', officialPageUrl: 'https://www.makati.gov.ph/barangay/pinagkaisahan/16?tab=239', officials: { punongBarangay: 'Shyla Marie Ramos (Acting)', source: 'https://www.makati.gov.ph/barangay/pinagkaisahan/16?tab=239' }, hallAddress: '2886 Danlig St. cor. Tolentino Streets, Makati City', hallPhone: '(02) 8881-4536 / (02) 8821-4530 / (02) 8881-4403', hallEmail: 'brgy.pinagkaisahan.makati@gmail.com', hallSource: 'https://www.makati.gov.ph/barangay/pinagkaisahan/16?tab=239' },
   { slug: 'pio-del-pilar', name: 'Pio Del Pilar', population2024: 55572, legislativeDistrict: '1st District', officialPageUrl: 'https://www.makati.gov.ph/barangay/pio-del-pilar/33', websiteUrl: 'https://brgypiodelpilarmakati.com.ph/staging/', hallEmail: 'bpiodelpilarsecoffice2020@gmail.com', publishedServices: [
     {
@@ -760,7 +796,23 @@ const barangayBaseProfiles: BarangayProfile[] = [
   ], officials: { punongBarangay: 'Jose Emmanuel A. Recto', source: 'https://www.makati.gov.ph/barangay/san-lorenzo/37' }, hallAddress: '65 Amorsolo Street, Makati City', hallPhone: '(02) 8893-3811 / (02) 8241-9319', hallEmail: 'brgysanlorenzo.makati@gmail.com', hallSource: 'https://sanloph.com/', hallSourceLabel: 'Barangay San Lorenzo website', associations: [{ name: 'San Lorenzo Village Association (SLVA)', href: 'https://www.myslv.ph/', linkLabel: 'Website' }, { name: 'Makati Central Estate Association (MACEA)', href: 'https://macea.com.ph/', linkLabel: 'Estate association' }] },
   { slug: 'santa-cruz', name: 'Santa Cruz', population2024: 6744, legislativeDistrict: '1st District', officialPageUrl: 'https://www.makati.gov.ph/barangay/sta.-cruz/39?page=622', officials: { punongBarangay: 'Kit H. Taguiang', source: 'https://www.makati.gov.ph/barangay/sta.-cruz/39?page=622' } },
   { slug: 'singkamas', name: 'Singkamas', population2024: 7485, legislativeDistrict: '1st District', officialPageUrl: 'https://www.makati.gov.ph/barangay/singkamas/38?tab=598', facebookUrl: 'https://www.facebook.com/barangaysingkamas.serbisyo' },
-  { slug: 'tejeros', name: 'Tejeros', population2024: 16019, legislativeDistrict: '1st District', officialPageUrl: 'https://www.makati.gov.ph/barangay/tejeros/7?page=92', heritageMarkers: [{ name: 'Dambana ng Banal na Krus', agency: 'NHCP', status: 'Level II – Historical marker', href: 'https://philhistoricsites.nhcp.gov.ph/registry_database/dambana-ng-banal-na-krus/', location: 'Holy Cross Parish Church, 211 J.P. Rizal Avenue, Barangay Tejeros' }], notablePlaces: [{ name: 'Holy Cross Parish Church (Dambana ng Banal na Krus)', href: 'https://philhistoricsites.nhcp.gov.ph/registry_database/dambana-ng-banal-na-krus/', type: 'Heritage', source: 'NHCP' }] },
+  { slug: 'tejeros', name: 'Tejeros', population2024: 16019, legislativeDistrict: '1st District', officialPageUrl: 'https://www.makati.gov.ph/barangay/tejeros/7?page=92', publishedServices: [
+    {
+      title: 'Tejeros Health Center primary care',
+      type: 'Health',
+      summary: 'Services documented in 2026 include medical consultations, family planning, vaccination, dental care, nutrition programs, and care for hypertension and diabetes.',
+      availability: 'Monday–Friday · 8:00 AM–5:00 PM',
+      sourceUrl: 'https://pco.gov.ph/news_releases/pbbm-inspects-barangay-tejeros-health-center-in-makati/',
+      sourceLabel: 'Presidential Communications Office · May 18, 2026',
+    },
+    {
+      title: 'TB-DOTS services',
+      type: 'Health',
+      summary: 'Tejeros Health Center is listed as an accredited TB-DOTS package provider through 2026.',
+      sourceUrl: 'https://www.philhealth.gov.ph/partners/providers/facilities/accredited/DOTS_053126.pdf',
+      sourceLabel: 'PhilHealth TB-DOTS providers · May 31, 2026',
+    },
+  ], heritageMarkers: [{ name: 'Dambana ng Banal na Krus', agency: 'NHCP', status: 'Level II – Historical marker', href: 'https://philhistoricsites.nhcp.gov.ph/registry_database/dambana-ng-banal-na-krus/', location: 'Holy Cross Parish Church, 211 J.P. Rizal Avenue, Barangay Tejeros' }], notablePlaces: [{ name: 'Holy Cross Parish Church (Dambana ng Banal na Krus)', href: 'https://philhistoricsites.nhcp.gov.ph/registry_database/dambana-ng-banal-na-krus/', type: 'Heritage', source: 'NHCP' }] },
   { slug: 'urdaneta', name: 'Urdaneta', population2024: 4720, legislativeDistrict: '1st District', officialPageUrl: 'https://www.makati.gov.ph/barangay/urdaneta/8', officials: { punongBarangay: 'Leonard Y. Alandy Dy', source: 'https://www.makati.gov.ph/barangay/urdaneta/8' }, associations: [{ name: 'Urdaneta Village Association (UVA)', href: 'https://www.google.com/maps/search/?api=1&query=Urdaneta%20Village%20Association%20Makati', linkLabel: 'Map' }, { name: 'Makati Central Estate Association (MACEA)', href: 'https://macea.com.ph/', linkLabel: 'Estate association' }] },
   { slug: 'valenzuela', name: 'Valenzuela', population2024: 5598, legislativeDistrict: '1st District', officialPageUrl: makatiBarangayDirectory },
 ];
@@ -769,6 +821,10 @@ export const barangays: BarangayProfile[] = barangayBaseProfiles.map(profile => 
   ...(barangayContactSupplement[profile.slug] ?? {}),
   ...profile,
   officials: barangayOfficialData[profile.slug] ?? profile.officials,
+  publishedServices: [
+    ...(profile.publishedServices ?? []),
+    ...yakapPublishedServicesFor(profile.slug),
+  ],
 }));
 
 export const barangayCoverageSummary = {
