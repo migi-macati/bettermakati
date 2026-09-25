@@ -65,7 +65,7 @@
     "path": "/barangays",
     "label": "Barangays",
     "status": "partial",
-    "reviewedAt": "2026-09-20",
+    "reviewedAt": "2026-09-25",
     "checks": [
       "23-barangays",
       "population",
@@ -74,7 +74,8 @@
       "associations"
     ],
     "gaps": [
-      "Barangay hall contacts and service inventories are not equally complete for all 23 barangays."
+      "Barangay hall address and phone coverage has been expanded across the 23 current barangays, but verified email addresses and official social channels remain uneven.",
+      "Service pages currently expose the common barangay transactions citywide; barangay-specific fees, requirements and local process variations still need field-by-field verification where a barangay publishes them."
     ]
   },
   {
