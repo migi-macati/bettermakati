@@ -80,6 +80,8 @@ if (history.version !== 2 || !Array.isArray(history.runs)) {
 
 for (const marker of [
   "const cadence = args.get('cadence') || 'all'",
+  "cadenceIsDue",
+  "const publishRequired = checked.some(semanticStateChanged)",
   "source.monitoringMode === 'content-hash'",
   "result.change === 'content-changed'",
   "response.body?.cancel()",
@@ -89,11 +91,18 @@ for (const marker of [
   if (!checker.includes(marker)) problems.push('Source checker lost safety/cadence behavior: ' + marker);
 }
 
-for (const cron of ["cron: '30 0 * * *'", "cron: '40 0 * * 1'", "cron: '50 0 1 * *'"]) {
-  if (!workflow.includes(cron)) problems.push('Source freshness workflow lost schedule: ' + cron);
+if (!workflow.includes("cron: '0 0 * * *'")) {
+  problems.push('Source freshness workflow must run once daily at 08:00 Philippine time.');
+}
+for (const retiredCron of ["cron: '30 0 * * *'", "cron: '40 0 * * 1'", "cron: '50 0 1 * *'"]) {
+  if (workflow.includes(retiredCron)) {
+    problems.push('Source freshness workflow still contains retired split schedule: ' + retiredCron);
+  }
 }
 for (const marker of [
   'node scripts/check-sources.mjs --cadence=',
+  'cadence="due"',
+  "if: steps.publish.outputs.publish_required == 'true'",
   'npm run build',
   'data/source-watch-state.json',
   'git pull --rebase origin main',
