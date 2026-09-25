@@ -341,6 +341,16 @@ export default function BarangayProfile() {
                 >
                   Makati barangay page <ExternalLink className="h-4 w-4" />
                 </a>
+                {barangay.websiteUrl && (
+                  <a
+                    href={barangay.websiteUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="brand-btn-secondary"
+                  >
+                    Barangay website <ExternalLink className="h-4 w-4" />
+                  </a>
+                )}
                 {barangay.facebookUrl && (
                   <a
                     href={barangay.facebookUrl}
