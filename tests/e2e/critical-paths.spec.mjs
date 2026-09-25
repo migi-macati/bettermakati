@@ -151,9 +151,42 @@ test('service directory opens BetterMakati guide before external handoff', async
   await search.fill('cedula');
   await page.getByRole('link', { name: /Open guide/i }).first().click();
   await expect(page).toHaveURL(/\/services\/guide\/community-tax-certificate/);
-  await expect(page.getByText('Structured details verified')).toBeVisible();
+  await expect(page.getByText('Structured details verified')).toHaveCount(0);
   await expect(page.getByRole('heading', { name: 'Requirements' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Fees & payment' })).toBeVisible();
+});
+
+test('services directory omits completeness scorekeeping', async ({ page }) => {
+  await page.goto(baseURL + '/services');
+  await expect(page.getByText(/structured · .*verified/i)).toHaveCount(0);
+  await expect(page.getByText('Detailed guide', { exact: true })).toHaveCount(0);
+  await expect(page.getByText('Detail checked with caveat', { exact: true })).toHaveCount(0);
+  await expect(page.getByText(/results$/).first()).toBeVisible();
+});
+
+test('expanded Makati city service guides expose transaction details', async ({ page }) => {
+  await page.goto(baseURL + '/services/guide/locational-clearance-business');
+  await expect(page.getByRole('heading', { name: 'Requirements' })).toBeVisible();
+  await expect(page.getByText(/Occupancy Permit or Occupancy Clearance/i)).toBeVisible();
+  await expect(page.getByText(/3–4 days when site verification is required/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/special-event-permit');
+  await expect(page.getByText(/Letter of request addressed to the Mayor\/City Administrator/i)).toBeVisible();
+  await expect(page.getByText(/admission tickets for stamping/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/city-laboratory-services');
+  await expect(page.getByText(/Physician referral slip or walk-in laboratory request/i)).toBeVisible();
+  await expect(page.getByText(/morning specimens are generally released in the afternoon/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/supplier-registration');
+  await expect(page.getByText(/Letter of intent to the Bids and Awards Committee/i)).toBeVisible();
+  await expect(page.getByText(/No fee stated in the cited guide/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/weighing-scale-registration');
+  await expect(page.getByText(/10 minutes in the cited guide/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/gasoline-pump-calibration');
+  await expect(page.getByText(/₱45 per instrument/i)).toBeVisible();
 });
 
 test('Saan Ako Lalapit is task-first and service-only', async ({ page }) => {
@@ -171,7 +204,7 @@ test('Saan Ako Lalapit common need reaches the structured PWD guide', async ({ p
   await page.goto(baseURL + '/community-tools/saan-ako-lalapit');
   await page.getByRole('link', { name: /I need a PWD ID/i }).click();
   await expect(page).toHaveURL(/\/services\/guide\/pwd-id$/);
-  await expect(page.getByText('Partially verified')).toBeVisible();
+  await expect(page.getByText('Partially verified')).toHaveCount(0);
   await expect(page.getByRole('heading', { name: 'Requirements' })).toBeVisible();
   await expect(page.getByText('Six 1x1 ID pictures', { exact: true })).toBeVisible();
 });
@@ -720,7 +753,7 @@ test('scoped city pages show the selected BetterBarangay in the persistent bar',
 
 test('barangay homepage exposes council services election and local accountability', async ({ page }) => {
   await page.goto(baseURL + '/barangays/poblacion');
-  await expect(page.getByRole('heading', { name: /Common barangay transactions/i })).toBeVisible();
+  await expect(page.getByRole('heading', { name: /Common transactions/i })).toBeVisible();
   await expect(page.getByRole('heading', { name: /Current barangay council/i })).toBeVisible();
   await expect(page.getByText(/Jose Mikhail Ranillo Villena/i)).toBeVisible();
   await expect(page.getByRole('heading', { name: /2025 mayoral result/i })).toBeVisible();
