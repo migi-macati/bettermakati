@@ -10,6 +10,28 @@ if (duplicateAssets.length) {
   problems.push('Duplicate Civic Map asset IDs: ' + [...new Set(duplicateAssets)].join(', '));
 }
 
+const requiredGovernmentServiceAssets = [
+  'psa-makati-crs',
+  'lto-makati-district',
+  'sec-headquarters',
+  'makati-central-fire-station',
+];
+
+for (const id of requiredGovernmentServiceAssets) {
+  if (!assetIds.includes(id)) {
+    problems.push('Missing verified government-service Civic Map asset: ' + id);
+    continue;
+  }
+  const start = assetBlock.indexOf("id: '" + id + "'");
+  const end = assetBlock.indexOf('\n  },', start);
+  const row = start >= 0 && end >= 0 ? assetBlock.slice(start, end) : '';
+  for (const marker of ['address:', 'sourceUrl:', 'sourceLabel:', "status: 'mapped'"]) {
+    if (!row.includes(marker)) {
+      problems.push(id + ' is missing verified facility metadata: ' + marker);
+    }
+  }
+}
+
 const coordinates = [...assetBlock.matchAll(/lat:\s*([0-9.]+),\s*\n\s*lng:\s*([0-9.]+)/g)].map(match => ({
   lat: Number(match[1]),
   lng: Number(match[2]),
@@ -47,7 +69,7 @@ if (duplicateProposals.length) {
   problems.push('Duplicate Civic Map proposal category IDs: ' + [...new Set(duplicateProposals)].join(', '));
 }
 
-if (assetIds.length < 5) problems.push('Civic Map pilot needs at least five seed assets.');
+if (assetIds.length < 10) problems.push('Civic Map needs at least ten mapped/pilot assets after the government-service expansion.');
 if (issueIds.length < 20) problems.push('Civic Map issue taxonomy appears unexpectedly small.');
 if (proposalIds.length < 10) problems.push('Civic Map proposal taxonomy appears unexpectedly small.');
 
