@@ -185,13 +185,14 @@
     "unresolved": "Remain visible in the audit and prevent a false completeness claim."
   },
   "immediateNext": {
-    "id": "3C-2c",
-    "title": "Verify current public parks",
-    "maximumScope": "Current existence/name/access/authority/address/coordinate verification only. Split into bounded research batches if needed; no bulk Civic Map additions."
+    "id": "3C-2c2",
+    "title": "Verify current public parks — batch 2",
+    "maximumScope": "Research seven remaining high-priority current public-park candidates only. No Civic Map changes."
   },
   "completedSubsteps": [
     "3C-2a",
-    "3C-2b"
+    "3C-2b",
+    "3C-2c1"
   ],
   "inventoryFile": "data/wave3-civic-map-parks-inventory.json",
   "geographyFile": "data/wave3-civic-map-parks-geography.json",
@@ -201,5 +202,14 @@
     "formerMakatiNowTaguig": 10,
     "unresolved": 2,
     "boundaryUncertain": 0
+  },
+  "currentVerificationFiles": [
+    "data/wave3-civic-map-parks-current-verification-1.json"
+  ],
+  "currentVerificationSummary": {
+    "researched": 6,
+    "verifiedCurrentPublic": 4,
+    "heldAliasResolution": 1,
+    "heldCurrentStatusUnverified": 1
   }
 }
