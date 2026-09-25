@@ -84,6 +84,55 @@ for (const id of requiredHealthCenterBatchB) {
   }
 }
 
+const requiredFireStationAssets = [
+  'makati-central-fire-station',
+  'ayala-fire-satellite',
+  'bel-air-fire-substation',
+  'bangkal-fire-substation',
+  'guadalupe-fire-substation',
+  'la-paz-fire-substation',
+  'pio-del-pilar-fire-substation',
+  'palanan-fire-substation',
+  'poblacion-fire-substation',
+  'tejeros-fire-substation',
+  'valenzuela-fire-substation',
+];
+
+for (const id of requiredFireStationAssets) {
+  if (!assetIds.includes(id)) {
+    problems.push('Missing verified Makati fire-station Civic Map asset: ' + id);
+    continue;
+  }
+  const start = assetBlock.indexOf("id: '" + id + "'");
+  const end = assetBlock.indexOf('\n  },', start);
+  const row = start >= 0 && end >= 0 ? assetBlock.slice(start, end) : '';
+  for (const marker of [
+    "type: 'public-office'",
+    'address:',
+    'sourceUrl:',
+    'sourceLabel:',
+    'coordinateSourceUrl:',
+    'coordinateSourceLabel:',
+    "status: 'mapped'",
+  ]) {
+    if (!row.includes(marker)) {
+      problems.push(id + ' is missing verified fire-station metadata: ' + marker);
+    }
+  }
+}
+
+const blockedAmbiguousFireAssets = [
+  'new-makati-central-fire-station',
+  'west-rembo-fire-substation',
+  'comembo-fire-substation',
+];
+
+for (const id of blockedAmbiguousFireAssets) {
+  if (assetIds.includes(id)) {
+    problems.push('Ambiguous/former-Makati fire station must not be mapped as a current Makati asset: ' + id);
+  }
+}
+
 const requiredGovernmentServiceAssets = [
   'psa-makati-crs',
   'lto-makati-district',
