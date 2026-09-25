@@ -187,9 +187,9 @@
       "likelyCurrentIdentity": "The Plaza / redeveloped Glorietta 4 open space",
       "barangay": "San Lorenzo",
       "accessClass": "public-access-private-managed",
-      "currentStatus": "public-access-redevelopment-verified-current-formal-name-not-frozen",
+      "currentStatus": "verified-current-public-access-redeveloped",
       "management": "Ayala Malls / Ayala Land",
-      "implementationDisposition": "hold-for-current-name-and-point-freeze",
+      "implementationDisposition": "ready",
       "evidence": [
         {
           "source": "Makati Facts and Figures 2020",
@@ -205,9 +205,24 @@
           "source": "Ayala Land — Redevelopment of Brownfield Sites",
           "url": "https://ir.ayalaland.com.ph/sustainability/our-policies/redevelopment-of-brownfield-sites/",
           "finding": "Ayala Land confirms the ongoing Glorietta redevelopment and increased-open-space objective."
+        },
+        {
+          "source": "BusinessWorld — Ayala Malls refresh",
+          "url": "https://www.bworldonline.com/arts-and-leisure/2025/07/21/686256/ayala-malls-heads-for-refresh-expansion-projects/",
+          "finding": "Ayala Malls identified Glorietta 4 Park as the green space being transformed into The Plaza."
+        },
+        {
+          "source": "Current map geometry",
+          "url": "https://www.openstreetmap.org/?mlat=14.55111&mlon=121.02694#map=19/14.55111/121.02694",
+          "finding": "Current map data continues to identify the park at the Glorietta 4 site."
         }
       ],
-      "note": "Current public reporting indicates the Glorietta 4 outdoor space has been redeveloped as The Plaza, but a current official Ayala source naming the outdoor space itself was not found in this pass."
+      "note": "Implement one current asset with both names rather than creating separate historical and redevelopment pins.",
+      "currentName": "Glorietta 4 Park / The Plaza",
+      "aliases": [
+        "Glorietta 4 Park",
+        "The Plaza"
+      ]
     },
     {
       "id": "mahogany-park",
@@ -376,17 +391,28 @@
       "currentName": "Dela Rosa Gardens",
       "barangay": "San Lorenzo",
       "accessClass": "public-access-private-managed",
-      "currentStatus": "verified-current-public-access",
+      "currentStatus": "future-public-green-space-under-development",
       "management": "Ayala Land / Makati CBD estate management",
-      "implementationDisposition": "ready",
+      "implementationDisposition": "future-do-not-implement-until-open",
       "official2020PrivateList": false,
       "evidence": [
         {
           "source": "Ayala Land 2025 Integrated Report",
           "url": "https://ir.ayalaland.com.ph/wp-content/uploads/2026/04/ALI-2025-Integrated-Report.pdf",
-          "finding": "Ayala Land reports the launch of Dela Rosa Gardens, a 2,600-square-meter green and open-space node in the Makati CBD."
+          "finding": "Ayala Land identifies Dela Rosa Gardens as a planned 2,600-sqm green node in the Makati CBD Emerald Network."
+        },
+        {
+          "source": "Ayala Land 2026 Annual Meeting minutes",
+          "url": "https://ir.ayalaland.com.ph/wp-content/uploads/2026/04/ALI-Minutes-ASM-23-April-2026.pdf",
+          "finding": "As of April 23, 2026, Ayala Land still described Dela Rosa Gardens as forthcoming."
+        },
+        {
+          "source": "BusinessWorld — July 1, 2025",
+          "url": "https://www.bworldonline.com/page/1338/?check_desc=on&cof=forid%3A9&cx=004532060860096015900%3Aasdluufycnm&limit=0&noamp=mobile&order=daterec&page=1&sel_section=all&sel_year_end=2011&sel_year_start=1994&sitesearch=www.bworldonline.com&sort=desc&start_row=0&wmc-currency=usd",
+          "finding": "Ayala Land's published completion target for the park is Q4 2028."
         }
-      ]
+      ],
+      "note": "Do not map as a current usable park before opening. The district is active, but the public green space itself remains forthcoming."
     },
     {
       "id": "palm-promenade-park",
@@ -420,11 +446,11 @@
     "newReadyPublicAccessAssets": [
       "greenbelt-park",
       "jaime-velasquez-park",
-      "dela-rosa-gardens",
-      "palm-promenade-park"
-    ],
-    "holdBeforeImplementation": [
+      "palm-promenade-park",
       "glorietta-4-park"
+    ],
+    "futureDoNotImplementUntilOpen": [
+      "dela-rosa-gardens"
     ],
     "auditOnlyControlledPrivateCommunity": [
       "bel-air-park-near-barangay-hall",
@@ -453,17 +479,18 @@
     "official2020PrivateEntries": 21,
     "officialEntriesCurrentMakati": 14,
     "officialEntriesFormerMakatiNowTaguig": 7,
-    "publicAccessPrivateManagedReadyOrAlreadyMappedFromOfficialBaseline": 4,
-    "publicAccessPrivateManagedHoldFromOfficialBaseline": 1,
+    "publicAccessPrivateManagedImplementedFromOfficialBaseline": 4,
     "controlledPrivateCommunityFromOfficialBaseline": 7,
     "unresolvedOfficialCurrentMakati": 2,
-    "supplementalCurrentPublicAccessSpaces": 3,
-    "final3C2fPublicAccessSetReadyOrAlreadyMapped": 7,
-    "final3C2fPublicAccessHold": 1
+    "supplementalCurrentPublicAccessImplemented": 1,
+    "supplementalExistingPublicAccessAlreadyMapped": 1,
+    "supplementalFuturePublicAccessNotYetOpen": 1,
+    "final3C2fPublicAccessImplementedOrReclassified": 7,
+    "final3C2fFutureNotImplemented": 1
   },
   "nextStep": {
     "id": "3C-2f",
     "title": "Implement private/public-access park layer",
-    "scope": "Add the four ready missing public-access private-managed parks, reclassify the three existing CBD park assets with ownership/access metadata, and resolve Glorietta 4's current name/point immediately before deciding whether to add it. Do not add gated village parks, unresolved historical records or former-Makati assets."
+    "scope": "Implementation set frozen after current-status correction: reclassify three existing CBD parks; add Greenbelt Park, Jaime C. Velasquez Park, Palm Promenade and Glorietta 4 Park / The Plaza; keep Dela Rosa Gardens out until it opens."
   }
 }
