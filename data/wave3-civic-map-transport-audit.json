@@ -285,8 +285,43 @@
   },
   "conclusion": "The transport expansion should begin with four official MRT-3 Makati stations plus One Ayala Terminal. EDSA Busway Guadalupe, Buendia and Ayala are also verified current assets, but should be implemented separately after precise mode-specific points are checked. Route objects remain deferred until Civic Map supports route geometry.",
   "nextStep": {
-    "id": "3C-4a",
-    "title": "Add verified rail/intermodal transport assets",
-    "scope": "Implement the five approved first-batch objects only after current coordinate verification."
+    "id": "3C-4b",
+    "title": "Add EDSA Busway Makati stations",
+    "scope": "Verify distinct platform points for Guadalupe, Buendia and Ayala and add only those three assets."
+  },
+  "implementationStatus": {
+    "3C-4a": {
+      "status": "complete",
+      "completedAt": "2026-09-25",
+      "assets": [
+        {
+          "id": "mrt3-guadalupe",
+          "lat": 14.56711,
+          "lng": 121.04554
+        },
+        {
+          "id": "mrt3-buendia",
+          "lat": 14.55437,
+          "lng": 121.03422,
+          "note": "Barangay intentionally omitted pending sufficiently reliable exact-boundary verification."
+        },
+        {
+          "id": "mrt3-ayala",
+          "lat": 14.54919,
+          "lng": 121.02792
+        },
+        {
+          "id": "mrt3-magallanes",
+          "lat": 14.54195,
+          "lng": 121.01939
+        },
+        {
+          "id": "one-ayala-terminal",
+          "lat": 14.55029,
+          "lng": 121.02816
+        }
+      ],
+      "provenance": "Service identity verified from DOTr MRT-3 / Ayala Land; point geometry cross-checked against current OpenStreetMap-derived station/terminal geometry."
+    }
   }
 }
