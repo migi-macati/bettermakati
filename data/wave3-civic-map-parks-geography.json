@@ -1,0 +1,458 @@
+{
+  "schemaVersion": 1,
+  "reconciledAt": "2026-09-25",
+  "workstream": "Wave 3C-2b — Park inventory geography reconciliation",
+  "scope": "Classify all 43 official-inventory crosswalk entries against present-day Makati geography. No Civic Map assets are added or removed here.",
+  "controllingGeography": {
+    "makati": {
+      "source": "Philippine Statistics Authority PSGC — City of Makati",
+      "url": "https://psa.gov.ph/classification/psgc/barangays/1380300000",
+      "currentBarangayCount": 23,
+      "currentBarangays": [
+        "Bangkal",
+        "Bel-Air",
+        "Carmona",
+        "Dasmariñas",
+        "Forbes Park",
+        "Guadalupe Nuevo",
+        "Guadalupe Viejo",
+        "Kasilawan",
+        "La Paz",
+        "Magallanes",
+        "Olympia",
+        "Palanan",
+        "Pinagkaisahan",
+        "Pio Del Pilar",
+        "Poblacion",
+        "San Antonio",
+        "San Isidro",
+        "San Lorenzo",
+        "Santa Cruz",
+        "Singkamas",
+        "Tejeros",
+        "Urdaneta",
+        "Valenzuela"
+      ]
+    },
+    "transferredToTaguig": {
+      "source": "Philippine Statistics Authority — Third Quarter 2023 PSGC Updates",
+      "url": "https://psa.gov.ph/content/third-quarter-2023-psgc-updates-conversion-new-city-merging-44-barangays-renaming-five",
+      "transferredBarangays": [
+        "Cembo",
+        "Comembo",
+        "East Rembo",
+        "Pembo",
+        "Pitogo",
+        "Post Proper Northside",
+        "Post Proper Southside",
+        "Rizal",
+        "South Cembo",
+        "West Rembo"
+      ]
+    }
+  },
+  "sourceLocationLayer": {
+    "source": "Makati Facts and Figures 2020",
+    "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/45/561/pdf/Facts%20and%20FIgures%202020.pdf",
+    "role": "Primary named location source for the 2020 public/private park entries; historical geography is then reconciled against current PSGC."
+  },
+  "supportingOperationalEvidence": [
+    {
+      "source": "Makati 2022 Annual Procurement Plan",
+      "url": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/online_forms/pdf/2022%20APP%20Final.pdf",
+      "supports": [
+        "Magallanes Interchange Park",
+        "Buendia Plaza",
+        "Ayala Freedom Park",
+        "EDSA-Buendia Park",
+        "Kennely Ann L. Binay Park",
+        "Guadalupe Viejo Cloverleaf Park"
+      ]
+    },
+    {
+      "source": "MMDA/Makati Adopt-A-Park rollout reported by Philippine Information Agency",
+      "url": "https://mirror.pia.gov.ph/news/2023/02/22/mmda-unveils-three-adopt-a-park-project-sites-in-makati",
+      "supports": [
+        "EDSA-Buendia Park",
+        "EDSA-Pinagkaisahan Park",
+        "Magallanes Interchange Phase A - Mini Park"
+      ]
+    }
+  ],
+  "classifications": [
+    {
+      "id": "magallanes-interchange-park",
+      "geographyStatus": "current-makati",
+      "currentBarangay": "Magallanes",
+      "historicalBarangay": null,
+      "confidence": "high",
+      "rationale": "2020 Makati park table locates it in Magallanes, which remains one of Makati's 23 current barangays."
+    },
+    {
+      "id": "buendia-plaza",
+      "geographyStatus": "current-makati",
+      "currentBarangay": null,
+      "historicalBarangay": null,
+      "confidence": "medium",
+      "rationale": "Makati's 2010 DES inventory and 2022 APP both retain Buendia Plaza; present-day mapping places the park on Mayapis Street inside current Makati. Exact barangay will be re-verified in 3C-2c."
+    },
+    {
+      "id": "gil-puyat-slex",
+      "geographyStatus": "current-makati",
+      "currentBarangay": "San Antonio",
+      "historicalBarangay": null,
+      "confidence": "high",
+      "rationale": "2020 Makati park table locates it on Mayapis Street, Barangay San Antonio, a current Makati barangay."
+    },
+    {
+      "id": "makati-park-and-garden",
+      "geographyStatus": "former-makati-now-taguig",
+      "currentBarangay": null,
+      "historicalBarangay": "West Rembo",
+      "confidence": "high",
+      "rationale": "2020 Makati park table locates it in West Rembo; PSA transferred West Rembo from Makati to Taguig in 2023."
+    },
+    {
+      "id": "poblacion-park",
+      "geographyStatus": "current-makati",
+      "currentBarangay": "Poblacion",
+      "historicalBarangay": null,
+      "confidence": "high",
+      "rationale": "2020 Makati park table locates it in Poblacion, a current Makati barangay."
+    },
+    {
+      "id": "kennely-ann-lacia-binay-park-guadalupe-nuevo",
+      "geographyStatus": "current-makati",
+      "currentBarangay": "Guadalupe Nuevo",
+      "historicalBarangay": null,
+      "confidence": "high",
+      "rationale": "2020 Makati park table locates the Guadalupe Nuevo cloverleaf park in Guadalupe Nuevo, a current Makati barangay."
+    },
+    {
+      "id": "guadalupe-viejo-cloverleaf-park",
+      "geographyStatus": "current-makati",
+      "currentBarangay": "Guadalupe Viejo",
+      "historicalBarangay": null,
+      "confidence": "high",
+      "rationale": "2020 Makati park table locates it in Guadalupe Viejo, a current Makati barangay."
+    },
+    {
+      "id": "freedom-park",
+      "geographyStatus": "unresolved",
+      "currentBarangay": null,
+      "historicalBarangay": null,
+      "confidence": "low",
+      "rationale": "2010 DES and 2022 APP establish Freedom Park/Ayala Freedom Park as a Makati-maintained site, but the reviewed Makati publications do not provide a location precise enough to reconcile it confidently to current geography."
+    },
+    {
+      "id": "pinagkaisahan-underpass-park",
+      "geographyStatus": "current-makati",
+      "currentBarangay": "Pinagkaisahan",
+      "historicalBarangay": null,
+      "confidence": "medium",
+      "rationale": "The 2010 DES name ties the park to Pinagkaisahan, which remains a current Makati barangay. Exact current site/name will be verified in 3C-2c."
+    },
+    {
+      "id": "edsa-buendia-park",
+      "geographyStatus": "current-makati",
+      "currentBarangay": null,
+      "historicalBarangay": null,
+      "confidence": "high",
+      "rationale": "Makati's 2010 DES inventory and 2022 APP retain the site; the Makati/MMDA Adopt-A-Park project identifies EDSA-Buendia Park as a Makati park. Exact barangay will be verified in 3C-2c."
+    },
+    {
+      "id": "guadalupe-nuevo-linear-park",
+      "geographyStatus": "current-makati",
+      "currentBarangay": "Guadalupe Nuevo",
+      "historicalBarangay": null,
+      "confidence": "medium",
+      "rationale": "The 2010 DES name ties the linear park to Guadalupe Nuevo, which remains a current Makati barangay. Exact present-day geometry/status will be verified in 3C-2c."
+    },
+    {
+      "id": "valenzuela-park",
+      "geographyStatus": "current-makati",
+      "currentBarangay": "Valenzuela",
+      "historicalBarangay": null,
+      "confidence": "high",
+      "rationale": "2020 Makati park table locates it on A. Bonifacio Street in Barangay Valenzuela, a current Makati barangay."
+    },
+    {
+      "id": "makati-des-linear-park",
+      "geographyStatus": "unresolved",
+      "currentBarangay": null,
+      "historicalBarangay": null,
+      "confidence": "low",
+      "rationale": "The 2010 DES inventory names the site but does not provide a location; no reviewed later Makati inventory resolves its present-day geography."
+    },
+    {
+      "id": "post-office-pocket-park",
+      "geographyStatus": "current-makati",
+      "currentBarangay": null,
+      "historicalBarangay": null,
+      "confidence": "high",
+      "rationale": "2020 Makati park table locates it at Malugay Street corner Ayala Avenue Extension, within present-day Makati; exact barangay will be verified in 3C-2c."
+    },
+    {
+      "id": "makati-city-hall-park",
+      "geographyStatus": "current-makati",
+      "currentBarangay": "Poblacion",
+      "historicalBarangay": null,
+      "confidence": "high",
+      "rationale": "2020 Makati park table locates it in Poblacion, a current Makati barangay."
+    },
+    {
+      "id": "ayala-edsa-park",
+      "geographyStatus": "current-makati",
+      "currentBarangay": "Urdaneta",
+      "historicalBarangay": null,
+      "confidence": "high",
+      "rationale": "2020 Makati private-park table locates it at Ayala Avenue corner EDSA in Barangay Urdaneta, a current Makati barangay."
+    },
+    {
+      "id": "cembo-linear-park",
+      "geographyStatus": "former-makati-now-taguig",
+      "currentBarangay": null,
+      "historicalBarangay": "Cembo",
+      "confidence": "high",
+      "rationale": "2020 Makati park table locates it in Cembo; PSA transferred Cembo from Makati to Taguig in 2023."
+    },
+    {
+      "id": "poblacion-linear-park",
+      "geographyStatus": "current-makati",
+      "currentBarangay": "Poblacion",
+      "historicalBarangay": null,
+      "confidence": "high",
+      "rationale": "2020 Makati park table locates it in Poblacion, a current Makati barangay."
+    },
+    {
+      "id": "plaza-cristo-rey",
+      "geographyStatus": "current-makati",
+      "currentBarangay": "Poblacion",
+      "historicalBarangay": null,
+      "confidence": "high",
+      "rationale": "2020 Makati park and heritage tables locate Plaza Cristo Rey in Poblacion, a current Makati barangay."
+    },
+    {
+      "id": "east-rembo-park",
+      "geographyStatus": "former-makati-now-taguig",
+      "currentBarangay": null,
+      "historicalBarangay": "East Rembo",
+      "confidence": "high",
+      "rationale": "2020 Makati park table locates it in East Rembo; PSA transferred East Rembo from Makati to Taguig in 2023."
+    },
+    {
+      "id": "kalayaan-avenue-park-pinagkaisahan",
+      "geographyStatus": "current-makati",
+      "currentBarangay": "Pinagkaisahan",
+      "historicalBarangay": null,
+      "confidence": "high",
+      "rationale": "2020 Makati park table locates it on Kalayaan Avenue in Barangay Pinagkaisahan, a current Makati barangay."
+    },
+    {
+      "id": "playground-park-poblacion",
+      "geographyStatus": "current-makati",
+      "currentBarangay": "Poblacion",
+      "historicalBarangay": null,
+      "confidence": "high",
+      "rationale": "2020 Makati park table locates it in Poblacion, a current Makati barangay."
+    },
+    {
+      "id": "riverside-carmona",
+      "geographyStatus": "current-makati",
+      "currentBarangay": "Carmona",
+      "historicalBarangay": null,
+      "confidence": "high",
+      "rationale": "2020 Makati park table locates it on H. Santos Street in Barangay Carmona, a current Makati barangay."
+    },
+    {
+      "id": "greenbelt-park",
+      "geographyStatus": "current-makati",
+      "currentBarangay": "San Lorenzo",
+      "historicalBarangay": null,
+      "confidence": "high",
+      "rationale": "2020 Makati private-park table locates it in Barangay San Lorenzo, a current Makati barangay."
+    },
+    {
+      "id": "bel-air-park-near-barangay-hall",
+      "geographyStatus": "current-makati",
+      "currentBarangay": "Bel-Air",
+      "historicalBarangay": null,
+      "confidence": "high",
+      "rationale": "2020 Makati private-park table locates it on Aquarius Street in Barangay Bel-Air, a current Makati barangay."
+    },
+    {
+      "id": "ayala-triangle",
+      "geographyStatus": "current-makati",
+      "currentBarangay": "Bel-Air",
+      "historicalBarangay": null,
+      "confidence": "high",
+      "rationale": "2020 Makati private-park table locates it on Paseo de Roxas in Barangay Bel-Air, a current Makati barangay."
+    },
+    {
+      "id": "legazpi-active-park",
+      "geographyStatus": "current-makati",
+      "currentBarangay": "San Lorenzo",
+      "historicalBarangay": null,
+      "confidence": "high",
+      "rationale": "2020 Makati private-park table locates it on Legazpi Street in Barangay San Lorenzo, a current Makati barangay."
+    },
+    {
+      "id": "velasquez-park",
+      "geographyStatus": "current-makati",
+      "currentBarangay": "Bel-Air",
+      "historicalBarangay": null,
+      "confidence": "high",
+      "rationale": "2020 Makati private-park table locates it at Tordesillas/J.C. Velasquez in Barangay Bel-Air, a current Makati barangay."
+    },
+    {
+      "id": "track-30th-bgc",
+      "geographyStatus": "former-makati-now-taguig",
+      "currentBarangay": null,
+      "historicalBarangay": "Post Proper Northside",
+      "confidence": "high",
+      "rationale": "2020 Makati private-park table locates it in Post Proper Northside; PSA transferred Post Proper Northside from Makati to Taguig in 2023."
+    },
+    {
+      "id": "bonifacio-high-street-7th",
+      "geographyStatus": "former-makati-now-taguig",
+      "currentBarangay": null,
+      "historicalBarangay": "Post Proper Northside",
+      "confidence": "high",
+      "rationale": "2020 Makati private-park table locates it in Post Proper Northside; PSA transferred the barangay to Taguig in 2023."
+    },
+    {
+      "id": "bonifacio-high-street-8th",
+      "geographyStatus": "former-makati-now-taguig",
+      "currentBarangay": null,
+      "historicalBarangay": "Post Proper Northside",
+      "confidence": "high",
+      "rationale": "2020 Makati private-park table locates it in Post Proper Northside; PSA transferred the barangay to Taguig in 2023."
+    },
+    {
+      "id": "bonifacio-high-street-9th",
+      "geographyStatus": "former-makati-now-taguig",
+      "currentBarangay": null,
+      "historicalBarangay": "Post Proper Northside",
+      "confidence": "high",
+      "rationale": "2020 Makati private-park table locates it in Post Proper Northside; PSA transferred the barangay to Taguig in 2023."
+    },
+    {
+      "id": "bonifacio-high-street-11th",
+      "geographyStatus": "former-makati-now-taguig",
+      "currentBarangay": null,
+      "historicalBarangay": "Post Proper Northside",
+      "confidence": "high",
+      "rationale": "2020 Makati private-park table locates it in Post Proper Northside; PSA transferred the barangay to Taguig in 2023."
+    },
+    {
+      "id": "de-jesus-oval-park",
+      "geographyStatus": "former-makati-now-taguig",
+      "currentBarangay": null,
+      "historicalBarangay": "Post Proper Northside",
+      "confidence": "high",
+      "rationale": "2020 Makati private-park table locates it in Post Proper Northside; PSA transferred the barangay to Taguig in 2023."
+    },
+    {
+      "id": "forbes-park-and-pavillion",
+      "geographyStatus": "current-makati",
+      "currentBarangay": "Forbes Park",
+      "historicalBarangay": null,
+      "confidence": "high",
+      "rationale": "2020 Makati private-park table locates it at Cambridge Circle in Barangay Forbes Park, a current Makati barangay."
+    },
+    {
+      "id": "glorietta-4-park",
+      "geographyStatus": "current-makati",
+      "currentBarangay": "San Lorenzo",
+      "historicalBarangay": null,
+      "confidence": "high",
+      "rationale": "2020 Makati private-park table locates it at Hotel Drive in Barangay San Lorenzo, a current Makati barangay."
+    },
+    {
+      "id": "mahogany-park",
+      "geographyStatus": "current-makati",
+      "currentBarangay": "Dasmariñas",
+      "historicalBarangay": null,
+      "confidence": "high",
+      "rationale": "2020 Makati private-park table locates it on Mahogany Road in Barangay Dasmariñas, a current Makati barangay."
+    },
+    {
+      "id": "park-at-san-lorenzo-assumption",
+      "geographyStatus": "current-makati",
+      "currentBarangay": "San Lorenzo",
+      "historicalBarangay": null,
+      "confidence": "high",
+      "rationale": "2020 Makati private-park table locates it on San Lorenzo Drive in Barangay San Lorenzo, a current Makati barangay."
+    },
+    {
+      "id": "bel-air-park-hercules",
+      "geographyStatus": "current-makati",
+      "currentBarangay": "Bel-Air",
+      "historicalBarangay": null,
+      "confidence": "high",
+      "rationale": "2020 Makati private-park table locates it on Hercules Street in Barangay Bel-Air, a current Makati barangay."
+    },
+    {
+      "id": "san-felipe-park",
+      "geographyStatus": "current-makati",
+      "currentBarangay": "Magallanes",
+      "historicalBarangay": null,
+      "confidence": "high",
+      "rationale": "2020 Makati private-park table locates it on San Felipe Street in Barangay Magallanes, a current Makati barangay."
+    },
+    {
+      "id": "senior-citizen-park",
+      "geographyStatus": "current-makati",
+      "currentBarangay": "Dasmariñas",
+      "historicalBarangay": null,
+      "confidence": "high",
+      "rationale": "2020 Makati private-park table locates it at Tamarind Road/Antonio Arnaiz in Barangay Dasmariñas, a current Makati barangay."
+    },
+    {
+      "id": "terra-28th-park",
+      "geographyStatus": "former-makati-now-taguig",
+      "currentBarangay": null,
+      "historicalBarangay": "Post Proper Northside",
+      "confidence": "high",
+      "rationale": "2020 Makati private-park table locates it in Post Proper Northside; PSA transferred the barangay to Taguig in 2023."
+    },
+    {
+      "id": "urdaneta-park",
+      "geographyStatus": "current-makati",
+      "currentBarangay": "Urdaneta",
+      "historicalBarangay": null,
+      "confidence": "high",
+      "rationale": "2020 Makati private-park table locates it on Urdaneta Avenue in Barangay Urdaneta, a current Makati barangay."
+    }
+  ],
+  "summary": {
+    "total": 43,
+    "current-makati": 31,
+    "former-makati-now-taguig": 10,
+    "unresolved": 2,
+    "boundaryUncertain": 0
+  },
+  "interpretation": [
+    "A 'current-makati' classification only establishes present-day city geography, not that the park still exists or retains the same name/access/ownership.",
+    "A 'former-makati-now-taguig' classification preserves historical Makati provenance but excludes the asset from current-Makati park completeness.",
+    "The two unresolved names remain blockers until 3C-2c finds sufficiently precise location/status evidence.",
+    "Exact barangay remains intentionally blank for a few current-Makati sites where the reviewed official park source names only a street/intersection."
+  ],
+  "unresolved": [
+    {
+      "id": "freedom-park",
+      "question": "Where exactly is Freedom Park / Ayala Freedom Park, and is it still a separately identifiable park?",
+      "nextAction": "Find a current or sufficiently precise Makati publication/address before assigning current geography."
+    },
+    {
+      "id": "makati-des-linear-park",
+      "question": "What present-day site corresponds to the 2010 Makati DES Linear Park entry?",
+      "nextAction": "Trace later DES/DEPW publications, procurement records or official maps for a location/name successor."
+    }
+  ],
+  "nextStep": {
+    "id": "3C-2c",
+    "title": "Verify current public parks",
+    "scope": "Verify current existence/name/access/authority/address/coordinate provenance for all current-Makati public-park candidates and resolve the two geography unknowns if possible. No bulk Civic Map implementation in the same step."
+  }
+}
