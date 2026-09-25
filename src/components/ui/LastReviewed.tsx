@@ -1,12 +1,12 @@
 import { CalendarDays } from 'lucide-react';
 
 export default function LastReviewed({
-  date = '19 September 2026',
+  date,
   label = 'Content reviewed',
   note,
   className = '',
 }: {
-  date?: string;
+  date: string;
   label?: string;
   note?: string;
   className?: string;
