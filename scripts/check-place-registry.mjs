@@ -1,6 +1,7 @@
 import { readFile } from 'node:fs/promises';
 
 const text = await readFile('src/data/placeRegistry.ts', 'utf8');
+const mobilityPage = await readFile('src/pages/Mobility.tsx', 'utf8');
 const problems = [];
 
 const requiredExports = [
@@ -43,6 +44,37 @@ if (duplicateIds.length) {
   problems.push('Duplicate migrated place IDs: ' + [...new Set(duplicateIds)].join(', '));
 }
 
+const transportRows = assetBlock
+  .split(/\n\s*\{/)
+  .filter(block => /type:\s*'transport-(stop|terminal)'/.test(block));
+const verifiedTransportRows = transportRows.filter(block =>
+  /status:\s*'mapped'/.test(block) &&
+  /sourceUrl:/.test(block) &&
+  /coordinateSourceUrl:/.test(block)
+);
+if (verifiedTransportRows.length !== 10) {
+  problems.push(
+    'Expected 10 verified transport stops/terminals for Mobility reuse but found ' +
+      verifiedTransportRows.length +
+      '.'
+  );
+}
+
+for (const marker of [
+  "...placesByCategory('transport-stop')",
+  "...placesByCategory('transport-terminal')",
+  "place.verification.status === 'verified'",
+  'id="transport-anchors"',
+  "to={'/civic-map/' + place.id}",
+  "place.tags.includes('MRT-3')",
+  "place.tags.includes('EDSA Busway')",
+  "place.tags.includes('Pasig River Ferry')",
+]) {
+  if (!mobilityPage.includes(marker)) {
+    problems.push('Mobility Place Registry integration is missing: ' + marker);
+  }
+}
+
 if (problems.length) {
   console.error(problems.join('\n'));
   process.exit(1);
@@ -50,5 +82,5 @@ if (problems.length) {
 
 console.log(
   'Place Registry selectors passed static integrity checks: ' +
-  requiredExports.length + ' selector exports, ' + assetIds.length + ' preserved place IDs.'
+  requiredExports.length + ' selector exports, ' + assetIds.length + ' preserved place IDs, and ' + verifiedTransportRows.length + ' verified Mobility transport anchors.'
 );
