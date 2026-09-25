@@ -418,8 +418,19 @@
     "uiChanges": 0
   },
   "nextImplementationStep": {
-    "id": "W3R-3a",
-    "title": "Reuse places in BetterBarangay",
-    "constraint": "Barangay Profile only. Surface verified local places/facilities from the registry."
+    "id": "W3R-3b",
+    "title": "Reuse places in Mobility",
+    "constraint": "Mobility page only. Reuse shared transport stops/terminals from the Place Registry; no new transport research."
+  },
+  "betterBarangayReuse": {
+    "workstream": "W3R-3a",
+    "implementedIn": "src/pages/BarangayProfile.tsx",
+    "behavior": [
+      "Verified registry places are selected by barangay.",
+      "Existing barangay facility contacts enrich matching registry places.",
+      "Unmatched facilities remain as fallback cards.",
+      "Registry place cards link to canonical place detail pages.",
+      "Co-located services are shown from servicesAtLocation."
+    ]
   }
 }
