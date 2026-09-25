@@ -1,0 +1,469 @@
+{
+  "schemaVersion": 1,
+  "reconciledAt": "2026-09-25",
+  "workstream": "Wave 3C-2e — Private and public-access green-space reconciliation",
+  "scope": "Research/classification only. No Civic Map assets are added or removed in this step.",
+  "purpose": "Separate privately managed spaces that function as public-facing parks from gated/resident-oriented private community amenities, while preserving historical Makati inventory provenance.",
+  "classificationRules": [
+    "The City Government of Makati 2020 private-park list is the historical named baseline.",
+    "Former Makati entries in the transferred Post Proper Northside geography remain historical records and are excluded from present-day Makati implementation.",
+    "Private ownership does not imply public access. Access class is determined separately from ownership/management.",
+    "Public-facing estate parks may enter the Civic Map private/public-access layer when current existence and management/access are sufficiently supported.",
+    "Residential-village parks remain in the audit even when current, but are not default Civic Map implementation candidates unless public access and civic usefulness are clearly established.",
+    "A current successor or rename is not asserted when the reviewed evidence only shows a nearby/redeveloped space."
+  ],
+  "baseline": {
+    "source": "Makati Facts and Figures 2020 — Private Parks",
+    "sourceUrl": "https://www.makati.gov.ph/assets/uploads/downloads/2/45/561/pdf/Facts%20and%20FIgures%202020.pdf",
+    "namedPrivateParks": 21,
+    "currentMakatiAfter2023BoundaryChange": 14,
+    "formerMakatiNowTaguig": 7
+  },
+  "accessClasses": {
+    "public-access-private-managed": "Privately or estate managed but ordinarily intended for public visitors/users.",
+    "private-community-controlled": "Village/community amenity with resident/guest or gate-controlled access; not treated as an ordinary public park.",
+    "access-or-current-identity-unresolved": "Historical Makati private-park record whose present identity, access or successor cannot yet be frozen.",
+    "former-makati-now-taguig": "Historical Makati inventory entry now outside present-day Makati."
+  },
+  "currentMakatiBaselineEntries": [
+    {
+      "id": "ayala-edsa-park",
+      "historicalName": "Ayala - EDSA Park",
+      "barangay": "Urdaneta",
+      "historicalLocation": "Ayala Avenue corner EDSA",
+      "accessClass": "access-or-current-identity-unresolved",
+      "currentStatus": "historical-location-current-successor-unresolved",
+      "implementationDisposition": "hold",
+      "evidence": [
+        {
+          "source": "Makati Facts and Figures 2020",
+          "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/45/561/pdf/Facts%20and%20FIgures%202020.pdf",
+          "finding": "Listed as a private park at Ayala Avenue corner EDSA, Barangay Urdaneta."
+        }
+      ],
+      "note": "Current search did not identify a sufficiently authoritative present park identity at the historical corner. Do not guess that a nearby contemporary estate space is its successor."
+    },
+    {
+      "id": "greenbelt-park",
+      "currentName": "Greenbelt Park",
+      "barangay": "San Lorenzo",
+      "accessClass": "public-access-private-managed",
+      "currentStatus": "verified-current-public-access",
+      "management": "Ayala Malls / Ayala Land",
+      "implementationDisposition": "ready",
+      "evidence": [
+        {
+          "source": "Makati Facts and Figures 2020",
+          "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/45/561/pdf/Facts%20and%20FIgures%202020.pdf",
+          "finding": "Listed as a private park in Barangay San Lorenzo."
+        },
+        {
+          "source": "Ayala Malls — Greenbelt",
+          "url": "https://www.ayalamalls.com/explore/ayala-greenbelt/store/AYALA-GREENBELT-1138189",
+          "finding": "Current Ayala Malls description identifies Greenbelt as a 2.8-hectare garden integrated with the shopping and dining estate."
+        }
+      ]
+    },
+    {
+      "id": "bel-air-park-near-barangay-hall",
+      "historicalName": "Bel-Air Park near Barangay Hall",
+      "barangay": "Bel-Air",
+      "historicalLocation": "Aquarius Street",
+      "accessClass": "private-community-controlled",
+      "currentStatus": "village-park-system-current-exact-one-to-one-name-not-frozen",
+      "management": "Bel-Air Village Association",
+      "implementationDisposition": "audit-only-not-default-civic-map",
+      "evidence": [
+        {
+          "source": "Makati Facts and Figures 2020",
+          "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/45/561/pdf/Facts%20and%20FIgures%202020.pdf",
+          "finding": "Listed as a private park near the Barangay Hall on Aquarius Street."
+        },
+        {
+          "source": "Bel-Air Village Association — About Us",
+          "url": "https://www.bava.ph/about-us",
+          "finding": "BAVA currently states that Bel-Air Village has two developed parks."
+        },
+        {
+          "source": "Bel-Air Village Association — Facilities",
+          "url": "https://www.bava.ph/facilities",
+          "finding": "BAVA publishes resident-oriented rules for its parks and recreation facilities."
+        }
+      ]
+    },
+    {
+      "id": "ayala-triangle",
+      "currentName": "Ayala Triangle Gardens",
+      "barangay": "Bel-Air",
+      "accessClass": "public-access-private-managed",
+      "currentStatus": "verified-current-public-access",
+      "management": "Ayala Land / Makati CBD estate management",
+      "implementationDisposition": "already-mapped-reclassify",
+      "civicMapId": "ayala-triangle-gardens",
+      "evidence": [
+        {
+          "source": "Makati Facts and Figures 2020",
+          "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/45/561/pdf/Facts%20and%20FIgures%202020.pdf",
+          "finding": "Listed as a private park in Barangay Bel-Air."
+        },
+        {
+          "source": "Ayala Land 2025 Integrated Report",
+          "url": "https://ir.ayalaland.com.ph/wp-content/uploads/2026/04/ALI-2025-Integrated-Report.pdf",
+          "finding": "Current estate report identifies Ayala Triangle Gardens as an existing Makati CBD green-space landmark."
+        }
+      ]
+    },
+    {
+      "id": "legazpi-active-park",
+      "currentName": "Legazpi Active Park",
+      "barangay": "San Lorenzo",
+      "accessClass": "public-access-private-managed",
+      "currentStatus": "verified-current-public-access",
+      "management": "Makati Central Estate Association / Ayala Land / Ayala Property Management",
+      "implementationDisposition": "already-mapped-reclassify",
+      "civicMapId": "legazpi-active-park",
+      "evidence": [
+        {
+          "source": "Makati Facts and Figures 2020",
+          "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/45/561/pdf/Facts%20and%20FIgures%202020.pdf",
+          "finding": "Listed as a private park in Barangay San Lorenzo."
+        },
+        {
+          "source": "Ayala Property Management Corporation — Eco Patch",
+          "url": "https://www.ayalaproperty.com.ph/news-and-updates/apmc-celebrates-with-the-city-as-makatis-first-eco-patch-opens-at-legazpi-active-park",
+          "finding": "APMC documents the park as active in 2025 and states that it oversees continuing care for the Eco Patch there."
+        }
+      ]
+    },
+    {
+      "id": "velasquez-park",
+      "currentName": "Jaime Velasquez Park",
+      "aliases": [
+        "Velasquez Park",
+        "Jaime C. Velasquez Park"
+      ],
+      "barangay": "Bel-Air",
+      "accessClass": "public-access-private-managed",
+      "currentStatus": "verified-current-public-access",
+      "management": "Makati Central Estate Association with Ayala Land, Barangay Bel-Air and Makati LGU collaboration",
+      "implementationDisposition": "ready",
+      "evidence": [
+        {
+          "source": "Makati Facts and Figures 2020",
+          "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/45/561/pdf/Facts%20and%20FIgures%202020.pdf",
+          "finding": "Listed as Velasquez Park at Tordesillas/J.C. Velasquez in Barangay Bel-Air."
+        },
+        {
+          "source": "Makati Central Estate Association",
+          "url": "https://macea.com.ph/",
+          "finding": "Current MACEA site reports the refreshed Jaime Velasquez Park reopening to park visitors and identifies the collaborating managers."
+        }
+      ]
+    },
+    {
+      "id": "forbes-park-and-pavillion",
+      "currentName": "Forbes Park Pavilion / community grounds",
+      "barangay": "Forbes Park",
+      "accessClass": "private-community-controlled",
+      "currentStatus": "current-community-facility-verified",
+      "management": "Forbes Park Association",
+      "implementationDisposition": "audit-only-not-default-civic-map",
+      "evidence": [
+        {
+          "source": "Makati Facts and Figures 2020",
+          "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/45/561/pdf/Facts%20and%20FIgures%202020.pdf",
+          "finding": "Listed as Forbes Park and Pavillion at Cambridge Circle."
+        },
+        {
+          "source": "Forbes Park Association",
+          "url": "https://www.forbesparkassociation.com/",
+          "finding": "Current association site describes Forbes Park as a private residential community and the Pavilion as an association facility available for rent."
+        }
+      ]
+    },
+    {
+      "id": "glorietta-4-park",
+      "historicalName": "Glorietta 4 Park",
+      "likelyCurrentIdentity": "The Plaza / redeveloped Glorietta 4 open space",
+      "barangay": "San Lorenzo",
+      "accessClass": "public-access-private-managed",
+      "currentStatus": "public-access-redevelopment-verified-current-formal-name-not-frozen",
+      "management": "Ayala Malls / Ayala Land",
+      "implementationDisposition": "hold-for-current-name-and-point-freeze",
+      "evidence": [
+        {
+          "source": "Makati Facts and Figures 2020",
+          "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/45/561/pdf/Facts%20and%20FIgures%202020.pdf",
+          "finding": "Listed as Glorietta 4 Park at Hotel Drive."
+        },
+        {
+          "source": "MACEA Bike & Dine / Moovr 2022",
+          "url": "https://macea.com.ph/2022/02/25/cycling-is-the-new-norm-makati-launches-bike-dine-initiates-moovr-bike-rentals/",
+          "finding": "MACEA listed Glorietta 4 Park as a public-facing bike-rental location."
+        },
+        {
+          "source": "Ayala Land — Redevelopment of Brownfield Sites",
+          "url": "https://ir.ayalaland.com.ph/sustainability/our-policies/redevelopment-of-brownfield-sites/",
+          "finding": "Ayala Land confirms the ongoing Glorietta redevelopment and increased-open-space objective."
+        }
+      ],
+      "note": "Current public reporting indicates the Glorietta 4 outdoor space has been redeveloped as The Plaza, but a current official Ayala source naming the outdoor space itself was not found in this pass."
+    },
+    {
+      "id": "mahogany-park",
+      "currentName": "Mahogany Park",
+      "barangay": "Dasmariñas",
+      "accessClass": "private-community-controlled",
+      "currentStatus": "verified-current-private-community",
+      "management": "Dasmariñas Village Association",
+      "implementationDisposition": "audit-only-not-default-civic-map",
+      "evidence": [
+        {
+          "source": "Makati Facts and Figures 2020",
+          "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/45/561/pdf/Facts%20and%20FIgures%202020.pdf",
+          "finding": "Listed as a private park on Mahogany Road."
+        },
+        {
+          "source": "Dasmariñas Village Association — Facilities",
+          "url": "https://dva.org.ph/facilities/",
+          "finding": "DVA currently identifies Mahogany as one of the village's two parks and describes its resident-oriented facilities."
+        }
+      ]
+    },
+    {
+      "id": "park-at-san-lorenzo-assumption",
+      "historicalName": "Park at San Lorenzo near Assumption College",
+      "likelyCurrentIdentity": "SLVA Park / Plaza de San Lorenzo area",
+      "barangay": "San Lorenzo",
+      "accessClass": "private-community-controlled",
+      "currentStatus": "current-village-park-verified-exact-alias-unresolved",
+      "management": "San Lorenzo Village Association",
+      "implementationDisposition": "audit-only-hold-alias",
+      "evidence": [
+        {
+          "source": "Makati Facts and Figures 2020",
+          "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/45/561/pdf/Facts%20and%20FIgures%202020.pdf",
+          "finding": "Listed as a private park on San Lorenzo Drive near Assumption College."
+        },
+        {
+          "source": "San Lorenzo Village Association",
+          "url": "https://www.sanloph.com/index.php/component/content/category/slva",
+          "finding": "Current SLVA notices refer to the SLVA Park and Plaza de San Lorenzo, with village access and security protocols."
+        }
+      ],
+      "note": "Do not assert a one-to-one rename without a site plan or association document tying the 2020 inventory label to the current SLVA Park/Plaza."
+    },
+    {
+      "id": "bel-air-park-hercules",
+      "historicalName": "Bel-Air Park at Hercules St.",
+      "barangay": "Bel-Air",
+      "accessClass": "private-community-controlled",
+      "currentStatus": "village-park-system-current-exact-one-to-one-name-not-frozen",
+      "management": "Bel-Air Village Association",
+      "implementationDisposition": "audit-only-not-default-civic-map",
+      "evidence": [
+        {
+          "source": "Makati Facts and Figures 2020",
+          "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/45/561/pdf/Facts%20and%20FIgures%202020.pdf",
+          "finding": "Listed as a private park at Hercules Street."
+        },
+        {
+          "source": "Bel-Air Village Association — About Us",
+          "url": "https://www.bava.ph/about-us",
+          "finding": "BAVA currently states that Bel-Air Village has two developed parks."
+        }
+      ]
+    },
+    {
+      "id": "san-felipe-park",
+      "currentName": "San Felipe Park",
+      "barangay": "Magallanes",
+      "accessClass": "private-community-controlled",
+      "currentStatus": "current-map-verified-management-access-not-officially-frozen",
+      "implementationDisposition": "audit-only-hold-access",
+      "evidence": [
+        {
+          "source": "Makati Facts and Figures 2020",
+          "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/45/561/pdf/Facts%20and%20FIgures%202020.pdf",
+          "finding": "Listed as a private park on San Felipe Street, Barangay Magallanes."
+        },
+        {
+          "source": "Current OpenStreetMap-derived map record",
+          "url": "https://www.openstreetmap.org/way/256858199",
+          "finding": "Current map geometry continues to identify San Felipe Park within the Magallanes Village area."
+        }
+      ],
+      "note": "Current existence is supported, but a current Magallanes Village Association source establishing management and visitor access was not found in this pass."
+    },
+    {
+      "id": "senior-citizen-park",
+      "historicalName": "Senior Citizen Park",
+      "barangay": "Dasmariñas",
+      "historicalLocation": "Tamarind Road corner Antonio Arnaiz",
+      "accessClass": "access-or-current-identity-unresolved",
+      "currentStatus": "historical-private-current-identity-unresolved",
+      "implementationDisposition": "hold",
+      "evidence": [
+        {
+          "source": "Makati Facts and Figures 2020",
+          "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/45/561/pdf/Facts%20and%20FIgures%202020.pdf",
+          "finding": "Listed as a private park in Barangay Dasmariñas."
+        },
+        {
+          "source": "Dasmariñas Village Association — Facilities",
+          "url": "https://dva.org.ph/facilities/",
+          "finding": "Current DVA facilities page identifies two current village parks, Calumpang and Mahogany, and does not identify a Senior Citizen Park."
+        }
+      ],
+      "note": "Absence from the current DVA park list is not sufficient proof of removal. Preserve as unresolved rather than merging it into Calumpang Park."
+    },
+    {
+      "id": "urdaneta-park",
+      "currentName": "Urdaneta Village Park",
+      "barangay": "Urdaneta",
+      "accessClass": "private-community-controlled",
+      "currentStatus": "current-map-verified-management-access-not-officially-frozen",
+      "implementationDisposition": "audit-only-hold-access",
+      "evidence": [
+        {
+          "source": "Makati Facts and Figures 2020",
+          "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/45/561/pdf/Facts%20and%20FIgures%202020.pdf",
+          "finding": "Listed as a private park on Urdaneta Avenue."
+        },
+        {
+          "source": "Current OpenStreetMap-derived map record",
+          "url": "https://www.openstreetmap.org/way/22927834",
+          "finding": "Current map geometry identifies Urdaneta Village Park in Makati."
+        }
+      ],
+      "note": "The current park is clearly present, but a current association source specifying general public access was not found; treat it as a village/community facility rather than a public-facing estate park."
+    }
+  ],
+  "formerMakatiEntries": [
+    "track-30th-bgc",
+    "bonifacio-high-street-7th",
+    "bonifacio-high-street-8th",
+    "bonifacio-high-street-9th",
+    "bonifacio-high-street-11th",
+    "de-jesus-oval-park",
+    "terra-28th-park"
+  ],
+  "supplementalCurrentPublicAccessSpaces": [
+    {
+      "id": "washington-sycip-park",
+      "currentName": "Washington SyCip Park",
+      "barangay": "San Lorenzo",
+      "accessClass": "public-access-private-managed",
+      "currentStatus": "verified-current-public-access",
+      "implementationDisposition": "already-mapped-reclassify",
+      "civicMapId": "washington-sycip-park",
+      "official2020PrivateList": false,
+      "evidence": [
+        {
+          "source": "Makati Central Estate Association — Parks & Car Parks",
+          "url": "https://macea.com.ph/2019/09/01/parks-car-parks/",
+          "finding": "MACEA identifies Washington SyCip Park as one of its Makati CBD parks."
+        },
+        {
+          "source": "Ayala Land 2025 Integrated Report",
+          "url": "https://ir.ayalaland.com.ph/wp-content/uploads/2026/04/ALI-2025-Integrated-Report.pdf",
+          "finding": "Current estate report identifies Washington SyCip Park as an existing landmark within the Makati CBD green-space network."
+        }
+      ]
+    },
+    {
+      "id": "dela-rosa-gardens",
+      "currentName": "Dela Rosa Gardens",
+      "barangay": "San Lorenzo",
+      "accessClass": "public-access-private-managed",
+      "currentStatus": "verified-current-public-access",
+      "management": "Ayala Land / Makati CBD estate management",
+      "implementationDisposition": "ready",
+      "official2020PrivateList": false,
+      "evidence": [
+        {
+          "source": "Ayala Land 2025 Integrated Report",
+          "url": "https://ir.ayalaland.com.ph/wp-content/uploads/2026/04/ALI-2025-Integrated-Report.pdf",
+          "finding": "Ayala Land reports the launch of Dela Rosa Gardens, a 2,600-square-meter green and open-space node in the Makati CBD."
+        }
+      ]
+    },
+    {
+      "id": "palm-promenade-park",
+      "currentName": "Palm Promenade Park",
+      "barangay": "San Lorenzo",
+      "accessClass": "public-access-private-managed",
+      "currentStatus": "verified-current-public-access",
+      "management": "Ayala Property Management / Makati CBD estate management",
+      "implementationDisposition": "ready",
+      "official2020PrivateList": false,
+      "evidence": [
+        {
+          "source": "Ayala Property Management Corporation — Eco Patch",
+          "url": "https://www.ayalaproperty.com.ph/news-and-updates/apmc-celebrates-with-the-city-as-makatis-first-eco-patch-opens-at-legazpi-active-park",
+          "finding": "APMC identifies Palm Promenade Park among the green spaces it continues to maintain across Makati."
+        },
+        {
+          "source": "MACEA Bike & Dine / Moovr 2022",
+          "url": "https://macea.com.ph/2022/02/25/cycling-is-the-new-norm-makati-launches-bike-dine-initiates-moovr-bike-rentals/",
+          "finding": "MACEA identifies Palm Promenade Park as a Makati CBD bike-rental location."
+        }
+      ]
+    }
+  ],
+  "implementationSetFor3C2f": {
+    "alreadyMappedNeedsOwnershipAccessMetadata": [
+      "ayala-triangle-gardens",
+      "washington-sycip-park",
+      "legazpi-active-park"
+    ],
+    "newReadyPublicAccessAssets": [
+      "greenbelt-park",
+      "jaime-velasquez-park",
+      "dela-rosa-gardens",
+      "palm-promenade-park"
+    ],
+    "holdBeforeImplementation": [
+      "glorietta-4-park"
+    ],
+    "auditOnlyControlledPrivateCommunity": [
+      "bel-air-park-near-barangay-hall",
+      "forbes-park-and-pavillion",
+      "mahogany-park",
+      "park-at-san-lorenzo-assumption",
+      "bel-air-park-hercules",
+      "san-felipe-park",
+      "urdaneta-park"
+    ],
+    "unresolvedDoNotImplement": [
+      "ayala-edsa-park",
+      "senior-citizen-park"
+    ],
+    "formerMakatiExcluded": [
+      "track-30th-bgc",
+      "bonifacio-high-street-7th",
+      "bonifacio-high-street-8th",
+      "bonifacio-high-street-9th",
+      "bonifacio-high-street-11th",
+      "de-jesus-oval-park",
+      "terra-28th-park"
+    ]
+  },
+  "summary": {
+    "official2020PrivateEntries": 21,
+    "officialEntriesCurrentMakati": 14,
+    "officialEntriesFormerMakatiNowTaguig": 7,
+    "publicAccessPrivateManagedReadyOrAlreadyMappedFromOfficialBaseline": 4,
+    "publicAccessPrivateManagedHoldFromOfficialBaseline": 1,
+    "controlledPrivateCommunityFromOfficialBaseline": 7,
+    "unresolvedOfficialCurrentMakati": 2,
+    "supplementalCurrentPublicAccessSpaces": 3,
+    "final3C2fPublicAccessSetReadyOrAlreadyMapped": 7,
+    "final3C2fPublicAccessHold": 1
+  },
+  "nextStep": {
+    "id": "3C-2f",
+    "title": "Implement private/public-access park layer",
+    "scope": "Add the four ready missing public-access private-managed parks, reclassify the three existing CBD park assets with ownership/access metadata, and resolve Glorietta 4's current name/point immediately before deciding whether to add it. Do not add gated village parks, unresolved historical records or former-Makati assets."
+  }
+}
