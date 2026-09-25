@@ -34,6 +34,48 @@ const archiveSearch = (query: string) =>
     'site:makati.gov.ph/content/resolutions-and-ordinances ' + query + ' Makati'
   );
 
+
+const makatiCongressRecords = [
+  {
+    bill: 'HB 1293',
+    congress: '19th Congress',
+    filed: 'July 6, 2022',
+    title: 'An Act Converting the Makati City into a Special City',
+    recordUrl:
+      'https://ldr.senate.gov.ph/bills/house-bill-no-1293-19th-congress',
+    pdfUrl:
+      'https://docs.congress.hrep.online/legisdocs/basic_19/HB01293.pdf',
+    upstreamUrl:
+      'https://github.com/bettergovph/open-congress-data/blob/6e853ee027790427c5b5961c6318ff907cf717d5/data/document/hb/19/01K6D89C4S8D2KYJJRKTQRGAQX.toml',
+  },
+  {
+    bill: 'HB 1294',
+    congress: '19th Congress',
+    filed: 'July 6, 2022',
+    title:
+      'An Act Converting the Makati West High School into Makati Science High School and Appropriating Funds Therefor',
+    recordUrl:
+      'https://ldr.senate.gov.ph/bills/house-bill-no-1294-19th-congress',
+    pdfUrl:
+      'https://docs.congress.hrep.online/legisdocs/basic_19/HB01294.pdf',
+    upstreamUrl:
+      'https://github.com/bettergovph/open-congress-data/blob/6e853ee027790427c5b5961c6318ff907cf717d5/data/document/hb/19/01K6D89C4S8D2KYJJRKTQRGAQY.toml',
+  },
+  {
+    bill: 'HB 6100',
+    congress: '19th Congress',
+    filed: 'November 14, 2022',
+    title:
+      'An Act Establishing a TESDA Training and Assessment Center in Barangay Sta. Cruz, Makati City',
+    recordUrl:
+      'https://ldr.senate.gov.ph/bills/house-bill-no-6100-19th-congress',
+    pdfUrl:
+      'https://docs.congress.hrep.online/legisdocs/basic_19/HB06100.pdf',
+    upstreamUrl:
+      'https://github.com/bettergovph/open-congress-data/blob/6e853ee027790427c5b5961c6318ff907cf717d5/data/document/hb/19/01K6D89D2ZM1B69D8JRFWX1MPY.toml',
+  },
+];
+
 export default function Legislation() {
   const [query, setQuery] = useState('');
 
@@ -174,6 +216,60 @@ export default function Legislation() {
           >
             Juris <ExternalLink className="h-3.5 w-3.5" />
           </a>
+        </div>
+      </Section>
+
+      <Section className="bg-[#f5f8f2]">
+        <div className="section-eyebrow">Makati in Congress</div>
+        <Heading level={2}>National bills that directly name Makati</Heading>
+        <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-700">
+          Reviewed Open Congress records with Makati named in the bill title.
+        </p>
+
+        <div className="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-4">
+          {makatiCongressRecords.map(record => (
+            <article
+              key={record.bill}
+              className="rounded-2xl border border-primary-100 bg-white p-5"
+            >
+              <div className="flex flex-wrap items-center gap-2 text-xs font-bold uppercase tracking-[0.08em] text-gray-500">
+                <span>{record.bill}</span>
+                <span aria-hidden="true">·</span>
+                <span>{record.congress}</span>
+              </div>
+              <h3 className="mt-3 text-base font-extrabold leading-snug text-gray-950">
+                {record.title}
+              </h3>
+              <p className="mt-2 text-sm text-gray-600">Filed {record.filed}</p>
+
+              <div className="mt-5 flex flex-wrap gap-x-4 gap-y-2 text-sm font-bold">
+                <a
+                  href={record.recordUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1 text-primary-700 underline underline-offset-2"
+                >
+                  Senate LDR record <ExternalLink className="h-3.5 w-3.5" />
+                </a>
+                <a
+                  href={record.pdfUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1 text-primary-700 underline underline-offset-2"
+                >
+                  House bill PDF <ExternalLink className="h-3.5 w-3.5" />
+                </a>
+                <a
+                  href={record.upstreamUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1 text-primary-700 underline underline-offset-2"
+                >
+                  Open Congress data <ExternalLink className="h-3.5 w-3.5" />
+                </a>
+              </div>
+            </article>
+          ))}
         </div>
       </Section>
 
