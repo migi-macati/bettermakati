@@ -188,7 +188,7 @@ export default function BarangayProfile() {
               </div>
               <LastReviewed
                 date={barangayProfilesReviewed}
-                note="Population uses the 2024 POPCEN. Barangay-official rosters are for the 2023–2026 term and can change through succession or vacancy."
+                note="Population: 2024 POPCEN · Council term: 2023–2026"
                 className="mt-5"
               />
             </div>
