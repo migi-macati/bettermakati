@@ -461,12 +461,15 @@
         "Preserve official-city inventory provenance separately from operator/current-network verification.",
         "Add missing verified current transport assets only after the crosswalk is complete."
       ],
-      "current": "3C-3b",
+      "current": "3C-3c",
       "planFile": "data/wave3-civic-map-transport-plan.json",
       "reconciliationFile": "data/wave3-civic-map-transport-reconciliation.json",
       "completedSubsteps": [
-        "3C-3a"
-      ]
+        "3C-3a",
+        "3C-3b"
+      ],
+      "ferryImplementationFile": "data/wave3-civic-map-ferry-implementation.json",
+      "ferryImplementationStatus": "complete"
     },
     {
       "id": "3C-4",
@@ -768,9 +771,9 @@
     }
   ],
   "immediateNext": {
-    "id": "3C-3b",
-    "title": "Implement the two current Makati ferry stations",
-    "scope": "Freeze exact current points for Guadalupe and Valenzuela Pasig River Ferry stations, add the two current transport-stop assets with MMDA/current-service provenance, validate, and stop."
+    "id": "3C-3c",
+    "title": "Reconcile the 32 current bus stops",
+    "scope": "Research only. Find a named current city stop inventory from Makati/DEPW/PSD or equivalent authoritative records, crosswalk it to existing Busway/other stop assets, and do not add speculative bus-stop pins."
   },
   "reopenedExecutionOrder": [
     "3C-2a",
@@ -797,12 +800,14 @@
       "status": "in-progress",
       "title": "Transport completeness from Makati publications",
       "executeAfter": "reopened 3C-1 unless user reprioritizes",
-      "current": "3C-3b",
+      "current": "3C-3c",
       "planFile": "data/wave3-civic-map-transport-plan.json",
       "reconciliationFile": "data/wave3-civic-map-transport-reconciliation.json",
       "completedSubsteps": [
-        "3C-3a"
-      ]
+        "3C-3a",
+        "3C-3b"
+      ],
+      "ferryImplementationFile": "data/wave3-civic-map-ferry-implementation.json"
     }
   }
 }
