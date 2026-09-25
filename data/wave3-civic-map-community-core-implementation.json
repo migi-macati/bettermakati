@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "implementedAt": "2026-09-25",
+  "workstream": "Wave 3C-1f1 — Implement core social and city-owned facilities",
+  "scope": "Implement five verified current public-facing social/community/city-owned destinations only.",
+  "assets": [
+    "makati-social-development-center",
+    "makati-youth-home",
+    "makati-youth-center",
+    "sm-felicidad-sy-center-for-the-elderly",
+    "poblacion-public-market"
+  ],
+  "points": {
+    "makati-social-development-center": [
+      14.57057,
+      121.01582
+    ],
+    "makati-youth-home": [
+      14.56973,
+      121.00801
+    ],
+    "makati-youth-center": [
+      14.5681,
+      121.0427
+    ],
+    "sm-felicidad-sy-center-for-the-elderly": [
+      14.57344,
+      121.01341
+    ],
+    "poblacion-public-market": [
+      14.5654277,
+      121.0334145
+    ]
+  },
+  "implementationNotes": {
+    "makatiYouthCenter": "Current point and historical/current address evidence place the facility on J.P. Rizal in Guadalupe Viejo.",
+    "poblacionPublicMarket": "Implemented as the current Poblacion Wet & Dry Market at 6022 Escuela / J.D. Villena, not any same-named market in another city.",
+    "coLocationRule": "This batch deliberately excludes day-care and child-minding services inside barangay halls; those will be reconciled against host buildings before implementation."
+  },
+  "result": {
+    "newlyAdded": 5,
+    "coreCommunityCityOwnedImplementationStatus": "complete"
+  },
+  "nextStep": {
+    "id": "3C-1f2",
+    "title": "Implement co-location-aware day-care and child-minding coverage",
+    "scope": "Resolve the 22 current day-care centers + 1 child-minding center against host buildings/barangay facilities, then implement only distinct useful Civic Map assets without duplicate-building clutter."
+  }
+}
