@@ -35,7 +35,8 @@
     "quality": "npm run lint && npm run check:content && npm run check:barangays && npm run check:civic-map && npm run check:brand && npm run audit:services && npm run audit:budget && npm run audit:accountability && npm run audit:records && npm run audit:elections && npm run audit:city-monitor && npm run audit:civic-briefs && npm run audit:today-live && npm run audit:source-freshness && npm run audit:pages",
     "check:barangays": "node scripts/check-barangays.mjs",
     "audit:today-live": "node scripts/audit-today-live-depth.mjs",
-    "audit:source-freshness": "node scripts/audit-source-freshness-depth.mjs"
+    "audit:source-freshness": "node scripts/audit-source-freshness-depth.mjs",
+    "build:freshness-queue": "node scripts/build-freshness-review-queue.mjs"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
