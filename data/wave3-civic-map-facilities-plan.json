@@ -13,7 +13,8 @@
   },
   "completedSubsteps": [
     "3C-1a",
-    "3C-1b"
+    "3C-1b",
+    "3C-1c"
   ],
   "substeps": [
     {
@@ -70,9 +71,9 @@
   ],
   "inventoryFile": "data/wave3-civic-map-facilities-inventory.json",
   "immediateNext": {
-    "id": "3C-1c",
-    "title": "Verify current protective-service facilities",
-    "maximumScope": "11 fire stations + 8 police facilities; reconcile current names, addresses, post-transfer control and point provenance. Research only, no Civic Map additions."
+    "id": "3C-1d",
+    "title": "Reconcile community, social-welfare and city-owned facilities",
+    "maximumScope": "Day-care/child-minding network, Social Development Center, Makati Youth Home, Youth Center, Senior Citizen Center, Poblacion Public Market and citywide civic anchors. Research/reconciliation only; no Civic Map additions."
   },
   "healthCenterVerificationStatus": "complete",
   "healthCenterVerificationFile": "data/wave3-civic-map-health-centers-verification.json",
@@ -83,5 +84,16 @@
     "additionalCurrentViaDohNtp": 1,
     "palanan24x7CoLocated": true,
     "supplementalSanLorenzoClinicSystem": "separate-from-mhd18-denominator"
+  },
+  "protectiveServicesVerificationStatus": "complete",
+  "protectiveServicesVerificationFile": "data/wave3-civic-map-protective-services-verification.json",
+  "protectiveServicesVerificationSummary": {
+    "fireStationsVerifiedCurrent": 11,
+    "fireAlreadyMapped": 1,
+    "fireMissingReady": 10,
+    "policeFacilitiesVerifiedCurrent": 8,
+    "policeAlreadyMapped": 0,
+    "policeMissingReady": 8,
+    "transferredPoliceSubstationsExcluded": 2
   }
 }
