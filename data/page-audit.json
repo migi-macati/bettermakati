@@ -71,11 +71,15 @@
       "population",
       "district",
       "profiles",
-      "associations"
+      "associations",
+      "23-hall-addresses",
+      "barangay-official-websites",
+      "barangay-email-coverage",
+      "official-social-channel-coverage"
     ],
     "gaps": [
-      "Barangay hall address and phone coverage has been expanded across the 23 current barangays, but verified email addresses and official social channels remain uneven.",
-      "Service pages currently expose the common barangay transactions citywide; barangay-specific fees, requirements and local process variations still need field-by-field verification where a barangay publishes them."
+      "All 23 current barangays now have a hall address in the structured profile. Hall email coverage is 14 of 23; verified standalone barangay websites cover 6 of 23 and verified official Facebook channels cover 5 of 23.",
+      "Common barangay transactions are available across all barangay homepages, but barangay-specific fees, requirements, turnaround times and local process variations still need field-by-field verification where published."
     ]
   },
   {
