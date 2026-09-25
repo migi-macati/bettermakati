@@ -104,7 +104,8 @@ for (const type of [
 }
 
 for (const marker of [
-  'Source changes awaiting review',
+  'Freshness review queue',
+  '/records#freshness-review-queue',
   'validated permanent records',
   'content-change detection',
   'reachability only',
@@ -150,6 +151,12 @@ if (!workflow.includes("cron: '30 0 * * *'")) {
 }
 if (!workflow.includes('npm run check:city-monitor')) {
   problems.push('Daily City Monitor workflow no longer runs the source checker.');
+}
+if (!workflow.includes('npm run build:freshness-queue')) {
+  problems.push('Daily City Monitor workflow no longer rebuilds the consolidated freshness queue.');
+}
+if (!workflow.includes("title = 'Freshness review queue'") && !workflow.includes("const title = 'Freshness review queue'")) {
+  problems.push('Daily City Monitor workflow no longer targets the consolidated freshness review issue.');
 }
 if (!workflow.includes("if: steps.publish.outputs.publish_required == 'true'")) {
   problems.push('Daily City Monitor workflow no longer suppresses no-op build/publish runs.');
