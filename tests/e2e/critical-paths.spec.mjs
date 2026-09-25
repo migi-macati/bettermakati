@@ -691,7 +691,7 @@ test('barangay landing page uses the persistent BetterBarangay context bar', asy
   await expect(page.getByRole('heading', { level: 1 })).toContainText('BetterPoblacion');
   await expect(page.getByRole('region', { name: 'BetterBarangay view' })).toBeVisible();
   await expect(page.getByLabel('Choose BetterBarangay view')).toHaveValue('poblacion');
-  await expect(page.getByRole('link', { name: /Homepage/i })).toHaveAttribute('href', '/barangays/poblacion');
+  await expect(page.getByRole('link', { name: 'Barangay Homepage', exact: true })).toHaveAttribute('href', '/barangays/poblacion');
   await expect(page.getByRole('heading', { name: /What do you need in Poblacion/i })).toBeVisible();
   await expect(page.getByRole('heading', { name: /Follow what affects Poblacion/i })).toBeVisible();
 });
@@ -721,6 +721,20 @@ test('barangay homepage exposes council services election and local accountabili
   await expect(page.getByText(/Jose Mikhail Ranillo Villena/i)).toBeVisible();
   await expect(page.getByRole('heading', { name: /2025 mayoral result/i })).toBeVisible();
   await expect(page.getByRole('heading', { name: /Locally tagged public records/i })).toBeVisible();
+});
+
+test('first BetterBarangay contact batch exposes verified hall details', async ({ page }) => {
+  await page.goto(baseURL + '/barangays/bangkal');
+  await expect(page.getByText('3440 Gen. Lim Street, Bangkal, Makati City', { exact: true })).toBeVisible();
+  await expect(page.getByText('7751-0787', { exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: /Official social channel/i })).toBeVisible();
+
+  await page.goto(baseURL + '/barangays/carmona');
+  await expect(page.getByText('A.P. Reyes Avenue, Barangay Carmona, Makati City', { exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'barangaycarmona2013@gmail.com', exact: true })).toBeVisible();
+
+  await page.goto(baseURL + '/barangays/forbes-park');
+  await expect(page.getByText('Kalayaan Road corner Pandan Street, Forbes Park, Makati City', { exact: true })).toBeVisible();
 });
 
 test('barangay gateway search finds a barangay through an official name', async ({ page }) => {
