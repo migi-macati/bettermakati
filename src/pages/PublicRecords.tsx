@@ -27,20 +27,6 @@ import {
   type PublicRecordSourceClass,
 } from '../data/publicRecords';
 
-interface SourceWatchRun {
-  checkedAt: string;
-  changed: Array<{ id: string; label: string; url: string; kind?: string }>;
-  failed: Array<{
-    id: string;
-    label: string;
-    url: string;
-    kind?: string;
-    status?: string;
-    statusCode?: number | null;
-  }>;
-  newBaselines: Array<{ id: string; label: string; url: string; kind?: string }>;
-}
-
 interface WatchedSource {
   id: string;
   label: string;
@@ -75,6 +61,36 @@ interface SourceWatchState {
   sources?: SourceWatchStateSource[];
 }
 
+interface FreshnessReviewItem {
+  key: string;
+  status: 'open' | 'resolved';
+  system: 'general-source-freshness' | 'city-monitor';
+  signal: 'content-changed' | 'check-failed' | 'manual-review';
+  signalLabel: string;
+  sourceId: string;
+  label: string;
+  url: string;
+  affectedPages: string[];
+  firstDetectedAt?: string | null;
+  latestDetectedAt?: string | null;
+  detections: number;
+  lastCheckedAt?: string | null;
+  lastSuccessfulAt?: string | null;
+  action: string;
+}
+
+interface FreshnessReviewQueue {
+  generatedAt?: string | null;
+  summary: {
+    open: number;
+    contentChanged: number;
+    failed: number;
+    manualReview: number;
+    affectedPages: number;
+  };
+  items: FreshnessReviewItem[];
+}
+
 const sourceClassOptions: Array<'All' | PublicRecordSourceClass> = [
   'All',
   'City government',
@@ -107,9 +123,13 @@ const catalogCsv = [
 ].join('\n');
 
 export default function PublicRecords() {
-  const [watchRuns, setWatchRuns] = useState<SourceWatchRun[]>([]);
   const [watchedSources, setWatchedSources] = useState<WatchedSource[]>([]);
   const [watchState, setWatchState] = useState<SourceWatchState>({});
+  const [reviewQueue, setReviewQueue] = useState<FreshnessReviewQueue>({
+    summary: { open: 0, contentChanged: 0, failed: 0, manualReview: 0, affectedPages: 0 },
+    items: [],
+  });
+  const [reviewQueueFailed, setReviewQueueFailed] = useState(false);
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState('All');
   const [sourceClass, setSourceClass] = useState<'All' | PublicRecordSourceClass>('All');
@@ -118,17 +138,12 @@ export default function PublicRecords() {
   useEffect(() => {
     const load = async () => {
       try {
-        const [historyResponse, indexResponse, stateResponse] = await Promise.all([
-          fetch('/source-watch-history.json', { cache: 'no-store' }),
+        const [indexResponse, stateResponse] = await Promise.all([
           fetch('/source-watch-index.json', { cache: 'no-store' }),
           fetch('/source-watch-state.json', { cache: 'no-store' }),
         ]);
-        const history = await historyResponse.json();
         const index = await indexResponse.json();
         const state = await stateResponse.json();
-        if (historyResponse.ok && Array.isArray(history.runs)) {
-          setWatchRuns(history.runs);
-        }
         if (indexResponse.ok && Array.isArray(index)) {
           setWatchedSources(index);
         }
@@ -136,15 +151,25 @@ export default function PublicRecords() {
           setWatchState(state);
         }
       } catch {
-        setWatchRuns([]);
         setWatchedSources([]);
         setWatchState({});
+      }
+
+      try {
+        const response = await fetch('/freshness-review-queue.json', { cache: 'no-store' });
+        const data = await response.json();
+        if (!response.ok || !Array.isArray(data.items) || !data.summary) {
+          throw new Error('review queue');
+        }
+        setReviewQueue(data);
+      } catch {
+        setReviewQueueFailed(true);
       }
     };
     void load();
   }, []);
 
-  const latestRun = watchRuns[0];
+  const openReviewItems = reviewQueue.items.filter(item => item.status === 'open');
   const watchedSourceByUrl = useMemo(
     () => new Map(watchedSources.map(source => [source.url, source])),
     [watchedSources]
@@ -453,14 +478,14 @@ export default function PublicRecords() {
             <div className="text-sm text-gray-600">latest source-specific checks successful</div>
           </div>
           <div className="rounded-xl border border-secondary-200 bg-secondary-50 p-4">
-            <div className="text-2xl font-extrabold text-gray-950">{latestRun?.changed.length ?? 0}</div>
-            <div className="text-sm text-gray-600">stable-document changes awaiting review</div>
+            <div className="text-2xl font-extrabold text-gray-950">{reviewQueue.summary.contentChanged}</div>
+            <div className="text-sm text-gray-600">content changes awaiting review</div>
           </div>
           <div className="rounded-xl border border-error-200 bg-error-50 p-4">
             <div className="text-2xl font-extrabold text-gray-950">
-              {(watchState.sources ?? []).filter(source => source.status === 'http-error' || source.status === 'unreachable').length}
+              {reviewQueue.summary.failed}
             </div>
-            <div className="text-sm text-gray-600">latest source-specific checks failed</div>
+            <div className="text-sm text-gray-600">failed checks awaiting review</div>
           </div>
         </div>
 
@@ -501,63 +526,81 @@ export default function PublicRecords() {
           </a>
         </div>
 
-        {!latestRun ? (
-          <div className="mt-6 rounded-2xl border border-gray-200 bg-[#fffdf8] p-5 text-sm text-gray-600">
-            <RefreshCw className="h-5 w-5 text-primary-700" />
-            <p className="mt-3">
-              No completed general source-freshness run is in the published history yet. The configured cadence and monitoring mode are already visible above.
-            </p>
+        <div id="freshness-review-queue" className="mt-6 rounded-2xl border border-primary-100 bg-[#fffdf8] p-6 scroll-mt-24">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">Editorial review</div>
+              <h3 className="mt-1 text-xl font-extrabold text-gray-950">Freshness review queue</h3>
+            </div>
+            <div className="text-sm font-bold text-primary-800">
+              {reviewQueue.summary.open} open item{reviewQueue.summary.open === 1 ? '' : 's'} · {reviewQueue.summary.affectedPages} affected page{reviewQueue.summary.affectedPages === 1 ? '' : 's'}
+            </div>
           </div>
-        ) : (
-          <div className="mt-6 rounded-2xl border border-primary-100 bg-[#fffdf8] p-6">
-            <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
-              Latest run · {new Date(latestRun.checkedAt).toLocaleString('en-PH')}
-            </div>
-            <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
-              <div className="rounded-xl border border-gray-200 bg-white p-4">
-                <div className="text-2xl font-extrabold text-gray-950">{latestRun.changed.length}</div>
-                <div className="text-sm text-gray-600">content changes for review</div>
-              </div>
-              <div className="rounded-xl border border-gray-200 bg-white p-4">
-                <div className="text-2xl font-extrabold text-gray-950">{latestRun.failed.length}</div>
-                <div className="text-sm text-gray-600">checks failed</div>
-              </div>
-              <div className="rounded-xl border border-gray-200 bg-white p-4">
-                <div className="text-2xl font-extrabold text-gray-950">{latestRun.newBaselines.length}</div>
-                <div className="text-sm text-gray-600">new document baselines</div>
-              </div>
-            </div>
 
-            {(latestRun.changed.length > 0 || latestRun.failed.length > 0) && (
-              <div className="mt-5 space-y-3">
-                {latestRun.changed.map(item => (
-                  <a
-                    key={'changed-' + item.id}
-                    href={item.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="flex items-start gap-3 rounded-xl border border-secondary-200 bg-secondary-50 p-4"
-                  >
-                    <RefreshCw className="mt-0.5 h-4 w-4 shrink-0 text-secondary-800" />
-                    <span className="text-sm text-gray-700"><strong>{item.label}</strong> changed and requires editorial review.</span>
-                  </a>
-                ))}
-                {latestRun.failed.map(item => (
-                  <a
-                    key={'failed-' + item.id}
-                    href={item.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="flex items-start gap-3 rounded-xl border border-error-200 bg-error-50 p-4"
-                  >
-                    <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-error-700" />
-                    <span className="text-sm text-gray-700"><strong>{item.label}</strong> could not be checked successfully.</span>
-                  </a>
-                ))}
-              </div>
-            )}
+          {reviewQueue.generatedAt && (
+            <div className="mt-2 text-xs text-gray-500">
+              Published source state {new Date(reviewQueue.generatedAt).toLocaleString('en-PH')}
+            </div>
+          )}
+
+          {reviewQueueFailed ? (
+            <div className="mt-5 rounded-xl border border-error-200 bg-error-50 p-4 text-sm text-error-900">
+              The published freshness review queue is unavailable.
+            </div>
+          ) : openReviewItems.length > 0 ? (
+            <div className="mt-5 space-y-4">
+              {openReviewItems.map(item => (
+                <article key={item.key} className="rounded-xl border border-gray-200 bg-white p-5">
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                    <div>
+                      <div className="flex flex-wrap gap-2 text-xs font-bold">
+                        <span className="rounded-full bg-primary-50 px-2.5 py-1 text-primary-800">{item.signalLabel}</span>
+                        <span className="rounded-full bg-gray-100 px-2.5 py-1 text-gray-700">
+                          {item.system === 'city-monitor' ? 'City Monitor' : 'Source freshness'}
+                        </span>
+                      </div>
+                      <h4 className="mt-3 text-lg font-extrabold text-gray-950">{item.label}</h4>
+                    </div>
+                    <a href={item.url} target="_blank" rel="noreferrer" className="brand-btn-secondary">
+                      Open source <ExternalLink className="h-4 w-4" />
+                    </a>
+                  </div>
+
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {item.affectedPages.map(page => (
+                      <Link key={page} to={page} className="rounded-full bg-[#f5f8f2] px-3 py-1.5 text-xs font-bold text-primary-800">
+                        {page}
+                      </Link>
+                    ))}
+                  </div>
+
+                  <div className="mt-4 grid gap-2 text-xs text-gray-600 sm:grid-cols-2">
+                    <div>
+                      Last successful check: <strong className="text-gray-800">{item.lastSuccessfulAt ? new Date(item.lastSuccessfulAt).toLocaleString('en-PH') : 'None recorded'}</strong>
+                    </div>
+                    <div>
+                      Last checked: <strong className="text-gray-800">{item.lastCheckedAt ? new Date(item.lastCheckedAt).toLocaleString('en-PH') : 'None recorded'}</strong>
+                    </div>
+                  </div>
+
+                  <div className="mt-4 rounded-lg bg-[#fffdf8] p-3 text-sm leading-relaxed text-gray-700">
+                    <strong>Action:</strong> {item.action}
+                  </div>
+                </article>
+              ))}
+            </div>
+          ) : (
+            <div className="mt-5 rounded-xl border border-gray-200 bg-white p-4 text-sm text-gray-600">
+              No open freshness review item.
+            </div>
+          )}
+
+          <div className="mt-5">
+            <a href="/freshness-review-queue.json" download className="brand-btn-secondary">
+              <Download className="h-4 w-4" /> Download review queue
+            </a>
           </div>
-        )}
+        </div>
       </Section>
 
       <Section className="bg-[#fffdf8]">
