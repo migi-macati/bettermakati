@@ -12,6 +12,7 @@ import { Heading } from '../components/ui/Heading';
 import SEO from '../components/SEO';
 import LastReviewed from '../components/ui/LastReviewed';
 import SharePage from '../components/ui/SharePage';
+import { openCongressMakatiRecords } from '../data/openCongressMakati';
 
 const officialArchive =
   'https://www.makati.gov.ph/content/resolutions-and-ordinances/author';
@@ -35,46 +36,6 @@ const archiveSearch = (query: string) =>
   );
 
 
-const makatiCongressRecords = [
-  {
-    bill: 'HB 1293',
-    congress: '19th Congress',
-    filed: 'July 6, 2022',
-    title: 'An Act Converting the Makati City into a Special City',
-    recordUrl:
-      'https://ldr.senate.gov.ph/bills/house-bill-no-1293-19th-congress',
-    pdfUrl:
-      'https://docs.congress.hrep.online/legisdocs/basic_19/HB01293.pdf',
-    upstreamUrl:
-      'https://github.com/bettergovph/open-congress-data/blob/6e853ee027790427c5b5961c6318ff907cf717d5/data/document/hb/19/01K6D89C4S8D2KYJJRKTQRGAQX.toml',
-  },
-  {
-    bill: 'HB 1294',
-    congress: '19th Congress',
-    filed: 'July 6, 2022',
-    title:
-      'An Act Converting the Makati West High School into Makati Science High School and Appropriating Funds Therefor',
-    recordUrl:
-      'https://ldr.senate.gov.ph/bills/house-bill-no-1294-19th-congress',
-    pdfUrl:
-      'https://docs.congress.hrep.online/legisdocs/basic_19/HB01294.pdf',
-    upstreamUrl:
-      'https://github.com/bettergovph/open-congress-data/blob/6e853ee027790427c5b5961c6318ff907cf717d5/data/document/hb/19/01K6D89C4S8D2KYJJRKTQRGAQY.toml',
-  },
-  {
-    bill: 'HB 6100',
-    congress: '19th Congress',
-    filed: 'November 14, 2022',
-    title:
-      'An Act Establishing a TESDA Training and Assessment Center in Barangay Sta. Cruz, Makati City',
-    recordUrl:
-      'https://ldr.senate.gov.ph/bills/house-bill-no-6100-19th-congress',
-    pdfUrl:
-      'https://docs.congress.hrep.online/legisdocs/basic_19/HB06100.pdf',
-    upstreamUrl:
-      'https://github.com/bettergovph/open-congress-data/blob/6e853ee027790427c5b5961c6318ff907cf717d5/data/document/hb/19/01K6D89D2ZM1B69D8JRFWX1MPY.toml',
-  },
-];
 
 export default function Legislation() {
   const [query, setQuery] = useState('');
@@ -227,7 +188,7 @@ export default function Legislation() {
         </p>
 
         <div className="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-4">
-          {makatiCongressRecords.map(record => (
+          {openCongressMakatiRecords.map(record => (
             <article
               key={record.bill}
               className="rounded-2xl border border-primary-100 bg-white p-5"
