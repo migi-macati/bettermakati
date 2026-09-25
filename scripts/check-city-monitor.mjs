@@ -206,7 +206,12 @@ const report = [
   '',
   '## Manual-review channels',
   '',
-  ...(run.manualReview.length ? run.manualReview.map(item => `- **${item.label}** — ${item.url}`) : ['- None']),
+  ...(run.manualReview.length
+    ? run.manualReview.map(
+        item =>
+          `- **${item.label}** — review ${item.affectedPages.join(', ') || '/city-monitor'} manually: ${item.url}`
+      )
+    : ['- None']),
   '',
   '### Editorial rule',
   '',
