@@ -15,6 +15,10 @@ const featuredIds = serviceBlocks
   .filter(block => /featured:\s*true/.test(block))
   .map(block => block.match(/\bid:\s*'([^']+)'/)?.[1])
   .filter(Boolean);
+const localServiceIds = serviceBlocks
+  .filter(block => /level:\s*'(City|Barangay)'/.test(block))
+  .map(block => block.match(/\bid:\s*'([^']+)'/)?.[1])
+  .filter(Boolean);
 
 const problems = [];
 const watchedUrls = new Set(watchlist.map(item => item.url));
@@ -36,6 +40,13 @@ if (missingFeaturedDetails.length) {
   problems.push(
     'Featured/high-use services without structured transaction guides: ' +
       missingFeaturedDetails.join(', ')
+  );
+}
+const missingLocalDetails = localServiceIds.filter(id => !detailIds.includes(id));
+if (missingLocalDetails.length) {
+  problems.push(
+    'City/barangay services without structured transaction guides: ' +
+      missingLocalDetails.join(', ')
   );
 }
 const duplicateIds = directoryIds.filter((id, index) => directoryIds.indexOf(id) !== index);
@@ -74,5 +85,5 @@ if (problems.length) {
 }
 
 console.log(
-  `Service-depth audit passed: ${directoryIds.length} indexed services (${cityServiceCount} city); ${detailIds.length} structured guides; ${verifiedCount} verified; ${featuredIds.length} featured services all structured; ${detailSourceUrls.length} detailed sources watched.`
+  `Service-depth audit passed: ${directoryIds.length} indexed services (${cityServiceCount} city); ${localServiceIds.length} city/barangay services all structured; ${detailIds.length} structured guides; ${verifiedCount} verified; ${featuredIds.length} featured services all structured; ${detailSourceUrls.length} detailed sources watched.`
 );
