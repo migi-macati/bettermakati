@@ -30,10 +30,12 @@
       "anti-sermon-service-ui",
       "assessment-services-batch",
       "civil-registry-transaction-batch",
-      "social-welfare-transaction-batch"
+      "social-welfare-transaction-batch",
+      "ancillary-building-permits-batch",
+      "veterinary-pet-services-batch"
     ],
     "gaps": [
-      "76 of 151 indexed services now have field-by-field transaction guides. The remaining 75 are concentrated in ancillary building permits, barangay transactions, veterinary services and national-agency services that still need source-specific requirements, fees, processing times or current-channel verification."
+      "85 of 151 indexed services now have field-by-field transaction guides. The remaining 66 are concentrated in barangay transactions, other long-tail city services and national-agency services that still need source-specific requirements, fees, processing times or current-channel verification."
     ]
   },
   {
