@@ -219,7 +219,7 @@ const Services: React.FC = () => {
                   </div>
                 </div>
                 <Link
-                  to={'/civic-map?barangay=' + encodeURIComponent(barangay.slug)}
+                  to={withBarangayScope('/civic-map', barangay.slug)}
                   className="inline-flex items-center gap-1 text-sm font-bold text-primary-700"
                 >
                   Open local map <MapPin className="h-4 w-4" />
