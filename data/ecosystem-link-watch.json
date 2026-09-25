@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-09-25",
+  "purpose": "Critical external destinations used by BetterMakati for BetterGov/BetterLGU ecosystem handoffs.",
+  "links": [
+    {
+      "id": "bettergov-services",
+      "label": "BetterGov services",
+      "url": "https://bettergov.ph/services"
+    },
+    {
+      "id": "betterlgu",
+      "label": "BetterLGU Directory",
+      "url": "https://lgu.bettergov.ph/"
+    },
+    {
+      "id": "bettergov-transparency",
+      "label": "BetterGov Transparency Portal",
+      "url": "https://transparency.bettergov.ph/"
+    },
+    {
+      "id": "bettergov-procurement",
+      "label": "BetterGov procurement browser",
+      "url": "https://transparency.bettergov.ph/procurement"
+    },
+    {
+      "id": "bettergov-open-data",
+      "label": "BetterGov Open Data Portal",
+      "url": "https://data.bettergov.ph/"
+    },
+    {
+      "id": "bettergov-open-congress",
+      "label": "BetterGov Open Congress API",
+      "url": "https://open-congress-api.bettergov.ph/"
+    },
+    {
+      "id": "bettergov-hotlines",
+      "label": "BetterGov Hotlines",
+      "url": "https://hotlines.bettergov.ph/"
+    },
+    {
+      "id": "bettergov-visualizations",
+      "label": "BetterGov Data Research",
+      "url": "https://visualizations.bettergov.ph/"
+    },
+    {
+      "id": "bettergov-dynasty",
+      "label": "BetterGov Political Dynasty Tracker",
+      "url": "https://visualizations.bettergov.ph/dynasty"
+    },
+    {
+      "id": "bettergov-saln",
+      "label": "BetterGov SALN Tracker",
+      "url": "https://saln.bettergov.ph/"
+    },
+    {
+      "id": "bettergov-price-guides",
+      "label": "BetterGov Price Guides",
+      "url": "https://price-guides.bettergov.ph/"
+    },
+    {
+      "id": "bettergov-budget-2026",
+      "label": "BetterGov 2026 Budget dashboard",
+      "url": "https://2026-budget.bettergov.ph/"
+    },
+    {
+      "id": "bettergov-flood-control",
+      "label": "BetterGov flood-control projects",
+      "url": "https://bettergov.ph/flood-control-projects"
+    },
+    {
+      "id": "bisto",
+      "label": "Bisto.ph",
+      "url": "https://bisto.ph/"
+    },
+    {
+      "id": "petitions",
+      "label": "Petitions.ph",
+      "url": "https://petition.ph/"
+    },
+    {
+      "id": "openbayan",
+      "label": "OpenBayan",
+      "url": "https://www.openbayan.org/"
+    },
+    {
+      "id": "juris",
+      "label": "Juris",
+      "url": "https://juris.ph/"
+    }
+  ]
+}
