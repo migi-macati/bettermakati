@@ -1,0 +1,389 @@
+{
+  "schemaVersion": 1,
+  "verifiedAt": "2026-09-25",
+  "workstream": "Wave 3C-1c — Current Makati protective-service facility verification",
+  "scope": "Research/reconciliation only. No Civic Map fire- or police-station assets are added in this step.",
+  "controllingCount": {
+    "source": "Makati City Basic Facts and Figures 2023",
+    "sourceUrl": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1720150266681.pdf",
+    "geography": "Present-day Makati excluding the 10 transferred barangays",
+    "police": {
+      "central": 1,
+      "substations": 7,
+      "total": 8
+    },
+    "fire": {
+      "central": 1,
+      "substations": 10,
+      "total": 11
+    },
+    "note": "The 2023 count is the denominator for the current protective-service facility layer."
+  },
+  "fireNetwork": {
+    "verifiedCurrentCount": 11,
+    "countMatches2023Headline": true,
+    "currentSource": {
+      "source": "City Government of Makati — Fire Stations Hotlines",
+      "sourceUrl": "https://www.makati.gov.ph/content/makati-hotlines-firestations",
+      "role": "Current named operating list and current street addresses."
+    },
+    "sites": [
+      {
+        "id": "makati-central-fire-station",
+        "name": "Makati Central Fire Station",
+        "barangay": "San Antonio",
+        "address": "Old Makati City Fire Station, Ayala Avenue Extension corner Malugay Street, Barangay San Antonio, Makati City",
+        "currentStatus": "verified-current",
+        "civicMapStatus": "already-mapped-audit-current-address",
+        "pointProvenance": {
+          "addressSource": "City Government of Makati — Fire Stations Hotlines",
+          "coordinateDisposition": "Freeze exact map point from the current official street address during 3C-1e; do not use barangay centroid."
+        }
+      },
+      {
+        "id": "ayala-fire-satellite",
+        "name": "Ayala Satellite",
+        "aliases": [
+          "Ayala Satellite Fire Sub-Station"
+        ],
+        "barangay": "San Lorenzo",
+        "address": "East Street, Ayala Center Park Square, Barangay San Lorenzo, Makati City",
+        "currentStatus": "verified-current",
+        "civicMapStatus": "missing-ready-for-implementation",
+        "pointProvenance": {
+          "addressSource": "City Government of Makati — Fire Stations Hotlines",
+          "coordinateDisposition": "Freeze exact current Park Square/East Street map point during 3C-1e."
+        }
+      },
+      {
+        "id": "bel-air-fire-substation",
+        "name": "Bel-Air FSS",
+        "aliases": [
+          "Bel-Air Fire Sub-Station"
+        ],
+        "barangay": "Bel-Air",
+        "address": "Nicanor Garcia Street corner Kalayaan Avenue, Barangay Bel-Air, Makati City",
+        "currentStatus": "verified-current",
+        "civicMapStatus": "missing-ready-for-implementation",
+        "pointProvenance": {
+          "addressSource": "City Government of Makati — Fire Stations Hotlines",
+          "coordinateDisposition": "Freeze exact current intersection point during 3C-1e."
+        }
+      },
+      {
+        "id": "bangkal-fire-substation",
+        "name": "Bangkal Fire Sub-Station",
+        "barangay": "Bangkal",
+        "address": "Evangelista Street, Barangay Bangkal, Makati City",
+        "currentStatus": "verified-current",
+        "civicMapStatus": "missing-ready-for-implementation",
+        "pointProvenance": {
+          "addressSource": "City Government of Makati — Fire Stations Hotlines",
+          "coordinateDisposition": "Match the current fire-station building on Evangelista Street during 3C-1e."
+        }
+      },
+      {
+        "id": "guadalupe-fire-substation",
+        "name": "Guadalupe Fire Sub-Station",
+        "barangay": "Guadalupe Nuevo",
+        "address": "2519 La Consolacion Street, Barangay Guadalupe Nuevo, Makati City",
+        "currentStatus": "verified-current",
+        "civicMapStatus": "missing-ready-for-implementation",
+        "pointProvenance": {
+          "addressSource": "City Government of Makati — Fire Stations Hotlines",
+          "coordinateDisposition": "Freeze exact current building point during 3C-1e."
+        }
+      },
+      {
+        "id": "la-paz-fire-substation",
+        "name": "La Paz Fire Sub-Station",
+        "barangay": "La Paz",
+        "address": "Dumas Street corner Archimedes Street, Barangay La Paz, Makati City",
+        "currentStatus": "verified-current",
+        "civicMapStatus": "missing-ready-for-implementation",
+        "pointProvenance": {
+          "addressSource": "City Government of Makati — Fire Stations Hotlines",
+          "coordinateDisposition": "Freeze current La Paz barangay-hall/fire-substation building point during 3C-1e."
+        }
+      },
+      {
+        "id": "pio-del-pilar-fire-substation",
+        "name": "Pio del Pilar Fire Sub-Station",
+        "barangay": "Pio del Pilar",
+        "address": "Batangas Street corner Arnaiz Road, Barangay Pio del Pilar, Makati City",
+        "currentStatus": "verified-current",
+        "civicMapStatus": "missing-ready-for-implementation",
+        "pointProvenance": {
+          "addressSource": "City Government of Makati — Fire Stations Hotlines",
+          "coordinateDisposition": "Freeze exact current station building point during 3C-1e."
+        }
+      },
+      {
+        "id": "palanan-fire-substation",
+        "name": "Palanan Fire Sub-Station",
+        "barangay": "Palanan",
+        "address": "Casino Street corner South Super Highway / Osmeña Highway, Barangay Palanan, Makati City",
+        "currentStatus": "verified-current",
+        "civicMapStatus": "missing-ready-for-implementation",
+        "pointProvenance": {
+          "addressSource": "City Government of Makati — Fire Stations Hotlines",
+          "coordinateDisposition": "Freeze exact current Casino/Osmeña station point during 3C-1e."
+        }
+      },
+      {
+        "id": "poblacion-fire-substation",
+        "name": "Poblacion Fire Sub-Station",
+        "barangay": "Poblacion",
+        "address": "J.P. Rizal Street, Barangay Poblacion, Makati City",
+        "currentStatus": "verified-current",
+        "civicMapStatus": "missing-ready-for-implementation",
+        "pointProvenance": {
+          "addressSource": "City Government of Makati — Fire Stations Hotlines",
+          "coordinateDisposition": "Match the current station building on J.P. Rizal during 3C-1e."
+        }
+      },
+      {
+        "id": "tejeros-fire-substation",
+        "name": "Tejeros Fire Sub-Station",
+        "barangay": "Tejeros",
+        "address": "H. Santos Street corner J.P. Rizal, Barangay Tejeros, Makati City",
+        "currentStatus": "verified-current",
+        "civicMapStatus": "missing-ready-for-implementation",
+        "pointProvenance": {
+          "addressSource": "City Government of Makati — Fire Stations Hotlines",
+          "coordinateDisposition": "Freeze exact current intersection/building point during 3C-1e."
+        }
+      },
+      {
+        "id": "valenzuela-fire-substation",
+        "name": "Valenzuela Fire Sub-Station",
+        "barangay": "Valenzuela",
+        "address": "Pililia Street corner Hormiga Street, Barangay Valenzuela, Makati City",
+        "currentStatus": "verified-current",
+        "civicMapStatus": "missing-ready-for-implementation",
+        "pointProvenance": {
+          "addressSource": "City Government of Makati — Fire Stations Hotlines",
+          "coordinateDisposition": "Freeze exact current station point during 3C-1e."
+        }
+      }
+    ],
+    "historicalReconciliation": {
+      "source": "Makati Facts and Figures 2020",
+      "sourceUrl": "https://www.makati.gov.ph/assets/uploads/downloads/2/45/561/pdf/Facts%20and%20FIgures%202020.pdf",
+      "formerMakatiNowTaguig": [
+        "West Rembo Fire Sub-Station",
+        "Comembo Fire Sub-Station"
+      ],
+      "currentAdditionsRelativeTo2020MainList": [
+        "Ayala Satellite",
+        "Bel-Air FSS"
+      ],
+      "finding": "After removing the two transferred-barangay fire stations and using the current Makati hotline page, the current network resolves to the official 2023 count of 11."
+    }
+  },
+  "policeNetwork": {
+    "verifiedCurrentCount": 8,
+    "countMatches2023Headline": true,
+    "historicalNamedBaseline": {
+      "source": "Makati Facts and Figures 2020 — List of Police Station",
+      "sourceUrl": "https://www.makati.gov.ph/assets/uploads/downloads/2/45/561/pdf/Facts%20and%20FIgures%202020.pdf",
+      "currentMakatiCandidatesAfterBoundaryTransfer": [
+        "Makati Central Police Station",
+        "Police Sub-Station 1 — Olympia",
+        "Police Sub-Station 2 — Palanan",
+        "Police Sub-Station 3 — San Isidro",
+        "Police Sub-Station 4 — Bangkal",
+        "Police Sub-Station 5 — Ayala / San Lorenzo",
+        "Police Sub-Station 6 — Poblacion",
+        "Police Sub-Station 7 — Guadalupe Nuevo"
+      ]
+    },
+    "jurisdictionTransfer": {
+      "source": "National Police Commission resolution index",
+      "sourceUrl": "https://www.napolcom.gov.ph/resoindex.html",
+      "resolutions": [
+        {
+          "id": "2023-1591",
+          "effect": "Transferred administrative and operational control of PCPs serving the 10 transferred barangays from Makati City Police Station to Taguig City Police Station."
+        },
+        {
+          "id": "2024-0646",
+          "effect": "Approved transfer of administrative and operational control of Makati Police Sub-Stations 8 and 9 to Taguig."
+        }
+      ],
+      "disposition": "Sub-Stations 8 and 9 are excluded from present-day Makati. Sub-Stations 1–7 remain the current-Makati completeness set."
+    },
+    "sites": [
+      {
+        "id": "makati-city-police-station",
+        "name": "Makati City Police Station / Makati Police Headquarters",
+        "barangay": "San Antonio",
+        "currentAddress": "Malugay Street corner Mayapis Street, Barangay San Antonio, Makati City",
+        "historicalAddress": "Ayala Avenue Extension corner Yakal Street, Barangay San Antonio, Makati City",
+        "currentStatus": "verified-current-operational-headquarters",
+        "addressResolution": "Use Malugay–Mayapis as current operational HQ; retain Ayala/Yakal as historical/legacy address.",
+        "currentEvidence": {
+          "source": "PNP Makati City Police Station current social-feed mirror",
+          "sourceUrl": "https://www.findglocal.com/PH/Makati/833882533663407/PNP-Makati-City-Police-Station",
+          "finding": "2025–2026 station posts and page address identify Makati Police Headquarters at Malugay corner Mayapis."
+        },
+        "pointProvenance": {
+          "coordinateDisposition": "Freeze exact Malugay–Mayapis headquarters point during 3C-1e; do not reuse the old Ayala/Yakal point without separate current evidence."
+        },
+        "civicMapStatus": "missing-ready-for-implementation"
+      },
+      {
+        "id": "makati-police-substation-1",
+        "name": "Police Sub-Station 1 — Olympia",
+        "barangay": "Olympia",
+        "address": "7996 Honradez Street, Barangay Olympia, Makati City",
+        "currentStatus": "verified-current",
+        "mapEvidence": {
+          "source": "Waze current place listing",
+          "sourceUrl": "https://www.waze.com/live-map/directions/ph/ncr/makati-city/makati-city-police-station-police-community-precint-no.-1-barangay-olympia?to=place.ChIJnflxnaXJlzMR8b76aJwImv8"
+        },
+        "pointProvenance": {
+          "coordinateDisposition": "Use current Honradez Street station listing; exact point to be frozen in 3C-1e."
+        },
+        "civicMapStatus": "missing-ready-for-implementation"
+      },
+      {
+        "id": "makati-police-substation-2",
+        "name": "Police Sub-Station 2 — Palanan",
+        "barangay": "Palanan",
+        "address": "Block 5, Casino Street near Osmeña Highway, Barangay Palanan, Makati City",
+        "currentStatus": "verified-current",
+        "mapEvidence": {
+          "source": "Waze current place listing",
+          "sourceUrl": "https://www.waze.com/live-map/directions/ph/ncr/makati/makati-police-sub-station-2?to=place.ChIJv-_d_3PJlzMRhvyIP6xlNaI"
+        },
+        "pointProvenance": {
+          "coordinateDisposition": "Use the current Casino Street station listing; reconcile point to the historical Osmeña Highway corner during 3C-1e."
+        },
+        "civicMapStatus": "missing-ready-for-implementation"
+      },
+      {
+        "id": "makati-police-substation-3",
+        "name": "Police Sub-Station 3 — San Isidro",
+        "barangay": "San Isidro",
+        "address": "Batangas Street corner Antonio Arnaiz Avenue, Barangay San Isidro, Makati City",
+        "currentStatus": "verified-current",
+        "mapEvidence": {
+          "source": "Current OpenStreetMap-derived Mapcarta listing",
+          "sourceUrl": "https://mapcarta.com/W309927964",
+          "lat": 14.55058,
+          "lng": 121.00725,
+          "osmId": "way 309927964"
+        },
+        "pointProvenance": {
+          "coordinateDisposition": "Current OSM building geometry is suitable for exact 3C-1e point freeze."
+        },
+        "civicMapStatus": "missing-ready-for-implementation"
+      },
+      {
+        "id": "makati-police-substation-4",
+        "name": "Police Sub-Station 4 — Bangkal",
+        "barangay": "Bangkal",
+        "address": "Evangelista Street corner P. Santos Street, Barangay Bangkal, Makati City",
+        "currentStatus": "verified-current",
+        "mapEvidence": {
+          "source": "Waze current place listing",
+          "sourceUrl": "https://www.waze.com/live-map/directions/ph/ncr/makati-city/police-community-precinct-4?to=place.ChIJsxcydT_JlzMRZQaG2w3n4xk"
+        },
+        "pointProvenance": {
+          "coordinateDisposition": "Use the current Evangelista/P. Santos precinct listing for 3C-1e."
+        },
+        "civicMapStatus": "missing-ready-for-implementation"
+      },
+      {
+        "id": "makati-police-substation-5",
+        "name": "Ayala Police Sub-Station 5",
+        "barangay": "San Lorenzo",
+        "address": "East Street / Park Square area, Ayala Center, Barangay San Lorenzo, Makati City",
+        "historicalAddress": "Ground Floor, Park Square 1, Ayala Center, Barangay San Lorenzo, Makati City",
+        "currentStatus": "verified-current",
+        "currentEvidence": {
+          "source": "Current local map/business listing plus continuing 2025 operational reporting",
+          "mapAddress": "10 East Street, Makati City",
+          "note": "The station remains operational as Ayala Sub-Station 5; current map listings place it on East Street in the Park Square area."
+        },
+        "pointProvenance": {
+          "coordinateDisposition": "Freeze the current East Street/Park Square point in 3C-1e; do not assume the old Park Square building footprint if redevelopment has shifted the entrance."
+        },
+        "civicMapStatus": "missing-ready-for-implementation"
+      },
+      {
+        "id": "makati-police-substation-6",
+        "name": "Police Sub-Station 6 — Poblacion",
+        "barangay": "Poblacion",
+        "address": "P. Gomez Street corner San Mateo Street, Barangay Poblacion, Makati City",
+        "historicalAddress": "P. Gomez Street corner San Rafael Street, Barangay Poblacion, Makati City",
+        "currentStatus": "verified-current",
+        "currentEvidence": {
+          "source": "Current local map listing",
+          "finding": "Current listings place Sub-Station 6 at P. Gomez corner San Mateo."
+        },
+        "pointProvenance": {
+          "coordinateDisposition": "Use the current P. Gomez/San Mateo map point during 3C-1e; preserve the older San Rafael address as historical."
+        },
+        "civicMapStatus": "missing-ready-for-implementation"
+      },
+      {
+        "id": "makati-police-substation-7",
+        "name": "Police Sub-Station 7 — Guadalupe Nuevo",
+        "barangay": "Guadalupe Nuevo",
+        "address": "2342 Nuestra Señora de Antipolo, Barangay Guadalupe Nuevo, Makati City",
+        "aliases": [
+          "Guadalupe Nuevo Police Sub-Station 7"
+        ],
+        "currentStatus": "verified-current",
+        "mapEvidence": {
+          "source": "Waze current place listing",
+          "sourceUrl": "https://www.waze.com/live-map/directions/ph/ncr/makati/sub-station-7-guadalupe-nuevo%2C-makati-city?to=place.ChIJl1JmvPnJlzMRRRVMgWPfhT8"
+        },
+        "pointProvenance": {
+          "coordinateDisposition": "Freeze current Nuestra Señora de Antipolo station point during 3C-1e; older city sources simplify the address as Antipolo Street."
+        },
+        "civicMapStatus": "missing-ready-for-implementation"
+      }
+    ],
+    "excludedFormerMakati": [
+      {
+        "id": "makati-police-substation-8",
+        "historicalLocation": "West Rembo",
+        "currentDisposition": "Taguig jurisdiction — exclude from current Makati Civic Map"
+      },
+      {
+        "id": "makati-police-substation-9",
+        "historicalLocation": "Comembo",
+        "currentDisposition": "Taguig jurisdiction — exclude from current Makati Civic Map"
+      }
+    ]
+  },
+  "implementationReadiness": {
+    "fire": {
+      "totalCurrent": 11,
+      "alreadyMapped": 1,
+      "missingReady": 10
+    },
+    "police": {
+      "totalCurrent": 8,
+      "alreadyMapped": 0,
+      "missingReady": 8
+    },
+    "coordinateRule": "In 3C-1e, freeze exact current points from official street addresses plus current map evidence. Never use barangay centroids. Preserve historical addresses as aliases/provenance rather than duplicate assets."
+  },
+  "findings": [
+    "The current 11-station fire network is fully named on the City Government of Makati hotline page and matches the 2023 official count.",
+    "Ayala Satellite and Bel-Air FSS are current Makati fire stations not present in the older 2020 eleven-station main list; West Rembo and Comembo are now outside Makati.",
+    "The current police completeness denominator is one headquarters plus Sub-Stations 1–7.",
+    "NAPOLCOM formally transferred the old Makati Sub-Stations 8 and 9 to Taguig.",
+    "The Makati Police headquarters current operational address has shifted from the older Ayala/Yakal listing to Malugay/Mayapis in newer 2025–2026 station evidence.",
+    "Sub-Stations 1–7 retain stable neighborhood identities, though several street/address details have evolved; the verification record keeps both current and historical address evidence where needed."
+  ],
+  "nextStep": {
+    "id": "3C-1d",
+    "title": "Reconcile community, social-welfare and city-owned facilities",
+    "scope": "Resolve the day-care/child-minding network, social-development/youth/senior facilities, Poblacion Public Market and other citywide civic anchors against current Makati geography. Research only; no Civic Map additions."
+  }
+}
