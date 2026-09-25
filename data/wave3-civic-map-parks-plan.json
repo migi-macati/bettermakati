@@ -185,9 +185,9 @@
     "unresolved": "Remain visible in the audit and prevent a false completeness claim."
   },
   "immediateNext": {
-    "id": "3C-2f",
-    "title": "Implement private/public-access park layer",
-    "maximumScope": "Reclassify the three existing CBD parks, add the four ready missing public-access privately managed parks, and resolve Glorietta 4 immediately before coding. Do not add gated village parks, unresolved records or former-Makati assets."
+    "id": "3C-2g",
+    "title": "Close park completeness",
+    "maximumScope": "Audit the combined public and private/public-access park layers against all reconciled inventories and current Makati geography; report final dispositions and enforce the complete verified set without inventing unresolved assets."
   },
   "completedSubsteps": [
     "3C-2a",
@@ -198,7 +198,8 @@
     "3C-2c4",
     "3C-2c",
     "3C-2d",
-    "3C-2e"
+    "3C-2e",
+    "3C-2f"
   ],
   "inventoryFile": "data/wave3-civic-map-parks-inventory.json",
   "geographyFile": "data/wave3-civic-map-parks-geography.json",
@@ -244,5 +245,16 @@
     "supplementalCurrentPublicAccessSpaces": 3,
     "final3C2fPublicAccessSetReadyOrAlreadyMapped": 7,
     "final3C2fPublicAccessHold": 1
+  },
+  "privatePublicAccessImplementationStatus": "complete",
+  "privatePublicAccessImplementationFile": "data/wave3-civic-map-parks-private-implementation.json",
+  "privatePublicAccessImplementationSummary": {
+    "existingReclassified": 3,
+    "newCurrentPublicAccessAssetsAdded": 4,
+    "totalCurrentPrivatePublicAccessLayer": 7,
+    "futureExcludedUntilOpen": 1,
+    "controlledPrivateCommunityExcluded": 7,
+    "unresolvedExcluded": 2,
+    "formerMakatiExcluded": 7
   }
 }
