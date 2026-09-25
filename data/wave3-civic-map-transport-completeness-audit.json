@@ -1,0 +1,188 @@
+{
+  "schemaVersion": 1,
+  "closedAt": "2026-09-25",
+  "workstream": "Wave 3C-3 — Transport completeness from Makati publications",
+  "status": "complete-for-verified-current-named-mappable-set-with-explicit-unresolved-denominators",
+  "closureRule": "Current operating transport assets are mapped only where a current named physical stop/station/terminal can be verified. Historical route rows, headline-only counts, suspended rail stations and future infrastructure are dispositioned without being forced into the default current-operating Civic Map.",
+  "currentCivicMapSnapshot": {
+    "totalAssets": 88,
+    "currentTransportAssets": 10,
+    "mrtStations": 4,
+    "edsaBuswayStations": 3,
+    "pasigRiverFerryStations": 2,
+    "intermodalTerminals": 1,
+    "transportRouteAssets": 0
+  },
+  "familyDispositions": [
+    {
+      "family": "MRT-3 stations",
+      "officialMakatiCount": 4,
+      "disposition": "complete-current-named-set",
+      "mappedAssets": [
+        "mrt3-guadalupe",
+        "mrt3-buendia",
+        "mrt3-ayala",
+        "mrt3-magallanes"
+      ]
+    },
+    {
+      "family": "Pasig River Ferry stations",
+      "namedCurrentSet": [
+        "Guadalupe",
+        "Valenzuela"
+      ],
+      "disposition": "complete-current-named-set",
+      "mappedAssets": [
+        "pasig-ferry-guadalupe",
+        "pasig-ferry-valenzuela"
+      ]
+    },
+    {
+      "family": "EDSA Busway stations",
+      "namedCurrentSet": [
+        "Guadalupe",
+        "Buendia",
+        "Ayala"
+      ],
+      "disposition": "retain-current-supplemental-national-system-assets",
+      "mappedAssets": [
+        "edsa-busway-guadalupe",
+        "edsa-busway-buendia",
+        "edsa-busway-ayala"
+      ],
+      "denominatorNote": "Not counted automatically against Makati DEPW's published 32-bus-stop denominator because no direct crosswalk has been established."
+    },
+    {
+      "family": "One Ayala Terminal",
+      "disposition": "retain-current-supplemental-intermodal-asset",
+      "mappedAssets": [
+        "one-ayala-terminal"
+      ],
+      "denominatorNote": "Useful current public-transport infrastructure, but not treated as one of DEPW's 32 bus stops without documentary equivalence."
+    },
+    {
+      "family": "DEPW bus stops",
+      "official2023Count": 32,
+      "disposition": "headline-only-unresolved",
+      "namedRosterFrozen": 0,
+      "civicMapAssetsAdded": 0,
+      "notes": [
+        "The current official count is source-backed but the reviewed authoritative material does not publish the 32 stop names/locations.",
+        "The 2022 count was 17 and the reviewed sources do not explain the increase to 32.",
+        "An older 36-waiting-shed inventory is lineage evidence only and is not treated as the bus-stop roster."
+      ]
+    },
+    {
+      "family": "Public utility jeepney routes",
+      "historicalPublishedRows": 38,
+      "disposition": "route-by-route-reconciled-no-point-assets",
+      "currentOrSuccessorCorridorEvidence": 35,
+      "unresolvedNoExactCurrentMatch": 3,
+      "obsoleteCorridorsProven": 0,
+      "associationContinuityProven": 0,
+      "routeAssetsAdded": 0,
+      "unresolvedRows": [
+        {
+          "publishedNo": 24,
+          "route": "Washington–Mantrade"
+        },
+        {
+          "publishedNo": 29,
+          "route": "Mantrade–Pasong Tamo Extension"
+        },
+        {
+          "publishedNo": 37,
+          "route": "Kalayaan–PICC"
+        }
+      ],
+      "notes": [
+        "The source numbering skips 36; no missing route 36 is inferred.",
+        "Current corridor continuity is not treated as proof that the 2020 association/operator acronym remains current.",
+        "Linear routes are not rendered as fake single-point assets."
+      ]
+    },
+    {
+      "family": "PNR stations",
+      "official2023OperatingEraCount": 3,
+      "namedSet": [
+        "Dela Rosa",
+        "Pasay Road",
+        "EDSA"
+      ],
+      "disposition": "legacy-suspended-excluded-from-current-operating-layer",
+      "currentOperatingMapped": 0,
+      "notes": [
+        "Metro Commuter passenger operations have been suspended since March 28, 2024.",
+        "Legacy stations are eligible only for a future lifecycle/history layer, not the default current-operating map."
+      ]
+    },
+    {
+      "family": "NSCR South stations in Makati",
+      "namedFutureSet": [
+        "Buendia",
+        "EDSA"
+      ],
+      "disposition": "under-construction-excluded-from-current-operating-layer",
+      "currentOperatingMapped": 0,
+      "notes": [
+        "Future NSCR Buendia is not aliased to legacy PNR Dela Rosa.",
+        "Future NSCR EDSA and legacy PNR EDSA remain lifecycle-distinct.",
+        "No Makati-specific passenger opening date is frozen."
+      ]
+    },
+    {
+      "family": "MRT-3 and EDSA Busway route segments",
+      "disposition": "verified-but-deferred-until-route-geometry-support",
+      "reason": "The Civic Map currently stores point geometry for assets; a single point would misrepresent a linear route."
+    },
+    {
+      "family": "Other transport modes from 2020 city profile",
+      "modes": [
+        "Public Utility Buses",
+        "Taxi",
+        "Tricycle",
+        "Motorcycle Taxi",
+        "Pedicab",
+        "UV Express",
+        "LRT"
+      ],
+      "disposition": "mode-presence-not-a-physical-asset-inventory",
+      "rule": "Add only verified stops, terminals or true route geometry; do not create generic mode pins."
+    }
+  ],
+  "currentLayerIntegrity": {
+    "requiredCurrentTransportAssets": 10,
+    "duplicateAssetIds": 0,
+    "suspendedLegacyPnrAssetsAllowedInDefaultLayer": 0,
+    "futureNscrAssetsAllowedInDefaultLayer": 0,
+    "jeepneyPointRouteAssetsAllowed": 0,
+    "explicitBlockedLifecycleIds": [
+      "pnr-dela-rosa-legacy",
+      "pnr-pasay-road-legacy",
+      "pnr-edsa-legacy",
+      "nscr-buendia-future",
+      "nscr-edsa-future"
+    ]
+  },
+  "explicitHolds": [
+    "32 DEPW bus-stop names/locations",
+    "Jeepney row 24 Washington–Mantrade current exact match",
+    "Jeepney row 29 Mantrade–Pasong Tamo Extension current exact match",
+    "Jeepney row 37 Kalayaan–PICC current exact match",
+    "Makati-specific NSCR passenger opening schedule",
+    "Route-geometry support for linear public-transport routes"
+  ],
+  "sourceFiles": [
+    "data/wave3-civic-map-transport-reconciliation.json",
+    "data/wave3-civic-map-ferry-implementation.json",
+    "data/wave3-civic-map-bus-stops-reconciliation.json",
+    "data/wave3-civic-map-jeepney-routes-reconciliation-a.json",
+    "data/wave3-civic-map-jeepney-routes-reconciliation-b.json",
+    "data/wave3-civic-map-pnr-nscr-lifecycle.json"
+  ],
+  "nextWorkstream": {
+    "id": "3H-1",
+    "title": "Define participation outcome metrics",
+    "scope": "Define metrics and publication thresholds only. Do not instrument or publish aggregates yet."
+  }
+}
