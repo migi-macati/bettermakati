@@ -17,7 +17,8 @@
     "3C-1c",
     "3C-1d",
     "3C-1e1",
-    "3C-1e2"
+    "3C-1e2",
+    "3C-1e3"
   ],
   "substeps": [
     {
@@ -81,9 +82,9 @@
   ],
   "inventoryFile": "data/wave3-civic-map-facilities-inventory.json",
   "immediateNext": {
-    "id": "3C-1e3",
-    "title": "Implement current fire stations",
-    "maximumScope": "10 missing verified fire-station assets plus audit/correct the already-mapped Makati Central Fire Station. No police, day-care or social-welfare assets."
+    "id": "3C-1e4",
+    "title": "Implement current police facilities",
+    "maximumScope": "Makati Police headquarters + Sub-Stations 1–7 only. Freeze exact current points, preserve historical addresses where needed, block transferred Sub-Stations 8 and 9, and validate. No day-care/social-welfare assets."
   },
   "healthCenterVerificationStatus": "complete",
   "healthCenterVerificationFile": "data/wave3-civic-map-health-centers-verification.json",
@@ -126,5 +127,15 @@
     "batchBFile": "data/wave3-civic-map-health-centers-implementation-b.json",
     "batchBAssets": 9,
     "totalImplemented": 18
+  },
+  "fireStationImplementationStatus": "complete",
+  "fireStationImplementationFile": "data/wave3-civic-map-fire-stations-implementation.json",
+  "fireStationImplementationSummary": {
+    "officialCurrentCount": 11,
+    "mappedCurrent": 11,
+    "newlyAdded": 10,
+    "centralAuditedRetained": 1,
+    "ambiguousNewCentralBlocked": true,
+    "formerMakatiExcluded": 2
   }
 }
