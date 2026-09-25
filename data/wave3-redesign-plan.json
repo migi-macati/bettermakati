@@ -161,13 +161,27 @@
     {
       "id": "W3R-3b",
       "title": "Reuse places in Mobility",
-      "status": "next",
-      "maximumScope": "Mobility page only. Replace duplicated MRT, Busway, ferry and terminal facts where appropriate."
+      "status": "complete",
+      "maximumScope": "Mobility page only. Replace duplicated MRT, Busway, ferry and terminal facts where appropriate.",
+      "validation": {
+        "integration": "Mobility now selects verified transport-stop and transport-terminal records from the shared Place Registry.",
+        "verifiedAnchors": 10,
+        "breakdown": {
+          "mrt3": 4,
+          "edsaBusway": 3,
+          "pasigRiverFerry": 2,
+          "intermodalTerminal": 1
+        },
+        "canonicalLinks": "Each transport anchor links to its canonical /civic-map/:id place page and its registry provenance source.",
+        "shortcut": "The former generic Google terminal search shortcut now jumps to the registry-backed transport inventory on the Mobility page.",
+        "guardrail": "scripts/check-place-registry.mjs now verifies 10 transport rows and guards the Mobility selector/filter/place-link integration.",
+        "ci": "Latest CI still stops at the same three pre-existing unused-import ESLint errors before downstream checks/build. No new lint/parser errors are reported in Mobility.tsx, placeRegistry.ts or check-place-registry.mjs."
+      }
     },
     {
       "id": "W3R-3c",
       "title": "Reuse places in Services and Government Offices",
-      "status": "planned",
+      "status": "next",
       "maximumScope": "Services and Government Offices only. Connect service guides to relevant verified physical locations."
     },
     {
@@ -352,9 +366,9 @@
     }
   ],
   "immediateNext": {
-    "id": "W3R-3b",
-    "title": "Reuse places in Mobility",
-    "maximumScope": "Mobility page only. Reuse shared transport stops/terminals from the Place Registry; no new transport research."
+    "id": "W3R-3c",
+    "title": "Reuse places in Services and Government Offices",
+    "maximumScope": "Services and Government Offices surfaces only. Reuse relevant Place Registry records without merging governmentServiceOffices into the registry."
   },
   "capabilityDispositionAuditFile": "data/wave3-capability-disposition-audit.json",
   "completedSteps": [
@@ -363,7 +377,8 @@
     "W3R-2a",
     "W3R-2b",
     "W3R-2c",
-    "W3R-3a"
+    "W3R-3a",
+    "W3R-3b"
   ],
   "placeRegistrySchemaFile": "data/place-registry-schema.json",
   "placeRegistryDataFile": "src/data/placeRegistry.ts"
