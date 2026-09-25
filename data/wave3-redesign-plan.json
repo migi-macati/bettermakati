@@ -103,13 +103,19 @@
     {
       "id": "W3R-2b",
       "title": "Introduce Place Registry data layer",
-      "status": "next",
-      "maximumScope": "Data-layer refactor only. Preserve all current place IDs and page behavior; Civic Map may temporarily re-export the same records."
+      "status": "complete",
+      "maximumScope": "Data-layer refactor only. Preserve all current place IDs and page behavior; Civic Map may temporarily re-export the same records.",
+      "validation": {
+        "idParity": "88 of 88 Civic Map place IDs preserved in the same order; no additions, losses or duplicates.",
+        "civicMapIntegrity": "Focused integrity audit passed: 88 assets, 33 issue categories, 17 proposal categories and 7 emergency categories.",
+        "ci": "Latest CI reaches dependency audit, then stops at the same three pre-existing unused-import ESLint errors present before W3R-2b. No new lint/parser errors are reported for placeRegistry.ts, civicMap.ts or check-civic-map.mjs; the repo-wide Build step remains skipped by that baseline lint failure.",
+        "deployment": "Vercel status is blocked by the existing account build-rate limit, not a code diagnostic."
+      }
     },
     {
       "id": "W3R-2c",
       "title": "Add Place Registry selectors",
-      "status": "planned",
+      "status": "next",
       "maximumScope": "Shared helpers only: by barangay, category, service, coordinates/distance and lifecycle. No visible UI changes."
     },
     {
@@ -312,15 +318,17 @@
     }
   ],
   "immediateNext": {
-    "id": "W3R-2b",
-    "title": "Introduce Place Registry data layer",
-    "maximumScope": "Data-layer refactor only. Preserve all current place IDs and page behavior; Civic Map may temporarily re-export the same records."
+    "id": "W3R-2c",
+    "title": "Add Place Registry selectors",
+    "maximumScope": "Shared helpers only: by barangay, category, service, coordinates/distance and lifecycle. No visible UI changes."
   },
   "capabilityDispositionAuditFile": "data/wave3-capability-disposition-audit.json",
   "completedSteps": [
     "W3R-0",
     "W3R-1",
-    "W3R-2a"
+    "W3R-2a",
+    "W3R-2b"
   ],
-  "placeRegistrySchemaFile": "data/place-registry-schema.json"
+  "placeRegistrySchemaFile": "data/place-registry-schema.json",
+  "placeRegistryDataFile": "src/data/placeRegistry.ts"
 }
