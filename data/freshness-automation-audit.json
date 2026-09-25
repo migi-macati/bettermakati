@@ -233,7 +233,8 @@
     {
       "id": "2.4B",
       "title": "Remove automation collisions",
-      "objective": "Stagger or consolidate schedules and stop no-op generated-state commits from causing unnecessary main-branch deployments."
+      "objective": "Stagger or consolidate schedules and stop no-op generated-state commits from causing unnecessary main-branch deployments.",
+      "status": "complete"
     },
     {
       "id": "2.4C",
@@ -264,6 +265,29 @@
       "id": "2.4H",
       "title": "Harden automation",
       "objective": "Test concurrency, retries, rebases, duplicate issues, recovery and no-op behavior; then protect the architecture with audits."
+    }
+  ],
+  "implementationUpdates": [
+    {
+      "step": "2.4B",
+      "completedAt": "2026-09-25",
+      "title": "Remove automation collisions and no-op deployment churn",
+      "changes": [
+        "Collapsed the three Source Freshness schedules into one 08:00 Philippine-time daily trigger.",
+        "The scheduled Source Freshness run uses cadence=due: daily sources every day, weekly sources on Mondays, monthly sources on the first day of the month.",
+        "Daily City Monitor remains at 08:30 Philippine time, separating the two freshness jobs.",
+        "General Source Freshness now sets publishRequired only when checked source status/error state changes or a content-hash baseline changes.",
+        "City Monitor now sets publishRequired only when source status/error state changes or a content-hash source changes.",
+        "Both workflows skip npm run build and skip commits to main when publishRequired is false.",
+        "Reachability-only body changes do not trigger publication.",
+        "Public Records and BetterMakati Status now label timestamps as published checks rather than implying every background run is deployed."
+      ],
+      "expectedEffect": "Routine unchanged checks still execute, but they no longer create timestamp-only main-branch commits or Vercel deployments.",
+      "unchanged": [
+        "Source ownership is unchanged and remains for 2.4C.",
+        "The four general-source/City-Monitor overlaps are unchanged and remain for 2.4C.",
+        "Editorial source-to-page dependency mapping remains for 2.4D."
+      ]
     }
   ]
 }
