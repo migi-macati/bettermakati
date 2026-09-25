@@ -251,10 +251,21 @@ test('Budget Explorer exposes reconciled office line-item drill-down', async ({ 
   await expect(page.getByRole('link', { name: 'p. 82', exact: true }).first()).toBeVisible();
 });
 
-test('Projects & Budget displays procurement evidence instead of only linking out', async ({ page }) => {
+test('Projects & Budget displays and filters procurement evidence', async ({ page }) => {
   await page.goto(baseURL + '/projects-budget');
   await expect(page.getByRole('heading', { name: 'Bid results and award records' })).toBeVisible();
   await expect(page.getByText('21', { exact: true }).first()).toBeVisible();
+
+  const evidence = page.getByRole('combobox', { name: 'Filter procurement evidence' });
+  await evidence.selectOption('Follow-up evidence');
+  await expect(page.getByText('Event management services for Rosas ng Sampiro Festival 2025', { exact: true })).toBeVisible();
+  await expect(page.getByText('Desktop/laptop computers and printers for various city offices', { exact: true })).toHaveCount(0);
+
+  await evidence.selectOption('Bid result only');
+  await expect(page.getByText('Desktop/laptop computers and printers for various city offices', { exact: true })).toBeVisible();
+  await expect(page.getByText('Event management services for Rosas ng Sampiro Festival 2025', { exact: true })).toHaveCount(0);
+
+  await evidence.selectOption('All');
   const search = page.getByPlaceholder('Search project, supplier or reference');
   await search.fill('BS25-04-0419');
   await expect(page.getByText('Instructional materials for Makati public elementary and secondary schools', { exact: true })).toBeVisible();
