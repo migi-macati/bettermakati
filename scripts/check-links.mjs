@@ -14,7 +14,15 @@ const walk = async dir => {
 };
 for (const root of roots) await walk(root);
 
-const urls = new Set();
+const ecosystemManifest = JSON.parse(
+  await readFile('data/ecosystem-link-watch.json', 'utf8')
+);
+const ecosystemLinks = Array.isArray(ecosystemManifest.links)
+  ? ecosystemManifest.links
+  : [];
+const criticalUrls = new Set(ecosystemLinks.map(item => item.url));
+
+const urls = new Set(criticalUrls);
 for (const file of files) {
   const text = await readFile(file, 'utf8');
   for (const match of text.matchAll(/https?:\/\/[^\s"'<>\])}]+/g)) {
@@ -48,7 +56,13 @@ const worker = async url => {
       console.error(response.status + ' ' + url);
     }
   } catch (error) {
-    console.warn('CHECK FAILED ' + url + ' (' + (error?.name || 'error') + ')');
+    const message = 'CHECK FAILED ' + url + ' (' + (error?.name || 'error') + ')';
+    if (criticalUrls.has(url)) {
+      failures += 1;
+      console.error(message);
+    } else {
+      console.warn(message);
+    }
   } finally {
     clearTimeout(timer);
   }
@@ -57,5 +71,12 @@ const worker = async url => {
 for (let i = 0; i < list.length; i += 8) {
   await Promise.all(list.slice(i, i + 8).map(worker));
 }
-console.log('Checked ' + list.length + ' external URLs; hard failures: ' + failures);
+console.log(
+  'Checked ' +
+    list.length +
+    ' external URLs (' +
+    criticalUrls.size +
+    ' critical ecosystem links); hard failures: ' +
+    failures
+);
 if (failures > 0) process.exit(1);
