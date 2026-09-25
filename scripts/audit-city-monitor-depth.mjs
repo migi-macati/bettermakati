@@ -7,6 +7,7 @@ const generator = await readFile('scripts/generate-site-files.mjs', 'utf8');
 const workflow = await readFile('.github/workflows/daily-city-monitor.yml', 'utf8');
 const config = JSON.parse(await readFile('data/city-monitor-sources.json', 'utf8'));
 const supplement = await readFile('src/data/accountabilitySupplement.ts', 'utf8');
+const app = await readFile('src/App.tsx', 'utf8');
 
 const problems = [];
 
@@ -44,6 +45,20 @@ for (const id of expectedSourceIds) {
 for (const source of config.sources) {
   if (source.owner !== 'city-monitor') {
     problems.push('City Monitor source has wrong or missing owner: ' + source.id);
+  }
+  if (!Array.isArray(source.affectedPages) || source.affectedPages.length === 0) {
+    problems.push('City Monitor source has no affected pages: ' + source.id);
+  } else {
+    for (const affectedPage of source.affectedPages) {
+      if (!app.includes(`path="${affectedPage}"`)) {
+        problems.push(
+          'City Monitor source points to an unrouted affected page: ' +
+            source.id +
+            ' -> ' +
+            affectedPage
+        );
+      }
+    }
   }
 }
 const philgepsSource = config.sources.find(source => source.id === 'philgeps');
@@ -108,6 +123,7 @@ for (const marker of [
   "'data/city-monitor-source-state.json'",
   "'data/city-monitor-source-history.json'",
   "const publishRequired = results.some(semanticStateChanged)",
+  "affectedPages: Array.isArray(affectedPages)",
   'A changed source hash is only a detection signal.',
 ]) {
   if (!checker.includes(marker)) {
