@@ -248,7 +248,8 @@
       "planFile": "data/wave3-civic-map-parks-plan.json",
       "completedSubsteps": [
         "3C-2a",
-        "3C-2b"
+        "3C-2b",
+        "3C-2c1"
       ],
       "inventoryFile": "data/wave3-civic-map-parks-inventory.json",
       "geographyFile": "data/wave3-civic-map-parks-geography.json",
@@ -257,6 +258,15 @@
         "currentMakati": 31,
         "formerMakatiNowTaguig": 10,
         "unresolved": 2
+      },
+      "currentVerificationFiles": [
+        "data/wave3-civic-map-parks-current-verification-1.json"
+      ],
+      "currentVerificationSummary": {
+        "researched": 6,
+        "verifiedCurrentPublic": 4,
+        "heldAliasResolution": 1,
+        "heldCurrentStatusUnverified": 1
       }
     },
     {
@@ -617,9 +627,9 @@
     }
   ],
   "immediateNext": {
-    "id": "3C-2c",
-    "title": "Verify current public parks",
-    "maximumScope": "Research/verification only: current status, current name, access/ownership, barangay/address, and coordinate provenance. No Civic Map implementation yet."
+    "id": "3C-2c2",
+    "title": "Verify current public parks — batch 2",
+    "maximumScope": "Makati City Hall Park, Valenzuela Park, Poblacion Linear Park, Plaza Cristo Rey, Kalayaan Avenue Park, Playground Park at Brgy. Poblacion, Riverside Carmona. Research only."
   },
   "reopenedExecutionOrder": [
     "3C-2a",
@@ -638,7 +648,7 @@
     },
     "3C-2": {
       "status": "in-progress",
-      "current": "3C-2c"
+      "current": "3C-2c2"
     },
     "3C-3": {
       "status": "reopened-planned",
