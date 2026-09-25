@@ -18,16 +18,19 @@
     "path": "/services",
     "label": "Services",
     "status": "partial",
-    "reviewedAt": "2026-09-20",
+    "reviewedAt": "2026-09-25",
     "checks": [
       "directory",
       "search",
       "city-barangay-national",
       "guide-first-routing",
-      "office-context"
+      "office-context",
+      "city-permits-transaction-batch",
+      "city-health-laboratory-transaction-batch",
+      "anti-sermon-service-ui"
     ],
     "gaps": [
-      "Continue converting long-tail indexed services into field-by-field verified transaction guides."
+      "63 of 151 indexed services now have field-by-field transaction guides. The remaining 88 are concentrated in long-tail city permits, barangay transactions and national-agency services that still need source-specific requirements, fees, processing times or current-channel verification."
     ]
   },
   {
