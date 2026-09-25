@@ -159,9 +159,12 @@
       "officialCurrentCount": 32,
       "source": "Makati Basic Facts 2023 / DEPW",
       "namedCurrentInventoryFound": false,
-      "civicMapDisposition": "headline-only-unresolved",
-      "note": "Do not manufacture 32 pins from a count. The existing EDSA Busway points remain current supplemental assets but are not counted toward this denominator without a named crosswalk.",
-      "followUp": "Search DEPW/PSD traffic plans, stop-sign inventories, procurement/engineering schedules and other city records for a named current stop list."
+      "civicMapDisposition": "headline-only-unresolved-after-authoritative-search",
+      "note": "The 32-stop count remains source-backed, but no current named roster was found in reviewed authoritative sources. The 2022 count was 17; available sources do not explain the change to 32.",
+      "followUp": "Obtain DEPW/PSD stop-level inventory, GIS layer, maintenance schedule, or equivalent official named list before implementation.",
+      "currentNamedInventoryFound": false,
+      "currentNamedInventoryFile": "data/wave3-civic-map-bus-stops-reconciliation.json",
+      "namedCurrentBusStopsFrozen": 0
     },
     {
       "family": "EDSA Busway stations",
@@ -511,7 +514,10 @@
     "The 32 bus-stop headline cannot be safely turned into assets because Makati's current publication does not name the 32 stops.",
     "The 2020 city transport section contains 38 jeepney-route rows, not 39: its numbering skips 36.",
     "Guadalupe and Valenzuela ferry stations are the strongest immediate missing current transport assets.",
-    "One Ayala and the three EDSA Busway stations are useful current supplemental assets but should remain separate from Makati's older/current city denominators unless a direct crosswalk is found."
+    "One Ayala and the three EDSA Busway stations are useful current supplemental assets but should remain separate from Makati's older/current city denominators unless a direct crosswalk is found.",
+    "The 32 current bus stops remain a verified DEPW headline count but cannot yet be converted into named Civic Map assets.",
+    "The city count changed from 17 in 2022 to 32 in 2023 despite the 2023 exclusion of the 10 transferred barangays; the reviewed sources do not explain the counting-basis change.",
+    "DEPW's older 36 waiting-shed count is lineage evidence only and is not treated as a bus-stop roster."
   ],
   "completenessDoctrine": [
     "Current service status and physical-infrastructure existence are separate dimensions.",
@@ -524,5 +530,6 @@
     "id": "3C-3b",
     "title": "Implement the two current Makati ferry stations",
     "scope": "Freeze exact current points for Guadalupe and Valenzuela Pasig River Ferry stations, add the two current transport-stop assets with MMDA/current-service provenance, validate, and stop."
-  }
+  },
+  "busStopReconciliationFile": "data/wave3-civic-map-bus-stops-reconciliation.json"
 }
