@@ -1036,6 +1036,17 @@ export const serviceDirectory: ServiceDirectoryItem[] = [
     href: 'https://bfp.gov.ph/',
     sourceUrl: 'https://bfp.gov.ph/wp-content/uploads/2020/12/3-BFP-Citizens-Charter-Handbook-for-Printing.pdf',
     keywords: 'bfp fsic occupancy building fire inspection certificate',
+    nationalIntegration: {
+      officialActionUrl: 'https://bfp.gov.ph/',
+      officialSourceUrl: 'https://bfp.gov.ph/wp-content/uploads/2020/12/3-BFP-Citizens-Charter-Handbook-for-Printing.pdf',
+      betterGov: {
+        status: 'missing',
+        auditedAt: '2026-09-25',
+      },
+      makatiContext: {
+        officeIds: ['bfp-makati-city'],
+      },
+    },
   },
   {
     id: 'psa-birth-certificate',
@@ -1741,6 +1752,17 @@ export const serviceDirectory: ServiceDirectoryItem[] = [
     href: 'https://ecc.gov.ph/downloads/',
     sourceUrl: 'https://ecc.gov.ph/downloads/',
     keywords: 'ecc ec medical reimbursement work related medicine hospital claim',
+    nationalIntegration: {
+      officialActionUrl: 'https://ecc.gov.ph/downloads/',
+      officialSourceUrl: 'https://ecc.gov.ph/downloads/',
+      betterGov: {
+        status: 'missing',
+        auditedAt: '2026-09-25',
+      },
+      makatiContext: {
+        officeIds: ['ecc-head-office'],
+      },
+    },
   },
   {
     id: 'ecc-rehabilitation',
@@ -1753,6 +1775,17 @@ export const serviceDirectory: ServiceDirectoryItem[] = [
     href: 'https://ecc.gov.ph/downloads/',
     sourceUrl: 'https://ecc.gov.ph/downloads/',
     keywords: 'ecc kagabay rehabilitation work related disability physical therapy assistive device skills entrepreneurship',
+    nationalIntegration: {
+      officialActionUrl: 'https://ecc.gov.ph/downloads/',
+      officialSourceUrl: 'https://ecc.gov.ph/downloads/',
+      betterGov: {
+        status: 'missing',
+        auditedAt: '2026-09-25',
+      },
+      makatiContext: {
+        officeIds: ['ecc-head-office'],
+      },
+    },
   },
   {
     id: 'ecc-death-funeral',
@@ -1765,6 +1798,17 @@ export const serviceDirectory: ServiceDirectoryItem[] = [
     href: 'https://ecc.gov.ph/frequently-asked-questions/',
     sourceUrl: 'https://ecc.gov.ph/frequently-asked-questions/',
     keywords: 'ecc ec death funeral benefit work related beneficiary pension',
+    nationalIntegration: {
+      officialActionUrl: 'https://ecc.gov.ph/frequently-asked-questions/',
+      officialSourceUrl: 'https://ecc.gov.ph/frequently-asked-questions/',
+      betterGov: {
+        status: 'missing',
+        auditedAt: '2026-09-25',
+      },
+      makatiContext: {
+        officeIds: ['ecc-head-office'],
+      },
+    },
   },
 
   {
@@ -1791,6 +1835,17 @@ export const serviceDirectory: ServiceDirectoryItem[] = [
     href: 'https://depedmakati.ph/index.php/records/',
     sourceUrl: 'https://depedmakati.ph/index.php/records/',
     keywords: 'deped makati cav certification authentication verification diploma form 137 school records',
+    nationalIntegration: {
+      officialActionUrl: 'https://depedmakati.ph/index.php/records/',
+      officialSourceUrl: 'https://depedmakati.ph/index.php/records/',
+      betterGov: {
+        status: 'missing',
+        auditedAt: '2026-09-25',
+      },
+      makatiContext: {
+        officeIds: ['deped-makati-sdo'],
+      },
+    },
   },
   {
     id: 'deped-makati-record-correction',
@@ -1803,6 +1858,17 @@ export const serviceDirectory: ServiceDirectoryItem[] = [
     href: 'https://depedmakati.ph/index.php/records/',
     sourceUrl: 'https://depedmakati.ph/index.php/records/',
     keywords: 'deped makati correction school records name birth form 137 diploma',
+    nationalIntegration: {
+      officialActionUrl: 'https://depedmakati.ph/index.php/records/',
+      officialSourceUrl: 'https://depedmakati.ph/index.php/records/',
+      betterGov: {
+        status: 'missing',
+        auditedAt: '2026-09-25',
+      },
+      makatiContext: {
+        officeIds: ['deped-makati-sdo'],
+      },
+    },
   },
 
   {

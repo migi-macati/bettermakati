@@ -1227,3 +1227,42 @@ test('national service handoff batch C2 covers DOLE and DOH NCR', async ({ page 
     'https://ncroffice.doh.gov.ph/CitizensCharter'
   );
 });
+
+test('national service handoff batch D1 covers BFP, ECC and DepEd Makati', async ({ page }) => {
+  await page.goto(baseURL + '/services/guide/bfp-fsic-occupancy');
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://bfp.gov.ph/'
+  );
+  await expect(page.getByText('BFP Makati City Fire Station', { exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toHaveCount(0);
+
+  await page.goto(baseURL + '/services/guide/ecc-medical-reimbursement');
+  await expect(page.getByText('Employees’ Compensation Commission – Head Office / Public Assistance Center', { exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toHaveCount(0);
+
+  await page.goto(baseURL + '/services/guide/ecc-rehabilitation');
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://ecc.gov.ph/downloads/'
+  );
+
+  await page.goto(baseURL + '/services/guide/ecc-death-funeral');
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://ecc.gov.ph/frequently-asked-questions/'
+  );
+
+  await page.goto(baseURL + '/services/guide/deped-makati-cav');
+  await expect(page.getByText('DepEd Schools Division Office – Makati City', { exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://depedmakati.ph/index.php/records/'
+  );
+
+  await page.goto(baseURL + '/services/guide/deped-makati-record-correction');
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://depedmakati.ph/index.php/records/'
+  );
+});
