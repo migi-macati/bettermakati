@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "implementedAt": "2026-09-25",
+  "workstream": "Wave 3C-2f — Implement private/public-access park layer",
+  "scope": "Current, present-day Makati green spaces that are privately or estate managed but ordinarily public-facing. Gated community parks, unresolved historical records, future spaces and former-Makati assets are excluded.",
+  "implementationCorrection": {
+    "id": "dela-rosa-gardens",
+    "previousDisposition": "ready",
+    "correctedDisposition": "future-do-not-implement-until-open",
+    "reason": "Ayala Land's April 2026 shareholder materials still describe Dela Rosa Gardens as forthcoming; published target completion is Q4 2028."
+  },
+  "existingAssetsReclassified": [
+    "ayala-triangle-gardens",
+    "washington-sycip-park",
+    "legazpi-active-park"
+  ],
+  "newAssetsAdded": [
+    "greenbelt-park",
+    "jaime-velasquez-park",
+    "palm-promenade-park",
+    "glorietta-4-park"
+  ],
+  "accessMetadata": {
+    "field": "accessClass",
+    "value": "public-access-private-managed",
+    "uiLabel": "Public access · privately managed",
+    "appliedTo": 7
+  },
+  "excluded": {
+    "futureUntilOpen": [
+      "dela-rosa-gardens"
+    ],
+    "controlledPrivateCommunity": [
+      "bel-air-park-near-barangay-hall",
+      "forbes-park-and-pavillion",
+      "mahogany-park",
+      "park-at-san-lorenzo-assumption",
+      "bel-air-park-hercules",
+      "san-felipe-park",
+      "urdaneta-park"
+    ],
+    "unresolved": [
+      "ayala-edsa-park",
+      "senior-citizen-park"
+    ],
+    "formerMakati": [
+      "track-30th-bgc",
+      "bonifacio-high-street-7th",
+      "bonifacio-high-street-8th",
+      "bonifacio-high-street-9th",
+      "bonifacio-high-street-11th",
+      "de-jesus-oval-park",
+      "terra-28th-park"
+    ]
+  },
+  "gloriettaResolution": {
+    "id": "glorietta-4-park",
+    "implementedName": "Glorietta 4 Park / The Plaza",
+    "aliases": [
+      "Glorietta 4 Park",
+      "The Plaza"
+    ],
+    "point": {
+      "lat": 14.55111,
+      "lng": 121.02694
+    },
+    "disposition": "one current asset; no duplicate historical pin"
+  },
+  "integrityGuards": [
+    "Require all seven current private/public-access park IDs.",
+    "Require accessClass public-access-private-managed plus source and coordinate provenance.",
+    "Reject future, controlled-private, unresolved and former-Makati records from the current public-access layer."
+  ],
+  "nextStep": {
+    "id": "3C-2g",
+    "title": "Close park completeness"
+  }
+}
