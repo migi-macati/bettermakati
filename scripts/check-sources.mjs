@@ -9,9 +9,23 @@ const args = new Map(
 );
 
 const cadence = args.get('cadence') || 'all';
-if (!['daily', 'weekly', 'monthly', 'all'].includes(cadence)) {
-  throw new Error('cadence must be daily, weekly, monthly or all');
+if (!['daily', 'weekly', 'monthly', 'due', 'all'].includes(cadence)) {
+  throw new Error('cadence must be daily, weekly, monthly, due or all');
 }
+
+const manilaNow = new Date();
+const manilaParts = new Intl.DateTimeFormat('en-US', {
+  timeZone: 'Asia/Manila',
+  weekday: 'short',
+  day: '2-digit',
+}).formatToParts(manilaNow);
+const manilaWeekday =
+  manilaParts.find(part => part.type === 'weekday')?.value || '';
+const manilaDay = manilaParts.find(part => part.type === 'day')?.value || '';
+const cadenceIsDue = sourceCadence =>
+  sourceCadence === 'daily' ||
+  (sourceCadence === 'weekly' && manilaWeekday === 'Mon') ||
+  (sourceCadence === 'monthly' && manilaDay === '01');
 
 const watchlist = JSON.parse(
   await readFile('data/source-watchlist.json', 'utf8')
@@ -122,9 +136,11 @@ const fetchSource = async source => {
   }
 };
 
-const selected = watchlist.filter(
-  source => cadence === 'all' || source.cadence === cadence
-);
+const selected = watchlist.filter(source => {
+  if (cadence === 'all') return true;
+  if (cadence === 'due') return cadenceIsDue(source.cadence);
+  return source.cadence === cadence;
+});
 
 const checked = [];
 for (let index = 0; index < selected.length; index += concurrency) {
@@ -137,6 +153,24 @@ for (let index = 0; index < selected.length; index += concurrency) {
     );
   }
 }
+
+const semanticStateChanged = result => {
+  const old = previousById.get(result.id);
+  if (!old) return true;
+  if (old.status !== result.status) return true;
+  if ((old.statusCode ?? null) !== (result.statusCode ?? null)) return true;
+  if ((old.error || '') !== (result.error || '')) return true;
+  if (
+    result.monitoringMode === 'content-hash' &&
+    (old.lastSuccessfulHash || old.sha256 || '') !==
+      (result.lastSuccessfulHash || result.sha256 || '')
+  ) {
+    return true;
+  }
+  return false;
+};
+
+const publishRequired = checked.some(semanticStateChanged);
 
 const checkedById = new Map(checked.map(source => [source.id, source]));
 const sources = watchlist.map(source => {
@@ -166,6 +200,7 @@ await writeFile(
       checkedAt: runAt,
       cadence,
       summary,
+      publishRequired,
       sources,
     },
     null,
@@ -262,5 +297,5 @@ const report = [
 await writeFile('data/source-watch-report.md', report);
 
 console.log(
-  `Source freshness run complete: ${summary.checked} checked, ${summary.ok} successful, ${summary.failed} failed, ${summary.changed} stable-document changes.`
+  `Source freshness run complete: ${summary.checked} checked, ${summary.ok} successful, ${summary.failed} failed, ${summary.changed} stable-document changes; publish required: ${publishRequired}.`
 );
