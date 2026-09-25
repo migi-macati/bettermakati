@@ -92,7 +92,8 @@ for (const marker of [
   'Official only',
   'Download catalog CSV',
   'source-watch-index.json',
-  'source-watch-history.json',
+  'freshness-history.json',
+  'page-freshness-state.json',
   'freshness-review-queue.json',
   'Freshness review queue',
   'Last successful check:',
@@ -109,6 +110,12 @@ if (!generator.includes("writeFile('public/source-watch-index.json'")) {
 }
 if (!generator.includes("writeFile('public/freshness-review-queue.json'")) {
   problems.push('Generated site files no longer publish the consolidated freshness review queue.');
+}
+if (!generator.includes("writeFile('public/freshness-history.json'")) {
+  problems.push('Generated site files no longer publish consolidated freshness history.');
+}
+if (!generator.includes("writeFile('public/page-freshness-state.json'")) {
+  problems.push('Generated site files no longer publish page freshness state.');
 }
 
 if (!catalog.includes("export const publicRecordsReviewed = '24 September 2026';")) {
