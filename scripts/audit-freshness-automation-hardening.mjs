@@ -2,6 +2,7 @@ import { readFile } from 'node:fs/promises';
 
 const sourceWorkflow = await readFile('.github/workflows/source-freshness.yml', 'utf8');
 const cityWorkflow = await readFile('.github/workflows/daily-city-monitor.yml', 'utf8');
+const civicWorkflow = await readFile('.github/workflows/civic-briefs.yml', 'utf8');
 const sourceChecker = await readFile('scripts/check-sources.mjs', 'utf8');
 const cityChecker = await readFile('scripts/check-city-monitor.mjs', 'utf8');
 const queueBuilder = await readFile('scripts/build-freshness-review-queue.mjs', 'utf8');
@@ -15,7 +16,7 @@ const workflows = [
 
 for (const [label, workflow] of workflows) {
   for (const marker of [
-    'group: freshness-main-writer',
+    'group: scheduled-main-writer',
     'cancel-in-progress: false',
     'timeout-minutes: 20',
     "if: steps.publish.outputs.publish_required == 'true'",
@@ -53,10 +54,45 @@ for (const [label, workflow] of workflows) {
     problems.push(label + ' workflow must build, publish, then sync the review issue in that order.');
   }
 
-  const concurrencyMatches = workflow.match(/group: freshness-main-writer/g) || [];
+  const concurrencyMatches = workflow.match(/group: scheduled-main-writer/g) || [];
   if (concurrencyMatches.length !== 1) {
     problems.push(label + ' workflow must declare exactly one shared freshness writer lock.');
   }
+}
+
+for (const [label, checker] of [
+  ['Source freshness', sourceChecker],
+  ['City Monitor', cityChecker],
+]) {
+  for (const marker of [
+    'const maxFetchAttempts = 2',
+    'const shouldRetryStatus = status => status === 429 || status >= 500',
+    'const fetchWithRetry = async',
+    'attempt < maxFetchAttempts && shouldRetryStatus(response.status)',
+    'await sleep(attempt * 1000)',
+  ]) {
+    if (!checker.includes(marker)) {
+      problems.push(label + ' checker lost transient fetch retry behavior: ' + marker);
+    }
+  }
+}
+
+for (const marker of [
+  'group: scheduled-main-writer',
+  'cancel-in-progress: false',
+  'timeout-minutes: 20',
+  'for attempt in 1 2 3; do',
+  'git fetch origin main',
+  'git rebase origin/main',
+  'git rebase --abort || true',
+  'git push origin HEAD:main',
+]) {
+  if (!civicWorkflow.includes(marker)) {
+    problems.push('Civic Brief workflow lost direct-main writer hardening: ' + marker);
+  }
+}
+if (civicWorkflow.includes('git push --force') || civicWorkflow.includes('git push -f')) {
+  problems.push('Civic Brief workflow must never force-push.');
 }
 
 for (const marker of [
