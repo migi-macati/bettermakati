@@ -200,9 +200,10 @@
       "completedSubsteps": [
         "3C-1a",
         "3C-1b",
-        "3C-1c"
+        "3C-1c",
+        "3C-1d"
       ],
-      "current": "3C-1d",
+      "current": "3C-1e1",
       "substeps": [
         "3C-1a",
         "3C-1b",
@@ -230,7 +231,23 @@
         "policeAlreadyMapped": 0,
         "policeMissingReady": 8,
         "transferredPoliceSubstationsExcluded": 2
-      }
+      },
+      "communityFacilitiesReconciliationFile": "data/wave3-civic-map-community-facilities-reconciliation.json",
+      "communityFacilitiesReconciliationSummary": {
+        "currentDayCareCenters": 22,
+        "currentChildMindingCenters": 1,
+        "transferredDayCareCentersExcluded": 18,
+        "transferredChildMindingCentersExcluded": 3,
+        "currentCoreSocialWelfareFacilities": 4,
+        "currentCityOwnedMarketCandidate": 1,
+        "unresolvedProposedOrColocated": 2
+      },
+      "implementationSplit": [
+        "3C-1e1",
+        "3C-1e2",
+        "3C-1e3",
+        "3C-1e4"
+      ]
     },
     {
       "id": "3C-2",
@@ -685,9 +702,9 @@
     }
   ],
   "immediateNext": {
-    "id": "3C-1d",
-    "title": "Reconcile community, social-welfare and city-owned facilities",
-    "maximumScope": "Day-care/child-minding network, Social Development Center, Makati Youth Home, Youth Center, Senior Citizen Center, Poblacion Public Market and citywide civic anchors. Research/reconciliation only; no Civic Map additions."
+    "id": "3C-1e1",
+    "title": "Implement current health centers — batch A",
+    "maximumScope": "First 9 verified MHD health-center sites only. Freeze exact current points, add source/address provenance and validate. No fire, police, day-care or social-welfare assets."
   },
   "reopenedExecutionOrder": [
     "3C-2a",
@@ -703,7 +720,7 @@
       "status": "in-progress",
       "title": "Public infrastructure/facility completeness from Makati publications",
       "executeAfter": "3C-2g unless user reprioritizes",
-      "current": "3C-1d"
+      "current": "3C-1e1"
     },
     "3C-2": {
       "status": "in-progress",
