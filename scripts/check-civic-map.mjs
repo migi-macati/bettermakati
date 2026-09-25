@@ -495,6 +495,20 @@ for (const id of requiredMakatiFerryAssets) {
   }
 }
 
+const blockedNonOperatingRailAssets = [
+  'pnr-dela-rosa-legacy',
+  'pnr-pasay-road-legacy',
+  'pnr-edsa-legacy',
+  'nscr-buendia-future',
+  'nscr-edsa-future',
+];
+
+for (const id of blockedNonOperatingRailAssets) {
+  if (assetIds.includes(id)) {
+    problems.push('Suspended/future rail asset must not appear in the default current-operating Civic Map layer: ' + id);
+  }
+}
+
 const requiredTransportAssets = [
   'mrt3-guadalupe',
   'mrt3-buendia',
