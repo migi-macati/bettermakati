@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "revisedAt": "2026-09-25",
   "workstream": "Wave 3C-2 — Makati parks and civic-space completeness",
-  "status": "reopened",
+  "status": "in-progress",
   "reason": "The original 3C-2 added only three CBD parks. Official Makati sources publish substantially broader park inventories, so that batch was preliminary and did not satisfy the completeness goal.",
   "authoritativeBaseline": {
     "primary": {
@@ -185,8 +185,12 @@
     "unresolved": "Remain visible in the audit and prevent a false completeness claim."
   },
   "immediateNext": {
-    "id": "3C-2a",
-    "title": "Reconcile official Makati park inventories",
-    "maximumScope": "Research/crosswalk only. No Civic Map additions yet."
-  }
+    "id": "3C-2b",
+    "title": "Reconcile parks to current Makati geography",
+    "maximumScope": "Geography/disposition classification only. No Civic Map additions."
+  },
+  "completedSubsteps": [
+    "3C-2a"
+  ],
+  "inventoryFile": "data/wave3-civic-map-parks-inventory.json"
 }
