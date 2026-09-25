@@ -31,11 +31,6 @@ import {
 } from '../data/serviceDirectory';
 import PhotoCarousel from '../components/ui/PhotoCarousel';
 import { servicesImageSet } from '../data/cityImages';
-import {
-  detailedServiceGuideCount,
-  serviceGuideDetails,
-  verifiedServiceGuideCount,
-} from '../data/serviceGuideDetails';
 import { useBarangayScope } from '../hooks/useBarangayScope';
 
 const normalize = (value: string) =>
@@ -286,13 +281,12 @@ const Services: React.FC = () => {
               <Heading level={2}>Government services</Heading>
             </div>
             <div className="text-sm text-gray-500">
-              {visibleDirectory.length} of {serviceDirectory.length} services · {detailedServiceGuideCount} structured · {verifiedServiceGuideCount} verified
+              {visibleDirectory.length} results
             </div>
           </div>
 
           <div className="mt-6 divide-y divide-gray-200 overflow-hidden rounded-2xl border border-gray-200 bg-white">
             {visibleDirectory.map(item => {
-              const detail = serviceGuideDetails[item.id];
               return (
                 <article
                   key={item.id}
@@ -306,15 +300,6 @@ const Services: React.FC = () => {
                       <span className="rounded-full bg-gray-100 px-2.5 py-1 text-gray-600">
                         {item.type}
                       </span>
-                      {detail && (
-                        <span className={
-                          detail.verification === 'verified'
-                            ? 'rounded-full bg-success-50 px-2.5 py-1 text-success-800'
-                            : 'rounded-full bg-warning-50 px-2.5 py-1 text-warning-800'
-                        }>
-                          {detail.verification === 'verified' ? 'Detailed guide' : 'Detail checked with caveat'}
-                        </span>
-                      )}
                     </div>
                     <h3 className="mt-2 text-lg font-extrabold text-gray-950">
                       {item.title}
