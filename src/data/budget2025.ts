@@ -1,3 +1,5 @@
+import { officeBudgetDetails2026Remaining } from './budgetOfficeDetails2026Remaining';
+
 export const budgetSources = {
   annualBudget2026:
     'https://www.makati.gov.ph/assets/uploads/staticmenu/docs/online_forms/pdf/Annual%20Budget%20Report%202026.pdf',
@@ -4260,7 +4262,8 @@ export const officeBudgetDetails2026: Array<{
         "page": 46
       }
     ]
-  }
+  },
+  ...officeBudgetDetails2026Remaining
 ];
 
 export const selectedBudgetLines2026 = [
