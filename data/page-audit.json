@@ -265,7 +265,7 @@
     "path": "/city-monitor",
     "label": "City Monitor",
     "status": "partial",
-    "reviewedAt": "2026-09-24",
+    "reviewedAt": "2026-09-25",
     "checks": [
       "eight-stream-coverage",
       "source-directory",
@@ -293,7 +293,7 @@
     "path": "/briefs",
     "label": "Civic Briefs",
     "status": "partial",
-    "reviewedAt": "2026-09-24",
+    "reviewedAt": "2026-09-25",
     "checks": [
       "daily-weekly-monthly-cadence",
       "scheduled-publication",
@@ -345,7 +345,7 @@
     "path": "/records",
     "label": "Public Records",
     "status": "partial",
-    "reviewedAt": "2026-09-24",
+    "reviewedAt": "2026-09-25",
     "checks": [
       "normalized-source-catalog",
       "search",
