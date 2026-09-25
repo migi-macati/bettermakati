@@ -1,0 +1,424 @@
+{
+  "schemaVersion": 1,
+  "auditedAt": "2026-09-25",
+  "workstream": "Wave 3A-1 — Participation feature inventory",
+  "scope": "Inventory only. No participation UX, API, lifecycle, routing, or content behavior changed in this step.",
+  "routeInventory": [
+    {
+      "route": "/participate",
+      "role": "Participation hub",
+      "implementation": "src/pages/Participate.tsx",
+      "status": "implemented",
+      "capabilities": [
+        "Lists current official participation opportunities when indexed.",
+        "Shows documented past participation records.",
+        "Loads BetterMakati proposals, ideas, corrections and source submissions from /api/community-input.",
+        "Displays GitHub-backed workflow status separately from City Government disposition.",
+        "When barangay-scoped, links to the barangay government contact, a barangay-filtered Civic Map, and a local source-submission path."
+      ],
+      "data": [
+        "src/data/participation.ts",
+        "/api/community-input"
+      ],
+      "barangayAware": true,
+      "pageAudit": {
+        "status": "reviewed",
+        "reviewedAt": "2026-09-20"
+      }
+    },
+    {
+      "route": "/get-involved",
+      "role": "Structured BetterMakati contribution form",
+      "implementation": "src/pages/GetInvolved.tsx",
+      "status": "implemented",
+      "capabilities": [
+        "Accepts proposal, idea, source, correction, volunteer and contact submissions.",
+        "Supports tool and subject prefill through query parameters.",
+        "Submits to /api/feedback.",
+        "Returns a public GitHub tracking URL when native storage succeeds.",
+        "Falls back to a pre-filled public GitHub issue when native storage is unavailable.",
+        "Collects optional source URL and barangay/area text.",
+        "Includes a privacy warning against sensitive personal information."
+      ],
+      "pageAudit": {
+        "status": "not-listed"
+      }
+    },
+    {
+      "route": "/contact",
+      "role": "Contact entry point",
+      "implementation": "src/pages/Contact.tsx",
+      "status": "implemented",
+      "capabilities": [
+        "Provides BetterMakati email and social channels.",
+        "Routes structured contact messages to /get-involved?type=contact#submission.",
+        "Separately provides official Makati City contact channels."
+      ],
+      "pageAudit": {
+        "status": "not-listed"
+      }
+    },
+    {
+      "route": "all standard pages via PageHelp",
+      "role": "Page-specific correction entry point",
+      "implementation": "src/components/ui/PageHelp.tsx",
+      "status": "implemented",
+      "capabilities": [
+        "Adds a Suggest a correction action to most pages.",
+        "Prefills the correction subject with the current route.",
+        "Links back to Public Records and Status."
+      ]
+    },
+    {
+      "route": "/civic-map",
+      "role": "Public-realm participation map",
+      "implementation": "src/pages/CivicMap.tsx",
+      "status": "implemented-pilot",
+      "capabilities": [
+        "Searches and filters mapped civic assets.",
+        "Filters mapped assets by BetterBarangay query scope.",
+        "Loads public civic cases from /api/civic.",
+        "Shows current open reports and proposals.",
+        "Links to Civic Map reporting summaries."
+      ],
+      "pageAudit": {
+        "status": "partial",
+        "reviewedAt": "2026-09-21"
+      }
+    },
+    {
+      "route": "/civic-map/:assetId",
+      "role": "Asset-level reporting, rating and discussion",
+      "implementation": "src/pages/CivicAsset.tsx",
+      "status": "implemented-pilot",
+      "capabilities": [
+        "Accepts reports, improvement proposals, ratings/reviews and updates.",
+        "Displays existing community cases/discussion.",
+        "Uses duplicate-case checking before opening a separate nearby report/proposal.",
+        "Routes emergency categories away from BetterMakati to 911.",
+        "Keeps community submission, BetterMakati review, referral, authority acknowledgement and resolution as separate evidence states."
+      ]
+    },
+    {
+      "route": "/civic-map/reports",
+      "role": "Participation reporting and referral dashboard",
+      "implementation": "src/pages/CivicReports.tsx",
+      "status": "implemented-pilot",
+      "capabilities": [
+        "Shows weekly counts for new cases, proposals, open cases, corroborated cases, referral candidates and community resolution signals.",
+        "Shows monthly issue/proposal/review activity and rating summaries.",
+        "Shows proposals with at least three community supports.",
+        "Shows cases eligible for BetterMakati review/referral.",
+        "Explains the five-stage community-to-resolution lifecycle."
+      ],
+      "pageAudit": {
+        "status": "not-listed"
+      }
+    }
+  ],
+  "apiInventory": [
+    {
+      "endpoint": "/api/feedback",
+      "file": "api/feedback.js",
+      "methods": [
+        "POST"
+      ],
+      "purpose": "General BetterMakati participation submissions",
+      "storedAs": "GitHub issues",
+      "issueTypes": [
+        "Proposal",
+        "Idea",
+        "Source",
+        "Correction",
+        "Volunteer",
+        "Contact"
+      ],
+      "safeguards": [
+        "IP-memory rate limit: 12 requests per 60 seconds per runtime instance.",
+        "Hidden website honeypot.",
+        "Required subject and details.",
+        "String cleaning/length limits.",
+        "Public GitHub fallback when native token storage is unavailable."
+      ]
+    },
+    {
+      "endpoint": "/api/community-input",
+      "file": "api/community-input.js",
+      "methods": [
+        "GET"
+      ],
+      "purpose": "Public feed for BetterMakati community proposals, ideas, corrections and source submissions",
+      "sources": "GitHub issues",
+      "publicPrefixes": [
+        "[Proposal]",
+        "[Idea]",
+        "[Correction]",
+        "[Source]"
+      ],
+      "behavior": [
+        "Returns up to 30 recent matching issues.",
+        "Reads status:* labels as workflowStatus.",
+        "Keeps GitHub open/closed state distinct from workflow status."
+      ]
+    },
+    {
+      "endpoint": "/api/civic",
+      "file": "api/civic.js",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "purpose": "Civic Map storage, discussion and retrieval",
+      "storedAs": "GitHub issues and issue comments",
+      "contributionKinds": [
+        "report",
+        "proposal",
+        "review",
+        "update"
+      ],
+      "commentKinds": [
+        "confirm",
+        "resolved",
+        "support",
+        "concern",
+        "update",
+        "reply"
+      ],
+      "safeguards": [
+        "IP-memory limits: 8 submissions per minute and 40 per day per runtime instance.",
+        "Hidden website honeypot.",
+        "Input cleaning and URL protocol validation.",
+        "Emergency categories rejected with a 911 handoff.",
+        "Nearby duplicate detection for open reports/proposals on the same asset/category within 75 metres when coordinates exist.",
+        "GitHub fallback URL when native storage is not configured."
+      ]
+    },
+    {
+      "endpoint": "/api/civic-report",
+      "file": "api/civic-report.js",
+      "methods": [
+        "GET"
+      ],
+      "purpose": "Aggregated weekly/monthly Civic Map metrics and referral candidates",
+      "rules": [
+        "Two or more independent confirm comments produce a community-corroborated evidence state.",
+        "An open report becomes referral-eligible when severity is high or it is community-corroborated, unless already marked forwarded.",
+        "An open proposal is treated as mature after at least three support comments.",
+        "Community resolution comments are counted separately from official lifecycle events."
+      ]
+    },
+    {
+      "endpoint": "/api/civic-admin",
+      "file": "api/civic-admin.js",
+      "methods": [
+        "POST"
+      ],
+      "purpose": "Authenticated moderation/referral lifecycle recording",
+      "authorization": "Requires BETTERMAKATI_CIVIC_ADMIN_TOKEN and BETTERMAKATI_GITHUB_TOKEN.",
+      "statuses": [
+        "reviewed",
+        "forwarded",
+        "acknowledged",
+        "action-reported",
+        "community-verified-resolved"
+      ],
+      "eventFields": [
+        "authority",
+        "channel",
+        "externalReference",
+        "note"
+      ],
+      "behavior": [
+        "Records lifecycle events as machine-readable GitHub comments.",
+        "Closes a Civic Map GitHub issue when community-verified-resolved is recorded."
+      ]
+    }
+  ],
+  "civicMapInventory": {
+    "methodologyReviewed": "2026-09-21",
+    "assetTypesSupported": [
+      "street-segment",
+      "sidewalk-segment",
+      "crossing",
+      "bike-lane",
+      "park",
+      "public-office",
+      "health-center",
+      "community-center",
+      "public-market",
+      "public-toilet",
+      "drainage",
+      "bridge",
+      "heritage-site",
+      "transport-route",
+      "transport-stop",
+      "transport-terminal"
+    ],
+    "currentSeedAssets": [
+      {
+        "id": "jp-rizal-makati-ave-p-burgos",
+        "status": "pilot",
+        "barangay": "Poblacion"
+      },
+      {
+        "id": "jp-rizal-p-burgos-n-garcia",
+        "status": "pilot",
+        "barangay": "Poblacion"
+      },
+      {
+        "id": "ayala-paseo-rufino",
+        "status": "pilot",
+        "barangay": "San Lorenzo / Bel-Air"
+      },
+      {
+        "id": "poblacion-park",
+        "status": "mapped",
+        "barangay": "Poblacion"
+      },
+      {
+        "id": "makati-city-hall",
+        "status": "mapped",
+        "barangay": "Poblacion"
+      },
+      {
+        "id": "museo-ng-makati",
+        "status": "mapped",
+        "barangay": "Poblacion"
+      }
+    ],
+    "currentSeedAssetCount": 6,
+    "issueCategoryCount": 33,
+    "issueCategories": [
+      "fire",
+      "crime-in-progress",
+      "medical-emergency",
+      "serious-collision",
+      "electrical-danger",
+      "structural-danger",
+      "flood-danger",
+      "open-manhole",
+      "traffic-signal",
+      "dangerous-tree",
+      "sidewalk-blocked",
+      "vehicle-obstruction",
+      "graffiti",
+      "litter",
+      "pothole",
+      "broken-sidewalk",
+      "curb-ramp",
+      "crossing-problem",
+      "streetlight",
+      "flooding",
+      "drainage-blocked",
+      "construction-obstruction",
+      "damaged-equipment",
+      "toilet-problem",
+      "accessibility-barrier",
+      "route-info-wrong",
+      "route-deviation",
+      "long-wait",
+      "overcharging",
+      "refusal",
+      "unsafe-driving",
+      "overcrowding",
+      "terminal-obstruction"
+    ],
+    "proposalCategoryCount": 17,
+    "proposalCategories": [
+      "more-trees",
+      "wider-sidewalk",
+      "new-crosswalk",
+      "curb-ramp-upgrade",
+      "better-lighting",
+      "traffic-calming",
+      "bike-infrastructure",
+      "seating",
+      "public-toilet",
+      "drainage-improvement",
+      "park-improvement",
+      "new-stop",
+      "relocate-stop",
+      "new-route",
+      "route-extension",
+      "route-revision",
+      "accessibility-upgrade"
+    ]
+  },
+  "barangayIntegration": {
+    "current": [
+      "Participation reads the BetterBarangay query scope.",
+      "Participation can open the Civic Map already scoped to the selected barangay.",
+      "Participation surfaces a selected barangay's verified hall email or official page.",
+      "Civic Map filters its seed assets by barangay scope.",
+      "Participation attempts to pass barangay into local source submission URLs."
+    ],
+    "inventoryObservation": "Get Involved currently initializes type, tool and subject from query parameters but does not initialize its barangay field from the barangay query parameter. The barangay value passed by /participate is therefore not automatically prefilled."
+  },
+  "crossSiteParticipationEntrypoints": [
+    "PageHelp correction CTA on most pages",
+    "Contact → structured contact form",
+    "Participation → Get Involved submissions",
+    "Participation → barangay contact",
+    "Participation → Civic Map",
+    "Civic Map → asset-level contributions",
+    "Civic Map → weekly/monthly reports",
+    "Get Involved → BetterLGU Directory",
+    "Get Involved → OpenBayan"
+  ],
+  "qaInventory": {
+    "existing": [
+      "scripts/check-civic-map.mjs validates major Civic Map content/methodology assumptions.",
+      "Critical-path browser tests cover Civic Map consolidated reports, failed-feed behavior, barangay homepage → scoped Civic Map, and national infrastructure handoffs.",
+      "page-audit.json tracks /participate as reviewed and /civic-map as partial."
+    ],
+    "coverageGaps": [
+      "/get-involved is not currently listed in page-audit.json.",
+      "/civic-map/reports is not currently listed in page-audit.json.",
+      "/contact is not currently listed in page-audit.json.",
+      "No dedicated participation-depth audit currently covers the whole participation journey.",
+      "Existing critical-path tests do not constitute a complete end-to-end POST submission/lifecycle test suite."
+    ]
+  },
+  "observationsFor3A2": [
+    {
+      "id": "barangay-prefill-gap",
+      "area": "Get Involved",
+      "observation": "A barangay query parameter can be generated upstream, but Get Involved does not read it into the initial form state."
+    },
+    {
+      "id": "audit-coverage-gap",
+      "area": "Quality assurance",
+      "observation": "Several participation surfaces are functional but absent from the human page-audit inventory."
+    },
+    {
+      "id": "civic-map-small-pilot",
+      "area": "Civic Map",
+      "observation": "The implementation supports many asset and issue types, but the current seed map contains only six assets concentrated in Poblacion plus one Ayala Avenue segment spanning San Lorenzo / Bel-Air."
+    },
+    {
+      "id": "human-referral",
+      "area": "Referral lifecycle",
+      "observation": "Lifecycle recording is implemented, but referral delivery remains a human-reviewed process rather than automatic government forwarding."
+    },
+    {
+      "id": "official-opportunity-discovery",
+      "area": "Participation",
+      "observation": "The participation data currently has no open official participation opportunity and explicitly records the absence of a complete authoritative citywide consultation calendar."
+    },
+    {
+      "id": "metrics-gap",
+      "area": "Participation outcomes",
+      "observation": "page-audit.json records that response time and participation conversion are not yet measured longitudinally."
+    },
+    {
+      "id": "general-vs-civic-submission-split",
+      "area": "Information architecture",
+      "observation": "General project feedback uses /api/feedback while public-realm reports/proposals/ratings use /api/civic. 3A-2 should decide whether the visible distinction is clear enough, without merging unlike workflows merely for architectural neatness."
+    }
+  ],
+  "nextStep": {
+    "id": "3A-2",
+    "title": "Compare existing participation capability against the intended Wave 3 scope",
+    "output": "Classify each intended capability as complete, partial, missing or intentionally deferred. Do not implement fixes in that classification step."
+  }
+}
