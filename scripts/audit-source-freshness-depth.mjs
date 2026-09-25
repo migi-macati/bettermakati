@@ -6,6 +6,7 @@ const history = JSON.parse(await readFile('data/source-watch-history.json', 'utf
 const checker = await readFile('scripts/check-sources.mjs', 'utf8');
 const workflow = await readFile('.github/workflows/source-freshness.yml', 'utf8');
 const weeklyNews = await readFile('.github/workflows/weekly-content-refresh.yml', 'utf8');
+const cityMonitorConfig = JSON.parse(await readFile('data/city-monitor-sources.json', 'utf8'));
 const generator = await readFile('scripts/generate-site-files.mjs', 'utf8');
 const records = await readFile('src/pages/PublicRecords.tsx', 'utf8');
 const status = await readFile('src/pages/ProjectStatus.tsx', 'utf8');
@@ -16,6 +17,8 @@ const pkg = JSON.parse(await readFile('package.json', 'utf8'));
 const problems = [];
 const validCadence = new Set(['daily', 'weekly', 'monthly']);
 const validMode = new Set(['content-hash', 'reachability']);
+const validOwners = new Set(['general-source-freshness', 'city-monitor']);
+const delegatedToCityMonitor = new Set(['makati-news', 'makati-events', 'makati-legislation', 'philgeps']);
 
 if (!Array.isArray(watchlist) || watchlist.length < 90) {
   problems.push('Source watchlist unexpectedly fell below the established site-wide baseline.');
@@ -29,6 +32,7 @@ for (const source of watchlist) {
   }
   if (!validCadence.has(source.cadence)) problems.push('Invalid cadence for ' + source.id);
   if (!validMode.has(source.monitoringMode)) problems.push('Invalid monitoring mode for ' + source.id);
+  if (!validOwners.has(source.owner)) problems.push('Invalid or missing owner for ' + source.id);
   if (ids.has(source.id)) problems.push('Duplicate watched-source id: ' + source.id);
   if (urls.has(source.url)) problems.push('Duplicate watched-source URL: ' + source.url);
   ids.add(source.id);
@@ -65,6 +69,27 @@ for (const cadence of validCadence) {
   }
 }
 
+const cityMonitorById = new Map(cityMonitorConfig.sources.map(source => [source.id, source]));
+for (const id of delegatedToCityMonitor) {
+  const source = watchlist.find(item => item.id === id);
+  if (!source) {
+    problems.push('Delegated source missing from public source catalog: ' + id);
+    continue;
+  }
+  if (source.owner !== 'city-monitor' || source.delegated !== true) {
+    problems.push('Delegated source is not marked City Monitor-owned: ' + id);
+  }
+  if (!cityMonitorById.has(id)) {
+    problems.push('Delegated source is missing from City Monitor config: ' + id);
+  }
+}
+const unexpectedCityOwned = watchlist
+  .filter(source => source.owner === 'city-monitor' && !delegatedToCityMonitor.has(source.id))
+  .map(source => source.id);
+if (unexpectedCityOwned.length) {
+  problems.push('Unexpected City Monitor-owned source(s) in general catalog: ' + unexpectedCityOwned.join(', '));
+}
+
 if (state.version !== 2 || !Array.isArray(state.sources)) {
   problems.push('Current source freshness state must use version 2 with a sources array.');
 } else {
@@ -81,6 +106,7 @@ if (history.version !== 2 || !Array.isArray(history.runs)) {
 for (const marker of [
   "const cadence = args.get('cadence') || 'all'",
   "cadenceIsDue",
+  "source.owner && source.owner !== 'general-source-freshness'",
   "const publishRequired = checked.some(semanticStateChanged)",
   "source.monitoringMode === 'content-hash'",
   "result.change === 'content-changed'",
@@ -171,10 +197,13 @@ if (problems.length) {
 }
 
 const counts = Object.fromEntries([...validCadence].map(cadence => [cadence, watchlist.filter(source => source.cadence === cadence).length]));
-const hashCount = watchlist.filter(source => source.monitoringMode === 'content-hash').length;
-const reachabilityCount = watchlist.filter(source => source.monitoringMode === 'reachability').length;
+const activeGeneralSources = watchlist.filter(source => source.owner === 'general-source-freshness');
+const delegatedCount = watchlist.filter(source => source.owner === 'city-monitor').length;
+const hashCount = activeGeneralSources.filter(source => source.monitoringMode === 'content-hash').length;
+const reachabilityCount = activeGeneralSources.filter(source => source.monitoringMode === 'reachability').length;
 console.log(
-  'Source freshness depth audit passed: ' + watchlist.length + ' sources; ' +
+  'Source freshness depth audit passed: ' + watchlist.length + ' catalog sources; ' +
+    activeGeneralSources.length + ' owned by general freshness and ' + delegatedCount + ' delegated to City Monitor; ' +
     counts.daily + ' daily, ' + counts.weekly + ' weekly, ' + counts.monthly + ' monthly; ' +
-    hashCount + ' stable-document hashes and ' + reachabilityCount + ' reachability checks.'
+    hashCount + ' active stable-document hashes and ' + reachabilityCount + ' active reachability checks.'
 );
