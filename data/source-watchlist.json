@@ -8,7 +8,12 @@
     "monitoringMode": "reachability",
     "owner": "city-monitor",
     "delegated": true,
-    "ownerReason": "City Monitor owns this official Makati activity/discovery channel."
+    "ownerReason": "City Monitor owns this official Makati activity/discovery channel.",
+    "affectedPages": [
+      "/city-monitor",
+      "/briefs",
+      "/today"
+    ]
   },
   {
     "id": "makati-events",
@@ -19,7 +24,12 @@
     "monitoringMode": "reachability",
     "owner": "city-monitor",
     "delegated": true,
-    "ownerReason": "City Monitor owns this official Makati activity/discovery channel."
+    "ownerReason": "City Monitor owns this official Makati activity/discovery channel.",
+    "affectedPages": [
+      "/city-monitor",
+      "/briefs",
+      "/today"
+    ]
   },
   {
     "id": "makati-budget-2026",
@@ -28,7 +38,12 @@
     "kind": "budget",
     "cadence": "monthly",
     "monitoringMode": "content-hash",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/projects-budget",
+      "/accountability",
+      "/reports"
+    ]
   },
   {
     "id": "dbm-f14-2026",
@@ -37,7 +52,12 @@
     "kind": "actuals",
     "cadence": "monthly",
     "monitoringMode": "content-hash",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/projects-budget",
+      "/statistics",
+      "/reports"
+    ]
   },
   {
     "id": "psa-population",
@@ -46,7 +66,11 @@
     "kind": "statistics",
     "cadence": "monthly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/statistics",
+      "/reports"
+    ]
   },
   {
     "id": "psa-ppa",
@@ -55,7 +79,11 @@
     "kind": "statistics",
     "cadence": "monthly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/statistics",
+      "/reports"
+    ]
   },
   {
     "id": "coa-audit",
@@ -64,7 +92,12 @@
     "kind": "audit",
     "cadence": "monthly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/projects-budget",
+      "/accountability",
+      "/integrity"
+    ]
   },
   {
     "id": "philgeps",
@@ -75,7 +108,13 @@
     "monitoringMode": "content-hash",
     "owner": "city-monitor",
     "delegated": true,
-    "ownerReason": "City Monitor owns this procurement discovery signal and applies normalized content-change detection."
+    "ownerReason": "City Monitor owns this procurement discovery signal and applies normalized content-change detection.",
+    "affectedPages": [
+      "/projects-budget",
+      "/accountability",
+      "/city-monitor",
+      "/briefs"
+    ]
   },
   {
     "id": "comelec-2026-bske-calendar",
@@ -84,7 +123,10 @@
     "kind": "election",
     "cadence": "daily",
     "monitoringMode": "content-hash",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/elections"
+    ]
   },
   {
     "id": "comelec-2026-bske-registration",
@@ -93,7 +135,10 @@
     "kind": "election",
     "cadence": "daily",
     "monitoringMode": "content-hash",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/elections"
+    ]
   },
   {
     "id": "comelec-home",
@@ -102,7 +147,10 @@
     "kind": "election",
     "cadence": "daily",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/elections"
+    ]
   },
   {
     "id": "comelec-2025-results",
@@ -111,7 +159,10 @@
     "kind": "election-results",
     "cadence": "daily",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/elections"
+    ]
   },
   {
     "id": "makati-legislation",
@@ -122,7 +173,12 @@
     "monitoringMode": "reachability",
     "owner": "city-monitor",
     "delegated": true,
-    "ownerReason": "City Monitor owns this official Makati activity/discovery channel."
+    "ownerReason": "City Monitor owns this official Makati activity/discovery channel.",
+    "affectedPages": [
+      "/legislation",
+      "/city-monitor",
+      "/briefs"
+    ]
   },
   {
     "id": "makati-action-center",
@@ -131,7 +187,10 @@
     "kind": "services",
     "cadence": "weekly",
     "monitoringMode": "content-hash",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "macea-circulars",
@@ -140,7 +199,10 @@
     "kind": "estate-advisory",
     "cadence": "daily",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/mobility"
+    ]
   },
   {
     "id": "mrt3",
@@ -149,7 +211,10 @@
     "kind": "mobility",
     "cadence": "weekly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/mobility"
+    ]
   },
   {
     "id": "resilient-makati-consultations",
@@ -158,7 +223,10 @@
     "kind": "participation",
     "cadence": "weekly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/participate"
+    ]
   },
   {
     "id": "makati-cdp",
@@ -167,7 +235,12 @@
     "kind": "planning-participation",
     "cadence": "monthly",
     "monitoringMode": "content-hash",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/projects-budget",
+      "/participate",
+      "/reports"
+    ]
   },
   {
     "id": "oecd-open-government-recommendation",
@@ -176,7 +249,10 @@
     "kind": "open-government-standard",
     "cadence": "monthly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/open-government"
+    ]
   },
   {
     "id": "ogp-foundations",
@@ -185,7 +261,10 @@
     "kind": "open-government-standard",
     "cadence": "monthly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/open-government"
+    ]
   },
   {
     "id": "ogp-participation-standards",
@@ -194,7 +273,10 @@
     "kind": "open-government-standard",
     "cadence": "monthly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/open-government"
+    ]
   },
   {
     "id": "ra-6713",
@@ -203,7 +285,11 @@
     "kind": "integrity-law",
     "cadence": "monthly",
     "monitoringMode": "content-hash",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/integrity",
+      "/accountability"
+    ]
   },
   {
     "id": "ra-12009",
@@ -212,7 +298,11 @@
     "kind": "procurement-law",
     "cadence": "monthly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/projects-budget",
+      "/accountability"
+    ]
   },
   {
     "id": "ra-12009-irr",
@@ -221,7 +311,11 @@
     "kind": "procurement-law",
     "cadence": "monthly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/projects-budget",
+      "/accountability"
+    ]
   },
   {
     "id": "gppb-beneficial-ownership",
@@ -230,7 +324,11 @@
     "kind": "integrity-procurement",
     "cadence": "monthly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/projects-budget",
+      "/accountability"
+    ]
   },
   {
     "id": "gppb-2026-irr-advisory",
@@ -239,7 +337,11 @@
     "kind": "procurement-law",
     "cadence": "monthly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/projects-budget",
+      "/accountability"
+    ]
   },
   {
     "id": "makati-citizens-charter",
@@ -248,7 +350,10 @@
     "kind": "services",
     "cadence": "weekly",
     "monitoringMode": "content-hash",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "makati-permits-clearances",
@@ -257,7 +362,10 @@
     "kind": "services",
     "cadence": "weekly",
     "monitoringMode": "content-hash",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "makati-taxes-fees",
@@ -266,7 +374,10 @@
     "kind": "services",
     "cadence": "weekly",
     "monitoringMode": "content-hash",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "makati-civil-registry",
@@ -275,7 +386,10 @@
     "kind": "services",
     "cadence": "weekly",
     "monitoringMode": "content-hash",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "makati-social-welfare",
@@ -284,7 +398,10 @@
     "kind": "services",
     "cadence": "weekly",
     "monitoringMode": "content-hash",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "pnp-clearance",
@@ -293,7 +410,10 @@
     "kind": "national-services",
     "cadence": "weekly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "nbi-clearance",
@@ -302,7 +422,10 @@
     "kind": "national-services",
     "cadence": "weekly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "bfp-fsic",
@@ -311,7 +434,10 @@
     "kind": "national-services",
     "cadence": "weekly",
     "monitoringMode": "content-hash",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "psa-frontline",
@@ -320,7 +446,10 @@
     "kind": "national-services",
     "cadence": "weekly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "dfa-passport",
@@ -329,7 +458,10 @@
     "kind": "national-services",
     "cadence": "weekly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "makati-sanitation-code",
@@ -338,7 +470,10 @@
     "kind": "services",
     "cadence": "weekly",
     "monitoringMode": "content-hash",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "makati-veterinary-services",
@@ -347,7 +482,10 @@
     "kind": "services",
     "cadence": "weekly",
     "monitoringMode": "content-hash",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "makati-assessment-services",
@@ -356,7 +494,10 @@
     "kind": "services",
     "cadence": "weekly",
     "monitoringMode": "content-hash",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "makati-business-permit-form",
@@ -365,7 +506,10 @@
     "kind": "services",
     "cadence": "weekly",
     "monitoringMode": "content-hash",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "sss-benefits",
@@ -374,7 +518,10 @@
     "kind": "national-services",
     "cadence": "weekly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "pagibig-services",
@@ -383,7 +530,10 @@
     "kind": "national-services",
     "cadence": "weekly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "philhealth-services",
@@ -392,7 +542,10 @@
     "kind": "national-services",
     "cadence": "weekly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "ecc-contact",
@@ -401,7 +554,10 @@
     "kind": "national-services",
     "cadence": "weekly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "deped-makati",
@@ -410,7 +566,10 @@
     "kind": "national-services",
     "cadence": "weekly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "dswd-satellite-offices",
@@ -419,7 +578,10 @@
     "kind": "national-services",
     "cadence": "weekly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "doh-mmchd",
@@ -428,7 +590,10 @@
     "kind": "national-services",
     "cadence": "weekly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "psa-crs-outlets",
@@ -437,7 +602,10 @@
     "kind": "national-services",
     "cadence": "weekly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "gsis-benefits",
@@ -446,7 +614,10 @@
     "kind": "national-services",
     "cadence": "weekly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "dole-makati-pasay",
@@ -455,7 +626,10 @@
     "kind": "national-services",
     "cadence": "weekly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "sec-headquarters",
@@ -464,7 +638,10 @@
     "kind": "national-services",
     "cadence": "weekly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "tesda-pasmak",
@@ -473,7 +650,10 @@
     "kind": "national-services",
     "cadence": "weekly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "phlpost-locator",
@@ -482,7 +662,10 @@
     "kind": "national-services",
     "cadence": "weekly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "dti-services",
@@ -491,7 +674,10 @@
     "kind": "national-services",
     "cadence": "weekly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "dpwh-home",
@@ -500,7 +686,10 @@
     "kind": "national-services",
     "cadence": "weekly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "pcso-medical-assistance",
@@ -509,7 +698,10 @@
     "kind": "national-services",
     "cadence": "weekly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "owwa-ncr",
@@ -518,7 +710,10 @@
     "kind": "national-services",
     "cadence": "weekly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "owwa-wap",
@@ -527,7 +722,10 @@
     "kind": "national-services",
     "cadence": "weekly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "unified-911",
@@ -536,7 +734,11 @@
     "kind": "civic-map-routing",
     "cadence": "weekly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/hotlines",
+      "/civic-map"
+    ]
   },
   {
     "id": "ltfrb-ncr-complaints",
@@ -545,7 +747,11 @@
     "kind": "civic-map-routing",
     "cadence": "weekly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/mobility",
+      "/civic-map"
+    ]
   },
   {
     "id": "makati-marriage-license",
@@ -554,7 +760,10 @@
     "kind": "service-detail",
     "cadence": "weekly",
     "monitoringMode": "content-hash",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "makati-yellow-card",
@@ -563,7 +772,10 @@
     "kind": "service-detail",
     "cadence": "weekly",
     "monitoringMode": "content-hash",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "sss-sickness-benefit",
@@ -572,7 +784,10 @@
     "kind": "service-detail",
     "cadence": "weekly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "sss-maternity-benefit",
@@ -581,7 +796,10 @@
     "kind": "service-detail",
     "cadence": "weekly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "sss-retirement-benefit",
@@ -590,7 +808,10 @@
     "kind": "service-detail",
     "cadence": "weekly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "pagibig-mpl-v08",
@@ -599,7 +820,10 @@
     "kind": "service-detail",
     "cadence": "weekly",
     "monitoringMode": "content-hash",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "pagibig-mp2-v06",
@@ -608,7 +832,10 @@
     "kind": "service-detail",
     "cadence": "weekly",
     "monitoringMode": "content-hash",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "philhealth-yakap-detail",
@@ -617,7 +844,10 @@
     "kind": "service-detail",
     "cadence": "weekly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "nbi-first-time-jobseekers",
@@ -626,7 +856,10 @@
     "kind": "service-detail",
     "cadence": "weekly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "makati-real-property-tax-division",
@@ -635,7 +868,10 @@
     "kind": "service-detail",
     "cadence": "weekly",
     "monitoringMode": "content-hash",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "umak-admissions",
@@ -644,7 +880,10 @@
     "kind": "service-detail",
     "cadence": "weekly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "umak-scholarships",
@@ -653,7 +892,10 @@
     "kind": "service-detail",
     "cadence": "weekly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "makati-solo-parent-guide",
@@ -662,7 +904,10 @@
     "kind": "service-detail",
     "cadence": "weekly",
     "monitoringMode": "content-hash",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "sss-employees-compensation",
@@ -671,7 +916,10 @@
     "kind": "service-detail",
     "cadence": "weekly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "philhealth-benefits",
@@ -680,7 +928,10 @@
     "kind": "service-detail",
     "cadence": "weekly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "ecc-faq",
@@ -689,7 +940,10 @@
     "kind": "service-detail",
     "cadence": "weekly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "psa-birth-certificate",
@@ -698,7 +952,10 @@
     "kind": "service-detail",
     "cadence": "weekly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "bir-online-services",
@@ -707,7 +964,10 @@
     "kind": "service-detail",
     "cadence": "weekly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "dole-sena",
@@ -716,7 +976,10 @@
     "kind": "service-detail",
     "cadence": "weekly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "dti-negosyo-center-detail",
@@ -725,7 +988,10 @@
     "kind": "service-detail",
     "cadence": "weekly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "tesda-registered-programs",
@@ -734,7 +1000,10 @@
     "kind": "service-detail",
     "cadence": "weekly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "deped-makati-contact-detail",
@@ -743,7 +1012,10 @@
     "kind": "service-detail",
     "cadence": "weekly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "dswd-aics-faq",
@@ -752,7 +1024,10 @@
     "kind": "service-detail",
     "cadence": "weekly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "pnp-clearance-detail",
@@ -761,7 +1036,10 @@
     "kind": "service-detail",
     "cadence": "weekly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "makati-pwd-id-guide",
@@ -770,7 +1048,10 @@
     "kind": "service-detail",
     "cadence": "weekly",
     "monitoringMode": "content-hash",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "makati-burial-assistance-guide",
@@ -779,7 +1060,10 @@
     "kind": "service-detail",
     "cadence": "weekly",
     "monitoringMode": "content-hash",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "makatizen-card-guide",
@@ -788,7 +1072,10 @@
     "kind": "service-detail",
     "cadence": "weekly",
     "monitoringMode": "content-hash",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "makati-q2-2025-bid-results",
@@ -797,7 +1084,11 @@
     "kind": "procurement",
     "cadence": "daily",
     "monitoringMode": "content-hash",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/projects-budget",
+      "/accountability"
+    ]
   },
   {
     "id": "makati-q3-2024-bid-results",
@@ -806,7 +1097,11 @@
     "kind": "procurement",
     "cadence": "daily",
     "monitoringMode": "content-hash",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/projects-budget",
+      "/accountability"
+    ]
   },
   {
     "id": "makati-sef-q4-2024",
@@ -815,7 +1110,11 @@
     "kind": "fiscal",
     "cadence": "monthly",
     "monitoringMode": "content-hash",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/projects-budget",
+      "/accountability"
+    ]
   },
   {
     "id": "comelec-2026-bske-filing-rules",
@@ -824,7 +1123,10 @@
     "kind": "election",
     "cadence": "daily",
     "monitoringMode": "content-hash",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/elections"
+    ]
   },
   {
     "id": "comelec-2026-bske-term-rules",
@@ -833,7 +1135,10 @@
     "kind": "election",
     "cadence": "daily",
     "monitoringMode": "content-hash",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/elections"
+    ]
   },
   {
     "id": "lawphil-ra-12232",
@@ -842,7 +1147,10 @@
     "kind": "election-law",
     "cadence": "daily",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/elections"
+    ]
   },
   {
     "id": "comelec-precinct-finder",
@@ -851,7 +1159,10 @@
     "kind": "election-tool",
     "cadence": "daily",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/elections"
+    ]
   },
   {
     "id": "comelec-makati-2025-candidate-list",
@@ -860,7 +1171,10 @@
     "kind": "election",
     "cadence": "daily",
     "monitoringMode": "content-hash",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/elections"
+    ]
   },
   {
     "id": "makati-peso-job-referral",
@@ -869,7 +1183,10 @@
     "kind": "services",
     "cadence": "weekly",
     "monitoringMode": "content-hash",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "ra-11261-first-time-jobseeker",
@@ -878,7 +1195,10 @@
     "kind": "services-law",
     "cadence": "monthly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "dilg-katarungang-pambarangay-manual",
@@ -887,7 +1207,10 @@
     "kind": "services",
     "cadence": "monthly",
     "monitoringMode": "content-hash",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "makati-citizens-charter-2023-eboss",
@@ -896,7 +1219,10 @@
     "kind": "services",
     "cadence": "weekly",
     "monitoringMode": "content-hash",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "makati-addressing-system",
@@ -905,7 +1231,11 @@
     "kind": "services",
     "cadence": "weekly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services",
+      "/barangays"
+    ]
   },
   {
     "id": "belair-business-clearance",
@@ -914,7 +1244,11 @@
     "kind": "barangay-service",
     "cadence": "weekly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services",
+      "/barangays"
+    ]
   },
   {
     "id": "belair-indigency",
@@ -923,7 +1257,11 @@
     "kind": "barangay-service",
     "cadence": "weekly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services",
+      "/barangays"
+    ]
   },
   {
     "id": "makati-solo-parent-form-2024",
@@ -932,7 +1270,10 @@
     "kind": "services",
     "cadence": "weekly",
     "monitoringMode": "content-hash",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   },
   {
     "id": "belair-residency",
@@ -941,7 +1282,11 @@
     "kind": "barangay-service",
     "cadence": "weekly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services",
+      "/barangays"
+    ]
   },
   {
     "id": "belair-barangay-id",
@@ -950,7 +1295,11 @@
     "kind": "barangay-service",
     "cadence": "weekly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services",
+      "/barangays"
+    ]
   },
   {
     "id": "bettergov-openhalalan-dataset",
@@ -959,7 +1308,10 @@
     "kind": "ecosystem-dependency",
     "cadence": "weekly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/elections"
+    ]
   },
   {
     "id": "openhalalan-makati-2022-source",
@@ -968,7 +1320,10 @@
     "kind": "ecosystem-dependency",
     "cadence": "weekly",
     "monitoringMode": "content-hash",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/elections"
+    ]
   },
   {
     "id": "bettergov-open-congress-api",
@@ -977,7 +1332,10 @@
     "kind": "ecosystem-dependency",
     "cadence": "weekly",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/legislation"
+    ]
   },
   {
     "id": "open-congress-hb-1293-source",
@@ -986,7 +1344,10 @@
     "kind": "ecosystem-dependency",
     "cadence": "weekly",
     "monitoringMode": "content-hash",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/legislation"
+    ]
   },
   {
     "id": "open-congress-hb-1294-source",
@@ -995,7 +1356,10 @@
     "kind": "ecosystem-dependency",
     "cadence": "weekly",
     "monitoringMode": "content-hash",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/legislation"
+    ]
   },
   {
     "id": "open-congress-hb-6100-source",
@@ -1004,7 +1368,10 @@
     "kind": "ecosystem-dependency",
     "cadence": "weekly",
     "monitoringMode": "content-hash",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/legislation"
+    ]
   },
   {
     "id": "bettergov-transparency-procurement",
@@ -1013,6 +1380,11 @@
     "kind": "ecosystem-dependency",
     "cadence": "daily",
     "monitoringMode": "reachability",
-    "owner": "general-source-freshness"
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/projects-budget",
+      "/accountability",
+      "/records"
+    ]
   }
 ]
