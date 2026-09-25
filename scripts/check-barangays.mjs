@@ -106,7 +106,7 @@ for (const marker of [
   }
 }
 
-if (!registrySource.includes(".replace(/\\bsta\\.?\\b/g, 'santa')")) {
+if (!registrySource.includes(".replace(/\\bsta\\.?(?=\\s|$)/g, 'santa')")) {
   problems.push('Place Registry barangay matching must normalize Sta. Cruz / Santa Cruz.');
 }
 
