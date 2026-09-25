@@ -108,7 +108,7 @@
     "path": "/projects-budget",
     "label": "Projects & budget",
     "status": "partial",
-    "reviewedAt": "2026-09-24",
+    "reviewedAt": "2026-09-25",
     "checks": [
       "2025-adopted-vs-current-estimate",
       "2026-budget-summary",
@@ -125,7 +125,6 @@
       "trend-view"
     ],
     "gaps": [
-      "All 36 office and department total appropriations are indexed and reconcile to ₱21.0B. Line-item schedules are normalized and individually reconciled for 10 offices; 26 office schedules remain to be transcribed.",
       "Structured procurement coverage includes the public bid-result disclosures already ingested; many records still lack a separately linked contract, notice to proceed, implementation or completion source.",
       "Audit follow-through is structured only where an official or attributable public record can be linked; BetterMakati does not yet have a definitive current-year inventory of resolved and unresolved COA recommendations."
     ]
