@@ -133,6 +133,51 @@ for (const id of blockedAmbiguousFireAssets) {
   }
 }
 
+const requiredPoliceAssets = [
+  'makati-city-police-station',
+  'makati-police-substation-1',
+  'makati-police-substation-2',
+  'makati-police-substation-3',
+  'makati-police-substation-4',
+  'makati-police-substation-5',
+  'makati-police-substation-6',
+  'makati-police-substation-7',
+];
+
+for (const id of requiredPoliceAssets) {
+  if (!assetIds.includes(id)) {
+    problems.push('Missing verified Makati police-facility Civic Map asset: ' + id);
+    continue;
+  }
+  const start = assetBlock.indexOf("id: '" + id + "'");
+  const end = assetBlock.indexOf('\n  },', start);
+  const row = start >= 0 && end >= 0 ? assetBlock.slice(start, end) : '';
+  for (const marker of [
+    "type: 'public-office'",
+    'address:',
+    'sourceUrl:',
+    'sourceLabel:',
+    'coordinateSourceUrl:',
+    'coordinateSourceLabel:',
+    "status: 'mapped'",
+  ]) {
+    if (!row.includes(marker)) {
+      problems.push(id + ' is missing verified police-facility metadata: ' + marker);
+    }
+  }
+}
+
+const blockedTransferredPoliceAssets = [
+  'makati-police-substation-8',
+  'makati-police-substation-9',
+];
+
+for (const id of blockedTransferredPoliceAssets) {
+  if (assetIds.includes(id)) {
+    problems.push('Transferred former-Makati police substation must not be mapped as a current Makati asset: ' + id);
+  }
+}
+
 const requiredGovernmentServiceAssets = [
   'psa-makati-crs',
   'lto-makati-district',
