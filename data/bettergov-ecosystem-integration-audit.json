@@ -1,0 +1,759 @@
+{
+  "schemaVersion": 1,
+  "auditedAt": "2026-09-25",
+  "betterMakatiBaseCommit": "69771fb4cdce5e951bbad87f51311bdf2840c395",
+  "scope": {
+    "purpose": "Map BetterMakati against the current BetterGov civic-tech ecosystem before adding cross-portal UI or data dependencies.",
+    "decisionTypes": [
+      "use-directly",
+      "deep-link",
+      "consume-data-api",
+      "contextual-reference",
+      "no-relevance"
+    ],
+    "sourceNotes": [
+      "Current BetterGov projects page lists 17 projects.",
+      "BetterGov main-portal navigation also links ecosystem projects not present on the current projects page; those are marked linked rather than assigned an unverified live/development status.",
+      "BetterLGU is treated as the cross-LGU discovery and contributor-routing layer."
+    ],
+    "sources": [
+      "https://about.bettergov.ph/projects/",
+      "https://github.com/bettergovph/bettergov/blob/main/src/data/navigation.ts",
+      "https://lgu.bettergov.ph/"
+    ]
+  },
+  "principles": [
+    "BetterMakati owns the Makati-local experience and synthesis.",
+    "Official government sources remain the factual authority for transactions, requirements, legal rules and official records.",
+    "BetterGov ecosystem products may extend discovery, evidence, national context or structured data; they do not replace an official source where one exists.",
+    "BetterLGU is the cross-LGU escape hatch and contributor directory, not a national-service intermediary.",
+    "Prefer integration over duplication when a stable ecosystem capability already solves the national-scale problem.",
+    "Do not make core BetterMakati functions depend on an external ecosystem site being available.",
+    "Do not surface ecosystem architecture sermons in the UI; links should appear because they help complete the user's task.",
+    "For political records, use ecosystem sources only as neutral evidence or structured data and never create BetterMakati rankings, endorsements or inferred judgments."
+  ],
+  "ecosystemProjects": [
+    {
+      "id": "bettergov-core",
+      "name": "BetterGov.ph core portal",
+      "url": "https://bettergov.ph/",
+      "status": "live",
+      "source": "main-portal",
+      "decision": "use-directly",
+      "fit": [
+        "services",
+        "government-offices",
+        "government",
+        "search",
+        "visit"
+      ],
+      "notes": "Use for national-service discovery, national government directories, government websites and travel/visa context. BetterMakati national service CTAs should still go directly to the issuing agency."
+    },
+    {
+      "id": "betterlgu",
+      "name": "BetterLGU Directory",
+      "url": "https://lgu.bettergov.ph/",
+      "status": "live",
+      "source": "main-portal-nav-and-directory",
+      "decision": "deep-link",
+      "fit": [
+        "services",
+        "search",
+        "participate",
+        "get-involved",
+        "about",
+        "footer"
+      ],
+      "notes": "Primary cross-LGU route for users who need another city or municipality and for contributors looking for an existing local portal."
+    },
+    {
+      "id": "transparency",
+      "name": "Transparency Portal",
+      "url": "https://transparency.bettergov.ph/",
+      "status": "live",
+      "source": "official-projects-page",
+      "decision": "deep-link",
+      "fit": [
+        "projects-budget",
+        "accountability",
+        "records",
+        "reports"
+      ],
+      "notes": "Use as national evidence context for procurement, public spending and other transparency records when a Makati record has a clear counterpart."
+    },
+    {
+      "id": "data-research",
+      "name": "Data Research / Visualizations",
+      "url": "https://visualizations.bettergov.ph/",
+      "status": "live",
+      "source": "official-projects-page",
+      "decision": "contextual-reference",
+      "fit": [
+        "statistics",
+        "reports",
+        "projects-budget",
+        "accountability"
+      ],
+      "notes": "Use for national comparisons and existing research views; avoid rebuilding national visualizations locally."
+    },
+    {
+      "id": "budget-2026",
+      "name": "2026 Budget Analysis",
+      "url": "https://2026-budget.bettergov.ph/",
+      "status": "live",
+      "source": "official-projects-page",
+      "decision": "deep-link",
+      "fit": [
+        "projects-budget",
+        "reports"
+      ],
+      "notes": "National budget context only. Makati city budget and fiscal records remain BetterMakati-owned."
+    },
+    {
+      "id": "open-data",
+      "name": "Open Data Portal",
+      "url": "https://data.bettergov.ph/",
+      "status": "live",
+      "source": "official-projects-page",
+      "decision": "consume-data-api",
+      "fit": [
+        "statistics",
+        "projects-budget",
+        "accountability",
+        "records",
+        "elections",
+        "reports"
+      ],
+      "notes": "Highest-priority structured-data candidate. Audit dataset/API stability per use case before adding runtime dependencies and keep cached/local fallbacks."
+    },
+    {
+      "id": "flood-control",
+      "name": "Flood Control Browser",
+      "url": "https://bettergov.ph/flood-control-projects",
+      "status": "live",
+      "source": "official-projects-page",
+      "decision": "deep-link",
+      "fit": [
+        "projects-budget",
+        "civic-map",
+        "reports"
+      ],
+      "notes": "Use when Makati records relate to DPWH or national flood-control projects. Do not duplicate the full national browser."
+    },
+    {
+      "id": "cadena-act",
+      "name": "The Cadena Act",
+      "url": null,
+      "status": "in-development",
+      "source": "official-projects-page",
+      "decision": "no-relevance",
+      "fit": [],
+      "notes": "No BetterMakati integration until the project has a stable public capability relevant to a Makati workflow."
+    },
+    {
+      "id": "philgeps",
+      "name": "PhilGEPS Browser",
+      "url": "https://philgeps.bettergov.ph/",
+      "status": "live",
+      "source": "official-projects-page",
+      "decision": "deep-link",
+      "fit": [
+        "projects-budget",
+        "accountability",
+        "records",
+        "city-monitor"
+      ],
+      "notes": "Strong evidence handoff for procurement records. Prefer direct record links when identifiers can be matched."
+    },
+    {
+      "id": "political-dynasty",
+      "name": "Political Dynasty Tracker",
+      "url": "https://visualizations.bettergov.ph/dynasty",
+      "status": "live",
+      "source": "official-projects-page",
+      "decision": "contextual-reference",
+      "fit": [
+        "elections",
+        "government"
+      ],
+      "notes": "Only use where a sourced factual relationship dataset directly supports a page. No BetterMakati evaluative labels, rankings or electoral conclusions."
+    },
+    {
+      "id": "congress-api",
+      "name": "Open Congress API",
+      "url": "https://open-congress-api.bettergov.ph/",
+      "status": "live",
+      "source": "official-projects-page",
+      "decision": "consume-data-api",
+      "fit": [
+        "legislation",
+        "government",
+        "official-profiles",
+        "records"
+      ],
+      "notes": "High-value structured source for national legislative records affecting Makati. Preserve official legislative sources where available."
+    },
+    {
+      "id": "hotlines",
+      "name": "Hotlines",
+      "url": "https://hotlines.bettergov.ph/",
+      "status": "live",
+      "source": "official-projects-page",
+      "decision": "deep-link",
+      "fit": [
+        "hotlines",
+        "search"
+      ],
+      "notes": "Use as nationwide fallback after Makati-specific emergency and city contacts."
+    },
+    {
+      "id": "bisto",
+      "name": "Bisto.ph",
+      "url": "https://bisto.ph/",
+      "status": "live",
+      "source": "official-projects-page",
+      "decision": "contextual-reference",
+      "fit": [
+        "civic-map",
+        "projects-budget"
+      ],
+      "notes": "Potential handoff for nationally funded infrastructure reporting. Do not auto-forward BetterMakati reports until interoperability and consent are explicitly designed."
+    },
+    {
+      "id": "tax-calculators",
+      "name": "Tax Calculators / Tax Directory",
+      "url": "https://taxdirectory.bettergov.ph/",
+      "status": "live",
+      "source": "official-projects-page-and-main-portal-nav",
+      "decision": "deep-link",
+      "fit": [
+        "services",
+        "reports"
+      ],
+      "notes": "Use for national tax calculators/reference; keep Makati local tax and permit guidance inside BetterMakati."
+    },
+    {
+      "id": "saln",
+      "name": "SALN Tracker",
+      "url": "https://saln.bettergov.ph/",
+      "status": "live",
+      "source": "official-projects-page",
+      "decision": "contextual-reference",
+      "fit": [
+        "accountability",
+        "official-profiles",
+        "records"
+      ],
+      "notes": "Evidence reference only when a specific public record is relevant. Do not infer wealth, integrity, legality or fitness from SALN data."
+    },
+    {
+      "id": "price-guides",
+      "name": "Price Guides",
+      "url": "https://price-guides.bettergov.ph/",
+      "status": "live",
+      "source": "official-projects-page",
+      "decision": "contextual-reference",
+      "fit": [
+        "statistics",
+        "reports"
+      ],
+      "notes": "Potential national benchmark/context source. Audit data provenance and update cadence before consuming values directly."
+    },
+    {
+      "id": "opengovchain",
+      "name": "OpenGovChain",
+      "url": "https://govchain.bettergov.ph/",
+      "status": "in-development",
+      "source": "official-projects-page",
+      "decision": "no-relevance",
+      "fit": [],
+      "notes": "Do not create a dependency while the product is under active development."
+    },
+    {
+      "id": "petitions",
+      "name": "Petitions",
+      "url": "https://petition.ph/",
+      "status": "live",
+      "source": "official-projects-page",
+      "decision": "deep-link",
+      "fit": [
+        "participate",
+        "get-involved"
+      ],
+      "notes": "Optional escalation path when a user wants to organize public support, distinct from reporting a service issue or submitting a BetterMakati correction."
+    },
+    {
+      "id": "philippines-quiz",
+      "name": "Philippines Quiz",
+      "url": "https://quiz.bettergov.ph/",
+      "status": "live",
+      "source": "official-projects-page",
+      "decision": "no-relevance",
+      "fit": [],
+      "notes": "No current BetterMakati task needs this capability."
+    },
+    {
+      "id": "budget-tracker",
+      "name": "Budget Tracker",
+      "url": "https://budget.bettergov.ph/",
+      "status": "linked",
+      "source": "main-portal-nav",
+      "decision": "contextual-reference",
+      "fit": [
+        "projects-budget",
+        "reports"
+      ],
+      "notes": "Potential historical/current national budget context. Verify scope and maintenance before making it a primary handoff because 2026 Budget Analysis already overlaps."
+    },
+    {
+      "id": "bantay-ph",
+      "name": "Bantay PH",
+      "url": "https://bantay.bettergov.ph/",
+      "status": "linked",
+      "source": "main-portal-nav",
+      "decision": "no-relevance",
+      "fit": [],
+      "notes": "Defer until its stable public scope and a concrete BetterMakati user journey are verified."
+    },
+    {
+      "id": "openbayan",
+      "name": "OpenBayan",
+      "url": "https://www.openbayan.org/",
+      "status": "linked",
+      "source": "main-portal-nav",
+      "decision": "deep-link",
+      "fit": [
+        "participate",
+        "get-involved",
+        "about"
+      ],
+      "notes": "Useful civic-tech discovery/contribution route, especially for users seeking projects beyond Makati."
+    },
+    {
+      "id": "juris",
+      "name": "Juris",
+      "url": "https://juris.ph/",
+      "status": "linked",
+      "source": "main-portal-nav",
+      "decision": "contextual-reference",
+      "fit": [
+        "legislation",
+        "records",
+        "government",
+        "services"
+      ],
+      "notes": "Useful legal research handoff for statutes and jurisprudence. Official laws, court issuances and agency rules remain preferred factual authority."
+    }
+  ],
+  "moduleDecisions": [
+    {
+      "module": "Services",
+      "paths": [
+        "/services",
+        "/services/guide/:id"
+      ],
+      "integrations": [
+        {
+          "project": "bettergov-core",
+          "decision": "use-directly",
+          "purpose": "National-service directory/reference after direct official transaction paths."
+        },
+        {
+          "project": "betterlgu",
+          "decision": "deep-link",
+          "purpose": "Not from Makati or need another LGU."
+        },
+        {
+          "project": "tax-calculators",
+          "decision": "deep-link",
+          "purpose": "National tax calculation/reference where relevant."
+        }
+      ],
+      "priority": "2.3B"
+    },
+    {
+      "module": "Search",
+      "paths": [
+        "/search"
+      ],
+      "integrations": [
+        {
+          "project": "bettergov-core",
+          "decision": "deep-link",
+          "purpose": "National-service fallback when BetterMakati has no useful local result."
+        },
+        {
+          "project": "betterlgu",
+          "decision": "deep-link",
+          "purpose": "Cross-LGU fallback for explicitly non-Makati queries."
+        },
+        {
+          "project": "hotlines",
+          "decision": "deep-link",
+          "purpose": "Nationwide emergency/contact fallback for hotline queries."
+        }
+      ],
+      "priority": "2.3B"
+    },
+    {
+      "module": "Footer / About",
+      "paths": [
+        "/about",
+        "global-footer"
+      ],
+      "integrations": [
+        {
+          "project": "bettergov-core",
+          "decision": "contextual-reference",
+          "purpose": "Quiet ecosystem reference."
+        },
+        {
+          "project": "betterlgu",
+          "decision": "deep-link",
+          "purpose": "Find another LGU."
+        },
+        {
+          "project": "openbayan",
+          "decision": "contextual-reference",
+          "purpose": "Broader civic-tech discovery without cluttering task pages."
+        }
+      ],
+      "priority": "2.3B"
+    },
+    {
+      "module": "Participate / Get Involved",
+      "paths": [
+        "/participate",
+        "/get-involved"
+      ],
+      "integrations": [
+        {
+          "project": "betterlgu",
+          "decision": "deep-link",
+          "purpose": "Contribute to or start another local portal."
+        },
+        {
+          "project": "petitions",
+          "decision": "deep-link",
+          "purpose": "Optional public-campaign pathway distinct from BetterMakati submissions."
+        },
+        {
+          "project": "openbayan",
+          "decision": "deep-link",
+          "purpose": "Discover other civic-tech projects."
+        }
+      ],
+      "priority": "2.3B"
+    },
+    {
+      "module": "Hotlines",
+      "paths": [
+        "/hotlines"
+      ],
+      "integrations": [
+        {
+          "project": "hotlines",
+          "decision": "deep-link",
+          "purpose": "Nationwide fallback after Makati-specific contacts."
+        }
+      ],
+      "priority": "2.3B"
+    },
+    {
+      "module": "Government offices",
+      "paths": [
+        "/government-offices"
+      ],
+      "integrations": [
+        {
+          "project": "bettergov-core",
+          "decision": "contextual-reference",
+          "purpose": "National agency/government website directory outside Makati-specific office context."
+        }
+      ],
+      "priority": "2.3B"
+    },
+    {
+      "module": "Projects & Budget",
+      "paths": [
+        "/projects-budget"
+      ],
+      "integrations": [
+        {
+          "project": "transparency",
+          "decision": "deep-link",
+          "purpose": "National transparency evidence."
+        },
+        {
+          "project": "philgeps",
+          "decision": "deep-link",
+          "purpose": "Procurement evidence by matched project/notice identifier."
+        },
+        {
+          "project": "budget-2026",
+          "decision": "deep-link",
+          "purpose": "National budget context."
+        },
+        {
+          "project": "budget-tracker",
+          "decision": "contextual-reference",
+          "purpose": "Other national budget years after maintenance check."
+        },
+        {
+          "project": "open-data",
+          "decision": "consume-data-api",
+          "purpose": "Reusable national datasets when stable."
+        },
+        {
+          "project": "flood-control",
+          "decision": "deep-link",
+          "purpose": "DPWH/flood-control project evidence."
+        }
+      ],
+      "priority": "2.3C"
+    },
+    {
+      "module": "Accountability / Public Records",
+      "paths": [
+        "/accountability",
+        "/records",
+        "/city-monitor"
+      ],
+      "integrations": [
+        {
+          "project": "transparency",
+          "decision": "deep-link",
+          "purpose": "Evidence-level national records."
+        },
+        {
+          "project": "philgeps",
+          "decision": "deep-link",
+          "purpose": "Procurement records."
+        },
+        {
+          "project": "open-data",
+          "decision": "consume-data-api",
+          "purpose": "Machine-readable national evidence."
+        },
+        {
+          "project": "saln",
+          "decision": "contextual-reference",
+          "purpose": "Specific public SALN records without evaluative inference."
+        },
+        {
+          "project": "juris",
+          "decision": "contextual-reference",
+          "purpose": "Relevant legal context or jurisprudence."
+        }
+      ],
+      "priority": "2.3C"
+    },
+    {
+      "module": "Government / Legislation",
+      "paths": [
+        "/government",
+        "/legislation",
+        "/officials/:slug"
+      ],
+      "integrations": [
+        {
+          "project": "bettergov-core",
+          "decision": "contextual-reference",
+          "purpose": "National government structure and agency directories."
+        },
+        {
+          "project": "congress-api",
+          "decision": "consume-data-api",
+          "purpose": "National legislative records tied to Makati representation or cited measures."
+        },
+        {
+          "project": "juris",
+          "decision": "contextual-reference",
+          "purpose": "Statutory/jurisprudential context."
+        }
+      ],
+      "priority": "2.3C"
+    },
+    {
+      "module": "Elections",
+      "paths": [
+        "/elections"
+      ],
+      "integrations": [
+        {
+          "project": "open-data",
+          "decision": "consume-data-api",
+          "purpose": "Election datasets only where provenance, geography and election cycle match the page."
+        },
+        {
+          "project": "political-dynasty",
+          "decision": "contextual-reference",
+          "purpose": "Optional sourced relationship context without BetterMakati labels or rankings."
+        },
+        {
+          "project": "saln",
+          "decision": "contextual-reference",
+          "purpose": "Specific disclosed records only; no electoral or fitness conclusions."
+        }
+      ],
+      "priority": "2.3C"
+    },
+    {
+      "module": "Civic Map",
+      "paths": [
+        "/civic-map",
+        "/civic-map/reports",
+        "/civic-map/:assetId"
+      ],
+      "integrations": [
+        {
+          "project": "bisto",
+          "decision": "contextual-reference",
+          "purpose": "National-infrastructure reporting route where relevant."
+        },
+        {
+          "project": "flood-control",
+          "decision": "deep-link",
+          "purpose": "National flood-control project evidence."
+        },
+        {
+          "project": "open-data",
+          "decision": "consume-data-api",
+          "purpose": "National infrastructure/boundary datasets after schema review."
+        }
+      ],
+      "priority": "2.3C"
+    },
+    {
+      "module": "Statistics / Reports",
+      "paths": [
+        "/statistics",
+        "/reports",
+        "/reports/:slug"
+      ],
+      "integrations": [
+        {
+          "project": "open-data",
+          "decision": "consume-data-api",
+          "purpose": "National comparison datasets."
+        },
+        {
+          "project": "data-research",
+          "decision": "contextual-reference",
+          "purpose": "Existing national visualizations and analyses."
+        },
+        {
+          "project": "price-guides",
+          "decision": "contextual-reference",
+          "purpose": "National economic benchmarks after provenance review."
+        },
+        {
+          "project": "budget-2026",
+          "decision": "contextual-reference",
+          "purpose": "National fiscal comparisons when relevant."
+        }
+      ],
+      "priority": "2.3C"
+    },
+    {
+      "module": "Visit Makati",
+      "paths": [
+        "/visit"
+      ],
+      "integrations": [
+        {
+          "project": "bettergov-core",
+          "decision": "contextual-reference",
+          "purpose": "Philippine visa/travel information for international visitors; keep Makati destination content local."
+        }
+      ],
+      "priority": "later"
+    },
+    {
+      "module": "No current integration",
+      "paths": [
+        "/history",
+        "/heritage",
+        "/cinemas",
+        "/parking",
+        "/whats-on",
+        "/estates",
+        "/privacy",
+        "/terms"
+      ],
+      "integrations": [
+        {
+          "project": "philippines-quiz",
+          "decision": "no-relevance",
+          "purpose": "No task benefit."
+        },
+        {
+          "project": "cadena-act",
+          "decision": "no-relevance",
+          "purpose": "No stable relevant capability."
+        },
+        {
+          "project": "opengovchain",
+          "decision": "no-relevance",
+          "purpose": "No stable relevant capability."
+        },
+        {
+          "project": "bantay-ph",
+          "decision": "no-relevance",
+          "purpose": "Scope/use case not yet verified."
+        }
+      ],
+      "priority": "none"
+    }
+  ],
+  "implementationOrder": [
+    {
+      "wave": "2.3B",
+      "name": "Navigation and handoffs",
+      "items": [
+        "Services beyond-Makati block",
+        "BetterGov national-services exit",
+        "BetterLGU cross-LGU exit",
+        "Search/no-result fallbacks",
+        "Footer links",
+        "Participate/Get Involved routes",
+        "About ecosystem reference",
+        "Hotlines nationwide fallback"
+      ]
+    },
+    {
+      "wave": "2.3C",
+      "name": "Evidence integrations",
+      "items": [
+        "Projects & Budget evidence links",
+        "Accountability/Public Records evidence links",
+        "Government/Legislation links",
+        "Elections neutral evidence links",
+        "Civic Map national-infrastructure links",
+        "Statistics/Reports national context"
+      ]
+    },
+    {
+      "wave": "2.3D",
+      "name": "Structured interoperability",
+      "items": [
+        "Audit Open Data API/datasets",
+        "Audit Open Congress API schema",
+        "Match stable identifiers for PhilGEPS/transparency",
+        "Add cached fallbacks",
+        "Add dependency/source-watch checks"
+      ]
+    },
+    {
+      "wave": "2.3E",
+      "name": "Ecosystem polish",
+      "items": [
+        "Remove duplicate national functionality",
+        "Cross-site journey tests",
+        "Mobile/accessibility checks",
+        "Dead-link checks",
+        "Keep ecosystem copy concise and task-led"
+      ]
+    }
+  ]
+}
