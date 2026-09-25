@@ -14,6 +14,7 @@ import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
 import SEO from '../components/SEO';
 import { communityTools } from '../data/communityTools';
+import { findBarangay } from '../data/barangays';
 
 const actionCards = [
   {
@@ -61,13 +62,15 @@ export default function GetInvolved() {
   const initialType = searchParams.get('type') || 'idea';
   const initialTool = searchParams.get('tool') || '';
   const initialSubject = searchParams.get('subject') || '';
+  const initialBarangay =
+    findBarangay(searchParams.get('barangay') || undefined)?.name || '';
 
   const [type, setType] = useState(initialType);
   const [tool, setTool] = useState(initialTool);
   const [subject, setSubject] = useState(initialSubject);
   const [details, setDetails] = useState('');
   const [sourceUrl, setSourceUrl] = useState('');
-  const [barangay, setBarangay] = useState('');
+  const [barangay, setBarangay] = useState(initialBarangay);
   const [website, setWebsite] = useState('');
   const [status, setStatus] = useState<SubmitState>('idle');
   const [message, setMessage] = useState('');
