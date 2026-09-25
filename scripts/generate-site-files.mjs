@@ -294,6 +294,25 @@ try {
 }
 
 try {
+  const pageFreshness = await readFile('data/page-freshness-state.json', 'utf8');
+  await writeFile('public/page-freshness-state.json', pageFreshness);
+} catch {
+  await writeFile(
+    'public/page-freshness-state.json',
+    JSON.stringify(
+      {
+        version: 1,
+        generatedAt: null,
+        summary: { pages: 0, current: 0, needsReview: 0 },
+        pages: [],
+      },
+      null,
+      2
+    ) + '\n'
+  );
+}
+
+try {
   const reviewQueue = await readFile('data/freshness-review-queue.json', 'utf8');
   await writeFile('public/freshness-review-queue.json', reviewQueue);
 } catch {
