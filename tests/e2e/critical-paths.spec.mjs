@@ -814,7 +814,7 @@ test('Civic Briefs exposes daily weekly and monthly publication modes', async ({
   await expect(page.getByRole('button', { name: 'Weekly', exact: true })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Monthly', exact: true })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'What changed in the civic record' })).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Source-review queue' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Freshness review queue' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Permanent brief archive' })).toBeVisible();
 });
 
@@ -842,10 +842,14 @@ test('Civic Briefs archive has permanent seeded snapshots without backdating', a
   }
 });
 
-test('Civic Briefs exposes its review queue separately from published activity', async ({ page }) => {
+test('Civic Briefs routes review actions to the unified freshness queue', async ({ page }) => {
   await page.goto(baseURL + '/briefs');
-  await expect(page.getByRole('heading', { name: 'Source-review queue' })).toBeVisible();
-  await expect(page.getByText(/source changes awaiting review/i).first()).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Freshness review queue' })).toBeVisible();
+  await expect(page.getByRole('link', { name: /Open review queue/i })).toHaveAttribute(
+    'href',
+    '/records#freshness-review-queue'
+  );
+  await expect(page.getByText(/consolidated queue/i)).toBeVisible();
 });
 
 test('Civic Briefs exposes barangay relevance without hiding citywide records', async ({ page }) => {
