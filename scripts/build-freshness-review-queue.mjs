@@ -25,6 +25,58 @@ const resolutions = await readJson('data/freshness-review-resolutions.json', {
   resolutions: [],
 });
 
+const normalizeHistoryItem = item => ({
+  sourceId: item.id,
+  label: item.label,
+  url: item.url,
+  affectedPages: Array.isArray(item.affectedPages) ? item.affectedPages : [],
+});
+
+const historyEvents = [
+  ...(sourceHistory.runs || []).map(run => ({
+    system: 'general-source-freshness',
+    checkedAt: run.checkedAt,
+    cadence: run.cadence || null,
+    changed: (run.changed || []).map(normalizeHistoryItem),
+    failed: (run.failed || []).map(normalizeHistoryItem),
+    newBaselines: (run.newBaselines || []).map(normalizeHistoryItem),
+    manualReview: [],
+  })),
+  ...(cityHistory.runs || []).map(run => ({
+    system: 'city-monitor',
+    checkedAt: run.checkedAt,
+    cadence: 'daily',
+    changed: (run.changed || []).map(normalizeHistoryItem),
+    failed: (run.failed || []).map(normalizeHistoryItem),
+    newBaselines: (run.newBaselines || []).map(normalizeHistoryItem),
+    manualReview: (run.manualReview || []).map(normalizeHistoryItem),
+  })),
+]
+  .sort((a, b) => String(b.checkedAt || '').localeCompare(String(a.checkedAt || '')))
+  .slice(0, 200);
+
+const freshnessHistory = {
+  version: 1,
+  generatedAt: latestTimestamp(
+    sourceState.checkedAt,
+    cityState.checkedAt,
+    ...historyEvents.map(event => event.checkedAt)
+  ),
+  summary: {
+    events: historyEvents.length,
+    changed: historyEvents.reduce((sum, event) => sum + event.changed.length, 0),
+    failed: historyEvents.reduce((sum, event) => sum + event.failed.length, 0),
+    newBaselines: historyEvents.reduce((sum, event) => sum + event.newBaselines.length, 0),
+    manualReview: historyEvents.reduce((sum, event) => sum + event.manualReview.length, 0),
+  },
+  events: historyEvents,
+};
+
+await writeFile(
+  'data/freshness-history.json',
+  JSON.stringify(freshnessHistory, null, 2) + '\n'
+);
+
 const sourceStateById = new Map((sourceState.sources || []).map(item => [item.id, item]));
 const cityStateById = new Map((cityState.sources || []).map(item => [item.id, item]));
 const existingByKey = new Map((existing.items || []).map(item => [item.key, item]));
