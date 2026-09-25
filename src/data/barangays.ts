@@ -257,7 +257,7 @@ export const barangayFacilities = (slug: string, name: string): BarangayFacility
   return [hall, ...(yakapHealthCenters[slug] ?? [])];
 };
 
-export const barangayProfilesReviewed = '23 September 2026';
+export const barangayProfilesReviewed = '25 September 2026';
 
 const barangayRosterSource = (slug: string) =>
   'https://www.barangaydirectory.com/barangay/city-of-makati/' + slug;
@@ -570,19 +570,79 @@ const barangayContactSupplement: Record<string, Partial<BarangayProfile>> = {
     hallSource: "https://barangays.contactnumbersph.com/barangay-forbes-park/",
     hallSourceLabel: "Barangay hall directory cross-check",
   },
-  'guadalupe-nuevo': { hallPhone: "(02) 8882-1992", hallSource: barangayRosterSource('guadalupe-nuevo'), hallSourceLabel: 'Barangay Directory contact cross-check', },
-  'guadalupe-viejo': { hallPhone: "(02) 8672-0032", hallSource: barangayRosterSource('guadalupe-viejo'), hallSourceLabel: 'Barangay Directory contact cross-check', },
-  'kasilawan': { hallPhone: "(02) 7505-3583", hallSource: barangayRosterSource('kasilawan'), hallSourceLabel: 'Barangay Directory contact cross-check', },
-  'magallanes': { hallPhone: "(02) 8713-4820", hallSource: barangayRosterSource('magallanes'), hallSourceLabel: 'Barangay Directory contact cross-check', },
+  'guadalupe-nuevo': {
+    hallAddress: "Orense Street, Guadalupe Nuevo, Makati City",
+    hallPhone: "(02) 8882-1992",
+    hallSource: barangayRosterSource('guadalupe-nuevo'),
+    hallSourceLabel: 'Barangay Directory contact cross-check',
+  },
+  'guadalupe-viejo': {
+    hallAddress: "Camia Street, Guadalupe Viejo, Makati City",
+    hallPhone: "(02) 8672-0032",
+    hallSource: "https://www.waze.com/live-map/directions/guadalupe-viejo-barangay-hall-camia-makati?to=place.w.79298706.793249200.3265567",
+    hallSourceLabel: "Current barangay hall listing cross-check",
+  },
+  'kasilawan': {
+    hallAddress: "2094 E. Pascua Street, Kasilawan, Makati City",
+    hallPhone: "(02) 8890-0197",
+    hallSource: "https://www.waze.com/live-map/directions/ph/ncr/makati-city/kasilawan-barangay-hall?to=place.ChIJuxOxo7zJlzMRMzcEF9nsKTw",
+    hallSourceLabel: "Current barangay hall listing cross-check",
+  },
+  'magallanes': {
+    hallAddress: "Santiago Street, Magallanes, Makati City",
+    hallPhone: "(02) 8854-0380",
+    hallSource: "https://www.waze.com/live-map/directions/magallanes-barangay-hall-santiago-makati?to=place.w.79298705.793118126.687818",
+    hallSourceLabel: "Current barangay hall listing cross-check",
+  },
   'palanan': { hallAddress: "4513 Casino Street, Palanan, Makati City", hallPhone: "(02) 8640-2945", hallEmail: "brgypalanan2023@gmail.com", hallSource: "https://notices.philgeps.gov.ph/GEPSNONPILOT/Tender/PrintableBidNoticeAbstractUI.aspx?refid=11450082", hallSourceLabel: "PhilGEPS public record", },
-  'pio-del-pilar': { hallPhone: "(02) 8660-2367", hallSource: barangayRosterSource('pio-del-pilar'), hallSourceLabel: 'Barangay Directory contact cross-check', },
-  'san-antonio': { hallPhone: "(02) 8890-4366", hallSource: barangayRosterSource('san-antonio'), hallSourceLabel: 'Barangay Directory contact cross-check', },
-  'san-isidro': { hallPhone: "(02) 8845-0260", hallSource: barangayRosterSource('san-isidro'), hallSourceLabel: 'Barangay Directory contact cross-check', },
-  'santa-cruz': { hallPhone: "(02) 8896-8775", hallSource: barangayRosterSource('santa-cruz'), hallSourceLabel: 'Barangay Directory contact cross-check', },
-  'singkamas': { hallPhone: "(02) 7254-8121", hallSource: barangayRosterSource('singkamas'), hallSourceLabel: 'Barangay Directory contact cross-check', },
-  'tejeros': { hallPhone: "(02) 7092-5038", hallSource: barangayRosterSource('tejeros'), hallSourceLabel: 'Barangay Directory contact cross-check', },
-  'urdaneta': { hallPhone: "(02) 8892-5431", hallSource: barangayRosterSource('urdaneta'), hallSourceLabel: 'Barangay Directory contact cross-check', },
-  'valenzuela': { hallPhone: "(02) 8519-9232", hallSource: barangayRosterSource('valenzuela'), hallSourceLabel: 'Barangay Directory contact cross-check', },
+  'pio-del-pilar': {
+    hallAddress: "6845 Washington Street, Pio Del Pilar, Makati City",
+    hallPhone: "(02) 8400-7191",
+    hallSource: "https://www.google.com/maps/search/?api=1&query=Pio%20del%20Pilar%20Barangay%20Hall%206845%20Washington%20Makati",
+    hallSourceLabel: "Current barangay hall listing cross-check",
+  },
+  'san-antonio': {
+    hallAddress: "8537 Caong Street, San Antonio, Makati City",
+    hallPhone: "(02) 8896-4265",
+    hallSource: "https://www.waze.com/live-map/directions/ph/ncr/makati/san-antonio-barangay-hall?to=place.ChIJ0w-I8HTJlzMR_d-ZFg4G82o",
+    hallSourceLabel: "Current barangay hall listing cross-check",
+  },
+  'san-isidro': {
+    hallAddress: "2701 Guatemala Street, San Isidro, Makati City",
+    hallPhone: "(02) 8845-0260",
+    hallSource: "https://www.waze.com/live-map/directions/ph/ncr/makati-city/san-isidro-barangay-hall-makati?to=place.ChIJf4y_oW7JlzMR76bWd6XH0dU",
+    hallSourceLabel: "Current barangay hall listing cross-check",
+  },
+  'santa-cruz': {
+    hallAddress: "3942 Yague Street, Santa Cruz, Makati City",
+    hallPhone: "(02) 8896-8775",
+    hallSource: "https://www.waze.com/live-map/directions/ph/ncr/makati-city/sta.-cruz-barangay-hall?to=place.ChIJqw5yS6HJlzMRm3JGWTxF_RY",
+    hallSourceLabel: "Current barangay hall listing cross-check",
+  },
+  'singkamas': {
+    hallAddress: "3816 F. Nazario Street, Singkamas, Makati City",
+    hallPhone: "(02) 8895-6727",
+    hallSource: "https://www.waze.com/live-map/directions/ph/ncr/makati-city/barangay-hall-singkamas?to=place.ChIJYyamm6LJlzMRD3I9TdXiwZA",
+    hallSourceLabel: "Current barangay hall listing cross-check",
+  },
+  'tejeros': {
+    hallAddress: "2903 H. Santos Street, Tejeros, Makati City",
+    hallPhone: "(02) 7092-5038",
+    hallSource: "https://www.waze.com/live-map/directions/ph/ncr/makati-city/tejeros-barangay-hall?to=place.ChIJEZYvL6PJlzMRHz4ThXBSeks",
+    hallSourceLabel: "Current barangay hall location cross-check",
+  },
+  'urdaneta': {
+    hallAddress: "26 Urdaneta Avenue, Urdaneta, Makati City",
+    hallPhone: "(02) 8892-3039",
+    hallSource: "https://www.google.com/maps/search/?api=1&query=Urdaneta%20Barangay%20Hall%2026%20Urdaneta%20Avenue%20Makati",
+    hallSourceLabel: "Current barangay hall listing cross-check",
+  },
+  'valenzuela': {
+    hallAddress: "Hormiga Street corner Pililia Street, Valenzuela, Makati City",
+    hallPhone: "(02) 8896-0283",
+    hallSource: "https://www.waze.com/live-map/directions/ph/ncr/makati-city/valenzuela-barangay-hall?to=place.ChIJ4bd2tq_JlzMRh5dqE5qmfQg",
+    hallSourceLabel: "Current barangay hall listing cross-check",
+  },
 };
 
 const barangayBaseProfiles: BarangayProfile[] = [
@@ -594,7 +654,7 @@ const barangayBaseProfiles: BarangayProfile[] = [
   { slug: 'guadalupe-nuevo', name: 'Guadalupe Nuevo', population2024: 21596, legislativeDistrict: '2nd District', officialPageUrl: 'https://www.makati.gov.ph/barangay/guadalupe-nuevo/13', officials: { punongBarangay: 'German O. Sunga', source: 'https://www.makati.gov.ph/barangay/guadalupe-nuevo/13' }, hallEmail: 'barangayguadalupenuevo2023@gmail.com', hallSource: 'https://www.makati.gov.ph/barangay/guadalupe-nuevo/13', facebookUrl: 'https://www.facebook.com/barangayguadalupe.nuevo' },
   { slug: 'guadalupe-viejo', name: 'Guadalupe Viejo', population2024: 13525, legislativeDistrict: '2nd District', officialPageUrl: makatiBarangayDirectory, heritageMarkers: [{ name: 'Church and Monastery of Guadalupe', agency: 'NHCP', status: 'Level II – Historical marker', href: 'https://philhistoricsites.nhcp.gov.ph/registry_database/church-and-monastery-of-guadalupe/', location: 'Nuestra Señora de Gracia Church, 7440 Bernardino Street' }], notablePlaces: [{ name: 'Nuestra Señora de Gracia Church and Monastery', href: 'https://philhistoricsites.nhcp.gov.ph/registry_database/church-and-monastery-of-guadalupe/', type: 'Heritage' }] },
   { slug: 'kasilawan', name: 'Kasilawan', population2024: 5007, legislativeDistrict: '1st District', officialPageUrl: 'https://www.makati.gov.ph/barangay/kasilawan/24' },
-  { slug: 'la-paz', name: 'La Paz', population2024: 6682, legislativeDistrict: '1st District', officialPageUrl: 'https://www.makati.gov.ph/barangay/la-paz/25?page=406', hallPhone: '(02) 8895-2755 / (02) 8735-5703', hallEmail: 'barangaylapaz815@gmail.com', hallSource: 'https://www.makati.gov.ph/barangay/la-paz/25?page=406', notablePlaces: [{ name: 'Makati Cinema Square', href: 'https://www.google.com/maps/search/?api=1&query=Makati+Cinema+Square', type: 'Establishment' }] },
+  { slug: 'la-paz', name: 'La Paz', population2024: 6682, legislativeDistrict: '1st District', officialPageUrl: 'https://www.makati.gov.ph/barangay/la-paz/25?page=406', hallAddress: '815 Archimedes Street, La Paz, Makati City', hallPhone: '(02) 8895-2755 / (02) 8735-5703 / 0939-522-7443', hallEmail: 'barangaylapaz815@gmail.com', hallSource: 'https://www.makati.gov.ph/barangay/la-paz/25?page=406', notablePlaces: [{ name: 'Makati Cinema Square', href: 'https://www.google.com/maps/search/?api=1&query=Makati+Cinema+Square', type: 'Establishment' }] },
   { slug: 'magallanes', name: 'Magallanes', population2024: 5473, legislativeDistrict: '1st District', officialPageUrl: 'https://www.makati.gov.ph/barangay/magallanes/26', associations: [{ name: 'Magallanes Village Association (MVA)', href: 'https://www.google.com/maps/search/?api=1&query=Magallanes%20Village%20Association%20Makati', linkLabel: 'Map' }] },
   { slug: 'olympia', name: 'Olympia', population2024: 19035, legislativeDistrict: '1st District', officialPageUrl: 'https://www.makati.gov.ph/barangay/olympia/27?page=438', officials: { punongBarangay: 'Reynaldo A. Yulo', source: 'https://www.makati.gov.ph/barangay/olympia/27?page=438' }, hallAddress: 'Fortuna Street, Makati City', hallPhone: '(02) 8897-9718 / (02) 8897-5019 / (02) 8897-9764 / (02) 8805-5096 / (02) 8551-8892 / (02) 8785-0626 / 0968-349-4634', hallEmail: 'barangayolympiamakati@gmail.com', hallSource: 'https://www.makati.gov.ph/barangay/olympia/27?page=438' },
   { slug: 'palanan', name: 'Palanan', population2024: 11934, legislativeDistrict: '1st District', officialPageUrl: 'https://www.makati.gov.ph/barangay/palanan/28', officials: { punongBarangay: 'John Benedict C. Corcuera', source: 'https://www.makati.gov.ph/barangay/palanan/28' } },
