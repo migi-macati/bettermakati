@@ -1344,3 +1344,28 @@ test('ecosystem fallbacks appear in search, participation and hotlines', async (
     'https://hotlines.bettergov.ph/'
   );
 });
+
+test('projects and budget exposes related national evidence without replacing Makati records', async ({ page }) => {
+  await page.goto(baseURL + '/projects-budget');
+
+  const nationalContext = page.getByText('National context', { exact: true }).locator('..');
+  await expect(nationalContext.getByRole('link', { name: /2026 national budget/i })).toHaveAttribute(
+    'href',
+    'https://2026-budget.bettergov.ph/'
+  );
+  await expect(nationalContext.getByRole('link', { name: /Procurement browser/i })).toHaveAttribute(
+    'href',
+    'https://philgeps.bettergov.ph/'
+  );
+  await expect(nationalContext.getByRole('link', { name: /Transparency records/i })).toHaveAttribute(
+    'href',
+    'https://transparency.bettergov.ph/'
+  );
+  await expect(nationalContext.getByRole('link', { name: /Flood-control projects/i })).toHaveAttribute(
+    'href',
+    'https://bettergov.ph/flood-control-projects'
+  );
+
+  await expect(page.getByRole('link', { name: /2026 Annual Budget Report/i }).first()).toBeVisible();
+  await expect(page.getByRole('heading', { name: /Bid results and award records/i })).toBeVisible();
+});
