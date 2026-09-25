@@ -1,0 +1,385 @@
+{
+  "schemaVersion": 1,
+  "definedAt": "2026-09-25",
+  "workstream": "W3R-2a — Define shared Place Registry schema",
+  "status": "design-complete",
+  "scope": "Schema/design record only. Defines the canonical BetterMakati place record, provenance and relationship rules, and the boundary between shared place facts and Civic Map/participation-specific data. No application data is migrated in this step.",
+  "nonGoals": [
+    "Do not move civicAssets out of src/data/civicMap.ts yet.",
+    "Do not change Civic Map, BetterBarangay, Mobility, Services, Search, Visit Makati, Heritage, Projects, Accountability or City Monitor behavior.",
+    "Do not add new places or reopen completed facility, park or transport reconciliation.",
+    "Do not define structured observation questions; that remains W3R-6a.",
+    "Do not implement nearby-place matching; that remains W3R-5b.",
+    "Do not merge records by fuzzy name or geographic proximity."
+  ],
+  "designPrinciples": [
+    "A place has one canonical identity independent of any page or map that consumes it.",
+    "Stable existing CivicAsset IDs are preserved when those assets migrate into the registry.",
+    "Location, verification state and real-world operating/service lifecycle are separate concepts.",
+    "Canonical facts carry explicit provenance; coordinates may have different evidence from names, addresses or lifecycle status.",
+    "Aliases describe names for the same identity only. Predecessors, successors and same-corridor facilities remain separate records linked by explicit relationships.",
+    "The registry stores durable place facts. Reports, proposals, observations, case lifecycle, submission state and user-generated aggregates reference a place by placeId but are not embedded in the place record.",
+    "Access class is a factual property of a place, not a quality score or endorsement.",
+    "No generic rating score belongs in the Place Registry.",
+    "Unknown or unresolved facts remain unknown; migration must not infer lifecycle, barangay, access or identity from weak signals merely to fill fields."
+  ],
+  "canonicalPlaceRecord": {
+    "requiredFields": [
+      "id",
+      "name",
+      "primaryCategory",
+      "location",
+      "management",
+      "access",
+      "lifecycle",
+      "verification",
+      "provenance",
+      "relationships",
+      "tags"
+    ],
+    "fields": {
+      "id": {
+        "type": "string",
+        "description": "Stable slug-like canonical identifier. Existing CivicAsset.id values are preserved during W3R-2b.",
+        "mutable": false
+      },
+      "name": {
+        "type": "string",
+        "description": "Current canonical public-facing name supported by the best available evidence."
+      },
+      "summary": {
+        "type": "string?",
+        "description": "Short factual descriptor suitable for reuse across pages. Replaces CivicAsset.subtitle when the text describes the place rather than the Civic Map."
+      },
+      "primaryCategory": {
+        "type": "controlled-string",
+        "description": "Primary place/asset family. Initial taxonomy is the current CivicAssetType set; future additions require explicit taxonomy revision rather than ad-hoc strings.",
+        "initialValues": [
+          "street-segment",
+          "sidewalk-segment",
+          "crossing",
+          "bike-lane",
+          "park",
+          "public-office",
+          "health-center",
+          "community-center",
+          "public-market",
+          "public-toilet",
+          "drainage",
+          "bridge",
+          "heritage-site",
+          "transport-route",
+          "transport-stop",
+          "transport-terminal"
+        ]
+      },
+      "secondaryCategories": {
+        "type": "string[]?",
+        "description": "Optional controlled secondary classifications when one place legitimately serves more than one reusable website function."
+      },
+      "aliases": {
+        "type": "Alias[]?",
+        "itemShape": {
+          "name": "string",
+          "kind": "current-alternate | former-name | historical-name | abbreviation | local-name",
+          "note": "string?"
+        },
+        "description": "Alternative names for the same place identity. A predecessor or successor is not an alias unless the evidence supports continuous identity."
+      },
+      "location": {
+        "type": "Location",
+        "shape": {
+          "relationToMakati": {
+            "type": "in-makati | makati-boundary | serves-makati-outside | route-or-network | unknown",
+            "description": "Whether the physical place lies in Makati, sits on a boundary, is outside Makati but serves Makati, or is a multi-place route/network."
+          },
+          "barangays": {
+            "type": "string[]",
+            "description": "Canonical barangay names. Empty is allowed only when genuinely unknown, outside Makati, or not meaningful for a route/network."
+          },
+          "address": "string?",
+          "point": {
+            "type": "object?",
+            "shape": {
+              "lat": "number",
+              "lng": "number",
+              "role": "exact | entrance | centroid | representative"
+            },
+            "description": "Point used for map display and distance selection. Non-point assets may use a centroid or representative point without pretending it is exact geometry."
+          },
+          "geometry": {
+            "type": "object?",
+            "shape": {
+              "type": "point | segment | route | area",
+              "street": "string?",
+              "from": "string?",
+              "to": "string?",
+              "side": "north | south | east | west | both | not-applicable | unknown?",
+              "geometryRef": "string?"
+            },
+            "description": "Describes spatial form without requiring full GIS geometry in the first registry version. geometryRef may later point to a maintained geometry source."
+          }
+        }
+      },
+      "management": {
+        "type": "Management",
+        "shape": {
+          "responsibilityText": {
+            "type": "string?",
+            "description": "Human-readable authority/management text preserved from verified current data where normalized body roles are not yet available."
+          },
+          "bodies": {
+            "type": "ResponsibleBody[]",
+            "itemShape": {
+              "name": "string",
+              "role": "owner | operator | manager | maintainer | regulator | service-provider | other",
+              "note": "string?"
+            }
+          }
+        },
+        "description": "Separates who owns, manages, operates or regulates a place. Migration may preserve responsibilityText first and normalize bodies later without losing evidence."
+      },
+      "servicesAtLocation": {
+        "type": "ServiceAtLocation[]?",
+        "itemShape": {
+          "label": "string",
+          "serviceId": "string?",
+          "href": "string?",
+          "note": "string?"
+        },
+        "description": "Services physically available at this location. serviceId may later reference a canonical BetterMakati service guide."
+      },
+      "access": {
+        "type": "Access",
+        "shape": {
+          "class": "government-public | public-access-private-managed | private-community-controlled | service-users-only | restricted | unknown",
+          "note": "string?"
+        },
+        "description": "Who can ordinarily access the place. Preserves the existing three CivicAccessClass values and adds explicit restricted/unknown service-location cases."
+      },
+      "lifecycle": {
+        "type": "Lifecycle",
+        "shape": {
+          "status": "operating | temporarily-suspended | under-construction | future | closed | unknown",
+          "statusAsOf": "YYYY-MM-DD?",
+          "effectiveFrom": "YYYY-MM-DD?",
+          "effectiveTo": "YYYY-MM-DD?",
+          "note": "string?"
+        },
+        "description": "Real-world place/service lifecycle. This is never derived from Civic Map mapping status. It carries forward the PNR/NSCR lifecycle design."
+      },
+      "verification": {
+        "type": "Verification",
+        "shape": {
+          "status": "verified | provisional | needs-verification",
+          "lastVerified": "YYYY-MM-DD?",
+          "note": "string?"
+        },
+        "description": "Editorial/evidence state of the registry record. This is distinct from lifecycle and from map visibility."
+      },
+      "provenance": {
+        "type": "Provenance",
+        "shape": {
+          "sources": {
+            "type": "Source[]",
+            "itemShape": {
+              "id": "string",
+              "label": "string",
+              "url": "string",
+              "publisher": "string?",
+              "publishedOrPeriod": "string?",
+              "checkedOn": "YYYY-MM-DD?",
+              "kind": "official-primary | official-secondary | reference-map | secondary-reporting | other"
+            }
+          },
+          "assertions": {
+            "type": "Assertion[]",
+            "itemShape": {
+              "fieldPaths": "string[]",
+              "sourceIds": "string[]",
+              "evidenceStrength": "direct | corroborated | inferred",
+              "note": "string?"
+            }
+          }
+        },
+        "description": "Field-aware provenance. Coordinates, current name, access, lifecycle and management can cite different evidence."
+      },
+      "relationships": {
+        "type": "Relationship[]",
+        "itemShape": {
+          "kind": "part-of | contains | same-site-as | predecessor-of | successor-of | service-location-for | served-by | related-project | related-accountability | related-city-monitor | related-heritage",
+          "targetType": "place | service | project | accountability-record | city-monitor-record | heritage-record",
+          "targetId": "string",
+          "sourceIds": "string[]?",
+          "note": "string?"
+        },
+        "description": "Explicit links only. Relationship creation must be evidence-based and must not rely on automated fuzzy matching."
+      },
+      "tags": {
+        "type": "string[]",
+        "description": "Search/discovery descriptors. Tags do not establish identity, lifecycle, access or management facts."
+      }
+    }
+  },
+  "civicMapConsumerBoundary": {
+    "principle": "Civic Map becomes one consumer of the Place Registry. Map-specific presentation and participation behavior must not become canonical place facts.",
+    "fieldsThatMayRemainCivicMapSpecific": {
+      "legacyStatus": {
+        "type": "mapped | pilot | needs-verification",
+        "transitional": true,
+        "description": "Temporary compatibility field during W3R-2b so current pages do not change behavior. It must not be interpreted as real-world lifecycle."
+      },
+      "defaultLayer": {
+        "type": "current | history | future | private-access | pilot?",
+        "description": "Consumer-side layer selection if/when Civic Map needs it. Not part of canonical place identity."
+      },
+      "mapVisibility": {
+        "type": "default | optional | hidden?",
+        "description": "Consumer-side display policy, especially for historical/future/private-access places."
+      },
+      "mapLabelOverride": {
+        "type": "string?",
+        "description": "Rare UI label override; canonical name remains in the registry."
+      }
+    },
+    "fieldsExplicitlyNotInRegistry": [
+      "marker style, color, cluster state or selected state",
+      "report/proposal/observation form state",
+      "issue and proposal category choices",
+      "structured observation questions or answers",
+      "generic rating/review values or rating aggregates",
+      "report counts, proposal counts or popularity counts",
+      "submission status and contributor details",
+      "duplicate-case matching state",
+      "emergency routing decisions",
+      "case referral/lifecycle events",
+      "community resolution signals"
+    ]
+  },
+  "participationDataBoundary": {
+    "rule": "Participation entities reference a canonical place through placeId; they do not mutate the canonical record automatically.",
+    "externalEntities": [
+      "civic report",
+      "place improvement proposal",
+      "structured observation",
+      "civic audit response",
+      "case/referral lifecycle",
+      "community resolution signal"
+    ],
+    "protectedBehavior": [
+      "Emergency handling remains outside the registry.",
+      "Duplicate detection remains outside the registry.",
+      "Human review before government referral remains outside the registry.",
+      "User submissions never rewrite canonical name, address, lifecycle, management or access without an explicit editorial verification step."
+    ]
+  },
+  "currentCivicAssetMigrationMapping": [
+    {
+      "from": "id",
+      "to": "id",
+      "rule": "Preserve exactly."
+    },
+    {
+      "from": "title",
+      "to": "name",
+      "rule": "Preserve current verified title unless later evidence explicitly changes the canonical name."
+    },
+    {
+      "from": "type",
+      "to": "primaryCategory",
+      "rule": "Map one-to-one to the initial controlled taxonomy."
+    },
+    {
+      "from": "subtitle",
+      "to": "summary",
+      "rule": "Carry over when factual and reusable; keep Civic-Map-only wording out of the canonical record."
+    },
+    {
+      "from": "barangay",
+      "to": "location.barangays",
+      "rule": "Convert to an array only after validating the actual geography. Do not mechanically split slash-delimited values such as boundary/route descriptions."
+    },
+    {
+      "from": "lat + lng",
+      "to": "location.point",
+      "rule": "Preserve coordinates. Set point.role from evidence and geometry; use representative/centroid for non-point assets rather than claiming exact geometry."
+    },
+    {
+      "from": "address",
+      "to": "location.address",
+      "rule": "Preserve when sourced."
+    },
+    {
+      "from": "street + from + to + side",
+      "to": "location.geometry",
+      "rule": "Use for segment descriptors. Do not invent full GIS geometry."
+    },
+    {
+      "from": "authority",
+      "to": "management.responsibilityText",
+      "rule": "Preserve text first. Normalize bodies/roles only where evidence clearly supports it."
+    },
+    {
+      "from": "servicesAtLocation",
+      "to": "servicesAtLocation",
+      "rule": "Convert each label to a structured entry. Add serviceId only when a canonical BetterMakati service guide relationship exists."
+    },
+    {
+      "from": "accessClass",
+      "to": "access.class",
+      "rule": "Preserve existing values exactly; use unknown rather than guessing when absent."
+    },
+    {
+      "from": "aliases",
+      "to": "aliases",
+      "rule": "Preserve names but classify historical/former/current-alternate only where provenance supports the distinction."
+    },
+    {
+      "from": "sourceUrl + sourceLabel",
+      "to": "provenance.sources + assertions",
+      "rule": "Create a canonical-fact source and attach it to the fields it actually supports."
+    },
+    {
+      "from": "coordinateSourceUrl + coordinateSourceLabel",
+      "to": "provenance.sources + assertions",
+      "rule": "Create a separate coordinate source and attach it specifically to location.point/geometry."
+    },
+    {
+      "from": "status",
+      "to": "civicMapConsumerBoundary.legacyStatus",
+      "rule": "Do not map mapped/pilot/needs-verification to lifecycle.status. W3R-2b may keep the legacy value only as a compatibility field."
+    },
+    {
+      "from": "tags",
+      "to": "tags",
+      "rule": "Preserve current discovery tags; later deduplicate and normalize without changing identity."
+    }
+  ],
+  "integrityRules": [
+    "Place IDs are unique and stable.",
+    "An alias cannot create a second current record for the same verified identity.",
+    "A predecessor/successor with distinct identity remains a separate record even if name or geography overlaps.",
+    "Legacy PNR and future NSCR facilities remain lifecycle-distinct records; Dela Rosa must not be aliased to future NSCR Buendia.",
+    "Lifecycle status must never be inferred from mapped/pilot/needs-verification.",
+    "A verified record must have at least one source and at least one assertion supporting its canonical identity/current existence.",
+    "Coordinate/geometry claims should cite coordinate or geometry evidence separately when that evidence differs from the identity source.",
+    "In-Makati point places should normally resolve to a canonical barangay; boundary, route/network and unresolved cases may use multiple/empty barangays with an explicit note.",
+    "Out-of-Makati service locations must use relationToMakati=serves-makati-outside rather than being assigned a Makati barangay.",
+    "Public-access private-managed places remain distinguishable from government-public places.",
+    "No user-generated report, proposal, observation or case event directly changes canonical place facts.",
+    "No generic rating score, ranking or derived popularity metric is stored in the Place Registry.",
+    "Cross-dataset relationships are explicit and ID-based; do not mass-create them with fuzzy matching."
+  ],
+  "w3r2bHandoff": {
+    "nextStep": "W3R-2b — Introduce Place Registry data layer",
+    "implementationConstraints": [
+      "Create the shared data layer using this schema without visible UI changes.",
+      "Preserve every current CivicAsset.id.",
+      "Preserve existing Civic Map behavior through a temporary re-export/adapter if needed.",
+      "Migrate current canonical asset facts only; do not add new records from governmentServiceOffices, Visit Makati or other datasets in the same step.",
+      "Keep legacy Civic Map status as compatibility data only and keep lifecycle separate.",
+      "Do not reopen completed place research.",
+      "Stop after data-layer refactor and focused type/build validation."
+    ]
+  }
+}
