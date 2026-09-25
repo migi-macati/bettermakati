@@ -1,0 +1,446 @@
+{
+  "schemaVersion": 1,
+  "frozenAt": "2026-09-25",
+  "workstream": "Wave 3A-3 — Participation implementation backlog",
+  "objective": "Freeze a small, non-overlapping execution order for the remaining Wave 3 work. No implementation is performed in this step.",
+  "executionRules": {
+    "userCadence": "One user 'Next' executes exactly one micro-step.",
+    "scopeCap": [
+      "One functional concern per micro-step.",
+      "Prefer 2–5 files and 1–3 commits.",
+      "One focused verification pass, then stop.",
+      "If a micro-step expands unexpectedly, split it before implementation rather than continuing."
+    ],
+    "deployment": "Do not manually deploy after each micro-step while Vercel build-rate pressure remains. Commit cleanly to GitHub and report deployment status separately.",
+    "research": "Do not combine broad external research, large implementation and whole-site QA in one micro-step.",
+    "overlapRule": "A gap is owned by exactly one implementation step even if it affects multiple Wave 3 workstreams."
+  },
+  "completedOrDeferred": {
+    "3D": "Referral lifecycle is complete for the current scope. Automatic government forwarding remains intentionally deferred.",
+    "3F": "Get Involved core submission/fallback workflow is complete; only cross-cutting fixes and QA remain.",
+    "3H-low-volume-headline-metrics": "Intentionally deferred until sample size and recency support meaningful public metrics.",
+    "official-participation-calendar": "Source-dependent. Keep the current honest empty-state/official-events handoff until a sufficiently authoritative current source exists.",
+    "barangay-activity-comparisons": "Do not build cross-barangay comparisons until Civic Map coverage and real submission volume are adequate."
+  },
+  "batches": [
+    {
+      "id": "3B-1",
+      "title": "Complete the Participation Hub task set",
+      "priority": "high",
+      "ownerWorkstream": "3B",
+      "goal": "Make /participate a complete citywide starting point without changing backend architecture.",
+      "changes": [
+        "Expose public-place report/improvement as a citywide action, not only inside barangay scope.",
+        "Keep official participation, BetterMakati project input and Civic Map public-realm cases visibly distinct.",
+        "Ensure proposal, idea, source, correction, volunteer/contact and official-participation journeys are reachable without hunting."
+      ],
+      "likelyFiles": [
+        "src/pages/Participate.tsx"
+      ],
+      "dependencies": [],
+      "stopWhen": "The task set is complete and every CTA points to an existing functional route/handoff.",
+      "excludes": [
+        "Do not redesign Get Involved form.",
+        "Do not expand Civic Map assets.",
+        "Do not add new official opportunities."
+      ]
+    },
+    {
+      "id": "3B-2",
+      "title": "Preserve barangay context into Get Involved",
+      "priority": "high",
+      "ownerWorkstream": "3B/3G shared gap",
+      "goal": "Fix the one known scope-loss bug without broader form redesign.",
+      "changes": [
+        "Read ?barangay= from the Get Involved URL.",
+        "Prefill the barangay/area field when valid context is supplied.",
+        "Preserve normal manual editing of that field.",
+        "Add a focused regression test from barangay-scoped Participation to Get Involved."
+      ],
+      "likelyFiles": [
+        "src/pages/GetInvolved.tsx",
+        "tests/e2e/critical-paths.spec.mjs"
+      ],
+      "dependencies": [
+        "3B-1"
+      ],
+      "stopWhen": "A barangay-scoped source/correction journey reaches Get Involved with the barangay prefilled.",
+      "excludes": [
+        "Do not create a new barangay submission backend."
+      ]
+    },
+    {
+      "id": "3E-1",
+      "title": "Add general-feedback duplicate detection",
+      "priority": "medium",
+      "ownerWorkstream": "3E",
+      "goal": "Reduce duplicate corrections, ideas, proposals and source submissions before creating another GitHub issue.",
+      "changes": [
+        "Define conservative duplicate matching for /api/feedback.",
+        "Search only relevant open BetterMakati feedback issues.",
+        "Return an existing public issue reference when a strong duplicate is found.",
+        "Avoid fuzzy matching that could merge unrelated civic input."
+      ],
+      "likelyFiles": [
+        "api/feedback.js",
+        "tests/e2e/critical-paths.spec.mjs"
+      ],
+      "dependencies": [
+        "3B-2"
+      ],
+      "stopWhen": "Strong duplicates reuse an existing issue; unrelated submissions still create a new one.",
+      "excludes": [
+        "Do not merge /api/feedback with /api/civic."
+      ]
+    },
+    {
+      "id": "3E-2",
+      "title": "Clarify duplicate-result UX",
+      "priority": "medium",
+      "ownerWorkstream": "3E",
+      "goal": "Make an existing-match response understandable without adding a separate workflow.",
+      "changes": [
+        "Show when an existing public item was found.",
+        "Link to the existing tracking issue.",
+        "Retain the user's ability to continue only when the backend says the submission is not a strong duplicate."
+      ],
+      "likelyFiles": [
+        "src/pages/GetInvolved.tsx"
+      ],
+      "dependencies": [
+        "3E-1"
+      ],
+      "stopWhen": "Duplicate responses are clearly distinguished from newly created submissions.",
+      "excludes": [
+        "Do not redesign the entire submission form."
+      ]
+    },
+    {
+      "id": "3C-1",
+      "title": "Expand Civic Map government-service assets",
+      "priority": "medium",
+      "ownerWorkstream": "3C",
+      "goal": "Grow coverage using already-verifiable public facilities before harder transport/street research.",
+      "changes": [
+        "Add a bounded batch of verified public offices, health centers and community-facing public facilities.",
+        "Reuse existing BetterMakati government/barangay facility data where coordinates or reliable locations already exist.",
+        "Keep asset metadata and barangay assignment sourceable."
+      ],
+      "likelyFiles": [
+        "src/data/civicMap.ts",
+        "scripts/check-civic-map.mjs"
+      ],
+      "dependencies": [
+        "3E-2"
+      ],
+      "stopWhen": "One coherent facility batch is added and validated; do not continue to another asset family in the same step.",
+      "excludes": [
+        "Transport routes/stops",
+        "Long street segmentation",
+        "Private establishments"
+      ]
+    },
+    {
+      "id": "3C-2",
+      "title": "Expand Civic Map parks and civic-space assets",
+      "priority": "medium",
+      "ownerWorkstream": "3C",
+      "goal": "Add another bounded asset family after government-service assets.",
+      "changes": [
+        "Add verified parks, community spaces, markets or public toilets only where location/source confidence is sufficient.",
+        "Apply the existing rating criteria appropriate to each asset type."
+      ],
+      "likelyFiles": [
+        "src/data/civicMap.ts",
+        "scripts/check-civic-map.mjs"
+      ],
+      "dependencies": [
+        "3C-1"
+      ],
+      "stopWhen": "The civic-space batch is complete and verified.",
+      "excludes": [
+        "Transport network expansion"
+      ]
+    },
+    {
+      "id": "3C-3",
+      "title": "Research verified public-transport objects",
+      "priority": "medium",
+      "ownerWorkstream": "3C",
+      "goal": "Establish a reliable source set for transport stops, terminals and routes before adding them to the map.",
+      "changes": [
+        "Inventory authoritative or reliably maintained Makati transport sources.",
+        "Identify which route/stop objects can be represented without false precision.",
+        "Freeze a source-backed transport expansion list."
+      ],
+      "likelyFiles": [
+        "data/wave3-civic-map-transport-audit.json"
+      ],
+      "dependencies": [
+        "3C-2"
+      ],
+      "stopWhen": "A source-backed transport expansion list exists.",
+      "excludes": [
+        "Do not add transport assets in the same research step."
+      ]
+    },
+    {
+      "id": "3C-4",
+      "title": "Add verified transport assets",
+      "priority": "medium",
+      "ownerWorkstream": "3C",
+      "goal": "Implement only the transport objects approved in 3C-3.",
+      "changes": [
+        "Add verified routes/stops/terminals in small source-coherent batches.",
+        "Use existing transport-specific issue and rating categories."
+      ],
+      "likelyFiles": [
+        "src/data/civicMap.ts",
+        "scripts/check-civic-map.mjs"
+      ],
+      "dependencies": [
+        "3C-3"
+      ],
+      "stopWhen": "The first approved transport batch is implemented and validated.",
+      "splitRule": "If the approved list is large, continue as 3C-4a, 3C-4b, etc., one source family per user 'Next'."
+    },
+    {
+      "id": "3H-1",
+      "title": "Define participation outcome metrics",
+      "priority": "medium",
+      "ownerWorkstream": "3H",
+      "goal": "Define measurable response/conversion/outcome fields before collecting or publishing them.",
+      "changes": [
+        "Define what counts as received, reviewed, responded, converted to action and resolved for each participation workflow.",
+        "Keep general BetterMakati feedback metrics separate from Civic Map case metrics where semantics differ.",
+        "Define minimum-volume rules before any public rate/percentage is shown."
+      ],
+      "likelyFiles": [
+        "data/wave3-participation-metrics.json"
+      ],
+      "dependencies": [
+        "3E-2"
+      ],
+      "stopWhen": "Metric definitions and publication thresholds are frozen.",
+      "excludes": [
+        "Do not publish headline metrics in this step."
+      ]
+    },
+    {
+      "id": "3H-2",
+      "title": "Instrument participation timestamps and outcomes",
+      "priority": "medium",
+      "ownerWorkstream": "3H",
+      "goal": "Collect the fields required by 3H-1 without creating dashboards yet.",
+      "changes": [
+        "Add or derive timestamps/status fields needed for response-time and conversion measurement.",
+        "Preserve existing public GitHub tracking model."
+      ],
+      "likelyFiles": [
+        "api/feedback.js",
+        "api/community-input.js",
+        "api/civic-report.js"
+      ],
+      "dependencies": [
+        "3H-1"
+      ],
+      "stopWhen": "The machine data exposes the defined fields with no public aggregate claims yet."
+    },
+    {
+      "id": "3I-1",
+      "title": "Add missing participation pages to human audit",
+      "priority": "high",
+      "ownerWorkstream": "3I",
+      "goal": "Bring all major participation surfaces under the existing page-freshness discipline.",
+      "changes": [
+        "Add /get-involved to page-audit.json.",
+        "Add /civic-map/reports to page-audit.json.",
+        "Add /contact to page-audit.json.",
+        "Give each a real checklist, review date and explicit known gaps."
+      ],
+      "likelyFiles": [
+        "data/page-audit.json",
+        "data/page-freshness-state.json",
+        "scripts/audit-page-freshness.mjs"
+      ],
+      "dependencies": [
+        "3H-2"
+      ],
+      "stopWhen": "All major participation surfaces are covered by page audit and dependency-aware freshness.",
+      "note": "Scheduled late so audit rows describe the stabilized Wave 3 implementation rather than moving targets."
+    },
+    {
+      "id": "3I-2",
+      "title": "Add participation-depth architecture audit",
+      "priority": "high",
+      "ownerWorkstream": "3I",
+      "goal": "Create one build audit that protects the participation architecture without duplicating browser tests.",
+      "changes": [
+        "Guard required routes and API endpoints.",
+        "Guard emergency routing, duplicate semantics, barangay context, lifecycle distinctions and canonical submission paths.",
+        "Reject accidental merging of general feedback and Civic Map case semantics."
+      ],
+      "likelyFiles": [
+        "scripts/audit-participation-depth.mjs",
+        "package.json"
+      ],
+      "dependencies": [
+        "3I-1"
+      ],
+      "stopWhen": "The audit runs in quality/build and catches the Wave 3 architectural invariants."
+    },
+    {
+      "id": "3I-3",
+      "title": "Test general participation submission journeys",
+      "priority": "high",
+      "ownerWorkstream": "3I",
+      "goal": "Add focused browser/API coverage for Get Involved and general feedback.",
+      "changes": [
+        "Test type/tool/subject/barangay prefill.",
+        "Test successful submission response shape.",
+        "Test duplicate-result behavior.",
+        "Test fallback behavior when native storage is unavailable.",
+        "Test correction entry from a normal page."
+      ],
+      "likelyFiles": [
+        "tests/e2e/critical-paths.spec.mjs"
+      ],
+      "dependencies": [
+        "3I-2"
+      ],
+      "stopWhen": "General BetterMakati input has end-to-end regression coverage."
+    },
+    {
+      "id": "3I-4",
+      "title": "Test Civic Map lifecycle journeys",
+      "priority": "high",
+      "ownerWorkstream": "3I",
+      "goal": "Cover the public-realm path separately from general feedback.",
+      "changes": [
+        "Test report/proposal submission validation.",
+        "Test emergency rejection/911 handoff.",
+        "Test duplicate-case handoff.",
+        "Test corroboration/referral eligibility data.",
+        "Test lifecycle status rendering without implying government acknowledgement prematurely."
+      ],
+      "likelyFiles": [
+        "tests/e2e/critical-paths.spec.mjs"
+      ],
+      "dependencies": [
+        "3I-3"
+      ],
+      "stopWhen": "Civic Map's submission and lifecycle semantics have focused regression coverage."
+    },
+    {
+      "id": "3I-5",
+      "title": "Participation mobile/accessibility pass",
+      "priority": "high",
+      "ownerWorkstream": "3I",
+      "goal": "Finish Wave 3 with targeted mobile, keyboard, focus, label and error-state QA.",
+      "changes": [
+        "Check /participate, /get-involved, /civic-map, representative asset page, /civic-map/reports and /contact at 390px.",
+        "Run Axe coverage for those routes/states.",
+        "Check form labels, focus order, errors and touch targets.",
+        "Fix only participation-specific defects discovered."
+      ],
+      "likelyFiles": [
+        "tests/e2e/accessibility.spec.mjs",
+        "tests/e2e/critical-paths.spec.mjs",
+        "participation components only if a defect is found"
+      ],
+      "dependencies": [
+        "3I-4"
+      ],
+      "stopWhen": "Targeted participation QA passes and no Wave 3-specific accessibility/mobile defect remains."
+    },
+    {
+      "id": "3I-6",
+      "title": "Close Wave 3",
+      "priority": "high",
+      "ownerWorkstream": "3I",
+      "goal": "Re-run the Wave 3 classification and close only what is actually complete.",
+      "changes": [
+        "Reclassify all 40 capabilities.",
+        "Refresh participation page-audit gaps.",
+        "Record source-dependent and intentionally deferred items without treating them as implementation failures.",
+        "Freeze the Wave 3 completion record."
+      ],
+      "likelyFiles": [
+        "data/wave3-participation-classification.json",
+        "data/wave3-participation-backlog.json",
+        "data/page-audit.json"
+      ],
+      "dependencies": [
+        "3I-5"
+      ],
+      "stopWhen": "Wave 3 completion state is evidence-based and the next major wave can start."
+    }
+  ],
+  "executionOrder": [
+    "3B-1",
+    "3B-2",
+    "3E-1",
+    "3E-2",
+    "3C-1",
+    "3C-2",
+    "3C-3",
+    "3C-4",
+    "3H-1",
+    "3H-2",
+    "3I-1",
+    "3I-2",
+    "3I-3",
+    "3I-4",
+    "3I-5",
+    "3I-6"
+  ],
+  "whyThisOrder": [
+    "Fix user routing and lost barangay context before adding more participation volume.",
+    "Add general-feedback deduplication before instrumenting participation outcomes.",
+    "Expand Civic Map coverage in bounded asset families instead of one citywide data push.",
+    "Define metrics before collecting or publishing them.",
+    "Do final audit/E2E/mobile/accessibility work after the functional behavior is stable.",
+    "Keep source-dependent and intentionally deferred items out of the active implementation queue."
+  ],
+  "removedAsDuplicateOrDeferred": [
+    {
+      "original": [
+        "3B-3-barangay-context",
+        "3G-3-scoped-general-contribution"
+      ],
+      "disposition": "One task: 3B-2."
+    },
+    {
+      "original": [
+        "3C-3-geographic-handling",
+        "3C-citywide-coverage",
+        "3G-4-barangay-activity"
+      ],
+      "disposition": "Coverage work is owned by 3C-1 through 3C-4. Barangay activity comparisons remain deferred until the underlying map/submission density exists."
+    },
+    {
+      "original": [
+        "3B-4-mobile-accessibility",
+        "3I-4-mobile-accessibility"
+      ],
+      "disposition": "One final QA task: 3I-5."
+    },
+    {
+      "original": [
+        "3I-2-full-page-audit-coverage"
+      ],
+      "disposition": "Owned by 3I-1."
+    },
+    {
+      "original": [
+        "3I-3-end-to-end-submission"
+      ],
+      "disposition": "Split by backend semantics into 3I-3 general participation and 3I-4 Civic Map."
+    }
+  ],
+  "immediateNext": {
+    "id": "3B-1",
+    "title": "Complete the Participation Hub task set",
+    "maximumScope": "One page, its existing links/data only, one focused browser verification. No backend work."
+  }
+}
