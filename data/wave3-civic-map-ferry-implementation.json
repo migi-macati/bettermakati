@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "implementedAt": "2026-09-25",
+  "workstream": "Wave 3C-3b — Implement current Makati Pasig River Ferry stations",
+  "scope": "Guadalupe and Valenzuela stations only.",
+  "assets": [
+    {
+      "id": "pasig-ferry-guadalupe",
+      "lat": 14.56799,
+      "lng": 121.04787,
+      "address": "J.P. Rizal Extension, Makati City",
+      "currentServiceEvidence": "DICT/MMDA current ferry-station list reported May 14, 2026",
+      "coordinateProvenance": "OpenStreetMap way 279526133"
+    },
+    {
+      "id": "pasig-ferry-valenzuela",
+      "lat": 14.57391,
+      "lng": 121.02572,
+      "address": "A. Bonifacio Street, Barangay Valenzuela, Makati City",
+      "currentServiceEvidence": "DICT/MMDA current ferry-station list reported May 14, 2026",
+      "coordinateProvenance": "OpenStreetMap way 309386571"
+    }
+  ],
+  "result": {
+    "currentMakatiFerryStationsMapped": 2,
+    "historicalMakatiNamedFerryStationsMatched": 2,
+    "missingCurrentFerryStations": 0
+  },
+  "nextStep": {
+    "id": "3C-3c",
+    "title": "Reconcile the 32 current bus stops",
+    "scope": "Research only. Find a named current city stop inventory from Makati/DEPW/PSD or equivalent authoritative records, crosswalk it to existing Busway/other stop assets, and do not add speculative bus-stop pins."
+  }
+}
