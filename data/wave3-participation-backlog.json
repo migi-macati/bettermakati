@@ -162,7 +162,7 @@
         "Long street segmentation",
         "Private establishments"
       ],
-      "status": "in-progress",
+      "status": "complete",
       "completedAt": "2026-09-25",
       "commits": [
         "638f0be6576ef1727971091c15332743996e238a",
@@ -209,9 +209,10 @@
         "3C-1e",
         "3C-1f1",
         "3C-1f2",
-        "3C-1f"
+        "3C-1f",
+        "3C-1g"
       ],
-      "current": "3C-1g",
+      "current": "complete",
       "substeps": [
         "3C-1a",
         "3C-1b",
@@ -280,7 +281,33 @@
         "existingHostAssetsReused": 10,
         "newHostAssetsAdded": 8,
         "provisionalExactPointAssets": 1
-      }
+      },
+      "reopenedCompletedAt": "2026-09-25",
+      "completenessStatus": "complete-for-verified-named-mappable-set-with-explicit-deferrals",
+      "closureAuditFile": "data/wave3-civic-map-facilities-completeness-audit.json",
+      "finalCoverage": {
+        "civicMapAssetsAtClosure": 86,
+        "currentMhdHealthCentersMapped": 18,
+        "currentFireStationsMapped": 11,
+        "currentPoliceFacilitiesMapped": 8,
+        "coreSocialAndCityOwnedFacilitiesMapped": 5,
+        "currentChildCareServicesRepresented": 22,
+        "currentChildCareServicesUnresolved": 1,
+        "childCareHostLocationsRepresented": 18,
+        "childCareHostLocationsTotal": 19,
+        "headlineOnlyFacilityFamiliesDeferred": 5,
+        "supplementalNationalGovernmentAssetsRetained": 3
+      },
+      "explicitDeferrals": [
+        "Singkamas Day Care Center exact host point",
+        "2 birthing homes — headline count only",
+        "1 social hygiene clinic — headline count only",
+        "5 diagnostic laboratories — headline count only",
+        "16 MAPSA outposts — headline count only",
+        "17 Bantay Bayan outposts — headline count only",
+        "Makati Drop-in Center Olympia — proposed/current status unresolved",
+        "Tejeros Wellness Center — separate/co-located identity unresolved"
+      ]
     },
     {
       "id": "3C-2",
@@ -735,9 +762,9 @@
     }
   ],
   "immediateNext": {
-    "id": "3C-1g",
-    "title": "Close facility completeness audit",
-    "maximumScope": "Reconcile every 3C-1 facility family to a final disposition, verify Civic Map/checker coverage, preserve unresolved Singkamas Day Care exact point and any other explicit holds, and close only to the supported named/mappable set."
+    "id": "3C-3-reopen",
+    "title": "Reopen transport completeness using official-source-first reconciliation",
+    "maximumScope": "Extract Makati-published transport inventories/counts first, crosswalk them against the existing Civic Map/current operators and present-day 23-barangay geography, classify every discrepancy, and stop after reconciliation before implementation."
   },
   "reopenedExecutionOrder": [
     "3C-2a",
@@ -750,19 +777,21 @@
   ],
   "reopenedWorkstreams": {
     "3C-1": {
-      "status": "in-progress",
+      "status": "complete",
       "title": "Public infrastructure/facility completeness from Makati publications",
       "executeAfter": "3C-2g unless user reprioritizes",
-      "current": "3C-1g"
+      "current": "complete",
+      "closureAuditFile": "data/wave3-civic-map-facilities-completeness-audit.json"
     },
     "3C-2": {
-      "status": "in-progress",
-      "current": "3C-2d"
+      "status": "complete",
+      "current": "complete"
     },
     "3C-3": {
       "status": "reopened-planned",
       "title": "Transport completeness from Makati publications",
-      "executeAfter": "reopened 3C-1 unless user reprioritizes"
+      "executeAfter": "reopened 3C-1 unless user reprioritizes",
+      "current": "3C-3-reopen"
     }
   }
 }
