@@ -27,7 +27,14 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "city-monitor",
+      "delegated": true,
+      "affectedPages": [
+        "/city-monitor",
+        "/briefs",
+        "/today"
+      ]
     },
     {
       "id": "makati-events",
@@ -45,7 +52,14 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "city-monitor",
+      "delegated": true,
+      "affectedPages": [
+        "/city-monitor",
+        "/briefs",
+        "/today"
+      ]
     },
     {
       "id": "makati-budget-2026",
@@ -63,7 +77,14 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/projects-budget",
+        "/accountability",
+        "/reports"
+      ]
     },
     {
       "id": "dbm-f14-2026",
@@ -81,7 +102,14 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/projects-budget",
+        "/statistics",
+        "/reports"
+      ]
     },
     {
       "id": "psa-population",
@@ -99,7 +127,13 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/statistics",
+        "/reports"
+      ]
     },
     {
       "id": "psa-ppa",
@@ -117,7 +151,13 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/statistics",
+        "/reports"
+      ]
     },
     {
       "id": "coa-audit",
@@ -135,7 +175,14 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/projects-budget",
+        "/accountability",
+        "/integrity"
+      ]
     },
     {
       "id": "philgeps",
@@ -153,7 +200,15 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "city-monitor",
+      "delegated": true,
+      "affectedPages": [
+        "/projects-budget",
+        "/accountability",
+        "/city-monitor",
+        "/briefs"
+      ]
     },
     {
       "id": "comelec-2026-bske-calendar",
@@ -171,7 +226,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/elections"
+      ]
     },
     {
       "id": "comelec-2026-bske-registration",
@@ -189,7 +249,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/elections"
+      ]
     },
     {
       "id": "comelec-home",
@@ -207,7 +272,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/elections"
+      ]
     },
     {
       "id": "comelec-2025-results",
@@ -225,7 +295,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/elections"
+      ]
     },
     {
       "id": "makati-legislation",
@@ -243,7 +318,14 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "city-monitor",
+      "delegated": true,
+      "affectedPages": [
+        "/legislation",
+        "/city-monitor",
+        "/briefs"
+      ]
     },
     {
       "id": "makati-action-center",
@@ -261,7 +343,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "macea-circulars",
@@ -279,7 +366,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/mobility"
+      ]
     },
     {
       "id": "mrt3",
@@ -297,7 +389,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/mobility"
+      ]
     },
     {
       "id": "resilient-makati-consultations",
@@ -315,7 +412,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/participate"
+      ]
     },
     {
       "id": "makati-cdp",
@@ -333,7 +435,14 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/projects-budget",
+        "/participate",
+        "/reports"
+      ]
     },
     {
       "id": "oecd-open-government-recommendation",
@@ -351,7 +460,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/open-government"
+      ]
     },
     {
       "id": "ogp-foundations",
@@ -369,7 +483,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/open-government"
+      ]
     },
     {
       "id": "ogp-participation-standards",
@@ -387,7 +506,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/open-government"
+      ]
     },
     {
       "id": "ra-6713",
@@ -405,7 +529,13 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/integrity",
+        "/accountability"
+      ]
     },
     {
       "id": "ra-12009",
@@ -423,7 +553,13 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/projects-budget",
+        "/accountability"
+      ]
     },
     {
       "id": "ra-12009-irr",
@@ -441,7 +577,13 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/projects-budget",
+        "/accountability"
+      ]
     },
     {
       "id": "gppb-beneficial-ownership",
@@ -459,7 +601,13 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/projects-budget",
+        "/accountability"
+      ]
     },
     {
       "id": "gppb-2026-irr-advisory",
@@ -477,7 +625,13 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/projects-budget",
+        "/accountability"
+      ]
     },
     {
       "id": "makati-citizens-charter",
@@ -495,7 +649,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "makati-permits-clearances",
@@ -513,7 +672,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "makati-taxes-fees",
@@ -531,7 +695,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "makati-civil-registry",
@@ -549,7 +718,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "makati-social-welfare",
@@ -567,7 +741,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "pnp-clearance",
@@ -585,7 +764,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "nbi-clearance",
@@ -603,7 +787,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "bfp-fsic",
@@ -621,7 +810,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "psa-frontline",
@@ -639,7 +833,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "dfa-passport",
@@ -657,7 +856,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "makati-sanitation-code",
@@ -675,7 +879,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "makati-veterinary-services",
@@ -693,7 +902,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "makati-assessment-services",
@@ -711,7 +925,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "makati-business-permit-form",
@@ -729,7 +948,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "sss-benefits",
@@ -747,7 +971,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "pagibig-services",
@@ -765,7 +994,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "philhealth-services",
@@ -783,7 +1017,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "ecc-contact",
@@ -801,7 +1040,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "deped-makati",
@@ -819,7 +1063,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "dswd-satellite-offices",
@@ -837,7 +1086,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "doh-mmchd",
@@ -855,7 +1109,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "psa-crs-outlets",
@@ -873,7 +1132,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "gsis-benefits",
@@ -891,7 +1155,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "dole-makati-pasay",
@@ -909,7 +1178,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "sec-headquarters",
@@ -927,7 +1201,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "tesda-pasmak",
@@ -945,7 +1224,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "phlpost-locator",
@@ -963,7 +1247,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "dti-services",
@@ -981,7 +1270,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "dpwh-home",
@@ -999,7 +1293,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "pcso-medical-assistance",
@@ -1017,7 +1316,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "owwa-ncr",
@@ -1035,7 +1339,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "owwa-wap",
@@ -1053,7 +1362,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "unified-911",
@@ -1071,7 +1385,13 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/hotlines",
+        "/civic-map"
+      ]
     },
     {
       "id": "ltfrb-ncr-complaints",
@@ -1089,7 +1409,13 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/mobility",
+        "/civic-map"
+      ]
     },
     {
       "id": "makati-marriage-license",
@@ -1107,7 +1433,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "makati-yellow-card",
@@ -1125,7 +1456,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "sss-sickness-benefit",
@@ -1143,7 +1479,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "sss-maternity-benefit",
@@ -1161,7 +1502,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "sss-retirement-benefit",
@@ -1179,7 +1525,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "pagibig-mpl-v08",
@@ -1197,7 +1548,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "pagibig-mp2-v06",
@@ -1215,7 +1571,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "philhealth-yakap-detail",
@@ -1233,7 +1594,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "nbi-first-time-jobseekers",
@@ -1251,7 +1617,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "makati-real-property-tax-division",
@@ -1269,7 +1640,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "umak-admissions",
@@ -1287,7 +1663,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "umak-scholarships",
@@ -1305,7 +1686,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "makati-solo-parent-guide",
@@ -1323,7 +1709,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "sss-employees-compensation",
@@ -1341,7 +1732,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "philhealth-benefits",
@@ -1359,7 +1755,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "ecc-faq",
@@ -1377,7 +1778,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "psa-birth-certificate",
@@ -1395,7 +1801,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "bir-online-services",
@@ -1413,7 +1824,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "dole-sena",
@@ -1431,7 +1847,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "dti-negosyo-center-detail",
@@ -1449,7 +1870,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "tesda-registered-programs",
@@ -1467,7 +1893,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "deped-makati-contact-detail",
@@ -1485,7 +1916,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "dswd-aics-faq",
@@ -1503,7 +1939,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "pnp-clearance-detail",
@@ -1521,7 +1962,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "makati-pwd-id-guide",
@@ -1539,7 +1985,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "makati-burial-assistance-guide",
@@ -1557,7 +2008,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "makatizen-card-guide",
@@ -1575,7 +2031,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "makati-q2-2025-bid-results",
@@ -1593,7 +2054,13 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/projects-budget",
+        "/accountability"
+      ]
     },
     {
       "id": "makati-q3-2024-bid-results",
@@ -1611,7 +2078,13 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/projects-budget",
+        "/accountability"
+      ]
     },
     {
       "id": "makati-sef-q4-2024",
@@ -1629,7 +2102,13 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/projects-budget",
+        "/accountability"
+      ]
     },
     {
       "id": "comelec-2026-bske-filing-rules",
@@ -1647,7 +2126,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/elections"
+      ]
     },
     {
       "id": "comelec-2026-bske-term-rules",
@@ -1665,7 +2149,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/elections"
+      ]
     },
     {
       "id": "lawphil-ra-12232",
@@ -1683,7 +2172,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/elections"
+      ]
     },
     {
       "id": "comelec-precinct-finder",
@@ -1701,7 +2195,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/elections"
+      ]
     },
     {
       "id": "comelec-makati-2025-candidate-list",
@@ -1719,7 +2218,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/elections"
+      ]
     },
     {
       "id": "makati-peso-job-referral",
@@ -1737,7 +2241,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "ra-11261-first-time-jobseeker",
@@ -1755,7 +2264,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "dilg-katarungang-pambarangay-manual",
@@ -1773,7 +2287,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "makati-citizens-charter-2023-eboss",
@@ -1791,7 +2310,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "makati-addressing-system",
@@ -1809,7 +2333,13 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services",
+        "/barangays"
+      ]
     },
     {
       "id": "belair-business-clearance",
@@ -1827,7 +2357,13 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services",
+        "/barangays"
+      ]
     },
     {
       "id": "belair-indigency",
@@ -1845,7 +2381,13 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services",
+        "/barangays"
+      ]
     },
     {
       "id": "makati-solo-parent-form-2024",
@@ -1863,7 +2405,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services"
+      ]
     },
     {
       "id": "belair-residency",
@@ -1881,7 +2428,13 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services",
+        "/barangays"
+      ]
     },
     {
       "id": "belair-barangay-id",
@@ -1899,7 +2452,13 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/services",
+        "/barangays"
+      ]
     },
     {
       "id": "bettergov-openhalalan-dataset",
@@ -1917,7 +2476,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/elections"
+      ]
     },
     {
       "id": "openhalalan-makati-2022-source",
@@ -1935,7 +2499,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/elections"
+      ]
     },
     {
       "id": "bettergov-open-congress-api",
@@ -1953,7 +2522,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/legislation"
+      ]
     },
     {
       "id": "open-congress-hb-1293-source",
@@ -1971,7 +2545,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/legislation"
+      ]
     },
     {
       "id": "open-congress-hb-1294-source",
@@ -1989,7 +2568,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/legislation"
+      ]
     },
     {
       "id": "open-congress-hb-6100-source",
@@ -2007,7 +2591,12 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/legislation"
+      ]
     },
     {
       "id": "bettergov-transparency-procurement",
@@ -2025,7 +2614,14 @@
       "change": "not-checked",
       "lastCheckedAt": null,
       "lastSuccessfulAt": null,
-      "lastChangedAt": null
+      "lastChangedAt": null,
+      "owner": "general-source-freshness",
+      "delegated": false,
+      "affectedPages": [
+        "/projects-budget",
+        "/accountability",
+        "/records"
+      ]
     }
   ]
 }
