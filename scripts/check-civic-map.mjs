@@ -87,20 +87,59 @@ const requiredPrivatePublicAccessParkAssets = [
   'ayala-triangle-gardens',
   'washington-sycip-park',
   'legazpi-active-park',
+  'greenbelt-park',
+  'jaime-velasquez-park',
+  'palm-promenade-park',
+  'glorietta-4-park',
 ];
 
 for (const id of requiredPrivatePublicAccessParkAssets) {
   if (!assetIds.includes(id)) {
-    problems.push('Missing existing private/public-access park Civic Map asset: ' + id);
+    problems.push('Missing verified private/public-access park Civic Map asset: ' + id);
     continue;
   }
   const start = assetBlock.indexOf("id: '" + id + "'");
   const end = assetBlock.indexOf('\n  },', start);
   const row = start >= 0 && end >= 0 ? assetBlock.slice(start, end) : '';
-  for (const marker of ["type: 'park'", 'address:', 'sourceUrl:', 'sourceLabel:', "status: 'mapped'"]) {
+  for (const marker of [
+    "type: 'park'",
+    "accessClass: 'public-access-private-managed'",
+    'address:',
+    'sourceUrl:',
+    'sourceLabel:',
+    'coordinateSourceUrl:',
+    'coordinateSourceLabel:',
+    "status: 'mapped'",
+  ]) {
     if (!row.includes(marker)) {
-      problems.push(id + ' is missing park metadata: ' + marker);
+      problems.push(id + ' is missing private/public-access park metadata: ' + marker);
     }
+  }
+}
+
+const privateParkAssetsNotForCurrentCivicMap = [
+  'dela-rosa-gardens',
+  'ayala-edsa-park',
+  'senior-citizen-park',
+  'bel-air-park-near-barangay-hall',
+  'forbes-park-and-pavillion',
+  'mahogany-park',
+  'park-at-san-lorenzo-assumption',
+  'bel-air-park-hercules',
+  'san-felipe-park',
+  'urdaneta-park',
+  'track-30th-bgc',
+  'bonifacio-high-street-7th',
+  'bonifacio-high-street-8th',
+  'bonifacio-high-street-9th',
+  'bonifacio-high-street-11th',
+  'de-jesus-oval-park',
+  'terra-28th-park',
+];
+
+for (const id of privateParkAssetsNotForCurrentCivicMap) {
+  if (assetIds.includes(id)) {
+    problems.push('Private/future/former-Makati park must not be in the current public-access Civic Map layer: ' + id);
   }
 }
 
