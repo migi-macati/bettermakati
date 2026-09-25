@@ -119,6 +119,38 @@ export default function Statistics() {
             { label: 'Data downloads', href: '#statistics-data' },
           ]}
         />
+
+        <div className="mt-5 rounded-2xl border border-primary-100 bg-white p-5">
+          <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+            National data context
+          </div>
+          <div className="mt-3 flex flex-wrap gap-x-5 gap-y-3 text-sm font-bold">
+            <a
+              href="https://data.bettergov.ph/"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1 text-primary-700 underline underline-offset-2"
+            >
+              Open Data Portal <ArrowUpRight className="h-3.5 w-3.5" />
+            </a>
+            <a
+              href="https://visualizations.bettergov.ph/"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1 text-primary-700 underline underline-offset-2"
+            >
+              Data Research <ArrowUpRight className="h-3.5 w-3.5" />
+            </a>
+            <a
+              href="https://price-guides.bettergov.ph/"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1 text-primary-700 underline underline-offset-2"
+            >
+              Price Guides <ArrowUpRight className="h-3.5 w-3.5" />
+            </a>
+          </div>
+        </div>
         <div
           id="statistics-summary"
           className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-8"

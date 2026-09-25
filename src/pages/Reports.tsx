@@ -1,4 +1,4 @@
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, ExternalLink } from 'lucide-react';
 import { Link } from 'react-router';
 import SEO from '../components/SEO';
 import Section from '../components/ui/Section';
@@ -16,6 +16,30 @@ export default function Reports() {
       <Section className="bg-[#fffdf8]">
         <div className="section-eyebrow">Featured Reports & Insights</div>
         <Heading>Featured Reports & Insights</Heading>
+
+        <div className="mt-5 rounded-2xl border border-primary-100 bg-white p-5">
+          <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+            National context
+          </div>
+          <div className="mt-3 flex flex-wrap gap-x-5 gap-y-3 text-sm font-bold">
+            <a
+              href="https://visualizations.bettergov.ph/"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1 text-primary-700 underline underline-offset-2"
+            >
+              National data research <ExternalLink className="h-3.5 w-3.5" />
+            </a>
+            <a
+              href="https://2026-budget.bettergov.ph/"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1 text-primary-700 underline underline-offset-2"
+            >
+              2026 national budget <ExternalLink className="h-3.5 w-3.5" />
+            </a>
+          </div>
+        </div>
 
         <div className="mt-8 grid grid-cols-1 gap-5 lg:grid-cols-2">
           {reports.map(report => (

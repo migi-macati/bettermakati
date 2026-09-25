@@ -1461,3 +1461,34 @@ test('civic map exposes national infrastructure references without redirecting l
   await expect(page.getByRole('link', { name: /Choose a place/i })).toHaveAttribute('href', '#places');
   await expect(page.getByRole('heading', { name: /Help improve public places/i })).toBeVisible();
 });
+
+test('statistics and reports expose national context without replacing Makati sources', async ({ page }) => {
+  await page.goto(baseURL + '/statistics');
+
+  const dataContext = page.getByText('National data context', { exact: true }).locator('..');
+  await expect(dataContext.getByRole('link', { name: 'Open Data Portal', exact: true })).toHaveAttribute(
+    'href',
+    'https://data.bettergov.ph/'
+  );
+  await expect(dataContext.getByRole('link', { name: 'Data Research', exact: true })).toHaveAttribute(
+    'href',
+    'https://visualizations.bettergov.ph/'
+  );
+  await expect(dataContext.getByRole('link', { name: 'Price Guides', exact: true })).toHaveAttribute(
+    'href',
+    'https://price-guides.bettergov.ph/'
+  );
+  await expect(page.getByText('2024 POPCEN', { exact: true }).first()).toBeVisible();
+
+  await page.goto(baseURL + '/reports');
+  const reportContext = page.getByText('National context', { exact: true }).locator('..');
+  await expect(reportContext.getByRole('link', { name: /National data research/i })).toHaveAttribute(
+    'href',
+    'https://visualizations.bettergov.ph/'
+  );
+  await expect(reportContext.getByRole('link', { name: /2026 national budget/i })).toHaveAttribute(
+    'href',
+    'https://2026-budget.bettergov.ph/'
+  );
+  await expect(page.getByRole('link', { name: /Read more/i }).first()).toBeVisible();
+});
