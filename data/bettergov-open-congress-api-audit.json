@@ -1,0 +1,255 @@
+{
+  "schemaVersion": 1,
+  "auditedAt": "2026-09-25",
+  "betterMakatiBaseCommit": "9465401b872b642a4acea3f522cf5f1d190e4bbd",
+  "upstream": {
+    "repository": "bettergovph/open-congress-api",
+    "commit": "ada8f3ce0afee0c0d8dc46cdd4e7ba35c62c83a0",
+    "liveUrl": "https://open-congress-api.bettergov.ph/",
+    "apiBase": "https://open-congress-api.bettergov.ph/api",
+    "swagger": "https://open-congress-api.bettergov.ph/api",
+    "scalar": "https://open-congress-api.bettergov.ph/api/scalar",
+    "openApiSpec": "https://open-congress-api.bettergov.ph/api/doc",
+    "dataRepository": "bettergovph/open-congress-data",
+    "dataCommit": "6e853ee027790427c5b5961c6318ff907cf717d5"
+  },
+  "scope": "API and integration feasibility only. No BetterMakati runtime integration is implemented in this step.",
+  "currentSourceOfTruth": {
+    "note": "Route source is treated as authoritative because API.md contains older endpoint names and planned routes that are not present in the current route files.",
+    "implementedRoutes": [
+      {
+        "method": "GET",
+        "path": "/api/congresses",
+        "purpose": "List congresses with filters/pagination"
+      },
+      {
+        "method": "GET",
+        "path": "/api/congresses/{id}",
+        "purpose": "Congress detail by number or ULID"
+      },
+      {
+        "method": "GET",
+        "path": "/api/congresses/{id}/documents",
+        "purpose": "Bills/documents for one congress"
+      },
+      {
+        "method": "GET",
+        "path": "/api/people",
+        "purpose": "List/filter people"
+      },
+      {
+        "method": "GET",
+        "path": "/api/people/{id}",
+        "purpose": "Person detail"
+      },
+      {
+        "method": "GET",
+        "path": "/api/people/{id}/groups",
+        "purpose": "Person chamber/group memberships"
+      },
+      {
+        "method": "GET",
+        "path": "/api/people/{id}/documents",
+        "purpose": "Documents authored by a person"
+      },
+      {
+        "method": "GET",
+        "path": "/api/search/people",
+        "purpose": "Search people by name or alias"
+      },
+      {
+        "method": "GET",
+        "path": "/api/documents",
+        "purpose": "List/filter legislative documents"
+      },
+      {
+        "method": "GET",
+        "path": "/api/documents/{id}",
+        "purpose": "Document detail"
+      },
+      {
+        "method": "GET",
+        "path": "/api/documents/{id}/authors",
+        "purpose": "Document authors"
+      },
+      {
+        "method": "GET",
+        "path": "/api/search/documents",
+        "purpose": "Search document title, abstract or author names"
+      },
+      {
+        "method": "GET",
+        "path": "/api/stats",
+        "purpose": "Database summary statistics"
+      },
+      {
+        "method": "GET",
+        "path": "/api/ping",
+        "purpose": "API/database health check"
+      }
+    ],
+    "documentationDrift": [
+      "API.md still describes /api/bills endpoints while current route source exposes /api/documents.",
+      "API.md describes several committee and global-search routes as implemented or planned; current route files do not expose a standalone committee router or global /api/search route.",
+      "Integrations should validate against the generated OpenAPI spec or route source before relying on a documented path."
+    ]
+  },
+  "dataModel": {
+    "congress": [
+      "id",
+      "congress_number",
+      "congress_website_key",
+      "name",
+      "ordinal",
+      "start_date",
+      "end_date",
+      "start_year",
+      "end_year",
+      "year_range"
+    ],
+    "person": [
+      "id",
+      "first_name",
+      "middle_name",
+      "last_name",
+      "name_prefix",
+      "name_suffix",
+      "full_name",
+      "professional_designations",
+      "senate_website_keys",
+      "congress_website_primary_keys",
+      "congress_website_author_keys",
+      "aliases"
+    ],
+    "membership": [
+      "congress_id",
+      "congress_number",
+      "congress_ordinal",
+      "congress_name",
+      "position",
+      "type",
+      "start_date",
+      "end_date",
+      "year_range"
+    ],
+    "document": [
+      "id",
+      "type",
+      "subtype",
+      "name",
+      "bill_number",
+      "congress",
+      "title",
+      "long_title",
+      "congress_website_title",
+      "congress_website_abstract",
+      "date_filed",
+      "scope",
+      "subjects",
+      "authors_raw",
+      "senate_website_permalink",
+      "download_url_sources",
+      "authors"
+    ],
+    "importantGap": "The exposed Person and CongressMembership schemas do not include electoral district, province, city, constituency or party affiliation. BetterMakati cannot safely discover 'Makati representatives' from geography through this API alone."
+  },
+  "filtersAndSearch": {
+    "people": [
+      "type (senator/representative)",
+      "congress",
+      "last_name",
+      "search/name or alias",
+      "limit",
+      "offset"
+    ],
+    "documents": [
+      "congress",
+      "type/subtype",
+      "author",
+      "search/q",
+      "date range where supported by route",
+      "limit",
+      "offset"
+    ],
+    "note": "Document search is text-oriented. A query for 'Makati' can find titles/abstracts mentioning Makati, but that does not mean the bill is sponsored by, limited to, or primarily about Makati."
+  },
+  "accessAndOperations": {
+    "authentication": "Current API is public for read endpoints; repository documentation says authentication is not implemented.",
+    "rateLimiting": "Current repository documentation says no rate limiting is implemented.",
+    "cors": "No CORS middleware was found in the inspected current API source. Do not assume direct browser calls from bettermakati.org are supported.",
+    "pagination": "List endpoints use limit/offset with a maximum of 100 where implemented.",
+    "dataAccuracy": "The live portal explicitly warns that data is manually encoded and may contain inaccuracies.",
+    "license": "API repository is CC0. Individual source documents and linked data should retain their own source/provenance context."
+  },
+  "betterMakatiFit": [
+    {
+      "module": "Government / official profiles",
+      "fit": "conditional",
+      "use": "After BetterMakati independently verifies the Makati officeholder, match that person to an Open Congress person ID and show neutral legislative records/authored documents.",
+      "constraint": "Do not infer constituency from the Open Congress person record because geographic representation is not exposed in the current schema."
+    },
+    {
+      "module": "Legislation",
+      "fit": "strong",
+      "use": "Surface national bills whose text clearly concerns Makati, with congress, bill number, title, date and source/PDF links.",
+      "constraint": "Text search relevance must be reviewed. A title match is not evidence that a measure became law or that a current official supports it."
+    },
+    {
+      "module": "Public Records",
+      "fit": "strong",
+      "use": "Deep-link document metadata, authors and source/PDF records for cited national legislation.",
+      "constraint": "Prefer official House/Senate/Lawphil sources for legal status and enacted-law claims."
+    },
+    {
+      "module": "Reports",
+      "fit": "conditional",
+      "use": "Use structured bill metadata where a BetterMakati report discusses a specific national measure affecting Makati.",
+      "constraint": "No scoring, ranking or evaluative political labels."
+    }
+  ],
+  "technicalFindings": [
+    {
+      "finding": "Current code exposes document-oriented routes, not the older /bills paths described in API.md.",
+      "consequence": "Use /api/documents and /api/search/documents for any implementation."
+    },
+    {
+      "finding": "No geographic constituency fields are exposed for people or memberships.",
+      "consequence": "Resolve Makati officeholders from BetterMakati's independently verified records first, then map by person identity. Never discover representatives by assuming a name or district from this API."
+    },
+    {
+      "finding": "Document records include authors, congress, title/long title, filing date, scope, subjects, Senate permalink and downloadable source/PDF links where available.",
+      "consequence": "The API can add useful legislative provenance without BetterMakati duplicating the full national legislative database."
+    },
+    {
+      "finding": "The live site warns that records are manually encoded and may contain errors.",
+      "consequence": "Treat Open Congress as a structured secondary source. Keep official legislative sources primary for legal status, current membership and authoritative text."
+    },
+    {
+      "finding": "No CORS middleware is present in the inspected API source.",
+      "consequence": "Prefer server/build-time fetches or static cached extracts until cross-origin behavior is separately verified."
+    }
+  ],
+  "integrationDecision": {
+    "runtimeBrowserApi": "defer",
+    "serverOrBuildTime": "preferred",
+    "reason": "Useful structured legislative metadata is available, but current data-quality warnings, missing constituency fields and unverified cross-origin support make a direct browser dependency inappropriate.",
+    "nextStep": {
+      "id": "2.3D-4",
+      "scope": "Implement exactly one Open Congress use case.",
+      "recommendedUseCase": "Add a reviewed, cached Makati-related national legislation feed to the BetterMakati Legislation page using /api/search/documents or the matching open-congress-data records.",
+      "guardrails": [
+        "Include only records whose title/long title clearly identifies a Makati connection after manual review.",
+        "Show congress, bill number, title and filing date as descriptive facts only.",
+        "Link to the Open Congress record and any available official/source PDF.",
+        "Do not describe a bill as enacted, pending, supported or opposed without an official source that establishes that status.",
+        "Do not rank legislators, bills or political actors.",
+        "Cache the reviewed subset locally so the page does not depend on Open Congress availability."
+      ]
+    }
+  },
+  "sources": [
+    "https://github.com/bettergovph/open-congress-api/tree/ada8f3ce0afee0c0d8dc46cdd4e7ba35c62c83a0",
+    "https://github.com/bettergovph/open-congress-data/tree/6e853ee027790427c5b5961c6318ff907cf717d5",
+    "https://open-congress-api.bettergov.ph/"
+  ]
+}
