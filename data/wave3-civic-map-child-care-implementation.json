@@ -1,0 +1,192 @@
+{
+  "schemaVersion": 1,
+  "implementedAt": "2026-09-25",
+  "workstream": "Wave 3C-1f2 — Co-location-aware day-care and child-minding coverage",
+  "sourceBaseline": {
+    "source": "Makati Facts and Figures 2020 — MSWD Day Care Services",
+    "sourceUrl": "https://www.makati.gov.ph/assets/uploads/downloads/2/45/561/pdf/Facts%20and%20FIgures%202020.pdf",
+    "currentGeographyReconciliation": "22 day-care centers + 1 child-minding center remain in present-day Makati after excluding transferred barangays, matching the 2023 post-transfer headline counts."
+  },
+  "implementationModel": {
+    "field": "servicesAtLocation",
+    "rule": "When a child-care service shares a host building or civic complex already represented in Civic Map, attach the service to that host asset instead of creating a stacked duplicate pin.",
+    "searchBehavior": "Civic Map search includes servicesAtLocation.",
+    "detailBehavior": "Asset pages show a compact 'Services at this location' line."
+  },
+  "currentServices": {
+    "total": 23,
+    "represented": 22,
+    "unresolved": 1,
+    "dayCareRepresented": 21,
+    "childMindingRepresented": 1
+  },
+  "hostLocations": {
+    "totalCurrentDistinct": 19,
+    "represented": 18,
+    "unresolved": 1,
+    "existingAssetsReused": 10,
+    "newHostAssetsAdded": 8
+  },
+  "reusedHostAssets": [
+    {
+      "id": "kasilawan-health-center",
+      "services": [
+        "Kasilawan Day Care Center",
+        "Kasilawan Child Minding Center"
+      ]
+    },
+    {
+      "id": "la-paz-health-center",
+      "services": [
+        "La Paz Day Care Center"
+      ]
+    },
+    {
+      "id": "olympia-health-center",
+      "services": [
+        "Olympia Day Care Center"
+      ]
+    },
+    {
+      "id": "palanan-health-center",
+      "services": [
+        "Palanan 1 Day Care Center",
+        "Palanan 2 Day Care Center"
+      ]
+    },
+    {
+      "id": "san-isidro-health-center",
+      "services": [
+        "San Isidro Day Care Center"
+      ]
+    },
+    {
+      "id": "tejeros-health-center",
+      "services": [
+        "Tejeros Day Care Center"
+      ]
+    },
+    {
+      "id": "makati-social-development-center",
+      "services": [
+        "Makati Homes Tejeros Day Care Center"
+      ]
+    },
+    {
+      "id": "sta-cruz-health-center",
+      "services": [
+        "Sta. Cruz Day Care Center"
+      ]
+    },
+    {
+      "id": "guadalupe-viejo-health-center",
+      "services": [
+        "Guadalupe Viejo 1 Day Care Center",
+        "Guadalupe Viejo 2 Day Care Center"
+      ]
+    },
+    {
+      "id": "pinagkaisahan-health-center",
+      "services": [
+        "Pinagkaisahan Day Care Center"
+      ]
+    }
+  ],
+  "newHostAssets": [
+    {
+      "id": "bangkal-barangay-hall",
+      "services": [
+        "Bangkal Day Care Center"
+      ],
+      "status": "mapped"
+    },
+    {
+      "id": "carmona-community-complex",
+      "services": [
+        "Carmona Day Care Center"
+      ],
+      "status": "mapped"
+    },
+    {
+      "id": "guadalupe-nuevo-barangay-hall",
+      "services": [
+        "Guadalupe Nuevo 1 Day Care Center",
+        "Guadalupe Nuevo 2 Day Care Center"
+      ],
+      "status": "mapped"
+    },
+    {
+      "id": "san-antonio-barangay-hall",
+      "services": [
+        "San Antonio Day Care Center"
+      ],
+      "status": "mapped"
+    },
+    {
+      "id": "valenzuela-barangay-hall",
+      "services": [
+        "Valenzuela Day Care Center"
+      ],
+      "status": "mapped"
+    },
+    {
+      "id": "south-poblacion-day-care-center",
+      "services": [
+        "South Poblacion Day Care Center"
+      ],
+      "status": "mapped"
+    },
+    {
+      "id": "north-poblacion-day-care-center",
+      "services": [
+        "North Poblacion Day Care Center"
+      ],
+      "status": "mapped"
+    },
+    {
+      "id": "pio-del-pilar-day-care-center",
+      "services": [
+        "Pio del Pilar Day Care Center"
+      ],
+      "status": "needs-verification",
+      "note": "Current J. Victor/Dela Rosa address is verified; exact day-care entrance point remains to be frozen."
+    }
+  ],
+  "unresolved": [
+    {
+      "service": "Singkamas Day Care Center",
+      "host": "Francisco Benitez III Elementary School",
+      "currentAddress": "3839 F. Nazario Street, Barangay Singkamas, Makati City",
+      "currentAddressEvidence": [
+        "Current Waze school listing",
+        "2024 PhilGEPS record for Francisco Benitez Elementary School III",
+        "2026 DepEd Makati LMS lists F. Benitez ES III as a current Makati public school"
+      ],
+      "reason": "A current exact campus coordinate/entrance point was not recoverable with enough confidence in this pass. No substitute or nearby health-center point was used.",
+      "disposition": "audit-visible-unmapped-until-exact-point-is-frozen"
+    }
+  ],
+  "duplicatePinsPrevented": [
+    "Kasilawan Day Care Center / Child Minding Center",
+    "La Paz Day Care Center",
+    "Olympia Day Care Center",
+    "Palanan 1 and 2 Day Care Centers",
+    "San Isidro Day Care Center",
+    "Tejeros Day Care Center",
+    "Makati Homes Tejeros Day Care Center",
+    "Sta. Cruz Day Care Center",
+    "Guadalupe Viejo 1 and 2 Day Care Centers",
+    "Pinagkaisahan Day Care Center"
+  ],
+  "integrity": {
+    "requiredRepresentedServices": 22,
+    "duplicateServiceNamesAllowed": 0,
+    "singkamasBlockedFromFalseCompletion": true,
+    "coLocatedStandaloneDuplicateIdsBlocked": true
+  },
+  "nextStep": {
+    "id": "3C-1g",
+    "title": "Close facility completeness audit",
+    "scope": "Audit every reviewed 3C-1 facility family to a final current/former/co-located/supplemental/unresolved disposition, validate integrity coverage, and close only to the level supported by named evidence."
+  }
+}
