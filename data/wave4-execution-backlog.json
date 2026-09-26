@@ -528,9 +528,25 @@
       "id": "W4-3a",
       "phase": "Integrity",
       "title": "Audit Integrity, procurement and accountability overlap",
-      "status": "planned",
+      "status": "complete",
       "maximumScope": "Current-state inventory only. Identify evidence already present in Accountability, Projects & Budget, procurement seeds, COA records and Integrity.",
-      "stopWhen": "Every current integrity concept has an owner dataset and duplicate/gap disposition."
+      "stopWhen": "Every current integrity concept has an owner dataset and duplicate/gap disposition.",
+      "completedAt": "2026-09-26",
+      "implementationFiles": [
+        "data/wave4-integrity-current-state-audit.json"
+      ],
+      "validation": {
+        "procurementSeedRecords": 21,
+        "procurementUniqueSupplierStrings": 17,
+        "procurementRecordsWithSeparatePublicOccurrenceEvidence": 2,
+        "structuredAuditRecords": 4,
+        "auditRecordsWithStructuredTrace": 3,
+        "auditRecordsPendingFindingLevelRetrieval": 1,
+        "integrityStandardSourceCards": 5,
+        "integrityPublishedGapCards": 4,
+        "keyDisposition": "Projects & Budget and Accountability intentionally render the same canonical procurement/audit datasets for different user jobs; Integrity must consume those records later rather than fork them.",
+        "sourceBoundary": "Generic COA archive identity is source-level and belongs conceptually in Public Records; finding-level evidence remains in Accountability."
+      }
     },
     {
       "id": "W4-3b",
@@ -725,11 +741,11 @@
       "stopWhen": "Wave 4 is closed only to the extent supported by evidence, with future work reopened as specific capabilities rather than vague unfinished work."
     }
   ],
-  "current": "W4-3a",
+  "current": "W4-3b",
   "immediateNext": {
-    "id": "W4-3a",
-    "title": "Audit Integrity, procurement and accountability overlap",
-    "maximumScope": "Current-state inventory only. Identify evidence already present in Accountability, Projects & Budget, procurement seeds, COA records and Integrity."
+    "id": "W4-3b",
+    "title": "Define integrity evidence and entity schemas",
+    "maximumScope": "Schema only for suppliers/contractors, awards/contracts, ownership/disclosure references, audit findings and corrective-action evidence."
   },
   "carriedForward": [
     {
