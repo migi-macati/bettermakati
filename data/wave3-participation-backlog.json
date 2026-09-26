@@ -1094,12 +1094,39 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Specify Report something near me",
       "maximumScope": "Flow specification only: location, nearby place/street, issue, details/evidence, submit, fallback. No implementation.",
-      "status": "next",
+      "status": "complete",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
       ],
-      "stopWhen": "Flow specification only: location, nearby place/street, issue, details/evidence, submit, fallback. No implementation."
+      "stopWhen": "Flow specification only: location, nearby place/street, issue, details/evidence, submit, fallback. No implementation.",
+      "specificationFile": "data/nearby-reporting-spec.json",
+      "validation": {
+        "specificationFile": "data/nearby-reporting-spec.json",
+        "flowSteps": [
+          "locate",
+          "match-place",
+          "issue",
+          "details",
+          "review-submit",
+          "result"
+        ],
+        "nearbyMatching": {
+          "initialRadiusMeters": 250,
+          "expandIfEmptyMeters": 500,
+          "maximumCandidates": 5,
+          "verifiedOnly": true,
+          "autoSelect": false
+        },
+        "locationOnly": "Explicitly supported without creating or inventing a Place Registry ID.",
+        "privacy": "Location permission only after explicit user action; raw device point/accuracy remain ephemeral for matching; submitted incident coordinates are rounded before public persistence.",
+        "duplicateSemantics": {
+          "matchedPlace": "same place + same category + <=75 m",
+          "locationOnly": "same category + <=75 m"
+        },
+        "emergency": "Existing 911 termination behavior preserved.",
+        "implementationBoundary": "W3R-5a changed specification/planning files only. No location UI, browser geolocation or submission code was implemented."
+      }
     },
     {
       "id": "W3R-5b",
@@ -1108,7 +1135,7 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Implement nearby place matching",
       "maximumScope": "Location-to-nearby-place selection only. Do not modify report submission yet.",
-      "status": "planned",
+      "status": "next",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
@@ -1529,9 +1556,9 @@
     }
   ],
   "immediateNext": {
-    "id": "W3R-5a",
-    "title": "Specify Report something near me",
-    "maximumScope": "Design/specification only. Define the location-first reporting flow and matching behavior before implementation."
+    "id": "W3R-5b",
+    "title": "Implement nearby place matching",
+    "maximumScope": "Location selection and candidate matching only. Do not connect report submission yet."
   },
   "reopenedExecutionOrder": [
     "3C-2a",
