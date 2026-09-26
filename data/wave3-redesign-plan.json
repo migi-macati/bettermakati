@@ -181,13 +181,28 @@
     {
       "id": "W3R-3c",
       "title": "Reuse places in Services and Government Offices",
-      "status": "next",
-      "maximumScope": "Services and Government Offices only. Connect service guides to relevant verified physical locations."
+      "status": "complete",
+      "maximumScope": "Services and Government Offices only. Connect service guides to relevant verified physical locations.",
+      "validation": {
+        "services": "Barangay-scoped Services now surfaces verified registry health centers, community facilities and other records tagged for service use, with canonical place links.",
+        "serviceGuides": "Service guides inherit explicit office.placeId links and show a canonical place-detail link when the listed office has an exact registry match.",
+        "governmentOffices": "Government Offices preserves the separate governmentServiceOffices dataset and uses explicit placeId cross-references rather than fuzzy matching or migration.",
+        "explicitOfficeLinks": [
+          "psa-makati-crs → psa-makati-crs",
+          "bfp-makati-city → makati-central-fire-station",
+          "lto-makati → lto-makati-district",
+          "sec-headquarters → sec-headquarters"
+        ],
+        "deliberatelyUnlinked": "Makati central police service-office record remains unlinked because its listed service location does not match the current police-headquarters registry record.",
+        "verificationBoundary": "Scoped Services displays only registry records with verification.status === verified. Government-office cross-references preserve the registry's existing verification state; no provisional record was silently upgraded.",
+        "guardrail": "scripts/check-place-registry.mjs now validates the 4 explicit office links, scoped Services selector behavior, Government Offices place links, Service Guide place links, and prevents Place Registry implementation language from appearing in those service UIs.",
+        "ci": "Latest CI reports the same three pre-existing unused-import ESLint errors. The Services page still has its pre-existing set-state-in-effect warnings; no new errors are reported for Services.tsx, ServiceGuide.tsx, GovernmentOffices.tsx, governmentServiceOffices.ts or the registry guardrail."
+      }
     },
     {
       "id": "W3R-3d",
       "title": "Add place results to Saan Ako Lalapit",
-      "status": "planned",
+      "status": "next",
       "maximumScope": "Concern Finder only. Where appropriate, answer both which service and where the user can go."
     },
     {
@@ -366,9 +381,9 @@
     }
   ],
   "immediateNext": {
-    "id": "W3R-3c",
-    "title": "Reuse places in Services and Government Offices",
-    "maximumScope": "Services and Government Offices surfaces only. Reuse relevant Place Registry records without merging governmentServiceOffices into the registry."
+    "id": "W3R-3d",
+    "title": "Add place results to Saan Ako Lalapit",
+    "maximumScope": "Concern Finder only. Where appropriate, answer both which service and where the user can go."
   },
   "capabilityDispositionAuditFile": "data/wave3-capability-disposition-audit.json",
   "completedSteps": [
@@ -378,7 +393,8 @@
     "W3R-2b",
     "W3R-2c",
     "W3R-3a",
-    "W3R-3b"
+    "W3R-3b",
+    "W3R-3c"
   ],
   "placeRegistrySchemaFile": "data/place-registry-schema.json",
   "placeRegistryDataFile": "src/data/placeRegistry.ts"
