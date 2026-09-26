@@ -1710,12 +1710,18 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Connect City Monitor items to places",
       "maximumScope": "One-way explicit relationships only for clearly named places. No automated fuzzy matching.",
-      "status": "next",
+      "status": "complete",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
       ],
-      "stopWhen": "One-way explicit relationships only for clearly named places. No automated fuzzy matching."
+      "stopWhen": "One-way explicit relationships only for clearly named places. No automated fuzzy matching.",
+      "completedAt": "2026-09-26",
+      "commits": [
+        "f4be6c4df89821a7fc9811abd8c538e078db2b07",
+        "545c810002083d5fd97b94290adf0ae4ba523971",
+        "605b6fa38a2e83b830b58ea2e989ef1712eb9af4"
+      ]
     },
     {
       "id": "W3R-9e",
@@ -1724,7 +1730,7 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Add reusable Near me utility",
       "maximumScope": "One shared nearby-place component/helper after registry reuse is proven elsewhere.",
-      "status": "planned",
+      "status": "next",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
@@ -1993,9 +1999,10 @@
       "W3R-8c",
       "W3R-9a",
       "W3R-9b",
-      "W3R-9c"
+      "W3R-9c",
+      "W3R-9d"
     ],
-    "current": "W3R-9d",
+    "current": "W3R-9e",
     "capabilityDispositionAuditFile": "data/wave3-capability-disposition-audit.json"
   },
   "knownCoverageGaps": {
