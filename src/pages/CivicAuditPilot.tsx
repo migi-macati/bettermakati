@@ -11,7 +11,7 @@ import {
 import {
   civicAssetTypeLabels,
 } from '../data/civicMap';
-import { placeRegistryById } from '../data/placeRegistry';
+import { placeRegistryById, type PlaceRegistryRecord } from '../data/placeRegistry';
 
 const formatDate = (value: string) =>
   new Intl.DateTimeFormat('en-PH', {
@@ -24,7 +24,7 @@ const formatDate = (value: string) =>
 export default function CivicAuditPilot() {
   const targets = civicAuditPilot.targetEntityIds
     .map(id => placeRegistryById.get(id))
-    .filter((item): item is NonNullable<typeof item> => Boolean(item))
+    .filter((item): item is PlaceRegistryRecord => Boolean(item))
     .sort((a, b) => {
       const barangayA = a.location.barangays[0] ?? '';
       const barangayB = b.location.barangays[0] ?? '';
