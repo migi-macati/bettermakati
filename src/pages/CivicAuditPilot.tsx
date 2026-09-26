@@ -144,7 +144,13 @@ export default function CivicAuditPilot() {
               )}
 
               <Link
-                to={'/civic-map/' + place.id + '#observe'}
+                to={
+                  '/civic-map/' +
+                  place.id +
+                  '?campaign=' +
+                  civicAuditPilot.id +
+                  '#observe'
+                }
                 className="brand-btn-primary mt-5 w-full justify-center"
               >
                 Record conditions <ArrowRight className="h-4 w-4" />
