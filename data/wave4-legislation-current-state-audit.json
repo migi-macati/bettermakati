@@ -1,0 +1,220 @@
+{
+  "schemaVersion": 1,
+  "auditedAt": "2026-09-26",
+  "workstream": "W4-2a — Audit Makati legislation sources and current page",
+  "status": "current-state-and-source-audit",
+  "scope": [
+    "src/pages/Legislation.tsx",
+    "src/data/openCongressMakati.ts",
+    "src/data/cityMonitor.ts",
+    "src/data/publicRecords.ts",
+    "src/pages/PublicRecords.tsx",
+    "src/data/searchIndex.ts",
+    "official Makati resolutions-and-ordinances archive",
+    "official Makati Web Portal council-session videos",
+    "official MyMakati session-streaming evidence",
+    "Office of the Secretary to the Sangguniang Panlungsod certified-copy service"
+  ],
+  "sourceAuditMethod": "Repository audit plus current official/public-source verification. Facebook itself was not directly fetchable in this audit environment; current session-video availability was independently confirmed on the official Makati Web Portal, and the City Government's 2020 Annual Report confirms MyMakati Facebook as an official council-session streaming channel.",
+  "officialSourceFindings": [
+    {
+      "id": "makati-resolutions-ordinances-archive",
+      "publisher": "City Government of Makati",
+      "url": "https://www.makati.gov.ph/content/resolutions-and-ordinances/author",
+      "status": "current-official-source",
+      "role": "canonical enacted-measure discovery/archive",
+      "observedCapabilities": [
+        "Keyword or document-code search.",
+        "All / Resolution / Ordinance filtering.",
+        "Official Makati-hosted measure documents are discoverable from the archive/search surface."
+      ],
+      "recordFieldsObservedFromOfficialDocuments": [
+        "measure type",
+        "measure number",
+        "title",
+        "authors where stated",
+        "enactment/session date where stated",
+        "council attendance/signatories on some documents",
+        "Secretary to the Sangguniang Panlungsod certification",
+        "presiding-officer attestation",
+        "mayoral approval where stated",
+        "full official text/document URL"
+      ],
+      "examples": [
+        {
+          "reference": "City Ordinance No. 2012-102",
+          "evidence": "Official Makati PDF identifies the ordinance number, authors, title, third/final reading and council participants."
+        },
+        {
+          "reference": "City Ordinance No. 2020-176",
+          "evidence": "Official Makati-hosted document states enactment in the 9 September 2020 regular session and mayoral approval."
+        },
+        {
+          "reference": "City Resolutions 2020-018 to 2020-020",
+          "evidence": "Official Makati recovery-plan annex records resolution number, title and approval date."
+        }
+      ],
+      "limitations": [
+        "The public archive is dynamically rendered; BetterMakati does not yet possess a normalized complete local record set.",
+        "Archive discovery does not itself provide a complete lifecycle chain for filing, committee referral, readings, vote, transmittal, mayoral action and implementation.",
+        "Individual document structure varies by year/document, so fields must be nullable/evidence-backed rather than assumed."
+      ]
+    },
+    {
+      "id": "makati-current-council-session-video-stream",
+      "publisher": "City Government of Makati",
+      "url": "https://www.makati.gov.ph/",
+      "status": "current-official-source",
+      "role": "session-level evidence and discovery",
+      "observedCapabilities": [
+        "The official Makati portal currently surfaces regular City Council session videos under Makati Latest Videos.",
+        "Current examples visible during the audit include regular council sessions dated 21 September 2026, 14 September 2026, 7 September 2026, 1 September 2026, 24 August 2026, 17 August 2026, 11 August 2026, 3 August 2026 and 27 July 2026."
+      ],
+      "decision": "promote-to-first-class-legislation-source",
+      "limitation": "The visible current stream demonstrates strong session coverage but this audit does not claim every 2026 regular/special session is complete until dates are enumerated against an official calendar or session sequence."
+    },
+    {
+      "id": "mymakati-facebook-session-streams",
+      "publisher": "City Government of Makati",
+      "url": "https://www.facebook.com/mymakativerified",
+      "status": "official-channel-supported-by-city-records",
+      "role": "session video archive / live-stream source",
+      "evidence": [
+        "CityMonitor already identifies the MyMakati official social-broadcast channel as a council-session source.",
+        "The City Government's 2020 Annual Report states that council sessions were streamed using the MyMakati Facebook live-streaming platform."
+      ],
+      "decision": "retain-and-crosslink",
+      "limitation": "Direct Facebook retrieval was unavailable in this audit environment. A specific session should be linked only when the official post/recording URL can be preserved."
+    },
+    {
+      "id": "ossp-certified-copy-service",
+      "publisher": "City Government of Makati — Office of the Secretary to the Sangguniang Panlungsod",
+      "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/481/pdf/Makati%20Citizen%27s%20Charter%20-%20FOR%20PRINT.pdf",
+      "status": "official-record-service",
+      "role": "authoritative fallback for certified/photocopy legislation",
+      "observedCapabilities": [
+        "General public may request a desired City Ordinance or City Resolution.",
+        "The Office of the Secretary to the Sangguniang Panlungsod is the responsible records office.",
+        "Certified true copy and photocopy issuance is documented in the Citizen's Charter."
+      ],
+      "decision": "keep-as-record-access-fallback",
+      "note": "BetterMakati should point to this service when a needed official text is not publicly downloadable or when a certified copy is required."
+    }
+  ],
+  "currentProductAudit": {
+    "legislationPage": {
+      "status": "external-discovery-page-not-local-registry",
+      "strengths": [
+        "Direct official archive link is present.",
+        "City Charter link is present.",
+        "Basic ordinance-versus-resolution distinction is present.",
+        "City Monitor link is present.",
+        "National Open Congress / Juris handoffs already establish BetterGov ecosystem behavior."
+      ],
+      "gaps": [
+        "Local search is not a BetterMakati record search; it opens a Google site-search query against makati.gov.ph.",
+        "No canonical local ordinance or resolution records are stored/rendered.",
+        "No current council-session video stream is surfaced.",
+        "No measure detail route exists.",
+        "No browsing/filtering by local measure number, date, topic, author or source-backed lifecycle state exists.",
+        "Three national bills naming Makati are rendered, but these are national legislation and not substitutes for local ordinances/resolutions."
+      ]
+    },
+    "openCongressMakati": {
+      "recordCount": 3,
+      "role": "national-legislation-context",
+      "finding": "Contains three House bills that name Makati; contains no local ordinance or local resolution data.",
+      "disposition": "retain-as-BetterGov-national-context-not-local-owner"
+    },
+    "cityMonitor": {
+      "strengths": [
+        "Already models council-session and legislation streams.",
+        "CityMonitorRecord already supports documents with kind video, official-text and measure.",
+        "CityMonitorRecord already supports measures[] relationships.",
+        "MyMakati broadcasts and the official resolutions/ordinances archive are already registered sources.",
+        "A historical 2020 council legislative-activity record preserves session-volume and MyMakati-streaming evidence."
+      ],
+      "gaps": [
+        "The current council-session coverage classification still says source-gap, which is now too pessimistic because the official Makati portal visibly publishes current 2026 regular council-session videos.",
+        "Current 2026 session videos are not normalized into individual CityMonitor records.",
+        "Current local measures are not normalized into legislation records or linked to session evidence.",
+        "Session video availability does not by itself establish every lifecycle stage, vote or mayoral action."
+      ]
+    },
+    "publicRecords": {
+      "strengths": [
+        "Indexes the official Makati resolutions-and-ordinances archive.",
+        "Indexes the Makati City Charter and exposes legislation/law as a record category."
+      ],
+      "gaps": [
+        "Does not index individual local ordinances/resolutions as canonical BetterMakati records.",
+        "Does not index individual current council-session videos.",
+        "Its own coverage note correctly says the city archive is not normalized measure-by-measure inside BetterMakati."
+      ]
+    },
+    "globalSearch": {
+      "finding": "There is no local legislation registry to index, so search can surface the Legislation/Public Records destinations but not one canonical local measure result.",
+      "disposition": "W4-2h after registry implementation"
+    }
+  },
+  "sourceOwnershipModel": [
+    {
+      "object": "ordinance/resolution",
+      "canonicalEvidenceOwner": "official Makati measure document/archive",
+      "BetterMakatiOwner": "future local legislation registry",
+      "note": "A session video may corroborate deliberation/action but cannot replace the official measure text."
+    },
+    {
+      "object": "council session",
+      "canonicalEvidenceOwner": "official Makati portal video / preserved official MyMakati recording, plus agenda/minutes when located",
+      "BetterMakatiOwner": "City Monitor session record",
+      "note": "One session can relate to many measures; do not duplicate the video URL into unrelated measure data without an explicit relationship."
+    },
+    {
+      "object": "national bill/law affecting Makati",
+      "canonicalEvidenceOwner": "Congress/Senate/Lawphil or BetterGov upstream data",
+      "BetterMakatiOwner": "national-context relationship/handoff",
+      "note": "Keep distinct from Makati City Council legislation."
+    },
+    {
+      "object": "certified legal copy",
+      "canonicalEvidenceOwner": "Office of the Secretary to the Sangguniang Panlungsod",
+      "BetterMakatiOwner": "record-access instruction only",
+      "note": "BetterMakati should not claim that its copy substitutes for a certified copy."
+    }
+  ],
+  "lifecycleEvidenceRules": [
+    "Measure number/title/type from the official archive/document may identify the canonical local legislation record.",
+    "Session date from an official measure document may establish enactment/session evidence when explicitly stated.",
+    "A session video establishes that a recording of the session exists; it does not automatically establish that a particular measure passed, the vote tally, or mayoral action.",
+    "A measure may link to a session video only when the measure/session relationship is explicit in official text, agenda/minutes, the recording, or reviewed session evidence.",
+    "Authors/sponsors are recorded only as stated by the official record; do not infer authorship from who spoke in a session video.",
+    "Signed/approved/effective/repealed/amended states require explicit legal/document evidence.",
+    "Later ordinances that amend/repeal earlier measures should use explicit measure-to-measure relationships rather than free-text-only notes."
+  ],
+  "schemaRequirementsExposedByAudit": [
+    "Stable local measure ID independent of title.",
+    "Measure type: ordinance or resolution.",
+    "Official reference/number and series/year.",
+    "Official title/subject.",
+    "Official text/document URL plus source provenance.",
+    "Authors/sponsors only when stated.",
+    "Enactment/approval/session dates as separate nullable evidence-backed dates.",
+    "Lifecycle events with event type, date, source and confidence/evidence status rather than one guessed status string.",
+    "Session-evidence relationships, including official portal/MyMakati video URL and later agenda/minutes when available.",
+    "Measure-to-measure amend/repeal/implements relationships.",
+    "Typed relationships to barangays, services, canonical Place Registry assets, projects/accountability records, Public Records, reports and BetterGov ecosystem resources.",
+    "Record-access fallback to OSSP certified-copy service.",
+    "Explicit separation of local legislation from national bills/laws."
+  ],
+  "auditDecision": {
+    "currentStatus": "official-source-rich-but-bettermakati-under-normalized",
+    "mostImportantCorrection": "Council-session video availability is not a current source gap. The official Makati portal is visibly publishing 2026 regular council-session videos; the remaining gap is normalization, completeness checking, agendas/minutes/votes and measure-session linking.",
+    "nextSchemaDirection": "W4-2b should model ordinances/resolutions as canonical local measures and model session evidence as typed relationships/documents, so the same session recording can be reused by City Monitor, Legislation, Public Records and later Reports without duplication."
+  },
+  "nextStep": {
+    "id": "W4-2b",
+    "title": "Define local legislation registry schema",
+    "maximumScope": "Schema only for ordinances/resolutions plus typed council-session evidence: identifier, number, title, type, dates, official text, authors when stated, lifecycle events, session video/agenda/minutes relationships, civic relationships and provenance."
+  }
+}
