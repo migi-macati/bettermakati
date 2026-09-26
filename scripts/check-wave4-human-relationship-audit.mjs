@@ -101,7 +101,7 @@ for (const marker of [
   '<Route path="/reports/:slug" element={<ReportArticle />} />',
   '<Route path="/records" element={<PublicRecords />} />',
   '<Route path="/records/:id" element={<PublicRecordDetail />} />',
-  '<Route path="/accountability"',
+  'path="/accountability"',
   'path="/services/guide/:id"',
 ]) {
   if (!app.includes(marker)) {
