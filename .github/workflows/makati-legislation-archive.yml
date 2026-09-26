@@ -1,0 +1,43 @@
+name: Makati legislation archive extraction
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - scripts/discover-makati-legislation-archive.mjs
+      - .github/workflows/makati-legislation-archive.yml
+  workflow_dispatch:
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install app dependencies
+        run: npm ci
+
+      - name: Install Playwright
+        run: |
+          npm install --no-save playwright@1.55.0
+          npx playwright install --with-deps chromium
+
+      - name: Inspect official Makati archive
+        run: node scripts/discover-makati-legislation-archive.mjs
+
+      - name: Upload discovery artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: makati-legislation-archive-discovery
+          path: artifacts/makati-legislation-archive-discovery.json
+          if-no-files-found: error
+          retention-days: 7
