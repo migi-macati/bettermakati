@@ -55,6 +55,7 @@ import {
   accountabilityStatusLabel,
 } from '../data/accountability';
 import { placesRelatedTo } from '../data/placeRegistry';
+import { integrityForAccountability } from '../data/integrityCivicRelationships';
 
 const peso = (millions: number) => {
   const sign = millions < 0 ? '−' : '';
@@ -1326,6 +1327,7 @@ export default function ProjectsBudget() {
                   item.procurement?.stages.filter(stage => stage.status === 'documented').length || 0;
                 const gaps =
                   item.procurement?.stages.filter(stage => stage.status === 'source-gap').length || 0;
+                const integrityLinks = integrityForAccountability(item.id);
                 return (
                   <tr key={item.id} className="border-t align-top">
                     <td className="px-4 py-4 text-sm text-gray-600">{item.period}</td>
@@ -1365,6 +1367,16 @@ export default function ProjectsBudget() {
                       {item.procurement?.evidenceCheckedOn && (
                         <div className="mt-1 text-gray-500">
                           Checked {item.procurement.evidenceCheckedOn}
+                        </div>
+                      )}
+                      {integrityLinks.length > 0 && (
+                        <div className="mt-2">
+                          <Link
+                            to={integrityLinks[0]?.node?.href ?? '/integrity#procurement'}
+                            className="font-bold text-primary-700 underline underline-offset-2"
+                          >
+                            Integrity evidence
+                          </Link>
                         </div>
                       )}
                     </td>
