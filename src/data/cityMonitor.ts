@@ -1,4 +1,9 @@
 import { procurementProjectEntries } from './accountabilitySupplement';
+import {
+  currentCouncilSessionSeeds,
+  type CouncilTranscriptKind,
+  type CouncilTranscriptStatus,
+} from './councilSessions';
 
 export type CityMonitorType =
   | 'council-session'
@@ -75,10 +80,16 @@ export interface CityMonitorRecord {
     url?: string;
   }>;
   transcript?: {
-    kind: 'official' | 'bettermakati-automated' | 'bettermakati-reviewed';
-    status: 'available' | 'planned';
+    kind: CouncilTranscriptKind;
+    status: CouncilTranscriptStatus;
     note: string;
     url?: string;
+    sourceVideoUrl?: string;
+    generatedAt?: string;
+    model?: string;
+    segmentsUrl?: string;
+    textUrl?: string;
+    reviewedAt?: string;
   };
   commitments?: Array<{
     text: string;
@@ -111,6 +122,17 @@ export const cityMonitorSources: CityMonitorSource[] = [
     monitoringMode: 'reachability',
     monitoringNote:
       'Watch for newly published speeches or official text. BetterMakati transcripts must be labeled separately from official transcripts.',
+  },
+  {
+    id: 'makati-council-videos',
+    label: 'Makati official council-session videos',
+    stream: 'council-session',
+    url: 'https://www.makati.gov.ph/',
+    publisher: 'City Government of Makati',
+    cadence: 'event-driven',
+    monitoringMode: 'reachability',
+    monitoringNote:
+      'The official Makati portal currently lists regular City Council session videos. A listing is enough to create a session discovery record, but BetterMakati must preserve the item-specific official recording URL before transcription or timestamp linking.',
   },
   {
     id: 'mymakati-broadcasts',
@@ -247,6 +269,38 @@ const baseCityMonitorRecords: CityMonitorRecord[] = [
 ];
 
 
+const currentCouncilSessionMonitorRecords: CityMonitorRecord[] =
+  currentCouncilSessionSeeds.map(session => ({
+    id: session.id,
+    type: 'council-session',
+    title: session.titleAsPublished,
+    summary:
+      'The official Makati web portal lists this regular City Council session video. BetterMakati has normalized the session identity/date and queued the recording for transcript backfill after the item-specific official video URL is preserved.',
+    date: session.date,
+    status: 'published',
+    stage: 'Official session video listed',
+    sourceLabel: 'Makati Latest Videos',
+    sourceUrl: session.discoveryUrl,
+    sourcePublisher: 'City Government of Makati',
+    relatedHref: '/legislation',
+    summaryBullets: [
+      'Session date is taken from the official published session title.',
+      'No measure action, vote, attendance or mayoral action is inferred from the existence of the recording.',
+      'Automated transcript remains planned until the stable official video URL is preserved.',
+    ],
+    transcript: {
+      kind: session.transcript.kind,
+      status: session.transcript.status,
+      note: session.transcript.note,
+      sourceVideoUrl: session.recording.url,
+      generatedAt: session.transcript.generatedAt,
+      model: session.transcript.model,
+      segmentsUrl: session.transcript.segmentsUrl,
+      textUrl: session.transcript.textUrl,
+      reviewedAt: session.transcript.reviewedAt,
+    },
+  }));
+
 const procurementMonitorRecords: CityMonitorRecord[] =
   procurementProjectEntries.map(entry => {
     const procurement = entry.procurement!;
@@ -313,6 +367,7 @@ const procurementMonitorRecords: CityMonitorRecord[] =
 
 export const cityMonitorRecords: CityMonitorRecord[] = [
   ...baseCityMonitorRecords,
+  ...currentCouncilSessionMonitorRecords,
   ...procurementMonitorRecords,
 ].sort((a, b) => b.date.localeCompare(a.date));
 
@@ -332,11 +387,11 @@ const coverageSeed: Array<
   {
     type: 'council-session',
     label: 'City Council sessions',
-    coverage: 'source-gap',
+    coverage: 'partial',
     included:
-      'Historical session-volume evidence and the official MyMakati broadcast channel used for session discovery.',
+      'Current regular-session videos listed on the official Makati portal are normalized as session records, alongside historical MyMakati streaming evidence.',
     limit:
-      'No reliable current source has yet been normalized for every 2026 session date, agenda, attendance, vote and minutes record.',
+      'The current official video listing does not by itself establish a complete calendar of all regular/special sessions, agendas, attendance, votes or minutes; item-specific video URLs still need preservation before transcription.',
   },
   {
     type: 'legislation',
@@ -421,9 +476,15 @@ export const cityMonitorHistoricalRecordCount = cityMonitorRecords.filter(
 export const cityMonitorCoverageGaps = [
   {
     id: 'current-council-calendar',
-    title: 'No complete current City Council session calendar is indexed yet',
+    title: 'Current session videos are indexed; the complete legislative calendar is not',
     description:
-      'BetterMakati has not located a reliable current machine-readable source for all regular and special session dates, agendas, attendance, votes and minutes. Makati’s official records establish that the council holds regular sessions and historically streamed sessions, but BetterMakati will not assume a 2026 recurrence pattern without a current source.',
+      'The official Makati portal currently lists regular City Council session videos and BetterMakati normalizes the identifiable sessions. Completeness still requires reconciliation against all regular/special sessions plus agendas, attendance, votes and minutes; no recurrence pattern is assumed.',
+  },
+  {
+    id: 'council-transcript-backfill',
+    title: 'Council-session transcript backfill is queued',
+    description:
+      'Identifiable official session recordings enter the BetterMakati automated-transcript queue only after an item-specific official video URL is preserved. Generated transcripts remain non-official until reviewed and cannot establish a legislative action without source review.',
   },
   {
     id: 'measure-lifecycle',
