@@ -44,6 +44,13 @@ const sharedRefFor = (
       recordKind: 'procurement-award',
     };
   }
+  if (ref.recordType === 'procurement-contract') {
+    return {
+      type: 'integrity-record',
+      id: ref.id,
+      recordKind: 'procurement-contract',
+    };
+  }
   if (ref.recordType === 'disclosure') {
     return {
       type: 'integrity-record',
@@ -321,6 +328,16 @@ export const integrityForAccountability = (
   resolvedForRef({
     type: 'accountability-record',
     id: accountabilityId,
+  }).filter(
+    item =>
+      item.related.type === 'integrity-record' ||
+      item.related.type === 'integrity-entity'
+  );
+
+export const integrityForPublicRecord = (publicRecordId: string) =>
+  resolvedForRef({
+    type: 'public-record',
+    id: publicRecordId,
   }).filter(
     item =>
       item.related.type === 'integrity-record' ||
