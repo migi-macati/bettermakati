@@ -35,6 +35,7 @@ import {
   integrityProcurementContextLinks,
   integrityRelatedRecords,
 } from '../data/integrityCivicRelationships';
+import { reportsForCivicRecord } from '../data/reportCivicRelationships';
 
 type View =
   | 'all'
@@ -642,6 +643,11 @@ export default function Integrity() {
                 ...actions.flatMap(action => action.sourceIds),
               ];
               const directSources = sourcesFor(sourceIds);
+              const analysisLinks = reportsForCivicRecord({
+                type: 'integrity-record',
+                id: finding.id,
+                recordKind: 'audit-finding',
+              });
 
               return (
                 <article
@@ -749,6 +755,17 @@ export default function Integrity() {
                           {item.node.owner === 'accountability'
                             ? 'Accountability record'
                             : 'Source catalog'}
+                        </Link>
+                      ) : null
+                    )}
+                    {analysisLinks.map(item =>
+                      item.node ? (
+                        <Link
+                          key={item.relationship.id}
+                          to={item.node.href}
+                          className="text-sm font-bold text-secondary-900 underline"
+                        >
+                          Analysis: {item.node.label}
                         </Link>
                       ) : null
                     )}
