@@ -271,7 +271,8 @@ for (const marker of [
   "makati-legislation-index.json",
   "canonicalRecordTotal",
   "officialDocumentUrl",
-  "records.map(record => ({",
+  "recordShape",
+  "records.map(record => [",
 ]) {
   if (!browserIndexBuilderSource.includes(marker)) {
     problems.push('W4-2g browser-index builder marker missing: ' + marker);
