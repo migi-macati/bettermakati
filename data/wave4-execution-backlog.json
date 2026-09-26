@@ -1416,17 +1416,38 @@
       "id": "W4-5j",
       "phase": "Cross-linking and closure",
       "title": "Reclassify and close Wave 4",
-      "status": "planned",
+      "status": "complete",
       "maximumScope": "Classification/closure only. Record complete, bounded, partial and deferred capabilities without inflating completion.",
-      "stopWhen": "Wave 4 is closed only to the extent supported by evidence, with future work reopened as specific capabilities rather than vague unfinished work."
+      "stopWhen": "Wave 4 is closed only to the extent supported by evidence, with future work reopened as specific capabilities rather than vague unfinished work.",
+      "completedAt": "2026-09-27",
+      "implementationFiles": [
+        "data/wave4-closure.json",
+        "scripts/check-wave4-closure.mjs",
+        "data/wave4-execution-backlog.json",
+        "package.json"
+      ],
+      "validation": {
+        "closureStatus": "closed-with-bounded-and-deferred-capabilities",
+        "microsteps": "46/46 complete after W4-5j",
+        "classificationCounts": {
+          "complete": 10,
+          "bounded": 7,
+          "partial": 2,
+          "deferred": 2
+        },
+        "closureFile": "data/wave4-closure.json",
+        "completeMeaning": "Implemented capability is complete for its declared Wave 4 scope; this does not erase explicit data/evidence boundaries.",
+        "boundedMeaning": "Implementation is working, but scope/relationship coverage is intentionally limited by declared sources or anti-inference rules.",
+        "partialMeaning": "The capability exists but authoritative evidence coverage is incomplete, unavailable or unresolved and is classified as such.",
+        "deferredMeaning": "Verification could not be completed in this environment or is blocked by a pre-existing repo-wide dependency.",
+        "liveBrowser": "Deferred and explicitly unverified.",
+        "ci": "Full Wave 4 CI execution remains deferred because the repo stops at the pre-existing BetterBarangay Place Registry check:barangays marker mismatch.",
+        "futureWork": "Only the named future capabilities in data/wave4-closure.json may reopen this wave's bounded/partial/deferred areas; there is no generic unfinished Wave 4 bucket."
+      }
     }
   ],
-  "current": "W4-5j",
-  "immediateNext": {
-    "id": "W4-5j",
-    "title": "Reclassify and close Wave 4",
-    "maximumScope": "Classification/closure only. Record complete, bounded, partial and deferred capabilities without inflating completion."
-  },
+  "current": null,
+  "immediateNext": null,
   "carriedForward": [
     {
       "item": "Wave 3 Civic Reports outcome presentation gap",
@@ -1441,12 +1462,16 @@
   ],
   "planningStatus": {
     "planFrozen": true,
-    "productImplementationStarted": false,
-    "note": "W4-0 freezes the execution plan only. W4-1a is the first product-analysis micro-step."
+    "productImplementationStarted": true,
+    "note": "Wave 4 implementation is closed. See data/wave4-closure.json for complete, bounded, partial and deferred capability classifications.",
+    "waveClosed": true
   },
   "ecosystemCrosslinking": {
     "betterGov": "National datasets, visualizations, budget, procurement/price and broader civic tools.",
     "betterLgu": "Cross-LGU and non-Makati local-government context.",
     "rule": "Handoff and contextualize; do not duplicate another ecosystem product’s canonical data. Keep the underlying official source visible."
-  }
+  },
+  "waveStatus": "closed",
+  "closedAt": "2026-09-27",
+  "closureFile": "data/wave4-closure.json"
 }
