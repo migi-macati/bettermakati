@@ -1830,12 +1830,18 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Add Place Registry integrity audit",
       "maximumScope": "Guard duplicate IDs, barangays, coordinates, lifecycle states, provenance and broken relationships. No browser testing.",
-      "status": "next",
+      "status": "complete",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
       ],
-      "stopWhen": "Guard duplicate IDs, barangays, coordinates, lifecycle states, provenance and broken relationships. No browser testing."
+      "stopWhen": "Guard duplicate IDs, barangays, coordinates, lifecycle states, provenance and broken relationships. No browser testing.",
+      "completedAt": "2026-09-26",
+      "commits": [
+        "78bfcafcd306b1ad8d4c5d1e2c7ed1f5770ef08d",
+        "38f003d8e67b5721fcbce79735c46fbbcd0a0e80",
+        "3617982ac0c89759b5914fad53f31e1c7c2df077"
+      ]
     },
     {
       "id": "W3R-11c",
@@ -1844,7 +1850,7 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Test general participation journeys",
       "maximumScope": "General submission, duplicate, fallback, tracking and barangay-context E2E only.",
-      "status": "planned",
+      "status": "next",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
@@ -2035,9 +2041,10 @@
       "W3R-10a",
       "W3R-10b",
       "W3R-10c",
-      "W3R-11a"
+      "W3R-11a",
+      "W3R-11b"
     ],
-    "current": "W3R-11b",
+    "current": "W3R-11c",
     "capabilityDispositionAuditFile": "data/wave3-capability-disposition-audit.json"
   },
   "knownCoverageGaps": {
