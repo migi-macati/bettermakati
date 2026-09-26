@@ -1669,12 +1669,18 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Reuse places in Visit Makati and Heritage",
       "maximumScope": "Visit and Heritage only. Reuse canonical place facts without duplicating coordinates/addresses.",
-      "status": "next",
+      "status": "complete",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
       ],
-      "stopWhen": "Visit and Heritage only. Reuse canonical place facts without duplicating coordinates/addresses."
+      "stopWhen": "Visit and Heritage only. Reuse canonical place facts without duplicating coordinates/addresses.",
+      "completedAt": "2026-09-26",
+      "commits": [
+        "e31c77d39293a193004110a2f5952dbbfa4c89fd",
+        "15da4fb2b109fd3841b681d981941cb5306f0a58",
+        "008ade24aa423981fddcfa8329e4235b4eb385ec"
+      ]
     },
     {
       "id": "W3R-9c",
@@ -1683,7 +1689,7 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Connect places to Projects and Accountability",
       "maximumScope": "Relationship model plus a small verified example set only. No mass fuzzy matching.",
-      "status": "planned",
+      "status": "next",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
@@ -1978,9 +1984,10 @@
       "W3R-8a",
       "W3R-8b",
       "W3R-8c",
-      "W3R-9a"
+      "W3R-9a",
+      "W3R-9b"
     ],
-    "current": "W3R-9b",
+    "current": "W3R-9c",
     "capabilityDispositionAuditFile": "data/wave3-capability-disposition-audit.json"
   },
   "knownCoverageGaps": {
