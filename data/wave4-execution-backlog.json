@@ -185,15 +185,33 @@
       "id": "W4-1f",
       "phase": "Statistics",
       "title": "Implement canonical indicator dataset",
-      "status": "next",
+      "status": "complete",
       "maximumScope": "Data layer only for the approved W4-1c/1d/1e indicator set.",
-      "stopWhen": "Implemented indicators pass geography/period/source validation and existing hard-coded duplicates have a migration disposition."
+      "stopWhen": "Implemented indicators pass geography/period/source validation and existing hard-coded duplicates have a migration disposition.",
+      "completedAt": "2026-09-26",
+      "implementationFiles": [
+        "src/data/cityIndicators.ts",
+        "data/city-indicator.schema.json",
+        "data/wave4-statistics-data-migration.json",
+        "scripts/check-city-indicators.mjs"
+      ],
+      "commits": [
+        "084edbffde75170b63a207cf0c021eb50295cbf0",
+        "168162cf9db414ae34df59049c323331a43826cb",
+        "192fc4a38deebff70e17a69c292cb9b7c3644dc4",
+        "1e1eff067ef13f890f5e3378dc70455511970202",
+        "a13614cab96ba27d125c18c0a9d46ea56935a7c5",
+        "067eb04b1a6075d3efd07c06e06c9a3034ee72db",
+        "8027d1c5d94bf482ae332471d49afe1b54df4624",
+        "124b904dbc218360c4cc40ca097ecaf8b98a7e1c",
+        "5c4212711982a3482364f25f03e48a8fe14e71ce"
+      ]
     },
     {
       "id": "W4-1g",
       "phase": "Statistics",
       "title": "Redesign Statistics landing around questions and trends",
-      "status": "planned",
+      "status": "next",
       "maximumScope": "Statistics page only. Use canonical indicators, strong visual hierarchy, charts/tables and concise interpretation.",
       "stopWhen": "The page answers current scale, change over time and comparable context without sermons or duplicated data."
     },
@@ -478,11 +496,11 @@
       "stopWhen": "Wave 4 is closed only to the extent supported by evidence, with future work reopened as specific capabilities rather than vague unfinished work."
     }
   ],
-  "current": "W4-1f",
+  "current": "W4-1g",
   "immediateNext": {
-    "id": "W4-1f",
-    "title": "Implement canonical indicator dataset",
-    "maximumScope": "Data layer only for the approved W4-1c/1d/1e indicator set."
+    "id": "W4-1g",
+    "title": "Redesign Statistics landing around questions and trends",
+    "maximumScope": "Statistics page only. Use canonical indicators, strong visual hierarchy, charts/tables and concise interpretation."
   },
   "carriedForward": [
     {
