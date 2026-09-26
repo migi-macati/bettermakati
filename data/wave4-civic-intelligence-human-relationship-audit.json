@@ -1,0 +1,204 @@
+{
+  "id": "wave4-civic-intelligence-human-relationship-audit",
+  "auditedOn": "2026-09-26",
+  "scope": "Wave 4 Statistics, Legislation, Integrity, Featured Reports, Public Records, Search and their canonical cross-links.",
+  "overallStatus": "static-verified-live-browser-unverified",
+  "verification": {
+    "repositoryStaticAudit": {
+      "status": "pass",
+      "basis": [
+        "Canonical relationship modules validate stored relationships and throw when either endpoint cannot be resolved.",
+        "App routes and required section/record anchors used by Wave 4 canonical destinations are present.",
+        "Wave 4 dense tables are horizontally scrollable rather than forcing page-width overflow.",
+        "Global focus-visible, reduced-motion, form-control and skip-link accessibility baselines are present."
+      ]
+    },
+    "liveBrowserAudit": {
+      "status": "unverified",
+      "reason": "The connected Vercel deployment fetch was denied for this project, and the public web fetcher could not access bettermakati.org routes during this audit.",
+      "implication": "No claim is made here about rendered viewport screenshots, runtime console state, visual focus order or production PDF embedding."
+    },
+    "continuousIntegration": {
+      "status": "blocked-before-wave4-checks",
+      "blocker": "Existing BetterBarangay Place Registry guard in check:barangays expects a specific /civic-map/ link marker and stops the quality pipeline before the new Wave 4 checks run.",
+      "wave4Attribution": "The blocker predates W4-5i and is outside this workstream."
+    }
+  },
+  "fixesApplied": [
+    {
+      "finding": "Legislation filter buttons, year selector and View record toggle did not explicitly meet the site-wide 44px touch-target baseline.",
+      "fix": "Added min-h-11 to the interactive controls.",
+      "files": [
+        "src/pages/Legislation.tsx"
+      ]
+    },
+    {
+      "finding": "Inline Featured Report record citations used legacy generic hrefs even when the Civic Intelligence resolver knew a more precise canonical destination.",
+      "fix": "ReportArticle now resolves typed record references through reportCivicNodeResolver/reportRecordRefToCivicRef before falling back to the stored href.",
+      "files": [
+        "src/pages/ReportArticle.tsx"
+      ]
+    },
+    {
+      "finding": "Integrity supplier destinations contained ?view=suppliers even though Integrity does not parse that query parameter.",
+      "fix": "Canonical supplier destination is now /integrity#procurement in relationship resolvers and global Search.",
+      "files": [
+        "src/data/integrityCivicRelationships.ts",
+        "src/data/reportCivicRelationships.ts",
+        "src/data/searchIndex.ts"
+      ]
+    }
+  ],
+  "relationshipIntegrity": {
+    "sharedModel": {
+      "status": "pass",
+      "checks": [
+        "non-empty relationship and reference IDs",
+        "supported typed Integrity and ecosystem references",
+        "no self-links",
+        "no duplicate/reverse stored semantic edges",
+        "source-backed edges require source IDs and a statement",
+        "ecosystem-context edges require a note"
+      ]
+    },
+    "statistics": {
+      "status": "pass-static",
+      "verified": [
+        "population-total -> 23 canonical barangays",
+        "GDP indicators -> curated BetterGov continuation/comparison resources",
+        "report analysis backlinks are derived from the report-owned graph"
+      ],
+      "antiInference": [
+        "no individual place attribution from aggregate indicators",
+        "no service/project/accountability attribution without explicit evidence",
+        "no indicator-level BetterLGU statistical-source claim"
+      ]
+    },
+    "legislation": {
+      "status": "pass-static",
+      "verified": [
+        "ordinance-2020-115 <-> civil-registration",
+        "ordinance-2020-116 <-> local-civil-registry-copy",
+        "service backlinks retain the historical-effect caveat",
+        "future City Monitor/Public Records edges require explicit canonical IDs or exact shared source URLs"
+      ],
+      "antiInference": [
+        "no title/keyword/fuzzy relationship matching"
+      ]
+    },
+    "integrity": {
+      "status": "pass-static",
+      "verified": [
+        "validated internal Integrity provenance graph projects to shared Civic Intelligence references",
+        "procurement/audit records link to canonical Accountability records",
+        "Public Records identity uses exact source URL equality",
+        "BetterGov procurement links remain continuation context rather than Makati-specific evidence"
+      ],
+      "antiInference": [
+        "no location-string to Place Registry inference",
+        "no duplicate project identity for Accountability-owned procurement entries",
+        "no risk score, red-flag, inferred ownership/conflict or wrongdoing label"
+      ]
+    },
+    "reports": {
+      "status": "pass-static",
+      "verified": [
+        "one report-owned relationship per unique typed canonical evidence reference",
+        "report -> record relationship kind is synthesizes, never evidence-for",
+        "Statistics, Accountability and Integrity derive reverse analysis backlinks",
+        "inline evidence now uses canonical resolver destinations"
+      ]
+    },
+    "publicRecords": {
+      "status": "pass-static",
+      "verified": [
+        "Wave 4 source registries merge by exact URL",
+        "one source can retain multiple BetterMakati contexts",
+        "/records/:id provides canonical source detail",
+        "Reports, Integrity and seed Legislation records link back to matching Public Records entries by exact URL"
+      ]
+    }
+  },
+  "mobileAccessibility": {
+    "status": "pass-static-live-unverified",
+    "globalBaseline": [
+      "skip link to #main-content",
+      "visible focus styles",
+      "prefers-reduced-motion handling",
+      "44px shared buttons/form controls",
+      "scroll margin for anchored records"
+    ],
+    "surfaceChecks": {
+      "statistics": "Single dense table uses min-width inside overflow-x-auto; section navigation and source actions use mobile-sized targets.",
+      "legislation": "Search/filter controls are labelled; filters and View record toggle now explicitly use min-h-11.",
+      "integrity": "Both dense evidence tables use overflow-x-auto; view controls use min-h-11 and aria-pressed.",
+      "reports": "Report tables use overflow-x-auto; evidence tokens wrap; page has one content heading per rendered branch.",
+      "publicRecords": "Filters are labelled; primary actions use shared 44px button classes.",
+      "publicRecordDetail": "PDF iframe has an accessible title and original-source fallback."
+    }
+  },
+  "userJourneys": [
+    {
+      "id": "statistics-report-record",
+      "status": "pass-static",
+      "path": [
+        "Statistics indicator",
+        "Related analysis",
+        "Featured Report",
+        "Related records / inline evidence",
+        "canonical Statistics or Accountability record",
+        "reverse Analysis backlink where applicable"
+      ]
+    },
+    {
+      "id": "legislation-service-source",
+      "status": "pass-static",
+      "path": [
+        "Legislation search result",
+        "verified ordinance",
+        "related service",
+        "Service Guide historical legislation backlink",
+        "official attached source / Public Records entry"
+      ]
+    },
+    {
+      "id": "integrity-accountability-source-analysis",
+      "status": "pass-static",
+      "path": [
+        "Integrity supplier/award or audit finding",
+        "Accountability record",
+        "Public Records source when exact URL matches",
+        "Featured Report analysis when typed evidence references the finding",
+        "reverse Integrity evidence link"
+      ]
+    },
+    {
+      "id": "search-canonical-destination",
+      "status": "pass-static",
+      "path": [
+        "Global Search",
+        "typed canonical key",
+        "Statistics / Integrity / Report destination or lazy Legislation record",
+        "BetterGov/BetterLGU only as external handoffs when appropriate"
+      ]
+    }
+  ],
+  "closureInputs": {
+    "verifiedCompleteForStaticScope": [
+      "relationship endpoint resolution rules",
+      "canonical reverse navigation wiring",
+      "source identity rules",
+      "mobile source-code baseline",
+      "four Wave 4 user journeys"
+    ],
+    "boundedOrDeferred": [
+      "live browser viewport verification",
+      "runtime console verification",
+      "visual focus-order verification",
+      "production PDF embed behavior"
+    ],
+    "unrelatedKnownBlocker": [
+      "BetterBarangay Place Registry check:barangays marker mismatch"
+    ]
+  }
+}
