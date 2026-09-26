@@ -20,10 +20,10 @@ for (const slug of canonicalSlugs) {
   }
 }
 
-if (slugs.length !== canonicalSlugs.length) {
-  problems.push(
-    'Expected exactly 3 canonical migrated reports; found ' + slugs.length + '.'
-  );
+for (const slug of canonicalSlugs) {
+  if (slugs.filter(candidate => candidate === slug).length !== 1) {
+    problems.push('Migrated canonical report must appear exactly once: ' + slug);
+  }
 }
 
 for (const legacySlug of ['2025-local-revenue', '2025-social-services']) {
@@ -36,9 +36,9 @@ for (const legacySlug of ['2025-local-revenue', '2025-social-services']) {
 const schemaVersionCount = (reports.match(/schemaVersion:\s*2/g) ?? []).length;
 const synthesisCount = (reports.match(/synthesis:\s*/g) ?? []).length;
 
-if (schemaVersionCount !== 3 || synthesisCount !== 3) {
+if (schemaVersionCount !== slugs.length || synthesisCount !== slugs.length) {
   problems.push(
-    'All 3 canonical reports must carry schemaVersion 2 and exactly one synthesis field.'
+    'Every published report must carry schemaVersion 2 and exactly one synthesis field.'
   );
 }
 
@@ -110,5 +110,5 @@ if (problems.length) {
 }
 
 console.log(
-  'Featured Report v2 migration check passed: 4 audited reports are represented by 3 canonical v2 articles, legacy fiscal URLs alias to the merged article, and the renderer supports evidence-aware sections, data blocks and optional methodology.'
+  'Featured Report v2 migration check passed: the 3 migrated W4-4c storylines and legacy fiscal aliases remain intact while later v2 flagship reports may be added.'
 );
