@@ -1192,12 +1192,44 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Connect nearby reporting to existing civic submission",
       "maximumScope": "Reporting flow only. Preserve emergency handling, duplicate detection, barangay context, evidence and tracking. Stop after focused E2E validation.",
-      "status": "next",
+      "status": "complete",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
       ],
-      "stopWhen": "Reporting flow only. Preserve emergency handling, duplicate detection, barangay context, evidence and tracking. Stop after focused E2E validation."
+      "stopWhen": "Reporting flow only. Preserve emergency handling, duplicate detection, barangay context, evidence and tracking. Stop after focused E2E validation.",
+      "implementationFiles": [
+        "src/pages/CivicNearbyReport.tsx",
+        "src/components/civic/CivicNearbyReportForm.tsx",
+        "api/civic.js",
+        "src/pages/CivicMap.tsx"
+      ],
+      "validation": {
+        "implementationFiles": [
+          "src/pages/CivicNearbyReport.tsx",
+          "src/components/civic/CivicNearbyReportForm.tsx",
+          "api/civic.js",
+          "src/pages/CivicMap.tsx"
+        ],
+        "entry": "Civic Map now exposes Report something near me and preserves BetterBarangay query scope in the handoff.",
+        "matchedPlaceFlow": "Confirmed nearby/search-selected places submit through the existing civic API using the stable place ID in both placeId and legacy assetId fields.",
+        "locationOnlyFlow": "None-of-these reports require a human-readable location description and submit with locationMode=location-only. The server forcibly clears placeId, assetId, assetTitle and assetType before persistence.",
+        "privacy": "Incident coordinates are rounded to 4 decimal places in both the client payload and server normalization; geolocation accuracy is never submitted.",
+        "issueTaxonomy": "Matched places use the existing asset-aware issue taxonomy. Location-only reports use the specified public-realm baseline plus emergency categories.",
+        "emergency": "Emergency categories retain the existing Unified 911 handoff and are not submitted as ordinary civic cases.",
+        "duplicates": {
+          "matchedPlace": "same kind + same category + same assetId + <=75 m",
+          "locationOnly": "same kind + same category + <=75 m regardless of place attachment"
+        },
+        "duplicateSimulation": {
+          "matchedPlace": "A same-place litter report ~42 m away is detected; a different-place report at the same point is not.",
+          "locationOnly": "Both same-place and different-place litter reports within ~42 m are detected because the incident itself may have been attached differently."
+        },
+        "fallbackAndTracking": "Duplicate confirmation, force-separate case, GitHub fallback and public case tracking links are preserved.",
+        "identityHardening": "API rejects location-only non-report contribution kinds and normalizes matched placeId to assetId.",
+        "guardrail": "scripts/check-place-registry.mjs now guards UI handoff, POST submission, location identity fields, coordinate rounding, 75 m duplicate branching, server identity normalization, route exposure and barangay-scope preservation.",
+        "ci": "Latest CI reports only the same three pre-existing unused-import ESLint errors. No new errors are reported for CivicNearbyReport.tsx, CivicNearbyReportForm.tsx, CivicMap.tsx, api/civic.js or the nearby-reporting guardrail; build remains skipped behind the baseline lint failure."
+      }
     },
     {
       "id": "W3R-5d",
@@ -1206,7 +1238,7 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Reconnect case lifecycle to redesigned reporting",
       "maximumScope": "Lifecycle display/relationships only. Preserve reviewed, forwarded, acknowledged, action-reported and community-verified-resolved semantics. No automatic forwarding.",
-      "status": "planned",
+      "status": "next",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
@@ -1599,9 +1631,9 @@
     }
   ],
   "immediateNext": {
-    "id": "W3R-5c",
-    "title": "Connect nearby reporting to existing civic submission",
-    "maximumScope": "Reporting flow only. Preserve emergency handling, duplicate detection, barangay context, evidence and tracking. Stop after focused E2E validation."
+    "id": "W3R-5d",
+    "title": "Reconnect case lifecycle to redesigned reporting",
+    "maximumScope": "Lifecycle display/relationships only. Preserve reviewed, forwarded, acknowledged, action-reported and community-verified-resolved semantics. No automatic forwarding."
   },
   "reopenedExecutionOrder": [
     "3C-2a",
