@@ -284,15 +284,20 @@
       "id": "W4-2b",
       "phase": "Legislation",
       "title": "Define local legislation registry schema",
-      "status": "next",
+      "status": "complete",
       "maximumScope": "Schema only for ordinances/resolutions plus typed council-session evidence: identifier, number, title, type, dates, official text, authors when stated, lifecycle events, session video/agenda/minutes relationships, civic relationships and provenance.",
-      "stopWhen": "Schema supports canonical local measures, reusable official session evidence and City Monitor links without inventing enactment, vote or mayoral-action status."
+      "stopWhen": "Schema supports canonical local measures, reusable official session evidence and City Monitor links without inventing enactment, vote or mayoral-action status.",
+      "completedAt": "2026-09-26",
+      "schemaFile": "data/local-legislation.schema.json",
+      "commits": [
+        "9f0320881d3287d78a7c1da8849888d9061c64a4"
+      ]
     },
     {
       "id": "W4-2c",
       "phase": "Legislation",
       "title": "Build first ordinance registry batch",
-      "status": "planned",
+      "status": "next",
       "maximumScope": "One bounded official-source batch of ordinances. No resolutions in the same step.",
       "stopWhen": "The batch is source-complete for its declared period/topic and every record has a stable ID and official source."
     },
@@ -537,11 +542,11 @@
       "stopWhen": "Wave 4 is closed only to the extent supported by evidence, with future work reopened as specific capabilities rather than vague unfinished work."
     }
   ],
-  "current": "W4-2b",
+  "current": "W4-2c",
   "immediateNext": {
-    "id": "W4-2b",
-    "title": "Define local legislation registry schema",
-    "maximumScope": "Schema only for ordinances/resolutions plus typed council-session evidence: identifier, number, title, type, dates, official text, authors when stated, lifecycle events, session video/agenda/minutes relationships, civic relationships and provenance."
+    "id": "W4-2c",
+    "title": "Build first ordinance registry batch",
+    "maximumScope": "One bounded official-source batch of ordinances. No resolutions in the same step."
   },
   "carriedForward": [
     {
