@@ -4,6 +4,7 @@ const text = await readFile('src/data/placeRegistry.ts', 'utf8');
 const mobilityPage = await readFile('src/pages/Mobility.tsx', 'utf8');
 const servicesPage = await readFile('src/pages/Services.tsx', 'utf8');
 const governmentOfficesPage = await readFile('src/pages/GovernmentOffices.tsx', 'utf8');
+const serviceGuidePage = await readFile('src/pages/ServiceGuide.tsx', 'utf8');
 const governmentOfficesSource = await readFile('src/data/governmentServiceOffices.ts', 'utf8');
 const problems = [];
 
@@ -129,8 +130,17 @@ for (const marker of [
   }
 }
 
-if (governmentOfficesPage.includes('Place Registry')) {
-  problems.push('Government Offices must not expose Place Registry implementation language in the UI.');
+for (const marker of [
+  'placeRegistryById.get(office.placeId)',
+  "to={'/civic-map/' + place.id}",
+]) {
+  if (!serviceGuidePage.includes(marker)) {
+    problems.push('Service Guide Place Registry integration is missing: ' + marker);
+  }
+}
+
+if (governmentOfficesPage.includes('Place Registry') || serviceGuidePage.includes('Place Registry')) {
+  problems.push('Service surfaces must not expose Place Registry implementation language in the UI.');
 }
 
 if (problems.length) {
