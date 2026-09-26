@@ -128,6 +128,7 @@ export default function CivicAuditResults() {
     distribution: {},
     latestObservedAt: null,
   }));
+  const targetCount = data?.targetCount ?? civicAuditPilot.targetEntityIds.length;
 
   return (
     <>
@@ -184,13 +185,13 @@ export default function CivicAuditResults() {
           </div>
           <div className="rounded-2xl border border-primary-100 bg-white p-4">
             <div className="text-2xl font-extrabold text-gray-950">
-              {state !== 'ready' ? '—' : (data?.observedEntities ?? 0) + '/13'}
+              {state !== 'ready' ? '—' : (data?.observedEntities ?? 0) + '/' + targetCount}
             </div>
             <div className="mt-1 text-xs font-bold text-gray-600">parks with observations</div>
           </div>
           <div className="rounded-2xl border border-primary-100 bg-white p-4">
             <div className="text-2xl font-extrabold text-gray-950">
-              {state !== 'ready' ? '—' : (data?.completeEntities ?? 0) + '/13'}
+              {state !== 'ready' ? '—' : (data?.completeEntities ?? 0) + '/' + targetCount}
             </div>
             <div className="mt-1 text-xs font-bold text-gray-600">parks meeting the pilot completion rule</div>
           </div>
@@ -267,7 +268,7 @@ export default function CivicAuditResults() {
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <div className="section-eyebrow">Park coverage</div>
-            <Heading level={2}>13 frozen target parks</Heading>
+            <Heading level={2}>{targetCount} frozen target parks</Heading>
           </div>
           <Link to={civicAuditPilot.route} className="brand-btn-primary">
             Add an observation <ArrowRight className="h-4 w-4" />
