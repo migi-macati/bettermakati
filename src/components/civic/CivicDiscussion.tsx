@@ -189,7 +189,7 @@ export default function CivicDiscussion({ assetId }: { assetId: string }) {
             Community record
           </div>
           <h2 className="mt-1 text-xl font-extrabold text-gray-950">
-            Reports, proposals, reviews & updates
+            Cases, proposals & updates
           </h2>
         </div>
         <button
@@ -202,7 +202,7 @@ export default function CivicDiscussion({ assetId }: { assetId: string }) {
       </div>
 
       <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600">
-        These are community-submitted BetterMakati records. They are not official government cases unless an official referral or acknowledgement is separately documented.
+        Open a record to confirm a problem, add an update, support a proposal or join the discussion.
       </p>
 
       {feedFailed ? (
@@ -211,7 +211,7 @@ export default function CivicDiscussion({ assetId }: { assetId: string }) {
         </div>
       ) : items.length === 0 ? (
         <div className="mt-5 rounded-2xl border border-gray-200 bg-[#fffdf8] p-6 text-sm text-gray-600">
-          No public BetterMakati Civic Map records are attached to this asset yet.
+          No community cases or updates are attached to this place yet.
         </div>
       ) : (
         <div className="mt-5 space-y-3">
