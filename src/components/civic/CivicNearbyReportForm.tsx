@@ -46,15 +46,15 @@ const locationOnlyCategoryIds = new Set([
 const roundCoordinate = (value: number) => Math.round(value * 10000) / 10000;
 
 export default function CivicNearbyReportForm({
-  place,
+  entity,
   point,
   onSubmitted,
 }: {
-  place: PlaceRegistryRecord | null;
+  entity: PlaceRegistryRecord | null;
   point: PlacePoint;
   onSubmitted?: () => void;
 }) {
-  const locationMode = place ? 'matched-place' : 'location-only';
+  const locationMode = entity ? 'matched-entity' : 'location-only';
   const [category, setCategory] = useState('');
   const [subject, setSubject] = useState('');
   const [details, setDetails] = useState('');
@@ -72,40 +72,38 @@ export default function CivicNearbyReportForm({
   const [forceNew, setForceNew] = useState(false);
 
   const issueCategories = useMemo(() => {
-    if (place) return issueCategoriesForAsset(place.primaryCategory);
+    if (entity) return issueCategoriesForAsset(entity.primaryCategory);
     return civicIssueCategories.filter(
       item => item.emergency || locationOnlyCategoryIds.has(item.id)
     );
-  }, [place]);
+  }, [entity]);
 
   const selectedIssue = civicIssueCategories.find(item => item.id === category);
   const emergency = Boolean(selectedIssue?.emergency);
   const preferredChannel = selectedIssue?.preferredChannel
     ? civicOfficialChannels[selectedIssue.preferredChannel]
     : undefined;
-  const isSegment = place
-    ? ['street-segment', 'sidewalk-segment'].includes(place.primaryCategory)
-    : false;
+  const isSegment = entity?.entityKind === 'segment';
 
   const requestPayload = () => ({
     action: 'create',
     kind: 'report',
-    entityId: place?.id ?? '',
-    entityKind: place?.entityKind ?? '',
+    entityId: entity?.id ?? '',
+    entityKind: entity?.entityKind ?? '',
     locationMode,
-    assetId: place?.id ?? '',
-    assetTitle: place?.name ?? '',
-    assetType: place?.primaryCategory ?? '',
+    assetId: entity?.id ?? '',
+    assetTitle: entity?.name ?? '',
+    assetType: entity?.primaryCategory ?? '',
     category,
     subject,
     details,
-    location: place?.name ?? locationLabel,
-    locationLabel: place?.name ?? locationLabel,
+    location: entity?.name ?? locationLabel,
+    locationLabel: entity?.name ?? locationLabel,
     lat: roundCoordinate(point.lat),
     lng: roundCoordinate(point.lng),
     side,
-    segmentFrom: place?.location.geometry?.from ?? '',
-    segmentTo: place?.location.geometry?.to ?? '',
+    segmentFrom: entity?.location.geometry?.from ?? '',
+    segmentTo: entity?.location.geometry?.to ?? '',
     severity,
     preferredChannel: selectedIssue?.preferredChannel ?? '',
     alias,
@@ -158,7 +156,7 @@ export default function CivicNearbyReportForm({
   const submit = async (event: FormEvent) => {
     event.preventDefault();
     if (emergency || status === 'submitting') return;
-    if (!place && !locationLabel.trim()) {
+    if (!entity && !locationLabel.trim()) {
       setStatus('error');
       setMessage('Describe the location before submitting.');
       return;
@@ -219,7 +217,7 @@ export default function CivicNearbyReportForm({
         Report a problem
       </div>
       <h2 className="mt-1 text-xl font-extrabold text-gray-950">
-        {place ? place.name : 'This location'}
+        {entity ? entity.name : 'This location'}
       </h2>
       <p className="mt-2 text-sm text-gray-600">
         {roundCoordinate(point.lat).toFixed(4)}, {roundCoordinate(point.lng).toFixed(4)}
@@ -227,7 +225,7 @@ export default function CivicNearbyReportForm({
 
       <form onSubmit={submit} className="mt-6" aria-busy={status === 'submitting'}>
         <fieldset disabled={status === 'submitting'} className="min-w-0">
-          {!place && (
+          {!entity && (
             <label className="form-field">
               <span>Where exactly is it?</span>
               <input
@@ -239,7 +237,7 @@ export default function CivicNearbyReportForm({
             </label>
           )}
 
-          <div className={!place ? 'mt-5 grid gap-5 md:grid-cols-2' : 'grid gap-5 md:grid-cols-2'}>
+          <div className={!entity ? 'mt-5 grid gap-5 md:grid-cols-2' : 'grid gap-5 md:grid-cols-2'}>
             <label className="form-field md:col-span-2">
               <span>What is the problem?</span>
               <select
