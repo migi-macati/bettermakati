@@ -503,7 +503,7 @@
       "The page prioritizes location and sources, existing community cases, then useful actions.",
       "Generic rating entry points and rating criteria are removed from the place-detail experience.",
       "Existing report/proposal/update submission and case lifecycle behavior remain intact.",
-      "Legacy review records can still render while structured observations are deferred to W3R-6."
+      "No Civic Review records were found; no legacy review rendering path needs to be preserved."
     ]
   },
   "nearbyReportingSpec": {
@@ -583,7 +583,7 @@
       "Unknown/not-observed responses are first-class and the contributor is never forced to guess.",
       "No overall score or hidden numeric composite is permitted.",
       "Observation submission never mutates canonical place facts or civic case lifecycle.",
-      "Legacy 1–5 reviews remain historical and are not converted."
+      "No existing 1–5 Civic Review records were found; there is nothing to convert."
     ]
   },
   "structuredObservationImplementation": {
@@ -594,7 +594,7 @@
     "rules": [
       "One reusable family-aware observation form is used on place pages.",
       "Observation storage is separate from civic cases and lifecycle.",
-      "New generic 1–5 reviews are retired; historical review records remain readable.",
+      "Generic 1–5 reviews are retired, and no historical Civic Review records were found to preserve.",
       "The server validates canonical place identity and structured answers.",
       "No derived score is stored or generated."
     ]
@@ -614,5 +614,22 @@
       "Use categorical distributions or wait-time median/range only.",
       "Do not compute composite scores, rankings or place grades."
     ]
+  },
+  "streetSegmentCoverageGap": {
+    "checkedOn": "2026-09-26",
+    "status": "known-gap",
+    "current": {
+      "streetSegments": 3,
+      "verifiedStreetSegments": 0,
+      "provisionalStreetSegments": 3,
+      "sidewalkSegments": 0
+    },
+    "records": [
+      "jp-rizal-makati-ave-p-burgos",
+      "jp-rizal-p-burgos-n-garcia",
+      "ayala-paseo-rufino"
+    ],
+    "explanation": "W3R-4a made the Civic Map browser verified-only. All three existing street-segment seeds are pilot records without identity/coordinate source URLs, so they migrated as provisional and disappeared from the default browser.",
+    "rule": "Street segments remain part of the Place Registry model. Do not claim barangay- or citywide street/sidewalk audit coverage until the segment inventory is expanded and verified."
   }
 }
