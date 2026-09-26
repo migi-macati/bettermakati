@@ -78,6 +78,40 @@ const parseMeta = body => {
   }
 };
 
+const parseTaggedJson = (body, marker) => {
+  const match = String(body || '').match(
+    new RegExp('<!--\\s*' + marker + '\\s+({[\\s\\S]*?})\\s*-->')
+  );
+  if (!match) return null;
+  try {
+    return JSON.parse(match[1]);
+  } catch {
+    return null;
+  }
+};
+
+const officialLifecycleStatus = adminEvents => {
+  const order = [
+    'community-verified-resolved',
+    'action-reported',
+    'acknowledged',
+    'forwarded',
+    'reviewed',
+  ];
+  return order.find(status => adminEvents.some(event => event.status === status)) || null;
+};
+
+const lifecycleLabel = status =>
+  ({
+    'community-verified-resolved': 'Community verified resolved',
+    'action-reported': 'Action reported',
+    acknowledged: 'Authority acknowledged',
+    forwarded: 'Forwarded by BetterMakati',
+    reviewed: 'BetterMakati reviewed',
+    'community-corroborated': 'Community corroborated',
+    unverified: 'Unverified community submission',
+  })[status] || 'Unverified community submission';
+
 const distanceMeters = (aLat, aLng, bLat, bLng) => {
   if ([aLat, aLng, bLat, bLng].some(value => value === null || value === undefined)) {
     return null;
@@ -318,8 +352,36 @@ export default async function handler(req, res) {
           headers: headersFor(token),
         });
         const comments = commentsResponse.ok ? await commentsResponse.json() : [];
+        const adminEvents = comments
+          .map(comment => ({
+            comment,
+            meta: parseTaggedJson(comment.body, 'civic-admin'),
+          }))
+          .filter(item => item.meta)
+          .map(item => ({
+            ...item.meta,
+            createdAt: item.comment.created_at,
+            url: item.comment.html_url,
+          }));
+        const communityComments = comments
+          .map(comment => parseTaggedJson(comment.body, 'civic-comment'))
+          .filter(Boolean);
+        const confirmationCount = communityComments.filter(
+          item => item.commentType === 'confirm'
+        ).length;
+        const adminStatus = officialLifecycleStatus(adminEvents);
+        const evidenceStatus =
+          adminStatus || (confirmationCount >= 2 ? 'community-corroborated' : 'unverified');
+
         return res.status(200).json({
           item: issueView(issue),
+          lifecycle: {
+            status: evidenceStatus,
+            label: lifecycleLabel(evidenceStatus),
+            officialStatus: adminStatus,
+            confirmationCount,
+            adminEvents,
+          },
           comments: comments.map(comment => ({
             id: comment.id,
             body: comment.body,
