@@ -239,7 +239,7 @@ const baseCityMonitorRecords: CityMonitorRecord[] = [
     type: 'council-session',
     title: '2020 City Council legislative activity',
     summary:
-      'The City Government’s 2020 Annual Report records 56 regular sessions and 56 committee hearings, with 287 ordinances and 50 resolutions enacted during the year. Sessions were held by videoconference under pandemic protocols and streamed through MyMakati Facebook.',
+      'The City Government’s 2020 Annual Report records 56 regular sessions and 56 committee hearings, with 287 resolutions and 50 ordinances passed/approved during the year. Sessions were held by videoconference under pandemic protocols and streamed through MyMakati Facebook.',
     date: '2020-12-31',
     status: 'archived',
     historical: true,
