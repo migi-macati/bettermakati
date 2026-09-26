@@ -18,6 +18,7 @@ import Breadcrumbs from '../components/ui/Breadcrumbs';
 import CivicMapEmbed from '../components/civic/CivicMapEmbed';
 import CivicContributionForm from '../components/civic/CivicContributionForm';
 import CivicObservationForm from '../components/civic/CivicObservationForm';
+import CivicObservationSummary from '../components/civic/CivicObservationSummary';
 import CivicDiscussion from '../components/civic/CivicDiscussion';
 import { useBarangayScope, withBarangayScope } from '../hooks/useBarangayScope';
 import {
@@ -44,6 +45,7 @@ const accessLabel = {
 export default function CivicAsset() {
   const { assetId } = useParams();
   const [revision, setRevision] = useState(0);
+  const [observationRevision, setObservationRevision] = useState(0);
   const { barangaySlug, isExplicitScope } = useBarangayScope();
   const mapHref = withBarangayScope(
     '/civic-map',
@@ -241,11 +243,19 @@ export default function CivicAsset() {
       </Section>
 
       <Section className="bg-white" id="observe">
-        <div className="grid gap-8 lg:grid-cols-[0.65fr_1.35fr]">
+        <div className="section-eyebrow">Observed conditions</div>
+        <Heading level={2}>Condition snapshots</Heading>
+
+        <div className="mt-6">
+          <CivicObservationSummary
+            place={place}
+            refreshKey={observationRevision}
+          />
+        </div>
+
+        <div className="mt-8 grid gap-8 lg:grid-cols-[0.65fr_1.35fr]">
           <div>
-            <div className="section-eyebrow">Observe this place</div>
-            <Heading level={2}>Record current conditions</Heading>
-            <div className="mt-5 flex gap-3 rounded-xl border border-gray-200 bg-[#fffdf8] p-4">
+            <div className="flex gap-3 rounded-xl border border-gray-200 bg-[#fffdf8] p-4">
               <ClipboardCheck className="mt-0.5 h-5 w-5 shrink-0 text-primary-700" />
               <p className="text-sm leading-relaxed text-gray-600">
                 Choose only what you checked. Skip the rest.
@@ -259,7 +269,10 @@ export default function CivicAsset() {
             </a>
           </div>
 
-          <CivicObservationForm place={place} />
+          <CivicObservationForm
+            place={place}
+            onSubmitted={() => setObservationRevision(value => value + 1)}
+          />
         </div>
       </Section>
 
