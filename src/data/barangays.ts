@@ -827,6 +827,11 @@ export const barangays: BarangayProfile[] = barangayBaseProfiles.map(profile => 
   ],
 }));
 
+export const currentMakatiPopulation2024 = barangays.reduce(
+  (sum, barangay) => sum + barangay.population2024,
+  0
+);
+
 export const barangayCoverageSummary = {
   profiles: barangays.length,
   councilRosters: barangays.filter(
