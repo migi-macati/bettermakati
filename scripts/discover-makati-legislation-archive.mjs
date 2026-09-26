@@ -216,4 +216,8 @@ console.log(
   )
 );
 
+console.log('ARCHIVE_DISCOVERY_JSON_START');
+console.log(JSON.stringify(result));
+console.log('ARCHIVE_DISCOVERY_JSON_END');
+
 await browser.close();
