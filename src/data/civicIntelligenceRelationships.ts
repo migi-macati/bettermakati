@@ -25,6 +25,7 @@ export type CivicIntelligenceNodeType =
 
 export type CivicIntelligenceIntegrityRecordKind =
   | 'procurement-award'
+  | 'procurement-contract'
   | 'disclosure'
   | 'audit-finding'
   | 'audit-action'
@@ -155,6 +156,7 @@ const nonEmpty = (value: string, field: string) => {
 
 const integrityRecordKinds = new Set<CivicIntelligenceIntegrityRecordKind>([
   'procurement-award',
+  'procurement-contract',
   'disclosure',
   'audit-finding',
   'audit-action',
