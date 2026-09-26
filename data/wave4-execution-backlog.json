@@ -25,7 +25,8 @@
     "Explicit typed relationships only; no fuzzy asset/place linking.",
     "No political rankings, corruption/risk scores, guilt-by-association or inferred wrongdoing.",
     "Source gaps remain source gaps.",
-    "Mobile/accessibility baselines are continuous requirements."
+    "Mobile/accessibility baselines are continuous requirements.",
+    "Cross-linking includes the wider BetterGov ecosystem: BetterGov for national context/tools, BetterLGU for cross-LGU/non-Makati context, and sibling local sites only where a canonical handoff adds value."
   ],
   "phases": [
     {
@@ -386,7 +387,7 @@
       "phase": "Cross-linking and closure",
       "title": "Define shared civic-intelligence relationship model",
       "status": "planned",
-      "maximumScope": "Relationship schema/helper only. Typed references across indicator, legislation, integrity entity, report, place, barangay, service, project/accountability, City Monitor and public record.",
+      "maximumScope": "Relationship schema/helper only. Typed references across indicator, legislation, integrity entity, report, place, barangay, service, project/accountability, City Monitor, public record and BetterGov/BetterLGU ecosystem resources.",
       "stopWhen": "Relationships can be stored once and resolved without circular data duplication."
     },
     {
@@ -394,7 +395,7 @@
       "phase": "Cross-linking and closure",
       "title": "Connect Statistics to canonical city entities",
       "status": "planned",
-      "maximumScope": "Explicit relationships from implemented indicators to barangays, services, places/assets, budget/project records and reports where semantically valid.",
+      "maximumScope": "Explicit relationships from implemented indicators to barangays, services, places/assets, budget/project records, reports and relevant BetterGov/BetterLGU comparison or national-data resources where semantically valid.",
       "stopWhen": "A small verified set demonstrates reusable bidirectional navigation without inferred place attribution."
     },
     {
@@ -402,7 +403,7 @@
       "phase": "Cross-linking and closure",
       "title": "Connect Legislation across the site",
       "status": "planned",
-      "maximumScope": "Legislation relationships/backlinks only: services, barangays, places/assets, City Monitor, Public Records and Accountability.",
+      "maximumScope": "Legislation relationships/backlinks only: services, barangays, places/assets, City Monitor, Public Records, Accountability and relevant BetterGov national-law/context resources.",
       "stopWhen": "Users can move from a law/council record to the relevant civic entity and back without duplicate copies."
     },
     {
@@ -410,7 +411,7 @@
       "phase": "Cross-linking and closure",
       "title": "Connect Integrity evidence across the site",
       "status": "planned",
-      "maximumScope": "Integrity relationships/backlinks only: procurement, projects, Accountability, audit findings, places when source-specific and Public Records.",
+      "maximumScope": "Integrity relationships/backlinks only: procurement, projects, Accountability, audit findings, places when source-specific, Public Records and relevant BetterGov procurement/budget/benchmark resources.",
       "stopWhen": "Supplier/audit/entity evidence is reachable from the underlying record and vice versa."
     },
     {
@@ -418,7 +419,7 @@
       "phase": "Cross-linking and closure",
       "title": "Connect Reports to their underlying records",
       "status": "planned",
-      "maximumScope": "Report-related-record modules and backlinks only.",
+      "maximumScope": "Report-related-record modules and backlinks only, including relevant BetterGov/BetterLGU continuation links when they deepen the report’s evidence or comparison context.",
       "stopWhen": "Every report exposes the canonical data/record set it synthesizes, and applicable records can surface the report as analysis rather than source evidence."
     },
     {
@@ -426,7 +427,7 @@
       "phase": "Cross-linking and closure",
       "title": "Extend global Search to Civic Intelligence",
       "status": "planned",
-      "maximumScope": "Search indexing only for canonical indicators, legislation, integrity entities and reports.",
+      "maximumScope": "Search indexing only for canonical indicators, legislation, integrity entities and reports; include deliberate ecosystem handoffs without cloning BetterGov/BetterLGU records into BetterMakati search.",
       "stopWhen": "Search returns one canonical destination per entity and avoids duplicate title-only records."
     },
     {
@@ -484,5 +485,10 @@
     "planFrozen": true,
     "productImplementationStarted": false,
     "note": "W4-0 freezes the execution plan only. W4-1a is the first product-analysis micro-step."
+  },
+  "ecosystemCrosslinking": {
+    "betterGov": "National datasets, visualizations, budget, procurement/price and broader civic tools.",
+    "betterLgu": "Cross-LGU and non-Makati local-government context.",
+    "rule": "Handoff and contextualize; do not duplicate another ecosystem product’s canonical data. Keep the underlying official source visible."
   }
 }
