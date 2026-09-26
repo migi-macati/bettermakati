@@ -552,15 +552,44 @@
       "id": "W4-2d",
       "phase": "Legislation",
       "title": "Build first resolution registry batch",
-      "status": "next",
+      "status": "complete",
       "maximumScope": "One bounded official-source batch of resolutions. No ordinance expansion in the same step.",
-      "stopWhen": "The batch is source-complete for its declared period/topic and every record has a stable ID and official source."
+      "stopWhen": "The batch is source-complete for its declared period/topic and every record has a stable ID and official source.",
+      "implementationFiles": [
+        "src/data/localLegislation.ts",
+        "scripts/check-local-legislation.mjs"
+      ],
+      "batch": {
+        "id": "resolution-batch-2020-covid-response",
+        "source": "Makati City COVID-19 Recovery Plan — Annex A: City Policies and Legislation",
+        "declaredScope": "All 5 City Resolution entries in Annex A from 16 through 19 March 2020.",
+        "recordCount": 5,
+        "references": [
+          "2020-016",
+          "2020-017",
+          "2020-018",
+          "2020-019",
+          "2020-020"
+        ]
+      },
+      "validation": {
+        "sourceIntegrity": "Every resolution points to the official City Government of Makati COVID-19 Recovery Plan Annex A for reference, title-as-listed and date of approval.",
+        "evidenceBoundary": [
+          "The source's Date of Approval column remains generic other-as-stated evidence and is not converted into council approval or mayoral action.",
+          "Resolution records remain provisional until measure-level official text and lifecycle evidence are normalized.",
+          "No authors, readings, vote, effectivity, amendment/repeal state or session relationship is inferred."
+        ],
+        "completeness": "The batch contains all five City Resolution entries in the declared Annex A period and does not claim to contain every Makati resolution adopted in 2020.",
+        "existingOrdinanceIntegrity": "The prior 15-ordinance batch remains unchanged in count and official references.",
+        "regression": "check:local-legislation now validates 15/15 ordinances and 5/5 resolutions, unique references, dates, source class and non-inferential approval semantics.",
+        "focusedValidation": "Fresh source inspection finds resolution references 2020-016 through 2020-020 on 16/19 March 2020; all 20 local records have unique references; no approved-by-council or mayor-signed-approved event is present."
+      }
     },
     {
       "id": "W4-2e",
       "phase": "Legislation",
       "title": "Connect legislation to City Monitor lifecycle",
-      "status": "planned",
+      "status": "next",
       "maximumScope": "Explicit record-to-record relationships plus council-session normalization and transcript pipeline: backfill identifiable previous official session videos and ingest new official sessions; represent each session once in City Monitor; attach timestamped BetterMakati automated transcripts with provenance/model/date, allow BetterMakati reviewed transcripts, and never label generated text official. Link measures to session/video/transcript evidence only where the action is explicit. No fuzzy number/title or speaker-identity inference.",
       "stopWhen": "Previous/current session-video evidence can be normalized without the false source-gap assumption; session records have provenance-aware transcript states for backfill and new-session ingestion; and canonical measures can link to exact session/video/transcript evidence without treating automated text as an official record."
     },
@@ -790,9 +819,9 @@
     }
   ],
   "immediateNext": {
-    "id": "W4-2d",
-    "title": "Build first resolution registry batch",
-    "maximumScope": "One bounded official-source batch of resolutions. No ordinance expansion in the same step."
+    "id": "W4-2e",
+    "title": "Connect legislation to City Monitor lifecycle",
+    "maximumScope": "Explicit record-to-record relationships plus council-session normalization and transcript pipeline: backfill identifiable previous official session videos and ingest new official sessions; represent each session once in City Monitor; attach timestamped BetterMakati automated transcripts with provenance/model/date, allow BetterMakati reviewed transcripts, and never label generated text official. Link measures to session/video/transcript evidence only where the action is explicit. No fuzzy number/title or speaker-identity inference."
   },
   "inheritedKnownItems": [
     {
