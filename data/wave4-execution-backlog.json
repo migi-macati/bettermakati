@@ -552,9 +552,58 @@
       "id": "W4-3b",
       "phase": "Integrity",
       "title": "Define integrity evidence and entity schemas",
-      "status": "planned",
+      "status": "complete",
       "maximumScope": "Schema only for suppliers/contractors, awards/contracts, ownership/disclosure references, audit findings and corrective-action evidence.",
-      "stopWhen": "The model supports factual relationships without risk scores, accusations or guilt-by-association."
+      "stopWhen": "The model supports factual relationships without risk scores, accusations or guilt-by-association.",
+      "completedAt": "2026-09-26",
+      "implementationFiles": [
+        "src/data/integrityTypes.ts",
+        "scripts/check-integrity-schema.mjs",
+        "package.json"
+      ],
+      "validation": {
+        "entityKinds": [
+          "supplier",
+          "contractor",
+          "joint-venture",
+          "government-body",
+          "other-organization"
+        ],
+        "procurementSchemas": [
+          "ProcurementAwardRecord",
+          "ProcurementContractRecord"
+        ],
+        "disclosureKinds": [
+          "beneficial-ownership",
+          "legal-ownership",
+          "conflict-of-interest",
+          "recusal",
+          "related-party",
+          "other-disclosure"
+        ],
+        "disclosureAvailability": [
+          "source-backed",
+          "unavailable",
+          "restricted",
+          "not-applicable",
+          "not-researched"
+        ],
+        "evidenceAvailability": [
+          "documented",
+          "source-not-found",
+          "source-inaccessible",
+          "restricted",
+          "not-researched",
+          "not-applicable"
+        ],
+        "auditContinuityBasis": [
+          "explicit-finding-reference",
+          "explicit-recommendation-reference",
+          "exact-record-reference",
+          "unresolved"
+        ],
+        "guardrail": "Schema contains no risk, corruption, suspicion or guilt scoring. A source-backed disclosure requires at least one explicit source ID; an unresolved audit trail requires a reason."
+      }
     },
     {
       "id": "W4-3c",
@@ -741,11 +790,11 @@
       "stopWhen": "Wave 4 is closed only to the extent supported by evidence, with future work reopened as specific capabilities rather than vague unfinished work."
     }
   ],
-  "current": "W4-3b",
+  "current": "W4-3c",
   "immediateNext": {
-    "id": "W4-3b",
-    "title": "Define integrity evidence and entity schemas",
-    "maximumScope": "Schema only for suppliers/contractors, awards/contracts, ownership/disclosure references, audit findings and corrective-action evidence."
+    "id": "W4-3c",
+    "title": "Normalize supplier and contractor entities",
+    "maximumScope": "Existing Makati procurement records only. Create canonical entity identities and award relationships; no beneficial-ownership research yet."
   },
   "carriedForward": [
     {
