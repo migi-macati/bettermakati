@@ -8,7 +8,7 @@ import LastReviewed from '../components/ui/LastReviewed';
 import SharePage from '../components/ui/SharePage';
 import PhotoCarousel from '../components/ui/PhotoCarousel';
 import CitizenSummary from '../components/ui/CitizenSummary';
-import { cityImages } from '../data/cityImages';
+import { governmentImageSet } from '../data/cityImages';
 import {
   cityExecutiveOfficials,
   congressionalOfficials,
@@ -88,7 +88,7 @@ export default function Government() {
           the 2025 ballot rather than an inferred current affiliation.
         </Text>
         <PhotoCarousel
-          images={[cityImages.cityHall]}
+          images={governmentImageSet}
           title="City government"
           compact
           className="mt-8"
