@@ -406,6 +406,11 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Invalid Civic Map contribution type.' });
   }
   const locationOnly = payload.locationMode === 'location-only';
+  if (locationOnly && kind !== 'report') {
+    return res.status(400).json({
+      error: 'Location-only submissions are supported for problem reports only.',
+    });
+  }
   if (locationOnly) {
     if (!payload.locationLabel || payload.lat === null || payload.lng === null) {
       return res.status(400).json({
