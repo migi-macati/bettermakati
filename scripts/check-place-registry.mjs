@@ -234,7 +234,7 @@ for (const forbidden of [
 }
 
 if (!searchIndexSource.includes(
-  "Browse sourced civic places, report non-emergency problems, suggest improvements and help document Makati."
+  "Browse civic places, bounded infrastructure segments and transport routes; report non-emergency problems and suggest improvements."
 )) {
   problems.push('Civic Map search entry still uses the retired rating-first description.');
 }
@@ -283,13 +283,13 @@ if (!civicDiscussion.includes('Cases, proposals & updates')) {
 for (const marker of [
   "navigator.geolocation.getCurrentPosition",
   "placesWithinDistance(",
+  "place.entityKind !== 'place'",
   "place.verification.status !== 'verified'",
-  "place.primaryCategory === 'transport-route'",
   "0.25",
   "0.5",
   ".slice(0, 5)",
   "None of these — report this location",
-  "Search for a place or street",
+  "Search the civic registry",
   "Choose the location manually",
   "Location selected",
 ]) {
@@ -314,7 +314,8 @@ for (const marker of [
   "fetch('/api/civic'",
   "method: 'POST'",
   "locationMode",
-  "placeId: place?.id ?? ''",
+  "entityId: place?.id ?? ''",
+  "entityKind: place?.entityKind ?? ''",
   "assetId: place?.id ?? ''",
   "lat: roundCoordinate(point.lat)",
   "lng: roundCoordinate(point.lng)",
@@ -328,13 +329,14 @@ for (const marker of [
 
 for (const marker of [
   "locationMode: clean(req.body?.locationMode, 30)",
-  "placeId: clean(req.body?.placeId, 120)",
+  "entityId: clean(req.body?.entityId, 120)",
+  "entityKind: clean(req.body?.entityKind, 20)",
   "const locationOnly = payload.locationMode === 'location-only'",
   "locationOnly && kind !== 'report'",
-  "payload.placeId = ''",
+  "payload.entityId = ''",
   "payload.assetId = ''",
-  "payload.placeId = payload.assetId",
-  "locationOnly ? true : meta.assetId === payload.assetId",
+  "payload.entityId = payload.entityId || payload.assetId",
+  "meta.entityId || meta.placeId || meta.assetId",
   "distance !== null && distance <= 75",
   "roundCoordinate(parseNumber(req.body?.lat))",
   "roundCoordinate(parseNumber(req.body?.lng))",
@@ -365,7 +367,9 @@ for (const marker of [
 }
 
 for (const marker of [
-  "item.meta?.placeId === assetId || item.meta?.assetId === assetId",
+  "item.meta?.entityId === assetId",
+  "item.meta?.placeId === assetId",
+  "item.meta?.assetId === assetId",
   "setLifecycle(data.lifecycle ?? null)",
   "Case lifecycle",
   "Step {lifecycleStep(lifecycle.status)} of 6",
@@ -379,8 +383,9 @@ for (const marker of [
 
 for (const marker of [
   "['OWNER', 'MEMBER', 'COLLABORATOR'].includes(comment.author_association)",
-  "meta.placeId || meta.assetId || null",
-  "meta.locationMode || (placeId ? 'matched-place' : 'location-only')",
+  "meta.entityId || meta.placeId || meta.assetId || null",
+  "meta.entityKind || (meta.placeId ? 'place' : null)",
+  "'matched-entity'",
   "['forwarded', 'acknowledged', 'action-reported', 'community-verified-resolved']",
   "evidenceStatus",
   "adminEvents",
@@ -392,9 +397,11 @@ for (const marker of [
 
 for (const marker of [
   'Recent issue cases',
-  "item.placeId ?? item.meta.placeId ?? null",
+  "item.entityId ??",
+  "item.meta.entityId ??",
   "item.locationMode ??",
-  "to={'/civic-map/' + placeId}",
+  "to={'/civic-map/' + entityId}",
+  'Record details',
   'Location only',
   'Authority acknowledged',
   'Action reported',
