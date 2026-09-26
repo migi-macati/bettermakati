@@ -1,69 +1,64 @@
-import { BarChart3, FileText, PhoneCall, MapPin } from 'lucide-react';
+import { BarChart3, FileText, Landmark, MapPin } from 'lucide-react';
 import { Link } from 'react-router';
-import CityPhoto from '../ui/CityPhoto';
 import ServiceSearch from '../home/ServiceSearch';
 
 export default function Hero() {
   return (
-    <section className="makati-hero overflow-visible">
-      <div className="container px-5 md:px-6 lg:px-8 py-10 md:py-14 lg:py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-[1.08fr_0.92fr] gap-8 lg:gap-10 items-center">
-          <div className="min-w-0">
-            <div className="section-eyebrow">BetterMakati</div>
-            <h1 className="max-w-3xl text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.05] text-gray-950">
-              What do you need in Makati?
-            </h1>
-            <p className="mt-4 max-w-2xl text-base md:text-lg leading-relaxed text-gray-900">
-              Services, places, barangays, public records, participation and city information.
-            </p>
-
-            <div className="mt-7">
-              <ServiceSearch
-                scope="site"
-                title="Search BetterMakati"
-                placeholder="Try Yellow Card, Poblacion, budget, cinema..."
-              />
-            </div>
-
-            <div className="mt-6 flex flex-wrap gap-x-5 gap-y-3 text-sm">
-              <Link to="/civic-map#places" className="hero-principle hover:text-primary-800">
-                <MapPin className="h-4 w-4 text-primary-700" aria-hidden="true" />
-                Report or rate a place
-              </Link>
-              <Link
-                to="/hotlines"
-                className="hero-principle hover:text-primary-800"
-              >
-                <PhoneCall
-                  className="h-4 w-4 text-primary-700"
-                  aria-hidden="true"
-                />
-                Hotlines
-              </Link>
-              <Link
-                to="/projects-budget"
-                className="hero-principle hover:text-primary-800"
-              >
-                <FileText
-                  className="h-4 w-4 text-primary-700"
-                  aria-hidden="true"
-                />
-                Budgets & projects
-              </Link>
-              <Link
-                to="/statistics"
-                className="hero-principle hover:text-primary-800"
-              >
-                <BarChart3
-                  className="h-4 w-4 text-primary-700"
-                  aria-hidden="true"
-                />
-                City statistics
-              </Link>
-            </div>
+    <section className="overflow-visible border-b border-primary-900 bg-primary-800 text-white">
+      <div className="container px-5 py-12 md:px-6 md:py-16 lg:px-8 lg:py-20">
+        <div className="max-w-4xl">
+          <div className="mb-3 text-xs font-extrabold uppercase tracking-[0.12em] text-secondary-400 md:text-sm">
+            Makati City · Civic Guide
           </div>
 
-          <CityPhoto priority />
+          <h1 className="max-w-4xl text-5xl font-extrabold leading-[0.98] tracking-tight text-white md:text-6xl lg:text-7xl">
+            Let&apos;s make Makati{' '}
+            <span className="text-secondary-500">Better!</span>
+          </h1>
+
+          <p className="mt-5 max-w-3xl text-lg leading-relaxed text-primary-50 md:text-xl">
+            Find services, explore places and barangays, check public records and
+            projects, and take part in city life.
+          </p>
+
+          <div className="mt-8 max-w-3xl">
+            <ServiceSearch
+              scope="site"
+              title="What can we help you find?"
+              placeholder="Try Yellow Card, Poblacion, business permit, budget..."
+            />
+          </div>
+
+          <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm md:text-base">
+            <Link
+              to="/services"
+              className="hero-principle font-semibold text-white transition hover:text-secondary-300"
+            >
+              <Landmark className="h-4 w-4 text-secondary-400" aria-hidden="true" />
+              Find a service
+            </Link>
+            <Link
+              to="/barangays"
+              className="hero-principle font-semibold text-white transition hover:text-secondary-300"
+            >
+              <MapPin className="h-4 w-4 text-secondary-400" aria-hidden="true" />
+              Explore barangays
+            </Link>
+            <Link
+              to="/projects-budget"
+              className="hero-principle font-semibold text-white transition hover:text-secondary-300"
+            >
+              <FileText className="h-4 w-4 text-secondary-400" aria-hidden="true" />
+              Budgets &amp; projects
+            </Link>
+            <Link
+              to="/statistics"
+              className="hero-principle font-semibold text-white transition hover:text-secondary-300"
+            >
+              <BarChart3 className="h-4 w-4 text-secondary-400" aria-hidden="true" />
+              City statistics
+            </Link>
+          </div>
         </div>
       </div>
     </section>
