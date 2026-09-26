@@ -1,0 +1,413 @@
+{
+  "schemaVersion": 1,
+  "researchedAt": "2026-09-26",
+  "workstream": "W4-1c — Inventory population and demographic sources",
+  "status": "official-source-inventory",
+  "scope": "Official Philippine Statistics Authority sources only. This step inventories usable population/demographic series and geography constraints; it does not implement indicator data.",
+  "geographyRule": "Prefer current 23-barangay Makati. Historical values are usable only when the official source explicitly restates/excludes the 10 barangays transferred to Taguig or when a current-boundary aggregate can be reproduced from canonical barangay observations.",
+  "officialSources": [
+    {
+      "id": "psa-psgc-makati-current",
+      "publisher": "Philippine Statistics Authority",
+      "title": "City of Makati — Philippine Standard Geographic Code",
+      "url": "https://psa.gov.ph/classification/psgc/barangays/1380300000",
+      "checkedAt": "2026-09-26",
+      "usableFor": [
+        "2024 total population",
+        "23 current Makati barangays",
+        "2024 population by barangay",
+        "urban/rural classification by barangay",
+        "current income classification"
+      ],
+      "geography": "Current Makati: 23 barangays.",
+      "decision": "implement/reuse",
+      "note": "Use barangays.ts as the canonical Makati barangay identity layer; do not duplicate the 23 population values inside Statistics."
+    },
+    {
+      "id": "psa-openstat-population-growth-2024",
+      "publisher": "Philippine Statistics Authority",
+      "title": "Population and Annual Population Growth Rate based on the 2010, 2015, 2020 and 2024 censuses",
+      "url": "https://openstat.psa.gov.ph/PXWeb/pxweb/en/DB/DB__1A__PO_2024/0211A6DAPG0.px/",
+      "matrix": "1A6DAPG0",
+      "checkedAt": "2026-09-26",
+      "usableFor": [
+        "comparable total population 2010, 2015, 2020, 2024",
+        "annual population growth rates between census periods"
+      ],
+      "geography": "HUC/city series; Makati is explicitly footnoted as excluding the 10 barangays transferred to Taguig.",
+      "decision": "implement",
+      "note": "This is the preferred historical city population series because the source explicitly handles the Makati/Taguig boundary break."
+    },
+    {
+      "id": "psa-openstat-households-ncr-2024",
+      "publisher": "Philippine Statistics Authority",
+      "title": "Total Population, Household Population, and Number of Households by Province, City, Municipality, and Barangay as of 01 July 2024 — NCR",
+      "url": "https://openstat.psa.gov.ph/PXWeb/pxweb/en/DB/DB__1A__PO_2024/0171A6DTHP6.px/",
+      "matrix": "1A6DTHP6",
+      "checkedAt": "2026-09-26",
+      "usableFor": [
+        "2024 total population by current barangay",
+        "2024 household population by current barangay",
+        "2024 number of households by current barangay",
+        "city totals derived from the current 23 barangays"
+      ],
+      "geography": "NCR city/municipality/barangay. The source separately identifies transferred Embo barangays under Taguig.",
+      "decision": "implement",
+      "note": "This is the strongest candidate for expanding BetterBarangay statistics beyond total population while preserving canonical barangay scope."
+    },
+    {
+      "id": "psa-openstat-household-size-2024",
+      "publisher": "Philippine Statistics Authority",
+      "title": "Total Population, Household Population, Number of Households and Average Household Size by Region, Province, and Highly Urbanized City: Philippines, 2024",
+      "url": "https://openstat.psa.gov.ph/PXWeb/pxweb/en/DB/DB__1A__PO_2024/0191A6DTHP8.px/",
+      "matrix": "1A6DTHP8",
+      "checkedAt": "2026-09-26",
+      "usableFor": [
+        "2024 city household population",
+        "2024 number of households",
+        "2024 average household size"
+      ],
+      "geography": "HUC/city; Makati current-boundary treatment follows the 2024 POPCEN transfer notes.",
+      "decision": "implement",
+      "note": "For citywide average household size, prefer the published PSA value. Barangay average household size may be explicitly derived from household population / household count if needed."
+    },
+    {
+      "id": "psa-openstat-age-sex-2024",
+      "publisher": "Philippine Statistics Authority",
+      "title": "Household Population by Age-Group, Region, Province, and Highly Urbanized City: Philippines, 2024 Census of Population",
+      "url": "https://openstat.psa.gov.ph/PXWeb/pxweb/en/DB/DB__1A__PO_2024/0201A6DPAG0.px/",
+      "matrix": "1A6DPAG0",
+      "checkedAt": "2026-09-26",
+      "usableFor": [
+        "2024 Makati household population by age group",
+        "2024 Makati household population by sex",
+        "age/sex shares derived from published counts"
+      ],
+      "geography": "HUC/city only. The table explicitly footnotes Makati as excluding the 10 transferred barangays.",
+      "decision": "implement-city-only",
+      "note": "Do not imply barangay-level age/sex detail from this HUC-level table."
+    },
+    {
+      "id": "psa-openstat-density-2024",
+      "publisher": "Philippine Statistics Authority",
+      "title": "Population, Land Area, Population Density, and Percent Change in Population Density: 2015, 2020, and 2024",
+      "url": "https://openstat.psa.gov.ph/PXWeb/pxweb/en/DB/DB__1A__PO_2024/0221A6DLPD0.px/",
+      "matrix": "1A6DLPD0",
+      "checkedAt": "2026-09-26",
+      "usableFor": [
+        "current-boundary city land area",
+        "population density 2015, 2020, 2024",
+        "change in population density"
+      ],
+      "geography": "HUC/city. Makati is explicitly footnoted as excluding the 10 transferred barangays.",
+      "decision": "implement",
+      "note": "Prefer this current-boundary density series over older publications whose Makati land area/population may reflect the former 33-barangay city."
+    },
+    {
+      "id": "psa-population-legislative-districts-2024",
+      "publisher": "Philippine Statistics Authority",
+      "title": "Population of Legislative Districts based on the 2024 Census of Population",
+      "url": "https://psa.gov.ph/content/highlights-population-legislative-districts-philippines-based-2024-census-population-2024",
+      "checkedAt": "2026-09-26",
+      "usableFor": [
+        "2024 population by Makati legislative district"
+      ],
+      "geography": "2024 legislative-district geography; official release identifies Makati as having two districts and reports the Second District at 40,444 persons.",
+      "decision": "hold-for-government-context",
+      "note": "Useful for Government/Elections/BetterBarangay context, but not a priority headline Statistics indicator. Import only from the full official table, not by subtracting one district from the city total."
+    },
+    {
+      "id": "psa-2024-statistical-tables-index",
+      "publisher": "Philippine Statistics Authority",
+      "title": "2024 Census of Population statistical tables",
+      "url": "https://psa.gov.ph/statistics/population-and-housing/stat-tables",
+      "checkedAt": "2026-09-26",
+      "usableFor": [
+        "2024 age and sex release",
+        "2024 household population/households release",
+        "2024 institutional population release",
+        "2024 urban population release",
+        "2024 density release and errata"
+      ],
+      "geography": "Varies by table.",
+      "decision": "source-discovery-only",
+      "note": "Use the specific table/matrix as the indicator source whenever possible; keep this page as the release index."
+    },
+    {
+      "id": "psa-rsso-makati-2020-profile-legacy",
+      "publisher": "Philippine Statistics Authority — NCR",
+      "title": "Countryside in Figures / City of Makati profile using 2020 CPH",
+      "url": "https://rssoncr.psa.gov.ph/sites/default/files/CIF%20CITY%20OF%20MAKATI%202022.pdf",
+      "checkedAt": "2026-09-26",
+      "usableFor": [
+        "historical reference only"
+      ],
+      "geography": "Former Makati geography including the transferred barangays; the profile reports 2020 household population on the old city boundary.",
+      "decision": "reject-for-current-city-demographic-trends",
+      "note": "Do not use its citywide age/sex or household totals as comparable current-Makati values. A legacy table may be used only if explicitly labeled historical-33 or if current 23-barangay values can be reconstructed from sufficiently granular official observations."
+    }
+  ],
+  "candidateIndicators": [
+    {
+      "id": "population-total",
+      "decision": "implement",
+      "level": [
+        "city",
+        "barangay"
+      ],
+      "periods": [
+        "2010",
+        "2015",
+        "2020",
+        "2024 city series",
+        "2024 barangay"
+      ],
+      "ownerPattern": "city indicator derived/reference + canonical barangay data",
+      "sources": [
+        "psa-openstat-population-growth-2024",
+        "psa-psgc-makati-current",
+        "psa-openstat-households-ncr-2024"
+      ]
+    },
+    {
+      "id": "population-growth-rate",
+      "decision": "implement",
+      "level": [
+        "city"
+      ],
+      "periods": [
+        "2010–2015",
+        "2015–2020",
+        "2020–2024"
+      ],
+      "ownerPattern": "city indicator",
+      "sources": [
+        "psa-openstat-population-growth-2024"
+      ]
+    },
+    {
+      "id": "household-population",
+      "decision": "implement",
+      "level": [
+        "city",
+        "barangay"
+      ],
+      "periods": [
+        "2024"
+      ],
+      "ownerPattern": "canonical-reference to official 2024 census observations",
+      "sources": [
+        "psa-openstat-households-ncr-2024",
+        "psa-openstat-household-size-2024"
+      ]
+    },
+    {
+      "id": "number-of-households",
+      "decision": "implement",
+      "level": [
+        "city",
+        "barangay"
+      ],
+      "periods": [
+        "2024"
+      ],
+      "ownerPattern": "canonical-reference to official 2024 census observations",
+      "sources": [
+        "psa-openstat-households-ncr-2024",
+        "psa-openstat-household-size-2024"
+      ]
+    },
+    {
+      "id": "average-household-size",
+      "decision": "implement",
+      "level": [
+        "city",
+        "barangay-derived"
+      ],
+      "periods": [
+        "2024"
+      ],
+      "ownerPattern": "published city value; explicit derived barangay value if shown",
+      "sources": [
+        "psa-openstat-household-size-2024",
+        "psa-openstat-households-ncr-2024"
+      ]
+    },
+    {
+      "id": "age-group-population",
+      "decision": "implement-city-only",
+      "level": [
+        "city"
+      ],
+      "periods": [
+        "2024"
+      ],
+      "ownerPattern": "city indicator series",
+      "sources": [
+        "psa-openstat-age-sex-2024"
+      ]
+    },
+    {
+      "id": "sex-distribution",
+      "decision": "implement-city-only",
+      "level": [
+        "city"
+      ],
+      "periods": [
+        "2024"
+      ],
+      "ownerPattern": "city indicator series",
+      "sources": [
+        "psa-openstat-age-sex-2024"
+      ]
+    },
+    {
+      "id": "population-density",
+      "decision": "implement",
+      "level": [
+        "city"
+      ],
+      "periods": [
+        "2015",
+        "2020",
+        "2024"
+      ],
+      "ownerPattern": "city indicator series",
+      "sources": [
+        "psa-openstat-density-2024"
+      ]
+    },
+    {
+      "id": "land-area-current-boundary",
+      "decision": "implement-as-geography-metadata",
+      "level": [
+        "city"
+      ],
+      "periods": [
+        "current/source-basis"
+      ],
+      "ownerPattern": "geography metadata / supporting indicator",
+      "sources": [
+        "psa-openstat-density-2024"
+      ]
+    },
+    {
+      "id": "legislative-district-population",
+      "decision": "hold",
+      "level": [
+        "legislative-district"
+      ],
+      "periods": [
+        "2024"
+      ],
+      "ownerPattern": "government-context indicator",
+      "sources": [
+        "psa-population-legislative-districts-2024"
+      ]
+    },
+    {
+      "id": "urban-population-share",
+      "decision": "hold-low-value",
+      "level": [
+        "city"
+      ],
+      "periods": [
+        "2024"
+      ],
+      "ownerPattern": "geography metadata",
+      "sources": [
+        "psa-psgc-makati-current",
+        "psa-2024-statistical-tables-index"
+      ],
+      "note": "All current Makati barangays are classified Urban in PSGC; this is more useful as geography metadata than as a headline metric."
+    },
+    {
+      "id": "institutional-population",
+      "decision": "hold",
+      "level": [
+        "city"
+      ],
+      "periods": [
+        "2024"
+      ],
+      "ownerPattern": "city demographic indicator",
+      "sources": [
+        "psa-2024-statistical-tables-index"
+      ],
+      "note": "Authoritative 2024 release exists, but it is lower priority than household/age/sex indicators for the first implementation batch."
+    },
+    {
+      "id": "legacy-2020-city-age-sex",
+      "decision": "reject",
+      "level": [
+        "city"
+      ],
+      "periods": [
+        "2020"
+      ],
+      "ownerPattern": "none",
+      "sources": [
+        "psa-rsso-makati-2020-profile-legacy"
+      ],
+      "note": "Old-boundary city totals cannot be mixed with current-boundary Makati."
+    }
+  ],
+  "comparabilityRules": [
+    "The 2010/2015/2020/2024 city population trend may be used only from a PSA series that explicitly excludes the 10 transferred barangays for Makati.",
+    "Never use the old 629,616-style 2020 city total or its associated demographic tables as current-boundary Makati without an explicit historical-33 label.",
+    "Do not derive missing barangay demographic detail from a city/HUC table.",
+    "A city total may be derived from canonical barangay observations only when all 23 current barangays are present for the same indicator, period and definition.",
+    "Average household size may be derived only from household population divided by household count for the same geography/period; missing counts are not zero.",
+    "Legislative-district population must come from the official district table, not subtraction from the city total.",
+    "If PSA issues an erratum/revision, the indicator revision metadata must retain the previous version/date and point to the revised source."
+  ],
+  "implementationBatchRecommendation": {
+    "implementFirst": [
+      "population-total",
+      "population-growth-rate",
+      "household-population",
+      "number-of-households",
+      "average-household-size",
+      "age-group-population",
+      "sex-distribution",
+      "population-density",
+      "land-area-current-boundary"
+    ],
+    "hold": [
+      "legislative-district-population",
+      "urban-population-share",
+      "institutional-population"
+    ],
+    "reject": [
+      "legacy-2020-city-age-sex"
+    ],
+    "rationale": "This batch materially broadens the current Statistics product while keeping every implemented value on an explicit current-boundary or current-barangay basis."
+  },
+  "crossFunctionReuse": [
+    {
+      "target": "BetterBarangay",
+      "use": "2024 household population, household count and explicitly derived household size by canonical barangay where the official table supplies the inputs."
+    },
+    {
+      "target": "Government / Elections",
+      "use": "Legislative-district population only if imported from the full official district table."
+    },
+    {
+      "target": "Reports & Insights",
+      "use": "Reports should reference indicator IDs and dated values rather than becoming a second demographic datastore."
+    },
+    {
+      "target": "Place Registry",
+      "use": "No demographic count is derived from Place Registry. Future place links may contextualize a sourced indicator but do not establish demographic denominators."
+    },
+    {
+      "target": "BetterGov ecosystem",
+      "use": "Map implemented indicator families to relevant BetterGov national-data/visualization resources and BetterLGU comparison destinations during W4-5 cross-linking; keep PSA as the visible primary source."
+    }
+  ],
+  "nextStep": {
+    "id": "W4-1d",
+    "title": "Inventory economic and business indicators",
+    "maximumScope": "Official-source research only for GDP/economic structure, establishments/employment/business indicators that can be stated consistently."
+  }
+}
