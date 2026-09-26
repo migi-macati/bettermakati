@@ -8,6 +8,7 @@ export interface VisitorPlace {
     | 'District';
   summary: string;
   mapsQuery: string;
+  placeId?: string;
   sourceUrl: string;
   sourceLabel: string;
 }
@@ -19,6 +20,7 @@ export interface HeritageSite {
   period: string;
   summary: string;
   mapsQuery: string;
+  placeId?: string;
   sourceUrl: string;
   sourceLabel: string;
 }
@@ -65,6 +67,7 @@ export const visitorPlaces: VisitorPlace[] = [
     category: 'Parks',
     summary: 'Urban park and walking space in the central business district.',
     mapsQuery: 'Ayala Triangle Gardens Makati',
+    placeId: 'ayala-triangle-gardens',
     sourceUrl:
       'https://www.tourism.gov.ph/destination/national-capital-region/makati/',
     sourceLabel: 'Department of Tourism',
@@ -136,6 +139,7 @@ export const heritageSites: HeritageSite[] = [
     summary:
       'Makati cultural institution housed in a heritage structure in Poblacion.',
     mapsQuery: 'Museo ng Makati',
+    placeId: 'museo-ng-makati',
     sourceUrl:
       'https://www.makati.gov.ph/assets/uploads/downloads/2/45/561/pdf/Facts%20and%20FIgures%202020.pdf',
     sourceLabel: 'City of Makati',
