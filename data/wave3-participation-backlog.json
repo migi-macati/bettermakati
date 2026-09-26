@@ -1135,12 +1135,55 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Implement nearby place matching",
       "maximumScope": "Location-to-nearby-place selection only. Do not modify report submission yet.",
-      "status": "next",
+      "status": "complete",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
       ],
-      "stopWhen": "Location-to-nearby-place selection only. Do not modify report submission yet."
+      "stopWhen": "Location-to-nearby-place selection only. Do not modify report submission yet.",
+      "implementationFiles": [
+        "src/pages/CivicNearbyReport.tsx",
+        "src/App.tsx"
+      ],
+      "validation": {
+        "implementationFiles": [
+          "src/pages/CivicNearbyReport.tsx",
+          "src/App.tsx"
+        ],
+        "route": "/civic-map/report",
+        "promotion": "The route is intentionally not linked from the Civic Map yet; W3R-5c will expose it when report submission is connected.",
+        "locationChoices": [
+          "Use my current location",
+          "Search for a place or street",
+          "Choose the location manually"
+        ],
+        "permissionBehavior": "Browser geolocation is requested only from the Use my current location button. Denied/unavailable states keep search and manual-coordinate alternatives available.",
+        "nearbyMatching": {
+          "verifiedOnly": true,
+          "excludesClosedAndFuture": true,
+          "excludesServesMakatiOutside": true,
+          "excludesTransportRouteFromAutomaticMatching": true,
+          "initialRadiusMeters": 250,
+          "expandedRadiusMeters": 500,
+          "maximumCandidates": 5,
+          "autoSelect": false
+        },
+        "manualSearch": "Verified registry places are searchable by name, summary, barangay, address, aliases and tags.",
+        "locationOnly": "After a point is chosen, the user can explicitly select None of these — report this location. No synthetic place ID is created.",
+        "representativeValidation": {
+          "origin": "Makati Poblacion Park",
+          "within250m": [
+            "Makati Poblacion Park · 0 m",
+            "Poblacion Fire Sub-Station · ~68 m",
+            "Poblacion Public Market · ~211 m"
+          ],
+          "searchQuery": "poblacion",
+          "searchResolvesExpectedLocalPlaces": true
+        },
+        "submissionBoundary": "CivicNearbyReport contains no /api/civic fetch or POST submission code.",
+        "guardrail": "scripts/check-place-registry.mjs now guards geolocation-on-action, verified nearby filtering, 250/500 m radii, five-candidate cap, location-only option, route registration, no submission and no premature Civic Map promotion.",
+        "ci": "Latest CI reports only the same three pre-existing unused-import ESLint errors. No new lint errors are reported for CivicNearbyReport.tsx, App.tsx or the Place Registry guardrail; repo build remains skipped behind the baseline lint failure."
+      }
     },
     {
       "id": "W3R-5c",
@@ -1149,7 +1192,7 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Connect nearby reporting to existing civic submission",
       "maximumScope": "Reporting flow only. Preserve emergency handling, duplicate detection, barangay context, evidence and tracking. Stop after focused E2E validation.",
-      "status": "planned",
+      "status": "next",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
@@ -1556,9 +1599,9 @@
     }
   ],
   "immediateNext": {
-    "id": "W3R-5b",
-    "title": "Implement nearby place matching",
-    "maximumScope": "Location selection and candidate matching only. Do not connect report submission yet."
+    "id": "W3R-5c",
+    "title": "Connect nearby reporting to existing civic submission",
+    "maximumScope": "Reporting flow only. Preserve emergency handling, duplicate detection, barangay context, evidence and tracking. Stop after focused E2E validation."
   },
   "reopenedExecutionOrder": [
     "3C-2a",
