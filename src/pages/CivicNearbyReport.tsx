@@ -29,7 +29,7 @@ type GeolocationState =
   | 'unavailable';
 
 type LocationSource = 'device' | 'manual-pin' | 'place-search' | 'none';
-type PlaceMatchState = 'confirmed-place' | 'location-only' | 'unresolved';
+type EntityMatchState = 'confirmed-entity' | 'location-only' | 'unresolved';
 
 interface ReportLocationState {
   source: LocationSource;
@@ -40,7 +40,7 @@ interface ReportLocationState {
 const eligibleNearbyPlaces = placeRegistry.filter(place => {
   if (place.entityKind !== 'place') return false;
   if (place.verification.status !== 'verified') return false;
-  if (!place.location.point) return false;
+  if (!entity.location.point) return false;
   if (place.lifecycle.status === 'closed' || place.lifecycle.status === 'future') return false;
   if (place.location.relationToMakati === 'serves-makati-outside') return false;
   return true;
@@ -94,8 +94,8 @@ export default function CivicNearbyReport() {
     point: null,
     accuracyMeters: null,
   });
-  const [matchState, setMatchState] = useState<PlaceMatchState>('unresolved');
-  const [selectedPlace, setSelectedPlace] = useState<PlaceRegistryRecord | null>(null);
+  const [matchState, setMatchState] = useState<EntityMatchState>('unresolved');
+  const [selectedEntity, setSelectedEntity] = useState<PlaceRegistryRecord | null>(null);
   const [query, setQuery] = useState('');
   const [manualLat, setManualLat] = useState('');
   const [manualLng, setManualLng] = useState('');
@@ -132,7 +132,7 @@ export default function CivicNearbyReport() {
   }, [query]);
 
   const resetMatch = () => {
-    setSelectedPlace(null);
+    setSelectedEntity(null);
     setMatchState('unresolved');
   };
 
@@ -197,18 +197,18 @@ export default function CivicNearbyReport() {
     setManualError('');
   };
 
-  const choosePlace = (place: PlaceRegistryRecord) => {
-    setSelectedPlace(place);
-    setMatchState('confirmed-place');
+  const chooseEntity = (entity: PlaceRegistryRecord) => {
+    setSelectedEntity(entity);
+    setMatchState('confirmed-entity');
     setLocation(current => ({
       source: current.source === 'none' ? 'place-search' : current.source,
-      point: current.point ?? place.location.point ?? null,
+      point: current.point ?? entity.location.point ?? null,
       accuracyMeters: current.accuracyMeters,
     }));
   };
 
   const chooseLocationOnly = () => {
-    setSelectedPlace(null);
+    setSelectedEntity(null);
     setMatchState('location-only');
   };
 
@@ -327,12 +327,12 @@ export default function CivicNearbyReport() {
           {nearbyCandidates.length > 0 ? (
             <div className="mt-6 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
               {nearbyCandidates.map(({ place, distanceKm }) => {
-                const selected = selectedPlace?.id === place.id;
+                const selected = selectedEntity?.id === entity.id;
                 return (
                   <button
-                    key={place.id}
+                    key={entity.id}
                     type="button"
-                    onClick={() => choosePlace(place)}
+                    onClick={() => chooseEntity(place)}
                     className={
                       selected
                         ? 'rounded-2xl border border-primary-500 bg-primary-50 p-5 text-left ring-2 ring-primary-100'
@@ -403,12 +403,12 @@ export default function CivicNearbyReport() {
         {query.trim() && (
           <div className="mt-5 grid gap-3 md:grid-cols-2">
             {searchResults.map(place => {
-              const selected = selectedPlace?.id === place.id;
+              const selected = selectedEntity?.id === entity.id;
               return (
                 <button
-                  key={place.id}
+                  key={entity.id}
                   type="button"
-                  onClick={() => choosePlace(place)}
+                  onClick={() => chooseEntity(place)}
                   className={
                     selected
                       ? 'rounded-xl border border-primary-500 bg-primary-50 p-4 text-left ring-2 ring-primary-100'
@@ -487,8 +487,8 @@ export default function CivicNearbyReport() {
               <div>
                 <div className="font-extrabold text-gray-950">Location selected</div>
                 <p className="mt-1 text-sm leading-relaxed text-gray-700">
-                  {matchState === 'confirmed-place' && selectedPlace
-                    ? selectedPlace.name
+                  {matchState === 'confirmed-entity' && selectedEntity
+                    ? selectedEntity.name
                     : 'Location only — no canonical place selected.'}
                 </p>
               </div>
@@ -497,8 +497,8 @@ export default function CivicNearbyReport() {
 
           <div className="max-w-4xl">
             <CivicNearbyReportForm
-              key={(selectedPlace?.id ?? 'location-only') + ':' + pointLabel(location.point)}
-              place={matchState === 'confirmed-place' ? selectedPlace : null}
+              key={(selectedEntity?.id ?? 'location-only') + ':' + pointLabel(location.point)}
+              entity={matchState === 'confirmed-entity' ? selectedEntity : null}
               point={location.point}
             />
           </div>
