@@ -11,6 +11,7 @@ import {
 interface StoredObservation {
   id: number;
   entityId: string;
+  entityKind?: 'place' | 'segment' | 'route';
   familyId: string;
   questionSetId: string;
   observedAt: string;
