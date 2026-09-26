@@ -1191,20 +1191,48 @@
     {
       "id": "W3R-11e",
       "title": "Run mobile and accessibility pass",
-      "status": "next",
-      "maximumScope": "Redesigned Wave 3 surfaces only. Fix only defects found."
+      "status": "complete",
+      "maximumScope": "Redesigned Wave 3 surfaces only. Fix only defects found.",
+      "implementationFiles": [
+        "src/components/civic/CivicDiscussion.tsx",
+        "src/components/civic/NearMePlaces.tsx",
+        "src/pages/GetInvolved.tsx",
+        "scripts/audit-wave3-mobile-accessibility.mjs",
+        "package.json"
+      ],
+      "validation": {
+        "scope": "13 redesigned Wave 3 page/component surfaces plus the shared UI accessibility baseline in src/index.css.",
+        "defectsFixed": [
+          "CivicDiscussion quick actions and text-action controls included 40px or smaller mobile touch targets. Interactive actions now use at least min-h-11 (44px) in the redesigned discussion flow.",
+          "CivicDiscussion asynchronous feed/loading/reply-empty failure states were visually present but not consistently announced. Loading states now use role=status and failures use role=alert/dynamic alert semantics.",
+          "NearMePlaces changed geolocation state and nearby results without a dedicated live announcement. The component now exposes aria-busy, a polite live status, and an alert for denied/unavailable location.",
+          "The Get Involved emergency phone link was a small inline text target. It now has a 44px minimum mobile target while retaining the direct tel:911 action."
+        ],
+        "existingBaselineConfirmed": [
+          "global focus-visible outline for links, buttons and form controls",
+          "prefers-reduced-motion handling",
+          "44px shared brand-button minimum height",
+          "44px shared form-control minimum height",
+          "hidden honeypot fields removed from keyboard order and accessibility tree",
+          "nearby-report and observation forms expose submitting/status semantics",
+          "no hard w-[...], min-w-[...] or whitespace-nowrap mobile locks were found across the 13 scoped Wave 3 surfaces"
+        ],
+        "regressionAudit": "scripts/audit-wave3-mobile-accessibility.mjs now guards the responsive-width, touch-target, focus, reduced-motion, async-status and hidden-honeypot markers and is included in both npm run build and npm run quality.",
+        "focusedValidation": "Current source snapshot passes the audit conditions: 13 scoped surfaces, zero flagged mobile width locks, no min-h-10 controls in CivicDiscussion, Near me live/error semantics present, 44px emergency link target present, and the global reduced-motion/focus/44px control baseline remains intact.",
+        "executionBoundary": "This was a source-level responsive/accessibility pass. The current environment has no browser/device automation path and the repository has no GitHub Actions run for these commits, so no claim is made about physical-device, screen-reader or automated browser execution."
+      }
     },
     {
       "id": "W3R-11f",
       "title": "Reclassify and close Wave 3",
-      "status": "planned",
+      "status": "next",
       "maximumScope": "Supersede the old capability classification with an evidence-based redesigned Wave 3 classification, record deferrals, and close only what is actually complete."
     }
   ],
   "immediateNext": {
-    "id": "W3R-11e",
-    "title": "Run mobile and accessibility pass",
-    "maximumScope": "Redesigned Wave 3 surfaces only. Fix only defects found."
+    "id": "W3R-11f",
+    "title": "Reclassify and close Wave 3",
+    "maximumScope": "Supersede the old capability classification with an evidence-based redesigned Wave 3 classification, record deferrals, and close only what is actually complete."
   },
   "capabilityDispositionAuditFile": "data/wave3-capability-disposition-audit.json",
   "completedSteps": [
@@ -1243,7 +1271,8 @@
     "W3R-11a",
     "W3R-11b",
     "W3R-11c",
-    "W3R-11d"
+    "W3R-11d",
+    "W3R-11e"
   ],
   "placeRegistrySchemaFile": "data/place-registry-schema.json",
   "placeRegistryDataFile": "src/data/placeRegistry.ts",
