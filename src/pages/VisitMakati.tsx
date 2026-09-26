@@ -71,7 +71,7 @@ export default function VisitMakati() {
 
               <div className="mt-6 flex flex-wrap items-center gap-3">
                 <SharePage title="Visit Makati | BetterMakati" />
-                <LastReviewed note="Place details and operating conditions can change; current map and official links are provided." />
+                <LastReviewed date="2026-09-20" note="Place details and operating conditions can change; current map and official links are provided." />
               </div>
             </div>
 
