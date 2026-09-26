@@ -771,7 +771,8 @@
             "public-record-source",
             "report-analysis",
             "legislation-context",
-            "integrity-context"
+            "integrity-context",
+            "ecosystem-context"
           ]
         },
         "targetType": {
@@ -789,7 +790,8 @@
             "public-record",
             "report",
             "legislation-record",
-            "integrity-entity"
+            "integrity-entity",
+            "ecosystem-resource"
           ]
         },
         "targetId": {
@@ -855,7 +857,8 @@
     "Place Registry record counts are not citywide facility counts unless a separate source establishes a complete eligible inventory.",
     "Report prose may quote an indicator as a dated publication snapshot but is never a canonical data owner.",
     "Source gaps remain source gaps; missing data must not be converted into zero.",
-    "Presentation components format values from unit metadata; they must not maintain independent copies of the same number."
+    "Presentation components format values from unit metadata; they must not maintain independent copies of the same number.",
+    "BetterGov/BetterLGU ecosystem links are typed context or continuation links, not substitutes for the underlying official source unless that ecosystem resource is itself the canonical data owner."
   ],
   "examples": [
     {
