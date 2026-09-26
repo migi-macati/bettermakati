@@ -418,9 +418,9 @@
     "uiChanges": 0
   },
   "nextImplementationStep": {
-    "id": "W3R-6c",
-    "title": "Add place condition summaries",
-    "constraint": "Display recent structured observations and freshness only. Do not publish composite scores."
+    "id": "W3R-7a",
+    "title": "Define civic audit campaigns",
+    "constraint": "Campaign schema/workflow only: geography, place set, questions, period and completion. No generalized campaign UI."
   },
   "betterBarangayReuse": {
     "workstream": "W3R-3a",
@@ -597,6 +597,22 @@
       "New generic 1–5 reviews are retired; historical review records remain readable.",
       "The server validates canonical place identity and structured answers.",
       "No derived score is stored or generated."
+    ]
+  },
+  "placeConditionSummaries": {
+    "workstream": "W3R-6c",
+    "implementation": "src/components/civic/CivicObservationSummary.tsx",
+    "windowDays": 90,
+    "freshness": {
+      "fresh": "<=30 days",
+      "recent": "31-90 days",
+      "older": ">90 days"
+    },
+    "rules": [
+      "Show sample counts and observation dates with every condition summary.",
+      "Exclude not-observed values from substantive condition distributions.",
+      "Use categorical distributions or wait-time median/range only.",
+      "Do not compute composite scores, rankings or place grades."
     ]
   }
 }
