@@ -353,6 +353,9 @@ export default async function handler(req, res) {
         });
         const comments = commentsResponse.ok ? await commentsResponse.json() : [];
         const adminEvents = comments
+          .filter(comment =>
+            ['OWNER', 'MEMBER', 'COLLABORATOR'].includes(comment.author_association)
+          )
           .map(comment => ({
             comment,
             meta: parseTaggedJson(comment.body, 'civic-admin'),
