@@ -220,8 +220,8 @@ export default function Legislation() {
                   aria-pressed={active}
                   className={
                     active
-                      ? 'brand-chip border-primary-700 bg-primary-700 text-white'
-                      : 'brand-chip'
+                      ? 'brand-chip min-h-11 border-primary-700 bg-primary-700 text-white'
+                      : 'brand-chip min-h-11'
                   }
                 >
                   {filter.label} ({count.toLocaleString()})
@@ -235,7 +235,7 @@ export default function Legislation() {
                 <select
                   value={year}
                   onChange={event => setYear(event.target.value)}
-                  className="appearance-none rounded-full border border-gray-300 bg-white py-2 pl-4 pr-9 text-sm font-bold text-gray-700 outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-200"
+                  className="min-h-11 appearance-none rounded-full border border-gray-300 bg-white py-2 pl-4 pr-9 text-sm font-bold text-gray-700 outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-200"
                 >
                   <option value="all">All years</option>
                   {archiveIndex.years.map(item => (
@@ -325,7 +325,7 @@ export default function Legislation() {
                       onClick={() =>
                         setExpandedRecordId(expanded ? null : legislationRecordId(record))
                       }
-                      className="text-primary-700 underline underline-offset-2"
+                      className="inline-flex min-h-11 items-center text-primary-700 underline underline-offset-2"
                       aria-expanded={expanded}
                     >
                       {expanded ? 'Hide record' : 'View record'}
