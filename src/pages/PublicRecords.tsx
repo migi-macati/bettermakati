@@ -24,6 +24,7 @@ import {
   publicRecordSecondaryCount,
   type PublicRecordSourceClass,
 } from '../data/publicRecords';
+import { integrityForPublicRecord } from '../data/integrityCivicRelationships';
 import {
   legislationRecordDisplay,
   legislationRecordHref,
@@ -508,7 +509,9 @@ export default function PublicRecords() {
         )}
 
         <div className="mt-5 space-y-3">
-          {visibleRecords.map(record => (
+          {visibleRecords.map(record => {
+            const integrityLinks = integrityForPublicRecord(record.id);
+            return (
             <article key={record.id} className="rounded-2xl border border-gray-200 bg-white p-5">
               <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                 <div className="min-w-0">
@@ -546,13 +549,22 @@ export default function PublicRecords() {
                   {record.relatedHref && (
                     <Link to={record.relatedHref} className="brand-btn-secondary">See context</Link>
                   )}
+                  {integrityLinks.length > 0 && (
+                    <Link
+                      to={integrityLinks[0]?.node?.href ?? '/integrity'}
+                      className="brand-btn-secondary"
+                    >
+                      Integrity evidence
+                    </Link>
+                  )}
                   <a href={record.url} target="_blank" rel="noreferrer" className="brand-btn-primary">
                     Open source <ExternalLink className="h-4 w-4" />
                   </a>
                 </div>
               </div>
             </article>
-          ))}
+            );
+          })}
 
           {visibleRecords.length === 0 && (
             <div className="rounded-2xl border border-gray-200 bg-white p-8 text-center">
