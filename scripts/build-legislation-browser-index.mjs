@@ -58,17 +58,22 @@ const browserIndex = {
   total: records.length,
   countByType: normalized.enumeration?.countByType || {},
   years,
-  records: records.map(record => ({
-    id: record.id,
-    archiveLegislationId: record.archiveLegislationId,
-    measureType: record.measureType,
-    officialNumber: record.reference?.officialNumber || '',
-    display: record.reference?.display || record.reference?.officialNumber || '',
-    seriesYear: record.reference?.seriesYear || null,
-    title: record.title,
-    officialDocumentUrl: record.officialDocument?.url || null,
-    officialDocumentStatus: record.officialDocument?.status || null,
-  })),
+  recordShape: [
+    'archiveLegislationId',
+    'measureType',
+    'officialNumber',
+    'seriesYear',
+    'title',
+    'officialDocumentUrl',
+  ],
+  records: records.map(record => [
+    record.archiveLegislationId,
+    record.measureType,
+    record.reference?.officialNumber || '',
+    record.reference?.seriesYear || null,
+    record.title,
+    record.officialDocument?.url || null,
+  ]),
 };
 
 await mkdir(outputDir, { recursive: true });
