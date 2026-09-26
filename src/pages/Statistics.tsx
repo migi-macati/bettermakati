@@ -332,7 +332,6 @@ export default function Statistics() {
 
           <LastReviewed
             date="2026-09-26"
-            note="Dates on each indicator show the observation or source snapshot."
             className="mt-5 !text-primary-50 [&_strong]:!text-white [&_svg]:!text-secondary-400"
           />
         </div>
@@ -400,7 +399,7 @@ export default function Statistics() {
                   legislative district
                 </div>
                 <div className="mt-1 text-xs text-gray-500">
-                  canonical barangay profile
+                  Barangay profile
                 </div>
               </div>
             </div>
@@ -827,7 +826,7 @@ export default function Statistics() {
         </div>
 
         <div className="mt-10">
-          <div className="section-eyebrow">Across BetterMakati</div>
+          <div className="section-eyebrow">Related</div>
           <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
             {[
               ['Barangays', '/barangays', 'Population and local profiles'],
