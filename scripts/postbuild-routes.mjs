@@ -29,6 +29,7 @@ const staticMeta = {
   '/civic-map': ['Makati Civic Map', 'Browse civic places, bounded infrastructure segments and transport routes in Makati.'],
   '/civic-map/reports': ['Civic Map Reports', 'Review public community reports submitted through the Makati Civic Map.'],
   '/civic-map/audits/park-accessibility-2026': ['Makati Public Park Accessibility Check', 'Record structured accessibility observations across 13 verified government/public parks in Makati.'],
+  '/civic-map/audits/park-accessibility-2026/results': ['Public Park Accessibility Check — Live Output', 'Live coverage, sample counts and structured observation distributions for BetterMakati’s 13-park accessibility pilot.'],
   '/briefs': ['BetterMakati Civic Briefs', 'Daily, weekly and monthly civic digests from City Monitor.'],
   '/barangays': ['Makati Barangays', 'Profiles and population data for the 23 barangays of Makati City.'],
   '/elections': ['Makati Elections & Voting', 'Election results, voter information and COMELEC sources for Makati.'],
