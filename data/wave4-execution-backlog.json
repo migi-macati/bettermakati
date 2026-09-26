@@ -472,22 +472,30 @@
       "id": "W4-2g",
       "phase": "Legislation",
       "title": "Redesign Legislation page around local records",
-      "status": "partial",
+      "status": "complete",
       "maximumScope": "Legislation page only. Canonical local search/filter/browse becomes primary; external site search becomes fallback.",
       "stopWhen": "Users can find and open BetterMakati-indexed ordinances/resolutions and reach the official text without leaving the site first.",
+      "completedAt": "2026-09-26",
       "implementationFiles": [
         "src/pages/Legislation.tsx",
-        "scripts/check-local-legislation.mjs"
+        "scripts/build-legislation-browser-index.mjs",
+        "scripts/check-local-legislation.mjs",
+        "package.json"
       ],
       "validation": {
         "localSearchPrimary": true,
-        "currentIndexedRecordCount": 20,
+        "canonicalArchiveRecordCount": 11355,
+        "sourceNormalizedFileBytes": 9887461,
+        "browserIndexDelivery": "Generated compact static JSON outside the initial React bundle and fetched only on the Legislation page.",
+        "visibleResultLimit": 60,
         "measureTypeFilters": [
           "ordinance",
           "resolution"
         ],
-        "officialArchiveRole": "fallback",
-        "remaining": "Promote the full normalized official archive into a browser-safe local index and add local record/detail access for official text/document links where available."
+        "yearFilter": true,
+        "localRecordDetail": true,
+        "officialArchiveRole": "fallback when the normalized archive row does not expose a measure-specific document URL",
+        "sourceBoundary": "The official enumeration exposes identity, reference and title for all canonical records but does not expose measure-specific document URLs in the normalized rows; BetterMakati does not fabricate those URLs."
       }
     },
     {
@@ -699,11 +707,11 @@
       "stopWhen": "Wave 4 is closed only to the extent supported by evidence, with future work reopened as specific capabilities rather than vague unfinished work."
     }
   ],
-  "current": "W4-2g",
+  "current": "W4-2h",
   "immediateNext": {
-    "id": "W4-2g",
-    "title": "Redesign Legislation page around local records",
-    "maximumScope": "Legislation page only. Canonical local search/filter/browse becomes primary; external site search becomes fallback."
+    "id": "W4-2h",
+    "title": "Integrate legislation into Search and Public Records",
+    "maximumScope": "Search/Public Records integration only."
   },
   "carriedForward": [
     {
