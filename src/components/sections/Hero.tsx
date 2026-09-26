@@ -1,6 +1,12 @@
-import { BarChart3, FileText, Landmark, MapPin } from 'lucide-react';
 import { Link } from 'react-router';
 import ServiceSearch from '../home/ServiceSearch';
+
+const popularStarts = [
+  { label: 'Business permit', href: '/services/business/new-business-permit' },
+  { label: 'Yellow Card', href: '/services/health-services/makati-health-plus' },
+  { label: 'Cedula', href: '/services/guide/community-tax-certificate' },
+  { label: 'Find your barangay', href: '/barangays' },
+];
 
 export default function Hero() {
   return (
@@ -29,35 +35,17 @@ export default function Hero() {
             />
           </div>
 
-          <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm md:text-base">
-            <Link
-              to="/services"
-              className="hero-principle font-semibold text-white transition hover:text-secondary-300"
-            >
-              <Landmark className="h-4 w-4 text-secondary-400" aria-hidden="true" />
-              Find a service
-            </Link>
-            <Link
-              to="/barangays"
-              className="hero-principle font-semibold text-white transition hover:text-secondary-300"
-            >
-              <MapPin className="h-4 w-4 text-secondary-400" aria-hidden="true" />
-              Explore barangays
-            </Link>
-            <Link
-              to="/projects-budget"
-              className="hero-principle font-semibold text-white transition hover:text-secondary-300"
-            >
-              <FileText className="h-4 w-4 text-secondary-400" aria-hidden="true" />
-              Budgets &amp; projects
-            </Link>
-            <Link
-              to="/statistics"
-              className="hero-principle font-semibold text-white transition hover:text-secondary-300"
-            >
-              <BarChart3 className="h-4 w-4 text-secondary-400" aria-hidden="true" />
-              City statistics
-            </Link>
+          <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-primary-50">
+            <span className="font-medium text-primary-100">Start with:</span>
+            {popularStarts.map(item => (
+              <Link
+                key={item.label}
+                to={item.href}
+                className="min-h-11 content-center font-semibold underline decoration-white/40 underline-offset-4 transition hover:text-secondary-300 hover:decoration-secondary-300"
+              >
+                {item.label}
+              </Link>
+            ))}
           </div>
         </div>
       </div>
