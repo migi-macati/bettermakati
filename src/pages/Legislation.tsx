@@ -20,6 +20,7 @@ import {
   type LocalMeasureType,
 } from '../data/localLegislation';
 import { legislationRelatedRecords } from '../data/legislationCivicRelationships';
+import { publicRecordByUrl } from '../data/publicRecords';
 import {
   legislationRecordDisplay,
   legislationRecordId,
@@ -362,6 +363,39 @@ export default function Legislation() {
                           </div>
                         ) : null}
                       </dl>
+
+                      {seed?.documents.length ? (
+                        <div className="mt-4">
+                          <div className="text-xs font-extrabold uppercase tracking-[0.08em] text-gray-500">
+                            Attached source
+                          </div>
+                          <div className="mt-2 flex flex-wrap gap-2">
+                            {seed.documents.map(document => {
+                              const publicRecord = publicRecordByUrl.get(document.url);
+                              return (
+                                <span key={document.id} className="inline-flex items-center gap-2">
+                                  <a
+                                    href={document.url}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="text-xs font-bold text-primary-700 underline underline-offset-2"
+                                  >
+                                    {document.label}
+                                  </a>
+                                  {publicRecord && (
+                                    <Link
+                                      to={'/records/' + publicRecord.id}
+                                      className="text-xs font-bold text-primary-700 underline underline-offset-2"
+                                    >
+                                      Public record
+                                    </Link>
+                                  )}
+                                </span>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      ) : null}
 
                       {relatedRecords.length > 0 ? (
                         <div className="mt-4">
