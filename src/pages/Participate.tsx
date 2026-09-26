@@ -1,17 +1,16 @@
 import { useEffect, useState } from 'react';
 import {
   ArrowRight,
-  CheckCircle2,
   ExternalLink,
   FileSearch,
   HandHeart,
   Lightbulb,
   MapPinned,
-  MessagesSquare,
   PencilLine,
   Scale,
   Send,
-  Users,
+  ShieldAlert,
+  ClipboardCheck,
 } from 'lucide-react';
 import { Link } from 'react-router';
 import SEO from '../components/SEO';
@@ -22,9 +21,9 @@ import SharePage from '../components/ui/SharePage';
 import {
   documentedParticipation,
   openParticipationOpportunities,
-  participationCoverageGaps,
   participationReviewed,
 } from '../data/participation';
+import { civicAuditPilot } from '../data/civicAuditPilot';
 import { useBarangayScope, withBarangayScope } from '../hooks/useBarangayScope';
 
 interface CommunityInput {
@@ -62,169 +61,138 @@ export default function Participate() {
     <>
       <SEO
         title="Participate"
-        description="Find civic participation opportunities in Makati and track BetterMakati community proposals, corrections and public-source submissions."
+        description="Join official Makati participation opportunities, report local problems, suggest improvements, document public places and contribute to BetterMakati."
       />
 
       <Section className="bg-[#fffdf8]">
         <div className="section-eyebrow">Participation</div>
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <Heading>Participate in Makati</Heading>
+            <Heading>What do you want to do?</Heading>
             <p className="max-w-3xl text-gray-700">
-              Find public consultations and track proposals, sources and corrections submitted through BetterMakati.
+              Choose the task that matches what you want to contribute.
             </p>
           </div>
           <SharePage title="Participate in Makati | BetterMakati" />
         </div>
-        <LastReviewed
-          date={participationReviewed}
-          note="Official opportunities and BetterMakati submissions are labeled separately."
-        />
+        <LastReviewed date={participationReviewed} />
 
-        <div className="mt-7">
-          <div className="section-eyebrow">Start here</div>
-          <Heading level={2}>What do you want to do?</Heading>
-          <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
-            <a
-              href="#official-opportunities"
-              className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
-            >
-              <Scale className="h-5 w-5 text-primary-700" />
-              <div className="mt-3 font-extrabold text-gray-950">Join an official consultation</div>
-              <p className="mt-1 text-sm text-gray-600">Check hearings, consultations and other published opportunities.</p>
-            </a>
-
-            <Link
-              to={withBarangayScope('/civic-map', barangay?.slug)}
-              className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
-            >
-              <MapPinned className="h-5 w-5 text-primary-700" />
-              <div className="mt-3 font-extrabold text-gray-950">Report or improve a public place</div>
-              <p className="mt-1 text-sm text-gray-600">Use the Civic Map for non-emergency problems, ratings and improvement proposals.</p>
-            </Link>
-
-            <Link
-              to="/get-involved?type=proposal#submission"
-              className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
-            >
-              <Lightbulb className="h-5 w-5 text-primary-700" />
-              <div className="mt-3 font-extrabold text-gray-950">Propose or suggest something</div>
-              <p className="mt-1 text-sm text-gray-600">Send a BetterMakati proposal, civic-tool idea or project improvement.</p>
-            </Link>
-
-            <Link
-              to="/get-involved?type=correction#submission"
-              className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
-            >
-              <PencilLine className="h-5 w-5 text-primary-700" />
-              <div className="mt-3 font-extrabold text-gray-950">Correct BetterMakati information</div>
-              <p className="mt-1 text-sm text-gray-600">Flag something that is wrong, stale or incomplete.</p>
-            </Link>
-
-            <Link
-              to="/get-involved?type=source#submission"
-              className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
-            >
-              <FileSearch className="h-5 w-5 text-primary-700" />
-              <div className="mt-3 font-extrabold text-gray-950">Share a public source</div>
-              <p className="mt-1 text-sm text-gray-600">Send a public record, dataset, notice or useful official link.</p>
-            </Link>
-
-            <Link
-              to="/get-involved?type=volunteer#submission"
-              className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
-            >
-              <HandHeart className="h-5 w-5 text-primary-700" />
-              <div className="mt-3 font-extrabold text-gray-950">Volunteer or contact BetterMakati</div>
-              <p className="mt-1 text-sm text-gray-600">Offer research, data, design or development help, or send a project message.</p>
-            </Link>
-          </div>
-        </div>
-
-        {barangay && (
-          <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-3">
-            <a
-              href={barangay.hallEmail ? 'mailto:' + barangay.hallEmail : barangay.officialPageUrl}
-              target={barangay.hallEmail ? undefined : '_blank'}
-              rel={barangay.hallEmail ? undefined : 'noreferrer'}
-              className="rounded-2xl border border-primary-100 bg-white p-5 hover:border-primary-300"
-            >
-              <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
-                Barangay government
-              </div>
-              <div className="mt-2 font-extrabold text-gray-950">
-                Contact Barangay {barangay.name}
-              </div>
-              <p className="mt-1 text-sm text-gray-600">
-                Use the verified hall email where available, otherwise open the official barangay page.
-              </p>
-            </a>
-            <Link
-              to={withBarangayScope('/civic-map', barangay.slug)}
-              className="rounded-2xl border border-primary-100 bg-white p-5 hover:border-primary-300"
-            >
-              <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
-                Public places
-              </div>
-              <div className="mt-2 font-extrabold text-gray-950">
-                Report or propose an improvement
-              </div>
-              <p className="mt-1 text-sm text-gray-600">
-                Open the Civic Map already filtered to this barangay.
-              </p>
-            </Link>
-            <Link
-              to={`/get-involved?type=source&barangay=${encodeURIComponent(barangay.slug)}#submission`}
-              className="rounded-2xl border border-primary-100 bg-white p-5 hover:border-primary-300"
-            >
-              <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
-                Community evidence
-              </div>
-              <div className="mt-2 font-extrabold text-gray-950">
-                Add a local public source
-              </div>
-              <p className="mt-1 text-sm text-gray-600">
-                Submit a notice, record or correction for review.
-              </p>
-            </Link>
-          </div>
-        )}
-
-        <div className="mt-7 grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="rounded-2xl border border-primary-100 bg-white p-6">
-            <Users className="h-6 w-6 text-primary-700" />
-            <h2 className="mt-4 text-xl font-extrabold text-gray-950">
-              Official participation
-            </h2>
-            <p className="mt-2 text-sm leading-relaxed text-gray-600">
-              Hearings, assemblies and consultations published by the responsible public body.
+        <div className="mt-7 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
+          <a
+            href="#official-opportunities"
+            className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
+          >
+            <Scale className="h-5 w-5 text-primary-700" />
+            <div className="mt-3 font-extrabold text-gray-950">
+              Join an official consultation
+            </div>
+            <p className="mt-1 text-sm text-gray-600">
+              Check published hearings, consultations and other participation opportunities.
             </p>
-          </div>
-          <div className="rounded-2xl border border-secondary-200 bg-secondary-50 p-6">
-            <MessagesSquare className="h-6 w-6 text-secondary-800" />
-            <h2 className="mt-4 text-xl font-extrabold text-gray-950">
-              BetterMakati community input
-            </h2>
-            <p className="mt-2 text-sm leading-relaxed text-gray-700">
-              Proposals, corrections and source submissions tracked through BetterMakati&apos;s public project workflow.
+          </a>
+
+          <Link
+            to={withBarangayScope('/civic-map/report', barangay?.slug)}
+            className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
+          >
+            <ShieldAlert className="h-5 w-5 text-primary-700" />
+            <div className="mt-3 font-extrabold text-gray-950">
+              Report a local problem
+            </div>
+            <p className="mt-1 text-sm text-gray-600">
+              Report a non-emergency issue at a place, segment or location.
             </p>
-          </div>
+          </Link>
+
+          <Link
+            to={withBarangayScope('/civic-map', barangay?.slug)}
+            className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
+          >
+            <MapPinned className="h-5 w-5 text-primary-700" />
+            <div className="mt-3 font-extrabold text-gray-950">
+              Suggest a place improvement
+            </div>
+            <p className="mt-1 text-sm text-gray-600">
+              Find a civic place or segment, then propose a specific improvement.
+            </p>
+          </Link>
+
+          <Link
+            to={civicAuditPilot.route}
+            className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
+          >
+            <ClipboardCheck className="h-5 w-5 text-primary-700" />
+            <div className="mt-3 font-extrabold text-gray-950">
+              Record current conditions
+            </div>
+            <p className="mt-1 text-sm text-gray-600">
+              Join the public-park accessibility check and record what you observe.
+            </p>
+          </Link>
+
+          <Link
+            to="/get-involved?type=correction#submission"
+            className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
+          >
+            <PencilLine className="h-5 w-5 text-primary-700" />
+            <div className="mt-3 font-extrabold text-gray-950">
+              Correct BetterMakati
+            </div>
+            <p className="mt-1 text-sm text-gray-600">
+              Flag information that is wrong, stale or incomplete.
+            </p>
+          </Link>
+
+          <Link
+            to="/get-involved?type=source#submission"
+            className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
+          >
+            <FileSearch className="h-5 w-5 text-primary-700" />
+            <div className="mt-3 font-extrabold text-gray-950">
+              Share a public source
+            </div>
+            <p className="mt-1 text-sm text-gray-600">
+              Send an official notice, public record, dataset or useful source.
+            </p>
+          </Link>
+
+          <Link
+            to="/get-involved?type=idea#submission"
+            className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
+          >
+            <Lightbulb className="h-5 w-5 text-primary-700" />
+            <div className="mt-3 font-extrabold text-gray-950">
+              Suggest a BetterMakati idea
+            </div>
+            <p className="mt-1 text-sm text-gray-600">
+              Propose a site feature, civic tool or project improvement.
+            </p>
+          </Link>
+
+          <Link
+            to="/get-involved?type=volunteer#submission"
+            className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
+          >
+            <HandHeart className="h-5 w-5 text-primary-700" />
+            <div className="mt-3 font-extrabold text-gray-950">
+              Volunteer
+            </div>
+            <p className="mt-1 text-sm text-gray-600">
+              Offer research, data, design, documentation or development help.
+            </p>
+          </Link>
         </div>
       </Section>
 
       <Section className="bg-white" id="official-opportunities">
-        <div className="section-eyebrow">Open official opportunities</div>
-        <Heading level={2}>Participate before a decision</Heading>
+        <div className="section-eyebrow">Official participation</div>
+        <Heading level={2}>Open opportunities</Heading>
 
         {openParticipationOpportunities.length === 0 ? (
-          <div className="mt-6 rounded-2xl border border-secondary-200 bg-secondary-50 p-6">
-            <Scale className="h-5 w-5 text-secondary-800" />
-            <h3 className="mt-3 font-extrabold text-gray-950">
-              No current citywide consultation is indexed here yet
-            </h3>
-            <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-700">
-              No complete current citywide consultation calendar is indexed yet.
-            </p>
+          <div className="mt-6 rounded-2xl border border-gray-200 bg-[#fffdf8] p-6">
+            <div className="font-extrabold text-gray-950">
+              No current citywide consultation is indexed here.
+            </div>
             <div className="mt-4 flex flex-wrap gap-3">
               <a
                 href="https://www.makati.gov.ph/content/events"
@@ -232,7 +200,7 @@ export default function Participate() {
                 rel="noreferrer"
                 className="brand-btn-secondary"
               >
-                Check official city events <ExternalLink className="h-4 w-4" />
+                Check Makati events <ExternalLink className="h-4 w-4" />
               </a>
               <Link
                 to="/get-involved?type=source&subject=Public%20participation%20opportunity#submission"
@@ -243,9 +211,12 @@ export default function Participate() {
             </div>
           </div>
         ) : (
-          <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
             {openParticipationOpportunities.map(item => (
-              <article key={item.id} className="rounded-2xl border border-gray-200 bg-white p-5">
+              <article
+                key={item.id}
+                className="rounded-2xl border border-gray-200 bg-white p-5"
+              >
                 <h3 className="font-extrabold text-gray-950">{item.title}</h3>
                 <p className="mt-2 text-sm text-gray-600">{item.summary}</p>
               </article>
@@ -255,8 +226,85 @@ export default function Participate() {
       </Section>
 
       <Section className="bg-[#f5f8f2]">
-        <div className="section-eyebrow">Documented precedent</div>
-        <Heading level={2}>Past participation records</Heading>
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <div className="section-eyebrow">Current civic audit</div>
+            <Heading level={2}>Public park accessibility check</Heading>
+            <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600">
+              Record entrance access, step-free access, seating and toilets at one of 13 public parks.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <Link to={civicAuditPilot.route} className="brand-btn-primary">
+              Join the audit <ArrowRight className="h-4 w-4" />
+            </Link>
+            <Link to={civicAuditPilot.route + '/results'} className="brand-btn-secondary">
+              View live output
+            </Link>
+          </div>
+        </div>
+      </Section>
+
+      <Section className="bg-white">
+        <div className="section-eyebrow">BetterMakati community input</div>
+        <Heading level={2}>Track proposals, corrections and sources</Heading>
+
+        <div className="mt-6">
+          {loading ? (
+            <div className="rounded-xl border border-gray-200 p-5 text-sm text-gray-500">
+              Loading public input…
+            </div>
+          ) : inputs.length === 0 ? (
+            <div className="rounded-xl border border-gray-200 p-5 text-sm text-gray-600">
+              No community-input items are available from the project feed yet.
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {inputs.map(item => (
+                <a
+                  key={item.number}
+                  href={item.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex flex-col gap-3 rounded-2xl border border-gray-200 bg-white p-5 transition hover:border-primary-300 sm:flex-row sm:items-center sm:justify-between"
+                >
+                  <div>
+                    <div className="flex flex-wrap items-center gap-2 text-xs font-bold uppercase tracking-[0.08em]">
+                      <span className="text-primary-700">{item.kind}</span>
+                      <span className={item.state === 'closed' ? 'text-gray-500' : 'text-success-700'}>
+                        {item.workflowStatus || (item.state === 'closed' ? 'Closed' : 'Received')}
+                      </span>
+                    </div>
+                    <h3 className="mt-2 font-extrabold text-gray-950">
+                      #{item.number} {item.title}
+                    </h3>
+                    <div className="mt-1 text-xs text-gray-500">
+                      Updated {new Date(item.updatedAt).toLocaleDateString('en-PH')} · {item.comments} comments
+                    </div>
+                  </div>
+                  <ArrowRight className="h-5 w-5 shrink-0 text-primary-700" />
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className="mt-7 flex flex-wrap gap-3">
+          <Link to="/get-involved?type=idea#submission" className="brand-btn-primary">
+            <Send className="h-4 w-4" /> Suggest an idea
+          </Link>
+          <Link to="/get-involved?type=source#submission" className="brand-btn-secondary">
+            Share a source
+          </Link>
+          <Link to="/get-involved?type=correction#submission" className="brand-btn-secondary">
+            Report a correction
+          </Link>
+        </div>
+      </Section>
+
+      <Section className="bg-[#f5f8f2]">
+        <div className="section-eyebrow">Past official participation</div>
+        <Heading level={2}>Documented records</Heading>
         <div className="mt-6 space-y-4">
           {documentedParticipation.map(item => (
             <article
@@ -291,71 +339,8 @@ export default function Participate() {
       </Section>
 
       <Section className="bg-white">
-        <div className="section-eyebrow">Community proposals & corrections</div>
-        <Heading level={2}>Follow BetterMakati input publicly</Heading>
-        <p className="max-w-3xl text-sm leading-relaxed text-gray-600">
-          Only project issues with civic-input prefixes are shown here. Open and
-          closed refer to BetterMakati&apos;s project workflow, not a City
-          Government disposition.
-        </p>
-
-        <div className="mt-6">
-          {loading ? (
-            <div className="rounded-xl border border-gray-200 p-5 text-sm text-gray-500">
-              Loading public input…
-            </div>
-          ) : inputs.length === 0 ? (
-            <div className="rounded-xl border border-gray-200 p-5 text-sm text-gray-600">
-              No public community-input items are available from the project
-              feed yet.
-            </div>
-          ) : (
-            <div className="space-y-3">
-              {inputs.map(item => (
-                <a
-                  key={item.number}
-                  href={item.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex flex-col gap-3 rounded-2xl border border-gray-200 bg-white p-5 transition hover:border-primary-300 sm:flex-row sm:items-center sm:justify-between"
-                >
-                  <div>
-                    <div className="flex flex-wrap items-center gap-2 text-xs font-bold uppercase tracking-[0.08em]">
-                      <span className="text-primary-700">{item.kind}</span>
-                      <span className={item.state === 'closed' ? 'text-gray-500' : 'text-success-700'}>
-                        {item.workflowStatus || (item.state === 'closed' ? 'Closed' : 'Received')}
-                      </span>
-                    </div>
-                    <h3 className="mt-2 font-extrabold text-gray-950">
-                      #{item.number} {item.title}
-                    </h3>
-                    <div className="mt-1 text-xs text-gray-500">
-                      Updated {new Date(item.updatedAt).toLocaleDateString('en-PH')} · {item.comments} comments
-                    </div>
-                  </div>
-                  <ArrowRight className="h-5 w-5 shrink-0 text-primary-700" />
-                </a>
-              ))}
-            </div>
-          )}
-        </div>
-
-        <div className="mt-7 flex flex-wrap gap-3">
-          <Link to="/get-involved?type=proposal#submission" className="brand-btn-primary">
-            <Send className="h-4 w-4" /> Propose something
-          </Link>
-          <Link to="/get-involved?type=source#submission" className="brand-btn-secondary">
-            Share a public source
-          </Link>
-          <Link to="/get-involved?type=correction#submission" className="brand-btn-secondary">
-            Report a correction
-          </Link>
-        </div>
-      </Section>
-
-      <Section className="bg-[#f5f8f2]">
         <div className="section-eyebrow">Beyond Makati</div>
-        <Heading level={2}>Continue elsewhere</Heading>
+        <Heading level={2}>Other civic channels</Heading>
         <div className="mt-6 grid gap-4 md:grid-cols-3">
           <a
             href="https://lgu.bettergov.ph/"
@@ -365,19 +350,20 @@ export default function Participate() {
           >
             <h3 className="font-extrabold text-gray-950">Another LGU</h3>
             <p className="mt-2 text-sm text-gray-600">
-              Find a local civic portal in the BetterLGU Directory.
+              Find another local civic portal in the BetterLGU directory.
             </p>
             <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
               Open BetterLGU <ExternalLink className="h-3.5 w-3.5" />
             </span>
           </a>
+
           <a
             href="https://petition.ph/"
             target="_blank"
             rel="noreferrer"
             className="rounded-2xl border border-primary-100 bg-white p-5 hover:border-primary-300"
           >
-            <h3 className="font-extrabold text-gray-950">Build public support</h3>
+            <h3 className="font-extrabold text-gray-950">Public petitions</h3>
             <p className="mt-2 text-sm text-gray-600">
               Start or find a public petition on Petitions.ph.
             </p>
@@ -385,6 +371,7 @@ export default function Participate() {
               Open Petitions.ph <ExternalLink className="h-3.5 w-3.5" />
             </span>
           </a>
+
           <a
             href="https://www.openbayan.org/"
             target="_blank"
@@ -399,22 +386,6 @@ export default function Participate() {
               Open OpenBayan <ExternalLink className="h-3.5 w-3.5" />
             </span>
           </a>
-        </div>
-      </Section>
-
-      <Section className="bg-[#fffdf8]">
-        <div className="section-eyebrow">Close the loop</div>
-        <Heading level={2}>What remains missing</Heading>
-        <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-          {participationCoverageGaps.map(gap => (
-            <article key={gap.id} className="rounded-2xl border border-secondary-200 bg-white p-5">
-              <CheckCircle2 className="h-5 w-5 text-secondary-800" />
-              <h3 className="mt-3 font-extrabold text-gray-950">{gap.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-gray-600">
-                {gap.description}
-              </p>
-            </article>
-          ))}
         </div>
       </Section>
     </>
