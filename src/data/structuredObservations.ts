@@ -141,6 +141,20 @@ export const observationResponseChoices = (
 ): Array<{ value: string; label: string }> =>
   type === 'waitMinutes' ? [] : responseChoices[type];
 
+export const observationValueLabel = (
+  type: ObservationResponseType,
+  value: string | number
+): string => {
+  if (type === 'waitMinutes') return String(value) + ' min';
+  return (
+    observationResponseChoices(type).find(choice => choice.value === value)?.label ??
+    String(value)
+  );
+};
+
+export const isNotObservedValue = (value: string | number): boolean =>
+  typeof value === 'string' && value.startsWith('not-observed');
+
 const streetCategories: PlaceCategory[] = [
   'street-segment',
   'sidewalk-segment',
