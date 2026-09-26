@@ -23,6 +23,7 @@ export default function PhotoCarousel({
   const image = images[index];
   const previous = () => carousel.move(-1);
   const next = () => carousel.move(1);
+  const hasAttribution = Boolean(image.sourceUrl && image.credit && image.license);
 
   return (
     <figure
@@ -44,14 +45,18 @@ export default function PhotoCarousel({
           <div className="grid h-full place-items-center text-gray-500">
             <div className="text-center">
               <Camera className="mx-auto h-7 w-7" />
-              <a
-                href={image.sourceUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="mt-2 block text-sm font-bold text-primary-700 underline underline-offset-2"
-              >
-                View photo
-              </a>
+              {image.sourceUrl ? (
+                <a
+                  href={image.sourceUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-2 block text-sm font-bold text-primary-700 underline underline-offset-2"
+                >
+                  View photo
+                </a>
+              ) : (
+                <span className="mt-2 block text-sm font-semibold">Photo unavailable</span>
+              )}
             </div>
           </div>
         ) : (
@@ -104,53 +109,57 @@ export default function PhotoCarousel({
         </div>
       </div>
 
-      <figcaption className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 px-4 py-3 text-xs leading-relaxed text-gray-500">
-        <span>
-          <a
-            href={image.sourceUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="font-semibold text-primary-700 underline underline-offset-2"
-          >
-            {image.credit}
-          </a>
-          {' · '}
-          {image.licenseUrl ? (
-            <a
-              href={image.licenseUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="underline underline-offset-2"
-            >
-              {image.license}
-            </a>
-          ) : (
-            image.license
-          )}
-          {' · cropped'}
-        </span>
-        {images.length > 1 && (
-          <div className="flex items-center gap-3">
-            <span aria-live={carousel.rotating ? 'off' : 'polite'}>
-              {index + 1} / {images.length}
-            </span>
-            {!carousel.reducedMotion && (
-              <button
-                type="button"
-                onClick={() => carousel.setPaused(!carousel.paused)}
-                className="inline-flex min-h-11 items-center gap-1.5 rounded-lg px-2 font-semibold text-primary-800 hover:bg-primary-50"
+      {(hasAttribution || images.length > 1) && (
+        <figcaption className="flex flex-wrap items-center gap-x-4 gap-y-1 px-4 py-3 text-xs leading-relaxed text-gray-500">
+          {hasAttribution && (
+            <span>
+              <a
+                href={image.sourceUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="font-semibold text-primary-700 underline underline-offset-2"
               >
-                {carousel.paused ? (
-                  <Play className="h-4 w-4" aria-hidden="true" />
-                ) : (
-                  <Pause className="h-4 w-4" aria-hidden="true" />
-                )}
-                {carousel.paused ? 'Resume photos' : 'Pause photos'}
-              </button>
-            )}
-          </div>
-        )}
-      </figcaption>
+                {image.credit}
+              </a>
+              {' · '}
+              {image.licenseUrl ? (
+                <a
+                  href={image.licenseUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="underline underline-offset-2"
+                >
+                  {image.license}
+                </a>
+              ) : (
+                image.license
+              )}
+              {' · cropped'}
+            </span>
+          )}
+          {images.length > 1 && (
+            <div className="ml-auto flex items-center gap-3">
+              <span aria-live={carousel.rotating ? 'off' : 'polite'}>
+                {index + 1} / {images.length}
+              </span>
+              {!carousel.reducedMotion && (
+                <button
+                  type="button"
+                  onClick={() => carousel.setPaused(!carousel.paused)}
+                  className="inline-flex min-h-11 items-center gap-1.5 rounded-lg px-2 font-semibold text-primary-800 hover:bg-primary-50"
+                >
+                  {carousel.paused ? (
+                    <Play className="h-4 w-4" aria-hidden="true" />
+                  ) : (
+                    <Pause className="h-4 w-4" aria-hidden="true" />
+                  )}
+                  {carousel.paused ? 'Resume photos' : 'Pause photos'}
+                </button>
+              )}
+            </div>
+          )}
+        </figcaption>
+      )}
     </figure>
   );
 }
