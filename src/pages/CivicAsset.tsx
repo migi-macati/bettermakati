@@ -25,7 +25,10 @@ import {
   civicAssets,
   civicAssetTypeLabels,
 } from '../data/civicMap';
-import { placeRegistryById } from '../data/placeRegistry';
+import {
+  civicEntityKindLabels,
+  placeRegistryById,
+} from '../data/placeRegistry';
 
 const verificationLabel = {
   verified: 'Verified',
@@ -60,13 +63,28 @@ export default function CivicAsset() {
         <Link to={mapHref} className="inline-flex items-center gap-1 text-sm font-bold text-primary-700">
           <ArrowLeft className="h-4 w-4" /> Back to Civic Map
         </Link>
-        <Heading className="mt-5">Place not found</Heading>
+        <Heading className="mt-5">Civic record not found</Heading>
         <p className="mt-2 text-gray-600">
-          This place is not in the current BetterMakati place inventory.
+          This record is not in the current BetterMakati civic registry.
         </p>
       </Section>
     );
   }
+
+  const entityKind = place.entityKind;
+  const entityLabel = civicEntityKindLabels[entityKind];
+  const informationLabel =
+    entityKind === 'place'
+      ? 'Place information'
+      : entityKind === 'segment'
+        ? 'Segment information'
+        : 'Route information';
+  const locationHeading =
+    entityKind === 'place'
+      ? 'Location & sources'
+      : entityKind === 'segment'
+        ? 'Boundary & sources'
+        : 'Route & sources';
 
   const placeSources = place.provenance.sources;
   const primarySources = placeSources.filter(source => source.kind !== 'reference-map');
@@ -76,7 +94,7 @@ export default function CivicAsset() {
     <>
       <SEO
         title={place.name + ' | Civic Map'}
-        description={'Place information, community cases and improvement actions for ' + place.name + ' in BetterMakati.'}
+        description={entityLabel + ' information, community cases and improvement actions for ' + place.name + ' in BetterMakati.'}
       />
 
       <Section className="bg-[#fffdf8]">
@@ -104,9 +122,11 @@ export default function CivicAsset() {
               >
                 {verificationLabel[place.verification.status]}
               </span>
-              <span className="rounded-full bg-gray-100 px-2.5 py-1 text-gray-700">
-                {accessLabel[place.access.class]}
-              </span>
+              {entityKind === 'place' && (
+                <span className="rounded-full bg-gray-100 px-2.5 py-1 text-gray-700">
+                  {accessLabel[place.access.class]}
+                </span>
+              )}
             </div>
 
             <Heading className="mt-3">{place.name}</Heading>
@@ -120,7 +140,7 @@ export default function CivicAsset() {
               </p>
             )}
 
-            {(place.servicesAtLocation?.length ?? 0) > 0 && (
+            {entityKind === 'place' && (place.servicesAtLocation?.length ?? 0) > 0 && (
               <div className="mt-4 flex flex-wrap gap-2">
                 {place.servicesAtLocation?.map(service => (
                   <span
@@ -160,8 +180,8 @@ export default function CivicAsset() {
           </Link>
         </div>
 
-        <nav aria-label="On this place page" className="mt-6 flex flex-wrap gap-3">
-          <a href="#place-information" className="brand-btn-secondary">Place information</a>
+        <nav aria-label={'On this ' + entityKind + ' page'} className="mt-6 flex flex-wrap gap-3">
+          <a href="#place-information" className="brand-btn-secondary">{informationLabel}</a>
           <a href="#observe" className="brand-btn-secondary">Observe conditions</a>
           <a href="#community-records" className="brand-btn-secondary">Community cases</a>
           <a href="#contribute" className="brand-btn-primary">Report or suggest</a>
@@ -177,14 +197,34 @@ export default function CivicAsset() {
           />
 
           <div>
-            <div className="section-eyebrow">Place information</div>
-            <Heading level={2}>Location & sources</Heading>
+            <div className="section-eyebrow">{informationLabel}</div>
+            <Heading level={2}>{locationHeading}</Heading>
 
             <dl className="mt-5 space-y-4 text-sm">
-              {place.location.address && (
+              {entityKind === 'place' && place.location.address && (
                 <div>
                   <dt className="font-bold text-gray-950">Address</dt>
                   <dd className="mt-1 leading-relaxed text-gray-600">{place.location.address}</dd>
+                </div>
+              )}
+              {entityKind === 'segment' && place.location.geometry?.street && (
+                <div>
+                  <dt className="font-bold text-gray-950">Street / corridor</dt>
+                  <dd className="mt-1 leading-relaxed text-gray-600">{place.location.geometry.street}</dd>
+                </div>
+              )}
+              {entityKind === 'segment' && place.location.geometry?.from && place.location.geometry?.to && (
+                <div>
+                  <dt className="font-bold text-gray-950">Segment boundary</dt>
+                  <dd className="mt-1 leading-relaxed text-gray-600">
+                    {place.location.geometry.from} ↔ {place.location.geometry.to}
+                  </dd>
+                </div>
+              )}
+              {entityKind === 'route' && (
+                <div>
+                  <dt className="font-bold text-gray-950">Record form</dt>
+                  <dd className="mt-1 text-gray-600">Transport network / service route</dd>
                 </div>
               )}
               {place.location.barangays.length > 0 && (
@@ -201,10 +241,12 @@ export default function CivicAsset() {
                   </dd>
                 </div>
               )}
-              <div>
-                <dt className="font-bold text-gray-950">Access</dt>
-                <dd className="mt-1 text-gray-600">{accessLabel[place.access.class]}</dd>
-              </div>
+              {entityKind === 'place' && (
+                <div>
+                  <dt className="font-bold text-gray-950">Access</dt>
+                  <dd className="mt-1 text-gray-600">{accessLabel[place.access.class]}</dd>
+                </div>
+              )}
             </dl>
 
             {(primarySources.length > 0 || mapSources.length > 0) && (
@@ -244,7 +286,13 @@ export default function CivicAsset() {
 
       <Section className="bg-white" id="observe">
         <div className="section-eyebrow">Observed conditions</div>
-        <Heading level={2}>Condition snapshots</Heading>
+        <Heading level={2}>
+          {entityKind === 'place'
+            ? 'Condition snapshots'
+            : entityKind === 'segment'
+              ? 'Segment condition snapshots'
+              : 'Route trip snapshots'}
+        </Heading>
 
         <div className="mt-6">
           <CivicObservationSummary
