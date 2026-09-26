@@ -27,17 +27,14 @@ const charterUrl =
 const browserIndexUrl = '/data/makati-legislation-index.json';
 const visibleResultLimit = 60;
 
-interface BrowserLegislationRecord {
-  id: string;
-  archiveLegislationId: string;
-  measureType: LocalMeasureType;
-  officialNumber: string;
-  display: string;
-  seriesYear: number | null;
-  title: string;
-  officialDocumentUrl: string | null;
-  officialDocumentStatus: string | null;
-}
+type BrowserLegislationRecord = [
+  archiveLegislationId: string,
+  measureType: LocalMeasureType,
+  officialNumber: string,
+  seriesYear: number | null,
+  title: string,
+  officialDocumentUrl: string | null,
+];
 
 interface BrowserLegislationIndex {
   schemaVersion: number;
@@ -51,20 +48,35 @@ interface BrowserLegislationIndex {
 }
 
 const fallbackRecords: BrowserLegislationRecord[] = localLegislationRecords.map(
-  record => ({
-    id: record.id,
-    archiveLegislationId: '',
-    measureType: record.measureType,
-    officialNumber: record.reference.officialNumber,
-    display: record.reference.display,
-    seriesYear: record.reference.seriesYear ?? null,
-    title: record.title,
-    officialDocumentUrl:
-      record.documents.find(document => document.kind === 'official-text')?.url ??
+  record => [
+    '',
+    record[1],
+    record.reference.officialNumber,
+    record.reference.seriesYear ?? null,
+    record[4],
+    record.documents.find(document => document.kind === 'official-text')?.url ??
       null,
-    officialDocumentStatus: null,
-  })
+  ]
 );
+
+const recordIdFor = (record: BrowserLegislationRecord) => {
+  const [, measureType, officialNumber] = record;
+  const slug = officialNumber
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+  return measureType + '-' + slug;
+};
+
+const displayFor = (record: BrowserLegislationRecord) => {
+  const [, measureType, officialNumber] = record;
+  return (
+    'City ' +
+    (measureType === 'ordinance' ? 'Ordinance' : 'Resolution') +
+    ' No. ' +
+    officialNumber
+  );
+};
 
 const measureFilters: Array<{
   value: 'all' | LocalMeasureType;
@@ -113,15 +125,15 @@ export default function Legislation() {
     const normalizedQuery = query.trim().toLowerCase();
 
     const matches = records.filter(record => {
-      if (measureType !== 'all' && record.measureType !== measureType) return false;
-      if (year !== 'all' && String(record.seriesYear ?? '') !== year) return false;
+      if (measureType !== 'all' && record[1] !== measureType) return false;
+      if (year !== 'all' && String(record[3] ?? '') !== year) return false;
       if (!normalizedQuery) return true;
 
-      const seed = localLegislationById.get(record.id);
+      const seed = localLegislationById.get(recordIdFor(record));
       const haystack = [
-        record.display,
-        record.officialNumber,
-        record.title,
+        displayFor(record),
+        record[2],
+        record[4],
         ...(seed?.topics ?? []),
       ]
         .join(' ')
@@ -147,10 +159,10 @@ export default function Legislation() {
   const indexedTotal = archiveIndex?.total ?? fallbackRecords.length;
   const ordinanceCount =
     archiveIndex?.countByType.ordinance ??
-    fallbackRecords.filter(record => record.measureType === 'ordinance').length;
+    fallbackRecords.filter(record => record[1] === 'ordinance').length;
   const resolutionCount =
     archiveIndex?.countByType.resolution ??
-    fallbackRecords.filter(record => record.measureType === 'resolution').length;
+    fallbackRecords.filter(record => record[1] === 'resolution').length;
 
   return (
     <>
@@ -291,32 +303,32 @@ export default function Legislation() {
         {resultSet.visible.length ? (
           <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-2">
             {resultSet.visible.map(record => {
-              const seed = localLegislationById.get(record.id);
-              const expanded = expandedRecordId === record.id;
+              const seed = localLegislationById.get(recordIdFor(record));
+              const expanded = expandedRecordId === recordIdFor(record);
               const sourceUrl =
-                record.officialDocumentUrl ||
+                record[5] ||
                 archiveIndex?.archiveUrl ||
                 officialArchive;
 
               return (
                 <article
-                  key={record.id}
+                  key={recordIdFor(record)}
                   className="rounded-2xl border border-primary-100 bg-white p-5"
                 >
                   <div className="flex flex-wrap items-center gap-2 text-xs font-bold uppercase tracking-[0.08em] text-gray-500">
-                    <span>{record.measureType}</span>
+                    <span>{record[1]}</span>
                     <span aria-hidden="true">·</span>
-                    <span>{record.officialNumber}</span>
-                    {record.seriesYear ? (
+                    <span>{record[2]}</span>
+                    {record[3] ? (
                       <>
                         <span aria-hidden="true">·</span>
-                        <span>{record.seriesYear}</span>
+                        <span>{record[3]}</span>
                       </>
                     ) : null}
                   </div>
 
                   <h3 className="mt-3 text-base font-extrabold leading-snug text-gray-950">
-                    {record.title}
+                    {record[4]}
                   </h3>
 
                   {seed?.topics.length ? (
@@ -333,7 +345,7 @@ export default function Legislation() {
                     <button
                       type="button"
                       onClick={() =>
-                        setExpandedRecordId(expanded ? null : record.id)
+                        setExpandedRecordId(expanded ? null : recordIdFor(record))
                       }
                       className="text-primary-700 underline underline-offset-2"
                       aria-expanded={expanded}
@@ -346,7 +358,7 @@ export default function Legislation() {
                       rel="noreferrer"
                       className="inline-flex items-center gap-1 text-primary-700 underline underline-offset-2"
                     >
-                      {record.officialDocumentUrl
+                      {record[5]
                         ? 'Official document'
                         : 'Official archive'}
                       <ExternalLink className="h-3.5 w-3.5" />
@@ -357,17 +369,17 @@ export default function Legislation() {
                     <dl className="mt-5 grid grid-cols-1 gap-3 border-t border-gray-200 pt-4 text-sm sm:grid-cols-2">
                       <div>
                         <dt className="font-bold text-gray-500">BetterMakati ID</dt>
-                        <dd className="mt-1 break-words text-gray-900">{record.id}</dd>
+                        <dd className="mt-1 break-words text-gray-900">{recordIdFor(record)}</dd>
                       </div>
                       <div>
                         <dt className="font-bold text-gray-500">Official reference</dt>
-                        <dd className="mt-1 text-gray-900">{record.display}</dd>
+                        <dd className="mt-1 text-gray-900">{displayFor(record)}</dd>
                       </div>
-                      {record.archiveLegislationId ? (
+                      {record[0] ? (
                         <div className="sm:col-span-2">
                           <dt className="font-bold text-gray-500">Makati archive ID</dt>
                           <dd className="mt-1 break-all font-mono text-xs text-gray-700">
-                            {record.archiveLegislationId}
+                            {record[0]}
                           </dd>
                         </div>
                       ) : null}
@@ -453,7 +465,7 @@ export default function Legislation() {
                 <span>{record.congress}</span>
               </div>
               <h3 className="mt-3 text-base font-extrabold leading-snug text-gray-950">
-                {record.title}
+                {record[4]}
               </h3>
               <p className="mt-2 text-sm text-gray-600">Filed {record.filed}</p>
 
