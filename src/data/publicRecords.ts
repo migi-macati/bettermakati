@@ -627,7 +627,7 @@ add({
   usedBy: 'Projects & Budget',
 });
 
-export const publicRecordsReviewed = '24 September 2026';
+export const publicRecordsReviewed = '26 September 2026';
 
 export const publicRecords = [...map.values()].sort((a, b) => {
   if (a.official !== b.official) return a.official ? -1 : 1;
