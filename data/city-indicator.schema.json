@@ -1,0 +1,1056 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://bettermakati.org/schemas/city-indicator.schema.json",
+  "title": "BetterMakati City Indicator",
+  "description": "Canonical schema for sourced Makati indicators. It supports inline observations, references to existing canonical datasets, and derived indicators without forcing duplicate values into the Statistics layer.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "title",
+    "topic",
+    "definition",
+    "unit",
+    "data",
+    "provenance",
+    "revision",
+    "comparability",
+    "relationships"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "description": "Stable lowercase kebab-case identifier. It must not encode a display-only title."
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "shortLabel": {
+      "type": "string",
+      "minLength": 1
+    },
+    "topic": {
+      "type": "string",
+      "enum": [
+        "population-demographics",
+        "economy-business",
+        "finance",
+        "services",
+        "land-infrastructure",
+        "environment",
+        "mobility",
+        "health",
+        "education",
+        "other"
+      ]
+    },
+    "definition": {
+      "$ref": "#/$defs/definition"
+    },
+    "unit": {
+      "$ref": "#/$defs/unit"
+    },
+    "data": {
+      "$ref": "#/$defs/dataBinding"
+    },
+    "provenance": {
+      "$ref": "#/$defs/provenance"
+    },
+    "revision": {
+      "$ref": "#/$defs/revision"
+    },
+    "comparability": {
+      "$ref": "#/$defs/comparability"
+    },
+    "relationships": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/relationship"
+      },
+      "default": []
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true,
+      "default": []
+    },
+    "export": {
+      "$ref": "#/$defs/exportMetadata",
+      "description": "Optional export metadata. UI components should not have to reconstruct downloadable series independently."
+    }
+  },
+  "$defs": {
+    "definition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "measure",
+        "description",
+        "basis"
+      ],
+      "properties": {
+        "measure": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "basis": {
+          "type": "string",
+          "minLength": 1
+        },
+        "numerator": {
+          "type": "string",
+          "minLength": 1
+        },
+        "denominator": {
+          "type": "string",
+          "minLength": 1
+        },
+        "method": {
+          "type": "string",
+          "minLength": 1
+        },
+        "interpretation": {
+          "type": "string",
+          "minLength": 1
+        },
+        "caveat": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "unit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "code"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "count",
+            "currency",
+            "percentage",
+            "rate",
+            "ratio",
+            "area",
+            "classification",
+            "text",
+            "index",
+            "custom"
+          ]
+        },
+        "code": {
+          "type": "string",
+          "minLength": 1
+        },
+        "symbol": {
+          "type": "string"
+        },
+        "scale": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "default": 1
+        },
+        "per": {
+          "type": "string",
+          "minLength": 1
+        },
+        "decimalPlaces": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 6
+        },
+        "displayPrefix": {
+          "type": "string"
+        },
+        "displaySuffix": {
+          "type": "string"
+        }
+      }
+    },
+    "dataBinding": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/inlineData"
+        },
+        {
+          "$ref": "#/$defs/canonicalReferenceData"
+        },
+        {
+          "$ref": "#/$defs/derivedData"
+        }
+      ]
+    },
+    "inlineData": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "observations"
+      ],
+      "properties": {
+        "kind": {
+          "const": "inline-observations"
+        },
+        "observations": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/observation"
+          }
+        }
+      }
+    },
+    "canonicalReferenceData": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "reference"
+      ],
+      "properties": {
+        "kind": {
+          "const": "canonical-reference"
+        },
+        "reference": {
+          "$ref": "#/$defs/canonicalReference"
+        },
+        "observationTemplate": {
+          "$ref": "#/$defs/observationTemplate",
+          "description": "Describes how referenced canonical records become indicator observations without copying their values."
+        }
+      }
+    },
+    "derivedData": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "dependencies",
+        "calculation"
+      ],
+      "properties": {
+        "kind": {
+          "const": "derived"
+        },
+        "dependencies": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "type",
+              "id"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "indicator",
+                  "canonical-reference"
+                ]
+              },
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "reference": {
+                "$ref": "#/$defs/canonicalReference"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "type": {
+                      "const": "canonical-reference"
+                    }
+                  }
+                },
+                "then": {
+                  "required": [
+                    "reference"
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        "calculation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "method",
+            "description"
+          ],
+          "properties": {
+            "method": {
+              "type": "string",
+              "enum": [
+                "sum",
+                "difference",
+                "ratio",
+                "percentage-share",
+                "percentage-change",
+                "per-capita",
+                "custom"
+              ]
+            },
+            "description": {
+              "type": "string",
+              "minLength": 1
+            },
+            "formulaLabel": {
+              "type": "string",
+              "minLength": 1
+            },
+            "rounding": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "period": {
+          "$ref": "#/$defs/period"
+        },
+        "geography": {
+          "$ref": "#/$defs/geography"
+        }
+      }
+    },
+    "canonicalReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "owner",
+        "module",
+        "export"
+      ],
+      "properties": {
+        "owner": {
+          "type": "string",
+          "enum": [
+            "barangays",
+            "city-comparison",
+            "budget-finance",
+            "place-registry",
+            "services",
+            "accountability",
+            "city-monitor",
+            "public-records",
+            "elections",
+            "other"
+          ]
+        },
+        "module": {
+          "type": "string",
+          "minLength": 1
+        },
+        "export": {
+          "type": "string",
+          "minLength": 1
+        },
+        "selector": {
+          "type": "string",
+          "minLength": 1
+        },
+        "recordId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "field": {
+          "type": "string",
+          "minLength": 1
+        },
+        "mapping": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Declarative field mapping only; it is not executable code."
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "observationTemplate": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "valueField": {
+          "type": "string",
+          "minLength": 1
+        },
+        "periodField": {
+          "type": "string",
+          "minLength": 1
+        },
+        "geographyField": {
+          "type": "string",
+          "minLength": 1
+        },
+        "fixedPeriod": {
+          "$ref": "#/$defs/period"
+        },
+        "fixedGeography": {
+          "$ref": "#/$defs/geography"
+        }
+      }
+    },
+    "observation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "value",
+        "period",
+        "geography"
+      ],
+      "properties": {
+        "value": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "boolean"
+            }
+          ]
+        },
+        "period": {
+          "$ref": "#/$defs/period"
+        },
+        "geography": {
+          "$ref": "#/$defs/geography"
+        },
+        "sourceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "published",
+            "provisional",
+            "revised",
+            "estimated"
+          ]
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "period": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "label"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "year",
+            "census-year",
+            "fiscal-year",
+            "quarter",
+            "month",
+            "date",
+            "as-of",
+            "range",
+            "current"
+          ]
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "year": {
+          "type": "integer",
+          "minimum": 1800,
+          "maximum": 2200
+        },
+        "start": {
+          "type": "string",
+          "format": "date"
+        },
+        "end": {
+          "type": "string",
+          "format": "date"
+        },
+        "asOf": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "geography": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "id",
+        "label",
+        "boundaryBasis"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "city",
+            "barangay",
+            "comparison-area",
+            "other"
+          ]
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "barangaySlug": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "boundaryBasis": {
+          "type": "string",
+          "enum": [
+            "makati-current-23",
+            "makati-historical-33",
+            "canonical-barangay",
+            "as-published",
+            "other"
+          ]
+        },
+        "boundaryAsOf": {
+          "type": "string",
+          "format": "date"
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "barangay"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "barangaySlug"
+            ]
+          }
+        }
+      ]
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sources"
+      ],
+      "properties": {
+        "sources": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/source"
+          }
+        },
+        "sourceNote": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "label",
+        "publisher",
+        "url",
+        "sourceClass",
+        "role"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "publisher": {
+          "type": "string",
+          "minLength": 1
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "sourceClass": {
+          "type": "string",
+          "enum": [
+            "city-government",
+            "national-government",
+            "court-statute",
+            "public-institution",
+            "research-institution",
+            "media-secondary",
+            "other"
+          ]
+        },
+        "role": {
+          "type": "string",
+          "enum": [
+            "primary-data",
+            "definition",
+            "methodology",
+            "cross-check",
+            "supporting"
+          ]
+        },
+        "publishedOrPeriod": {
+          "type": "string",
+          "minLength": 1
+        },
+        "publicRecordId": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "revision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "lastReviewed",
+        "status"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "dataVersion": {
+          "type": "string",
+          "minLength": 1
+        },
+        "lastReviewed": {
+          "type": "string",
+          "format": "date"
+        },
+        "lastChanged": {
+          "type": "string",
+          "format": "date"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "verified",
+            "provisional",
+            "needs-review",
+            "retired"
+          ]
+        },
+        "changeNote": {
+          "type": "string",
+          "minLength": 1
+        },
+        "supersedes": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "comparability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "geographyBasis"
+      ],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "comparable",
+            "series-break",
+            "limited",
+            "not-comparable",
+            "not-applicable"
+          ]
+        },
+        "geographyBasis": {
+          "type": "string",
+          "enum": [
+            "makati-current-23",
+            "makati-historical-33",
+            "canonical-barangay",
+            "as-published",
+            "mixed",
+            "not-applicable"
+          ]
+        },
+        "comparableFrom": {
+          "type": "string",
+          "minLength": 1
+        },
+        "comparableTo": {
+          "type": "string",
+          "minLength": 1
+        },
+        "breakAt": {
+          "type": "string",
+          "minLength": 1
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "relationship": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "targetType",
+        "targetId"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "applies-to",
+            "breakdown-of",
+            "derived-from",
+            "related-indicator",
+            "place-context",
+            "service-context",
+            "project-context",
+            "accountability-context",
+            "city-monitor-context",
+            "public-record-source",
+            "report-analysis",
+            "legislation-context",
+            "integrity-context"
+          ]
+        },
+        "targetType": {
+          "type": "string",
+          "enum": [
+            "indicator",
+            "barangay",
+            "place",
+            "segment",
+            "route",
+            "service",
+            "project",
+            "accountability-record",
+            "city-monitor-record",
+            "public-record",
+            "report",
+            "legislation-record",
+            "integrity-entity"
+          ]
+        },
+        "targetId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "exportMetadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "filename": {
+          "type": "string",
+          "minLength": 1
+        },
+        "columns": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "key",
+              "label"
+            ],
+            "properties": {
+              "key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "label": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "x-bettermakati-rules": [
+    "Use inline-observations only when the Statistics layer genuinely owns the values.",
+    "Use canonical-reference when the source of truth already belongs to Barangays, city comparison, budget/finance, services, Place Registry, Accountability, City Monitor or another canonical module.",
+    "Use derived only when dependencies and the calculation are explicit; never copy a derived display string back into canonical data.",
+    "Barangay observations must use canonical barangay slugs.",
+    "Current and historical Makati geographies must not be mixed without comparability.status and geographyBasis documenting the break.",
+    "Place/segment/route relationships must use canonical Place Registry IDs and must be explicit; no fuzzy or proximity-derived civic-intelligence links.",
+    "Place Registry record counts are not citywide facility counts unless a separate source establishes a complete eligible inventory.",
+    "Report prose may quote an indicator as a dated publication snapshot but is never a canonical data owner.",
+    "Source gaps remain source gaps; missing data must not be converted into zero.",
+    "Presentation components format values from unit metadata; they must not maintain independent copies of the same number."
+  ],
+  "examples": [
+    {
+      "id": "population-total-current-boundary",
+      "title": "Makati population",
+      "topic": "population-demographics",
+      "definition": {
+        "measure": "Resident population",
+        "description": "Population of Makati on the stated boundary and census basis.",
+        "basis": "PSA census/POPCEN population."
+      },
+      "unit": {
+        "kind": "count",
+        "code": "person",
+        "decimalPlaces": 0
+      },
+      "data": {
+        "kind": "derived",
+        "dependencies": [
+          {
+            "type": "canonical-reference",
+            "id": "barangay-population-2024",
+            "reference": {
+              "owner": "barangays",
+              "module": "src/data/barangays.ts",
+              "export": "barangays",
+              "field": "population2024"
+            }
+          }
+        ],
+        "calculation": {
+          "method": "sum",
+          "description": "Sum the 2024 population of the 23 canonical current Makati barangays."
+        },
+        "period": {
+          "kind": "census-year",
+          "label": "2024",
+          "year": 2024
+        },
+        "geography": {
+          "type": "city",
+          "id": "makati-current-23",
+          "label": "Makati City",
+          "boundaryBasis": "makati-current-23"
+        }
+      },
+      "provenance": {
+        "sources": [
+          {
+            "id": "psa-makati-population-2024",
+            "label": "PSA Makati barangay population",
+            "publisher": "Philippine Statistics Authority",
+            "url": "https://psa.gov.ph/classification/psgc/barangays/1380300000",
+            "sourceClass": "national-government",
+            "role": "primary-data",
+            "publishedOrPeriod": "2024"
+          }
+        ]
+      },
+      "revision": {
+        "schemaVersion": 1,
+        "lastReviewed": "2026-09-26",
+        "status": "verified"
+      },
+      "comparability": {
+        "status": "comparable",
+        "geographyBasis": "makati-current-23"
+      },
+      "relationships": [],
+      "tags": [
+        "population"
+      ]
+    },
+    {
+      "id": "barangay-population-2024",
+      "title": "Barangay population",
+      "topic": "population-demographics",
+      "definition": {
+        "measure": "Resident population by barangay",
+        "description": "2024 population attached to canonical current Makati barangays.",
+        "basis": "PSA 2024 POPCEN/PSGC barangay records."
+      },
+      "unit": {
+        "kind": "count",
+        "code": "person",
+        "decimalPlaces": 0
+      },
+      "data": {
+        "kind": "canonical-reference",
+        "reference": {
+          "owner": "barangays",
+          "module": "src/data/barangays.ts",
+          "export": "barangays",
+          "field": "population2024"
+        },
+        "observationTemplate": {
+          "valueField": "population2024",
+          "fixedPeriod": {
+            "kind": "census-year",
+            "label": "2024",
+            "year": 2024
+          },
+          "geographyField": "slug"
+        }
+      },
+      "provenance": {
+        "sources": [
+          {
+            "id": "psa-makati-barangays-2024",
+            "label": "PSA Makati barangay classification",
+            "publisher": "Philippine Statistics Authority",
+            "url": "https://psa.gov.ph/classification/psgc/barangays/1380300000",
+            "sourceClass": "national-government",
+            "role": "primary-data",
+            "publishedOrPeriod": "2024"
+          }
+        ]
+      },
+      "revision": {
+        "schemaVersion": 1,
+        "lastReviewed": "2026-09-26",
+        "status": "verified"
+      },
+      "comparability": {
+        "status": "comparable",
+        "geographyBasis": "canonical-barangay"
+      },
+      "relationships": [],
+      "tags": [
+        "population",
+        "barangay"
+      ]
+    },
+    {
+      "id": "reported-city-receipts",
+      "title": "Reported city receipts",
+      "topic": "finance",
+      "definition": {
+        "measure": "Reported annual receipts",
+        "description": "Annual Makati receipts from the existing DBM/BLGF fiscal series.",
+        "basis": "Use the fiscal series as published; do not relabel it as audited city financial statements."
+      },
+      "unit": {
+        "kind": "currency",
+        "code": "PHP",
+        "symbol": "₱",
+        "scale": 1000000
+      },
+      "data": {
+        "kind": "canonical-reference",
+        "reference": {
+          "owner": "budget-finance",
+          "module": "src/data/budget2025.ts",
+          "export": "actualFiscalHistory",
+          "field": "receiptsM"
+        },
+        "observationTemplate": {
+          "valueField": "receiptsM",
+          "periodField": "year",
+          "fixedGeography": {
+            "type": "city",
+            "id": "makati-as-published",
+            "label": "Makati City",
+            "boundaryBasis": "as-published"
+          }
+        }
+      },
+      "provenance": {
+        "sources": [
+          {
+            "id": "dbm-blgf-makati-fiscal-series",
+            "label": "DBM/BLGF Statements of Receipts and Expenditures",
+            "publisher": "Department of Budget and Management / Bureau of Local Government Finance",
+            "url": "https://www.dbm.gov.ph/",
+            "sourceClass": "national-government",
+            "role": "primary-data",
+            "publishedOrPeriod": "2019–2025"
+          }
+        ]
+      },
+      "revision": {
+        "schemaVersion": 1,
+        "lastReviewed": "2026-09-26",
+        "status": "verified"
+      },
+      "comparability": {
+        "status": "limited",
+        "geographyBasis": "as-published",
+        "note": "Preserve the fiscal series exactly as sourced; do not silently combine it with differently defined budget-plan series."
+      },
+      "relationships": [],
+      "tags": [
+        "finance",
+        "receipts"
+      ]
+    }
+  ]
+}
