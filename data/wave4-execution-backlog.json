@@ -849,9 +849,36 @@
       "id": "W4-4c",
       "phase": "Reports & Insights",
       "title": "Migrate existing reports to report schema v2",
-      "status": "planned",
+      "status": "complete",
       "maximumScope": "Existing reports only. No new research except resolving broken citations.",
-      "stopWhen": "Retained reports use one-synthesis structure, inline evidence and canonical internal sources."
+      "stopWhen": "Retained reports use one-synthesis structure, inline evidence and canonical internal sources.",
+      "completedAt": "2026-09-26",
+      "implementationFiles": [
+        "src/data/reports.ts",
+        "src/pages/ReportArticle.tsx",
+        "scripts/check-report-schema-v2.mjs",
+        "scripts/check-featured-reports-migration.mjs",
+        "package.json"
+      ],
+      "validation": {
+        "auditedReportCountBeforeMigration": 4,
+        "canonicalReportCountAfterMigration": 3,
+        "canonicalReports": [
+          "2026-budget-operating-expenses",
+          "2025-fiscal-profile",
+          "2024-barangay-population"
+        ],
+        "redirectedLegacyReportSlugs": {
+          "2025-local-revenue": "2025-fiscal-profile",
+          "2025-social-services": "2025-fiscal-profile"
+        },
+        "budgetRewrite": "The 2026 article now distinguishes the ₱19.0B adopted 2025 plan from the ₱24.37B 2025 current-year estimate and keeps the MOOE composition finding tied to the adopted-plan baseline.",
+        "fiscalMerge": "The two 2025 fiscal reports are merged into one synthesis that presents revenue composition and spending composition without implying that particular taxes funded particular programs.",
+        "barangayRewrite": "The 2024 population article is limited to resident-population distribution, derives all 23 barangay values from the canonical dataset and correctly identifies 8 barangays below 6,000 residents.",
+        "renderer": "ReportArticle renders v2 sections, inline evidence, canonical record links, stat blocks, tables, accessible bar charts, direct sources and optional collapsed methodology.",
+        "sourceModel": "Each migrated report includes canonical internal sources plus direct official sources already present in the repository.",
+        "guardrail": "No new external research was added; public factual blocks are tied to evidence and BetterMakati analysis is explicitly typed."
+      }
     },
     {
       "id": "W4-4d",
@@ -974,11 +1001,11 @@
       "stopWhen": "Wave 4 is closed only to the extent supported by evidence, with future work reopened as specific capabilities rather than vague unfinished work."
     }
   ],
-  "current": "W4-4c",
+  "current": "W4-4d",
   "immediateNext": {
-    "id": "W4-4c",
-    "title": "Migrate existing reports to report schema v2",
-    "maximumScope": "Existing reports only. No new research except resolving broken citations."
+    "id": "W4-4d",
+    "title": "Publish one Statistics-derived flagship report",
+    "maximumScope": "Exactly one high-quality synthesis using the Wave 4 Statistics layer. No report batch."
   },
   "carriedForward": [
     {
