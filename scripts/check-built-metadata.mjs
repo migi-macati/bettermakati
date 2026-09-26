@@ -7,6 +7,10 @@ const sitemap = await readFile('dist/sitemap.xml', 'utf8');
 const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(match => match[1]);
 assert(urls.some(url => url.includes('/services/guide/')), 'Service guides missing from sitemap');
 assert(urls.some(url => /\/civic-map\/[^/]+$/.test(url) && !url.endsWith('/reports')), 'Civic assets missing from sitemap');
+assert(
+  urls.some(url => url.endsWith('/civic-map/audits/park-accessibility-2026')),
+  'Park accessibility audit missing from sitemap'
+);
 for (const url of urls) {
   assert(url.startsWith(base + '/'), `Wrong canonical host: ${url}`);
   const html = await readFile(path.join('dist', new URL(url).pathname, 'index.html'), 'utf8');
