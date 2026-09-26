@@ -1276,23 +1276,17 @@
       "priority": "medium",
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Define structured observations",
-      "maximumScope": "Observation schema only by place/asset family. No UI.",
+      "maximumScope": "Observation schema only by civic entity family. No UI.",
       "status": "complete",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
       ],
-      "stopWhen": "Observation schema only by place/asset family. No UI.",
+      "stopWhen": "Observation schema only by civic entity family. No UI.",
       "specificationFile": "data/structured-observation-schema.json",
       "validation": {
         "specificationFile": "data/structured-observation-schema.json",
         "families": 5,
-        "placeCategoryCoverage": {
-          "total": 16,
-          "mappedExactlyOnce": true,
-          "unmapped": [],
-          "extra": []
-        },
         "questionSets": {
           "street-public-realm-v1": 9,
           "park-public-space-v1": 8,
@@ -1303,10 +1297,16 @@
         "totalStructuredQuestions": 41,
         "responseTypes": 12,
         "scoreModel": "No overall score, star rating, weighted index, grade, rank, recommendation or hidden numeric composite is permitted.",
-        "observationBoundary": "Observations are dated snapshots tied to canonical placeId. They do not alter Place Registry facts and do not create, confirm, resolve, forward or otherwise change civic cases.",
+        "observationBoundary": "Observations are dated snapshots tied to canonical entityId. They do not alter Civic Registry facts and do not create, confirm, resolve, forward or otherwise change civic cases.",
         "ratingMigration": "No rating migration is required.",
-        "aggregationBoundary": "W3R-6c may show recent value/distribution, observation count and freshness, but not composite place scores or ranked places.",
-        "implementationBoundary": "W3R-6a changed schema/planning data only. No UI, API, storage path, migration or derived summary was implemented."
+        "aggregationBoundary": "W3R-6c may show recent value/distribution, observation count and freshness, but not composite entity scores or ranked entities.",
+        "implementationBoundary": "W3R-6a changed schema/planning data only. No UI, API, storage path, migration or derived summary was implemented.",
+        "categoryCoverage": {
+          "total": 16,
+          "mappedExactlyOnce": true,
+          "unmapped": [],
+          "extra": []
+        }
       }
     },
     {
@@ -1326,7 +1326,7 @@
         "src/data/structuredObservations.ts",
         "src/components/civic/CivicObservationForm.tsx",
         "api/civic-observation.js",
-        "data/place-observation-index.mjs",
+        "data/civic-observation-entity-index.mjs",
         "src/pages/CivicAsset.tsx",
         "src/components/civic/CivicContributionForm.tsx",
         "src/data/civicMap.ts",
@@ -1338,32 +1338,32 @@
           "src/data/structuredObservations.ts",
           "src/components/civic/CivicObservationForm.tsx",
           "api/civic-observation.js",
-          "data/place-observation-index.mjs",
+          "data/civic-observation-entity-index.mjs",
           "src/pages/CivicAsset.tsx",
           "src/components/civic/CivicContributionForm.tsx",
           "src/data/civicMap.ts",
           "api/civic.js",
           "scripts/check-structured-observations.mjs"
         ],
-        "reusableForm": "Every canonical place page now exposes one structured observation form selected from the place's observation family.",
-        "storage": "Observations use the dedicated /api/civic-observation endpoint and [Place Observations] per-place GitHub threads with place-observation metadata comments.",
-        "rawRetrieval": "GET /api/civic-observation?placeId=<id> returns raw observations for later W3R-6c summaries; it derives no scores.",
-        "canonicalValidation": "The server resolves submitted placeId against an 88-place canonical index and overwrites client-supplied place name/category before family/question validation.",
+        "reusableForm": "Every civic-registry detail page exposes one structured observation form selected from the entity's observation family.",
+        "storage": "Observations use /api/civic-observation and [Civic Observations] per-entity threads with civic-observation metadata.",
+        "rawRetrieval": "GET /api/civic-observation?entityId=<id> returns raw observations without deriving scores.",
+        "canonicalValidation": "The server resolves entityId against the 88-record canonical civic-entity index, restores canonical entityKind/name/category, and then validates family/questions.",
         "schemaEnforcement": "Server validates family/category, question-set version, question IDs, question applicability, answer types/choices, observed time, time context and weather context.",
-        "ratingRetirement": "CivicContributionKind no longer includes review; the 1–5 UI, scores payload, review write branch and retired generic rating criteria were removed.",
+        "ratingRetirement": "The generic numeric rating write path, score payload and rating criteria are removed.",
         "ratingCleanup": "Obsolete rating compatibility and rating outputs were removed.",
         "lifecycleSeparation": "Observation storage contains no civic-admin lifecycle, referral eligibility, duplicate-case behavior or case-state promotion.",
         "noDerivedScores": "No overall score, stars, average rating, weighted score, grade, rank or composite index is generated or stored.",
-        "integrityGate": "check:observations validates 16 categories mapped exactly once, 88 canonical place IDs, 5 families, 41 questions, dedicated storage, rating-write retirement and lifecycle separation; it is wired into quality and build.",
+        "integrityGate": "check:observations validates 16 categories, 88 canonical civic entity IDs, 5 observation families, 41 questions, dedicated storage, rating retirement and lifecycle separation.",
         "ci": "Latest completed CI after the implementation reports only the same three pre-existing unused-import ESLint errors and existing warnings. No new errors are reported for the observation form, observation definitions, observation API, CivicAsset, CivicContributionForm or civicMap; downstream checks/build remain skipped behind the baseline lint failure."
       }
     },
     {
       "id": "W3R-6c",
-      "title": "Add place condition summaries",
+      "title": "Add civic entity condition summaries",
       "priority": "medium",
       "ownerWorkstream": "Wave 3 Revision",
-      "goal": "Add place condition summaries",
+      "goal": "Add civic entity condition summaries",
       "maximumScope": "Display recent structured observations and freshness only. Do not publish composite scores.",
       "status": "complete",
       "planFile": "data/wave3-redesign-plan.json",
@@ -1386,7 +1386,7 @@
           "api/civic-observation.js",
           "scripts/check-structured-observations.mjs"
         ],
-        "display": "Every place page now shows recent structured condition summaries above the observation form.",
+        "display": "Every civic-registry detail page shows recent structured condition summaries above the observation form.",
         "freshness": {
           "fresh": "<=30 days",
           "recent": "31-90 days",
@@ -1422,13 +1422,13 @@
       "priority": "medium",
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Define civic audit campaigns",
-      "maximumScope": "Campaign schema/workflow only: geography, place set, questions, period and completion. No generalized campaign UI.",
+      "maximumScope": "Campaign schema/workflow only: geography, target entity set, questions, period and completion. No generalized campaign UI.",
       "status": "complete",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
       ],
-      "stopWhen": "Campaign schema/workflow only: geography, place set, questions, period and completion. No generalized campaign UI.",
+      "stopWhen": "Campaign schema/workflow only: geography, target entity set, questions, period and completion. No generalized campaign UI.",
       "schemaFile": "data/civic-audit-campaign-schema.json",
       "validation": {
         "schemaFile": "data/civic-audit-campaign-schema.json",
@@ -1442,9 +1442,9 @@
           "close",
           "publish"
         ],
-        "frozenTargetRule": "Campaigns freeze explicit canonical place IDs before launch; selectors are drafting aids only.",
-        "verificationGate": "Every target must be verification.status=verified at freeze time.",
-        "coverageDiscipline": "Campaign output cannot claim geography-wide coverage beyond the frozen place set and must show missing target places.",
+        "frozenTargetRule": "Campaigns freeze explicit canonical entity IDs before launch; selectors are drafting aids only.",
+        "verificationGate": "Place targets require verified status. Explicit bounded segment/route pilots may use provisional targets only under the partial-scope eligibility policy.",
+        "coverageDiscipline": "Campaign output cannot claim coverage beyond the frozen entity set and must show missing target entities.",
         "completion": "Completion is operational coverage only, based on minimum observations and required-question coverage; it is not a condition score.",
         "noScores": "Campaigns explicitly forbid overall scores, star ratings, weighted composites, rankings, best/worst labels and hidden numeric conversion.",
         "streetSegmentFinding": {
@@ -1452,10 +1452,10 @@
           "verifiedStreetSegments": 0,
           "provisionalStreetSegments": 3,
           "sidewalkSegments": 0,
-          "explanation": "W3R-4a verified-only browsing filtered out all three pilot street segments because none has identity/coordinate source URLs."
+          "explanation": "The three existing street-segment seeds are provisional. They now appear in the dedicated Segment view, but they are not a complete Poblacion or Makati street frame."
         },
         "ratingCleanupCorrection": "Obsolete rating compatibility, aggregates and rating UI were removed.",
-        "integrityGate": "check:civic-audits validates family parity, workflow stages, frozen-place requirements, verified-only campaign targeting, score prohibitions and the current street-segment coverage snapshot.",
+        "integrityGate": "check:civic-audits validates entity-family parity, workflow stages, frozen target entities, entity-specific eligibility, score prohibitions and the current street-segment coverage snapshot.",
         "ci": "Latest completed CI after the cleanup shows only the same three unrelated baseline unused-import errors and six existing warnings; no new blocking errors are reported in CivicReports, Civic Map, CivicDiscussion or civic-report changes."
       }
     },
@@ -1465,13 +1465,13 @@
       "priority": "medium",
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Pilot one civic audit",
-      "maximumScope": "One bounded pilot campaign using a registry-ready verified place set. Park accessibility is ready; street/sidewalk auditing remains blocked until segment inventory is expanded and verified.",
+      "maximumScope": "One bounded pilot campaign using one entity kind. Verified-place pilots are ready; a named partial segment pilot may use explicitly bounded provisional segments, but no barangay- or citywide street/sidewalk completeness claim.",
       "status": "next",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
       ],
-      "stopWhen": "One geography and one audit theme only, such as BetterPoblacion sidewalks or Makati park accessibility."
+      "stopWhen": "One geography or explicitly bounded corridor/segment set and one audit theme only."
     },
     {
       "id": "W3R-7c",
@@ -1791,7 +1791,7 @@
   "immediateNext": {
     "id": "W3R-7b",
     "title": "Pilot one civic audit",
-    "maximumScope": "One bounded pilot campaign using a registry-ready verified place set. Park accessibility is ready; street/sidewalk auditing remains blocked until segment inventory is expanded and verified."
+    "maximumScope": "One bounded pilot campaign using one entity kind. Verified-place pilots are ready; a named partial segment pilot may use explicitly bounded provisional segments, but no barangay- or citywide street/sidewalk completeness claim."
   },
   "reopenedExecutionOrder": [
     "3C-2a",
@@ -1865,8 +1865,22 @@
       "status": "known-gap",
       "streetSegments": 3,
       "verifiedStreetSegments": 0,
+      "provisionalStreetSegments": 3,
       "sidewalkSegments": 0,
-      "consequence": "Do not claim Poblacion-wide or Makati-wide street/sidewalk audit coverage yet."
+      "consequence": "The Segment view can show the three named draft segments, but no Poblacion-wide or Makati-wide street/sidewalk completeness claim is supported."
     }
+  },
+  "civicEntityTreatment": {
+    "status": "active",
+    "model": [
+      "place",
+      "segment",
+      "route"
+    ],
+    "place": "Destination-like physical sites. Address, access, services-at-location and nearby matching may apply; default browse requires verified status.",
+    "segment": "Bounded infrastructure units. Boundary/geometry is primary; representative points are display aids only; provisional named segments can appear as Draft segment.",
+    "route": "Network/service records. Route definition and lifecycle are primary; routes are not proximity-matched as nearby places.",
+    "observationIdentity": "New structured observations use entityId/entityKind.",
+    "civicCaseIdentity": "New civic cases use entityId/entityKind, with placeId/assetId retained only as compatibility fallbacks for older records."
   }
 }
