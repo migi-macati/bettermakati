@@ -7,6 +7,8 @@ export interface CivicEcosystemResource {
     | 'national-data-context'
     | 'cross-lgu-discovery'
     | 'national-service-discovery'
+    | 'national-transparency-context'
+    | 'national-procurement-discovery'
     | 'other';
   note: string;
   auditedOn: string;
@@ -41,6 +43,26 @@ export const civicEcosystemResources: CivicEcosystemResource[] = [
     role: 'cross-lgu-discovery',
     note:
       'Cross-LGU discovery route, not a statistical comparison source.',
+    auditedOn: '2026-09-25',
+  },
+  {
+    id: 'transparency',
+    ecosystem: 'bettergov',
+    name: 'Transparency Portal',
+    href: 'https://transparency.bettergov.ph/',
+    role: 'national-transparency-context',
+    note:
+      'National transparency context for procurement and public spending. It does not establish any Makati-specific Integrity fact.',
+    auditedOn: '2026-09-25',
+  },
+  {
+    id: 'philgeps',
+    ecosystem: 'bettergov',
+    name: 'PhilGEPS procurement browser',
+    href: 'https://transparency.bettergov.ph/procurement',
+    role: 'national-procurement-discovery',
+    note:
+      'BetterGov procurement handoff for further discovery. A BetterMakati award is not treated as a matched PhilGEPS notice unless an exact official reference is independently verified.',
     auditedOn: '2026-09-25',
   },
 ];
