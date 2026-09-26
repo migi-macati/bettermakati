@@ -11,6 +11,8 @@ import SEO from '../components/SEO';
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
 import Breadcrumbs from '../components/ui/Breadcrumbs';
+import CivicNearbyReportForm from '../components/civic/CivicNearbyReportForm';
+import { useBarangayScope, withBarangayScope } from '../hooks/useBarangayScope';
 import {
   civicAssetTypeLabels,
   placeRegistry,
@@ -94,6 +96,11 @@ export default function CivicNearbyReport() {
   const [manualLat, setManualLat] = useState('');
   const [manualLng, setManualLng] = useState('');
   const [manualError, setManualError] = useState('');
+  const { barangaySlug, isExplicitScope } = useBarangayScope();
+  const mapHref = withBarangayScope(
+    '/civic-map',
+    isExplicitScope ? barangaySlug : undefined
+  );
 
   const nearbyCandidates = useMemo(() => {
     if (!location.point) return [];
@@ -223,8 +230,14 @@ export default function CivicNearbyReport() {
           className="mb-7"
           items={[
             { label: 'Home', href: '/' },
-            { label: 'Civic Map', href: '/civic-map' },
-            { label: 'Report something near me', href: '/civic-map/report' },
+            { label: 'Civic Map', href: mapHref },
+            {
+              label: 'Report something near me',
+              href: withBarangayScope(
+                '/civic-map/report',
+                isExplicitScope ? barangaySlug : undefined
+              ),
+            },
           ]}
         />
 
@@ -462,9 +475,9 @@ export default function CivicNearbyReport() {
         </button>
       </Section>
 
-      {matchState !== 'unresolved' && (
-        <Section className="bg-white">
-          <div className="max-w-3xl rounded-2xl border border-primary-200 bg-primary-50 p-6">
+      {matchState !== 'unresolved' && location.point && (
+        <Section className="bg-white" id="report-details">
+          <div className="mb-6 max-w-3xl rounded-2xl border border-primary-200 bg-primary-50 p-5">
             <div className="flex items-start gap-3">
               <CheckCircle2 className="mt-0.5 h-6 w-6 shrink-0 text-primary-700" />
               <div>
@@ -474,14 +487,19 @@ export default function CivicNearbyReport() {
                     ? selectedPlace.name
                     : 'Location only — no canonical place selected.'}
                 </p>
-                <p className="mt-3 text-xs text-gray-500">
-                  Problem details and submission are connected in the next reporting step.
-                </p>
               </div>
             </div>
           </div>
 
-          <Link to="/civic-map" className="mt-5 inline-flex text-sm font-bold text-primary-700 underline underline-offset-2">
+          <div className="max-w-4xl">
+            <CivicNearbyReportForm
+              key={(selectedPlace?.id ?? 'location-only') + ':' + pointLabel(location.point)}
+              place={matchState === 'confirmed-place' ? selectedPlace : null}
+              point={location.point}
+            />
+          </div>
+
+          <Link to={mapHref} className="mt-5 inline-flex text-sm font-bold text-primary-700 underline underline-offset-2">
             Back to Civic Map
           </Link>
         </Section>
