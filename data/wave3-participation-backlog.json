@@ -1617,12 +1617,14 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Revise Get Involved",
       "maximumScope": "Get Involved only. Preserve general submissions and add civic-audit volunteering/handoffs where appropriate.",
-      "status": "next",
+      "status": "complete",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
       ],
-      "stopWhen": "Get Involved only. Preserve general submissions and add civic-audit volunteering/handoffs where appropriate."
+      "stopWhen": "Get Involved only. Preserve general submissions and add civic-audit volunteering/handoffs where appropriate.",
+      "completedAt": "2026-09-26",
+      "commit": "34d192fb91f5b398d24158cb528c0bf33b31b135"
     },
     {
       "id": "W3R-8c",
@@ -1631,12 +1633,14 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Revise BetterBarangay participation",
       "maximumScope": "Barangay participation integration only: local places, issues, improvements, civic audits and barangay contact.",
-      "status": "planned",
+      "status": "complete",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
       ],
-      "stopWhen": "Barangay participation integration only: local places, issues, improvements, civic audits and barangay contact."
+      "stopWhen": "Barangay participation integration only: local places, issues, improvements, civic audits and barangay contact.",
+      "completedAt": "2026-09-26",
+      "commit": "618f4bad6fbfb3fea4258517923994afd12e1594"
     },
     {
       "id": "W3R-9a",
@@ -1645,7 +1649,7 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Add places to global Search",
       "maximumScope": "Global Search only. Places become first-class searchable results.",
-      "status": "planned",
+      "status": "next",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
@@ -1964,9 +1968,12 @@
     ],
     "completed": [
       "W3R-0",
-      "W3R-1"
+      "W3R-1",
+      "W3R-8a",
+      "W3R-8b",
+      "W3R-8c"
     ],
-    "current": "W3R-2a",
+    "current": "W3R-9a",
     "capabilityDispositionAuditFile": "data/wave3-capability-disposition-audit.json"
   },
   "knownCoverageGaps": {
