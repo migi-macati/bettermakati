@@ -234,9 +234,9 @@
     "uiChanges": 0
   },
   "nextImplementationStep": {
-    "id": "W3R-8a",
-    "title": "Revise Participation Hub",
-    "constraint": "Participate page only. Align task-led participation entry points with the redesigned civic registry/reporting/audit flows."
+    "id": "W3R-8b",
+    "title": "Revise Get Involved",
+    "constraint": "Get Involved only. Preserve general submissions and add civic-audit volunteering/handoffs where appropriate."
   },
   "betterBarangayReuse": {
     "workstream": "W3R-3a",
