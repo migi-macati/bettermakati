@@ -381,15 +381,41 @@
       "id": "W4-1h",
       "phase": "Statistics",
       "title": "Integrate barangay statistics",
-      "status": "next",
+      "status": "complete",
       "maximumScope": "Barangay-scoped statistical view only. Reuse canonical barangay data and indicator definitions.",
-      "stopWhen": "Applicable city indicators can be sliced to canonical barangays without pretending unavailable barangay data exists."
+      "stopWhen": "Applicable city indicators can be sliced to canonical barangays without pretending unavailable barangay data exists.",
+      "implementationFiles": [
+        "src/data/cityIndicators.ts",
+        "src/pages/Statistics.tsx",
+        "scripts/check-city-indicators.mjs"
+      ],
+      "validation": {
+        "canonicalBarangayData": [
+          "2024 barangay observations are generated from the canonical 23 BarangayProfile records rather than copied into a second statistics table.",
+          "Barangay observations use canonical barangay slugs/geography and the PSA PSGC source.",
+          "A reusable barangayPopulationContext2024 helper derives city share, population rank and median comparison from canonical values."
+        ],
+        "scopedView": [
+          "Selected BetterBarangay scope now shows 2024 population, share of Makati, population rank among 23 barangays, city median context and legislative district.",
+          "The scoped panel links directly to the PSA barangay source and canonical barangay profile.",
+          "Section navigation exposes the Barangay snapshot when a barangay is selected."
+        ],
+        "scopeHonesty": [
+          "Economy, labor and city-system indicators remain explicitly citywide unless an official barangay value is available.",
+          "No barangay household, GDP, labor or infrastructure value is inferred from citywide indicators.",
+          "Citywide analysis immediately below the local panel is labeled Citywide context when barangay scope is active."
+        ],
+        "regression": "check:city-indicators now guards canonical barangay observation generation, population context derivation, scoped Statistics markers and absence of invented barangay household/economic/labor fields.",
+        "focusedValidation": "Source validation confirms the PSGC source registry, canonical barangay geography, rank/share/median context, scoped Statistics UI and explicit citywide boundary. No unsupported barangay household/GDP/labor field is present.",
+        "sourceRegistry": "City-indicator source registry now contains 19 registered official sources after adding the canonical PSA PSGC barangay source.",
+        "executionBoundary": "No external research or browser/device testing was performed in W4-1h."
+      }
     },
     {
       "id": "W4-1i",
       "phase": "Statistics",
       "title": "Add statistics downloads and provenance integrity",
-      "status": "planned",
+      "status": "next",
       "maximumScope": "Downloads/source metadata only. No new indicator research.",
       "stopWhen": "Displayed time series and comparison tables have reproducible downloads and source/definition metadata."
     },
@@ -659,9 +685,9 @@
     }
   ],
   "immediateNext": {
-    "id": "W4-1h",
-    "title": "Integrate barangay statistics",
-    "maximumScope": "Barangay-scoped statistical view only. Reuse canonical barangay data and indicator definitions."
+    "id": "W4-1i",
+    "title": "Add statistics downloads and provenance integrity",
+    "maximumScope": "Downloads/source metadata only. No new indicator research."
   },
   "inheritedKnownItems": [
     {
