@@ -70,7 +70,7 @@ export default function ConcernFinder() {
           <div className="section-eyebrow">Service finder</div>
           <Heading>Saan Ako Lalapit?</Heading>
           <p className="mt-2 max-w-3xl text-base leading-relaxed text-gray-700">
-            Describe what you need. Search results go directly to a BetterMakati service guide before the official government handoff.
+            Describe what you need. Describe what you need. Results identify the relevant service and, when an exact location is already verified, where you can go.
           </p>
 
           <div className="mt-5 flex items-start gap-3 rounded-2xl border border-warning-200 bg-warning-50 p-4 text-sm text-warning-950">
@@ -89,6 +89,7 @@ export default function ConcernFinder() {
               scope="services"
               title="What do you need help with?"
               placeholder="e.g., hospital bill, PWD ID, business permit, cedula"
+              showServicePlaces
             />
           </div>
         </div>
