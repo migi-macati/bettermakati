@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "createdAt": "2026-09-25",
   "title": "Wave 3 Revision — Places, Reporting & Civic Participation",
-  "status": "active",
+  "status": "closed-with-explicit-deferrals",
   "revisionReason": "Reframe Civic Map from a ratings-first destination into one consumer of a shared Makati place registry, while preserving completed asset research, reporting infrastructure, emergency handling, duplicate detection, lifecycle semantics and general participation workflows.",
   "productDoctrine": [
     "The verified asset inventory is shared civic-place infrastructure, not a set of objects people are expected to rate.",
@@ -1225,15 +1225,33 @@
     {
       "id": "W3R-11f",
       "title": "Reclassify and close Wave 3",
-      "status": "next",
-      "maximumScope": "Supersede the old capability classification with an evidence-based redesigned Wave 3 classification, record deferrals, and close only what is actually complete."
+      "status": "complete",
+      "maximumScope": "Supersede the old capability classification with an evidence-based redesigned Wave 3 classification, record deferrals, and close only what is actually complete.",
+      "classificationFile": "data/wave3-redesigned-capability-classification.json",
+      "validation": {
+        "supersession": "data/wave3-participation-classification.json is retained as a historical snapshot but marked superseded by the redesigned classification.",
+        "classificationSummary": {
+          "capabilities": 14,
+          "complete": 7,
+          "completeWithBoundary": 5,
+          "partial": 1,
+          "deferred": 1,
+          "replacedLegacyPatterns": 3
+        },
+        "closureStatus": "closed-with-explicit-deferrals",
+        "notFullyComplete": [
+          "Outcome-oriented /civic-map/reports presentation remains partial and is explicitly deferred to a future scoped follow-up.",
+          "Repeat-contribution measurement remains deferred until privacy-safe identity/retention design exists.",
+          "Automatic government forwarding remains deferred.",
+          "Public lifecycle rates/medians and aggregate freshness rates remain threshold-gated.",
+          "Official participation calendar completeness remains source-dependent.",
+          "Physical-device/screen-reader and independently executed CI validation are not claimed."
+        ],
+        "closureRule": "All planned Wave 3 redesign micro-steps are complete, but Wave 3 is not labeled fully complete because the redesigned classification preserves the known partial/deferred capabilities."
+      }
     }
   ],
-  "immediateNext": {
-    "id": "W3R-11f",
-    "title": "Reclassify and close Wave 3",
-    "maximumScope": "Supersede the old capability classification with an evidence-based redesigned Wave 3 classification, record deferrals, and close only what is actually complete."
-  },
+  "immediateNext": null,
   "capabilityDispositionAuditFile": "data/wave3-capability-disposition-audit.json",
   "completedSteps": [
     "W3R-0",
@@ -1272,7 +1290,8 @@
     "W3R-11b",
     "W3R-11c",
     "W3R-11d",
-    "W3R-11e"
+    "W3R-11e",
+    "W3R-11f"
   ],
   "placeRegistrySchemaFile": "data/place-registry-schema.json",
   "placeRegistryDataFile": "src/data/placeRegistry.ts",
@@ -1298,5 +1317,21 @@
     "route": "Network/service records. Route definition and lifecycle are primary; routes are not proximity-matched as nearby places.",
     "observationIdentity": "New structured observations use entityId/entityKind.",
     "civicCaseIdentity": "New civic cases use entityId/entityKind, with placeId/assetId retained only as compatibility fallbacks for older records."
+  },
+  "closure": {
+    "closedAt": "2026-09-26",
+    "status": "closed-with-explicit-deferrals",
+    "classificationFile": "data/wave3-redesigned-capability-classification.json",
+    "legacyClassificationFile": "data/wave3-participation-classification.json",
+    "implementationPlanSteps": 38,
+    "completedPlanSteps": 38,
+    "fullyComplete": false,
+    "partialCapabilities": [
+      "W3R-CAP-12"
+    ],
+    "deferredCapabilities": [
+      "W3R-CAP-11"
+    ],
+    "note": "Wave 3 redesign execution is closed. Future work must reopen a specifically scoped deferred/partial capability rather than treating the whole wave as unfinished or fully complete."
   }
 }
