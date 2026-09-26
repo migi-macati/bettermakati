@@ -81,15 +81,34 @@
       "id": "W4-1a",
       "phase": "Statistics",
       "title": "Audit current Statistics capabilities and gaps",
-      "status": "next",
+      "status": "complete",
       "maximumScope": "Inventory existing Statistics page, barangay population data, city-comparison data, finance links and duplicated/hard-coded facts. No external research.",
-      "stopWhen": "A current-state statistics inventory identifies canonical sources, duplicates, missing dimensions and candidates for reuse."
+      "stopWhen": "A current-state statistics inventory identifies canonical sources, duplicates, missing dimensions and candidates for reuse.",
+      "auditFile": "data/wave4-statistics-current-state-audit.json",
+      "validation": {
+        "currentStatus": "useful-but-fragmented",
+        "existingCapabilities": 6,
+        "canonicalFindings": [
+          "23 barangay profiles sum exactly to the current 2024 city population of 309,770.",
+          "2024 city population is duplicated across Statistics, budget2025 and report prose.",
+          "Population trend is page-local data and should migrate to the indicator layer.",
+          "GDP per person is numerically owned by cityComparison.ts but repeated as formatted page text.",
+          "Budget/fiscal series already have a canonical owner in budget2025.ts and should be reused rather than copied."
+        ],
+        "productFindings": [
+          "Current Statistics is strong on population comparability, city comparison and basic downloads.",
+          "Opening remains generic and contains one meta/sermon sentence slated for W4-1g.",
+          "Current statistical scope is narrow: mostly population plus one GDP-per-person comparison.",
+          "Place Registry counts must not be used as citywide infrastructure statistics without an independently source-backed denominator."
+        ],
+        "noExternalResearch": "W4-1a was repository/source audit only."
+      }
     },
     {
       "id": "W4-1b",
       "phase": "Statistics",
       "title": "Define canonical city-indicator schema",
-      "status": "planned",
+      "status": "next",
       "maximumScope": "Schema only: indicator ID, value, unit, period, geography, definition, source, revision, comparability and relationships.",
       "stopWhen": "One reusable indicator model can represent citywide and barangay statistics without copying display strings into pages."
     },
@@ -415,9 +434,9 @@
     }
   ],
   "immediateNext": {
-    "id": "W4-1a",
-    "title": "Audit current Statistics capabilities and gaps",
-    "maximumScope": "Inventory existing Statistics page, barangay population data, city-comparison data, finance links and duplicated/hard-coded facts. No external research."
+    "id": "W4-1b",
+    "title": "Define canonical city-indicator schema",
+    "maximumScope": "Schema only: indicator ID, value, unit, period, geography, definition, source, revision, comparability and relationships."
   },
   "inheritedKnownItems": [
     {
