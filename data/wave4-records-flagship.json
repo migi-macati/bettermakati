@@ -1,0 +1,25 @@
+{
+  "wave": "W4-4e",
+  "publishedOn": "2026-09-26",
+  "publishedReportSlugs": [
+    "audit-follow-up-closure-trails"
+  ],
+  "synthesis": "Three historical Makati audit findings have later response or implementation-evidence records in the indexed public trail, but none of the three currently has finding-specific closure established by an explicit later status mapping.",
+  "canonicalRecordInputs": {
+    "findingLevelAuditRecords": 3,
+    "followUpActionRecords": 4,
+    "resolutionTrails": 3,
+    "sourceOnlyAuditRecords": 1
+  },
+  "recordIds": [
+    "finding-2017-development-fund-loan-payments",
+    "finding-2018-deped-cash-advances",
+    "finding-2018-sef-eligibility"
+  ],
+  "boundaries": [
+    "Unresolved refers to documentary continuity in the indexed trail, not proof that the underlying condition continued.",
+    "Aggregate implementation counts are not assigned to a specific finding unless the later source identifies that finding or recommendation.",
+    "Related later controls or reporting are retained as follow-up evidence but are not treated as closure without explicit item-level continuity.",
+    "The 2024 SEF compliance audit remains source-only and is excluded from the three finding-level trails because finding-level text is not currently retrievable."
+  ]
+}
