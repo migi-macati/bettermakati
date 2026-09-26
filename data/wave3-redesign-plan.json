@@ -441,13 +441,38 @@
     {
       "id": "W3R-6a",
       "title": "Define structured observations",
-      "status": "next",
-      "maximumScope": "Observation schema only by place/asset family. No UI."
+      "status": "complete",
+      "maximumScope": "Observation schema only by place/asset family. No UI.",
+      "specificationFile": "data/structured-observation-schema.json",
+      "validation": {
+        "specificationFile": "data/structured-observation-schema.json",
+        "families": 5,
+        "placeCategoryCoverage": {
+          "total": 16,
+          "mappedExactlyOnce": true,
+          "unmapped": [],
+          "extra": []
+        },
+        "questionSets": {
+          "street-public-realm-v1": 9,
+          "park-public-space-v1": 8,
+          "public-facility-v1": 8,
+          "transport-stop-terminal-v1": 9,
+          "transport-route-v1": 7
+        },
+        "totalStructuredQuestions": 41,
+        "responseTypes": 12,
+        "scoreModel": "No overall score, star rating, weighted index, grade, rank, recommendation or hidden numeric composite is permitted.",
+        "observationBoundary": "Observations are dated snapshots tied to canonical placeId. They do not alter Place Registry facts and do not create, confirm, resolve, forward or otherwise change civic cases.",
+        "legacyRatings": "Existing 1–5 review records remain historical and are explicitly not migrated into structured observations.",
+        "aggregationBoundary": "W3R-6c may show recent value/distribution, observation count and freshness, but not composite place scores or ranked places.",
+        "implementationBoundary": "W3R-6a changed schema/planning data only. No UI, API, storage path, migration or derived summary was implemented."
+      }
     },
     {
       "id": "W3R-6b",
       "title": "Replace generic ratings with observations",
-      "status": "planned",
+      "status": "next",
       "maximumScope": "One reusable observation form. No derived scores."
     },
     {
@@ -578,9 +603,9 @@
     }
   ],
   "immediateNext": {
-    "id": "W3R-6a",
-    "title": "Define structured observations",
-    "maximumScope": "Observation schema only by place/asset family. No UI."
+    "id": "W3R-6b",
+    "title": "Replace generic ratings with observations",
+    "maximumScope": "One reusable observation form and storage path. No derived scores."
   },
   "capabilityDispositionAuditFile": "data/wave3-capability-disposition-audit.json",
   "completedSteps": [
@@ -598,7 +623,8 @@
     "W3R-5a",
     "W3R-5b",
     "W3R-5c",
-    "W3R-5d"
+    "W3R-5d",
+    "W3R-6a"
   ],
   "placeRegistrySchemaFile": "data/place-registry-schema.json",
   "placeRegistryDataFile": "src/data/placeRegistry.ts"
