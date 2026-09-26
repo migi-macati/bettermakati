@@ -392,19 +392,26 @@
     ]
   },
   "pilotReadiness": {
-    "readyExample": {
+    "activePilot": {
+      "campaignId": "makati-public-park-accessibility-2026-pilot",
+      "file": "data/civic-audit-pilot-park-accessibility-2026.json",
+      "publicRoute": "/civic-map/audits/park-accessibility-2026",
+      "entityKind": "place",
       "theme": "park-accessibility",
-      "reason": "A verified public-park place set already exists and can be frozen explicitly."
+      "frozenTargets": 13,
+      "minimumObservationGoal": 26,
+      "period": "2026-09-26T10:03:00+08:00 to 2026-10-26T23:59:59+08:00",
+      "nextStep": "W3R-7c — publish the bounded pilot output."
     },
-    "blockedExample": {
-      "theme": "poblacion-street-walkability",
-      "reason": "The current Poblacion street frame contains only two provisional J.P. Rizal segments and no canonical sidewalk segments; it cannot support a Poblacion-wide claim yet."
+    "segmentReadiness": {
+      "status": "partial-only",
+      "reason": "Three provisional street segments are available as named bounded entities, but they do not support barangay- or citywide street/sidewalk coverage claims."
     }
   },
   "implementationBoundary": {
     "W3R7a": "Schema/workflow only. No campaign UI, storage endpoint, campaign instance, or published audit.",
-    "W3R7b": "Create one bounded pilot campaign using an entity-kind-appropriate target set. Place pilots may use verified site records; segment/route pilots use explicit bounded records and cannot imply wider geographic completeness.",
-    "W3R7c": "Publish one output using the frozen campaign scope, coverage and structured observation distributions."
+    "W3R7b": "Implemented one live collection pilot: the 13-park Makati Public Park Accessibility Check. It reuses structured observation storage and has no campaign-specific scoring or ranking.",
+    "W3R7c": "Publish one output using only the frozen 13-park target set and campaign-period observations, including missing-target coverage; no scores or rankings."
   },
   "entityTreatment": {
     "place": {
