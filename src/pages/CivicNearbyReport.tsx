@@ -40,7 +40,7 @@ interface ReportLocationState {
 const eligibleNearbyPlaces = placeRegistry.filter(place => {
   if (place.entityKind !== 'place') return false;
   if (place.verification.status !== 'verified') return false;
-  if (!entity.location.point) return false;
+  if (!place.location.point) return false;
   if (place.lifecycle.status === 'closed' || place.lifecycle.status === 'future') return false;
   if (place.location.relationToMakati === 'serves-makati-outside') return false;
   return true;
@@ -327,10 +327,10 @@ export default function CivicNearbyReport() {
           {nearbyCandidates.length > 0 ? (
             <div className="mt-6 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
               {nearbyCandidates.map(({ place, distanceKm }) => {
-                const selected = selectedEntity?.id === entity.id;
+                const selected = selectedEntity?.id === place.id;
                 return (
                   <button
-                    key={entity.id}
+                    key={place.id}
                     type="button"
                     onClick={() => chooseEntity(place)}
                     className={
@@ -403,10 +403,10 @@ export default function CivicNearbyReport() {
         {query.trim() && (
           <div className="mt-5 grid gap-3 md:grid-cols-2">
             {searchResults.map(place => {
-              const selected = selectedEntity?.id === entity.id;
+              const selected = selectedEntity?.id === place.id;
               return (
                 <button
-                  key={entity.id}
+                  key={place.id}
                   type="button"
                   onClick={() => chooseEntity(place)}
                   className={
