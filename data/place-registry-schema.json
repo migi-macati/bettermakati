@@ -503,7 +503,7 @@
       "The page prioritizes location and sources, existing community cases, then useful actions.",
       "Generic rating entry points and rating criteria are removed from the place-detail experience.",
       "Existing report/proposal/update submission and case lifecycle behavior remain intact.",
-      "No Civic Review records were found; no legacy review rendering path needs to be preserved."
+      "Generic rating rendering is not part of the civic detail model."
     ]
   },
   "nearbyReportingSpec": {
@@ -583,7 +583,7 @@
       "Unknown/not-observed responses are first-class and the contributor is never forced to guess.",
       "No overall score or hidden numeric composite is permitted.",
       "Observation submission never mutates canonical place facts or civic case lifecycle.",
-      "No existing 1–5 Civic Review records were found; there is nothing to convert."
+      "No rating migration is required."
     ]
   },
   "structuredObservationImplementation": {
@@ -594,7 +594,7 @@
     "rules": [
       "One reusable family-aware observation form is used on place pages.",
       "Observation storage is separate from civic cases and lifecycle.",
-      "Generic 1–5 reviews are retired, and no historical Civic Review records were found to preserve.",
+      "Generic 1–5 ratings are retired.",
       "The server validates canonical place identity and structured answers.",
       "No derived score is stored or generated."
     ]
