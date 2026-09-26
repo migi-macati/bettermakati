@@ -378,15 +378,19 @@
     "path": "/participate",
     "label": "Participation",
     "status": "reviewed",
-    "reviewedAt": "2026-09-20",
+    "reviewedAt": "2026-09-26",
     "checks": [
-      "opportunities",
-      "community-input",
-      "workflow-status",
-      "correction-path"
+      "task-first-entry",
+      "official-participation-separation",
+      "citywide-public-realm-reporting",
+      "structured-observation-entry",
+      "correction-source-idea-volunteer-routing",
+      "barangay-context",
+      "live-civic-audit-entry",
+      "community-input-workflow-status"
     ],
     "gaps": [
-      "Response time and participation conversion are not yet measured longitudinally."
+      "There is no complete authoritative citywide consultation calendar, so the official-opportunities section may be empty; it links to the official Makati events source rather than inferring opportunities."
     ]
   },
   {
@@ -407,22 +411,21 @@
   {
     "path": "/civic-map",
     "label": "Civic Map",
-    "status": "partial",
-    "reviewedAt": "2026-09-21",
+    "status": "reviewed",
+    "reviewedAt": "2026-09-26",
     "checks": [
-      "independence-boundary",
+      "registry-first-place-segment-route",
+      "verified-place-browsing",
+      "barangay-scope",
+      "near-me-consent-on-action",
+      "report-near-me",
+      "improvement-routing",
       "emergency-routing",
-      "duplicate-consolidation",
-      "ratings",
-      "proposals",
-      "discussion",
-      "corroboration",
-      "referral-lifecycle",
-      "weekly-monthly-reporting"
+      "ratings-retired",
+      "civic-audit-entry"
     ],
     "gaps": [
-      "Pilot asset coverage is intentionally small; verified public-transport route/stop objects still need expansion.",
-      "Referral lifecycle events can now be recorded, but delivery to government remains intentionally human-reviewed rather than automatic."
+      "Linear infrastructure coverage remains partial because the current street/sidewalk segment inventory is provisional; the browser labels those records instead of claiming complete citywide coverage."
     ]
   },
   {
@@ -445,6 +448,115 @@
     "gaps": [
       "Live status cards depend on published machine-readable feeds and display an unavailable state when an upstream feed cannot be read.",
       "Source freshness reports monitoring health and review signals; it does not imply that every public record used by BetterMakati is in the automated watchlist."
+    ]
+  },
+  {
+    "path": "/get-involved",
+    "label": "Get Involved",
+    "status": "reviewed",
+    "reviewedAt": "2026-09-26",
+    "checks": [
+      "six-general-contribution-types",
+      "barangay-prefill",
+      "native-submission",
+      "duplicate-state",
+      "public-tracking",
+      "github-fallback",
+      "sensitive-data-warning",
+      "official-case-boundary",
+      "live-civic-audit-entry"
+    ],
+    "gaps": []
+  },
+  {
+    "path": "/civic-map/report",
+    "label": "Report something near me",
+    "status": "reviewed",
+    "reviewedAt": "2026-09-26",
+    "checks": [
+      "device-location-path",
+      "registry-search-path",
+      "manual-coordinate-path",
+      "verified-nearby-suggestions",
+      "no-auto-place-selection",
+      "segment-route-deliberate-search",
+      "location-only-reporting",
+      "location-permission-fallback",
+      "emergency-routing",
+      "duplicate-case-handling"
+    ],
+    "gaps": []
+  },
+  {
+    "path": "/civic-map/:assetId",
+    "label": "Civic entity detail",
+    "status": "reviewed",
+    "reviewedAt": "2026-09-26",
+    "checks": [
+      "canonical-entity-information",
+      "verification-access-labels",
+      "source-provenance",
+      "structured-observations",
+      "community-cases",
+      "report-proposal-actions",
+      "explicit-accountability-links",
+      "campaign-observation-entry",
+      "ratings-retired"
+    ],
+    "gaps": []
+  },
+  {
+    "path": "/civic-map/reports",
+    "label": "Civic Map reports",
+    "status": "partial",
+    "reviewedAt": "2026-09-26",
+    "checks": [
+      "feed-failure-state",
+      "recent-case-evidence-status",
+      "community-resolution-signal-separation",
+      "referral-review-boundary",
+      "six-stage-lifecycle",
+      "place-links"
+    ],
+    "gaps": [
+      "The page still centers legacy 7-day and 30-day submission/backlog counts rather than the W3R-10 outcome model for review, routing, acknowledgement, action, resolution, freshness and audit coverage.",
+      "The monthly proposals section still promotes the three-support pilot threshold as a primary outcome, which is inconsistent with the redesigned feedback-loop emphasis on evidence and outcomes rather than popularity.",
+      "W3R-10b publication-threshold suppression is not yet applied; lifecycle rates or timing summaries must not be added until the threshold policy is implemented."
+    ]
+  },
+  {
+    "path": "/civic-map/audits/park-accessibility-2026",
+    "label": "Public Park Accessibility Check",
+    "status": "reviewed",
+    "reviewedAt": "2026-09-26",
+    "checks": [
+      "frozen-target-scope",
+      "campaign-period",
+      "minimum-observations",
+      "four-observable-questions",
+      "not-observed-option",
+      "canonical-place-routing",
+      "anonymous-participation",
+      "no-score-ranking"
+    ],
+    "gaps": []
+  },
+  {
+    "path": "/civic-map/audits/park-accessibility-2026/results",
+    "label": "Public Park Accessibility Check live output",
+    "status": "reviewed",
+    "reviewedAt": "2026-09-26",
+    "checks": [
+      "coverage-counts",
+      "sample-counts",
+      "question-distributions",
+      "latest-observation-date",
+      "zero-observation-target-visibility",
+      "failed-feed-unavailable-state",
+      "no-score-ranking"
+    ],
+    "gaps": [
+      "Two coverage cards hard-code the current 13-target denominator. This is correct for the frozen pilot but should become data-driven before the component is reused for another campaign."
     ]
   }
 ]
