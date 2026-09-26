@@ -10,6 +10,7 @@ import {
   Wrench,
 } from 'lucide-react';
 import type { CivicAsset, CivicContributionKind } from '../../data/civicMap';
+import { civicEntityKindForCategory } from '../../data/placeRegistry';
 import {
   civicIssueCategories,
   civicOfficialChannels,
@@ -107,6 +108,8 @@ export default function CivicContributionForm({
   const requestPayload = () => ({
     action: 'create',
     kind,
+    entityId: asset.id,
+    entityKind: civicEntityKindForCategory(asset.type),
     assetId: asset.id,
     assetTitle: asset.title,
     assetType: asset.type,
