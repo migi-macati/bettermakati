@@ -14,6 +14,7 @@ const problems = [];
 const expectedSourceIds = [
   'makati-legislation',
   'makati-mayor-speeches',
+  'makati-council-videos',
   'mymakati-broadcasts',
   'makati-events',
   'makati-news',
@@ -162,7 +163,7 @@ if (!workflow.includes("if: steps.publish.outputs.publish_required == 'true'")) 
   problems.push('Daily City Monitor workflow no longer suppresses no-op build/publish runs.');
 }
 
-if (!monitor.includes("export const cityMonitorReviewed = '24 September 2026';")) {
+if (!monitor.includes("export const cityMonitorReviewed = '26 September 2026';")) {
   problems.push('City Monitor review date is not current for Wave 2.1.');
 }
 
