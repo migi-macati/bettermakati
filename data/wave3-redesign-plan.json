@@ -1128,13 +1128,35 @@
     {
       "id": "W3R-11c",
       "title": "Test general participation journeys",
-      "status": "next",
-      "maximumScope": "General submission, duplicate, fallback, tracking and barangay-context E2E only."
+      "status": "complete",
+      "maximumScope": "General submission, duplicate, fallback, tracking and barangay-context E2E only.",
+      "implementationFiles": [
+        "api/feedback.js",
+        "scripts/test-general-participation-journeys.mjs",
+        "package.json"
+      ],
+      "validation": {
+        "journeys": [
+          "native general submission creates one GitHub issue and returns a public tracking URL/reference",
+          "barangay/tool/source metadata survive the native submission body",
+          "an exact open duplicate is reused without a second create request",
+          "missing native storage returns a pre-filled GitHub fallback while preserving user-entered context",
+          "a public issue created through the fallback format can later be recognized by native duplicate detection",
+          "Get Involved maps a valid barangay query slug to the canonical barangay name and includes it in the API payload",
+          "success, duplicate and fallback UI states expose Track this publicly, Open existing item and Continue on GitHub respectively",
+          "Barangay Profile contribution links carry the barangay slug into Get Involved"
+        ],
+        "defectFixed": "Fallback GitHub issue bodies previously used plain metadata labels while native duplicate detection expects the canonical bold metadata labels. Fallback and native issue formats now match, allowing fallback-created issues to participate in later duplicate detection.",
+        "regression": "The existing strong-duplicate regression remains in place; the new journey suite adds native/fallback/tracking/barangay continuity coverage.",
+        "buildIntegration": "test:participation-journeys now runs from both npm run build and npm run quality after the existing duplicate regression.",
+        "focusedValidation": "Source validation confirms all journey assertions are represented in the test, API fallback/native metadata now match, Get Involved retains tracking/fallback states, Barangay Profile passes barangay context, and package scripts invoke the suite.",
+        "executionBoundary": "No GitHub Actions run is available in this repository at this commit, so completion is based on the committed deterministic handler test suite plus focused source validation; no browser/device claim is made."
+      }
     },
     {
       "id": "W3R-11d",
       "title": "Test public-place participation journeys",
-      "status": "planned",
+      "status": "next",
       "maximumScope": "Nearby reporting, place matching, duplicate case, lifecycle, observation and pilot audit E2E only."
     },
     {
@@ -1151,9 +1173,9 @@
     }
   ],
   "immediateNext": {
-    "id": "W3R-11c",
-    "title": "Test general participation journeys",
-    "maximumScope": "General submission, duplicate, fallback, tracking and barangay-context E2E only."
+    "id": "W3R-11d",
+    "title": "Test public-place participation journeys",
+    "maximumScope": "Nearby reporting, place matching, duplicate case, lifecycle, observation and pilot audit E2E only."
   },
   "capabilityDispositionAuditFile": "data/wave3-capability-disposition-audit.json",
   "completedSteps": [
@@ -1190,7 +1212,8 @@
     "W3R-10b",
     "W3R-10c",
     "W3R-11a",
-    "W3R-11b"
+    "W3R-11b",
+    "W3R-11c"
   ],
   "placeRegistrySchemaFile": "data/place-registry-schema.json",
   "placeRegistryDataFile": "src/data/placeRegistry.ts",
