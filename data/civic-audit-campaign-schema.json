@@ -225,7 +225,7 @@
           "frozenEntityIds",
           "frozenAt",
           "inventoryClaim",
-          "verificationRequirement"
+          "targetEligibility"
         ],
         "properties": {
           "selectorDraft": {
@@ -248,14 +248,6 @@
             "optional": true,
             "description": "Required when inventoryClaim is partial or unknown."
           },
-          "verificationRequirement": {
-            "type": "enum",
-            "values": [
-              "verified-only"
-            ],
-            "default": "verified-only",
-            "description": "Places require verified status. Segment and route pilots may use provisional records only when the campaign scope names the exact bounded records and does not claim geography-wide completeness."
-          },
           "frozenEntityIds": {
             "type": "array",
             "minItems": 1,
@@ -272,6 +264,14 @@
               "route"
             ],
             "description": "All frozen target IDs in one campaign use the same registry entity form."
+          },
+          "targetEligibility": {
+            "type": "enum",
+            "values": [
+              "verified-only",
+              "bounded-provisional-linear-allowed"
+            ],
+            "description": "Place campaigns use verified-only. Segment/route campaigns may use bounded-provisional-linear-allowed only when every target is explicit and the campaign makes no wider completeness claim."
           }
         }
       }
@@ -340,14 +340,16 @@
   ],
   "integrityRules": [
     "Every frozenEntityId must resolve to exactly one Civic Registry record.",
-    "Place targets must be verified at freeze time; provisional segment/route targets require an explicitly bounded partial-scope campaign.",
     "Every target entity primaryCategory must map to the campaign familyId.",
     "Every questionId must exist in the declared questionSetId and be applicable to every target place category, unless the campaign defines explicit per-category question subsets.",
     "endsAt must be after startsAt.",
     "The frozen entity set cannot change after campaign start; a changed target set requires a new campaign revision/id.",
     "Inventory claim complete-for-declared-scope requires an explicit completeness basis; a selector result alone is insufficient evidence of completeness.",
     "Campaign completion and observation freshness cannot mutate Place Registry verification or lifecycle.",
-    "Campaign output cannot silently omit target entities with zero observations."
+    "Campaign output cannot silently omit target entities with zero observations.",
+    "Place targets must use targetEligibility=verified-only and verification.status=verified.",
+    "Segment or route targets may use targetEligibility=bounded-provisional-linear-allowed only when every target has an explicit reproducible boundary/network definition and inventoryClaim is partial or unknown.",
+    "A campaign using provisional linear/network targets cannot claim complete-for-declared-scope unless independent completeness evidence is recorded."
   ],
   "streetSegmentCoverage": {
     "status": "known-gap",
