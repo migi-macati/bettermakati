@@ -95,6 +95,7 @@ export default function NearMePlaces({
 
   return (
     <div
+      aria-busy={geoState === 'requesting'}
       className={
         'rounded-2xl border border-primary-100 bg-white p-5 md:p-6 ' + className
       }
@@ -127,10 +128,20 @@ export default function NearMePlaces({
               ? 'Refresh my location'
               : 'Use my location'}
         </button>
+        <span className="sr-only" role="status" aria-live="polite">
+          {geoState === 'requesting'
+            ? 'Finding nearby civic places.'
+            : geoState === 'granted'
+              ? results.length + ' nearby civic place' + (results.length === 1 ? '' : 's') + ' found.'
+              : ''}
+        </span>
       </div>
 
       {(geoState === 'denied' || geoState === 'unavailable') && (
-        <div className="mt-4 flex gap-3 rounded-xl border border-warning-200 bg-warning-50 p-4 text-sm text-warning-950">
+        <div
+          role="alert"
+          className="mt-4 flex gap-3 rounded-xl border border-warning-200 bg-warning-50 p-4 text-sm text-warning-950"
+        >
           <AlertCircle className="mt-0.5 h-5 w-5 shrink-0" />
           <p>
             {geoState === 'denied'
