@@ -248,6 +248,7 @@ export default async function handler(req, res) {
       latestObservedAt,
       entities,
       questions,
+      dataAvailable: true,
       metricInputs: auditCoverageMetricInputs({
         campaignId: CAMPAIGN.id,
         asOf,
