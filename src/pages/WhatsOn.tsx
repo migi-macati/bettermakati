@@ -83,7 +83,7 @@ export default function WhatsOn() {
           </div>
           <SharePage title="What’s On in Makati | BetterMakati" />
         </div>
-        <LastReviewed note="Event schedules change frequently; organizer and venue pages remain controlling sources." />
+        <LastReviewed date="2026-09-20" note="Event schedules change frequently; organizer and venue pages remain controlling sources." />
 
         <div className="mt-7 rounded-2xl border border-primary-100 bg-white p-5 md:p-6">
           <div className="flex items-center gap-2 font-extrabold text-gray-950">
