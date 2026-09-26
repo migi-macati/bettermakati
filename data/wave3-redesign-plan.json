@@ -982,13 +982,51 @@
     {
       "id": "W3R-10b",
       "title": "Define metric publication thresholds",
-      "status": "next",
-      "maximumScope": "Separate internal operational metrics from public metrics and set minimum sample/time thresholds. No dashboards."
+      "status": "complete",
+      "maximumScope": "Separate internal operational metrics from public metrics and set minimum sample/time thresholds. No dashboards.",
+      "definitionFile": "data/participation-metric-publication-thresholds.json",
+      "validation": {
+        "publicationClasses": [
+          "public-now",
+          "public-after-threshold",
+          "internal-only",
+          "not-yet-measurable"
+        ],
+        "caseLifecycle": {
+          "minimumRateDenominator": 20,
+          "minimumDurationEventCount": 10,
+          "maturityDays": {
+            "review": 7,
+            "routing": 14,
+            "acknowledgement": 30,
+            "actionEvidence": 45,
+            "documentedResolution": 60
+          },
+          "durationStatistic": "median",
+          "comparisonRule": "Every compared group must independently meet the same publication threshold and equivalent definition; at least three comparable windows are required before calling a pattern a trend."
+        },
+        "observationFreshness": {
+          "recentWindowsDays": {
+            "streetPublicRealm": 30,
+            "parkPublicSpace": 30,
+            "publicFacility": 60,
+            "transportStopTerminal": 30,
+            "transportRoute": 30
+          },
+          "aggregateThreshold": "At least 10 explicitly eligible entities and at least 5 with observations before publishing an aggregate recent-observation coverage rate.",
+          "entityRule": "A single entity's latest observation date/age may be public with sample count; older evidence stays visible but is not labeled stale/poor/noncompliant."
+        },
+        "civicAuditCoverage": "Public as exact x/y coverage of a frozen target set because the denominator is a campaign census, not a sample. Campaign scope, period, asOf, inventory claim and zero-observation targets remain visible.",
+        "repeatContribution": "Not currently measurable; after privacy-safe instrumentation it remains internal-only for Wave 3 and never becomes a contributor leaderboard.",
+        "suppression": "Below-threshold rates are replaced by counts or an insufficient-data label, never 0%.",
+        "implementationBoundary": "Definitions only. No dashboards, APIs, analytics events, contributor identifiers or UI enforcement were added.",
+        "focusedValidation": "Threshold JSON parses; all lifecycle rate IDs and companion duration IDs resolve to W3R-10a definitions; sample, maturity, freshness and public/internal rules are explicit."
+      }
     },
     {
       "id": "W3R-10c",
       "title": "Instrument redesigned participation outcomes",
-      "status": "planned",
+      "status": "next",
       "maximumScope": "API/data instrumentation only for fields defined in W3R-10a/10b. No headline aggregates."
     },
     {
@@ -1029,9 +1067,9 @@
     }
   ],
   "immediateNext": {
-    "id": "W3R-10b",
-    "title": "Define metric publication thresholds",
-    "maximumScope": "Separate internal operational metrics from public metrics and set minimum sample/time thresholds. No dashboards."
+    "id": "W3R-10c",
+    "title": "Instrument redesigned participation outcomes",
+    "maximumScope": "API/data instrumentation only for fields defined in W3R-10a/10b. No headline aggregates."
   },
   "capabilityDispositionAuditFile": "data/wave3-capability-disposition-audit.json",
   "completedSteps": [
@@ -1064,7 +1102,8 @@
     "W3R-9c",
     "W3R-9d",
     "W3R-9e",
-    "W3R-10a"
+    "W3R-10a",
+    "W3R-10b"
   ],
   "placeRegistrySchemaFile": "data/place-registry-schema.json",
   "placeRegistryDataFile": "src/data/placeRegistry.ts",
