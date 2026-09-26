@@ -487,6 +487,7 @@
         "canonicalArchiveRecordCount": 11355,
         "sourceNormalizedFileBytes": 9887461,
         "browserIndexDelivery": "Generated compact static JSON outside the initial React bundle and fetched only on the Legislation page.",
+        "browserIndexEncoding": "Tuple records remove repeated JSON field names while retaining archive UUID, type, reference, year, title and optional official-document URL.",
         "visibleResultLimit": 60,
         "measureTypeFilters": [
           "ordinance",
