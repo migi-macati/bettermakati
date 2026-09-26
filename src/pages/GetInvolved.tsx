@@ -163,41 +163,12 @@ export default function GetInvolved() {
       />
       <Section className="bg-[#fffdf8]">
         <div className="section-eyebrow">Get Involved</div>
-        <Heading>Contribute to BetterMakati</Heading>
-        <p className="max-w-3xl text-gray-600">
-          Send a correction, source, proposal, idea or offer to help.
+        <Heading>How do you want to help?</Heading>
+        <p className="mt-2 max-w-3xl text-gray-600">
+          Choose what you want to send or do.
         </p>
 
-        <div className="mt-7 rounded-2xl border border-primary-200 bg-primary-50 p-5 md:p-6">
-          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-            <div className="max-w-3xl">
-              <div className="flex items-center gap-2 text-sm font-bold text-primary-800">
-                <ClipboardCheck className="h-5 w-5" />
-                Live civic audit
-              </div>
-              <h2 className="mt-2 text-xl font-extrabold text-gray-950">
-                Join the public park accessibility check
-              </h2>
-              <p className="mt-2 text-sm leading-relaxed text-gray-700">
-                Visit one of 13 pilot parks and record entrance access, step-free access,
-                seating and toilets.
-              </p>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              <Link to={civicAuditPilot.route} className="brand-btn-primary">
-                Record conditions
-              </Link>
-              <Link
-                to={civicAuditPilot.route + '/results'}
-                className="brand-btn-secondary"
-              >
-                View live output
-              </Link>
-            </div>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 mt-8">
+        <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
           {actionCards.map(action => {
             const Icon = action.icon;
             return (
@@ -211,11 +182,39 @@ export default function GetInvolved() {
                 }`}
               >
                 <Icon className="h-6 w-6 text-primary-700" />
-                <h2 className="font-bold text-gray-950 mt-4">{action.title}</h2>
-                <p className="text-sm text-gray-600 mt-1">{action.description}</p>
+                <h2 className="mt-4 font-bold text-gray-950">{action.title}</h2>
+                <p className="mt-1 text-sm text-gray-600">{action.description}</p>
               </button>
             );
           })}
+        </div>
+
+        <div className="mt-7 rounded-2xl border border-primary-200 bg-primary-50 p-5 md:p-6">
+          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <div className="max-w-3xl">
+              <div className="flex items-center gap-2 text-sm font-bold text-primary-800">
+                <ClipboardCheck className="h-5 w-5" />
+                Live civic audit
+              </div>
+              <h2 className="mt-2 text-xl font-extrabold text-gray-950">
+                Check accessibility at a public park
+              </h2>
+              <p className="mt-2 text-sm leading-relaxed text-gray-700">
+                Record entrance access, step-free access, seating and toilets at one of the pilot parks.
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <Link to={civicAuditPilot.route} className="brand-btn-primary">
+                Record conditions
+              </Link>
+              <Link
+                to={civicAuditPilot.route + '/results'}
+                className="brand-btn-secondary"
+              >
+                View results
+              </Link>
+            </div>
+          </div>
         </div>
       </Section>
 
