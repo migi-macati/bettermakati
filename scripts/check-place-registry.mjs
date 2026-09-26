@@ -211,8 +211,8 @@ if (expectedConcernServicePlaceIds.length !== 12) {
 for (const marker of [
   "placeRegistryById.get(asset.id)?.verification.status === 'verified'",
   "placesByBarangay(barangay.name)",
-  'Find a place in Makati',
-  'Browse the place inventory',
+  'Find a place, street or route.',
+  'Browse results',
   'Find a place',
   'Report something near me',
   'Suggest an improvement',
@@ -336,9 +336,9 @@ for (const marker of [
   "fetch('/api/civic'",
   "method: 'POST'",
   "locationMode",
-  "entityId: place?.id ?? ''",
-  "entityKind: place?.entityKind ?? ''",
-  "assetId: place?.id ?? ''",
+  "entityId: entity?.id ?? ''",
+  "entityKind: entity?.entityKind ?? ''",
+  "assetId: entity?.id ?? ''",
   "lat: roundCoordinate(point.lat)",
   "lng: roundCoordinate(point.lng)",
   "Confirm this issue",
@@ -426,12 +426,12 @@ for (const marker of [
   "item.meta.entityId ??",
   "item.locationMode ??",
   "to={'/civic-map/' + entityId}",
-  'Record details',
+  'Public case',
   'Location only',
   'Authority acknowledged',
   'Action reported',
   'Community verified resolved',
-  'Community corroboration and “appears resolved” responses are evidence signals',
+  'These are not counted as documented',
 ]) {
   if (!civicReportsPage.includes(marker)) {
     problems.push('Civic report lifecycle/relationship UI is missing: ' + marker);
