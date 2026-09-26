@@ -69,10 +69,19 @@ for (const marker of [
   'Open original source',
   'record.contexts.map',
   'Open related record',
-  'Public Records ID:',
+  'Where this source appears',
 ]) {
   if (!detailPage.includes(marker)) {
     problems.push('Public Records detail/viewer marker missing: ' + marker);
+  }
+}
+
+for (const forbidden of [
+  'Public Records ID:',
+  'No canonical BetterMakati context is attached',
+]) {
+  if (detailPage.includes(forbidden)) {
+    problems.push('Public Records detail must not expose internal/meta copy: ' + forbidden);
   }
 }
 
