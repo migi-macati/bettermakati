@@ -172,15 +172,40 @@
       "id": "W4-1c",
       "phase": "Statistics",
       "title": "Inventory population and demographic sources",
-      "status": "next",
+      "status": "complete",
       "maximumScope": "Official-source research only for comparable population/demographic series under current Makati geography.",
-      "stopWhen": "Population/demographic source inventory has explicit time, geography and inclusion/exclusion rules."
+      "stopWhen": "Population/demographic source inventory has explicit time, geography and inclusion/exclusion rules.",
+      "inventoryFile": "data/wave4-population-demographic-source-inventory.json",
+      "validation": {
+        "sourceScope": "Official Philippine Statistics Authority sources only.",
+        "approvedFirstBatch": [
+          "population total and growth",
+          "household population",
+          "number of households",
+          "average household size",
+          "2024 age-group population",
+          "2024 sex distribution",
+          "population density",
+          "current-boundary land area"
+        ],
+        "held": [
+          "legislative-district population",
+          "urban-population share",
+          "institutional population"
+        ],
+        "rejected": [
+          "legacy 2020 citywide age/sex tables on the former 33-barangay Makati boundary"
+        ],
+        "geographyGuard": "Historical city series are usable only when PSA explicitly excludes the 10 transferred barangays for Makati or when the current 23-barangay aggregate can be reproduced from complete canonical barangay observations.",
+        "barangayGuard": "Do not infer barangay age/sex or other demographic detail from HUC-only tables.",
+        "ecosystemScope": "Wave 4 cross-linking now explicitly includes BetterGov national resources and BetterLGU/canonical sibling local handoffs, while keeping the primary official source visible."
+      }
     },
     {
       "id": "W4-1d",
       "phase": "Statistics",
       "title": "Inventory economic and business indicators",
-      "status": "planned",
+      "status": "next",
       "maximumScope": "Official-source research only for GDP/economic structure, establishments/employment/business indicators that can be stated consistently.",
       "stopWhen": "Each candidate indicator has a source, definition, period and decision: implement, hold or reject."
     },
@@ -490,9 +515,9 @@
     }
   ],
   "immediateNext": {
-    "id": "W4-1c",
-    "title": "Inventory population and demographic sources",
-    "maximumScope": "Official-source research only for comparable population/demographic series under current Makati geography."
+    "id": "W4-1d",
+    "title": "Inventory economic and business indicators",
+    "maximumScope": "Official-source research only for GDP/economic structure, establishments/employment/business indicators that can be stated consistently."
   },
   "inheritedKnownItems": [
     {
