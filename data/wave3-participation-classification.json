@@ -492,5 +492,9 @@
       "3A-3": "complete"
     },
     "backlog": "data/wave3-participation-backlog.json"
-  }
+  },
+  "status": "superseded",
+  "supersededAt": "2026-09-26",
+  "supersededBy": "data/wave3-redesigned-capability-classification.json",
+  "supersessionReason": "The 25 September classification describes the pre-redesign/early-redesign state and contains missing/partial findings that have since been implemented, reframed or explicitly deferred. Use the redesigned classification for current Wave 3 status."
 }
