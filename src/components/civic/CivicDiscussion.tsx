@@ -75,8 +75,8 @@ const lifecycleStep = (status: string) =>
     reviewed: 2,
     forwarded: 3,
     acknowledged: 4,
-    'action-reported': 4,
-    'community-verified-resolved': 5,
+    'action-reported': 5,
+    'community-verified-resolved': 6,
   })[status] ?? 1;
 
 export default function CivicDiscussion({ assetId }: { assetId: string }) {
@@ -367,7 +367,7 @@ export default function CivicDiscussion({ assetId }: { assetId: string }) {
                   <div className="mt-1 font-extrabold text-gray-950">{lifecycle.label}</div>
                 </div>
                 <div className="text-xs font-bold text-gray-500">
-                  Step {lifecycleStep(lifecycle.status)} of 5
+                  Step {lifecycleStep(lifecycle.status)} of 6
                 </div>
               </div>
 
