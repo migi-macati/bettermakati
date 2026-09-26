@@ -16,6 +16,7 @@ import { Heading } from '../components/ui/Heading';
 import LastReviewed from '../components/ui/LastReviewed';
 import SharePage from '../components/ui/SharePage';
 import CivicMapEmbed from '../components/civic/CivicMapEmbed';
+import NearMePlaces from '../components/civic/NearMePlaces';
 import { useBarangayScope, withBarangayScope } from '../hooks/useBarangayScope';
 import {
   civicAssets,
@@ -192,6 +193,15 @@ export default function CivicMap() {
           date={civicMethodologyReviewed}
           note="Civic registry and source review."
           className="mt-5"
+        />
+
+        <NearMePlaces
+          className="mt-5"
+          title="What civic places are near me?"
+          description="See verified parks, public facilities, offices and transport places around your current location."
+          linkForPlace={placeId =>
+            withBarangayScope('/civic-map/' + placeId, barangay?.slug)
+          }
         />
 
         <Link
