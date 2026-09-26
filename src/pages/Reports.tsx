@@ -17,7 +17,7 @@ export default function Reports() {
 
       <Section className="border-b border-primary-800 bg-primary-900 text-white">
         <div className="section-eyebrow !text-secondary-300">
-          Reports & Insights
+          Civic analysis
         </div>
         <Heading className="!mb-0 !text-white">
           Featured Reports & Insights
