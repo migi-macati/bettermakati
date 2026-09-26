@@ -27,7 +27,7 @@ const normalizeText = value =>
     .normalize('NFD')
     .replace(/\p{Diacritic}/gu, '')
     .toLocaleLowerCase('en-PH')
-    .replace(/\bsta\.?\b/g, 'santa')
+    .replace(/\bsta\.?(?=\s|$)/g, 'santa')
     .replace(/\s+/g, ' ')
     .trim();
 
