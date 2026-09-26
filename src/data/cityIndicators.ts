@@ -1,4 +1,4 @@
-import { barangays } from './barangays';
+import { currentMakatiPopulation2024 } from './barangays';
 import {
   cityComparisonRows,
   cityComparisonSource,
@@ -409,10 +409,7 @@ export const cityIndicatorSources: Record<string, CityIndicatorSource> = {
   },
 };
 
-export const currentMakatiPopulation = barangays.reduce(
-  (sum, barangay) => sum + barangay.population2024,
-  0
-);
+export const currentMakatiPopulation = currentMakatiPopulation2024;
 
 const makati2024Comparison = cityComparisonRows.find(row => row.isMakati);
 if (!makati2024Comparison) {
