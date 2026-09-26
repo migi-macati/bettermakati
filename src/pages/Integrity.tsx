@@ -30,10 +30,7 @@ import {
   integrityAuditResolutionTrails,
   integrityAuditSourceOnlyRecords,
 } from '../data/integrityAuditTrails';
-import {
-  integrityRelationshipSources,
-  integrityRelationships,
-} from '../data/integrityRelationships';
+import { integrityRelationshipSources } from '../data/integrityRelationships';
 
 type View =
   | 'all'
@@ -227,7 +224,7 @@ export default function Integrity() {
           ].map(stat => (
             <div
               key={stat.label}
-              className="rounded-2xl border border-white/15 bg-white/8 p-4"
+              className="rounded-2xl border border-white/15 bg-white/10 p-4"
             >
               <div className="text-2xl font-black text-secondary-300 sm:text-3xl">
                 {stat.value}
@@ -242,6 +239,7 @@ export default function Integrity() {
         <LastReviewed
           date="26 September 2026"
           note="Record and source status checked on the date shown."
+          className="!text-primary-100 [&_strong]:!text-white [&_svg]:!text-secondary-300"
         />
       </Section>
 
@@ -300,8 +298,8 @@ export default function Integrity() {
             <div>
               <Heading level={2}>Suppliers & awards</Heading>
               <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-700">
-                Canonical supplier identities linked to the Makati bid-result
-                records currently indexed by BetterMakati.
+                Supplier identities linked to the Makati bid-result records
+                currently indexed by BetterMakati.
               </p>
             </div>
             <Link
@@ -722,8 +720,8 @@ export default function Integrity() {
           <div className="section-eyebrow">Primary trail</div>
           <Heading level={2}>Sources</Heading>
           <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-700">
-            Sources referenced by the procurement, disclosure and audit
-            relationship graph.
+            Sources cited by the procurement, disclosure and audit records on
+            this page.
           </p>
 
           <div className="mt-6 grid gap-3 md:grid-cols-2">
@@ -809,10 +807,6 @@ export default function Integrity() {
           </Link>
         </div>
 
-        <div className="mt-5 text-xs text-gray-500">
-          {integrityRelationships.length} verified graph relationships connect
-          the records shown on this page.
-        </div>
       </Section>
     </>
   );
