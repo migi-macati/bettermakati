@@ -1,3 +1,5 @@
+import { placeObservationById } from '../data/place-observation-index.mjs';
+
 const WINDOW_MS = 60_000;
 const DAY_MS = 86_400_000;
 const MAX_PER_MINUTE = 8;
@@ -485,9 +487,16 @@ export default async function handler(req, res) {
     evidenceUrl: cleanUrl(req.body?.evidenceUrl),
   };
 
-  if (!payload.placeId || !payload.placeName || !payload.placeCategory) {
+  if (!payload.placeId) {
     return res.status(400).json({ error: 'Choose a canonical place first.' });
   }
+  const canonicalPlace = placeObservationById.get(payload.placeId);
+  if (!canonicalPlace) {
+    return res.status(400).json({ error: 'Unknown canonical place.' });
+  }
+  payload.placeName = canonicalPlace.name;
+  payload.placeCategory = canonicalPlace.category;
+
   if (!familyCategories[payload.familyId]?.has(payload.placeCategory)) {
     return res.status(400).json({
       error: 'Observation family does not match this place category.',
