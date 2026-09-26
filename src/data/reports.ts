@@ -841,7 +841,7 @@ export const reports: [
           },
           {
             kind: 'chart',
-            chartType: 'line',
+            chartType: 'bar',
             title: 'Resident population on the current Makati boundary',
             valueLabel: 'residents',
             series: [
