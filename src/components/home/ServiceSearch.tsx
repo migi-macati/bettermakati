@@ -28,6 +28,7 @@ const siteTabs = [
   'Visit',
   'Government',
   'Barangays',
+  'Places',
   'Records',
   'Tools',
 ] as const;
@@ -136,6 +137,8 @@ const matchesTab = (item: SearchItem, tab: string, scope: SearchScope) => {
       (item.group === 'Contact' && item.category === 'Government')
     );
   if (tab === 'Barangays') return item.group === 'Barangay';
+  if (tab === 'Places')
+    return item.group === 'Place' || item.group === 'Segment' || item.group === 'Route';
   if (tab === 'Records') return item.group === 'Record';
   if (tab === 'Tools')
     return (
