@@ -4,7 +4,7 @@ const schema = JSON.parse(
   await readFile('data/structured-observation-schema.json', 'utf8')
 );
 const registrySource = await readFile('src/data/placeRegistry.ts', 'utf8');
-const entityIndexSource = await readFile('data/civic-observation-entity-index.mjs', 'utf8');
+const entityIndexSource = await readFile('data/civic-entity-index.mjs', 'utf8');
 const definitionsSource = await readFile('src/data/structuredObservations.ts', 'utf8');
 const formSource = await readFile(
   'src/components/civic/CivicObservationForm.tsx',
@@ -156,7 +156,7 @@ for (const marker of [
   "'[Civic Observations] ' + payload.entityName",
   "'<!-- civic-observation '",
   "'<!-- civic-observation-thread '",
-  "civicObservationEntityById.get(payload.entityId)",
+  "civicEntityById.get(payload.entityId)",
   "payload.entityName = canonicalEntity.name",
   "payload.entityCategory = canonicalEntity.category",
   "familyCategories[payload.familyId]?.has(payload.entityCategory)",
