@@ -884,9 +884,40 @@
       "id": "W4-4d",
       "phase": "Reports & Insights",
       "title": "Publish one Statistics-derived flagship report",
-      "status": "planned",
+      "status": "complete",
       "maximumScope": "Exactly one high-quality synthesis using the Wave 4 Statistics layer. No report batch.",
-      "stopWhen": "The report makes one defensible claim, cites every factual basis and links back to underlying indicators."
+      "stopWhen": "The report makes one defensible claim, cites every factual basis and links back to underlying indicators.",
+      "completedAt": "2026-09-26",
+      "implementationFiles": [
+        "src/data/reports.ts",
+        "data/wave4-statistics-flagship.json",
+        "scripts/check-featured-reports-audit.mjs",
+        "scripts/check-featured-reports-migration.mjs",
+        "scripts/check-report-schema-v2.mjs",
+        "scripts/check-statistics-flagship-report.mjs",
+        "package.json"
+      ],
+      "validation": {
+        "publishedReportCount": 1,
+        "publishedReportSlug": "2024-population-growth-acceleration",
+        "synthesis": "After slowing in 2015–2020, Makati's PSA-reported average annual resident-population growth accelerated to 1.37% in 2020–2024 while resident population rose by 17,027 on the current 23-barangay boundary.",
+        "canonicalIndicators": [
+          "population-total",
+          "population-growth-rate"
+        ],
+        "keyFigures": {
+          "growth2010to2015Percent": 1.16,
+          "growth2015to2020Percent": 0.93,
+          "growth2020to2024Percent": 1.37,
+          "accelerationPercentagePoints": 0.44,
+          "population2020": 292743,
+          "population2024": 309770,
+          "populationAdded": 17027
+        },
+        "sourceBoundary": "The report uses the canonical Wave 4 Statistics indicators plus the existing PSA OpenStat population series and current Makati geography source already registered in the repository.",
+        "analysisBoundary": "The report describes resident-population growth and explicitly does not infer its cause or treat resident population as daytime population.",
+        "guardrail": "W4-4d publishes exactly one new report; prior W4-4a/W4-4c guards were made future-safe so they protect migrated storylines without blocking later flagship reports."
+      }
     },
     {
       "id": "W4-4e",
@@ -1001,11 +1032,11 @@
       "stopWhen": "Wave 4 is closed only to the extent supported by evidence, with future work reopened as specific capabilities rather than vague unfinished work."
     }
   ],
-  "current": "W4-4d",
+  "current": "W4-4e",
   "immediateNext": {
-    "id": "W4-4d",
-    "title": "Publish one Statistics-derived flagship report",
-    "maximumScope": "Exactly one high-quality synthesis using the Wave 4 Statistics layer. No report batch."
+    "id": "W4-4e",
+    "title": "Publish one records-derived flagship report",
+    "maximumScope": "Exactly one high-quality synthesis from legislation/integrity/accountability records where the evidence supports a meaningful story."
   },
   "carriedForward": [
     {
