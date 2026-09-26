@@ -19,6 +19,13 @@ import { searchIndex, type SearchItem } from '../../data/searchIndex';
 import { serviceDirectory } from '../../data/serviceDirectory';
 import { officesForAgency } from '../../data/governmentServiceOffices';
 import { placeRegistryById } from '../../data/placeRegistry';
+import {
+  legislationRecordDisplay,
+  legislationRecordHref,
+  loadLegislationBrowserIndex,
+  matchLegislationRecords,
+  type BrowserLegislationIndex,
+} from '../../data/legislationBrowserIndex';
 
 type SearchScope = 'site' | 'services';
 
@@ -167,21 +174,66 @@ export default function ServiceSearch({
   const [tab, setTab] = useState<string>('All');
   const [open, setOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [legislationIndex, setLegislationIndex] =
+    useState<BrowserLegislationIndex | null>(null);
   const navigate = useNavigate();
   const containerRef = useRef<HTMLDivElement>(null);
+
+  const shouldSearchLegislation =
+    scope === 'site' &&
+    query.trim().length >= 3 &&
+    (tab === 'All' || tab === 'Records');
+
+  useEffect(() => {
+    if (!shouldSearchLegislation || legislationIndex) return;
+
+    let cancelled = false;
+    loadLegislationBrowserIndex()
+      .then(index => {
+        if (!cancelled) setLegislationIndex(index);
+      })
+      .catch(() => {
+        // Static site search remains available if the archive index cannot load.
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [legislationIndex, shouldSearchLegislation]);
+
+  const legislationItems = useMemo<SearchItem[]>(() => {
+    if (!shouldSearchLegislation || !legislationIndex) return [];
+
+    return matchLegislationRecords(legislationIndex, query, { limit: 12 }).visible.map(
+      record => ({
+        title: legislationRecordDisplay(record),
+        group: 'Record' as const,
+        category: 'Legislation',
+        description: record[4],
+        href: legislationRecordHref(record),
+        keywords: [
+          'legislation',
+          record[1],
+          record[2],
+          record[3] ?? '',
+          record[4],
+        ].join(' '),
+      })
+    );
+  }, [legislationIndex, query, shouldSearchLegislation]);
 
   const results = useMemo(() => {
     const base =
       scope === 'services'
         ? searchIndex.filter(item => item.group === 'Service')
-        : searchIndex;
+        : [...searchIndex, ...legislationItems];
 
     return base
       .filter(item => matchesTab(item, tab, scope))
       .map(item => ({ ...item, score: scoreItem(item, query) }))
       .filter(item => !query.trim() || item.score > 0)
       .sort((a, b) => b.score - a.score || a.title.localeCompare(b.title));
-  }, [query, scope, tab]);
+  }, [legislationItems, query, scope, tab]);
 
   const servicePlaceById = useMemo(() => {
     if (!showServicePlaces) return new Map<string, { name: string; address: string; placeId: string }>();
