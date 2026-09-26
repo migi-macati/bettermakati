@@ -157,7 +157,7 @@ export default function Mobility() {
           </div>
           <SharePage title="Getting Around Makati | BetterMakati" />
         </div>
-        <LastReviewed note="Schedules and routes can change; confirm current service with the linked operator or map." />
+        <LastReviewed date="2026-09-20" note="Schedules and routes can change; confirm current service with the linked operator or map." />
         <PhotoCarousel
           images={mobilityImageSet}
           title="Street-level Makati"
