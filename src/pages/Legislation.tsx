@@ -157,7 +157,7 @@ export default function Legislation() {
           </div>
           <SharePage title="Makati Legislation | BetterMakati" />
         </div>
-        <LastReviewed date="2026-09-27" date="2026-09-27" className="!text-primary-100 [&_strong]:!text-white [&_svg]:!text-secondary-300" />
+        <LastReviewed date="2026-09-27" className="!text-primary-100 [&_strong]:!text-white [&_svg]:!text-secondary-300" />
 
         <div className="mt-5 flex flex-wrap gap-3">
           <Link to="/city-monitor" className="brand-btn-primary">

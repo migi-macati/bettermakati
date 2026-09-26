@@ -333,10 +333,7 @@ const recordsFlagshipSources: [ReportSourceV2, ...ReportSourceV2[]] = [
   ].map(auditDirectSource),
 ];
 
-export const reports: [
-  FeaturedReportV2,
-  ...FeaturedReportV2[],
-] = [
+export const reports = [
   {
     schemaVersion: 2,
     slug: '2026-budget-operating-expenses',
@@ -1208,7 +1205,7 @@ export const reports: [
             kind: 'paragraph' as const,
             role: 'analysis' as const,
             text:
-              `Documentary reading: ${trail.resolution.reason} This is a statement about the continuity of the indexed public record, not a conclusion that the underlying condition continued after the audit period.`,
+              `Documentary reading: ${trail.resolution.status === 'unresolved' ? trail.resolution.reason : trail.resolution.statementAsStated} This is a statement about the continuity of the indexed public record, not a conclusion that the underlying condition continued after the audit period.`,
             evidence: {
               sourceIds: auditFollowUpSourceIds(finding.id),
               records: [
@@ -1267,7 +1264,7 @@ export const reports: [
     },
 
   },
-];
+] satisfies [FeaturedReportV2, ...FeaturedReportV2[]];
 
 export const publicationReports = [...reports].reverse();
 

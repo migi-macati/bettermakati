@@ -38,6 +38,10 @@ import {
 } from '../data/cityIndicators';
 import { statisticsRelatedRecords } from '../data/statisticsCivicRelationships';
 import { reportsForCivicRecord } from '../data/reportCivicRelationships';
+import {
+  populationTrendDownload,
+  populationTrendDownloadHref,
+} from '../data/statisticsExports';
 
 const people = (value: number) =>
   new Intl.NumberFormat('en-PH').format(value);

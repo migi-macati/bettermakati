@@ -39,7 +39,7 @@ export interface StatisticsDownloadMetadata {
   provenance: StatisticsProvenance;
 }
 
-const csvEscape = (value: string | number | null | undefined) =>
+const csvEscape = (value: string | number | boolean | null | undefined) =>
   '"' + String(value ?? '').replaceAll('"', '""') + '"';
 
 export const csvDataHref = (csv: string) =>

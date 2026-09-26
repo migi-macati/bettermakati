@@ -49,7 +49,7 @@ export default function CivicObservationForm({
   const [fallbackUrl, setFallbackUrl] = useState('');
 
   const answerList = (): ObservationAnswer[] =>
-    questionSet.questions.flatMap(question => {
+    questionSet.questions.flatMap<ObservationAnswer>(question => {
       const raw = answers[question.id]?.trim();
       if (!raw) return [];
 

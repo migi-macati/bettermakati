@@ -61,7 +61,7 @@ export default function Cinemas() {
           <Heading>Cinemas</Heading>
           <SharePage title="Cinemas in Makati | BetterMakati" />
         </div>
-        <LastReviewed date="2026-09-20" date="2026-09-20" note="Showtimes change daily; use the linked cinema or schedule source for current sessions." />
+        <LastReviewed date="2026-09-20" note="Showtimes change daily; use the linked cinema or schedule source for current sessions." />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
           {cinemas.map(cinema => (

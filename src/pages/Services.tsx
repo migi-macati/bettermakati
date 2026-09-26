@@ -32,7 +32,7 @@ import {
 } from '../data/serviceDirectory';
 import PhotoCarousel from '../components/ui/PhotoCarousel';
 import { servicesImageSet } from '../data/cityImages';
-import { useBarangayScope } from '../hooks/useBarangayScope';
+import { useBarangayScope, withBarangayScope } from '../hooks/useBarangayScope';
 import {
   civicAssetTypeLabels,
   placesByBarangay,
