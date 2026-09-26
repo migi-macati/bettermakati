@@ -1871,12 +1871,19 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Test public-place participation journeys",
       "maximumScope": "Nearby reporting, place matching, duplicate case, lifecycle, observation and pilot audit E2E only.",
-      "status": "next",
+      "status": "complete",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
       ],
-      "stopWhen": "Nearby reporting, place matching, duplicate case, lifecycle, observation and pilot audit E2E only."
+      "stopWhen": "Nearby reporting, place matching, duplicate case, lifecycle, observation and pilot audit E2E only.",
+      "completedAt": "2026-09-26",
+      "commits": [
+        "45004c2d8f4ce23c5b5cd813d939eec8e7ccf1e2",
+        "05d20438b7a8394990ef896c29c2e28ad823c345",
+        "4c34659babcf741270a449e6e32ec60eedfc7827",
+        "646ef7d9b0adb29bfc392e4cc55052822908c4ba"
+      ]
     },
     {
       "id": "W3R-11e",
@@ -1885,7 +1892,7 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Run mobile and accessibility pass",
       "maximumScope": "Redesigned Wave 3 surfaces only. Fix only defects found.",
-      "status": "planned",
+      "status": "next",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
@@ -2050,9 +2057,10 @@
       "W3R-10c",
       "W3R-11a",
       "W3R-11b",
-      "W3R-11c"
+      "W3R-11c",
+      "W3R-11d"
     ],
-    "current": "W3R-11d",
+    "current": "W3R-11e",
     "capabilityDispositionAuditFile": "data/wave3-capability-disposition-audit.json"
   },
   "knownCoverageGaps": {
