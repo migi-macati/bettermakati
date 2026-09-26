@@ -223,7 +223,10 @@ export default function CivicDiscussion({ assetId }: { assetId: string }) {
 
   if (loading) {
     return (
-      <div className="rounded-2xl border border-gray-200 bg-white p-5 text-sm text-gray-500">
+      <div
+        role="status"
+        className="rounded-2xl border border-gray-200 bg-white p-5 text-sm text-gray-500"
+      >
         Loading community reports and discussion…
       </div>
     );
@@ -243,7 +246,7 @@ export default function CivicDiscussion({ assetId }: { assetId: string }) {
         <button
           type="button"
           onClick={() => void loadFeed()}
-          className="inline-flex min-h-10 items-center gap-2 rounded-xl border border-gray-200 bg-white px-3 text-sm font-bold text-primary-700"
+          className="inline-flex min-h-11 items-center gap-2 rounded-xl border border-gray-200 bg-white px-3 text-sm font-bold text-primary-700"
         >
           <RefreshCw className="h-4 w-4" /> Refresh
         </button>
@@ -254,7 +257,10 @@ export default function CivicDiscussion({ assetId }: { assetId: string }) {
       </p>
 
       {feedFailed ? (
-        <div className="mt-5 rounded-xl border border-warning-200 bg-warning-50 p-4 text-sm text-warning-900">
+        <div
+          role="alert"
+          className="mt-5 rounded-xl border border-warning-200 bg-warning-50 p-4 text-sm text-warning-900"
+        >
           The public Civic Map feed could not be loaded from this deployment.
         </div>
       ) : items.length === 0 ? (
@@ -291,14 +297,14 @@ export default function CivicDiscussion({ assetId }: { assetId: string }) {
                     <button
                       type="button"
                       onClick={() => void quickResponse(item.number, 'confirm')}
-                      className="inline-flex min-h-10 items-center gap-1.5 rounded-xl border border-primary-200 bg-primary-50 px-3 text-sm font-bold text-primary-800"
+                      className="inline-flex min-h-11 items-center gap-1.5 rounded-xl border border-primary-200 bg-primary-50 px-3 text-sm font-bold text-primary-800"
                     >
                       <CheckCircle2 className="h-4 w-4" /> Confirm issue
                     </button>
                     <button
                       type="button"
                       onClick={() => void quickResponse(item.number, 'resolved')}
-                      className="inline-flex min-h-10 items-center gap-1.5 rounded-xl border border-gray-200 bg-white px-3 text-sm font-bold text-gray-700"
+                      className="inline-flex min-h-11 items-center gap-1.5 rounded-xl border border-gray-200 bg-white px-3 text-sm font-bold text-gray-700"
                     >
                       Appears resolved
                     </button>
@@ -309,14 +315,14 @@ export default function CivicDiscussion({ assetId }: { assetId: string }) {
                     <button
                       type="button"
                       onClick={() => void quickResponse(item.number, 'support')}
-                      className="inline-flex min-h-10 items-center gap-1.5 rounded-xl border border-primary-200 bg-primary-50 px-3 text-sm font-bold text-primary-800"
+                      className="inline-flex min-h-11 items-center gap-1.5 rounded-xl border border-primary-200 bg-primary-50 px-3 text-sm font-bold text-primary-800"
                     >
                       <ThumbsUp className="h-4 w-4" /> Support
                     </button>
                     <button
                       type="button"
                       onClick={() => void quickResponse(item.number, 'concern')}
-                      className="inline-flex min-h-10 items-center gap-1.5 rounded-xl border border-gray-200 bg-white px-3 text-sm font-bold text-gray-700"
+                      className="inline-flex min-h-11 items-center gap-1.5 rounded-xl border border-gray-200 bg-white px-3 text-sm font-bold text-gray-700"
                     >
                       <ThumbsDown className="h-4 w-4" /> Raise concern
                     </button>
@@ -325,7 +331,7 @@ export default function CivicDiscussion({ assetId }: { assetId: string }) {
                 <button
                   type="button"
                   onClick={() => void loadComments(item.number)}
-                  className="inline-flex min-h-10 items-center gap-1.5 rounded-xl border border-gray-200 bg-white px-3 text-sm font-bold text-gray-700"
+                  className="inline-flex min-h-11 items-center gap-1.5 rounded-xl border border-gray-200 bg-white px-3 text-sm font-bold text-gray-700"
                 >
                   <MessageCircle className="h-4 w-4" /> Discuss
                 </button>
@@ -333,7 +339,7 @@ export default function CivicDiscussion({ assetId }: { assetId: string }) {
                   href={item.url}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex min-h-10 items-center gap-1.5 rounded-xl px-3 text-sm font-bold text-primary-700"
+                  className="inline-flex min-h-11 items-center gap-1.5 rounded-xl px-3 text-sm font-bold text-primary-700"
                 >
                   Public record <ExternalLink className="h-3.5 w-3.5" />
                 </a>
@@ -355,7 +361,7 @@ export default function CivicDiscussion({ assetId }: { assetId: string }) {
             <button
               type="button"
               onClick={() => setActiveIssue(null)}
-              className="text-sm font-bold text-gray-600 underline underline-offset-2"
+              className="inline-flex min-h-11 items-center rounded-lg px-2 text-sm font-bold text-gray-600 underline underline-offset-2"
             >
               Close discussion
             </button>
@@ -411,9 +417,14 @@ export default function CivicDiscussion({ assetId }: { assetId: string }) {
           )}
 
           {commentsLoading ? (
-            <div className="mt-5 text-sm text-gray-500">Loading discussion…</div>
+            <div role="status" className="mt-5 text-sm text-gray-500">
+              Loading discussion…
+            </div>
           ) : comments.length === 0 ? (
-            <div className="mt-5 rounded-xl border border-gray-200 bg-white p-4 text-sm text-gray-600">
+            <div
+              role={commentsFailed ? 'alert' : 'status'}
+              className="mt-5 rounded-xl border border-gray-200 bg-white p-4 text-sm text-gray-600"
+            >
               {commentsFailed ? 'Replies could not be loaded. Reopen this discussion to try again.' : 'No community replies yet.'}
             </div>
           ) : (
@@ -432,7 +443,7 @@ export default function CivicDiscussion({ assetId }: { assetId: string }) {
                         setReplyType('reply');
                         document.getElementById('civic-reply-box')?.focus();
                       }}
-                      className="font-bold text-primary-700 underline underline-offset-2"
+                      className="inline-flex min-h-11 items-center rounded-lg px-2 font-bold text-primary-700 underline underline-offset-2"
                     >
                       Reply
                     </button>
@@ -475,7 +486,7 @@ export default function CivicDiscussion({ assetId }: { assetId: string }) {
               <button
                 type="button"
                 onClick={() => setParentCommentId(null)}
-                className="mt-2 text-xs font-bold text-gray-600 underline underline-offset-2"
+                className="mt-2 inline-flex min-h-11 items-center rounded-lg px-2 text-xs font-bold text-gray-600 underline underline-offset-2"
               >
                 Cancel reply target
               </button>
