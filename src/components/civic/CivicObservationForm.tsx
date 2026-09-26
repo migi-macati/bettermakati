@@ -76,16 +76,13 @@ export default function CivicObservationForm({
     setFallbackUrl('');
 
     try {
-      const response = await fetch('/api/civic', {
+      const response = await fetch('/api/civic-observation', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          action: 'create',
-          kind: 'observation',
           placeId: place.id,
-          assetId: place.id,
-          assetTitle: place.name,
-          assetType: place.primaryCategory,
+          placeName: place.name,
+          placeCategory: place.primaryCategory,
           familyId: questionSet.familyId,
           questionSetId: questionSet.id,
           observedAt: observedDate.toISOString(),
