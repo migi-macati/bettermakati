@@ -349,6 +349,7 @@ const observationThreadBody = payload => [
     JSON.stringify({
       version: 1,
       entityId: payload.entityId,
+      entityKind: payload.entityKind,
       entityCategory: payload.entityCategory,
       familyId: payload.familyId,
       createdVia: 'bettermakati-structured-observations',
@@ -367,6 +368,7 @@ const observationCommentBody = payload => [
     JSON.stringify({
       schemaVersion: 1,
       entityId: payload.entityId,
+      entityKind: payload.entityKind,
       familyId: payload.familyId,
       questionSetId: payload.questionSetId,
       observedAt: payload.observedAt,
@@ -477,6 +479,7 @@ export default async function handler(req, res) {
   const payload = {
     entityId: clean(req.body?.entityId, 120),
     entityName: clean(req.body?.entityName, 180),
+    entityKind: clean(req.body?.entityKind, 20),
     entityCategory: clean(req.body?.entityCategory, 60),
     familyId: clean(req.body?.familyId, 60),
     questionSetId: clean(req.body?.questionSetId, 80),
@@ -497,6 +500,7 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Unknown canonical civic entity.' });
   }
   payload.entityName = canonicalEntity.name;
+  payload.entityKind = canonicalEntity.entityKind;
   payload.entityCategory = canonicalEntity.category;
 
   if (!familyCategories[payload.familyId]?.has(payload.entityCategory)) {
