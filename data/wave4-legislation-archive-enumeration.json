@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "capturedAt": "2026-09-26",
+  "workstream": "W4-2e2 — Full official ordinance/resolution archive normalization",
+  "source": {
+    "id": "makati-resolutions-ordinances-archive",
+    "publisher": "City Government of Makati",
+    "url": "https://www.makati.gov.ph/content/resolutions-and-ordinances/author",
+    "searchUrl": "https://www.makati.gov.ph/content/resolutions-and-ordinances/search",
+    "observedInterface": [
+      "keyword or document-code search",
+      "All filter",
+      "Resolution filter",
+      "Ordinance filter"
+    ]
+  },
+  "enumerationAttempt": {
+    "status": "blocked-pending-dynamic-endpoint-or-browser-enumeration",
+    "observation": "The official archive shell is publicly reachable, but the result set is populated client-side. Non-browser text retrieval exposes the search/filter shell and Loading state rather than the archive rows.",
+    "consequence": "BetterMakati cannot truthfully freeze a complete archive total from the current text-fetch path. Search-engine indexing is not accepted as a completeness mechanism.",
+    "rule": "Do not label the local registry complete until the official archive result set can be enumerated reproducibly or an official complete export is obtained."
+  },
+  "officialCompletenessBenchmarks": [
+    {
+      "period": "2020",
+      "source": "Makati Facts and Figures 2020 — Implementation of Local Legislature",
+      "publisher": "City Government of Makati",
+      "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/45/561/pdf/Facts%20and%20FIgures%202020.pdf",
+      "office": "Office of the Secretary to the Sangguniang Panlungsod",
+      "resolutionsPassedApproved": 287,
+      "ordinancesPassedApproved": 50,
+      "totalPassedApproved": 337,
+      "note": "This is an official annual total, not an archive-entry export. It proves the existing 2020 seed is not a complete 2020 registry."
+    }
+  ],
+  "currentBetterMakatiSeed": {
+    "ordinances": 15,
+    "resolutions": 5,
+    "total": 20,
+    "source": "Makati City COVID-19 Recovery Plan Annex A",
+    "scope": "COVID-19 response measures in the bounded Annex A period only",
+    "reconciliationAgainst2020Benchmark": {
+      "knownSeedOrdinances": 15,
+      "official2020OrdinanceTotal": 50,
+      "knownSeedResolutions": 5,
+      "official2020ResolutionTotal": 287,
+      "conclusion": "seed-is-partial-by-design"
+    }
+  },
+  "extractionRequirements": [
+    "Resolve the official archive's client-side data endpoint or use a browser-capable enumerator that can traverse every result/page.",
+    "Capture raw archive identity fields before enrichment: type, official reference/document code, title, official item/document URL and any archive UUID.",
+    "Persist a dated raw snapshot so later changes can be diffed.",
+    "Deduplicate against canonical localLegislation records by exact official reference plus measure type; never by fuzzy title.",
+    "Record unresolved rows explicitly rather than dropping malformed or duplicate archive results.",
+    "Only after raw enumeration is reproducible may the snapshot claim a retrievable-entry total."
+  ],
+  "nextStep": {
+    "id": "W4-2e2a",
+    "title": "Resolve and enumerate the dynamic Makati legislation archive",
+    "stopWhen": "A dated raw snapshot contains every result returned by the official archive UI, with a reproducible total and exact duplicate/unresolved dispositions."
+  }
+}
