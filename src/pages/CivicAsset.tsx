@@ -190,11 +190,34 @@ export default function CivicAsset() {
 
       <Section className="bg-[#f5f8f2]" id="place-information">
         <div className="grid gap-8 xl:grid-cols-[1.05fr_0.95fr]">
-          <CivicMapEmbed
-            lat={place.location.point?.lat ?? asset.lat}
-            lng={place.location.point?.lng ?? asset.lng}
-            title={place.name}
-          />
+          {entityKind === 'place' ? (
+            <CivicMapEmbed
+              lat={place.location.point?.lat ?? asset.lat}
+              lng={place.location.point?.lng ?? asset.lng}
+              title={place.name}
+            />
+          ) : (
+            <div className="rounded-2xl border border-primary-100 bg-white p-6">
+              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+                <Route className="h-4 w-4" />
+                {entityKind === 'segment' ? 'Bounded infrastructure segment' : 'Transport network / service route'}
+              </div>
+              <div className="mt-4 text-xl font-extrabold text-gray-950">{place.name}</div>
+              {entityKind === 'segment' && place.location.geometry?.street && (
+                <div className="mt-3 text-sm text-gray-700">{place.location.geometry.street}</div>
+              )}
+              {entityKind === 'segment' && place.location.geometry?.from && place.location.geometry?.to && (
+                <div className="mt-2 rounded-xl bg-[#fffdf8] p-4 text-sm font-bold text-gray-800">
+                  {place.location.geometry.from} ↔ {place.location.geometry.to}
+                </div>
+              )}
+              {place.location.point && (
+                <div className="mt-4 text-xs text-gray-500">
+                  Representative map point: {place.location.point.lat.toFixed(5)}, {place.location.point.lng.toFixed(5)}
+                </div>
+              )}
+            </div>
+          )}
 
           <div>
             <div className="section-eyebrow">{informationLabel}</div>
