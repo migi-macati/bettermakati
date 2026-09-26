@@ -132,15 +132,20 @@
       "id": "W4-1b",
       "phase": "Statistics",
       "title": "Define canonical city-indicator schema",
-      "status": "next",
+      "status": "complete",
       "maximumScope": "Schema only: indicator ID, value, unit, period, geography, definition, source, revision, comparability and relationships.",
-      "stopWhen": "One reusable indicator model can represent citywide and barangay statistics without copying display strings into pages."
+      "stopWhen": "One reusable indicator model can represent citywide and barangay statistics without copying display strings into pages.",
+      "completedAt": "2026-09-26",
+      "schemaFile": "data/city-indicator.schema.json",
+      "commits": [
+        "d3e105267a2b45ba035e417814c455dbeec20f10"
+      ]
     },
     {
       "id": "W4-1c",
       "phase": "Statistics",
       "title": "Inventory population and demographic sources",
-      "status": "planned",
+      "status": "next",
       "maximumScope": "Official-source research only for comparable population/demographic series under current Makati geography.",
       "stopWhen": "Population/demographic source inventory has explicit time, geography and inclusion/exclusion rules."
     },
@@ -457,11 +462,11 @@
       "stopWhen": "Wave 4 is closed only to the extent supported by evidence, with future work reopened as specific capabilities rather than vague unfinished work."
     }
   ],
-  "current": "W4-1b",
+  "current": "W4-1c",
   "immediateNext": {
-    "id": "W4-1b",
-    "title": "Define canonical city-indicator schema",
-    "maximumScope": "Schema only: indicator ID, value, unit, period, geography, definition, source, revision, comparability and relationships."
+    "id": "W4-1c",
+    "title": "Inventory population and demographic sources",
+    "maximumScope": "Official-source research only for comparable population/demographic series under current Makati geography."
   },
   "carriedForward": [
     {
