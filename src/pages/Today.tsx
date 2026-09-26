@@ -7,7 +7,6 @@ import {
   Clock3,
   CloudRain,
   ExternalLink,
-  MapPin,
   Newspaper,
   PhoneCall,
   Radio,
