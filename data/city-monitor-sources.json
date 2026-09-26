@@ -28,6 +28,19 @@
       ]
     },
     {
+      "id": "makati-council-videos",
+      "label": "Makati official council-session videos",
+      "url": "https://www.makati.gov.ph/",
+      "stream": "council-session",
+      "monitoringMode": "reachability",
+      "owner": "city-monitor",
+      "affectedPages": [
+        "/legislation",
+        "/city-monitor",
+        "/briefs"
+      ]
+    },
+    {
       "id": "mymakati-broadcasts",
       "label": "MyMakati official social broadcasts",
       "url": "https://www.facebook.com/mymakativerified",
