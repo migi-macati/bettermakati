@@ -1156,13 +1156,42 @@
     {
       "id": "W3R-11d",
       "title": "Test public-place participation journeys",
-      "status": "next",
-      "maximumScope": "Nearby reporting, place matching, duplicate case, lifecycle, observation and pilot audit E2E only."
+      "status": "complete",
+      "maximumScope": "Nearby reporting, place matching, duplicate case, lifecycle, observation and pilot audit E2E only.",
+      "implementationFiles": [
+        "src/components/civic/CivicDiscussion.tsx",
+        "src/pages/CivicAuditResults.tsx",
+        "scripts/test-public-place-participation-journeys.mjs",
+        "package.json"
+      ],
+      "validation": {
+        "journeys": [
+          "nearby reporting creates a canonical place-backed civic case and server-side canonicalization overrides client-supplied entity name/kind/category metadata",
+          "same entity + category + point within 75 metres returns a duplicate candidate instead of a second case",
+          "duplicate confirmation writes a civic-comment confirmation to the existing public case",
+          "case readback keeps ordinary confirm/appears-resolved signals separate from official lifecycle and advances only through civic-admin evidence",
+          "structured observation submission canonicalizes entity metadata, creates/reuses the observation thread and stores the observation as a comment",
+          "structured observation readback returns observations ordered by observedAt plus freshness instrumentation",
+          "park accessibility audit consumes the same structured observations, excludes out-of-window evidence, applies the frozen 13-target campaign and emits raw observed/complete coverage inputs"
+        ],
+        "defectsFixed": [
+          "CivicDiscussion expected a legacy destination field while civic-admin stores authority. The discussion now renders authority, with destination retained only as a compatibility fallback.",
+          "CivicAuditResults hard-coded /13 in coverage cards and the target heading. It now reads targetCount from live audit output with the frozen campaign length as fallback."
+        ],
+        "evidenceBoundaries": [
+          "A community appears-resolved signal does not promote the case to community-verified-resolved.",
+          "New native case creation returns unverified/forwarded=false.",
+          "Audit output remains count/coverage input based; the journey test rejects an overallScore field."
+        ],
+        "buildIntegration": "test:public-place-journeys now runs from both npm run build and npm run quality after the general participation journey suite.",
+        "focusedValidation": "Source validation confirms the committed suite covers canonical matching, duplicate confirmation, lifecycle separation, observation submit/readback and pilot-audit aggregation; lifecycle authority and data-driven target-count fixes are present; package scripts invoke the suite.",
+        "executionBoundary": "No GitHub Actions run is available at this commit, so completion is based on the committed deterministic handler-level journey suite plus focused source validation; dedicated browser/mobile testing remains W3R-11e."
+      }
     },
     {
       "id": "W3R-11e",
       "title": "Run mobile and accessibility pass",
-      "status": "planned",
+      "status": "next",
       "maximumScope": "Redesigned Wave 3 surfaces only. Fix only defects found."
     },
     {
@@ -1173,9 +1202,9 @@
     }
   ],
   "immediateNext": {
-    "id": "W3R-11d",
-    "title": "Test public-place participation journeys",
-    "maximumScope": "Nearby reporting, place matching, duplicate case, lifecycle, observation and pilot audit E2E only."
+    "id": "W3R-11e",
+    "title": "Run mobile and accessibility pass",
+    "maximumScope": "Redesigned Wave 3 surfaces only. Fix only defects found."
   },
   "capabilityDispositionAuditFile": "data/wave3-capability-disposition-audit.json",
   "completedSteps": [
@@ -1213,7 +1242,8 @@
     "W3R-10c",
     "W3R-11a",
     "W3R-11b",
-    "W3R-11c"
+    "W3R-11c",
+    "W3R-11d"
   ],
   "placeRegistrySchemaFile": "data/place-registry-schema.json",
   "placeRegistryDataFile": "src/data/placeRegistry.ts",
