@@ -1,4 +1,5 @@
 import { civicEntityById } from '../data/civic-entity-index.mjs';
+import { observationFreshnessInstrumentation } from '../data/participation-outcome-instrumentation.mjs';
 
 const WINDOW_MS = 60_000;
 const DAY_MS = 86_400_000;
@@ -102,6 +103,11 @@ const familyCategories = {
   'transport-stop-terminal': new Set(['transport-stop', 'transport-terminal']),
   'transport-route': new Set(['transport-route']),
 };
+
+const familyIdForCategory = category =>
+  Object.entries(familyCategories).find(([, categories]) =>
+    categories.has(category)
+  )?.[0] || null;
 
 const questionTypes = {
   'street-public-realm': {
@@ -432,8 +438,20 @@ export default async function handler(req, res) {
     }
     try {
       const asOf = new Date().toISOString();
+      const canonicalEntity = civicEntityById.get(entityId);
+      const inferredFamilyId = familyIdForCategory(canonicalEntity?.category);
       const thread = await findObservationThread(entityId, token);
-      if (!thread) return res.status(200).json({ observations: [], asOf });
+      if (!thread) {
+        return res.status(200).json({
+          observations: [],
+          asOf,
+          freshness: observationFreshnessInstrumentation({
+            familyId: inferredFamilyId,
+            observations: [],
+            asOf,
+          }),
+        });
+      }
       const comments = await fetchComments(token, thread.number);
       const observations = comments
         .map(comment => {
@@ -448,11 +466,18 @@ export default async function handler(req, res) {
         })
         .filter(Boolean)
         .sort((a, b) => new Date(b.observedAt) - new Date(a.observedAt));
+      const familyId =
+        observations[0]?.familyId || inferredFamilyId;
       return res.status(200).json({
         entityId,
         threadUrl: thread.html_url,
         asOf,
         observations,
+        freshness: observationFreshnessInstrumentation({
+          familyId,
+          observations,
+          asOf,
+        }),
       });
     } catch {
       return res.status(503).json({
