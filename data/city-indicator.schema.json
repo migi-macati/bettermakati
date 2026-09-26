@@ -190,6 +190,9 @@
           "$ref": "#/$defs/canonicalReferenceData"
         },
         {
+          "$ref": "#/$defs/sourceTableReferenceData"
+        },
+        {
           "$ref": "#/$defs/derivedData"
         }
       ]
@@ -845,6 +848,83 @@
           }
         }
       }
+    },
+    "sourceTableReferenceData": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "sourceId",
+        "materializationStatus"
+      ],
+      "properties": {
+        "kind": {
+          "const": "source-table-reference"
+        },
+        "sourceId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "matrix": {
+          "type": "string",
+          "minLength": 1
+        },
+        "table": {
+          "type": "string",
+          "minLength": 1
+        },
+        "selectors": {
+          "type": "object",
+          "additionalProperties": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 1
+              }
+            ]
+          },
+          "description": "Declarative source-table selectors/constraints such as geography, measure, valuation basis or period. They document how to retrieve the indicator; they are not executable code."
+        },
+        "materializationStatus": {
+          "type": "string",
+          "enum": [
+            "source-bound",
+            "partially-materialized"
+          ]
+        },
+        "materializedObservations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/observation"
+          }
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "materializationStatus": {
+                "const": "partially-materialized"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "materializedObservations"
+            ]
+          }
+        }
+      ]
     }
   },
   "x-bettermakati-rules": [
@@ -858,7 +938,8 @@
     "Report prose may quote an indicator as a dated publication snapshot but is never a canonical data owner.",
     "Source gaps remain source gaps; missing data must not be converted into zero.",
     "Presentation components format values from unit metadata; they must not maintain independent copies of the same number.",
-    "BetterGov/BetterLGU ecosystem links are typed context or continuation links, not substitutes for the underlying official source unless that ecosystem resource is itself the canonical data owner."
+    "BetterGov/BetterLGU ecosystem links are typed context or continuation links, not substitutes for the underlying official source unless that ecosystem resource is itself the canonical data owner.",
+    "Use source-table-reference when an official machine-readable/source table is the canonical owner but BetterMakati has not safely materialized the full series; never guess missing cells merely to make an indicator locally complete."
   ],
   "examples": [
     {
