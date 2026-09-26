@@ -173,7 +173,7 @@ export default function CivicReports() {
     return () => controller.abort();
   }, [attempt]);
 
-  const asOfTime = data ? new Date(data.generatedAt).getTime() : Date.now();
+  const asOfTime = data ? new Date(data.generatedAt).getTime() : 0;
   const caseWindowStart = asOfTime - CASE_WINDOW_DAYS * DAY_MS;
 
   const cohort = useMemo(
