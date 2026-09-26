@@ -1,3 +1,5 @@
+import { civicEntityById } from '../data/civic-entity-index.mjs';
+
 const WINDOW_MS = 60_000;
 const DAY_MS = 86_400_000;
 const MAX_PER_MINUTE = 8;
@@ -236,7 +238,7 @@ const createComment = async (token, issueNumber, body) => {
 
 const contributionBody = payload => {
   const meta = {
-    version: payload.locationMode ? 2 : 1,
+    version: payload.entityId ? 3 : payload.locationMode ? 2 : 1,
     kind: payload.kind,
     entityId: payload.entityId || payload.placeId || payload.assetId || null,
     entityKind: payload.entityKind || '',
@@ -464,12 +466,17 @@ export default async function handler(req, res) {
     payload.assetId = '';
     payload.assetTitle = '';
     payload.assetType = '';
-  } else if (!payload.assetId || !payload.assetTitle) {
-    return res.status(400).json({ error: 'Choose a civic place, segment or route first.' });
   } else {
     payload.entityId = payload.entityId || payload.assetId;
-    payload.entityKind = payload.entityKind || '';
-    payload.placeId = payload.entityKind === 'place' ? payload.entityId : '';
+    const canonicalEntity = civicEntityById.get(payload.entityId);
+    if (!canonicalEntity) {
+      return res.status(400).json({ error: 'Choose a canonical civic place, segment or route first.' });
+    }
+    payload.entityKind = canonicalEntity.entityKind;
+    payload.assetId = canonicalEntity.id;
+    payload.assetTitle = canonicalEntity.name;
+    payload.assetType = canonicalEntity.category;
+    payload.placeId = canonicalEntity.entityKind === 'place' ? canonicalEntity.id : '';
   }
 
   if (kind === 'report' && emergencyCategories.has(payload.category)) {
