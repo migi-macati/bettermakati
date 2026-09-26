@@ -632,9 +632,30 @@
       "id": "W4-3d",
       "phase": "Integrity",
       "title": "Research public ownership and disclosure records",
-      "status": "planned",
+      "status": "complete",
       "maximumScope": "Authoritative-source research only for beneficial ownership, conflict, recusal or disclosure records relevant to implemented Makati procurement entities.",
-      "stopWhen": "Each candidate link is classified source-backed, unavailable, restricted or not applicable; missing data is not treated as a finding."
+      "stopWhen": "Each candidate link is classified source-backed, unavailable, restricted or not applicable; missing data is not treated as a finding.",
+      "completedAt": "2026-09-26",
+      "implementationFiles": [
+        "src/data/integrityDisclosures.ts",
+        "scripts/check-integrity-disclosures.mjs",
+        "package.json"
+      ],
+      "validation": {
+        "normalizedEntityCount": 17,
+        "researchQuestionKindsPerEntity": [
+          "beneficial-ownership",
+          "conflict-of-interest",
+          "recusal"
+        ],
+        "classifiedResearchRecordCount": 51,
+        "sourceBackedHistoricalRoleCount": 3,
+        "totalDisclosureRecordCount": 54,
+        "registryFramework": "GPPB Resolution No. 11-2025 authorized publication of the BOI Registry through PhilGEPS; PS-DBM states the enhanced Open Data Portal integrated the public BO Registry in March 2026.",
+        "retrievalBoundary": "Entity-specific BO records did not surface through the authoritative public web/search surfaces available during the 26 September 2026 check. Records are classified unavailable for retrieval, not absent, non-filed or concealed.",
+        "historicalRoleBoundary": "2017 Makati bid-result role labels for RUNR, TJ Grill and JPPM are preserved only as source-stated historical disclosures and are not treated as current beneficial ownership.",
+        "guardrail": "No missing disclosure, conflict or recusal record is treated as evidence of wrongdoing or as evidence that no relationship exists."
+      }
     },
     {
       "id": "W4-3e",
@@ -805,11 +826,11 @@
       "stopWhen": "Wave 4 is closed only to the extent supported by evidence, with future work reopened as specific capabilities rather than vague unfinished work."
     }
   ],
-  "current": "W4-3d",
+  "current": "W4-3e",
   "immediateNext": {
-    "id": "W4-3d",
-    "title": "Research public ownership and disclosure records",
-    "maximumScope": "Authoritative-source research only for beneficial ownership, conflict, recusal or disclosure records relevant to implemented Makati procurement entities."
+    "id": "W4-3e",
+    "title": "Build audit finding resolution trails",
+    "maximumScope": "Existing COA/accountability findings only. Link finding → recommendation → management response → later corrective/status evidence where exact continuity is documented."
   },
   "carriedForward": [
     {
