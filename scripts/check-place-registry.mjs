@@ -5,6 +5,10 @@ const mobilityPage = await readFile('src/pages/Mobility.tsx', 'utf8');
 const servicesPage = await readFile('src/pages/Services.tsx', 'utf8');
 const governmentOfficesPage = await readFile('src/pages/GovernmentOffices.tsx', 'utf8');
 const serviceGuidePage = await readFile('src/pages/ServiceGuide.tsx', 'utf8');
+const concernFinderPage = await readFile('src/pages/ConcernFinder.tsx', 'utf8');
+const serviceSearchSource = await readFile('src/components/home/ServiceSearch.tsx', 'utf8');
+const searchIndexSource = await readFile('src/data/searchIndex.ts', 'utf8');
+const serviceDirectorySource = await readFile('src/data/serviceDirectory.ts', 'utf8');
 const governmentOfficesSource = await readFile('src/data/governmentServiceOffices.ts', 'utf8');
 const problems = [];
 
@@ -141,6 +145,48 @@ for (const marker of [
 
 if (governmentOfficesPage.includes('Place Registry') || serviceGuidePage.includes('Place Registry')) {
   problems.push('Service surfaces must not expose Place Registry implementation language in the UI.');
+}
+
+for (const marker of [
+  'serviceId?: string',
+  'serviceId: item.id',
+]) {
+  if (!searchIndexSource.includes(marker)) {
+    problems.push('Search index service-place integration is missing: ' + marker);
+  }
+}
+
+for (const marker of [
+  'showServicePlaces = false',
+  'officesForAgency(service.agency).find(item => item.placeId)',
+  'placeRegistryById.get(office.placeId)',
+  'Where to go: {servicePlaceById.get(item.serviceId)?.name}',
+]) {
+  if (!serviceSearchSource.includes(marker)) {
+    problems.push('Saan Ako Lalapit place-result integration is missing: ' + marker);
+  }
+}
+
+if (!concernFinderPage.includes('showServicePlaces')) {
+  problems.push('Saan Ako Lalapit must enable service place results.');
+}
+
+const linkedAgencies = new Set(
+  [...governmentOfficesSource.matchAll(/agency:\s*'([^']+)'[\s\S]*?placeId:\s*'([^']+)'/g)]
+    .map(match => match[1])
+);
+const concernServicePlaceRows = [
+  ...serviceDirectorySource.matchAll(
+    /id:\s*'([^']+)'[\s\S]*?agency:\s*'([^']+)'[\s\S]*?(?=\n\s*\},|\n\s*\{)/
+  ),
+].filter(match =>
+  [...linkedAgencies].some(agency =>
+    match[2].includes(agency) || agency.includes(match[2])
+  )
+);
+
+if (concernServicePlaceRows.length < 1) {
+  problems.push('Saan Ako Lalapit has no service rows backed by explicit office/place links.');
 }
 
 if (problems.length) {
