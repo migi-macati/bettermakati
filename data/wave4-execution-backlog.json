@@ -271,17 +271,22 @@
       "id": "W4-2a",
       "phase": "Legislation",
       "title": "Audit Makati legislation sources and current page",
-      "status": "next",
+      "status": "complete",
       "maximumScope": "Source and product audit only: official Makati archive, City Monitor legislative records, Public Records and current external-search fallback.",
-      "stopWhen": "Available record fields, archive limitations and duplicate sources are documented."
+      "stopWhen": "Available record fields, archive limitations and duplicate sources are documented.",
+      "completedAt": "2026-09-26",
+      "auditFile": "data/wave4-legislation-current-state-audit.json",
+      "commits": [
+        "bfd28c38d3927156f536a79ba9c573f7f0de9a21"
+      ]
     },
     {
       "id": "W4-2b",
       "phase": "Legislation",
       "title": "Define local legislation registry schema",
-      "status": "planned",
-      "maximumScope": "Schema only for ordinances/resolutions: identifier, number, title, type, date, text/document, topics, lifecycle evidence, canonical relationships and provenance.",
-      "stopWhen": "Schema supports exact local records and City Monitor links without inventing enactment status."
+      "status": "next",
+      "maximumScope": "Schema only for ordinances/resolutions plus typed council-session evidence: identifier, number, title, type, dates, official text, authors when stated, lifecycle events, session video/agenda/minutes relationships, civic relationships and provenance.",
+      "stopWhen": "Schema supports canonical local measures, reusable official session evidence and City Monitor links without inventing enactment, vote or mayoral-action status."
     },
     {
       "id": "W4-2c",
@@ -304,8 +309,8 @@
       "phase": "Legislation",
       "title": "Connect legislation to City Monitor lifecycle",
       "status": "planned",
-      "maximumScope": "Explicit record-to-record relationships only. No fuzzy number/title matching.",
-      "stopWhen": "Current legislative activity can link to the canonical ordinance/resolution record where identity is explicit."
+      "maximumScope": "Explicit record-to-record relationships plus current council-session normalization: map official session videos into City Monitor/session evidence, then link measures only where identity/action is explicit. No fuzzy number/title matching.",
+      "stopWhen": "Current session-video evidence is represented without the false source-gap assumption, and canonical measures can link to City Monitor/session evidence where the official record explicitly supports the relationship."
     },
     {
       "id": "W4-2f",
@@ -532,11 +537,11 @@
       "stopWhen": "Wave 4 is closed only to the extent supported by evidence, with future work reopened as specific capabilities rather than vague unfinished work."
     }
   ],
-  "current": "W4-2a",
+  "current": "W4-2b",
   "immediateNext": {
-    "id": "W4-2a",
-    "title": "Audit Makati legislation sources and current page",
-    "maximumScope": "Source and product audit only: official Makati archive, City Monitor legislative records, Public Records and current external-search fallback."
+    "id": "W4-2b",
+    "title": "Define local legislation registry schema",
+    "maximumScope": "Schema only for ordinances/resolutions plus typed council-session evidence: identifier, number, title, type, dates, official text, authors when stated, lifecycle events, session video/agenda/minutes relationships, civic relationships and provenance."
   },
   "carriedForward": [
     {
