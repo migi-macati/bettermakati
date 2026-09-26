@@ -238,8 +238,10 @@ const contributionBody = payload => {
   const meta = {
     version: payload.locationMode ? 2 : 1,
     kind: payload.kind,
-    placeId: payload.placeId || payload.assetId || null,
-    locationMode: payload.locationMode || (payload.assetId ? 'matched-place' : 'location-only'),
+    entityId: payload.entityId || payload.placeId || payload.assetId || null,
+    entityKind: payload.entityKind || '',
+    placeId: payload.placeId || null,
+    locationMode: payload.locationMode || (payload.assetId ? 'matched-entity' : 'location-only'),
     assetId: payload.assetId || '',
     assetType: payload.assetType || '',
     category: payload.category,
@@ -260,7 +262,7 @@ const contributionBody = payload => {
     '<!-- civic-meta ' + JSON.stringify(meta) + ' -->',
     '',
     '**Type:** ' + payload.kind,
-    payload.assetTitle ? '**Place:** ' + payload.assetTitle : '',
+    payload.assetTitle ? '**Civic entity:** ' + payload.assetTitle : '',
     payload.location ? '**Location:** ' + payload.location : '',
     payload.category ? '**Category:** ' + payload.category : '',
     payload.side ? '**Side / direction:** ' + payload.side : '',
@@ -417,6 +419,8 @@ export default async function handler(req, res) {
   const kind = clean(req.body?.kind, 20);
   const payload = {
     kind,
+    entityId: clean(req.body?.entityId, 120),
+    entityKind: clean(req.body?.entityKind, 20),
     placeId: clean(req.body?.placeId, 120),
     locationMode: clean(req.body?.locationMode, 30),
     assetId: clean(req.body?.assetId, 120),
@@ -454,14 +458,18 @@ export default async function handler(req, res) {
         error: 'Describe the location and provide a map point before submitting.',
       });
     }
+    payload.entityId = '';
+    payload.entityKind = '';
     payload.placeId = '';
     payload.assetId = '';
     payload.assetTitle = '';
     payload.assetType = '';
   } else if (!payload.assetId || !payload.assetTitle) {
-    return res.status(400).json({ error: 'Choose a mapped place or segment first.' });
+    return res.status(400).json({ error: 'Choose a civic place, segment or route first.' });
   } else {
-    payload.placeId = payload.assetId;
+    payload.entityId = payload.entityId || payload.assetId;
+    payload.entityKind = payload.entityKind || '';
+    payload.placeId = payload.entityKind === 'place' ? payload.entityId : '';
   }
 
   if (kind === 'report' && emergencyCategories.has(payload.category)) {
@@ -489,9 +497,11 @@ export default async function handler(req, res) {
       .filter(issue => issue.state === 'open')
       .map(issue => ({ issue, meta: parseMeta(issue.body) }))
       .filter(({ meta }) => meta.kind === kind && meta.category === payload.category)
-      .filter(({ meta }) =>
-        locationOnly ? true : meta.assetId === payload.assetId
-      )
+      .filter(({ meta }) => {
+        if (locationOnly) return true;
+        const existingEntityId = meta.entityId || meta.placeId || meta.assetId;
+        return existingEntityId === payload.entityId;
+      })
       .filter(({ meta }) => {
         const distance = distanceMeters(payload.lat, payload.lng, Number(meta.lat), Number(meta.lng));
         return distance !== null && distance <= 75;
