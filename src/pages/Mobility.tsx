@@ -16,7 +16,7 @@ import SEO from '../components/SEO';
 import LastReviewed from '../components/ui/LastReviewed';
 import SharePage from '../components/ui/SharePage';
 import PhotoCarousel from '../components/ui/PhotoCarousel';
-import { cityImages } from '../data/cityImages';
+import { mobilityImageSet } from '../data/cityImages';
 import {
   placesByCategory,
   type PlaceRegistryRecord,
@@ -159,7 +159,7 @@ export default function Mobility() {
         </div>
         <LastReviewed note="Schedules and routes can change; confirm current service with the linked operator or map." />
         <PhotoCarousel
-          images={[cityImages.jeepney]}
+          images={mobilityImageSet}
           title="Street-level Makati"
           compact
           className="mt-7"
