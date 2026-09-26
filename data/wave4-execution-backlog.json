@@ -56,6 +56,7 @@
         "W4-2e",
         "W4-2e2",
         "W4-2e2a",
+        "W4-2e2b",
         "W4-2f",
         "W4-2g",
         "W4-2h"
@@ -366,7 +367,6 @@
       "status": "partial",
       "maximumScope": "Official Makati resolutions-and-ordinances archive only. Enumerate every retrievable archive entry in a dated snapshot, normalize ordinance/resolution identity, reference, title and official document/source URLs, and reconcile duplicates against the existing 20-record seed. No topic tagging or lifecycle inference in the same step.",
       "stopWhen": "The dated archive snapshot has a reproducible enumerated total and every retrievable item resolves to one canonical local measure or an explicit unresolved/duplicate disposition. Do not call the registry historically complete unless the archive enumeration itself proves that scope.",
-      "completedAt": "2026-09-26",
       "auditFile": "data/wave4-legislation-archive-enumeration.json",
       "commits": [
         "edea100556f689ffa5256af5a6c5be6d06bef089",
@@ -377,9 +377,31 @@
       "id": "W4-2e2a",
       "phase": "Legislation",
       "title": "Resolve and enumerate dynamic legislation archive",
-      "status": "next",
+      "status": "complete",
       "maximumScope": "Official Makati resolutions-and-ordinances archive only. Resolve the client-side archive data source or use a browser-capable enumeration path; capture every returned row into a dated raw snapshot with exact type/reference/title/item or document URL/UUID when exposed. No topic tagging, summaries or lifecycle enrichment.",
-      "stopWhen": "A dated raw snapshot contains every result returned by the official archive UI, with a reproducible total and exact duplicate/unresolved dispositions. If the archive cannot expose a reproducible export/result traversal, keep the capability partial rather than infer completeness."
+      "stopWhen": "A dated raw snapshot contains every result returned by the official archive UI, with a reproducible total and exact duplicate/unresolved dispositions. If the archive cannot expose a reproducible export/result traversal, keep the capability partial rather than infer completeness.",
+      "completedAt": "2026-09-26",
+      "implementationFiles": [
+        "scripts/discover-makati-legislation-archive.mjs",
+        "data/makati-legislation-archive-2026-09-26.json",
+        ".github/workflows/makati-legislation-archive.yml"
+      ],
+      "commits": [
+        "d3b2d991bacb3e20d7e15e6f6ddc469cd7cc1a9e",
+        "2d115c68a01e7cebf504bef236a8423c2727298b",
+        "dfc2e5c2b98f75779ce545b5f3ff0523c31eecbf",
+        "a566548c8db0b45285069bff38eac937b8bb00ad",
+        "cb6e6cf05552c49e47bdf8ea7bf349ce6c45e320",
+        "6626523991aed5c15c74c26303b59363a68cd2d2"
+      ]
+    },
+    {
+      "id": "W4-2e2b",
+      "phase": "Legislation",
+      "title": "Normalize enumerated archive rows and reconcile seed registry",
+      "status": "next",
+      "maximumScope": "Transform the latest dated raw Makati legislation snapshot into one canonical archive index: stable BetterMakati measure ID, official type/reference/title, official archive UUID/source URL, explicit official-document URL availability, and exact type+reference reconciliation against the existing Annex A ordinance/resolution seed. No topic tagging, summaries, lifecycle enrichment or page work.",
+      "stopWhen": "Every raw archive row maps to one canonical record or an explicit unresolved/duplicate disposition; every existing Annex A seed record reconciles to the same exact type+reference identity; output counts and identifier/reference uniqueness are reproducibly validated."
     },
     {
       "id": "W4-2f",
@@ -606,11 +628,11 @@
       "stopWhen": "Wave 4 is closed only to the extent supported by evidence, with future work reopened as specific capabilities rather than vague unfinished work."
     }
   ],
-  "current": "W4-2e2a",
+  "current": "W4-2e2b",
   "immediateNext": {
-    "id": "W4-2e2a",
-    "title": "Resolve and enumerate dynamic legislation archive",
-    "maximumScope": "Official Makati resolutions-and-ordinances archive only. Resolve the client-side archive data source or use a browser-capable enumeration path; capture every returned row into a dated raw snapshot with exact type/reference/title/item or document URL/UUID when exposed. No topic tagging, summaries or lifecycle enrichment."
+    "id": "W4-2e2b",
+    "title": "Normalize enumerated archive rows and reconcile seed registry",
+    "maximumScope": "Transform the latest dated raw Makati legislation snapshot into one canonical archive index: stable BetterMakati measure ID, official type/reference/title, official archive UUID/source URL, explicit official-document URL availability, and exact type+reference reconciliation against the existing Annex A ordinance/resolution seed. No topic tagging, summaries, lifecycle enrichment or page work."
   },
   "carriedForward": [
     {

@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - scripts/discover-makati-legislation-archive.mjs
+      - scripts/normalize-makati-legislation-archive.mjs
       - .github/workflows/makati-legislation-archive.yml
   workflow_dispatch:
 
@@ -39,23 +40,29 @@ jobs:
       - name: Enumerate official Makati archive
         run: node scripts/discover-makati-legislation-archive.mjs
 
+      - name: Normalize archive registry core
+        run: node scripts/normalize-makati-legislation-archive.mjs
+
       - name: Upload dated raw snapshot
         uses: actions/upload-artifact@v4
         with:
           name: makati-legislation-archive-snapshot
-          path: data/makati-legislation-archive-*.json
+          path: |
+            data/makati-legislation-archive-*.json
+            data/makati-legislation-normalized-*.json
           if-no-files-found: error
           retention-days: 14
 
       - name: Commit dated raw snapshot
         run: |
           SNAPSHOT="$(ls -1t data/makati-legislation-archive-*.json | head -1)"
+          NORMALIZED="$(ls -1t data/makati-legislation-normalized-*.json | head -1)"
           git config user.name "BetterMakati Archive Bot"
           git config user.email "actions@users.noreply.github.com"
-          git add "$SNAPSHOT"
+          git add "$SNAPSHOT" "$NORMALIZED"
           if git diff --cached --quiet; then
             echo "Snapshot unchanged; nothing to commit."
             exit 0
           fi
-          git commit -m "Snapshot official Makati legislation archive"
+          git commit -m "Snapshot and normalize official Makati legislation archive"
           git push origin HEAD:main
