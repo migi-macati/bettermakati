@@ -22,8 +22,9 @@ interface CivicRecord {
   evidenceLabel: string;
   referralEligible: boolean;
   updatedAt: string;
-  placeId?: string | null;
-  locationMode?: 'matched-place' | 'location-only';
+  entityId?: string | null;
+  entityKind?: 'place' | 'segment' | 'route' | null;
+  locationMode?: 'matched-place' | 'matched-entity' | 'location-only';
   counts: {
     confirm: number;
     resolved: number;
@@ -32,8 +33,10 @@ interface CivicRecord {
     updates: number;
   };
   meta: {
+    entityId?: string | null;
+    entityKind?: 'place' | 'segment' | 'route' | null;
     placeId?: string | null;
-    locationMode?: 'matched-place' | 'location-only';
+    locationMode?: 'matched-place' | 'matched-entity' | 'location-only';
     category?: string;
     location?: string;
     locationLabel?: string;
@@ -197,11 +200,15 @@ export default function CivicReports() {
             ) : (
               <div className="mt-6 grid gap-3 lg:grid-cols-2">
                 {recentCases.map(item => {
-                  const placeId = item.placeId ?? item.meta.placeId ?? null;
+                  const entityId =
+                    item.entityId ??
+                    item.meta.entityId ??
+                    item.meta.placeId ??
+                    null;
                   const locationMode =
                     item.locationMode ??
                     item.meta.locationMode ??
-                    (placeId ? 'matched-place' : 'location-only');
+                    (entityId ? 'matched-entity' : 'location-only');
                   const locationLabel =
                     item.meta.locationLabel || item.meta.location || 'Location not specified';
 
@@ -237,9 +244,9 @@ export default function CivicReports() {
                       </div>
 
                       <div className="mt-4 flex flex-wrap gap-3">
-                        {placeId && (
+                        {entityId && (
                           <Link
-                            to={'/civic-map/' + placeId}
+                            to={'/civic-map/' + entityId}
                             className="text-sm font-bold text-primary-700 underline underline-offset-2"
                           >
                             Place details
