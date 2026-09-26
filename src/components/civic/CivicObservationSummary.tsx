@@ -3,14 +3,14 @@ import { Clock3, ExternalLink } from 'lucide-react';
 import type { PlaceRegistryRecord } from '../../data/placeRegistry';
 import {
   isNotObservedValue,
-  observationQuestionSetForPlace,
+  observationQuestionSetForEntity,
   observationValueLabel,
   type ObservationAnswer,
 } from '../../data/structuredObservations';
 
 interface StoredObservation {
   id: number;
-  placeId: string;
+  entityId: string;
   familyId: string;
   questionSetId: string;
   observedAt: string;
@@ -63,10 +63,10 @@ const median = (values: number[]) => {
 };
 
 export default function CivicObservationSummary({
-  place,
+  entity,
   refreshKey = 0,
 }: {
-  place: PlaceRegistryRecord;
+  entity: PlaceRegistryRecord;
   refreshKey?: number;
 }) {
   const [observations, setObservations] = useState<StoredObservation[]>([]);
@@ -74,12 +74,12 @@ export default function CivicObservationSummary({
   const [asOf, setAsOf] = useState('');
   const [loading, setLoading] = useState(true);
   const [failed, setFailed] = useState(false);
-  const questionSet = useMemo(() => observationQuestionSetForPlace(place), [place]);
+  const questionSet = useMemo(() => observationQuestionSetForEntity(entity), [entity]);
 
   useEffect(() => {
     const controller = new AbortController();
 
-    void fetch('/api/civic-observation?placeId=' + encodeURIComponent(place.id), {
+    void fetch('/api/civic-observation?entityId=' + encodeURIComponent(entity.id), {
       signal: controller.signal,
     })
       .then(async response => {
@@ -102,7 +102,7 @@ export default function CivicObservationSummary({
       });
 
     return () => controller.abort();
-  }, [place.id, refreshKey]);
+  }, [entity.id, refreshKey]);
 
   const latestObservedAt = observations[0]?.observedAt;
   const freshnessInfo =
