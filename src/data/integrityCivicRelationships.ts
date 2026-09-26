@@ -230,7 +230,7 @@ export const integrityCivicNodeResolver: CivicIntelligenceNodeResolver =
       return {
         ref,
         label,
-        href: '/integrity?view=suppliers#procurement',
+        href: '/integrity#procurement',
         owner: 'integrity',
       };
     }
