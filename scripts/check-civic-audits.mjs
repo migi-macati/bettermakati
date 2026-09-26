@@ -45,7 +45,7 @@ for (const required of [
   'frozenEntityIds',
   'frozenAt',
   'inventoryClaim',
-  'verificationRequirement',
+  'targetEligibility',
 ]) {
   if (!campaign.campaign.properties.targetSet.required.includes(required)) {
     problems.push('Campaign targetSet is missing required field: ' + required);
@@ -55,6 +55,11 @@ for (const required of [
 for (const kind of ['place', 'segment', 'route']) {
   if (!campaign.campaign.properties.targetSet.properties.entityKind.values.includes(kind)) {
     problems.push('Campaign targetSet is missing entity kind: ' + kind);
+  }
+}
+for (const policy of ['verified-only', 'bounded-provisional-linear-allowed']) {
+  if (!campaign.campaign.properties.targetSet.properties.targetEligibility.values.includes(policy)) {
+    problems.push('Campaign targetSet is missing eligibility policy: ' + policy);
   }
 }
 
