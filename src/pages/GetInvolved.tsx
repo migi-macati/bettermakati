@@ -415,7 +415,10 @@ export default function GetInvolved() {
                 <Send className="h-4 w-4" />
                 {status === 'submitting' ? 'Sending…' : 'Send to BetterMakati'}
               </button>
-              <a href="tel:911" className="text-sm text-red-700 font-semibold">
+              <a
+                href="tel:911"
+                className="inline-flex min-h-11 items-center rounded-lg px-2 text-sm font-semibold text-error-700 underline underline-offset-2"
+              >
                 Emergency? Call 911
               </a>
             </div>
