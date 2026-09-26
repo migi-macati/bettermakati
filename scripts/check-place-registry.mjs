@@ -11,6 +11,8 @@ const civicAssetPage = await readFile('src/pages/CivicAsset.tsx', 'utf8');
 const civicNearbyReportPage = await readFile('src/pages/CivicNearbyReport.tsx', 'utf8');
 const civicNearbyReportForm = await readFile('src/components/civic/CivicNearbyReportForm.tsx', 'utf8');
 const civicApi = await readFile('api/civic.js', 'utf8');
+const civicReportApi = await readFile('api/civic-report.js', 'utf8');
+const civicReportsPage = await readFile('src/pages/CivicReports.tsx', 'utf8');
 const appSource = await readFile('src/App.tsx', 'utf8');
 const civicContributionForm = await readFile('src/components/civic/CivicContributionForm.tsx', 'utf8');
 const civicDiscussion = await readFile('src/components/civic/CivicDiscussion.tsx', 'utf8');
@@ -348,6 +350,58 @@ if (!appSource.includes('path="/civic-map/report" element={<CivicNearbyReport />
 
 if (!civicMapPage.includes("withBarangayScope('/civic-map/report', barangay?.slug)")) {
   problems.push('Civic Map must expose nearby reporting while preserving barangay scope.');
+}
+
+for (const marker of [
+  "parseTaggedJson(comment.body, 'civic-admin')",
+  "officialLifecycleStatus(adminEvents)",
+  "lifecycleLabel(evidenceStatus)",
+  "confirmationCount >= 2 ? 'community-corroborated' : 'unverified'",
+]) {
+  if (!civicApi.includes(marker)) {
+    problems.push('Civic case-detail lifecycle support is missing: ' + marker);
+  }
+}
+
+for (const marker of [
+  "item.meta?.placeId === assetId || item.meta?.assetId === assetId",
+  "setLifecycle(data.lifecycle ?? null)",
+  "Case lifecycle",
+  "Step {lifecycleStep(lifecycle.status)} of 6",
+  "'action-reported': 5",
+  "'community-verified-resolved': 6",
+]) {
+  if (!civicDiscussion.includes(marker)) {
+    problems.push('Civic place discussion lifecycle display is missing: ' + marker);
+  }
+}
+
+for (const marker of [
+  "meta.placeId || meta.assetId || null",
+  "meta.locationMode || (placeId ? 'matched-place' : 'location-only')",
+  "['forwarded', 'acknowledged', 'action-reported', 'community-verified-resolved']",
+  "evidenceStatus",
+  "adminEvents",
+]) {
+  if (!civicReportApi.includes(marker)) {
+    problems.push('Citywide civic lifecycle normalization is missing: ' + marker);
+  }
+}
+
+for (const marker of [
+  'Recent issue cases',
+  "item.placeId ?? item.meta.placeId ?? null",
+  "item.locationMode ??",
+  "to={'/civic-map/' + placeId}",
+  'Location only',
+  'Authority acknowledged',
+  'Action reported',
+  'Community verified resolved',
+  'Community corroboration and “appears resolved” responses are evidence signals',
+]) {
+  if (!civicReportsPage.includes(marker)) {
+    problems.push('Civic report lifecycle/relationship UI is missing: ' + marker);
+  }
 }
 
 if (problems.length) {
