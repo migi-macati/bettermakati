@@ -296,7 +296,7 @@ export default function CivicAsset() {
 
         <div className="mt-6">
           <CivicObservationSummary
-            place={place}
+            entity={place}
             refreshKey={observationRevision}
           />
         </div>
@@ -318,7 +318,7 @@ export default function CivicAsset() {
           </div>
 
           <CivicObservationForm
-            place={place}
+            entity={place}
             onSubmitted={() => setObservationRevision(value => value + 1)}
           />
         </div>
