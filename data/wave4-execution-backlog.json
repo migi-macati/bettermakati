@@ -1161,9 +1161,48 @@
       "id": "W4-5d",
       "phase": "Cross-linking and closure",
       "title": "Connect Integrity evidence across the site",
-      "status": "planned",
+      "status": "complete",
       "maximumScope": "Integrity relationships/backlinks only: procurement, projects, Accountability, audit findings, places when source-specific, Public Records and relevant BetterGov procurement/budget/benchmark resources.",
-      "stopWhen": "Supplier/audit/entity evidence is reachable from the underlying record and vice versa."
+      "stopWhen": "Supplier/audit/entity evidence is reachable from the underlying record and vice versa.",
+      "completedAt": "2026-09-26",
+      "implementationFiles": [
+        "src/data/civicIntelligenceRelationships.ts",
+        "src/data/ecosystemResources.ts",
+        "src/data/integrityCivicRelationships.ts",
+        "src/pages/Integrity.tsx",
+        "src/pages/Accountability.tsx",
+        "src/pages/ProjectsBudget.tsx",
+        "src/pages/PublicRecords.tsx",
+        "scripts/check-civic-intelligence-relationships.mjs",
+        "scripts/check-integrity-civic-relationships.mjs",
+        "package.json"
+      ],
+      "validation": {
+        "canonicalProjection": "The validated 110-edge Integrity provenance graph is projected into the shared Civic Intelligence model without replacing or duplicating the Integrity graph.",
+        "procurementContinuations": 21,
+        "procurementContinuationResource": "BetterGov PhilGEPS procurement browser",
+        "betterGovBoundary": "BetterGov Transparency/PhilGEPS resources are discovery or national-transparency context only. They do not establish Makati-specific Integrity facts or an exact PhilGEPS notice match.",
+        "publicRecordsRule": "Public Records backlinks are created only when an Integrity source URL exactly equals a canonical Public Records URL.",
+        "accountabilityOwnership": "Procurement projects and audit items remain canonical Accountability records; W4-5d creates no duplicate project identity.",
+        "bidirectionalNavigation": [
+          "Integrity award/finding -> Accountability record",
+          "Integrity award/finding -> exact matching Public Records source where available",
+          "Accountability project/audit record -> Integrity evidence",
+          "Projects & Budget procurement row -> Integrity evidence",
+          "Public Records exact source item -> Integrity evidence"
+        ],
+        "placeEdges": 0,
+        "placeBoundary": "Procurement location/barangay text is not converted into Place Registry links without an explicit canonical place ID or source-specific place relationship.",
+        "integrityRecordKinds": [
+          "procurement-award",
+          "procurement-contract",
+          "disclosure",
+          "audit-finding",
+          "audit-action",
+          "audit-resolution-trail"
+        ],
+        "guardrail": "No risk scoring, red flags, inferred ownership/conflict, wrongdoing label, fuzzy matching or guilt-by-association is introduced."
+      }
     },
     {
       "id": "W4-5e",
@@ -1214,11 +1253,11 @@
       "stopWhen": "Wave 4 is closed only to the extent supported by evidence, with future work reopened as specific capabilities rather than vague unfinished work."
     }
   ],
-  "current": "W4-5d",
+  "current": "W4-5e",
   "immediateNext": {
-    "id": "W4-5d",
-    "title": "Connect Integrity evidence across the site",
-    "maximumScope": "Integrity relationships/backlinks only: procurement, projects, Accountability, audit findings, places when source-specific, Public Records and relevant BetterGov procurement/budget/benchmark resources."
+    "id": "W4-5e",
+    "title": "Connect Reports to their underlying records",
+    "maximumScope": "Report-related-record modules and backlinks only, including relevant BetterGov/BetterLGU continuation links when they deepen the report’s evidence or comparison context."
   },
   "carriedForward": [
     {
