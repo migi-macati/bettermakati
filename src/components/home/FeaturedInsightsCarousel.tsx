@@ -1,11 +1,12 @@
 import { ArrowLeft, ArrowRight, Pause, Play } from 'lucide-react';
 import { Link } from 'react-router';
 import useCarousel from '../../hooks/useCarousel';
-import { reports } from '../../data/reports';
+import { publicationReports } from '../../data/reports';
+import ReportTeaser from '../reports/ReportTeaser';
 
 export default function FeaturedInsightsCarousel() {
-  const carousel = useCarousel(reports.length, 7000);
-  const report = reports[carousel.index];
+  const carousel = useCarousel(publicationReports.length, 7000);
+  const report = publicationReports[carousel.index];
 
   return (
     <section
@@ -30,30 +31,16 @@ export default function FeaturedInsightsCarousel() {
           </Link>
         </div>
 
-        <article className="mt-5 rounded-2xl border border-primary-200 bg-[#fffdf8] p-5 md:p-7">
-          <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
-            {report.date}
-          </div>
-          <h3 className="mt-2 max-w-5xl text-2xl font-extrabold leading-tight tracking-tight text-gray-950 md:text-3xl">
-            {report.headline}
-          </h3>
-          <p className="mt-3 max-w-4xl text-sm leading-relaxed text-gray-600 md:text-base">
-            {report.subheadline}
-          </p>
-          <Link
-            to={`/reports/${report.slug}`}
-            className="mt-5 inline-flex items-center gap-1.5 text-sm font-bold text-primary-700"
-          >
-            Read more <ArrowRight className="h-4 w-4" aria-hidden="true" />
-          </Link>
-        </article>
+        <div className="mt-5">
+          <ReportTeaser report={report} variant="carousel" />
+        </div>
 
         <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
           <span
             className="text-sm text-gray-600"
             aria-live={carousel.rotating ? 'off' : 'polite'}
           >
-            {carousel.index + 1} of {reports.length}
+            {carousel.index + 1} of {publicationReports.length}
           </span>
           <div className="flex items-center gap-2">
             {!carousel.reducedMotion && (
