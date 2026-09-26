@@ -8,6 +8,7 @@ import {
   FileText,
   Gavel,
   Landmark,
+  MapPin,
   Megaphone,
   Newspaper,
   Radio,
@@ -31,6 +32,7 @@ import {
   cityMonitorTypeLabel,
   type CityMonitorType,
 } from '../data/cityMonitor';
+import { placeRegistryById } from '../data/placeRegistry';
 
 interface MonitorRun {
   checkedAt: string;
@@ -116,10 +118,15 @@ export default function CityMonitor() {
     const needle = query.trim().toLowerCase();
     return cityMonitorRecords.filter(record => {
       const streamMatch = stream === 'all' || record.type === stream;
+      const linkedPlaceNames = (record.placeIds ?? [])
+        .map(placeId => placeRegistryById.get(placeId)?.name)
+        .filter(Boolean);
       const text = [
         record.title,
         record.summary,
         record.referenceNo,
+        record.location,
+        ...linkedPlaceNames,
         cityMonitorTypeLabel[record.type],
       ]
         .filter(Boolean)
@@ -310,6 +317,9 @@ export default function CityMonitor() {
         <div className="mt-6 space-y-4">
           {visibleRecords.map(record => {
             const Icon = typeIcon[record.type];
+            const linkedPlaces = (record.placeIds ?? [])
+              .map(placeId => placeRegistryById.get(placeId))
+              .filter((place): place is NonNullable<typeof place> => Boolean(place));
             return (
               <article key={record.id} className="rounded-2xl border border-gray-200 bg-[#fffdf8] p-6">
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
@@ -330,6 +340,20 @@ export default function CityMonitor() {
                 {record.referenceNo && (
                   <div className="mt-3 text-sm text-gray-600">
                     Reference: <strong>{record.referenceNo}</strong>
+                  </div>
+                )}
+                {linkedPlaces.length > 0 && (
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {linkedPlaces.map(place => (
+                      <Link
+                        key={place.id}
+                        to={'/civic-map/' + place.id}
+                        className="inline-flex items-center gap-1 rounded-full border border-primary-100 bg-primary-50 px-3 py-1.5 text-xs font-bold text-primary-800"
+                      >
+                        <MapPin className="h-3.5 w-3.5" />
+                        {place.name}
+                      </Link>
+                    ))}
                   </div>
                 )}
                 <div className="mt-5 flex flex-wrap gap-3">
