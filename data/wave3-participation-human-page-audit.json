@@ -1,0 +1,172 @@
+{
+  "schemaVersion": 1,
+  "auditedAt": "2026-09-26",
+  "workstream": "W3R-11a — Human page audit on redesigned participation",
+  "scope": [
+    "/participate",
+    "/get-involved",
+    "/civic-map",
+    "/civic-map/report",
+    "/civic-map/:assetId",
+    "/civic-map/reports",
+    "/civic-map/audits/park-accessibility-2026",
+    "/civic-map/audits/park-accessibility-2026/results"
+  ],
+  "method": "Manual source-level UX/content review of the current page implementations and their linked participation states. This step does not claim browser/device QA; dedicated interaction, mobile and accessibility testing remains in later W3R-11 steps.",
+  "auditCriteria": [
+    "The page starts from a recognizable user task rather than explaining why BetterMakati exists.",
+    "Official government participation is distinguishable from BetterMakati/community workflow.",
+    "Public-realm reporting, observations and improvement proposals are distinct actions.",
+    "Emergency cases are kept out of the BetterMakati queue.",
+    "Barangay/place context is carried where the route supports it.",
+    "Failure, empty, duplicate and fallback states do not overstate successful submission or government receipt.",
+    "Ratings-first language and generic star-score framing are absent.",
+    "Lifecycle wording distinguishes submission, review, referral, acknowledgement, action and documented resolution.",
+    "Live outputs expose dates/sample counts/scope instead of presenting unsupported representative-looking scores.",
+    "The page avoids repeated independence/guardrail sermons where a short factual boundary is sufficient."
+  ],
+  "summary": {
+    "reviewed": 7,
+    "partial": 1,
+    "blockingDefects": 0,
+    "followUpFindings": 3
+  },
+  "routes": [
+    {
+      "path": "/participate",
+      "label": "Participation",
+      "status": "reviewed",
+      "strengths": [
+        "Task-first entry answers What do you want to do? and exposes official consultation, local problem reporting, condition observations, corrections, sources, ideas and volunteering.",
+        "Official participation is a separate section from BetterMakati community input.",
+        "Barangay scope is carried into the nearby-report route when present.",
+        "The current civic-audit pilot is exposed as a concrete participation action rather than generic engagement copy."
+      ],
+      "gaps": [
+        "The official-opportunity index can still be empty because there is no complete authoritative citywide consultation calendar; the page correctly routes users to the official Makati events source rather than inventing coverage."
+      ],
+      "disposition": "Keep current UX. Treat opportunity-source completeness as an ongoing data constraint, not a redesign defect."
+    },
+    {
+      "path": "/get-involved",
+      "label": "Get Involved",
+      "status": "reviewed",
+      "strengths": [
+        "Six concrete general contribution types remain available: proposal, idea, source, correction, volunteer and contact.",
+        "Barangay query context is read into the form when a valid BetterBarangay is supplied.",
+        "Duplicate, native-success, fallback and error states are distinct.",
+        "Successful native submissions can return public tracking; fallback generation is not described as successful submission.",
+        "The form warns against sensitive personal data and distinguishes a BetterMakati submission from an official City Government case.",
+        "The live civic-audit path is visible without replacing the general contribution form."
+      ],
+      "gaps": [],
+      "disposition": "Keep current UX."
+    },
+    {
+      "path": "/civic-map",
+      "label": "Civic Map",
+      "status": "reviewed",
+      "strengths": [
+        "The page is registry-first: places, segments and routes are separate entity forms.",
+        "Generic ratings are absent; the primary jobs are finding a civic record, reporting a problem, suggesting an improvement and helping document Makati.",
+        "Near me requests device location only after an explicit user action and does not auto-select a place.",
+        "Emergency routing to 911 remains visually separate from community reporting.",
+        "Barangay scope filters registry records and is preserved through reporting/place links.",
+        "The park accessibility audit appears as a bounded live participation campaign."
+      ],
+      "gaps": [
+        "Registry completeness remains uneven for provisional linear infrastructure such as street/sidewalk segments; the UI already labels provisional records instead of claiming complete citywide coverage."
+      ],
+      "disposition": "Keep current UX; registry coverage is a data-completeness workstream rather than a page-design blocker."
+    },
+    {
+      "path": "/civic-map/report",
+      "label": "Report something near me",
+      "status": "reviewed",
+      "strengths": [
+        "Three location paths are clear: device location, registry search and manual coordinates.",
+        "Nearby matches are suggestions only and are limited to verified physical places.",
+        "Segments/routes require deliberate search rather than being proximity-matched as destinations.",
+        "Location-denied and unavailable states provide a usable search/manual fallback.",
+        "Location-only reporting remains possible when no canonical entity matches.",
+        "The form keeps emergency categories out of normal submission and retains duplicate-case handling."
+      ],
+      "gaps": [],
+      "disposition": "Keep current UX."
+    },
+    {
+      "path": "/civic-map/:assetId",
+      "label": "Civic place / segment / route detail",
+      "status": "reviewed",
+      "strengths": [
+        "The page separates canonical information, structured observations, community cases and report/suggest actions.",
+        "Verification/access labels and source provenance are visible without turning the page into a methodology explainer.",
+        "Structured observations remain distinct from problem cases and proposals.",
+        "Related accountability records use explicit canonical relationships.",
+        "Campaign-scoped observation entry works from the park accessibility audit."
+      ],
+      "gaps": [],
+      "disposition": "Keep current UX."
+    },
+    {
+      "path": "/civic-map/reports",
+      "label": "Civic Map reports",
+      "status": "partial",
+      "strengths": [
+        "Recent cases expose evidence status separately from GitHub open/closed state.",
+        "Community appears-resolved signals are visibly separate from lifecycle resolution.",
+        "Referral candidates are presented as BetterMakati review candidates, not as automatically forwarded government cases.",
+        "The six lifecycle states are stated in the correct evidence order.",
+        "Feed failure has a distinct retry state."
+      ],
+      "gaps": [
+        "The page is still dominated by legacy seven-day and thirty-day submission/backlog counts. W3R-10a/10b redefined the feedback loop around review, routing, acknowledgement, action, resolution, freshness and audit coverage; the new W3R-10c raw outcome fields are not yet used here.",
+        "The heading 'Proposals with community support' still promotes a three-support pilot threshold as a primary monthly outcome even though the redesigned metric doctrine explicitly avoids popularity/volume as the main feedback loop.",
+        "No W3R-10b publication-threshold suppression is applied because W3R-10c intentionally added instrumentation only. The page must not add lifecycle rates/medians until those threshold rules are implemented."
+      ],
+      "disposition": "Follow-up required after QA planning: redesign the reports page around threshold-gated outcome evidence while retaining exact recent-case records and referral workflow."
+    },
+    {
+      "path": "/civic-map/audits/park-accessibility-2026",
+      "label": "Public Park Accessibility Check",
+      "status": "reviewed",
+      "strengths": [
+        "The campaign states its 13-park target set, period, minimum observations and four directly observable questions.",
+        "It asks contributors to record only what they actually checked and permits not observed responses.",
+        "Each target routes directly to the canonical place observation form.",
+        "No score, grade or ranking language appears."
+      ],
+      "gaps": [],
+      "disposition": "Keep current UX."
+    },
+    {
+      "path": "/civic-map/audits/park-accessibility-2026/results",
+      "label": "Public Park Accessibility Check — live output",
+      "status": "reviewed",
+      "strengths": [
+        "Live output shows x/y coverage, observation count, latest observation date and question-level sample sizes/distributions.",
+        "Every frozen target remains listed, including targets with no observations.",
+        "No composite score or ranking is derived.",
+        "A failed live fetch is shown as unavailable rather than as zero measured coverage."
+      ],
+      "gaps": [
+        "The visible 13 target denominator is hard-coded in two cards instead of reading targetCount from the API/campaign object. It is correct for this frozen pilot but should be made data-driven before this results component is reused for another campaign."
+      ],
+      "disposition": "Non-blocking maintainability follow-up; current pilot output is factually correct."
+    }
+  ],
+  "crossPageFindings": {
+    "taskClarity": "Pass. The redesigned surfaces consistently start with report, observe, suggest, correct, source or volunteer actions.",
+    "officialVsCommunityBoundary": "Pass. BetterMakati submissions/referrals are not presented as automatic City Government cases or acknowledgements.",
+    "ratingsRetirement": "Pass. The audited pages contain no star-rating or generic score workflow.",
+    "placeRegistryReuse": "Pass. Public-realm journeys resolve through canonical civic records and preserve explicit location/entity state.",
+    "failureHonesty": "Pass. Submission/feed/audit failures use unavailable/fallback states rather than fake zero-success or zero-coverage values.",
+    "feedbackLoop": "Partial. Civic Map reports still use the previous volume-heavy weekly/monthly presentation and should be reconciled with W3R-10 outcome/publication policy before new headline rates are introduced.",
+    "mobileAccessibility": "Not assessed here; reserved for W3R-11e."
+  },
+  "nextStep": {
+    "id": "W3R-11b",
+    "title": "Add Place Registry integrity audit",
+    "scope": "Guard duplicate IDs, barangays, coordinates, lifecycle states, provenance and broken relationships. No browser testing."
+  }
+}
