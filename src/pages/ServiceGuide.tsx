@@ -20,6 +20,7 @@ import { officesForAgency } from '../data/governmentServiceOffices';
 import { serviceGuideDetails } from '../data/serviceGuideDetails';
 import { placeRegistryById } from '../data/placeRegistry';
 import NationalServiceHandoff from '../components/services/NationalServiceHandoff';
+import { legislationForService } from '../data/legislationCivicRelationships';
 
 const mapsUrl = (query: string) =>
   'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(query);
@@ -387,6 +388,7 @@ export default function ServiceGuide() {
     item.level === 'National' &&
     item.nationalIntegration?.betterGov.status === 'listed' &&
     !detail;
+  const relatedLegislation = legislationForService(item.id);
 
   return (
     <>
@@ -681,6 +683,37 @@ export default function ServiceGuide() {
           </div>
         )}
       </Section>
+
+      {relatedLegislation.length > 0 && (
+        <Section className="border-y border-primary-100 bg-[#f5f8f2]">
+          <div className="section-eyebrow">Related local legislation</div>
+          <Heading level={2}>Historical measures connected to this service</Heading>
+          <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600">
+            These records identify measures that explicitly affected this service at the time stated. They do not establish the service’s current fee, rule or legal effect.
+          </p>
+          <div className="mt-5 space-y-3">
+            {relatedLegislation.map(item =>
+              item.node ? (
+                <Link
+                  key={item.relationship.id}
+                  to={item.node.href}
+                  className="block rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300"
+                >
+                  <div className="font-extrabold text-gray-950">
+                    {item.node.label}
+                  </div>
+                  <div className="mt-2 text-sm leading-relaxed text-gray-600">
+                    {item.relationship.evidence.basis === 'source-stated' ||
+                    item.relationship.evidence.basis === 'official-cross-reference'
+                      ? item.relationship.evidence.statement
+                      : item.relationship.evidence.note}
+                  </div>
+                </Link>
+              ) : null
+            )}
+          </div>
+        </Section>
+      )}
 
       {item.level === 'National' && item.nationalIntegration ? (
         <NationalServiceHandoff
