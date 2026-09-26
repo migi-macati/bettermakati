@@ -1788,12 +1788,21 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Instrument redesigned participation outcomes",
       "maximumScope": "API/data instrumentation only for fields defined in W3R-10a/10b. No headline aggregates.",
-      "status": "next",
+      "status": "complete",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
       ],
-      "stopWhen": "API/data instrumentation only for fields defined in W3R-10a/10b. No headline aggregates."
+      "stopWhen": "API/data instrumentation only for fields defined in W3R-10a/10b. No headline aggregates.",
+      "completedAt": "2026-09-26",
+      "commits": [
+        "bc2004a3647400abf1c141565c325c6827ea6ffd",
+        "a4b5259113be3aec185cc54e8e1bf70417b84607",
+        "004ca04fee2da5463b673efd1e774190cddc551c",
+        "27e24fd178f643f56fd9d2d9191a8b2bce4aced6",
+        "f25123537832ebda5bc07b6abdbb91d5c7b0d8b0",
+        "2edf821ae22ca7ec5564a8c35f5f99123698ebb1"
+      ]
     },
     {
       "id": "W3R-11a",
@@ -1802,7 +1811,7 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Run human page audit on redesigned participation",
       "maximumScope": "Participation, Get Involved, Civic Map/place pages and reports only.",
-      "status": "planned",
+      "status": "next",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
@@ -2019,9 +2028,10 @@
       "W3R-9d",
       "W3R-9e",
       "W3R-10a",
-      "W3R-10b"
+      "W3R-10b",
+      "W3R-10c"
     ],
-    "current": "W3R-10c",
+    "current": "W3R-11a",
     "capabilityDispositionAuditFile": "data/wave3-capability-disposition-audit.json"
   },
   "knownCoverageGaps": {
