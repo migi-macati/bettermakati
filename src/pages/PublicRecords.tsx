@@ -526,7 +526,14 @@ export default function PublicRecords() {
                     )}
                   </div>
 
-                  <h3 className="mt-3 text-lg font-extrabold leading-snug text-gray-950">{record.title}</h3>
+                  <h3 className="mt-3 text-lg font-extrabold leading-snug text-gray-950">
+                    <Link
+                      to={'/records/' + record.id}
+                      className="hover:text-primary-700 hover:underline"
+                    >
+                      {record.title}
+                    </Link>
+                  </h3>
                   <p className="mt-1 text-sm font-semibold text-gray-600">
                     {record.publisher}{record.period ? ' · ' + record.period : ''}
                   </p>
@@ -546,9 +553,12 @@ export default function PublicRecords() {
                 </div>
 
                 <div className="flex shrink-0 flex-wrap gap-2">
-                  {record.relatedHref && (
-                    <Link to={record.relatedHref} className="brand-btn-secondary">See context</Link>
-                  )}
+                  <Link
+                    to={'/records/' + record.id}
+                    className="brand-btn-secondary"
+                  >
+                    View record
+                  </Link>
                   {integrityLinks.length > 0 && (
                     <Link
                       to={integrityLinks[0]?.node?.href ?? '/integrity'}
