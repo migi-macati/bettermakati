@@ -3,7 +3,7 @@ import type { CivicAssetType as RegistryAssetType } from './placeRegistry';
 export { civicAssets, civicAssetTypeLabels } from './placeRegistry';
 export type { CivicAccessClass, CivicAsset, CivicAssetType } from './placeRegistry';
 
-export type CivicContributionKind = 'report' | 'proposal' | 'review' | 'update';
+export type CivicContributionKind = 'report' | 'proposal' | 'update';
 
 export interface CivicCriterion {
   id: string;
