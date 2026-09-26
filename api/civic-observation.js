@@ -429,8 +429,9 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'placeId is required.' });
     }
     try {
+      const asOf = new Date().toISOString();
       const thread = await findObservationThread(placeId, token);
-      if (!thread) return res.status(200).json({ observations: [] });
+      if (!thread) return res.status(200).json({ observations: [], asOf });
       const comments = await fetchComments(token, thread.number);
       const observations = comments
         .map(comment => {
@@ -448,6 +449,7 @@ export default async function handler(req, res) {
       return res.status(200).json({
         placeId,
         threadUrl: thread.html_url,
+        asOf,
         observations,
       });
     } catch {
