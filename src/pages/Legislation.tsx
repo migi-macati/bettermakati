@@ -1,7 +1,8 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router';
 import {
   BookOpen,
+  ChevronDown,
   ExternalLink,
   FileSearch,
   FileText,
@@ -14,6 +15,7 @@ import LastReviewed from '../components/ui/LastReviewed';
 import SharePage from '../components/ui/SharePage';
 import { openCongressMakatiRecords } from '../data/openCongressMakati';
 import {
+  localLegislationById,
   localLegislationRecords,
   type LocalMeasureType,
 } from '../data/localLegislation';
@@ -22,6 +24,47 @@ const officialArchive =
   'https://www.makati.gov.ph/content/resolutions-and-ordinances/author';
 const charterUrl =
   'https://lawphil.net/statutes/repacts/ra1995/ra_7854_1995.html';
+const browserIndexUrl = '/data/makati-legislation-index.json';
+const visibleResultLimit = 60;
+
+interface BrowserLegislationRecord {
+  id: string;
+  archiveLegislationId: string;
+  measureType: LocalMeasureType;
+  officialNumber: string;
+  display: string;
+  seriesYear: number | null;
+  title: string;
+  officialDocumentUrl: string | null;
+  officialDocumentStatus: string | null;
+}
+
+interface BrowserLegislationIndex {
+  schemaVersion: number;
+  generatedAt: string;
+  sourceDate: string;
+  archiveUrl: string | null;
+  total: number;
+  countByType: Partial<Record<LocalMeasureType, number>>;
+  years: number[];
+  records: BrowserLegislationRecord[];
+}
+
+const fallbackRecords: BrowserLegislationRecord[] = localLegislationRecords.map(
+  record => ({
+    id: record.id,
+    archiveLegislationId: '',
+    measureType: record.measureType,
+    officialNumber: record.reference.officialNumber,
+    display: record.reference.display,
+    seriesYear: record.reference.seriesYear ?? null,
+    title: record.title,
+    officialDocumentUrl:
+      record.documents.find(document => document.kind === 'official-text')?.url ??
+      null,
+    officialDocumentStatus: null,
+  })
+);
 
 const measureFilters: Array<{
   value: 'all' | LocalMeasureType;
@@ -32,38 +75,88 @@ const measureFilters: Array<{
   { value: 'resolution', label: 'Resolutions' },
 ];
 
-const approvalDateFor = (record: (typeof localLegislationRecords)[number]) =>
-  record.lifecycle.find(event => event.date)?.date;
-
 export default function Legislation() {
   const [query, setQuery] = useState('');
   const [measureType, setMeasureType] = useState<'all' | LocalMeasureType>('all');
+  const [year, setYear] = useState('all');
+  const [archiveIndex, setArchiveIndex] = useState<BrowserLegislationIndex | null>(
+    null
+  );
+  const [archiveError, setArchiveError] = useState(false);
+  const [expandedRecordId, setExpandedRecordId] = useState<string | null>(null);
 
-  const filteredRecords = useMemo(() => {
+  useEffect(() => {
+    let cancelled = false;
+
+    fetch(browserIndexUrl)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Unable to load legislation index.');
+        }
+        return response.json() as Promise<BrowserLegislationIndex>;
+      })
+      .then(index => {
+        if (!cancelled) setArchiveIndex(index);
+      })
+      .catch(() => {
+        if (!cancelled) setArchiveError(true);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const records = archiveIndex?.records ?? fallbackRecords;
+
+  const resultSet = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
 
-    return localLegislationRecords.filter(record => {
+    const matches = records.filter(record => {
       if (measureType !== 'all' && record.measureType !== measureType) return false;
+      if (year !== 'all' && String(record.seriesYear ?? '') !== year) return false;
       if (!normalizedQuery) return true;
 
+      const seed = localLegislationById.get(record.id);
       const haystack = [
-        record.reference.display,
-        record.reference.officialNumber,
+        record.display,
+        record.officialNumber,
         record.title,
-        ...record.topics,
+        ...(seed?.topics ?? []),
       ]
         .join(' ')
         .toLowerCase();
 
       return haystack.includes(normalizedQuery);
     });
-  }, [query, measureType]);
+
+    matches.sort(
+      (a, b) =>
+        (b.seriesYear ?? 0) - (a.seriesYear ?? 0) ||
+        b.officialNumber.localeCompare(a.officialNumber, undefined, {
+          numeric: true,
+        })
+    );
+
+    return {
+      total: matches.length,
+      visible: matches.slice(0, visibleResultLimit),
+    };
+  }, [records, query, measureType, year]);
+
+  const indexedTotal = archiveIndex?.total ?? fallbackRecords.length;
+  const ordinanceCount =
+    archiveIndex?.countByType.ordinance ??
+    fallbackRecords.filter(record => record.measureType === 'ordinance').length;
+  const resolutionCount =
+    archiveIndex?.countByType.resolution ??
+    fallbackRecords.filter(record => record.measureType === 'resolution').length;
 
   return (
     <>
       <SEO
         title="Legislation"
-        description="Search BetterMakati-indexed ordinances and resolutions, then open the official Makati source record."
+        description="Search BetterMakati-indexed Makati ordinances and resolutions, inspect the local record, then open the official source."
       />
 
       <Section className="bg-[#fffdf8]">
@@ -78,20 +171,35 @@ export default function Legislation() {
           <SharePage title="Makati Legislation | BetterMakati" />
         </div>
         <LastReviewed />
-        <div className="mt-5">
+
+        <div className="mt-5 flex flex-wrap gap-3">
           <Link to="/city-monitor" className="brand-btn-primary">
-            Track legislative lifecycle in City Monitor
+            Track legislative lifecycle
           </Link>
+          <a
+            href={officialArchive}
+            target="_blank"
+            rel="noreferrer"
+            className="brand-btn-secondary"
+          >
+            Official Makati archive <ExternalLink className="h-4 w-4" />
+          </a>
         </div>
 
         <div
-          className="mt-7 max-w-4xl rounded-2xl border border-primary-100 bg-white p-5"
+          className="mt-7 max-w-5xl rounded-2xl border border-primary-100 bg-white p-5"
           role="search"
           aria-label="Search BetterMakati legislation index"
         >
-          <label htmlFor="legislation-search" className="font-extrabold text-gray-950">
-            Search local records
-          </label>
+          <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+            <label htmlFor="legislation-search" className="font-extrabold text-gray-950">
+              Search local records
+            </label>
+            <span className="text-sm font-bold text-gray-500">
+              {indexedTotal.toLocaleString()} indexed
+            </span>
+          </div>
+
           <div className="relative mt-3">
             <Search
               className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400"
@@ -107,15 +215,15 @@ export default function Legislation() {
             />
           </div>
 
-          <div className="mt-4 flex flex-wrap gap-2" aria-label="Filter by record type">
+          <div className="mt-4 flex flex-wrap items-center gap-2">
             {measureFilters.map(filter => {
               const active = measureType === filter.value;
               const count =
                 filter.value === 'all'
-                  ? localLegislationRecords.length
-                  : localLegislationRecords.filter(
-                      record => record.measureType === filter.value
-                    ).length;
+                  ? indexedTotal
+                  : filter.value === 'ordinance'
+                    ? ordinanceCount
+                    : resolutionCount;
 
               return (
                 <button
@@ -129,11 +237,42 @@ export default function Legislation() {
                       : 'brand-chip'
                   }
                 >
-                  {filter.label} ({count})
+                  {filter.label} ({count.toLocaleString()})
                 </button>
               );
             })}
+
+            {archiveIndex?.years.length ? (
+              <label className="relative ml-0 sm:ml-2">
+                <span className="sr-only">Filter by year</span>
+                <select
+                  value={year}
+                  onChange={event => setYear(event.target.value)}
+                  className="appearance-none rounded-full border border-gray-300 bg-white py-2 pl-4 pr-9 text-sm font-bold text-gray-700 outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-200"
+                >
+                  <option value="all">All years</option>
+                  {archiveIndex.years.map(item => (
+                    <option key={item} value={String(item)}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+                <ChevronDown
+                  className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500"
+                  aria-hidden="true"
+                />
+              </label>
+            ) : null}
           </div>
+
+          {!archiveIndex && !archiveError ? (
+            <p className="mt-4 text-sm text-gray-500">Loading full archive…</p>
+          ) : null}
+          {archiveError ? (
+            <p className="mt-4 text-sm text-gray-600">
+              Showing the verified local set. The full archive index is unavailable.
+            </p>
+          ) : null}
         </div>
       </Section>
 
@@ -144,15 +283,20 @@ export default function Legislation() {
             <Heading level={2}>Local ordinances & resolutions</Heading>
           </div>
           <div className="text-sm font-bold text-gray-600">
-            {filteredRecords.length} {filteredRecords.length === 1 ? 'record' : 'records'}
+            {resultSet.total.toLocaleString()}{' '}
+            {resultSet.total === 1 ? 'record' : 'records'}
           </div>
         </div>
 
-        {filteredRecords.length ? (
+        {resultSet.visible.length ? (
           <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-2">
-            {filteredRecords.map(record => {
-              const approvalDate = approvalDateFor(record);
-              const sourceDocument = record.documents[0];
+            {resultSet.visible.map(record => {
+              const seed = localLegislationById.get(record.id);
+              const expanded = expandedRecordId === record.id;
+              const sourceUrl =
+                record.officialDocumentUrl ||
+                archiveIndex?.archiveUrl ||
+                officialArchive;
 
               return (
                 <article
@@ -162,11 +306,11 @@ export default function Legislation() {
                   <div className="flex flex-wrap items-center gap-2 text-xs font-bold uppercase tracking-[0.08em] text-gray-500">
                     <span>{record.measureType}</span>
                     <span aria-hidden="true">·</span>
-                    <span>{record.reference.officialNumber}</span>
-                    {approvalDate ? (
+                    <span>{record.officialNumber}</span>
+                    {record.seriesYear ? (
                       <>
                         <span aria-hidden="true">·</span>
-                        <span>{approvalDate}</span>
+                        <span>{record.seriesYear}</span>
                       </>
                     ) : null}
                   </div>
@@ -175,9 +319,9 @@ export default function Legislation() {
                     {record.title}
                   </h3>
 
-                  {record.topics.length ? (
+                  {seed?.topics.length ? (
                     <div className="mt-4 flex flex-wrap gap-2">
-                      {record.topics.map(topic => (
+                      {seed.topics.map(topic => (
                         <span key={topic} className="brand-chip">
                           {topic}
                         </span>
@@ -185,16 +329,49 @@ export default function Legislation() {
                     </div>
                   ) : null}
 
-                  {sourceDocument ? (
+                  <div className="mt-5 flex flex-wrap gap-x-4 gap-y-2 text-sm font-bold">
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setExpandedRecordId(expanded ? null : record.id)
+                      }
+                      className="text-primary-700 underline underline-offset-2"
+                      aria-expanded={expanded}
+                    >
+                      {expanded ? 'Hide record' : 'View record'}
+                    </button>
                     <a
-                      href={sourceDocument.url}
+                      href={sourceUrl}
                       target="_blank"
                       rel="noreferrer"
-                      className="mt-5 inline-flex items-center gap-1 text-sm font-bold text-primary-700 underline underline-offset-2"
+                      className="inline-flex items-center gap-1 text-primary-700 underline underline-offset-2"
                     >
-                      Open official source record
+                      {record.officialDocumentUrl
+                        ? 'Official document'
+                        : 'Official archive'}
                       <ExternalLink className="h-3.5 w-3.5" />
                     </a>
+                  </div>
+
+                  {expanded ? (
+                    <dl className="mt-5 grid grid-cols-1 gap-3 border-t border-gray-200 pt-4 text-sm sm:grid-cols-2">
+                      <div>
+                        <dt className="font-bold text-gray-500">BetterMakati ID</dt>
+                        <dd className="mt-1 break-words text-gray-900">{record.id}</dd>
+                      </div>
+                      <div>
+                        <dt className="font-bold text-gray-500">Official reference</dt>
+                        <dd className="mt-1 text-gray-900">{record.display}</dd>
+                      </div>
+                      {record.archiveLegislationId ? (
+                        <div className="sm:col-span-2">
+                          <dt className="font-bold text-gray-500">Makati archive ID</dt>
+                          <dd className="mt-1 break-all font-mono text-xs text-gray-700">
+                            {record.archiveLegislationId}
+                          </dd>
+                        </div>
+                      ) : null}
+                    </dl>
                   ) : null}
                 </article>
               );
@@ -206,20 +383,12 @@ export default function Legislation() {
           </div>
         )}
 
-        <div className="mt-6 rounded-2xl border border-gray-200 bg-white p-5">
-          <h3 className="font-extrabold text-gray-950">Search the official archive</h3>
-          <p className="mt-1 text-sm text-gray-600">
-            Use the City Government of Makati archive for records not yet indexed here.
+        {resultSet.total > visibleResultLimit ? (
+          <p className="mt-5 text-sm text-gray-600">
+            Showing the first {visibleResultLimit} matches. Refine the search or year
+            filter to narrow the list.
           </p>
-          <a
-            href={officialArchive}
-            target="_blank"
-            rel="noreferrer"
-            className="brand-btn-secondary mt-4"
-          >
-            Official Makati archive <ExternalLink className="h-4 w-4" />
-          </a>
-        </div>
+        ) : null}
       </Section>
 
       <Section className="bg-white">
