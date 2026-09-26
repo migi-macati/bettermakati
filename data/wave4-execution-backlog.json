@@ -1249,9 +1249,29 @@
       "id": "W4-5f",
       "phase": "Cross-linking and closure",
       "title": "Extend global Search to Civic Intelligence",
-      "status": "planned",
+      "status": "complete",
       "maximumScope": "Search indexing only for canonical indicators, legislation, integrity entities and reports; include deliberate ecosystem handoffs without cloning BetterGov/BetterLGU records into BetterMakati search.",
-      "stopWhen": "Search returns one canonical destination per entity and avoids duplicate title-only records."
+      "stopWhen": "Search returns one canonical destination per entity and avoids duplicate title-only records.",
+      "completedAt": "2026-09-26",
+      "implementationFiles": [
+        "src/data/searchIndex.ts",
+        "src/components/home/ServiceSearch.tsx",
+        "scripts/check-civic-intelligence-search.mjs",
+        "package.json"
+      ],
+      "validation": {
+        "staticCanonicalRecords": {
+          "statisticsIndicators": 30,
+          "integrityEntities": 17,
+          "featuredReports": 5
+        },
+        "legislation": "The 11,355-record canonical legislation index remains lazy-loaded only for site Search queries of at least three characters in All or Records.",
+        "canonicalIdentity": "SearchItem supports canonicalKey. Civic Intelligence records and lazy legislation use typed stable keys; the result combiner removes duplicate canonical keys before scoring and display.",
+        "destinationRule": "Statistics indicators resolve to existing Statistics section anchors, Integrity entities to the supplier evidence view, reports to their canonical article, and legislation to /legislation?record=<canonical ID>.",
+        "recordLabels": "Record results display their category such as Statistic, Supplier, Joint venture, Report or Legislation rather than the generic Record badge.",
+        "ecosystemBoundary": "BetterGov national-service search and BetterLGU remain explicit external no-result handoffs. Their records are not copied into the BetterMakati search index.",
+        "antiDuplication": "The static index does not import LocalLegislationRecord data or ecosystem-resource records, and canonical dedupe is independent of title similarity."
+      }
     },
     {
       "id": "W4-5g",
@@ -1286,11 +1306,11 @@
       "stopWhen": "Wave 4 is closed only to the extent supported by evidence, with future work reopened as specific capabilities rather than vague unfinished work."
     }
   ],
-  "current": "W4-5f",
+  "current": "W4-5g",
   "immediateNext": {
-    "id": "W4-5f",
-    "title": "Extend global Search to Civic Intelligence",
-    "maximumScope": "Search indexing only for canonical indicators, legislation, integrity entities and reports; include deliberate ecosystem handoffs without cloning BetterGov/BetterLGU records into BetterMakati search."
+    "id": "W4-5g",
+    "title": "Integrate Public Records and documents",
+    "maximumScope": "Public Records/document viewer integration only for new Wave 4 source types."
   },
   "carriedForward": [
     {
