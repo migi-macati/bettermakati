@@ -7,6 +7,7 @@ import {
   ExternalLink,
   FileSearch,
   Landmark,
+  MapPin,
   ReceiptText,
   Search,
   ShieldCheck,
@@ -25,6 +26,7 @@ import {
   accountabilityStatusLabel,
 } from '../data/accountability';
 import type { AccountabilityEntry } from '../data/civicTypes';
+import { placesRelatedTo } from '../data/placeRegistry';
 
 const money = (millions?: number) => {
   if (millions === undefined) return '—';
@@ -708,6 +710,7 @@ export default function Accountability() {
         <div className="mt-6 space-y-4">
           {visible.map(entry => {
             const missing = firstMissingEvidence(entry);
+            const relatedPlaces = placesRelatedTo('accountability-record', entry.id);
             const documentedStages =
               entry.procurement?.stages.filter(
                 stage => stage.status === 'documented'
@@ -761,6 +764,20 @@ export default function Accountability() {
                     <span>Last verified: {entry.lastVerified}</span>
                     {entry.barangaySlug && <span>Local tag: {entry.barangaySlug}</span>}
                   </div>
+                  {relatedPlaces.length > 0 && (
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      {relatedPlaces.map(place => (
+                        <Link
+                          key={place.id}
+                          to={'/civic-map/' + place.id}
+                          className="inline-flex items-center gap-1 rounded-full border border-primary-100 bg-primary-50 px-3 py-1.5 text-xs font-bold text-primary-800"
+                        >
+                          <MapPin className="h-3.5 w-3.5" />
+                          {place.name}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
                 <div className="mt-4 grid grid-cols-2 gap-3 lg:grid-cols-4">
