@@ -80,7 +80,7 @@ for (const marker of [
   "to={'/records/' + record.id}",
   'View record',
   'record.contexts',
-  "download="bettermakati-public-records.csv"",
+  'download="bettermakati-public-records.csv"',
   "'/records/' + record.id",
 ]) {
   if (!catalogPage.includes(marker)) {
