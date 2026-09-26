@@ -219,23 +219,20 @@ for (const forbidden of [
   }
 }
 
-for (const retiredReviewMarker of [
-  "'[Civic Reviews]'",
-  "reviews: 'Legacy reviews'",
-  "| 'reviews'",
+for (const retiredRatingMarker of [
   'ratingSummary',
   'criterion ratings submitted',
   'Public-realm rating signals',
   '/ 5',
 ]) {
   if (
-    civicApi.includes(retiredReviewMarker) ||
-    civicReportApi.includes(retiredReviewMarker) ||
-    civicReportsPage.includes(retiredReviewMarker) ||
-    civicMapPage.includes(retiredReviewMarker) ||
-    discussionSource.includes(retiredReviewMarker)
+    civicApi.includes(retiredRatingMarker) ||
+    civicReportApi.includes(retiredRatingMarker) ||
+    civicReportsPage.includes(retiredRatingMarker) ||
+    civicMapPage.includes(retiredRatingMarker) ||
+    discussionSource.includes(retiredRatingMarker)
   ) {
-    problems.push('Nonexistent legacy review/rating compatibility remains: ' + retiredReviewMarker);
+    problems.push('Retired rating output remains: ' + retiredRatingMarker);
   }
 }
 
