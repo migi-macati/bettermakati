@@ -143,21 +143,21 @@ export default function Legislation() {
     <>
       <SEO
         title="Legislation"
-        description="Search BetterMakati-indexed Makati ordinances and resolutions, inspect the local record, then open the official source."
+        description="Search Makati ordinances and resolutions by reference, title, topic or year."
       />
 
-      <Section className="bg-[#fffdf8]">
-        <div className="section-eyebrow">City records</div>
+      <Section className="border-b border-primary-800 bg-primary-900 text-white">
+        <div className="section-eyebrow !text-secondary-300">City records</div>
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <Heading>Legislation</Heading>
-            <p className="max-w-3xl text-gray-600">
-              Search Makati ordinances and resolutions indexed by BetterMakati.
+            <Heading className="!text-white">Legislation</Heading>
+            <p className="max-w-3xl text-primary-50">
+              Search ordinances and resolutions by reference, title, topic or year.
             </p>
           </div>
           <SharePage title="Makati Legislation | BetterMakati" />
         </div>
-        <LastReviewed />
+        <LastReviewed className="!text-primary-100 [&_strong]:!text-white [&_svg]:!text-secondary-300" />
 
         <div className="mt-5 flex flex-wrap gap-3">
           <Link to="/city-monitor" className="brand-btn-primary">
@@ -266,7 +266,7 @@ export default function Legislation() {
       <Section className="bg-[#f5f8f2]">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <div className="section-eyebrow">BetterMakati index</div>
+            <div className="section-eyebrow">Indexed records</div>
             <Heading level={2}>Local ordinances & resolutions</Heading>
           </div>
           <div className="text-sm font-bold text-gray-600">
@@ -345,25 +345,6 @@ export default function Legislation() {
 
                   {expanded ? (
                     <div className="mt-5 border-t border-gray-200 pt-4">
-                      <dl className="grid grid-cols-1 gap-3 text-sm sm:grid-cols-2">
-                        <div>
-                          <dt className="font-bold text-gray-500">BetterMakati ID</dt>
-                          <dd className="mt-1 break-words text-gray-900">{legislationRecordId(record)}</dd>
-                        </div>
-                        <div>
-                          <dt className="font-bold text-gray-500">Official reference</dt>
-                          <dd className="mt-1 text-gray-900">{legislationRecordDisplay(record)}</dd>
-                        </div>
-                        {record[0] ? (
-                          <div className="sm:col-span-2">
-                            <dt className="font-bold text-gray-500">Makati archive ID</dt>
-                            <dd className="mt-1 break-all font-mono text-xs text-gray-700">
-                              {record[0]}
-                            </dd>
-                          </div>
-                        ) : null}
-                      </dl>
-
                       {seed?.documents.length ? (
                         <div className="mt-4">
                           <div className="text-xs font-extrabold uppercase tracking-[0.08em] text-gray-500">
@@ -400,7 +381,7 @@ export default function Legislation() {
                       {relatedRecords.length > 0 ? (
                         <div className="mt-4">
                           <div className="text-xs font-extrabold uppercase tracking-[0.08em] text-gray-500">
-                            Related BetterMakati records
+                            Related records
                           </div>
                           <div className="mt-2 flex flex-wrap gap-2">
                             {relatedRecords.map(item =>
