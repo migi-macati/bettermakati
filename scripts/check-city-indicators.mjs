@@ -9,6 +9,7 @@ const [
   cityComparisonSource,
   budgetSource,
   migrationSource,
+  statisticsPageSource,
 ] = await Promise.all([
   readFile('src/data/cityIndicators.ts', 'utf8'),
   readFile('data/wave4-population-demographic-source-inventory.json', 'utf8'),
@@ -18,6 +19,7 @@ const [
   readFile('src/data/cityComparison.ts', 'utf8'),
   readFile('src/data/budget2025.ts', 'utf8'),
   readFile('data/wave4-statistics-data-migration.json', 'utf8'),
+  readFile('src/pages/Statistics.tsx', 'utf8'),
 ]);
 
 const populationInventory = JSON.parse(populationInventorySource);
@@ -183,6 +185,26 @@ if (
   problems.push('Canonical currentMakatiPopulation2024 selector is missing.');
 }
 if (
+  !indicatorSource.includes('export const barangayPopulationObservations2024: CityIndicatorObservation[] =') ||
+  !indicatorSource.includes('barangays.map(barangay => ({') ||
+  !indicatorSource.includes("boundaryBasis: 'canonical-barangay'") ||
+  !indicatorSource.includes("sourceIds: ['psa-psgc-makati-current']")
+) {
+  problems.push(
+    'Barangay population observations must be generated from the 23 canonical barangay records with canonical barangay geography.'
+  );
+}
+if (
+  !indicatorSource.includes('export const barangayPopulationContext2024 = (slug: string) =>') ||
+  !indicatorSource.includes('shareOfCity:') ||
+  !indicatorSource.includes('rankByPopulation: rank') ||
+  !indicatorSource.includes('medianPopulation: medianBarangayPopulation2024')
+) {
+  problems.push(
+    'Barangay population context helper is missing share, rank or median context.'
+  );
+}
+if (
   !budgetSource.includes(
     "import { currentMakatiPopulation2024 } from './barangays';"
   ) ||
@@ -264,6 +286,29 @@ for (const expected of [
   if (!migrationStatuses.includes(expected)) {
     problems.push('Statistics migration disposition is missing status: ' + expected);
   }
+}
+
+for (const marker of [
+  'barangayPopulationContext2024',
+  'id="barangay-statistics"',
+  'Barangay snapshot',
+  'by population',
+  'City median:',
+  "barangay ? 'Citywide context' : 'What changed'",
+  'Economy, labor and city-system measures below stay',
+]) {
+  if (!statisticsPageSource.includes(marker)) {
+    problems.push('Barangay Statistics view marker missing: ' + marker);
+  }
+}
+if (
+  statisticsPageSource.includes('barangay.household') ||
+  statisticsPageSource.includes('barangay.gdp') ||
+  statisticsPageSource.includes('barangay.unemployment')
+) {
+  problems.push(
+    'Statistics page appears to invent unsupported barangay-level household/economic/labor values.'
+  );
 }
 
 if (problems.length) {
