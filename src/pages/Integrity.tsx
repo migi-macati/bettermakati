@@ -36,6 +36,7 @@ import {
   integrityRelatedRecords,
 } from '../data/integrityCivicRelationships';
 import { reportsForCivicRecord } from '../data/reportCivicRelationships';
+import { publicRecordByUrl } from '../data/publicRecords';
 
 type View =
   | 'all'
@@ -458,18 +459,30 @@ export default function Integrity() {
                             </td>
                             <td className="px-4 py-3">
                               <div className="flex flex-wrap gap-2">
-                                {sourcesFor(award.sourceIds).map(source => (
-                                  <a
-                                    key={source.id}
-                                    href={source.url}
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    className="inline-flex items-center gap-1 font-bold text-primary-700 underline"
-                                  >
-                                    Open
-                                    <ExternalLink className="h-3.5 w-3.5" />
-                                  </a>
-                                ))}
+                                {sourcesFor(award.sourceIds).map(source => {
+                                  const publicRecord = publicRecordByUrl.get(source.url);
+                                  return (
+                                    <span key={source.id} className="inline-flex items-center gap-2">
+                                      <a
+                                        href={source.url}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        className="inline-flex items-center gap-1 font-bold text-primary-700 underline"
+                                      >
+                                        Open
+                                        <ExternalLink className="h-3.5 w-3.5" />
+                                      </a>
+                                      {publicRecord && (
+                                        <Link
+                                          to={'/records/' + publicRecord.id}
+                                          className="font-bold text-primary-700 underline"
+                                        >
+                                          Public record
+                                        </Link>
+                                      )}
+                                    </span>
+                                  );
+                                })}
                               </div>
                             </td>
                           </tr>
@@ -733,18 +746,30 @@ export default function Integrity() {
                   )}
 
                   <div className="mt-5 flex flex-wrap gap-3">
-                    {directSources.map(source => (
-                      <a
-                        key={source.id}
-                        href={source.url}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex items-center gap-1 text-sm font-bold text-primary-700 underline"
-                      >
-                        {source.publisher}
-                        <ExternalLink className="h-3.5 w-3.5" />
-                      </a>
-                    ))}
+                    {directSources.map(source => {
+                      const publicRecord = publicRecordByUrl.get(source.url);
+                      return (
+                        <span key={source.id} className="inline-flex items-center gap-2">
+                          <a
+                            href={source.url}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="inline-flex items-center gap-1 text-sm font-bold text-primary-700 underline"
+                          >
+                            {source.publisher}
+                            <ExternalLink className="h-3.5 w-3.5" />
+                          </a>
+                          {publicRecord && (
+                            <Link
+                              to={'/records/' + publicRecord.id}
+                              className="text-sm font-bold text-primary-700 underline"
+                            >
+                              Public record
+                            </Link>
+                          )}
+                        </span>
+                      );
+                    })}
                     {civicLinksForFinding(finding.id).map(item =>
                       item.node ? (
                         <Link
