@@ -54,8 +54,9 @@ const extractSlugs = async file => {
 
 const barangaySlugs = await extractSlugs('src/data/barangays.ts');
 const officialSlugs = await extractSlugs('src/data/electedOfficials.ts');
-const civicMapText = await readFile('src/data/civicMap.ts', 'utf8');
-const civicAssetBlock = civicMapText.split('export const civicAssets')[1]?.split('const commonCriteria')[0] ?? '';
+const placeRegistryText = await readFile('src/data/placeRegistry.ts', 'utf8');
+const civicAssetBlock =
+  placeRegistryText.split('export const civicAssets')[1]?.split('const geometryTypeFor')[0] ?? '';
 const civicAssetIds = [...civicAssetBlock.matchAll(/\bid:\s*'([^']+)'/g)].map(match => match[1]);
 const serviceDirectoryText = await readFile('src/data/serviceDirectory.ts', 'utf8');
 const serviceIds = [...serviceDirectoryText.matchAll(/\bid:\s*'([^']+)'/g)].map(match => match[1]);
