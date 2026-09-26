@@ -1,4 +1,4 @@
-import { ArrowLeft, ExternalLink, FileText } from 'lucide-react';
+import { ArrowLeft, ExternalLink } from 'lucide-react';
 import { Link, useParams } from 'react-router';
 import SEO from '../components/SEO';
 import Section from '../components/ui/Section';
@@ -34,33 +34,33 @@ export default function PublicRecordDetail() {
         description={record.description}
       />
 
-      <Section className="bg-[#fffdf8]">
+      <Section className="border-b border-primary-800 bg-primary-900 text-white">
         <Link
           to="/records"
-          className="inline-flex items-center gap-1 text-sm font-bold text-primary-700"
+          className="inline-flex items-center gap-1 text-sm font-bold text-secondary-300"
         >
           <ArrowLeft className="h-4 w-4" aria-hidden="true" />
           Public Records
         </Link>
 
         <div className="mt-6 flex flex-wrap gap-2 text-xs font-bold">
-          <span className="rounded-full bg-primary-50 px-2.5 py-1 text-primary-800">
+          <span className="rounded-full bg-white/10 px-2.5 py-1 text-primary-50">
             {record.category}
           </span>
-          <span className="rounded-full bg-gray-100 px-2.5 py-1 text-gray-700">
+          <span className="rounded-full bg-white/10 px-2.5 py-1 text-primary-50">
             {record.sourceClass}
           </span>
-          <span className="rounded-full bg-gray-100 px-2.5 py-1 text-gray-700">
+          <span className="rounded-full bg-white/10 px-2.5 py-1 text-primary-50">
             {record.format}
           </span>
         </div>
 
-        <Heading className="mt-4">{record.title}</Heading>
-        <p className="mt-2 font-semibold text-gray-600">
+        <Heading className="mt-4 !text-white">{record.title}</Heading>
+        <p className="mt-2 font-semibold text-primary-100">
           {record.publisher}
           {record.period ? ' · ' + record.period : ''}
         </p>
-        <p className="mt-4 max-w-4xl text-base leading-relaxed text-gray-700">
+        <p className="mt-4 max-w-4xl text-base leading-relaxed text-primary-50">
           {record.description}
         </p>
 
@@ -69,7 +69,7 @@ export default function PublicRecordDetail() {
             href={record.url}
             target="_blank"
             rel="noreferrer"
-            className="brand-btn-primary"
+            className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-white px-4 py-2 text-sm font-bold text-primary-900"
           >
             Open original source
             <ExternalLink className="h-4 w-4" aria-hidden="true" />
@@ -96,8 +96,8 @@ export default function PublicRecordDetail() {
       )}
 
       <Section className="bg-[#f5f8f2]">
-        <div className="section-eyebrow">BetterMakati context</div>
-        <Heading level={2}>Where this source is used</Heading>
+        <div className="section-eyebrow">Related records</div>
+        <Heading level={2}>Where this source appears</Heading>
 
         {record.contexts.length > 0 ? (
           <div className="mt-5 grid gap-3 md:grid-cols-2">
@@ -118,7 +118,7 @@ export default function PublicRecordDetail() {
           </div>
         ) : (
           <div className="mt-5 rounded-2xl border border-gray-200 bg-white p-5 text-sm text-gray-600">
-            No canonical BetterMakati context is attached to this source yet.
+            No related page is attached to this source.
           </div>
         )}
 
@@ -128,10 +128,6 @@ export default function PublicRecordDetail() {
           </div>
         )}
 
-        <div className="mt-6 flex items-center gap-2 text-xs text-gray-500">
-          <FileText className="h-4 w-4" aria-hidden="true" />
-          Public Records ID: {record.id}
-        </div>
       </Section>
     </>
   );
