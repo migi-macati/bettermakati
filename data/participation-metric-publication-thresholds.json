@@ -1,0 +1,263 @@
+{
+  "schemaVersion": 1,
+  "definedAt": "2026-09-26",
+  "workstream": "W3R-10b — Define metric publication thresholds",
+  "status": "definitions-only",
+  "dependsOn": "data/participation-outcome-metrics.json",
+  "purpose": "Separate operational metrics from public metrics and define the minimum sample, cohort-maturity, freshness and scope conditions required before BetterMakati publishes rates or timing summaries.",
+  "implementationBoundary": "No dashboard, API, analytics event, contributor identifier, aggregate endpoint or UI threshold enforcement is added in W3R-10b.",
+  "principles": [
+    "Exact public records may exist before an aggregate is suitable for headline publication.",
+    "Small denominators may be shown as counts, but they must not be converted into representative-looking percentages merely because a percentage is mathematically possible.",
+    "A publication threshold is a display guardrail, not a service-level agreement, performance target or statistical claim of representativeness.",
+    "Recent case cohorts must mature before later-stage outcome rates are published.",
+    "Public timing summaries use medians rather than averages because a few long-running cases can distort a mean.",
+    "No metric may collapse BetterMakati referral, government acknowledgement, action evidence and documented resolution into one response measure.",
+    "Audit coverage is a census of a frozen campaign target set, not a population estimate; its scope must remain visible.",
+    "Observation freshness describes recency of evidence, not quality of a place.",
+    "Repeat-contributor metrics remain operational/internal in Wave 3 even after privacy-safe instrumentation exists.",
+    "When a public threshold is not met, show the underlying factual state or an insufficient-data label rather than 0%."
+  ],
+  "publicationClasses": {
+    "public-now": "May be displayed publicly when its metric-specific evidence and context requirements are satisfied; no minimum-volume rate threshold is required.",
+    "public-after-threshold": "May be displayed publicly only when all metric-specific volume, maturity and evidence requirements are satisfied.",
+    "internal-only": "May be computed for operations/QA but must not be used as a public headline metric in Wave 3.",
+    "not-yet-measurable": "Must not be calculated from current data because required instrumentation or a privacy-safe identity basis does not exist."
+  },
+  "globalRules": {
+    "asOfRequired": true,
+    "reportingWindowRequired": true,
+    "zeroDenominator": "Display not applicable / no eligible records, never 0%.",
+    "minimumRateDenominator": 20,
+    "minimumDurationEventCount": 10,
+    "durationStatistic": "median",
+    "durationCompanion": "Show event count; interquartile range may be shown when at least 20 stage events exist.",
+    "percentagePrecision": "Whole percentages by default. Do not add decimal precision to small civic datasets.",
+    "countsBelowRateThreshold": "Exact numerator and denominator counts may still be shown when useful, but omit the percentage and explain that the cohort is below the publication threshold.",
+    "comparisons": "Do not compare periods, barangays, place categories or campaigns using a rate unless every compared group independently meets the same publication threshold and uses an equivalent definition.",
+    "trendMinimumWindows": 3,
+    "trendRule": "Do not label an increase/decrease as a trend unless at least three consecutive comparable published windows meet all thresholds.",
+    "barangayBreakdown": {
+      "minimumEligibleCasesForRate": 15,
+      "minimumEventsForDuration": 8,
+      "rule": "Barangay-level counts can remain visible as factual case records, but rates/timing summaries are suppressed below these thresholds. Free-text barangay mentions never establish the denominator."
+    },
+    "noRanking": "Threshold-passing metrics still may not be turned into best/worst barangay, place, authority or contributor rankings."
+  },
+  "caseLifecycle": {
+    "cohortDefinition": "Eligible civic cases grouped by case createdAt in the selected reporting window.",
+    "maturityBasis": "A cohort is mature for a stage only when asOf is at least the stage's maturityDays after the cohort end.",
+    "rateRules": [
+      {
+        "metricId": "review-coverage",
+        "publicationClass": "public-after-threshold",
+        "minimumDenominator": 20,
+        "maturityDays": 7,
+        "publicLabel": "Reviewed case share",
+        "requiredEvidence": "reviewed civic-admin event",
+        "belowThresholdFallback": "Show submitted and reviewed counts only."
+      },
+      {
+        "metricId": "routing-share",
+        "publicationClass": "public-after-threshold",
+        "minimumDenominator": 20,
+        "maturityDays": 14,
+        "publicLabel": "Routed case share",
+        "requiredEvidence": "forwarded civic-admin event",
+        "belowThresholdFallback": "Show submitted and routed counts only.",
+        "wordingGuardrail": "Never relabel routed as received, acknowledged or accepted by government."
+      },
+      {
+        "metricId": "acknowledgement-share",
+        "publicationClass": "public-after-threshold",
+        "minimumDenominator": 20,
+        "maturityDays": 30,
+        "publicLabel": "Documented authority acknowledgement share",
+        "requiredEvidence": "acknowledged civic-admin event with a non-empty authority/responsible-body field",
+        "belowThresholdFallback": "Show the count of cases with documented authority acknowledgement only."
+      },
+      {
+        "metricId": "action-evidence-share",
+        "publicationClass": "public-after-threshold",
+        "minimumDenominator": 20,
+        "maturityDays": 45,
+        "publicLabel": "Cases with documented action evidence",
+        "requiredEvidence": "action-reported civic-admin event",
+        "belowThresholdFallback": "Show the count of cases with action evidence only.",
+        "wordingGuardrail": "Do not describe action evidence as resolution."
+      },
+      {
+        "metricId": "documented-resolution-share",
+        "publicationClass": "public-after-threshold",
+        "minimumDenominator": 20,
+        "maturityDays": 60,
+        "publicLabel": "Documented resolution share",
+        "requiredEvidence": "community-verified-resolved civic-admin event",
+        "belowThresholdFallback": "Show documented-resolution count only.",
+        "wordingGuardrail": "Do not use GitHub closed state or ordinary appears-resolved comments as the numerator."
+      }
+    ],
+    "durationRules": [
+      {
+        "metricId": "time-to-review",
+        "publicationClass": "public-after-threshold",
+        "minimumStageEvents": 10,
+        "maturityDays": 7
+      },
+      {
+        "metricId": "time-to-routing",
+        "publicationClass": "public-after-threshold",
+        "minimumStageEvents": 10,
+        "maturityDays": 14
+      },
+      {
+        "metricId": "time-to-acknowledgement",
+        "publicationClass": "public-after-threshold",
+        "minimumStageEvents": 10,
+        "maturityDays": 30,
+        "requiredEvidence": "named authority/responsible body"
+      },
+      {
+        "metricId": "time-to-action-evidence",
+        "publicationClass": "public-after-threshold",
+        "minimumStageEvents": 10,
+        "maturityDays": 45
+      },
+      {
+        "metricId": "time-to-documented-resolution",
+        "publicationClass": "public-after-threshold",
+        "minimumStageEvents": 10,
+        "maturityDays": 60
+      }
+    ],
+    "internalDiagnostics": [
+      {
+        "id": "routing-evidence-completeness",
+        "publicationClass": "internal-only",
+        "reason": "This is a workflow-quality diagnostic for whether forwarded events identify destination/channel, not a civic outcome."
+      },
+      {
+        "id": "stage-order-anomalies",
+        "publicationClass": "internal-only",
+        "reason": "Used to detect inconsistent lifecycle recording such as acknowledgement predating routing."
+      }
+    ]
+  },
+  "observationFreshness": {
+    "entityLevelLatestObservation": {
+      "metricId": "latest-observation-age-days",
+      "publicationClass": "public-now",
+      "minimumObservations": 1,
+      "display": "Show the actual latest observedAt date or age together with sample count. Do not hide old observations; old evidence remains useful when clearly dated."
+    },
+    "recentObservationWindowsDays": {
+      "street-public-realm": 30,
+      "park-public-space": 30,
+      "public-facility": 60,
+      "transport-stop-terminal": 30,
+      "transport-route": 30
+    },
+    "freshnessLabelRule": "An entity may be described as having a recent observation only when its latest observedAt is within the family-specific window. Beyond the window, show the date/age without calling the place stale, poor or noncompliant.",
+    "aggregateFreshnessCoverage": {
+      "publicationClass": "public-after-threshold",
+      "minimumEligibleEntities": 10,
+      "minimumEntitiesWithAnyObservation": 5,
+      "numerator": "Eligible entities whose latest observation falls within the applicable recent-observation window.",
+      "denominator": "Explicit eligible entity set for the published scope.",
+      "requiredContext": [
+        "entity family/category",
+        "geographic or inventory scope",
+        "asOf",
+        "recent-observation window",
+        "numerator and denominator"
+      ],
+      "scopeGuardrail": "Do not publish a citywide freshness percentage from a partial inventory."
+    }
+  },
+  "civicAuditCoverage": {
+    "observedMetricId": "audit-observed-entity-coverage",
+    "completeMetricId": "audit-complete-entity-coverage",
+    "publicationClass": "public-now",
+    "whyNoMinimumSampleRate": "The denominator is the campaign's complete frozen target set, so coverage is a census of that declared campaign scope rather than an estimate from a sample.",
+    "requirements": [
+      "Campaign target set is frozen.",
+      "Every target ID resolves to the declared entity kind.",
+      "Campaign period and asOf are shown.",
+      "Inventory claim and scope statement are shown.",
+      "Numerator and denominator counts are displayed with any percentage.",
+      "Entities with zero qualifying observations remain visible.",
+      "Live campaigns are labeled in progress / as of the displayed timestamp.",
+      "Ended campaigns distinguish period ended from target fully covered."
+    ],
+    "smallTargetPresentation": {
+      "targetCountBelow": 5,
+      "rule": "Show x of y coverage as the primary display; percentage may appear secondarily but must not be used as a headline by itself."
+    },
+    "questionDistributionBoundary": "Question-level condition distributions remain governed by the civic-audit campaign schema and must always show sample counts. They are not converted into place scores or rankings by this metric policy."
+  },
+  "repeatContribution": {
+    "metricIds": [
+      "repeat-contributor-share",
+      "repeat-contribution-count"
+    ],
+    "currentPublicationClass": "not-yet-measurable",
+    "futureWave3PublicationClass": "internal-only",
+    "instrumentationPrerequisites": [
+      "Privacy-preserving pseudonymous contributor key exists.",
+      "Key is not derived from IP address, public alias or free-text name.",
+      "Retention and deletion rules are documented.",
+      "Duplicate/fallback semantics follow W3R-10a."
+    ],
+    "futureInternalMinimumDistinctContributors": 20,
+    "publicRule": "Do not publish repeat-contributor rates, contributor leaderboards or contributor-level histories in Wave 3. The metric may be used internally after its privacy prerequisites are satisfied."
+  },
+  "publicPresentationMatrix": [
+    {
+      "metric": "Case lifecycle counts",
+      "class": "public-now",
+      "condition": "Exact source-backed counts with explicit period/cohort and lifecycle label."
+    },
+    {
+      "metric": "Case lifecycle rates",
+      "class": "public-after-threshold",
+      "condition": "At least 20 eligible cases and the stage-specific cohort maturity period has elapsed."
+    },
+    {
+      "metric": "Case timing medians",
+      "class": "public-after-threshold",
+      "condition": "At least 10 observed stage events and the stage-specific maturity period has elapsed."
+    },
+    {
+      "metric": "Latest observation date/age",
+      "class": "public-now",
+      "condition": "At least one valid structured observation; always show sample count."
+    },
+    {
+      "metric": "Aggregate recent-observation coverage",
+      "class": "public-after-threshold",
+      "condition": "Explicit eligible inventory of at least 10 entities, at least 5 with observations, and a declared family-specific freshness window."
+    },
+    {
+      "metric": "Civic audit target coverage",
+      "class": "public-now",
+      "condition": "Frozen target set, campaign period/asOf, inventory claim and x/y counts are visible."
+    },
+    {
+      "metric": "Repeat contribution",
+      "class": "internal-only after instrumentation",
+      "condition": "Privacy prerequisites satisfied; never a public Wave 3 headline."
+    }
+  ],
+  "suppressionLabels": {
+    "smallCohort": "Not enough cases for a stable public rate yet",
+    "immatureCohort": "Cohort is still too recent for this outcome rate",
+    "insufficientStageEvents": "Not enough completed stage events for a timing summary yet",
+    "partialInventory": "Coverage percentage withheld because the eligible inventory is incomplete",
+    "notMeasurable": "Not currently measurable with privacy-safe data"
+  },
+  "nextStep": {
+    "id": "W3R-10c",
+    "title": "Instrument redesigned participation outcomes",
+    "scope": "API/data instrumentation only for fields defined in W3R-10a/10b. No headline aggregates."
+  }
+}
