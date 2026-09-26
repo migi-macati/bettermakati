@@ -245,7 +245,7 @@ const Services: React.FC = () => {
         </section>
 
         <Section className="bg-[#fffdf8]">
-          <LastReviewed
+          <LastReviewed date="2026-09-25"
             note="Requirements can change. Open the linked official source before acting."
             className="mt-0"
           />
@@ -523,7 +523,7 @@ const Services: React.FC = () => {
         {Icon && <Icon className="h-8 w-8 mb-4 text-primary-600 rounded-md" />}
         <Heading>{categoryData.category}</Heading>
         <Text className="text-gray-600 mb-3">{categoryData.description}</Text>
-        <LastReviewed
+        <LastReviewed date="2026-09-25"
           note="Time-sensitive service requirements may change."
           className="mb-6"
         />
