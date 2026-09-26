@@ -9,6 +9,9 @@ on:
       - .github/workflows/makati-legislation-archive.yml
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   extract:
     runs-on: ubuntu-latest
@@ -16,6 +19,8 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Node
         uses: actions/setup-node@v4
@@ -31,13 +36,26 @@ jobs:
           npm install --no-save playwright@1.55.0
           npx playwright install --with-deps chromium
 
-      - name: Inspect official Makati archive
+      - name: Enumerate official Makati archive
         run: node scripts/discover-makati-legislation-archive.mjs
 
-      - name: Upload discovery artifact
+      - name: Upload dated raw snapshot
         uses: actions/upload-artifact@v4
         with:
-          name: makati-legislation-archive-discovery
-          path: artifacts/makati-legislation-archive-discovery.json
+          name: makati-legislation-archive-snapshot
+          path: data/makati-legislation-archive-*.json
           if-no-files-found: error
-          retention-days: 7
+          retention-days: 14
+
+      - name: Commit dated raw snapshot
+        run: |
+          SNAPSHOT="$(ls -1t data/makati-legislation-archive-*.json | head -1)"
+          git config user.name "BetterMakati Archive Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add "$SNAPSHOT"
+          if git diff --cached --quiet; then
+            echo "Snapshot unchanged; nothing to commit."
+            exit 0
+          fi
+          git commit -m "Snapshot official Makati legislation archive"
+          git push origin HEAD:main
