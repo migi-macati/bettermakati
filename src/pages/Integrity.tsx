@@ -31,6 +31,10 @@ import {
   integrityAuditSourceOnlyRecords,
 } from '../data/integrityAuditTrails';
 import { integrityRelationshipSources } from '../data/integrityRelationships';
+import {
+  integrityProcurementContextLinks,
+  integrityRelatedRecords,
+} from '../data/integrityCivicRelationships';
 
 type View =
   | 'all'
@@ -86,9 +90,48 @@ const viewLabels: Array<{ id: View; label: string }> = [
   { id: 'sources', label: 'Sources' },
 ];
 
+const civicLinksForAward = (awardId: string) => {
+  const seen = new Set<string>();
+  return integrityRelatedRecords({
+    type: 'integrity-record',
+    id: awardId,
+    recordKind: 'procurement-award',
+  }).filter(item => {
+    if (
+      !item.node ||
+      !['accountability', 'public-records'].includes(item.node.owner)
+    ) {
+      return false;
+    }
+    if (seen.has(item.node.href)) return false;
+    seen.add(item.node.href);
+    return true;
+  });
+};
+
+const civicLinksForFinding = (findingId: string) => {
+  const seen = new Set<string>();
+  return integrityRelatedRecords({
+    type: 'integrity-record',
+    id: findingId,
+    recordKind: 'audit-finding',
+  }).filter(item => {
+    if (
+      !item.node ||
+      !['accountability', 'public-records'].includes(item.node.owner)
+    ) {
+      return false;
+    }
+    if (seen.has(item.node.href)) return false;
+    seen.add(item.node.href);
+    return true;
+  });
+};
+
 export default function Integrity() {
   const [query, setQuery] = useState('');
   const [view, setView] = useState<View>('all');
+  const procurementContextLinks = integrityProcurementContextLinks();
 
   const needle = query.trim().toLowerCase();
 
@@ -302,12 +345,28 @@ export default function Integrity() {
                 currently indexed by BetterMakati.
               </p>
             </div>
-            <Link
-              to="/projects-budget#procurement"
-              className="text-sm font-bold text-primary-700 underline"
-            >
-              Open procurement table
-            </Link>
+            <div className="flex flex-wrap items-center gap-3">
+              <Link
+                to="/projects-budget#procurement"
+                className="text-sm font-bold text-primary-700 underline"
+              >
+                Open procurement table
+              </Link>
+              {procurementContextLinks.map(item =>
+                item.node ? (
+                  <a
+                    key={item.node.href}
+                    href={item.node.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-sm font-bold text-primary-700 underline"
+                  >
+                    {item.node.label}
+                    <ExternalLink className="ml-1 inline h-3.5 w-3.5" />
+                  </a>
+                ) : null
+              )}
+            </div>
           </div>
 
           <div className="mt-6 space-y-4">
@@ -372,6 +431,23 @@ export default function Integrity() {
                             </td>
                             <td className="px-4 py-3 font-semibold text-gray-900">
                               {award.title}
+                              {civicLinksForAward(award.id).length > 0 && (
+                                <div className="mt-2 flex flex-wrap gap-2">
+                                  {civicLinksForAward(award.id).map(item =>
+                                    item.node ? (
+                                      <Link
+                                        key={item.relationship.id}
+                                        to={item.node.href}
+                                        className="text-xs font-bold text-primary-700 underline underline-offset-2"
+                                      >
+                                        {item.node.owner === 'accountability'
+                                          ? 'Accountability record'
+                                          : 'Source catalog'}
+                                      </Link>
+                                    ) : null
+                                  )}
+                                </div>
+                              )}
                             </td>
                             <td className="px-4 py-3 text-gray-600">
                               {award.bidOrAwardDate ?? '—'}
@@ -663,6 +739,19 @@ export default function Integrity() {
                         <ExternalLink className="h-3.5 w-3.5" />
                       </a>
                     ))}
+                    {civicLinksForFinding(finding.id).map(item =>
+                      item.node ? (
+                        <Link
+                          key={item.relationship.id}
+                          to={item.node.href}
+                          className="text-sm font-bold text-primary-700 underline"
+                        >
+                          {item.node.owner === 'accountability'
+                            ? 'Accountability record'
+                            : 'Source catalog'}
+                        </Link>
+                      ) : null
+                    )}
                   </div>
                 </article>
               );
