@@ -409,7 +409,7 @@
   "structuredObservationImplementation": {
     "workstream": "W3R-6b",
     "route": "/api/civic-observation",
-    "canonicalIndex": "data/civic-observation-entity-index.mjs",
+    "canonicalIndex": "data/civic-entity-index.mjs",
     "form": "src/components/civic/CivicObservationForm.tsx",
     "rules": [
       "One reusable family-aware observation form is used on civic-registry detail pages.",
