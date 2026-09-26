@@ -662,7 +662,7 @@ try {
   for (const marker of [
     'authority?: string',
     'event.authority || event.destination',
-    'Authority acknowledged',
+    '{lifecycle.label}',
     'Step {lifecycleStep(lifecycle.status)} of 6',
   ]) {
     assert.ok(
