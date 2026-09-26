@@ -418,9 +418,9 @@
     "uiChanges": 0
   },
   "nextImplementationStep": {
-    "id": "W3R-5a",
-    "title": "Specify Report something near me",
-    "constraint": "Design/specification only. Define the location-first reporting flow and matching behavior before implementation."
+    "id": "W3R-5b",
+    "title": "Implement nearby place matching",
+    "constraint": "Location selection and candidate matching only. Do not connect report submission yet."
   },
   "betterBarangayReuse": {
     "workstream": "W3R-3a",
@@ -504,6 +504,18 @@
       "Generic rating entry points and rating criteria are removed from the place-detail experience.",
       "Existing report/proposal/update submission and case lifecycle behavior remain intact.",
       "Legacy review records can still render while structured observations are deferred to W3R-6."
+    ]
+  },
+  "nearbyReportingSpec": {
+    "workstream": "W3R-5a",
+    "file": "data/nearby-reporting-spec.json",
+    "keyRules": [
+      "Nearby matching suggests candidates and never silently assigns a place.",
+      "Automatic candidates require verified Place Registry records with a point.",
+      "A user may reject every candidate and submit a location-only report.",
+      "Location-only reports have no canonical placeId and never create Place Registry records.",
+      "Browser geolocation is requested only after explicit user action.",
+      "Existing emergency, duplicate, fallback and case-tracking behavior is preserved."
     ]
   }
 }
