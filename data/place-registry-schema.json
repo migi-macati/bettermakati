@@ -418,9 +418,9 @@
     "uiChanges": 0
   },
   "nextImplementationStep": {
-    "id": "W3R-3c",
-    "title": "Reuse places in Services and Government Offices",
-    "constraint": "Services and Government Offices surfaces only. Reuse relevant Place Registry records without absorbing the separate governmentServiceOffices dataset yet."
+    "id": "W3R-3d",
+    "title": "Add place results to Saan Ako Lalapit",
+    "constraint": "Concern Finder only. Where appropriate, return both the relevant service and a usable place to go."
   },
   "betterBarangayReuse": {
     "workstream": "W3R-3a",
@@ -443,5 +443,21 @@
       "No new transport records or route research were introduced in this step."
     ],
     "verifiedAnchorCount": 10
+  },
+  "servicesAndGovernmentOfficesReuse": {
+    "workstream": "W3R-3c",
+    "surfaces": [
+      "src/pages/Services.tsx",
+      "src/pages/ServiceGuide.tsx",
+      "src/pages/GovernmentOffices.tsx"
+    ],
+    "crossReferenceField": "GovernmentServiceOffice.placeId",
+    "explicitOfficeLinkCount": 4,
+    "behavior": [
+      "Barangay-scoped Services selects verified local service places from the Place Registry.",
+      "Government service offices remain a separate dataset and may explicitly reference a canonical placeId.",
+      "Service Guide and Government Offices cards link to canonical place details when an explicit placeId exists.",
+      "No fuzzy matching, bulk merge or new place research occurs in this workstream."
+    ]
   }
 }
