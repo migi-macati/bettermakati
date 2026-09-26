@@ -108,7 +108,7 @@ const sourceClassOptions: Array<'All' | PublicRecordSourceClass> = [
 ];
 
 const catalogCsv = [
-  'id,title,category,publisher,source_class,official,format,period,url,related_bettermakati_page,used_by',
+  'id,title,category,publisher,source_class,official,format,period,url,public_record_url,related_bettermakati_contexts,used_by',
   ...publicRecords.map(record =>
     [
       record.id,
@@ -120,7 +120,10 @@ const catalogCsv = [
       record.format,
       record.period ?? '',
       record.url,
-      record.relatedHref ?? '',
+      '/records/' + record.id,
+      record.contexts
+        .map(context => context.label + ' — ' + context.href)
+        .join(' | '),
       record.usedBy.join(' | '),
     ]
       .map(value => '"' + String(value).replaceAll('"', '""') + '"')
