@@ -99,8 +99,9 @@
       "disposition": [
         {
           "location": "Statistics and CityComparison UI",
-          "status": "migrate-W4-1i",
-          "action": "Move reproducible download construction to the shared indicator export/provenance layer after the page consumes canonical indicators."
+          "status": "migrated-in-W4-1i",
+          "action": "Population and city-comparison CSV generation now comes from src/data/statisticsExports.ts with shared filenames, columns, definitions, source metadata and reproducible row builders.",
+          "completedAt": "2026-09-26"
         }
       ]
     }
