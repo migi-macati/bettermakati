@@ -503,7 +503,8 @@ const civicIntelligenceItems: SearchItem[] = [
     keywords: [
       entity.id,
       entity.kind,
-      ...entity.sourceNames,
+      ...entity.sourceIds,
+      ...(entity.notes ?? []),
       'integrity procurement supplier contractor award',
     ].join(' '),
     canonicalKey: 'integrity-entity:' + entity.id,
