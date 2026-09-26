@@ -5,6 +5,19 @@ import {
   budgetSources,
 } from './budget2025';
 import { cityMonitorSources } from './cityMonitor';
+import {
+  cityIndicators,
+  cityIndicatorSources,
+} from './cityIndicators';
+import {
+  integrityGraphNodes,
+  integrityRelationshipSources,
+} from './integrityRelationships';
+import {
+  localLegislationRecords,
+  localLegislationSources,
+} from './localLegislation';
+import { reports } from './reports';
 import { election2025Sources } from './election2025';
 import { electionCivicSources } from './electionCivic';
 import {
@@ -45,6 +58,11 @@ export type PublicRecordSourceClass =
   | 'Research / institutional'
   | 'Media / secondary';
 
+export interface PublicRecordContext {
+  label: string;
+  href: string;
+}
+
 export interface PublicRecordItem {
   id: string;
   title: string;
@@ -58,6 +76,7 @@ export interface PublicRecordItem {
   description: string;
   relatedHref?: string;
   usedBy: string[];
+  contexts: PublicRecordContext[];
 }
 
 export interface PublicRecordCoverageArea {
@@ -173,10 +192,20 @@ const add = (input: {
   description: string;
   relatedHref?: string;
   usedBy?: string;
+  context?: PublicRecordContext;
   sourceClass?: PublicRecordSourceClass;
 }) => {
   if (!input.url) return;
   const existing = map.get(input.url);
+  const context =
+    input.context ??
+    (input.relatedHref
+      ? {
+          label: input.usedBy ?? 'Related BetterMakati page',
+          href: input.relatedHref,
+        }
+      : undefined);
+
   if (existing) {
     if (input.usedBy && !existing.usedBy.includes(input.usedBy)) {
       existing.usedBy.push(input.usedBy);
@@ -184,6 +213,14 @@ const add = (input: {
     if (!existing.period && input.period) existing.period = input.period;
     if (!existing.relatedHref && input.relatedHref) {
       existing.relatedHref = input.relatedHref;
+    }
+    if (
+      context &&
+      !existing.contexts.some(
+        item => item.href === context.href && item.label === context.label
+      )
+    ) {
+      existing.contexts.push(context);
     }
     return;
   }
@@ -208,6 +245,7 @@ const add = (input: {
     description: input.description,
     relatedHref: input.relatedHref,
     usedBy: input.usedBy ? [input.usedBy] : [],
+    contexts: context ? [context] : [],
   });
 };
 
@@ -288,6 +326,181 @@ for (const source of cityMonitorSources) {
     relatedHref: '/city-monitor',
     usedBy: 'City Monitor',
   });
+}
+
+
+const indicatorsBySourceId = new Map<string, string[]>();
+for (const indicator of cityIndicators) {
+  for (const sourceId of indicator.provenance.sourceIds) {
+    const current = indicatorsBySourceId.get(sourceId) ?? [];
+    current.push(indicator.title);
+    indicatorsBySourceId.set(sourceId, current);
+  }
+}
+
+for (const source of Object.values(cityIndicatorSources)) {
+  const usedByIndicators = indicatorsBySourceId.get(source.id) ?? [];
+  add({
+    title: source.label,
+    url: source.url,
+    publisher: source.publisher,
+    category: 'Statistics',
+    period: source.matrix,
+    description:
+      usedByIndicators.length > 0
+        ? 'Primary or supporting source used by BetterMakati Statistics: ' +
+          usedByIndicators.join(' · ')
+        : 'Source registered in the BetterMakati Statistics evidence layer.',
+    relatedHref: '/statistics',
+    usedBy: 'Statistics',
+    context: {
+      label: 'Statistics',
+      href: '/statistics',
+    },
+  });
+}
+
+const legislationSourceById = new Map(
+  localLegislationSources.map(source => [source.id, source] as const)
+);
+
+for (const record of localLegislationRecords) {
+  const sourceIds = new Set<string>([
+    ...record.reference.sourceIds,
+    ...record.provenance.sourceIds,
+    ...record.documents.flatMap(document => document.sourceIds),
+    ...record.lifecycle.flatMap(event => event.sourceIds),
+    ...record.sessionEvidence.flatMap(evidence => evidence.sourceIds),
+    ...record.relationships.flatMap(relationship => relationship.sourceIds),
+  ]);
+
+  for (const sourceId of sourceIds) {
+    const source = legislationSourceById.get(sourceId);
+    if (!source) continue;
+    add({
+      title: source.label,
+      url: source.url,
+      publisher: source.publisher,
+      category: 'Legislation & law',
+      description:
+        source.note ??
+        'Official source used by the canonical BetterMakati legislation record.',
+      relatedHref:
+        '/legislation?record=' + encodeURIComponent(record.id),
+      usedBy: 'Legislation',
+      context: {
+        label: record.reference.display,
+        href: '/legislation?record=' + encodeURIComponent(record.id),
+      },
+    });
+  }
+
+  for (const document of record.documents) {
+    add({
+      title: document.label,
+      url: document.url,
+      publisher: document.publisher,
+      category: 'Legislation & law',
+      description:
+        document.note ??
+        'Document attached to the canonical BetterMakati legislation record.',
+      relatedHref:
+        '/legislation?record=' + encodeURIComponent(record.id),
+      usedBy: 'Legislation',
+      context: {
+        label: record.reference.display,
+        href: '/legislation?record=' + encodeURIComponent(record.id),
+      },
+    });
+  }
+}
+
+const integritySectionForRecordType = (recordType: string) =>
+  recordType === 'procurement-award' || recordType === 'entity'
+    ? '/integrity#procurement'
+    : recordType === 'disclosure'
+      ? '/integrity#disclosures'
+      : '/integrity#audits';
+
+for (const source of integrityRelationshipSources) {
+  const relatedNodes = integrityGraphNodes.filter(node =>
+    node.sourceIds.includes(source.id)
+  );
+  const integrityCategory: PublicRecordCategory =
+    relatedNodes.some(node =>
+      ['audit-finding', 'audit-action', 'audit-resolution-trail'].includes(
+        node.ref.recordType
+      )
+    )
+      ? 'Audit'
+      : 'Procurement & projects';
+
+  if (relatedNodes.length === 0) {
+    add({
+      title: source.label,
+      url: source.url,
+      publisher: source.publisher,
+      category: integrityCategory,
+      period: source.publishedOrPeriod,
+      description: 'Source registered in the BetterMakati Integrity evidence layer.',
+      relatedHref: '/integrity',
+      usedBy: 'Integrity',
+      context: { label: 'Integrity', href: '/integrity' },
+    });
+    continue;
+  }
+
+  for (const node of relatedNodes) {
+    const href = integritySectionForRecordType(node.ref.recordType);
+    add({
+      title: source.label,
+      url: source.url,
+      publisher: source.publisher,
+      category: integrityCategory,
+      period: source.publishedOrPeriod,
+      description: 'Source used by the BetterMakati Integrity evidence layer.',
+      relatedHref: href,
+      usedBy: 'Integrity',
+      context: {
+        label: node.label,
+        href,
+      },
+    });
+  }
+}
+
+const reportCategory = (slug: string): PublicRecordCategory => {
+  if (slug.includes('audit')) return 'Audit';
+  if (slug.includes('population')) return 'Statistics';
+  return 'Budget & fiscal';
+};
+
+for (const report of reports) {
+  for (const source of report.sources) {
+    if (
+      source.sourceKind === 'canonical-internal' ||
+      !/^https?:\/\//.test(source.href)
+    ) {
+      continue;
+    }
+
+    add({
+      title: source.label,
+      url: source.href,
+      publisher: source.publisher ?? 'Published source',
+      category: reportCategory(report.slug),
+      period: source.publishedOrPeriod,
+      description:
+        source.note ??
+        'External source cited by a BetterMakati Featured Report.',
+      relatedHref: '/reports/' + report.slug,
+      usedBy: 'Featured Reports',
+      context: {
+        label: report.headline,
+        href: '/reports/' + report.slug,
+      },
+    });
+  }
 }
 
 add({
@@ -636,6 +849,14 @@ export const publicRecords = [...map.values()].sort((a, b) => {
   if (periodCompare !== 0) return periodCompare;
   return a.title.localeCompare(b.title);
 });
+
+export const publicRecordById = new Map(
+  publicRecords.map(record => [record.id, record] as const)
+);
+
+export const publicRecordByUrl = new Map(
+  publicRecords.map(record => [record.url, record] as const)
+);
 
 export const publicRecordCategories: PublicRecordCategory[] = [
   'Budget & fiscal',
