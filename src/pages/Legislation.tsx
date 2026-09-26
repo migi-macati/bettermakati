@@ -21,7 +21,6 @@ import {
 } from '../data/localLegislation';
 import {
   legislationRecordDisplay,
-  legislationRecordHref,
   legislationRecordId,
   loadLegislationBrowserIndex,
   matchLegislationRecords,
