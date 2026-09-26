@@ -958,9 +958,28 @@
       "id": "W4-4f",
       "phase": "Reports & Insights",
       "title": "Redesign Reports & Insights landing",
-      "status": "planned",
+      "status": "complete",
       "maximumScope": "Reports landing only. One report per card; headline, subheadline, date, Read more; strong carousel/list hierarchy and no overview/meta copy.",
-      "stopWhen": "The page reads like a high-quality publication index rather than a repository."
+      "stopWhen": "The page reads like a high-quality publication index rather than a repository.",
+      "completedAt": "2026-09-26",
+      "implementationFiles": [
+        "src/pages/Reports.tsx",
+        "scripts/check-reports-landing.mjs",
+        "package.json"
+      ],
+      "validation": {
+        "canonicalDataSource": "The landing renders only the shared canonical reports array.",
+        "editorialHierarchy": "The newest canonical report is rendered as one visually dominant lead story; all remaining reports appear once in a two-column publication index.",
+        "cardContent": [
+          "date",
+          "headline",
+          "subheadline",
+          "Read more"
+        ],
+        "removedDetour": "The BetterGov national-data box and its external-link imports were removed from the Reports landing.",
+        "antiMeta": "No overview, completeness, coverage-status or existence-justification copy is present.",
+        "scopeBoundary": "W4-4f changes only the Reports landing and its guard; homepage reuse remains W4-4g."
+      }
     },
     {
       "id": "W4-4g",
@@ -1059,11 +1078,11 @@
       "stopWhen": "Wave 4 is closed only to the extent supported by evidence, with future work reopened as specific capabilities rather than vague unfinished work."
     }
   ],
-  "current": "W4-4f",
+  "current": "W4-4g",
   "immediateNext": {
-    "id": "W4-4f",
-    "title": "Redesign Reports & Insights landing",
-    "maximumScope": "Reports landing only. One report per card; headline, subheadline, date, Read more; strong carousel/list hierarchy and no overview/meta copy."
+    "id": "W4-4g",
+    "title": "Reuse Featured Reports on the homepage",
+    "maximumScope": "Homepage featured-report module only, reusing the same canonical report data/component."
   },
   "carriedForward": [
     {
