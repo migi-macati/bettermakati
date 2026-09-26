@@ -392,8 +392,8 @@ export default function ReportArticle() {
       {underlyingRecords.length > 0 && (
         <Section className="bg-[#fffdf8]">
           <div className="mx-auto max-w-4xl">
-            <div className="section-eyebrow">Underlying records</div>
-            <Heading level={2}>Records synthesized in this report</Heading>
+            <div className="section-eyebrow">Records</div>
+            <Heading level={2}>Related records</Heading>
             <div className="mt-5 grid gap-3 md:grid-cols-2">
               {underlyingRecords.map(item =>
                 item.node ? (
