@@ -418,9 +418,9 @@
     "uiChanges": 0
   },
   "nextImplementationStep": {
-    "id": "W3R-4b",
-    "title": "Simplify place detail",
-    "constraint": "Civic place-detail page only. Reframe the page around verified place facts, useful actions and existing cases; do not implement structured observations yet."
+    "id": "W3R-5a",
+    "title": "Specify Report something near me",
+    "constraint": "Design/specification only. Define the location-first reporting flow and matching behavior before implementation."
   },
   "betterBarangayReuse": {
     "workstream": "W3R-3a",
@@ -489,6 +489,21 @@
       "The entry page starts from place discovery and user tasks rather than ratings.",
       "Only verified registry records are listed on the entry page.",
       "Place-detail and reporting mechanics remain unchanged for later W3R steps."
+    ]
+  },
+  "civicPlaceDetailReframe": {
+    "workstream": "W3R-4b",
+    "implementedIn": [
+      "src/pages/CivicAsset.tsx",
+      "src/components/civic/CivicContributionForm.tsx",
+      "src/components/civic/CivicDiscussion.tsx"
+    ],
+    "behavior": [
+      "Canonical place facts and provenance come from Place Registry.",
+      "The page prioritizes location and sources, existing community cases, then useful actions.",
+      "Generic rating entry points and rating criteria are removed from the place-detail experience.",
+      "Existing report/proposal/update submission and case lifecycle behavior remain intact.",
+      "Legacy review records can still render while structured observations are deferred to W3R-6."
     ]
   }
 }
