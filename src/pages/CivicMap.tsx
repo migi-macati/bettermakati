@@ -23,7 +23,13 @@ import {
   civicMethodologyReviewed,
   type CivicAssetType,
 } from '../data/civicMap';
-import { placeRegistryById, placesByBarangay } from '../data/placeRegistry';
+import {
+  civicEntityKindForCategory,
+  civicEntityKindLabels,
+  placeRegistryById,
+  placesByBarangay,
+  type CivicEntityKind,
+} from '../data/placeRegistry';
 
 interface FeedItem {
   kind: 'report' | 'proposal' | 'update';
@@ -31,19 +37,39 @@ interface FeedItem {
   meta?: { assetId?: string };
 }
 
-const typeOptions: Array<{ value: 'all' | CivicAssetType; label: string }> = [
-  { value: 'all', label: 'All places & segments' },
-  { value: 'street-segment', label: 'Street segments' },
-  { value: 'park', label: 'Parks' },
-  { value: 'heritage-site', label: 'Heritage sites' },
-  { value: 'public-office', label: 'Public offices' },
-  { value: 'health-center', label: 'Health centers' },
-  { value: 'transport-route', label: 'Transport routes' },
-  { value: 'transport-stop', label: 'Stops / terminals' },
-];
+const typeOptionsByEntityKind: Record<
+  CivicEntityKind,
+  Array<{ value: 'all' | CivicAssetType; label: string }>
+> = {
+  place: [
+    { value: 'all', label: 'All places' },
+    { value: 'park', label: 'Parks' },
+    { value: 'heritage-site', label: 'Heritage sites' },
+    { value: 'public-office', label: 'Public offices' },
+    { value: 'health-center', label: 'Health centers' },
+    { value: 'community-center', label: 'Community centers' },
+    { value: 'public-market', label: 'Markets' },
+    { value: 'transport-stop', label: 'Stops' },
+    { value: 'transport-terminal', label: 'Terminals' },
+  ],
+  segment: [
+    { value: 'all', label: 'All segments' },
+    { value: 'street-segment', label: 'Street segments' },
+    { value: 'sidewalk-segment', label: 'Sidewalk segments' },
+    { value: 'crossing', label: 'Crossings' },
+    { value: 'bike-lane', label: 'Bike lanes' },
+    { value: 'bridge', label: 'Bridges' },
+    { value: 'drainage', label: 'Drainage segments' },
+  ],
+  route: [
+    { value: 'all', label: 'All routes' },
+    { value: 'transport-route', label: 'Transport routes' },
+  ],
+};
 
 export default function CivicMap() {
   const [query, setQuery] = useState('');
+  const [entityKind, setEntityKind] = useState<CivicEntityKind>('place');
   const [type, setType] = useState<'all' | CivicAssetType>('all');
   const [feed, setFeed] = useState<FeedItem[]>([]);
   const [feedState, setFeedState] = useState<'loading' | 'ready' | 'failed'>('loading');
@@ -64,11 +90,18 @@ export default function CivicMap() {
     void load();
   }, []);
 
-  const verifiedAssetIds = useMemo(
+  const browsableAssetIds = useMemo(
     () =>
       new Set(
         civicAssets
-          .filter(asset => placeRegistryById.get(asset.id)?.verification.status === 'verified')
+          .filter(asset => {
+            const record = placeRegistryById.get(asset.id);
+            if (!record) return false;
+            if (record.entityKind === 'place') {
+              return record.verification.status === 'verified';
+            }
+            return record.verification.status !== 'needs-verification';
+          })
           .map(asset => asset.id)
       ),
     []
@@ -85,8 +118,9 @@ export default function CivicMap() {
       : null;
 
     return civicAssets.filter(asset => {
-      if (!verifiedAssetIds.has(asset.id)) return false;
+      if (!browsableAssetIds.has(asset.id)) return false;
       if (localIds && !localIds.has(asset.id)) return false;
+      if (civicEntityKindForCategory(asset.type) !== entityKind) return false;
 
       const typeMatch = type === 'all' || asset.type === type;
       const text = [
@@ -103,9 +137,10 @@ export default function CivicMap() {
 
       return typeMatch && (!needle || text.includes(needle));
     });
-  }, [barangay, query, type, verifiedAssetIds]);
+  }, [barangay, query, type, entityKind, browsableAssetIds]);
 
-  const verifiedAssetCount = verifiedAssetIds.size;
+  const browsableCount = browsableAssetIds.size;
+  const typeOptions = typeOptionsByEntityKind[entityKind];
 
   const activeReports = feed.filter(item => item.kind === 'report' && item.state === 'open').length;
   const proposals = feed.filter(item => item.kind === 'proposal' && item.state === 'open').length;
@@ -114,7 +149,7 @@ export default function CivicMap() {
     <>
       <SEO
         title="Civic Map"
-        description="Browse sourced public places, facilities, streets and transport locations in Makati, then open a place to report a problem or suggest an improvement."
+        description="Browse sourced civic places, infrastructure segments and transport routes in Makati, then open a record to report a problem or suggest an improvement."
         keywords="Makati civic map, public places, health center, public office, park, transport stop, report pothole, sidewalk, citizen report, improvement proposal"
       />
 
@@ -122,9 +157,9 @@ export default function CivicMap() {
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
             <div className="section-eyebrow">Civic Map</div>
-            <Heading>Find a place in Makati</Heading>
+            <Heading>Find civic places, segments and routes</Heading>
             <p className="mt-3 max-w-4xl text-lg leading-relaxed text-gray-700">
-              Browse sourced public places, facilities, streets and transport locations. Open a place to check its details, see community cases, report a problem or suggest an improvement.
+              Browse places as destinations, segments as bounded pieces of infrastructure, and routes as network/service records.
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-2">
@@ -142,12 +177,12 @@ export default function CivicMap() {
           >
             Report something near me <ArrowRight className="h-4 w-4" />
           </Link>
-          <a href="#places" className="brand-btn-secondary">Browse places</a>
+          <a href="#places" className="brand-btn-secondary">Browse records</a>
         </div>
 
         <LastReviewed
           date={civicMethodologyReviewed}
-          note="Place inventory and source review."
+          note="Civic registry and source review."
           className="mt-5"
         />
 
@@ -192,8 +227,8 @@ export default function CivicMap() {
 
         <div className="mt-7 grid grid-cols-1 gap-3 sm:grid-cols-3">
           <div className="rounded-2xl border border-primary-100 bg-white p-4">
-            <div className="text-2xl font-extrabold text-gray-950">{barangay ? visible.length : verifiedAssetCount}</div>
-            <div className="text-xs font-bold text-gray-600">{barangay ? 'verified places in scope' : 'verified places & segments'}</div>
+            <div className="text-2xl font-extrabold text-gray-950">{barangay ? visible.length : browsableCount}</div>
+            <div className="text-xs font-bold text-gray-600">{barangay ? 'records in scope' : 'browsable civic records'}</div>
           </div>
           <div className="rounded-2xl border border-primary-100 bg-white p-4">
             <div className="text-2xl font-extrabold text-gray-950">{feedState === 'ready' ? activeReports : '—'}</div>
@@ -210,32 +245,53 @@ export default function CivicMap() {
       </Section>
 
       <Section className="bg-[#f5f8f2]" id="places">
-        <div className="section-eyebrow">Places</div>
+        <div className="section-eyebrow">Civic registry</div>
         <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <Heading level={2}>Browse the place inventory</Heading>
+            <Heading level={2}>Browse {civicEntityKindLabels[entityKind].toLowerCase()} records</Heading>
             <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600">
-              Search by place, facility, street, transport location or barangay.
+              {entityKind === 'place'
+                ? 'Destination-like sites such as parks, facilities, offices, stops and terminals.'
+                : entityKind === 'segment'
+                  ? 'Bounded infrastructure records such as street, sidewalk, crossing and drainage segments.'
+                  : 'Network or service routes, kept separate from physical destinations.'}
             </p>
           </div>
           <div className="text-sm text-gray-500">
-            {barangay ? `${visible.length} verified places in Barangay ${barangay.name}` : `${visible.length} of ${verifiedAssetCount} verified places`}
+            {barangay ? `${visible.length} in Barangay ${barangay.name}` : `${visible.length} shown`}
           </div>
+        </div>
+
+        <div className="mt-5 flex flex-wrap gap-2" role="group" aria-label="Registry record type">
+          {(['place', 'segment', 'route'] as CivicEntityKind[]).map(kind => (
+            <button
+              key={kind}
+              type="button"
+              onClick={() => {
+                setEntityKind(kind);
+                setType('all');
+              }}
+              className={entityKind === kind ? 'brand-btn-primary' : 'brand-btn-secondary'}
+              aria-pressed={entityKind === kind}
+            >
+              {kind === 'place' ? 'Places' : kind === 'segment' ? 'Segments' : 'Routes'}
+            </button>
+          ))}
         </div>
 
         <div className="mt-6 grid gap-3 md:grid-cols-[1fr_18rem]">
           <label className="relative block">
-            <span className="sr-only">Search places</span>
+            <span className="sr-only">Search civic registry</span>
             <Search className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-500" />
             <input
               type="search"
               value={query}
               onChange={event => setQuery(event.target.value)}
-              placeholder="Search street, park, office or barangay"
+              placeholder="Search this registry view"
               className="w-full rounded-xl border border-gray-300 bg-white py-3 pl-12 pr-4"
             />
           </label>
-          <label className="sr-only" htmlFor="civic-asset-type">Place type</label>
+          <label className="sr-only" htmlFor="civic-asset-type">Record subtype</label>
           <select
             id="civic-asset-type"
             value={type}
@@ -261,8 +317,18 @@ export default function CivicMap() {
                   <span className="rounded-full bg-primary-50 px-2.5 py-1 text-primary-800">
                     {civicAssetTypeLabels[asset.type]}
                   </span>
-                  <span className="text-success-700">Verified</span>
-                  {asset.accessClass === 'public-access-private-managed' && (
+                  <span className={
+                    placeRegistryById.get(asset.id)?.verification.status === 'verified'
+                      ? 'text-success-700'
+                      : 'text-secondary-800'
+                  }>
+                    {placeRegistryById.get(asset.id)?.verification.status === 'verified'
+                      ? 'Verified'
+                      : entityKind === 'segment'
+                        ? 'Draft segment'
+                        : 'Provisional'}
+                  </span>
+                  {entityKind === 'place' && asset.accessClass === 'public-access-private-managed' && (
                     <span className="rounded-full bg-secondary-50 px-2.5 py-1 text-secondary-900">
                       Public access · privately managed
                     </span>
@@ -294,11 +360,11 @@ export default function CivicMap() {
 
         {visible.length === 0 && (
           <div className="mt-6 rounded-2xl border border-gray-200 bg-white p-6 text-sm text-gray-600">
-            <p>No verified place matches these filters.</p>
+            <p>No {entityKind} record matches these filters.</p>
             <button type="button" onClick={() => { setQuery(''); setType('all'); }} className="brand-btn-secondary mt-3">Clear filters</button>
           </div>
         )}
-        <p className="mt-6 text-sm text-gray-600">Place missing? <Link to="/get-involved?type=proposal&subject=Add%20a%20place%20to%20Civic%20Map#submission" className="font-bold text-primary-700 underline">Help document it</Link>.</p>
+        <p className="mt-6 text-sm text-gray-600">Record missing? <Link to="/get-involved?type=proposal&subject=Add%20a%20civic%20record%20to%20Civic%20Map#submission" className="font-bold text-primary-700 underline">Help document it</Link>.</p>
       </Section>
 
       <Section className="bg-white" id="what-you-can-do">
@@ -306,7 +372,7 @@ export default function CivicMap() {
           <CivicMapEmbed lat={14.5652} lng={121.0278} title="Makati Civic Map" zoom={14} />
 
           <div>
-            <div className="section-eyebrow">From a place</div>
+            <div className="section-eyebrow">From the civic registry</div>
             <Heading level={2}>What you can do</Heading>
             <div className="mt-5 space-y-3">
               <a
@@ -315,9 +381,9 @@ export default function CivicMap() {
               >
                 <Search className="mt-0.5 h-5 w-5 shrink-0 text-primary-700" />
                 <div>
-                  <div className="font-extrabold text-gray-950">Find a place</div>
+                  <div className="font-extrabold text-gray-950">Find a civic record</div>
                   <p className="mt-1 text-sm leading-relaxed text-gray-600">
-                    Look up a park, public facility, street segment or transport location.
+                    Look up a place, bounded infrastructure segment or transport route.
                   </p>
                 </div>
               </a>
@@ -343,7 +409,7 @@ export default function CivicMap() {
                 <div>
                   <div className="font-extrabold text-gray-950">Suggest an improvement</div>
                   <p className="mt-1 text-sm leading-relaxed text-gray-600">
-                    Choose the place first, then propose a specific change.
+                    Choose the relevant place or segment first, then propose a specific change.
                   </p>
                 </div>
               </a>
@@ -356,7 +422,7 @@ export default function CivicMap() {
                 <div>
                   <div className="font-extrabold text-gray-950">Help document Makati</div>
                   <p className="mt-1 text-sm leading-relaxed text-gray-600">
-                    Send a missing place, correction or source that should be added to the inventory.
+                    Send a missing place, segment, route, correction or source that should be added to the registry.
                   </p>
                 </div>
               </Link>
