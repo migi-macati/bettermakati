@@ -415,15 +415,43 @@
       "id": "W4-1i",
       "phase": "Statistics",
       "title": "Add statistics downloads and provenance integrity",
-      "status": "next",
+      "status": "complete",
       "maximumScope": "Downloads/source metadata only. No new indicator research.",
-      "stopWhen": "Displayed time series and comparison tables have reproducible downloads and source/definition metadata."
+      "stopWhen": "Displayed time series and comparison tables have reproducible downloads and source/definition metadata.",
+      "implementationFiles": [
+        "src/data/statisticsExports.ts",
+        "src/pages/Statistics.tsx",
+        "src/components/statistics/CityComparison.tsx",
+        "data/wave4-statistics-data-migration.json",
+        "scripts/check-city-indicators.mjs"
+      ],
+      "validation": {
+        "sharedExportLayer": [
+          "Population and city-comparison CSVs are generated in src/data/statisticsExports.ts rather than inside UI components.",
+          "Population export rows are generated from canonical population and growth indicator observations.",
+          "City-comparison export rows are generated from canonical cityComparisonRows; filtered downloads reproduce the currently selected comparison scope."
+        ],
+        "provenance": [
+          "Population download metadata carries definition, basis, geography, period, last-reviewed date and canonical official sources.",
+          "Population CSV includes geography, boundary basis and source ID in addition to displayed population/growth fields.",
+          "City-comparison metadata carries definition, valuation/population basis, geography, period, last-reviewed date and both PSA source links.",
+          "City-comparison CSV includes canonical source-table rank and source URL."
+        ],
+        "uiIntegrity": [
+          "Statistics no longer constructs population CSV locally and renders definition/geography/review metadata from the shared export layer.",
+          "CityComparison no longer constructs CSV locally; export filename follows the selected Top 10/NCR/outside-NCR filter and provenance text renders from shared metadata."
+        ],
+        "migration": "The final W4 Statistics data-migration item is marked migrated-in-W4-1i.",
+        "regression": "check:city-indicators now verifies shared export/provenance ownership, absence of local component CSV builders, required source/boundary fields and the completed W4-1g/W4-1i migration statuses.",
+        "focusedValidation": "Fresh source inspection confirms both displayed datasets use shared CSV/provenance metadata, local CSV constants are absent, filtered comparison downloads use the selected rows, and provenance fields are present.",
+        "executionBoundary": "No new indicator research, browser/device testing or independent Node/CI execution is claimed in this step."
+      }
     },
     {
       "id": "W4-2a",
       "phase": "Legislation",
       "title": "Audit Makati legislation sources and current page",
-      "status": "planned",
+      "status": "next",
       "maximumScope": "Source and product audit only: official Makati archive, City Monitor legislative records, Public Records and current external-search fallback.",
       "stopWhen": "Available record fields, archive limitations and duplicate sources are documented."
     },
@@ -685,9 +713,9 @@
     }
   ],
   "immediateNext": {
-    "id": "W4-1i",
-    "title": "Add statistics downloads and provenance integrity",
-    "maximumScope": "Downloads/source metadata only. No new indicator research."
+    "id": "W4-2a",
+    "title": "Audit Makati legislation sources and current page",
+    "maximumScope": "Source and product audit only: official Makati archive, City Monitor legislative records, Public Records and current external-search fallback."
   },
   "inheritedKnownItems": [
     {
