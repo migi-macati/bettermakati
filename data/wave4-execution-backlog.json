@@ -503,9 +503,26 @@
       "id": "W4-2h",
       "phase": "Legislation",
       "title": "Integrate legislation into Search and Public Records",
-      "status": "planned",
+      "status": "complete",
       "maximumScope": "Search/Public Records integration only.",
-      "stopWhen": "One canonical legislation result resolves consistently across global Search and Public Records."
+      "stopWhen": "One canonical legislation result resolves consistently across global Search and Public Records.",
+      "completedAt": "2026-09-26",
+      "implementationFiles": [
+        "src/data/legislationBrowserIndex.ts",
+        "src/pages/Legislation.tsx",
+        "src/components/home/ServiceSearch.tsx",
+        "src/pages/PublicRecords.tsx",
+        "src/data/publicRecords.ts",
+        "scripts/check-local-legislation.mjs"
+      ],
+      "validation": {
+        "canonicalRoute": "/legislation?record=<BetterMakati measure ID>",
+        "sharedIdentityHelper": true,
+        "globalSearchLazyLoad": "Full legislation browser index loads only for site-search queries of at least 3 characters while All or Records is active.",
+        "publicRecordsLazyLoad": "Legislation entity matches load only for queries of at least 3 characters when the category/source-class filters can include city legislation.",
+        "sourceCatalogBoundary": "Public Records retains source-level rows; individual ordinance/resolution identities link to the canonical Legislation record instead of being duplicated as source rows.",
+        "archiveRecordCount": 11355
+      }
     },
     {
       "id": "W4-3a",
@@ -708,11 +725,11 @@
       "stopWhen": "Wave 4 is closed only to the extent supported by evidence, with future work reopened as specific capabilities rather than vague unfinished work."
     }
   ],
-  "current": "W4-2h",
+  "current": "W4-3a",
   "immediateNext": {
-    "id": "W4-2h",
-    "title": "Integrate legislation into Search and Public Records",
-    "maximumScope": "Search/Public Records integration only."
+    "id": "W4-3a",
+    "title": "Audit Integrity, procurement and accountability overlap",
+    "maximumScope": "Current-state inventory only. Identify evidence already present in Accountability, Projects & Budget, procurement seeds, COA records and Integrity."
   },
   "carriedForward": [
     {
