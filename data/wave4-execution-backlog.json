@@ -985,9 +985,27 @@
       "id": "W4-4g",
       "phase": "Reports & Insights",
       "title": "Reuse Featured Reports on the homepage",
-      "status": "planned",
+      "status": "complete",
       "maximumScope": "Homepage featured-report module only, reusing the same canonical report data/component.",
-      "stopWhen": "Homepage and /reports cannot drift because both render the same report objects."
+      "stopWhen": "Homepage and /reports cannot drift because both render the same report objects.",
+      "completedAt": "2026-09-26",
+      "implementationFiles": [
+        "src/components/reports/ReportTeaser.tsx",
+        "src/components/home/FeaturedInsightsCarousel.tsx",
+        "src/pages/Reports.tsx",
+        "src/data/reports.ts",
+        "scripts/check-reports-landing.mjs",
+        "scripts/check-homepage-featured-reports.mjs",
+        "package.json"
+      ],
+      "validation": {
+        "canonicalOrder": "publicationReports is exported once from src/data/reports.ts as the shared newest-first publication order.",
+        "sharedComponent": "Homepage and /reports both render report date, headline, subheadline and Read more through src/components/reports/ReportTeaser.tsx.",
+        "homepageBehavior": "The carousel starts with publicationReports[0], cycles through the same ordered report set as /reports, and keeps its pause/previous/next controls.",
+        "reportsBehavior": "The Reports landing uses the same ReportTeaser component for the lead story and remaining report cards.",
+        "driftPrevention": "Neither FeaturedInsightsCarousel nor Reports.tsx owns duplicate report metadata markup or a second ordering rule.",
+        "scopeBoundary": "No other homepage module is changed in W4-4g."
+      }
     },
     {
       "id": "W4-4h",
@@ -1078,11 +1096,11 @@
       "stopWhen": "Wave 4 is closed only to the extent supported by evidence, with future work reopened as specific capabilities rather than vague unfinished work."
     }
   ],
-  "current": "W4-4g",
+  "current": "W4-4h",
   "immediateNext": {
-    "id": "W4-4g",
-    "title": "Reuse Featured Reports on the homepage",
-    "maximumScope": "Homepage featured-report module only, reusing the same canonical report data/component."
+    "id": "W4-4h",
+    "title": "Resolve Wave 3 Civic Reports partial capability",
+    "maximumScope": "Only the Wave 3 Civic Reports partial capability and its integration with the Wave 4 Reports layer."
   },
   "carriedForward": [
     {
