@@ -717,9 +717,40 @@
       "id": "W4-3g",
       "phase": "Integrity",
       "title": "Redesign Integrity page around evidence",
-      "status": "planned",
+      "status": "complete",
       "maximumScope": "Integrity page only. Replace standards-and-gaps sermon structure with searchable evidence, entities, audit trails and direct source links.",
-      "stopWhen": "The page surfaces what is documented, what is unresolved and where to inspect the record without labeling people/entities."
+      "stopWhen": "The page surfaces what is documented, what is unresolved and where to inspect the record without labeling people/entities.",
+      "completedAt": "2026-09-26",
+      "implementationFiles": [
+        "src/pages/Integrity.tsx",
+        "scripts/check-integrity-page.mjs",
+        "package.json"
+      ],
+      "validation": {
+        "searchableViews": [
+          "all records",
+          "suppliers and awards",
+          "disclosure research",
+          "audit trails",
+          "sources"
+        ],
+        "pageCounts": {
+          "indexedAwards": 21,
+          "supplierOrJointVentureIdentities": 17,
+          "disclosureRecords": 54,
+          "findingLevelAuditRecords": 3
+        },
+        "sourceAccess": "Procurement rows, historical role records, audit trails and the source registry expose direct external source links.",
+        "statusLanguage": "Disclosure retrieval gaps are presented as Not retrieved; audit trails show Unresolved only where exact continuity is not established.",
+        "removedLegacyStructure": [
+          "Public standards",
+          "Rules & records",
+          "Published gaps",
+          "Coverage gaps",
+          "Open-government doctrine"
+        ],
+        "guardrail": "The page presents records and source status without risk scores, wrongdoing labels or integrity ratings of people or entities."
+      }
     },
     {
       "id": "W4-4a",
@@ -866,11 +897,11 @@
       "stopWhen": "Wave 4 is closed only to the extent supported by evidence, with future work reopened as specific capabilities rather than vague unfinished work."
     }
   ],
-  "current": "W4-3g",
+  "current": "W4-4a",
   "immediateNext": {
-    "id": "W4-3g",
-    "title": "Redesign Integrity page around evidence",
-    "maximumScope": "Integrity page only. Replace standards-and-gaps sermon structure with searchable evidence, entities, audit trails and direct source links."
+    "id": "W4-4a",
+    "title": "Audit existing Featured Reports",
+    "maximumScope": "Content audit only of current reports, homepage/Reports presentation and underlying source links."
   },
   "carriedForward": [
     {
