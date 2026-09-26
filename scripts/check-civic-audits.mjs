@@ -279,7 +279,9 @@ for (const marker of [
 
 for (const marker of [
   'Choose a park to observe',
-  "to={'/civic-map/' + place.id + '#observe'}",
+  "'?campaign=' +",
+  'civicAuditPilot.id',
+  "'#observe'",
   'Record conditions',
 ]) {
   if (!pilotPageSource.includes(marker)) {
@@ -292,6 +294,32 @@ if (!appSource.includes('path="/civic-map/audits/park-accessibility-2026"')) {
 }
 if (!civicMapPage.includes('to="/civic-map/audits/park-accessibility-2026"')) {
   problems.push('Civic Map does not surface the park accessibility pilot.');
+}
+if (!pilotPageSource.includes("civicAuditPilot.id +")) {
+  problems.push('Park audit links do not carry campaign context.');
+}
+const civicAssetSource = await readFile('src/pages/CivicAsset.tsx', 'utf8');
+const observationFormSource = await readFile(
+  'src/components/civic/CivicObservationForm.tsx',
+  'utf8'
+);
+for (const marker of [
+  "searchParams.get('campaign') === civicAuditPilot.id",
+  'questionIds={',
+  'civicAuditPilot.questionIds',
+]) {
+  if (!civicAssetSource.includes(marker)) {
+    problems.push('Park audit detail-page question scoping is missing: ' + marker);
+  }
+}
+for (const marker of [
+  'questionIds?: readonly string[]',
+  'const allowed = new Set(questionIds)',
+  'questions: fullSet.questions.filter(question => allowed.has(question.id))',
+]) {
+  if (!observationFormSource.includes(marker)) {
+    problems.push('Observation form campaign question filter is missing: ' + marker);
+  }
 }
 
 for (const forbidden of [
