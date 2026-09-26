@@ -1517,12 +1517,43 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Publish one audit output",
       "maximumScope": "Publish one output for the 13-park accessibility pilot using only frozen target IDs and campaign-period observations. Coverage, dates, sample counts and question-level distributions only; no composite scores or rankings.",
-      "status": "next",
+      "status": "complete",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
       ],
-      "stopWhen": "One pilot output page or section is published from the frozen campaign data without adding another campaign."
+      "stopWhen": "One live output is published for the frozen park pilot; no additional campaign is introduced.",
+      "implementationFiles": [
+        "api/civic-audit.js",
+        "src/pages/CivicAuditResults.tsx",
+        "src/pages/CivicAuditPilot.tsx",
+        "src/App.tsx",
+        "scripts/check-civic-audits.mjs",
+        "scripts/generate-site-files.mjs",
+        "scripts/postbuild-routes.mjs",
+        "scripts/check-built-metadata.mjs",
+        "data/civic-audit-pilot-park-accessibility-2026.json"
+      ],
+      "validation": {
+        "publicRoute": "/civic-map/audits/park-accessibility-2026/results",
+        "liveApi": "/api/civic-audit?campaign=makati-public-park-accessibility-2026-pilot",
+        "frozenTargets": 13,
+        "campaignQuestions": [
+          "entrance-access",
+          "step-free-access",
+          "seating",
+          "toilets"
+        ],
+        "campaignWindow": "2026-09-26T10:03:00+08:00 to 2026-10-26T23:59:59+08:00",
+        "countingRule": "Only frozen-target observations inside the campaign period with at least one campaign question are counted.",
+        "substantiveRule": "not-observed values are excluded from per-question distributions and substantive required-question coverage.",
+        "missingCoverage": "All 13 frozen parks remain listed even with zero observations.",
+        "unavailableState": "If the live feed fails, the public page shows unavailable rather than false zeroes.",
+        "initialObservedState": "GitHub repository search found 0 Civic Observation threads at publication, so the live output correctly starts at 0 observations.",
+        "noScores": "No overall score, average rating, weighted composite, grade, ranking or best/worst park label is generated.",
+        "integrityGate": "check:civic-audits locks API target IDs, campaign dates and question IDs to the frozen pilot definition.",
+        "ci": "Latest completed CI after the live output API/page reports only the same three pre-existing unused-import ESLint errors and six existing warnings; no new audit-output lint errors were reported."
+      }
     },
     {
       "id": "W3R-8a",
@@ -1531,7 +1562,7 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Revise Participation Hub",
       "maximumScope": "Participate page only. Align entry points to official participation, local problem reporting, place improvements, documentation, corrections/sources, BetterMakati ideas and volunteering.",
-      "status": "planned",
+      "status": "next",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
@@ -1826,9 +1857,9 @@
     }
   ],
   "immediateNext": {
-    "id": "W3R-7c",
-    "title": "Publish one audit output",
-    "maximumScope": "Publish one output for the 13-park accessibility pilot using only frozen target IDs and campaign-period observations. Coverage, dates, sample counts and question-level distributions only; no composite scores or rankings."
+    "id": "W3R-8a",
+    "title": "Revise Participation Hub",
+    "maximumScope": "Participate page only. Align entry points to official participation, local problem reporting, place improvements, documentation, corrections/sources, BetterMakati ideas and volunteering."
   },
   "reopenedExecutionOrder": [
     "3C-2a",
