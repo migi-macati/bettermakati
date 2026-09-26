@@ -418,9 +418,9 @@
     "uiChanges": 0
   },
   "nextImplementationStep": {
-    "id": "W3R-7a",
-    "title": "Define civic audit campaigns",
-    "constraint": "Campaign schema/workflow only: geography, place set, questions, period and completion. No generalized campaign UI."
+    "id": "W3R-7b",
+    "title": "Pilot one civic audit",
+    "constraint": "One bounded pilot using a verified registry-ready place set. Do not use street/sidewalk geography-wide claims until segment coverage is expanded and verified."
   },
   "betterBarangayReuse": {
     "workstream": "W3R-3a",
@@ -631,5 +631,17 @@
     ],
     "explanation": "W3R-4a made the Civic Map browser verified-only. All three existing street-segment seeds are pilot records without identity/coordinate source URLs, so they migrated as provisional and disappeared from the default browser.",
     "rule": "Street segments remain part of the Place Registry model. Do not claim barangay- or citywide street/sidewalk audit coverage until the segment inventory is expanded and verified."
+  },
+  "civicAuditCampaigns": {
+    "workstream": "W3R-7a",
+    "schemaFile": "data/civic-audit-campaign-schema.json",
+    "rules": [
+      "Campaign targets are frozen explicit canonical place IDs.",
+      "Target places must be verified at freeze time.",
+      "Campaign questions reuse structured-observation question sets.",
+      "Coverage and missing places must remain visible.",
+      "Campaign completion is not a condition score.",
+      "No composite scores or rankings are allowed."
+    ]
   }
 }
