@@ -163,19 +163,95 @@ const Services: React.FC = () => {
           keywords="Makati services, permits, clearances, certificates, IDs, barangay, national government, health, business, civil registry"
         />
 
+        <section className="border-b border-primary-900 bg-primary-800 text-white">
+          <div className="container px-5 py-12 md:px-6 md:py-16 lg:px-8">
+            <div className="max-w-4xl">
+              <div className="mb-3 text-xs font-extrabold uppercase tracking-[0.12em] text-secondary-400 md:text-sm">
+                Services
+              </div>
+              <h1 className="text-4xl font-extrabold tracking-tight text-white md:text-6xl">
+                What do you need to get done?
+              </h1>
+              <p className="mt-4 max-w-3xl text-lg leading-relaxed text-primary-50 md:text-xl">
+                Find city, barangay and major national services used by people and businesses in Makati.
+              </p>
+
+              <label className="relative mt-7 block max-w-3xl">
+                <span className="sr-only">Search government services</span>
+                <Search
+                  className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-500"
+                  aria-hidden="true"
+                />
+                <input
+                  type="search"
+                  value={directoryQuery}
+                  onChange={event => setDirectoryQuery(event.target.value)}
+                  placeholder="Search permit, clearance, ID, test or service"
+                  className="w-full rounded-xl border border-white/30 bg-white py-3.5 pl-12 pr-4 text-base text-gray-950 shadow-sm outline-none placeholder:text-gray-500 focus:border-secondary-400 focus:ring-2 focus:ring-secondary-300/40"
+                />
+              </label>
+
+              <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-primary-50">
+                <span className="font-medium text-primary-100">Start with:</span>
+                <Link to="/services/business/new-business-permit" className="min-h-11 content-center font-semibold underline decoration-white/40 underline-offset-4 hover:text-secondary-300">
+                  Business permit
+                </Link>
+                <Link to="/services/health-services/makati-health-plus" className="min-h-11 content-center font-semibold underline decoration-white/40 underline-offset-4 hover:text-secondary-300">
+                  Yellow Card
+                </Link>
+                <Link to="/services/guide/community-tax-certificate" className="min-h-11 content-center font-semibold underline decoration-white/40 underline-offset-4 hover:text-secondary-300">
+                  Cedula
+                </Link>
+                <Link to="/services/housing-land-use/real-property-tax-payment" className="min-h-11 content-center font-semibold underline decoration-white/40 underline-offset-4 hover:text-secondary-300">
+                  Real property tax
+                </Link>
+              </div>
+
+              <div className="mt-5 flex flex-wrap gap-2" aria-label="Government level">
+                {serviceDirectoryLevels.map(level => (
+                  <button
+                    key={level}
+                    type="button"
+                    onClick={() => setDirectoryLevel(level)}
+                    aria-pressed={directoryLevel === level}
+                    className={
+                      directoryLevel === level
+                        ? 'min-h-11 rounded-full bg-secondary-500 px-4 py-2 text-sm font-bold text-primary-900'
+                        : 'min-h-11 rounded-full border border-white/30 bg-white/10 px-4 py-2 text-sm font-semibold text-white hover:border-white/60 hover:bg-white/15'
+                    }
+                  >
+                    {level}
+                  </button>
+                ))}
+              </div>
+
+              <label className="mt-4 block max-w-sm">
+                <span className="sr-only">Service category</span>
+                <select
+                  value={directoryCategory}
+                  onChange={event => setDirectoryCategory(event.target.value)}
+                  className="w-full rounded-xl border border-white/30 bg-white px-4 py-3 text-sm font-semibold text-gray-900"
+                >
+                  <option value="All">All categories</option>
+                  {serviceDirectoryCategories.map(item => (
+                    <option key={item} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            </div>
+          </div>
+        </section>
+
         <Section className="bg-[#fffdf8]">
-          <div className="section-eyebrow">Services</div>
-          <Heading>Find a government service</Heading>
-          <Text className="mt-2 max-w-3xl text-gray-600">
-            City, barangay and major national services used by people and businesses in Makati.
-          </Text>
           <LastReviewed
             note="Requirements can change. Open the linked official source before acting."
-            className="mt-4"
+            className="mt-0"
           />
 
           {barangay && (
-            <div className="mt-4 rounded-2xl border border-primary-100 bg-white p-5">
+            <div className="mt-5 rounded-2xl border border-primary-100 bg-white p-5">
               <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
                 Local starting point
               </div>
@@ -201,7 +277,7 @@ const Services: React.FC = () => {
                   Official barangay page
                 </a>
                 <Link to={'/barangays/' + barangay.slug} className="brand-btn-secondary">
-                  Barangay dashboard
+                  Barangay homepage
                 </Link>
               </div>
             </div>
@@ -280,60 +356,6 @@ const Services: React.FC = () => {
             compact
             className="mt-7"
           />
-
-          <div className="mt-7 max-w-3xl">
-            <label className="relative block">
-              <span className="sr-only">Search government services</span>
-              <Search
-                className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-500"
-                aria-hidden="true"
-              />
-              <input
-                type="search"
-                value={directoryQuery}
-                onChange={event => setDirectoryQuery(event.target.value)}
-                placeholder="Search permit, clearance, ID, test or service"
-                className="w-full rounded-2xl border border-gray-300 bg-white py-3.5 pl-12 pr-4 text-base outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
-              />
-            </label>
-          </div>
-
-          <div className="mt-5 flex flex-wrap gap-2" aria-label="Government level">
-            {serviceDirectoryLevels.map(level => (
-              <button
-                key={level}
-                type="button"
-                onClick={() => setDirectoryLevel(level)}
-                aria-pressed={directoryLevel === level}
-                className={
-                  directoryLevel === level
-                    ? 'rounded-full bg-primary-800 px-4 py-2 text-sm font-bold text-white'
-                    : 'rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-semibold text-gray-700 hover:border-primary-300'
-                }
-              >
-                {level}
-              </button>
-            ))}
-          </div>
-
-          <div className="mt-4 max-w-sm">
-            <label className="text-sm font-bold text-gray-800" htmlFor="service-category-filter">
-              Category
-            </label>
-            <select
-              id="service-category-filter"
-              value={directoryCategory}
-              onChange={event => setDirectoryCategory(event.target.value)}
-              className="mt-2 w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm"
-            >
-              <option value="All">All categories</option>
-              {serviceDirectoryCategories.map(item => (
-                <option key={item} value={item}>
-                  {item}
-                </option>
-              ))}
-            </select>
-          </div>
         </Section>
 
         <Section className="bg-white">
