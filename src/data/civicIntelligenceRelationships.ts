@@ -153,6 +153,14 @@ const nonEmpty = (value: string, field: string) => {
   }
 };
 
+const integrityRecordKinds = new Set<CivicIntelligenceIntegrityRecordKind>([
+  'procurement-award',
+  'disclosure',
+  'audit-finding',
+  'audit-action',
+  'audit-resolution-trail',
+]);
+
 export const civicIntelligenceRefKey = (
   ref: CivicIntelligenceReference
 ): string => {
@@ -182,6 +190,15 @@ const semanticEdgeKey = (
 
 const validateReference = (ref: CivicIntelligenceReference) => {
   nonEmpty(ref.id, 'reference id');
+
+  if (ref.type === 'integrity-record') {
+    if (!integrityRecordKinds.has(ref.recordKind)) {
+      throw new Error(
+        'Unsupported Civic Intelligence integrity record kind: ' +
+          ref.recordKind
+      );
+    }
+  }
 
   if (ref.type === 'ecosystem-resource') {
     if (!['bettergov', 'betterlgu'].includes(ref.ecosystem)) {
