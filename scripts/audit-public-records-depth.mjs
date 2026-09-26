@@ -15,6 +15,13 @@ for (const source of [
   'annualBudgetDocuments',
   'actualFiscalHistory',
   'cityMonitorSources',
+  'cityIndicators',
+  'cityIndicatorSources',
+  'localLegislationRecords',
+  'localLegislationSources',
+  'integrityGraphNodes',
+  'integrityRelationshipSources',
+  'reports',
   'election2025Sources',
   'makatiMayoralHistory',
   'makatiHistory',
@@ -118,8 +125,29 @@ if (!generator.includes("writeFile('public/page-freshness-state.json'")) {
   problems.push('Generated site files no longer publish page freshness state.');
 }
 
-if (!catalog.includes("export const publicRecordsReviewed = '24 September 2026';")) {
-  problems.push('Public Records review date is not current for Wave 1.5.');
+if (!catalog.includes("export const publicRecordsReviewed = '26 September 2026';")) {
+  problems.push('Public Records review date is not current.');
+}
+
+for (const marker of [
+  'export interface PublicRecordContext',
+  'contexts: PublicRecordContext[]',
+  'export const publicRecordById',
+  'export const publicRecordByUrl',
+]) {
+  if (!catalog.includes(marker)) {
+    problems.push('Public Records Wave 4 integration is missing: ' + marker);
+  }
+}
+
+for (const marker of [
+  "to={'/records/' + record.id}",
+  'View record',
+  'record.contexts',
+]) {
+  if (!page.includes(marker)) {
+    problems.push('Public Records catalog/detail integration is missing: ' + marker);
+  }
 }
 
 if (problems.length) {
