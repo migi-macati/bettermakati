@@ -298,6 +298,33 @@ if (!civicMapPage.includes('to="/civic-map/audits/park-accessibility-2026"')) {
   problems.push('Civic Map does not surface the park accessibility pilot.');
 }
 
+const apiTargetBlock = auditApiSource.match(
+  /targetEntityIds:\s*\[([\s\S]*?)\],\s*familyId/
+)?.[1] ?? '';
+const apiTargetIds = [
+  ...apiTargetBlock.matchAll(/'([^']+)'/g),
+].map(match => match[1]);
+
+if (
+  apiTargetIds.length !== pilotTargetIds.length ||
+  apiTargetIds.some(id => !pilotTargetIds.includes(id)) ||
+  pilotTargetIds.some(id => !apiTargetIds.includes(id))
+) {
+  problems.push('Live civic audit API target IDs are out of sync with the frozen campaign.');
+}
+
+for (const questionId of pilotCampaign.questions.questionIds) {
+  if (!auditApiSource.includes("'" + questionId + "'")) {
+    problems.push('Live civic audit API is missing campaign question: ' + questionId);
+  }
+}
+if (!auditApiSource.includes("startsAt: '" + pilotCampaign.period.startsAt + "'")) {
+  problems.push('Live civic audit API start date is out of sync.');
+}
+if (!auditApiSource.includes("endsAt: '" + pilotCampaign.period.endsAt + "'")) {
+  problems.push('Live civic audit API end date is out of sync.');
+}
+
 for (const marker of [
   "const CAMPAIGN = {",
   "targetEntityIds: [",
