@@ -1,4 +1,4 @@
-import { civicObservationEntityById } from '../data/civic-observation-entity-index.mjs';
+import { civicEntityById } from '../data/civic-entity-index.mjs';
 
 const WINDOW_MS = 60_000;
 const DAY_MS = 86_400_000;
@@ -495,7 +495,7 @@ export default async function handler(req, res) {
   if (!payload.entityId) {
     return res.status(400).json({ error: 'Choose a canonical civic entity first.' });
   }
-  const canonicalEntity = civicObservationEntityById.get(payload.entityId);
+  const canonicalEntity = civicEntityById.get(payload.entityId);
   if (!canonicalEntity) {
     return res.status(400).json({ error: 'Unknown canonical civic entity.' });
   }
