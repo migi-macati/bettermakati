@@ -1,0 +1,254 @@
+{
+  "schemaVersion": 1,
+  "wave": "Wave 4",
+  "title": "Civic Intelligence",
+  "closedAt": "2026-09-27",
+  "closureStatus": "closed-with-bounded-and-deferred-capabilities",
+  "closurePrinciple": "Close implemented capabilities only to the extent supported by their declared scope and evidence. Data absence, unavailable public records, blocked browser verification and unrelated repository CI blockers remain explicit rather than being converted into completion claims.",
+  "executionSummary": {
+    "plannedMicrosteps": 46,
+    "completedBeforeClosure": 45,
+    "completedAfterClosure": 46,
+    "scope": "Statistics, local legislation, Integrity evidence, Featured Reports, shared Civic Intelligence relationships, Search, Public Records and Wave 4 UX/relationship auditing."
+  },
+  "complete": [
+    {
+      "id": "statistics-core",
+      "capability": "Canonical Statistics layer",
+      "evidence": [
+        "Typed city-indicator schema and canonical dataset implemented for the approved Wave 4 indicator inventory.",
+        "30 implemented canonical indicators are searchable and rendered through the Statistics experience.",
+        "Barangay population/statistics integration, reproducible downloads and provenance metadata are implemented."
+      ],
+      "boundary": "Complete for the approved Wave 4 indicator set; not a claim that every useful Makati statistic is now represented."
+    },
+    {
+      "id": "legislation-archive",
+      "capability": "Official Makati legislation archive normalization and browsing",
+      "evidence": [
+        "11,359 retrievable official archive rows were enumerated.",
+        "11,355 canonical normalized ordinance/resolution records were produced.",
+        "4 rows remain explicitly unresolved and 2 normalization collision groups are recorded.",
+        "All 20 seed records reconcile to the normalized archive.",
+        "The full browser index remains lazy-loaded in Search and Legislation."
+      ],
+      "boundary": "Complete for the reproducibly enumerated official Makati archive result set only; no claim is made about legislative history outside that archive."
+    },
+    {
+      "id": "council-session-transcript-pipeline",
+      "capability": "Council-session normalization and transcript pipeline",
+      "evidence": [
+        "Official session-video sources can be normalized into City Monitor session records.",
+        "Transcript states preserve provenance/model/date and distinguish generated text from official records.",
+        "Legislation can attach exact session/video/transcript evidence when an action is explicit."
+      ],
+      "boundary": "The pipeline is implemented; session/measure linkage remains evidence-driven and is not inferred from fuzzy titles, numbers or speaker identity."
+    },
+    {
+      "id": "integrity-model-and-graph",
+      "capability": "Integrity evidence model and provenance graph",
+      "evidence": [
+        "17 supplier/JV entities are normalized from canonical procurement data.",
+        "21 procurement awards feed the Integrity layer.",
+        "54 disclosure research records are classified.",
+        "3 finding-level audit records, 4 follow-up actions and 3 resolution trails are represented.",
+        "126 canonical graph nodes and 110 verified Integrity relationships are validated."
+      ],
+      "boundary": "The model and graph are complete for the records researched in Wave 4; evidence coverage itself is classified separately below."
+    },
+    {
+      "id": "featured-reports",
+      "capability": "Featured Reports & Insights v2",
+      "evidence": [
+        "Report schema v2 is implemented with one required synthesis and evidence-aware content blocks.",
+        "Existing reports were migrated and two additional flagship reports were published.",
+        "The live publication set contains 5 Featured Reports.",
+        "Reports expose underlying canonical records and reverse analysis backlinks."
+      ],
+      "boundary": "Complete for the current 5-report publication set; this does not cap future editorial reporting."
+    },
+    {
+      "id": "civic-reports-outcomes",
+      "capability": "Wave 3 Civic Reports outcome presentation gap",
+      "evidence": [
+        "W3R-CAP-12 was resolved during W4-4h.",
+        "Case-outcome stages, threshold-gated rates, observation freshness and audit coverage now replace volume/popularity-led emphasis.",
+        "Wave 3 now carries zero partial capabilities for that previously identified gap."
+      ],
+      "boundary": "Operational civic-report outcomes remain separate from editorial /reports."
+    },
+    {
+      "id": "shared-civic-intelligence",
+      "capability": "Shared Civic Intelligence relationship model",
+      "evidence": [
+        "Typed relationship references and evidence bases are implemented.",
+        "Stored edges reject self-links, duplicate/reverse semantic duplicates and unresolved endpoints.",
+        "Statistics, Legislation, Integrity and Reports project into the shared relationship model without duplicating canonical domain records."
+      ]
+    },
+    {
+      "id": "search",
+      "capability": "Global Search Civic Intelligence integration",
+      "evidence": [
+        "30 Statistics indicators, 17 Integrity entities and 5 Featured Reports are statically indexed with canonical keys.",
+        "11,355 legislation records remain lazy-loaded for relevant queries.",
+        "Canonical-key deduplication is independent of title similarity.",
+        "BetterGov and BetterLGU remain external handoffs rather than cloned local records."
+      ]
+    },
+    {
+      "id": "public-records",
+      "capability": "Wave 4 Public Records/document integration",
+      "evidence": [
+        "Statistics, Legislation, Integrity and Featured Report sources merge into Public Records by exact source URL.",
+        "Public Records supports multiple BetterMakati contexts per source.",
+        "/records/:id is the canonical source-detail route.",
+        "PDF sources have an inline preview with an original-source fallback."
+      ],
+      "boundary": "Source identity is exact-URL based; documents are not merged by title, topic or fuzzy similarity."
+    },
+    {
+      "id": "wave4-ux-static-audit",
+      "capability": "Wave 4 anti-sermon, design and static human/relationship audit",
+      "evidence": [
+        "Core Civic Intelligence surfaces share the publication visual language and content-first labels.",
+        "Internal/meta labels identified in W4-5h were removed.",
+        "Four canonical user journeys are statically verified.",
+        "Touch-target, focus, reduced-motion, overflow and source-link issues found during W4-5i were corrected."
+      ],
+      "boundary": "Static/source verification only; live-browser verification is deferred separately."
+    }
+  ],
+  "bounded": [
+    {
+      "id": "statistics-coverage",
+      "capability": "Statistics subject coverage",
+      "reason": "Wave 4 implemented the approved 30-indicator inventory, not an unlimited city-statistics catalogue.",
+      "reopenWhen": "A specific new decision/use case requires an additional indicator and an authoritative Makati-compatible source can be defined."
+    },
+    {
+      "id": "legislation-history",
+      "capability": "Historical legislation completeness beyond the official enumerated archive",
+      "reason": "The normalized registry is complete only for the official Makati archive result set reproducibly enumerated on 26 September 2026.",
+      "reopenWhen": "A separate authoritative historical corpus outside the current archive is identified."
+    },
+    {
+      "id": "legislation-crosslinks",
+      "capability": "Legislation cross-domain relationship coverage",
+      "reason": "Only 2 measure-to-service relationships currently have explicit canonical evidence. Barangay/place/project/Accountability/City Monitor/Public Records measure links remain zero rather than inferred.",
+      "reopenWhen": "A canonical legislation record gains an explicit target ID, exact source cross-reference, City Monitor ID or exact shared Public Records URL."
+    },
+    {
+      "id": "statistics-crosslinks",
+      "capability": "Aggregate-indicator links to places/services/projects",
+      "reason": "Current citywide indicators do not establish record-level attribution to individual places, services, projects or Accountability entries.",
+      "reopenWhen": "A source explicitly defines the record-level relationship."
+    },
+    {
+      "id": "integrity-place-links",
+      "capability": "Integrity-to-place relationship coverage",
+      "reason": "Procurement location/barangay strings are not sufficient to identify a Place Registry entity.",
+      "reopenWhen": "A source-specific canonical place ID or exact place relationship becomes available."
+    },
+    {
+      "id": "ecosystem-links",
+      "capability": "BetterGov/BetterLGU relationship coverage",
+      "reason": "Ecosystem links are added only where they materially extend a record or comparison. Generic ecosystem decoration is intentionally excluded.",
+      "reopenWhen": "A specific Wave 4 record/report has a defensible BetterGov or BetterLGU continuation/comparison use."
+    },
+    {
+      "id": "public-records-crosslinks",
+      "capability": "Public Records cross-domain document identity",
+      "reason": "Crosslinks require exact URL identity, so semantically identical documents with different URLs are not auto-merged.",
+      "reopenWhen": "A stronger source-issued persistent identifier becomes available or an explicit record-level document cross-reference is added."
+    }
+  ],
+  "partial": [
+    {
+      "id": "integrity-beneficial-ownership-disclosures",
+      "capability": "Entity-specific beneficial-ownership/conflict/recusal evidence coverage",
+      "status": "research-classified-but-records-not-retrieved",
+      "evidence": [
+        "17 normalized entities each have beneficial-ownership, conflict-of-interest and recusal research classifications.",
+        "51 entity/question records are classified unavailable for retrieval through the authoritative public surfaces checked.",
+        "3 historical source-stated role records are preserved separately."
+      ],
+      "nonInference": "Unavailable does not mean absent, non-filed, concealed, unrelated, innocent or culpable.",
+      "reopenWhen": "Authoritative entity-specific BO/conflict/recusal records become publicly retrievable or a lawful registry lookup path becomes available."
+    },
+    {
+      "id": "integrity-audit-closure",
+      "capability": "Finding-specific audit closure coverage",
+      "status": "three-unresolved-trails-plus-one-source-only-record",
+      "evidence": [
+        "3 finding-level trails contain later response or implementation evidence.",
+        "All 3 remain explicitly unresolved because no later public record maps a closure status to the exact earlier finding.",
+        "The 2024 SEF compliance audit remains source-only because finding-level text is not currently retrievable."
+      ],
+      "nonInference": "Later controls or reporting do not establish item-specific closure; unresolved status does not establish continuing wrongdoing.",
+      "reopenWhen": "A later COA/city record explicitly references the exact finding/recommendation or the 2024 finding-level text becomes retrievable."
+    }
+  ],
+  "deferred": [
+    {
+      "id": "live-browser-verification",
+      "capability": "Rendered viewport/browser verification",
+      "reason": "The connected Vercel deployment fetch denied access and the public fetcher could not access bettermakati.org during W4-5i.",
+      "includes": [
+        "mobile/desktop viewport screenshots",
+        "runtime console verification",
+        "visual focus-order verification",
+        "production PDF embedding behavior"
+      ],
+      "reopenWhen": "The deployment becomes accessible through an authorized Vercel connection or a browser-capable session can reach the production/preview site."
+    },
+    {
+      "id": "wave4-ci-execution",
+      "capability": "Full CI execution of Wave 4 guards",
+      "reason": "The repo-wide quality workflow stops at the pre-existing BetterBarangay Place Registry check:barangays marker mismatch before reaching Wave 4-specific checks.",
+      "evidence": "CI run 36247651807 passed lint and check:content, then failed at check:barangays with: BetterBarangay Place Registry integration is missing: to={'/civic-map/' + place.id}",
+      "wave4Attribution": "This blocker predates W4-5i and is not evidence that a Wave 4 guard failed.",
+      "reopenWhen": "The BetterBarangay Place Registry guard/implementation mismatch is resolved, then the full quality/build chain should be rerun."
+    }
+  ],
+  "futureCapabilities": [
+    {
+      "id": "future-live-browser-audit",
+      "source": "deferred/live-browser-verification",
+      "action": "Run production or preview browser verification across Statistics, Legislation, Integrity, Reports and Public Records at mobile and desktop widths."
+    },
+    {
+      "id": "future-integrity-registry-retrieval",
+      "source": "partial/integrity-beneficial-ownership-disclosures",
+      "action": "Recheck authoritative BO/conflict/recusal registries when entity-specific public retrieval becomes available."
+    },
+    {
+      "id": "future-audit-continuity",
+      "source": "partial/integrity-audit-closure",
+      "action": "Attach item-specific closure only when a later authoritative record explicitly references the exact finding/recommendation."
+    },
+    {
+      "id": "future-legislation-relationships",
+      "source": "bounded/legislation-crosslinks",
+      "action": "Add typed legislation relationships only from explicit canonical IDs, exact cross-references or exact shared source identity."
+    },
+    {
+      "id": "future-statistics-expansion",
+      "source": "bounded/statistics-coverage",
+      "action": "Add new indicators as named capabilities when a concrete use case and authoritative compatible source justify them."
+    },
+    {
+      "id": "future-repo-ci-unblock",
+      "source": "deferred/wave4-ci-execution",
+      "action": "Resolve the BetterBarangay Place Registry guard mismatch and rerun the complete quality/build pipeline."
+    }
+  ],
+  "carriedForwardOutsideWave4": [
+    {
+      "item": "Place Registry unresolved coverage",
+      "owner": "Wave 3 Place Registry/source reconciliation",
+      "treatment": "Not reclassified as a Wave 4 defect."
+    }
+  ],
+  "finalStatement": "Wave 4 is closed. Its declared implementations are complete for their stated scopes. Evidence gaps, cross-link boundaries, live-browser verification and the unrelated repo-wide CI blocker remain explicitly classified above and may be reopened only as the named capabilities listed here."
+}
