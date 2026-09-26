@@ -1,0 +1,434 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-09-26",
+  "title": "Wave 4 — Civic Intelligence",
+  "status": "active",
+  "objective": "Turn BetterMakati's existing records, place infrastructure and participation systems into a connected civic-intelligence layer that helps people understand Makati through sourced statistics, legislation, integrity records and high-quality reports.",
+  "sequence": [
+    "Statistics",
+    "Legislation",
+    "Integrity",
+    "Reports & Insights",
+    "Cross-linking and closure"
+  ],
+  "executionDoctrine": {
+    "cadence": "One user 'Next' executes exactly one micro-step.",
+    "scopeCap": [
+      "One functional concern per micro-step.",
+      "Prefer 2–5 files and 1–3 commits.",
+      "Research, implementation and whole-site QA do not happen in the same micro-step.",
+      "If a step expands unexpectedly, split it before continuing.",
+      "One focused verification pass, then stop."
+    ],
+    "deployment": "Do not manually deploy after every micro-step while build-rate pressure remains. Commit cleanly and report CI/deployment evidence separately."
+  },
+  "productDoctrine": [
+    "No sermons. Pages should do the job rather than explain why BetterMakati exists.",
+    "No completeness bragging, methodology speeches, guardrail repetition or self-congratulation in normal page copy. Put necessary methodology where it belongs and let the feature speak for itself.",
+    "Start from the citizen's question or task, then show the evidence.",
+    "Use green as the dominant BetterMakati visual field and gold selectively for identity/emphasis; preserve the existing warm-white reading surfaces and restrained typography.",
+    "Prefer strong opening statements, clear headlines, compact summaries, charts/tables and direct record links over explanatory walls of text.",
+    "One report equals one synthesis. A bundle of unrelated observations is not one report.",
+    "Featured report cards show headline, subheadline, date and Read more. One report per card. Do not use 'Makati Overview' as a catch-all label.",
+    "Inline citations belong beside factual claims. Source lists support the article but do not replace inline evidence.",
+    "Distinguish fact, calculation, inference and uncertainty. Never fill source gaps by inference.",
+    "Use official Makati sources first for Makati-specific records, then authoritative national sources, then credible secondary sources where necessary.",
+    "Preserve current-boundary comparability. Never mix historical 33-barangay Makati and current 23-barangay Makati without an explicit geographic treatment.",
+    "Canonical assets are shared infrastructure. Statistics, legislation, integrity records and reports should link to Place Registry entities when the source explicitly identifies a place; never fuzzy-link by proximity, barangay or similar names.",
+    "Reuse canonical barangays, officials, services, projects, Accountability records, City Monitor records and public records instead of creating parallel copies.",
+    "Relationships must be explicit and typed. Cross-linking is not a reason to duplicate data.",
+    "A page-specific data object should own only information unique to that page; shared facts should live in canonical datasets.",
+    "Search should surface the same canonical entity rather than a duplicate search-only record.",
+    "Barangay slicing applies only where the underlying record has canonical barangay scope. Never infer local attribution from free text alone.",
+    "No generic scores, star ratings, popularity rankings or invented composite indexes unless the underlying methodology and denominator genuinely justify them.",
+    "Integrity pages are evidence indexes, not accusation engines. Do not label a person, supplier or entity corrupt, suspicious or risky from association, concentration or missing data.",
+    "Political and legislative information stays descriptive and sourced: records, actions, dates, text, sponsors/authors when officially documented, and lifecycle evidence. Do not rank officials or legislation.",
+    "Missing public records are source gaps, not evidence of wrongdoing.",
+    "Procurement award, contract, implementation, payment, audit finding and resolution are separate stages and must not be collapsed.",
+    "Reports & Insights should synthesize information already supported elsewhere in BetterMakati whenever possible, linking internally to the underlying city record before sending users outward.",
+    "Cross-functional links should be useful in both directions where the relationship is stable: place ↔ record, legislation ↔ service/topic/place, integrity entity ↔ procurement/project, report ↔ underlying records.",
+    "Avoid loops: every related-link module should take the user somewhere meaningfully deeper, not back to a page with no additional context.",
+    "Mobile, keyboard, touch-target, focus and reduced-motion requirements from Wave 3 remain baseline requirements, not a final cleanup task."
+  ],
+  "preservedFoundations": [
+    "Wave 3 Place Registry and typed place/segment/route model.",
+    "BetterBarangay persistent scope model.",
+    "Accountability Ledger, Projects & Budget, City Monitor and Public Records.",
+    "Wave 3 case lifecycle, structured observations and civic audits.",
+    "Global Search canonical-place indexing.",
+    "Existing Featured Reports article model as content to migrate, not a constraint on the Wave 4 schema.",
+    "Existing Statistics, Legislation and Integrity pages as starting implementations to audit rather than discard blindly."
+  ],
+  "explicitNonGoals": [
+    "Do not build a generic AI-generated report factory.",
+    "Do not scrape and publish every ordinance, statistic or supplier merely to maximize count.",
+    "Do not create political rankings, official performance scores, corruption risk scores or contractor blacklists.",
+    "Do not replace official legislation or audit records with BetterMakati summaries.",
+    "Do not make the Reports section a repository of snippets.",
+    "Do not reopen completed Wave 3 Place Registry source reconciliation unless a Wave 4 relationship exposes a specific error.",
+    "Do not combine unresolved Wave 3 participation-report redesign with unrelated Wave 4 statistics work before the Reports phase."
+  ],
+  "workstreams": [
+    {
+      "id": "W4-0",
+      "phase": "Foundation",
+      "title": "Freeze Wave 4 plan and doctrine",
+      "status": "complete",
+      "maximumScope": "Planning only. No product implementation.",
+      "stopWhen": "Sequence, micro-steps, accumulated product doctrine, cross-function rules and explicit non-goals are frozen."
+    },
+    {
+      "id": "W4-1a",
+      "phase": "Statistics",
+      "title": "Audit current Statistics capabilities and gaps",
+      "status": "next",
+      "maximumScope": "Inventory existing Statistics page, barangay population data, city-comparison data, finance links and duplicated/hard-coded facts. No external research.",
+      "stopWhen": "A current-state statistics inventory identifies canonical sources, duplicates, missing dimensions and candidates for reuse."
+    },
+    {
+      "id": "W4-1b",
+      "phase": "Statistics",
+      "title": "Define canonical city-indicator schema",
+      "status": "planned",
+      "maximumScope": "Schema only: indicator ID, value, unit, period, geography, definition, source, revision, comparability and relationships.",
+      "stopWhen": "One reusable indicator model can represent citywide and barangay statistics without copying display strings into pages."
+    },
+    {
+      "id": "W4-1c",
+      "phase": "Statistics",
+      "title": "Inventory population and demographic sources",
+      "status": "planned",
+      "maximumScope": "Official-source research only for comparable population/demographic series under current Makati geography.",
+      "stopWhen": "Population/demographic source inventory has explicit time, geography and inclusion/exclusion rules."
+    },
+    {
+      "id": "W4-1d",
+      "phase": "Statistics",
+      "title": "Inventory economic and business indicators",
+      "status": "planned",
+      "maximumScope": "Official-source research only for GDP/economic structure, establishments/employment/business indicators that can be stated consistently.",
+      "stopWhen": "Each candidate indicator has a source, definition, period and decision: implement, hold or reject."
+    },
+    {
+      "id": "W4-1e",
+      "phase": "Statistics",
+      "title": "Inventory service, land and infrastructure indicators",
+      "status": "planned",
+      "maximumScope": "Official-source research only; prioritize measures that connect to services, barangays, facilities or Place Registry records.",
+      "stopWhen": "A bounded source-backed indicator set is frozen with no inferred counts from incomplete Place Registry coverage."
+    },
+    {
+      "id": "W4-1f",
+      "phase": "Statistics",
+      "title": "Implement canonical indicator dataset",
+      "status": "planned",
+      "maximumScope": "Data layer only for the approved W4-1c/1d/1e indicator set.",
+      "stopWhen": "Implemented indicators pass geography/period/source validation and existing hard-coded duplicates have a migration disposition."
+    },
+    {
+      "id": "W4-1g",
+      "phase": "Statistics",
+      "title": "Redesign Statistics landing around questions and trends",
+      "status": "planned",
+      "maximumScope": "Statistics page only. Use canonical indicators, strong visual hierarchy, charts/tables and concise interpretation.",
+      "stopWhen": "The page answers current scale, change over time and comparable context without sermons or duplicated data."
+    },
+    {
+      "id": "W4-1h",
+      "phase": "Statistics",
+      "title": "Integrate barangay statistics",
+      "status": "planned",
+      "maximumScope": "Barangay-scoped statistical view only. Reuse canonical barangay data and indicator definitions.",
+      "stopWhen": "Applicable city indicators can be sliced to canonical barangays without pretending unavailable barangay data exists."
+    },
+    {
+      "id": "W4-1i",
+      "phase": "Statistics",
+      "title": "Add statistics downloads and provenance integrity",
+      "status": "planned",
+      "maximumScope": "Downloads/source metadata only. No new indicator research.",
+      "stopWhen": "Displayed time series and comparison tables have reproducible downloads and source/definition metadata."
+    },
+    {
+      "id": "W4-2a",
+      "phase": "Legislation",
+      "title": "Audit Makati legislation sources and current page",
+      "status": "planned",
+      "maximumScope": "Source and product audit only: official Makati archive, City Monitor legislative records, Public Records and current external-search fallback.",
+      "stopWhen": "Available record fields, archive limitations and duplicate sources are documented."
+    },
+    {
+      "id": "W4-2b",
+      "phase": "Legislation",
+      "title": "Define local legislation registry schema",
+      "status": "planned",
+      "maximumScope": "Schema only for ordinances/resolutions: identifier, number, title, type, date, text/document, topics, lifecycle evidence, canonical relationships and provenance.",
+      "stopWhen": "Schema supports exact local records and City Monitor links without inventing enactment status."
+    },
+    {
+      "id": "W4-2c",
+      "phase": "Legislation",
+      "title": "Build first ordinance registry batch",
+      "status": "planned",
+      "maximumScope": "One bounded official-source batch of ordinances. No resolutions in the same step.",
+      "stopWhen": "The batch is source-complete for its declared period/topic and every record has a stable ID and official source."
+    },
+    {
+      "id": "W4-2d",
+      "phase": "Legislation",
+      "title": "Build first resolution registry batch",
+      "status": "planned",
+      "maximumScope": "One bounded official-source batch of resolutions. No ordinance expansion in the same step.",
+      "stopWhen": "The batch is source-complete for its declared period/topic and every record has a stable ID and official source."
+    },
+    {
+      "id": "W4-2e",
+      "phase": "Legislation",
+      "title": "Connect legislation to City Monitor lifecycle",
+      "status": "planned",
+      "maximumScope": "Explicit record-to-record relationships only. No fuzzy number/title matching.",
+      "stopWhen": "Current legislative activity can link to the canonical ordinance/resolution record where identity is explicit."
+    },
+    {
+      "id": "W4-2f",
+      "phase": "Legislation",
+      "title": "Add legislation topics and civic relationships",
+      "status": "planned",
+      "maximumScope": "Explicit typed links to affected service, barangay, Place Registry entity, project/accountability record or public record only when supported by the legislative text/source.",
+      "stopWhen": "A small verified relationship set proves the model without broad automatic tagging."
+    },
+    {
+      "id": "W4-2g",
+      "phase": "Legislation",
+      "title": "Redesign Legislation page around local records",
+      "status": "planned",
+      "maximumScope": "Legislation page only. Canonical local search/filter/browse becomes primary; external site search becomes fallback.",
+      "stopWhen": "Users can find and open BetterMakati-indexed ordinances/resolutions and reach the official text without leaving the site first."
+    },
+    {
+      "id": "W4-2h",
+      "phase": "Legislation",
+      "title": "Integrate legislation into Search and Public Records",
+      "status": "planned",
+      "maximumScope": "Search/Public Records integration only.",
+      "stopWhen": "One canonical legislation result resolves consistently across global Search and Public Records."
+    },
+    {
+      "id": "W4-3a",
+      "phase": "Integrity",
+      "title": "Audit Integrity, procurement and accountability overlap",
+      "status": "planned",
+      "maximumScope": "Current-state inventory only. Identify evidence already present in Accountability, Projects & Budget, procurement seeds, COA records and Integrity.",
+      "stopWhen": "Every current integrity concept has an owner dataset and duplicate/gap disposition."
+    },
+    {
+      "id": "W4-3b",
+      "phase": "Integrity",
+      "title": "Define integrity evidence and entity schemas",
+      "status": "planned",
+      "maximumScope": "Schema only for suppliers/contractors, awards/contracts, ownership/disclosure references, audit findings and corrective-action evidence.",
+      "stopWhen": "The model supports factual relationships without risk scores, accusations or guilt-by-association."
+    },
+    {
+      "id": "W4-3c",
+      "phase": "Integrity",
+      "title": "Normalize supplier and contractor entities",
+      "status": "planned",
+      "maximumScope": "Existing Makati procurement records only. Create canonical entity identities and award relationships; no beneficial-ownership research yet.",
+      "stopWhen": "Repeated suppliers resolve to one entity and procurement records retain exact source lineage."
+    },
+    {
+      "id": "W4-3d",
+      "phase": "Integrity",
+      "title": "Research public ownership and disclosure records",
+      "status": "planned",
+      "maximumScope": "Authoritative-source research only for beneficial ownership, conflict, recusal or disclosure records relevant to implemented Makati procurement entities.",
+      "stopWhen": "Each candidate link is classified source-backed, unavailable, restricted or not applicable; missing data is not treated as a finding."
+    },
+    {
+      "id": "W4-3e",
+      "phase": "Integrity",
+      "title": "Build audit finding resolution trails",
+      "status": "planned",
+      "maximumScope": "Existing COA/accountability findings only. Link finding → recommendation → management response → later corrective/status evidence where exact continuity is documented.",
+      "stopWhen": "At least one complete or explicitly unresolved trail demonstrates the model without inferred closure."
+    },
+    {
+      "id": "W4-3f",
+      "phase": "Integrity",
+      "title": "Implement verified integrity relationships",
+      "status": "planned",
+      "maximumScope": "Only W4-3c/3d/3e verified relationships. No new research.",
+      "stopWhen": "Integrity entity graph links procurement/audit/accountability records with provenance and no broken targets."
+    },
+    {
+      "id": "W4-3g",
+      "phase": "Integrity",
+      "title": "Redesign Integrity page around evidence",
+      "status": "planned",
+      "maximumScope": "Integrity page only. Replace standards-and-gaps sermon structure with searchable evidence, entities, audit trails and direct source links.",
+      "stopWhen": "The page surfaces what is documented, what is unresolved and where to inspect the record without labeling people/entities."
+    },
+    {
+      "id": "W4-4a",
+      "phase": "Reports & Insights",
+      "title": "Audit existing Featured Reports",
+      "status": "planned",
+      "maximumScope": "Content audit only of current reports, homepage/Reports presentation and underlying source links.",
+      "stopWhen": "Each existing report is classified keep, rewrite, merge into another synthesis or retire; no new report is written."
+    },
+    {
+      "id": "W4-4b",
+      "phase": "Reports & Insights",
+      "title": "Define report schema v2",
+      "status": "planned",
+      "maximumScope": "Schema only: one synthesis, headline, subheadline, date, paragraphs/sections, inline evidence, charts/tables, related canonical records, methodology note only when necessary.",
+      "stopWhen": "The schema supports a news/article reading experience and typed links to statistics, legislation, integrity, place, project and accountability records."
+    },
+    {
+      "id": "W4-4c",
+      "phase": "Reports & Insights",
+      "title": "Migrate existing reports to report schema v2",
+      "status": "planned",
+      "maximumScope": "Existing reports only. No new research except resolving broken citations.",
+      "stopWhen": "Retained reports use one-synthesis structure, inline evidence and canonical internal sources."
+    },
+    {
+      "id": "W4-4d",
+      "phase": "Reports & Insights",
+      "title": "Publish one Statistics-derived flagship report",
+      "status": "planned",
+      "maximumScope": "Exactly one high-quality synthesis using the Wave 4 Statistics layer. No report batch.",
+      "stopWhen": "The report makes one defensible claim, cites every factual basis and links back to underlying indicators."
+    },
+    {
+      "id": "W4-4e",
+      "phase": "Reports & Insights",
+      "title": "Publish one records-derived flagship report",
+      "status": "planned",
+      "maximumScope": "Exactly one high-quality synthesis from legislation/integrity/accountability records where the evidence supports a meaningful story.",
+      "stopWhen": "The report has one synthesis and distinguishes source facts from BetterMakati analysis."
+    },
+    {
+      "id": "W4-4f",
+      "phase": "Reports & Insights",
+      "title": "Redesign Reports & Insights landing",
+      "status": "planned",
+      "maximumScope": "Reports landing only. One report per card; headline, subheadline, date, Read more; strong carousel/list hierarchy and no overview/meta copy.",
+      "stopWhen": "The page reads like a high-quality publication index rather than a repository."
+    },
+    {
+      "id": "W4-4g",
+      "phase": "Reports & Insights",
+      "title": "Reuse Featured Reports on the homepage",
+      "status": "planned",
+      "maximumScope": "Homepage featured-report module only, reusing the same canonical report data/component.",
+      "stopWhen": "Homepage and /reports cannot drift because both render the same report objects."
+    },
+    {
+      "id": "W4-4h",
+      "phase": "Reports & Insights",
+      "title": "Resolve Wave 3 Civic Reports partial capability",
+      "status": "planned",
+      "maximumScope": "/civic-map/reports only. Replace volume/popularity-led emphasis with threshold-gated case outcomes, observation freshness and audit coverage where publication rules allow.",
+      "stopWhen": "The known W3R-CAP-12 gap is either closed by implementation or remains explicitly deferred because thresholds are not met."
+    },
+    {
+      "id": "W4-5a",
+      "phase": "Cross-linking and closure",
+      "title": "Define shared civic-intelligence relationship model",
+      "status": "planned",
+      "maximumScope": "Relationship schema/helper only. Typed references across indicator, legislation, integrity entity, report, place, barangay, service, project/accountability, City Monitor and public record.",
+      "stopWhen": "Relationships can be stored once and resolved without circular data duplication."
+    },
+    {
+      "id": "W4-5b",
+      "phase": "Cross-linking and closure",
+      "title": "Connect Statistics to canonical city entities",
+      "status": "planned",
+      "maximumScope": "Explicit relationships from implemented indicators to barangays, services, places/assets, budget/project records and reports where semantically valid.",
+      "stopWhen": "A small verified set demonstrates reusable bidirectional navigation without inferred place attribution."
+    },
+    {
+      "id": "W4-5c",
+      "phase": "Cross-linking and closure",
+      "title": "Connect Legislation across the site",
+      "status": "planned",
+      "maximumScope": "Legislation relationships/backlinks only: services, barangays, places/assets, City Monitor, Public Records and Accountability.",
+      "stopWhen": "Users can move from a law/council record to the relevant civic entity and back without duplicate copies."
+    },
+    {
+      "id": "W4-5d",
+      "phase": "Cross-linking and closure",
+      "title": "Connect Integrity evidence across the site",
+      "status": "planned",
+      "maximumScope": "Integrity relationships/backlinks only: procurement, projects, Accountability, audit findings, places when source-specific and Public Records.",
+      "stopWhen": "Supplier/audit/entity evidence is reachable from the underlying record and vice versa."
+    },
+    {
+      "id": "W4-5e",
+      "phase": "Cross-linking and closure",
+      "title": "Connect Reports to their underlying records",
+      "status": "planned",
+      "maximumScope": "Report-related-record modules and backlinks only.",
+      "stopWhen": "Every report exposes the canonical data/record set it synthesizes, and applicable records can surface the report as analysis rather than source evidence."
+    },
+    {
+      "id": "W4-5f",
+      "phase": "Cross-linking and closure",
+      "title": "Extend global Search to Civic Intelligence",
+      "status": "planned",
+      "maximumScope": "Search indexing only for canonical indicators, legislation, integrity entities and reports.",
+      "stopWhen": "Search returns one canonical destination per entity and avoids duplicate title-only records."
+    },
+    {
+      "id": "W4-5g",
+      "phase": "Cross-linking and closure",
+      "title": "Integrate Public Records and documents",
+      "status": "planned",
+      "maximumScope": "Public Records/document viewer integration only for new Wave 4 source types.",
+      "stopWhen": "Primary documents are reachable from the record pages and record pages are reachable from document entries where identity is explicit."
+    },
+    {
+      "id": "W4-5h",
+      "phase": "Cross-linking and closure",
+      "title": "Run anti-sermon and design consistency pass",
+      "status": "planned",
+      "maximumScope": "Wave 4 surfaces only. Remove explanatory/meta copy, duplicate methodology, bragging and inconsistent visual patterns; do not add new functionality.",
+      "stopWhen": "Statistics, Legislation, Integrity and Reports share the BetterMakati visual language and let the records/features speak for themselves."
+    },
+    {
+      "id": "W4-5i",
+      "phase": "Cross-linking and closure",
+      "title": "Run Civic Intelligence human/relationship audit",
+      "status": "planned",
+      "maximumScope": "Wave 4 surfaces and cross-links only. Check source integrity, broken relationships, mobile/accessibility baseline and user journeys.",
+      "stopWhen": "Every Wave 4 surface has an evidence-based status and every canonical relationship resolves."
+    },
+    {
+      "id": "W4-5j",
+      "phase": "Cross-linking and closure",
+      "title": "Reclassify and close Wave 4",
+      "status": "planned",
+      "maximumScope": "Classification/closure only. Record complete, bounded, partial and deferred capabilities without inflating completion.",
+      "stopWhen": "Wave 4 is closed only to the extent supported by evidence, with future work reopened as specific capabilities rather than vague unfinished work."
+    }
+  ],
+  "immediateNext": {
+    "id": "W4-1a",
+    "title": "Audit current Statistics capabilities and gaps",
+    "maximumScope": "Inventory existing Statistics page, barangay population data, city-comparison data, finance links and duplicated/hard-coded facts. No external research."
+  },
+  "inheritedKnownItems": [
+    {
+      "id": "wave3-civic-reports-partial",
+      "disposition": "Owned by W4-4h",
+      "note": "Do not treat the Wave 3 public feedback-loop presentation gap as closed until W4-4h is executed."
+    },
+    {
+      "id": "place-registry-linear-coverage",
+      "disposition": "Not reopened globally",
+      "note": "Wave 4 may link only to existing canonical records. Any specific registry error discovered through a relationship gets a bounded correction."
+    }
+  ]
+}
