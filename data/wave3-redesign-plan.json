@@ -290,13 +290,40 @@
     {
       "id": "W3R-5a",
       "title": "Specify Report something near me",
-      "status": "next",
-      "maximumScope": "Flow specification only: location, nearby place/street, issue, details/evidence, submit, fallback. No implementation."
+      "status": "complete",
+      "maximumScope": "Flow specification only: location, nearby place/street, issue, details/evidence, submit, fallback. No implementation.",
+      "specificationFile": "data/nearby-reporting-spec.json",
+      "validation": {
+        "specificationFile": "data/nearby-reporting-spec.json",
+        "flowSteps": [
+          "locate",
+          "match-place",
+          "issue",
+          "details",
+          "review-submit",
+          "result"
+        ],
+        "nearbyMatching": {
+          "initialRadiusMeters": 250,
+          "expandIfEmptyMeters": 500,
+          "maximumCandidates": 5,
+          "verifiedOnly": true,
+          "autoSelect": false
+        },
+        "locationOnly": "Explicitly supported without creating or inventing a Place Registry ID.",
+        "privacy": "Location permission only after explicit user action; raw device point/accuracy remain ephemeral for matching; submitted incident coordinates are rounded before public persistence.",
+        "duplicateSemantics": {
+          "matchedPlace": "same place + same category + <=75 m",
+          "locationOnly": "same category + <=75 m"
+        },
+        "emergency": "Existing 911 termination behavior preserved.",
+        "implementationBoundary": "W3R-5a changed specification/planning files only. No location UI, browser geolocation or submission code was implemented."
+      }
     },
     {
       "id": "W3R-5b",
       "title": "Implement nearby place matching",
-      "status": "planned",
+      "status": "next",
       "maximumScope": "Location-to-nearby-place selection only. Do not modify report submission yet."
     },
     {
@@ -451,9 +478,9 @@
     }
   ],
   "immediateNext": {
-    "id": "W3R-5a",
-    "title": "Specify Report something near me",
-    "maximumScope": "Design/specification only. Define the location-first reporting flow and matching behavior before implementation."
+    "id": "W3R-5b",
+    "title": "Implement nearby place matching",
+    "maximumScope": "Location selection and candidate matching only. Do not connect report submission yet."
   },
   "capabilityDispositionAuditFile": "data/wave3-capability-disposition-audit.json",
   "completedSteps": [
@@ -467,7 +494,8 @@
     "W3R-3c",
     "W3R-3d",
     "W3R-4a",
-    "W3R-4b"
+    "W3R-4b",
+    "W3R-5a"
   ],
   "placeRegistrySchemaFile": "data/place-registry-schema.json",
   "placeRegistryDataFile": "src/data/placeRegistry.ts"
