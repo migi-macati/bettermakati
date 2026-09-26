@@ -216,11 +216,10 @@ for (const forbidden of [
   }
 }
 
-if (!civicApi.includes("'[Civic Reviews]'")) {
-  problems.push('Legacy Civic Reviews read prefix must remain available.');
-}
-if (!discussionSource.includes("reviews: 'Legacy reviews'")) {
-  problems.push('Historical rating records must be labeled Legacy reviews.');
+for (const retiredReviewMarker of ["'[Civic Reviews]'", "reviews: 'Legacy reviews'", "| 'reviews'"]) {
+  if (civicApi.includes(retiredReviewMarker) || discussionSource.includes(retiredReviewMarker)) {
+    problems.push('Nonexistent legacy review compatibility remains: ' + retiredReviewMarker);
+  }
 }
 
 for (const forbidden of [
