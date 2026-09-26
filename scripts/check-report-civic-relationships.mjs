@@ -96,7 +96,8 @@ for (let index = 0; index < slugMatches.length; index += 1) {
 }
 
 for (const marker of [
-  "import { reportRelatedRecords } from '../data/reportCivicRelationships'",
+  'reportRelatedRecords,',
+  "from '../data/reportCivicRelationships'",
   'const underlyingRecords = reportRelatedRecords(report.slug)',
   'Records',
   'Related records',
