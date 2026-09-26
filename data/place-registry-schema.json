@@ -418,9 +418,9 @@
     "uiChanges": 0
   },
   "nextImplementationStep": {
-    "id": "W3R-5b",
-    "title": "Implement nearby place matching",
-    "constraint": "Location selection and candidate matching only. Do not connect report submission yet."
+    "id": "W3R-5c",
+    "title": "Connect nearby reporting to existing civic submission",
+    "constraint": "Reporting flow only. Preserve emergency handling, duplicate detection, barangay context, evidence and tracking. Stop after focused E2E validation."
   },
   "betterBarangayReuse": {
     "workstream": "W3R-3a",
@@ -516,6 +516,20 @@
       "Location-only reports have no canonical placeId and never create Place Registry records.",
       "Browser geolocation is requested only after explicit user action.",
       "Existing emergency, duplicate, fallback and case-tracking behavior is preserved."
+    ]
+  },
+  "nearbyPlaceMatching": {
+    "workstream": "W3R-5b",
+    "route": "/civic-map/report",
+    "implementation": "src/pages/CivicNearbyReport.tsx",
+    "rules": [
+      "Geolocation is requested only after explicit user action.",
+      "Automatic suggestions use verified canonical places with point coordinates.",
+      "Nearby search checks 250 m first, then 500 m only when the first radius is empty.",
+      "At most five candidates are shown and none is auto-selected.",
+      "Manual place search and manual coordinates work without geolocation permission.",
+      "Location-only selection is supported without creating a canonical place record.",
+      "Submission remains disconnected until W3R-5c."
     ]
   }
 }
