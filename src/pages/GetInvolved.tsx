@@ -1,7 +1,8 @@
 import { FormEvent, useState } from 'react';
-import { useSearchParams } from 'react-router';
+import { Link, useSearchParams } from 'react-router';
 import {
   Bug,
+  ClipboardCheck,
   Database,
   ExternalLink,
   HeartHandshake,
@@ -15,6 +16,7 @@ import { Heading } from '../components/ui/Heading';
 import SEO from '../components/SEO';
 import { communityTools } from '../data/communityTools';
 import { findBarangay } from '../data/barangays';
+import { civicAuditPilot } from '../data/civicAuditPilot';
 
 const actionCards = [
   {
@@ -44,7 +46,7 @@ const actionCards = [
   {
     type: 'volunteer',
     title: 'Volunteer',
-    description: 'Offer research, data, design or development help.',
+    description: 'Offer research, data, design, field documentation or development help.',
     icon: HeartHandshake,
   },
   {
@@ -157,15 +159,43 @@ export default function GetInvolved() {
     <>
       <SEO
         title="Get Involved"
-        description="Suggest ideas, share sources, report corrections, contact or volunteer for BetterMakati."
+        description="Contribute to BetterMakati through corrections, sources, proposals, ideas, volunteering and live civic audits."
       />
       <Section className="bg-[#fffdf8]">
         <div className="section-eyebrow">Get Involved</div>
-        <Heading>Help improve BetterMakati</Heading>
+        <Heading>Contribute to BetterMakati</Heading>
         <p className="max-w-3xl text-gray-600">
-          BetterMakati gets better when residents, researchers and city users
-          point us to stronger sources, missing information and useful tools.
+          Send a correction, source, proposal, idea or offer to help.
         </p>
+
+        <div className="mt-7 rounded-2xl border border-primary-200 bg-primary-50 p-5 md:p-6">
+          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <div className="max-w-3xl">
+              <div className="flex items-center gap-2 text-sm font-bold text-primary-800">
+                <ClipboardCheck className="h-5 w-5" />
+                Live civic audit
+              </div>
+              <h2 className="mt-2 text-xl font-extrabold text-gray-950">
+                Join the public park accessibility check
+              </h2>
+              <p className="mt-2 text-sm leading-relaxed text-gray-700">
+                Visit one of 13 pilot parks and record entrance access, step-free access,
+                seating and toilets.
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <Link to={civicAuditPilot.route} className="brand-btn-primary">
+                Record conditions
+              </Link>
+              <Link
+                to={civicAuditPilot.route + '/results'}
+                className="brand-btn-secondary"
+              >
+                View live output
+              </Link>
+            </div>
+          </div>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 mt-8">
           {actionCards.map(action => {
@@ -237,10 +267,9 @@ export default function GetInvolved() {
           <div className="section-eyebrow">Submission</div>
           <Heading>Send something to BetterMakati</Heading>
           <p className="mt-2 text-sm leading-relaxed text-gray-600">
-            When the native project workflow is available, a successful
-            submission returns a public tracking link. This tracks
-            BetterMakati&apos;s handling of the submission, not an official City
-            Government case unless a government channel separately accepts it.
+            Successful submissions return a public BetterMakati tracking link when
+            the native workflow is available. This is not a City Government case
+            unless an official channel separately accepts it.
           </p>
 
           <form
