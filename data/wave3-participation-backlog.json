@@ -1914,12 +1914,20 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Reclassify and close Wave 3",
       "maximumScope": "Supersede the old capability classification with an evidence-based redesigned Wave 3 classification, record deferrals, and close only what is actually complete.",
-      "status": "next",
+      "status": "complete",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
       ],
-      "stopWhen": "Supersede the old capability classification with an evidence-based redesigned Wave 3 classification, record deferrals, and close only what is actually complete."
+      "stopWhen": "Supersede the old capability classification with an evidence-based redesigned Wave 3 classification, record deferrals, and close only what is actually complete.",
+      "completedAt": "2026-09-26",
+      "commits": [
+        "c9b5025e7c4869f942693491fff8416136b64822",
+        "a53569cf192429cbbff8cc8f9f193c3345174986",
+        "bbf5f47006530e206c23bc69dd907cf9ecf04c0c"
+      ],
+      "classificationFile": "data/wave3-redesigned-capability-classification.json",
+      "closureStatus": "closed-with-explicit-deferrals"
     }
   ],
   "executionOrder": [
@@ -1984,11 +1992,7 @@
       "disposition": "Split by backend semantics into 3I-3 general participation and 3I-4 Civic Map."
     }
   ],
-  "immediateNext": {
-    "id": "W3R-8b",
-    "title": "Revise Get Involved",
-    "maximumScope": "Get Involved only. Preserve general submissions and add civic-audit volunteering/handoffs where appropriate."
-  },
+  "immediateNext": null,
   "reopenedExecutionOrder": [
     "3C-2a",
     "3C-2b",
@@ -2038,7 +2042,7 @@
     }
   },
   "wave3Revision": {
-    "status": "active",
+    "status": "closed-with-explicit-deferrals",
     "revisedAt": "2026-09-25",
     "planFile": "data/wave3-redesign-plan.json",
     "title": "Places, Reporting & Civic Participation",
@@ -2067,10 +2071,16 @@
       "W3R-11b",
       "W3R-11c",
       "W3R-11d",
-      "W3R-11e"
+      "W3R-11e",
+      "W3R-11f"
     ],
-    "current": "W3R-11f",
-    "capabilityDispositionAuditFile": "data/wave3-capability-disposition-audit.json"
+    "current": null,
+    "capabilityDispositionAuditFile": "data/wave3-capability-disposition-audit.json",
+    "closedAt": "2026-09-26",
+    "classificationFile": "data/wave3-redesigned-capability-classification.json",
+    "legacyClassificationFile": "data/wave3-participation-classification.json",
+    "fullyComplete": false,
+    "closureNote": "All revised Wave 3 execution steps are complete. One redesigned public-reports capability remains partial and other named capabilities remain explicitly deferred, threshold-gated, source-dependent or unverified; future work should reopen those items individually."
   },
   "knownCoverageGaps": {
     "streetSegments": {
@@ -2094,5 +2104,19 @@
     "route": "Network/service records. Route definition and lifecycle are primary; routes are not proximity-matched as nearby places.",
     "observationIdentity": "New structured observations use entityId/entityKind.",
     "civicCaseIdentity": "New civic cases use entityId/entityKind, with placeId/assetId retained only as compatibility fallbacks for older records."
+  },
+  "wave3Closure": {
+    "status": "closed-with-explicit-deferrals",
+    "closedAt": "2026-09-26",
+    "planFile": "data/wave3-redesign-plan.json",
+    "classificationFile": "data/wave3-redesigned-capability-classification.json",
+    "allRevisedPlanStepsComplete": true,
+    "fullyComplete": false,
+    "knownPartial": [
+      "W3R-CAP-12"
+    ],
+    "knownDeferred": [
+      "W3R-CAP-11"
+    ]
   }
 }
