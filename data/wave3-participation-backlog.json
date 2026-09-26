@@ -2080,7 +2080,7 @@
     "classificationFile": "data/wave3-redesigned-capability-classification.json",
     "legacyClassificationFile": "data/wave3-participation-classification.json",
     "fullyComplete": false,
-    "closureNote": "All revised Wave 3 execution steps are complete. One redesigned public-reports capability remains partial and other named capabilities remain explicitly deferred, threshold-gated, source-dependent or unverified; future work should reopen those items individually."
+    "closureNote": "All revised Wave 3 execution steps are complete and the former Civic Reports partial capability has been closed by W4-4h. Remaining boundaries are explicitly deferred, threshold-gated, source-dependent or unverified and should be reopened only as individually scoped work."
   },
   "knownCoverageGaps": {
     "streetSegments": {
@@ -2112,9 +2112,7 @@
     "classificationFile": "data/wave3-redesigned-capability-classification.json",
     "allRevisedPlanStepsComplete": true,
     "fullyComplete": false,
-    "knownPartial": [
-      "W3R-CAP-12"
-    ],
+    "knownPartial": [],
     "knownDeferred": [
       "W3R-CAP-11"
     ]
