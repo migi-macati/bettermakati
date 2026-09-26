@@ -50,10 +50,10 @@ interface BrowserLegislationIndex {
 const fallbackRecords: BrowserLegislationRecord[] = localLegislationRecords.map(
   record => [
     '',
-    record[1],
+    record.measureType,
     record.reference.officialNumber,
     record.reference.seriesYear ?? null,
-    record[4],
+    record.title,
     record.documents.find(document => document.kind === 'official-text')?.url ??
       null,
   ]
@@ -144,8 +144,8 @@ export default function Legislation() {
 
     matches.sort(
       (a, b) =>
-        (b.seriesYear ?? 0) - (a.seriesYear ?? 0) ||
-        b.officialNumber.localeCompare(a.officialNumber, undefined, {
+        (b[3] ?? 0) - (a[3] ?? 0) ||
+        b[2].localeCompare(a[2], undefined, {
           numeric: true,
         })
     );
@@ -465,7 +465,7 @@ export default function Legislation() {
                 <span>{record.congress}</span>
               </div>
               <h3 className="mt-3 text-base font-extrabold leading-snug text-gray-950">
-                {record[4]}
+                {record.title}
               </h3>
               <p className="mt-2 text-sm text-gray-600">Filed {record.filed}</p>
 
