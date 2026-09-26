@@ -136,8 +136,13 @@ export default function CivicMap() {
         </div>
 
         <div className="mt-5 flex flex-wrap gap-3">
-          <a href="#places" className="brand-btn-primary">Browse places <ArrowRight className="h-4 w-4" /></a>
-          <a href="#what-you-can-do" className="brand-btn-secondary">What you can do</a>
+          <Link
+            to={withBarangayScope('/civic-map/report', barangay?.slug)}
+            className="brand-btn-primary"
+          >
+            Report something near me <ArrowRight className="h-4 w-4" />
+          </Link>
+          <a href="#places" className="brand-btn-secondary">Browse places</a>
         </div>
 
         <LastReviewed
@@ -317,18 +322,18 @@ export default function CivicMap() {
                 </div>
               </a>
 
-              <a
-                href="#places"
+              <Link
+                to={withBarangayScope('/civic-map/report', barangay?.slug)}
                 className="flex gap-3 rounded-xl border border-gray-200 bg-[#fffdf8] p-4 transition hover:border-primary-300"
               >
                 <Wrench className="mt-0.5 h-5 w-5 shrink-0 text-primary-700" />
                 <div>
-                  <div className="font-extrabold text-gray-950">Report a problem</div>
+                  <div className="font-extrabold text-gray-950">Report something near me</div>
                   <p className="mt-1 text-sm leading-relaxed text-gray-600">
-                    Open the affected place, then file or update a non-emergency case.
+                    Use your location or search for the affected place, then report the problem.
                   </p>
                 </div>
-              </a>
+              </Link>
 
               <a
                 href="#places"
