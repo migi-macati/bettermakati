@@ -5,12 +5,6 @@ export type { CivicAccessClass, CivicAsset, CivicAssetType } from './placeRegist
 
 export type CivicContributionKind = 'report' | 'proposal' | 'update';
 
-export interface CivicCriterion {
-  id: string;
-  label: string;
-  description: string;
-}
-
 export interface CivicIssueCategory {
   id: string;
   label: string;
@@ -28,62 +22,6 @@ export interface CivicProposalCategory {
   geometry: 'point' | 'segment' | 'route' | 'area';
   appliesTo?: RegistryAssetType[];
 }
-
-const commonCriteria: CivicCriterion[] = [
-  { id: 'accessibility', label: 'Accessibility & inclusion', description: 'Can people of different ages and abilities use it independently and safely?' },
-  { id: 'safety', label: 'Safety', description: 'Does the place or service feel physically and traffic-safe?' },
-  { id: 'cleanliness', label: 'Cleanliness & maintenance', description: 'Is it clean, functional and in good repair?' },
-  { id: 'comfort', label: 'Comfort', description: 'Is it reasonably comfortable for its intended use?' },
-];
-
-const streetCriteria: CivicCriterion[] = [
-  { id: 'walkability', label: 'Walking space & continuity', description: 'Is there a continuous, sufficiently clear pedestrian path?' },
-  { id: 'surface', label: 'Surface condition', description: 'Are walking and road surfaces even, stable and usable?' },
-  { id: 'crossing', label: 'Crossing quality', description: 'Are crossings legible, accessible and reasonably safe?' },
-  { id: 'shade', label: 'Shade & vegetation', description: 'Is there useful shade or vegetation along the segment?' },
-  { id: 'drainage', label: 'Drainage & flooding', description: 'Does the segment drain well during rain?' },
-  { id: 'lighting', label: 'Lighting', description: 'Is lighting adequate after dark?' },
-];
-
-const parkCriteria: CivicCriterion[] = [
-  { id: 'shade', label: 'Shade & thermal comfort', description: 'Are there enough shaded places to stay comfortably?' },
-  { id: 'seating', label: 'Seating', description: 'Is there enough usable seating for different users?' },
-  { id: 'vegetation', label: 'Trees & vegetation', description: 'Are planting and green areas healthy and pleasant?' },
-  { id: 'activities', label: 'Uses & activities', description: 'Does the place support useful and inclusive activities?' },
-  { id: 'toilets', label: 'Toilets & basic amenities', description: 'Are essential amenities available and usable?' },
-  { id: 'attractiveness', label: 'Attractiveness & identity', description: 'Is the place pleasant, legible and distinctive?' },
-];
-
-const facilityCriteria: CivicCriterion[] = [
-  { id: 'wayfinding', label: 'Wayfinding', description: 'Is it easy to find the entrance, counters and key spaces?' },
-  { id: 'waiting', label: 'Waiting space & seating', description: 'Is there enough accessible, comfortable waiting space?' },
-  { id: 'toilets', label: 'Toilets', description: 'Are toilets available, accessible and maintained?' },
-  { id: 'ventilation', label: 'Ventilation & temperature', description: 'Is the public area reasonably ventilated and comfortable?' },
-  { id: 'information', label: 'Service information', description: 'Are public instructions, schedules and directions easy to find?' },
-];
-
-const transportCriteria: CivicCriterion[] = [
-  { id: 'reliability', label: 'Reliability', description: 'Does the route/service operate consistently enough to plan around?' },
-  { id: 'frequency', label: 'Frequency & waiting time', description: 'Are waits reasonable for the route and time of day?' },
-  { id: 'coverage', label: 'Coverage & usefulness', description: 'Does the route connect useful destinations and transfers?' },
-  { id: 'boarding', label: 'Boarding & alighting', description: 'Are stops and boarding points safe and practical?' },
-  { id: 'information', label: 'Route & fare information', description: 'Are route, stop and fare details clear and dependable?' },
-  { id: 'accessibility', label: 'Accessibility', description: 'Can seniors and people with disabilities reasonably use the service?' },
-];
-
-export const criteriaForAsset = (type: RegistryAssetType): CivicCriterion[] => {
-  if (['street-segment', 'sidewalk-segment', 'crossing', 'bike-lane', 'bridge', 'drainage'].includes(type)) {
-    return [...commonCriteria, ...streetCriteria];
-  }
-  if (type === 'park') return [...commonCriteria, ...parkCriteria];
-  if (['public-office', 'health-center', 'community-center', 'public-market', 'public-toilet', 'heritage-site'].includes(type)) {
-    return [...commonCriteria, ...facilityCriteria];
-  }
-  if (['transport-route', 'transport-stop', 'transport-terminal'].includes(type)) {
-    return [commonCriteria[1], commonCriteria[2], commonCriteria[3], ...transportCriteria].filter(Boolean) as CivicCriterion[];
-  }
-  return commonCriteria;
-};
 
 export const civicIssueCategories: CivicIssueCategory[] = [
   { id: 'fire', label: 'Fire / smoke / explosion', description: 'Active fire or immediate fire danger.', emergency: true, preferredChannel: '911' },
