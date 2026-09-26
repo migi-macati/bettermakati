@@ -4,7 +4,6 @@ import {
   ArrowLeft,
   ClipboardList,
   ExternalLink,
-  FileText,
   TrendingUp,
 } from 'lucide-react';
 import { Link } from 'react-router';
@@ -56,8 +55,6 @@ interface CivicReportData {
   monthly: {
     casesCreated: number;
     proposalsCreated: number;
-    reviews: number;
-    ratingSummary: Record<string, { responses: number; average: number }>;
     matureProposals: CivicRecord[];
   };
   referralQueue: CivicRecord[];
@@ -100,12 +97,9 @@ export default function CivicReports() {
         <div className="section-eyebrow mt-6">Community reports</div>
         <Heading>Civic Map reports</Heading>
         <p className="mt-3 max-w-4xl text-lg leading-relaxed text-gray-700">
-          BetterMakati consolidates community observations before amplifying them. These summaries show what has been reported, corroborated, suggested for improvement and identified for BetterMakati review or referral.
+          Weekly and monthly counts of issue cases, improvement proposals, referral candidates and resolution signals.
         </p>
-        <LastReviewed
-          note="Community submissions are not representative polling and do not become official government cases unless a separate referral or acknowledgement is recorded."
-          className="mt-5"
-        />
+        <LastReviewed className="mt-5" />
       </Section>
 
       {failed ? (
@@ -281,30 +275,7 @@ export default function CivicReports() {
                 <div className="mt-3 text-3xl font-extrabold text-gray-950">{data.monthly.proposalsCreated}</div>
                 <div className="text-sm font-bold text-gray-700">improvement proposals</div>
               </div>
-              <div className="rounded-2xl border border-primary-100 bg-[#fffdf8] p-5">
-                <FileText className="h-5 w-5 text-primary-700" />
-                <div className="mt-3 text-3xl font-extrabold text-gray-950">{data.monthly.reviews}</div>
-                <div className="text-sm font-bold text-gray-700">criterion ratings submitted</div>
-              </div>
             </div>
-
-            {Object.keys(data.monthly.ratingSummary).length > 0 && (
-              <div className="mt-8">
-                <Heading level={3}>Public-realm rating signals</Heading>
-                <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                  {Object.entries(data.monthly.ratingSummary).map(([criterion, summary]) => (
-                    <div key={criterion} className="rounded-xl border border-gray-200 bg-white p-4">
-                      <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">{criterion.replaceAll('-', ' ')}</div>
-                      <div className="mt-1 text-2xl font-extrabold text-gray-950">{summary.average} / 5</div>
-                      <div className="text-xs text-gray-500">{summary.responses} rating{summary.responses === 1 ? '' : 's'}</div>
-                    </div>
-                  ))}
-                </div>
-                <p className="mt-4 text-xs leading-relaxed text-gray-500">
-                  These are community-submitted observations, not representative survey results. BetterMakati will only promote headline asset scores when sample size and recency are sufficient.
-                </p>
-              </div>
-            )}
 
             <div className="mt-8">
               <Heading level={3}>Proposals with community support</Heading>
