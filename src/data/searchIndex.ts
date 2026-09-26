@@ -442,7 +442,7 @@ const civicMapItems: SearchItem[] = [
     title: 'Civic Map',
     group: 'Tool',
     category: 'Participation',
-    description: 'Rate public infrastructure, report non-emergency issues, suggest improvements and follow community discussion.',
+    description: 'Browse sourced civic places, report non-emergency problems, suggest improvements and help document Makati.',
     href: '/civic-map',
     keywords: 'civic map report pothole sidewalk blocked park review public infrastructure road street proposal crosswalk trees jeepney route public transport',
     featured: true,
@@ -460,7 +460,7 @@ const civicMapItems: SearchItem[] = [
       asset.from ?? '',
       asset.to ?? '',
       asset.tags.join(' '),
-      'rate report review propose improve',
+      'place source report problem proposal improve correct document',
     ].join(' '),
   })),
 ];
