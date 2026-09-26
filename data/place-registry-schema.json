@@ -418,9 +418,9 @@
     "uiChanges": 0
   },
   "nextImplementationStep": {
-    "id": "W3R-5d",
-    "title": "Reconnect case lifecycle to redesigned reporting",
-    "constraint": "Lifecycle display/relationships only. Preserve reviewed, forwarded, acknowledged, action-reported and community-verified-resolved semantics. No automatic forwarding."
+    "id": "W3R-6a",
+    "title": "Define structured observations",
+    "constraint": "Observation schema only by place/asset family. No UI."
   },
   "betterBarangayReuse": {
     "workstream": "W3R-3a",
@@ -541,6 +541,28 @@
       "Submitted incident coordinates are rounded to 4 decimals.",
       "Emergency 911 routing, duplicate detection, confirmation, fallback and tracking remain active.",
       "Location-only duplicate checks use category plus 75 m proximity instead of requiring identical place identity."
+    ]
+  },
+  "civicCaseLifecycle": {
+    "workstream": "W3R-5d",
+    "relationshipKey": "placeId with legacy assetId fallback",
+    "lifecycleStages": [
+      "reviewed",
+      "forwarded",
+      "acknowledged",
+      "action-reported",
+      "community-verified-resolved"
+    ],
+    "evidenceSignals": [
+      "community-corroborated",
+      "appears-resolved"
+    ],
+    "rules": [
+      "Community evidence signals do not promote lifecycle states.",
+      "Lifecycle admin events are trusted only from repository owners, members, or collaborators.",
+      "Location-only cases remain citywide cases without a canonical place relationship.",
+      "Matched-place cases remain visible on their canonical place page.",
+      "No automatic forwarding or lifecycle inference is introduced."
     ]
   }
 }
