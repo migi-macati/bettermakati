@@ -336,15 +336,52 @@
       "id": "W4-1g",
       "phase": "Statistics",
       "title": "Redesign Statistics landing around questions and trends",
-      "status": "next",
+      "status": "complete",
       "maximumScope": "Statistics page only. Use canonical indicators, strong visual hierarchy, charts/tables and concise interpretation.",
-      "stopWhen": "The page answers current scale, change over time and comparable context without sermons or duplicated data."
+      "stopWhen": "The page answers current scale, change over time and comparable context without sermons or duplicated data.",
+      "implementationFiles": [
+        "src/pages/Statistics.tsx",
+        "data/wave4-statistics-data-migration.json"
+      ],
+      "validation": {
+        "opening": "Statistics now opens with a green BetterMakati hero and the citizen-facing statement 'See how Makati is changing.'",
+        "canonicalData": [
+          "Population trend renders from population-total and population-growth-rate indicators.",
+          "Current population resolves from currentMakatiPopulation2024 and barangay count from barangays.length.",
+          "GDP per person, national GDP share and labor-market cards render from canonical city indicators.",
+          "Public parks, schools, YAKAP/GAMOT providers, drainage and road-length snapshots render from canonical indicators."
+        ],
+        "interpretation": [
+          "Population change is summarized from comparable current-boundary observations.",
+          "GDP and resident labor-market concepts are explicitly distinguished without a methodology sermon.",
+          "The official 15-park administrative denominator remains visibly distinct from the 13-target civic-audit scope.",
+          "Dated infrastructure/service snapshots retain their observation date instead of being relabeled current."
+        ],
+        "crossFunctionality": [
+          "BetterBarangay population context remains on the Statistics route.",
+          "Statistics links internally to Barangays, Projects & Budget, City Monitor, Reports & Insights and the park civic-audit result.",
+          "BetterGov national data, visualizations and price-guide handoffs are grouped as national context instead of preceding Makati facts."
+        ],
+        "design": [
+          "Green-forward hero with selective gold accent.",
+          "Current scale, population trend, economy/work, city systems, city comparison and deeper-data sections create a clear reading hierarchy.",
+          "Tables/charts remain available; source links are adjacent to the figures they support."
+        ],
+        "antiSermon": [
+          "Removed the 'BetterMakati keeps definitions beside the figures' meta sentence.",
+          "Removed the generic Related national data box from the top of the page.",
+          "Removed page-local stats/population arrays and the independent 309,770 and ₱3.89M display copies."
+        ],
+        "migration": "W4-1g migration items are marked complete; shared CSV/export construction remains assigned to W4-1i.",
+        "focusedValidation": "Source validation confirms canonical indicator imports, derived barangay count/current population, green/gold design, population/economy/systems sections, BetterGov handoffs, internal cross-links, no old population/GDP literals, and no prior meta sermon.",
+        "executionBoundary": "No browser/device claim in W4-1g; Statistics page source only."
+      }
     },
     {
       "id": "W4-1h",
       "phase": "Statistics",
       "title": "Integrate barangay statistics",
-      "status": "planned",
+      "status": "next",
       "maximumScope": "Barangay-scoped statistical view only. Reuse canonical barangay data and indicator definitions.",
       "stopWhen": "Applicable city indicators can be sliced to canonical barangays without pretending unavailable barangay data exists."
     },
@@ -622,9 +659,9 @@
     }
   ],
   "immediateNext": {
-    "id": "W4-1g",
-    "title": "Redesign Statistics landing around questions and trends",
-    "maximumScope": "Statistics page only. Use canonical indicators, strong visual hierarchy, charts/tables and concise interpretation."
+    "id": "W4-1h",
+    "title": "Integrate barangay statistics",
+    "maximumScope": "Barangay-scoped statistical view only. Reuse canonical barangay data and indicator definitions."
   },
   "inheritedKnownItems": [
     {
