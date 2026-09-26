@@ -2,15 +2,10 @@ import { useEffect, useMemo, useState } from 'react';
 import {
   AlertTriangle,
   ArrowRight,
-  Bus,
-  CircleDot,
   ExternalLink,
   MapPinned,
-  MessagesSquare,
   Route,
   Search,
-  ShieldCheck,
-  Star,
   Trees,
   Wrench,
 } from 'lucide-react';
@@ -28,6 +23,7 @@ import {
   civicMethodologyReviewed,
   type CivicAssetType,
 } from '../data/civicMap';
+import { placeRegistryById, placesByBarangay } from '../data/placeRegistry';
 
 interface FeedItem {
   kind: 'report' | 'proposal' | 'update' | 'reviews';
@@ -36,7 +32,7 @@ interface FeedItem {
 }
 
 const typeOptions: Array<{ value: 'all' | CivicAssetType; label: string }> = [
-  { value: 'all', label: 'All mapped assets' },
+  { value: 'all', label: 'All places & segments' },
   { value: 'street-segment', label: 'Street segments' },
   { value: 'park', label: 'Parks' },
   { value: 'heritage-site', label: 'Heritage sites' },
@@ -68,22 +64,48 @@ export default function CivicMap() {
     void load();
   }, []);
 
+  const verifiedAssetIds = useMemo(
+    () =>
+      new Set(
+        civicAssets
+          .filter(asset => placeRegistryById.get(asset.id)?.verification.status === 'verified')
+          .map(asset => asset.id)
+      ),
+    []
+  );
+
   const visible = useMemo(() => {
     const needle = query.trim().toLowerCase();
+    const localIds = barangay
+      ? new Set(
+          placesByBarangay(barangay.name)
+            .filter(place => place.verification.status === 'verified')
+            .map(place => place.id)
+        )
+      : null;
+
     return civicAssets.filter(asset => {
+      if (!verifiedAssetIds.has(asset.id)) return false;
+      if (localIds && !localIds.has(asset.id)) return false;
+
       const typeMatch = type === 'all' || asset.type === type;
-      const localNames = (asset.barangay ?? '')
-        .split('/')
-        .map(value => value.trim().toLowerCase());
-      const barangayMatch =
-        !barangay || localNames.includes(barangay.name.toLowerCase());
-      const text = [asset.title, asset.subtitle, asset.barangay, (asset.aliases ?? []).join(' '), (asset.servicesAtLocation ?? []).join(' '), asset.tags.join(' ')]
+      const text = [
+        asset.title,
+        asset.subtitle,
+        asset.barangay,
+        (asset.aliases ?? []).join(' '),
+        (asset.servicesAtLocation ?? []).join(' '),
+        asset.tags.join(' '),
+      ]
         .filter(Boolean)
         .join(' ')
         .toLowerCase();
-      return barangayMatch && typeMatch && (!needle || text.includes(needle));
+
+      return typeMatch && (!needle || text.includes(needle));
     });
-  }, [barangay, query, type]);
+  }, [barangay, query, type, verifiedAssetIds]);
+
+  const verifiedAssetCount = verifiedAssetIds.size;
 
   const activeReports = feed.filter(item => item.kind === 'report' && item.state === 'open').length;
   const proposals = feed.filter(item => item.kind === 'proposal' && item.state === 'open').length;
@@ -92,17 +114,17 @@ export default function CivicMap() {
     <>
       <SEO
         title="Civic Map"
-        description="Independent BetterMakati map for rating public infrastructure, reporting non-emergency issues, suggesting improvements and following community discussion."
-        keywords="Makati civic map, report pothole, sidewalk, park review, public infrastructure, citizen report, public transport, improvement proposal"
+        description="Browse sourced public places, facilities, streets and transport locations in Makati, then open a place to report a problem or suggest an improvement."
+        keywords="Makati civic map, public places, health center, public office, park, transport stop, report pothole, sidewalk, citizen report, improvement proposal"
       />
 
       <Section className="bg-[#fffdf8]">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <div className="section-eyebrow">Civic Map · Pilot</div>
-            <Heading>Help improve public places</Heading>
+            <div className="section-eyebrow">Civic Map</div>
+            <Heading>Find a place in Makati</Heading>
             <p className="mt-3 max-w-4xl text-lg leading-relaxed text-gray-700">
-              Choose a mapped place to report a non-emergency problem, rate your experience or suggest an improvement. You can also check existing community reports.
+              Browse sourced public places, facilities, streets and transport locations. Open a place to check its details, see community cases, report a problem or suggest an improvement.
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-2">
@@ -114,13 +136,13 @@ export default function CivicMap() {
         </div>
 
         <div className="mt-5 flex flex-wrap gap-3">
-          <a href="#places" className="brand-btn-primary">Choose a place <ArrowRight className="h-4 w-4" /></a>
-          <a href="#how-it-works" className="brand-btn-secondary">How it works</a>
+          <a href="#places" className="brand-btn-primary">Browse places <ArrowRight className="h-4 w-4" /></a>
+          <a href="#what-you-can-do" className="brand-btn-secondary">What you can do</a>
         </div>
 
         <LastReviewed
           date={civicMethodologyReviewed}
-          note="Pilot methodology and seed assets. BetterMakati is independent and is not an official government reporting platform."
+          note="Place inventory and source review."
           className="mt-5"
         />
 
@@ -163,10 +185,10 @@ export default function CivicMap() {
           </div>
         </div>
 
-        <div className="mt-7 grid grid-cols-2 gap-3 md:grid-cols-4">
+        <div className="mt-7 grid grid-cols-1 gap-3 sm:grid-cols-3">
           <div className="rounded-2xl border border-primary-100 bg-white p-4">
-            <div className="text-2xl font-extrabold text-gray-950">{visible.length}</div>
-            <div className="text-xs font-bold text-gray-600">{barangay ? 'mapped assets in scope' : 'pilot mapped assets'}</div>
+            <div className="text-2xl font-extrabold text-gray-950">{barangay ? visible.length : verifiedAssetCount}</div>
+            <div className="text-xs font-bold text-gray-600">{barangay ? 'verified places in scope' : 'verified places & segments'}</div>
           </div>
           <div className="rounded-2xl border border-primary-100 bg-white p-4">
             <div className="text-2xl font-extrabold text-gray-950">{feedState === 'ready' ? activeReports : '—'}</div>
@@ -176,10 +198,6 @@ export default function CivicMap() {
             <div className="text-2xl font-extrabold text-gray-950">{feedState === 'ready' ? proposals : '—'}</div>
             <div className="text-xs font-bold text-gray-600">open improvement proposals</div>
           </div>
-          <div className="rounded-2xl border border-primary-100 bg-white p-4">
-            <div className="text-2xl font-extrabold text-gray-950">1 case</div>
-            <div className="text-xs font-bold text-gray-600">per duplicate problem, not per reporter</div>
-          </div>
         </div>
         {feedState !== 'ready' && <p role="status" className="mt-3 text-sm text-gray-600">
           {feedState === 'loading' ? 'Loading community counts…' : 'Community counts are unavailable. You can still browse places and open their reporting forms.'}
@@ -187,22 +205,22 @@ export default function CivicMap() {
       </Section>
 
       <Section className="bg-[#f5f8f2]" id="places">
-        <div className="section-eyebrow">Mapped assets</div>
+        <div className="section-eyebrow">Places</div>
         <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <Heading level={2}>Choose the exact place or segment</Heading>
+            <Heading level={2}>Browse the place inventory</Heading>
             <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600">
-              Long roads are split into block-level segments so reports stay local. Side-specific sidewalk data can be added when the condition differs across the street.
+              Search by place, facility, street, transport location or barangay.
             </p>
           </div>
           <div className="text-sm text-gray-500">
-            {barangay ? `${visible.length} mapped assets in Barangay ${barangay.name}` : `${visible.length} of ${civicAssets.length} pilot assets`}
+            {barangay ? `${visible.length} verified places in Barangay ${barangay.name}` : `${visible.length} of ${verifiedAssetCount} verified places`}
           </div>
         </div>
 
         <div className="mt-6 grid gap-3 md:grid-cols-[1fr_18rem]">
           <label className="relative block">
-            <span className="sr-only">Search mapped assets</span>
+            <span className="sr-only">Search places</span>
             <Search className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-500" />
             <input
               type="search"
@@ -212,7 +230,7 @@ export default function CivicMap() {
               className="w-full rounded-xl border border-gray-300 bg-white py-3 pl-12 pr-4"
             />
           </label>
-          <label className="sr-only" htmlFor="civic-asset-type">Asset type</label>
+          <label className="sr-only" htmlFor="civic-asset-type">Place type</label>
           <select
             id="civic-asset-type"
             value={type}
@@ -238,9 +256,7 @@ export default function CivicMap() {
                   <span className="rounded-full bg-primary-50 px-2.5 py-1 text-primary-800">
                     {civicAssetTypeLabels[asset.type]}
                   </span>
-                  <span className={asset.status === 'mapped' ? 'text-success-700' : 'text-secondary-800'}>
-                    {asset.status === 'mapped' ? 'Mapped' : asset.status === 'pilot' ? 'Pilot segment' : 'Needs verification'}
-                  </span>
+                  <span className="text-success-700">Verified</span>
                   {asset.accessClass === 'public-access-private-managed' && (
                     <span className="rounded-full bg-secondary-50 px-2.5 py-1 text-secondary-900">
                       Public access · privately managed
@@ -273,89 +289,77 @@ export default function CivicMap() {
 
         {visible.length === 0 && (
           <div className="mt-6 rounded-2xl border border-gray-200 bg-white p-6 text-sm text-gray-600">
-            <p>No mapped place matches these filters.</p>
+            <p>No verified place matches these filters.</p>
             <button type="button" onClick={() => { setQuery(''); setType('all'); }} className="brand-btn-secondary mt-3">Clear filters</button>
           </div>
         )}
-        <p className="mt-6 text-sm text-gray-600">Place missing? <Link to="/get-involved?type=proposal&subject=Add%20a%20place%20to%20Civic%20Map#submission" className="font-bold text-primary-700 underline">Suggest a place to map</Link>. The directory currently covers {civicAssets.length} pilot locations.</p>
+        <p className="mt-6 text-sm text-gray-600">Place missing? <Link to="/get-involved?type=proposal&subject=Add%20a%20place%20to%20Civic%20Map#submission" className="font-bold text-primary-700 underline">Help document it</Link>.</p>
       </Section>
 
-      <Section className="bg-white" id="how-it-works">
-        <div className="grid gap-8 xl:grid-cols-[1.15fr_0.85fr]">
-          <CivicMapEmbed lat={14.5652} lng={121.0278} title="Makati Civic Map pilot" zoom={14} />
+      <Section className="bg-white" id="what-you-can-do">
+        <div className="grid gap-8 xl:grid-cols-[1.05fr_0.95fr]">
+          <CivicMapEmbed lat={14.5652} lng={121.0278} title="Makati Civic Map" zoom={14} />
 
           <div>
-            <div className="section-eyebrow">How it works</div>
-            <Heading level={2}>Four kinds of civic contribution</Heading>
+            <div className="section-eyebrow">From a place</div>
+            <Heading level={2}>What you can do</Heading>
             <div className="mt-5 space-y-3">
-              {[
-                { icon: Star, title: 'Rate a place or route', text: 'Structured 1–5 assessment using criteria appropriate to the asset.' },
-                { icon: Wrench, title: 'Report a problem', text: 'A broken, blocked, unsafe or malfunctioning condition becomes a consolidatable case.' },
-                { icon: Trees, title: 'Suggest an improvement', text: 'More trees, a crosswalk, accessibility retrofit, route change or another specific improvement.' },
-                { icon: MessagesSquare, title: 'Discuss & update', text: 'Confirm, add evidence, reply, raise trade-offs, or say that something appears resolved.' },
-              ].map(item => {
-                const Icon = item.icon;
-                return (
-                  <div key={item.title} className="flex gap-3 rounded-xl border border-gray-200 bg-[#fffdf8] p-4">
-                    <Icon className="mt-0.5 h-5 w-5 shrink-0 text-primary-700" />
-                    <div>
-                      <div className="font-extrabold text-gray-950">{item.title}</div>
-                      <p className="mt-1 text-sm leading-relaxed text-gray-600">{item.text}</p>
-                    </div>
-                  </div>
-                );
-              })}
+              <a
+                href="#places"
+                className="flex gap-3 rounded-xl border border-gray-200 bg-[#fffdf8] p-4 transition hover:border-primary-300"
+              >
+                <Search className="mt-0.5 h-5 w-5 shrink-0 text-primary-700" />
+                <div>
+                  <div className="font-extrabold text-gray-950">Find a place</div>
+                  <p className="mt-1 text-sm leading-relaxed text-gray-600">
+                    Look up a park, public facility, street segment or transport location.
+                  </p>
+                </div>
+              </a>
+
+              <a
+                href="#places"
+                className="flex gap-3 rounded-xl border border-gray-200 bg-[#fffdf8] p-4 transition hover:border-primary-300"
+              >
+                <Wrench className="mt-0.5 h-5 w-5 shrink-0 text-primary-700" />
+                <div>
+                  <div className="font-extrabold text-gray-950">Report a problem</div>
+                  <p className="mt-1 text-sm leading-relaxed text-gray-600">
+                    Open the affected place, then file or update a non-emergency case.
+                  </p>
+                </div>
+              </a>
+
+              <a
+                href="#places"
+                className="flex gap-3 rounded-xl border border-gray-200 bg-[#fffdf8] p-4 transition hover:border-primary-300"
+              >
+                <Trees className="mt-0.5 h-5 w-5 shrink-0 text-primary-700" />
+                <div>
+                  <div className="font-extrabold text-gray-950">Suggest an improvement</div>
+                  <p className="mt-1 text-sm leading-relaxed text-gray-600">
+                    Choose the place first, then propose a specific change.
+                  </p>
+                </div>
+              </a>
+
+              <Link
+                to="/get-involved?type=proposal&subject=Add%20a%20place%20to%20Civic%20Map#submission"
+                className="flex gap-3 rounded-xl border border-gray-200 bg-[#fffdf8] p-4 transition hover:border-primary-300"
+              >
+                <MapPinned className="mt-0.5 h-5 w-5 shrink-0 text-primary-700" />
+                <div>
+                  <div className="font-extrabold text-gray-950">Help document Makati</div>
+                  <p className="mt-1 text-sm leading-relaxed text-gray-600">
+                    Send a missing place, correction or source that should be added to the inventory.
+                  </p>
+                </div>
+              </Link>
             </div>
           </div>
         </div>
       </Section>
 
-      <Section className="bg-white">
-        <div className="grid gap-6 lg:grid-cols-2">
-          <div className="rounded-2xl border border-primary-100 bg-[#fffdf8] p-6">
-            <Route className="h-6 w-6 text-primary-700" />
-            <h2 className="mt-3 text-xl font-extrabold text-gray-950">Report the right stretch of road</h2>
-            <p className="mt-2 text-sm leading-relaxed text-gray-600">
-              Roads break at intersections and other meaningful boundaries. A case retains precise coordinates plus the permanent segment ID, and can identify the north, south, east or west sidewalk when needed.
-            </p>
-          </div>
-          <div className="rounded-2xl border border-primary-100 bg-[#fffdf8] p-6">
-            <Bus className="h-6 w-6 text-primary-700" />
-            <h2 className="mt-3 text-xl font-extrabold text-gray-950">Public transport coverage is expanding</h2>
-            <p className="mt-2 text-sm leading-relaxed text-gray-600">
-              Jeepney and bus routes, individual stops, and tricycle/TODA terminals can each carry their own ratings, route corrections, fare/service reports and improvement proposals. Current route objects will only be published after their alignments and operating information are verified.
-            </p>
-          </div>
-        </div>
-      </Section>
-
-      <Section className="bg-[#fffdf8]">
-        <div className="section-eyebrow">Noise reduction</div>
-        <Heading level={2}>BetterMakati consolidates before it amplifies</Heading>
-        <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
-          <div className="rounded-2xl border border-gray-200 bg-white p-5">
-            <CircleDot className="h-5 w-5 text-primary-700" />
-            <h3 className="mt-3 font-extrabold text-gray-950">Duplicate-aware cases</h3>
-            <p className="mt-2 text-sm leading-relaxed text-gray-600">
-              Similar open reports on the same asset and category are surfaced before a new case is created. People can confirm or update the existing case instead.
-            </p>
-          </div>
-          <div className="rounded-2xl border border-gray-200 bg-white p-5">
-            <ShieldCheck className="h-5 w-5 text-primary-700" />
-            <h3 className="mt-3 font-extrabold text-gray-950">Evidence states</h3>
-            <p className="mt-2 text-sm leading-relaxed text-gray-600">
-              A submission starts as unverified community information. Corroboration, BetterMakati review, official acknowledgement and community-verified resolution are separate states.
-            </p>
-          </div>
-          <div className="rounded-2xl border border-gray-200 bg-white p-5">
-            <MessagesSquare className="h-5 w-5 text-primary-700" />
-            <h3 className="mt-3 font-extrabold text-gray-950">Batch public-interest reporting</h3>
-            <p className="mt-2 text-sm leading-relaxed text-gray-600">
-              Ordinary maintenance issues can be consolidated for a weekly digest; mature improvement proposals belong in a monthly planning brief rather than repetitive emails.
-            </p>
-          </div>
-        </div>
-      </Section>
     </>
   );
 }
