@@ -1,13 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
 import {
-  AlertCircle,
   ArrowRight,
   Database,
   Download,
   ExternalLink,
   FileSearch,
   FileText,
-  RefreshCw,
   Search,
   SearchCheck,
   ShieldCheck,
@@ -26,6 +24,13 @@ import {
   publicRecordSecondaryCount,
   type PublicRecordSourceClass,
 } from '../data/publicRecords';
+import {
+  legislationRecordDisplay,
+  legislationRecordHref,
+  loadLegislationBrowserIndex,
+  matchLegislationRecords,
+  type BrowserLegislationIndex,
+} from '../data/legislationBrowserIndex';
 
 interface WatchedSource {
   id: string;
@@ -134,6 +139,8 @@ export default function PublicRecords() {
   const [category, setCategory] = useState('All');
   const [sourceClass, setSourceClass] = useState<'All' | PublicRecordSourceClass>('All');
   const [officialOnly, setOfficialOnly] = useState(false);
+  const [legislationIndex, setLegislationIndex] =
+    useState<BrowserLegislationIndex | null>(null);
 
   useEffect(() => {
     const load = async () => {
@@ -219,6 +226,35 @@ export default function PublicRecords() {
       return categoryMatch && classMatch && officialMatch && queryMatch;
     });
   }, [category, officialOnly, query, sourceClass]);
+
+  const shouldSearchLegislation =
+    query.trim().length >= 3 &&
+    (category === 'All' || category === 'Legislation & law') &&
+    (sourceClass === 'All' || sourceClass === 'City government');
+
+  useEffect(() => {
+    if (!shouldSearchLegislation || legislationIndex) return;
+
+    let cancelled = false;
+    loadLegislationBrowserIndex()
+      .then(index => {
+        if (!cancelled) setLegislationIndex(index);
+      })
+      .catch(() => {
+        // Source catalog remains usable if the legislation entity index cannot load.
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [legislationIndex, shouldSearchLegislation]);
+
+  const legislationResultSet = useMemo(() => {
+    if (!shouldSearchLegislation || !legislationIndex) {
+      return { total: 0, visible: [] };
+    }
+    return matchLegislationRecords(legislationIndex, query, { limit: 8 });
+  }, [legislationIndex, query, shouldSearchLegislation]);
 
   const watchedCatalogCount = publicRecords.filter(record =>
     watchedUrls.has(record.url)
@@ -426,6 +462,50 @@ export default function PublicRecords() {
             </button>
           )}
         </div>
+
+        {legislationResultSet.visible.length > 0 && (
+          <div className="mt-5 rounded-2xl border border-primary-200 bg-white p-5">
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+                  Legislation records
+                </div>
+                <h3 className="mt-1 text-lg font-extrabold text-gray-950">
+                  {legislationResultSet.total.toLocaleString()} matching local measures
+                </h3>
+              </div>
+              <Link to="/legislation" className="text-sm font-bold text-primary-700 underline underline-offset-2">
+                Search all legislation
+              </Link>
+            </div>
+
+            <div className="mt-4 grid gap-3 lg:grid-cols-2">
+              {legislationResultSet.visible.map(record => (
+                <Link
+                  key={legislationRecordHref(record)}
+                  to={legislationRecordHref(record)}
+                  className="rounded-xl border border-gray-200 bg-[#fffdf8] p-4 hover:border-primary-300"
+                >
+                  <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">
+                    {record[1]} · {record[2]}{record[3] ? ' · ' + record[3] : ''}
+                  </div>
+                  <div className="mt-2 font-extrabold text-primary-800">
+                    {legislationRecordDisplay(record)}
+                  </div>
+                  <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-gray-700">
+                    {record[4]}
+                  </p>
+                </Link>
+              ))}
+            </div>
+
+            {legislationResultSet.total > legislationResultSet.visible.length && (
+              <p className="mt-4 text-xs text-gray-500">
+                Showing the first {legislationResultSet.visible.length} matches. Open Legislation for the full result set.
+              </p>
+            )}
+          </div>
+        )}
 
         <div className="mt-5 space-y-3">
           {visibleRecords.map(record => (
