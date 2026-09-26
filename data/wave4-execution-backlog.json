@@ -1042,9 +1042,50 @@
       "id": "W4-5a",
       "phase": "Cross-linking and closure",
       "title": "Define shared civic-intelligence relationship model",
-      "status": "planned",
+      "status": "complete",
       "maximumScope": "Relationship schema/helper only. Typed references across indicator, legislation, integrity entity, report, place, barangay, service, project/accountability, City Monitor, public record and BetterGov/BetterLGU ecosystem resources.",
-      "stopWhen": "Relationships can be stored once and resolved without circular data duplication."
+      "stopWhen": "Relationships can be stored once and resolved without circular data duplication.",
+      "completedAt": "2026-09-26",
+      "implementationFiles": [
+        "src/data/civicIntelligenceRelationships.ts",
+        "scripts/check-civic-intelligence-relationships.mjs",
+        "package.json"
+      ],
+      "validation": {
+        "referenceTypes": [
+          "indicator",
+          "legislation-record",
+          "integrity-entity",
+          "integrity-record",
+          "report",
+          "place",
+          "segment",
+          "route",
+          "barangay",
+          "service",
+          "project",
+          "accountability-record",
+          "city-monitor-record",
+          "public-record",
+          "ecosystem-resource"
+        ],
+        "ecosystems": [
+          "bettergov",
+          "betterlgu"
+        ],
+        "integrityRecordKinds": [
+          "procurement-award",
+          "disclosure",
+          "audit-finding",
+          "audit-action",
+          "audit-resolution-trail"
+        ],
+        "storageRule": "A relationship is stored once as a directed edge; inbound backlinks are derived by createCivicIntelligenceRelationshipIndex rather than duplicated.",
+        "canonicalOwnership": "Relationship edges contain references and evidence only. Labels, hrefs and record payloads are resolved from canonical owning modules at render time through composable node resolvers.",
+        "evidenceRule": "Official/source-stated links require source IDs and an evidence statement; BetterGov/BetterLGU continuation/context links require an explicit curation note.",
+        "cycleBoundary": "The shared relationship module imports no domain data module, preventing circular ownership dependencies.",
+        "scopeBoundary": "W4-5a defines schema/helpers only and creates no cross-domain relationship dataset yet."
+      }
     },
     {
       "id": "W4-5b",
@@ -1119,11 +1160,11 @@
       "stopWhen": "Wave 4 is closed only to the extent supported by evidence, with future work reopened as specific capabilities rather than vague unfinished work."
     }
   ],
-  "current": "W4-5a",
+  "current": "W4-5b",
   "immediateNext": {
-    "id": "W4-5a",
-    "title": "Define shared civic-intelligence relationship model",
-    "maximumScope": "Relationship schema/helper only. Typed references across indicator, legislation, integrity entity, report, place, barangay, service, project/accountability, City Monitor, public record and BetterGov/BetterLGU ecosystem resources."
+    "id": "W4-5b",
+    "title": "Connect Statistics to canonical city entities",
+    "maximumScope": "Explicit relationships from implemented indicators to barangays, services, places/assets, budget/project records, reports and relevant BetterGov/BetterLGU comparison or national-data resources where semantically valid."
   },
   "carriedForward": [
     {
