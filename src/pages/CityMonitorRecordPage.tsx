@@ -3,6 +3,7 @@ import {
   ExternalLink,
   FileText,
   Link2,
+  MapPin,
   Megaphone,
   Scale,
 } from 'lucide-react';
@@ -14,10 +15,14 @@ import {
   cityMonitorRecords,
   cityMonitorTypeLabel,
 } from '../data/cityMonitor';
+import { placeRegistryById } from '../data/placeRegistry';
 
 export default function CityMonitorRecordPage() {
   const { id } = useParams();
   const record = cityMonitorRecords.find(item => item.id === id);
+  const linkedPlaces = (record?.placeIds ?? [])
+    .map(placeId => placeRegistryById.get(placeId))
+    .filter((place): place is NonNullable<typeof place> => Boolean(place));
 
   if (!record) {
     return (
@@ -89,7 +94,33 @@ export default function CityMonitorRecordPage() {
               </div>
             </div>
           )}
+          {record.location && (
+            <div className="rounded-xl border border-primary-100 bg-white p-4">
+              <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">Location</div>
+              <div className="mt-1 font-extrabold text-gray-950">{record.location}</div>
+            </div>
+          )}
         </div>
+
+        {linkedPlaces.length > 0 && (
+          <div className="mt-5">
+            <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+              Related civic place
+            </div>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {linkedPlaces.map(place => (
+                <Link
+                  key={place.id}
+                  to={'/civic-map/' + place.id}
+                  className="inline-flex items-center gap-1 rounded-full border border-primary-100 bg-primary-50 px-3 py-1.5 text-sm font-bold text-primary-800"
+                >
+                  <MapPin className="h-4 w-4" />
+                  {place.name}
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
 
         <div className="mt-6 flex flex-wrap gap-3">
           <a
