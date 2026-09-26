@@ -2,6 +2,7 @@ import { readFile } from 'node:fs/promises';
 
 const source = await readFile('src/data/localLegislation.ts', 'utf8');
 const serviceSource = await readFile('src/data/serviceDirectory.ts', 'utf8');
+const pageSource = await readFile('src/pages/Legislation.tsx', 'utf8');
 
 const expectedOrdinances = [
   ['2020-074', '2020-03-19'],
@@ -234,6 +235,27 @@ for (const marker of [
   if (!source.includes(marker)) {
     problems.push('W4-2f relationship guard missing: ' + marker);
   }
+}
+
+for (const marker of [
+  "localLegislationRecords",
+  "Search local records",
+  "BetterMakati index",
+  "Open official source record",
+  "Use the City Government of Makati archive for records not yet indexed here.",
+]) {
+  if (!pageSource.includes(marker)) {
+    problems.push('W4-2g local-first page marker missing: ' + marker);
+  }
+}
+
+if (
+  pageSource.includes("site:makati.gov.ph/content/resolutions-and-ordinances") ||
+  pageSource.includes("archiveSearch(")
+) {
+  problems.push(
+    'W4-2g must not use an external web search as the primary legislation search experience.'
+  );
 }
 
 const allReferences = [...ordinanceCalls, ...resolutionCalls].map(
