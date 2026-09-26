@@ -448,9 +448,25 @@
       "id": "W4-2f",
       "phase": "Legislation",
       "title": "Add legislation topics and civic relationships",
-      "status": "planned",
+      "status": "complete",
       "maximumScope": "Explicit typed links to affected service, barangay, Place Registry entity, project/accountability record or public record only when supported by the legislative text/source.",
-      "stopWhen": "A small verified relationship set proves the model without broad automatic tagging."
+      "stopWhen": "A small verified relationship set proves the model without broad automatic tagging.",
+      "completedAt": "2026-09-26",
+      "implementationFiles": [
+        "src/data/localLegislation.ts",
+        "scripts/check-local-legislation.mjs"
+      ],
+      "validation": {
+        "pilotMeasureCount": 2,
+        "relationshipCount": 2,
+        "relationshipKind": "affects-service",
+        "targets": [
+          "civil-registration",
+          "local-civil-registry-copy"
+        ],
+        "evidenceBasis": "official-title",
+        "guardrail": "No broad automatic tagging; the pilot links only explicit service effects stated in the official Annex A measure titles."
+      }
     },
     {
       "id": "W4-2g",
@@ -669,11 +685,11 @@
       "stopWhen": "Wave 4 is closed only to the extent supported by evidence, with future work reopened as specific capabilities rather than vague unfinished work."
     }
   ],
-  "current": "W4-2f",
+  "current": "W4-2g",
   "immediateNext": {
-    "id": "W4-2f",
-    "title": "Add legislation topics and civic relationships",
-    "maximumScope": "Explicit typed links to affected service, barangay, Place Registry entity, project/accountability record or public record only when supported by the legislative text/source."
+    "id": "W4-2g",
+    "title": "Redesign Legislation page around local records",
+    "maximumScope": "Legislation page only. Canonical local search/filter/browse becomes primary; external site search becomes fallback."
   },
   "carriedForward": [
     {
