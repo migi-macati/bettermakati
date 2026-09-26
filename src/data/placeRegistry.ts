@@ -1841,6 +1841,18 @@ const placeAssertionsFor = (asset: CivicAsset): PlaceAssertion[] => {
   return assertions;
 };
 
+const explicitPlaceRelationshipsById: Record<string, PlaceRelationship[]> = {
+  'makati-city-hall': [
+    {
+      kind: 'related-accountability',
+      targetType: 'accountability-record',
+      targetId: 'commitment-renewable-energy-government-buildings',
+      note:
+        'The 2 July 2026 renewable-energy update cited by the accountability record explicitly includes the New Makati City Hall among the facilities switched to 100% renewable energy.',
+    },
+  ],
+};
+
 /**
  * Shared canonical place records.
  *
@@ -1895,7 +1907,7 @@ export const placeRegistry: PlaceRegistryRecord[] = civicAssets.map((asset): Pla
     sources: placeSourcesFor(asset),
     assertions: placeAssertionsFor(asset),
   },
-  relationships: [],
+  relationships: explicitPlaceRelationshipsById[asset.id] ?? [],
   tags: [...asset.tags],
 }));
 
@@ -1977,6 +1989,20 @@ export const placesByLifecycle = (
   status: PlaceLifecycleStatus,
   places: readonly PlaceRegistryRecord[] = placeRegistry
 ) => places.filter(place => place.lifecycle.status === status);
+
+export const placesRelatedTo = (
+  targetType: PlaceRelationship['targetType'],
+  targetId: string,
+  places: readonly PlaceRegistryRecord[] = placeRegistry
+) =>
+  places.filter(place =>
+    place.relationships.some(
+      relationship =>
+        relationship.targetType === targetType &&
+        relationship.targetId === targetId
+    )
+  );
+
 
 export interface PlaceDistanceResult {
   place: PlaceRegistryRecord;
