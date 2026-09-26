@@ -90,7 +90,8 @@ export default function CivicNearbyReportForm({
   const requestPayload = () => ({
     action: 'create',
     kind: 'report',
-    placeId: place?.id ?? '',
+    entityId: place?.id ?? '',
+    entityKind: place?.entityKind ?? '',
     locationMode,
     assetId: place?.id ?? '',
     assetTitle: place?.name ?? '',
