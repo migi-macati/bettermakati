@@ -18,8 +18,10 @@ interface CivicFeedItem {
   updatedAt: string;
   comments: number;
   meta: {
+    entityId?: string | null;
+    entityKind?: 'place' | 'segment' | 'route' | null;
     placeId?: string | null;
-    locationMode?: 'matched-place' | 'location-only';
+    locationMode?: 'matched-place' | 'matched-entity' | 'location-only';
     assetId?: string;
     category?: string;
     severity?: string;
@@ -104,7 +106,9 @@ export default function CivicDiscussion({ assetId }: { assetId: string }) {
       setItems(
         data.items.filter(
           (item: CivicFeedItem) =>
-            item.meta?.placeId === assetId || item.meta?.assetId === assetId
+            item.meta?.entityId === assetId ||
+            item.meta?.placeId === assetId ||
+            item.meta?.assetId === assetId
         )
       );
     } catch {
@@ -254,7 +258,7 @@ export default function CivicDiscussion({ assetId }: { assetId: string }) {
         </div>
       ) : items.length === 0 ? (
         <div className="mt-5 rounded-2xl border border-gray-200 bg-[#fffdf8] p-6 text-sm text-gray-600">
-          No community cases or updates are attached to this place yet.
+          No community cases or updates are attached to this civic record yet.
         </div>
       ) : (
         <div className="mt-5 space-y-3">
