@@ -1091,13 +1091,44 @@
     {
       "id": "W3R-11b",
       "title": "Add Place Registry integrity audit",
-      "status": "next",
-      "maximumScope": "Guard duplicate IDs, barangays, coordinates, lifecycle states, provenance and broken relationships. No browser testing."
+      "status": "complete",
+      "maximumScope": "Guard duplicate IDs, barangays, coordinates, lifecycle states, provenance and broken relationships. No browser testing.",
+      "implementationFiles": [
+        "scripts/audit-place-registry-integrity.mjs",
+        "package.json"
+      ],
+      "validation": {
+        "guarded": [
+          "duplicate registry IDs and lowercase-kebab-case IDs",
+          "all registry barangay assignments resolve to one of the 23 current Makati barangays, including slash-separated multi-barangay records",
+          "finite WGS84 coordinates, a loose Makati/Metro Manila sanity envelope and exact duplicate-coordinate collisions",
+          "identity-source and coordinate-source URL/label pairing plus valid http/https source URLs",
+          "verification remains source-derived and legacy mapping status does not silently become lifecycle status",
+          "all six allowed lifecycle states remain declared",
+          "generated civic-entity-index parity for IDs, names, categories and entity kinds",
+          "explicit relationship owner IDs, duplicate relationship tuples, kind/target-type compatibility and referenced target existence"
+        ],
+        "currentSnapshot": {
+          "records": 88,
+          "canonicalBarangays": 23,
+          "duplicateIds": 0,
+          "unknownBarangays": 0,
+          "duplicateCoordinates": 0,
+          "sourcePairProblems": 0,
+          "generatedIndexEntries": 88,
+          "explicitRelationships": 1,
+          "brokenRelationshipTargets": 0
+        },
+        "relationshipSources": "Current external relationship targets are checked against service, accountability/accountability-supplement, City Monitor and heritage datasets; place targets resolve against the registry itself.",
+        "buildIntegration": "audit:place-registry is now part of both npm run build and npm run quality immediately after the existing check:place-registry.",
+        "focusedValidation": "Static source validation reproduced the audit's current snapshot: 88 records, 23 barangays, no duplicate IDs/coordinates, no source-pair problems, full generated-index parity and no broken explicit relationship target.",
+        "browserBoundary": "No browser/mobile testing in W3R-11b."
+      }
     },
     {
       "id": "W3R-11c",
       "title": "Test general participation journeys",
-      "status": "planned",
+      "status": "next",
       "maximumScope": "General submission, duplicate, fallback, tracking and barangay-context E2E only."
     },
     {
@@ -1120,9 +1151,9 @@
     }
   ],
   "immediateNext": {
-    "id": "W3R-11b",
-    "title": "Add Place Registry integrity audit",
-    "maximumScope": "Guard duplicate IDs, barangays, coordinates, lifecycle states, provenance and broken relationships. No browser testing."
+    "id": "W3R-11c",
+    "title": "Test general participation journeys",
+    "maximumScope": "General submission, duplicate, fallback, tracking and barangay-context E2E only."
   },
   "capabilityDispositionAuditFile": "data/wave3-capability-disposition-audit.json",
   "completedSteps": [
@@ -1158,7 +1189,8 @@
     "W3R-10a",
     "W3R-10b",
     "W3R-10c",
-    "W3R-11a"
+    "W3R-11a",
+    "W3R-11b"
   ],
   "placeRegistrySchemaFile": "data/place-registry-schema.json",
   "placeRegistryDataFile": "src/data/placeRegistry.ts",
