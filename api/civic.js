@@ -58,6 +58,11 @@ const parseNumber = value => {
   return Number.isFinite(n) ? n : null;
 };
 
+const roundCoordinate = value =>
+  value === null || value === undefined
+    ? null
+    : Math.round(Number(value) * 10000) / 10000;
+
 const isCivicIssue = issue =>
   issue &&
   !issue.pull_request &&
@@ -201,12 +206,15 @@ const createComment = async (token, issueNumber, body) => {
 
 const contributionBody = payload => {
   const meta = {
-    version: 1,
+    version: payload.locationMode ? 2 : 1,
     kind: payload.kind,
-    assetId: payload.assetId,
-    assetType: payload.assetType,
+    placeId: payload.placeId || payload.assetId || null,
+    locationMode: payload.locationMode || (payload.assetId ? 'matched-place' : 'location-only'),
+    assetId: payload.assetId || '',
+    assetType: payload.assetType || '',
     category: payload.category,
     location: payload.location,
+    locationLabel: payload.locationLabel || payload.location || '',
     lat: payload.lat,
     lng: payload.lng,
     side: payload.side || '',
@@ -222,7 +230,7 @@ const contributionBody = payload => {
     '<!-- civic-meta ' + JSON.stringify(meta) + ' -->',
     '',
     '**Type:** ' + payload.kind,
-    payload.assetTitle ? '**Asset:** ' + payload.assetTitle : '',
+    payload.assetTitle ? '**Place:** ' + payload.assetTitle : '',
     payload.location ? '**Location:** ' + payload.location : '',
     payload.category ? '**Category:** ' + payload.category : '',
     payload.side ? '**Side / direction:** ' + payload.side : '',
@@ -371,6 +379,8 @@ export default async function handler(req, res) {
   const kind = clean(req.body?.kind, 20);
   const payload = {
     kind,
+    placeId: clean(req.body?.placeId, 120),
+    locationMode: clean(req.body?.locationMode, 30),
     assetId: clean(req.body?.assetId, 120),
     assetTitle: clean(req.body?.assetTitle, 180),
     assetType: clean(req.body?.assetType, 60),
@@ -378,8 +388,9 @@ export default async function handler(req, res) {
     subject: clean(req.body?.subject, 180),
     details: clean(req.body?.details, 3000),
     location: clean(req.body?.location, 240),
-    lat: parseNumber(req.body?.lat),
-    lng: parseNumber(req.body?.lng),
+    locationLabel: clean(req.body?.locationLabel, 240),
+    lat: roundCoordinate(parseNumber(req.body?.lat)),
+    lng: roundCoordinate(parseNumber(req.body?.lng)),
     side: clean(req.body?.side, 40),
     segmentFrom: clean(req.body?.segmentFrom, 120),
     segmentTo: clean(req.body?.segmentTo, 120),
@@ -394,8 +405,15 @@ export default async function handler(req, res) {
   if (!['report', 'proposal', 'review', 'update'].includes(kind)) {
     return res.status(400).json({ error: 'Invalid Civic Map contribution type.' });
   }
-  if (!payload.assetId || !payload.assetTitle) {
-    return res.status(400).json({ error: 'Choose a mapped asset or segment first.' });
+  const locationOnly = payload.locationMode === 'location-only';
+  if (locationOnly) {
+    if (!payload.locationLabel || payload.lat === null || payload.lng === null) {
+      return res.status(400).json({
+        error: 'Describe the location and provide a map point before submitting.',
+      });
+    }
+  } else if (!payload.assetId || !payload.assetTitle) {
+    return res.status(400).json({ error: 'Choose a mapped place or segment first.' });
   }
 
   if (kind === 'report' && emergencyCategories.has(payload.category)) {
@@ -479,13 +497,24 @@ export default async function handler(req, res) {
       .filter(isCivicIssue)
       .filter(issue => issue.state === 'open')
       .map(issue => ({ issue, meta: parseMeta(issue.body) }))
-      .filter(({ meta }) => meta.kind === kind && meta.assetId === payload.assetId && meta.category === payload.category)
+      .filter(({ meta }) => meta.kind === kind && meta.category === payload.category)
+      .filter(({ meta }) =>
+        locationOnly ? true : meta.assetId === payload.assetId
+      )
       .filter(({ meta }) => {
         const distance = distanceMeters(payload.lat, payload.lng, Number(meta.lat), Number(meta.lng));
-        return distance === null || distance <= 75;
+        return distance !== null && distance <= 75;
       })
       .slice(0, 5)
-      .map(({ issue, meta }) => ({ ...issueView(issue), distanceMeters: distanceMeters(payload.lat, payload.lng, Number(meta.lat), Number(meta.lng)) }));
+      .map(({ issue, meta }) => ({
+        ...issueView(issue),
+        distanceMeters: distanceMeters(
+          payload.lat,
+          payload.lng,
+          Number(meta.lat),
+          Number(meta.lng)
+        ),
+      }));
 
     if (duplicates.length) {
       return res.status(409).json({
