@@ -109,9 +109,9 @@ if (
 const sessionEvidenceArrays = (
   legislation.match(/sessionEvidence:\s*\[\]/g) || []
 ).length;
-if (sessionEvidenceArrays < 20) {
+if (sessionEvidenceArrays < 2) {
   problems.push(
-    'Existing 20 bounded local measures should remain without inferred session evidence until exact links are reviewed.'
+    'Both Annex A record constructors must keep sessionEvidence empty until exact measure-session links are reviewed.'
   );
 }
 
