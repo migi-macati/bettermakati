@@ -364,14 +364,36 @@
       "id": "W4-2e2",
       "phase": "Legislation",
       "title": "Normalize full official ordinance/resolution archive",
-      "status": "partial",
+      "status": "complete",
       "maximumScope": "Official Makati resolutions-and-ordinances archive only. Enumerate every retrievable archive entry in a dated snapshot, normalize ordinance/resolution identity, reference, title and official document/source URLs, and reconcile duplicates against the existing 20-record seed. No topic tagging or lifecycle inference in the same step.",
       "stopWhen": "The dated archive snapshot has a reproducible enumerated total and every retrievable item resolves to one canonical local measure or an explicit unresolved/duplicate disposition. Do not call the registry historically complete unless the archive enumeration itself proves that scope.",
       "auditFile": "data/wave4-legislation-archive-enumeration.json",
       "commits": [
         "edea100556f689ffa5256af5a6c5be6d06bef089",
-        "f812bb5645ead419e6881e93e68397f9ce01fc6f"
-      ]
+        "f812bb5645ead419e6881e93e68397f9ce01fc6f",
+        "b58c71d9b35e343535c52ae7e33a3b9f82dd308f",
+        "ca8f01a232fe081b4f3126bd55bcade5d7242ae5",
+        "eed5319ceb6465e2421902b65f4f9371088501f7"
+      ],
+      "completedAt": "2026-09-26",
+      "normalizedFile": "data/makati-legislation-normalized-2026-09-26.json",
+      "implementationFiles": [
+        "scripts/discover-makati-legislation-archive.mjs",
+        "scripts/normalize-makati-legislation-archive.mjs",
+        "data/makati-legislation-archive-2026-09-26.json",
+        "data/makati-legislation-normalized-2026-09-26.json",
+        ".github/workflows/makati-legislation-archive.yml"
+      ],
+      "validation": {
+        "retrievableArchiveRows": 11359,
+        "canonicalNormalizedRecords": 11355,
+        "explicitUnresolvedRows": 4,
+        "normalizationCollisionGroups": 2,
+        "existingSeedRecords": 20,
+        "matchedSeedRecords": 20,
+        "missingSeedRecords": 0,
+        "completenessBoundary": "Complete for the reproducibly enumerated official Makati archive result set only; no claim is made about legislative history outside that archive."
+      }
     },
     {
       "id": "W4-2e2a",
@@ -399,9 +421,28 @@
       "id": "W4-2e2b",
       "phase": "Legislation",
       "title": "Normalize enumerated archive rows and reconcile seed registry",
-      "status": "next",
+      "status": "complete",
       "maximumScope": "Transform the latest dated raw Makati legislation snapshot into one canonical archive index: stable BetterMakati measure ID, official type/reference/title, official archive UUID/source URL, explicit official-document URL availability, and exact type+reference reconciliation against the existing Annex A ordinance/resolution seed. No topic tagging, summaries, lifecycle enrichment or page work.",
-      "stopWhen": "Every raw archive row maps to one canonical record or an explicit unresolved/duplicate disposition; every existing Annex A seed record reconciles to the same exact type+reference identity; output counts and identifier/reference uniqueness are reproducibly validated."
+      "stopWhen": "Every raw archive row maps to one canonical record or an explicit unresolved/duplicate disposition; every existing Annex A seed record reconciles to the same exact type+reference identity; output counts and identifier/reference uniqueness are reproducibly validated.",
+      "completedAt": "2026-09-26",
+      "implementationFiles": [
+        "scripts/normalize-makati-legislation-archive.mjs",
+        "data/makati-legislation-normalized-2026-09-26.json",
+        ".github/workflows/makati-legislation-archive.yml"
+      ],
+      "validation": {
+        "inputRowTotal": 11359,
+        "canonicalRecordTotal": 11355,
+        "unresolvedTotal": 4,
+        "normalizationCollisionGroupCount": 2,
+        "matchedSeedCount": 20,
+        "missingSeedCount": 0
+      },
+      "commits": [
+        "b58c71d9b35e343535c52ae7e33a3b9f82dd308f",
+        "ca8f01a232fe081b4f3126bd55bcade5d7242ae5",
+        "eed5319ceb6465e2421902b65f4f9371088501f7"
+      ]
     },
     {
       "id": "W4-2f",
@@ -628,11 +669,11 @@
       "stopWhen": "Wave 4 is closed only to the extent supported by evidence, with future work reopened as specific capabilities rather than vague unfinished work."
     }
   ],
-  "current": "W4-2e2b",
+  "current": "W4-2f",
   "immediateNext": {
-    "id": "W4-2e2b",
-    "title": "Normalize enumerated archive rows and reconcile seed registry",
-    "maximumScope": "Transform the latest dated raw Makati legislation snapshot into one canonical archive index: stable BetterMakati measure ID, official type/reference/title, official archive UUID/source URL, explicit official-document URL availability, and exact type+reference reconciliation against the existing Annex A ordinance/resolution seed. No topic tagging, summaries, lifecycle enrichment or page work."
+    "id": "W4-2f",
+    "title": "Add legislation topics and civic relationships",
+    "maximumScope": "Explicit typed links to affected service, barangay, Place Registry entity, project/accountability record or public record only when supported by the legislative text/source."
   },
   "carriedForward": [
     {
