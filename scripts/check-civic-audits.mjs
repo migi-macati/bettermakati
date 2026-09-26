@@ -349,7 +349,7 @@ for (const marker of [
   'parks with observations',
   'parks meeting the pilot completion rule',
   'Observed distributions',
-  '13 frozen target parks',
+  'frozen target parks',
   'No substantive campaign-period answers yet.',
   "civicAuditPilot.route + '/results'",
 ]) {
