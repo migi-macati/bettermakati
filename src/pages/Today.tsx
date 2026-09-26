@@ -251,70 +251,64 @@ export default function Today() {
         description="A daily Makati dashboard for weather, civic updates, news, events and emergency links."
       />
 
-      <Section className="bg-[#fffdf8]">
-        <div className="section-eyebrow">Your Makati</div>
-        <Heading>Today in Makati</Heading>
-        <p className="mt-1 text-sm font-semibold text-primary-800">{dateLabel}</p>
-        <p className="mt-3 max-w-3xl text-gray-700">
-          One starting point for what you may need to know today, with timestamps and
-          source boundaries kept visible.
-        </p>
-        <LastReviewed date={todayReviewed} />
-
-        <div className="mt-7 rounded-2xl border border-primary-100 bg-white p-5 md:p-6">
-          <div className="flex items-center gap-2 font-extrabold text-gray-950">
-            <Settings2 className="h-5 w-5 text-primary-700" />
-            My Makati
-          </div>
-          <label className="mt-4 block max-w-xl">
-            <span className="text-sm font-bold text-gray-800">My barangay</span>
-            <select
-              value={barangaySlug}
-              onChange={event => chooseBarangay(event.target.value)}
-              className="mt-2 w-full rounded-xl border border-gray-300 bg-white px-4 py-3"
-              aria-label="Choose my barangay"
-            >
-              <option value="">Choose a barangay</option>
-              {barangays.map(item => (
-                <option key={item.slug} value={item.slug}>{item.name}</option>
-              ))}
-            </select>
-          </label>
-          <p className="mt-3 text-xs text-gray-500">
-            Saved in this browser.
-          </p>
-        </div>
-
-        {barangay && (
-          <div className="mt-6 rounded-2xl border border-primary-200 bg-primary-50 p-6">
-            <div className="flex items-start gap-3">
-              <MapPin className="mt-1 h-5 w-5 shrink-0 text-primary-800" />
-              <div>
-                <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-800">
-                  Your selected locality
-                </div>
-                <h2 className="mt-1 text-2xl font-extrabold text-gray-950">
-                  Barangay {barangay.name}
-                </h2>
-                <p className="mt-1 text-sm text-gray-700">
-                  2024 population {barangay.population2024.toLocaleString('en-PH')} · {barangay.legislativeDistrict}
-                </p>
-                <div className="mt-4 flex flex-wrap gap-3">
-                  <Link to={'/barangays/' + barangay.slug} className="brand-btn-primary">
-                    Better{barangay.name}
-                  </Link>
-                  <Link to={'/participate?barangay=' + barangay.slug} className="brand-btn-secondary">
-                    Participate locally
-                  </Link>
-                  <Link to={'/accountability?barangay=' + barangay.slug} className="brand-btn-secondary">
-                    Local accountability
-                  </Link>
-                </div>
-              </div>
+      <section className="border-b border-primary-900 bg-primary-800 text-white">
+        <div className="container px-5 py-10 md:px-6 md:py-12 lg:px-8">
+          <div className="max-w-4xl">
+            <div className="mb-2 text-xs font-extrabold uppercase tracking-[0.12em] text-secondary-400 md:text-sm">
+              Your Makati
             </div>
+            <h1 className="text-4xl font-extrabold tracking-tight text-white md:text-6xl">
+              Today in Makati
+            </h1>
+            <p className="mt-2 text-sm font-semibold text-primary-100 md:text-base">{dateLabel}</p>
+
+            <div className="mt-6 max-w-xl">
+              <label className="block">
+                <span className="mb-2 flex items-center gap-2 text-sm font-bold text-white">
+                  <Settings2 className="h-4 w-4 text-secondary-400" aria-hidden="true" />
+                  My barangay
+                </span>
+                <select
+                  value={barangaySlug}
+                  onChange={event => chooseBarangay(event.target.value)}
+                  className="w-full rounded-xl border border-white/30 bg-white px-4 py-3 text-gray-950 shadow-sm"
+                  aria-label="Choose my barangay"
+                >
+                  <option value="">Choose a barangay</option>
+                  {barangays.map(item => (
+                    <option key={item.slug} value={item.slug}>{item.name}</option>
+                  ))}
+                </select>
+              </label>
+            </div>
+
+            {barangay && (
+              <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm">
+                <span className="font-semibold text-primary-100">
+                  Barangay {barangay.name} · {barangay.population2024.toLocaleString('en-PH')} residents · {barangay.legislativeDistrict}
+                </span>
+                <Link
+                  to={'/barangays/' + barangay.slug}
+                  className="min-h-11 content-center font-bold text-white underline decoration-white/40 underline-offset-4 hover:text-secondary-300"
+                >
+                  Barangay homepage
+                </Link>
+                <Link
+                  to={'/participate?barangay=' + barangay.slug}
+                  className="min-h-11 content-center font-bold text-white underline decoration-white/40 underline-offset-4 hover:text-secondary-300"
+                >
+                  Participate locally
+                </Link>
+              </div>
+            )}
+
+            <LastReviewed
+              date={todayReviewed}
+              className="mt-4 !text-primary-100 [&_strong]:!text-white [&_svg]:!text-secondary-400"
+            />
           </div>
-        )}
-      </Section>
+        </div>
+      </section>
 
       <Section className="bg-[#f5f8f2]">
         <div className="section-eyebrow">Today at a glance</div>
