@@ -91,11 +91,12 @@
   },
   "collection": {
     "publicRoute": "/civic-map/audits/park-accessibility-2026",
-    "observationRoutePattern": "/civic-map/:entityId#observe",
+    "observationRoutePattern": "/civic-map/:entityId?campaign=makati-public-park-accessibility-2026-pilot#observe",
     "targetCount": 13,
     "minimumObservationGoal": 26,
     "dataSource": "Existing /api/civic-observation records are counted by frozen entityId + observedAt window; no separate campaign response store is created.",
-    "problemReports": "Remain separate civic cases and never count as audit observations."
+    "problemReports": "Remain separate civic cases and never count as audit observations.",
+    "formBehavior": "When opened from the pilot page, the existing observation form is limited to the four campaign question IDs. Normal park pages retain the full park observation question set."
   },
   "nextStep": {
     "id": "W3R-7c",
