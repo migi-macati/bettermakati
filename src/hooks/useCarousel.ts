@@ -1,9 +1,13 @@
 import { useEffect, useState } from 'react';
 
 /** Keep manual pause, hover, keyboard focus and reduced motion independent. */
-export default function useCarousel(count: number, interval: number) {
+export default function useCarousel(
+  count: number,
+  interval: number,
+  startPaused = true
+) {
   const [position, setPosition] = useState(0);
-  const [paused, setPaused] = useState(false);
+  const [paused, setPaused] = useState(startPaused);
   const [hovered, setHovered] = useState(false);
   const [focused, setFocused] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(
@@ -36,12 +40,18 @@ export default function useCarousel(count: number, interval: number) {
     if (count) setPosition(current => (current + direction + count) % count);
   };
 
+  const goTo = (nextIndex: number) => {
+    setPaused(true);
+    if (count) setPosition(((nextIndex % count) + count) % count);
+  };
+
   return {
     index,
     paused,
     reducedMotion,
     rotating,
     move,
+    goTo,
     setPaused,
     interactions: {
       onMouseEnter: () => setHovered(true),
