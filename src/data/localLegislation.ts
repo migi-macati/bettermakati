@@ -25,6 +25,40 @@ export interface LocalLegislationSource {
   note?: string;
 }
 
+export type LocalLegislationCivicRelationshipKind =
+  | 'affects-service'
+  | 'applies-to-barangay'
+  | 'affects-place'
+  | 'authorizes-project'
+  | 'funds-project'
+  | 'affects-accountability-record'
+  | 'supported-by-public-record';
+
+export type LocalLegislationCivicTargetType =
+  | 'service'
+  | 'barangay'
+  | 'place'
+  | 'project'
+  | 'accountability-record'
+  | 'public-record';
+
+export interface LocalLegislationCivicRelationship {
+  kind: LocalLegislationCivicRelationshipKind;
+  targetType: LocalLegislationCivicTargetType;
+  targetId: string;
+  sourceIds: string[];
+  evidence: {
+    basis:
+      | 'official-title'
+      | 'official-text'
+      | 'official-agenda-minutes'
+      | 'reviewed-official-session-recording'
+      | 'official-cross-reference';
+    statement: string;
+  };
+  note?: string;
+}
+
 export interface LocalLegislationRecord {
   id: string;
   measureType: LocalMeasureType;
@@ -141,13 +175,7 @@ export interface LocalLegislationRecord {
     note?: string;
   }>;
   topics: string[];
-  relationships: Array<{
-    kind: string;
-    targetType: string;
-    targetId: string;
-    sourceIds: string[];
-    note?: string;
-  }>;
+  relationships: LocalLegislationCivicRelationship[];
   revision: {
     schemaVersion: 1;
     lastReviewed: string;
@@ -186,6 +214,51 @@ export const ordinanceBatch2020CovidResponse = {
 
 const annexSource = localLegislationSources['makati-covid-recovery-plan-2020'];
 
+const annexVerifiedEnrichment: Record<
+  string,
+  {
+    topics: string[];
+    relationships: LocalLegislationCivicRelationship[];
+  }
+> = {
+  '2020-115': {
+    topics: ['civil registry', 'COVID-19'],
+    relationships: [
+      {
+        kind: 'affects-service',
+        targetType: 'service',
+        targetId: 'civil-registration',
+        sourceIds: [annexSource.id],
+        evidence: {
+          basis: 'official-title',
+          statement:
+            'Annex A titles this ordinance as suspending late registration fees on several civil registry documents during the COVID-19 community quarantine.',
+        },
+        note:
+          'The relationship identifies the explicitly affected service area only; it does not infer current fees, implementation status or later legal effect.',
+      },
+    ],
+  },
+  '2020-116': {
+    topics: ['civil registry', 'death records', 'COVID-19'],
+    relationships: [
+      {
+        kind: 'affects-service',
+        targetType: 'service',
+        targetId: 'local-civil-registry-copy',
+        sourceIds: [annexSource.id],
+        evidence: {
+          basis: 'official-title',
+          statement:
+            'Annex A titles this ordinance as waiving fees for certified true copies of certificates of death during the COVID-19 community quarantine.',
+        },
+        note:
+          'The relationship identifies the explicitly affected service area only; it does not infer current fees, implementation status or later legal effect.',
+      },
+    ],
+  },
+};
+
 const ordinanceFromAnnex = (
   officialNumber: string,
   approvalDate: string,
@@ -193,6 +266,10 @@ const ordinanceFromAnnex = (
 ): LocalLegislationRecord => {
   const sequence = officialNumber.split('-').at(-1) ?? officialNumber;
   const id = 'ordinance-' + officialNumber;
+  const enrichment = annexVerifiedEnrichment[officialNumber] ?? {
+    topics: enrichment.topics,
+    relationships: enrichment.relationships,
+  };
 
   return {
     id,
