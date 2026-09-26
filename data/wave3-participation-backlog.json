@@ -1562,12 +1562,53 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Revise Participation Hub",
       "maximumScope": "Participate page only. Align entry points to official participation, local problem reporting, place improvements, documentation, corrections/sources, BetterMakati ideas and volunteering.",
-      "status": "next",
+      "status": "complete",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
       ],
-      "stopWhen": "Participate page only. Align entry points to official participation, local problem reporting, place improvements, documentation, corrections/sources, BetterMakati ideas and volunteering."
+      "stopWhen": "Participate page is task-led and routes cleanly into the redesigned participation workflows.",
+      "implementationFiles": [
+        "src/pages/Participate.tsx"
+      ],
+      "validation": {
+        "implementationFile": "src/pages/Participate.tsx",
+        "taskLedEntryPoints": [
+          "Join an official consultation",
+          "Report a local problem",
+          "Suggest a place improvement",
+          "Record current conditions",
+          "Correct BetterMakati",
+          "Share a public source",
+          "Suggest a BetterMakati idea",
+          "Volunteer"
+        ],
+        "routing": {
+          "officialParticipation": "#official-opportunities",
+          "localProblem": "/civic-map/report with optional barangay scope",
+          "placeImprovement": "/civic-map with optional barangay scope",
+          "currentConditions": "active civic audit pilot",
+          "correction": "/get-involved?type=correction#submission",
+          "source": "/get-involved?type=source#submission",
+          "idea": "/get-involved?type=idea#submission",
+          "volunteer": "/get-involved?type=volunteer#submission"
+        },
+        "removed": [
+          "generic rating language",
+          "combined report-or-improve action",
+          "official-vs-BetterMakati explainer cards",
+          "duplicated barangay shortcut block",
+          "participation coverage-gap sermon section"
+        ],
+        "retained": [
+          "official participation opportunities",
+          "active civic audit handoff and live output",
+          "public BetterMakati community-input tracking",
+          "documented past official participation",
+          "external civic channels"
+        ],
+        "focusedValidation": "8/8 task cards and required links present; stale ratings/coverage-gap/explainer markers absent."
+      }
     },
     {
       "id": "W3R-8b",
@@ -1576,7 +1617,7 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Revise Get Involved",
       "maximumScope": "Get Involved only. Preserve general submissions and add civic-audit volunteering/handoffs where appropriate.",
-      "status": "planned",
+      "status": "next",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
@@ -1857,9 +1898,9 @@
     }
   ],
   "immediateNext": {
-    "id": "W3R-8a",
-    "title": "Revise Participation Hub",
-    "maximumScope": "Participate page only. Align entry points to official participation, local problem reporting, place improvements, documentation, corrections/sources, BetterMakati ideas and volunteering."
+    "id": "W3R-8b",
+    "title": "Revise Get Involved",
+    "maximumScope": "Get Involved only. Preserve general submissions and add civic-audit volunteering/handoffs where appropriate."
   },
   "reopenedExecutionOrder": [
     "3C-2a",
