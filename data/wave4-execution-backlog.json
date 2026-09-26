@@ -1277,9 +1277,44 @@
       "id": "W4-5g",
       "phase": "Cross-linking and closure",
       "title": "Integrate Public Records and documents",
-      "status": "planned",
+      "status": "complete",
       "maximumScope": "Public Records/document viewer integration only for new Wave 4 source types.",
-      "stopWhen": "Primary documents are reachable from the record pages and record pages are reachable from document entries where identity is explicit."
+      "stopWhen": "Primary documents are reachable from the record pages and record pages are reachable from document entries where identity is explicit.",
+      "completedAt": "2026-09-26",
+      "implementationFiles": [
+        "src/data/publicRecords.ts",
+        "src/pages/PublicRecords.tsx",
+        "src/pages/PublicRecordDetail.tsx",
+        "src/pages/ReportArticle.tsx",
+        "src/pages/Integrity.tsx",
+        "src/pages/Legislation.tsx",
+        "src/App.tsx",
+        "scripts/audit-public-records-depth.mjs",
+        "scripts/check-wave4-public-records.mjs",
+        "package.json"
+      ],
+      "validation": {
+        "wave4SourceRegistries": [
+          "Statistics: cityIndicators + cityIndicatorSources",
+          "Legislation: localLegislationRecords + localLegislationSources + attached documents",
+          "Integrity: integrityGraphNodes + integrityRelationshipSources",
+          "Featured Reports: external ReportSourceV2 entries"
+        ],
+        "identityRule": "Public Records continues to deduplicate on exact source URL. Wave 4 integration adds multiple BetterMakati contexts to one source row instead of duplicating the document.",
+        "multiContext": "PublicRecordItem now carries contexts[] so one primary source can backlink to every explicit Statistics, Legislation, Integrity or Report context that uses it.",
+        "documentRoute": "/records/:id is the canonical BetterMakati source-detail route.",
+        "pdfViewer": "PDF records render an inline document preview when the publisher permits embedding, while the original publisher URL remains the authoritative fallback.",
+        "bidirectionalNavigation": [
+          "Public Records catalog -> source-detail page",
+          "source-detail page -> all explicit BetterMakati contexts",
+          "Report source -> matching Public Records entry by exact URL",
+          "Integrity source -> matching Public Records entry by exact URL",
+          "Legislation attached source -> matching Public Records entry by exact URL"
+        ],
+        "statisticsBoundary": "Statistics primary-source links already open the official source directly; the matching Public Records entries backlink to Statistics through contexts.",
+        "csv": "The Public Records CSV now exports the canonical /records/:id URL plus all related BetterMakati contexts.",
+        "antiInference": "No title, keyword, fuzzy or similarity matching is used to identify shared documents."
+      }
     },
     {
       "id": "W4-5h",
@@ -1306,11 +1341,11 @@
       "stopWhen": "Wave 4 is closed only to the extent supported by evidence, with future work reopened as specific capabilities rather than vague unfinished work."
     }
   ],
-  "current": "W4-5g",
+  "current": "W4-5h",
   "immediateNext": {
-    "id": "W4-5g",
-    "title": "Integrate Public Records and documents",
-    "maximumScope": "Public Records/document viewer integration only for new Wave 4 source types."
+    "id": "W4-5h",
+    "title": "Run anti-sermon and design consistency pass",
+    "maximumScope": "Wave 4 surfaces only. Remove explanatory/meta copy, duplicate methodology, bragging and inconsistent visual patterns; do not add new functionality."
   },
   "carriedForward": [
     {
