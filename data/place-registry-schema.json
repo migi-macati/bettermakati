@@ -418,9 +418,9 @@
     "uiChanges": 0
   },
   "nextImplementationStep": {
-    "id": "W3R-4a",
-    "title": "Reframe Civic Map entry",
-    "constraint": "Civic Map entry surface only. Present the map as one way to browse verified places and start place-based tasks, not as a destination for generic ratings."
+    "id": "W3R-4b",
+    "title": "Simplify place detail",
+    "constraint": "Civic place-detail page only. Reframe the page around verified place facts, useful actions and existing cases; do not implement structured observations yet."
   },
   "betterBarangayReuse": {
     "workstream": "W3R-3a",
@@ -474,6 +474,21 @@
       "A service resolves a where-to-go office only through an explicit office.placeId relationship.",
       "The result displays the office name and address together with the matched service.",
       "No fuzzy, nearest-place or inferred place matching is used in this step."
+    ]
+  },
+  "civicMapEntryReframe": {
+    "workstream": "W3R-4a",
+    "implementedIn": [
+      "src/pages/CivicMap.tsx",
+      "src/data/searchIndex.ts"
+    ],
+    "visibleVerificationStatus": "verified",
+    "currentVisibleCount": 79,
+    "behavior": [
+      "Civic Map is one browse surface over canonical place records.",
+      "The entry page starts from place discovery and user tasks rather than ratings.",
+      "Only verified registry records are listed on the entry page.",
+      "Place-detail and reporting mechanics remain unchanged for later W3R steps."
     ]
   }
 }
