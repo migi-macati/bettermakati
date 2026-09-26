@@ -230,7 +230,7 @@ export default function Document({
         <div className="mb-5 flex flex-col gap-3 rounded-xl border border-primary-100 bg-primary-50 p-4 text-sm leading-relaxed text-gray-700 sm:flex-row sm:items-center sm:justify-between">
           <div>
             Check the official source before acting; requirements, fees and deadlines can change.
-            <LastReviewed className="mt-2" note="Time-sensitive requirements may change." />
+            <LastReviewed date="2026-09-20" className="mt-2" note="Time-sensitive requirements may change." />
           </div>
           {officialSourceHref && (
             <a
