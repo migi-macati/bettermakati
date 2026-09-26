@@ -1374,9 +1374,43 @@
       "id": "W4-5i",
       "phase": "Cross-linking and closure",
       "title": "Run Civic Intelligence human/relationship audit",
-      "status": "planned",
+      "status": "complete",
       "maximumScope": "Wave 4 surfaces and cross-links only. Check source integrity, broken relationships, mobile/accessibility baseline and user journeys.",
-      "stopWhen": "Every Wave 4 surface has an evidence-based status and every canonical relationship resolves."
+      "stopWhen": "Every Wave 4 surface has an evidence-based status and every canonical relationship resolves.",
+      "completedAt": "2026-09-26",
+      "implementationFiles": [
+        "data/wave4-civic-intelligence-human-relationship-audit.json",
+        "src/pages/Legislation.tsx",
+        "src/pages/ReportArticle.tsx",
+        "src/data/integrityCivicRelationships.ts",
+        "src/data/reportCivicRelationships.ts",
+        "src/data/searchIndex.ts",
+        "scripts/check-wave4-human-relationship-audit.mjs",
+        "package.json"
+      ],
+      "validation": {
+        "overallStatus": "static-verified-live-browser-unverified",
+        "sourceIntegrity": "Canonical relationship modules guard unresolved endpoints; Public Records uses exact URL identity; report evidence links now resolve through canonical record resolvers.",
+        "relationshipFixes": [
+          "Removed the dead ?view=suppliers query parameter from canonical Integrity supplier destinations.",
+          "Report inline evidence now resolves to exact canonical deep links rather than older generic hrefs."
+        ],
+        "mobileAccessibilityFixes": [
+          "Legislation filter buttons now meet the 44px touch-target baseline.",
+          "Legislation year selector now meets the 44px touch-target baseline.",
+          "Legislation View record toggle now meets the 44px touch-target baseline."
+        ],
+        "verifiedJourneys": [
+          "Statistics -> Report -> canonical record -> reverse analysis",
+          "Legislation -> service -> historical legislation backlink -> source/Public Records",
+          "Integrity -> Accountability/Public Records/Report analysis -> reverse Integrity evidence",
+          "Global Search -> canonical Civic Intelligence destination"
+        ],
+        "staticMobileBaseline": "Focus-visible, reduced-motion, skip-link, shared 44px controls, responsive overflow for dense Wave 4 tables and accessible PDF iframe title/fallback were verified from source.",
+        "liveBrowserStatus": "Unverified. The connected Vercel deployment fetch denied access and the public web fetcher could not access bettermakati.org routes during this audit.",
+        "ciStatus": "The repository quality workflow remains blocked before Wave 4 checks by the pre-existing BetterBarangay Place Registry check:barangays marker mismatch.",
+        "closureRule": "W4-5j must classify live browser/runtime verification as bounded/deferred unless it is actually completed; do not convert the static audit into a browser-tested claim."
+      }
     },
     {
       "id": "W4-5j",
@@ -1387,11 +1421,11 @@
       "stopWhen": "Wave 4 is closed only to the extent supported by evidence, with future work reopened as specific capabilities rather than vague unfinished work."
     }
   ],
-  "current": "W4-5i",
+  "current": "W4-5j",
   "immediateNext": {
-    "id": "W4-5i",
-    "title": "Run Civic Intelligence human/relationship audit",
-    "maximumScope": "Wave 4 surfaces and cross-links only. Check source integrity, broken relationships, mobile/accessibility baseline and user journeys."
+    "id": "W4-5j",
+    "title": "Reclassify and close Wave 4",
+    "maximumScope": "Classification/closure only. Record complete, bounded, partial and deferred capabilities without inflating completion."
   },
   "carriedForward": [
     {
