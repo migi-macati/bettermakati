@@ -154,8 +154,6 @@ const Home: React.FC = () => {
 
       <Hero />
       <CapabilityCarousel />
-
-
       <FeaturedInsightsCarousel />
 
       <section className="border-b border-primary-100 bg-[#f5f8f2] py-8">
@@ -163,15 +161,13 @@ const Home: React.FC = () => {
           <div className="rounded-2xl border border-primary-200 bg-white p-5 md:p-6">
             <div className="grid gap-5 lg:grid-cols-[1fr_auto] lg:items-center">
               <div>
-                <div className="section-eyebrow">Barangay editions</div>
+                <div className="section-eyebrow">BetterBarangay</div>
                 <h2 className="text-2xl font-extrabold tracking-tight text-gray-950 md:text-3xl">
-                  Go deeper into your barangay
+                  Go straight to your barangay
                 </h2>
                 <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600 md:text-base">
-                  BetterMakati also has local barangay homepages. Open BetterBangkal,
-                  BetterPoblacion, BetterBel-Air and the other barangay editions for
-                  local services, contacts, public places, projects, statistics,
-                  reporting and participation.
+                  Local services, officials, contacts, places, projects, statistics
+                  and reports for each of Makati&apos;s 23 barangays.
                 </p>
               </div>
 
@@ -240,12 +236,6 @@ const Home: React.FC = () => {
               );
             })}
           </div>
-        </div>
-      </section>
-
-      <section className="bg-[#f5f8f2] py-8 border-b border-primary-100/70">
-        <div className="container px-5 md:px-6 lg:px-8">
-          <PhotoCarousel images={homeImageSet} title="Around Makati" compact />
         </div>
       </section>
 
@@ -339,6 +329,12 @@ const Home: React.FC = () => {
               );
             })}
           </div>
+        </div>
+      </section>
+
+      <section className="bg-[#f5f8f2] py-8 border-b border-primary-100/70">
+        <div className="container px-5 md:px-6 lg:px-8">
+          <PhotoCarousel images={homeImageSet} title="Around Makati" compact />
         </div>
       </section>
 
