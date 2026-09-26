@@ -284,15 +284,59 @@
       "id": "W4-1f",
       "phase": "Statistics",
       "title": "Implement canonical indicator dataset",
-      "status": "next",
+      "status": "complete",
       "maximumScope": "Data layer only for the approved W4-1c/1d/1e indicator set.",
-      "stopWhen": "Implemented indicators pass geography/period/source validation and existing hard-coded duplicates have a migration disposition."
+      "stopWhen": "Implemented indicators pass geography/period/source validation and existing hard-coded duplicates have a migration disposition.",
+      "implementationFiles": [
+        "src/data/cityIndicators.ts",
+        "data/city-indicator.schema.json",
+        "data/wave4-statistics-data-migration.json",
+        "scripts/check-city-indicators.mjs",
+        "src/data/barangays.ts",
+        "src/data/budget2025.ts",
+        "package.json"
+      ],
+      "validation": {
+        "approvedIndicators": 30,
+        "registeredSources": 18,
+        "dataStates": {
+          "inlineMaterialized": 15,
+          "sourceTableBound": 14,
+          "sourceTablePartiallyMaterialized": 1,
+          "derived": 1,
+          "indicatorsWithLocalObservations": 16,
+          "fullySourceBoundWithoutLocalObservation": 13
+        },
+        "batchIntegrity": "All 30 W4-1c/1d/1e approved indicator IDs are present exactly once; no held or rejected candidate is implemented.",
+        "sourceIntegrity": "Every source-table/sourceIds reference resolves to one of 18 registered official sources; source-bound indicators preserve unavailable cells instead of inventing values.",
+        "canonicalReuse": [
+          "2024 Makati population is now exported once as currentMakatiPopulation2024 from canonical barangay records (23 records; sum 309,770).",
+          "budget2025.ts now reuses currentMakatiPopulation2024 instead of storing a second 309,770 literal.",
+          "cityIndicators.ts resolves 2024 population from that canonical selector.",
+          "2024 GDP per person is resolved from the existing canonical CityComparison Makati row instead of duplicating 3,889,202."
+        ],
+        "geographyAndMeaningGuards": [
+          "PPA current-boundary series begins in 2022 unless a future official restatement supports earlier values.",
+          "Resident labor rates remain distinct from workplace employment.",
+          "Official park denominator remains 15 and is not replaced by the 13-park civic-audit target.",
+          "YAKAP/GAMOT provider count is explicitly not treated as all Makati health facilities.",
+          "Place Registry is not imported or used as an infrastructure denominator."
+        ],
+        "schemaExtensions": [
+          "source-table-reference supports official tables that are canonical externally but not yet safely materialized locally.",
+          "explicit dimensions support age, sex, industry, land-use and other breakdowns without encoding breakdowns into indicator IDs."
+        ],
+        "migrationDisposition": "data/wave4-statistics-data-migration.json assigns remaining Statistics UI literals to W4-1g, download construction to W4-1i, keeps CityComparison as the 2024 benchmark owner, and treats report prose only as dated publication snapshots.",
+        "regression": "check:city-indicators is now included in npm run build and npm run quality.",
+        "focusedValidation": "Source-level audit simulation returns zero problems: 30/30 approved, 0 extras, 0 held/rejected implemented, 0 duplicate IDs, 23 barangay records summing to 309,770, canonical population and GDP-per-capita reuse confirmed, source references and indicator relationships resolve.",
+        "executionBoundary": "No browser work is part of W4-1f. No GitHub Actions execution is claimed unless a workflow run appears."
+      }
     },
     {
       "id": "W4-1g",
       "phase": "Statistics",
       "title": "Redesign Statistics landing around questions and trends",
-      "status": "planned",
+      "status": "next",
       "maximumScope": "Statistics page only. Use canonical indicators, strong visual hierarchy, charts/tables and concise interpretation.",
       "stopWhen": "The page answers current scale, change over time and comparable context without sermons or duplicated data."
     },
@@ -578,9 +622,9 @@
     }
   ],
   "immediateNext": {
-    "id": "W4-1f",
-    "title": "Implement canonical indicator dataset",
-    "maximumScope": "Data layer only for the approved W4-1c/1d/1e indicator set."
+    "id": "W4-1g",
+    "title": "Redesign Statistics landing around questions and trends",
+    "maximumScope": "Statistics page only. Use canonical indicators, strong visual hierarchy, charts/tables and concise interpretation."
   },
   "inheritedKnownItems": [
     {
