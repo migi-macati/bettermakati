@@ -10,7 +10,6 @@ import {
   Landmark,
   Mail,
   MapPin,
-  MessageSquarePlus,
   Phone,
   Search,
   Users,
