@@ -267,8 +267,8 @@ const ordinanceFromAnnex = (
   const sequence = officialNumber.split('-').at(-1) ?? officialNumber;
   const id = 'ordinance-' + officialNumber;
   const enrichment = annexVerifiedEnrichment[officialNumber] ?? {
-    topics: enrichment.topics,
-    relationships: enrichment.relationships,
+    topics: [],
+    relationships: [],
   };
 
   return {
@@ -318,8 +318,8 @@ const ordinanceFromAnnex = (
     ],
     sessionEvidence: [],
     measureRelationships: [],
-    topics: [],
-    relationships: [],
+    topics: enrichment.topics,
+    relationships: enrichment.relationships,
     revision: {
       schemaVersion: 1,
       lastReviewed: '2026-09-26',
