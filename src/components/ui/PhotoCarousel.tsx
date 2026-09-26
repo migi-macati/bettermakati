@@ -8,11 +8,13 @@ export default function PhotoCarousel({
   title,
   className = '',
   compact = false,
+  priority = false,
 }: {
   images: CityImage[];
   title?: string;
   className?: string;
   compact?: boolean;
+  priority?: boolean;
 }) {
   const carousel = useCarousel(images.length, 6500);
   const { index } = carousel;
@@ -59,7 +61,8 @@ export default function PhotoCarousel({
             alt={image.alt}
             width={1400}
             height={933}
-            loading="lazy"
+            loading={priority ? 'eager' : 'lazy'}
+            fetchPriority={priority ? 'high' : 'auto'}
             decoding="async"
             referrerPolicy="no-referrer"
             onError={() =>
