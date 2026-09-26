@@ -218,6 +218,19 @@ export const statisticsCivicNodeResolver: CivicIntelligenceNodeResolver =
     return undefined;
   };
 
+for (const relationship of statisticsCivicRelationships) {
+  if (!statisticsCivicNodeResolver(relationship.from)) {
+    throw new Error(
+      'Unresolved Statistics relationship source: ' + relationship.id
+    );
+  }
+  if (!statisticsCivicNodeResolver(relationship.to)) {
+    throw new Error(
+      'Unresolved Statistics relationship target: ' + relationship.id
+    );
+  }
+}
+
 export const statisticsRelatedRecords = (indicatorId: string) =>
   statisticsCivicRelationshipIndex
     .forRef({ type: 'indicator', id: indicatorId })
@@ -225,13 +238,7 @@ export const statisticsRelatedRecords = (indicatorId: string) =>
       ...view,
       node: statisticsCivicNodeResolver(view.related),
     }))
-    .filter(
-      (
-        item
-      ): item is typeof item & {
-        node: NonNullable<ReturnType<typeof statisticsCivicNodeResolver>>;
-      } => Boolean(item.node)
-    );
+    .filter(item => Boolean(item.node));
 
 export const statisticsRelationshipCoverage = {
   indicatorToBarangay: populationBarangayRelationships.length,
