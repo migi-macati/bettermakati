@@ -33,7 +33,7 @@ export default function About() {
           observations, proposals, corrections and civic input. Original sources
           remain linked wherever they support the information shown.
         </Text>
-        <LastReviewed label="Project policy reviewed" />
+        <LastReviewed date="2026-09-20" label="Project policy reviewed" />
 
         <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="rounded-2xl border border-primary-100 bg-white p-5">
