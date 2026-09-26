@@ -139,6 +139,67 @@ export const cityImages: Record<string, CityImage> = {
     objectPosition: '50% 66%',
   },
 
+  userTreeLinedSidewalk: {
+    src: userImage('tree-lined-sidewalk.jpg'),
+    alt: 'Tree-lined Makati sidewalk framed by office towers, with sunlight filtering through the canopy.',
+    title: 'A shaded walk through the CBD',
+    objectPosition: '50% 58%',
+  },
+  userCbdMonumentCrossing: {
+    src: userImage('cbd-monument-crossing.jpg'),
+    alt: 'Pedestrians crossing a Makati business district street beside a monument and glass office towers.',
+    title: 'Crossing the business district',
+    objectPosition: '50% 57%',
+  },
+  userBacklitCbdTree: {
+    src: userImage('backlit-cbd-tree.jpg'),
+    alt: 'Large tree backlit by the sun between office buildings along a Makati street.',
+    title: 'Trees between towers',
+    objectPosition: '50% 56%',
+  },
+  userDuskParkPath: {
+    src: userImage('dusk-park-path.jpg'),
+    alt: 'Lit pedestrian path through a landscaped Makati park at dusk.',
+    title: 'A park at dusk',
+    objectPosition: '50% 57%',
+  },
+  userEscalatorCity: {
+    src: userImage('escalator-city.jpg'),
+    alt: 'Outdoor escalator rising through a glass canopy with Makati buildings visible beyond.',
+    title: 'Moving through the city',
+    objectPosition: '50% 52%',
+  },
+  userHazySkyline: {
+    src: userImage('hazy-skyline.jpg'),
+    alt: 'Hazy daytime view across lower-rise Makati neighborhoods toward larger office and residential buildings.',
+    title: 'Makati across the neighborhoods',
+    objectPosition: '50% 46%',
+  },
+  userParkCanopy: {
+    src: userImage('park-canopy.jpg'),
+    alt: 'Landscaped Makati park with mature tree canopy, paved paths and a shaded pavilion.',
+    title: 'Under the trees',
+    objectPosition: '50% 54%',
+  },
+  userWideNightSkyline: {
+    src: userImage('wide-night-skyline.jpg'),
+    alt: 'Wide nighttime view of Makati neighborhoods and illuminated skyline.',
+    title: 'Makati after sunset',
+    objectPosition: '50% 61%',
+  },
+  userCityHallSkyline: {
+    src: userImage('city-hall-skyline.jpg'),
+    alt: 'Makati City Hall tower seen across surrounding neighborhoods under an overcast sky.',
+    title: 'City Hall across Makati',
+    objectPosition: '50% 43%',
+  },
+  userUrbanUndercroft: {
+    src: userImage('urban-undercroft.jpg'),
+    alt: 'Covered Makati pedestrian and vehicle space framed by a sculptural concrete column and landscaped street beyond.',
+    title: 'Layers of the city',
+    objectPosition: '50% 56%',
+  },
+
   skyline: {
     src: commonsImage('Makati City Skyline from Guadalupe, Apr 2025.jpg'),
     alt: 'Makati skyline rising beyond trees and lower-rise neighborhoods, viewed from Guadalupe.',
@@ -217,69 +278,69 @@ export const cityImages: Record<string, CityImage> = {
 
 export const homeImageSet = [
   cityImages.userSkylineClouds,
+  cityImages.userWideNightSkyline,
+  cityImages.userBacklitCbdTree,
+  cityImages.userDuskParkPath,
+  cityImages.userCbdMonumentCrossing,
   cityImages.userNightCourtyard,
-  cityImages.userCarFreeCbd,
   cityImages.userRiverChurchNight,
-  cityImages.userTreeLinedPark,
-  cityImages.userNightSkyline,
-  cityImages.userMuseo,
-  cityImages.userSkylineDay,
+  cityImages.userTreeLinedSidewalk,
 ];
 
 export const visitImageSet = [
   cityImages.userNightCourtyard,
-  cityImages.userRiverDay,
-  cityImages.userRiverChurchNight,
+  cityImages.userDuskParkPath,
+  cityImages.userParkCanopy,
   cityImages.userUrbanCourtyard,
   cityImages.userPoblacionNightStreet,
-  cityImages.userCarFreeCbd,
-  cityImages.userUrbanPark,
+  cityImages.userRiverDay,
   cityImages.userMuseo,
+  cityImages.userBacklitCbdTree,
   cityImages.userPasigRiverNight,
 ];
 
 export const governmentImageSet = [
   cityImages.cityHall,
+  cityImages.userCityHallSkyline,
+  cityImages.userCbdMonumentCrossing,
   cityImages.userWarriorMonument,
-  cityImages.userOpenLotMonument,
+  cityImages.userSunsetMonument,
   cityImages.userCbdStreet,
-  cityImages.userSkylineClouds,
-  cityImages.userMuseo,
 ];
 
 export const barangayImageSet = [
+  cityImages.userWideNightSkyline,
   cityImages.userNightSkyline,
   cityImages.userPoblacionNightStreet,
   cityImages.userRiverChurchNight,
-  cityImages.userRiverDay,
   cityImages.userSkylineDay,
-  cityImages.userUrbanPark,
-  cityImages.userMuseo,
+  cityImages.userParkCanopy,
+  cityImages.userHazySkyline,
 ];
 
 export const historyImageSet = [
   cityImages.userMuseo,
+  cityImages.userCbdMonumentCrossing,
   cityImages.userWarriorMonument,
   cityImages.userSunsetMonument,
+  cityImages.userCityHallSkyline,
   cityImages.sanPedro,
-  cityImages.cityHall,
-  cityImages.userSkylineDay,
 ];
 
 export const mobilityImageSet = [
   cityImages.userCarFreeCbd,
+  cityImages.userTreeLinedSidewalk,
+  cityImages.userEscalatorCity,
+  cityImages.userUrbanUndercroft,
   cityImages.userTrafficStreet,
   cityImages.userCbdStreet,
   cityImages.userNightSidewalk,
-  cityImages.jeepney,
-  cityImages.userNightCourtyard,
-  cityImages.userSkylineClouds,
 ];
 
 export const servicesImageSet = [
   cityImages.userCbdStreet,
+  cityImages.userUrbanUndercroft,
   cityImages.cityHall,
   cityImages.userUrbanPark,
   cityImages.userNightCourtyard,
-  cityImages.userTrafficStreet,
 ];
