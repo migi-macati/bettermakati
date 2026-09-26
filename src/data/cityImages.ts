@@ -78,6 +78,66 @@ export const cityImages: Record<string, CityImage> = {
     title: 'Makati from above',
     objectPosition: '50% 45%',
   },
+  userOpenLotMonument: {
+    src: userImage('open-lot-monument.jpg'),
+    alt: 'A sculptural monument in a Makati streetscape with towers, open space and overhead utility lines behind it.',
+    title: 'A Makati streetscape',
+    objectPosition: '50% 54%',
+  },
+  userRiverDay: {
+    src: userImage('pasig-river-day.jpg'),
+    alt: 'Daytime view across the Pasig River toward Makati buildings, seen from close to the water.',
+    title: 'Along the Pasig River',
+    objectPosition: '50% 45%',
+  },
+  userRiverChurchNight: {
+    src: userImage('river-church-night.jpg'),
+    alt: 'Church, high-rise buildings and their lights reflected across the river at night.',
+    title: 'Poblacion by the river at night',
+    objectPosition: '50% 52%',
+  },
+  userUrbanCourtyard: {
+    src: userImage('urban-courtyard.jpg'),
+    alt: 'Multi-level Makati commercial courtyard with a landscaped water feature and pedestrian walkways.',
+    title: 'Urban spaces in Makati',
+    objectPosition: '50% 57%',
+  },
+  userTrafficStreet: {
+    src: userImage('traffic-street.jpg'),
+    alt: 'Dense evening traffic, pedestrians and overhead utility lines on a narrow Makati street.',
+    title: 'Moving through a busy street',
+    objectPosition: '50% 64%',
+  },
+  userPoblacionNightStreet: {
+    src: userImage('poblacion-night-street.jpg'),
+    alt: 'Busy Makati nightlife street with neon signs, motorcycles, cars and dense overhead utility lines.',
+    title: 'Poblacion at night',
+    objectPosition: '50% 60%',
+  },
+  userCarFreeCbd: {
+    src: userImage('car-free-cbd.jpg'),
+    alt: 'Runners and walkers using a broad car-free avenue in Makati’s business district.',
+    title: 'Car-free morning in the CBD',
+    objectPosition: '50% 67%',
+  },
+  userWarriorMonument: {
+    src: userImage('warrior-monument.jpg'),
+    alt: 'Bronze warrior monument framed by Makati office buildings and construction cranes.',
+    title: 'Monument in the business district',
+    objectPosition: '50% 54%',
+  },
+  userSunsetMonument: {
+    src: userImage('sunset-monument.jpg'),
+    alt: 'Monument silhouetted against a warm sunset between high-rise office buildings in Makati.',
+    title: 'Sunset in the CBD',
+    objectPosition: '50% 58%',
+  },
+  userNightSidewalk: {
+    src: userImage('night-sidewalk.jpg'),
+    alt: 'Makati sidewalk at night with palm trees, hotel signs, traffic lights and a pedestrian.',
+    title: 'Walking through Makati at night',
+    objectPosition: '50% 66%',
+  },
 
   skyline: {
     src: commonsImage('Makati City Skyline from Guadalupe, Apr 2025.jpg'),
@@ -158,25 +218,30 @@ export const cityImages: Record<string, CityImage> = {
 export const homeImageSet = [
   cityImages.userSkylineClouds,
   cityImages.userNightCourtyard,
+  cityImages.userCarFreeCbd,
+  cityImages.userRiverChurchNight,
   cityImages.userTreeLinedPark,
   cityImages.userNightSkyline,
   cityImages.userMuseo,
-  cityImages.userPasigRiverNight,
   cityImages.userSkylineDay,
 ];
 
 export const visitImageSet = [
   cityImages.userNightCourtyard,
+  cityImages.userRiverDay,
+  cityImages.userRiverChurchNight,
+  cityImages.userUrbanCourtyard,
+  cityImages.userPoblacionNightStreet,
+  cityImages.userCarFreeCbd,
   cityImages.userUrbanPark,
-  cityImages.userTreeLinedPark,
   cityImages.userMuseo,
   cityImages.userPasigRiverNight,
-  cityImages.userUrbanGreenery,
-  cityImages.sanPedro,
 ];
 
 export const governmentImageSet = [
   cityImages.cityHall,
+  cityImages.userWarriorMonument,
+  cityImages.userOpenLotMonument,
   cityImages.userCbdStreet,
   cityImages.userSkylineClouds,
   cityImages.userMuseo,
@@ -184,24 +249,30 @@ export const governmentImageSet = [
 
 export const barangayImageSet = [
   cityImages.userNightSkyline,
+  cityImages.userPoblacionNightStreet,
+  cityImages.userRiverChurchNight,
+  cityImages.userRiverDay,
   cityImages.userSkylineDay,
   cityImages.userUrbanPark,
-  cityImages.userPasigRiverNight,
   cityImages.userMuseo,
 ];
 
 export const historyImageSet = [
   cityImages.userMuseo,
+  cityImages.userWarriorMonument,
+  cityImages.userSunsetMonument,
   cityImages.sanPedro,
   cityImages.cityHall,
   cityImages.userSkylineDay,
 ];
 
 export const mobilityImageSet = [
+  cityImages.userCarFreeCbd,
+  cityImages.userTrafficStreet,
   cityImages.userCbdStreet,
+  cityImages.userNightSidewalk,
   cityImages.jeepney,
   cityImages.userNightCourtyard,
-  cityImages.userPasigRiverNight,
   cityImages.userSkylineClouds,
 ];
 
@@ -210,4 +281,5 @@ export const servicesImageSet = [
   cityImages.cityHall,
   cityImages.userUrbanPark,
   cityImages.userNightCourtyard,
+  cityImages.userTrafficStreet,
 ];
