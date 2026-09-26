@@ -9,6 +9,7 @@ import {
   resolveReportSlug,
 } from '../data/reports';
 import { reportRelatedRecords } from '../data/reportCivicRelationships';
+import { publicRecordByUrl } from '../data/publicRecords';
 import type {
   ReportCanonicalRecordRef,
   ReportContentBlock,
@@ -46,15 +47,27 @@ function SourceLink({
     );
   }
 
+  const publicRecord = publicRecordByUrl.get(source.href);
+
   return (
-    <a
-      href={source.href}
-      target="_blank"
-      rel="noreferrer"
-      className={classes}
-    >
-      {children}
-    </a>
+    <span className="inline-flex items-baseline gap-1.5">
+      <a
+        href={source.href}
+        target="_blank"
+        rel="noreferrer"
+        className={classes}
+      >
+        {children}
+      </a>
+      {publicRecord && (
+        <Link
+          to={'/records/' + publicRecord.id}
+          className="whitespace-nowrap font-bold text-primary-700 underline underline-offset-2"
+        >
+          Public record
+        </Link>
+      )}
+    </span>
   );
 }
 
