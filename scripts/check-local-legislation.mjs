@@ -2,7 +2,7 @@ import { readFile } from 'node:fs/promises';
 
 const source = await readFile('src/data/localLegislation.ts', 'utf8');
 
-const expected = [
+const expectedOrdinances = [
   ['2020-074', '2020-03-19'],
   ['2020-075', '2020-03-19'],
   ['2020-080', '2020-03-26'],
@@ -20,25 +20,39 @@ const expected = [
   ['2020-128', '2020-05-06'],
 ];
 
+const expectedResolutions = [
+  ['2020-016', '2020-03-16'],
+  ['2020-017', '2020-03-16'],
+  ['2020-018', '2020-03-19'],
+  ['2020-019', '2020-03-19'],
+  ['2020-020', '2020-03-19'],
+];
+
 const problems = [];
 
-if (!source.includes("id: 'ordinance-batch-2020-covid-response'")) {
-  problems.push('First ordinance batch metadata is missing.');
+for (const [batchId, count, scopeMarker] of [
+  ['ordinance-batch-2020-covid-response', 15, 'All City Ordinance entries in Annex A'],
+  ['resolution-batch-2020-covid-response', 5, 'All City Resolution entries in Annex A'],
+]) {
+  if (!source.includes("id: '" + batchId + "'")) {
+    problems.push('Missing batch metadata: ' + batchId);
+  }
+  if (!source.includes('expectedCount: ' + count)) {
+    problems.push('Missing expectedCount ' + count + ' for ' + batchId);
+  }
+  if (!source.includes(scopeMarker)) {
+    problems.push('Missing declared scope marker for ' + batchId);
+  }
 }
-if (!source.includes('expectedCount: 15')) {
-  problems.push('First ordinance batch expectedCount must be 15.');
-}
-if (!source.includes('All City Ordinance entries in Annex A')) {
-  problems.push('Declared Annex A ordinance scope is missing.');
-}
+
 if (!source.includes("'makati-covid-recovery-plan-2020'")) {
   problems.push('Official Makati recovery-plan source is missing.');
 }
 if (!source.includes("sourceClass: 'official-city-publication'")) {
-  problems.push('First batch must identify the official source class.');
+  problems.push('Official source class is missing.');
 }
 
-const calls = [
+const ordinanceCalls = [
   ...source.matchAll(
     /ordinanceFromAnnex\(\s*'([^']+)',\s*'([^']+)',\s*("[\s\S]*?")\s*\)/g
   ),
@@ -48,40 +62,62 @@ const calls = [
   title: JSON.parse(match[3]),
 }));
 
-if (calls.length !== expected.length) {
-  problems.push(
-    'Expected ' + expected.length + ' ordinance records; found ' + calls.length + '.'
-  );
-}
+const resolutionCalls = [
+  ...source.matchAll(
+    /resolutionFromAnnex\(\s*'([^']+)',\s*'([^']+)',\s*'([\s\S]*?)'\s*\)/g
+  ),
+].map(match => ({
+  number: match[1],
+  date: match[2],
+  title: match[3],
+}));
 
-const duplicateNumbers = calls
-  .map(item => item.number)
-  .filter((number, index, all) => all.indexOf(number) !== index);
-if (duplicateNumbers.length) {
-  problems.push('Duplicate ordinance references: ' + duplicateNumbers.join(', '));
-}
-
-for (const [number, date] of expected) {
-  const record = calls.find(item => item.number === number);
-  if (!record) {
-    problems.push('Missing ordinance ' + number + '.');
-    continue;
-  }
-  if (record.date !== date) {
+const validateBatch = (kind, records, expected) => {
+  if (records.length !== expected.length) {
     problems.push(
-      'Approval date mismatch for ' + number + ': ' + record.date + ' != ' + date
+      'Expected ' + expected.length + ' ' + kind + ' records; found ' + records.length + '.'
     );
   }
-  if (!record.title.trim()) {
-    problems.push('Missing title for ordinance ' + number + '.');
+
+  const duplicateNumbers = records
+    .map(item => item.number)
+    .filter((number, index, all) => all.indexOf(number) !== index);
+  if (duplicateNumbers.length) {
+    problems.push(
+      'Duplicate ' + kind + ' references: ' + duplicateNumbers.join(', ')
+    );
   }
-}
+
+  for (const [number, date] of expected) {
+    const record = records.find(item => item.number === number);
+    if (!record) {
+      problems.push('Missing ' + kind + ' ' + number + '.');
+      continue;
+    }
+    if (record.date !== date) {
+      problems.push(
+        'Approval date mismatch for ' +
+          number +
+          ': ' +
+          record.date +
+          ' != ' +
+          date
+      );
+    }
+    if (!record.title.trim()) {
+      problems.push('Missing title for ' + kind + ' ' + number + '.');
+    }
+  }
+};
+
+validateBatch('ordinance', ordinanceCalls, expectedOrdinances);
+validateBatch('resolution', resolutionCalls, expectedResolutions);
 
 if (
   !source.includes("measureType: 'ordinance'") ||
-  !source.includes('export const localResolutionRecords: LocalLegislationRecord[] = [];')
+  !source.includes("measureType: 'resolution'")
 ) {
-  problems.push('W4-2c must contain ordinances only; resolutions belong to W4-2d.');
+  problems.push('Both canonical local measure types must be represented.');
 }
 
 for (const marker of [
@@ -91,6 +127,7 @@ for (const marker of [
   'does not, in this table alone, identify the approving body',
   "recordStatus: 'provisional'",
   'Full ordinance text, authors, readings, vote, mayoral action, effectivity and later legal status still require measure-level evidence.',
+  'Full resolution text, authors, readings, vote, mayoral action where applicable, effectivity and later legal status still require measure-level evidence.',
 ]) {
   if (!source.includes(marker)) {
     problems.push('Evidence guard missing: ' + marker);
@@ -103,16 +140,30 @@ if (
   source.includes("recordStatus: 'verified'")
 ) {
   problems.push(
-    'Annex A batch must not infer council approval, mayoral action or full verification from a generic Date of Approval column.'
+    'Annex A batches must not infer council approval, mayoral action or full verification from a generic Date of Approval column.'
   );
 }
 
 if (
   source.includes("kind: 'official-text'") &&
-  source.includes('annex-a-' + expected[0][0])
+  (source.includes('annex-a-' + expectedOrdinances[0][0]) ||
+    source.includes('annex-a-resolution-' + expectedResolutions[0][0]))
 ) {
   problems.push(
-    'The recovery-plan Annex A must not be mislabeled as the full official text of each ordinance.'
+    'The recovery-plan Annex A must not be mislabeled as the full official text of an ordinance or resolution.'
+  );
+}
+
+const allReferences = [...ordinanceCalls, ...resolutionCalls].map(
+  item => item.number
+);
+const duplicateAcrossTypes = allReferences.filter(
+  (number, index, all) => all.indexOf(number) !== index
+);
+if (duplicateAcrossTypes.length) {
+  problems.push(
+    'Duplicate official references across local measure types: ' +
+      duplicateAcrossTypes.join(', ')
   );
 }
 
@@ -122,6 +173,6 @@ if (problems.length) {
 }
 
 console.log(
-  'Local legislation audit passed: 15/15 Annex A ordinances, 0 resolutions, ' +
+  'Local legislation audit passed: 15/15 Annex A ordinances, 5/5 Annex A resolutions, ' +
     'official source preserved, approval-date evidence kept non-inferential.'
 );
