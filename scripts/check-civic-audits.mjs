@@ -41,21 +41,21 @@ if (JSON.stringify(workflowStages) !== JSON.stringify(expectedStages)) {
 }
 
 for (const required of [
-  'frozenPlaceIds',
+  'entityKind',
+  'frozenEntityIds',
   'frozenAt',
   'inventoryClaim',
   'verificationRequirement',
 ]) {
-  if (!campaign.campaign.properties.placeSet.required.includes(required)) {
-    problems.push('Campaign placeSet is missing required field: ' + required);
+  if (!campaign.campaign.properties.targetSet.required.includes(required)) {
+    problems.push('Campaign targetSet is missing required field: ' + required);
   }
 }
 
-if (
-  campaign.campaign.properties.placeSet.properties.verificationRequirement.default !==
-  'verified-only'
-) {
-  problems.push('Campaign place sets must default to verified-only.');
+for (const kind of ['place', 'segment', 'route']) {
+  if (!campaign.campaign.properties.targetSet.properties.entityKind.values.includes(kind)) {
+    problems.push('Campaign targetSet is missing entity kind: ' + kind);
+  }
 }
 
 const sourceMarker = 'export const civicAssets: CivicAsset[] = ';
@@ -100,7 +100,7 @@ for (let index = arrayStart; index < registrySource.length; index += 1) {
 }
 
 if (arrayStart < 0 || arrayEnd < 0) {
-  problems.push('Could not parse Civic Map place seed list.');
+  problems.push('Could not parse Civic Registry seed list.');
 } else {
   const assets = Function(
     'return (' + registrySource.slice(arrayStart, arrayEnd) + ')'
@@ -158,7 +158,7 @@ for (const forbidden of [
   'overall-score',
   'star-rating',
   'weighted-composite',
-  'place-ranking',
+  'entity-ranking',
   'best-worst-label',
   'hidden-numeric-conversion',
 ]) {
