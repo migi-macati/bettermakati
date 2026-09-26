@@ -36,6 +36,7 @@ import {
   latestCityIndicatorObservation,
   type CityIndicatorObservation,
 } from '../data/cityIndicators';
+import { statisticsRelatedRecords } from '../data/statisticsCivicRelationships';
 
 const people = (value: number) =>
   new Intl.NumberFormat('en-PH').format(value);
@@ -137,6 +138,28 @@ export default function Statistics() {
   const asphaltRoads = numberValue(
     latestCityIndicatorObservation('road-surface-length-asphalt')
   );
+
+  const populationAnalysisLinks = [
+    ...statisticsRelatedRecords('population-total'),
+    ...statisticsRelatedRecords('population-growth-rate'),
+  ]
+    .filter(item => item.node?.owner === 'reports')
+    .filter(
+      (item, index, items) =>
+        items.findIndex(candidate => candidate.node?.href === item.node?.href) ===
+        index
+    );
+
+  const economyContextLinks = [
+    ...statisticsRelatedRecords('real-gdp-level'),
+    ...statisticsRelatedRecords('gdp-per-capita'),
+  ]
+    .filter(item => item.node?.owner === 'ecosystem')
+    .filter(
+      (item, index, items) =>
+        items.findIndex(candidate => candidate.node?.href === item.node?.href) ===
+        index
+    );
 
   const heroStats = [
     {
@@ -541,6 +564,28 @@ export default function Statistics() {
           <strong className="text-gray-800">Reviewed:</strong>{' '}
           {populationTrendDownload.provenance.lastReviewed}
         </div>
+
+        {populationAnalysisLinks.length > 0 && (
+          <div className="mt-5 rounded-2xl border border-primary-100 bg-primary-50 p-5">
+            <div className="text-xs font-extrabold uppercase tracking-[0.08em] text-primary-700">
+              Related analysis
+            </div>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {populationAnalysisLinks.map(item =>
+                item.node ? (
+                  <Link
+                    key={item.node.href}
+                    to={item.node.href}
+                    className="inline-flex min-h-11 items-center gap-1 rounded-full border border-primary-200 bg-white px-4 text-sm font-bold text-primary-800 hover:border-primary-400"
+                  >
+                    {item.node.label}
+                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                  </Link>
+                ) : null
+              )}
+            </div>
+          </div>
+        )}
       </Section>
 
       <Section id="economy-work" className="border-y border-primary-100 bg-[#f5f8f2]">
@@ -642,6 +687,30 @@ export default function Statistics() {
             PSA labor-force data <ArrowUpRight className="h-4 w-4" />
           </a>
         </div>
+
+        {economyContextLinks.length > 0 && (
+          <div className="mt-5 rounded-2xl border border-gray-200 bg-white p-5">
+            <div className="text-xs font-extrabold uppercase tracking-[0.08em] text-gray-500">
+              National data context
+            </div>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {economyContextLinks.map(item =>
+                item.node ? (
+                  <a
+                    key={item.node.href}
+                    href={item.node.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex min-h-11 items-center gap-1 rounded-full border border-gray-200 px-4 text-sm font-bold text-primary-800 hover:border-primary-400"
+                  >
+                    {item.node.label}
+                    <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                  </a>
+                ) : null
+              )}
+            </div>
+          </div>
+        )}
       </Section>
 
       <Section id="city-systems" className="bg-[#fffdf8]">
