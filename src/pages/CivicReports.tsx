@@ -7,7 +7,6 @@ import {
   Clock3,
   ExternalLink,
   FileCheck2,
-  Route,
   ShieldCheck,
 } from 'lucide-react';
 import { Link } from 'react-router';
@@ -440,7 +439,9 @@ export default function CivicReports() {
               <div>
                 <Heading level={2}>Park audit coverage & freshness</Heading>
                 <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600">
-                  {civicAuditPilot.scopeStatement}
+                  The live {civicAuditPilot.title} covers the{' '}
+                  {civicAuditPilot.targetEntityIds.length} verified current
+                  government/public parks frozen into this campaign.
                 </p>
               </div>
               <Link
