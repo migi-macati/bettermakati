@@ -417,8 +417,14 @@ export default async function handler(req, res) {
         error: 'Describe the location and provide a map point before submitting.',
       });
     }
+    payload.placeId = '';
+    payload.assetId = '';
+    payload.assetTitle = '';
+    payload.assetType = '';
   } else if (!payload.assetId || !payload.assetTitle) {
     return res.status(400).json({ error: 'Choose a mapped place or segment first.' });
+  } else {
+    payload.placeId = payload.assetId;
   }
 
   if (kind === 'report' && emergencyCategories.has(payload.category)) {
