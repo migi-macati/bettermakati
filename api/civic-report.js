@@ -79,6 +79,9 @@ export default async function handler(req, res) {
         .map(comment => ({ comment, meta: parseJsonComment(comment.body, 'civic-comment') }))
         .filter(item => item.meta);
       const adminEvents = comments
+        .filter(comment =>
+          ['OWNER', 'MEMBER', 'COLLABORATOR'].includes(comment.author_association)
+        )
         .map(comment => parseJsonComment(comment.body, 'civic-admin'))
         .filter(Boolean);
 
