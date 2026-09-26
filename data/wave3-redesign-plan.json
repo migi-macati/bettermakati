@@ -883,13 +883,38 @@
     {
       "id": "W3R-9d",
       "title": "Connect City Monitor items to places",
-      "status": "next",
-      "maximumScope": "One-way explicit relationships only for clearly named places. No automated fuzzy matching."
+      "status": "complete",
+      "maximumScope": "One-way explicit relationships only for clearly named places. No automated fuzzy matching.",
+      "implementationFiles": [
+        "src/data/cityMonitor.ts",
+        "src/pages/CityMonitor.tsx",
+        "src/pages/CityMonitorRecordPage.tsx"
+      ],
+      "validation": {
+        "relationshipDirection": "City Monitor → Place Registry only. No reverse related-city-monitor edge was added to canonical place records.",
+        "model": "CityMonitorRecord.placeIds stores explicit canonical place IDs. The field is documented to prohibit barangay-, proximity- or fuzzy-name matching.",
+        "verifiedExample": {
+          "cityMonitorId": "2026-q2-makati-city-hall-building-ii-hvac",
+          "placeId": "makati-city-hall",
+          "source": "City Government of Makati Q2 2026 Bid Results — Goods and Services",
+          "referenceNo": "BS26-04-0403",
+          "date": "2026-05-19",
+          "basis": "The source explicitly names Makati City Hall Building II as the work site, so the record links to the canonical Makati City Hall complex."
+        },
+        "userSurfaces": [
+          "City Monitor search now indexes record location and explicitly linked canonical place names.",
+          "City Monitor result cards show linked civic-place chips.",
+          "City Monitor record pages show the stated source location and linked canonical civic place."
+        ],
+        "conservativeBoundary": "Existing records with only a barangay, broad district, citywide school coverage or an unregistered venue remain unlinked.",
+        "currentRecordAdded": "One current 2026 procurement record was added from the official Q2 bid-results source to exercise the explicit place-link model with a source-supported example.",
+        "focusedValidation": "placeIds is present only on City Monitor records; Makati City Hall is the sole explicit example in this step; no related-city-monitor reverse relationship was added to Place Registry."
+      }
     },
     {
       "id": "W3R-9e",
       "title": "Add reusable Near me utility",
-      "status": "planned",
+      "status": "next",
       "maximumScope": "One shared nearby-place component/helper after registry reuse is proven elsewhere."
     },
     {
@@ -948,9 +973,9 @@
     }
   ],
   "immediateNext": {
-    "id": "W3R-9d",
-    "title": "Connect City Monitor items to places",
-    "maximumScope": "One-way explicit relationships only for clearly named places. No automated fuzzy matching."
+    "id": "W3R-9e",
+    "title": "Add reusable Near me utility",
+    "maximumScope": "One shared nearby-place component/helper after registry reuse is proven elsewhere."
   },
   "capabilityDispositionAuditFile": "data/wave3-capability-disposition-audit.json",
   "completedSteps": [
@@ -980,7 +1005,8 @@
     "W3R-8c",
     "W3R-9a",
     "W3R-9b",
-    "W3R-9c"
+    "W3R-9c",
+    "W3R-9d"
   ],
   "placeRegistrySchemaFile": "data/place-registry-schema.json",
   "placeRegistryDataFile": "src/data/placeRegistry.ts",
