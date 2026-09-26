@@ -8,6 +8,9 @@ import {
   civicEntityKindLabels,
   placeRegistry,
 } from './placeRegistry';
+import { cityIndicators } from './cityIndicators';
+import { integrityProcurementEntities } from './integrityData';
+import { reports } from './reports';
 
 export type SearchGroup =
   | 'Service'
@@ -30,6 +33,7 @@ export interface SearchItem {
   keywords: string;
   serviceId?: string;
   featured?: boolean;
+  canonicalKey?: string;
 }
 
 const serviceItems: SearchItem[] = serviceDirectory.map(item => ({
@@ -444,6 +448,81 @@ const toolItems: SearchItem[] = [
   },
 ];
 
+const statisticsHrefForTopic = (
+  topic: (typeof cityIndicators)[number]['topic']
+) => {
+  if (topic === 'population-demographics') return '/statistics#population-trend';
+  if (topic === 'economy-business') return '/statistics#economy-work';
+  if (
+    [
+      'services',
+      'land-infrastructure',
+      'environment',
+      'mobility',
+      'health',
+      'education',
+    ].includes(topic)
+  ) {
+    return '/statistics#city-systems';
+  }
+  return '/statistics#statistics-data';
+};
+
+const civicIntelligenceItems: SearchItem[] = [
+  ...cityIndicators
+    .filter(indicator => indicator.revision.status !== 'retired')
+    .map(indicator => ({
+      title: indicator.title,
+      group: 'Record' as const,
+      category: 'Statistic',
+      description: indicator.definition.description,
+      href: statisticsHrefForTopic(indicator.topic),
+      keywords: [
+        indicator.id,
+        indicator.shortLabel ?? '',
+        indicator.topic,
+        indicator.definition.measure,
+        indicator.definition.basis,
+        indicator.definition.interpretation ?? '',
+        indicator.definition.caveat ?? '',
+        indicator.unit.code,
+        ...indicator.tags,
+        'statistics indicator data',
+      ].join(' '),
+      canonicalKey: 'indicator:' + indicator.id,
+    })),
+  ...integrityProcurementEntities.map(entity => ({
+    title: entity.canonicalName,
+    group: 'Record' as const,
+    category: entity.kind === 'joint-venture' ? 'Joint venture' : 'Supplier',
+    description:
+      entity.kind === 'joint-venture'
+        ? 'Source-stated joint-venture identity in indexed Makati procurement awards.'
+        : 'Normalized supplier identity in indexed Makati procurement awards.',
+    href: '/integrity?view=suppliers#procurement',
+    keywords: [
+      entity.id,
+      entity.kind,
+      ...entity.sourceNames,
+      'integrity procurement supplier contractor award',
+    ].join(' '),
+    canonicalKey: 'integrity-entity:' + entity.id,
+  })),
+  ...reports.map(report => ({
+    title: report.headline,
+    group: 'Record' as const,
+    category: 'Report',
+    description: report.subheadline,
+    href: '/reports/' + report.slug,
+    keywords: [
+      report.slug,
+      report.synthesis,
+      'featured report insight analysis',
+    ].join(' '),
+    canonicalKey: 'report:' + report.slug,
+  })),
+];
+
 const civicRegistryItems: SearchItem[] = [
   {
     title: 'Civic Map',
@@ -686,6 +765,7 @@ export const searchIndex: SearchItem[] = [
     keywords: `${event.date} ${event.topic} ${event.source.label} history timeline`,
   })),
   ...serviceItems,
+  ...civicIntelligenceItems,
   ...radicalCivicItems,
   ...civicRegistryItems,
   ...visitItems,
