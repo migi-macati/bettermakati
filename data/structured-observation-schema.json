@@ -1,0 +1,658 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-09-26",
+  "workstream": "W3R-6a",
+  "title": "BetterMakati structured place observations",
+  "status": "approved-for-implementation",
+  "purpose": "Capture dated, place-specific condition snapshots that are more factual and reusable than generic 1–5 ratings.",
+  "entity": "StructuredObservation",
+  "principles": [
+    "An observation is a dated snapshot, not a rating, review, complaint, case, or canonical place fact.",
+    "Every observation references one existing canonical Place Registry placeId. Location-only observations are out of scope.",
+    "Questions describe things a person can directly observe at a place or during a trip.",
+    "Unknown and not-observed are valid answers; the form must never force a guess.",
+    "No overall score, star rating, weighted index, grade, ranking, or good/bad place label is stored or derived in W3R-6.",
+    "Submitting an observation never opens a civic case automatically and never changes Place Registry verification, lifecycle, access, management, or provenance.",
+    "A contributor may separately file a problem report when an observed condition warrants action.",
+    "Observation summaries must retain date/freshness and sample counts so stale or thin evidence is visible."
+  ],
+  "record": {
+    "required": [
+      "schemaVersion",
+      "placeId",
+      "familyId",
+      "observedAt",
+      "answers"
+    ],
+    "properties": {
+      "schemaVersion": {
+        "type": "integer",
+        "const": 1
+      },
+      "placeId": {
+        "type": "string",
+        "description": "Stable canonical Place Registry ID. Must resolve at submission time."
+      },
+      "familyId": {
+        "type": "enum",
+        "values": [
+          "street-public-realm",
+          "park-public-space",
+          "public-facility",
+          "transport-stop-terminal",
+          "transport-route"
+        ]
+      },
+      "observedAt": {
+        "type": "string",
+        "format": "date-time",
+        "description": "When the contributor directly observed the conditions, not when the form was submitted."
+      },
+      "submittedAt": {
+        "type": "string",
+        "format": "date-time",
+        "generated": true
+      },
+      "timeContext": {
+        "type": "enum",
+        "values": [
+          "early-morning",
+          "morning",
+          "midday",
+          "afternoon",
+          "evening",
+          "late-night",
+          "unknown"
+        ],
+        "optional": true
+      },
+      "weatherContext": {
+        "type": "enum",
+        "values": [
+          "dry",
+          "raining",
+          "recent-rain",
+          "unknown",
+          "not-relevant"
+        ],
+        "optional": true,
+        "description": "Useful especially for drainage, shade, heat and surface observations."
+      },
+      "answers": {
+        "type": "array",
+        "minItems": 1,
+        "items": {
+          "required": [
+            "questionId",
+            "value"
+          ],
+          "properties": {
+            "questionId": {
+              "type": "string"
+            },
+            "value": {
+              "type": "string|number|boolean",
+              "description": "Must be one of the question's enumerated choices or satisfy its numeric constraint."
+            },
+            "note": {
+              "type": "string",
+              "maxLength": 500,
+              "optional": true,
+              "description": "Brief factual context for this answer."
+            }
+          }
+        }
+      },
+      "overallNote": {
+        "type": "string",
+        "maxLength": 1000,
+        "optional": true
+      },
+      "evidenceUrl": {
+        "type": "string",
+        "format": "http-or-https-url",
+        "optional": true
+      },
+      "publicAlias": {
+        "type": "string",
+        "maxLength": 80,
+        "optional": true
+      }
+    }
+  },
+  "responseTypes": {
+    "availability": {
+      "type": "enum",
+      "choices": [
+        "present-and-usable",
+        "present-but-not-usable",
+        "not-present",
+        "not-observed"
+      ]
+    },
+    "accessContinuity": {
+      "type": "enum",
+      "choices": [
+        "continuous",
+        "partly-interrupted",
+        "blocked-or-not-usable",
+        "not-observed"
+      ]
+    },
+    "condition": {
+      "type": "enum",
+      "choices": [
+        "usable",
+        "usable-with-visible-issues",
+        "not-usable",
+        "not-observed"
+      ]
+    },
+    "cleanliness": {
+      "type": "enum",
+      "choices": [
+        "clear",
+        "minor-litter-or-dirt",
+        "significant-litter-or-dirt",
+        "not-observed"
+      ]
+    },
+    "lighting": {
+      "type": "enum",
+      "choices": [
+        "adequate-at-observed-time",
+        "patchy-at-observed-time",
+        "inadequate-at-observed-time",
+        "not-observed-after-dark"
+      ]
+    },
+    "shade": {
+      "type": "enum",
+      "choices": [
+        "substantial",
+        "partial",
+        "little-or-none",
+        "not-observed"
+      ]
+    },
+    "crowding": {
+      "type": "enum",
+      "choices": [
+        "low",
+        "moderate",
+        "high",
+        "not-observed"
+      ]
+    },
+    "information": {
+      "type": "enum",
+      "choices": [
+        "present-and-clear",
+        "present-but-incomplete-or-unclear",
+        "not-found",
+        "not-observed"
+      ]
+    },
+    "stepFreeAccess": {
+      "type": "enum",
+      "choices": [
+        "continuous-step-free-route",
+        "partial-step-free-route",
+        "no-usable-step-free-route",
+        "not-observed"
+      ]
+    },
+    "drainage": {
+      "type": "enum",
+      "choices": [
+        "no-standing-water-observed",
+        "minor-standing-water",
+        "significant-standing-water-or-flooding",
+        "not-observed-during-or-after-rain"
+      ]
+    },
+    "waitMinutes": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 240,
+      "allow": "not-observed"
+    },
+    "yesNoObserved": {
+      "type": "enum",
+      "choices": [
+        "yes",
+        "no",
+        "not-observed"
+      ]
+    }
+  },
+  "familyMapping": {
+    "street-public-realm": {
+      "placeCategories": [
+        "street-segment",
+        "sidewalk-segment",
+        "crossing",
+        "bike-lane",
+        "bridge",
+        "drainage"
+      ],
+      "questionSet": "street-public-realm-v1"
+    },
+    "park-public-space": {
+      "placeCategories": [
+        "park"
+      ],
+      "questionSet": "park-public-space-v1"
+    },
+    "public-facility": {
+      "placeCategories": [
+        "public-office",
+        "health-center",
+        "community-center",
+        "public-market",
+        "public-toilet",
+        "heritage-site"
+      ],
+      "questionSet": "public-facility-v1"
+    },
+    "transport-stop-terminal": {
+      "placeCategories": [
+        "transport-stop",
+        "transport-terminal"
+      ],
+      "questionSet": "transport-stop-terminal-v1"
+    },
+    "transport-route": {
+      "placeCategories": [
+        "transport-route"
+      ],
+      "questionSet": "transport-route-v1"
+    }
+  },
+  "questionSets": {
+    "street-public-realm-v1": {
+      "label": "Street & public-realm snapshot",
+      "questions": [
+        {
+          "id": "pedestrian-path",
+          "label": "Pedestrian path",
+          "prompt": "Was there a continuous usable pedestrian path?",
+          "responseType": "accessContinuity",
+          "appliesTo": [
+            "street-segment",
+            "sidewalk-segment",
+            "bridge"
+          ]
+        },
+        {
+          "id": "surface",
+          "label": "Surface condition",
+          "prompt": "Was the walking or travel surface usable?",
+          "responseType": "condition",
+          "appliesTo": [
+            "street-segment",
+            "sidewalk-segment",
+            "crossing",
+            "bike-lane",
+            "bridge"
+          ]
+        },
+        {
+          "id": "crossing-access",
+          "label": "Crossing access",
+          "prompt": "Was the crossing clear and usable?",
+          "responseType": "accessContinuity",
+          "appliesTo": [
+            "street-segment",
+            "crossing"
+          ]
+        },
+        {
+          "id": "step-free-access",
+          "label": "Step-free access",
+          "prompt": "Was there a continuous usable step-free route?",
+          "responseType": "stepFreeAccess",
+          "appliesTo": [
+            "street-segment",
+            "sidewalk-segment",
+            "crossing",
+            "bridge"
+          ]
+        },
+        {
+          "id": "lighting",
+          "label": "Lighting",
+          "prompt": "At the observed time, was public lighting adequate?",
+          "responseType": "lighting"
+        },
+        {
+          "id": "shade",
+          "label": "Shade",
+          "prompt": "How much useful shade was available along the observed section?",
+          "responseType": "shade",
+          "appliesTo": [
+            "street-segment",
+            "sidewalk-segment",
+            "crossing",
+            "bike-lane"
+          ]
+        },
+        {
+          "id": "cleanliness",
+          "label": "Cleanliness",
+          "prompt": "How much litter or visible dirt was present?",
+          "responseType": "cleanliness"
+        },
+        {
+          "id": "drainage",
+          "label": "Drainage",
+          "prompt": "Was standing water or flooding visible?",
+          "responseType": "drainage",
+          "appliesTo": [
+            "street-segment",
+            "sidewalk-segment",
+            "crossing",
+            "drainage",
+            "bridge"
+          ]
+        },
+        {
+          "id": "obstruction",
+          "label": "Obstruction",
+          "prompt": "Was the intended path blocked by vehicles, construction, objects or queues?",
+          "responseType": "yesNoObserved"
+        }
+      ]
+    },
+    "park-public-space-v1": {
+      "label": "Park & public-space snapshot",
+      "questions": [
+        {
+          "id": "entrance-access",
+          "label": "Entrance access",
+          "prompt": "Was at least one public entrance open and usable?",
+          "responseType": "availability"
+        },
+        {
+          "id": "step-free-access",
+          "label": "Step-free access",
+          "prompt": "Was there a usable step-free route into and through the main public area?",
+          "responseType": "stepFreeAccess"
+        },
+        {
+          "id": "seating",
+          "label": "Seating",
+          "prompt": "Was usable public seating available?",
+          "responseType": "availability"
+        },
+        {
+          "id": "shade",
+          "label": "Shade",
+          "prompt": "How much useful shade was available in occupied areas?",
+          "responseType": "shade"
+        },
+        {
+          "id": "cleanliness",
+          "label": "Cleanliness",
+          "prompt": "How much litter or visible dirt was present?",
+          "responseType": "cleanliness"
+        },
+        {
+          "id": "lighting",
+          "label": "Lighting",
+          "prompt": "At the observed time, was public lighting adequate?",
+          "responseType": "lighting"
+        },
+        {
+          "id": "toilets",
+          "label": "Toilets",
+          "prompt": "Were public toilets present and usable?",
+          "responseType": "availability"
+        },
+        {
+          "id": "equipment",
+          "label": "Public equipment",
+          "prompt": "Were benches, play equipment or other visible public fixtures usable?",
+          "responseType": "condition"
+        }
+      ]
+    },
+    "public-facility-v1": {
+      "label": "Public facility snapshot",
+      "questions": [
+        {
+          "id": "entrance-open",
+          "label": "Public entrance",
+          "prompt": "Was the public entrance open and usable during the observed time?",
+          "responseType": "availability"
+        },
+        {
+          "id": "step-free-access",
+          "label": "Step-free access",
+          "prompt": "Was there a usable step-free route from entrance to the public service area?",
+          "responseType": "stepFreeAccess"
+        },
+        {
+          "id": "wayfinding",
+          "label": "Wayfinding",
+          "prompt": "Could the relevant entrance, counter or public area be identified from posted signs?",
+          "responseType": "information"
+        },
+        {
+          "id": "service-information",
+          "label": "Service information",
+          "prompt": "Were relevant public instructions, schedules or requirements posted clearly?",
+          "responseType": "information"
+        },
+        {
+          "id": "waiting-seating",
+          "label": "Waiting seating",
+          "prompt": "Was usable seating available in the public waiting area?",
+          "responseType": "availability"
+        },
+        {
+          "id": "toilets",
+          "label": "Toilets",
+          "prompt": "Were public/user toilets present and usable?",
+          "responseType": "availability"
+        },
+        {
+          "id": "cleanliness",
+          "label": "Cleanliness",
+          "prompt": "How much litter or visible dirt was present in the public area?",
+          "responseType": "cleanliness"
+        },
+        {
+          "id": "crowding",
+          "label": "Crowding",
+          "prompt": "How crowded was the public waiting/service area at the observed time?",
+          "responseType": "crowding"
+        }
+      ]
+    },
+    "transport-stop-terminal-v1": {
+      "label": "Transport stop & terminal snapshot",
+      "questions": [
+        {
+          "id": "boarding-area",
+          "label": "Boarding area",
+          "prompt": "Was the boarding/alighting area clear and usable?",
+          "responseType": "accessContinuity"
+        },
+        {
+          "id": "step-free-access",
+          "label": "Step-free access",
+          "prompt": "Was there a usable step-free route to the boarding area?",
+          "responseType": "stepFreeAccess"
+        },
+        {
+          "id": "route-information",
+          "label": "Route information",
+          "prompt": "Were route/stop details present and clear?",
+          "responseType": "information"
+        },
+        {
+          "id": "fare-information",
+          "label": "Fare information",
+          "prompt": "Was fare information present and clear where applicable?",
+          "responseType": "information"
+        },
+        {
+          "id": "shelter",
+          "label": "Shelter",
+          "prompt": "Was weather shelter present and usable?",
+          "responseType": "availability"
+        },
+        {
+          "id": "seating",
+          "label": "Seating",
+          "prompt": "Was waiting seating present and usable?",
+          "responseType": "availability"
+        },
+        {
+          "id": "lighting",
+          "label": "Lighting",
+          "prompt": "At the observed time, was lighting adequate?",
+          "responseType": "lighting"
+        },
+        {
+          "id": "crowding",
+          "label": "Crowding",
+          "prompt": "How crowded was the boarding or waiting area?",
+          "responseType": "crowding"
+        },
+        {
+          "id": "observed-wait-minutes",
+          "label": "Observed wait",
+          "prompt": "How many minutes passed before an applicable service arrived?",
+          "responseType": "waitMinutes",
+          "optional": true
+        }
+      ]
+    },
+    "transport-route-v1": {
+      "label": "Transport route trip snapshot",
+      "questions": [
+        {
+          "id": "service-ran",
+          "label": "Service operated",
+          "prompt": "Did the observed trip/service operate?",
+          "responseType": "yesNoObserved"
+        },
+        {
+          "id": "observed-wait-minutes",
+          "label": "Observed wait",
+          "prompt": "How many minutes did you wait before boarding?",
+          "responseType": "waitMinutes",
+          "optional": true
+        },
+        {
+          "id": "route-information",
+          "label": "Route information",
+          "prompt": "Was route/destination information present and consistent with the trip?",
+          "responseType": "information"
+        },
+        {
+          "id": "fare-information",
+          "label": "Fare information",
+          "prompt": "Was fare information available and consistent with the fare charged?",
+          "responseType": "information"
+        },
+        {
+          "id": "boarding",
+          "label": "Boarding",
+          "prompt": "Was boarding/alighting usable at the observed points?",
+          "responseType": "accessContinuity"
+        },
+        {
+          "id": "crowding",
+          "label": "Crowding",
+          "prompt": "How crowded was the vehicle/service during the observed trip?",
+          "responseType": "crowding"
+        },
+        {
+          "id": "step-free-access",
+          "label": "Step-free access",
+          "prompt": "Could a passenger using a step-free route board and alight at the observed points?",
+          "responseType": "stepFreeAccess"
+        }
+      ]
+    }
+  },
+  "validationRules": [
+    "placeId must resolve to a Place Registry record at submission time.",
+    "familyId must match the place's primaryCategory through familyMapping.",
+    "questionId must exist in the selected family's question set.",
+    "If a question has appliesTo, the place primaryCategory must be included.",
+    "Each questionId may appear at most once in one observation.",
+    "At least one answer is required.",
+    "Answers must use the declared response type; unknown conditions must use the explicit not-observed choice rather than invented values.",
+    "observedAt cannot be in the future beyond a small clock-skew allowance.",
+    "submittedAt is generated by storage and cannot be supplied as authoritative by the contributor.",
+    "No observation field may update Place Registry canonical facts automatically.",
+    "No observation automatically creates, confirms, resolves, forwards or otherwise changes a civic case.",
+    "No overallScore, stars, averageRating, grade, rank, recommendation, or compositeIndex field is permitted."
+  ],
+  "legacyRatingDisposition": {
+    "status": "superseded-not-migrated",
+    "rule": "Existing 1–5 review records remain historical records. Do not transform numeric ratings into structured observations because their semantics and evidence granularity differ.",
+    "oldCriteriaReference": [
+      "accessibility",
+      "safety",
+      "cleanliness",
+      "comfort",
+      "walkability",
+      "surface",
+      "crossing",
+      "shade",
+      "drainage",
+      "lighting",
+      "seating",
+      "vegetation",
+      "activities",
+      "toilets",
+      "attractiveness",
+      "wayfinding",
+      "waiting",
+      "ventilation",
+      "information",
+      "reliability",
+      "frequency",
+      "coverage",
+      "boarding"
+    ],
+    "replacementPattern": "Where useful, a legacy criterion is decomposed into directly observable questions rather than carried forward as a numeric scale."
+  },
+  "aggregationContract": {
+    "implementationTarget": "W3R-6c",
+    "allowed": [
+      "most recent observed value per question",
+      "counts by answer choice within a stated time window",
+      "observation count",
+      "latest observation date",
+      "freshness label based on explicit age thresholds",
+      "distribution of numeric wait-time observations with sample count and time window"
+    ],
+    "forbidden": [
+      "overall place score",
+      "average star rating",
+      "weighted composite",
+      "ranked places",
+      "best/worst place label",
+      "conversion of categorical answers to hidden numeric scores"
+    ],
+    "minimumDisplayRule": "Any summary must show observation count and recency/time window alongside the condition result."
+  },
+  "privacyAndSafety": [
+    "Do not collect precise contributor home/work location; observations attach only to the selected canonical place.",
+    "Do not collect sensitive demographic attributes.",
+    "Free-text notes must warn against names, faces, medical details, allegations about identifiable people, or other sensitive personal information.",
+    "Emergency conditions remain reports routed to 911, not observation answers.",
+    "Potentially actionable defects may be offered a separate Report a problem action in W3R-6b, but an observation itself does not create that case."
+  ],
+  "implementationBoundary": {
+    "W3R6a": "Schema only. No UI, API, storage, migration, derived summary, or rating deletion.",
+    "W3R6b": "Implement one reusable observation form/storage path using this schema. Retire generic rating entry points; do not derive scores.",
+    "W3R6c": "Show recent condition/freshness summaries only under the aggregation contract."
+  }
+}
