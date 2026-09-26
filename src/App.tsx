@@ -54,6 +54,7 @@ const CivicNearbyReport = lazy(() => import('./pages/CivicNearbyReport'));
 const CivicAsset = lazy(() => import('./pages/CivicAsset'));
 const CivicReports = lazy(() => import('./pages/CivicReports'));
 const CivicAuditPilot = lazy(() => import('./pages/CivicAuditPilot'));
+const CivicAuditResults = lazy(() => import('./pages/CivicAuditResults'));
 const Reports = lazy(() => import('./pages/Reports'));
 const ReportArticle = lazy(() => import('./pages/ReportArticle'));
 const CityMonitorRecordPage = lazy(
@@ -136,6 +137,7 @@ function App() {
                     <Route path="/civic-map" element={<CivicMap />} />
                     <Route path="/civic-map/reports" element={<CivicReports />} />
                     <Route path="/civic-map/audits/park-accessibility-2026" element={<CivicAuditPilot />} />
+                    <Route path="/civic-map/audits/park-accessibility-2026/results" element={<CivicAuditResults />} />
                     <Route path="/civic-map/report" element={<CivicNearbyReport />} />
                     <Route path="/civic-map/:assetId" element={<CivicAsset />} />
                     <Route path="/barangays" element={<Barangays />} />
