@@ -19,6 +19,7 @@ import {
   localLegislationRecords,
   type LocalMeasureType,
 } from '../data/localLegislation';
+import { legislationRelatedRecords } from '../data/legislationCivicRelationships';
 import {
   legislationRecordDisplay,
   legislationRecordId,
@@ -277,6 +278,9 @@ export default function Legislation() {
           <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-2">
             {resultSet.visible.map(record => {
               const seed = localLegislationById.get(legislationRecordId(record));
+              const relatedRecords = seed
+                ? legislationRelatedRecords(seed.id)
+                : [];
               const expanded = expandedRecordId === legislationRecordId(record);
               const sourceUrl =
                 record[5] ||
@@ -339,24 +343,47 @@ export default function Legislation() {
                   </div>
 
                   {expanded ? (
-                    <dl className="mt-5 grid grid-cols-1 gap-3 border-t border-gray-200 pt-4 text-sm sm:grid-cols-2">
-                      <div>
-                        <dt className="font-bold text-gray-500">BetterMakati ID</dt>
-                        <dd className="mt-1 break-words text-gray-900">{legislationRecordId(record)}</dd>
-                      </div>
-                      <div>
-                        <dt className="font-bold text-gray-500">Official reference</dt>
-                        <dd className="mt-1 text-gray-900">{legislationRecordDisplay(record)}</dd>
-                      </div>
-                      {record[0] ? (
-                        <div className="sm:col-span-2">
-                          <dt className="font-bold text-gray-500">Makati archive ID</dt>
-                          <dd className="mt-1 break-all font-mono text-xs text-gray-700">
-                            {record[0]}
-                          </dd>
+                    <div className="mt-5 border-t border-gray-200 pt-4">
+                      <dl className="grid grid-cols-1 gap-3 text-sm sm:grid-cols-2">
+                        <div>
+                          <dt className="font-bold text-gray-500">BetterMakati ID</dt>
+                          <dd className="mt-1 break-words text-gray-900">{legislationRecordId(record)}</dd>
+                        </div>
+                        <div>
+                          <dt className="font-bold text-gray-500">Official reference</dt>
+                          <dd className="mt-1 text-gray-900">{legislationRecordDisplay(record)}</dd>
+                        </div>
+                        {record[0] ? (
+                          <div className="sm:col-span-2">
+                            <dt className="font-bold text-gray-500">Makati archive ID</dt>
+                            <dd className="mt-1 break-all font-mono text-xs text-gray-700">
+                              {record[0]}
+                            </dd>
+                          </div>
+                        ) : null}
+                      </dl>
+
+                      {relatedRecords.length > 0 ? (
+                        <div className="mt-4">
+                          <div className="text-xs font-extrabold uppercase tracking-[0.08em] text-gray-500">
+                            Related BetterMakati records
+                          </div>
+                          <div className="mt-2 flex flex-wrap gap-2">
+                            {relatedRecords.map(item =>
+                              item.node ? (
+                                <Link
+                                  key={item.relationship.id}
+                                  to={item.node.href}
+                                  className="rounded-full border border-primary-200 bg-primary-50 px-3 py-2 text-xs font-bold text-primary-800 hover:border-primary-400"
+                                >
+                                  {item.node.label}
+                                </Link>
+                              ) : null
+                            )}
+                          </div>
                         </div>
                       ) : null}
-                    </dl>
+                    </div>
                   ) : null}
                 </article>
               );
