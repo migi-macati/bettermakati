@@ -115,22 +115,22 @@ export default function BarangayProfile() {
       icon: Search,
     },
     {
-      label: 'Report a local problem',
-      description: 'Start a non-emergency report already scoped to this barangay.',
-      href: withBarangayScope('/civic-map/report', barangay.slug),
-      icon: Wrench,
-    },
-    {
-      label: 'Participate locally',
-      description: 'Report, suggest an improvement, record conditions or contact the barangay.',
-      href: '#participate',
-      icon: MessageSquarePlus,
+      label: 'Explore local places',
+      description: 'Public facilities, parks, streets and other mapped places in this barangay.',
+      href: withBarangayScope('/civic-map', barangay.slug),
+      icon: MapPin,
     },
     {
       label: 'Barangay government',
       description: 'See the current council, hall contacts and official channels.',
       href: '#local-government',
       icon: Building2,
+    },
+    {
+      label: 'Projects & records',
+      description: 'Open locally relevant projects, budgets, accountability records and statistics.',
+      href: withBarangayScope('/projects-budget', barangay.slug),
+      icon: ClipboardCheck,
     },
   ];
 
