@@ -231,19 +231,62 @@ export default function PublicRecords() {
         description="Search the source documents, datasets, public portals and evidence used across BetterMakati."
       />
 
-      <Section className="bg-[#fffdf8]">
-        <div className="section-eyebrow">Records & data</div>
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-          <div>
-            <Heading>Public Records</Heading>
-            <p className="mt-2 max-w-4xl text-gray-700 leading-relaxed">
-              Search documents, datasets and public portals used across BetterMakati.
+      <section className="border-b border-primary-900 bg-primary-800 text-white">
+        <div className="container px-5 py-12 md:px-6 md:py-16 lg:px-8">
+          <div className="max-w-4xl">
+            <div className="mb-3 text-xs font-extrabold uppercase tracking-[0.12em] text-secondary-400 md:text-sm">
+              Records &amp; data
+            </div>
+            <h1 className="text-4xl font-extrabold tracking-tight text-white md:text-6xl">
+              Find the source.
+            </h1>
+            <p className="mt-4 max-w-3xl text-lg leading-relaxed text-primary-50 md:text-xl">
+              Search the documents, datasets and public portals used across BetterMakati.
             </p>
+
+            <label className="relative mt-7 block max-w-3xl">
+              <span className="sr-only">Search public records</span>
+              <Search
+                className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-500"
+                aria-hidden="true"
+              />
+              <input
+                type="search"
+                value={query}
+                onChange={event => setQuery(event.target.value)}
+                placeholder="Search budget, ordinance, COA, COMELEC, Citizen’s Charter…"
+                className="w-full rounded-xl border border-white/30 bg-white py-3.5 pl-12 pr-4 text-base text-gray-950 shadow-sm outline-none placeholder:text-gray-500 focus:border-secondary-400 focus:ring-2 focus:ring-secondary-300/40"
+              />
+            </label>
+
+            <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-primary-50">
+              <span className="font-medium text-primary-100">Start with:</span>
+              <button type="button" onClick={() => setQuery('budget')} className="min-h-11 font-semibold underline decoration-white/40 underline-offset-4 hover:text-secondary-300">
+                Budget
+              </button>
+              <button type="button" onClick={() => setQuery('ordinance')} className="min-h-11 font-semibold underline decoration-white/40 underline-offset-4 hover:text-secondary-300">
+                Ordinances
+              </button>
+              <button type="button" onClick={() => setQuery('procurement')} className="min-h-11 font-semibold underline decoration-white/40 underline-offset-4 hover:text-secondary-300">
+                Procurement
+              </button>
+              <button type="button" onClick={() => setQuery('election')} className="min-h-11 font-semibold underline decoration-white/40 underline-offset-4 hover:text-secondary-300">
+                Election records
+              </button>
+            </div>
           </div>
+        </div>
+      </section>
+
+      <Section className="bg-[#fffdf8]">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+          <LastReviewed
+            date={publicRecordsReviewed}
+            note="For legal or transactional use, rely on the issuing public body’s original record."
+            className="mt-0"
+          />
           <SharePage title="Makati Public Records | BetterMakati" />
         </div>
-
-        <LastReviewed date={publicRecordsReviewed} note="For legal or transactional use, rely on the issuing public body’s original record." />
 
         <div className="mt-5 rounded-2xl border border-primary-100 bg-white p-5">
           <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
@@ -305,7 +348,6 @@ export default function PublicRecords() {
         </div>
       </Section>
 
-
       <Section className="bg-[#f5f8f2]">
         <div className="section-eyebrow">Evidence index</div>
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
@@ -324,19 +366,7 @@ export default function PublicRecords() {
           </a>
         </div>
 
-        <div className="mt-6 grid grid-cols-1 gap-3 lg:grid-cols-[minmax(0,1.5fr)_repeat(2,minmax(0,0.8fr))_auto]">
-          <label className="relative">
-            <span className="sr-only">Search public records</span>
-            <Search className="absolute left-3 top-3.5 h-4 w-4 text-gray-400" />
-            <input
-              type="search"
-              value={query}
-              onChange={event => setQuery(event.target.value)}
-              placeholder="Search budget, ordinance, COA, COMELEC, Citizen’s Charter…"
-              className="w-full rounded-xl border border-gray-300 bg-white py-3 pl-10 pr-4 outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
-            />
-          </label>
-
+        <div className="mt-6 grid grid-cols-1 gap-3 lg:grid-cols-[repeat(2,minmax(0,1fr))_auto]">
           <select
             value={category}
             onChange={event => setCategory(event.target.value)}
