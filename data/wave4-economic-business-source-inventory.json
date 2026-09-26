@@ -1,0 +1,464 @@
+{
+  "schemaVersion": 1,
+  "researchedAt": "2026-09-26",
+  "workstream": "W4-1d — Inventory economic and business indicators",
+  "status": "official-source-inventory",
+  "scope": "Official Philippine Statistics Authority and City Government of Makati sources only. This step inventories usable GDP/economic-structure, labor-market, establishment and business-activity indicators; it does not implement indicator data.",
+  "geographyRule": "For city economic series, treat 2022 as the Makati geography break unless a source explicitly restates earlier values to the current 23-barangay boundary. PSA PPA footnotes state that Makati figures exclude the Embo barangays starting in 2022.",
+  "officialSources": [
+    {
+      "id": "psa-ppa-openstat-2026",
+      "publisher": "Philippine Statistics Authority",
+      "title": "Provincial Product Accounts OpenSTAT tables",
+      "url": "https://openstat.psa.gov.ph/PXWeb/pxweb/en/DB/DB__2A__PPA/?tablelist=true",
+      "checkedAt": "2026-09-26",
+      "coverage": "2018–2025; annual",
+      "usableFor": [
+        "GDP level at current and constant 2018 prices",
+        "GDP growth rate",
+        "GVA by 16 industries",
+        "industry growth rates",
+        "HUC share of regional GDP",
+        "HUC share of regional industry GVA",
+        "implicit price indexes",
+        "per-capita GDP"
+      ],
+      "geography": "Province/HUC. PSA notes that Makati excludes the Embo barangays starting in 2022.",
+      "decision": "implement",
+      "note": "Primary machine-readable owner for Makati GDP and industry series. Use 2022–2025 for a clean current-boundary trend unless a restated pre-2022 series becomes available."
+    },
+    {
+      "id": "psa-ppa-2025-release",
+      "publisher": "Philippine Statistics Authority",
+      "title": "PSA Releases the 2025 Economic Performance of the 82 Provinces and 33 Highly Urbanized Cities",
+      "url": "https://psa.gov.ph/content/psa-releases-2025-economic-performance-82-provinces-and-33-highly-urbanized-cities",
+      "checkedAt": "2026-09-26",
+      "usableFor": [
+        "2025 Makati GDP headline",
+        "2025 Makati share of national GDP",
+        "national comparison context"
+      ],
+      "factsForValidation": [
+        "Makati 2025 GDP: PhP 1.27 trillion at constant 2018 prices",
+        "Makati share of national GDP in 2025: 5.5 percent"
+      ],
+      "decision": "implement",
+      "note": "Use the OpenSTAT tables as canonical numeric series; use the release as a human-readable validation/context source."
+    },
+    {
+      "id": "psa-ppa-makati-2024-release",
+      "publisher": "Philippine Statistics Authority — NCR",
+      "title": "The City of Makati Posts 7.3 Percent Economic Growth in 2024, Tops Nation in Per Capita GDP",
+      "url": "https://rssoncr.psa.gov.ph/content/city-makati-posts-73-percent-economic-growth-2024-tops-nation-capita-gdp",
+      "checkedAt": "2026-09-26",
+      "usableFor": [
+        "2024 Makati GDP",
+        "2023–2024 GDP growth",
+        "2024 per-capita GDP",
+        "named fastest/slowest-growing Makati industries"
+      ],
+      "factsForValidation": [
+        "2024 Makati GDP: PhP 1.20 trillion",
+        "2023–2024 real GDP growth: 7.3 percent in the Makati release",
+        "2024 per-capita GDP: PhP 3,889,202"
+      ],
+      "decision": "implement",
+      "note": "Useful validation/context for the existing city-comparison module and for industry-story labels."
+    },
+    {
+      "id": "psa-ppa-gdp-level-matrix",
+      "publisher": "Philippine Statistics Authority",
+      "title": "Gross Domestic Product by Province and HUC",
+      "url": "https://openstat.psa.gov.ph/PXWeb/pxweb/en/DB/DB__2A__PPA/0012A5FPPA0.px/",
+      "matrix": "2A5FPPA0",
+      "checkedAt": "2026-09-26",
+      "definition": "GDP measures production of resident producers; HUC GDP is compiled using the production approach.",
+      "period": "2018–2025",
+      "decision": "implement"
+    },
+    {
+      "id": "psa-ppa-gdp-growth-matrix",
+      "publisher": "Philippine Statistics Authority",
+      "title": "Gross Domestic Product by Province and HUC, Growth Rates",
+      "url": "https://openstat.psa.gov.ph/PXWeb/pxweb/en/DB/DB__2A__PPA/0032A5FPPA2.px/",
+      "matrix": "2A5FPPA2",
+      "checkedAt": "2026-09-26",
+      "definition": "Year-on-year rate of change in GDP.",
+      "period": "2018–2019 through 2024–2025",
+      "decision": "implement"
+    },
+    {
+      "id": "psa-ppa-industry-gva-matrix",
+      "publisher": "Philippine Statistics Authority",
+      "title": "Gross Domestic Product by Industry, Province and HUC",
+      "url": "https://openstat.psa.gov.ph/PXWeb/pxweb/en/DB/DB__2A__PPA/0022A5FPPA1.px/",
+      "matrix": "2A5FPPA1",
+      "checkedAt": "2026-09-26",
+      "definition": "Gross value added by 16 production industries; GVA equals gross output less intermediate consumption.",
+      "period": "2018–2025",
+      "decision": "implement",
+      "note": "Use this matrix for Makati industry levels. Derive each industry's share of Makati GDP explicitly; do not mislabel PSA's separate regional-industry-share table as Makati's internal industry mix."
+    },
+    {
+      "id": "psa-ppa-industry-growth-matrix",
+      "publisher": "Philippine Statistics Authority",
+      "title": "Gross Domestic Product Growth Rates by Industry, Province and HUC",
+      "url": "https://openstat.psa.gov.ph/PXWeb/pxweb/en/DB/DB__2A__PPA/",
+      "checkedAt": "2026-09-26",
+      "definition": "Year-on-year growth rate of GVA by production industry.",
+      "period": "2018–2019 through 2024–2025",
+      "decision": "implement"
+    },
+    {
+      "id": "psa-ppa-regional-share-matrix",
+      "publisher": "Philippine Statistics Authority",
+      "title": "Gross Domestic Product Percent Share by Province and HUC",
+      "url": "https://openstat.psa.gov.ph/PXWeb/pxweb/en/DB/DB__2A__PPA/0052A5FPPA4.px/",
+      "matrix": "2A5FPPA4",
+      "checkedAt": "2026-09-26",
+      "definition": "Share of a province/HUC GDP in its administrative region's GDP.",
+      "period": "2018–2025",
+      "decision": "implement",
+      "note": "This is a regional-share measure. It is not an industry-composition measure."
+    },
+    {
+      "id": "psa-ppa-industry-regional-share-matrix",
+      "publisher": "Philippine Statistics Authority",
+      "title": "Gross Domestic Product Percent Share by Industry, Province and HUC",
+      "url": "https://openstat.psa.gov.ph/PXWeb/pxweb/en/DB/DB__2A__PPA/0062A5FPPA5.px/",
+      "matrix": "2A5FPPA5",
+      "checkedAt": "2026-09-26",
+      "definition": "Share of an industry's GVA in the HUC relative to the same industry's GVA in the region.",
+      "period": "2018–2025",
+      "decision": "hold",
+      "note": "Potentially useful for specialized economic-analysis reports, but too easy to misread as the industry's share of Makati's own economy. Do not use as the default Statistics composition measure."
+    },
+    {
+      "id": "psa-ppa-per-capita-matrix",
+      "publisher": "Philippine Statistics Authority",
+      "title": "Per Capita Gross Domestic Product by Province and HUC",
+      "url": "https://openstat.psa.gov.ph/PXWeb/pxweb/en/DB/DB__2A__PPA/0092A5FPPA8.px/",
+      "matrix": "2A5FPPA8",
+      "checkedAt": "2026-09-26",
+      "definition": "GDP divided by the relevant population denominator.",
+      "period": "2018–2025",
+      "decision": "implement",
+      "note": "Keep denominator metadata visible. The 2024 national comparison uses 2024 POPCEN population; the current OpenSTAT per-capita series notes use of preliminary 2020-based population projections for the relevant series."
+    },
+    {
+      "id": "psa-lfs-ncr-2025-huc",
+      "publisher": "Philippine Statistics Authority — NCR",
+      "title": "Highlights of the Labor Force Survey in the National Capital Region, 2025",
+      "url": "https://rssoncr.psa.gov.ph/content/number-underemployed-persons-national-capital-region-decreased-384-thousand-filipinos-aged",
+      "checkedAt": "2026-09-26",
+      "usableFor": [
+        "Makati labor-force participation rate",
+        "Makati employment rate",
+        "Makati unemployment rate",
+        "Makati underemployment rate"
+      ],
+      "factsForValidation": [
+        "Makati 2025 labor-force participation rate: 67.1 percent",
+        "Makati 2025 employment rate: 95.0 percent",
+        "Makati 2025 unemployment rate: 5.0 percent",
+        "Makati 2025 underemployment rate: 2.2 percent"
+      ],
+      "decision": "implement",
+      "note": "These are resident labor-market rates, not counts of jobs physically located in Makati. Label them accordingly."
+    },
+    {
+      "id": "psa-rset-2025-city-employment",
+      "publisher": "Philippine Statistics Authority — NCR",
+      "title": "2025 Regional Social and Economic Trends — total employed persons by city/municipality, 2019–2023",
+      "url": "https://rssoncr.psa.gov.ph/system/files/publication/Final%202025%20RSET_10th_edition_NCR.pdf",
+      "checkedAt": "2026-09-26",
+      "usableFor": [
+        "historical annualized resident employment counts"
+      ],
+      "decision": "hold",
+      "note": "Useful historical labor context, but the newer 2025 HUC labor-rate release is cleaner for the first Statistics batch. Do not confuse resident employed persons with workplace employment."
+    },
+    {
+      "id": "psa-list-establishments-2021",
+      "publisher": "Philippine Statistics Authority — NCR",
+      "title": "2021 Updating of the List of Establishments Final Result",
+      "url": "https://rssoncr.psa.gov.ph/content/RSSO/2021-updating-list-establishment-final-result",
+      "checkedAt": "2026-09-26",
+      "usableFor": [
+        "2021 Makati establishment count",
+        "2021 employment in Makati establishments"
+      ],
+      "factsForValidation": [
+        "2021 Makati establishments: 15,841",
+        "2021 total employment in Makati establishments: 460,230"
+      ],
+      "decision": "reject-for-current-city-indicator",
+      "note": "The reference year predates the current Makati/Taguig geography. Retain only as explicitly historical old-boundary context unless PSA publishes a restated current-boundary establishment series."
+    },
+    {
+      "id": "psa-cpbi-2023-fieldwork",
+      "publisher": "Philippine Statistics Authority — NCR PSO III",
+      "title": "2023 Census of Philippine Business and Industry and IOSPBI fieldwork for Makati, Pasig, Taguig and Pateros",
+      "url": "https://rssoncr.psa.gov.ph/content/50-statistical-researchers-survey-7337-sample-establishments",
+      "checkedAt": "2026-09-26",
+      "usableFor": [
+        "source discovery for future city business statistics"
+      ],
+      "decision": "hold",
+      "note": "The page reports a 7,337-establishment sample across four LGUs, not a Makati result. Never treat the fieldwork sample as Makati's establishment count. Revisit when Makati-level 2023 CPBI outputs are officially published."
+    },
+    {
+      "id": "makati-basic-facts-2023",
+      "publisher": "City Government of Makati — Urban Development Department",
+      "title": "Makati City Basic Facts and Figures 2023",
+      "url": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1720150266681.pdf",
+      "checkedAt": "2026-09-26",
+      "usableFor": [
+        "administrative business-activity snapshot",
+        "PEZA-registered IT buildings",
+        "banks and other finance-related institutions",
+        "cooperatives and other city business-environment counts"
+      ],
+      "factsForValidation": [
+        "Business establishments (per activity): 86,370",
+        "PEZA-registered IT buildings operating: 44",
+        "Banks and other finance-related institutions: 4,798"
+      ],
+      "decision": "hold-definition-needs-clarification",
+      "note": "The city labels 86,370 as 'business establishments (per activity)'. That is not definitionally interchangeable with PSA's List of Establishments count. Preserve the city's wording and clarify unit/scope before implementation."
+    },
+    {
+      "id": "makati-facts-2020-business-detail",
+      "publisher": "City Government of Makati",
+      "title": "Makati Facts and Figures 2020 — businesses",
+      "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/45/561/pdf/Facts%20and%20FIgures%202020.pdf",
+      "checkedAt": "2026-09-26",
+      "usableFor": [
+        "historical BPO business-activity categories",
+        "new/renewing/closing business activity counts"
+      ],
+      "decision": "reject-for-current-trend",
+      "note": "Pre-transfer geography. Useful only as historical business-administration context; do not connect directly to 2023/current Makati as a continuous series."
+    }
+  ],
+  "candidateIndicators": [
+    {
+      "id": "real-gdp-level",
+      "definition": "Makati GDP at constant 2018 prices.",
+      "period": "2022–2025 current-boundary series; older values retained only with historical geography metadata",
+      "source": "psa-ppa-gdp-level-matrix",
+      "decision": "implement"
+    },
+    {
+      "id": "real-gdp-growth",
+      "definition": "Year-on-year percentage change in Makati GDP at constant 2018 prices.",
+      "period": "2022–2023 through 2024–2025 for the clean current-boundary series",
+      "source": "psa-ppa-gdp-growth-matrix",
+      "decision": "implement"
+    },
+    {
+      "id": "gdp-national-share",
+      "definition": "Makati GDP as a share of national GDP.",
+      "period": "2025 headline; future series only if reproducible from canonical national/HUC data",
+      "source": "psa-ppa-2025-release",
+      "decision": "implement"
+    },
+    {
+      "id": "gdp-ncr-share",
+      "definition": "Makati GDP as a share of NCR GDP.",
+      "period": "2022–2025 current-boundary series",
+      "source": "psa-ppa-regional-share-matrix",
+      "decision": "implement"
+    },
+    {
+      "id": "industry-gva",
+      "definition": "Gross value added by Makati production industry at constant 2018 prices.",
+      "period": "2022–2025 current-boundary series",
+      "source": "psa-ppa-industry-gva-matrix",
+      "decision": "implement"
+    },
+    {
+      "id": "industry-growth-rate",
+      "definition": "Year-on-year real GVA growth by Makati production industry.",
+      "period": "2022–2023 through 2024–2025",
+      "source": "psa-ppa-industry-growth-matrix",
+      "decision": "implement"
+    },
+    {
+      "id": "industry-share-of-makati-gdp",
+      "definition": "Industry GVA divided by Makati total GDP for the same year/valuation basis.",
+      "period": "2022–2025",
+      "source": "psa-ppa-industry-gva-matrix + psa-ppa-gdp-level-matrix",
+      "decision": "implement",
+      "note": "Derived explicitly from canonical PPA values. Do not substitute the PSA regional-industry-share matrix."
+    },
+    {
+      "id": "industry-share-of-ncr-industry",
+      "definition": "Makati industry GVA as a share of the same industry's GVA in NCR.",
+      "period": "2022–2025",
+      "source": "psa-ppa-industry-regional-share-matrix",
+      "decision": "hold",
+      "note": "Specialist measure; not suitable as a default city economic-structure card."
+    },
+    {
+      "id": "gdp-per-capita",
+      "definition": "Makati GDP divided by the applicable population denominator.",
+      "period": "2024 census-based benchmark plus 2025 continuation with denominator metadata",
+      "source": "psa-ppa-per-capita-matrix + psa-ppa-makati-2024-release",
+      "decision": "implement",
+      "note": "Keep 2024's census-based comparison distinct from later projection-based values."
+    },
+    {
+      "id": "resident-labor-force-participation-rate",
+      "definition": "Share of Makati residents age 15+ who are in the labor force.",
+      "period": "2025",
+      "source": "psa-lfs-ncr-2025-huc",
+      "decision": "implement"
+    },
+    {
+      "id": "resident-employment-rate",
+      "definition": "Share of the Makati labor force that is employed.",
+      "period": "2025",
+      "source": "psa-lfs-ncr-2025-huc",
+      "decision": "implement"
+    },
+    {
+      "id": "resident-unemployment-rate",
+      "definition": "Share of the Makati labor force that is unemployed.",
+      "period": "2025",
+      "source": "psa-lfs-ncr-2025-huc",
+      "decision": "implement"
+    },
+    {
+      "id": "resident-underemployment-rate",
+      "definition": "Share of employed Makati residents who want additional hours or additional/new work with longer hours.",
+      "period": "2025",
+      "source": "psa-lfs-ncr-2025-huc",
+      "decision": "implement"
+    },
+    {
+      "id": "resident-employed-persons",
+      "definition": "Annualized number of employed residents.",
+      "period": "2019–2023 historical RSET series",
+      "source": "psa-rset-2025-city-employment",
+      "decision": "hold",
+      "note": "Lower priority than current HUC rates and easily confused with workplace employment."
+    },
+    {
+      "id": "establishments-located-in-makati",
+      "definition": "PSA List of Establishments count for establishments physically located in Makati.",
+      "period": "2021 available official result",
+      "source": "psa-list-establishments-2021",
+      "decision": "reject",
+      "note": "Do not use as a current Makati indicator because the reference year predates the territorial transfer."
+    },
+    {
+      "id": "employment-in-makati-establishments",
+      "definition": "Employment reported by establishments physically located in Makati in the PSA List of Establishments.",
+      "period": "2021 available official result",
+      "source": "psa-list-establishments-2021",
+      "decision": "reject",
+      "note": "Old-boundary historical measure and conceptually different from resident employment."
+    },
+    {
+      "id": "city-business-establishments-per-activity",
+      "definition": "City BPO count labeled 'No. of Business Establishments (per activity)'.",
+      "period": "2023",
+      "source": "makati-basic-facts-2023",
+      "decision": "hold",
+      "note": "Needs a documented unit/denominator rule before use. Do not relabel it as distinct establishments."
+    },
+    {
+      "id": "peza-it-buildings",
+      "definition": "Operating PEZA-registered IT buildings reported in the city's Basic Facts and Figures.",
+      "period": "2023",
+      "source": "makati-basic-facts-2023",
+      "decision": "hold",
+      "note": "Useful business-environment context, but lower priority than GDP/labor measures and should eventually cross-link to named assets only where an official facility list supports exact identity."
+    },
+    {
+      "id": "finance-related-institutions",
+      "definition": "Banks and other finance-related institutions reported by the city.",
+      "period": "2023",
+      "source": "makati-basic-facts-2023",
+      "decision": "hold",
+      "note": "Category definition needs clarification before comparison or trend use."
+    },
+    {
+      "id": "cpbi-city-business-statistics",
+      "definition": "Makati establishment employment/revenue/expense/assets from the 2023 CPBI.",
+      "period": "2023",
+      "source": "psa-cpbi-2023-fieldwork",
+      "decision": "hold",
+      "note": "Wait for an official Makati-level published result; do not infer from the four-LGU sample count."
+    }
+  ],
+  "comparabilityRules": [
+    "PPA values for Makati before 2022 and from 2022 onward must not be presented as one uninterrupted current-boundary series unless PSA publishes a restatement.",
+    "Use constant 2018 prices for growth/real-output trends; use current prices only when the user explicitly needs nominal values.",
+    "GDP per capita is economic output per resident, not household income, wages or personal wealth.",
+    "The 2024 per-capita comparison uses 2024 POPCEN population; later PPA per-capita values may use population projections and must carry denominator metadata.",
+    "Resident employment/LFPR/unemployment/underemployment measure Makati residents, not jobs or workers physically located in Makati workplaces.",
+    "PSA establishment employment and LFS resident employment are different concepts and must never share one label.",
+    "The city BPO 'business establishments (per activity)' count is not interchangeable with PSA's distinct establishment count.",
+    "A 2023 CPBI fieldwork sample spanning Makati, Pasig, Taguig and Pateros is not a Makati count.",
+    "Industry composition should be derived from Makati industry GVA divided by Makati GDP; PSA's industry regional-share measure answers a different question.",
+    "Missing or suppressed PPA industry cells remain unavailable; do not convert suppression into zero."
+  ],
+  "implementationBatchRecommendation": {
+    "implementFirst": [
+      "real-gdp-level",
+      "real-gdp-growth",
+      "gdp-national-share",
+      "gdp-ncr-share",
+      "industry-gva",
+      "industry-growth-rate",
+      "industry-share-of-makati-gdp",
+      "gdp-per-capita",
+      "resident-labor-force-participation-rate",
+      "resident-employment-rate",
+      "resident-unemployment-rate",
+      "resident-underemployment-rate"
+    ],
+    "hold": [
+      "industry-share-of-ncr-industry",
+      "resident-employed-persons",
+      "city-business-establishments-per-activity",
+      "peza-it-buildings",
+      "finance-related-institutions",
+      "cpbi-city-business-statistics"
+    ],
+    "reject": [
+      "establishments-located-in-makati",
+      "employment-in-makati-establishments"
+    ],
+    "rationale": "The first batch gives BetterMakati a current, well-defined city economy and resident labor-market picture using official sources with explicit current-boundary treatment. Business-establishment counts remain held or historical because the available city/PSA series do not yet form a clean current-boundary, definition-consistent trend."
+  },
+  "crossFunctionReuse": [
+    {
+      "target": "Reports & Insights",
+      "use": "GDP growth, industry structure and labor-market shifts are high-value report inputs, but reports should reference indicator IDs rather than duplicate the series."
+    },
+    {
+      "target": "Projects & Budget",
+      "use": "Keep public-finance and city-economy measures distinct. Cross-link GDP/output context to fiscal records without implying city budget equals city economy."
+    },
+    {
+      "target": "BetterBarangay",
+      "use": "Do not fabricate barangay GDP, employment or business counts from citywide data. Only barangay-scoped economic indicators with an official barangay denominator may be shown."
+    },
+    {
+      "target": "Place Registry",
+      "use": "PEZA/business-building statistics may link to named canonical assets only when an official list proves exact identity. Never infer business density from mapped Place Registry records."
+    },
+    {
+      "target": "BetterGov ecosystem",
+      "use": "Use BetterGov national data/visualization tools for national GDP/industry context and BetterLGU/sibling sites for cross-LGU comparisons where a canonical destination exists; keep PSA or Makati official data as the visible source of record."
+    }
+  ],
+  "nextStep": {
+    "id": "W4-1e",
+    "title": "Inventory service, land and infrastructure indicators",
+    "maximumScope": "Official-source research only; prioritize measures that connect to services, barangays, facilities or Place Registry records."
+  }
+}
