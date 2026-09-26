@@ -2,7 +2,7 @@ import { FormEvent, useMemo, useState } from 'react';
 import { CheckCircle2, ExternalLink, Send } from 'lucide-react';
 import type { PlaceRegistryRecord } from '../../data/placeRegistry';
 import {
-  observationQuestionSetForPlace,
+  observationQuestionSetForEntity,
   observationResponseChoices,
   type ObservationAnswer,
   type ObservationTimeContext,
@@ -24,7 +24,7 @@ export default function CivicObservationForm({
   entity: PlaceRegistryRecord;
   onSubmitted?: () => void;
 }) {
-  const questionSet = useMemo(() => observationQuestionSetForPlace(place), [entity]);
+  const questionSet = useMemo(() => observationQuestionSetForEntity(entity), [entity]);
   const [observedAt, setObservedAt] = useState(localDateTimeValue);
   const [timeContext, setTimeContext] = useState<ObservationTimeContext>('unknown');
   const [weatherContext, setWeatherContext] = useState<ObservationWeatherContext>('unknown');
