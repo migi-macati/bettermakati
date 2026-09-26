@@ -1,0 +1,269 @@
+{
+  "schemaVersion": 1,
+  "classifiedAt": "2026-09-26",
+  "workstream": "W3R-11f — Reclassify and close Wave 3",
+  "supersedes": "data/wave3-participation-classification.json",
+  "basis": [
+    "data/wave3-capability-disposition-audit.json",
+    "data/wave3-redesign-plan.json",
+    "data/wave3-participation-human-page-audit.json",
+    "data/participation-outcome-metrics.json",
+    "data/participation-metric-publication-thresholds.json",
+    "scripts/audit-place-registry-integrity.mjs",
+    "scripts/test-general-participation-journeys.mjs",
+    "scripts/test-public-place-participation-journeys.mjs",
+    "scripts/audit-wave3-mobile-accessibility.mjs"
+  ],
+  "closureStatus": "closed-with-explicit-deferrals",
+  "closureMeaning": "The redesigned Wave 3 implementation work is closed. Capabilities marked complete or complete-with-boundary are implemented for their declared scope. Partial and deferred items are not represented as complete and require a future explicitly scoped workstream if they are resumed.",
+  "statusDefinitions": {
+    "complete": "Implemented and validated for the redesigned Wave 3 scope with no known in-scope product gap.",
+    "complete-with-boundary": "Implemented and validated for the declared scope, with an explicit source, coverage, maturity, automation or execution boundary that must remain visible.",
+    "partial": "A useful implementation exists, but a known in-scope presentation or workflow gap remains.",
+    "deferred": "Intentionally not implemented in Wave 3; the reason and restart condition are explicit.",
+    "replaced": "A legacy capability was intentionally superseded by a different redesigned capability."
+  },
+  "summary": {
+    "capabilities": 14,
+    "complete": 8,
+    "completeWithBoundary": 4,
+    "partial": 1,
+    "deferred": 1,
+    "replacedLegacyPatterns": 3
+  },
+  "capabilities": [
+    {
+      "id": "W3R-CAP-01",
+      "capability": "Shared canonical Place Registry",
+      "status": "complete-with-boundary",
+      "evidence": [
+        "Place Registry schema, data layer, selectors and integrity audit are implemented.",
+        "Current integrity snapshot contains 88 unique records, 23 canonical Makati barangays, no duplicate IDs or exact duplicate coordinates, and generated civic-entity-index parity.",
+        "Registry relationships and provenance are guarded by scripts/audit-place-registry-integrity.mjs."
+      ],
+      "boundary": "The registry is complete for the verified/current named scope established by the Wave 3 source-reconciliation work, not a claim that every possible Makati place, street segment or facility has been mapped."
+    },
+    {
+      "id": "W3R-CAP-02",
+      "capability": "Cross-site reuse of canonical places",
+      "status": "complete",
+      "evidence": [
+        "Canonical places are reused in BetterBarangay, Mobility, Services/Government Offices and Saan Ako Lalapit.",
+        "Global Search indexes Place Registry records.",
+        "Visit Makati and Heritage reuse exact canonical place links where identity is unambiguous.",
+        "Projects/Accountability and City Monitor expose explicit place relationships without fuzzy matching.",
+        "A reusable Near me selector/component consumes Place Registry coordinates."
+      ]
+    },
+    {
+      "id": "W3R-CAP-03",
+      "capability": "Task-led Civic Map and place-detail experience",
+      "status": "complete",
+      "evidence": [
+        "Civic Map is registry-first and separates place, segment and route entities.",
+        "Primary jobs are finding a civic record, reporting a problem, suggesting an improvement and recording current conditions.",
+        "Place detail pages separate canonical facts, structured observations, community cases, proposals and explicit related public records.",
+        "Generic star-rating/review framing is retired from redesigned surfaces."
+      ]
+    },
+    {
+      "id": "W3R-CAP-04",
+      "capability": "Nearby public-realm reporting and canonical matching",
+      "status": "complete",
+      "evidence": [
+        "Users can use device location, registry search or manual coordinates.",
+        "Nearby results are suggestions only; server-side submission re-normalizes entity identity from the canonical index.",
+        "Location-only reports remain possible when no canonical entity matches.",
+        "Duplicate open cases are detected by entity/category/proximity and can be confirmed instead of duplicated.",
+        "Emergency categories are rejected from normal Civic Map submission and routed to 911."
+      ]
+    },
+    {
+      "id": "W3R-CAP-05",
+      "capability": "Evidence-separated civic case lifecycle and referral tracking",
+      "status": "complete-with-boundary",
+      "evidence": [
+        "Lifecycle states remain distinct: reviewed, forwarded, acknowledged, action-reported and community-verified-resolved.",
+        "Community confirmations and appears-resolved signals remain separate from official lifecycle evidence.",
+        "Authority, channel, external reference and timestamp fields are preserved in machine-readable admin events and public case readback.",
+        "W3R-10 instrumentation exposes first-stage timestamps, elapsed-hours inputs and evidence diagnostics."
+      ],
+      "boundary": "Automatic government forwarding is intentionally deferred. Forwarded means BetterMakati documented a referral attempt; it does not prove authority acknowledgement."
+    },
+    {
+      "id": "W3R-CAP-06",
+      "capability": "Structured condition observations",
+      "status": "complete",
+      "evidence": [
+        "Five observation families and canonical question sets are implemented.",
+        "Observation submission validates canonical entity/category/family/question-set compatibility.",
+        "Observations use observedAt and remain separate from complaints, cases and canonical registry facts.",
+        "Observation readback includes freshness inputs and sample-aware summaries without composite scores."
+      ]
+    },
+    {
+      "id": "W3R-CAP-07",
+      "capability": "Bounded civic audit campaigns and live output",
+      "status": "complete",
+      "evidence": [
+        "A reusable civic-audit campaign schema and workflow are defined.",
+        "The 2026 public-park accessibility pilot freezes 13 verified public-park targets and four directly observable questions.",
+        "Live results preserve zero-observation targets, sample counts, question distributions, campaign period and data-availability state.",
+        "Coverage outputs use raw numerator/denominator inputs and do not derive park scores or rankings."
+      ]
+    },
+    {
+      "id": "W3R-CAP-08",
+      "capability": "Participation Hub and Get Involved task routing",
+      "status": "complete-with-boundary",
+      "evidence": [
+        "Participation exposes official participation, local problem reporting, place improvements, condition observations, corrections, sources, ideas and volunteering from one task-led entry.",
+        "Get Involved supports proposal, idea, source, correction, volunteer and contact submissions with native tracking, duplicate handling and a pre-filled fallback.",
+        "Fallback-created issues now use the same metadata format as native submissions so later duplicate detection remains continuous.",
+        "Barangay query context is resolved to the canonical barangay name and carried into general submissions."
+      ],
+      "boundary": "No complete authoritative citywide consultation calendar has been identified. The official-opportunity section therefore keeps an honest empty state and official Makati events handoff rather than fabricating completeness."
+    },
+    {
+      "id": "W3R-CAP-09",
+      "capability": "BetterBarangay participation integration",
+      "status": "complete",
+      "evidence": [
+        "Barangay scope is preserved into Civic Map and nearby reporting.",
+        "Barangay contribution links carry barangay context into Get Involved.",
+        "Barangay pages expose local civic records and participation actions without requiring a separate barangay-only backend.",
+        "Activity presentation is tied to actual canonical/local evidence rather than an invented completeness score."
+      ]
+    },
+    {
+      "id": "W3R-CAP-10",
+      "capability": "Outcome metric definitions, publication guardrails and raw instrumentation",
+      "status": "complete-with-boundary",
+      "evidence": [
+        "Case outcome definitions cover review, routing, acknowledgement, action evidence and documented resolution plus elapsed-time inputs.",
+        "Observation freshness and civic-audit coverage definitions are explicit.",
+        "Publication thresholds require minimum case/event counts and cohort maturity before lifecycle rates or medians can be public.",
+        "API/data instrumentation exposes raw per-case, freshness and audit metric inputs without adding headline rates."
+      ],
+      "boundary": "Threshold-gated public lifecycle rates, timing medians and aggregate freshness rates are not published until their sample, maturity and inventory requirements are met."
+    },
+    {
+      "id": "W3R-CAP-11",
+      "capability": "Repeat-contribution measurement",
+      "status": "deferred",
+      "evidence": [
+        "Metric semantics and privacy requirements are defined.",
+        "Current anonymous contribution data has no privacy-safe stable contributor key."
+      ],
+      "reason": "Do not infer identity from IP address, public alias or free-text name. Resume only after a pseudonymous non-public contributor key, retention/deletion rules and explicit instrumentation design exist."
+    },
+    {
+      "id": "W3R-CAP-12",
+      "capability": "Outcome-oriented public participation reports",
+      "status": "partial",
+      "evidence": [
+        "Civic Reports correctly separates evidence status, community resolution signals and referral candidates.",
+        "The six-stage lifecycle wording is present.",
+        "W3R-10 raw outcome instrumentation exists."
+      ],
+      "gap": "The public reports page is still dominated by legacy seven-day/thirty-day volume counts and a three-support proposal threshold. It does not yet present the redesigned outcome model with W3R-10b threshold suppression.",
+      "restartCondition": "Create a separate follow-up workstream to redesign /civic-map/reports around threshold-gated outcome evidence while retaining exact recent-case records and referral workflow. Do not publish lifecycle rates or medians before thresholds are met."
+    },
+    {
+      "id": "W3R-CAP-13",
+      "capability": "Participation QA and integrity regression coverage",
+      "status": "complete",
+      "evidence": [
+        "Human/source-level audit covers Participation, Get Involved, Civic Map, nearby reporting, entity detail, reports and civic-audit surfaces.",
+        "Place Registry integrity audit guards identity, barangays, coordinates, lifecycle/provenance and relationships.",
+        "General participation handler tests cover submission, duplicate, fallback, tracking and barangay context.",
+        "Public-place handler tests cover canonical matching, duplicate confirmation, lifecycle evidence, observations and civic-audit aggregation.",
+        "Wave 3 accessibility regression audit guards mobile width locks, minimum touch targets, focus, reduced motion, async state semantics and hidden honeypots."
+      ]
+    },
+    {
+      "id": "W3R-CAP-14",
+      "capability": "Physical-device/browser/screen-reader execution evidence",
+      "status": "complete-with-boundary",
+      "evidence": [
+        "Source-level responsive/accessibility review and deterministic handler-level journey suites are committed and wired into build/quality scripts."
+      ],
+      "boundary": "No GitHub Actions run or browser/device automation result was available during W3R-11c through W3R-11e. Wave 3 therefore does not claim independently executed CI, physical-device or screen-reader validation."
+    }
+  ],
+  "replacedLegacyPatterns": [
+    {
+      "legacy": "Civic Map-owned asset model as the only home of place identity",
+      "replacement": "Shared canonical Place Registry reused across the website."
+    },
+    {
+      "legacy": "Generic rating/review workflow and star-style public-realm scoring",
+      "replacement": "Structured dated condition observations and bounded civic audits with sample counts."
+    },
+    {
+      "legacy": "Participation feedback loop led primarily by recent volume/popularity counts",
+      "replacement": "Defined outcome evidence: review, routing, acknowledgement, action, documented resolution, freshness and audit coverage, with public-threshold guardrails."
+    }
+  ],
+  "explicitDeferrals": [
+    {
+      "id": "automatic-government-forwarding",
+      "status": "deferred",
+      "reason": "Destination, authorization, evidence and accountability rules are not yet reliable enough for automated government delivery."
+    },
+    {
+      "id": "official-participation-calendar-completeness",
+      "status": "source-dependent",
+      "reason": "No sufficiently authoritative complete current citywide consultation calendar has been identified."
+    },
+    {
+      "id": "repeat-contribution-instrumentation",
+      "status": "deferred",
+      "reason": "No privacy-safe stable contributor identity exists; IP address and public aliases are explicitly prohibited as substitutes."
+    },
+    {
+      "id": "public-lifecycle-rates-and-medians",
+      "status": "threshold-gated",
+      "reason": "Publication requires the W3R-10b minimum denominator/event counts and stage-specific cohort maturity."
+    },
+    {
+      "id": "aggregate-observation-freshness-rate",
+      "status": "threshold-gated",
+      "reason": "Publication requires an explicit eligible inventory of at least 10 entities, at least 5 observed entities and the family-specific freshness window."
+    },
+    {
+      "id": "civic-reports-outcome-redesign",
+      "status": "deferred-follow-up",
+      "reason": "The human audit found /civic-map/reports still volume-heavy. This is the one known redesigned participation presentation gap and is not classified complete."
+    },
+    {
+      "id": "physical-device-and-screen-reader-execution",
+      "status": "not-verified",
+      "reason": "No browser/device automation or GitHub Actions execution evidence was available in the current environment."
+    },
+    {
+      "id": "registry-unresolved-source-items",
+      "status": "data-deferrals",
+      "reason": "Unresolved exact facility/park/linear-infrastructure items remain governed by the source-reconciliation and completeness-audit files rather than being silently treated as mapped."
+    }
+  ],
+  "closureDecision": {
+    "wave3Implementation": "closed",
+    "wave3AsFullyComplete": false,
+    "why": "All 38 planned redesign micro-steps are complete after W3R-11f, but one public feedback-loop presentation capability remains partial and several explicitly bounded capabilities remain deferred or threshold-gated.",
+    "whatMayBeCalledComplete": [
+      "The redesigned Wave 3 implementation plan.",
+      "Place Registry foundation and cross-site reuse for the declared verified scope.",
+      "Task-led reporting, structured observations, civic audit pilot, redesigned participation routing and data/API outcome instrumentation.",
+      "Source-level/handler-level QA and integrity guardrails."
+    ],
+    "whatMustNotBeCalledComplete": [
+      "Automatic government forwarding.",
+      "A complete authoritative citywide consultation calendar.",
+      "Repeat-contributor measurement.",
+      "Public lifecycle outcome rates/medians before thresholds are met.",
+      "The outcome-oriented redesign of /civic-map/reports.",
+      "Physical-device/screen-reader or independently executed CI validation."
+    ]
+  }
+}
