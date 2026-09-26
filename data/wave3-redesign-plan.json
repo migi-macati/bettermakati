@@ -261,13 +261,36 @@
     {
       "id": "W3R-4b",
       "title": "Simplify place detail experience",
-      "status": "next",
-      "maximumScope": "CivicAsset page only plus tiny shared UI if essential. Remove generic rating-first language while retaining factual details, reports, improvements and source provenance."
+      "status": "complete",
+      "maximumScope": "CivicAsset page only plus tiny shared UI if essential. Remove generic rating-first language while retaining factual details, reports, improvements and source provenance.",
+      "validation": {
+        "placeFacts": "CivicAsset now reads canonical verification status, access, address, management, aliases, co-located services and provenance from Place Registry.",
+        "pageOrder": [
+          "Place summary",
+          "Location & sources",
+          "Community cases",
+          "Report or suggest"
+        ],
+        "contributionKinds": "Place detail now exposes report, proposal and information-update actions only; legacy review backend compatibility remains hidden for later replacement.",
+        "retiredDetailFraming": [
+          "Report, rate or suggest",
+          "Location & rating criteria",
+          "What people can rate here",
+          "Structured 1–5 assessment framing",
+          "Future headline rating scores",
+          "Pilot asset methodology copy",
+          "Repeated independent-platform explainer"
+        ],
+        "communityRecords": "Community discussion is presented as Cases, proposals & updates; any historical review records remain renderable but are not promoted as a primary action.",
+        "provisionalCompatibility": "Direct links to provisional Place Registry records still render their existing verification state and sources instead of being silently upgraded or blocked.",
+        "guardrail": "scripts/check-place-registry.mjs now requires canonical place facts, the simplified section structure, report/proposal/update-only page actions and absence of retired rating/pilot copy.",
+        "ci": "Latest completed CI after the page/component changes reports only the same three pre-existing unused-import errors. CivicDiscussion still has its pre-existing React effect warning; no new blocking errors are reported for CivicAsset.tsx, CivicContributionForm.tsx or CivicDiscussion.tsx."
+      }
     },
     {
       "id": "W3R-5a",
       "title": "Specify Report something near me",
-      "status": "planned",
+      "status": "next",
       "maximumScope": "Flow specification only: location, nearby place/street, issue, details/evidence, submit, fallback. No implementation."
     },
     {
@@ -428,9 +451,9 @@
     }
   ],
   "immediateNext": {
-    "id": "W3R-4b",
-    "title": "Simplify place detail",
-    "maximumScope": "Civic place-detail page only. Reframe around verified place facts, useful actions and existing cases; do not implement structured observations yet."
+    "id": "W3R-5a",
+    "title": "Specify Report something near me",
+    "maximumScope": "Design/specification only. Define the location-first reporting flow and matching behavior before implementation."
   },
   "capabilityDispositionAuditFile": "data/wave3-capability-disposition-audit.json",
   "completedSteps": [
@@ -443,7 +466,8 @@
     "W3R-3b",
     "W3R-3c",
     "W3R-3d",
-    "W3R-4a"
+    "W3R-4a",
+    "W3R-4b"
   ],
   "placeRegistrySchemaFile": "data/place-registry-schema.json",
   "placeRegistryDataFile": "src/data/placeRegistry.ts"
