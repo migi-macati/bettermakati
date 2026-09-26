@@ -210,7 +210,7 @@ for (const marker of [
   'Find a place in Makati',
   'Browse the place inventory',
   'Find a place',
-  'Report a problem',
+  'Report something near me',
   'Suggest an improvement',
   'Help document Makati',
 ]) {
@@ -300,7 +300,8 @@ for (const marker of [
   '<CivicNearbyReportForm',
   "place={matchState === 'confirmed-place' ? selectedPlace : null}",
   'point={location.point}',
-  "withBarangayScope('/civic-map/report'",
+  "href: withBarangayScope(",
+  "'/civic-map/report'",
 ]) {
   if (!civicNearbyReportPage.includes(marker)) {
     problems.push('Nearby report handoff is missing: ' + marker);
