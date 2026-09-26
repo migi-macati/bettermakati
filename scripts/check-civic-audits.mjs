@@ -17,6 +17,8 @@ const pilotSource = await readFile('src/data/civicAuditPilot.ts', 'utf8');
 const pilotPageSource = await readFile('src/pages/CivicAuditPilot.tsx', 'utf8');
 const appSource = await readFile('src/App.tsx', 'utf8');
 const civicMapPage = await readFile('src/pages/CivicMap.tsx', 'utf8');
+const auditApiSource = await readFile('api/civic-audit.js', 'utf8');
+const auditResultsSource = await readFile('src/pages/CivicAuditResults.tsx', 'utf8');
 
 const problems = [];
 
@@ -294,6 +296,54 @@ if (!appSource.includes('path="/civic-map/audits/park-accessibility-2026"')) {
 }
 if (!civicMapPage.includes('to="/civic-map/audits/park-accessibility-2026"')) {
   problems.push('Civic Map does not surface the park accessibility pilot.');
+}
+
+for (const marker of [
+  "const CAMPAIGN = {",
+  "targetEntityIds: [",
+  "minimumObservationsPerEntity: 2",
+  "inCampaignWindow(observation.observedAt)",
+  "CAMPAIGN.questionIds.includes(answer.questionId)",
+  "entityObservations.length >= CAMPAIGN.minimumObservationsPerEntity",
+  "CAMPAIGN.requiredQuestionIds.every",
+  "observationCount: observations.length",
+  "observedEntities",
+  "completeEntities",
+  "questions,",
+]) {
+  if (!auditApiSource.includes(marker)) {
+    problems.push('Live civic audit API is missing: ' + marker);
+  }
+}
+
+for (const marker of [
+  'Live audit output',
+  'campaign observations',
+  'parks with observations',
+  'parks meeting the pilot completion rule',
+  'Observed distributions',
+  '13 frozen target parks',
+  'No substantive campaign-period answers yet.',
+  "civicAuditPilot.route + '/results'",
+]) {
+  if (!auditResultsSource.includes(marker) && !pilotPageSource.includes(marker)) {
+    problems.push('Published audit output is missing: ' + marker);
+  }
+}
+
+for (const forbidden of [
+  'overallScore',
+  'averageRating',
+  'weightedScore',
+  'compositeIndex',
+  'starRating',
+  'best park',
+  'worst park',
+  'park ranking',
+]) {
+  if (auditApiSource.includes(forbidden) || auditResultsSource.includes(forbidden)) {
+    problems.push('Published audit output contains forbidden scoring/ranking marker: ' + forbidden);
+  }
 }
 if (!pilotPageSource.includes("civicAuditPilot.id +")) {
   problems.push('Park audit links do not carry campaign context.');
