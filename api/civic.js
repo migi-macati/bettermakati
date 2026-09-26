@@ -185,9 +185,7 @@ const fallbackUrl = ({ kind, subject, body }) => {
       ? 'Civic Proposal'
       : kind === 'update'
         ? 'Civic Update'
-        : kind === 'review'
-          ? 'Civic Review'
-          : 'Civic Report';
+        : 'Civic Report';
   const params = new URLSearchParams({
     title: '[' + label + '] ' + (subject || 'Civic Map submission'),
     body,
@@ -279,29 +277,6 @@ const contributionBody = payload => {
     '### Status',
     '',
     'Unverified community submission. Duplicate reports should be consolidated into this case through confirmations and updates. BetterMakati does not guarantee government action.',
-  ]
-    .filter(Boolean)
-    .join('\n');
-};
-
-const reviewCommentBody = payload => {
-  const scores = payload.scores && typeof payload.scores === 'object' ? payload.scores : {};
-  const meta = {
-    version: 1,
-    kind: 'review',
-    assetId: payload.assetId,
-    scores,
-    parentCommentId: payload.parentCommentId || null,
-  };
-  return [
-    '<!-- civic-comment ' + JSON.stringify(meta) + ' -->',
-    '**Review** · ' + (payload.alias || 'Anonymous contributor'),
-    '',
-    Object.entries(scores)
-      .map(([key, value]) => '- ' + key + ': ' + value + '/5')
-      .join('\n'),
-    '',
-    payload.details || '',
   ]
     .filter(Boolean)
     .join('\n');
@@ -463,11 +438,10 @@ export default async function handler(req, res) {
     preferredChannel: clean(req.body?.preferredChannel, 40),
     alias: clean(req.body?.alias, 80),
     evidenceUrl: cleanUrl(req.body?.evidenceUrl),
-    scores: req.body?.scores,
     forceNew: Boolean(req.body?.forceNew),
   };
 
-  if (!['report', 'proposal', 'review', 'update'].includes(kind)) {
+  if (!['report', 'proposal', 'update'].includes(kind)) {
     return res.status(400).json({ error: 'Invalid Civic Map contribution type.' });
   }
   const locationOnly = payload.locationMode === 'location-only';
@@ -498,63 +472,6 @@ export default async function handler(req, res) {
       emergency: true,
       call: 'tel:911',
     });
-  }
-
-  if (kind === 'review') {
-    const scores =
-      payload.scores && typeof payload.scores === 'object'
-        ? Object.values(payload.scores).map(Number).filter(Number.isFinite)
-        : [];
-    if (!scores.length || scores.some(score => score < 1 || score > 5)) {
-      return res.status(400).json({ error: 'Provide at least one 1–5 rating.' });
-    }
-    try {
-      const issues = await fetchIssues(token);
-      let thread = issues.find(
-        issue =>
-          isCivicIssue(issue) &&
-          String(issue.title || '').startsWith('[Civic Reviews]') &&
-          parseMeta(issue.body).assetId === payload.assetId
-      );
-      if (!token) {
-        const body = contributionBody({ ...payload, kind: 'review' });
-        return res.status(503).json({
-          error: 'Native Civic Map review storage is not configured.',
-          fallbackUrl: fallbackUrl({ kind: 'review', subject: payload.assetTitle, body }),
-        });
-      }
-      if (!thread) {
-        thread = await createIssue(
-          token,
-          '[Civic Reviews] ' + payload.assetTitle,
-          [
-            '_Permanent BetterMakati review thread for this civic asset._',
-            '',
-            '<!-- civic-meta ' +
-              JSON.stringify({
-                version: 1,
-                kind: 'reviews',
-                assetId: payload.assetId,
-                assetType: payload.assetType,
-                location: payload.location,
-                createdVia: 'bettermakati-civic-map',
-              }) +
-              ' -->',
-            '',
-            'Reviews are community-submitted observations. They are not official government ratings and should be interpreted with sample size and recency.',
-          ].join('\n')
-        );
-      }
-      const comment = await createComment(token, thread.number, reviewCommentBody(payload));
-      return res.status(201).json({
-        ok: true,
-        reference: thread.number,
-        url: thread.html_url,
-        commentUrl: comment.html_url,
-      });
-    } catch {
-      return res.status(502).json({ error: 'The review could not be saved.' });
-    }
   }
 
   if (!payload.category || !payload.details) {
