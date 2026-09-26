@@ -68,7 +68,6 @@ export default async function handler(req, res) {
     const weekAgo = now - 7 * 86400000;
     const monthAgo = now - 30 * 86400000;
     const records = [];
-    const reviewScores = [];
 
     for (const issue of issues) {
       const commentsResponse = await fetch(apiBase() + '/issues/' + issue.number + '/comments?per_page=100', {
@@ -93,21 +92,6 @@ export default async function handler(req, res) {
         updates: community.filter(item => item.meta.commentType === 'update').length,
         replies: community.filter(item => item.meta.commentType === 'reply').length,
       };
-
-      if (kindOf(issue) === 'reviews') {
-        for (const item of community) {
-          if (item.meta.kind !== 'review' || !item.meta.scores) continue;
-          for (const [criterion, value] of Object.entries(item.meta.scores)) {
-            const score = Number(value);
-            if (Number.isFinite(score)) reviewScores.push({
-              assetId: item.meta.assetId || parseMeta(issue.body).assetId,
-              criterion,
-              score,
-              createdAt: item.comment.created_at,
-            });
-          }
-        }
-      }
 
       const adminStatus = officialStatus(adminEvents);
       const corroborated = counts.confirm >= 2;
@@ -158,22 +142,6 @@ export default async function handler(req, res) {
       });
     }
 
-    const currentMonthScores = reviewScores.filter(item => new Date(item.createdAt).getTime() >= monthAgo);
-    const byCriterion = {};
-    for (const item of currentMonthScores) {
-      byCriterion[item.criterion] ||= [];
-      byCriterion[item.criterion].push(item.score);
-    }
-    const ratingSummary = Object.fromEntries(
-      Object.entries(byCriterion).map(([criterion, values]) => [
-        criterion,
-        {
-          responses: values.length,
-          average: Math.round((values.reduce((a, b) => a + b, 0) / values.length) * 10) / 10,
-        },
-      ])
-    );
-
     const reports = records.filter(item => item.kind === 'report');
     const proposals = records.filter(item => item.kind === 'proposal');
     const weekly = {
@@ -189,8 +157,6 @@ export default async function handler(req, res) {
       periodDays: 30,
       casesCreated: reports.filter(item => new Date(item.createdAt).getTime() >= monthAgo).length,
       proposalsCreated: proposals.filter(item => new Date(item.createdAt).getTime() >= monthAgo).length,
-      reviews: currentMonthScores.length,
-      ratingSummary,
       matureProposals: proposals
         .filter(item => item.state === 'open' && item.counts.support >= 3)
         .sort((a,b) => b.counts.support - a.counts.support)
