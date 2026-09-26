@@ -681,9 +681,9 @@ const coverageNotes: Record<
   },
   'Legislation & law': {
     included:
-      'Official Makati resolutions/ordinances archive and the Makati City Charter, with legal records also surfaced from the historical chronology.',
+      'Official Makati resolutions/ordinances archive, 11,355 canonical local measure identities searchable through BetterMakati, and the Makati City Charter.',
     limit:
-      'The city archive is not yet normalized into a measure-by-measure searchable local database inside BetterMakati.',
+      'Public Records keeps source documents at source level. Individual measures resolve to the canonical Legislation record, and a direct official-document link is shown only when the official archive exposes one.',
   },
   Statistics: {
     included:
