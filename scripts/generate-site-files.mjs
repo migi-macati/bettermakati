@@ -40,6 +40,7 @@ const staticRoutes = [
   '/civic-map',
   '/civic-map/reports',
   '/civic-map/audits/park-accessibility-2026',
+  '/civic-map/audits/park-accessibility-2026/results',
   '/community-tools/saan-ako-lalapit',
   '/get-involved',
   '/contact',
