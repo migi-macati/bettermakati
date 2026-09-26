@@ -8,6 +8,7 @@ import {
   findReport,
   resolveReportSlug,
 } from '../data/reports';
+import { reportRelatedRecords } from '../data/reportCivicRelationships';
 import type {
   ReportCanonicalRecordRef,
   ReportContentBlock,
@@ -303,6 +304,7 @@ export default function ReportArticle() {
   }
 
   const sourceById = new Map(report.sources.map(source => [source.id, source]));
+  const underlyingRecords = reportRelatedRecords(report.slug);
 
   return (
     <>
@@ -373,6 +375,51 @@ export default function ReportArticle() {
           )}
         </article>
       </Section>
+
+      {underlyingRecords.length > 0 && (
+        <Section className="bg-[#fffdf8]">
+          <div className="mx-auto max-w-4xl">
+            <div className="section-eyebrow">Underlying records</div>
+            <Heading level={2}>Records synthesized in this report</Heading>
+            <div className="mt-5 grid gap-3 md:grid-cols-2">
+              {underlyingRecords.map(item =>
+                item.node ? (
+                  item.node.owner === 'ecosystem' ? (
+                    <a
+                      key={item.relationship.id}
+                      href={item.node.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="rounded-2xl border border-gray-200 bg-white p-5 hover:border-primary-300"
+                    >
+                      <div className="font-black text-gray-950">
+                        {item.node.label}
+                      </div>
+                      <div className="mt-2 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
+                        Open record
+                        <ExternalLink className="h-3.5 w-3.5" />
+                      </div>
+                    </a>
+                  ) : (
+                    <Link
+                      key={item.relationship.id}
+                      to={item.node.href}
+                      className="rounded-2xl border border-gray-200 bg-white p-5 hover:border-primary-300"
+                    >
+                      <div className="font-black text-gray-950">
+                        {item.node.label}
+                      </div>
+                      <div className="mt-2 text-sm font-bold text-primary-700">
+                        Open record
+                      </div>
+                    </Link>
+                  )
+                ) : null
+              )}
+            </div>
+          </div>
+        </Section>
+      )}
 
       <Section className="bg-[#f5f8f2]">
         <div className="mx-auto max-w-4xl">
