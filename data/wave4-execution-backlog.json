@@ -172,15 +172,20 @@
       "id": "W4-1e",
       "phase": "Statistics",
       "title": "Inventory service, land and infrastructure indicators",
-      "status": "next",
+      "status": "complete",
       "maximumScope": "Official-source research only; prioritize measures that connect to services, barangays, facilities or Place Registry records.",
-      "stopWhen": "A bounded source-backed indicator set is frozen with no inferred counts from incomplete Place Registry coverage."
+      "stopWhen": "A bounded source-backed indicator set is frozen with no inferred counts from incomplete Place Registry coverage.",
+      "completedAt": "2026-09-26",
+      "inventoryFile": "data/wave4-service-land-infrastructure-source-inventory.json",
+      "commits": [
+        "a77f3977eb47c06a054108ae007c49587a784958"
+      ]
     },
     {
       "id": "W4-1f",
       "phase": "Statistics",
       "title": "Implement canonical indicator dataset",
-      "status": "planned",
+      "status": "next",
       "maximumScope": "Data layer only for the approved W4-1c/1d/1e indicator set.",
       "stopWhen": "Implemented indicators pass geography/period/source validation and existing hard-coded duplicates have a migration disposition."
     },
@@ -473,11 +478,11 @@
       "stopWhen": "Wave 4 is closed only to the extent supported by evidence, with future work reopened as specific capabilities rather than vague unfinished work."
     }
   ],
-  "current": "W4-1e",
+  "current": "W4-1f",
   "immediateNext": {
-    "id": "W4-1e",
-    "title": "Inventory service, land and infrastructure indicators",
-    "maximumScope": "Official-source research only; prioritize measures that connect to services, barangays, facilities or Place Registry records."
+    "id": "W4-1f",
+    "title": "Implement canonical indicator dataset",
+    "maximumScope": "Data layer only for the approved W4-1c/1d/1e indicator set."
   },
   "carriedForward": [
     {
