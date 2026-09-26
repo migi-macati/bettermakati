@@ -10,6 +10,7 @@ const civicMapPage = await readFile('src/pages/CivicMap.tsx', 'utf8');
 const civicAssetPage = await readFile('src/pages/CivicAsset.tsx', 'utf8');
 const civicNearbyReportPage = await readFile('src/pages/CivicNearbyReport.tsx', 'utf8');
 const civicNearbyReportForm = await readFile('src/components/civic/CivicNearbyReportForm.tsx', 'utf8');
+const nearMePlaces = await readFile('src/components/civic/NearMePlaces.tsx', 'utf8');
 const civicApi = await readFile('api/civic.js', 'utf8');
 const civicReportApi = await readFile('api/civic-report.js', 'utf8');
 const civicReportsPage = await readFile('src/pages/CivicReports.tsx', 'utf8');
@@ -31,6 +32,7 @@ const requiredExports = [
   'placesByLifecycle',
   'placeDistanceKm',
   'placesWithinDistance',
+  'nearbyVerifiedPlaces',
 ];
 
 for (const name of requiredExports) {
@@ -282,12 +284,10 @@ if (!civicDiscussion.includes('Cases, proposals & updates')) {
 
 for (const marker of [
   "navigator.geolocation.getCurrentPosition",
-  "placesWithinDistance(",
-  "place.entityKind !== 'place'",
-  "place.verification.status !== 'verified'",
-  "0.25",
-  "0.5",
-  ".slice(0, 5)",
+  "nearbyVerifiedPlaces(location.point",
+  "initialDistanceKm: 0.25",
+  "fallbackDistanceKm: 0.5",
+  "limit: 5",
   "None of these — report this location",
   "Search the civic registry",
   "Choose the location manually",
@@ -300,13 +300,35 @@ for (const marker of [
 
 for (const marker of [
   '<CivicNearbyReportForm',
-  "place={matchState === 'confirmed-place' ? selectedPlace : null}",
+  "entity={matchState === 'confirmed-entity' ? selectedEntity : null}",
   'point={location.point}',
   "href: withBarangayScope(",
   "'/civic-map/report'",
 ]) {
   if (!civicNearbyReportPage.includes(marker)) {
     problems.push('Nearby report handoff is missing: ' + marker);
+  }
+}
+
+for (const marker of [
+  "navigator.geolocation.getCurrentPosition",
+  "nearbyVerifiedPlaces(point",
+  "initialDistanceKm",
+  "fallbackDistanceKm",
+  "linkForPlace(place.id)",
+  "Location is requested only when you tap the button",
+]) {
+  if (!nearMePlaces.includes(marker)) {
+    problems.push('Reusable Near me component is missing: ' + marker);
+  }
+}
+
+for (const marker of [
+  '<NearMePlaces',
+  "withBarangayScope('/civic-map/' + placeId, barangay?.slug)",
+]) {
+  if (!civicMapPage.includes(marker)) {
+    problems.push('Civic Map Near me integration is missing: ' + marker);
   }
 }
 
