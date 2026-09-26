@@ -76,7 +76,7 @@ export default function Heritage() {
           </div>
           <SharePage title="Heritage & Culture in Makati | BetterMakati" />
         </div>
-        <LastReviewed date="2026-09-20" note="Historical summaries link to NHCP, city or Department of Tourism sources." />
+        <LastReviewed date="2026-09-20" date="2026-09-20" note="Historical summaries link to NHCP, city or Department of Tourism sources." />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-8">
           {heritageSites.map(site => {
