@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useParams } from 'react-router';
+import { Link, useParams, useSearchParams } from 'react-router';
 import {
   AlertTriangle,
   ArrowLeft,
@@ -29,6 +29,7 @@ import {
   civicEntityKindLabels,
   placeRegistryById,
 } from '../data/placeRegistry';
+import { civicAuditPilot } from '../data/civicAuditPilot';
 
 const verificationLabel = {
   verified: 'Verified',
@@ -47,6 +48,7 @@ const accessLabel = {
 
 export default function CivicAsset() {
   const { assetId } = useParams();
+  const [searchParams] = useSearchParams();
   const [revision, setRevision] = useState(0);
   const [observationRevision, setObservationRevision] = useState(0);
   const { barangaySlug, isExplicitScope } = useBarangayScope();
@@ -85,6 +87,10 @@ export default function CivicAsset() {
       : entityKind === 'segment'
         ? 'Boundary & sources'
         : 'Route & sources';
+
+  const isParkAccessibilityPilot =
+    searchParams.get('campaign') === civicAuditPilot.id &&
+    (civicAuditPilot.targetEntityIds as readonly string[]).includes(place.id);
 
   const placeSources = place.provenance.sources;
   const primarySources = placeSources.filter(source => source.kind !== 'reference-map');
@@ -340,10 +346,20 @@ export default function CivicAsset() {
             </a>
           </div>
 
-          <CivicObservationForm
-            entity={place}
-            onSubmitted={() => setObservationRevision(value => value + 1)}
-          />
+          <div>
+            {isParkAccessibilityPilot && (
+              <div className="mb-3 text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+                Civic audit pilot · Park accessibility
+              </div>
+            )}
+            <CivicObservationForm
+              entity={place}
+              questionIds={
+                isParkAccessibilityPilot ? civicAuditPilot.questionIds : undefined
+              }
+              onSubmitted={() => setObservationRevision(value => value + 1)}
+            />
+          </div>
         </div>
       </Section>
 
