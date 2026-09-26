@@ -686,9 +686,32 @@
       "id": "W4-3f",
       "phase": "Integrity",
       "title": "Implement verified integrity relationships",
-      "status": "planned",
+      "status": "complete",
       "maximumScope": "Only W4-3c/3d/3e verified relationships. No new research.",
-      "stopWhen": "Integrity entity graph links procurement/audit/accountability records with provenance and no broken targets."
+      "stopWhen": "Integrity entity graph links procurement/audit/accountability records with provenance and no broken targets.",
+      "completedAt": "2026-09-26",
+      "implementationFiles": [
+        "src/data/integrityRelationships.ts",
+        "scripts/check-integrity-relationships.mjs",
+        "package.json"
+      ],
+      "validation": {
+        "graphNodeCount": 126,
+        "relationshipCount": 110,
+        "relationshipKinds": [
+          "supplier-on-award",
+          "award-backed-by-accountability",
+          "entity-disclosure-record",
+          "finding-backed-by-accountability",
+          "finding-action-evidence",
+          "finding-resolution-trail",
+          "trail-action-evidence"
+        ],
+        "provenance": "Every evidence-bearing relationship carries canonical source IDs from the W4-3c procurement, W4-3d disclosure or W4-3e audit source registries.",
+        "targetIntegrity": "The graph validates both ends of every relationship and rejects unknown provenance source IDs at runtime.",
+        "scopeBoundary": "No new URLs or research evidence are introduced in the relationship layer; it only indexes verified upstream records.",
+        "guardrail": "Unavailable disclosure research remains a research classification and unresolved audit continuity remains explicit rather than becoming an integrity finding or closure inference."
+      }
     },
     {
       "id": "W4-3g",
@@ -843,11 +866,11 @@
       "stopWhen": "Wave 4 is closed only to the extent supported by evidence, with future work reopened as specific capabilities rather than vague unfinished work."
     }
   ],
-  "current": "W4-3f",
+  "current": "W4-3g",
   "immediateNext": {
-    "id": "W4-3f",
-    "title": "Implement verified integrity relationships",
-    "maximumScope": "Only W4-3c/3d/3e verified relationships. No new research."
+    "id": "W4-3g",
+    "title": "Redesign Integrity page around evidence",
+    "maximumScope": "Integrity page only. Replace standards-and-gaps sermon structure with searchable evidence, entities, audit trails and direct source links."
   },
   "carriedForward": [
     {
