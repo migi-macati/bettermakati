@@ -22,6 +22,9 @@ const contributionForm = await readFile(
   'utf8'
 );
 const civicApi = await readFile('api/civic.js', 'utf8');
+const civicReportApi = await readFile('api/civic-report.js', 'utf8');
+const civicReportsPage = await readFile('src/pages/CivicReports.tsx', 'utf8');
+const civicMapPage = await readFile('src/pages/CivicMap.tsx', 'utf8');
 const discussionSource = await readFile(
   'src/components/civic/CivicDiscussion.tsx',
   'utf8'
@@ -216,9 +219,23 @@ for (const forbidden of [
   }
 }
 
-for (const retiredReviewMarker of ["'[Civic Reviews]'", "reviews: 'Legacy reviews'", "| 'reviews'"]) {
-  if (civicApi.includes(retiredReviewMarker) || discussionSource.includes(retiredReviewMarker)) {
-    problems.push('Nonexistent legacy review compatibility remains: ' + retiredReviewMarker);
+for (const retiredReviewMarker of [
+  "'[Civic Reviews]'",
+  "reviews: 'Legacy reviews'",
+  "| 'reviews'",
+  'ratingSummary',
+  'criterion ratings submitted',
+  'Public-realm rating signals',
+  '/ 5',
+]) {
+  if (
+    civicApi.includes(retiredReviewMarker) ||
+    civicReportApi.includes(retiredReviewMarker) ||
+    civicReportsPage.includes(retiredReviewMarker) ||
+    civicMapPage.includes(retiredReviewMarker) ||
+    discussionSource.includes(retiredReviewMarker)
+  ) {
+    problems.push('Nonexistent legacy review/rating compatibility remains: ' + retiredReviewMarker);
   }
 }
 
