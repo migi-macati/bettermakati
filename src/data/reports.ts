@@ -20,6 +20,13 @@ import {
   cityIndicatorObservations,
   cityIndicatorSources,
 } from './cityIndicators';
+import {
+  integrityAuditActions,
+  integrityAuditFindings,
+  integrityAuditResolutionTrails,
+  integrityAuditSourceOnlyRecords,
+  integrityAuditSources,
+} from './integrityAuditTrails';
 import type { FeaturedReportV2 } from './reportTypes';
 
 const reviewedOn = '26 September 2026';
@@ -201,6 +208,90 @@ const growth2020to2024 = numericObservation(
 );
 const populationAdded2020to2024 = population2024 - population2020;
 const growthAccelerationPp = growth2020to2024 - growth2015to2020;
+
+
+const auditSourceById = new Map(
+  integrityAuditSources.map(source => [source.id, source] as const)
+);
+
+const auditRegistryToReportSourceId: Record<string, string> = {
+  'coa-annual-audit-reports': '3',
+  'gma-2018-development-fund-finding': '4',
+  'gma-2018-development-fund-city-response': '5',
+  'coa-makati-2018-audit-archive': '6',
+  'makati-2018-unliquidated-cash-advances': '7',
+  'makati-deped-sef-q4-2024': '8',
+  'coa-makati-sef-compliance-2024': '9',
+};
+
+const auditReportSourceIds = (registryIds: string[]) => {
+  const mapped = registryIds
+    .map(id => auditRegistryToReportSourceId[id])
+    .filter((id): id is string => Boolean(id));
+  return ['1', ...new Set(mapped)] as [string, ...string[]];
+};
+
+const auditFindingsWithTrails = integrityAuditFindings.map(finding => {
+  const trail = integrityAuditResolutionTrails.find(
+    candidate => candidate.findingId === finding.id
+  );
+  if (!trail) {
+    throw new Error('Records flagship requires an audit trail for ' + finding.id);
+  }
+  const actions = integrityAuditActions.filter(
+    action => action.findingId === finding.id
+  );
+  return { finding, trail, actions };
+});
+
+if (
+  auditFindingsWithTrails.length !== 3 ||
+  !auditFindingsWithTrails.every(
+    item => item.trail.resolution.status === 'unresolved'
+  )
+) {
+  throw new Error(
+    'Records flagship expects exactly three finding-level audit trails without item-specific closure.'
+  );
+}
+
+const auditDirectSource = (registryId: string) => {
+  const source = auditSourceById.get(registryId);
+  if (!source) {
+    throw new Error('Records flagship source missing: ' + registryId);
+  }
+  const id = auditRegistryToReportSourceId[registryId];
+  if (!id) {
+    throw new Error('Records flagship source mapping missing: ' + registryId);
+  }
+  return {
+    id,
+    label: source.label,
+    href: source.url,
+    sourceKind:
+      source.sourceClass === 'secondary-reporting'
+        ? ('secondary' as const)
+        : ('official-external' as const),
+    publisher: source.publisher,
+    publishedOrPeriod: source.publishedOrPeriod,
+    checkedOn: reviewedOn,
+  };
+};
+
+const auditFollowUpSourceIds = (findingId: string) =>
+  auditReportSourceIds(
+    integrityAuditActions
+      .filter(action => action.findingId === findingId)
+      .flatMap(action => action.sourceIds)
+  );
+
+const auditFindingSourceIds = (findingId: string) => {
+  const finding = integrityAuditFindings.find(item => item.id === findingId);
+  if (!finding) {
+    throw new Error('Records flagship finding missing: ' + findingId);
+  }
+  return auditReportSourceIds(finding.sourceIds);
+};
 
 export const reports: [
   FeaturedReportV2,
@@ -941,6 +1032,247 @@ export const reports: [
             href: '/statistics',
           },
         ],
+      },
+    },
+
+
+  },
+  {
+    schemaVersion: 2,
+    slug: 'audit-follow-up-closure-trails',
+    date: reviewedOn,
+    headline:
+      'Three older Makati audit findings have follow-up records but no item-level closure in the indexed trail',
+    subheadline:
+      `BetterMakati’s finding-level audit layer contains ${auditFindingsWithTrails.length} historical findings and ${integrityAuditActions.length} later response or implementation-evidence records; none of the three trails currently establishes a finding-specific closure status.`,
+    synthesis:
+      'The public record indexed by BetterMakati shows later responses, controls or reporting for each of three historical audit findings, but the available follow-up does not map those later records back to the original recommendation closely enough to establish item-level closure.',
+    sections: [
+      {
+        id: 'three-trails',
+        heading: 'Later evidence exists in all three trails',
+        blocks: [
+          {
+            kind: 'paragraph',
+            role: 'fact',
+            text:
+              `The Integrity layer currently contains ${integrityAuditFindings.length} finding-level historical audit records. They concern 2017 Development Fund loan payments, 2018 DepEd-Makati cash advances and 2018 Special Education Fund eligibility. Across those findings, BetterMakati has indexed ${integrityAuditActions.length} later response or implementation-evidence records.`,
+            evidence: {
+              sourceIds: ['1', '2', '3'],
+              records: auditFindingsWithTrails.flatMap(({ finding }) => [
+                {
+                  recordType: 'integrity-audit-finding' as const,
+                  id: finding.id,
+                  href: '/integrity#audits',
+                },
+                {
+                  recordType: 'accountability-entry' as const,
+                  id: finding.accountabilityEntryId,
+                  href: '/accountability?type=audit',
+                },
+              ]),
+            },
+          },
+          {
+            kind: 'stat',
+            label: 'Finding-level trails without item-specific closure in the indexed record',
+            value: integrityAuditResolutionTrails.length + ' of ' + integrityAuditFindings.length,
+            detail:
+              '“Without item-specific closure” means the later record does not explicitly identify the original finding or recommendation with a resolved implementation status.',
+            evidence: {
+              sourceIds: ['1', '2', '3'],
+              records: integrityAuditFindings.map(finding => ({
+                recordType: 'integrity-audit-finding' as const,
+                id: finding.id,
+                href: '/integrity#audits',
+              })),
+            },
+          },
+          {
+            kind: 'table',
+            title: 'What the indexed trail shows',
+            columns: [
+              { key: 'period', label: 'Audit period' },
+              { key: 'finding', label: 'Finding-level record' },
+              { key: 'amount', label: 'Amount cited', align: 'right' },
+              { key: 'laterEvidence', label: 'Later evidence' },
+              { key: 'documentaryStatus', label: 'Documentary status' },
+            ],
+            rows: auditFindingsWithTrails.map(({ finding, actions }) => ({
+              period: finding.auditPeriod,
+              finding: finding.title,
+              amount:
+                finding.amountM === undefined
+                  ? '—'
+                  : moneyB(finding.amountM),
+              laterEvidence:
+                actions.length +
+                ' record' +
+                (actions.length === 1 ? '' : 's'),
+              documentaryStatus: 'Item-level closure not established',
+            })),
+            evidence: {
+              sourceIds: [
+                '1',
+                '2',
+                '3',
+                '4',
+                '5',
+                '6',
+                '7',
+                '8',
+                '9',
+              ],
+              records: integrityAuditFindings.map(finding => ({
+                recordType: 'integrity-audit-finding' as const,
+                id: finding.id,
+                href: '/integrity#audits',
+              })),
+            },
+          },
+        ],
+      },
+      {
+        id: 'what-follow-up-means',
+        heading: 'The follow-up is real, but the continuity differs by finding',
+        blocks: auditFindingsWithTrails.flatMap(({ finding, trail, actions }) => [
+          {
+            kind: 'paragraph' as const,
+            role: 'fact' as const,
+            text:
+              `${finding.title}: ${finding.findingAsStated} Later evidence in the indexed trail: ${actions
+                .map(action => action.statementAsStated)
+                .join(' ')}`,
+            evidence: {
+              sourceIds: [
+                ...new Set([
+                  ...auditFindingSourceIds(finding.id),
+                  ...auditFollowUpSourceIds(finding.id),
+                ]),
+              ] as [string, ...string[]],
+              records: [
+                {
+                  recordType: 'integrity-audit-finding' as const,
+                  id: finding.id,
+                  href: '/integrity#audits',
+                },
+                {
+                  recordType: 'accountability-entry' as const,
+                  id: finding.accountabilityEntryId,
+                  href: '/accountability?type=audit',
+                },
+              ],
+            },
+          },
+          {
+            kind: 'paragraph' as const,
+            role: 'analysis' as const,
+            text:
+              `Documentary reading: ${trail.resolution.reason} This is a statement about the continuity of the indexed public record, not a conclusion that the underlying condition continued after the audit period.`,
+            evidence: {
+              sourceIds: auditFollowUpSourceIds(finding.id),
+              records: [
+                {
+                  recordType: 'integrity-audit-finding' as const,
+                  id: finding.id,
+                  href: '/integrity#audits',
+                },
+              ],
+            },
+          },
+        ]),
+      },
+      {
+        id: 'scope',
+        heading: 'What is outside this count',
+        blocks: [
+          {
+            kind: 'paragraph',
+            role: 'fact',
+            text:
+              `The Integrity layer also carries ${integrityAuditSourceOnlyRecords.length} source-only audit record: ${integrityAuditSourceOnlyRecords[0]?.title ?? 'the 2024 Makati Special Education Fund compliance audit'}. It is not counted among the three findings because the currently retrievable source path does not expose the finding-level text needed to create a canonical finding record.`,
+            evidence: {
+              sourceIds: ['1', '2', '9'],
+              records: integrityAuditSourceOnlyRecords.map(record => ({
+                recordType: 'accountability-entry' as const,
+                id: record.accountabilityEntryId,
+                href: '/accountability?type=audit',
+              })),
+            },
+          },
+          {
+            kind: 'paragraph',
+            role: 'analysis',
+            text:
+              'The report therefore does not claim that all Makati audit findings remain open, nor that later corrective work did not occur. It identifies a narrower records problem: the public evidence currently indexed does not provide a finding-specific chain from recommendation to an explicit implementation or closure status for these three historical records.',
+            evidence: {
+              sourceIds: ['1', '2', '3', '6', '7', '8', '9'],
+            },
+          },
+        ],
+      },
+    ],
+    sources: [
+      {
+        id: '1',
+        label: 'Integrity — audit finding trails',
+        href: '/integrity#audits',
+        sourceKind: 'canonical-internal',
+        publisher: 'BetterMakati',
+        note:
+          'Canonical finding, action-evidence and resolution-trail records.',
+        checkedOn: reviewedOn,
+      },
+      {
+        id: '2',
+        label: 'Accountability — audit ledger',
+        href: '/accountability?type=audit',
+        sourceKind: 'canonical-internal',
+        publisher: 'BetterMakati',
+        note:
+          'Underlying canonical Accountability entries from which finding-level records are derived.',
+        checkedOn: reviewedOn,
+      },
+      ...[
+        'coa-annual-audit-reports',
+        'gma-2018-development-fund-finding',
+        'gma-2018-development-fund-city-response',
+        'coa-makati-2018-audit-archive',
+        'makati-2018-unliquidated-cash-advances',
+        'makati-deped-sef-q4-2024',
+        'coa-makati-sef-compliance-2024',
+      ].map(auditDirectSource),
+    ] as [
+      {
+        id: string;
+        label: string;
+        href: string;
+        sourceKind: 'canonical-internal';
+        publisher: string;
+        note: string;
+        checkedOn: string;
+      },
+      ...Array<{
+        id: string;
+        label: string;
+        href: string;
+        sourceKind: 'canonical-internal' | 'official-external' | 'secondary';
+        publisher?: string;
+        publishedOrPeriod?: string;
+        note?: string;
+        checkedOn?: string;
+      }>,
+    ],
+    methodology: {
+      text:
+        '“Closure” is used only when a later source explicitly maps back to the same finding or recommendation and states an implementation status. Aggregate audit implementation counts, related control activity and later reporting are retained as follow-up evidence but are not promoted to finding-specific closure without that continuity.',
+      evidence: {
+        sourceIds: ['1', '2', '3', '6', '7', '8', '9'],
+        records: integrityAuditFindings.map(finding => ({
+          recordType: 'integrity-audit-finding' as const,
+          id: finding.id,
+          href: '/integrity#audits',
+        })),
       },
     },
 
