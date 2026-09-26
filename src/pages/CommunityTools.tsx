@@ -14,25 +14,23 @@ export default function CommunityTools() {
       />
       <Section className="bg-[#fffdf8]">
         <div className="section-eyebrow">Community Tools</div>
-        <Heading>Useful tools for everyday Makati</Heading>
-        <div className="mt-5 rounded-2xl border border-primary-100 bg-primary-50 p-4 text-sm text-gray-700">
-          <p>
-            Each tool shows its current stage so you can see what is ready, what
-            is being researched, and where community input is useful.
-          </p>
-          <div className="mt-3 flex flex-wrap gap-2 text-xs font-bold">
-            <span className="tool-status tool-status-live">Live</span>
-            <span className="tool-status tool-status-researching">
-              Researching
-            </span>
-            <span className="tool-status tool-status-planned">Planned</span>
-          </div>
-        </div>
-        <div className="mt-8">
+        <Heading>What can help you today?</Heading>
+        <p className="mt-2 max-w-3xl text-gray-600">
+          Practical tools for finding services, places, information and ways to participate in Makati.
+        </p>
+
+        <div className="mt-7">
           <CommunityToolsGrid />
         </div>
-        <div className="mt-8">
-          <Link to="/get-involved" className="brand-btn-secondary">
+
+        <div className="mt-7 flex flex-col gap-4 border-t border-primary-100 pt-5 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex flex-wrap items-center gap-2 text-xs font-bold">
+            <span className="text-gray-500">Tool status:</span>
+            <span className="tool-status tool-status-live">Live</span>
+            <span className="tool-status tool-status-researching">Researching</span>
+            <span className="tool-status tool-status-planned">Planned</span>
+          </div>
+          <Link to="/get-involved?type=idea" className="brand-btn-secondary">
             Suggest a tool <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
