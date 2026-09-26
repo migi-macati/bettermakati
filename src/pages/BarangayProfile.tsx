@@ -43,6 +43,7 @@ import {
   findBarangayMayoralResult2025,
 } from '../data/electionHistory';
 import { withBarangayScope } from '../hooks/useBarangayScope';
+import { civicAuditPilot } from '../data/civicAuditPilot';
 
 const compactEditionName = (name: string) => name.replace(/\s+/g, '');
 const normalizePlaceName = (name: string) =>
@@ -74,6 +75,9 @@ export default function BarangayProfile() {
   const facilities = barangayFacilities(barangay.slug, barangay.name);
   const localPlaces = placesByBarangay(barangay.name).filter(
     place => place.verification.status === 'verified'
+  );
+  const localAuditPlaces = localPlaces.filter(place =>
+    (civicAuditPilot.targetEntityIds as readonly string[]).includes(place.id)
   );
   const facilityByName = new Map(
     facilities.map(facility => [normalizePlaceName(facility.name), facility])
@@ -111,15 +115,15 @@ export default function BarangayProfile() {
       icon: Search,
     },
     {
-      label: 'Report a public-place issue',
-      description: 'Open the Civic Map with this barangay selected.',
-      href: withBarangayScope('/civic-map', barangay.slug),
+      label: 'Report a local problem',
+      description: 'Start a non-emergency report already scoped to this barangay.',
+      href: withBarangayScope('/civic-map/report', barangay.slug),
       icon: Wrench,
     },
     {
       label: 'Participate locally',
-      description: 'Find ways to raise concerns, contribute or take part.',
-      href: withBarangayScope('/participate', barangay.slug),
+      description: 'Report, suggest an improvement, record conditions or contact the barangay.',
+      href: '#participate',
       icon: MessageSquarePlus,
     },
     {
@@ -271,6 +275,89 @@ export default function BarangayProfile() {
                 </Link>
               );
             })}
+          </div>
+        </div>
+      </section>
+
+      <section id="participate" className="bg-[#fffdf8] py-14">
+        <div className="container px-5 md:px-6 lg:px-8">
+          <div className="section-eyebrow">Participate locally</div>
+          <h2 className="text-3xl font-extrabold tracking-tight text-gray-950 md:text-4xl">
+            Take action in {barangay.name}
+          </h2>
+
+          <div className="mt-7 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            <Link
+              to={withBarangayScope('/civic-map/report', barangay.slug)}
+              className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
+            >
+              <Wrench className="h-6 w-6 text-primary-700" />
+              <h3 className="mt-4 font-extrabold text-gray-950">Report a local problem</h3>
+              <p className="mt-2 text-sm leading-relaxed text-gray-600">
+                Start a non-emergency report and identify the affected place, segment or location.
+              </p>
+              <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
+                Start report <ArrowRight className="h-4 w-4" />
+              </span>
+            </Link>
+
+            <Link
+              to={withBarangayScope('/civic-map', barangay.slug) + '#places'}
+              className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
+            >
+              <MapPin className="h-6 w-6 text-primary-700" />
+              <h3 className="mt-4 font-extrabold text-gray-950">Suggest a place improvement</h3>
+              <p className="mt-2 text-sm leading-relaxed text-gray-600">
+                Choose a local civic place, review its community records and propose a specific improvement.
+              </p>
+              <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
+                Browse local places <ArrowRight className="h-4 w-4" />
+              </span>
+            </Link>
+
+            {localAuditPlaces.length > 0 ? (
+              <Link
+                to={civicAuditPilot.route}
+                className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
+              >
+                <ClipboardCheck className="h-6 w-6 text-primary-700" />
+                <h3 className="mt-4 font-extrabold text-gray-950">Record park accessibility</h3>
+                <p className="mt-2 text-sm leading-relaxed text-gray-600">
+                  {localAuditPlaces.length} pilot {localAuditPlaces.length === 1 ? 'park is' : 'parks are'} in {barangay.name}. Record entrance access, step-free access, seating and toilets.
+                </p>
+                <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
+                  Join the audit <ArrowRight className="h-4 w-4" />
+                </span>
+              </Link>
+            ) : (
+              <Link
+                to={'/get-involved?type=source&barangay=' + encodeURIComponent(barangay.slug) + '#submission'}
+                className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
+              >
+                <FileCheck2 className="h-6 w-6 text-primary-700" />
+                <h3 className="mt-4 font-extrabold text-gray-950">Add or correct local information</h3>
+                <p className="mt-2 text-sm leading-relaxed text-gray-600">
+                  Share a public source or flag information about {barangay.name} that needs correction.
+                </p>
+                <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
+                  Contribute information <ArrowRight className="h-4 w-4" />
+                </span>
+              </Link>
+            )}
+
+            <a
+              href="#local-government"
+              className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
+            >
+              <Building2 className="h-6 w-6 text-primary-700" />
+              <h3 className="mt-4 font-extrabold text-gray-950">Contact barangay government</h3>
+              <p className="mt-2 text-sm leading-relaxed text-gray-600">
+                Go to the verified hall contact details and official channels on this page.
+              </p>
+              <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
+                Barangay contacts <ArrowRight className="h-4 w-4" />
+              </span>
+            </a>
           </div>
         </div>
       </section>
@@ -603,11 +690,36 @@ export default function BarangayProfile() {
 
                   <div className="mt-4 flex flex-wrap gap-3">
                     <Link
-                      to={'/civic-map/' + place.id}
+                      to={withBarangayScope('/civic-map/' + place.id, barangay.slug)}
                       className="text-sm font-bold text-primary-700 underline underline-offset-2"
                     >
                       Place details <ArrowRight className="inline h-3.5 w-3.5" />
                     </Link>
+                    <Link
+                      to={withBarangayScope('/civic-map/' + place.id, barangay.slug) + '#community-records'}
+                      className="text-sm font-bold text-primary-700 underline underline-offset-2"
+                    >
+                      Community cases
+                    </Link>
+                    <Link
+                      to={withBarangayScope('/civic-map/' + place.id, barangay.slug) + '#contribute'}
+                      className="text-sm font-bold text-primary-700 underline underline-offset-2"
+                    >
+                      Report or suggest
+                    </Link>
+                    {(civicAuditPilot.targetEntityIds as readonly string[]).includes(place.id) && (
+                      <Link
+                        to={
+                          withBarangayScope(
+                            '/civic-map/' + place.id + '?campaign=' + civicAuditPilot.id,
+                            barangay.slug
+                          ) + '#observe'
+                        }
+                        className="text-sm font-bold text-primary-700 underline underline-offset-2"
+                      >
+                        Accessibility check
+                      </Link>
+                    )}
                     {source && (
                       <a
                         href={source.url}
