@@ -21,6 +21,92 @@ const page = await context.newPage();
 await page.goto(uiUrl, { waitUntil: 'domcontentloaded', timeout: 60_000 });
 await page.waitForLoadState('networkidle', { timeout: 20_000 }).catch(() => {});
 
+
+async function captureRomsPage(url) {
+  const probe = await context.newPage();
+  const captured = [];
+
+  probe.on('response', async response => {
+    if (!response.url().includes('/api/ROMS/')) return;
+    const headers = await response.allHeaders().catch(() => ({}));
+    const contentType = headers['content-type'] || '';
+    let json = null;
+    if (/json/i.test(contentType)) {
+      try {
+        json = await response.json();
+      } catch {
+        json = null;
+      }
+    }
+    captured.push({
+      url: response.url(),
+      status: response.status(),
+      contentType,
+      json,
+    });
+  });
+
+  await probe.goto(url, { waitUntil: 'domcontentloaded', timeout: 60_000 });
+  await probe.waitForLoadState('networkidle', { timeout: 20_000 }).catch(() => {});
+  await probe.waitForTimeout(1_500);
+
+  const links = await probe
+    .locator('a[href*="/content/resolutions-and-ordinances/category/"]')
+    .evaluateAll(nodes =>
+      nodes.map(node => ({
+        href: node.href,
+        text: (node.textContent || '').replace(/\\s+/g, ' ').trim(),
+      }))
+    )
+    .catch(() => []);
+
+  await probe.close();
+  return { url, captured, links };
+}
+
+const categoryRootProbe = await captureRomsPage(
+  origin + '/content/resolutions-and-ordinances/category'
+);
+const categoryDetailLinks = [
+  ...new Map(
+    categoryRootProbe.links
+      .filter(link =>
+        /\/content\/resolutions-and-ordinances\/category\/[^/]+\/[0-9a-f-]{36}(?:\?|$)/i.test(
+          link.href
+        )
+      )
+      .map(link => [link.href, link])
+  ).values(),
+];
+
+const sampleCategoryProbe = categoryDetailLinks.length
+  ? await captureRomsPage(categoryDetailLinks[0].href)
+  : { url: null, captured: [], links: [] };
+
+const sampleCategoryLegislationResponse = sampleCategoryProbe.captured.find(
+  item =>
+    Array.isArray(item.json) &&
+    item.url.includes('/api/ROMS/') &&
+    item.url.includes('/Legislation/') &&
+    item.json.some(row => row && row.legislationId)
+);
+
+const categoryLegislationPrefix = sampleCategoryLegislationResponse
+  ? sampleCategoryLegislationResponse.url.replace(/[0-9a-f-]{36}(?:\?.*)?$/i, '')
+  : null;
+
+const categoryIds = [
+  ...new Set(
+    categoryDetailLinks
+      .map(link =>
+        link.href.match(
+          /\/content\/resolutions-and-ordinances\/category\/[^/]+\/([0-9a-f-]{36})(?:\?|$)/i
+        )?.[1]
+      )
+      .filter(Boolean)
+  ),
+];
+
 const calls = [];
 
 async function getJson(path, { required = false } = {}) {
@@ -72,32 +158,64 @@ const authorResult = await getJson('/api/ROMS/Author/List/ByType/all', {
 });
 const categoryResult = await getJson('/api/ROMS/Category/List/ByType/all');
 
-let rawRows = Array.isArray(allResult.json) ? allResult.json : [];
-let enumerationMethod = 'global-by-type-all';
+const authorRowsById = new Map();
+for (const author of authorResult.json) {
+  if (!author?.memberId) continue;
+  const result = await getJson(
+    '/api/ROMS/Legislation/List/ByMember/' +
+      encodeURIComponent(author.memberId)
+  );
+  if (!Array.isArray(result.json)) continue;
+  for (const row of result.json) {
+    const key = row?.legislationId || JSON.stringify(row);
+    if (!authorRowsById.has(key)) authorRowsById.set(key, row);
+  }
+}
 
-if (!rawRows.length) {
-  enumerationMethod = 'author-union-fallback';
-  const byId = new Map();
+const categoryRowsById = new Map();
+if (categoryLegislationPrefix && categoryIds.length) {
+  const categoryPathPrefix = categoryLegislationPrefix.startsWith(origin)
+    ? categoryLegislationPrefix.slice(origin.length)
+    : categoryLegislationPrefix;
 
-  for (const author of authorResult.json) {
-    if (!author?.memberId) continue;
+  for (const categoryId of categoryIds) {
     const result = await getJson(
-      '/api/ROMS/Legislation/List/ByMember/' +
-        encodeURIComponent(author.memberId)
+      categoryPathPrefix + encodeURIComponent(categoryId)
     );
     if (!Array.isArray(result.json)) continue;
     for (const row of result.json) {
       const key = row?.legislationId || JSON.stringify(row);
-      if (!byId.has(key)) byId.set(key, row);
+      if (!categoryRowsById.has(key)) categoryRowsById.set(key, row);
     }
   }
+}
 
-  rawRows = [...byId.values()];
+let rawRows = Array.isArray(allResult.json) ? allResult.json : [];
+let enumerationMethod = 'global-by-type-all';
+
+if (!rawRows.length) {
+  const union = new Map(authorRowsById);
+  for (const [key, row] of categoryRowsById) {
+    if (!union.has(key)) union.set(key, row);
+  }
+  rawRows = [...union.values()];
+  enumerationMethod = categoryRowsById.size
+    ? 'author-category-union'
+    : 'author-union-fallback';
 }
 
 if (!rawRows.length) {
   throw new Error('Official Makati archive enumeration returned zero legislation rows.');
 }
+
+const authorIds = new Set(authorRowsById.keys());
+const categoryIdsSet = new Set(categoryRowsById.keys());
+const authorOnlyIds = [...authorIds].filter(id => !categoryIdsSet.has(id));
+const categoryOnlyIds = [...categoryIdsSet].filter(id => !authorIds.has(id));
+const authorCategoryExactIdSetMatch =
+  categoryRowsById.size > 0 &&
+  authorOnlyIds.length === 0 &&
+  categoryOnlyIds.length === 0;
 
 const validTypes = new Set(['RESOLUTION', 'ORDINANCE']);
 const idGroups = new Map();
@@ -265,9 +383,31 @@ const snapshot = {
     countByType,
     countByYear,
     authorIndexCount: authorResult.json.length,
-    categoryIndexCount: Array.isArray(categoryResult.json)
-      ? categoryResult.json.length
-      : null,
+    categoryIndexCount: categoryIds.length || null,
+    categoryDiscovery: {
+      rootUrl: categoryRootProbe.url,
+      rootApiResponses: categoryRootProbe.captured.map(item => ({
+        url: item.url,
+        status: item.status,
+        rowCount: Array.isArray(item.json) ? item.json.length : null,
+      })),
+      sampleDetailUrl: sampleCategoryProbe.url,
+      sampleDetailApiResponses: sampleCategoryProbe.captured.map(item => ({
+        url: item.url,
+        status: item.status,
+        rowCount: Array.isArray(item.json) ? item.json.length : null,
+      })),
+      legislationEndpointPrefix: categoryLegislationPrefix,
+    },
+    coverageVerification: {
+      authorUniqueIdCount: authorRowsById.size,
+      categoryUniqueIdCount: categoryRowsById.size,
+      authorCategoryExactIdSetMatch,
+      authorOnlyCount: authorOnlyIds.length,
+      categoryOnlyCount: categoryOnlyIds.length,
+      authorOnlyIds,
+      categoryOnlyIds,
+    },
     filterVerification,
     duplicateLegislationIdGroupCount: duplicateIdGroups.length,
     duplicateReferenceGroupCount: duplicateReferenceGroups.length,
@@ -293,6 +433,8 @@ console.log(
       countByType,
       authorIndexCount: snapshot.enumeration.authorIndexCount,
       categoryIndexCount: snapshot.enumeration.categoryIndexCount,
+      categoryDiscovery: snapshot.enumeration.categoryDiscovery,
+      coverageVerification: snapshot.enumeration.coverageVerification,
       filterVerification,
       duplicateLegislationIdGroupCount: duplicateIdGroups.length,
       duplicateReferenceGroupCount: duplicateReferenceGroups.length,
