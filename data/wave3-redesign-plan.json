@@ -725,13 +725,37 @@
     {
       "id": "W3R-8b",
       "title": "Revise Get Involved",
-      "status": "next",
-      "maximumScope": "Get Involved only. Preserve general submissions and add civic-audit volunteering/handoffs where appropriate."
+      "status": "complete",
+      "maximumScope": "Get Involved only. Preserve general submissions and add civic-audit volunteering/handoffs where appropriate.",
+      "implementationFiles": [
+        "src/pages/GetInvolved.tsx"
+      ],
+      "validation": {
+        "implementationFile": "src/pages/GetInvolved.tsx",
+        "preservedSubmissionTypes": [
+          "proposal",
+          "idea",
+          "source",
+          "correction",
+          "volunteer",
+          "contact"
+        ],
+        "civicAuditHandoff": {
+          "campaign": "Makati Public Park Accessibility Check",
+          "route": "/civic-map/audits/park-accessibility-2026",
+          "liveOutputRoute": "/civic-map/audits/park-accessibility-2026/results",
+          "task": "Record entrance access, step-free access, seating and toilets at one of 13 pilot parks."
+        },
+        "volunteerScope": "Volunteer copy now explicitly includes field documentation while preserving research, data, design and development.",
+        "submissionTracking": "Existing BetterMakati public tracking, duplicate, fallback and emergency handoff behavior preserved.",
+        "copyCleanup": "Removed the generic 'BetterMakati gets better when...' explainer and shortened the tracking explanation to the functional distinction from City Government cases.",
+        "focusedValidation": "General submission types remain present; two civic-audit route references are present; old generic intro is absent."
+      }
     },
     {
       "id": "W3R-8c",
       "title": "Revise BetterBarangay participation",
-      "status": "planned",
+      "status": "next",
       "maximumScope": "Barangay participation integration only: local places, issues, improvements, civic audits and barangay contact."
     },
     {
@@ -820,9 +844,9 @@
     }
   ],
   "immediateNext": {
-    "id": "W3R-8b",
-    "title": "Revise Get Involved",
-    "maximumScope": "Get Involved only. Preserve general submissions and add civic-audit volunteering/handoffs where appropriate."
+    "id": "W3R-8c",
+    "title": "Revise BetterBarangay participation",
+    "maximumScope": "Barangay participation integration only: local places, issues, improvements, civic audits and barangay contact."
   },
   "capabilityDispositionAuditFile": "data/wave3-capability-disposition-audit.json",
   "completedSteps": [
@@ -844,7 +868,11 @@
     "W3R-6a",
     "W3R-6b",
     "W3R-6c",
-    "W3R-7a"
+    "W3R-7a",
+    "W3R-7b",
+    "W3R-7c",
+    "W3R-8a",
+    "W3R-8b"
   ],
   "placeRegistrySchemaFile": "data/place-registry-schema.json",
   "placeRegistryDataFile": "src/data/placeRegistry.ts",
