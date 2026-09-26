@@ -116,11 +116,20 @@ export default async function handler(req, res) {
           ? 'Community corroborated'
           : 'Unverified community submission';
 
+      const blocksReferral = adminEvents.some(event =>
+        ['forwarded', 'acknowledged', 'action-reported', 'community-verified-resolved'].includes(
+          event.status
+        )
+      );
       const referralEligible =
         kindOf(issue) === 'report' &&
         issue.state === 'open' &&
-        !adminEvents.some(event => event.status === 'forwarded') &&
+        !blocksReferral &&
         (meta.severity === 'high' || corroborated);
+
+      const placeId = meta.placeId || meta.assetId || null;
+      const locationMode =
+        meta.locationMode || (placeId ? 'matched-place' : 'location-only');
 
       records.push({
         number: issue.number,
@@ -130,7 +139,14 @@ export default async function handler(req, res) {
         url: issue.html_url,
         createdAt: issue.created_at,
         updatedAt: issue.updated_at,
-        meta,
+        meta: {
+          ...meta,
+          placeId,
+          locationMode,
+          locationLabel: meta.locationLabel || meta.location || '',
+        },
+        placeId,
+        locationMode,
         counts,
         evidenceStatus,
         evidenceLabel,
