@@ -43,7 +43,7 @@
         "W4-1h",
         "W4-1i"
       ],
-      "status": "active"
+      "status": "complete"
     },
     {
       "id": "W4-P2",
@@ -58,7 +58,7 @@
         "W4-2g",
         "W4-2h"
       ],
-      "status": "planned"
+      "status": "active"
     },
     {
       "id": "W4-P3",
@@ -248,15 +248,30 @@
       "id": "W4-1i",
       "phase": "Statistics",
       "title": "Add statistics downloads and provenance integrity",
-      "status": "next",
+      "status": "complete",
       "maximumScope": "Downloads/source metadata only. No new indicator research.",
-      "stopWhen": "Displayed time series and comparison tables have reproducible downloads and source/definition metadata."
+      "stopWhen": "Displayed time series and comparison tables have reproducible downloads and source/definition metadata.",
+      "completedAt": "2026-09-26",
+      "implementationFiles": [
+        "src/data/statisticsExports.ts",
+        "src/pages/Statistics.tsx",
+        "src/components/statistics/CityComparison.tsx",
+        "data/wave4-statistics-data-migration.json",
+        "scripts/check-city-indicators.mjs"
+      ],
+      "commits": [
+        "366314b8162a5838ae0319ba97cb76474294420e",
+        "176d258b2c6275ee599930a06d9cdf4062a566af",
+        "2776cc11217ee8ec1b437b0d58073559753e8907",
+        "c8459ea5e042750378c13e69da6ba6ba0657face",
+        "6732cb4f75b1484259f5b0b27da7272383d0580d"
+      ]
     },
     {
       "id": "W4-2a",
       "phase": "Legislation",
       "title": "Audit Makati legislation sources and current page",
-      "status": "planned",
+      "status": "next",
       "maximumScope": "Source and product audit only: official Makati archive, City Monitor legislative records, Public Records and current external-search fallback.",
       "stopWhen": "Available record fields, archive limitations and duplicate sources are documented."
     },
@@ -517,11 +532,11 @@
       "stopWhen": "Wave 4 is closed only to the extent supported by evidence, with future work reopened as specific capabilities rather than vague unfinished work."
     }
   ],
-  "current": "W4-1i",
+  "current": "W4-2a",
   "immediateNext": {
-    "id": "W4-1i",
-    "title": "Add statistics downloads and provenance integrity",
-    "maximumScope": "Downloads/source metadata only. No new indicator research."
+    "id": "W4-2a",
+    "title": "Audit Makati legislation sources and current page",
+    "maximumScope": "Source and product audit only: official Makati archive, City Monitor legislative records, Public Records and current external-search fallback."
   },
   "carriedForward": [
     {
