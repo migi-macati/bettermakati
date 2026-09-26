@@ -89,6 +89,15 @@ export default function CivicAuditPilot() {
           </span>
           <span>Anonymous participation is allowed.</span>
         </div>
+
+        <div className="mt-5">
+          <Link
+            to={civicAuditPilot.route + '/results'}
+            className="brand-btn-secondary"
+          >
+            View live output <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
       </Section>
 
       <Section className="bg-white">
