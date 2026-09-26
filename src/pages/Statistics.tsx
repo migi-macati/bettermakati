@@ -26,6 +26,7 @@ import { useBarangayScope } from '../hooks/useBarangayScope';
 import {
   barangays,
   currentMakatiPopulation2024,
+  psaBarangaySource,
 } from '../data/barangays';
 import {
   cityIndicatorById,
@@ -134,19 +135,22 @@ export default function Statistics() {
       value: people(population2024),
       label: 'people',
       note: '2024 POPCEN · current 23-barangay boundary',
-      source: indicatorSource('population-total'),
+      href: indicatorSource('population-total')?.url,
+      sourceLabel: 'Philippine Statistics Authority',
     },
     {
       value: String(barangays.length),
       label: 'barangays',
       note: 'Current Makati geography',
-      source: cityIndicatorSources['psa-openstat-population-growth-2024'],
+      href: psaBarangaySource,
+      sourceLabel: 'PSA PSGC',
     },
     {
       value: gdpPerPerson === null ? '—' : compactPesos(gdpPerPerson),
       label: 'GDP per person',
       note: '2024 · constant 2018 prices',
-      source: indicatorSource('gdp-per-capita'),
+      href: indicatorSource('gdp-per-capita')?.url,
+      sourceLabel: 'Philippine Statistics Authority',
     },
     {
       value:
@@ -155,7 +159,8 @@ export default function Statistics() {
           : nationalGdpShare.toFixed(1) + '%',
       label: 'of Philippine GDP',
       note: '2025 PSA estimate',
-      source: indicatorSource('gdp-national-share'),
+      href: indicatorSource('gdp-national-share')?.url,
+      sourceLabel: 'Philippine Statistics Authority',
     },
   ];
 
@@ -271,14 +276,14 @@ export default function Statistics() {
                 <div className="mt-1 text-xs leading-relaxed text-primary-100">
                   {stat.note}
                 </div>
-                {stat.source && (
+                {stat.href && (
                   <a
-                    href={stat.source.url}
+                    href={stat.href}
                     target="_blank"
                     rel="noreferrer"
                     className="mt-3 inline-flex min-h-11 items-center gap-1 text-xs font-bold text-secondary-300 underline underline-offset-2"
                   >
-                    {stat.source.publisher}
+                    {stat.sourceLabel}
                     <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
                   </a>
                 )}
