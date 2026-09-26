@@ -609,9 +609,24 @@
       "id": "W4-3c",
       "phase": "Integrity",
       "title": "Normalize supplier and contractor entities",
-      "status": "planned",
+      "status": "complete",
       "maximumScope": "Existing Makati procurement records only. Create canonical entity identities and award relationships; no beneficial-ownership research yet.",
-      "stopWhen": "Repeated suppliers resolve to one entity and procurement records retain exact source lineage."
+      "stopWhen": "Repeated suppliers resolve to one entity and procurement records retain exact source lineage.",
+      "completedAt": "2026-09-26",
+      "implementationFiles": [
+        "src/data/integrityData.ts",
+        "scripts/check-integrity-data.mjs",
+        "package.json"
+      ],
+      "validation": {
+        "procurementAwardCount": 21,
+        "canonicalSupplierEntityCount": 17,
+        "repeatedSupplierEntityCount": 4,
+        "sourceDocumentCount": 2,
+        "jointVentureTreatment": "The exact source-stated Beesee Global Technologies Inc. / Pinnacle Technologies Inc. (JV) name is preserved as one joint-venture entity; W4-3c does not infer separate member-entity relationships.",
+        "lineage": "Every normalized award retains the existing Accountability entry ID, procurement reference, title, bid date, ABC, winning amount and canonical City Government of Makati bid-result source ID.",
+        "guardrail": "No beneficial-ownership, conflict, recusal or risk research is introduced in W4-3c."
+      }
     },
     {
       "id": "W4-3d",
@@ -790,11 +805,11 @@
       "stopWhen": "Wave 4 is closed only to the extent supported by evidence, with future work reopened as specific capabilities rather than vague unfinished work."
     }
   ],
-  "current": "W4-3c",
+  "current": "W4-3d",
   "immediateNext": {
-    "id": "W4-3c",
-    "title": "Normalize supplier and contractor entities",
-    "maximumScope": "Existing Makati procurement records only. Create canonical entity identities and award relationships; no beneficial-ownership research yet."
+    "id": "W4-3d",
+    "title": "Research public ownership and disclosure records",
+    "maximumScope": "Authoritative-source research only for beneficial ownership, conflict, recusal or disclosure records relevant to implemented Makati procurement entities."
   },
   "carriedForward": [
     {
