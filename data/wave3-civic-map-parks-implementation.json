@@ -73,7 +73,7 @@
     ]
   },
   "retainedBehavior": [
-    "Park-specific Civic Map rating criteria continue to apply through criteriaForAsset('park').",
+    "Park entities use the park-public-space structured observation question set; generic numeric rating criteria are retired.",
     "Historical/current aliases are searchable and shown on asset detail pages.",
     "Existing private/public-access CBD parks remain untouched pending 3C-2e/2f."
   ],
