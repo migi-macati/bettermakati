@@ -9,6 +9,8 @@ const concernFinderPage = await readFile('src/pages/ConcernFinder.tsx', 'utf8');
 const civicMapPage = await readFile('src/pages/CivicMap.tsx', 'utf8');
 const civicAssetPage = await readFile('src/pages/CivicAsset.tsx', 'utf8');
 const civicNearbyReportPage = await readFile('src/pages/CivicNearbyReport.tsx', 'utf8');
+const civicNearbyReportForm = await readFile('src/components/civic/CivicNearbyReportForm.tsx', 'utf8');
+const civicApi = await readFile('api/civic.js', 'utf8');
 const appSource = await readFile('src/App.tsx', 'utf8');
 const civicContributionForm = await readFile('src/components/civic/CivicContributionForm.tsx', 'utf8');
 const civicDiscussion = await readFile('src/components/civic/CivicDiscussion.tsx', 'utf8');
@@ -294,16 +296,54 @@ for (const marker of [
   }
 }
 
-if (civicNearbyReportPage.includes("fetch('/api/civic'") || civicNearbyReportPage.includes('method: \'POST\'')) {
-  problems.push('W3R-5b must not submit civic reports yet.');
+for (const marker of [
+  '<CivicNearbyReportForm',
+  "place={matchState === 'confirmed-place' ? selectedPlace : null}",
+  'point={location.point}',
+  "withBarangayScope('/civic-map/report'",
+]) {
+  if (!civicNearbyReportPage.includes(marker)) {
+    problems.push('Nearby report handoff is missing: ' + marker);
+  }
+}
+
+for (const marker of [
+  "fetch('/api/civic'",
+  "method: 'POST'",
+  "locationMode",
+  "placeId: place?.id ?? ''",
+  "assetId: place?.id ?? ''",
+  "lat: roundCoordinate(point.lat)",
+  "lng: roundCoordinate(point.lng)",
+  "None of these",
+  "Confirm this issue",
+  "Continue on GitHub",
+]) {
+  if (!civicNearbyReportForm.includes(marker)) {
+    problems.push('Nearby civic report form is missing: ' + marker);
+  }
+}
+
+for (const marker of [
+  "locationMode: clean(req.body?.locationMode, 30)",
+  "placeId: clean(req.body?.placeId, 120)",
+  "const locationOnly = payload.locationMode === 'location-only'",
+  "locationOnly ? true : meta.assetId === payload.assetId",
+  "distance !== null && distance <= 75",
+  "roundCoordinate(parseNumber(req.body?.lat))",
+  "roundCoordinate(parseNumber(req.body?.lng))",
+]) {
+  if (!civicApi.includes(marker)) {
+    problems.push('Civic API nearby-report support is missing: ' + marker);
+  }
 }
 
 if (!appSource.includes('path="/civic-map/report" element={<CivicNearbyReport />}')) {
   problems.push('Nearby reporting route is missing.');
 }
 
-if (civicMapPage.includes('to="/civic-map/report"') || civicMapPage.includes('href="/civic-map/report"')) {
-  problems.push('W3R-5b must not promote the incomplete nearby-reporting route from Civic Map yet.');
+if (!civicMapPage.includes("withBarangayScope('/civic-map/report', barangay?.slug)")) {
+  problems.push('Civic Map must expose nearby reporting while preserving barangay scope.');
 }
 
 if (problems.length) {
