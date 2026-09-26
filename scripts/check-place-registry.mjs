@@ -353,6 +353,7 @@ if (!civicMapPage.includes("withBarangayScope('/civic-map/report', barangay?.slu
 }
 
 for (const marker of [
+  "['OWNER', 'MEMBER', 'COLLABORATOR'].includes(comment.author_association)",
   "parseTaggedJson(comment.body, 'civic-admin')",
   "officialLifecycleStatus(adminEvents)",
   "lifecycleLabel(evidenceStatus)",
@@ -377,6 +378,7 @@ for (const marker of [
 }
 
 for (const marker of [
+  "['OWNER', 'MEMBER', 'COLLABORATOR'].includes(comment.author_association)",
   "meta.placeId || meta.assetId || null",
   "meta.locationMode || (placeId ? 'matched-place' : 'location-only')",
   "['forwarded', 'acknowledged', 'action-reported', 'community-verified-resolved']",
