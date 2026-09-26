@@ -634,7 +634,8 @@
         "publicRoute": "/civic-map/audits/park-accessibility-2026",
         "outputBoundary": "W3R-7b collects observations only. Campaign results/publication remain W3R-7c.",
         "focusedValidation": "13/13 target IDs matched the reconciled government/public park set; every target is a verified government-public park; all four question IDs exist in park-public-space-v1; frontend and frozen target IDs match.",
-        "ci": "Latest completed CI after the pilot page reports only the same three pre-existing unused-import ESLint errors and six existing warnings; no new lint errors were reported for the pilot page/data/route."
+        "ci": "Latest completed CI after the pilot page reports only the same three pre-existing unused-import ESLint errors and six existing warnings; no new lint errors were reported for the pilot page/data/route.",
+        "formScoping": "Audit links carry the campaign ID into CivicAsset; CivicObservationForm then shows only entrance-access, step-free-access, seating and toilets for pilot entrants. Normal park observation pages retain the full question set."
       }
     },
     {
