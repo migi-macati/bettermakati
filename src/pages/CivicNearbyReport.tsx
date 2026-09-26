@@ -38,16 +38,20 @@ interface ReportLocationState {
 }
 
 const eligibleNearbyPlaces = placeRegistry.filter(place => {
+  if (place.entityKind !== 'place') return false;
   if (place.verification.status !== 'verified') return false;
   if (!place.location.point) return false;
   if (place.lifecycle.status === 'closed' || place.lifecycle.status === 'future') return false;
   if (place.location.relationToMakati === 'serves-makati-outside') return false;
-  if (place.primaryCategory === 'transport-route') return false;
   return true;
 });
 
 const searchablePlaces = placeRegistry
-  .filter(place => place.verification.status === 'verified')
+  .filter(place =>
+    place.entityKind === 'place'
+      ? place.verification.status === 'verified'
+      : place.verification.status !== 'needs-verification'
+  )
   .filter(place => place.lifecycle.status !== 'closed' && place.lifecycle.status !== 'future')
   .filter(place => place.location.relationToMakati !== 'serves-makati-outside')
   .sort((a, b) => a.name.localeCompare(b.name));
@@ -221,7 +225,7 @@ export default function CivicNearbyReport() {
     <>
       <SEO
         title="Report something near me | Civic Map"
-        description="Use your location or search BetterMakati places to identify where a non-emergency civic problem is happening."
+        description="Use your location or search BetterMakati places, infrastructure segments or routes to identify where a non-emergency civic problem is happening."
         keywords="Makati report problem near me, civic issue location, Makati place finder"
       />
 
@@ -245,7 +249,7 @@ export default function CivicNearbyReport() {
           <div className="section-eyebrow">Civic Map</div>
           <Heading>Where is the problem?</Heading>
           <p className="mt-3 max-w-3xl text-lg leading-relaxed text-gray-700">
-            Use your location, search for a place or enter a location manually. BetterMakati will suggest nearby verified places, but you choose the match.
+            Use your location, search the civic registry or enter a location manually. Nearby suggestions are limited to verified physical places; segments and routes must be selected deliberately from search.
           </p>
         </div>
 
@@ -268,9 +272,9 @@ export default function CivicNearbyReport() {
             className="rounded-2xl border border-primary-200 bg-white p-5 transition hover:border-primary-400"
           >
             <Search className="h-6 w-6 text-primary-700" />
-            <div className="mt-3 font-extrabold text-gray-950">Search for a place or street</div>
+            <div className="mt-3 font-extrabold text-gray-950">Search the civic registry</div>
             <p className="mt-1 text-sm leading-relaxed text-gray-600">
-              Find a verified BetterMakati place without sharing device location.
+              Find a place, street segment or route without sharing device location.
             </p>
           </a>
 
@@ -312,7 +316,7 @@ export default function CivicNearbyReport() {
       {location.point && (
         <Section className="bg-[#f5f8f2]">
           <div className="section-eyebrow">Nearby places</div>
-          <Heading level={2}>Is it one of these places?</Heading>
+          <Heading level={2}>Is it one of these physical places?</Heading>
           <p className="mt-2 text-sm text-gray-600">
             Location: {pointLabel(location.point)}
             {location.accuracyMeters !== null
