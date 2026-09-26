@@ -1,4 +1,4 @@
-import { placeObservationById } from '../data/place-observation-index.mjs';
+import { civicObservationEntityById } from '../data/civic-observation-entity-index.mjs';
 
 const WINDOW_MS = 60_000;
 const DAY_MS = 86_400_000;
@@ -58,7 +58,7 @@ const headersFor = token => {
   const headers = {
     Accept: 'application/vnd.github+json',
     'X-GitHub-Api-Version': '2022-11-28',
-    'User-Agent': 'BetterMakati-place-observations/1.0',
+    'User-Agent': 'BetterMakati-civic-observations/1.0',
   };
   if (token) headers.Authorization = 'Bearer ' + token;
   return headers;
@@ -250,7 +250,7 @@ const validQuestionSetId = (familyId, questionSetId) =>
     'transport-route': 'transport-route-v1',
   })[familyId];
 
-const sanitizeAnswers = (familyId, placeCategory, answers) => {
+const sanitizeAnswers = (familyId, entityCategory, answers) => {
   if (!Array.isArray(answers) || answers.length === 0 || answers.length > 20) {
     return null;
   }
@@ -265,7 +265,7 @@ const sanitizeAnswers = (familyId, placeCategory, answers) => {
     const responseType = definitions[questionId];
     if (!responseType || seen.has(questionId)) return null;
     const categoryLimit = questionCategoryLimits[familyId]?.[questionId];
-    if (categoryLimit && !categoryLimit.has(placeCategory)) return null;
+    if (categoryLimit && !categoryLimit.has(entityCategory)) return null;
     seen.add(questionId);
 
     let value;
@@ -287,12 +287,12 @@ const sanitizeAnswers = (familyId, placeCategory, answers) => {
   return cleaned;
 };
 
-const findObservationThread = async (placeId, token) => {
+const findObservationThread = async (entityId, token) => {
   const query = encodeURIComponent(
     'repo:' +
       repository() +
-      ' is:issue in:body "observation-thread" "' +
-      placeId +
+      ' is:issue in:body "civic-observation-thread" "' +
+      entityId +
       '"'
   );
   const response = await fetch(
@@ -302,8 +302,8 @@ const findObservationThread = async (placeId, token) => {
   if (!response.ok) throw new Error('Observation thread search failed');
   const data = await response.json();
   return (data.items || []).find(issue => {
-    if (!String(issue.title || '').startsWith('[Place Observations]')) return false;
-    return parseTaggedJson(issue.body, 'observation-thread')?.placeId === placeId;
+    if (!String(issue.title || '').startsWith('[Civic Observations]')) return false;
+    return parseTaggedJson(issue.body, 'civic-observation-thread')?.entityId === entityId;
   });
 };
 
@@ -345,28 +345,28 @@ const fetchComments = async (token, issueNumber) => {
 };
 
 const observationThreadBody = payload => [
-  '<!-- observation-thread ' +
+  '<!-- civic-observation-thread ' +
     JSON.stringify({
       version: 1,
-      placeId: payload.placeId,
-      placeCategory: payload.placeCategory,
+      entityId: payload.entityId,
+      entityCategory: payload.entityCategory,
       familyId: payload.familyId,
       createdVia: 'bettermakati-structured-observations',
     }) +
     ' -->',
   '',
-  '**Place:** ' + payload.placeName,
-  '**Place ID:** ' + payload.placeId,
+  '**Place:** ' + payload.entityName,
+  '**Place ID:** ' + payload.entityId,
   '**Observation family:** ' + payload.familyId,
   '',
-  'Structured condition observations for this place. These records are separate from Civic Map problem cases and do not change canonical place facts.',
+  'Structured condition observations for this civic entity. These records are separate from Civic Map problem cases and do not change canonical place facts.',
 ].join('\n');
 
 const observationCommentBody = payload => [
-  '<!-- place-observation ' +
+  '<!-- civic-observation ' +
     JSON.stringify({
       schemaVersion: 1,
-      placeId: payload.placeId,
+      entityId: payload.entityId,
       familyId: payload.familyId,
       questionSetId: payload.questionSetId,
       observedAt: payload.observedAt,
@@ -403,7 +403,7 @@ const fallbackUrl = payload => {
     observationCommentBody(payload),
   ].join('\n');
   const params = new URLSearchParams({
-    title: '[Place Observation] ' + payload.placeName,
+    title: '[Place Observation] ' + payload.entityName,
     body,
   });
   return (
@@ -424,19 +424,19 @@ export default async function handler(req, res) {
   const token = process.env.BETTERMAKATI_GITHUB_TOKEN;
 
   if (req.method === 'GET') {
-    const placeId = clean(req.query?.placeId, 120);
-    if (!placeId) {
-      return res.status(400).json({ error: 'placeId is required.' });
+    const entityId = clean(req.query?.entityId, 120);
+    if (!entityId) {
+      return res.status(400).json({ error: 'entityId is required.' });
     }
     try {
       const asOf = new Date().toISOString();
-      const thread = await findObservationThread(placeId, token);
+      const thread = await findObservationThread(entityId, token);
       if (!thread) return res.status(200).json({ observations: [], asOf });
       const comments = await fetchComments(token, thread.number);
       const observations = comments
         .map(comment => {
-          const observation = parseTaggedJson(comment.body, 'place-observation');
-          if (!observation || observation.placeId !== placeId) return null;
+          const observation = parseTaggedJson(comment.body, 'civic-observation');
+          if (!observation || observation.entityId !== entityId) return null;
           return {
             ...observation,
             submittedAt: comment.created_at,
@@ -447,14 +447,14 @@ export default async function handler(req, res) {
         .filter(Boolean)
         .sort((a, b) => new Date(b.observedAt) - new Date(a.observedAt));
       return res.status(200).json({
-        placeId,
+        entityId,
         threadUrl: thread.html_url,
         asOf,
         observations,
       });
     } catch {
       return res.status(503).json({
-        error: 'Place observations are temporarily unavailable.',
+        error: 'Civic observations are temporarily unavailable.',
         observations: [],
       });
     }
@@ -475,9 +475,9 @@ export default async function handler(req, res) {
   if (website) return res.status(204).end();
 
   const payload = {
-    placeId: clean(req.body?.placeId, 120),
-    placeName: clean(req.body?.placeName, 180),
-    placeCategory: clean(req.body?.placeCategory, 60),
+    entityId: clean(req.body?.entityId, 120),
+    entityName: clean(req.body?.entityName, 180),
+    entityCategory: clean(req.body?.entityCategory, 60),
     familyId: clean(req.body?.familyId, 60),
     questionSetId: clean(req.body?.questionSetId, 80),
     observedAt: clean(req.body?.observedAt, 60),
@@ -489,19 +489,19 @@ export default async function handler(req, res) {
     evidenceUrl: cleanUrl(req.body?.evidenceUrl),
   };
 
-  if (!payload.placeId) {
-    return res.status(400).json({ error: 'Choose a canonical place first.' });
+  if (!payload.entityId) {
+    return res.status(400).json({ error: 'Choose a canonical civic entity first.' });
   }
-  const canonicalPlace = placeObservationById.get(payload.placeId);
+  const canonicalPlace = civicObservationEntityById.get(payload.entityId);
   if (!canonicalPlace) {
-    return res.status(400).json({ error: 'Unknown canonical place.' });
+    return res.status(400).json({ error: 'Unknown canonical civic entity.' });
   }
-  payload.placeName = canonicalPlace.name;
-  payload.placeCategory = canonicalPlace.category;
+  payload.entityName = canonicalPlace.name;
+  payload.entityCategory = canonicalPlace.category;
 
-  if (!familyCategories[payload.familyId]?.has(payload.placeCategory)) {
+  if (!familyCategories[payload.familyId]?.has(payload.entityCategory)) {
     return res.status(400).json({
-      error: 'Observation family does not match this place category.',
+      error: 'Observation family does not match this civic entity category.',
     });
   }
   if (!validQuestionSetId(payload.familyId, payload.questionSetId)) {
@@ -523,7 +523,7 @@ export default async function handler(req, res) {
   }
   payload.observedAt = observedAt.toISOString();
 
-  const answers = sanitizeAnswers(payload.familyId, payload.placeCategory, payload.answers);
+  const answers = sanitizeAnswers(payload.familyId, payload.entityCategory, payload.answers);
   if (!answers?.length) {
     return res.status(400).json({
       error: 'Record at least one valid observed condition.',
@@ -539,11 +539,11 @@ export default async function handler(req, res) {
   }
 
   try {
-    let thread = await findObservationThread(payload.placeId, token);
+    let thread = await findObservationThread(payload.entityId, token);
     if (!thread) {
       thread = await createIssue(
         token,
-        '[Place Observations] ' + payload.placeName,
+        '[Civic Observations] ' + payload.entityName,
         observationThreadBody(payload)
       );
     }
