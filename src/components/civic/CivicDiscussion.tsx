@@ -65,7 +65,7 @@ const kindLabel: Record<CivicFeedItem['kind'], string> = {
   report: 'Issue case',
   proposal: 'Improvement proposal',
   update: 'Information update',
-  reviews: 'Reviews',
+  reviews: 'Legacy reviews',
 };
 
 const lifecycleStep = (status: string) =>
