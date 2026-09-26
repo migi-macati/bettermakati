@@ -418,9 +418,9 @@
     "uiChanges": 0
   },
   "nextImplementationStep": {
-    "id": "W3R-3d",
-    "title": "Add place results to Saan Ako Lalapit",
-    "constraint": "Concern Finder only. Where appropriate, return both the relevant service and a usable place to go."
+    "id": "W3R-4a",
+    "title": "Reframe Civic Map entry",
+    "constraint": "Civic Map entry surface only. Present the map as one way to browse verified places and start place-based tasks, not as a destination for generic ratings."
   },
   "betterBarangayReuse": {
     "workstream": "W3R-3a",
@@ -458,6 +458,22 @@
       "Government service offices remain a separate dataset and may explicitly reference a canonical placeId.",
       "Service Guide and Government Offices cards link to canonical place details when an explicit placeId exists.",
       "No fuzzy matching, bulk merge or new place research occurs in this workstream."
+    ]
+  },
+  "concernFinderReuse": {
+    "workstream": "W3R-3d",
+    "implementedIn": [
+      "src/pages/ConcernFinder.tsx",
+      "src/components/home/ServiceSearch.tsx",
+      "src/data/searchIndex.ts"
+    ],
+    "exactServicePlaceCoverage": 12,
+    "behavior": [
+      "Service search items carry stable serviceId values.",
+      "Saan Ako Lalapit opts into service-place enrichment; other search surfaces do not.",
+      "A service resolves a where-to-go office only through an explicit office.placeId relationship.",
+      "The result displays the office name and address together with the matched service.",
+      "No fuzzy, nearest-place or inferred place matching is used in this step."
     ]
   }
 }
