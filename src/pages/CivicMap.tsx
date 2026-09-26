@@ -34,7 +34,11 @@ import {
 interface FeedItem {
   kind: 'report' | 'proposal' | 'update';
   state: 'open' | 'closed';
-  meta?: { assetId?: string };
+  meta?: {
+    entityId?: string | null;
+    placeId?: string | null;
+    assetId?: string;
+  };
 }
 
 const typeOptionsByEntityKind: Record<
@@ -310,7 +314,11 @@ export default function CivicMap() {
 
         <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
           {visible.map(asset => {
-            const records = feed.filter(item => item.meta?.assetId === asset.id);
+            const records = feed.filter(item =>
+              item.meta?.entityId === asset.id ||
+              item.meta?.placeId === asset.id ||
+              item.meta?.assetId === asset.id
+            );
             return (
               <Link
                 key={asset.id}
