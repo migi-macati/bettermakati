@@ -8,7 +8,11 @@ import {
   findReport,
   resolveReportSlug,
 } from '../data/reports';
-import { reportRelatedRecords } from '../data/reportCivicRelationships';
+import {
+  reportCivicNodeResolver,
+  reportRecordRefToCivicRef,
+  reportRelatedRecords,
+} from '../data/reportCivicRelationships';
 import { publicRecordByUrl } from '../data/publicRecords';
 import type {
   ReportCanonicalRecordRef,
@@ -98,15 +102,20 @@ function EvidenceLinks({
           </SourceLink>
         ) : null;
       })}
-      {records?.map(record => (
-        <Link
-          key={record.recordType + ':' + record.id}
-          to={record.href}
-          className="whitespace-nowrap font-bold text-primary-700 underline underline-offset-2"
-        >
-          {recordTypeLabel[record.recordType]}
-        </Link>
-      ))}
+      {records?.map(record => {
+        const resolved = reportCivicNodeResolver(
+          reportRecordRefToCivicRef(record)
+        );
+        return (
+          <Link
+            key={record.recordType + ':' + record.id}
+            to={resolved?.href ?? record.href}
+            className="whitespace-nowrap font-bold text-primary-700 underline underline-offset-2"
+          >
+            {recordTypeLabel[record.recordType]}
+          </Link>
+        );
+      })}
     </span>
   );
 }
