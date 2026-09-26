@@ -79,33 +79,36 @@ const categoryDetailLinks = [
   ).values(),
 ];
 
-const sampleCategoryProbe = categoryDetailLinks.length
-  ? await captureRomsPage(categoryDetailLinks[0].href)
-  : { url: null, captured: [], links: [] };
-
-const sampleCategoryLegislationResponse = sampleCategoryProbe.captured.find(
+const categoryIndexNetworkResponse = categoryRootProbe.captured.find(
   item =>
     Array.isArray(item.json) &&
-    item.url.includes('/api/ROMS/') &&
-    item.url.includes('/Legislation/') &&
-    item.json.some(row => row && row.legislationId)
+    item.url.includes('/api/ROMS/Codification/List/ByType/')
 );
+const categoryIndexRows = Array.isArray(categoryIndexNetworkResponse?.json)
+  ? categoryIndexNetworkResponse.json
+  : [];
 
-const categoryLegislationPrefix = sampleCategoryLegislationResponse
-  ? sampleCategoryLegislationResponse.url.replace(/[0-9a-f-]{36}(?:\?.*)?$/i, '')
-  : null;
+function firstUuidValue(record) {
+  if (!record || typeof record !== 'object') return null;
+  const preferred = Object.entries(record).find(
+    ([key, value]) =>
+      /codification.*id|category.*id/i.test(key) &&
+      typeof value === 'string' &&
+      /^[0-9a-f-]{36}$/i.test(value)
+  );
+  if (preferred) return preferred[1];
+  const fallback = Object.values(record).find(
+    value => typeof value === 'string' && /^[0-9a-f-]{36}$/i.test(value)
+  );
+  return fallback || null;
+}
 
 const categoryIds = [
-  ...new Set(
-    categoryDetailLinks
-      .map(link =>
-        link.href.match(
-          /\/content\/resolutions-and-ordinances\/category\/[^/]+\/([0-9a-f-]{36})(?:\?|$)/i
-        )?.[1]
-      )
-      .filter(Boolean)
-  ),
+  ...new Set(categoryIndexRows.map(firstUuidValue).filter(Boolean)),
 ];
+
+let categoryLegislationPrefix = null;
+const sampleCategoryProbe = { url: null, captured: [], links: [] };
 
 const calls = [];
 
@@ -173,6 +176,27 @@ for (const author of authorResult.json) {
 }
 
 const categoryRowsById = new Map();
+
+if (categoryIds.length) {
+  const sampleCategoryId = categoryIds[0];
+  const categoryEndpointCandidates = [
+    '/api/ROMS/Legislation/List/ByCodification/',
+    '/api/ROMS/Legislation/List/ByCategory/',
+    '/api/ROMS/Legislation/List/BySubject/',
+  ];
+
+  for (const prefix of categoryEndpointCandidates) {
+    const probe = await getJson(prefix + encodeURIComponent(sampleCategoryId));
+    if (
+      Array.isArray(probe.json) &&
+      probe.json.some(row => row && row.legislationId)
+    ) {
+      categoryLegislationPrefix = origin + prefix;
+      break;
+    }
+  }
+}
+
 if (categoryLegislationPrefix && categoryIds.length) {
   const categoryPathPrefix = categoryLegislationPrefix.startsWith(origin)
     ? categoryLegislationPrefix.slice(origin.length)
@@ -383,7 +407,7 @@ const snapshot = {
     countByType,
     countByYear,
     authorIndexCount: authorResult.json.length,
-    categoryIndexCount: categoryIds.length || null,
+    categoryIndexCount: categoryIndexRows.length || null,
     categoryDiscovery: {
       rootUrl: categoryRootProbe.url,
       rootApiResponses: categoryRootProbe.captured.map(item => ({
@@ -391,6 +415,8 @@ const snapshot = {
         status: item.status,
         rowCount: Array.isArray(item.json) ? item.json.length : null,
       })),
+      categoryIndexSample: categoryIndexRows.slice(0, 3),
+      categoryIdCount: categoryIds.length,
       sampleDetailUrl: sampleCategoryProbe.url,
       sampleDetailApiResponses: sampleCategoryProbe.captured.map(item => ({
         url: item.url,
