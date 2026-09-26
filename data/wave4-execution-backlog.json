@@ -661,9 +661,26 @@
       "id": "W4-3e",
       "phase": "Integrity",
       "title": "Build audit finding resolution trails",
-      "status": "planned",
+      "status": "complete",
       "maximumScope": "Existing COA/accountability findings only. Link finding → recommendation → management response → later corrective/status evidence where exact continuity is documented.",
-      "stopWhen": "At least one complete or explicitly unresolved trail demonstrates the model without inferred closure."
+      "stopWhen": "At least one complete or explicitly unresolved trail demonstrates the model without inferred closure.",
+      "completedAt": "2026-09-26",
+      "implementationFiles": [
+        "src/data/integrityAuditTrails.ts",
+        "scripts/check-integrity-audit-trails.mjs",
+        "package.json"
+      ],
+      "validation": {
+        "findingLevelRecordCount": 3,
+        "followUpActionRecordCount": 4,
+        "resolutionTrailCount": 3,
+        "explicitlyUnresolvedTrailCount": 3,
+        "sourceOnlyAuditRecordCount": 1,
+        "sourceOnlyRecord": "audit-2024-sef-compliance-report",
+        "managementResponseContinuity": "The 2017 development-fund trail preserves a source-backed city response tied to the reported finding, but does not treat that response as implementation or closure.",
+        "laterEvidenceBoundary": "Later cash-advance controls and later SEF reporting/compliance activity remain contextual follow-up because the public records do not explicitly map them to closure of the exact earlier findings.",
+        "guardrail": "No current trail is labeled implemented, partially implemented, not acted on or closed because exact item-level continuity is not established in the existing evidence."
+      }
     },
     {
       "id": "W4-3f",
@@ -826,11 +843,11 @@
       "stopWhen": "Wave 4 is closed only to the extent supported by evidence, with future work reopened as specific capabilities rather than vague unfinished work."
     }
   ],
-  "current": "W4-3e",
+  "current": "W4-3f",
   "immediateNext": {
-    "id": "W4-3e",
-    "title": "Build audit finding resolution trails",
-    "maximumScope": "Existing COA/accountability findings only. Link finding → recommendation → management response → later corrective/status evidence where exact continuity is documented."
+    "id": "W4-3f",
+    "title": "Implement verified integrity relationships",
+    "maximumScope": "Only W4-3c/3d/3e verified relationships. No new research."
   },
   "carriedForward": [
     {
