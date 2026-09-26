@@ -48,7 +48,8 @@
     "Reports & Insights should synthesize information already supported elsewhere in BetterMakati whenever possible, linking internally to the underlying city record before sending users outward.",
     "Cross-functional links should be useful in both directions where the relationship is stable: place ↔ record, legislation ↔ service/topic/place, integrity entity ↔ procurement/project, report ↔ underlying records.",
     "Avoid loops: every related-link module should take the user somewhere meaningfully deeper, not back to a page with no additional context.",
-    "Mobile, keyboard, touch-target, focus and reduced-motion requirements from Wave 3 remain baseline requirements, not a final cleanup task."
+    "Mobile, keyboard, touch-target, focus and reduced-motion requirements from Wave 3 remain baseline requirements, not a final cleanup task.",
+    "Treat BetterMakati as Makati’s local layer in the wider BetterGov ecosystem: link outward to BetterGov for national datasets/tools and to BetterLGU or sibling local sites for non-Makati/local-comparison context when a useful canonical destination exists. Prefer handoff/context over duplicating another product’s data."
   ],
   "preservedFoundations": [
     "Wave 3 Place Registry and typed place/segment/route model.",
@@ -412,7 +413,7 @@
       "phase": "Cross-linking and closure",
       "title": "Define shared civic-intelligence relationship model",
       "status": "planned",
-      "maximumScope": "Relationship schema/helper only. Typed references across indicator, legislation, integrity entity, report, place, barangay, service, project/accountability, City Monitor and public record.",
+      "maximumScope": "Relationship schema/helper only. Typed references across indicator, legislation, integrity entity, report, place, barangay, service, project/accountability, City Monitor, public record and BetterGov/BetterLGU ecosystem resources.",
       "stopWhen": "Relationships can be stored once and resolved without circular data duplication."
     },
     {
@@ -420,7 +421,7 @@
       "phase": "Cross-linking and closure",
       "title": "Connect Statistics to canonical city entities",
       "status": "planned",
-      "maximumScope": "Explicit relationships from implemented indicators to barangays, services, places/assets, budget/project records and reports where semantically valid.",
+      "maximumScope": "Explicit relationships from implemented indicators to barangays, services, places/assets, budget/project records, reports and relevant BetterGov/BetterLGU comparison or national-data resources where semantically valid.",
       "stopWhen": "A small verified set demonstrates reusable bidirectional navigation without inferred place attribution."
     },
     {
@@ -428,7 +429,7 @@
       "phase": "Cross-linking and closure",
       "title": "Connect Legislation across the site",
       "status": "planned",
-      "maximumScope": "Legislation relationships/backlinks only: services, barangays, places/assets, City Monitor, Public Records and Accountability.",
+      "maximumScope": "Legislation relationships/backlinks only: services, barangays, places/assets, City Monitor, Public Records, Accountability and relevant BetterGov national-law/context resources.",
       "stopWhen": "Users can move from a law/council record to the relevant civic entity and back without duplicate copies."
     },
     {
@@ -436,7 +437,7 @@
       "phase": "Cross-linking and closure",
       "title": "Connect Integrity evidence across the site",
       "status": "planned",
-      "maximumScope": "Integrity relationships/backlinks only: procurement, projects, Accountability, audit findings, places when source-specific and Public Records.",
+      "maximumScope": "Integrity relationships/backlinks only: procurement, projects, Accountability, audit findings, places when source-specific, Public Records and relevant BetterGov procurement/budget/benchmark resources.",
       "stopWhen": "Supplier/audit/entity evidence is reachable from the underlying record and vice versa."
     },
     {
@@ -444,7 +445,7 @@
       "phase": "Cross-linking and closure",
       "title": "Connect Reports to their underlying records",
       "status": "planned",
-      "maximumScope": "Report-related-record modules and backlinks only.",
+      "maximumScope": "Report-related-record modules and backlinks only, including relevant BetterGov/BetterLGU continuation links when they deepen the report’s evidence or comparison context.",
       "stopWhen": "Every report exposes the canonical data/record set it synthesizes, and applicable records can surface the report as analysis rather than source evidence."
     },
     {
@@ -452,7 +453,7 @@
       "phase": "Cross-linking and closure",
       "title": "Extend global Search to Civic Intelligence",
       "status": "planned",
-      "maximumScope": "Search indexing only for canonical indicators, legislation, integrity entities and reports.",
+      "maximumScope": "Search indexing only for canonical indicators, legislation, integrity entities and reports; include deliberate ecosystem handoffs without cloning BetterGov/BetterLGU records into BetterMakati search.",
       "stopWhen": "Search returns one canonical destination per entity and avoids duplicate title-only records."
     },
     {
@@ -504,5 +505,19 @@
       "disposition": "Not reopened globally",
       "note": "Wave 4 may link only to existing canonical records. Any specific registry error discovered through a relationship gets a bounded correction."
     }
-  ]
+  ],
+  "ecosystemCrosslinking": {
+    "scope": [
+      "BetterGov national data, visualizations, budget, procurement/price and other relevant civic resources.",
+      "BetterLGU for cross-LGU or non-Makati local-government context.",
+      "Sibling Better* local sites only when a canonical resource exists and materially deepens the Makati record."
+    ],
+    "rules": [
+      "BetterMakati remains the canonical Makati layer; do not duplicate a BetterGov/BetterLGU dataset merely to make an outbound link look local.",
+      "Primary official sources remain visible beside ecosystem handoffs.",
+      "Use typed ecosystem relationships once W4-5a defines the shared relationship model.",
+      "Prefer contextual handoffs such as compare nationally, compare with another LGU, inspect national source/benchmark, or continue to a broader tool.",
+      "Do not create circular links that return users to equivalent pages without additional information."
+    ]
+  }
 }
