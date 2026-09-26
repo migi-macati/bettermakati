@@ -499,7 +499,7 @@ const civicIntelligenceItems: SearchItem[] = [
       entity.kind === 'joint-venture'
         ? 'Source-stated joint-venture identity in indexed Makati procurement awards.'
         : 'Normalized supplier identity in indexed Makati procurement awards.',
-    href: '/integrity?view=suppliers#procurement',
+    href: '/integrity#procurement',
     keywords: [
       entity.id,
       entity.kind,
