@@ -418,9 +418,9 @@
     "uiChanges": 0
   },
   "nextImplementationStep": {
-    "id": "W3R-5c",
-    "title": "Connect nearby reporting to existing civic submission",
-    "constraint": "Reporting flow only. Preserve emergency handling, duplicate detection, barangay context, evidence and tracking. Stop after focused E2E validation."
+    "id": "W3R-5d",
+    "title": "Reconnect case lifecycle to redesigned reporting",
+    "constraint": "Lifecycle display/relationships only. Preserve reviewed, forwarded, acknowledged, action-reported and community-verified-resolved semantics. No automatic forwarding."
   },
   "betterBarangayReuse": {
     "workstream": "W3R-3a",
@@ -530,6 +530,17 @@
       "Manual place search and manual coordinates work without geolocation permission.",
       "Location-only selection is supported without creating a canonical place record.",
       "Submission remains disconnected until W3R-5c."
+    ]
+  },
+  "nearbyReportingSubmission": {
+    "workstream": "W3R-5c",
+    "route": "/civic-map/report",
+    "behavior": [
+      "Confirmed places retain stable canonical IDs through placeId and legacy assetId.",
+      "Location-only cases persist no canonical place identity.",
+      "Submitted incident coordinates are rounded to 4 decimals.",
+      "Emergency 911 routing, duplicate detection, confirmation, fallback and tracking remain active.",
+      "Location-only duplicate checks use category plus 75 m proximity instead of requiring identical place identity."
     ]
   }
 }
