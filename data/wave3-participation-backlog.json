@@ -1649,12 +1649,18 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Add places to global Search",
       "maximumScope": "Global Search only. Places become first-class searchable results.",
-      "status": "next",
+      "status": "complete",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
       ],
-      "stopWhen": "Global Search only. Places become first-class searchable results."
+      "stopWhen": "Global Search only. Places become first-class searchable results.",
+      "completedAt": "2026-09-26",
+      "commits": [
+        "ad614737b06f9e9fb037a6b0a0162bf47f82d072",
+        "a9982d7bd0c0740d4157de4e7aaff7622059702d",
+        "b337eca00a98ce582a16b172b74782b07b5d0d75"
+      ]
     },
     {
       "id": "W3R-9b",
@@ -1663,7 +1669,7 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Reuse places in Visit Makati and Heritage",
       "maximumScope": "Visit and Heritage only. Reuse canonical place facts without duplicating coordinates/addresses.",
-      "status": "planned",
+      "status": "next",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
@@ -1971,9 +1977,10 @@
       "W3R-1",
       "W3R-8a",
       "W3R-8b",
-      "W3R-8c"
+      "W3R-8c",
+      "W3R-9a"
     ],
-    "current": "W3R-9a",
+    "current": "W3R-9b",
     "capabilityDispositionAuditFile": "data/wave3-capability-disposition-audit.json"
   },
   "knownCoverageGaps": {
