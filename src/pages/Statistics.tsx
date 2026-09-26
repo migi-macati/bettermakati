@@ -29,6 +29,7 @@ import {
   psaBarangaySource,
 } from '../data/barangays';
 import {
+  barangayPopulationContext2024,
   cityIndicatorById,
   cityIndicatorObservations,
   cityIndicatorSources,
@@ -64,6 +65,16 @@ const indicatorSource = (indicatorId: string) => {
 const indicatorPeriod = (indicatorId: string) =>
   latestCityIndicatorObservation(indicatorId)?.period.label ?? '';
 
+const ordinal = (value: number) => {
+  const mod100 = value % 100;
+  if (mod100 >= 11 && mod100 <= 13) return value + 'th';
+  const mod10 = value % 10;
+  if (mod10 === 1) return value + 'st';
+  if (mod10 === 2) return value + 'nd';
+  if (mod10 === 3) return value + 'rd';
+  return value + 'th';
+};
+
 export default function Statistics() {
   const { barangay } = useBarangayScope();
 
@@ -88,9 +99,11 @@ export default function Statistics() {
     ...populationTrend.map(item => [item.year, item.population].join(',')),
   ].join('\n');
 
-  const barangayPopulationShare = barangay
-    ? (barangay.population2024 / currentMakatiPopulation2024) * 100
+  const barangayPopulationContext = barangay
+    ? barangayPopulationContext2024(barangay.slug)
     : null;
+  const barangayPopulationShare =
+    barangayPopulationContext?.shareOfCity ?? null;
 
   const gdpPerPerson = numberValue(
     latestCityIndicatorObservation('gdp-per-capita')
@@ -229,8 +242,14 @@ export default function Statistics() {
   return (
     <>
       <SEO
-        title="Makati Statistics"
-        description="Population, economy, public services and infrastructure indicators for Makati, using official sources and comparable geographic definitions."
+        title={barangay ? barangay.name + ' Statistics' : 'Makati Statistics'}
+        description={
+          barangay
+            ? 'Population context for Barangay ' +
+              barangay.name +
+              ' with comparable citywide Makati indicators and official sources.'
+            : 'Population, economy, public services and infrastructure indicators for Makati, using official sources and comparable geographic definitions.'
+        }
         jsonLd={{
           '@context': 'https://schema.org',
           '@type': 'Dataset',
@@ -300,21 +319,39 @@ export default function Statistics() {
       </section>
 
       <Section className="bg-[#fffdf8]">
-        {barangay && (
-          <div className="mb-8 rounded-2xl border border-primary-200 bg-white p-5 md:p-6">
-            <div className="section-eyebrow">Better{barangay.name}</div>
-            <div className="mt-2 grid grid-cols-1 gap-4 sm:grid-cols-3">
+        {barangay && barangayPopulationContext && (
+          <div
+            id="barangay-statistics"
+            className="mb-8 rounded-2xl border border-primary-200 bg-white p-5 md:p-6"
+          >
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <div className="text-3xl font-extrabold text-primary-800">
+                <div className="section-eyebrow">Better{barangay.name}</div>
+                <h2 className="mt-1 text-2xl font-extrabold tracking-tight text-gray-950 md:text-3xl">
+                  {barangay.name} in the city
+                </h2>
+              </div>
+              <a
+                href={psaBarangaySource}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex min-h-11 items-center gap-1 text-sm font-bold text-primary-700 underline underline-offset-2"
+              >
+                PSA barangay source
+                <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+              </a>
+            </div>
+
+            <div className="mt-5 grid grid-cols-2 gap-4 lg:grid-cols-4">
+              <div className="rounded-xl bg-primary-50 p-4">
+                <div className="text-2xl font-extrabold text-primary-800 md:text-3xl">
                   {people(barangay.population2024)}
                 </div>
-                <div className="mt-1 font-bold text-gray-950">
-                  residents
-                </div>
+                <div className="mt-1 font-bold text-gray-950">residents</div>
                 <div className="mt-1 text-xs text-gray-500">2024 POPCEN</div>
               </div>
-              <div>
-                <div className="text-3xl font-extrabold text-primary-800">
+              <div className="rounded-xl bg-primary-50 p-4">
+                <div className="text-2xl font-extrabold text-primary-800 md:text-3xl">
                   {barangayPopulationShare?.toFixed(1)}%
                 </div>
                 <div className="mt-1 font-bold text-gray-950">
@@ -324,27 +361,54 @@ export default function Statistics() {
                   current 23-barangay boundary
                 </div>
               </div>
-              <div>
-                <div className="text-2xl font-extrabold text-primary-800">
+              <div className="rounded-xl bg-primary-50 p-4">
+                <div className="text-2xl font-extrabold text-primary-800 md:text-3xl">
+                  {ordinal(barangayPopulationContext.rankByPopulation)}
+                </div>
+                <div className="mt-1 font-bold text-gray-950">
+                  by population
+                </div>
+                <div className="mt-1 text-xs text-gray-500">
+                  of {barangayPopulationContext.totalBarangays} barangays
+                </div>
+              </div>
+              <div className="rounded-xl bg-primary-50 p-4">
+                <div className="text-xl font-extrabold text-primary-800 md:text-2xl">
                   {barangay.legislativeDistrict}
                 </div>
                 <div className="mt-1 font-bold text-gray-950">
                   legislative district
                 </div>
-                <Link
-                  to={'/barangays/' + barangay.slug}
-                  className="mt-2 inline-flex min-h-11 items-center gap-1 text-sm font-bold text-primary-700"
-                >
-                  Open barangay profile
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                </Link>
+                <div className="mt-1 text-xs text-gray-500">
+                  canonical barangay profile
+                </div>
               </div>
+            </div>
+
+            <div className="mt-5 grid gap-4 md:grid-cols-[1fr_auto] md:items-center">
+              <div className="rounded-xl border border-gray-200 bg-[#fffdf8] p-4 text-sm text-gray-700">
+                <strong>City median:</strong>{' '}
+                {people(barangayPopulationContext.medianPopulation)} residents.
+                Barangay-level data shown here is the source-backed 2024
+                population. Economy, labor and city-system measures below stay
+                citywide unless an official barangay value is available.
+              </div>
+              <Link
+                to={'/barangays/' + barangay.slug}
+                className="brand-btn-secondary justify-center"
+              >
+                Open barangay profile
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
             </div>
           </div>
         )}
 
         <SectionNav
           items={[
+            ...(barangay
+              ? [{ label: 'Barangay snapshot', href: '#barangay-statistics' }]
+              : []),
             { label: 'Population', href: '#population-trend' },
             { label: 'Economy & work', href: '#economy-work' },
             { label: 'City systems', href: '#city-systems' },
@@ -355,7 +419,9 @@ export default function Statistics() {
 
         <div className="mt-8 grid gap-5 lg:grid-cols-[1.35fr_0.65fr]">
           <div className="rounded-2xl border border-primary-100 bg-white p-6 md:p-7">
-            <div className="section-eyebrow">What changed</div>
+            <div className="section-eyebrow">
+              {barangay ? 'Citywide context' : 'What changed'}
+            </div>
             <h2 className="mt-2 text-2xl font-extrabold tracking-tight text-gray-950 md:text-3xl">
               Makati added {people(population2024 - population2010)} people
               from 2010 to 2024.
