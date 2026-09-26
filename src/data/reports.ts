@@ -27,7 +27,7 @@ import {
   integrityAuditSourceOnlyRecords,
   integrityAuditSources,
 } from './integrityAuditTrails';
-import type { FeaturedReportV2, ReportSourceV2 } from './reportTypes';
+import type { FeaturedReportV2, ReportContentBlock, ReportSourceV2 } from './reportTypes';
 
 const reviewedOn = '26 September 2026';
 
@@ -333,7 +333,7 @@ const recordsFlagshipSources: [ReportSourceV2, ...ReportSourceV2[]] = [
   ].map(auditDirectSource),
 ];
 
-export const reports = [
+export const reports: FeaturedReportV2[] = [
   {
     schemaVersion: 2,
     slug: '2026-budget-operating-expenses',
@@ -1217,7 +1217,7 @@ export const reports = [
               ],
             },
           },
-        ]),
+        ]) as [ReportContentBlock, ...ReportContentBlock[]],
       },
       {
         id: 'scope',
@@ -1264,7 +1264,7 @@ export const reports = [
     },
 
   },
-] satisfies [FeaturedReportV2, ...FeaturedReportV2[]];
+];
 
 export const publicationReports = [...reports].reverse();
 
