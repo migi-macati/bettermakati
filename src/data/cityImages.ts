@@ -2,9 +2,9 @@ export interface CityImage {
   src: string;
   alt: string;
   title: string;
-  sourceUrl: string;
-  credit: string;
-  license: string;
+  sourceUrl?: string;
+  credit?: string;
+  license?: string;
   licenseUrl?: string;
   objectPosition?: string;
 }
@@ -15,7 +15,70 @@ const commonsImage = (file: string, width = 1400) =>
   '?width=' +
   width;
 
+const userImage = (file: string) => '/images/makati/user/' + file;
+
 export const cityImages: Record<string, CityImage> = {
+  userNightCourtyard: {
+    src: userImage('night-courtyard.jpg'),
+    alt: 'People gathered in an open-air Makati courtyard at night under string lights, with a small live music performance.',
+    title: 'Makati after dark',
+    objectPosition: '50% 52%',
+  },
+  userNightSkyline: {
+    src: userImage('poblacion-night-skyline.jpg'),
+    alt: 'Makati skyline illuminated at night beyond a lower-rise neighborhood.',
+    title: 'Makati at night',
+    objectPosition: '50% 50%',
+  },
+  userUrbanPark: {
+    src: userImage('urban-park.jpg'),
+    alt: 'A landscaped urban park in Makati framed by mature trees and high-rise buildings.',
+    title: 'Green space in the city',
+    objectPosition: '50% 54%',
+  },
+  userCbdStreet: {
+    src: userImage('cbd-street.jpg'),
+    alt: 'A busy Makati business district street framed by glass office towers.',
+    title: 'Street life in the CBD',
+    objectPosition: '50% 58%',
+  },
+  userSkylineClouds: {
+    src: userImage('poblacion-skyline-clouds.jpg'),
+    alt: 'A wide Makati skyline under dramatic afternoon clouds.',
+    title: 'Makati skyline',
+    objectPosition: '50% 50%',
+  },
+  userPasigRiverNight: {
+    src: userImage('pasig-river-night.jpg'),
+    alt: 'Night view across the Pasig River with city lights reflected on the water.',
+    title: 'Makati by the Pasig River',
+    objectPosition: '50% 55%',
+  },
+  userTreeLinedPark: {
+    src: userImage('tree-lined-park.jpg'),
+    alt: 'A tree-lined paved path through a landscaped Makati park.',
+    title: 'A greener Makati',
+    objectPosition: '50% 48%',
+  },
+  userUrbanGreenery: {
+    src: userImage('urban-greenery.jpg'),
+    alt: 'Red flowering tree and dense greenery framed by high-rise buildings in Makati.',
+    title: 'Nature between towers',
+    objectPosition: '50% 45%',
+  },
+  userMuseo: {
+    src: userImage('museo-ng-makati.jpg'),
+    alt: 'Facade of Museo ng Makati under a blue sky.',
+    title: 'Museo ng Makati',
+    objectPosition: '50% 42%',
+  },
+  userSkylineDay: {
+    src: userImage('poblacion-skyline-day.jpg'),
+    alt: 'Daytime view across dense low-rise neighborhoods toward Makati’s high-rise skyline.',
+    title: 'Makati from above',
+    objectPosition: '50% 45%',
+  },
+
   skyline: {
     src: commonsImage('Makati City Skyline from Guadalupe, Apr 2025.jpg'),
     alt: 'Makati skyline rising beyond trees and lower-rise neighborhoods, viewed from Guadalupe.',
@@ -93,52 +156,58 @@ export const cityImages: Record<string, CityImage> = {
 };
 
 export const homeImageSet = [
-  cityImages.poblacionPark,
-  cityImages.jeepney,
-  cityImages.cityHall,
-  cityImages.estrellaBridge,
-  cityImages.museo,
-  cityImages.skyline,
+  cityImages.userSkylineClouds,
+  cityImages.userNightCourtyard,
+  cityImages.userTreeLinedPark,
+  cityImages.userNightSkyline,
+  cityImages.userMuseo,
+  cityImages.userPasigRiverNight,
+  cityImages.userSkylineDay,
 ];
 
 export const visitImageSet = [
-  cityImages.poblacionPark,
-  cityImages.museo,
+  cityImages.userNightCourtyard,
+  cityImages.userUrbanPark,
+  cityImages.userTreeLinedPark,
+  cityImages.userMuseo,
+  cityImages.userPasigRiverNight,
+  cityImages.userUrbanGreenery,
   cityImages.sanPedro,
-  cityImages.estrellaBridge,
-  cityImages.jupiter,
-  cityImages.skyline,
 ];
 
 export const governmentImageSet = [
   cityImages.cityHall,
-  cityImages.poblacionPark,
-  cityImages.museo,
+  cityImages.userCbdStreet,
+  cityImages.userSkylineClouds,
+  cityImages.userMuseo,
 ];
 
 export const barangayImageSet = [
-  cityImages.poblacionPark,
-  cityImages.jupiter,
-  cityImages.estrellaBridge,
-  cityImages.sanPedro,
+  cityImages.userNightSkyline,
+  cityImages.userSkylineDay,
+  cityImages.userUrbanPark,
+  cityImages.userPasigRiverNight,
+  cityImages.userMuseo,
 ];
 
 export const historyImageSet = [
+  cityImages.userMuseo,
   cityImages.sanPedro,
-  cityImages.museo,
   cityImages.cityHall,
-  cityImages.estrellaBridge,
+  cityImages.userSkylineDay,
 ];
 
 export const mobilityImageSet = [
+  cityImages.userCbdStreet,
   cityImages.jeepney,
-  cityImages.jupiter,
-  cityImages.estrellaBridge,
-  cityImages.skyline,
+  cityImages.userNightCourtyard,
+  cityImages.userPasigRiverNight,
+  cityImages.userSkylineClouds,
 ];
 
 export const servicesImageSet = [
+  cityImages.userCbdStreet,
   cityImages.cityHall,
-  cityImages.poblacionPark,
-  cityImages.jupiter,
+  cityImages.userUrbanPark,
+  cityImages.userNightCourtyard,
 ];
