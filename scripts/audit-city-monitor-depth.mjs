@@ -89,6 +89,17 @@ if (procurementRefs.length < 21) {
   );
 }
 
+if (
+  !monitor.includes(
+    'with 287 resolutions and 50 ordinances passed/approved during the year.'
+  ) ||
+  monitor.includes('with 287 ordinances and 50 resolutions enacted during the year.')
+) {
+  problems.push(
+    'City Monitor must preserve the official 2020 OSSP totals: 287 resolutions and 50 ordinances passed/approved.'
+  );
+}
+
 for (const type of [
   'council-session',
   'legislation',
