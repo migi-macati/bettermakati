@@ -235,14 +235,13 @@ export default function Integrity() {
 
       <Section className="bg-primary-900 text-white">
         <div className="section-eyebrow !text-secondary-300">
-          Integrity records
+          Integrity & audit
         </div>
         <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <Heading className="!text-white">Follow the record</Heading>
+            <Heading className="!text-white">Integrity records</Heading>
             <p className="mt-3 max-w-4xl text-base leading-relaxed text-primary-50 sm:text-lg">
-              Procurement awards, supplier identities, disclosure research and
-              COA follow-up evidence in one searchable record.
+              Procurement awards, supplier identities, disclosures and COA follow-up.
             </p>
           </div>
           <SharePage title="Integrity records | BetterMakati" />
@@ -283,7 +282,6 @@ export default function Integrity() {
 
         <LastReviewed
           date="26 September 2026"
-          note="Record and source status checked on the date shown."
           className="!text-primary-100 [&_strong]:!text-white [&_svg]:!text-secondary-300"
         />
       </Section>
@@ -342,10 +340,6 @@ export default function Integrity() {
           <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <Heading level={2}>Suppliers & awards</Heading>
-              <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-700">
-                Supplier identities linked to the Makati bid-result records
-                currently indexed by BetterMakati.
-              </p>
             </div>
             <div className="flex flex-wrap items-center gap-3">
               <Link
@@ -505,12 +499,10 @@ export default function Integrity() {
 
       {showDisclosures && (
         <Section className="bg-[#f5f8f2]" id="disclosures">
-          <div className="section-eyebrow">Disclosure research</div>
-          <Heading level={2}>What the checked public record returned</Heading>
+          <div className="section-eyebrow">Disclosures</div>
+          <Heading level={2}>Disclosure records</Heading>
           <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-700">
-            “Not retrieved” means the entity-specific record did not surface
-            through the checked authoritative public sources. Historical role
-            statements are shown separately when a source states one.
+            “Not retrieved” means no entity-specific record surfaced in the checked authoritative sources.
           </p>
 
           <div className="mt-5 overflow-x-auto rounded-2xl border border-primary-100 bg-white">
@@ -630,10 +622,6 @@ export default function Integrity() {
           <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <Heading level={2}>Audit finding trails</Heading>
-              <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-700">
-                Finding, recommendation, later evidence and the latest
-                source-supported resolution status.
-              </p>
             </div>
             <Link
               to="/accountability?type=audit"
@@ -848,12 +836,8 @@ export default function Integrity() {
 
       {showSources && (
         <Section className="bg-[#f5f8f2]" id="sources">
-          <div className="section-eyebrow">Primary trail</div>
+          <div className="section-eyebrow">Source records</div>
           <Heading level={2}>Sources</Heading>
-          <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-700">
-            Sources cited by the procurement, disclosure and audit records on
-            this page.
-          </p>
 
           <div className="mt-6 grid gap-3 md:grid-cols-2">
             {visibleSources.map(source => (
