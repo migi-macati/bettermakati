@@ -1,0 +1,355 @@
+{
+  "schemaVersion": 1,
+  "auditedAt": "2026-09-26",
+  "workstream": "W4-1a — Audit current Statistics capabilities and gaps",
+  "status": "current-state-audit",
+  "scope": [
+    "src/pages/Statistics.tsx",
+    "src/components/statistics/CityComparison.tsx",
+    "src/data/cityComparison.ts",
+    "src/data/barangays.ts",
+    "src/data/budget2025.ts",
+    "src/pages/ProjectsBudget.tsx",
+    "src/data/reports.ts",
+    "src/pages/Barangays.tsx",
+    "src/pages/BarangayProfile.tsx",
+    "src/data/searchIndex.ts"
+  ],
+  "method": "Repository/source audit only. No external web research or source re-verification was performed in W4-1a.",
+  "currentCapabilities": [
+    {
+      "id": "city-at-a-glance",
+      "status": "implemented",
+      "details": [
+        "Statistics shows four headline facts: 2024 population, 23 barangays, income class and 2024 GDP per person.",
+        "Each headline card currently links directly to an external source rather than to a canonical BetterMakati indicator record."
+      ]
+    },
+    {
+      "id": "population-trend",
+      "status": "implemented-page-local",
+      "details": [
+        "Comparable current-boundary population series is hard-coded in Statistics for 2010, 2015, 2020 and 2024.",
+        "Annual population growth values are stored beside the four census points.",
+        "The page derives 2010–2024 absolute/percentage change and offers a CSV download."
+      ]
+    },
+    {
+      "id": "barangay-slice",
+      "status": "implemented",
+      "details": [
+        "When BetterBarangay scope is active, Statistics shows the canonical barangay's 2024 population, share of city population and legislative district.",
+        "The city denominator is recomputed from the 23 barangay population values."
+      ]
+    },
+    {
+      "id": "city-comparison",
+      "status": "implemented-separate-data-module",
+      "details": [
+        "CityComparison contains the PSA 2024 top-ten GDP-per-person comparison, NCR/outside-NCR filters, chart/list, optional table and CSV.",
+        "Makati's exact GDP-per-person value is stored in src/data/cityComparison.ts."
+      ]
+    },
+    {
+      "id": "related-datasets",
+      "status": "implemented-as-navigation",
+      "details": [
+        "Statistics links to Barangays, Projects & Budget, Elections and History.",
+        "It also links outward to BetterGov national-data tools."
+      ]
+    },
+    {
+      "id": "structured-metadata",
+      "status": "implemented",
+      "details": [
+        "The Statistics route emits Dataset JSON-LD with spatial and temporal coverage."
+      ]
+    }
+  ],
+  "currentDataOwnership": [
+    {
+      "factFamily": "2024 barangay population",
+      "currentOwner": "src/data/barangays.ts",
+      "currentShape": "population2024 on each of 23 BarangayProfile records",
+      "sourcePointer": "psaBarangaySource",
+      "observedIntegrity": {
+        "records": 23,
+        "summedPopulation": 309770
+      },
+      "disposition": "keep-as-canonical-barangay-data",
+      "note": "Wave 4 indicators should reference/reuse these canonical barangay values rather than create a second barangay-population table."
+    },
+    {
+      "factFamily": "2024 Makati population total",
+      "currentOwner": "none-single",
+      "duplicateLocations": [
+        "src/pages/Statistics.tsx",
+        "src/data/budget2025.ts",
+        "src/data/reports.ts (publication prose)"
+      ],
+      "observedIntegrity": {
+        "hardCodedStatisticsValue": 309770,
+        "barangaySum": 309770,
+        "budgetCityPopulation": 309770
+      },
+      "disposition": "centralize-in-city-indicator-layer",
+      "note": "The 2024 city value currently reconciles exactly with the 23 barangay values, but it should not remain separately hard-coded in multiple product/data files."
+    },
+    {
+      "factFamily": "Comparable population trend 2010–2024",
+      "currentOwner": "src/pages/Statistics.tsx",
+      "currentShape": "page-local populationTrend array",
+      "disposition": "migrate-to-city-indicator-layer",
+      "note": "The time series is data, not presentation state; the page should consume it."
+    },
+    {
+      "factFamily": "Barangay count",
+      "currentOwner": "src/data/barangays.ts",
+      "currentShape": "23 canonical records",
+      "duplicateLocation": "src/pages/Statistics.tsx hard-coded '23'",
+      "disposition": "derive-from-canonical-barangays",
+      "note": "Do not store 23 as an independent statistics fact unless an indicator record needs a source/period snapshot."
+    },
+    {
+      "factFamily": "Legislative district by barangay",
+      "currentOwner": "src/data/barangays.ts",
+      "currentShape": "legislativeDistrict per BarangayProfile",
+      "disposition": "reuse-existing-canonical-data"
+    },
+    {
+      "factFamily": "Income class",
+      "currentOwner": "src/pages/Statistics.tsx",
+      "currentShape": "hard-coded display string '1st'",
+      "disposition": "move-to-city-indicator-layer-after-source-inventory",
+      "note": "No other current canonical data owner was found in the audited files."
+    },
+    {
+      "factFamily": "2024 GDP per person",
+      "currentOwner": "src/data/cityComparison.ts",
+      "currentShape": "numeric gdpPerPerson values for ten cities",
+      "duplicateLocation": "src/pages/Statistics.tsx formatted '₱3.89M' card and CitizenSummary prose",
+      "disposition": "reuse-or-adapt-from-canonical-comparison-data",
+      "note": "Statistics should format the Makati row instead of carrying a second value string."
+    },
+    {
+      "factFamily": "2019–2025 receipts/expenditures and 2025–2026 budget data",
+      "currentOwner": "src/data/budget2025.ts",
+      "currentShape": "actualFiscalHistory, budget summaries, revenue/spending breakdowns and budget line data",
+      "currentConsumer": "src/pages/ProjectsBudget.tsx",
+      "disposition": "reuse-existing-finance-owner",
+      "note": "Statistics may surface selected fiscal indicators through selectors/relationships, but should not copy the numeric series into a parallel statistics file."
+    },
+    {
+      "factFamily": "Published analytical claims",
+      "currentOwner": "src/data/reports.ts",
+      "currentShape": "article prose with hard-coded snapshot values and internal source links",
+      "disposition": "publication-snapshot-not-canonical-data",
+      "note": "Reports may quote values as dated prose, but future report schema should point back to canonical indicator/finance records so article text is never treated as the source of truth."
+    }
+  ],
+  "duplicateAndHardCodedFindings": [
+    {
+      "id": "population-multi-copy",
+      "severity": "high",
+      "finding": "The current 2024 population value appears as page data in Statistics, as cityPopulation in budget2025 and as report prose, while the same total can be reconstructed from canonical barangay population records.",
+      "affected": [
+        "src/pages/Statistics.tsx",
+        "src/data/budget2025.ts",
+        "src/data/reports.ts",
+        "src/data/barangays.ts"
+      ]
+    },
+    {
+      "id": "population-page-self-duplication",
+      "severity": "medium",
+      "finding": "Statistics repeats the same population facts across the at-a-glance stats array, populationTrend and hard-coded CitizenSummary text.",
+      "affected": [
+        "src/pages/Statistics.tsx"
+      ]
+    },
+    {
+      "id": "gdp-display-copy",
+      "severity": "medium",
+      "finding": "The exact 2024 Makati GDP-per-person value is owned by cityComparison.ts, but Statistics separately hard-codes the formatted ₱3.89M value in two presentation locations.",
+      "affected": [
+        "src/data/cityComparison.ts",
+        "src/pages/Statistics.tsx"
+      ]
+    },
+    {
+      "id": "barangay-count-copy",
+      "severity": "low",
+      "finding": "Statistics hard-codes 23 barangays even though the canonical barangay dataset already contains exactly 23 profiles.",
+      "affected": [
+        "src/pages/Statistics.tsx",
+        "src/data/barangays.ts"
+      ]
+    },
+    {
+      "id": "budget-population-copy",
+      "severity": "medium",
+      "finding": "budget2025.ts stores cityPopulation only to calculate per-resident budget, creating a second owner for a demographic fact.",
+      "affected": [
+        "src/data/budget2025.ts",
+        "src/pages/ProjectsBudget.tsx"
+      ]
+    },
+    {
+      "id": "report-data-copy",
+      "severity": "bounded",
+      "finding": "Featured report prose repeats population and fiscal values from underlying datasets. This is acceptable as a dated publication snapshot, but report prose must not become a reusable data source.",
+      "affected": [
+        "src/data/reports.ts"
+      ]
+    }
+  ],
+  "uxAndContentAudit": {
+    "strengths": [
+      "Current-boundary comparability is stated directly beside the population series.",
+      "Population trend includes chart, table, source link and CSV.",
+      "City comparison includes filters, table/download controls and a clear explanation of GDP per person.",
+      "Barangay scope already works without creating a second Statistics route.",
+      "Related city datasets are linked internally."
+    ],
+    "gaps": [
+      {
+        "id": "generic-opening",
+        "finding": "The page opens with the generic title 'Makati Statistics' and a national-data resource box before the city facts. It does not yet lead with a strong citizen-facing statement/question or the most useful current indicators.",
+        "ownerStep": "W4-1g"
+      },
+      {
+        "id": "meta-copy",
+        "finding": "CitizenSummary includes the meta sentence 'BetterMakati keeps definitions beside the figures...' which explains the site's behavior instead of simply presenting the definition/evidence.",
+        "ownerStep": "W4-1g"
+      },
+      {
+        "id": "external-first-headline-cards",
+        "finding": "At-a-glance cards jump straight to external sources. There is no canonical BetterMakati indicator detail/state between the headline number and source.",
+        "ownerStep": "W4-1b/W4-1f/W4-1g"
+      },
+      {
+        "id": "narrow-statistical-scope",
+        "finding": "The current Statistics product is mostly population plus one GDP-per-person comparison. Existing finance series are only linked, not integrated as reusable city indicators.",
+        "ownerStep": "W4-1c through W4-1g"
+      },
+      {
+        "id": "limited-barangay-statistics",
+        "finding": "Barangay scope currently exposes only 2024 population, city share and legislative district; there is no barangay trend or broader indicator model.",
+        "ownerStep": "W4-1h"
+      },
+      {
+        "id": "download-fragmentation",
+        "finding": "Population and city-comparison downloads are created independently inside their UI components; there is no shared provenance/download model.",
+        "ownerStep": "W4-1i"
+      }
+    ]
+  },
+  "missingDimensionsInCurrentImplementation": [
+    {
+      "family": "Population and demographics",
+      "missing": [
+        "Demographic dimensions beyond total population are absent from the current Statistics implementation.",
+        "Barangay population time series is absent; only 2024 is modeled canonically."
+      ],
+      "researchOwner": "W4-1c"
+    },
+    {
+      "family": "Economic and business structure",
+      "missing": [
+        "No city economic time series is modeled; the Statistics page currently shows one 2024 GDP-per-person point/comparison.",
+        "No establishment, employment or business-activity indicator family is modeled in Statistics."
+      ],
+      "researchOwner": "W4-1d"
+    },
+    {
+      "family": "Service, land and infrastructure",
+      "missing": [
+        "No source-backed service/infrastructure indicator family is modeled on Statistics.",
+        "Place Registry record counts must not be used as citywide facility statistics because registry completeness varies by category/segment."
+      ],
+      "researchOwner": "W4-1e"
+    },
+    {
+      "family": "Finance",
+      "missing": [
+        "Useful city finance time series already exist in budget2025.ts but are not represented through a generic indicator interface.",
+        "Any Statistics finance view should reuse those series rather than clone them."
+      ],
+      "researchOwner": "W4-1b/W4-1f"
+    }
+  ],
+  "crossFunctionReuseCandidates": [
+    {
+      "source": "src/data/barangays.ts",
+      "reuse": "Canonical barangay geography, 2024 population and legislative district.",
+      "rule": "Statistics owns indicator semantics; Barangays continues to own barangay identity/profile data."
+    },
+    {
+      "source": "src/data/cityComparison.ts",
+      "reuse": "2024 GDP-per-person comparison values and PSA source pointers.",
+      "rule": "Do not create a second Makati GDP value string."
+    },
+    {
+      "source": "src/data/budget2025.ts",
+      "reuse": "Fiscal time series, adopted/current-estimate budgets, revenue and spending structures.",
+      "rule": "Expose through selectors/relationships; do not move/copy the fiscal source of truth merely to make Statistics self-contained."
+    },
+    {
+      "source": "src/data/placeRegistry.ts",
+      "reuse": "Canonical relationships to facilities/places when a future indicator explicitly refers to named assets.",
+      "rule": "Never derive citywide facility counts from incomplete registry coverage unless a source-backed inventory independently establishes the denominator."
+    },
+    {
+      "source": "src/data/reports.ts",
+      "reuse": "Future report relationships to Statistics indicators.",
+      "rule": "Reports consume indicators; report prose is not canonical indicator data."
+    },
+    {
+      "source": "src/data/searchIndex.ts",
+      "reuse": "Future canonical indicator/report search entries.",
+      "rule": "Search must resolve to the canonical indicator/report destination rather than storing duplicate fact values."
+    }
+  ],
+  "schemaRequirementsExposedByAudit": [
+    "Stable indicator ID independent of display title.",
+    "Numeric/string value plus unit and display formatting metadata.",
+    "Period/as-of and optional time-series observations.",
+    "Geography identifier and explicit current/historical boundary treatment.",
+    "Definition/method/basis sufficient to distinguish similarly named measures.",
+    "Primary source/provenance and last-reviewed metadata.",
+    "Comparability flags/notes for series breaks.",
+    "Ability to reference an existing canonical dataset/selector instead of duplicating its values.",
+    "Typed relationships to barangays, places/assets, services, projects/accountability records and reports.",
+    "Download/export metadata separate from UI component code."
+  ],
+  "auditDecision": {
+    "currentStatisticsStatus": "useful-but-fragmented",
+    "keep": [
+      "Current-boundary population treatment.",
+      "Barangay scoping behavior.",
+      "City comparison interaction pattern.",
+      "Direct source visibility.",
+      "Chart/table/download affordances."
+    ],
+    "migrate": [
+      "Page-local population trend into canonical indicator data.",
+      "Hard-coded at-a-glance values into indicators or derived canonical selectors.",
+      "Standalone download construction into reusable indicator export metadata."
+    ],
+    "reuseWithoutCopying": [
+      "Barangay population and district data.",
+      "GDP comparison data.",
+      "Budget/fiscal data."
+    ],
+    "deferToResearch": [
+      "Additional demographic indicators.",
+      "Economic/business indicators.",
+      "Service/land/infrastructure indicators."
+    ]
+  },
+  "nextStep": {
+    "id": "W4-1b",
+    "title": "Define canonical city-indicator schema",
+    "scope": "Schema only. Use this audit to support citywide/barangay values, series, provenance, comparability and typed relationships without duplicating existing canonical datasets."
+  }
+}
