@@ -1208,9 +1208,42 @@
       "id": "W4-5e",
       "phase": "Cross-linking and closure",
       "title": "Connect Reports to their underlying records",
-      "status": "planned",
+      "status": "complete",
       "maximumScope": "Report-related-record modules and backlinks only, including relevant BetterGov/BetterLGU continuation links when they deepen the report’s evidence or comparison context.",
-      "stopWhen": "Every report exposes the canonical data/record set it synthesizes, and applicable records can surface the report as analysis rather than source evidence."
+      "stopWhen": "Every report exposes the canonical data/record set it synthesizes, and applicable records can surface the report as analysis rather than source evidence.",
+      "completedAt": "2026-09-26",
+      "implementationFiles": [
+        "src/data/reportCivicRelationships.ts",
+        "src/data/statisticsCivicRelationships.ts",
+        "src/pages/ReportArticle.tsx",
+        "src/pages/Statistics.tsx",
+        "src/pages/Accountability.tsx",
+        "src/pages/Integrity.tsx",
+        "scripts/check-statistics-civic-relationships.mjs",
+        "scripts/check-report-civic-relationships.mjs",
+        "package.json"
+      ],
+      "validation": {
+        "currentReports": 5,
+        "relationshipOwner": "Report-to-record relationships are stored once in reportCivicRelationships and are derived from typed v2 report evidence references.",
+        "relationshipSemantics": "Each stored edge is report -> canonical record with kind synthesizes and declared-analysis-input evidence. A report is never evidence-for its underlying record.",
+        "currentRecordDomains": [
+          "Statistics indicators",
+          "Accountability records",
+          "Integrity audit findings"
+        ],
+        "articleNavigation": "Every report article exposes a deduplicated Underlying records section while retaining inline evidence links.",
+        "reverseNavigation": [
+          "Statistics indicator -> related report analysis",
+          "Accountability record -> related report analysis",
+          "Integrity audit finding -> related report analysis"
+        ],
+        "statisticsDeduplication": "The older Statistics-owned indicator-to-report edges were removed; Statistics now derives report backlinks from the report-owned graph.",
+        "ecosystemRelationships": 0,
+        "ecosystemBoundary": "No current report uses BetterGov or BetterLGU as evidence or a material comparison input, so W4-5e does not add generic ecosystem links merely because those resources exist.",
+        "futureTypes": "The mapper already supports typed report references to legislation, Integrity entities/disclosures, places and projects; an edge appears only when a report explicitly cites such a canonical record.",
+        "antiInference": "No title, keyword, fuzzy or topical matching is used to connect reports to records."
+      }
     },
     {
       "id": "W4-5f",
@@ -1253,11 +1286,11 @@
       "stopWhen": "Wave 4 is closed only to the extent supported by evidence, with future work reopened as specific capabilities rather than vague unfinished work."
     }
   ],
-  "current": "W4-5e",
+  "current": "W4-5f",
   "immediateNext": {
-    "id": "W4-5e",
-    "title": "Connect Reports to their underlying records",
-    "maximumScope": "Report-related-record modules and backlinks only, including relevant BetterGov/BetterLGU continuation links when they deepen the report’s evidence or comparison context."
+    "id": "W4-5f",
+    "title": "Extend global Search to Civic Intelligence",
+    "maximumScope": "Search indexing only for canonical indicators, legislation, integrity entities and reports; include deliberate ecosystem handoffs without cloning BetterGov/BetterLGU records into BetterMakati search."
   },
   "carriedForward": [
     {
