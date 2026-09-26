@@ -30,6 +30,10 @@ import {
   placeRegistryById,
 } from '../data/placeRegistry';
 import { civicAuditPilot } from '../data/civicAuditPilot';
+import {
+  accountabilityEntries,
+  accountabilityStatusLabel,
+} from '../data/accountability';
 
 const verificationLabel = {
   verified: 'Verified',
@@ -95,6 +99,14 @@ export default function CivicAsset() {
   const placeSources = place.provenance.sources;
   const primarySources = placeSources.filter(source => source.kind !== 'reference-map');
   const mapSources = placeSources.filter(source => source.kind === 'reference-map');
+  const relatedAccountability = place.relationships
+    .filter(relationship => relationship.targetType === 'accountability-record')
+    .flatMap(relationship => {
+      const entry = accountabilityEntries.find(
+        item => item.id === relationship.targetId
+      );
+      return entry ? [{ relationship, entry }] : [];
+    });
 
   return (
     <>
@@ -305,6 +317,35 @@ export default function CivicAsset() {
                     >
                       {source.label} <ExternalLink className="h-3.5 w-3.5" />
                     </a>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {relatedAccountability.length > 0 && (
+              <div className="mt-6 border-t border-gray-200 pt-5">
+                <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+                  Related public records
+                </div>
+                <div className="mt-3 space-y-3">
+                  {relatedAccountability.map(({ relationship, entry }) => (
+                    <Link
+                      key={entry.id}
+                      to={'/accountability#' + entry.id}
+                      className="block rounded-xl border border-primary-100 bg-white p-4 hover:border-primary-300"
+                    >
+                      <div className="font-extrabold text-gray-950">
+                        {entry.title}
+                      </div>
+                      <div className="mt-1 text-xs font-semibold text-gray-500">
+                        {entry.period} · {accountabilityStatusLabel[entry.status]}
+                      </div>
+                      {relationship.note && (
+                        <p className="mt-2 text-xs leading-relaxed text-gray-600">
+                          {relationship.note}
+                        </p>
+                      )}
+                    </Link>
                   ))}
                 </div>
               </div>
