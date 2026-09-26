@@ -82,6 +82,7 @@ export default function CivicObservationForm({
         body: JSON.stringify({
           entityId: entity.id,
           entityName: entity.name,
+          entityKind: entity.entityKind,
           entityCategory: entity.primaryCategory,
           familyId: questionSet.familyId,
           questionSetId: questionSet.id,
