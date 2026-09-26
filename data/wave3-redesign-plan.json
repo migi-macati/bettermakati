@@ -851,13 +851,39 @@
     {
       "id": "W3R-9c",
       "title": "Connect places to Projects and Accountability",
-      "status": "next",
-      "maximumScope": "Relationship model plus a small verified example set only. No mass fuzzy matching."
+      "status": "complete",
+      "maximumScope": "Relationship model plus a small verified example set only. No mass fuzzy matching.",
+      "implementationFiles": [
+        "src/data/placeRegistry.ts",
+        "src/pages/Accountability.tsx",
+        "src/pages/ProjectsBudget.tsx",
+        "src/pages/CivicAsset.tsx"
+      ],
+      "validation": {
+        "relationshipModel": "PlaceRegistryRecord.relationships is now used for explicit related-accountability edges, with placesRelatedTo(targetType, targetId) providing reverse lookup without fuzzy matching.",
+        "verifiedExample": {
+          "placeId": "makati-city-hall",
+          "accountabilityId": "commitment-renewable-energy-government-buildings",
+          "basis": "The cited 2 July 2026 renewable-energy report explicitly identifies the New Makati City Hall among facilities switched to 100% renewable energy."
+        },
+        "userSurfaces": [
+          "Accountability entries show linked civic places when an explicit relationship exists.",
+          "Projects & Budget shows a bounded Place-linked follow-through set for project/commitment records with explicit place relationships.",
+          "Civic place pages show related Accountability records and the relationship note."
+        ],
+        "conservativeBoundary": "No broad location string, barangay tag, name similarity or geographic proximity was converted into a relationship.",
+        "deliberatelyUnlinked": [
+          "The 2025 medical-supplies development-fund project names Ospital ng Makati / Makati Health Department, but no exact canonical Ospital ng Makati registry record exists.",
+          "Rosas ng Sampiro and Pride procurement evidence names Makati Coliseum or Poblacion context, but no exact canonical venue relationship is currently available.",
+          "Broad school-, district- and citywide procurements remain unlinked."
+        ],
+        "focusedValidation": "The relationship target exists in Accountability; reverse lookup is used by Accountability and Projects & Budget; the civic place page reads the same canonical relationship."
+      }
     },
     {
       "id": "W3R-9d",
       "title": "Connect City Monitor items to places",
-      "status": "planned",
+      "status": "next",
       "maximumScope": "One-way explicit relationships only for clearly named places. No automated fuzzy matching."
     },
     {
@@ -922,9 +948,9 @@
     }
   ],
   "immediateNext": {
-    "id": "W3R-9c",
-    "title": "Connect places to Projects and Accountability",
-    "maximumScope": "Relationship model plus a small verified example set only. No mass fuzzy matching."
+    "id": "W3R-9d",
+    "title": "Connect City Monitor items to places",
+    "maximumScope": "One-way explicit relationships only for clearly named places. No automated fuzzy matching."
   },
   "capabilityDispositionAuditFile": "data/wave3-capability-disposition-audit.json",
   "completedSteps": [
@@ -953,7 +979,8 @@
     "W3R-8b",
     "W3R-8c",
     "W3R-9a",
-    "W3R-9b"
+    "W3R-9b",
+    "W3R-9c"
   ],
   "placeRegistrySchemaFile": "data/place-registry-schema.json",
   "placeRegistryDataFile": "src/data/placeRegistry.ts",
