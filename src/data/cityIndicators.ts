@@ -1,4 +1,8 @@
-import { currentMakatiPopulation2024 } from './barangays';
+import {
+  barangays,
+  currentMakatiPopulation2024,
+  psaBarangaySource,
+} from './barangays';
 import {
   cityComparisonRows,
   cityComparisonSource,
@@ -228,6 +232,15 @@ export interface CityIndicatorRecord {
 const checkedAt = '2026-09-26';
 
 export const cityIndicatorSources: Record<string, CityIndicatorSource> = {
+  'psa-psgc-makati-current': {
+    id: 'psa-psgc-makati-current',
+    label: 'City of Makati — Philippine Standard Geographic Code',
+    publisher: 'Philippine Statistics Authority',
+    url: psaBarangaySource,
+    sourceClass: 'national-government',
+    role: 'primary-data',
+    checkedAt,
+  },
   'psa-openstat-population-growth-2024': {
     id: 'psa-openstat-population-growth-2024',
     label:
@@ -410,6 +423,59 @@ export const cityIndicatorSources: Record<string, CityIndicatorSource> = {
 };
 
 export const currentMakatiPopulation = currentMakatiPopulation2024;
+
+export const barangayPopulationObservations2024: CityIndicatorObservation[] =
+  barangays.map(barangay => ({
+    value: barangay.population2024,
+    period: {
+      kind: 'census-year',
+      label: '2024',
+      year: 2024,
+    },
+    geography: {
+      type: 'barangay',
+      id: 'barangay-' + barangay.slug,
+      label: barangay.name,
+      barangaySlug: barangay.slug,
+      boundaryBasis: 'canonical-barangay',
+    },
+    sourceIds: ['psa-psgc-makati-current'],
+  }));
+
+const sortedBarangayPopulation2024 = [...barangays].sort(
+  (a, b) => b.population2024 - a.population2024
+);
+const sortedBarangayPopulationValues2024 = [...barangays]
+  .map(barangay => barangay.population2024)
+  .sort((a, b) => a - b);
+
+export const medianBarangayPopulation2024 =
+  sortedBarangayPopulationValues2024[
+    Math.floor(sortedBarangayPopulationValues2024.length / 2)
+  ];
+
+export const barangayPopulationContext2024 = (slug: string) => {
+  const barangay = barangays.find(item => item.slug === slug);
+  if (!barangay) return null;
+
+  const observation = barangayPopulationObservations2024.find(
+    item => item.geography.barangaySlug === slug
+  );
+  const rank =
+    sortedBarangayPopulation2024.findIndex(item => item.slug === slug) + 1;
+
+  return {
+    barangay,
+    observation: observation ?? null,
+    shareOfCity:
+      currentMakatiPopulation2024 > 0
+        ? (barangay.population2024 / currentMakatiPopulation2024) * 100
+        : 0,
+    rankByPopulation: rank,
+    totalBarangays: barangays.length,
+    medianPopulation: medianBarangayPopulation2024,
+  };
+};
 
 const makati2024Comparison = cityComparisonRows.find(row => row.isMakati);
 if (!makati2024Comparison) {
