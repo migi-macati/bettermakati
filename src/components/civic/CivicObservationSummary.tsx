@@ -27,6 +27,7 @@ interface StoredObservation {
 interface ObservationResponse {
   observations?: StoredObservation[];
   threadUrl?: string;
+  asOf?: string;
   error?: string;
 }
 
@@ -40,10 +41,12 @@ const formatDate = (value: string) =>
     day: 'numeric',
   }).format(new Date(value));
 
-const freshness = (observedAt: string) => {
+const freshness = (observedAt: string, asOf: string) => {
   const ageDays = Math.max(
     0,
-    Math.floor((Date.now() - new Date(observedAt).getTime()) / DAY_MS)
+    Math.floor(
+      (new Date(asOf).getTime() - new Date(observedAt).getTime()) / DAY_MS
+    )
   );
   if (ageDays <= 30) return { label: 'Fresh', detail: ageDays + ' days old' };
   if (ageDays <= 90) return { label: 'Recent', detail: ageDays + ' days old' };
@@ -68,14 +71,13 @@ export default function CivicObservationSummary({
 }) {
   const [observations, setObservations] = useState<StoredObservation[]>([]);
   const [threadUrl, setThreadUrl] = useState('');
+  const [asOf, setAsOf] = useState('');
   const [loading, setLoading] = useState(true);
   const [failed, setFailed] = useState(false);
   const questionSet = useMemo(() => observationQuestionSetForPlace(place), [place]);
 
   useEffect(() => {
     const controller = new AbortController();
-    setLoading(true);
-    setFailed(false);
 
     void fetch('/api/civic-observation?placeId=' + encodeURIComponent(place.id), {
       signal: controller.signal,
@@ -85,11 +87,14 @@ export default function CivicObservationSummary({
         if (!response.ok) throw new Error(data.error || 'Observation feed unavailable');
         setObservations(Array.isArray(data.observations) ? data.observations : []);
         setThreadUrl(data.threadUrl || '');
+        setAsOf(data.asOf || '');
+        setFailed(false);
       })
       .catch(error => {
         if (error instanceof DOMException && error.name === 'AbortError') return;
         setObservations([]);
         setThreadUrl('');
+        setAsOf('');
         setFailed(true);
       })
       .finally(() => {
@@ -100,8 +105,11 @@ export default function CivicObservationSummary({
   }, [place.id, refreshKey]);
 
   const latestObservedAt = observations[0]?.observedAt;
-  const freshnessInfo = latestObservedAt ? freshness(latestObservedAt) : null;
-  const windowStart = Date.now() - SUMMARY_WINDOW_DAYS * DAY_MS;
+  const freshnessInfo =
+    latestObservedAt && asOf ? freshness(latestObservedAt, asOf) : null;
+  const windowStart = asOf
+    ? new Date(asOf).getTime() - SUMMARY_WINDOW_DAYS * DAY_MS
+    : Number.NEGATIVE_INFINITY;
 
   const summaries = questionSet.questions.flatMap(question => {
     const answerRows = observations
