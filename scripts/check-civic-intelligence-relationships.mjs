@@ -12,6 +12,7 @@ for (const marker of [
   "'legislation-record'",
   "'integrity-entity'",
   "'integrity-record'",
+  "'procurement-contract'",
   "'report'",
   "'place'",
   "'segment'",
