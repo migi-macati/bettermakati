@@ -98,8 +98,8 @@ for (let index = 0; index < slugMatches.length; index += 1) {
 for (const marker of [
   "import { reportRelatedRecords } from '../data/reportCivicRelationships'",
   'const underlyingRecords = reportRelatedRecords(report.slug)',
-  'Underlying records',
-  'Records synthesized in this report',
+  'Records',
+  'Related records',
   'underlyingRecords.map',
 ]) {
   if (!reportArticle.includes(marker)) {
