@@ -49,13 +49,13 @@ const missing = categories.filter(category => !mappedCategories.includes(categor
 const extra = mappedCategories.filter(category => !categories.includes(category));
 
 if (categories.length !== 16) {
-  problems.push('Expected 16 Place Registry categories but found ' + categories.length + '.');
+  problems.push('Expected 16 Civic Registry categories but found ' + categories.length + '.');
 }
 if (duplicates.length) {
   problems.push('Observation categories mapped more than once: ' + [...new Set(duplicates)].join(', '));
 }
 if (missing.length) {
-  problems.push('Observation schema misses Place Registry categories: ' + missing.join(', '));
+  problems.push('Observation schema misses Civic Registry categories: ' + missing.join(', '));
 }
 if (extra.length) {
   problems.push('Observation schema contains unknown categories: ' + extra.join(', '));
@@ -90,7 +90,7 @@ const questionCount = Object.values(schema.questionSets).reduce(
   0
 );
 if (Object.keys(schema.familyMapping).length !== 5) {
-  problems.push('Structured observations must keep five place families.');
+  problems.push('Structured observations must keep five civic-observation families.');
 }
 if (questionCount !== 41) {
   problems.push('Expected 41 structured questions but found ' + questionCount + '.');
@@ -130,7 +130,7 @@ for (const marker of [
   'Condition snapshots',
 ]) {
   if (!placePageSource.includes(marker)) {
-    problems.push('Place observation summary/form integration is missing: ' + marker);
+    problems.push('Civic observation summary/form integration is missing: ' + marker);
   }
 }
 
@@ -159,7 +159,7 @@ for (const marker of [
   "civicObservationEntityById.get(payload.entityId)",
   "payload.entityName = canonicalEntity.name",
   "payload.entityCategory = canonicalEntity.category",
-  "familyCategories[payload.familyId]?.has(payload.placeCategory)",
+  "familyCategories[payload.familyId]?.has(payload.entityCategory)",
   'validQuestionSetId(payload.familyId, payload.questionSetId)',
   'sanitizeAnswers(payload.familyId, payload.entityCategory, payload.answers)',
   'questionCategoryLimits[familyId]?.[questionId]',
@@ -249,7 +249,7 @@ if (problems.length) {
 console.log(
   'Structured civic-observation integrity OK: ' +
     categories.length +
-    ' place categories, ' +
+    ' civic categories, ' +
     Object.keys(schema.familyMapping).length +
     ' families, ' +
     questionCount +
