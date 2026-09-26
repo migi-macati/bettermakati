@@ -7,6 +7,9 @@ const governmentOfficesPage = await readFile('src/pages/GovernmentOffices.tsx', 
 const serviceGuidePage = await readFile('src/pages/ServiceGuide.tsx', 'utf8');
 const concernFinderPage = await readFile('src/pages/ConcernFinder.tsx', 'utf8');
 const civicMapPage = await readFile('src/pages/CivicMap.tsx', 'utf8');
+const civicAssetPage = await readFile('src/pages/CivicAsset.tsx', 'utf8');
+const civicContributionForm = await readFile('src/components/civic/CivicContributionForm.tsx', 'utf8');
+const civicDiscussion = await readFile('src/components/civic/CivicDiscussion.tsx', 'utf8');
 const serviceSearchSource = await readFile('src/components/home/ServiceSearch.tsx', 'utf8');
 const searchIndexSource = await readFile('src/data/searchIndex.ts', 'utf8');
 const serviceDirectorySource = await readFile('src/data/serviceDirectory.ts', 'utf8');
@@ -228,6 +231,47 @@ if (!searchIndexSource.includes(
   "Browse sourced civic places, report non-emergency problems, suggest improvements and help document Makati."
 )) {
   problems.push('Civic Map search entry still uses the retired rating-first description.');
+}
+
+for (const marker of [
+  'placeRegistryById.get(asset.id)',
+  'place.provenance.sources',
+  'verificationLabel[place.verification.status]',
+  'Place information',
+  'Community cases',
+  'Report or suggest',
+  "allowedKinds={['report', 'proposal', 'update']}",
+]) {
+  if (!civicAssetPage.includes(marker)) {
+    problems.push('Civic place-detail simplification is missing: ' + marker);
+  }
+}
+
+for (const forbidden of [
+  'Report, rate or suggest',
+  'Location & rating criteria',
+  'What people can rate here',
+  'Structured 1–5',
+  'Headline scores',
+  'Community ratings',
+  'Civic Map pilot asset',
+  'Independent community record',
+]) {
+  if (civicAssetPage.includes(forbidden)) {
+    problems.push('Civic place detail still exposes retired rating/pilot framing: ' + forbidden);
+  }
+}
+
+if (!civicContributionForm.includes('allowedKinds?: CivicContributionKind[]')) {
+  problems.push('Civic contribution form no longer supports page-level contribution-kind limits.');
+}
+
+if (civicContributionForm.includes('Independent platform.')) {
+  problems.push('Civic contribution form still repeats the retired platform explainer.');
+}
+
+if (!civicDiscussion.includes('Cases, proposals & updates')) {
+  problems.push('Civic discussion still advertises reviews as a primary place-page section.');
 }
 
 if (problems.length) {
