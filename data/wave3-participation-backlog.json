@@ -1850,12 +1850,19 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Test general participation journeys",
       "maximumScope": "General submission, duplicate, fallback, tracking and barangay-context E2E only.",
-      "status": "next",
+      "status": "complete",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
       ],
-      "stopWhen": "General submission, duplicate, fallback, tracking and barangay-context E2E only."
+      "stopWhen": "General submission, duplicate, fallback, tracking and barangay-context E2E only.",
+      "completedAt": "2026-09-26",
+      "commits": [
+        "3e3360508951519c0000a1dccaa917f152c2c686",
+        "12d3b9dda1b154063fedcb2c2d04693373ebc92d",
+        "09f450e8c7580f239b2e96720108a8bf50ea7103",
+        "c72e6858e8ea9e17a0cffa6581fd8e55fcfbdef2"
+      ]
     },
     {
       "id": "W3R-11d",
@@ -1864,7 +1871,7 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Test public-place participation journeys",
       "maximumScope": "Nearby reporting, place matching, duplicate case, lifecycle, observation and pilot audit E2E only.",
-      "status": "planned",
+      "status": "next",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
@@ -2042,9 +2049,10 @@
       "W3R-10b",
       "W3R-10c",
       "W3R-11a",
-      "W3R-11b"
+      "W3R-11b",
+      "W3R-11c"
     ],
-    "current": "W3R-11c",
+    "current": "W3R-11d",
     "capabilityDispositionAuditFile": "data/wave3-capability-disposition-audit.json"
   },
   "knownCoverageGaps": {
