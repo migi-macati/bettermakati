@@ -26,7 +26,7 @@ import {
 import { placeRegistryById, placesByBarangay } from '../data/placeRegistry';
 
 interface FeedItem {
-  kind: 'report' | 'proposal' | 'update' | 'reviews';
+  kind: 'report' | 'proposal' | 'update';
   state: 'open' | 'closed';
   meta?: { assetId?: string };
 }
