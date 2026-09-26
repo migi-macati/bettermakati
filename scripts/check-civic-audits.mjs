@@ -7,6 +7,16 @@ const observations = JSON.parse(
   await readFile('data/structured-observation-schema.json', 'utf8')
 );
 const registrySource = await readFile('src/data/placeRegistry.ts', 'utf8');
+const pilot = JSON.parse(
+  await readFile('data/civic-audit-pilot-park-accessibility-2026.json', 'utf8')
+);
+const parkAudit = JSON.parse(
+  await readFile('data/wave3-civic-map-parks-completeness-audit.json', 'utf8')
+);
+const pilotSource = await readFile('src/data/civicAuditPilot.ts', 'utf8');
+const pilotPageSource = await readFile('src/pages/CivicAuditPilot.tsx', 'utf8');
+const appSource = await readFile('src/App.tsx', 'utf8');
+const civicMapPage = await readFile('src/pages/CivicMap.tsx', 'utf8');
 
 const problems = [];
 
@@ -63,6 +73,8 @@ for (const policy of ['verified-only', 'bounded-provisional-linear-allowed']) {
   }
 }
 
+let registryAssets = [];
+
 const sourceMarker = 'export const civicAssets: CivicAsset[] = ';
 const sourceStart = registrySource.indexOf(sourceMarker);
 const arrayStart = registrySource.indexOf('[', sourceStart + sourceMarker.length);
@@ -107,18 +119,18 @@ for (let index = arrayStart; index < registrySource.length; index += 1) {
 if (arrayStart < 0 || arrayEnd < 0) {
   problems.push('Could not parse Civic Registry seed list.');
 } else {
-  const assets = Function(
+  registryAssets = Function(
     'return (' + registrySource.slice(arrayStart, arrayEnd) + ')'
   )();
 
-  const streetSegments = assets.filter(asset => asset.type === 'street-segment');
+  const streetSegments = registryAssets.filter(asset => asset.type === 'street-segment');
   const provisionalStreetSegments = streetSegments.filter(
     asset => asset.status === 'pilot'
   );
   const verifiedStreetSegments = streetSegments.filter(
     asset => asset.status === 'mapped' && asset.sourceUrl && asset.coordinateSourceUrl
   );
-  const sidewalkSegments = assets.filter(
+  const sidewalkSegments = registryAssets.filter(
     asset => asset.type === 'sidewalk-segment'
   );
 
@@ -159,6 +171,129 @@ if (arrayStart < 0 || arrayEnd < 0) {
   }
 }
 
+
+const pilotCampaign = pilot.campaign;
+const pilotTargetIds = pilotCampaign.targetSet.frozenEntityIds;
+const expectedGovernmentPublicParkIds =
+  parkAudit.currentCivicMapParkLayer.governmentPublicIds;
+
+if (pilot.status !== 'collecting') {
+  problems.push('Park accessibility pilot must be in collecting status.');
+}
+if (pilotCampaign.targetSet.entityKind !== 'place') {
+  problems.push('Park accessibility pilot must target place entities.');
+}
+if (pilotCampaign.targetSet.targetEligibility !== 'verified-only') {
+  problems.push('Park accessibility pilot must use verified-only targeting.');
+}
+if (pilotCampaign.questions.familyId !== 'park-public-space') {
+  problems.push('Park accessibility pilot must use the park-public-space family.');
+}
+if (pilotCampaign.questions.questionSetId !== 'park-public-space-v1') {
+  problems.push('Park accessibility pilot must use park-public-space-v1.');
+}
+if (
+  pilotTargetIds.length !== 13 ||
+  new Set(pilotTargetIds).size !== pilotTargetIds.length
+) {
+  problems.push('Park accessibility pilot must freeze exactly 13 unique targets.');
+}
+if (
+  pilotTargetIds.length !== expectedGovernmentPublicParkIds.length ||
+  pilotTargetIds.some(id => !expectedGovernmentPublicParkIds.includes(id)) ||
+  expectedGovernmentPublicParkIds.some(id => !pilotTargetIds.includes(id))
+) {
+  problems.push('Park accessibility pilot target set is out of sync with the reconciled 13 public parks.');
+}
+
+for (const id of pilotTargetIds) {
+  const asset = registryAssets.find(item => item.id === id);
+  if (!asset) {
+    problems.push('Pilot target is missing from Civic Registry seeds: ' + id);
+    continue;
+  }
+  if (asset.type !== 'park') {
+    problems.push('Pilot target is not a park: ' + id);
+  }
+  if (asset.accessClass !== 'government-public') {
+    problems.push('Pilot target is not government-public: ' + id);
+  }
+  if (!(asset.status === 'mapped' && asset.sourceUrl && asset.coordinateSourceUrl)) {
+    problems.push('Pilot target is not verified under the current registry migration rule: ' + id);
+  }
+}
+
+const parkQuestionSet = observations.questionSets['park-public-space-v1'];
+const parkQuestionIds = new Set(
+  parkQuestionSet?.questions?.map(question => question.id) ?? []
+);
+for (const questionId of pilotCampaign.questions.questionIds) {
+  if (!parkQuestionIds.has(questionId)) {
+    problems.push('Pilot question is missing from park-public-space-v1: ' + questionId);
+  }
+}
+for (const requiredQuestionId of pilotCampaign.questions.requiredQuestionIds) {
+  if (!pilotCampaign.questions.questionIds.includes(requiredQuestionId)) {
+    problems.push('Pilot required question is not in questionIds: ' + requiredQuestionId);
+  }
+}
+
+const startsAt = new Date(pilotCampaign.period.startsAt).getTime();
+const endsAt = new Date(pilotCampaign.period.endsAt).getTime();
+if (!Number.isFinite(startsAt) || !Number.isFinite(endsAt) || endsAt <= startsAt) {
+  problems.push('Park accessibility pilot period is invalid.');
+}
+
+if (pilotCampaign.completion.minimumObservationsPerEntity !== 2) {
+  problems.push('Park accessibility pilot must seek two observations per park.');
+}
+if (pilotCampaign.completion.coverageTargetPercent !== 100) {
+  problems.push('Park accessibility pilot coverage target must remain 100 percent.');
+}
+
+const frontendTargetIds = [
+  ...pilotSource.matchAll(/\n\s+'([^']+)',/g),
+]
+  .map(match => match[1])
+  .filter(value => expectedGovernmentPublicParkIds.includes(value));
+
+if (
+  frontendTargetIds.length !== pilotTargetIds.length ||
+  frontendTargetIds.some(id => !pilotTargetIds.includes(id))
+) {
+  problems.push('Frontend park audit target IDs are out of sync with the frozen campaign.');
+}
+
+for (const marker of [
+  "id: 'makati-public-park-accessibility-2026-pilot'",
+  "minimumObservationsPerEntity: 2",
+  "'entrance-access'",
+  "'step-free-access'",
+  "'seating'",
+  "'toilets'",
+]) {
+  if (!pilotSource.includes(marker)) {
+    problems.push('Frontend pilot data is missing: ' + marker);
+  }
+}
+
+for (const marker of [
+  'Choose a park to observe',
+  "to={'/civic-map/' + place.id + '#observe'}",
+  'Record conditions',
+]) {
+  if (!pilotPageSource.includes(marker)) {
+    problems.push('Park accessibility pilot page is missing: ' + marker);
+  }
+}
+
+if (!appSource.includes('path="/civic-map/audits/park-accessibility-2026"')) {
+  problems.push('Park accessibility pilot route is missing.');
+}
+if (!civicMapPage.includes('to="/civic-map/audits/park-accessibility-2026"')) {
+  problems.push('Civic Map does not surface the park accessibility pilot.');
+}
+
 for (const forbidden of [
   'overall-score',
   'star-rating',
@@ -186,5 +321,5 @@ console.log(
     campaignFamilies.size +
     ' families, ' +
     workflowStages.length +
-    ' workflow stages, street inventory gap explicitly gated.'
+    ' workflow stages, 13-park accessibility pilot frozen, street inventory gap explicitly gated.'
 );
