@@ -208,7 +208,7 @@
               "overall-score",
               "star-rating",
               "weighted-composite",
-              "place-ranking",
+              "entity-ranking",
               "best-worst-label",
               "hidden-numeric-conversion"
             ]
