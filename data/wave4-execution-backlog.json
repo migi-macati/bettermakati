@@ -472,9 +472,23 @@
       "id": "W4-2g",
       "phase": "Legislation",
       "title": "Redesign Legislation page around local records",
-      "status": "planned",
+      "status": "partial",
       "maximumScope": "Legislation page only. Canonical local search/filter/browse becomes primary; external site search becomes fallback.",
-      "stopWhen": "Users can find and open BetterMakati-indexed ordinances/resolutions and reach the official text without leaving the site first."
+      "stopWhen": "Users can find and open BetterMakati-indexed ordinances/resolutions and reach the official text without leaving the site first.",
+      "implementationFiles": [
+        "src/pages/Legislation.tsx",
+        "scripts/check-local-legislation.mjs"
+      ],
+      "validation": {
+        "localSearchPrimary": true,
+        "currentIndexedRecordCount": 20,
+        "measureTypeFilters": [
+          "ordinance",
+          "resolution"
+        ],
+        "officialArchiveRole": "fallback",
+        "remaining": "Promote the full normalized official archive into a browser-safe local index and add local record/detail access for official text/document links where available."
+      }
     },
     {
       "id": "W4-2h",
