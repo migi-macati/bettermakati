@@ -34,6 +34,14 @@ const reviewedOn = '26 September 2026';
 const moneyB = (millions: number) =>
   '₱' + (millions / 1000).toFixed(2).replace(/\.00$/, '') + 'B';
 
+const moneyM = (millions: number) =>
+  '₱' +
+  millions.toLocaleString('en-PH', {
+    minimumFractionDigits: Number.isInteger(millions) ? 0 : 2,
+    maximumFractionDigits: 3,
+  }) +
+  'M';
+
 const percent = (value: number) => value.toFixed(1) + '%';
 
 const pctChange = (from: number, to: number) =>
@@ -1104,7 +1112,7 @@ export const reports: [
               amount:
                 finding.amountM === undefined
                   ? '—'
-                  : moneyB(finding.amountM),
+                  : moneyM(finding.amountM),
               laterEvidence:
                 actions.length +
                 ' record' +
