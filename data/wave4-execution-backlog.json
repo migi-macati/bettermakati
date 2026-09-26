@@ -794,9 +794,56 @@
       "id": "W4-4b",
       "phase": "Reports & Insights",
       "title": "Define report schema v2",
-      "status": "planned",
+      "status": "complete",
       "maximumScope": "Schema only: one synthesis, headline, subheadline, date, paragraphs/sections, inline evidence, charts/tables, related canonical records, methodology note only when necessary.",
-      "stopWhen": "The schema supports a news/article reading experience and typed links to statistics, legislation, integrity, place, project and accountability records."
+      "stopWhen": "The schema supports a news/article reading experience and typed links to statistics, legislation, integrity, place, project and accountability records.",
+      "completedAt": "2026-09-26",
+      "implementationFiles": [
+        "src/data/reportTypes.ts",
+        "scripts/check-report-schema-v2.mjs",
+        "package.json"
+      ],
+      "validation": {
+        "requiredTopLevelFields": [
+          "schemaVersion",
+          "slug",
+          "date",
+          "headline",
+          "subheadline",
+          "synthesis",
+          "sections",
+          "sources"
+        ],
+        "contentBlocks": [
+          "paragraph",
+          "stat",
+          "table",
+          "chart"
+        ],
+        "paragraphRoles": [
+          "fact",
+          "analysis",
+          "context"
+        ],
+        "factEvidenceRule": "Fact paragraphs, stat blocks, tables and charts require at least one source ID; analysis/context evidence remains optional.",
+        "canonicalRecordTypes": [
+          "statistics-indicator",
+          "legislation",
+          "integrity-entity",
+          "integrity-disclosure",
+          "integrity-audit-finding",
+          "place",
+          "project",
+          "accountability-entry"
+        ],
+        "sourceKinds": [
+          "canonical-internal",
+          "official-external",
+          "secondary"
+        ],
+        "methodologyRule": "Methodology remains optional and is intended only when definitions, comparison bases, transformations or limitations materially affect interpretation.",
+        "scopeBoundary": "No current Featured Report content or public renderer is migrated in W4-4b."
+      }
     },
     {
       "id": "W4-4c",
@@ -927,11 +974,11 @@
       "stopWhen": "Wave 4 is closed only to the extent supported by evidence, with future work reopened as specific capabilities rather than vague unfinished work."
     }
   ],
-  "current": "W4-4b",
+  "current": "W4-4c",
   "immediateNext": {
-    "id": "W4-4b",
-    "title": "Define report schema v2",
-    "maximumScope": "Schema only: one synthesis, headline, subheadline, date, paragraphs/sections, inline evidence, charts/tables, related canonical records, methodology note only when necessary."
+    "id": "W4-4c",
+    "title": "Migrate existing reports to report schema v2",
+    "maximumScope": "Existing reports only. No new research except resolving broken citations."
   },
   "carriedForward": [
     {
