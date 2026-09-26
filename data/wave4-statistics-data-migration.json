@@ -22,8 +22,9 @@
         },
         {
           "location": "src/pages/Statistics.tsx",
-          "status": "migrate-W4-1g",
-          "action": "Replace headline and populationTrend literals with canonical city-indicator selectors."
+          "status": "migrated-in-W4-1g",
+          "action": "Replace headline and populationTrend literals with canonical city-indicator selectors.",
+          "completedAt": "2026-09-26"
         },
         {
           "location": "src/data/reports.ts",
@@ -43,8 +44,9 @@
       "disposition": [
         {
           "location": "src/pages/Statistics.tsx",
-          "status": "migrate-W4-1g",
-          "action": "Derive the headline count from canonical barangays rather than store '23' as display data."
+          "status": "migrated-in-W4-1g",
+          "action": "Derive the headline count from canonical barangays rather than store '23' as display data.",
+          "completedAt": "2026-09-26"
         }
       ]
     },
@@ -59,8 +61,9 @@
       "disposition": [
         {
           "location": "src/pages/Statistics.tsx",
-          "status": "migrate-W4-1g",
-          "action": "Format the canonical gdp-per-capita observation instead of retaining the independent ₱3.89M string."
+          "status": "migrated-in-W4-1g",
+          "action": "Format the canonical gdp-per-capita observation instead of retaining the independent ₱3.89M string.",
+          "completedAt": "2026-09-26"
         },
         {
           "location": "src/data/cityComparison.ts",
@@ -79,8 +82,9 @@
       "disposition": [
         {
           "location": "src/pages/Statistics.tsx",
-          "status": "migrate-W4-1g",
-          "action": "Remove page-local time-series constants and render from the canonical indicators."
+          "status": "migrated-in-W4-1g",
+          "action": "Remove page-local time-series constants and render from the canonical indicators.",
+          "completedAt": "2026-09-26"
         }
       ]
     },
