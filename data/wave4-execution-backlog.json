@@ -229,15 +229,26 @@
       "id": "W4-1h",
       "phase": "Statistics",
       "title": "Integrate barangay statistics",
-      "status": "next",
+      "status": "complete",
       "maximumScope": "Barangay-scoped statistical view only. Reuse canonical barangay data and indicator definitions.",
-      "stopWhen": "Applicable city indicators can be sliced to canonical barangays without pretending unavailable barangay data exists."
+      "stopWhen": "Applicable city indicators can be sliced to canonical barangays without pretending unavailable barangay data exists.",
+      "completedAt": "2026-09-26",
+      "implementationFiles": [
+        "src/data/cityIndicators.ts",
+        "src/pages/Statistics.tsx",
+        "scripts/check-city-indicators.mjs"
+      ],
+      "commits": [
+        "024618ef45ae00b332a23a295b028323d1cfbef9",
+        "372ac2d5d8b75fd2de515a433531b4ec496caadf",
+        "5f907ee4aa7c7a235dfc0d9fd10d1da6302d7b99"
+      ]
     },
     {
       "id": "W4-1i",
       "phase": "Statistics",
       "title": "Add statistics downloads and provenance integrity",
-      "status": "planned",
+      "status": "next",
       "maximumScope": "Downloads/source metadata only. No new indicator research.",
       "stopWhen": "Displayed time series and comparison tables have reproducible downloads and source/definition metadata."
     },
@@ -506,11 +517,11 @@
       "stopWhen": "Wave 4 is closed only to the extent supported by evidence, with future work reopened as specific capabilities rather than vague unfinished work."
     }
   ],
-  "current": "W4-1h",
+  "current": "W4-1i",
   "immediateNext": {
-    "id": "W4-1h",
-    "title": "Integrate barangay statistics",
-    "maximumScope": "Barangay-scoped statistical view only. Reuse canonical barangay data and indicator definitions."
+    "id": "W4-1i",
+    "title": "Add statistics downloads and provenance integrity",
+    "maximumScope": "Downloads/source metadata only. No new indicator research."
   },
   "carriedForward": [
     {
