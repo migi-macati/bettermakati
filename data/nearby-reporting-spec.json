@@ -1,0 +1,273 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-09-26",
+  "workstream": "W3R-5a",
+  "title": "Report something near me — flow specification",
+  "status": "approved-for-implementation",
+  "intent": "Let a person start from where the problem is, see plausible nearby BetterMakati places, confirm the right place when one exists, and still report when the place is missing or unmatched.",
+  "productRules": [
+    "Location-first reporting is an alternative to searching the Civic Map; it does not replace place pages.",
+    "Nearby matching suggests candidates and never auto-selects or silently assigns a place.",
+    "A report must remain possible when no canonical place matches.",
+    "Location-only reports must not create fake Place Registry records or fake place IDs.",
+    "Only verified Place Registry records are eligible for automatic nearby suggestions.",
+    "Emergency routing, duplicate detection, evidence states, public tracking and submission fallback are preserved.",
+    "The browser must never request location permission on page load.",
+    "Exact device location is ephemeral matching input, not canonical place data."
+  ],
+  "entryPoints": {
+    "primary": {
+      "label": "Report something near me",
+      "futureRoute": "/civic-map/report",
+      "source": "Civic Map task entry"
+    },
+    "futureReuse": [
+      "Participation Hub",
+      "BetterBarangay participation",
+      "Near Me utility"
+    ],
+    "directPlaceReporting": "Existing place-detail Report a problem action remains available and bypasses nearby matching because the place is already known."
+  },
+  "flow": [
+    {
+      "step": 1,
+      "id": "locate",
+      "title": "Where is the problem?",
+      "choices": [
+        {
+          "id": "use-current-location",
+          "label": "Use my current location",
+          "behavior": "Request browser geolocation only after the user taps this choice."
+        },
+        {
+          "id": "search-place",
+          "label": "Search for a place or street",
+          "behavior": "Use Place Registry text search/manual selection without asking for device location."
+        },
+        {
+          "id": "choose-location-manually",
+          "label": "Choose the location manually",
+          "behavior": "Allow a map/pin or equivalent coordinate selection without geolocation permission."
+        }
+      ],
+      "permissionStates": {
+        "granted": "Use the returned point and accuracy only for the current flow.",
+        "denied": "Do not reprompt automatically. Keep Search and Choose manually available.",
+        "unavailable": "Show the same manual alternatives without an error dead-end.",
+        "lowAccuracy": "Continue, but label the result approximate and require explicit place confirmation."
+      }
+    },
+    {
+      "step": 2,
+      "id": "match-place",
+      "title": "Is it one of these places?",
+      "behavior": [
+        "Show up to five nearby verified candidates.",
+        "Show name, category, barangay when known and approximate distance.",
+        "Always require the user to choose a candidate or choose None of these.",
+        "Provide Search another place even when nearby candidates exist.",
+        "Do not require the candidate to be in the currently selected BetterBarangay; border cases may cross barangay boundaries."
+      ],
+      "noMatchChoice": {
+        "id": "location-only",
+        "label": "None of these — report this location",
+        "consequence": "Continue without a canonical place ID. Require a short human-readable location description before submit."
+      }
+    },
+    {
+      "step": 3,
+      "id": "issue",
+      "title": "What is the problem?",
+      "matchedPlace": "Use issueCategoriesForAsset(place.primaryCategory) so the existing taxonomy remains asset-aware.",
+      "locationOnly": {
+        "rule": "Use a defined public-realm baseline subset of the existing civic issue taxonomy rather than exposing transport/facility-specific categories without a place context.",
+        "categoryIds": [
+          "open-manhole",
+          "traffic-signal",
+          "dangerous-tree",
+          "sidewalk-blocked",
+          "vehicle-obstruction",
+          "graffiti",
+          "litter",
+          "pothole",
+          "broken-sidewalk",
+          "curb-ramp",
+          "crossing-problem",
+          "streetlight",
+          "flooding",
+          "drainage-blocked",
+          "construction-obstruction",
+          "damaged-equipment",
+          "accessibility-barrier"
+        ]
+      },
+      "emergencyBehavior": "If an emergency category is selected, stop the civic report flow and show the existing 911 handoff. Do not submit a BetterMakati case."
+    },
+    {
+      "step": 4,
+      "id": "details",
+      "title": "Add details",
+      "fields": [
+        "Issue details — required",
+        "Short subject — optional/current behavior",
+        "Side or direction when relevant",
+        "Severity for non-emergency reports",
+        "Public name/alias — optional",
+        "Evidence URL — optional"
+      ],
+      "matchedPlaceLocation": "Keep the selected place ID and use the incident point as location context when one was supplied.",
+      "locationOnlyRequirement": "Require a short location description such as a corner, landmark or street stretch because no canonical place name exists."
+    },
+    {
+      "step": 5,
+      "id": "review-submit",
+      "title": "Review & submit",
+      "reviewItems": [
+        "Selected place, or Location only",
+        "Approximate report location",
+        "Issue category",
+        "Details/evidence"
+      ],
+      "submitBehavior": "Hand off to the existing civic submission path with emergency filtering and duplicate detection preserved."
+    },
+    {
+      "step": 6,
+      "id": "result",
+      "title": "Track the case",
+      "success": "Show the existing public BetterMakati case/tracking link.",
+      "duplicate": "Show existing nearby matching cases and let the user confirm/update one or create a separate case when genuinely different.",
+      "fallback": "Preserve the existing pre-filled GitHub fallback when native storage is unavailable."
+    }
+  ],
+  "nearbyMatching": {
+    "implementationTarget": "W3R-5b",
+    "source": "Place Registry + existing placesWithinDistance helper",
+    "automaticCandidateRequirements": [
+      "verification.status === verified",
+      "location.point exists",
+      "lifecycle.status is not closed",
+      "lifecycle.status is not future",
+      "location.relationToMakati is not serves-makati-outside"
+    ],
+    "excludedFromAutomaticMatching": [
+      "transport-route, because one representative point is not a reliable proxy for an entire route"
+    ],
+    "searchRadiiMeters": {
+      "initial": 250,
+      "expandIfEmpty": 500
+    },
+    "maximumCandidates": 5,
+    "ordering": [
+      "Nearest great-circle distance first.",
+      "Stable name tie-breaker.",
+      "Do not infer containment from a representative point.",
+      "Do not apply hidden category or barangay preference before the user chooses the issue."
+    ],
+    "accuracyHandling": {
+      "accuracy<=100m": "Normal candidate list; still no auto-selection.",
+      "100m<accuracy<=250m": "Label location approximate and show candidates; explicit confirmation remains mandatory.",
+      "accuracy>250m": "Do not present any candidate as likely/correct. Prefer manual search or manual pin, though nearby candidates may still be shown as broad suggestions."
+    },
+    "distanceDisplay": "Round candidate distance for display; do not imply survey-grade precision.",
+    "confidenceModel": "No numeric confidence score in W3R-5. Confirmation by the user is the identity decision."
+  },
+  "locationOnlyCases": {
+    "canonicalPlaceId": null,
+    "rule": "Do not invent a synthetic Place Registry ID.",
+    "futurePayloadV2": {
+      "placeId": null,
+      "locationMode": "location-only",
+      "locationLabel": "user-provided short description",
+      "lat": "rounded incident latitude",
+      "lng": "rounded incident longitude"
+    },
+    "duplicateDetection": "For location-only reports, compare open reports with the same category within the existing 75 m duplicate radius instead of requiring identical assetId.",
+    "registryEffect": "A location-only report never creates or edits a Place Registry record. A separate Help document Makati action may later propose a missing place."
+  },
+  "matchedPlaceCases": {
+    "backwardCompatibility": "Keep sending the selected stable place ID through the existing assetId field during W3R-5c so existing case pages and duplicate logic continue to work.",
+    "futureMetadata": "Add placeId/locationMode fields when case metadata is versioned, but do not require a bulk migration of old cases.",
+    "duplicateDetection": "Preserve same-place + same-category + <=75 m behavior."
+  },
+  "privacy": {
+    "locationPermission": "Explicit user action only; no background or automatic location request.",
+    "ephemeralDevicePoint": "The raw browser geolocation point and accuracy are used in memory for candidate matching and cleared when the flow ends.",
+    "persistence": "Do not persist geolocation accuracy or the raw device point simply because permission was granted.",
+    "submittedIncidentPoint": "When a coordinate is submitted, use the user-confirmed incident location and round to 4 decimal places before public case persistence, roughly block/10-metre scale in Makati.",
+    "analytics": "Do not add location coordinates to analytics or client logs as part of W3R-5.",
+    "permissionDenial": "A denied location permission must not reduce functionality beyond removing automatic nearby suggestions."
+  },
+  "stateModel": {
+    "locationSource": [
+      "device",
+      "manual-pin",
+      "place-search",
+      "none"
+    ],
+    "placeMatch": [
+      "confirmed-place",
+      "location-only",
+      "unresolved"
+    ],
+    "geolocationState": [
+      "idle",
+      "requesting",
+      "granted",
+      "denied",
+      "unavailable"
+    ],
+    "submissionState": [
+      "editing",
+      "emergency-handoff",
+      "checking-duplicates",
+      "duplicate-found",
+      "submitting",
+      "success",
+      "fallback",
+      "error"
+    ]
+  },
+  "accessibilityAndMobile": [
+    "The flow must work without an interactive map; candidate cards and manual text search are first-class.",
+    "Keyboard and screen-reader users must be able to complete every step.",
+    "Location permission is triggered by a labeled button, never by focus or page load.",
+    "Selected place/location remains visible while completing issue details.",
+    "Back navigation between steps retains entered details locally."
+  ],
+  "failureAndFallbackRules": [
+    "Geolocation denied/unavailable → Search place or Choose manually.",
+    "No nearby candidates → Location-only remains available immediately.",
+    "Wrong candidate → Search another place or Location-only.",
+    "Place is missing → Do not force the user to document the place before reporting the problem.",
+    "Civic API unavailable → existing GitHub fallback.",
+    "Emergency category → 911 handoff, no civic case.",
+    "Duplicate detected → existing confirm/update/separate-case UX."
+  ],
+  "notInScope": [
+    "Automatic forwarding to city government",
+    "Reverse-geocoding service integration",
+    "New civic issue taxonomy",
+    "Photo/file upload",
+    "Structured observations or ratings",
+    "Place Registry creation from user submissions",
+    "Route geometry or polygon containment",
+    "Outcome metrics/instrumentation"
+  ],
+  "acceptanceCriteria": [
+    "The specification supports reporting without first knowing a Civic Map place.",
+    "The browser never requests location before explicit user action.",
+    "Nearby suggestions use only verified registry places and never auto-select.",
+    "The user can reject all suggestions and continue with a location-only report.",
+    "Location-only reporting does not require or invent a Place Registry ID.",
+    "Emergency categories still terminate into the 911 path.",
+    "Matched-place duplicate semantics remain same place + same category + <=75 m.",
+    "Location-only duplicate semantics are same category + <=75 m.",
+    "Raw device location/accuracy is not persisted merely for matching.",
+    "The flow remains usable without geolocation permission and without an interactive map."
+  ],
+  "handoff": {
+    "W3R5b": "Implement candidate matching and location-selection state only. Do not submit reports yet.",
+    "W3R5c": "Connect confirmed-place and location-only paths to civic submission; extend backend metadata/duplicate logic only as required by this spec.",
+    "W3R5d": "Reconnect lifecycle display/relationships after the new report path is operational."
+  }
+}
