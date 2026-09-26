@@ -146,15 +146,20 @@
       "id": "W4-1c",
       "phase": "Statistics",
       "title": "Inventory population and demographic sources",
-      "status": "next",
+      "status": "complete",
       "maximumScope": "Official-source research only for comparable population/demographic series under current Makati geography.",
-      "stopWhen": "Population/demographic source inventory has explicit time, geography and inclusion/exclusion rules."
+      "stopWhen": "Population/demographic source inventory has explicit time, geography and inclusion/exclusion rules.",
+      "completedAt": "2026-09-26",
+      "inventoryFile": "data/wave4-population-demographic-source-inventory.json",
+      "commits": [
+        "20656c725a71a9c74331f2bdfa034e7f774fbdd4"
+      ]
     },
     {
       "id": "W4-1d",
       "phase": "Statistics",
       "title": "Inventory economic and business indicators",
-      "status": "planned",
+      "status": "next",
       "maximumScope": "Official-source research only for GDP/economic structure, establishments/employment/business indicators that can be stated consistently.",
       "stopWhen": "Each candidate indicator has a source, definition, period and decision: implement, hold or reject."
     },
@@ -463,11 +468,11 @@
       "stopWhen": "Wave 4 is closed only to the extent supported by evidence, with future work reopened as specific capabilities rather than vague unfinished work."
     }
   ],
-  "current": "W4-1c",
+  "current": "W4-1d",
   "immediateNext": {
-    "id": "W4-1c",
-    "title": "Inventory population and demographic sources",
-    "maximumScope": "Official-source research only for comparable population/demographic series under current Makati geography."
+    "id": "W4-1d",
+    "title": "Inventory economic and business indicators",
+    "maximumScope": "Official-source research only for GDP/economic structure, establishments/employment/business indicators that can be stated consistently."
   },
   "carriedForward": [
     {
