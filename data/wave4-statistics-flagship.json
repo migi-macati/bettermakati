@@ -1,0 +1,28 @@
+{
+  "wave": "W4-4d",
+  "publishedOn": "2026-09-26",
+  "publishedReportSlugs": [
+    "2024-population-growth-acceleration"
+  ],
+  "synthesis": "Makati's PSA-reported average annual resident-population growth accelerated in 2020–2024 after slowing in the prior interval, while population rose by 17,027 on the current 23-barangay boundary.",
+  "canonicalIndicators": [
+    "population-total",
+    "population-growth-rate"
+  ],
+  "primarySourceId": "psa-openstat-population-growth-2024",
+  "claims": {
+    "growth2010to2015Percent": 1.16,
+    "growth2015to2020Percent": 0.93,
+    "growth2020to2024Percent": 1.37,
+    "accelerationVsPriorIntervalPercentagePoints": 0.44,
+    "population2020": 292743,
+    "population2024": 309770,
+    "populationAdded2020to2024": 17027
+  },
+  "boundaries": [
+    "Uses the PSA-published average annual growth rate rather than recomputing a simple calendar-year CAGR.",
+    "Uses the comparable current Makati 23-barangay boundary.",
+    "Does not infer why growth accelerated.",
+    "Does not treat resident population as daytime population."
+  ]
+}
