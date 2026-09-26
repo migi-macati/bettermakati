@@ -51,11 +51,9 @@ const payload = {
 const expectedIssueTitle = '[Source] Poblacion public record';
 const expectedIssueBody = [
   '_Submitted through the BetterMakati website._',
-  '',
   '**Community tool:** accountability-ledger',
   '**Barangay / area:** Poblacion',
   '**Source / URL:** https://www.makati.gov.ph/example-record',
-  '',
   'Please add this source to the local public-record coverage.',
 ].join('\n');
 
