@@ -1320,9 +1320,55 @@
       "id": "W4-5h",
       "phase": "Cross-linking and closure",
       "title": "Run anti-sermon and design consistency pass",
-      "status": "planned",
+      "status": "complete",
       "maximumScope": "Wave 4 surfaces only. Remove explanatory/meta copy, duplicate methodology, bragging and inconsistent visual patterns; do not add new functionality.",
-      "stopWhen": "Statistics, Legislation, Integrity and Reports share the BetterMakati visual language and let the records/features speak for themselves."
+      "stopWhen": "Statistics, Legislation, Integrity and Reports share the BetterMakati visual language and let the records/features speak for themselves.",
+      "completedAt": "2026-09-26",
+      "implementationFiles": [
+        "src/pages/Statistics.tsx",
+        "src/pages/Legislation.tsx",
+        "src/pages/Integrity.tsx",
+        "src/pages/Reports.tsx",
+        "src/pages/ReportArticle.tsx",
+        "src/pages/PublicRecordDetail.tsx",
+        "scripts/check-local-legislation.mjs",
+        "scripts/check-integrity-page.mjs",
+        "scripts/check-report-civic-relationships.mjs",
+        "scripts/check-wave4-public-records.mjs",
+        "scripts/check-wave4-design-consistency.mjs",
+        "package.json"
+      ],
+      "validation": {
+        "sharedVisualLanguage": "Statistics, Legislation, Integrity, Reports and Public Record detail use dark-green publication headers with gold/secondary eyebrow treatment where applicable.",
+        "removedMetaCopy": [
+          "BetterMakati index",
+          "BetterMakati ID",
+          "Makati archive ID",
+          "Public Records ID",
+          "Follow the record",
+          "What the checked public record returned",
+          "Record and source status checked on the date shown",
+          "Dates on each indicator show the observation or source snapshot",
+          "Records synthesized in this report",
+          "Across BetterMakati"
+        ],
+        "contentFirstLabels": [
+          "Indexed records",
+          "Disclosure records",
+          "Source records",
+          "Related records",
+          "Where this source appears",
+          "Civic analysis"
+        ],
+        "preservedInterpretiveCaveats": [
+          "Statistics current-boundary warning",
+          "Statistics resident-versus-workplace labor distinction",
+          "Integrity Not retrieved meaning",
+          "Integrity unresolved audit reason",
+          "Public Record PDF embed fallback"
+        ],
+        "scopeBoundary": "No new Wave 4 functionality or evidence was added in W4-5h."
+      }
     },
     {
       "id": "W4-5i",
@@ -1341,11 +1387,11 @@
       "stopWhen": "Wave 4 is closed only to the extent supported by evidence, with future work reopened as specific capabilities rather than vague unfinished work."
     }
   ],
-  "current": "W4-5h",
+  "current": "W4-5i",
   "immediateNext": {
-    "id": "W4-5h",
-    "title": "Run anti-sermon and design consistency pass",
-    "maximumScope": "Wave 4 surfaces only. Remove explanatory/meta copy, duplicate methodology, bragging and inconsistent visual patterns; do not add new functionality."
+    "id": "W4-5i",
+    "title": "Run Civic Intelligence human/relationship audit",
+    "maximumScope": "Wave 4 surfaces and cross-links only. Check source integrity, broken relationships, mobile/accessibility baseline and user journeys."
   },
   "carriedForward": [
     {
