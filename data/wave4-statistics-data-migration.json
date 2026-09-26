@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-09-26",
+  "workstream": "W4-1f — Canonical indicator data migration disposition",
+  "rule": "A duplicated number may remain temporarily in a consumer only when its migration owner is explicit. Publication prose may retain a dated quoted value, but must not become a reusable data owner.",
+  "items": [
+    {
+      "id": "canonical-current-population",
+      "fact": "2024 Makati population",
+      "formerCopies": [
+        "src/data/barangays.ts — 23 population2024 records",
+        "src/data/budget2025.ts — cityPopulation = 309770",
+        "src/pages/Statistics.tsx — headline card and populationTrend",
+        "src/data/reports.ts — dated publication prose"
+      ],
+      "canonicalOwner": "src/data/barangays.ts#currentMakatiPopulation2024 for current total; src/data/cityIndicators.ts#population-total for the comparable city time series",
+      "disposition": [
+        {
+          "location": "src/data/budget2025.ts",
+          "status": "migrated-in-W4-1f",
+          "action": "cityPopulation now references currentMakatiPopulation2024 instead of storing 309770."
+        },
+        {
+          "location": "src/pages/Statistics.tsx",
+          "status": "migrate-W4-1g",
+          "action": "Replace headline and populationTrend literals with canonical city-indicator selectors."
+        },
+        {
+          "location": "src/data/reports.ts",
+          "status": "retain-publication-snapshot",
+          "action": "Keep dated prose value where editorially necessary; W4-4 report schema should link the report to the population indicator so prose is never treated as source data."
+        }
+      ]
+    },
+    {
+      "id": "canonical-barangay-count",
+      "fact": "Current number of Makati barangays",
+      "formerCopies": [
+        "src/pages/Statistics.tsx — headline value '23'",
+        "src/data/barangays.ts — canonical profile array"
+      ],
+      "canonicalOwner": "src/data/barangays.ts#barangays.length",
+      "disposition": [
+        {
+          "location": "src/pages/Statistics.tsx",
+          "status": "migrate-W4-1g",
+          "action": "Derive the headline count from canonical barangays rather than store '23' as display data."
+        }
+      ]
+    },
+    {
+      "id": "canonical-gdp-per-capita-2024",
+      "fact": "2024 Makati GDP per person",
+      "formerCopies": [
+        "src/data/cityComparison.ts — numeric Makati row",
+        "src/pages/Statistics.tsx — formatted ₱3.89M headline and summary prose"
+      ],
+      "canonicalOwner": "src/data/cityComparison.ts for the 2024 national-comparison snapshot; src/data/cityIndicators.ts#gdp-per-capita exposes it through the Statistics data layer",
+      "disposition": [
+        {
+          "location": "src/pages/Statistics.tsx",
+          "status": "migrate-W4-1g",
+          "action": "Format the canonical gdp-per-capita observation instead of retaining the independent ₱3.89M string."
+        },
+        {
+          "location": "src/data/cityComparison.ts",
+          "status": "retain-canonical-owner",
+          "action": "Keep the exact 2024 comparison row because CityComparison owns that national benchmark dataset."
+        }
+      ]
+    },
+    {
+      "id": "population-growth-series",
+      "fact": "2010–2024 current-boundary population trend and PSA annual growth rates",
+      "formerCopies": [
+        "src/pages/Statistics.tsx — page-local populationTrend array"
+      ],
+      "canonicalOwner": "src/data/cityIndicators.ts#population-total and #population-growth-rate",
+      "disposition": [
+        {
+          "location": "src/pages/Statistics.tsx",
+          "status": "migrate-W4-1g",
+          "action": "Remove page-local time-series constants and render from the canonical indicators."
+        }
+      ]
+    },
+    {
+      "id": "downloads",
+      "fact": "Population and comparison CSV construction",
+      "formerCopies": [
+        "src/pages/Statistics.tsx — populationCsv",
+        "src/components/statistics/CityComparison.tsx — local csv"
+      ],
+      "canonicalOwner": "Indicator export metadata / selectors",
+      "disposition": [
+        {
+          "location": "Statistics and CityComparison UI",
+          "status": "migrate-W4-1i",
+          "action": "Move reproducible download construction to the shared indicator export/provenance layer after the page consumes canonical indicators."
+        }
+      ]
+    }
+  ]
+}
