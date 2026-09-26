@@ -654,5 +654,45 @@
     "W3R6a": "Schema only. No UI, API, storage, migration, derived summary, or rating deletion.",
     "W3R6b": "Implement one reusable observation form/storage path using this schema. Retire generic rating entry points; do not derive scores.",
     "W3R6c": "Show recent condition/freshness summaries only under the aggregation contract."
+  },
+  "implementation": {
+    "W3R6b": {
+      "status": "complete",
+      "files": [
+        "src/data/structuredObservations.ts",
+        "src/components/civic/CivicObservationForm.tsx",
+        "api/civic-observation.js",
+        "data/place-observation-index.mjs",
+        "src/pages/CivicAsset.tsx",
+        "src/components/civic/CivicContributionForm.tsx",
+        "src/data/civicMap.ts",
+        "api/civic.js",
+        "scripts/check-structured-observations.mjs"
+      ],
+      "validation": {
+        "implementationFiles": [
+          "src/data/structuredObservations.ts",
+          "src/components/civic/CivicObservationForm.tsx",
+          "api/civic-observation.js",
+          "data/place-observation-index.mjs",
+          "src/pages/CivicAsset.tsx",
+          "src/components/civic/CivicContributionForm.tsx",
+          "src/data/civicMap.ts",
+          "api/civic.js",
+          "scripts/check-structured-observations.mjs"
+        ],
+        "reusableForm": "Every canonical place page now exposes one structured observation form selected from the place's observation family.",
+        "storage": "Observations use the dedicated /api/civic-observation endpoint and [Place Observations] per-place GitHub threads with place-observation metadata comments.",
+        "rawRetrieval": "GET /api/civic-observation?placeId=<id> returns raw observations for later W3R-6c summaries; it derives no scores.",
+        "canonicalValidation": "The server resolves submitted placeId against an 88-place canonical index and overwrites client-supplied place name/category before family/question validation.",
+        "schemaEnforcement": "Server validates family/category, question-set version, question IDs, question applicability, answer types/choices, observed time, time context and weather context.",
+        "ratingRetirement": "CivicContributionKind no longer includes review; the 1–5 UI, scores payload, review write branch and retired generic rating criteria were removed.",
+        "legacyCompatibility": "Existing [Civic Reviews] records remain in civic read prefixes and are labeled Legacy reviews in the discussion UI.",
+        "lifecycleSeparation": "Observation storage contains no civic-admin lifecycle, referral eligibility, duplicate-case behavior or case-state promotion.",
+        "noDerivedScores": "No overall score, stars, average rating, weighted score, grade, rank or composite index is generated or stored.",
+        "integrityGate": "check:observations validates 16 categories mapped exactly once, 88 canonical place IDs, 5 families, 41 questions, dedicated storage, rating-write retirement and lifecycle separation; it is wired into quality and build.",
+        "ci": "Latest completed CI after the implementation reports only the same three pre-existing unused-import ESLint errors and existing warnings. No new errors are reported for the observation form, observation definitions, observation API, CivicAsset, CivicContributionForm or civicMap; downstream checks/build remain skipped behind the baseline lint failure."
+      }
+    }
   }
 }
