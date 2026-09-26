@@ -469,15 +469,42 @@
       "id": "W4-2b",
       "phase": "Legislation",
       "title": "Define local legislation registry schema",
-      "status": "next",
+      "status": "complete",
       "maximumScope": "Schema only for ordinances/resolutions plus typed council-session evidence: identifier, number, title, type, dates, official text, authors when stated, lifecycle events, session video/agenda/minutes relationships, civic relationships and provenance.",
-      "stopWhen": "Schema supports canonical local measures, reusable official session evidence and City Monitor links without inventing enactment, vote or mayoral-action status."
+      "stopWhen": "Schema supports canonical local measures, reusable official session evidence and City Monitor links without inventing enactment, vote or mayoral-action status.",
+      "schemaFile": "data/local-legislation.schema.json",
+      "validation": {
+        "schemaDraft": "JSON Schema 2020-12",
+        "canonicalMeasure": "One record represents one Makati ordinance or resolution with stable ID, official number/reference, title, jurisdiction, official documents, provenance and revision metadata.",
+        "lifecycleModel": [
+          "No single guessed currentStatus/status field exists.",
+          "Lifecycle is an array of evidence-backed events such as filing/referral/readings/council approval/mayoral action/effectiveness/amendment/repeal.",
+          "Every lifecycle event carries evidenceStatus and sourceIds; missing events remain unknown."
+        ],
+        "sessionEvidence": [
+          "Session links support regular/special sessions, committee/public hearings and reuse a canonical City Monitor record when available.",
+          "Measure/session relationships distinguish mentioned, calendared, referred, deliberated, read, voted, approved and enacted actions.",
+          "Reviewed official video is an allowed evidence class, but video existence alone is not treated as proof of measure action."
+        ],
+        "legalRelationships": [
+          "Measure-to-measure links cover amends/amended-by, repeals/repealed-by, implements/implemented-by, supersedes/superseded-by and cites.",
+          "Mayoral approval/veto/effectiveness/authorship require explicit official evidence."
+        ],
+        "crossFunctionality": [
+          "Typed civic targets cover barangay, service, place/segment/route, project, Accountability, City Monitor, Public Records, report, indicator and Integrity records.",
+          "National law/bill and ecosystem-resource targets support BetterGov/Open Congress/Lawphil-style context without replacing the official Makati measure."
+        ],
+        "recordAccess": "Schema supports Office of the Secretary to the Sangguniang Panlungsod certified-copy/photocopy fallback when public text is unavailable or legal certification is needed.",
+        "assetGuard": "Place/segment/route relationships require canonical IDs and explicit source evidence; fuzzy/proximity linking is prohibited.",
+        "focusedValidation": "All 13 schema requirements exposed by W4-2a are represented; JSON parses; ordinance/resolution types, lifecycle/session evidence, measure relationships, certified-copy fallback and BetterGov ecosystem targets are present; no top-level guessed status field exists.",
+        "implementationBoundary": "Schema only. No ordinance/resolution records, session normalization or page changes were implemented in W4-2b."
+      }
     },
     {
       "id": "W4-2c",
       "phase": "Legislation",
       "title": "Build first ordinance registry batch",
-      "status": "planned",
+      "status": "next",
       "maximumScope": "One bounded official-source batch of ordinances. No resolutions in the same step.",
       "stopWhen": "The batch is source-complete for its declared period/topic and every record has a stable ID and official source."
     },
@@ -723,9 +750,9 @@
     }
   ],
   "immediateNext": {
-    "id": "W4-2b",
-    "title": "Define local legislation registry schema",
-    "maximumScope": "Schema only for ordinances/resolutions plus typed council-session evidence: identifier, number, title, type, dates, official text, authors when stated, lifecycle events, session video/agenda/minutes relationships, civic relationships and provenance."
+    "id": "W4-2c",
+    "title": "Build first ordinance registry batch",
+    "maximumScope": "One bounded official-source batch of ordinances. No resolutions in the same step."
   },
   "inheritedKnownItems": [
     {
