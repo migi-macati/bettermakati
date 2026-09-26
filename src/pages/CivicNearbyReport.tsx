@@ -15,8 +15,8 @@ import CivicNearbyReportForm from '../components/civic/CivicNearbyReportForm';
 import { useBarangayScope, withBarangayScope } from '../hooks/useBarangayScope';
 import {
   civicAssetTypeLabels,
+  nearbyVerifiedPlaces,
   placeRegistry,
-  placesWithinDistance,
   type PlacePoint,
   type PlaceRegistryRecord,
 } from '../data/placeRegistry';
@@ -36,15 +36,6 @@ interface ReportLocationState {
   point: PlacePoint | null;
   accuracyMeters: number | null;
 }
-
-const eligibleNearbyPlaces = placeRegistry.filter(place => {
-  if (place.entityKind !== 'place') return false;
-  if (place.verification.status !== 'verified') return false;
-  if (!place.location.point) return false;
-  if (place.lifecycle.status === 'closed' || place.lifecycle.status === 'future') return false;
-  if (place.location.relationToMakati === 'serves-makati-outside') return false;
-  return true;
-});
 
 const searchablePlaces = placeRegistry
   .filter(place =>
@@ -106,21 +97,17 @@ export default function CivicNearbyReport() {
     isExplicitScope ? barangaySlug : undefined
   );
 
-  const nearbyCandidates = useMemo(() => {
-    if (!location.point) return [];
-
-    const initial = placesWithinDistance(
-      location.point,
-      0.25,
-      eligibleNearbyPlaces
-    );
-    const matches =
-      initial.length > 0
-        ? initial
-        : placesWithinDistance(location.point, 0.5, eligibleNearbyPlaces);
-
-    return matches.slice(0, 5);
-  }, [location.point]);
+  const nearbyCandidates = useMemo(
+    () =>
+      location.point
+        ? nearbyVerifiedPlaces(location.point, {
+            initialDistanceKm: 0.25,
+            fallbackDistanceKm: 0.5,
+            limit: 5,
+          })
+        : [],
+    [location.point]
+  );
 
   const searchResults = useMemo(() => {
     const needle = normalizeSearch(query);
