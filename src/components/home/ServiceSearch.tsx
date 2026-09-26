@@ -22,6 +22,7 @@ import { placeRegistryById } from '../../data/placeRegistry';
 import {
   legislationRecordDisplay,
   legislationRecordHref,
+  legislationRecordId,
   loadLegislationBrowserIndex,
   matchLegislationRecords,
   type BrowserLegislationIndex,
@@ -211,6 +212,7 @@ export default function ServiceSearch({
         category: 'Legislation',
         description: record[4],
         href: legislationRecordHref(record),
+        canonicalKey: 'legislation-record:' + legislationRecordId(record),
         keywords: [
           'legislation',
           record[1],
@@ -228,7 +230,17 @@ export default function ServiceSearch({
         ? searchIndex.filter(item => item.group === 'Service')
         : [...searchIndex, ...legislationItems];
 
-    return base
+    const seen = new Set<string>();
+    const canonical = base.filter(item => {
+      const key =
+        item.canonicalKey ??
+        [item.group, item.href, normalize(item.title)].join(':');
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+
+    return canonical
       .filter(item => matchesTab(item, tab, scope))
       .map(item => ({ ...item, score: scoreItem(item, query) }))
       .filter(item => !query.trim() || item.score > 0)
@@ -480,7 +492,9 @@ export default function ServiceSearch({
                   </div>
                   <div className="mt-2 flex items-center gap-2 text-xs text-gray-600">
                     <span className="inline-flex items-center rounded-md bg-gray-100 px-2 py-1">
-                      {item.group === 'Service' ? item.category : item.group}
+                      {item.group === 'Service' || item.group === 'Record'
+                        ? item.category
+                        : item.group}
                     </span>
                   </div>
                   <p className="mt-2 text-sm leading-relaxed text-gray-700">
