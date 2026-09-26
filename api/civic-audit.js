@@ -274,16 +274,8 @@ export default async function handler(req, res) {
       completeEntities: 0,
       entities: [],
       questions: CAMPAIGN.questionIds.map(emptyQuestionSummary),
-      metricInputs: auditCoverageMetricInputs({
-        campaignId: CAMPAIGN.id,
-        asOf,
-        startsAt: CAMPAIGN.startsAt,
-        endsAt: CAMPAIGN.endsAt,
-        inventoryClaim: CAMPAIGN.inventoryClaim,
-        targetCount: CAMPAIGN.targetEntityIds.length,
-        observedEntities: 0,
-        completeEntities: 0,
-      }),
+      metricInputs: null,
+      dataAvailable: false,
     });
   }
 }
