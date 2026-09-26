@@ -1,0 +1,149 @@
+{
+  "wave": "W4-4a",
+  "auditedOn": "2026-09-26",
+  "scope": [
+    "src/data/reports.ts",
+    "src/pages/Reports.tsx",
+    "src/pages/ReportArticle.tsx",
+    "src/components/home/FeaturedInsightsCarousel.tsx",
+    "src/pages/Home.tsx",
+    "underlying canonical budget/statistics/barangay data already in the repository"
+  ],
+  "inventory": {
+    "reportCount": 4,
+    "homepageUsesCanonicalReportsArray": true,
+    "reportsLandingUsesCanonicalReportsArray": true,
+    "articleUsesCanonicalReportsArray": true,
+    "allCurrentReportsDated": "23 September 2026",
+    "currentReportSourcePattern": "Paragraph-level source IDs link to canonical BetterMakati pages; direct official-source links are not exposed in the article source schema."
+  },
+  "editorialPrinciples": {
+    "oneReportOneSynthesis": true,
+    "qualityOverReportCount": true,
+    "articleNotSnippet": true,
+    "factAndAnalysisMustBeDistinguishable": true,
+    "preferCanonicalInternalEvidence": true,
+    "exposeDirectOfficialSourcesWhereAvailable": true,
+    "noOverviewOrExistenceJustification": true
+  },
+  "classifications": [
+    {
+      "slug": "2026-budget-operating-expenses",
+      "classification": "rewrite",
+      "factualStatus": "core arithmetic is supported by the current canonical budget dataset",
+      "rationale": [
+        "The article's 10.5% budget increase is specifically 2026 proposed appropriation versus the 2025 adopted plan.",
+        "The same canonical Projects & Budget page also shows a 2025 current-year estimate of ₱24.37B, above the ₱21.0B 2026 proposal.",
+        "The current headline and opening do not identify the adopted-plan baseline strongly enough, so a reader could interpret '2026 budget increase' as an increase over the city's latest 2025 estimate.",
+        "The MOOE concentration finding remains useful if the baseline is made explicit and the adopted-plan/current-estimate distinction is carried through the article."
+      ],
+      "migrationDirection": "Retain the MOOE composition insight, but rewrite the headline, subheadline and article around the explicit 2025 adopted-plan comparison while also stating that the 2026 proposal is below the 2025 current-year estimate.",
+      "canonicalInputs": [
+        "src/data/budget2025.ts#budgetSummary",
+        "src/data/budget2025.ts#budgetCurrentEstimate2025",
+        "src/data/budget2025.ts#budgetSummary2026",
+        "src/pages/ProjectsBudget.tsx#budget"
+      ]
+    },
+    {
+      "slug": "2025-local-revenue",
+      "classification": "merge",
+      "mergeGroup": "2025-fiscal-profile",
+      "factualStatus": "supported by the current DBM/BLGF-derived fiscal dataset",
+      "rationale": [
+        "The 93.5% local-source share and concentration in business/property-related taxes form a coherent revenue-side finding.",
+        "As a standalone three-paragraph report it is thin and substantially overlaps the same 2025 fiscal source surface used by the social-services article.",
+        "It becomes more useful when paired with the spending-side evidence as one fiscal-profile synthesis rather than retained as a separate statistic article."
+      ],
+      "migrationDirection": "Merge with 2025-social-services into one article whose single synthesis connects the source of 2025 receipts with the functional destination of 2025 spending, without implying causation between individual revenue streams and programs.",
+      "canonicalInputs": [
+        "src/data/budget2025.ts#budgetSummary",
+        "src/data/budget2025.ts#revenueSources",
+        "src/data/budget2025.ts#localRevenueBreakdown",
+        "src/pages/ProjectsBudget.tsx#budget"
+      ]
+    },
+    {
+      "slug": "2025-social-services",
+      "classification": "merge",
+      "mergeGroup": "2025-fiscal-profile",
+      "factualStatus": "supported by the current DBM/BLGF-derived fiscal dataset",
+      "rationale": [
+        "The 55.2% Social Services share is a valid functional-spending observation.",
+        "The current article is too close to a single table readout to justify a separate report beside the local-revenue article.",
+        "The category is broad, so the article should avoid implying program outcomes or service quality from expenditure classification alone."
+      ],
+      "migrationDirection": "Merge with 2025-local-revenue into the same 2025 fiscal-profile article; retain the spending composition as the destination side of that one synthesis.",
+      "canonicalInputs": [
+        "src/data/budget2025.ts#budgetSummary",
+        "src/data/budget2025.ts#actualSpendingByFunction",
+        "src/pages/ProjectsBudget.tsx#budget"
+      ]
+    },
+    {
+      "slug": "2024-barangay-population",
+      "classification": "rewrite",
+      "factualStatus": "population counts and concentration arithmetic are supported by the current barangay/statistics datasets",
+      "rationale": [
+        "The current article has a usable underlying point: resident population scale differs sharply across Makati's 23 barangays.",
+        "The headline 'three barangays contain 37.6%' is accurate but reads more like a statistical observation than a finished report synthesis.",
+        "The final paragraph moves toward service-demand implications even though daytime population, land use, facilities and service utilization are not part of the report's evidence."
+      ],
+      "migrationDirection": "Rewrite around resident-population concentration and the order-of-magnitude difference in barangay scale. Keep service-demand claims out unless later evidence explicitly supports them.",
+      "canonicalInputs": [
+        "src/data/barangays.ts",
+        "src/data/statisticsExports.ts",
+        "src/pages/Statistics.tsx",
+        "src/pages/Barangays.tsx"
+      ]
+    }
+  ],
+  "dispositionSummary": {
+    "keep": 0,
+    "rewrite": 2,
+    "merge": 2,
+    "retire": 0,
+    "futureArticleCountFromCurrentInventory": 3
+  },
+  "presentationAudit": {
+    "reportsLanding": [
+      {
+        "finding": "The landing renders one report per card with headline, subheadline, date and Read more.",
+        "disposition": "keep-pattern"
+      },
+      {
+        "finding": "The BetterGov 'Related national data' box appears before the publication index and competes with the reports themselves.",
+        "disposition": "remove-or-demote-in-W4-4f"
+      },
+      {
+        "finding": "All reports have equal card weight and the same date, so the landing has little editorial hierarchy.",
+        "disposition": "redesign-in-W4-4f"
+      }
+    ],
+    "reportArticle": [
+      {
+        "finding": "Paragraph-level [n] references already provide inline evidence links to canonical BetterMakati pages.",
+        "disposition": "preserve-and-strengthen"
+      },
+      {
+        "finding": "The current schema has paragraphs plus sources only; it cannot represent sections, charts/tables, typed canonical records, direct official sources or an explicit analysis/methodology distinction.",
+        "disposition": "address-in-W4-4b"
+      },
+      {
+        "finding": "Articles are uniformly three paragraphs and can read like expanded stat cards rather than publication-grade reports.",
+        "disposition": "address-in-W4-4b-and-W4-4c"
+      }
+    ],
+    "homepage": [
+      {
+        "finding": "The homepage carousel already reuses the same canonical reports array as /reports and shows one report per card.",
+        "disposition": "preserve"
+      },
+      {
+        "finding": "The homepage module should continue to consume canonical report objects after schema v2 so homepage and /reports cannot drift.",
+        "disposition": "enforce-in-W4-4g"
+      }
+    ]
+  },
+  "nextStep": "W4-4b: define report schema v2 only. Do not rewrite or merge report content until W4-4c."
+}
