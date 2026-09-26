@@ -345,7 +345,6 @@ for (const source of Object.values(cityIndicatorSources)) {
     url: source.url,
     publisher: source.publisher,
     category: 'Statistics',
-    period: source.matrix,
     description:
       usedByIndicators.length > 0
         ? 'Primary or supporting source used by BetterMakati Statistics: ' +
@@ -361,7 +360,7 @@ for (const source of Object.values(cityIndicatorSources)) {
 }
 
 const legislationSourceById = new Map(
-  localLegislationSources.map(source => [source.id, source] as const)
+  Object.values(localLegislationSources).map(source => [source.id, source] as const)
 );
 
 for (const record of localLegislationRecords) {
