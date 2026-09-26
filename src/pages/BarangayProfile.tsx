@@ -185,38 +185,46 @@ export default function BarangayProfile() {
         }
       />
 
-      <section className="bg-[#fffdf8] py-12 md:py-16">
+      <section className="border-b border-primary-900 bg-primary-800 py-12 text-white md:py-16">
         <div className="container px-5 md:px-6 lg:px-8">
           <Link
             to="/barangays"
-            className="inline-flex items-center gap-1 text-sm font-bold text-primary-700"
+            className="inline-flex items-center gap-1 text-sm font-bold text-primary-50 transition hover:text-secondary-300"
           >
             <ArrowLeft className="h-4 w-4" /> All barangays
           </Link>
 
           <div className="mt-7 grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
             <div>
-              <div className="section-eyebrow">Barangay homepage</div>
-              <h1 className="text-4xl font-extrabold tracking-tight text-gray-950 md:text-6xl">
-                <span className="text-primary-700">Better</span>
-                {compactEditionName(barangay.name)}
+              <div className="mb-3 text-xs font-extrabold uppercase tracking-[0.12em] text-secondary-400 md:text-sm">
+                Better{compactEditionName(barangay.name)} · Barangay homepage
+              </div>
+              <h1 className="text-4xl font-extrabold leading-[1.02] tracking-tight text-white md:text-6xl">
+                Let&apos;s make {barangay.name}{' '}
+                <span className="text-secondary-500">Better!</span>
               </h1>
-              <p className="mt-4 max-w-2xl text-lg leading-relaxed text-gray-700">
-                Services, local government, civic records, public places and participation
-                for Barangay {barangay.name}.
+              <p className="mt-4 max-w-2xl text-lg leading-relaxed text-primary-50">
+                Find local services, officials, public places, projects, records and
+                ways to take part in Barangay {barangay.name}.
               </p>
               <div className="mt-6 flex flex-wrap gap-3">
-                <Link to={withBarangayScope('/services', barangay.slug)} className="brand-btn-primary">
+                <Link
+                  to={withBarangayScope('/services', barangay.slug)}
+                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-white px-4 py-2.5 text-sm font-bold text-primary-800 transition hover:bg-primary-50"
+                >
                   Find a service <ArrowRight className="h-4 w-4" />
                 </Link>
-                <Link to={withBarangayScope('/civic-map', barangay.slug)} className="brand-btn-secondary">
-                  Open local Civic Map
+                <Link
+                  to={withBarangayScope('/civic-map', barangay.slug)}
+                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-white/60 px-4 py-2.5 text-sm font-bold text-white transition hover:border-secondary-400 hover:text-secondary-300"
+                >
+                  Explore local places
                 </Link>
               </div>
               <LastReviewed
                 date={barangayProfilesReviewed}
                 note="Population: 2024 POPCEN · Council term: 2023–2026"
-                className="mt-5"
+                className="mt-5 rounded-xl bg-white/10 px-3 py-2 !text-primary-50 [&_strong]:!text-white [&_svg]:!text-secondary-400"
               />
             </div>
 
@@ -225,7 +233,7 @@ export default function BarangayProfile() {
                 href={psaBarangaySource}
                 target="_blank"
                 rel="noreferrer"
-                className="rounded-2xl border border-primary-100 bg-white p-5"
+                className="rounded-2xl border border-white/20 bg-white p-5"
               >
                 <div className="text-2xl font-extrabold text-primary-800">
                   {barangay.population2024.toLocaleString('en-PH')}
@@ -233,14 +241,14 @@ export default function BarangayProfile() {
                 <div className="mt-1 text-sm font-semibold text-gray-900">Population</div>
                 <div className="mt-1 text-xs text-gray-500">2024 POPCEN</div>
               </a>
-              <div className="rounded-2xl border border-primary-100 bg-white p-5">
+              <div className="rounded-2xl border border-white/20 bg-white p-5">
                 <div className="text-2xl font-extrabold text-primary-800">
                   {populationShare.toFixed(1)}%
                 </div>
                 <div className="mt-1 text-sm font-semibold text-gray-900">of Makati</div>
                 <div className="mt-1 text-xs text-gray-500">2024 population</div>
               </div>
-              <div className="col-span-2 rounded-2xl border border-primary-100 bg-white p-5">
+              <div className="col-span-2 rounded-2xl border border-white/20 bg-white p-5">
                 <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
                   Legislative district
                 </div>
@@ -253,11 +261,11 @@ export default function BarangayProfile() {
         </div>
       </section>
 
-      <section className="bg-white py-14">
+      <section className="bg-[#fffdf8] py-14">
         <div className="container px-5 md:px-6 lg:px-8">
           <div className="section-eyebrow">Start here</div>
           <h2 className="text-3xl font-extrabold tracking-tight text-gray-950 md:text-4xl">
-            What do you need in {barangay.name}?
+            What brings you here?
           </h2>
           <div className="mt-7 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {quickActions.map(item => {
