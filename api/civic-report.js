@@ -1,3 +1,5 @@
+import { caseOutcomeInstrumentation } from '../data/participation-outcome-instrumentation.mjs';
+
 const prefixes = ['[Civic Report]', '[Civic Proposal]', '[Civic Update]'];
 
 const parseJsonComment = (body, marker) => {
@@ -81,7 +83,15 @@ export default async function handler(req, res) {
         .filter(comment =>
           ['OWNER', 'MEMBER', 'COLLABORATOR'].includes(comment.author_association)
         )
-        .map(comment => parseJsonComment(comment.body, 'civic-admin'))
+        .map(comment => {
+          const meta = parseJsonComment(comment.body, 'civic-admin');
+          if (!meta) return null;
+          return {
+            ...meta,
+            createdAt: comment.created_at,
+            url: comment.html_url,
+          };
+        })
         .filter(Boolean);
 
       const counts = {
@@ -119,6 +129,12 @@ export default async function handler(req, res) {
       const locationMode =
         meta.locationMode ||
         (entityId ? (meta.placeId ? 'matched-place' : 'matched-entity') : 'location-only');
+      const outcome = caseOutcomeInstrumentation({
+        kind: kindOf(issue),
+        createdAt: issue.created_at,
+        adminEvents,
+        communityResolvedSignals: counts.resolved,
+      });
 
       records.push({
         number: issue.number,
@@ -143,6 +159,7 @@ export default async function handler(req, res) {
         evidenceLabel,
         referralEligible,
         adminEvents,
+        outcome,
       });
     }
 
