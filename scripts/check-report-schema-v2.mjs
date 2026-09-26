@@ -71,22 +71,24 @@ for (const forbidden of [
   }
 }
 
-if (reports.includes('schemaVersion: 2')) {
-  problems.push(
-    'W4-4b is schema-only; published report objects must not migrate until W4-4c.'
-  );
-}
-
 const currentSlugs = [
   ...reports.matchAll(/slug:\s*'([^']+)'/g),
 ].map(match => match[1]);
 
-if (currentSlugs.length !== 4) {
+if (!reports.includes('schemaVersion: 2')) {
+  problems.push('Published Featured Reports must use schema v2 after W4-4c.');
+}
+
+if (currentSlugs.length !== 3) {
   problems.push(
-    'W4-4b must not alter the four current report objects; found ' +
+    'Expected 3 canonical v2 report objects after the audited merge; found ' +
       currentSlugs.length +
       '.'
   );
+}
+
+if (reports.includes('paragraphs:')) {
+  problems.push('Legacy v1 paragraph arrays must not remain after W4-4c.');
 }
 
 if (problems.length) {
@@ -97,5 +99,5 @@ if (problems.length) {
 }
 
 console.log(
-  'Report schema v2 check passed: one required synthesis, evidence-aware article blocks, typed canonical-record links and optional methodology are defined without migrating current reports.'
+  'Report schema v2 check passed: the v2 contract remains intact and the 3 canonical published reports use it without legacy v1 paragraph arrays.'
 );
