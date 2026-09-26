@@ -45,10 +45,12 @@ export default function CivicContributionForm({
   asset,
   initialKind = 'report',
   onSubmitted,
+  allowedKinds,
 }: {
   asset: CivicAsset;
   initialKind?: CivicContributionKind;
   onSubmitted?: () => void;
+  allowedKinds?: CivicContributionKind[];
 }) {
   const [kind, setKind] = useState<CivicContributionKind>(initialKind);
   const [category, setCategory] = useState('');
@@ -70,6 +72,10 @@ export default function CivicContributionForm({
   const issueCategories = useMemo(() => issueCategoriesForAsset(asset.type), [asset.type]);
   const proposals = useMemo(() => proposalCategoriesForAsset(asset.type), [asset.type]);
   const criteria = useMemo(() => criteriaForAsset(asset.type), [asset.type]);
+  const visibleKindOptions = useMemo(
+    () => kindOptions.filter(option => !allowedKinds || allowedKinds.includes(option.id)),
+    [allowedKinds]
+  );
 
   const selectedIssue = civicIssueCategories.find(item => item.id === category);
   const emergency = kind === 'report' && Boolean(selectedIssue?.emergency);
@@ -235,7 +241,7 @@ export default function CivicContributionForm({
       </h2>
 
       <div className="mt-5 grid grid-cols-1 gap-2 sm:grid-cols-2">
-        {kindOptions.map(option => {
+        {visibleKindOptions.map(option => {
           const Icon = option.icon;
           const active = kind === option.id;
           return (
