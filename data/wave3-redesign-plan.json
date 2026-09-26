@@ -513,13 +513,57 @@
     {
       "id": "W3R-6c",
       "title": "Add place condition summaries",
-      "status": "next",
-      "maximumScope": "Display recent structured observations and freshness only. Do not publish composite scores."
+      "status": "complete",
+      "maximumScope": "Display recent structured observations and freshness only. Do not publish composite scores.",
+      "implementationFiles": [
+        "src/components/civic/CivicObservationSummary.tsx",
+        "src/data/structuredObservations.ts",
+        "src/pages/CivicAsset.tsx",
+        "api/civic-observation.js",
+        "scripts/check-structured-observations.mjs"
+      ],
+      "validation": {
+        "implementationFiles": [
+          "src/components/civic/CivicObservationSummary.tsx",
+          "src/data/structuredObservations.ts",
+          "src/pages/CivicAsset.tsx",
+          "api/civic-observation.js",
+          "scripts/check-structured-observations.mjs"
+        ],
+        "display": "Every place page now shows recent structured condition summaries above the observation form.",
+        "freshness": {
+          "fresh": "<=30 days",
+          "recent": "31-90 days",
+          "older": ">90 days",
+          "reference": "API-supplied asOf timestamp for deterministic rendering"
+        },
+        "aggregationWindowDays": 90,
+        "summaryFields": [
+          "total loaded observation count",
+          "latest observation date",
+          "freshness label",
+          "latest substantive value per question",
+          "90-day per-question sample count",
+          "90-day categorical answer distribution",
+          "90-day observed wait median and range"
+        ],
+        "notObservedHandling": "Values beginning with not-observed are excluded from condition-value summaries and 90-day substantive sample counts.",
+        "noCompositeScores": "No overall score, average rating, weighted composite, grade, ranking, best/worst label or hidden numeric conversion is produced.",
+        "refresh": "A newly saved observation increments observationRevision and refreshes the summary immediately.",
+        "simulation": {
+          "latestAgeDays": 6,
+          "freshness": "Fresh",
+          "recent90DaySampleCount": 2,
+          "excludedNotObserved": true,
+          "excludedOlderThan90Days": true
+        },
+        "ci": "After fixing one render-purity error and one effect warning introduced in the first pass, the completed CI run reports only the same three pre-existing unused-import errors and six existing warnings. No new lint errors remain in CivicObservationSummary.tsx or related W3R-6c files."
+      }
     },
     {
       "id": "W3R-7a",
       "title": "Define civic audit campaigns",
-      "status": "planned",
+      "status": "next",
       "maximumScope": "Campaign schema/workflow only: geography, place set, questions, period and completion. No generalized campaign UI."
     },
     {
@@ -638,9 +682,9 @@
     }
   ],
   "immediateNext": {
-    "id": "W3R-6c",
-    "title": "Add place condition summaries",
-    "maximumScope": "Display recent structured observations and freshness only. Do not publish composite scores."
+    "id": "W3R-7a",
+    "title": "Define civic audit campaigns",
+    "maximumScope": "Campaign schema/workflow only: geography, place set, questions, period and completion. No generalized campaign UI."
   },
   "capabilityDispositionAuditFile": "data/wave3-capability-disposition-audit.json",
   "completedSteps": [
@@ -660,7 +704,8 @@
     "W3R-5c",
     "W3R-5d",
     "W3R-6a",
-    "W3R-6b"
+    "W3R-6b",
+    "W3R-6c"
   ],
   "placeRegistrySchemaFile": "data/place-registry-schema.json",
   "placeRegistryDataFile": "src/data/placeRegistry.ts"
