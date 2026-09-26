@@ -1892,12 +1892,20 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Run mobile and accessibility pass",
       "maximumScope": "Redesigned Wave 3 surfaces only. Fix only defects found.",
-      "status": "next",
+      "status": "complete",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
       ],
-      "stopWhen": "Redesigned Wave 3 surfaces only. Fix only defects found."
+      "stopWhen": "Redesigned Wave 3 surfaces only. Fix only defects found.",
+      "completedAt": "2026-09-26",
+      "commits": [
+        "6616f585bbd673ed943241cd7782941637ab99bf",
+        "43d42521a78a63bf47ced7c33d2e426efb9d2fb1",
+        "69f6bc8e11c16926bb6b1a9aac8c70edd1bc36c5",
+        "cd0dec8e1a7a61bf405f8d49c11678a4de5d57bc",
+        "0931918b1d5503e95d522a7abe87f36564bd54bf"
+      ]
     },
     {
       "id": "W3R-11f",
@@ -1906,7 +1914,7 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Reclassify and close Wave 3",
       "maximumScope": "Supersede the old capability classification with an evidence-based redesigned Wave 3 classification, record deferrals, and close only what is actually complete.",
-      "status": "planned",
+      "status": "next",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
@@ -2058,9 +2066,10 @@
       "W3R-11a",
       "W3R-11b",
       "W3R-11c",
-      "W3R-11d"
+      "W3R-11d",
+      "W3R-11e"
     ],
-    "current": "W3R-11e",
+    "current": "W3R-11f",
     "capabilityDispositionAuditFile": "data/wave3-capability-disposition-audit.json"
   },
   "knownCoverageGaps": {
