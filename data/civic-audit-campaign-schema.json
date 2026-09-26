@@ -401,7 +401,9 @@
       "frozenTargets": 13,
       "minimumObservationGoal": 26,
       "period": "2026-09-26T10:03:00+08:00 to 2026-10-26T23:59:59+08:00",
-      "nextStep": "W3R-7c — publish the bounded pilot output."
+      "nextStep": "W3R-7c — publish the bounded pilot output.",
+      "outputRoute": "/civic-map/audits/park-accessibility-2026/results",
+      "outputStatus": "published-live"
     },
     "segmentReadiness": {
       "status": "partial-only",
@@ -411,7 +413,7 @@
   "implementationBoundary": {
     "W3R7a": "Schema/workflow only. No campaign UI, storage endpoint, campaign instance, or published audit.",
     "W3R7b": "Implemented one live collection pilot: the 13-park Makati Public Park Accessibility Check. It reuses structured observation storage and has no campaign-specific scoring or ranking.",
-    "W3R7c": "Publish one output using only the frozen 13-park target set and campaign-period observations, including missing-target coverage; no scores or rankings."
+    "W3R7c": "Published a live output at /civic-map/audits/park-accessibility-2026/results. It aggregates only the frozen 13 targets, campaign-period observations and four campaign questions; missing targets remain visible and no scores/rankings are produced."
   },
   "entityTreatment": {
     "place": {
