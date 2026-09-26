@@ -162,15 +162,80 @@ export default function CivicMap() {
         keywords="Makati civic map, public places, health center, public office, park, transport stop, report pothole, sidewalk, citizen report, improvement proposal"
       />
 
-      <Section className="bg-[#fffdf8]">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-          <div>
-            <div className="section-eyebrow">Civic Map</div>
-            <Heading>Find civic places, segments and routes</Heading>
-            <p className="mt-3 max-w-4xl text-lg leading-relaxed text-gray-700">
-              Browse places as destinations, segments as bounded pieces of infrastructure, and routes as network/service records.
+      <section className="border-b border-primary-900 bg-primary-800 text-white">
+        <div className="container px-5 py-12 md:px-6 md:py-16 lg:px-8">
+          <div className="max-w-4xl">
+            <div className="mb-3 text-xs font-extrabold uppercase tracking-[0.12em] text-secondary-400 md:text-sm">
+              Civic Map
+            </div>
+            <h1 className="text-4xl font-extrabold tracking-tight text-white md:text-6xl">
+              Find a place, street or route.
+            </h1>
+            <p className="mt-4 max-w-3xl text-lg leading-relaxed text-primary-50 md:text-xl">
+              Search Makati&apos;s civic places and infrastructure, then open a record to see details, report a problem or suggest an improvement.
             </p>
+
+            <label className="relative mt-7 block max-w-3xl">
+              <span className="sr-only">Search civic registry</span>
+              <Search
+                className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-500"
+                aria-hidden="true"
+              />
+              <input
+                type="search"
+                value={query}
+                onChange={event => setQuery(event.target.value)}
+                placeholder="Search park, street, health center, route..."
+                className="w-full rounded-xl border border-white/30 bg-white py-3.5 pl-12 pr-4 text-base text-gray-950 shadow-sm outline-none placeholder:text-gray-500 focus:border-secondary-400 focus:ring-2 focus:ring-secondary-300/40"
+              />
+            </label>
+
+            <div className="mt-5 flex flex-wrap gap-2" role="group" aria-label="Registry record type">
+              {(['place', 'segment', 'route'] as CivicEntityKind[]).map(kind => (
+                <button
+                  key={kind}
+                  type="button"
+                  onClick={() => {
+                    setEntityKind(kind);
+                    setType('all');
+                  }}
+                  className={
+                    entityKind === kind
+                      ? 'min-h-11 rounded-full bg-secondary-500 px-4 py-2 text-sm font-bold text-primary-900'
+                      : 'min-h-11 rounded-full border border-white/30 bg-white/10 px-4 py-2 text-sm font-semibold text-white hover:border-white/60 hover:bg-white/15'
+                  }
+                  aria-pressed={entityKind === kind}
+                >
+                  {kind === 'place' ? 'Places' : kind === 'segment' ? 'Segments' : 'Routes'}
+                </button>
+              ))}
+            </div>
+
+            <div className="mt-5 flex flex-wrap gap-3">
+              <Link
+                to={withBarangayScope('/civic-map/report', barangay?.slug)}
+                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-white px-4 py-2.5 text-sm font-bold text-primary-800 transition hover:bg-primary-50"
+              >
+                Report a local problem <ArrowRight className="h-4 w-4" />
+              </Link>
+              <a
+                href="#places"
+                className="inline-flex min-h-11 items-center justify-center rounded-xl border border-white/60 px-4 py-2.5 text-sm font-bold text-white transition hover:border-secondary-400 hover:text-secondary-300"
+              >
+                Browse results
+              </a>
+            </div>
           </div>
+        </div>
+      </section>
+
+      <Section className="bg-[#fffdf8]">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <LastReviewed
+            date={civicMethodologyReviewed}
+            note="Civic registry and source review."
+            className="mt-0"
+          />
           <div className="flex flex-wrap items-center gap-2">
             <Link to="/civic-map/reports" className="brand-btn-secondary">
               {barangay ? 'Citywide reports' : 'Weekly & monthly reports'}
@@ -178,22 +243,6 @@ export default function CivicMap() {
             <SharePage title="BetterMakati Civic Map" />
           </div>
         </div>
-
-        <div className="mt-5 flex flex-wrap gap-3">
-          <Link
-            to={withBarangayScope('/civic-map/report', barangay?.slug)}
-            className="brand-btn-primary"
-          >
-            Report something near me <ArrowRight className="h-4 w-4" />
-          </Link>
-          <a href="#places" className="brand-btn-secondary">Browse records</a>
-        </div>
-
-        <LastReviewed
-          date={civicMethodologyReviewed}
-          note="Civic registry and source review."
-          className="mt-5"
-        />
 
         <NearMePlaces
           className="mt-5"
@@ -250,9 +299,9 @@ export default function CivicMap() {
           <div className="flex gap-3">
             <AlertTriangle className="mt-0.5 h-6 w-6 shrink-0 text-error-700" />
             <div>
-              <h2 className="font-extrabold text-error-950">Emergencies do not belong in the Civic Map queue</h2>
+              <h2 className="font-extrabold text-error-950">Emergency? Call 911.</h2>
               <p className="mt-1 text-sm leading-relaxed text-error-900">
-                Fire, crime or violence in progress, medical emergencies, serious collisions, immediate electrical or structural danger, and flooding that puts people in immediate danger should go directly to Unified 911.
+                Use the Civic Map for non-emergency local issues. Fire, crime or violence in progress, medical emergencies and immediate danger should go directly to Unified 911.
               </p>
               <a href="tel:911" className="mt-3 inline-flex min-h-11 items-center rounded-xl bg-error-700 px-4 py-2 font-extrabold text-white">
                 Call 911
@@ -298,35 +347,7 @@ export default function CivicMap() {
           </div>
         </div>
 
-        <div className="mt-5 flex flex-wrap gap-2" role="group" aria-label="Registry record type">
-          {(['place', 'segment', 'route'] as CivicEntityKind[]).map(kind => (
-            <button
-              key={kind}
-              type="button"
-              onClick={() => {
-                setEntityKind(kind);
-                setType('all');
-              }}
-              className={entityKind === kind ? 'brand-btn-primary' : 'brand-btn-secondary'}
-              aria-pressed={entityKind === kind}
-            >
-              {kind === 'place' ? 'Places' : kind === 'segment' ? 'Segments' : 'Routes'}
-            </button>
-          ))}
-        </div>
-
-        <div className="mt-6 grid gap-3 md:grid-cols-[1fr_18rem]">
-          <label className="relative block">
-            <span className="sr-only">Search civic registry</span>
-            <Search className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-500" />
-            <input
-              type="search"
-              value={query}
-              onChange={event => setQuery(event.target.value)}
-              placeholder="Search this registry view"
-              className="w-full rounded-xl border border-gray-300 bg-white py-3 pl-12 pr-4"
-            />
-          </label>
+        <div className="mt-5 max-w-sm">
           <label className="sr-only" htmlFor="civic-asset-type">Record subtype</label>
           <select
             id="civic-asset-type"
