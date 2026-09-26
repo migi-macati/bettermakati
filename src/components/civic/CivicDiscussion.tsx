@@ -18,6 +18,8 @@ interface CivicFeedItem {
   updatedAt: string;
   comments: number;
   meta: {
+    placeId?: string | null;
+    locationMode?: 'matched-place' | 'location-only';
     assetId?: string;
     category?: string;
     severity?: string;
@@ -34,6 +36,24 @@ interface CivicComment {
   url: string;
 }
 
+interface CivicLifecycleEvent {
+  status?: string;
+  destination?: string;
+  channel?: string;
+  externalReference?: string;
+  note?: string;
+  createdAt?: string;
+  url?: string;
+}
+
+interface CivicLifecycle {
+  status: string;
+  label: string;
+  officialStatus: string | null;
+  confirmationCount: number;
+  adminEvents: CivicLifecycleEvent[];
+}
+
 const cleanComment = (body: string) =>
   body
     .replace(/<!--[\\s\\S]*?-->/g, '')
@@ -48,12 +68,24 @@ const kindLabel: Record<CivicFeedItem['kind'], string> = {
   reviews: 'Reviews',
 };
 
+const lifecycleStep = (status: string) =>
+  ({
+    unverified: 1,
+    'community-corroborated': 1,
+    reviewed: 2,
+    forwarded: 3,
+    acknowledged: 4,
+    'action-reported': 4,
+    'community-verified-resolved': 5,
+  })[status] ?? 1;
+
 export default function CivicDiscussion({ assetId }: { assetId: string }) {
   const [items, setItems] = useState<CivicFeedItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [feedFailed, setFeedFailed] = useState(false);
   const [activeIssue, setActiveIssue] = useState<number | null>(null);
   const [comments, setComments] = useState<CivicComment[]>([]);
+  const [lifecycle, setLifecycle] = useState<CivicLifecycle | null>(null);
   const [commentsLoading, setCommentsLoading] = useState(false);
   const [commentsFailed, setCommentsFailed] = useState(false);
   const [replyType, setReplyType] = useState('reply');
@@ -70,7 +102,12 @@ export default function CivicDiscussion({ assetId }: { assetId: string }) {
       const response = await fetch('/api/civic', { cache: 'no-store' });
       const data = await response.json();
       if (!response.ok || !Array.isArray(data.items)) throw new Error('feed');
-      setItems(data.items.filter((item: CivicFeedItem) => item.meta?.assetId === assetId));
+      setItems(
+        data.items.filter(
+          (item: CivicFeedItem) =>
+            item.meta?.placeId === assetId || item.meta?.assetId === assetId
+        )
+      );
     } catch {
       setFeedFailed(true);
     } finally {
@@ -94,13 +131,20 @@ export default function CivicDiscussion({ assetId }: { assetId: string }) {
     setReplyState('idle');
     setReplyMessage('');
     setParentCommentId(null);
+    setLifecycle(null);
     try {
       const response = await fetch('/api/civic?issue=' + issueNumber, { cache: 'no-store' });
       const data = await response.json();
       if (!response.ok || !Array.isArray(data.comments)) throw new Error('comments');
-      setComments(data.comments);
+      setLifecycle(data.lifecycle ?? null);
+      setComments(
+        data.comments.filter(
+          (comment: CivicComment) => !comment.body.includes('<!-- civic-admin ')
+        )
+      );
     } catch {
       setComments([]);
+      setLifecycle(null);
       setCommentsFailed(true);
     } finally {
       setCommentsLoading(false);
@@ -312,6 +356,51 @@ export default function CivicDiscussion({ assetId }: { assetId: string }) {
               Close discussion
             </button>
           </div>
+
+          {lifecycle && (
+            <div className="mt-5 rounded-xl border border-primary-100 bg-white p-4">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div>
+                  <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+                    Case lifecycle
+                  </div>
+                  <div className="mt-1 font-extrabold text-gray-950">{lifecycle.label}</div>
+                </div>
+                <div className="text-xs font-bold text-gray-500">
+                  Step {lifecycleStep(lifecycle.status)} of 5
+                </div>
+              </div>
+
+              {lifecycle.status === 'community-corroborated' && (
+                <p className="mt-2 text-sm text-gray-600">
+                  {lifecycle.confirmationCount} community confirmations. This does not mean BetterMakati reviewed or forwarded the case.
+                </p>
+              )}
+
+              {lifecycle.adminEvents.length > 0 && (
+                <div className="mt-4 space-y-2">
+                  {lifecycle.adminEvents.map((event, index) => (
+                    <div
+                      key={(event.createdAt ?? 'event') + ':' + index}
+                      className="rounded-lg bg-[#fffdf8] px-3 py-2 text-sm text-gray-700"
+                    >
+                      <div className="font-bold text-gray-950">
+                        {event.status?.replaceAll('-', ' ') ?? 'Lifecycle event'}
+                      </div>
+                      {(event.destination || event.channel || event.externalReference) && (
+                        <div className="mt-1 text-xs text-gray-500">
+                          {[event.destination, event.channel, event.externalReference]
+                            .filter(Boolean)
+                            .join(' · ')}
+                        </div>
+                      )}
+                      {event.note && <div className="mt-1 text-xs text-gray-600">{event.note}</div>}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
 
           {commentsLoading ? (
             <div className="mt-5 text-sm text-gray-500">Loading discussion…</div>
