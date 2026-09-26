@@ -1,0 +1,269 @@
+{
+  "schemaVersion": 1,
+  "definedAt": "2026-09-26",
+  "workstream": "W3R-10a — Redefine participation outcome metrics",
+  "status": "definitions-only",
+  "purpose": "Define outcome-oriented participation metrics for the redesigned BetterMakati participation system before any new instrumentation or public dashboard is added.",
+  "implementationBoundary": "This file defines populations, events, numerators, denominators and interpretation rules only. W3R-10a does not add analytics, tracking events, contributor identifiers, API fields, aggregates or public metrics.",
+  "principles": [
+    "Measure useful progression and evidence, not participation volume for its own sake.",
+    "A BetterMakati workflow event is not automatically evidence of City Government receipt, action or resolution.",
+    "Case-stage metrics use explicit lifecycle evidence rather than GitHub open/closed state alone.",
+    "Forwarded means BetterMakati documented a referral attempt; acknowledged requires a separate authority-acknowledged lifecycle event.",
+    "Action reported means action evidence was recorded; it is not automatically a resolution.",
+    "Community-verified resolved is the strongest BetterMakati case-resolution state and remains distinct from a community comment that merely says a problem appears resolved.",
+    "Observations are dated condition snapshots, not complaints, cases, ratings or canonical place facts.",
+    "Observation freshness is based on observedAt, not submittedAt.",
+    "Civic-audit coverage is calculated only against the campaign's frozen target set and cannot be extrapolated beyond that set.",
+    "Anonymous public aliases, IP addresses and free-text names must not be treated as stable contributor identities.",
+    "Any future repeat-contribution measurement must use a privacy-preserving contributor key and must not expose individual participation histories.",
+    "Every published rate must state its population, time window, sample size and evidence basis. Publication thresholds are defined separately in W3R-10b."
+  ],
+  "scope": {
+    "included": [
+      "Civic reports and proposals stored as BetterMakati civic cases.",
+      "Documented civic-case lifecycle events: reviewed, forwarded, acknowledged, action-reported and community-verified-resolved.",
+      "Structured civic observations using observedAt.",
+      "Civic-audit campaigns with frozen target sets and entity-complete rules.",
+      "Future privacy-preserving repeat-contribution instrumentation."
+    ],
+    "notCombinedIntoCaseLifecycle": [
+      "General BetterMakati proposals, ideas, corrections, sources, volunteer offers and contact submissions from /api/feedback.",
+      "Official consultations or hearings hosted by government.",
+      "Structured observations.",
+      "Fallback URLs that were generated but not confirmed as submitted.",
+      "Emergency attempts rejected before BetterMakati case creation."
+    ],
+    "reasonForSeparation": "These workflows do not currently share equivalent lifecycle evidence. Combining unlike records would produce misleading funnel rates."
+  },
+  "canonicalDefinitions": {
+    "eligibleCivicCase": "A native BetterMakati civic report or proposal successfully created as a civic issue. Emergency attempts rejected before creation, fallback-only unsaved attempts, structured observations and general feedback are excluded.",
+    "caseCohort": "Eligible civic cases whose issue-created timestamp falls inside the selected reporting period. Later lifecycle outcomes remain attached to the original submission cohort.",
+    "firstStageEvent": "The earliest valid civic-admin event for the specified lifecycle status.",
+    "reviewed": "At least one valid civic-admin event with status=reviewed.",
+    "routed": "At least one valid civic-admin event with status=forwarded. A routed case documents BetterMakati's referral attempt; it does not prove authority receipt.",
+    "acknowledged": "At least one valid civic-admin event with status=acknowledged. This is the first lifecycle state that may be described as documented authority acknowledgement when the event identifies the responsible authority/body.",
+    "actionReported": "At least one valid civic-admin event with status=action-reported.",
+    "documentedResolution": "At least one valid civic-admin event with status=community-verified-resolved.",
+    "communityResolutionSignal": "An ordinary community comment with commentType=resolved. This is evidence to review, not the documentedResolution state.",
+    "substantiveObservation": "A stored structured observation answer that is not a not-observed value.",
+    "campaignObservedEntity": "A frozen campaign target with at least one valid campaign-period observation.",
+    "campaignCompleteEntity": "A frozen campaign target satisfying the campaign's minimumObservationsPerEntity and required-question substantive-answer rule."
+  },
+  "metricFamilies": [
+    {
+      "id": "case-lifecycle",
+      "label": "Civic case progression",
+      "cohortRule": "Use submission cohorts based on civic case createdAt. Do not build the denominator from cases that merely happen to be open or updated during the reporting period.",
+      "metrics": [
+        {
+          "id": "review-coverage",
+          "label": "Reviewed case share",
+          "question": "Of civic cases submitted in the cohort, how many received documented BetterMakati review?",
+          "numerator": "Eligible civic cases in the cohort with a reviewed lifecycle event.",
+          "denominator": "All eligible civic cases in the cohort.",
+          "calculation": "numerator / denominator",
+          "companionDuration": {
+            "id": "time-to-review",
+            "start": "case createdAt",
+            "end": "first reviewed event recordedAt",
+            "unit": "elapsed hours"
+          },
+          "interpretation": "Measures BetterMakati review coverage, not government response."
+        },
+        {
+          "id": "routing-share",
+          "label": "Routed case share",
+          "question": "Of civic cases submitted in the cohort, how many have a documented BetterMakati referral?",
+          "numerator": "Eligible civic cases in the cohort with a forwarded lifecycle event.",
+          "denominator": "All eligible civic cases in the cohort.",
+          "calculation": "numerator / denominator",
+          "companionDuration": {
+            "id": "time-to-routing",
+            "start": "case createdAt",
+            "end": "first forwarded event recordedAt",
+            "unit": "elapsed hours"
+          },
+          "interpretation": "Measures documented BetterMakati routing/referral. It must not be labeled authority receipt or acceptance.",
+          "supportingDiagnostic": {
+            "id": "routing-evidence-completeness",
+            "numerator": "Routed cases whose first forwarded event includes both authority and channel.",
+            "denominator": "Routed cases.",
+            "purpose": "Check whether a routing claim is supported by a named destination and delivery channel."
+          }
+        },
+        {
+          "id": "acknowledgement-share",
+          "label": "Authority acknowledgement share",
+          "question": "Of civic cases submitted in the cohort, how many later obtained documented authority acknowledgement?",
+          "numerator": "Eligible civic cases in the cohort with an acknowledged lifecycle event.",
+          "denominator": "All eligible civic cases in the cohort.",
+          "calculation": "numerator / denominator",
+          "companionDuration": {
+            "id": "time-to-acknowledgement",
+            "start": "case createdAt",
+            "end": "first acknowledged event recordedAt",
+            "unit": "elapsed hours"
+          },
+          "evidenceRule": "For public presentation as authority acknowledgement, the lifecycle event must identify the responsible authority/body. A forwarded event alone never satisfies this metric.",
+          "interpretation": "Measures documented acknowledgement visible to BetterMakati, not all acknowledgements that may have occurred outside the recorded workflow."
+        },
+        {
+          "id": "action-evidence-share",
+          "label": "Action-evidence share",
+          "question": "Of civic cases submitted in the cohort, how many have later documented action evidence?",
+          "numerator": "Eligible civic cases in the cohort with an action-reported lifecycle event.",
+          "denominator": "All eligible civic cases in the cohort.",
+          "calculation": "numerator / denominator",
+          "companionDuration": {
+            "id": "time-to-action-evidence",
+            "start": "case createdAt",
+            "end": "first action-reported event recordedAt",
+            "unit": "elapsed hours"
+          },
+          "interpretation": "Records that some action was evidenced; it does not imply the issue was fully resolved or that BetterMakati independently verified the quality of the action."
+        },
+        {
+          "id": "documented-resolution-share",
+          "label": "Documented resolution share",
+          "question": "Of civic cases submitted in the cohort, how many reached BetterMakati's documented community-verified resolution state?",
+          "numerator": "Eligible civic cases in the cohort with a community-verified-resolved lifecycle event.",
+          "denominator": "All eligible civic cases in the cohort.",
+          "calculation": "numerator / denominator",
+          "companionDuration": {
+            "id": "time-to-documented-resolution",
+            "start": "case createdAt",
+            "end": "first community-verified-resolved event recordedAt",
+            "unit": "elapsed hours"
+          },
+          "exclusions": [
+            "GitHub issue closed without a community-verified-resolved lifecycle event.",
+            "Ordinary community resolved comments without the lifecycle event.",
+            "Action-reported events without later documented resolution."
+          ],
+          "interpretation": "Measures cases with documented BetterMakati resolution evidence. It is not a claim that every unresolved cohort case remains unresolved in the real world."
+        }
+      ],
+      "presentationRule": "Lifecycle shares may be displayed as a progression only if the selected cohort and denominator remain the same across stages. Conditional stage-to-stage rates may be calculated internally later but must not replace the cohort-based shares without explicit labeling."
+    },
+    {
+      "id": "observation-freshness",
+      "label": "Condition observation freshness",
+      "metrics": [
+        {
+          "id": "latest-observation-age-days",
+          "label": "Latest observation age",
+          "unit": "days",
+          "entityLevelCalculation": "asOf minus the entity's latest valid observedAt",
+          "population": "Canonical civic entities with at least one valid structured observation.",
+          "sourceTimestamp": "observedAt",
+          "notSourceTimestamp": "submittedAt",
+          "interpretation": "Lower age means more recently observed conditions. It is not a quality score."
+        },
+        {
+          "id": "entities-with-observations",
+          "label": "Observed entity count",
+          "calculation": "Count of canonical entities with at least one valid structured observation in the selected period or all-time view.",
+          "interpretation": "Coverage count only; it must be shown with the eligible entity population when used as a coverage statement."
+        }
+      ],
+      "thresholdBoundary": "W3R-10a does not define a universal fresh/stale cutoff. Any age threshold for public labels belongs to W3R-10b and may vary by observation family."
+    },
+    {
+      "id": "civic-audit-coverage",
+      "label": "Civic audit coverage",
+      "metrics": [
+        {
+          "id": "audit-observed-entity-coverage",
+          "label": "Target entities observed",
+          "numerator": "Frozen target entities with at least one valid observation whose observedAt falls inside the campaign period.",
+          "denominator": "All frozen target entities in the campaign.",
+          "calculation": "numerator / denominator",
+          "requiredContext": [
+            "campaign id",
+            "campaign period",
+            "frozen target count",
+            "inventory claim"
+          ]
+        },
+        {
+          "id": "audit-complete-entity-coverage",
+          "label": "Target entities meeting the campaign completion rule",
+          "numerator": "Frozen target entities satisfying minimumObservationsPerEntity and required-question substantive-answer coverage.",
+          "denominator": "All frozen target entities in the campaign.",
+          "calculation": "numerator / denominator",
+          "requiredContext": [
+            "minimumObservationsPerEntity",
+            "required question set",
+            "campaign period",
+            "frozen target count"
+          ]
+        }
+      ],
+      "interpretation": "These are operational coverage measures. They do not score, rank or judge the condition of target places.",
+      "scopeRule": "Never replace the frozen target denominator with all parks, all barangays or all Makati places unless the campaign itself froze and justified that exact scope."
+    },
+    {
+      "id": "repeat-contribution",
+      "label": "Repeat contribution",
+      "status": "defined-but-not-currently-measurable-reliably",
+      "metrics": [
+        {
+          "id": "repeat-contributor-share",
+          "label": "Repeat contributor share",
+          "question": "Among contributors measurable with a privacy-preserving stable key in the selected period, what share made more than one valid contribution?",
+          "numerator": "Distinct privacy-preserving contributor keys associated with at least two valid contributions in the selected period.",
+          "denominator": "Distinct privacy-preserving contributor keys associated with at least one valid contribution in the selected period.",
+          "calculation": "numerator / denominator",
+          "eligibleContributionKinds": [
+            "general BetterMakati submission",
+            "civic report",
+            "civic proposal",
+            "structured observation"
+          ],
+          "deduplicationRule": "A duplicate submission that resolves to an already-existing record does not create an additional contribution event unless the user adds a new substantive confirmation, support or observation.",
+          "interpretation": "Measures repeat participation among contributors who can be measured consistently; it does not measure unique residents."
+        },
+        {
+          "id": "repeat-contribution-count",
+          "label": "Repeat contribution events",
+          "calculation": "Count valid contribution events after a contributor's first valid contribution in the selected period.",
+          "interpretation": "A workload/engagement diagnostic. It should not be used to rank or publicly profile contributors."
+        }
+      ],
+      "privacyRequirements": [
+        "Do not use IP address as the stable contributor key.",
+        "Do not treat publicAlias or free-text name as identity.",
+        "Do not require a public account solely to measure this metric.",
+        "A future contributor key should be pseudonymous, non-public and documented with retention rules before W3R-10c instrumentation."
+      ],
+      "currentReadiness": "Current data cannot produce a trustworthy repeat-contributor rate because anonymous submissions do not carry a stable privacy-safe identity key."
+    }
+  ],
+  "crossCuttingRules": {
+    "timeWindows": "Every aggregate requires an explicit asOf and reporting window. Case funnels use submission cohorts; observation and audit metrics use observedAt.",
+    "lateOutcomes": "A lifecycle event that occurs after the cohort period still counts toward that cohort when measuring mature outcomes as of a later date.",
+    "rightCensoring": "Recent cohorts have had less time to reach later stages. W3R-10b must define age/maturity thresholds before later-stage rates are publicly compared across periods.",
+    "zeroDenominator": "Return not-applicable rather than 0% when a denominator is zero.",
+    "duplicateCases": "Cases prevented by duplicate detection are not new case submissions. Community confirmations/support may be reported separately but must not inflate submitted-case denominators.",
+    "fallbackOnly": "Generating a fallback URL is not a successful BetterMakati submission and must not enter native case/submission outcome denominators unless completion can be independently confirmed.",
+    "evidenceSeparation": "Community comments, BetterMakati lifecycle events and government acknowledgement/action must remain distinguishable in both storage and presentation.",
+    "barangayBreakdowns": "A barangay breakdown is valid only when the underlying record has a canonical barangay/entity relationship or explicit barangay scope. Do not infer local attribution from free-text mentions alone.",
+    "noPopularityLeaderboard": "Do not turn counts, repeat contribution or audit participation into contributor, barangay or place popularity rankings."
+  },
+  "currentDataReadiness": {
+    "review": "derivable from civic-admin reviewed events plus civic case createdAt",
+    "routing": "derivable from civic-admin forwarded events plus civic case createdAt",
+    "acknowledgement": "partially derivable; public authority-acknowledgement metric additionally requires a named authority/body on the event",
+    "action": "derivable from civic-admin action-reported events",
+    "resolution": "derivable from civic-admin community-verified-resolved events",
+    "observationFreshness": "derivable from structured observation observedAt values",
+    "auditCoverage": "derivable from frozen campaign targets plus campaign-period observations",
+    "repeatContribution": "not reliably derivable until a privacy-preserving stable contributor key exists"
+  },
+  "nextStep": {
+    "id": "W3R-10b",
+    "title": "Define metric publication thresholds",
+    "scope": "Separate internal operational metrics from public metrics and set minimum sample, cohort-maturity, freshness and coverage thresholds. No dashboards or instrumentation."
+  }
+}
