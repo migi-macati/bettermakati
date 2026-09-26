@@ -211,15 +211,25 @@
       "id": "W4-1g",
       "phase": "Statistics",
       "title": "Redesign Statistics landing around questions and trends",
-      "status": "next",
+      "status": "complete",
       "maximumScope": "Statistics page only. Use canonical indicators, strong visual hierarchy, charts/tables and concise interpretation.",
-      "stopWhen": "The page answers current scale, change over time and comparable context without sermons or duplicated data."
+      "stopWhen": "The page answers current scale, change over time and comparable context without sermons or duplicated data.",
+      "completedAt": "2026-09-26",
+      "implementationFiles": [
+        "src/pages/Statistics.tsx",
+        "data/wave4-statistics-data-migration.json"
+      ],
+      "commits": [
+        "57b69378034f13630b22dbdcb1bca779454f1aed",
+        "fa02e06f232fee9ec589eb0684fafe1bfc0b9b10",
+        "35195cde41762b822eadc58e56e6ae4872a62cf0"
+      ]
     },
     {
       "id": "W4-1h",
       "phase": "Statistics",
       "title": "Integrate barangay statistics",
-      "status": "planned",
+      "status": "next",
       "maximumScope": "Barangay-scoped statistical view only. Reuse canonical barangay data and indicator definitions.",
       "stopWhen": "Applicable city indicators can be sliced to canonical barangays without pretending unavailable barangay data exists."
     },
@@ -496,11 +506,11 @@
       "stopWhen": "Wave 4 is closed only to the extent supported by evidence, with future work reopened as specific capabilities rather than vague unfinished work."
     }
   ],
-  "current": "W4-1g",
+  "current": "W4-1h",
   "immediateNext": {
-    "id": "W4-1g",
-    "title": "Redesign Statistics landing around questions and trends",
-    "maximumScope": "Statistics page only. Use canonical indicators, strong visual hierarchy, charts/tables and concise interpretation."
+    "id": "W4-1h",
+    "title": "Integrate barangay statistics",
+    "maximumScope": "Barangay-scoped statistical view only. Reuse canonical barangay data and indicator definitions."
   },
   "carriedForward": [
     {
