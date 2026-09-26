@@ -111,7 +111,7 @@ for (const marker of [
   "id: 'philgeps'",
   "role: 'national-procurement-discovery'",
   'It does not establish any Makati-specific Integrity fact.',
-  'does not assert an exact PhilGEPS notice match',
+  'not treated as a matched PhilGEPS notice unless an exact official reference is independently verified',
 ]) {
   if (!ecosystem.includes(marker)) {
     problems.push('BetterGov Integrity-context marker missing: ' + marker);
