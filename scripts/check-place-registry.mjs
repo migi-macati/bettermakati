@@ -315,7 +315,6 @@ for (const marker of [
   "assetId: place?.id ?? ''",
   "lat: roundCoordinate(point.lat)",
   "lng: roundCoordinate(point.lng)",
-  "None of these",
   "Confirm this issue",
   "Continue on GitHub",
 ]) {
@@ -328,6 +327,7 @@ for (const marker of [
   "locationMode: clean(req.body?.locationMode, 30)",
   "placeId: clean(req.body?.placeId, 120)",
   "const locationOnly = payload.locationMode === 'location-only'",
+  "locationOnly && kind !== 'report'",
   "locationOnly ? true : meta.assetId === payload.assetId",
   "distance !== null && distance <= 75",
   "roundCoordinate(parseNumber(req.body?.lat))",
