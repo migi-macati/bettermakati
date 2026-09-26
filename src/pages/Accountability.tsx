@@ -27,6 +27,7 @@ import {
 } from '../data/accountability';
 import type { AccountabilityEntry } from '../data/civicTypes';
 import { placesRelatedTo } from '../data/placeRegistry';
+import { integrityForAccountability } from '../data/integrityCivicRelationships';
 
 const money = (millions?: number) => {
   if (millions === undefined) return '—';
@@ -711,6 +712,7 @@ export default function Accountability() {
           {visible.map(entry => {
             const missing = firstMissingEvidence(entry);
             const relatedPlaces = placesRelatedTo('accountability-record', entry.id);
+            const integrityLinks = integrityForAccountability(entry.id);
             const documentedStages =
               entry.procurement?.stages.filter(
                 stage => stage.status === 'documented'
@@ -776,6 +778,22 @@ export default function Accountability() {
                           {place.name}
                         </Link>
                       ))}
+                    </div>
+                  )}
+                  {integrityLinks.length > 0 && (
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      {integrityLinks.map(item =>
+                        item.node ? (
+                          <Link
+                            key={item.relationship.id}
+                            to={item.node.href}
+                            className="inline-flex items-center gap-1 rounded-full border border-primary-100 bg-primary-50 px-3 py-1.5 text-xs font-bold text-primary-800"
+                          >
+                            <ShieldCheck className="h-3.5 w-3.5" />
+                            Integrity evidence
+                          </Link>
+                        ) : null
+                      )}
                     </div>
                   )}
                 </div>
