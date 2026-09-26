@@ -3,6 +3,11 @@ import { readFile } from 'node:fs/promises';
 const source = await readFile('src/data/localLegislation.ts', 'utf8');
 const serviceSource = await readFile('src/data/serviceDirectory.ts', 'utf8');
 const pageSource = await readFile('src/pages/Legislation.tsx', 'utf8');
+const browserIndexBuilderSource = await readFile(
+  'scripts/build-legislation-browser-index.mjs',
+  'utf8'
+);
+const packageSource = await readFile('package.json', 'utf8');
 
 const expectedOrdinances = [
   ['2020-074', '2020-03-19'],
@@ -241,8 +246,10 @@ for (const marker of [
   "localLegislationRecords",
   "Search local records",
   "BetterMakati index",
-  "Open official source record",
-  "Use the City Government of Makati archive for records not yet indexed here.",
+  "makati-legislation-index.json",
+  "View record",
+  "Makati archive ID",
+  "visibleResultLimit = 60",
 ]) {
   if (!pageSource.includes(marker)) {
     problems.push('W4-2g local-first page marker missing: ' + marker);
@@ -256,6 +263,29 @@ if (
   problems.push(
     'W4-2g must not use an external web search as the primary legislation search experience.'
   );
+}
+
+for (const marker of [
+  "makati-legislation-normalized-",
+  "public/data",
+  "makati-legislation-index.json",
+  "canonicalRecordTotal",
+  "officialDocumentUrl",
+  "records.map(record => ({",
+]) {
+  if (!browserIndexBuilderSource.includes(marker)) {
+    problems.push('W4-2g browser-index builder marker missing: ' + marker);
+  }
+}
+
+for (const marker of [
+  '"build:legislation-index": "node scripts/build-legislation-browser-index.mjs"',
+  '"dev": "npm run build:legislation-index && vite"',
+  '"build": "npm run build:legislation-index && ',
+]) {
+  if (!packageSource.includes(marker)) {
+    problems.push('W4-2g package wiring missing: ' + marker);
+  }
 }
 
 const allReferences = [...ordinanceCalls, ...resolutionCalls].map(
