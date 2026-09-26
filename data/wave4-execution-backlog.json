@@ -54,6 +54,7 @@
         "W4-2c",
         "W4-2d",
         "W4-2e",
+        "W4-2e2",
         "W4-2f",
         "W4-2g",
         "W4-2h"
@@ -334,9 +335,36 @@
       "id": "W4-2e",
       "phase": "Legislation",
       "title": "Connect legislation to City Monitor lifecycle",
-      "status": "next",
+      "status": "complete",
       "maximumScope": "Explicit record-to-record relationships plus council-session normalization and transcript pipeline: backfill identifiable previous official session videos and ingest new official sessions; represent each session once in City Monitor; attach timestamped BetterMakati automated transcripts with provenance/model/date, allow BetterMakati reviewed transcripts, and never label generated text official. Link measures to session/video/transcript evidence only where the action is explicit. No fuzzy number/title or speaker-identity inference.",
-      "stopWhen": "Previous/current session-video evidence can be normalized without the false source-gap assumption; session records have provenance-aware transcript states for backfill and new-session ingestion; and canonical measures can link to exact session/video/transcript evidence without treating automated text as an official record."
+      "stopWhen": "Previous/current session-video evidence can be normalized without the false source-gap assumption; session records have provenance-aware transcript states for backfill and new-session ingestion; and canonical measures can link to exact session/video/transcript evidence without treating automated text as an official record.",
+      "completedAt": "2026-09-26",
+      "implementationFiles": [
+        "src/data/councilSessions.ts",
+        "src/data/cityMonitor.ts",
+        "data/city-monitor-sources.json",
+        "scripts/check-council-sessions.mjs",
+        "scripts/audit-city-monitor-depth.mjs",
+        "package.json"
+      ],
+      "commits": [
+        "564a50b0c3d34b6399af4e4b8ea68934f0865a53",
+        "ad84c1a91e11ffef85aa71e34df60ab25ab20d96",
+        "0e629a4ec591edd61627f75c22a61c875fe50ed6",
+        "66c5ab08b80db424e6509d22e4f0dd0ef86f7770",
+        "22335f74054d78c21687129fcd0151d1240d95bf",
+        "6e8389bf03eb0e3f2802d87ea33321ce04296a5d",
+        "b00a58766c061eb65f327e4ab8a428d7c5d5b10a",
+        "c1cefee7397498183867864a8e7a1ba0c65a9d27"
+      ]
+    },
+    {
+      "id": "W4-2e2",
+      "phase": "Legislation",
+      "title": "Normalize full official ordinance/resolution archive",
+      "status": "next",
+      "maximumScope": "Official Makati resolutions-and-ordinances archive only. Enumerate every retrievable archive entry in a dated snapshot, normalize ordinance/resolution identity, reference, title and official document/source URLs, and reconcile duplicates against the existing 20-record seed. No topic tagging or lifecycle inference in the same step.",
+      "stopWhen": "The dated archive snapshot has a reproducible enumerated total and every retrievable item resolves to one canonical local measure or an explicit unresolved/duplicate disposition. Do not call the registry historically complete unless the archive enumeration itself proves that scope."
     },
     {
       "id": "W4-2f",
@@ -563,11 +591,11 @@
       "stopWhen": "Wave 4 is closed only to the extent supported by evidence, with future work reopened as specific capabilities rather than vague unfinished work."
     }
   ],
-  "current": "W4-2e",
+  "current": "W4-2e2",
   "immediateNext": {
-    "id": "W4-2e",
-    "title": "Connect legislation to City Monitor lifecycle",
-    "maximumScope": "Explicit record-to-record relationships plus council-session normalization and transcript pipeline: backfill identifiable previous official session videos and ingest new official sessions; represent each session once in City Monitor; attach timestamped BetterMakati automated transcripts with provenance/model/date, allow BetterMakati reviewed transcripts, and never label generated text official. Link measures to session/video/transcript evidence only where the action is explicit. No fuzzy number/title or speaker-identity inference."
+    "id": "W4-2e2",
+    "title": "Normalize full official ordinance/resolution archive",
+    "maximumScope": "Official Makati resolutions-and-ordinances archive only. Enumerate every retrievable archive entry in a dated snapshot, normalize ordinance/resolution identity, reference, title and official document/source URLs, and reconcile duplicates against the existing 20-record seed. No topic tagging or lifecycle inference in the same step."
   },
   "carriedForward": [
     {
