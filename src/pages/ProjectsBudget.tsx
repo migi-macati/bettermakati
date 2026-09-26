@@ -50,6 +50,11 @@ import {
   procurementProjectEntries,
   specialEducationFundEntries,
 } from '../data/accountabilitySupplement';
+import {
+  accountabilityEntries,
+  accountabilityStatusLabel,
+} from '../data/accountability';
+import { placesRelatedTo } from '../data/placeRegistry';
 
 const peso = (millions: number) => {
   const sign = millions < 0 ? '−' : '';
@@ -214,6 +219,18 @@ export default function ProjectsBudget() {
   const officeTotalsReconcile =
     Math.abs(officeBudgetTotalM - budgetSummary2026.totalBudgetM) < 0.001;
   const sefRecord = specialEducationFundEntries[0];
+  const placeLinkedRecords = accountabilityEntries
+    .flatMap(entry =>
+      placesRelatedTo('accountability-record', entry.id).map(place => ({
+        entry,
+        place,
+      }))
+    )
+    .filter(
+      item =>
+        item.entry.type === 'project' || item.entry.type === 'commitment'
+    )
+    .slice(0, 4);
 
   const perResident = Math.round(
     (budgetSummary2026.totalBudgetM * 1_000_000) / cityPopulation
@@ -818,6 +835,48 @@ export default function ProjectsBudget() {
             </a>
           ))}
         </div>
+
+        {placeLinkedRecords.length > 0 && (
+          <div className="mt-8">
+            <div className="section-eyebrow">Place-linked follow-through</div>
+            <div className="grid gap-4 md:grid-cols-2">
+              {placeLinkedRecords.map(({ entry, place }) => (
+                <article
+                  key={place.id + ':' + entry.id}
+                  className="rounded-2xl border border-primary-100 bg-white p-5"
+                >
+                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+                    <Building2 className="h-4 w-4" />
+                    {place.name}
+                  </div>
+                  <h3 className="mt-3 text-lg font-extrabold text-gray-950">
+                    {entry.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-gray-600">
+                    {entry.summary}
+                  </p>
+                  <div className="mt-3 text-xs font-semibold text-gray-500">
+                    {entry.period} · {accountabilityStatusLabel[entry.status]}
+                  </div>
+                  <div className="mt-4 flex flex-wrap gap-3 text-sm">
+                    <Link
+                      to={'/accountability#' + entry.id}
+                      className="font-bold text-primary-700 underline underline-offset-2"
+                    >
+                      Open record
+                    </Link>
+                    <Link
+                      to={'/civic-map/' + place.id}
+                      className="font-bold text-primary-700 underline underline-offset-2"
+                    >
+                      Place details
+                    </Link>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        )}
 
         <div className="mt-8 rounded-2xl border border-primary-100 bg-white p-6">
           <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-5">
