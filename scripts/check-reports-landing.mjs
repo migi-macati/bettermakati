@@ -1,26 +1,40 @@
 import { readFile } from 'node:fs/promises';
 
 const page = await readFile('src/pages/Reports.tsx', 'utf8');
+const teaser = await readFile(
+  'src/components/reports/ReportTeaser.tsx',
+  'utf8'
+);
 
 const problems = [];
 
 for (const marker of [
-  "import { reports } from '../data/reports'",
-  'const publicationOrder = [...reports].reverse()',
-  'const leadReport = publicationOrder[0]',
-  'const moreReports = publicationOrder.slice(1)',
+  "import ReportTeaser from '../components/reports/ReportTeaser'",
+  "import { publicationReports } from '../data/reports'",
+  'const leadReport = publicationReports[0]',
+  'const moreReports = publicationReports.slice(1)',
   'Featured Reports & Insights',
   '>Latest<',
   'More reports',
+  '<ReportTeaser report={leadReport} variant="lead" />',
+  'moreReports.map',
+  'variant="card"',
+]) {
+  if (!page.includes(marker)) {
+    problems.push('Reports landing marker missing: ' + marker);
+  }
+}
+
+for (const marker of [
   'report.date',
   'report.headline',
   'report.subheadline',
   'Read more',
-  '<ReportCard report={leadReport} lead />',
-  'moreReports.map',
+  "variant === 'lead'",
+  "variant === 'carousel'",
 ]) {
-  if (!page.includes(marker)) {
-    problems.push('Reports landing marker missing: ' + marker);
+  if (!teaser.includes(marker)) {
+    problems.push('Shared report teaser marker missing: ' + marker);
   }
 }
 
@@ -40,33 +54,34 @@ for (const forbidden of [
   }
 }
 
-const reportImportCount = (
-  page.match(/from '..\/data\/reports'/g) ?? []
-).length;
-if (reportImportCount !== 1) {
-  problems.push(
-    'Reports landing must consume the canonical reports array exactly once.'
-  );
-}
-
-if (!page.includes('lead = false') || !page.includes('if (lead)')) {
-  problems.push(
-    'Reports landing must preserve explicit lead-story editorial hierarchy.'
-  );
+for (const duplicateMarkup of [
+  'report.date',
+  'report.headline',
+  'report.subheadline',
+  'function ReportCard',
+]) {
+  if (page.includes(duplicateMarkup)) {
+    problems.push(
+      'Reports landing must render report metadata through the shared ReportTeaser only: ' +
+        duplicateMarkup
+    );
+  }
 }
 
 if (
-  !page.includes('bg-primary-900 text-white') ||
-  !page.includes('lg:grid-cols-[minmax(0,1.45fr)_minmax(18rem,0.75fr)]')
+  !teaser.includes('bg-primary-900 text-white') ||
+  !teaser.includes(
+    'lg:grid-cols-[minmax(0,1.45fr)_minmax(18rem,0.75fr)]'
+  )
 ) {
   problems.push(
-    'Lead story must retain visually distinct publication-front treatment.'
+    'Shared lead teaser must retain visually distinct publication-front treatment.'
   );
 }
 
 if (
   !page.includes('grid grid-cols-1 gap-5 lg:grid-cols-2') ||
-  !page.includes('group block h-full rounded-3xl')
+  !teaser.includes('group block h-full rounded-3xl')
 ) {
   problems.push(
     'Remaining reports must stay in a readable one-report-per-card index.'
@@ -95,5 +110,5 @@ if (problems.length) {
 }
 
 console.log(
-  'Reports landing check passed: canonical reports render once in a lead-story plus publication-index hierarchy, with headline, subheadline, date and Read more and no national-data detour or meta copy.'
+  'Reports landing check passed: the page uses the shared publication order and ReportTeaser for lead and index stories, with no national-data detour or duplicated report metadata markup.'
 );
