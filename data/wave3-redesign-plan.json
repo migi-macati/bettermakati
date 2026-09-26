@@ -791,13 +791,43 @@
     {
       "id": "W3R-9a",
       "title": "Add places to global Search",
-      "status": "next",
-      "maximumScope": "Global Search only. Places become first-class searchable results."
+      "status": "complete",
+      "maximumScope": "Global Search only. Places become first-class searchable results.",
+      "implementationFiles": [
+        "src/data/searchIndex.ts",
+        "src/components/home/ServiceSearch.tsx",
+        "src/pages/Search.tsx"
+      ],
+      "validation": {
+        "searchSource": "Place Registry now feeds global search directly instead of the legacy Civic Map compatibility array.",
+        "eligibility": "Verified place records are searchable; segments/routes remain searchable when they are not in needs-verification state, matching Civic Map browse eligibility.",
+        "firstClassGroups": [
+          "Place",
+          "Segment",
+          "Route"
+        ],
+        "tab": "Global site search now has a Places tab that includes Place, Segment and Route registry records.",
+        "canonicalRouting": "Registry search results open /civic-map/:id canonical record pages.",
+        "indexedFields": [
+          "canonical name",
+          "entity kind and category",
+          "barangay",
+          "address",
+          "segment street/from/to",
+          "aliases",
+          "services at location",
+          "management/responsible body",
+          "registry tags"
+        ],
+        "searchCopy": "Search page now explicitly names civic places and uses Poblacion Park in its example query.",
+        "preserved": "Service-only search behavior and service-place office enrichment are unchanged.",
+        "focusedValidation": "Legacy civicAssets import/civicMapItems search block is absent; civicRegistryItems, Places tab matching, canonical hrefs, aliases and service keywords are present."
+      }
     },
     {
       "id": "W3R-9b",
       "title": "Reuse places in Visit Makati and Heritage",
-      "status": "planned",
+      "status": "next",
       "maximumScope": "Visit and Heritage only. Reuse canonical place facts without duplicating coordinates/addresses."
     },
     {
@@ -874,9 +904,9 @@
     }
   ],
   "immediateNext": {
-    "id": "W3R-9a",
-    "title": "Add places to global Search",
-    "maximumScope": "Global Search only. Places become first-class searchable results."
+    "id": "W3R-9b",
+    "title": "Reuse places in Visit Makati and Heritage",
+    "maximumScope": "Visit and Heritage only. Reuse canonical place facts without duplicating coordinates/addresses."
   },
   "capabilityDispositionAuditFile": "data/wave3-capability-disposition-audit.json",
   "completedSteps": [
@@ -903,7 +933,8 @@
     "W3R-7c",
     "W3R-8a",
     "W3R-8b",
-    "W3R-8c"
+    "W3R-8c",
+    "W3R-9a"
   ],
   "placeRegistrySchemaFile": "data/place-registry-schema.json",
   "placeRegistryDataFile": "src/data/placeRegistry.ts",
