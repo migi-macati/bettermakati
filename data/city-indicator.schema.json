@@ -83,6 +83,14 @@
     "export": {
       "$ref": "#/$defs/exportMetadata",
       "description": "Optional export metadata. UI components should not have to reconstruct downloadable series independently."
+    },
+    "dimensions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/dimension"
+      },
+      "uniqueItems": true,
+      "description": "Optional breakdown dimensions such as age group, sex, industry, land-use category or provider type. Geography and period remain separate."
     }
   },
   "$defs": {
@@ -464,6 +472,13 @@
         "note": {
           "type": "string",
           "minLength": 1
+        },
+        "dimensions": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Dimension-value IDs for this observation, e.g. {\"sex\":\"female\"} or {\"industry\":\"financial-and-insurance\"}."
         }
       }
     },
@@ -925,6 +940,49 @@
           }
         }
       ]
+    },
+    "dimension": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "label"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "label"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "label": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      }
     }
   },
   "x-bettermakati-rules": [
@@ -939,7 +997,8 @@
     "Source gaps remain source gaps; missing data must not be converted into zero.",
     "Presentation components format values from unit metadata; they must not maintain independent copies of the same number.",
     "BetterGov/BetterLGU ecosystem links are typed context or continuation links, not substitutes for the underlying official source unless that ecosystem resource is itself the canonical data owner.",
-    "Use source-table-reference when an official machine-readable/source table is the canonical owner but BetterMakati has not safely materialized the full series; never guess missing cells merely to make an indicator locally complete."
+    "Use source-table-reference when an official machine-readable/source table is the canonical owner but BetterMakati has not safely materialized the full series; never guess missing cells merely to make an indicator locally complete.",
+    "Use explicit dimensions for age, sex, industry, land-use category and similar breakdowns; never encode a breakdown value into the indicator ID merely to avoid modeling the dimension."
   ],
   "examples": [
     {
