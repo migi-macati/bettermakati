@@ -11,6 +11,10 @@ assert(
   urls.some(url => url.endsWith('/civic-map/audits/park-accessibility-2026')),
   'Park accessibility audit missing from sitemap'
 );
+assert(
+  urls.some(url => url.endsWith('/civic-map/audits/park-accessibility-2026/results')),
+  'Park accessibility audit results missing from sitemap'
+);
 for (const url of urls) {
   assert(url.startsWith(base + '/'), `Wrong canonical host: ${url}`);
   const html = await readFile(path.join('dist', new URL(url).pathname, 'index.html'), 'utf8');
