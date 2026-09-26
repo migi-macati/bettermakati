@@ -19,8 +19,12 @@ interface CivicRecord {
   kind: string;
   state: string;
   url: string;
+  evidenceStatus: string;
   evidenceLabel: string;
   referralEligible: boolean;
+  updatedAt: string;
+  placeId?: string | null;
+  locationMode?: 'matched-place' | 'location-only';
   counts: {
     confirm: number;
     resolved: number;
@@ -29,8 +33,11 @@ interface CivicRecord {
     updates: number;
   };
   meta: {
+    placeId?: string | null;
+    locationMode?: 'matched-place' | 'location-only';
     category?: string;
     location?: string;
+    locationLabel?: string;
     preferredChannel?: string;
     severity?: string;
   };
@@ -61,6 +68,8 @@ export default function CivicReports() {
   const [data, setData] = useState<CivicReportData | null>(null);
   const [failed, setFailed] = useState(false);
   const [attempt, setAttempt] = useState(0);
+  const recentCases =
+    data?.records.filter(item => item.kind === 'report').slice(0, 12) ?? [];
 
   useEffect(() => {
     const load = async () => {
@@ -179,6 +188,86 @@ export default function CivicReports() {
           </Section>
 
           <Section className="bg-white">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <div className="section-eyebrow">Case status</div>
+                <Heading level={2}>Recent issue cases</Heading>
+              </div>
+              <div className="text-sm text-gray-500">{recentCases.length} shown</div>
+            </div>
+
+            {recentCases.length === 0 ? (
+              <div className="mt-6 rounded-2xl border border-gray-200 bg-[#fffdf8] p-6 text-sm text-gray-600">
+                No issue cases are available.
+              </div>
+            ) : (
+              <div className="mt-6 grid gap-3 lg:grid-cols-2">
+                {recentCases.map(item => {
+                  const placeId = item.placeId ?? item.meta.placeId ?? null;
+                  const locationMode =
+                    item.locationMode ??
+                    item.meta.locationMode ??
+                    (placeId ? 'matched-place' : 'location-only');
+                  const locationLabel =
+                    item.meta.locationLabel || item.meta.location || 'Location not specified';
+
+                  return (
+                    <article
+                      key={item.number}
+                      className="rounded-2xl border border-gray-200 bg-[#fffdf8] p-5"
+                    >
+                      <div className="flex flex-wrap items-center gap-2 text-xs font-bold">
+                        <span className="rounded-full bg-primary-50 px-2.5 py-1 text-primary-800">
+                          {item.evidenceLabel}
+                        </span>
+                        <span className={item.state === 'open' ? 'text-success-700' : 'text-gray-500'}>
+                          {item.state === 'open' ? 'Open case' : 'Closed record'}
+                        </span>
+                        {locationMode === 'location-only' && (
+                          <span className="rounded-full bg-gray-100 px-2.5 py-1 text-gray-600">
+                            Location only
+                          </span>
+                        )}
+                      </div>
+
+                      <h3 className="mt-2 font-extrabold text-gray-950">
+                        #{item.number} {item.title}
+                      </h3>
+                      <div className="mt-2 text-sm text-gray-600">
+                        {locationLabel}
+                      </div>
+                      <div className="mt-2 text-xs text-gray-500">
+                        Updated {new Date(item.updatedAt).toLocaleDateString('en-PH')}
+                        {item.counts.confirm > 0 ? ' · ' + item.counts.confirm + ' confirmation' + (item.counts.confirm === 1 ? '' : 's') : ''}
+                        {item.counts.resolved > 0 ? ' · ' + item.counts.resolved + ' appears-resolved signal' + (item.counts.resolved === 1 ? '' : 's') : ''}
+                      </div>
+
+                      <div className="mt-4 flex flex-wrap gap-3">
+                        {placeId && (
+                          <Link
+                            to={'/civic-map/' + placeId}
+                            className="text-sm font-bold text-primary-700 underline underline-offset-2"
+                          >
+                            Place details
+                          </Link>
+                        )}
+                        <a
+                          href={item.url}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex items-center gap-1 text-sm font-bold text-primary-700 underline underline-offset-2"
+                        >
+                          Public case <ExternalLink className="h-3.5 w-3.5" />
+                        </a>
+                      </div>
+                    </article>
+                  );
+                })}
+              </div>
+            )}
+          </Section>
+
+          <Section className="bg-white">
             <div className="section-eyebrow">Monthly public-realm brief</div>
             <Heading level={2}>Last 30 days</Heading>
             <div className="mt-6 grid gap-4 md:grid-cols-3">
@@ -238,15 +327,16 @@ export default function CivicReports() {
           </Section>
 
           <Section className="bg-primary-900 text-white">
-            <div className="section-eyebrow !text-white/80">Lifecycle discipline</div>
-            <Heading level={2} className="text-white">Forwarded does not mean acknowledged.</Heading>
-            <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+            <div className="section-eyebrow !text-white/80">Case lifecycle</div>
+            <Heading level={2} className="text-white">Recorded evidence states</Heading>
+            <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
               {[
                 ['1', 'Community submitted'],
                 ['2', 'BetterMakati reviewed'],
                 ['3', 'Forwarded'],
-                ['4', 'Authority acknowledged / action reported'],
-                ['5', 'Community verified resolved'],
+                ['4', 'Authority acknowledged'],
+                ['5', 'Action reported'],
+                ['6', 'Community verified resolved'],
               ].map(([step, label]) => (
                 <div key={step} className="rounded-xl border border-white/15 bg-white/5 p-4">
                   <div className="text-lg font-extrabold text-secondary-500">{step}</div>
@@ -255,7 +345,7 @@ export default function CivicReports() {
               ))}
             </div>
             <p className="mt-5 max-w-4xl text-sm leading-relaxed text-primary-100">
-              Referral events are recorded separately with destination, channel and external reference when available. BetterMakati never promotes a case to an official-response state solely because a citizen submitted it here.
+              Community corroboration and “appears resolved” responses are evidence signals, not automatic lifecycle promotions.
             </p>
           </Section>
         </>
