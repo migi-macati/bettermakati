@@ -155,6 +155,17 @@ const questionTypes = {
   },
 };
 
+const questionCategoryLimits = {
+  'street-public-realm': {
+    'pedestrian-path': new Set(['street-segment', 'sidewalk-segment', 'bridge']),
+    surface: new Set(['street-segment', 'sidewalk-segment', 'crossing', 'bike-lane', 'bridge']),
+    'crossing-access': new Set(['street-segment', 'crossing']),
+    'step-free-access': new Set(['street-segment', 'sidewalk-segment', 'crossing', 'bridge']),
+    shade: new Set(['street-segment', 'sidewalk-segment', 'crossing', 'bike-lane']),
+    drainage: new Set(['street-segment', 'sidewalk-segment', 'crossing', 'drainage', 'bridge']),
+  },
+};
+
 const choiceValues = {
   availability: new Set([
     'present-and-usable',
@@ -237,7 +248,7 @@ const validQuestionSetId = (familyId, questionSetId) =>
     'transport-route': 'transport-route-v1',
   })[familyId];
 
-const sanitizeAnswers = (familyId, answers) => {
+const sanitizeAnswers = (familyId, placeCategory, answers) => {
   if (!Array.isArray(answers) || answers.length === 0 || answers.length > 20) {
     return null;
   }
@@ -251,6 +262,8 @@ const sanitizeAnswers = (familyId, answers) => {
     const questionId = clean(raw?.questionId, 80);
     const responseType = definitions[questionId];
     if (!responseType || seen.has(questionId)) return null;
+    const categoryLimit = questionCategoryLimits[familyId]?.[questionId];
+    if (categoryLimit && !categoryLimit.has(placeCategory)) return null;
     seen.add(questionId);
 
     let value;
@@ -499,7 +512,7 @@ export default async function handler(req, res) {
   }
   payload.observedAt = observedAt.toISOString();
 
-  const answers = sanitizeAnswers(payload.familyId, payload.answers);
+  const answers = sanitizeAnswers(payload.familyId, payload.placeCategory, payload.answers);
   if (!answers?.length) {
     return res.status(400).json({
       error: 'Record at least one valid observed condition.',
