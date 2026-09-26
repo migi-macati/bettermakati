@@ -508,21 +508,21 @@
   {
     "path": "/civic-map/reports",
     "label": "Civic Map reports",
-    "status": "partial",
-    "reviewedAt": "2026-09-26",
+    "status": "reviewed",
+    "reviewedAt": "2026-09-27",
     "checks": [
       "feed-failure-state",
-      "recent-case-evidence-status",
+      "30-day-outcome-cohort",
+      "lifecycle-counts",
+      "rate-threshold-suppression",
       "community-resolution-signal-separation",
       "referral-review-boundary",
-      "six-stage-lifecycle",
+      "structured-observation-freshness",
+      "park-audit-coverage",
+      "recent-case-records",
       "place-links"
     ],
-    "gaps": [
-      "The page still centers legacy 7-day and 30-day submission/backlog counts rather than the W3R-10 outcome model for review, routing, acknowledgement, action, resolution, freshness and audit coverage.",
-      "The monthly proposals section still promotes the three-support pilot threshold as a primary outcome, which is inconsistent with the redesigned feedback-loop emphasis on evidence and outcomes rather than popularity.",
-      "W3R-10b publication-threshold suppression is not yet applied; lifecycle rates or timing summaries must not be added until the threshold policy is implemented."
-    ]
+    "gaps": []
   },
   {
     "path": "/civic-map/audits/park-accessibility-2026",
@@ -545,7 +545,7 @@
     "path": "/civic-map/audits/park-accessibility-2026/results",
     "label": "Public Park Accessibility Check live output",
     "status": "reviewed",
-    "reviewedAt": "2026-09-26",
+    "reviewedAt": "2026-09-27",
     "checks": [
       "coverage-counts",
       "sample-counts",
@@ -555,8 +555,6 @@
       "failed-feed-unavailable-state",
       "no-score-ranking"
     ],
-    "gaps": [
-      "Two coverage cards hard-code the current 13-target denominator. This is correct for the frozen pilot but should become data-driven before the component is reused for another campaign."
-    ]
+    "gaps": []
   }
 ]
