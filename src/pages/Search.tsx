@@ -20,13 +20,13 @@ export default function Search() {
           <div className="section-eyebrow">Search</div>
           <Heading>Search BetterMakati</Heading>
           <p className="mb-6 text-gray-600">
-            One search for services, barangays, officials, records, visitor
-            information and community tools.
+            One search for services, barangays, civic places, officials, records,
+            visitor information and community tools.
           </p>
           <ServiceSearch
             scope="site"
             title="What are you looking for?"
-            placeholder="e.g., Yellow Card, Poblacion, budget, cinema"
+            placeholder="e.g., Yellow Card, Poblacion Park, budget, cinema"
             initialQuery={initialQuery}
           />
         </div>
