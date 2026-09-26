@@ -106,9 +106,11 @@ const githubFallback = ({ type, subject, details, sourceUrl, barangay, tool }) =
             ? 'Contact'
             : 'Idea';
   const body = [
-    tool ? 'Community tool: ' + tool : '',
-    barangay ? 'Barangay / area: ' + barangay : '',
-    sourceUrl ? 'Source / URL: ' + sourceUrl : '',
+    '_Submitted through the BetterMakati website._',
+    '',
+    tool ? '**Community tool:** ' + tool : '',
+    barangay ? '**Barangay / area:** ' + barangay : '',
+    sourceUrl ? '**Source / URL:** ' + sourceUrl : '',
     '',
     details,
   ].filter(Boolean).join('\n');
