@@ -163,7 +163,9 @@ for (const marker of [
   'validQuestionSetId(payload.familyId, payload.questionSetId)',
   'sanitizeAnswers(payload.familyId, payload.entityCategory, payload.answers)',
   'questionCategoryLimits[familyId]?.[questionId]',
-  "if (!thread) return res.status(200).json({ observations: [], asOf })",
+  "if (!thread) {",
+  "observations: [],",
+  "freshness: observationFreshnessInstrumentation({",
   "asOf,",
 ]) {
   if (!observationApi.includes(marker)) {
