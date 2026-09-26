@@ -98,7 +98,7 @@ for (const marker of [
   "placesByBarangay(barangay.name)",
   "place.verification.status === 'verified'",
   "civicAssetTypeLabels[place.primaryCategory]",
-  "to={'/civic-map/' + place.id}",
+  "to={withBarangayScope('/civic-map/' + place.id, barangay.slug)}",
   "place.servicesAtLocation?.slice(0, 3)",
 ]) {
   if (!profilePage.includes(marker)) {
