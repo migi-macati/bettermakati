@@ -593,13 +593,9 @@
     "No observation automatically creates, confirms, resolves, forwards or otherwise changes a civic case.",
     "No overallScore, stars, averageRating, grade, rank, recommendation, or compositeIndex field is permitted."
   ],
-  "legacyRatingDisposition": {
-    "status": "retired-no-existing-records",
-    "verification": {
-      "checkedOn": "2026-09-26",
-      "result": "0 repository issues matching [Civic Reviews]"
-    },
-    "rule": "The generic 1–5 review model is retired. No existing Civic Review records were found, so no legacy migration or compatibility path is required.",
+  "retiredRatingModel": {
+    "status": "retired",
+    "rule": "Generic 1–5 ratings are retired and replaced by structured observations.",
     "oldCriteriaReference": [
       "accessibility",
       "safety",
@@ -625,7 +621,7 @@
       "coverage",
       "boarding"
     ],
-    "replacementPattern": "Where useful, a legacy criterion is decomposed into directly observable questions rather than carried forward as a numeric scale."
+    "replacementPattern": "Where useful, a former rating criterion is decomposed into directly observable questions rather than carried forward as a numeric scale."
   },
   "aggregationContract": {
     "implementationTarget": "W3R-6c",
@@ -703,7 +699,7 @@
         "canonicalValidation": "The server resolves submitted placeId against an 88-place canonical index and overwrites client-supplied place name/category before family/question validation.",
         "schemaEnforcement": "Server validates family/category, question-set version, question IDs, question applicability, answer types/choices, observed time, time context and weather context.",
         "ratingRetirement": "CivicContributionKind no longer includes review; the 1–5 UI, scores payload, review write branch and retired generic rating criteria were removed.",
-        "legacyCompatibility": "Repository review search found zero [Civic Reviews] issues, so obsolete review read compatibility and rating outputs were removed.",
+        "ratingCleanup": "Obsolete rating compatibility and rating outputs were removed.",
         "lifecycleSeparation": "Observation storage contains no civic-admin lifecycle, referral eligibility, duplicate-case behavior or case-state promotion.",
         "noDerivedScores": "No overall score, stars, average rating, weighted score, grade, rank or composite index is generated or stored.",
         "integrityGate": "check:observations validates 16 categories mapped exactly once, 88 canonical place IDs, 5 families, 41 questions, dedicated storage, rating-write retirement and lifecycle separation; it is wired into quality and build.",
