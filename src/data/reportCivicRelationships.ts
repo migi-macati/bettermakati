@@ -154,7 +154,7 @@ export const reportCivicNodeResolver: CivicIntelligenceNodeResolver =
       return {
         ref,
         label: entity.canonicalName,
-        href: '/integrity?view=suppliers#procurement',
+        href: '/integrity#procurement',
         owner: 'integrity',
       };
     }
