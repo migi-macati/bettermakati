@@ -165,7 +165,7 @@ export const localLegislationSources: Record<string, LocalLegislationSource> = {
     sourceClass: 'official-city-publication',
     role: 'identity',
     note:
-      'Annex A lists the measure reference, title and date of approval. It is an official source for this bounded batch but is not treated as the full official text of each ordinance.',
+      'Annex A lists the measure reference, title and date of approval. It is an official source for the bounded ordinance/resolution batches but is not treated as the full official text of each measure.',
   },
 };
 
@@ -331,7 +331,117 @@ export const localOrdinanceRecords: LocalLegislationRecord[] = [
   ),
 ];
 
-export const localResolutionRecords: LocalLegislationRecord[] = [];
+
+export const resolutionBatch2020CovidResponse = {
+  id: 'resolution-batch-2020-covid-response',
+  label:
+    'COVID-19 response resolutions listed in Annex A of the Makati City COVID-19 Recovery Plan',
+  declaredScope:
+    'All City Resolution entries in Annex A, City Policies and Legislation, from 16 through 19 March 2020.',
+  sourceId: 'makati-covid-recovery-plan-2020',
+  periodStart: '2020-03-16',
+  periodEnd: '2020-03-19',
+  expectedCount: 5,
+  completenessRule:
+    'This batch contains every City Resolution entry listed in the cited Annex A between 16 and 19 March 2020. It does not claim to contain every Makati resolution adopted in 2020.',
+  recordEvidenceLevel:
+    'Official city publication confirms reference, title-as-listed and date of approval; individual full legal texts are not yet normalized in this batch.',
+} as const;
+
+const resolutionFromAnnex = (
+  officialNumber: string,
+  approvalDate: string,
+  title: string
+): LocalLegislationRecord => {
+  const sequence = officialNumber.split('-').at(-1) ?? officialNumber;
+  const id = 'resolution-' + officialNumber;
+
+  return {
+    id,
+    measureType: 'resolution',
+    reference: {
+      officialNumber,
+      seriesYear: 2020,
+      sequence,
+      display: 'City Resolution No. ' + officialNumber,
+      sourceIds: [annexSource.id],
+    },
+    title,
+    jurisdiction: {
+      level: 'city',
+      name: 'Makati City',
+      legislativeBody: 'Sangguniang Panlungsod ng Makati',
+    },
+    documents: [
+      {
+        id: 'annex-a-resolution-' + officialNumber,
+        kind: 'archive-record',
+        label: annexSource.label,
+        url: annexSource.url,
+        publisher: annexSource.publisher,
+        sourceIds: [annexSource.id],
+        note:
+          'Official city publication listing the resolution reference, title and date of approval; not the resolution’s full legal text.',
+      },
+    ],
+    provenance: {
+      sourceIds: [annexSource.id],
+      note:
+        'Identity/title/date are normalized from Annex A only. Authors, readings, vote, mayoral action where applicable, effectivity and later legal status remain unset unless separately evidenced.',
+    },
+    lifecycle: [
+      {
+        id: 'annex-a-resolution-approval-' + officialNumber,
+        eventType: 'other-as-stated',
+        date: approvalDate,
+        actionAsStated: 'Date of approval listed in Annex A',
+        evidenceStatus: 'official-publication',
+        sourceIds: [annexSource.id],
+        note:
+          'The source labels the field Date of Approval but does not, in this table alone, identify the approving body or establish other lifecycle stages.',
+      },
+    ],
+    sessionEvidence: [],
+    measureRelationships: [],
+    topics: [],
+    relationships: [],
+    revision: {
+      schemaVersion: 1,
+      lastReviewed: '2026-09-26',
+      recordStatus: 'provisional',
+      changeNote:
+        'Identity, title-as-listed and approval date are verified against the official Annex A. Full resolution text, authors, readings, vote, mayoral action where applicable, effectivity and later legal status still require measure-level evidence.',
+    },
+  };
+};
+
+export const localResolutionRecords: LocalLegislationRecord[] = [
+  resolutionFromAnnex(
+    '2020-016',
+    '2020-03-16',
+    'Declaring a State of Calamity in the City of Makati due to the Coronavirus Disease 2019 (COVID-19) Pandemic, Subject to Existing Laws, Rules and Regulations'
+  ),
+  resolutionFromAnnex(
+    '2020-017',
+    '2020-03-16',
+    'Establishing the Restrictions in the Operation of Government and Private Facilities Until 14 April 2020, Unless Extended or Shortened Upon the Recommendation of the Inter-Agency Task Force on Emerging Infectious Diseases (IATF-EID) or the Makati Health Department (MHD), Subject to Existing Laws, Rules and Regulations'
+  ),
+  resolutionFromAnnex(
+    '2020-018',
+    '2020-03-19',
+    'Enjoining All Establishments, Whether Public or Private, and Households Within the City of Makati to Implement “Ocho-Ocho” for the Purpose of Disinfecting and Sanitizing the Houses, Workplaces and Common Areas Every Day at 8:00am – 8:00pm, Subject to Existing Rules and Regulations'
+  ),
+  resolutionFromAnnex(
+    '2020-019',
+    '2020-03-19',
+    'Authorizing the Honorable Mayor Mar-Len Abigail S. Binay to Accept, For and In Behalf of the City Government of Makati, All Donations Favorable to the City of Makati During the National Public Health Emergency, and to Sign the Deeds of Donation and All Other Pertinent Documents Relative Thereto, Subject to Existing Laws, Rules and Regulations'
+  ),
+  resolutionFromAnnex(
+    '2020-020',
+    '2020-03-19',
+    'Authorizing the Honorable Mayor Mar-Len Abigail S. Binay to Enter into and Sign Various Agreements, Contracts, and the Like, For and In Behalf of the City Government of Makati, Which Will Benefit the City of Makati During the National Public Health Emergency, Subject to Existing Laws, Rules and Regulations.'
+  ),
+];
 
 export const localLegislationRecords: LocalLegislationRecord[] = [
   ...localOrdinanceRecords,
