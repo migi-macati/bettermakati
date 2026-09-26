@@ -1770,12 +1770,16 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Define metric publication thresholds",
       "maximumScope": "Separate internal operational metrics from public metrics and set minimum sample/time thresholds. No dashboards.",
-      "status": "next",
+      "status": "complete",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
       ],
-      "stopWhen": "Separate internal operational metrics from public metrics and set minimum sample/time thresholds. No dashboards."
+      "stopWhen": "Separate internal operational metrics from public metrics and set minimum sample/time thresholds. No dashboards.",
+      "completedAt": "2026-09-26",
+      "commits": [
+        "f806b5c5f27f413c9340505beaf23a889ea893f3"
+      ]
     },
     {
       "id": "W3R-10c",
@@ -1784,7 +1788,7 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Instrument redesigned participation outcomes",
       "maximumScope": "API/data instrumentation only for fields defined in W3R-10a/10b. No headline aggregates.",
-      "status": "planned",
+      "status": "next",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
@@ -2014,9 +2018,10 @@
       "W3R-9c",
       "W3R-9d",
       "W3R-9e",
-      "W3R-10a"
+      "W3R-10a",
+      "W3R-10b"
     ],
-    "current": "W3R-10b",
+    "current": "W3R-10c",
     "capabilityDispositionAuditFile": "data/wave3-capability-disposition-audit.json"
   },
   "knownCoverageGaps": {
