@@ -108,15 +108,70 @@
       "id": "W4-1b",
       "phase": "Statistics",
       "title": "Define canonical city-indicator schema",
-      "status": "next",
+      "status": "complete",
       "maximumScope": "Schema only: indicator ID, value, unit, period, geography, definition, source, revision, comparability and relationships.",
-      "stopWhen": "One reusable indicator model can represent citywide and barangay statistics without copying display strings into pages."
+      "stopWhen": "One reusable indicator model can represent citywide and barangay statistics without copying display strings into pages.",
+      "schemaFile": "data/city-indicator.schema.json",
+      "validation": {
+        "schemaDraft": "JSON Schema 2020-12",
+        "requiredCore": [
+          "stable indicator ID",
+          "definition",
+          "unit",
+          "data binding",
+          "provenance",
+          "revision",
+          "comparability",
+          "typed relationships"
+        ],
+        "dataOwnershipModes": [
+          "inline-observations for Statistics-owned values",
+          "canonical-reference for data already owned by barangays, city comparison, budget/finance, services, Place Registry, Accountability, City Monitor or other canonical modules",
+          "derived for explicit calculations over indicator/canonical dependencies"
+        ],
+        "geography": [
+          "city",
+          "barangay with required canonical barangaySlug",
+          "comparison-area",
+          "other"
+        ],
+        "boundaryHandling": [
+          "makati-current-23",
+          "makati-historical-33",
+          "canonical-barangay",
+          "as-published",
+          "other"
+        ],
+        "relationshipTargets": [
+          "indicator",
+          "barangay",
+          "place",
+          "segment",
+          "route",
+          "service",
+          "project",
+          "accountability-record",
+          "city-monitor-record",
+          "public-record",
+          "report",
+          "legislation-record",
+          "integrity-entity"
+        ],
+        "antiDuplication": [
+          "The example city population indicator is derived from canonical barangay records instead of copying 309,770.",
+          "The example barangay-population indicator references src/data/barangays.ts instead of duplicating 23 values.",
+          "The example receipts indicator references src/data/budget2025.ts instead of copying the fiscal series.",
+          "Presentation formatting is metadata; pages must not maintain independent formatted copies of canonical values."
+        ],
+        "assetGuard": "Place/segment/route relationships require canonical IDs and explicit links; Place Registry record counts cannot become citywide facility indicators without an independently complete source-backed inventory.",
+        "focusedValidation": "Schema JSON parses, all requested core fields are required, three data-binding modes are present, barangay geography requires canonical slug, boundary/comparability fields are explicit, and relationship types cover Wave 4 cross-function targets."
+      }
     },
     {
       "id": "W4-1c",
       "phase": "Statistics",
       "title": "Inventory population and demographic sources",
-      "status": "planned",
+      "status": "next",
       "maximumScope": "Official-source research only for comparable population/demographic series under current Makati geography.",
       "stopWhen": "Population/demographic source inventory has explicit time, geography and inclusion/exclusion rules."
     },
@@ -434,9 +489,9 @@
     }
   ],
   "immediateNext": {
-    "id": "W4-1b",
-    "title": "Define canonical city-indicator schema",
-    "maximumScope": "Schema only: indicator ID, value, unit, period, geography, definition, source, revision, comparability and relationships."
+    "id": "W4-1c",
+    "title": "Inventory population and demographic sources",
+    "maximumScope": "Official-source research only for comparable population/demographic series under current Makati geography."
   },
   "inheritedKnownItems": [
     {
