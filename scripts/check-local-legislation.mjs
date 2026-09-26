@@ -8,6 +8,22 @@ const browserIndexBuilderSource = await readFile(
   'utf8'
 );
 const packageSource = await readFile('package.json', 'utf8');
+const browserIndexSource = await readFile(
+  'src/data/legislationBrowserIndex.ts',
+  'utf8'
+);
+const siteSearchSource = await readFile(
+  'src/components/home/ServiceSearch.tsx',
+  'utf8'
+);
+const publicRecordsPageSource = await readFile(
+  'src/pages/PublicRecords.tsx',
+  'utf8'
+);
+const publicRecordsDataSource = await readFile(
+  'src/data/publicRecords.ts',
+  'utf8'
+);
 
 const expectedOrdinances = [
   ['2020-074', '2020-03-19'],
@@ -287,6 +303,70 @@ for (const marker of [
   if (!packageSource.includes(marker)) {
     problems.push('W4-2g package wiring missing: ' + marker);
   }
+}
+
+for (const marker of [
+  "legislationRecordId",
+  "legislationRecordDisplay",
+  "legislationRecordHref",
+  "'/legislation?record='",
+  "loadLegislationBrowserIndex",
+  "matchLegislationRecords",
+]) {
+  if (!browserIndexSource.includes(marker)) {
+    problems.push('W4-2h canonical legislation helper missing: ' + marker);
+  }
+}
+
+for (const marker of [
+  "useSearchParams",
+  "params.get('record')",
+  "legislationRecordId(record) === recordParam",
+]) {
+  if (!pageSource.includes(marker)) {
+    problems.push('W4-2h canonical Legislation route handling missing: ' + marker);
+  }
+}
+
+for (const marker of [
+  "loadLegislationBrowserIndex",
+  "legislationRecordHref(record)",
+  "category: 'Legislation'",
+  "tab === 'All' || tab === 'Records'",
+]) {
+  if (!siteSearchSource.includes(marker)) {
+    problems.push('W4-2h global Search integration missing: ' + marker);
+  }
+}
+
+for (const marker of [
+  "Legislation records",
+  "loadLegislationBrowserIndex",
+  "matchLegislationRecords",
+  "legislationRecordHref(record)",
+]) {
+  if (!publicRecordsPageSource.includes(marker)) {
+    problems.push('W4-2h Public Records integration missing: ' + marker);
+  }
+}
+
+for (const marker of [
+  '11,355 canonical local measure identities',
+  'Individual measures resolve to the canonical Legislation record',
+]) {
+  if (!publicRecordsDataSource.includes(marker)) {
+    problems.push('W4-2h Public Records coverage note missing: ' + marker);
+  }
+}
+
+if (
+  publicRecordsDataSource.includes(
+    'The city archive is not yet normalized into a measure-by-measure searchable local database inside BetterMakati.'
+  )
+) {
+  problems.push(
+    'W4-2h must remove the obsolete Public Records claim that the legislation archive is not normalized.'
+  );
 }
 
 const allReferences = [...ordinanceCalls, ...resolutionCalls].map(
