@@ -14,7 +14,7 @@ for (const marker of [
   'const leadReport = publicationReports[0]',
   'const moreReports = publicationReports.slice(1)',
   'Featured Reports & Insights',
-  '>Latest<',
+  'Latest',
   'More reports',
   '<ReportTeaser report={leadReport} variant="lead" />',
   'moreReports.map',
