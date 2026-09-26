@@ -827,13 +827,31 @@
     {
       "id": "W3R-9b",
       "title": "Reuse places in Visit Makati and Heritage",
-      "status": "next",
-      "maximumScope": "Visit and Heritage only. Reuse canonical place facts without duplicating coordinates/addresses."
+      "status": "complete",
+      "maximumScope": "Visit and Heritage only. Reuse canonical place facts without duplicating coordinates/addresses.",
+      "implementationFiles": [
+        "src/data/visitMakati.ts",
+        "src/pages/VisitMakati.tsx",
+        "src/pages/Heritage.tsx"
+      ],
+      "validation": {
+        "explicitLinks": [
+          "Ayala Triangle Gardens → ayala-triangle-gardens",
+          "Museo ng Makati → museo-ng-makati"
+        ],
+        "identityRule": "Only exact same-place identities were linked. Greenbelt, Salcedo Saturday Market, Legazpi Sunday Market, Nielson Tower and other related/hosted places were not conflated with nearby registry places.",
+        "visitMakati": "Ayala Triangle Gardens now resolves its map point and displayed address from the shared place record and exposes Place details.",
+        "heritage": "Museo ng Makati now resolves its map point from the shared place record and exposes Place details; the heritage-specific historical source/summary remains separate.",
+        "fallback": "Unlinked visitor/heritage entries keep their existing mapsQuery/address/source data. Linked Heritage entries fall back to the heritage address only when the registry has no canonical address.",
+        "noDuplication": "No coordinates were copied into Visit or Heritage. Linked items read coordinates from placeRegistryById at render time; canonical address is preferred when present.",
+        "registryBoundary": "No new place identities, fuzzy matches or inferred host/nearby relationships were created.",
+        "focusedValidation": "Both explicit place IDs exist in the registry; Visit and Heritage both import placeRegistryById, derive point-based map links, and expose canonical place-detail links."
+      }
     },
     {
       "id": "W3R-9c",
       "title": "Connect places to Projects and Accountability",
-      "status": "planned",
+      "status": "next",
       "maximumScope": "Relationship model plus a small verified example set only. No mass fuzzy matching."
     },
     {
@@ -904,9 +922,9 @@
     }
   ],
   "immediateNext": {
-    "id": "W3R-9b",
-    "title": "Reuse places in Visit Makati and Heritage",
-    "maximumScope": "Visit and Heritage only. Reuse canonical place facts without duplicating coordinates/addresses."
+    "id": "W3R-9c",
+    "title": "Connect places to Projects and Accountability",
+    "maximumScope": "Relationship model plus a small verified example set only. No mass fuzzy matching."
   },
   "capabilityDispositionAuditFile": "data/wave3-capability-disposition-audit.json",
   "completedSteps": [
@@ -934,7 +952,8 @@
     "W3R-8a",
     "W3R-8b",
     "W3R-8c",
-    "W3R-9a"
+    "W3R-9a",
+    "W3R-9b"
   ],
   "placeRegistrySchemaFile": "data/place-registry-schema.json",
   "placeRegistryDataFile": "src/data/placeRegistry.ts",
