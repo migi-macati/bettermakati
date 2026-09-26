@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run generate:site && npm run check:content && npm run check:barangays && npm run check:civic-map && npm run check:place-registry && npm run check:observations && npm run check:civic-audits && npm run test:feedback-duplicate && npm run check:brand && npm run audit:services && npm run audit:budget && npm run audit:accountability && npm run audit:records && npm run audit:elections && npm run audit:city-monitor && npm run audit:civic-briefs && npm run audit:today-live && npm run audit:source-freshness && npm run audit:freshness-hardening && npm run audit:pages && tsc -b && vite build && node scripts/postbuild-routes.mjs && node scripts/check-built-metadata.mjs",
+    "build": "npm run generate:site && npm run check:content && npm run check:barangays && npm run check:civic-map && npm run check:place-registry && npm run audit:place-registry && npm run check:observations && npm run check:civic-audits && npm run test:feedback-duplicate && npm run check:brand && npm run audit:services && npm run audit:budget && npm run audit:accountability && npm run audit:records && npm run audit:elections && npm run audit:city-monitor && npm run audit:civic-briefs && npm run audit:today-live && npm run audit:source-freshness && npm run audit:freshness-hardening && npm run audit:pages && tsc -b && vite build && node scripts/postbuild-routes.mjs && node scripts/check-built-metadata.mjs",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
@@ -32,7 +32,7 @@
     "audit:city-monitor": "node scripts/audit-city-monitor-depth.mjs",
     "audit:civic-briefs": "node scripts/audit-civic-briefs-depth.mjs",
     "audit:pages": "node scripts/audit-page-freshness.mjs",
-    "quality": "npm run lint && npm run check:content && npm run check:barangays && npm run check:civic-map && npm run check:place-registry && npm run check:observations && npm run check:civic-audits && npm run test:feedback-duplicate && npm run check:brand && npm run audit:services && npm run audit:budget && npm run audit:accountability && npm run audit:records && npm run audit:elections && npm run audit:city-monitor && npm run audit:civic-briefs && npm run audit:today-live && npm run audit:source-freshness && npm run audit:freshness-hardening && npm run audit:pages",
+    "quality": "npm run lint && npm run check:content && npm run check:barangays && npm run check:civic-map && npm run check:place-registry && npm run audit:place-registry && npm run check:observations && npm run check:civic-audits && npm run test:feedback-duplicate && npm run check:brand && npm run audit:services && npm run audit:budget && npm run audit:accountability && npm run audit:records && npm run audit:elections && npm run audit:city-monitor && npm run audit:civic-briefs && npm run audit:today-live && npm run audit:source-freshness && npm run audit:freshness-hardening && npm run audit:pages",
     "check:barangays": "node scripts/check-barangays.mjs",
     "audit:today-live": "node scripts/audit-today-live-depth.mjs",
     "audit:source-freshness": "node scripts/audit-source-freshness-depth.mjs",
@@ -41,7 +41,8 @@
     "test:feedback-duplicate": "node scripts/test-feedback-duplicate.mjs",
     "check:place-registry": "node scripts/check-place-registry.mjs",
     "check:observations": "node scripts/check-structured-observations.mjs",
-    "check:civic-audits": "node scripts/check-civic-audits.mjs"
+    "check:civic-audits": "node scripts/check-civic-audits.mjs",
+    "audit:place-registry": "node scripts/audit-place-registry-integrity.mjs"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
