@@ -55,6 +55,7 @@
         "W4-2d",
         "W4-2e",
         "W4-2e2",
+        "W4-2e2a",
         "W4-2f",
         "W4-2g",
         "W4-2h"
@@ -362,9 +363,23 @@
       "id": "W4-2e2",
       "phase": "Legislation",
       "title": "Normalize full official ordinance/resolution archive",
-      "status": "next",
+      "status": "partial",
       "maximumScope": "Official Makati resolutions-and-ordinances archive only. Enumerate every retrievable archive entry in a dated snapshot, normalize ordinance/resolution identity, reference, title and official document/source URLs, and reconcile duplicates against the existing 20-record seed. No topic tagging or lifecycle inference in the same step.",
-      "stopWhen": "The dated archive snapshot has a reproducible enumerated total and every retrievable item resolves to one canonical local measure or an explicit unresolved/duplicate disposition. Do not call the registry historically complete unless the archive enumeration itself proves that scope."
+      "stopWhen": "The dated archive snapshot has a reproducible enumerated total and every retrievable item resolves to one canonical local measure or an explicit unresolved/duplicate disposition. Do not call the registry historically complete unless the archive enumeration itself proves that scope.",
+      "completedAt": "2026-09-26",
+      "auditFile": "data/wave4-legislation-archive-enumeration.json",
+      "commits": [
+        "edea100556f689ffa5256af5a6c5be6d06bef089",
+        "f812bb5645ead419e6881e93e68397f9ce01fc6f"
+      ]
+    },
+    {
+      "id": "W4-2e2a",
+      "phase": "Legislation",
+      "title": "Resolve and enumerate dynamic legislation archive",
+      "status": "next",
+      "maximumScope": "Official Makati resolutions-and-ordinances archive only. Resolve the client-side archive data source or use a browser-capable enumeration path; capture every returned row into a dated raw snapshot with exact type/reference/title/item or document URL/UUID when exposed. No topic tagging, summaries or lifecycle enrichment.",
+      "stopWhen": "A dated raw snapshot contains every result returned by the official archive UI, with a reproducible total and exact duplicate/unresolved dispositions. If the archive cannot expose a reproducible export/result traversal, keep the capability partial rather than infer completeness."
     },
     {
       "id": "W4-2f",
@@ -591,11 +606,11 @@
       "stopWhen": "Wave 4 is closed only to the extent supported by evidence, with future work reopened as specific capabilities rather than vague unfinished work."
     }
   ],
-  "current": "W4-2e2",
+  "current": "W4-2e2a",
   "immediateNext": {
-    "id": "W4-2e2",
-    "title": "Normalize full official ordinance/resolution archive",
-    "maximumScope": "Official Makati resolutions-and-ordinances archive only. Enumerate every retrievable archive entry in a dated snapshot, normalize ordinance/resolution identity, reference, title and official document/source URLs, and reconcile duplicates against the existing 20-record seed. No topic tagging or lifecycle inference in the same step."
+    "id": "W4-2e2a",
+    "title": "Resolve and enumerate dynamic legislation archive",
+    "maximumScope": "Official Makati resolutions-and-ordinances archive only. Resolve the client-side archive data source or use a browser-capable enumeration path; capture every returned row into a dated raw snapshot with exact type/reference/title/item or document URL/UUID when exposed. No topic tagging, summaries or lifecycle enrichment."
   },
   "carriedForward": [
     {
