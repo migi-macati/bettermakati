@@ -104,15 +104,13 @@ const browserClosure = closure.deferred.find(
 if (!browserClosure) {
   problems.push('Live-browser deferred entry is missing.');
 } else {
+  const deferredChecks = browserClosure.includes ?? [];
   for (const phrase of [
     'runtime console verification',
     'visual focus-order verification',
     'production PDF embedding behavior',
   ]) {
-    if (!browserClosure.includes?.(phrase) && !browserClosure.includes?.includes?.(phrase)) {
-      // no-op: object, not string; validated below against includes array
-    }
-    if (!browserClosure.includes?.includes?.(phrase)) {
+    if (!deferredChecks.includes(phrase)) {
       problems.push('Live-browser deferred scope missing: ' + phrase);
     }
   }
