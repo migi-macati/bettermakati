@@ -1277,12 +1277,37 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Define structured observations",
       "maximumScope": "Observation schema only by place/asset family. No UI.",
-      "status": "next",
+      "status": "complete",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
       ],
-      "stopWhen": "Observation schema only by place/asset family. No UI."
+      "stopWhen": "Observation schema only by place/asset family. No UI.",
+      "specificationFile": "data/structured-observation-schema.json",
+      "validation": {
+        "specificationFile": "data/structured-observation-schema.json",
+        "families": 5,
+        "placeCategoryCoverage": {
+          "total": 16,
+          "mappedExactlyOnce": true,
+          "unmapped": [],
+          "extra": []
+        },
+        "questionSets": {
+          "street-public-realm-v1": 9,
+          "park-public-space-v1": 8,
+          "public-facility-v1": 8,
+          "transport-stop-terminal-v1": 9,
+          "transport-route-v1": 7
+        },
+        "totalStructuredQuestions": 41,
+        "responseTypes": 12,
+        "scoreModel": "No overall score, star rating, weighted index, grade, rank, recommendation or hidden numeric composite is permitted.",
+        "observationBoundary": "Observations are dated snapshots tied to canonical placeId. They do not alter Place Registry facts and do not create, confirm, resolve, forward or otherwise change civic cases.",
+        "legacyRatings": "Existing 1–5 review records remain historical and are explicitly not migrated into structured observations.",
+        "aggregationBoundary": "W3R-6c may show recent value/distribution, observation count and freshness, but not composite place scores or ranked places.",
+        "implementationBoundary": "W3R-6a changed schema/planning data only. No UI, API, storage path, migration or derived summary was implemented."
+      }
     },
     {
       "id": "W3R-6b",
@@ -1291,7 +1316,7 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Replace generic ratings with observations",
       "maximumScope": "One reusable observation form. No derived scores.",
-      "status": "planned",
+      "status": "next",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
@@ -1656,9 +1681,9 @@
     }
   ],
   "immediateNext": {
-    "id": "W3R-6a",
-    "title": "Define structured observations",
-    "maximumScope": "Observation schema only by place/asset family. No UI."
+    "id": "W3R-6b",
+    "title": "Replace generic ratings with observations",
+    "maximumScope": "One reusable observation form and storage path. No derived scores."
   },
   "reopenedExecutionOrder": [
     "3C-2a",
