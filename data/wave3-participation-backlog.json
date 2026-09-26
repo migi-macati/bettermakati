@@ -1238,12 +1238,37 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Reconnect case lifecycle to redesigned reporting",
       "maximumScope": "Lifecycle display/relationships only. Preserve reviewed, forwarded, acknowledged, action-reported and community-verified-resolved semantics. No automatic forwarding.",
-      "status": "next",
+      "status": "complete",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
       ],
-      "stopWhen": "Lifecycle display/relationships only. Preserve reviewed, forwarded, acknowledged, action-reported and community-verified-resolved semantics. No automatic forwarding."
+      "stopWhen": "Lifecycle display/relationships only. Preserve reviewed, forwarded, acknowledged, action-reported and community-verified-resolved semantics. No automatic forwarding.",
+      "implementationFiles": [
+        "api/civic.js",
+        "api/civic-report.js",
+        "src/components/civic/CivicDiscussion.tsx",
+        "src/pages/CivicReports.tsx"
+      ],
+      "validation": {
+        "relationshipNormalization": "Case relationships now resolve canonical placeId first, with legacy assetId fallback. Location-only cases remain explicitly location-only.",
+        "placePageLifecycle": "Opening a place-bound case now shows its current lifecycle/evidence label and trusted lifecycle event history.",
+        "citywideLifecycle": "Recent issue cases now show lifecycle/evidence status, location mode, location label, and canonical place links when one exists.",
+        "lifecycleStages": [
+          "community submitted",
+          "BetterMakati reviewed",
+          "forwarded",
+          "authority acknowledged",
+          "action reported",
+          "community verified resolved"
+        ],
+        "evidenceSeparation": "Community corroboration and appears-resolved comments remain evidence signals and never automatically promote a case lifecycle state.",
+        "referralQueue": "Reviewed cases can remain eligible for referral, but forwarded, acknowledged, action-reported, and community-verified-resolved cases are blocked from re-entering the referral queue.",
+        "trustBoundary": "civic-admin lifecycle markers are accepted only from GitHub comments whose author_association is OWNER, MEMBER, or COLLABORATOR.",
+        "noAutomaticForwarding": "No code creates forwarded, acknowledged, action-reported, or resolved admin events automatically.",
+        "guardrail": "scripts/check-place-registry.mjs now guards lifecycle parsing, trusted admin events, placeId/assetId relationship fallback, six-stage display, citywide location-only compatibility, and referral-state blocking.",
+        "ci": "Latest CI still stops at the same three pre-existing unused-import ESLint errors. CivicDiscussion retains its pre-existing effect warnings; no new blocking errors are reported for CivicReports.tsx, CivicDiscussion.tsx, api/civic.js, api/civic-report.js, or the lifecycle guard."
+      }
     },
     {
       "id": "W3R-6a",
@@ -1252,7 +1277,7 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Define structured observations",
       "maximumScope": "Observation schema only by place/asset family. No UI.",
-      "status": "planned",
+      "status": "next",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
@@ -1631,9 +1656,9 @@
     }
   ],
   "immediateNext": {
-    "id": "W3R-5d",
-    "title": "Reconnect case lifecycle to redesigned reporting",
-    "maximumScope": "Lifecycle display/relationships only. Preserve reviewed, forwarded, acknowledged, action-reported and community-verified-resolved semantics. No automatic forwarding."
+    "id": "W3R-6a",
+    "title": "Define structured observations",
+    "maximumScope": "Observation schema only by place/asset family. No UI."
   },
   "reopenedExecutionOrder": [
     "3C-2a",
