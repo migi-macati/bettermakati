@@ -1,0 +1,492 @@
+{
+  "schemaVersion": 1,
+  "researchedAt": "2026-09-26",
+  "workstream": "W4-1e — Inventory service, land and infrastructure indicators",
+  "status": "official-source-inventory",
+  "scope": "Official City Government of Makati, PSA, DepEd and PhilHealth sources only. This step inventories service, land, environmental and physical-infrastructure indicators that can be stated with a defined period/geography. It does not implement indicator data or expand Place Registry coverage.",
+  "coreRule": "Source-backed inventory counts own the denominator. Place Registry may supply exact relationships to named assets, but its current record count must never be substituted for an official citywide denominator.",
+  "officialSources": [
+    {
+      "id": "makati-basic-facts-2023",
+      "publisher": "City Government of Makati — Urban Development Department",
+      "title": "Makati City Basic Facts and Figures 2023",
+      "url": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1720150266681.pdf",
+      "checkedAt": "2026-09-26",
+      "geography": "23 barangays for the city profile; the relevant environment, infrastructure, health, public-education and social-welfare measures explicitly note exclusion of the 10 transferred barangays where applicable.",
+      "usableFor": [
+        "public parks and trees",
+        "road-surface length",
+        "improved drainage length",
+        "streetlight poles",
+        "bike-lane count",
+        "MRT/PNR station and bus-stop snapshot",
+        "health-facility inventory",
+        "public/private education-level counts",
+        "day-care and selected social-service facility counts"
+      ],
+      "factsForValidation": [
+        "Public parks: 15 (excluding the 10 transferred barangays)",
+        "Trees: 44,551 (excluding the 10 transferred barangays)",
+        "Concreted roads: 176.615 km",
+        "Asphalt roads: 105.264 km",
+        "Improved drainage: 478.014 km",
+        "Streetlight poles: 5,603",
+        "Bike lanes: 9",
+        "MRT stations: 4",
+        "PNR stations: 3",
+        "Bus stops: 32",
+        "Health centers: 18 (excluding the 10 transferred barangays)",
+        "Birthing homes: 2 (excluding the 10 transferred barangays)",
+        "Diagnostic laboratories: 5 (excluding the 10 transferred barangays)",
+        "Day-care centers: 22 (excluding the 10 transferred barangays)"
+      ],
+      "decision": "implement-selected-dated-snapshots",
+      "note": "Treat these as 2023 administrative snapshots, not timeless/current counts. Several transport and service counts need fresher source confirmation before headline use."
+    },
+    {
+      "id": "makati-elccap-2024-2054",
+      "publisher": "City Government of Makati",
+      "title": "Enhanced Local Climate Change Action Plan for the City of Makati 2024–2054",
+      "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/841/842/pdf/Makati%20eLCCAP%202024-2054.pdf",
+      "checkedAt": "2026-09-26",
+      "geography": "Existing land-use table explicitly states 23 barangays and exclusion of the 10 EMBO barangays.",
+      "usableFor": [
+        "existing land-use distribution as of 2022",
+        "current-boundary total mapped land area",
+        "named health facilities in hazard/risk context",
+        "climate/infrastructure program context"
+      ],
+      "factsForValidation": [
+        "Existing-land-use total: 18,168,300 sq m",
+        "Residential: 6,760,571.48 sq m / 37.21%",
+        "Commercial: 3,757,747.70 sq m / 20.68%",
+        "Roads and waterways: 4,484,500.20 sq m / 24.68%",
+        "Recreational: 907,755.47 sq m / 5.00%"
+      ],
+      "decision": "implement-land-use",
+      "note": "Use the land-use table as a dated 2022 current-boundary distribution. Do not call it a 2026 land-use snapshot merely because the plan document is newer."
+    },
+    {
+      "id": "deped-national-inventory-dashboard-makati-2026",
+      "publisher": "Department of Education",
+      "title": "Makati City, NCR — Schools — National Inventory Dashboard",
+      "url": "https://nid.deped.gov.ph/public-dashboard/region/NCR/division/Makati%20City",
+      "checkedAt": "2026-09-26",
+      "geography": "DepEd Schools Division of Makati City after the 2024 transfer of 14 affected schools to the Schools Division of Taguig-Pateros.",
+      "usableFor": [
+        "current distinct public-school count",
+        "current public-school identities",
+        "school infrastructure project context"
+      ],
+      "factsForValidation": [
+        "23 total schools in Makati City division",
+        "23 submitted schools",
+        "39 total projects in the dashboard snapshot",
+        "dashboard last updated 11 September 2026"
+      ],
+      "decision": "implement-current-public-school-count",
+      "note": "The 23 total schools are distinct schools. Do not compare this directly with the Basic Facts 'school levels' total, whose categories overlap by level/program."
+    },
+    {
+      "id": "deped-school-transfer-2024",
+      "publisher": "Department of Education",
+      "title": "DepEd thanks City of Taguig and the City of Makati for orderly transition of the 14 schools",
+      "url": "https://www.deped.gov.ph/2024/01/15/deped-thanks-city-of-taguig-and-the-city-of-makati-for-orderly-transition-of-the-14-schools/",
+      "checkedAt": "2026-09-26",
+      "usableFor": [
+        "school-geography boundary evidence"
+      ],
+      "factsForValidation": [
+        "Fourteen affected public schools transferred to Schools Division of Taguig-Pateros operations beginning 01 January 2024"
+      ],
+      "decision": "boundary-evidence",
+      "note": "Use this to prevent old Makati school directories from being treated as current."
+    },
+    {
+      "id": "philhealth-yakap-gamot-2026-07",
+      "publisher": "Philippine Health Insurance Corporation",
+      "title": "List of Accredited YAKAP Clinics with Available GAMOT Prescription for CY 2026",
+      "url": "https://www.philhealth.gov.ph/partners/providers/facilities/accredited/YAKAP.pdf",
+      "checkedAt": "2026-09-26",
+      "period": "Updated as of 31 July 2026",
+      "geography": "Makati City section of the national provider list.",
+      "usableFor": [
+        "current Makati YAKAP/GAMOT-listed provider count",
+        "government/private provider split",
+        "exact provider identities and addresses for service/place relationships"
+      ],
+      "factsForValidation": [
+        "24 Makati City entries in the July 31, 2026 list",
+        "17 City Government of Makati entries",
+        "16 of those government entries are named health centers and one is Makati Health Department",
+        "7 private Makati entries"
+      ],
+      "decision": "implement-current-service-access",
+      "note": "Label exactly as YAKAP clinics with available GAMOT prescription in the cited PhilHealth list. This is not a count of all health facilities in Makati."
+    },
+    {
+      "id": "philhealth-accredited-facilities-index-2026-07",
+      "publisher": "Philippine Health Insurance Corporation",
+      "title": "Accredited Health Facilities",
+      "url": "https://www.philhealth.gov.ph/partners/providers/facilities/accredited/",
+      "checkedAt": "2026-09-26",
+      "period": "Updated as of 31 July 2026",
+      "usableFor": [
+        "source discovery for other current accredited health-facility categories"
+      ],
+      "decision": "source-discovery",
+      "note": "Use the specific facility-list document as the source for any implemented count."
+    },
+    {
+      "id": "doh-ncr-licensed-health-facilities",
+      "publisher": "Department of Health — Metro Manila Center for Health Development",
+      "title": "Licensed Health Facilities / RLED",
+      "url": "https://ncroffice.doh.gov.ph/RLED",
+      "checkedAt": "2026-09-26",
+      "usableFor": [
+        "current licensed primary-care facilities",
+        "hospitals",
+        "dialysis clinics",
+        "clinical laboratories",
+        "ambulance providers",
+        "birthing homes and other regulated facilities"
+      ],
+      "decision": "hold-until-makati-extract",
+      "note": "Authoritative current source exists, but W4-1e does not infer a Makati count from NCR-wide lists without a reproducible Makati extraction."
+    },
+    {
+      "id": "makati-barangay-health-centers-legacy-list",
+      "publisher": "City Government of Makati",
+      "title": "Barangay Health Centers",
+      "url": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1568103121130.pdf",
+      "checkedAt": "2026-09-26",
+      "usableFor": [
+        "named health-center identity cross-checks"
+      ],
+      "decision": "relationship-support-only",
+      "note": "The list predates the territorial transfer and therefore cannot own a current citywide count. Use only for exact identities that are independently current."
+    },
+    {
+      "id": "makati-official-gis-layer",
+      "publisher": "City Government of Makati",
+      "title": "Makati GIS — Barangay group layer",
+      "url": "https://securedmaps.makati.gov.ph/arcgis/rest/services/Points/Makati_Barangays2013/MapServer/0",
+      "checkedAt": "2026-09-26",
+      "usableFor": [
+        "official GIS source discovery for barangay halls, schools, colleges/universities, basketball courts, police stations, health centers, fire stations and boundaries"
+      ],
+      "decision": "hold-legacy-geometry",
+      "note": "The service name indicates a 2013 layer and can contain pre-transfer geography. Do not use its feature count as a current indicator without a current-layer/revision check."
+    }
+  ],
+  "candidateIndicators": [
+    {
+      "id": "existing-land-use-distribution",
+      "definition": "Area and percentage share of each official existing land-use category.",
+      "period": "2022",
+      "geography": "current 23-barangay Makati",
+      "source": "makati-elccap-2024-2054",
+      "decision": "implement",
+      "relationshipPotential": [
+        "barangay",
+        "place",
+        "report"
+      ],
+      "note": "Keep the official category vocabulary. Do not infer parcel-level land use for a Place Registry record from the citywide distribution."
+    },
+    {
+      "id": "mapped-city-land-area",
+      "definition": "Total area represented by the current-boundary 2022 existing-land-use table.",
+      "period": "2022",
+      "geography": "current 23-barangay Makati",
+      "source": "makati-elccap-2024-2054",
+      "decision": "implement-as-geography-metadata",
+      "note": "18,168,300 sq m. Keep distinct from PSA land-area metadata if definitions/measurement bases differ."
+    },
+    {
+      "id": "public-parks-administrative-count",
+      "definition": "Public parks reported by the City Government's environmental-management inventory.",
+      "period": "2023",
+      "geography": "current 23-barangay Makati",
+      "source": "makati-basic-facts-2023",
+      "decision": "implement",
+      "relationshipPotential": [
+        "place",
+        "barangay"
+      ],
+      "note": "Official denominator is 15. The Wave 3 civic-audit target currently contains 13 verified public-park records; do not replace the official count with 13 or claim all 15 have canonical Place Registry matches until exact identities are reconciled."
+    },
+    {
+      "id": "tree-stock-administrative-count",
+      "definition": "Number of trees reported by the Department of Environmental Services.",
+      "period": "2023",
+      "geography": "current 23-barangay Makati",
+      "source": "makati-basic-facts-2023",
+      "decision": "hold",
+      "note": "Useful environmental snapshot, but stock-count method and refresh cadence are not sufficiently described for trend interpretation."
+    },
+    {
+      "id": "road-surface-length-concreted",
+      "definition": "Length of concreted roads reported by the Department of Engineering and Public Works.",
+      "period": "2023",
+      "geography": "current 23-barangay Makati",
+      "source": "makati-basic-facts-2023",
+      "decision": "implement",
+      "unit": "km",
+      "note": "Aggregate city infrastructure measure; do not derive or backfill street-segment status in Place Registry from this total."
+    },
+    {
+      "id": "road-surface-length-asphalt",
+      "definition": "Length of asphalt roads reported by the Department of Engineering and Public Works.",
+      "period": "2023",
+      "geography": "current 23-barangay Makati",
+      "source": "makati-basic-facts-2023",
+      "decision": "implement",
+      "unit": "km",
+      "note": "Aggregate city infrastructure measure; do not infer segment-by-segment surface type."
+    },
+    {
+      "id": "improved-drainage-length",
+      "definition": "Length of improved drainage reported by the Department of Engineering and Public Works.",
+      "period": "2023",
+      "geography": "current 23-barangay Makati",
+      "source": "makati-basic-facts-2023",
+      "decision": "implement",
+      "unit": "km",
+      "relationshipPotential": [
+        "project",
+        "accountability-record",
+        "segment"
+      ],
+      "note": "Use as a dated network total. Individual drainage segments require their own explicit source relationship."
+    },
+    {
+      "id": "streetlight-poles",
+      "definition": "Streetlight poles reported by the Department of Engineering and Public Works.",
+      "period": "2023",
+      "geography": "current 23-barangay Makati",
+      "source": "makati-basic-facts-2023",
+      "decision": "hold",
+      "note": "A point-stock count is useful but needs a fresher inventory before headline publication."
+    },
+    {
+      "id": "bike-lanes-count",
+      "definition": "Number of bike lanes reported by the Department of Engineering and Public Works.",
+      "period": "2023",
+      "geography": "current 23-barangay Makati",
+      "source": "makati-basic-facts-2023",
+      "decision": "hold-definition-needs-clarification",
+      "note": "The source reports a count of 9 but does not define whether a 'bike lane' means corridor, segment, direction or project. Do not convert this into lane-kilometres."
+    },
+    {
+      "id": "mrt-stations-count",
+      "definition": "MRT stations reported within Makati.",
+      "period": "2023",
+      "geography": "current 23-barangay Makati",
+      "source": "makati-basic-facts-2023",
+      "decision": "hold-for-mobility-context",
+      "note": "Stable-looking infrastructure count, but Mobility/Place Registry should own exact station identities. Statistics may reference that canonical set after explicit reconciliation."
+    },
+    {
+      "id": "pnr-stations-count",
+      "definition": "PNR stations reported within Makati in the 2023 city inventory.",
+      "period": "2023",
+      "geography": "current 23-barangay Makati",
+      "source": "makati-basic-facts-2023",
+      "decision": "reject-as-current-service-indicator",
+      "note": "A station-location snapshot does not establish current passenger-service availability. Do not present the 2023 count as current transit service."
+    },
+    {
+      "id": "bus-stops-count",
+      "definition": "Bus stops reported by the Department of Engineering and Public Works.",
+      "period": "2023",
+      "geography": "current 23-barangay Makati",
+      "source": "makati-basic-facts-2023",
+      "decision": "hold",
+      "note": "Stop inventories can change with route/traffic schemes. Require a current operational source before headline use."
+    },
+    {
+      "id": "public-schools-current",
+      "definition": "Distinct schools in the DepEd Makati City National Inventory Dashboard.",
+      "period": "2026-09-11 dashboard snapshot",
+      "geography": "current Schools Division of Makati City",
+      "source": "deped-national-inventory-dashboard-makati-2026",
+      "decision": "implement",
+      "valueForValidation": 23,
+      "relationshipPotential": [
+        "barangay",
+        "service",
+        "ecosystem-resource"
+      ],
+      "note": "Do not compare 23 distinct schools to the Basic Facts total of public school 'levels', because the latter counts overlapping program/level categories."
+    },
+    {
+      "id": "school-infrastructure-projects-current",
+      "definition": "School infrastructure projects submitted in DepEd's National Inventory Dashboard.",
+      "period": "2026-09-11 dashboard snapshot",
+      "geography": "current Schools Division of Makati City",
+      "source": "deped-national-inventory-dashboard-makati-2026",
+      "decision": "hold",
+      "valueForValidation": 39,
+      "note": "Useful for an education-infrastructure page or report, but project-submission count is not a service-capacity metric."
+    },
+    {
+      "id": "city-health-centers-administrative-count",
+      "definition": "Health centers reported by the Makati Health Department in the city Basic Facts inventory.",
+      "period": "2023",
+      "geography": "current 23-barangay Makati",
+      "source": "makati-basic-facts-2023",
+      "decision": "hold-as-dated-inventory",
+      "valueForValidation": 18,
+      "note": "Keep distinct from PhilHealth accreditation/provider counts. A facility may exist without appearing in the YAKAP/GAMOT list."
+    },
+    {
+      "id": "yakap-gamot-providers-makati",
+      "definition": "Makati City providers in PhilHealth's list of accredited YAKAP clinics with available GAMOT prescription.",
+      "period": "2026-07-31",
+      "geography": "Makati City",
+      "source": "philhealth-yakap-gamot-2026-07",
+      "decision": "implement",
+      "valueForValidation": 24,
+      "breakdownForValidation": {
+        "cityGovernment": 17,
+        "private": 7
+      },
+      "relationshipPotential": [
+        "place",
+        "service",
+        "barangay",
+        "ecosystem-resource"
+      ],
+      "note": "Use the provider list itself as the denominator. Exact city-government health-center identities may link to canonical Place Registry health-center records only when IDs resolve exactly."
+    },
+    {
+      "id": "yakap-gamot-city-government-health-centers",
+      "definition": "Named City Government of Makati health centers in PhilHealth's YAKAP/GAMOT provider list.",
+      "period": "2026-07-31",
+      "geography": "Makati City",
+      "source": "philhealth-yakap-gamot-2026-07",
+      "decision": "implement",
+      "valueForValidation": 16,
+      "note": "The list also contains one City Government of Makati entry for Makati Health Department, yielding 17 government entries in total."
+    },
+    {
+      "id": "licensed-health-facilities-by-type",
+      "definition": "DOH-licensed Makati health facilities by regulatory facility type.",
+      "period": "current DOH-NCR list",
+      "geography": "Makati City",
+      "source": "doh-ncr-licensed-health-facilities",
+      "decision": "hold-until-reproducible-city-extract",
+      "note": "Do not hand-count from changing NCR PDFs or dashboards without a reproducible extraction and as-of date."
+    },
+    {
+      "id": "day-care-centers",
+      "definition": "Day-care centers reported by the Makati Social Welfare Department.",
+      "period": "2023",
+      "geography": "current 23-barangay Makati",
+      "source": "makati-basic-facts-2023",
+      "decision": "hold",
+      "valueForValidation": 22,
+      "relationshipPotential": [
+        "barangay",
+        "service"
+      ],
+      "note": "Potential social-service infrastructure indicator, but lower priority than the first Statistics batch and should ideally be refreshed."
+    },
+    {
+      "id": "administrative-processing-time",
+      "definition": "Stated city processing times for selected transactions in Basic Facts and Figures.",
+      "period": "2023",
+      "geography": "Makati City",
+      "source": "makati-basic-facts-2023",
+      "decision": "reject-as-performance-indicator",
+      "note": "These are stated processing times/service standards, not measured outcome or compliance performance. Transaction guides/Citizen Charter should own service-standard information."
+    }
+  ],
+  "comparabilityRules": [
+    "Every facility/network count must carry an as-of/year; city administrative inventories are snapshots, not timeless facts.",
+    "A count from Place Registry is never a substitute for a citywide denominator unless an official complete inventory establishes that the registry is complete for that exact indicator.",
+    "When an official denominator exceeds exact canonical Place Registry matches, publish the official count and expose the relationship-coverage gap separately rather than lowering the denominator.",
+    "Distinct schools, school-level/program counts, classrooms and school infrastructure projects are different measures and must not be combined.",
+    "Health-center existence, DOH license, PhilHealth accreditation and YAKAP/GAMOT availability are different states and require separate indicator IDs.",
+    "A transport station/stop location count does not establish current route operation or passenger-service availability.",
+    "Road length, drainage length, bike-lane count and streetlight stock have different units and cannot be aggregated into a composite infrastructure score.",
+    "Land-use percentages must retain their 2022 reference year and current 23-barangay boundary; document publication year does not change the observation year.",
+    "Administrative processing-time standards are not observed service-performance metrics.",
+    "Missing current facility data remains unavailable; do not carry forward a 2023 count as 'current' without an explicit dated label."
+  ],
+  "implementationBatchRecommendation": {
+    "implementFirst": [
+      "existing-land-use-distribution",
+      "mapped-city-land-area",
+      "public-parks-administrative-count",
+      "road-surface-length-concreted",
+      "road-surface-length-asphalt",
+      "improved-drainage-length",
+      "public-schools-current",
+      "yakap-gamot-providers-makati",
+      "yakap-gamot-city-government-health-centers"
+    ],
+    "hold": [
+      "tree-stock-administrative-count",
+      "streetlight-poles",
+      "bike-lanes-count",
+      "mrt-stations-count",
+      "bus-stops-count",
+      "school-infrastructure-projects-current",
+      "city-health-centers-administrative-count",
+      "licensed-health-facilities-by-type",
+      "day-care-centers"
+    ],
+    "reject": [
+      "pnr-stations-count",
+      "administrative-processing-time"
+    ],
+    "rationale": "The first batch combines a current-boundary land-use baseline, source-owned environmental/infrastructure snapshots and two current 2026 service-access inventories. It gives Statistics useful civic context without converting incomplete Place Registry coverage or stale service standards into invented current metrics."
+  },
+  "placeRegistryRelationshipPolicy": {
+    "allowed": [
+      "Link an indicator to a canonical place/segment/route only when the official source or an already-verified canonical record proves exact identity.",
+      "Use the official inventory as the denominator even when only a subset has canonical Place Registry matches.",
+      "Expose relationship coverage such as '13 of 15 public parks matched' as metadata if and only if the unresolved identities are genuinely tracked."
+    ],
+    "forbidden": [
+      "Counting Place Registry records to estimate the number of parks, schools, clinics, roads, drains, stops or other citywide infrastructure.",
+      "Creating a place relationship from proximity, same barangay or fuzzy name similarity.",
+      "Treating a civic-audit target set as a complete city inventory unless its campaign definition explicitly says so.",
+      "Creating missing school/health/place records merely to make an indicator relationship appear complete."
+    ],
+    "knownExample": "The 2023 official public-park denominator is 15, while the current Wave 3 park-accessibility pilot freezes 13 verified public-park targets. These are different scopes until exact source reconciliation proves otherwise."
+  },
+  "crossFunctionReuse": [
+    {
+      "target": "BetterBarangay",
+      "use": "Current public-school identities, exact health-center/provider identities and other facilities may be surfaced by canonical barangay only when the source identifies the location."
+    },
+    {
+      "target": "Place Registry / Civic Map",
+      "use": "Public parks, health centers, transport facilities and infrastructure segments may receive explicit indicator relationships, but the registry never owns the statistical denominator."
+    },
+    {
+      "target": "Services",
+      "use": "YAKAP/GAMOT provider counts and facility identities can link to health-service guides; service guides keep transaction/eligibility instructions while Statistics owns the dated aggregate."
+    },
+    {
+      "target": "Projects & Budget / Accountability",
+      "use": "Infrastructure totals such as drainage or roads can contextualize specific projects, but project spending cannot be treated as proof that aggregate network totals changed."
+    },
+    {
+      "target": "Reports & Insights",
+      "use": "Land-use composition, public-park coverage, education infrastructure and service-access inventories can support reports through indicator IDs rather than duplicated prose tables."
+    },
+    {
+      "target": "BetterGov ecosystem",
+      "use": "Use BetterGov/BetterLGU for national or cross-LGU facility/infrastructure comparisons where a canonical resource exists. BetterMakati keeps the local official denominator and primary source visible."
+    }
+  ],
+  "nextStep": {
+    "id": "W4-1f",
+    "title": "Implement canonical indicator dataset",
+    "maximumScope": "Data layer only for the approved W4-1c/1d/1e indicator set."
+  }
+}
