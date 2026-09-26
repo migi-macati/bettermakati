@@ -39,7 +39,7 @@ export default function GovernmentOffices() {
         <p className="mt-2 max-w-3xl text-gray-700">
           Citizen-facing national agencies and GOCC service offices in Makati, plus selected offices outside the city that directly serve Makati.
         </p>
-        <LastReviewed date="2026-09-20"
+        <LastReviewed date="2026-09-20" date="2026-09-20"
           note="Office locations can change. Check the linked agency source before travelling."
           className="mt-4"
         />
