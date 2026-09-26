@@ -637,9 +637,26 @@
       "id": "W4-2e2",
       "phase": "Legislation",
       "title": "Normalize full official ordinance/resolution archive",
-      "status": "next",
+      "status": "partial",
       "maximumScope": "Official Makati resolutions-and-ordinances archive only. Enumerate every retrievable archive entry in a dated snapshot, normalize ordinance/resolution identity, reference, title and official document/source URLs, and reconcile duplicates against the existing 20-record seed. No topic tagging or lifecycle inference in the same step.",
-      "stopWhen": "The dated archive snapshot has a reproducible enumerated total and every retrievable item resolves to one canonical local measure or an explicit unresolved/duplicate disposition. Do not call the registry historically complete unless the archive enumeration itself proves that scope."
+      "stopWhen": "The dated archive snapshot has a reproducible enumerated total and every retrievable item resolves to one canonical local measure or an explicit unresolved/duplicate disposition. Do not call the registry historically complete unless the archive enumeration itself proves that scope.",
+      "auditFile": "data/wave4-legislation-archive-enumeration.json",
+      "validation": {
+        "archiveInterface": "Official Makati archive exposes keyword/document-code search and All/Resolution/Ordinance filters.",
+        "enumeration": "The archive result set is client-side dynamic; the available non-browser text fetch returns the search/filter shell and Loading state, so a reproducible full row count was not available in this micro-step.",
+        "completenessBenchmark": "Official Makati Facts and Figures 2020 reports 287 resolutions and 50 ordinances passed/approved in 2020 (337 total), proving the existing 20-record 2020 seed is intentionally partial.",
+        "correction": "City Monitor's historical 2020 sentence was corrected from the reversed 287 ordinances/50 resolutions to 287 resolutions/50 ordinances, using the official OSSP table.",
+        "integrityRule": "Search-engine indexing is not accepted as archive completeness evidence. No registry-complete claim was made."
+      },
+      "stopReason": "Full normalization cannot honestly close until the dynamic archive rows can be enumerated reproducibly."
+    },
+    {
+      "id": "W4-2e2a",
+      "phase": "Legislation",
+      "title": "Resolve and enumerate dynamic legislation archive",
+      "status": "next",
+      "maximumScope": "Official Makati resolutions-and-ordinances archive only. Resolve the client-side archive data source or use a browser-capable enumeration path; capture every returned row into a dated raw snapshot with exact type/reference/title/item or document URL/UUID when exposed. No topic tagging, summaries or lifecycle enrichment.",
+      "stopWhen": "A dated raw snapshot contains every result returned by the official archive UI, with a reproducible total and exact duplicate/unresolved dispositions. If the archive cannot expose a reproducible export/result traversal, keep the capability partial rather than infer completeness."
     },
     {
       "id": "W4-2f",
@@ -867,9 +884,9 @@
     }
   ],
   "immediateNext": {
-    "id": "W4-2e2",
-    "title": "Normalize full official ordinance/resolution archive",
-    "maximumScope": "Official Makati resolutions-and-ordinances archive only. Enumerate every retrievable archive entry in a dated snapshot, normalize ordinance/resolution identity, reference, title and official document/source URLs, and reconcile duplicates against the existing 20-record seed. No topic tagging or lifecycle inference in the same step."
+    "id": "W4-2e2a",
+    "title": "Resolve and enumerate dynamic legislation archive",
+    "maximumScope": "Official Makati resolutions-and-ordinances archive only. Resolve the client-side archive data source or use a browser-capable enumeration path; capture every returned row into a dated raw snapshot with exact type/reference/title/item or document URL/UUID when exposed. No topic tagging, summaries or lifecycle enrichment."
   },
   "inheritedKnownItems": [
     {
