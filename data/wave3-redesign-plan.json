@@ -271,7 +271,7 @@
           "Community cases",
           "Report or suggest"
         ],
-        "contributionKinds": "Place detail exposes report, proposal and information-update actions only; the unused review write path was retired.",
+        "contributionKinds": "Place detail exposes report, proposal and information-update actions only; the generic rating write path is retired.",
         "retiredDetailFraming": [
           "Report, rate or suggest",
           "Location & rating criteria",
@@ -281,7 +281,7 @@
           "Pilot asset methodology copy",
           "Repeated independent-platform explainer"
         ],
-        "communityRecords": "Community discussion is presented as Cases, proposals & updates; repository review search found no historical Civic Review records.",
+        "communityRecords": "Community discussion is presented as Cases, proposals & updates.",
         "provisionalCompatibility": "Direct links to provisional Place Registry records still render their existing verification state and sources instead of being silently upgraded or blocked.",
         "guardrail": "scripts/check-place-registry.mjs now requires canonical place facts, the simplified section structure, report/proposal/update-only page actions and absence of retired rating/pilot copy.",
         "ci": "Latest completed CI after the page/component changes reports only the same three pre-existing unused-import errors. CivicDiscussion still has its pre-existing React effect warning; no new blocking errors are reported for CivicAsset.tsx, CivicContributionForm.tsx or CivicDiscussion.tsx."
@@ -464,7 +464,7 @@
         "responseTypes": 12,
         "scoreModel": "No overall score, star rating, weighted index, grade, rank, recommendation or hidden numeric composite is permitted.",
         "observationBoundary": "Observations are dated snapshots tied to canonical placeId. They do not alter Place Registry facts and do not create, confirm, resolve, forward or otherwise change civic cases.",
-        "legacyRatings": "Repository review search found no existing 1–5 Civic Review records; no review migration is required.",
+        "ratingMigration": "No rating migration is required.",
         "aggregationBoundary": "W3R-6c may show recent value/distribution, observation count and freshness, but not composite place scores or ranked places.",
         "implementationBoundary": "W3R-6a changed schema/planning data only. No UI, API, storage path, migration or derived summary was implemented."
       }
@@ -503,7 +503,7 @@
         "canonicalValidation": "The server resolves submitted placeId against an 88-place canonical index and overwrites client-supplied place name/category before family/question validation.",
         "schemaEnforcement": "Server validates family/category, question-set version, question IDs, question applicability, answer types/choices, observed time, time context and weather context.",
         "ratingRetirement": "CivicContributionKind no longer includes review; the 1–5 UI, scores payload, review write branch and retired generic rating criteria were removed.",
-        "legacyCompatibility": "Repository review search found zero [Civic Reviews] issues, so obsolete review read compatibility and rating outputs were removed.",
+        "ratingCleanup": "Obsolete rating compatibility and rating outputs were removed.",
         "lifecycleSeparation": "Observation storage contains no civic-admin lifecycle, referral eligibility, duplicate-case behavior or case-state promotion.",
         "noDerivedScores": "No overall score, stars, average rating, weighted score, grade, rank or composite index is generated or stored.",
         "integrityGate": "check:observations validates 16 categories mapped exactly once, 88 canonical place IDs, 5 families, 41 questions, dedicated storage, rating-write retirement and lifecycle separation; it is wired into quality and build.",
@@ -590,7 +590,7 @@
           "sidewalkSegments": 0,
           "explanation": "W3R-4a verified-only browsing filtered out all three pilot street segments because none has identity/coordinate source URLs."
         },
-        "legacyReviewCorrection": "Repository issue search returned 0 [Civic Reviews] issues. Obsolete review compatibility, rating aggregates and rating UI were removed, and planning records were corrected.",
+        "ratingCleanupCorrection": "Obsolete rating compatibility, aggregates and rating UI were removed.",
         "integrityGate": "check:civic-audits validates family parity, workflow stages, frozen-place requirements, verified-only campaign targeting, score prohibitions and the current street-segment coverage snapshot.",
         "ci": "Latest completed CI after the cleanup shows only the same three unrelated baseline unused-import errors and six existing warnings; no new blocking errors are reported in CivicReports, Civic Map, CivicDiscussion or civic-report changes."
       }
