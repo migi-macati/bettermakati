@@ -119,15 +119,20 @@
       "id": "W4-1a",
       "phase": "Statistics",
       "title": "Audit current Statistics capabilities and gaps",
-      "status": "next",
+      "status": "complete",
       "maximumScope": "Inventory existing Statistics page, barangay population data, city-comparison data, finance links and duplicated/hard-coded facts. No external research.",
-      "stopWhen": "A current-state statistics inventory identifies canonical sources, duplicates, missing dimensions and candidates for reuse."
+      "stopWhen": "A current-state statistics inventory identifies canonical sources, duplicates, missing dimensions and candidates for reuse.",
+      "completedAt": "2026-09-26",
+      "auditFile": "data/wave4-statistics-current-state-audit.json",
+      "commits": [
+        "91dc2cc7c5155a561295605a903174e90b9caaef"
+      ]
     },
     {
       "id": "W4-1b",
       "phase": "Statistics",
       "title": "Define canonical city-indicator schema",
-      "status": "planned",
+      "status": "next",
       "maximumScope": "Schema only: indicator ID, value, unit, period, geography, definition, source, revision, comparability and relationships.",
       "stopWhen": "One reusable indicator model can represent citywide and barangay statistics without copying display strings into pages."
     },
@@ -452,11 +457,11 @@
       "stopWhen": "Wave 4 is closed only to the extent supported by evidence, with future work reopened as specific capabilities rather than vague unfinished work."
     }
   ],
-  "current": "W4-1a",
+  "current": "W4-1b",
   "immediateNext": {
-    "id": "W4-1a",
-    "title": "Audit current Statistics capabilities and gaps",
-    "maximumScope": "Inventory existing Statistics page, barangay population data, city-comparison data, finance links and duplicated/hard-coded facts. No external research."
+    "id": "W4-1b",
+    "title": "Define canonical city-indicator schema",
+    "maximumScope": "Schema only: indicator ID, value, unit, period, geography, definition, source, revision, comparability and relationships."
   },
   "carriedForward": [
     {
