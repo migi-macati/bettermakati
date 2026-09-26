@@ -4,7 +4,7 @@ const schema = JSON.parse(
   await readFile('data/structured-observation-schema.json', 'utf8')
 );
 const registrySource = await readFile('src/data/placeRegistry.ts', 'utf8');
-const placeIndexSource = await readFile('data/place-observation-index.mjs', 'utf8');
+const entityIndexSource = await readFile('data/civic-observation-entity-index.mjs', 'utf8');
 const definitionsSource = await readFile('src/data/structuredObservations.ts', 'utf8');
 const formSource = await readFile(
   'src/components/civic/CivicObservationForm.tsx',
@@ -61,27 +61,27 @@ if (extra.length) {
   problems.push('Observation schema contains unknown categories: ' + extra.join(', '));
 }
 
-const indexedPlaceIds = [
-  ...placeIndexSource.matchAll(/"id":\s*"([^"]+)"/g),
+const indexedEntityIds = [
+  ...entityIndexSource.matchAll(/"id":\s*"([^"]+)"/g),
 ].map(match => match[1]);
 const registryAssetBlockStart = registrySource.indexOf(
   'export const civicAssets: CivicAsset[] = '
 );
 const registryAssetBlock = registrySource.slice(registryAssetBlockStart);
-const registryPlaceIds = [
+const registryEntityIds = [
   ...registryAssetBlock.matchAll(/\n\s+id:\s*'([^']+)',\n\s+title:/g),
 ].map(match => match[1]);
 
-if (indexedPlaceIds.length !== 88 || registryPlaceIds.length !== 88) {
+if (indexedEntityIds.length !== 88 || registryEntityIds.length !== 88) {
   problems.push(
-    'Observation canonical place index must preserve all 88 registry IDs.'
+    'Observation civic-entity index must preserve all 88 registry IDs.'
   );
 }
-const missingIndexIds = registryPlaceIds.filter(id => !indexedPlaceIds.includes(id));
-const extraIndexIds = indexedPlaceIds.filter(id => !registryPlaceIds.includes(id));
-if (missingIndexIds.length || extraIndexIds.length) {
+const missingEntityIndexIds = registryEntityIds.filter(id => !indexedEntityIds.includes(id));
+const extraEntityIndexIds = indexedEntityIds.filter(id => !registryEntityIds.includes(id));
+if (missingEntityIndexIds.length || extraEntityIndexIds.length) {
   problems.push(
-    'Observation canonical place index is out of sync with Place Registry.'
+    'Observation civic-entity index is out of sync with the registry.'
   );
 }
 
@@ -98,7 +98,7 @@ if (questionCount !== 41) {
 
 for (const marker of [
   'observationFamilyForCategory',
-  'observationQuestionSetForPlace',
+  'observationQuestionSetForEntity',
   'observationResponseChoices',
   "'street-public-realm-v1'",
   "'park-public-space-v1'",
@@ -135,7 +135,7 @@ for (const marker of [
 }
 
 for (const marker of [
-  "fetch('/api/civic-observation?placeId='",
+  "fetch('/api/civic-observation?entityId='",
   'const SUMMARY_WINDOW_DAYS = 90',
   "if (ageDays <= 30) return { label: 'Fresh'",
   "if (ageDays <= 90) return { label: 'Recent'",
@@ -153,15 +153,15 @@ for (const marker of [
 }
 
 for (const marker of [
-  "'[Place Observations] ' + payload.placeName",
-  "'<!-- place-observation '",
-  "'<!-- observation-thread '",
-  "placeObservationById.get(payload.placeId)",
-  "payload.placeName = canonicalPlace.name",
-  "payload.placeCategory = canonicalPlace.category",
+  "'[Civic Observations] ' + payload.entityName",
+  "'<!-- civic-observation '",
+  "'<!-- civic-observation-thread '",
+  "civicObservationEntityById.get(payload.entityId)",
+  "payload.entityName = canonicalEntity.name",
+  "payload.entityCategory = canonicalEntity.category",
   "familyCategories[payload.familyId]?.has(payload.placeCategory)",
   'validQuestionSetId(payload.familyId, payload.questionSetId)',
-  'sanitizeAnswers(payload.familyId, payload.placeCategory, payload.answers)',
+  'sanitizeAnswers(payload.familyId, payload.entityCategory, payload.answers)',
   'questionCategoryLimits[familyId]?.[questionId]',
   "if (!thread) return res.status(200).json({ observations: [], asOf })",
   "asOf,",
@@ -181,10 +181,10 @@ for (const forbidden of [
   'compositeIndex',
   'weightedScore',
   'starRating',
-  'overall place score',
-  'ranked places',
-  'best place',
-  'worst place',
+  'overall entity score',
+  'ranked entities',
+  'best entity',
+  'worst entity',
 ]) {
   if (
     definitionsSource.includes(forbidden) ||
@@ -252,7 +252,7 @@ if (problems.length) {
 }
 
 console.log(
-  'Structured observation integrity OK: ' +
+  'Structured civic-observation integrity OK: ' +
     categories.length +
     ' place categories, ' +
     Object.keys(schema.familyMapping).length +
