@@ -25,9 +25,9 @@
   },
   "summary": {
     "capabilities": 14,
-    "complete": 7,
+    "complete": 8,
     "completeWithBoundary": 5,
-    "partial": 1,
+    "partial": 0,
     "deferred": 1,
     "replacedLegacyPatterns": 3
   },
@@ -160,14 +160,14 @@
     {
       "id": "W3R-CAP-12",
       "capability": "Outcome-oriented public participation reports",
-      "status": "partial",
+      "status": "complete",
       "evidence": [
-        "Civic Reports correctly separates evidence status, community resolution signals and referral candidates.",
-        "The six-stage lifecycle wording is present.",
-        "W3R-10 raw outcome instrumentation exists."
-      ],
-      "gap": "The public reports page is still dominated by legacy seven-day/thirty-day volume counts and a three-support proposal threshold. It does not yet present the redesigned outcome model with W3R-10b threshold suppression.",
-      "restartCondition": "Create a separate follow-up workstream to redesign /civic-map/reports around threshold-gated outcome evidence while retaining exact recent-case records and referral workflow. Do not publish lifecycle rates or medians before thresholds are met."
+        "/civic-map/reports now leads with exact 30-day lifecycle counts for submitted, reviewed, routed, authority-acknowledged, action-evidence and documented-resolution stages.",
+        "Lifecycle percentages are withheld on the public page until the W3R-10b minimum denominator and stage-maturity rules are satisfied.",
+        "Community appears-resolved signals remain explicitly separate from documented lifecycle resolution.",
+        "The human review/referral queue and exact recent-case records are retained.",
+        "The page consumes the frozen 13-park civic-audit output for public x/y audit coverage and only publishes aggregate recent-observation coverage after the W3R-10b inventory and observed-entity thresholds are met."
+      ]
     },
     {
       "id": "W3R-CAP-13",
