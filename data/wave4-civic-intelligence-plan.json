@@ -240,15 +240,51 @@
       "id": "W4-1e",
       "phase": "Statistics",
       "title": "Inventory service, land and infrastructure indicators",
-      "status": "next",
+      "status": "complete",
       "maximumScope": "Official-source research only; prioritize measures that connect to services, barangays, facilities or Place Registry records.",
-      "stopWhen": "A bounded source-backed indicator set is frozen with no inferred counts from incomplete Place Registry coverage."
+      "stopWhen": "A bounded source-backed indicator set is frozen with no inferred counts from incomplete Place Registry coverage.",
+      "inventoryFile": "data/wave4-service-land-infrastructure-source-inventory.json",
+      "validation": {
+        "sourceScope": "Official Makati, PSA, DepEd and PhilHealth sources only.",
+        "approvedFirstBatch": [
+          "2022 existing land-use distribution on the current 23-barangay boundary",
+          "mapped current-boundary city land area as geography metadata",
+          "2023 official public-park count",
+          "2023 concreted-road and asphalt-road lengths",
+          "2023 improved-drainage length",
+          "current 2026 DepEd public-school count",
+          "current July 2026 Makati YAKAP/GAMOT provider count and government-health-center subset"
+        ],
+        "held": [
+          "tree stock",
+          "streetlight poles",
+          "bike-lane count pending definition clarification",
+          "MRT station count for Mobility ownership",
+          "bus-stop count pending current operational source",
+          "school infrastructure project count",
+          "2023 health-center administrative count",
+          "DOH licensed facility counts pending reproducible Makati extraction",
+          "day-care center count"
+        ],
+        "rejected": [
+          "2023 PNR station count as a current service indicator",
+          "stated administrative processing times as observed performance"
+        ],
+        "placeRegistryGuard": "Official inventories own denominators. Place Registry can supply exact relationships only; its record count cannot estimate citywide park, clinic, school, road, drainage or transport totals.",
+        "parkReconciliation": "Official 2023 public-park denominator is 15 while the Wave 3 accessibility pilot freezes 13 verified park targets; preserve the scope difference until exact identity reconciliation exists.",
+        "conceptGuards": [
+          "Distinct schools are not the same as overlapping school-level/program counts.",
+          "Health-center existence, DOH license, PhilHealth accreditation and YAKAP/GAMOT availability are separate states.",
+          "Transport infrastructure location does not prove current passenger service."
+        ],
+        "ecosystemScope": "BetterGov/BetterLGU comparisons are contextual cross-links only; BetterMakati keeps the local official denominator and primary source visible."
+      }
     },
     {
       "id": "W4-1f",
       "phase": "Statistics",
       "title": "Implement canonical indicator dataset",
-      "status": "planned",
+      "status": "next",
       "maximumScope": "Data layer only for the approved W4-1c/1d/1e indicator set.",
       "stopWhen": "Implemented indicators pass geography/period/source validation and existing hard-coded duplicates have a migration disposition."
     },
@@ -542,9 +578,9 @@
     }
   ],
   "immediateNext": {
-    "id": "W4-1e",
-    "title": "Inventory service, land and infrastructure indicators",
-    "maximumScope": "Official-source research only; prioritize measures that connect to services, barangays, facilities or Place Registry records."
+    "id": "W4-1f",
+    "title": "Implement canonical indicator dataset",
+    "maximumScope": "Data layer only for the approved W4-1c/1d/1e indicator set."
   },
   "inheritedKnownItems": [
     {
