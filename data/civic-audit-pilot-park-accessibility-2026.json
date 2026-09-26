@@ -99,8 +99,38 @@
     "formBehavior": "When opened from the pilot page, the existing observation form is limited to the four campaign question IDs. Normal park pages retain the full park observation question set."
   },
   "nextStep": {
-    "id": "W3R-7c",
-    "title": "Publish one audit output",
-    "constraint": "Use only the frozen 13-park target set and campaign-period structured observations. Publish coverage, dates, sample counts and question-level distributions; no composite scores or rankings."
+    "id": "W3R-8a",
+    "title": "Revise Participation Hub",
+    "constraint": "Participate page only. Align entry points to official participation, local problem reporting, place improvements, documentation, corrections/sources, BetterMakati ideas and volunteering."
+  },
+  "outputPublication": {
+    "workstream": "W3R-7c",
+    "status": "published-live",
+    "route": "/civic-map/audits/park-accessibility-2026/results",
+    "api": "/api/civic-audit?campaign=makati-public-park-accessibility-2026-pilot",
+    "publishedAt": "2026-09-26",
+    "initialRepositoryState": {
+      "civicObservationThreads": 0,
+      "note": "The live output correctly begins with zero observations and updates from campaign-period structured observations as they are submitted."
+    },
+    "fields": [
+      "campaign observation count",
+      "parks with observations",
+      "parks meeting the operational completion rule",
+      "latest campaign observation date",
+      "per-question substantive sample counts and categorical distributions",
+      "per-park observation count",
+      "per-park required-question coverage",
+      "missing/incomplete target parks"
+    ],
+    "exclusions": [
+      "overall score",
+      "average rating",
+      "weighted composite",
+      "grade",
+      "entity ranking",
+      "best/worst park label"
+    ],
+    "countingRule": "Count only observations for the frozen 13 entity IDs whose observedAt falls inside the campaign period and which contain at least one of the four campaign question IDs. Not-observed answers do not enter substantive question distributions."
   }
 }
