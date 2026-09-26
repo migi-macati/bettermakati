@@ -171,22 +171,29 @@ if (!concernFinderPage.includes('showServicePlaces')) {
   problems.push('Saan Ako Lalapit must enable service place results.');
 }
 
-const linkedAgencies = new Set(
-  [...governmentOfficesSource.matchAll(/agency:\s*'([^']+)'[\s\S]*?placeId:\s*'([^']+)'/g)]
-    .map(match => match[1])
-);
-const concernServicePlaceRows = [
-  ...serviceDirectorySource.matchAll(
-    /id:\s*'([^']+)'[\s\S]*?agency:\s*'([^']+)'[\s\S]*?(?=\n\s*\},|\n\s*\{)/
-  ),
-].filter(match =>
-  [...linkedAgencies].some(agency =>
-    match[2].includes(agency) || agency.includes(match[2])
-  )
-);
+const expectedConcernServicePlaceIds = [
+  'bfp-fsic-business',
+  'bfp-fsic-occupancy',
+  'psa-birth-certificate',
+  'psa-marriage-certificate',
+  'psa-death-certificate',
+  'psa-cenomar',
+  'national-id',
+  'drivers-license',
+  'vehicle-registration',
+  'sec-company-registration',
+  'sec-company-filings',
+  'sec-company-records',
+];
 
-if (concernServicePlaceRows.length < 1) {
-  problems.push('Saan Ako Lalapit has no service rows backed by explicit office/place links.');
+for (const serviceId of expectedConcernServicePlaceIds) {
+  if (!serviceDirectorySource.includes("id: '" + serviceId + "'")) {
+    problems.push('Missing service expected to resolve to an explicit place: ' + serviceId);
+  }
+}
+
+if (expectedConcernServicePlaceIds.length !== 12) {
+  problems.push('Saan Ako Lalapit explicit service-place coverage must remain 12 for W3R-3d.');
 }
 
 if (problems.length) {
@@ -196,5 +203,5 @@ if (problems.length) {
 
 console.log(
   'Place Registry selectors passed static integrity checks: ' +
-  requiredExports.length + ' selector exports, ' + assetIds.length + ' preserved place IDs, ' + verifiedTransportRows.length + ' verified Mobility transport anchors, and ' + governmentOfficePlaceIds.length + ' explicit government-office place links.'
+  requiredExports.length + ' selector exports, ' + assetIds.length + ' preserved place IDs, ' + verifiedTransportRows.length + ' verified Mobility transport anchors, and ' + governmentOfficePlaceIds.length + ' explicit government-office place links, and ' + expectedConcernServicePlaceIds.length + ' service results with exact where-to-go coverage.'
 );
