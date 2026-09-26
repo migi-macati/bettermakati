@@ -54,6 +54,14 @@ export interface CityMonitorRecord {
   relatedHref?: string;
   barangaySlug?: string;
   location?: string;
+  /**
+   * Explicit canonical Place Registry IDs only.
+   *
+   * Add a place only when the City Monitor source itself clearly names the
+   * place/site or the record is unambiguously scoped to that canonical place.
+   * Do not populate this from barangay, proximity or fuzzy name matching.
+   */
+  placeIds?: string[];
   summaryBullets?: string[];
   documents?: Array<{
     label: string;
@@ -79,7 +87,7 @@ export interface CityMonitorRecord {
   }>;
 }
 
-export const cityMonitorReviewed = '24 September 2026';
+export const cityMonitorReviewed = '26 September 2026';
 
 export const cityMonitorSources: CityMonitorSource[] = [
   {
@@ -173,6 +181,37 @@ export const cityMonitorSources: CityMonitorSource[] = [
 ];
 
 const baseCityMonitorRecords: CityMonitorRecord[] = [
+  {
+    id: '2026-q2-makati-city-hall-building-ii-hvac',
+    type: 'procurement',
+    title:
+      'HVAC dust cleaning and decontamination at Makati City Hall Building II',
+    summary:
+      'The Q2 2026 city bid-results disclosure records an award for HVAC system dust cleaning and decontamination services at Makati City Hall Building II.',
+    date: '2026-05-19',
+    status: 'awarded',
+    stage: 'Bid result disclosed',
+    referenceNo: 'BS26-04-0403',
+    amount: 10306303.35,
+    sourceLabel: 'Q2 2026 Bid Results — Goods and Services',
+    sourceUrl:
+      'https://www.makati.gov.ph/assets/uploads/staticmenu/docs/online_forms/pdf/Q2%20Bids.pdf',
+    sourcePublisher: 'City Government of Makati',
+    location: 'Makati City Hall Building II',
+    placeIds: ['makati-city-hall'],
+    summaryBullets: [
+      'Approved budget for contract: ₱10,810,561.25.',
+      'Winning bid: ₱10,306,303.35.',
+      'Linked to the Makati City Hall civic record because the source explicitly names Makati City Hall Building II; the relationship is to the City Hall complex, not inferred from proximity.',
+    ],
+    documents: [
+      {
+        label: 'Q2 2026 Bid Results — Goods and Services',
+        url: 'https://www.makati.gov.ph/assets/uploads/staticmenu/docs/online_forms/pdf/Q2%20Bids.pdf',
+        kind: 'procurement',
+      },
+    ],
+  },
   {
     id: '2020-council-legislative-activity',
     type: 'council-session',
