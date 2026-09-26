@@ -1002,12 +1002,48 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Reframe Civic Map entry experience",
       "maximumScope": "Civic Map landing only. Center Report something, Check a place, Suggest an improvement and Help document Makati. Remove ratings-first positioning.",
-      "status": "next",
+      "status": "complete",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
       ],
-      "stopWhen": "Civic Map landing only. Center Report something, Check a place, Suggest an improvement and Help document Makati. Remove ratings-first positioning."
+      "stopWhen": "Civic Map landing only. Center Report something, Check a place, Suggest an improvement and Help document Makati. Remove ratings-first positioning.",
+      "implementationFiles": [
+        "src/pages/CivicMap.tsx",
+        "src/data/searchIndex.ts"
+      ],
+      "validation": {
+        "entryModel": "Civic Map landing is now a verified-place browser plus task launcher, not a generic rating destination.",
+        "verifiedInventory": {
+          "shownOnEntry": 79,
+          "totalMigratedRecords": 88,
+          "rule": "Only records whose Place Registry verification.status is verified are shown on the Civic Map landing page."
+        },
+        "taskEntrypoints": [
+          "Find a place",
+          "Report a problem",
+          "Suggest an improvement",
+          "Help document Makati"
+        ],
+        "retiredEntryFraming": [
+          "1–5 place/route rating pitch",
+          "Civic Map · Pilot label",
+          "pilot mapped assets copy",
+          "duplicate-case doctrine card",
+          "transport ratings promise",
+          "BetterMakati consolidates before it amplifies section"
+        ],
+        "retainedOperationalElements": [
+          "Emergency 911 handoff",
+          "Open community case count",
+          "Open improvement proposal count",
+          "Barangay-scoped browsing",
+          "National infrastructure handoff links"
+        ],
+        "searchDiscovery": "Global search description for Civic Map now uses the place-first model and removes rate/review keywords.",
+        "guardrail": "scripts/check-place-registry.mjs now requires verified-place filtering, the four task entrypoints and absence of retired rating/pilot framing.",
+        "ci": "Latest CI still stops at the same three pre-existing unused-import ESLint errors. No new errors are reported for CivicMap.tsx, searchIndex.ts or the Place Registry guardrail."
+      }
     },
     {
       "id": "W3R-4b",
@@ -1016,7 +1052,7 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Simplify place detail experience",
       "maximumScope": "CivicAsset page only plus tiny shared UI if essential. Remove generic rating-first language while retaining factual details, reports, improvements and source provenance.",
-      "status": "planned",
+      "status": "next",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
@@ -1465,9 +1501,9 @@
     }
   ],
   "immediateNext": {
-    "id": "W3R-4a",
-    "title": "Reframe Civic Map entry",
-    "maximumScope": "Civic Map entry surface only. Present the map as one way to browse verified places and start place-based tasks, not as a destination for generic ratings."
+    "id": "W3R-4b",
+    "title": "Simplify place detail",
+    "maximumScope": "Civic place-detail page only. Reframe around verified place facts, useful actions and existing cases; do not implement structured observations yet."
   },
   "reopenedExecutionOrder": [
     "3C-2a",
