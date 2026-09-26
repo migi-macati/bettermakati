@@ -19,12 +19,22 @@ const localDateTimeValue = () => {
 
 export default function CivicObservationForm({
   entity,
+  questionIds,
   onSubmitted,
 }: {
   entity: PlaceRegistryRecord;
+  questionIds?: readonly string[];
   onSubmitted?: () => void;
 }) {
-  const questionSet = useMemo(() => observationQuestionSetForEntity(entity), [entity]);
+  const questionSet = useMemo(() => {
+    const fullSet = observationQuestionSetForEntity(entity);
+    if (!questionIds?.length) return fullSet;
+    const allowed = new Set(questionIds);
+    return {
+      ...fullSet,
+      questions: fullSet.questions.filter(question => allowed.has(question.id)),
+    };
+  }, [entity, questionIds]);
   const [observedAt, setObservedAt] = useState(localDateTimeValue);
   const [timeContext, setTimeContext] = useState<ObservationTimeContext>('unknown');
   const [weatherContext, setWeatherContext] = useState<ObservationWeatherContext>('unknown');
