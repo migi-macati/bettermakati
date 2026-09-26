@@ -1011,9 +1011,32 @@
       "id": "W4-4h",
       "phase": "Reports & Insights",
       "title": "Resolve Wave 3 Civic Reports partial capability",
-      "status": "planned",
+      "status": "complete",
       "maximumScope": "/civic-map/reports only. Replace volume/popularity-led emphasis with threshold-gated case outcomes, observation freshness and audit coverage where publication rules allow.",
-      "stopWhen": "The known W3R-CAP-12 gap is either closed by implementation or remains explicitly deferred because thresholds are not met."
+      "stopWhen": "The known W3R-CAP-12 gap is either closed by implementation or remains explicitly deferred because thresholds are not met.",
+      "completedAt": "2026-09-26",
+      "implementationFiles": [
+        "src/pages/CivicReports.tsx",
+        "data/wave3-redesigned-capability-classification.json",
+        "data/wave3-participation-backlog.json",
+        "scripts/check-civic-report-outcomes.mjs",
+        "package.json"
+      ],
+      "validation": {
+        "wave3Capability": "W3R-CAP-12 is now complete and Wave 3 has zero partial capabilities.",
+        "caseOutcomes": "The page shows exact 30-day counts for submitted, reviewed, routed, authority-acknowledged, action-evidence and documented-resolution stages from existing per-case outcome instrumentation.",
+        "rateSuppression": "Lifecycle percentages remain withheld until the minimum 20-case denominator and stage-specific maturity requirements are met.",
+        "communitySignalBoundary": "Ordinary community appears-resolved signals are shown separately from documented lifecycle resolution.",
+        "retainedWorkflows": [
+          "human review/referral queue",
+          "exact recent issue-case records",
+          "canonical place/entity links"
+        ],
+        "auditCoverage": "The live 13-park accessibility campaign publishes x/y observed and x/y complete coverage against its frozen complete-for-declared-scope target set.",
+        "observationFreshness": "Aggregate 30-day park freshness coverage is published only when at least 5 of the 13 eligible parks have observations; otherwise the aggregate is explicitly withheld while exact counts and latest observation date remain visible.",
+        "legacyRemoval": "Seven-day/thirty-day submission-volume cards and three-support proposal popularity summaries were removed.",
+        "separationFromWave4Reports": "/civic-map/reports remains an operational participation-outcomes surface; it is not merged with editorial /reports."
+      }
     },
     {
       "id": "W4-5a",
@@ -1096,11 +1119,11 @@
       "stopWhen": "Wave 4 is closed only to the extent supported by evidence, with future work reopened as specific capabilities rather than vague unfinished work."
     }
   ],
-  "current": "W4-4h",
+  "current": "W4-5a",
   "immediateNext": {
-    "id": "W4-4h",
-    "title": "Resolve Wave 3 Civic Reports partial capability",
-    "maximumScope": "Only the Wave 3 Civic Reports partial capability and its integration with the Wave 4 Reports layer."
+    "id": "W4-5a",
+    "title": "Define shared civic-intelligence relationship model",
+    "maximumScope": "Relationship schema/helper only. Typed references across indicator, legislation, integrity entity, report, place, barangay, service, project/accountability, City Monitor, public record and BetterGov/BetterLGU ecosystem resources."
   },
   "carriedForward": [
     {
