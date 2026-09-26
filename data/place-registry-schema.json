@@ -418,9 +418,9 @@
     "uiChanges": 0
   },
   "nextImplementationStep": {
-    "id": "W3R-6b",
-    "title": "Replace generic ratings with observations",
-    "constraint": "One reusable observation form and storage path. No derived scores."
+    "id": "W3R-6c",
+    "title": "Add place condition summaries",
+    "constraint": "Display recent structured observations and freshness only. Do not publish composite scores."
   },
   "betterBarangayReuse": {
     "workstream": "W3R-3a",
@@ -584,6 +584,19 @@
       "No overall score or hidden numeric composite is permitted.",
       "Observation submission never mutates canonical place facts or civic case lifecycle.",
       "Legacy 1–5 reviews remain historical and are not converted."
+    ]
+  },
+  "structuredObservationImplementation": {
+    "workstream": "W3R-6b",
+    "route": "/api/civic-observation",
+    "canonicalIndex": "data/place-observation-index.mjs",
+    "form": "src/components/civic/CivicObservationForm.tsx",
+    "rules": [
+      "One reusable family-aware observation form is used on place pages.",
+      "Observation storage is separate from civic cases and lifecycle.",
+      "New generic 1–5 reviews are retired; historical review records remain readable.",
+      "The server validates canonical place identity and structured answers.",
+      "No derived score is stored or generated."
     ]
   }
 }
