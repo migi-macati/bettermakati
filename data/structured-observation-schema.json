@@ -641,7 +641,19 @@
       "best/worst place label",
       "conversion of categorical answers to hidden numeric scores"
     ],
-    "minimumDisplayRule": "Any summary must show observation count and recency/time window alongside the condition result."
+    "minimumDisplayRule": "Any summary must show observation count and recency/time window alongside the condition result.",
+    "implementation": {
+      "workstream": "W3R-6c",
+      "summaryWindowDays": 90,
+      "freshnessThresholds": {
+        "freshMaxDays": 30,
+        "recentMaxDays": 90,
+        "olderMinDays": 91
+      },
+      "notObservedPolicy": "Exclude not-observed answers from substantive per-question summaries while retaining the total observation count.",
+      "numericWaitSummary": "Show latest value plus 90-day median and range with sample count.",
+      "renderingClock": "Use API asOf timestamp so freshness and window boundaries are deterministic within a response."
+    }
   },
   "privacyAndSafety": [
     "Do not collect precise contributor home/work location; observations attach only to the selected canonical place.",
@@ -692,6 +704,53 @@
         "noDerivedScores": "No overall score, stars, average rating, weighted score, grade, rank or composite index is generated or stored.",
         "integrityGate": "check:observations validates 16 categories mapped exactly once, 88 canonical place IDs, 5 families, 41 questions, dedicated storage, rating-write retirement and lifecycle separation; it is wired into quality and build.",
         "ci": "Latest completed CI after the implementation reports only the same three pre-existing unused-import ESLint errors and existing warnings. No new errors are reported for the observation form, observation definitions, observation API, CivicAsset, CivicContributionForm or civicMap; downstream checks/build remain skipped behind the baseline lint failure."
+      }
+    },
+    "W3R6c": {
+      "status": "complete",
+      "files": [
+        "src/components/civic/CivicObservationSummary.tsx",
+        "src/data/structuredObservations.ts",
+        "src/pages/CivicAsset.tsx",
+        "api/civic-observation.js",
+        "scripts/check-structured-observations.mjs"
+      ],
+      "validation": {
+        "implementationFiles": [
+          "src/components/civic/CivicObservationSummary.tsx",
+          "src/data/structuredObservations.ts",
+          "src/pages/CivicAsset.tsx",
+          "api/civic-observation.js",
+          "scripts/check-structured-observations.mjs"
+        ],
+        "display": "Every place page now shows recent structured condition summaries above the observation form.",
+        "freshness": {
+          "fresh": "<=30 days",
+          "recent": "31-90 days",
+          "older": ">90 days",
+          "reference": "API-supplied asOf timestamp for deterministic rendering"
+        },
+        "aggregationWindowDays": 90,
+        "summaryFields": [
+          "total loaded observation count",
+          "latest observation date",
+          "freshness label",
+          "latest substantive value per question",
+          "90-day per-question sample count",
+          "90-day categorical answer distribution",
+          "90-day observed wait median and range"
+        ],
+        "notObservedHandling": "Values beginning with not-observed are excluded from condition-value summaries and 90-day substantive sample counts.",
+        "noCompositeScores": "No overall score, average rating, weighted composite, grade, ranking, best/worst label or hidden numeric conversion is produced.",
+        "refresh": "A newly saved observation increments observationRevision and refreshes the summary immediately.",
+        "simulation": {
+          "latestAgeDays": 6,
+          "freshness": "Fresh",
+          "recent90DaySampleCount": 2,
+          "excludedNotObserved": true,
+          "excludedOlderThan90Days": true
+        },
+        "ci": "After fixing one render-purity error and one effect warning introduced in the first pass, the completed CI run reports only the same three pre-existing unused-import errors and six existing warnings. No new lint errors remain in CivicObservationSummary.tsx or related W3R-6c files."
       }
     }
   }
