@@ -914,13 +914,39 @@
     {
       "id": "W3R-9e",
       "title": "Add reusable Near me utility",
-      "status": "next",
-      "maximumScope": "One shared nearby-place component/helper after registry reuse is proven elsewhere."
+      "status": "complete",
+      "maximumScope": "One shared nearby-place component/helper after registry reuse is proven elsewhere.",
+      "implementationFiles": [
+        "src/data/placeRegistry.ts",
+        "src/components/civic/NearMePlaces.tsx",
+        "src/pages/CivicNearbyReport.tsx",
+        "src/pages/CivicMap.tsx",
+        "scripts/check-place-registry.mjs"
+      ],
+      "validation": {
+        "sharedSelector": "nearbyVerifiedPlaces centralizes the 250 m initial / 500 m fallback nearest-place behavior and returns at most five results by default.",
+        "eligibility": [
+          "physical place records only",
+          "verification.status === verified",
+          "must have a registry point",
+          "closed/future lifecycle records excluded",
+          "serves-makati-outside records excluded"
+        ],
+        "privacy": "The reusable component requests browser geolocation only after the user taps Use my location; it does not request location on page load.",
+        "noAutoSelection": "Nearby results are suggestions only. The shared selector never auto-selects a place.",
+        "reuse": [
+          "CivicNearbyReport now uses the same shared nearby selector instead of maintaining a second eligibility/distance implementation.",
+          "Civic Map now exposes the reusable NearMePlaces component as a browse utility with barangay scope preserved on canonical place links."
+        ],
+        "fallback": "Denied or unavailable device location leaves ordinary Civic Map search/browse available.",
+        "guardrail": "check-place-registry now requires the shared selector, reusable component, Civic Map integration and updated nearby-report handoff markers.",
+        "focusedValidation": "Shared selector, component geolocation, reporting reuse, Civic Map rendering and barangay-scoped place links are present; the reporting page no longer directly calls placesWithinDistance."
+      }
     },
     {
       "id": "W3R-10a",
       "title": "Redefine participation outcome metrics",
-      "status": "planned",
+      "status": "next",
       "maximumScope": "Metric definitions only: routing, review, acknowledgement, action, resolution, observation freshness, audit coverage and repeat contribution. No instrumentation."
     },
     {
@@ -973,9 +999,9 @@
     }
   ],
   "immediateNext": {
-    "id": "W3R-9e",
-    "title": "Add reusable Near me utility",
-    "maximumScope": "One shared nearby-place component/helper after registry reuse is proven elsewhere."
+    "id": "W3R-10a",
+    "title": "Redefine participation outcome metrics",
+    "maximumScope": "Metric definitions only: routing, review, acknowledgement, action, resolution, observation freshness, audit coverage and repeat contribution. No instrumentation."
   },
   "capabilityDispositionAuditFile": "data/wave3-capability-disposition-audit.json",
   "completedSteps": [
@@ -1006,7 +1032,8 @@
     "W3R-9a",
     "W3R-9b",
     "W3R-9c",
-    "W3R-9d"
+    "W3R-9d",
+    "W3R-9e"
   ],
   "placeRegistrySchemaFile": "data/place-registry-schema.json",
   "placeRegistryDataFile": "src/data/placeRegistry.ts",
