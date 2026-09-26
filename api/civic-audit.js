@@ -1,4 +1,5 @@
 import { civicEntityById } from '../data/civic-entity-index.mjs';
+import { auditCoverageMetricInputs } from '../data/participation-outcome-instrumentation.mjs';
 
 const CAMPAIGN = {
   id: 'makati-public-park-accessibility-2026-pilot',
@@ -34,6 +35,7 @@ const CAMPAIGN = {
   startsAt: '2026-09-26T10:03:00+08:00',
   endsAt: '2026-10-26T23:59:59+08:00',
   minimumObservationsPerEntity: 2,
+  inventoryClaim: 'complete-for-declared-scope',
 };
 
 const headersFor = token => {
@@ -230,31 +232,58 @@ export default async function handler(req, res) {
     const completeEntities = entities.filter(entity => entity.isComplete).length;
     const latestObservedAt = observations[0]?.observedAt || null;
 
+    const asOf = new Date().toISOString();
     return res.status(200).json({
       campaignId: CAMPAIGN.id,
       status: 'collecting',
-      asOf: new Date().toISOString(),
+      asOf,
       startsAt: CAMPAIGN.startsAt,
       endsAt: CAMPAIGN.endsAt,
       targetCount: CAMPAIGN.targetEntityIds.length,
       minimumObservationsPerEntity: CAMPAIGN.minimumObservationsPerEntity,
+      inventoryClaim: CAMPAIGN.inventoryClaim,
       observationCount: observations.length,
       observedEntities,
       completeEntities,
       latestObservedAt,
       entities,
       questions,
+      metricInputs: auditCoverageMetricInputs({
+        campaignId: CAMPAIGN.id,
+        asOf,
+        startsAt: CAMPAIGN.startsAt,
+        endsAt: CAMPAIGN.endsAt,
+        inventoryClaim: CAMPAIGN.inventoryClaim,
+        targetCount: CAMPAIGN.targetEntityIds.length,
+        observedEntities,
+        completeEntities,
+      }),
     });
   } catch {
+    const asOf = new Date().toISOString();
     return res.status(503).json({
       error: 'Civic audit observations are temporarily unavailable.',
       campaignId: CAMPAIGN.id,
+      asOf,
+      startsAt: CAMPAIGN.startsAt,
+      endsAt: CAMPAIGN.endsAt,
+      inventoryClaim: CAMPAIGN.inventoryClaim,
       targetCount: CAMPAIGN.targetEntityIds.length,
       observationCount: 0,
       observedEntities: 0,
       completeEntities: 0,
       entities: [],
       questions: CAMPAIGN.questionIds.map(emptyQuestionSummary),
+      metricInputs: auditCoverageMetricInputs({
+        campaignId: CAMPAIGN.id,
+        asOf,
+        startsAt: CAMPAIGN.startsAt,
+        endsAt: CAMPAIGN.endsAt,
+        inventoryClaim: CAMPAIGN.inventoryClaim,
+        targetCount: CAMPAIGN.targetEntityIds.length,
+        observedEntities: 0,
+        completeEntities: 0,
+      }),
     });
   }
 }
