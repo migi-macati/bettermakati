@@ -355,11 +355,11 @@ const observationThreadBody = payload => [
     }) +
     ' -->',
   '',
-  '**Place:** ' + payload.entityName,
-  '**Place ID:** ' + payload.entityId,
+  '**Civic entity:** ' + payload.entityName,
+  '**Entity ID:** ' + payload.entityId,
   '**Observation family:** ' + payload.familyId,
   '',
-  'Structured condition observations for this civic entity. These records are separate from Civic Map problem cases and do not change canonical place facts.',
+  'Structured condition observations for this civic entity. These records are separate from Civic Map problem cases and do not change canonical civic-registry facts.',
 ].join('\n');
 
 const observationCommentBody = payload => [
@@ -403,7 +403,7 @@ const fallbackUrl = payload => {
     observationCommentBody(payload),
   ].join('\n');
   const params = new URLSearchParams({
-    title: '[Place Observation] ' + payload.entityName,
+    title: '[Civic Observation] ' + payload.entityName,
     body,
   });
   return (
@@ -492,12 +492,12 @@ export default async function handler(req, res) {
   if (!payload.entityId) {
     return res.status(400).json({ error: 'Choose a canonical civic entity first.' });
   }
-  const canonicalPlace = civicObservationEntityById.get(payload.entityId);
-  if (!canonicalPlace) {
+  const canonicalEntity = civicObservationEntityById.get(payload.entityId);
+  if (!canonicalEntity) {
     return res.status(400).json({ error: 'Unknown canonical civic entity.' });
   }
-  payload.entityName = canonicalPlace.name;
-  payload.entityCategory = canonicalPlace.category;
+  payload.entityName = canonicalEntity.name;
+  payload.entityCategory = canonicalEntity.category;
 
   if (!familyCategories[payload.familyId]?.has(payload.entityCategory)) {
     return res.status(400).json({
