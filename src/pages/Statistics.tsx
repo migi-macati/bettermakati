@@ -94,11 +94,6 @@ export default function Statistics() {
       ? ((population2024 - population2010) / population2010) * 100
       : 0;
 
-  const populationCsv = [
-    'Census year,Population',
-    ...populationTrend.map(item => [item.year, item.population].join(',')),
-  ].join('\n');
-
   const barangayPopulationContext = barangay
     ? barangayPopulationContext2024(barangay.slug)
     : null;
@@ -528,12 +523,23 @@ export default function Statistics() {
             <ArrowUpRight className="h-4 w-4" />
           </a>
           <a
-            href={'data:text/csv;charset=utf-8,' + encodeURIComponent(populationCsv)}
-            download="makati-population-2010-2024.csv"
+            href={populationTrendDownloadHref}
+            download={populationTrendDownload.filename}
             className="brand-btn-secondary"
           >
             <Download className="h-4 w-4" /> Download CSV
           </a>
+        </div>
+
+        <div className="mt-4 rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-xs leading-relaxed text-gray-600">
+          <strong className="text-gray-800">Definition:</strong>{' '}
+          {populationTrendDownload.provenance.definition}{' '}
+          <span aria-hidden="true">·</span>{' '}
+          <strong className="text-gray-800">Geography:</strong>{' '}
+          {populationTrendDownload.provenance.geography}{' '}
+          <span aria-hidden="true">·</span>{' '}
+          <strong className="text-gray-800">Reviewed:</strong>{' '}
+          {populationTrendDownload.provenance.lastReviewed}
         </div>
       </Section>
 
