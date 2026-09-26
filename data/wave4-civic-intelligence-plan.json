@@ -205,15 +205,42 @@
       "id": "W4-1d",
       "phase": "Statistics",
       "title": "Inventory economic and business indicators",
-      "status": "next",
+      "status": "complete",
       "maximumScope": "Official-source research only for GDP/economic structure, establishments/employment/business indicators that can be stated consistently.",
-      "stopWhen": "Each candidate indicator has a source, definition, period and decision: implement, hold or reject."
+      "stopWhen": "Each candidate indicator has a source, definition, period and decision: implement, hold or reject.",
+      "inventoryFile": "data/wave4-economic-business-source-inventory.json",
+      "validation": {
+        "sourceScope": "Official PSA and City Government of Makati sources only.",
+        "approvedFirstBatch": [
+          "real GDP level and growth on the current-boundary 2022–2025 series",
+          "Makati share of national and NCR GDP",
+          "industry GVA, industry growth and explicitly derived industry share of Makati GDP",
+          "GDP per capita with denominator metadata",
+          "2025 resident LFPR, employment, unemployment and underemployment rates"
+        ],
+        "held": [
+          "industry share of the same NCR industry",
+          "resident employed-person counts",
+          "city BPO business establishments per activity",
+          "PEZA IT buildings",
+          "finance-related institution count",
+          "Makati-level 2023 CPBI business statistics pending official publication"
+        ],
+        "rejected": [
+          "2021 PSA Makati establishment count as a current indicator",
+          "2021 PSA employment in Makati establishments as a current indicator"
+        ],
+        "geographyGuard": "Treat 2022 as the PPA Makati geography break unless PSA publishes a restated pre-2022 current-boundary series.",
+        "conceptGuard": "Resident labor-market rates, employment in Makati establishments, and City BPO business-activity counts are distinct measures and must not share one label.",
+        "industryGuard": "For Makati's internal economic structure, derive industry share from Makati industry GVA / Makati GDP; do not misread the PSA regional-industry-share table as city industry composition.",
+        "ecosystemScope": "BetterGov/BetterLGU links remain contextual handoffs; PSA or Makati official sources remain the source of record."
+      }
     },
     {
       "id": "W4-1e",
       "phase": "Statistics",
       "title": "Inventory service, land and infrastructure indicators",
-      "status": "planned",
+      "status": "next",
       "maximumScope": "Official-source research only; prioritize measures that connect to services, barangays, facilities or Place Registry records.",
       "stopWhen": "A bounded source-backed indicator set is frozen with no inferred counts from incomplete Place Registry coverage."
     },
@@ -515,9 +542,9 @@
     }
   ],
   "immediateNext": {
-    "id": "W4-1d",
-    "title": "Inventory economic and business indicators",
-    "maximumScope": "Official-source research only for GDP/economic structure, establishments/employment/business indicators that can be stated consistently."
+    "id": "W4-1e",
+    "title": "Inventory service, land and infrastructure indicators",
+    "maximumScope": "Official-source research only; prioritize measures that connect to services, barangays, facilities or Place Registry records."
   },
   "inheritedKnownItems": [
     {
