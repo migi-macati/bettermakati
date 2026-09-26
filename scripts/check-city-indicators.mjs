@@ -10,6 +10,8 @@ const [
   budgetSource,
   migrationSource,
   statisticsPageSource,
+  cityComparisonComponentSource,
+  statisticsExportSource,
 ] = await Promise.all([
   readFile('src/data/cityIndicators.ts', 'utf8'),
   readFile('data/wave4-population-demographic-source-inventory.json', 'utf8'),
@@ -20,6 +22,8 @@ const [
   readFile('src/data/budget2025.ts', 'utf8'),
   readFile('data/wave4-statistics-data-migration.json', 'utf8'),
   readFile('src/pages/Statistics.tsx', 'utf8'),
+  readFile('src/components/statistics/CityComparison.tsx', 'utf8'),
+  readFile('src/data/statisticsExports.ts', 'utf8'),
 ]);
 
 const populationInventory = JSON.parse(populationInventorySource);
@@ -278,8 +282,8 @@ const migrationStatuses = migration.items.flatMap(item =>
 );
 for (const expected of [
   'migrated-in-W4-1f',
-  'migrate-W4-1g',
-  'migrate-W4-1i',
+  'migrated-in-W4-1g',
+  'migrated-in-W4-1i',
   'retain-publication-snapshot',
   'retain-canonical-owner',
 ]) {
@@ -308,6 +312,59 @@ if (
 ) {
   problems.push(
     'Statistics page appears to invent unsupported barangay-level household/economic/labor values.'
+  );
+}
+
+for (const marker of [
+  'export const populationTrendDownload',
+  'export const populationTrendRows',
+  'export const populationTrendCsv',
+  'export const populationTrendDownloadHref',
+  'export const cityComparisonDownload',
+  'export const cityComparisonCsv',
+  'export const cityComparisonFilename',
+  'definition:',
+  'basis:',
+  'lastReviewed:',
+  'sources:',
+]) {
+  if (!statisticsExportSource.includes(marker)) {
+    problems.push('Statistics export/provenance marker missing: ' + marker);
+  }
+}
+if (
+  statisticsPageSource.includes('const populationCsv') ||
+  statisticsPageSource.includes("['Census year,Population'") ||
+  !statisticsPageSource.includes('populationTrendDownloadHref') ||
+  !statisticsPageSource.includes('populationTrendDownload.provenance.definition')
+) {
+  problems.push(
+    'Statistics population download/provenance must come from the shared statisticsExports data layer.'
+  );
+}
+if (
+  cityComparisonComponentSource.includes('const csv = [') ||
+  !cityComparisonComponentSource.includes('cityComparisonCsv(rows)') ||
+  !cityComparisonComponentSource.includes('cityComparisonFilename(filter)') ||
+  !cityComparisonComponentSource.includes(
+    'cityComparisonDownload.provenance.definition'
+  ) ||
+  !cityComparisonComponentSource.includes(
+    'cityComparisonDownload.provenance.basis'
+  )
+) {
+  problems.push(
+    'CityComparison download/provenance must come from the shared statisticsExports data layer.'
+  );
+}
+if (
+  !statisticsExportSource.includes("'Rank in source table'") ||
+  !statisticsExportSource.includes("'Source URL'") ||
+  !statisticsExportSource.includes("'Boundary basis'") ||
+  !statisticsExportSource.includes("'Source ID'")
+) {
+  problems.push(
+    'Statistics downloads must carry source/boundary fields needed to reproduce displayed tables.'
   );
 }
 
