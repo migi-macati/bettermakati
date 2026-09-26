@@ -50,6 +50,7 @@ const ProjectStatus = lazy(() => import('./pages/ProjectStatus'));
 const CityMonitor = lazy(() => import('./pages/CityMonitor'));
 const CivicBriefs = lazy(() => import('./pages/CivicBriefs'));
 const CivicMap = lazy(() => import('./pages/CivicMap'));
+const CivicNearbyReport = lazy(() => import('./pages/CivicNearbyReport'));
 const CivicAsset = lazy(() => import('./pages/CivicAsset'));
 const CivicReports = lazy(() => import('./pages/CivicReports'));
 const Reports = lazy(() => import('./pages/Reports'));
@@ -133,6 +134,7 @@ function App() {
                     <Route path="/reports/:slug" element={<ReportArticle />} />
                     <Route path="/civic-map" element={<CivicMap />} />
                     <Route path="/civic-map/reports" element={<CivicReports />} />
+                    <Route path="/civic-map/report" element={<CivicNearbyReport />} />
                     <Route path="/civic-map/:assetId" element={<CivicAsset />} />
                     <Route path="/barangays" element={<Barangays />} />
                     <Route
