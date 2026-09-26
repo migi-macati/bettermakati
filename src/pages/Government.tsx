@@ -81,7 +81,7 @@ export default function Government() {
           <Heading>Makati City Government</Heading>
           <SharePage title="Makati City Government | BetterMakati" />
         </div>
-        <LastReviewed date="2026-09-20" note="Current elected-official profiles are tied to the 2025 election records cited on each profile." />
+        <LastReviewed date="2026-09-20" date="2026-09-20" note="Current elected-official profiles are tied to the 2025 election records cited on each profile." />
         <Text className="mt-3 max-w-3xl text-gray-700">
           Current elected-official profiles are linked to the election records
           used to identify the officeholder. Party labels, where shown, refer to
