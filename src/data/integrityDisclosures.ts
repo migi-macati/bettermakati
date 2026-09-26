@@ -64,7 +64,8 @@ const registryFrameworkSourceIds = [
 const relationshipFrameworkSourceIds = ['gppb-ra12009-irr-2025'];
 
 const entityResearchRecords: IntegrityDisclosureRecord[] =
-  integrityProcurementEntities.flatMap(entity => [
+  integrityProcurementEntities.flatMap(
+    (entity): IntegrityDisclosureRecord[] => [
     {
       id: 'bo-research-' + entity.id,
       kind: 'beneficial-ownership',
@@ -101,7 +102,8 @@ const entityResearchRecords: IntegrityDisclosureRecord[] =
           'Targeted searches of authoritative Makati, PhilGEPS and GPPB public surfaces did not surface a procurement recusal or inhibition record tied to this normalized supplier. No inference is made from the absence of a retrievable record.',
       },
     },
-  ]);
+    ]
+  );
 
 const historicalRoleDisclosures: IntegrityDisclosureRecord[] = [
   {
