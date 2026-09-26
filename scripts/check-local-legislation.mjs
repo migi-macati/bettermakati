@@ -261,10 +261,10 @@ for (const marker of [
 for (const marker of [
   "localLegislationRecords",
   "Search local records",
-  "BetterMakati index",
+  "Indexed records",
   "makati-legislation-index.json",
   "View record",
-  "Makati archive ID",
+  "Related records",
   "visibleResultLimit = 60",
 ]) {
   if (!pageSource.includes(marker)) {
