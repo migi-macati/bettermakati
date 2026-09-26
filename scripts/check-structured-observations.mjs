@@ -10,6 +10,10 @@ const formSource = await readFile(
   'src/components/civic/CivicObservationForm.tsx',
   'utf8'
 );
+const summarySource = await readFile(
+  'src/components/civic/CivicObservationSummary.tsx',
+  'utf8'
+);
 const placePageSource = await readFile('src/pages/CivicAsset.tsx', 'utf8');
 const observationApi = await readFile('api/civic-observation.js', 'utf8');
 const civicMapSource = await readFile('src/data/civicMap.ts', 'utf8');
@@ -116,12 +120,31 @@ for (const marker of [
 }
 
 for (const marker of [
-  '<CivicObservationForm place={place} />',
-  'Observe conditions',
-  'Record current conditions',
+  '<CivicObservationSummary',
+  'refreshKey={observationRevision}',
+  '<CivicObservationForm',
+  'onSubmitted={() => setObservationRevision(value => value + 1)}',
+  'Condition snapshots',
 ]) {
   if (!placePageSource.includes(marker)) {
-    problems.push('Place observation entry is missing: ' + marker);
+    problems.push('Place observation summary/form integration is missing: ' + marker);
+  }
+}
+
+for (const marker of [
+  "fetch('/api/civic-observation?placeId='",
+  'const SUMMARY_WINDOW_DAYS = 90',
+  "if (ageDays <= 30) return { label: 'Fresh'",
+  "if (ageDays <= 90) return { label: 'Recent'",
+  "return { label: 'Older'",
+  'observations.length',
+  'Latest: {formatDate(latestObservedAt)}',
+  'Last {SUMMARY_WINDOW_DAYS} days · n={summary.sampleCount}',
+  'isNotObservedValue(row.answer.value)',
+  'observationValueLabel(',
+]) {
+  if (!summarySource.includes(marker)) {
+    problems.push('Condition summary contract is missing: ' + marker);
   }
 }
 
@@ -149,13 +172,18 @@ for (const forbidden of [
   'compositeIndex',
   'weightedScore',
   'starRating',
+  'overall place score',
+  'ranked places',
+  'best place',
+  'worst place',
 ]) {
   if (
     definitionsSource.includes(forbidden) ||
     formSource.includes(forbidden) ||
+    summarySource.includes(forbidden) ||
     observationApi.includes(forbidden)
   ) {
-    problems.push('Structured observation implementation contains forbidden score field: ' + forbidden);
+    problems.push('Structured observation implementation contains forbidden score/ranking field: ' + forbidden);
   }
 }
 
