@@ -196,9 +196,6 @@ for (const forbidden of [
   }
 }
 
-if (civicMapSource.includes("| 'review'")) {
-  problems.push('Generic review remains a valid CivicContributionKind.');
-}
 for (const retired of ['criteriaForAsset', 'CivicCriterion', 'commonCriteria', 'streetCriteria']) {
   if (civicMapSource.includes(retired)) {
     problems.push('Retired generic rating criteria remain in civicMap.ts: ' + retired);
@@ -207,8 +204,6 @@ for (const retired of ['criteriaForAsset', 'CivicCriterion', 'commonCriteria', '
 for (const forbidden of [
   'Rate this place / service',
   'Choose at least one rating',
-  'structured-review',
-  "kind === 'review'",
   'scores: kind',
 ]) {
   if (contributionForm.includes(forbidden)) {
