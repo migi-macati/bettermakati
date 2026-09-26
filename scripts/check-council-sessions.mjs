@@ -37,7 +37,7 @@ for (const date of expectedDates) {
 
 const regularSessionCalls = (
   sessions.match(/regularSession\(/g) || []
-).length - 1; // subtract helper declaration
+).length;
 if (regularSessionCalls !== expectedDates.length) {
   problems.push(
     'Expected ' +
