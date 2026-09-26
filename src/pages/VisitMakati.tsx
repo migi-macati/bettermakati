@@ -19,6 +19,7 @@ import LastReviewed from '../components/ui/LastReviewed';
 import PhotoCarousel from '../components/ui/PhotoCarousel';
 import { visitImageSet } from '../data/cityImages';
 import SharePage from '../components/ui/SharePage';
+import { placeRegistryById } from '../data/placeRegistry';
 
 const mapsUrl = (query: string) =>
   `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
@@ -51,38 +52,64 @@ export default function VisitMakati() {
               Start here
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-5">
-              {visitorPlaces.map(place => (
-                <div
-                  key={place.name}
-                  className="rounded-2xl border border-gray-200 bg-white p-5"
-                >
-                  <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
-                    {place.category}
+              {visitorPlaces.map(place => {
+                const registryPlace = place.placeId
+                  ? placeRegistryById.get(place.placeId)
+                  : undefined;
+                const mapHref = registryPlace?.location.point
+                  ? mapsUrl(
+                      registryPlace.location.point.lat +
+                        ',' +
+                        registryPlace.location.point.lng
+                    )
+                  : mapsUrl(place.mapsQuery);
+
+                return (
+                  <div
+                    key={place.name}
+                    className="rounded-2xl border border-gray-200 bg-white p-5"
+                  >
+                    <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+                      {place.category}
+                    </div>
+                    <h3 className="font-extrabold text-lg text-gray-950 mt-2">
+                      {place.name}
+                    </h3>
+                    <p className="text-sm text-gray-600 mt-2">{place.summary}</p>
+                    {registryPlace?.location.address && (
+                      <p className="mt-2 text-xs leading-relaxed text-gray-500">
+                        {registryPlace.location.address}
+                      </p>
+                    )}
+                    <div className="mt-4 flex flex-wrap gap-3 text-sm">
+                      <a
+                        href={mapHref}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="font-bold text-primary-700 inline-flex items-center gap-1"
+                      >
+                        Google Maps <ExternalLink className="h-3.5 w-3.5" />
+                      </a>
+                      {registryPlace && (
+                        <Link
+                          to={'/civic-map/' + registryPlace.id}
+                          className="font-bold text-primary-700 inline-flex items-center gap-1"
+                        >
+                          Place details <ArrowRight className="h-3.5 w-3.5" />
+                        </Link>
+                      )}
+                      <a
+                        href={place.sourceUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-gray-500 underline underline-offset-2"
+                      >
+                        {place.sourceLabel}
+                      </a>
+                    </div>
                   </div>
-                  <h3 className="font-extrabold text-lg text-gray-950 mt-2">
-                    {place.name}
-                  </h3>
-                  <p className="text-sm text-gray-600 mt-2">{place.summary}</p>
-                  <div className="mt-4 flex flex-wrap gap-3 text-sm">
-                    <a
-                      href={mapsUrl(place.mapsQuery)}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="font-bold text-primary-700 inline-flex items-center gap-1"
-                    >
-                      Google Maps <ExternalLink className="h-3.5 w-3.5" />
-                    </a>
-                    <a
-                      href={place.sourceUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="text-gray-500 underline underline-offset-2"
-                    >
-                      {place.sourceLabel}
-                    </a>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
 
