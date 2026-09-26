@@ -37,6 +37,7 @@ import {
   type CityIndicatorObservation,
 } from '../data/cityIndicators';
 import { statisticsRelatedRecords } from '../data/statisticsCivicRelationships';
+import { reportsForCivicRecord } from '../data/reportCivicRelationships';
 
 const people = (value: number) =>
   new Intl.NumberFormat('en-PH').format(value);
@@ -140,15 +141,16 @@ export default function Statistics() {
   );
 
   const populationAnalysisLinks = [
-    ...statisticsRelatedRecords('population-total'),
-    ...statisticsRelatedRecords('population-growth-rate'),
-  ]
-    .filter(item => item.node?.owner === 'reports')
-    .filter(
-      (item, index, items) =>
-        items.findIndex(candidate => candidate.node?.href === item.node?.href) ===
-        index
-    );
+    ...reportsForCivicRecord({ type: 'indicator', id: 'population-total' }),
+    ...reportsForCivicRecord({
+      type: 'indicator',
+      id: 'population-growth-rate',
+    }),
+  ].filter(
+    (item, index, items) =>
+      items.findIndex(candidate => candidate.node?.href === item.node?.href) ===
+      index
+  );
 
   const economyContextLinks = [
     ...statisticsRelatedRecords('real-gdp-level'),
