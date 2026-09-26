@@ -946,13 +946,43 @@
     {
       "id": "W3R-10a",
       "title": "Redefine participation outcome metrics",
-      "status": "next",
-      "maximumScope": "Metric definitions only: routing, review, acknowledgement, action, resolution, observation freshness, audit coverage and repeat contribution. No instrumentation."
+      "status": "complete",
+      "maximumScope": "Metric definitions only: routing, review, acknowledgement, action, resolution, observation freshness, audit coverage and repeat contribution. No instrumentation.",
+      "definitionFile": "data/participation-outcome-metrics.json",
+      "validation": {
+        "metricFamilies": [
+          "case lifecycle",
+          "observation freshness",
+          "civic audit coverage",
+          "repeat contribution"
+        ],
+        "lifecycleMetrics": [
+          "review coverage",
+          "routing share",
+          "authority acknowledgement share",
+          "action-evidence share",
+          "documented resolution share"
+        ],
+        "lifecycleTiming": [
+          "time to review",
+          "time to routing",
+          "time to acknowledgement",
+          "time to action evidence",
+          "time to documented resolution"
+        ],
+        "evidenceBoundary": "Forwarded remains BetterMakati referral evidence, not authority receipt. Authority acknowledgement requires a distinct acknowledged lifecycle event with a named responsible authority/body for public presentation. GitHub closure and ordinary 'appears resolved' comments do not count as documented resolution.",
+        "observationFreshness": "Defined from observedAt rather than submittedAt; no universal fresh/stale threshold is set in W3R-10a.",
+        "auditCoverage": "Defined against each campaign's frozen target set, with separate observed-entity and complete-entity coverage.",
+        "repeatContribution": "Defined but explicitly not currently measurable reliably; future instrumentation must use a privacy-preserving stable contributor key, never IP address or public alias.",
+        "cohortRule": "Case metrics use submission cohorts. Later outcomes remain attached to their original cohort; recent cohorts are explicitly right-censored.",
+        "implementationBoundary": "Definitions only. No analytics, API fields, tracking events, dashboards or public aggregates were added.",
+        "focusedValidation": "The JSON parses; all five lifecycle states match civic-admin; observation freshness matches observedAt; audit coverage matches frozen target/minimum-observation semantics; repeat contribution is marked not currently ready."
+      }
     },
     {
       "id": "W3R-10b",
       "title": "Define metric publication thresholds",
-      "status": "planned",
+      "status": "next",
       "maximumScope": "Separate internal operational metrics from public metrics and set minimum sample/time thresholds. No dashboards."
     },
     {
@@ -999,9 +1029,9 @@
     }
   ],
   "immediateNext": {
-    "id": "W3R-10a",
-    "title": "Redefine participation outcome metrics",
-    "maximumScope": "Metric definitions only: routing, review, acknowledgement, action, resolution, observation freshness, audit coverage and repeat contribution. No instrumentation."
+    "id": "W3R-10b",
+    "title": "Define metric publication thresholds",
+    "maximumScope": "Separate internal operational metrics from public metrics and set minimum sample/time thresholds. No dashboards."
   },
   "capabilityDispositionAuditFile": "data/wave3-capability-disposition-audit.json",
   "completedSteps": [
@@ -1033,7 +1063,8 @@
     "W3R-9b",
     "W3R-9c",
     "W3R-9d",
-    "W3R-9e"
+    "W3R-9e",
+    "W3R-10a"
   ],
   "placeRegistrySchemaFile": "data/place-registry-schema.json",
   "placeRegistryDataFile": "src/data/placeRegistry.ts",
