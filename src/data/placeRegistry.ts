@@ -18,6 +18,31 @@ export type PlaceCategory =
 
 export type CivicAssetType = PlaceCategory;
 
+export type CivicEntityKind = 'place' | 'segment' | 'route';
+
+const segmentCategories = new Set<PlaceCategory>([
+  'street-segment',
+  'sidewalk-segment',
+  'crossing',
+  'bike-lane',
+  'drainage',
+  'bridge',
+]);
+
+export const civicEntityKindForCategory = (
+  category: PlaceCategory
+): CivicEntityKind => {
+  if (category === 'transport-route') return 'route';
+  if (segmentCategories.has(category)) return 'segment';
+  return 'place';
+};
+
+export const civicEntityKindLabels: Record<CivicEntityKind, string> = {
+  place: 'Place',
+  segment: 'Segment',
+  route: 'Route',
+};
+
 export type PlaceAccessClass =
   | 'government-public'
   | 'public-access-private-managed'
@@ -121,6 +146,7 @@ export interface PlaceRelationship {
 
 export interface PlaceRegistryRecord {
   id: string;
+  entityKind: CivicEntityKind;
   name: string;
   summary?: string;
   primaryCategory: PlaceCategory;
@@ -1824,6 +1850,7 @@ const placeAssertionsFor = (asset: CivicAsset): PlaceAssertion[] => {
  */
 export const placeRegistry: PlaceRegistryRecord[] = civicAssets.map((asset): PlaceRegistryRecord => ({
   id: asset.id,
+  entityKind: civicEntityKindForCategory(asset.type),
   name: asset.title,
   summary: asset.subtitle,
   primaryCategory: asset.type,
@@ -1922,6 +1949,11 @@ export const placesByCategory = (
     place.secondaryCategories?.some(item => normalizePlaceSelectorText(item) === target)
   );
 };
+
+export const placesByEntityKind = (
+  entityKind: CivicEntityKind,
+  places: readonly PlaceRegistryRecord[] = placeRegistry
+) => places.filter(place => place.entityKind === entityKind);
 
 export const placeOffersService = (
   place: PlaceRegistryRecord,
