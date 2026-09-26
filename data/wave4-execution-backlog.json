@@ -1091,9 +1091,34 @@
       "id": "W4-5b",
       "phase": "Cross-linking and closure",
       "title": "Connect Statistics to canonical city entities",
-      "status": "planned",
+      "status": "complete",
       "maximumScope": "Explicit relationships from implemented indicators to barangays, services, places/assets, budget/project records, reports and relevant BetterGov/BetterLGU comparison or national-data resources where semantically valid.",
-      "stopWhen": "A small verified set demonstrates reusable bidirectional navigation without inferred place attribution."
+      "stopWhen": "A small verified set demonstrates reusable bidirectional navigation without inferred place attribution.",
+      "completedAt": "2026-09-26",
+      "implementationFiles": [
+        "src/data/ecosystemResources.ts",
+        "src/data/statisticsCivicRelationships.ts",
+        "src/pages/Statistics.tsx",
+        "scripts/check-statistics-civic-relationships.mjs",
+        "package.json"
+      ],
+      "validation": {
+        "populationBarangayRelationships": 23,
+        "reportRelationships": "Derived automatically from typed statistics-indicator references already declared inside v2 report evidence blocks; current population reports produce the verified report links.",
+        "ecosystemRelationships": [
+          "real-gdp-level -> BetterGov Data Research / Visualizations",
+          "gdp-per-capita -> BetterGov Open Data Portal"
+        ],
+        "ecosystemBoundary": "BetterGov links are continuation/comparison context only and are not treated as source evidence for Makati values. BetterLGU is registered as a cross-LGU discovery resource but receives no indicator-level Statistics relationship because it is not a statistical source.",
+        "publicNavigation": "Statistics surfaces related population analysis and GDP national-data continuations; Barangay Profile and scoped Statistics already retain reciprocal barangay navigation.",
+        "antiInference": {
+          "placeLinks": 0,
+          "serviceLinks": 0,
+          "projectOrAccountabilityLinks": 0,
+          "reason": "Current aggregate park, road, school and YAKAP indicators do not establish record-level attribution to individual places/services/projects."
+        },
+        "resolverValidation": "Every stored Statistics relationship endpoint must resolve through the canonical Statistics/Barangay/Reports/Ecosystem owners at module load."
+      }
     },
     {
       "id": "W4-5c",
@@ -1160,11 +1185,11 @@
       "stopWhen": "Wave 4 is closed only to the extent supported by evidence, with future work reopened as specific capabilities rather than vague unfinished work."
     }
   ],
-  "current": "W4-5b",
+  "current": "W4-5c",
   "immediateNext": {
-    "id": "W4-5b",
-    "title": "Connect Statistics to canonical city entities",
-    "maximumScope": "Explicit relationships from implemented indicators to barangays, services, places/assets, budget/project records, reports and relevant BetterGov/BetterLGU comparison or national-data resources where semantically valid."
+    "id": "W4-5c",
+    "title": "Connect Legislation across the site",
+    "maximumScope": "Legislation relationships/backlinks only: services, barangays, places/assets, City Monitor, Public Records, Accountability and relevant BetterGov national-law/context resources."
   },
   "carriedForward": [
     {
