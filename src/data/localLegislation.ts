@@ -179,7 +179,9 @@ export const ordinanceBatch2020CovidResponse = {
   periodEnd: '2020-05-06',
   expectedCount: 15,
   completenessRule:
-    'This batch is complete only for ordinance entries in the cited Annex A and period. It does not claim to contain every Makati ordinance enacted in 2020.',
+    'This batch contains every City Ordinance entry listed in the cited Annex A between 19 March and 6 May 2020. It does not claim to contain every Makati ordinance enacted in 2020.',
+  recordEvidenceLevel:
+    'Official city publication confirms reference, title-as-listed and date of approval; individual full legal texts are not yet normalized in this batch.',
 } as const;
 
 const annexSource = localLegislationSources['makati-covid-recovery-plan-2020'];
@@ -244,9 +246,9 @@ const ordinanceFromAnnex = (
     revision: {
       schemaVersion: 1,
       lastReviewed: '2026-09-26',
-      recordStatus: 'verified',
+      recordStatus: 'provisional',
       changeNote:
-        'First bounded ordinance registry batch; further lifecycle/source enrichment is deferred to later legislation steps.',
+        'Identity, title-as-listed and approval date are verified against the official Annex A. Full ordinance text, authors, readings, vote, mayoral action, effectivity and later legal status still require measure-level evidence.',
     },
   };
 };
@@ -255,7 +257,7 @@ export const localOrdinanceRecords: LocalLegislationRecord[] = [
   ordinanceFromAnnex(
     '2020-074',
     '2020-03-19',
-    "Mandating the Strict Implementation of Curfew Hours From 8:00 P.M. to 5:00 A.M. of the Following Day to All Persons Within the City of Makati During a State of Calamity, Public Health Emergency"
+    "Mandating the Strict Implementation of Curfew Hours From 8:00 P.M to 5:00 A.M of the Following Day to All Persons Within the City of Makati During A State of Calamity, Public Health Emergency"
   ),
   ordinanceFromAnnex(
     '2020-075',
@@ -265,27 +267,27 @@ export const localOrdinanceRecords: LocalLegislationRecord[] = [
   ordinanceFromAnnex(
     '2020-080',
     '2020-03-26',
-    "Temporarily Suspending the Implementation of Sections 21–23 of City Ordinance No. 2003-095, Otherwise Known as the Solid Waste Management Code of the City of Makati, During a State of Calamity, Public Health Emergency and the Like, Subject to Existing Laws, Rules and Regulations"
+    "Temporarily Suspending the Implementation of Sections 21 – 23 of City Ordinance NO. 2003-095, Otherwise Known as the Solid Waste Management Code of the City of Makati, During a State of Calamity, Public Health Emergency and the Like, Subject to Existing Laws, Rules and Regulations"
   ),
   ordinanceFromAnnex(
     '2020-086',
     '2020-04-08',
-    "Appropriating the Amount of Three Hundred Forty-Seven Million Nine Hundred Fifty Thousand One Hundred Seven Pesos and 22/100 (₱347,950,107.22) as Supplemental Budget No. 2 for Calendar Year 2020, Sourced from the Realignment of Existing Programs, Projects and Activities of the Continuing Appropriations Under the 20% Development Fund, for Various COVID-19-Related Expenses, Subject to Applicable Laws and Auditing Rules and Regulations"
+    "Appropriating the Amount of Three Hundred Forty-Seven Million Nine Hundred Fifty Thousand One Hundred Seven Pesos and 22/10 (P347,950,107.22) as Supplemental Budget No. 2 for Calendar Year 2020 which will be Sourced from the Realignment of Existing Programs, Projects and Activities (PPAs) of the Continuing Appropriations Under the 20% Development Fund for the Purpose of Funding the Various COVID-19-Related Expenses Consistent with Item 2.1 of DILG-DBM Joint Memorandum Circular (JMC) No. 01 Dated 27 March 2020, Subject to Applicable Laws and Auditing Rules and Regulations"
   ),
   ordinanceFromAnnex(
     '2020-087',
     '2020-04-08',
-    "Prohibiting Any Person from Committing Any Act of Discrimination Against Any Person Who Is Infected or Suspected to Be Infected with an Infectious/Communicable Disease, Whether as a Patient or as a Frontliner/Service Worker, Subject to Existing Laws, Rules and Regulations"
+    "Prohibiting Any Person from Committing Any Act of Discrimination Against Any Person who is Infected or Suspected to be Infected with an Infectious/Communicable Disease, Whether as a Patients or as a Front-liner/Service Worker, Subject to Existing Laws, Rules and Regulations"
   ),
   ordinanceFromAnnex(
     '2020-088',
     '2020-04-08',
-    "Mandating the Imposition of Quarantine to All Persons Who Shall Be Infected or Suspected to Be Infected with an Infectious/Communicable Disease, Providing Penalties for Violations Thereof and for Other Purposes, Subject to Existing Laws, Rules and Regulations"
+    "Mandating the Imposition of Quarantine to All Persons who shall be Infected or Suspected to be Infected with an Infectious/Communicable Disease, Providing Penalties for Violations Thereof and for Other Purposes, Subject to Existing Laws, Rules and Regulations"
   ),
   ordinanceFromAnnex(
     '2020-089',
     '2020-04-08',
-    "Requiring All Persons Within the Territorial Jurisdiction of the City of Makati to Wear Face Masks or Other Similar Protective Equipment Outside Their Home Premises During the Existence of a State of Public Health Emergency or Similar Declarations, Providing Penalties for Violations Thereof and for Other Purposes, Subject to Existing Laws, Rules and Regulations"
+    "Requiring All Persons Within the Territorial Jurisdiction of the City of Makati to Wear Face Masks or other Similar Protective Equipment Outside their Home Premises During the Existence of a State of Public Health Emergency or Similar Declarations, Providing Penalties for Violations Thereof and For Other Purposes, Subject to Exiting Laws, Rules and Regulations"
   ),
   ordinanceFromAnnex(
     '2020-090',
@@ -295,17 +297,17 @@ export const localOrdinanceRecords: LocalLegislationRecord[] = [
   ordinanceFromAnnex(
     '2020-092',
     '2020-04-15',
-    "Appropriating the Amount of One Hundred Twenty-Four Million Four Hundred Fifty-Three Thousand Pesos (₱124,453,000.00) as Supplemental Budget No. 3 for Calendar Year 2020 for the Grant of COVID-19 Hazard Pay and Special Risk Allowance, Subject to Applicable Laws and Auditing Rules and Procedures"
+    "Appropriating the Amount of One Hundred Twenty-Four Million Four Hundred Fifty-Three Thousand Pesos (P124,453,000.00) as Supplemental Budget No. 3 for Calendar Year 2020 for the Grand of COVID-19 Hazard Pay and Special Risk Allowance Pursuant to DBM Budget Circular Nos. 2020-1 and 2020-2, among others, Funds of which shall be taken from the Funding Sources Stated in LBP Form no. 8, Subject to Applicable Laws and Auditing Rules and Procedures"
   ),
   ordinanceFromAnnex(
     '2020-095',
     '2020-04-18',
-    "Appropriating the Amount of One Hundred Ten Million Eight Hundred Ninety-Two Thousand and Twenty-Two Pesos (₱110,892,022.00) as Supplemental Budget No. 4 for Calendar Year 2020, Sourced from the National Government’s Bayanihan Grant to Cities and Municipalities, for Various COVID-19-Related Expenses, and Authorizing the Creation of a Special Account in the General Fund for the Grant, Subject to Applicable Laws and Auditing Rules and Procedures"
+    "Appropriating the Amount of One Hundred Ten Million Eight Hundred Ninety-Two Thousand and Twenty Tow Pesos (P110,892,022.00) as Supplemental Budget No. 4 for Calendar Year 2020 Sourced from the National Government’s Bayanihan Grant to Cities and Municipalities (BGCM) which will be Used for Various Coronavirus Disease 2019 (COVID-19) Related Expenses as Provided by the Pertinent Provisions of Department of Budget and Management (DBM) Local Budget Circular (LBC) No. 125 Dated 7 April 2020 and Likewise Authorizing the Creation of a Special Account in the General Fund (SAGF) for the BGCM as Mandated by Item 3.7 of the Said LBC, Subject to Applicable Laws and Auditing Rules and Procedures"
   ),
   ordinanceFromAnnex(
     '2020-100',
     '2020-04-21',
-    "Establishing and Funding the MAKA-Tulong 5K for 500K+ Makatizens Economic Relief Program for Eligible Makatizens Affected by the Coronavirus Disease 2019 (COVID-19) Pandemic by Way of Enactment of Supplemental Budget No. 5, Subject to Applicable Laws and Auditing Rules and Procedures"
+    "Establishing and Funding the MAKA-Tulong 5K for 500K+ Makatizens Economic Relief Program to Eligible Makatizens who were Affected and Continue to be Affected by the Coronavirus Disease 2019 (COVID-19) Pandemic by Way of Enactment of Supplemental Budget No. 5, Subject to Applicable Laws and Auditing Rules and Procedures"
   ),
   ordinanceFromAnnex(
     '2020-115',
@@ -325,7 +327,7 @@ export const localOrdinanceRecords: LocalLegislationRecord[] = [
   ordinanceFromAnnex(
     '2020-128',
     '2020-05-06',
-    "Approving the Reprogramming of the Unexpended Balances of the 2015 to 2019 LDRRM Fund Amounting to One Hundred Seventy-Two Million Forty-Seven Thousand Six Hundred Thirty-Eight Pesos and 18/100 (₱172,047,638.18) for Programs, Projects and Activities Addressing the Coronavirus Disease 2019 (COVID-19) Situation, Subject to Applicable Laws and Auditing Rules and Procedures"
+    "Approving the Reprogramming of the Unexpended Balances of 2015 to 2019 LDDRM Fund Amounting to One Hundred Seventy-Two Million Forty-Seven Thousand Six Hundred Thirty-Eight Pesos and 18/100 (PHP 172,047,638.18) for the Purpose of Funding the Programs, Projects and Activities Which Will Address the Coronavirus Disease 2019 (COVID-19) Situation Consistent with DMB Local Budget Circular No. 124 Dated 26 March 2020 and Other Issuances, Subject to Applicable Laws and Auditing Rules and Procedures"
   ),
 ];
 
