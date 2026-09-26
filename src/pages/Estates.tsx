@@ -61,7 +61,7 @@ export default function Estates() {
           </div>
           <SharePage title="Makati Estates & Associations | BetterMakati" />
         </div>
-        <LastReviewed note="Association responsibilities and public channels differ by estate; use the linked organization for current rules and advisories." />
+        <LastReviewed date="2026-09-20" note="Association responsibilities and public channels differ by estate; use the linked organization for current rules and advisories." />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
           {estates.map(estate => (
