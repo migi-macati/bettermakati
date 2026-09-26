@@ -8,6 +8,10 @@ const ecosystem = await readFile(
   'src/data/ecosystemResources.ts',
   'utf8'
 );
+const reportRelationships = await readFile(
+  'src/data/reportCivicRelationships.ts',
+  'utf8'
+);
 const statisticsPage = await readFile('src/pages/Statistics.tsx', 'utf8');
 const barangayPage = await readFile('src/pages/BarangayProfile.tsx', 'utf8');
 const reports = await readFile('src/data/reports.ts', 'utf8');
@@ -20,10 +24,6 @@ for (const marker of [
   "to: { type: 'barangay', id: barangay.slug }",
   "basis: 'explicit-geography'",
   "sourceIds: ['psa-psgc-makati-current']",
-  'reportRecordRefs',
-  "ref.recordType === 'statistics-indicator'",
-  "kind: 'evidence-for' as const",
-  "basis: 'declared-analysis-input' as const",
   "'statistics-real-gdp-bettergov-data-research'",
   "'statistics-gdp-per-capita-bettergov-open-data'",
   "basis: 'curated-ecosystem-context'",
@@ -56,8 +56,10 @@ for (const marker of [
 
 for (const marker of [
   "import { statisticsRelatedRecords } from '../data/statisticsCivicRelationships'",
-  "statisticsRelatedRecords('population-total')",
-  "statisticsRelatedRecords('population-growth-rate')",
+  "import { reportsForCivicRecord } from '../data/reportCivicRelationships'",
+  "reportsForCivicRecord({ type: 'indicator', id: 'population-total' })",
+  "type: 'indicator'",
+  "id: 'population-growth-rate'",
   "statisticsRelatedRecords('real-gdp-level')",
   "statisticsRelatedRecords('gdp-per-capita')",
   'Related analysis',
@@ -122,6 +124,32 @@ if (
   );
 }
 
+for (const marker of [
+  'reportRecordRefs',
+  "case 'statistics-indicator'",
+  "kind: 'synthesizes' as const",
+  "basis: 'declared-analysis-input' as const",
+  'reportsForCivicRecord',
+]) {
+  if (!reportRelationships.includes(marker)) {
+    problems.push(
+      'Report-owned Statistics analysis relationship marker missing: ' + marker
+    );
+  }
+}
+
+for (const forbidden of [
+  "from './reports'",
+  "from './reportTypes'",
+  'reportIndicatorRelationships',
+]) {
+  if (relationships.includes(forbidden)) {
+    problems.push(
+      'Statistics must not duplicate report-owned relationship edges: ' + forbidden
+    );
+  }
+}
+
 if (problems.length) {
   console.error(
     'Statistics Civic Intelligence relationship check failed:\n- ' +
@@ -131,5 +159,5 @@ if (problems.length) {
 }
 
 console.log(
-  'Statistics Civic Intelligence relationship check passed: canonical 2024 population is connected to all barangays, report edges are derived from typed report evidence, two BetterGov continuations are curated, and no aggregate indicator is falsely attributed to a place, service, project or Accountability record.'
+  'Statistics Civic Intelligence relationship check passed: canonical 2024 population is connected to all barangays, report analysis edges are owned once by the report graph, two BetterGov continuations are curated, and no aggregate indicator is falsely attributed to a place, service, project or Accountability record.'
 );
