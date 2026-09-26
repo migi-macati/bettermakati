@@ -11,7 +11,6 @@ import {
 } from 'lucide-react';
 import { Link } from 'react-router';
 import Section from '../components/ui/Section';
-import { Heading } from '../components/ui/Heading';
 import PlacesExplorer from '../components/visit/PlacesExplorer';
 import { visitorPlaces } from '../data/visitMakati';
 import SEO from '../components/SEO';
