@@ -1269,6 +1269,8 @@ export const reports: [
   },
 ];
 
+export const publicationReports = [...reports].reverse();
+
 export const reportSlugAliases: Record<string, string> = {
   '2025-local-revenue': '2025-fiscal-profile',
   '2025-social-services': '2025-fiscal-profile',
