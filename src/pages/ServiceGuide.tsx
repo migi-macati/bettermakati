@@ -18,6 +18,7 @@ import LastReviewed from '../components/ui/LastReviewed';
 import { serviceDirectory, type ServiceDirectoryItem } from '../data/serviceDirectory';
 import { officesForAgency } from '../data/governmentServiceOffices';
 import { serviceGuideDetails } from '../data/serviceGuideDetails';
+import { placeRegistryById } from '../data/placeRegistry';
 import NationalServiceHandoff from '../components/services/NationalServiceHandoff';
 
 const mapsUrl = (query: string) =>
@@ -605,7 +606,10 @@ export default function ServiceGuide() {
           </div>
         ) : offices.length ? (
           <div className="mt-5 grid grid-cols-1 gap-4 lg:grid-cols-2">
-            {offices.map(office => (
+            {offices.map(office => {
+              const place = office.placeId ? placeRegistryById.get(office.placeId) : undefined;
+
+              return (
               <article key={office.id} className="rounded-2xl border border-primary-100 bg-white p-5">
                 <div className="flex flex-wrap items-center gap-2">
                   <span className={
@@ -656,9 +660,18 @@ export default function ServiceGuide() {
                   >
                     Office source
                   </a>
+                  {place && (
+                    <Link
+                      to={'/civic-map/' + place.id}
+                      className="font-bold text-primary-700 underline underline-offset-2"
+                    >
+                      Place details
+                    </Link>
+                  )}
                 </div>
               </article>
-            ))}
+              );
+            })}
           </div>
         ) : (
           <div className="mt-5 rounded-2xl border border-gray-200 bg-white p-5">
