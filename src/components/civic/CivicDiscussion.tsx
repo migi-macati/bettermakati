@@ -40,6 +40,7 @@ interface CivicComment {
 
 interface CivicLifecycleEvent {
   status?: string;
+  authority?: string;
   destination?: string;
   channel?: string;
   externalReference?: string;
@@ -390,9 +391,13 @@ export default function CivicDiscussion({ assetId }: { assetId: string }) {
                       <div className="font-bold text-gray-950">
                         {event.status?.replaceAll('-', ' ') ?? 'Lifecycle event'}
                       </div>
-                      {(event.destination || event.channel || event.externalReference) && (
+                      {(event.authority || event.destination || event.channel || event.externalReference) && (
                         <div className="mt-1 text-xs text-gray-500">
-                          {[event.destination, event.channel, event.externalReference]
+                          {[
+                            event.authority || event.destination,
+                            event.channel,
+                            event.externalReference,
+                          ]
                             .filter(Boolean)
                             .join(' · ')}
                         </div>
