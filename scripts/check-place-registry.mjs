@@ -6,6 +6,7 @@ const servicesPage = await readFile('src/pages/Services.tsx', 'utf8');
 const governmentOfficesPage = await readFile('src/pages/GovernmentOffices.tsx', 'utf8');
 const serviceGuidePage = await readFile('src/pages/ServiceGuide.tsx', 'utf8');
 const concernFinderPage = await readFile('src/pages/ConcernFinder.tsx', 'utf8');
+const civicMapPage = await readFile('src/pages/CivicMap.tsx', 'utf8');
 const serviceSearchSource = await readFile('src/components/home/ServiceSearch.tsx', 'utf8');
 const searchIndexSource = await readFile('src/data/searchIndex.ts', 'utf8');
 const serviceDirectorySource = await readFile('src/data/serviceDirectory.ts', 'utf8');
@@ -194,6 +195,39 @@ for (const serviceId of expectedConcernServicePlaceIds) {
 
 if (expectedConcernServicePlaceIds.length !== 12) {
   problems.push('Saan Ako Lalapit explicit service-place coverage must remain 12 for W3R-3d.');
+}
+
+for (const marker of [
+  "placeRegistryById.get(asset.id)?.verification.status === 'verified'",
+  "placesByBarangay(barangay.name)",
+  'Find a place in Makati',
+  'Browse the place inventory',
+  'Find a place',
+  'Report a problem',
+  'Suggest an improvement',
+  'Help document Makati',
+]) {
+  if (!civicMapPage.includes(marker)) {
+    problems.push('Civic Map place-first entry is missing: ' + marker);
+  }
+}
+
+for (const forbidden of [
+  'Rate a place or route',
+  'Structured 1–5 assessment',
+  'Civic Map · Pilot',
+  'pilot mapped assets',
+  'BetterMakati consolidates before it amplifies',
+]) {
+  if (civicMapPage.includes(forbidden)) {
+    problems.push('Civic Map still exposes retired entry framing: ' + forbidden);
+  }
+}
+
+if (!searchIndexSource.includes(
+  "Browse sourced civic places, report non-emergency problems, suggest improvements and help document Makati."
+)) {
+  problems.push('Civic Map search entry still uses the retired rating-first description.');
 }
 
 if (problems.length) {
