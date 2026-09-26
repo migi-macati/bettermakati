@@ -79,11 +79,22 @@ if (!reports.includes('schemaVersion: 2')) {
   problems.push('Published Featured Reports must use schema v2 after W4-4c.');
 }
 
-if (currentSlugs.length !== 3) {
+if (currentSlugs.length < 3) {
   problems.push(
-    'Expected 3 canonical v2 report objects after the audited merge; found ' +
+    'Expected at least the 3 canonical v2 reports created by W4-4c; found ' +
       currentSlugs.length +
       '.'
+  );
+}
+
+const schemaVersionCount = (reports.match(/schemaVersion:\s*2/g) ?? []).length;
+const synthesisCount = (reports.match(/synthesis:\s*/g) ?? []).length;
+if (
+  schemaVersionCount !== currentSlugs.length ||
+  synthesisCount !== currentSlugs.length
+) {
+  problems.push(
+    'Every published report must use schema v2 and carry exactly one synthesis.'
   );
 }
 
@@ -99,5 +110,5 @@ if (problems.length) {
 }
 
 console.log(
-  'Report schema v2 check passed: the v2 contract remains intact and the 3 canonical published reports use it without legacy v1 paragraph arrays.'
+  'Report schema v2 check passed: the v2 contract remains intact and every published report uses it without legacy v1 paragraph arrays.'
 );
