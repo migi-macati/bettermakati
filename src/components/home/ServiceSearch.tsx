@@ -473,7 +473,7 @@ export default function ServiceSearch({
             {visibleResults.length > 0 ? (
               visibleResults.map((item, index) => (
                 <button
-                  key={item.href + item.title}
+                  key={item.canonicalKey ?? item.href + item.title}
                   type="button"
                   role="option"
                   id={`search-result-${scope}-${index}`}
@@ -527,7 +527,7 @@ export default function ServiceSearch({
                     rel="noreferrer"
                     className="inline-flex min-h-11 items-center text-sm font-bold text-primary-700 underline underline-offset-2"
                   >
-                    Search BetterGov
+                    Search national services on BetterGov
                   </a>
                   <a
                     href="https://lgu.bettergov.ph/"
@@ -535,7 +535,7 @@ export default function ServiceSearch({
                     rel="noreferrer"
                     className="inline-flex min-h-11 items-center text-sm font-bold text-primary-700 underline underline-offset-2"
                   >
-                    Find another LGU
+                    Find another LGU on BetterLGU
                   </a>
                   <button
                     type="button"
