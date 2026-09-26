@@ -21,6 +21,7 @@ export interface SearchItem {
   description: string;
   href: string;
   keywords: string;
+  serviceId?: string;
   featured?: boolean;
 }
 
@@ -30,6 +31,7 @@ const serviceItems: SearchItem[] = serviceDirectory.map(item => ({
   category: item.category,
   description: item.description,
   href: '/services/guide/' + item.id,
+  serviceId: item.id,
   keywords: [
     item.keywords,
     item.agency,
