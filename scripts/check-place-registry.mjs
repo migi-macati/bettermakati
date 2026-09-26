@@ -8,6 +8,8 @@ const serviceGuidePage = await readFile('src/pages/ServiceGuide.tsx', 'utf8');
 const concernFinderPage = await readFile('src/pages/ConcernFinder.tsx', 'utf8');
 const civicMapPage = await readFile('src/pages/CivicMap.tsx', 'utf8');
 const civicAssetPage = await readFile('src/pages/CivicAsset.tsx', 'utf8');
+const civicNearbyReportPage = await readFile('src/pages/CivicNearbyReport.tsx', 'utf8');
+const appSource = await readFile('src/App.tsx', 'utf8');
 const civicContributionForm = await readFile('src/components/civic/CivicContributionForm.tsx', 'utf8');
 const civicDiscussion = await readFile('src/components/civic/CivicDiscussion.tsx', 'utf8');
 const serviceSearchSource = await readFile('src/components/home/ServiceSearch.tsx', 'utf8');
@@ -272,6 +274,36 @@ if (civicContributionForm.includes('Independent platform.')) {
 
 if (!civicDiscussion.includes('Cases, proposals & updates')) {
   problems.push('Civic discussion still advertises reviews as a primary place-page section.');
+}
+
+for (const marker of [
+  "navigator.geolocation.getCurrentPosition",
+  "placesWithinDistance(",
+  "place.verification.status !== 'verified'",
+  "place.primaryCategory === 'transport-route'",
+  "0.25",
+  "0.5",
+  ".slice(0, 5)",
+  "None of these — report this location",
+  "Search for a place or street",
+  "Choose the location manually",
+  "Location selected",
+]) {
+  if (!civicNearbyReportPage.includes(marker)) {
+    problems.push('Nearby reporting place matcher is missing: ' + marker);
+  }
+}
+
+if (civicNearbyReportPage.includes("fetch('/api/civic'") || civicNearbyReportPage.includes('method: \'POST\'')) {
+  problems.push('W3R-5b must not submit civic reports yet.');
+}
+
+if (!appSource.includes('path="/civic-map/report" element={<CivicNearbyReport />}')) {
+  problems.push('Nearby reporting route is missing.');
+}
+
+if (civicMapPage.includes('to="/civic-map/report"') || civicMapPage.includes('href="/civic-map/report"')) {
+  problems.push('W3R-5b must not promote the incomplete nearby-reporting route from Civic Map yet.');
 }
 
 if (problems.length) {
