@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { ArrowLeft, ArrowRight, Camera, Pause, Play } from 'lucide-react';
 import useCarousel from '../../hooks/useCarousel';
 import type { CityImage } from '../../data/cityImages';
@@ -9,21 +9,43 @@ export default function PhotoCarousel({
   className = '',
   compact = false,
   priority = false,
+  autoRotate = false,
 }: {
   images: CityImage[];
   title?: string;
   className?: string;
   compact?: boolean;
   priority?: boolean;
+  autoRotate?: boolean;
 }) {
-  const carousel = useCarousel(images.length, 6500);
+  const carousel = useCarousel(images.length, 6500, !autoRotate);
   const { index } = carousel;
   const [failed, setFailed] = useState<Record<string, boolean>>({});
+  const touchStart = useRef<{ x: number; y: number } | null>(null);
+
   if (!images.length) return null;
+
   const image = images[index];
   const previous = () => carousel.move(-1);
   const next = () => carousel.move(1);
   const hasAttribution = Boolean(image.sourceUrl && image.credit && image.license);
+
+  const onTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
+    const touch = event.touches[0];
+    touchStart.current = { x: touch.clientX, y: touch.clientY };
+  };
+
+  const onTouchEnd = (event: React.TouchEvent<HTMLDivElement>) => {
+    if (!touchStart.current) return;
+    const touch = event.changedTouches[0];
+    const deltaX = touch.clientX - touchStart.current.x;
+    const deltaY = touch.clientY - touchStart.current.y;
+    touchStart.current = null;
+
+    if (Math.abs(deltaX) < 45 || Math.abs(deltaX) <= Math.abs(deltaY)) return;
+    if (deltaX < 0) next();
+    else previous();
+  };
 
   return (
     <figure
@@ -40,6 +62,9 @@ export default function PhotoCarousel({
           'relative overflow-hidden bg-gray-100 ' +
           (compact ? 'aspect-[2.25/1]' : 'aspect-[16/9]')
         }
+        style={{ touchAction: 'pan-y' }}
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
       >
         {failed[image.src] ? (
           <div className="grid h-full place-items-center text-gray-500">
@@ -110,9 +135,9 @@ export default function PhotoCarousel({
       </div>
 
       {(hasAttribution || images.length > 1) && (
-        <figcaption className="flex flex-wrap items-center gap-x-4 gap-y-1 px-4 py-3 text-xs leading-relaxed text-gray-500">
+        <figcaption className="flex flex-wrap items-center gap-x-3 gap-y-2 px-3 py-2 text-xs leading-relaxed text-gray-500">
           {hasAttribution && (
-            <span>
+            <span className="mr-auto px-1">
               <a
                 href={image.sourceUrl}
                 target="_blank"
@@ -137,11 +162,36 @@ export default function PhotoCarousel({
               {' · cropped'}
             </span>
           )}
+
           {images.length > 1 && (
-            <div className="ml-auto flex items-center gap-3">
-              <span aria-live={carousel.rotating ? 'off' : 'polite'}>
+            <div className="flex min-w-0 flex-1 flex-wrap items-center justify-end gap-1">
+              <div className="flex items-center" aria-label="Choose photo">
+                {images.map((item, photoIndex) => (
+                  <button
+                    key={item.src}
+                    type="button"
+                    onClick={() => carousel.goTo(photoIndex)}
+                    aria-label={'Show photo ' + (photoIndex + 1) + ' of ' + images.length}
+                    aria-current={photoIndex === index ? 'true' : undefined}
+                    className="grid h-9 w-9 place-items-center rounded-full hover:bg-primary-50"
+                  >
+                    <span
+                      className={
+                        'block h-2.5 w-2.5 rounded-full transition ' +
+                        (photoIndex === index
+                          ? 'bg-primary-700'
+                          : 'bg-gray-300 hover:bg-primary-300')
+                      }
+                      aria-hidden="true"
+                    />
+                  </button>
+                ))}
+              </div>
+
+              <span className="px-1" aria-live={carousel.rotating ? 'off' : 'polite'}>
                 {index + 1} / {images.length}
               </span>
+
               {!carousel.reducedMotion && (
                 <button
                   type="button"
@@ -153,7 +203,7 @@ export default function PhotoCarousel({
                   ) : (
                     <Pause className="h-4 w-4" aria-hidden="true" />
                   )}
-                  {carousel.paused ? 'Resume photos' : 'Pause photos'}
+                  {carousel.paused ? 'Play photos' : 'Pause photos'}
                 </button>
               )}
             </div>

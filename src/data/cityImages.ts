@@ -278,25 +278,19 @@ export const cityImages: Record<string, CityImage> = {
 
 export const homeImageSet = [
   cityImages.userSkylineClouds,
-  cityImages.userWideNightSkyline,
-  cityImages.userBacklitCbdTree,
+  cityImages.userCarFreeCbd,
   cityImages.userDuskParkPath,
-  cityImages.userCbdMonumentCrossing,
   cityImages.userNightCourtyard,
-  cityImages.userRiverChurchNight,
-  cityImages.userTreeLinedSidewalk,
+  cityImages.userWideNightSkyline,
 ];
 
 export const visitImageSet = [
   cityImages.userNightCourtyard,
   cityImages.userDuskParkPath,
-  cityImages.userParkCanopy,
-  cityImages.userUrbanCourtyard,
   cityImages.userPoblacionNightStreet,
+  cityImages.userUrbanCourtyard,
   cityImages.userRiverDay,
   cityImages.userMuseo,
-  cityImages.userBacklitCbdTree,
-  cityImages.userPasigRiverNight,
 ];
 
 export const governmentImageSet = [
@@ -304,43 +298,41 @@ export const governmentImageSet = [
   cityImages.userCityHallSkyline,
   cityImages.userCbdMonumentCrossing,
   cityImages.userWarriorMonument,
-  cityImages.userSunsetMonument,
-  cityImages.userCbdStreet,
 ];
 
-export const barangayImageSet = [
-  cityImages.userWideNightSkyline,
-  cityImages.userNightSkyline,
-  cityImages.userPoblacionNightStreet,
-  cityImages.userRiverChurchNight,
-  cityImages.userSkylineDay,
-  cityImages.userParkCanopy,
-  cityImages.userHazySkyline,
-];
+const barangayImageSets: Record<string, CityImage[]> = {
+  poblacion: [
+    cityImages.userPoblacionNightStreet,
+    cityImages.userRiverChurchNight,
+    cityImages.userNightSkyline,
+    cityImages.userSkylineDay,
+    cityImages.userMuseo,
+  ],
+};
+
+export const barangayPhotoSetFor = (slug: string) =>
+  barangayImageSets[slug] ?? [];
 
 export const historyImageSet = [
   cityImages.userMuseo,
-  cityImages.userCbdMonumentCrossing,
+  cityImages.sanPedro,
   cityImages.userWarriorMonument,
   cityImages.userSunsetMonument,
   cityImages.userCityHallSkyline,
-  cityImages.sanPedro,
 ];
 
 export const mobilityImageSet = [
   cityImages.userCarFreeCbd,
   cityImages.userTreeLinedSidewalk,
   cityImages.userEscalatorCity,
-  cityImages.userUrbanUndercroft,
   cityImages.userTrafficStreet,
-  cityImages.userCbdStreet,
   cityImages.userNightSidewalk,
+  cityImages.userUrbanUndercroft,
 ];
 
 export const servicesImageSet = [
+  cityImages.cityHall,
   cityImages.userCbdStreet,
   cityImages.userUrbanUndercroft,
-  cityImages.cityHall,
   cityImages.userUrbanPark,
-  cityImages.userNightCourtyard,
 ];

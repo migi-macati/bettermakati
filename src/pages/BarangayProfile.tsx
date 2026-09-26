@@ -19,6 +19,7 @@ import {
 import { Link, useParams } from 'react-router';
 import SEO from '../components/SEO';
 import LastReviewed from '../components/ui/LastReviewed';
+import PhotoCarousel from '../components/ui/PhotoCarousel';
 import {
   barangays,
   barangayFacilities,
@@ -43,6 +44,7 @@ import {
 } from '../data/electionHistory';
 import { withBarangayScope } from '../hooks/useBarangayScope';
 import { civicAuditPilot } from '../data/civicAuditPilot';
+import { barangayPhotoSetFor } from '../data/cityImages';
 
 const compactEditionName = (name: string) => name.replace(/\s+/g, '');
 const normalizePlaceName = (name: string) =>
@@ -91,6 +93,7 @@ export default function BarangayProfile() {
     commonBarangayServiceIds.includes(item.id)
   );
   const electionResult = findBarangayMayoralResult2025(barangay.slug);
+  const barangayPhotos = barangayPhotoSetFor(barangay.slug);
   const needle = barangay.name.toLowerCase();
   const localAccountability = accountabilityEntries.filter(entry =>
     [
@@ -227,32 +230,42 @@ export default function BarangayProfile() {
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-3">
-              <a
-                href={psaBarangaySource}
-                target="_blank"
-                rel="noreferrer"
-                className="rounded-2xl border border-white/20 bg-white p-5"
-              >
-                <div className="text-2xl font-extrabold text-primary-800">
-                  {barangay.population2024.toLocaleString('en-PH')}
+            <div className="space-y-3">
+              {barangayPhotos.length > 0 && (
+                <PhotoCarousel
+                  images={barangayPhotos}
+                  title={'Around ' + barangay.name}
+                  compact
+                />
+              )}
+
+              <div className="grid grid-cols-2 gap-3">
+                <a
+                  href={psaBarangaySource}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="rounded-2xl border border-white/20 bg-white p-5"
+                >
+                  <div className="text-2xl font-extrabold text-primary-800">
+                    {barangay.population2024.toLocaleString('en-PH')}
+                  </div>
+                  <div className="mt-1 text-sm font-semibold text-gray-900">Population</div>
+                  <div className="mt-1 text-xs text-gray-500">2024 POPCEN</div>
+                </a>
+                <div className="rounded-2xl border border-white/20 bg-white p-5">
+                  <div className="text-2xl font-extrabold text-primary-800">
+                    {populationShare.toFixed(1)}%
+                  </div>
+                  <div className="mt-1 text-sm font-semibold text-gray-900">of Makati</div>
+                  <div className="mt-1 text-xs text-gray-500">2024 population</div>
                 </div>
-                <div className="mt-1 text-sm font-semibold text-gray-900">Population</div>
-                <div className="mt-1 text-xs text-gray-500">2024 POPCEN</div>
-              </a>
-              <div className="rounded-2xl border border-white/20 bg-white p-5">
-                <div className="text-2xl font-extrabold text-primary-800">
-                  {populationShare.toFixed(1)}%
-                </div>
-                <div className="mt-1 text-sm font-semibold text-gray-900">of Makati</div>
-                <div className="mt-1 text-xs text-gray-500">2024 population</div>
-              </div>
-              <div className="col-span-2 rounded-2xl border border-white/20 bg-white p-5">
-                <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
-                  Legislative district
-                </div>
-                <div className="mt-1 text-xl font-extrabold text-gray-950">
-                  {barangay.legislativeDistrict}
+                <div className="col-span-2 rounded-2xl border border-white/20 bg-white p-5">
+                  <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+                    Legislative district
+                  </div>
+                  <div className="mt-1 text-xl font-extrabold text-gray-950">
+                    {barangay.legislativeDistrict}
+                  </div>
                 </div>
               </div>
             </div>
