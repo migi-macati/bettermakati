@@ -3,8 +3,11 @@ import { barangays as barangayProfiles, barangayFacilities } from './barangays';
 import { electedOfficials } from './electedOfficials';
 import { serviceDirectory } from './serviceDirectory';
 import { governmentServiceOffices } from './governmentServiceOffices';
-import { civicAssets, civicAssetTypeLabels } from './civicMap';
-import { civicEntityKindForCategory } from './placeRegistry';
+import {
+  civicAssetTypeLabels,
+  civicEntityKindLabels,
+  placeRegistry,
+} from './placeRegistry';
 
 export type SearchGroup =
   | 'Service'
@@ -13,7 +16,10 @@ export type SearchGroup =
   | 'Barangay'
   | 'Record'
   | 'Tool'
-  | 'Contact';
+  | 'Contact'
+  | 'Place'
+  | 'Segment'
+  | 'Route';
 
 export interface SearchItem {
   title: string;
@@ -438,7 +444,7 @@ const toolItems: SearchItem[] = [
   },
 ];
 
-const civicMapItems: SearchItem[] = [
+const civicRegistryItems: SearchItem[] = [
   {
     title: 'Civic Map',
     group: 'Tool',
@@ -448,40 +454,56 @@ const civicMapItems: SearchItem[] = [
     keywords: 'civic map report pothole sidewalk blocked park public infrastructure road street segment proposal crosswalk trees jeepney route public transport',
     featured: true,
   },
-  ...civicAssets.map(asset => {
-    const entityKind = civicEntityKindForCategory(asset.type);
-    return {
-      title: asset.title,
-      group: 'Tool' as const,
-      category:
-        entityKind === 'place'
-          ? 'Civic places'
-          : entityKind === 'segment'
-            ? 'Civic segments'
-            : 'Transport routes',
-      description:
-        entityKind === 'place'
-          ? asset.subtitle
-          : entityKind === 'segment'
-            ? [asset.street, asset.from && asset.to ? asset.from + ' to ' + asset.to : '', asset.subtitle]
-                .filter(Boolean)
-                .join(' · ')
-            : asset.subtitle,
-      href: '/civic-map/' + asset.id,
-      keywords: [
-        civicAssetTypeLabels[asset.type],
-        entityKind,
-        asset.barangay ?? '',
-        asset.street ?? '',
-        asset.from ?? '',
-        asset.to ?? '',
-        asset.tags.join(' '),
-        'source report problem proposal improve correct document',
-      ].join(' '),
-    };
-  }),
-];
+  ...placeRegistry
+    .filter(record =>
+      record.entityKind === 'place'
+        ? record.verification.status === 'verified'
+        : record.verification.status !== 'needs-verification'
+    )
+    .map(record => {
+      const geometry = record.location.geometry;
+      const entityGroup =
+        record.entityKind === 'place'
+          ? ('Place' as const)
+          : record.entityKind === 'segment'
+            ? ('Segment' as const)
+            : ('Route' as const);
+      const locationText = [
+        record.location.address,
+        ...record.location.barangays,
+        geometry?.street,
+        geometry?.from && geometry?.to ? geometry.from + ' to ' + geometry.to : '',
+      ]
+        .filter(Boolean)
+        .join(' · ');
+      const description = [record.summary, locationText].filter(Boolean).join(' · ');
 
+      return {
+        title: record.name,
+        group: entityGroup,
+        category: civicAssetTypeLabels[record.primaryCategory],
+        description:
+          description ||
+          civicEntityKindLabels[record.entityKind] + ' in the BetterMakati Civic Registry.',
+        href: '/civic-map/' + record.id,
+        keywords: [
+          civicAssetTypeLabels[record.primaryCategory],
+          civicEntityKindLabels[record.entityKind],
+          ...record.location.barangays,
+          record.location.address ?? '',
+          geometry?.street ?? '',
+          geometry?.from ?? '',
+          geometry?.to ?? '',
+          ...(record.aliases?.map(alias => alias.name) ?? []),
+          ...(record.servicesAtLocation?.map(service => service.label) ?? []),
+          record.management.responsibilityText ?? '',
+          ...record.management.bodies.map(body => body.name),
+          ...record.tags,
+          'civic registry place location map report problem proposal improve observe conditions',
+        ].join(' '),
+      };
+    }),
+];
 const radicalCivicItems: SearchItem[] = [
   {
     title: 'City Monitor',
@@ -665,7 +687,7 @@ export const searchIndex: SearchItem[] = [
   })),
   ...serviceItems,
   ...radicalCivicItems,
-  ...civicMapItems,
+  ...civicRegistryItems,
   ...visitItems,
   ...governmentItems,
   ...officeItems,
