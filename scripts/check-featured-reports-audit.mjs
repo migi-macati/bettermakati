@@ -1,32 +1,28 @@
 import { readFile } from 'node:fs/promises';
 
-const reportsSource = await readFile('src/data/reports.ts', 'utf8');
 const audit = JSON.parse(
   await readFile('data/wave4-featured-reports-audit.json', 'utf8')
 );
 
 const problems = [];
 
-const slugs = [
-  ...reportsSource.matchAll(/slug:\s*'([^']+)'/g),
-].map(match => match[1]);
-
-if (slugs.length !== 4) {
-  problems.push('Expected 4 current Featured Reports; found ' + slugs.length + '.');
-}
+const auditedSlugs = [
+  '2026-budget-operating-expenses',
+  '2025-local-revenue',
+  '2025-social-services',
+  '2024-barangay-population',
+];
 
 const classifications = audit.classifications ?? [];
-if (classifications.length !== slugs.length) {
-  problems.push(
-    'Every current report must have exactly one audit classification.'
-  );
+if (classifications.length !== auditedSlugs.length) {
+  problems.push('The W4-4a audit must retain exactly 4 original classifications.');
 }
 
 const allowed = new Set(['keep', 'rewrite', 'merge', 'retire']);
 
 for (const item of classifications) {
-  if (!slugs.includes(item.slug)) {
-    problems.push('Audit classification targets unknown report slug: ' + item.slug);
+  if (!auditedSlugs.includes(item.slug)) {
+    problems.push('Audit classification targets an unknown original report slug: ' + item.slug);
   }
   if (!allowed.has(item.classification)) {
     problems.push(
@@ -38,7 +34,7 @@ for (const item of classifications) {
   }
 }
 
-for (const slug of slugs) {
+for (const slug of auditedSlugs) {
   const matches = classifications.filter(item => item.slug === slug);
   if (matches.length !== 1) {
     problems.push(
@@ -110,5 +106,5 @@ if (problems.length) {
 }
 
 console.log(
-  'Featured Reports audit check passed: all 4 current reports are classified, with 2 rewrites and 2 reports merged into one fiscal-profile storyline; no content migration occurs in W4-4a.'
+  'Featured Reports audit check passed: the 4 original W4-4a reports retain their audited dispositions independently of later flagship publications.'
 );
