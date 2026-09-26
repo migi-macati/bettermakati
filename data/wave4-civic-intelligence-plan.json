@@ -589,9 +589,57 @@
       "id": "W4-2e",
       "phase": "Legislation",
       "title": "Connect legislation to City Monitor lifecycle",
-      "status": "next",
+      "status": "complete",
       "maximumScope": "Explicit record-to-record relationships plus council-session normalization and transcript pipeline: backfill identifiable previous official session videos and ingest new official sessions; represent each session once in City Monitor; attach timestamped BetterMakati automated transcripts with provenance/model/date, allow BetterMakati reviewed transcripts, and never label generated text official. Link measures to session/video/transcript evidence only where the action is explicit. No fuzzy number/title or speaker-identity inference.",
-      "stopWhen": "Previous/current session-video evidence can be normalized without the false source-gap assumption; session records have provenance-aware transcript states for backfill and new-session ingestion; and canonical measures can link to exact session/video/transcript evidence without treating automated text as an official record."
+      "stopWhen": "Previous/current session-video evidence can be normalized without the false source-gap assumption; session records have provenance-aware transcript states for backfill and new-session ingestion; and canonical measures can link to exact session/video/transcript evidence without treating automated text as an official record.",
+      "implementationFiles": [
+        "src/data/councilSessions.ts",
+        "src/data/cityMonitor.ts",
+        "data/city-monitor-sources.json",
+        "scripts/check-council-sessions.mjs",
+        "scripts/audit-city-monitor-depth.mjs",
+        "package.json"
+      ],
+      "validation": {
+        "officialSessionSource": "The official Makati portal is registered as a first-class council-session video source alongside MyMakati historical/social-stream evidence.",
+        "normalizedCurrentSessions": {
+          "count": 9,
+          "dates": [
+            "2026-09-21",
+            "2026-09-14",
+            "2026-09-07",
+            "2026-09-01",
+            "2026-08-24",
+            "2026-08-17",
+            "2026-08-11",
+            "2026-08-03",
+            "2026-07-27"
+          ],
+          "rule": "One canonical City Monitor session record per official session date/type."
+        },
+        "transcriptPipeline": [
+          "Previous/current discovered sessions enter a backfill queue only after an item-specific official recording URL is preserved.",
+          "New sessions are deduplicated by canonical session key and then queued for transcription.",
+          "Transcript artifacts are timestamped and carry source video, model/version and generation metadata.",
+          "Machine text is labeled BetterMakati automated transcript; human-reviewed text may become BetterMakati reviewed transcript; generated text is never labeled official.",
+          "Speaker identities are not automatically assigned without explicit evidence/human review.",
+          "Measure mentions extracted from transcripts remain candidate links until reviewed against the recording and/or official agenda/minutes/measure text.",
+          "Raw audio/video is not committed to the Git repository."
+        ],
+        "cityMonitorCorrection": "Council-session coverage is now partial rather than source-gap; the remaining gap is completeness reconciliation plus agendas, attendance, votes, minutes and stable item-specific recording URLs.",
+        "measureLinks": "The existing 20 bounded local measures retain no inferred session relationships. No 2026 session link or reviewed-video lifecycle event was fabricated.",
+        "regression": "check:council-sessions is wired into build and quality; the City Monitor depth audit now expects the official council-video source.",
+        "focusedValidation": "Nine unique current session dates are normalized, transcript state is planned/non-official, the false current-session source-gap wording is removed, and no measure-session link exists without exact evidence.",
+        "boundary": "No actual audio transcription was executed in this repository step because stable item-specific recording URLs/transcript artifacts have not yet been preserved."
+      }
+    },
+    {
+      "id": "W4-2e2",
+      "phase": "Legislation",
+      "title": "Normalize full official ordinance/resolution archive",
+      "status": "next",
+      "maximumScope": "Official Makati resolutions-and-ordinances archive only. Enumerate every retrievable archive entry in a dated snapshot, normalize ordinance/resolution identity, reference, title and official document/source URLs, and reconcile duplicates against the existing 20-record seed. No topic tagging or lifecycle inference in the same step.",
+      "stopWhen": "The dated archive snapshot has a reproducible enumerated total and every retrievable item resolves to one canonical local measure or an explicit unresolved/duplicate disposition. Do not call the registry historically complete unless the archive enumeration itself proves that scope."
     },
     {
       "id": "W4-2f",
@@ -819,9 +867,9 @@
     }
   ],
   "immediateNext": {
-    "id": "W4-2e",
-    "title": "Connect legislation to City Monitor lifecycle",
-    "maximumScope": "Explicit record-to-record relationships plus council-session normalization and transcript pipeline: backfill identifiable previous official session videos and ingest new official sessions; represent each session once in City Monitor; attach timestamped BetterMakati automated transcripts with provenance/model/date, allow BetterMakati reviewed transcripts, and never label generated text official. Link measures to session/video/transcript evidence only where the action is explicit. No fuzzy number/title or speaker-identity inference."
+    "id": "W4-2e2",
+    "title": "Normalize full official ordinance/resolution archive",
+    "maximumScope": "Official Makati resolutions-and-ordinances archive only. Enumerate every retrievable archive entry in a dated snapshot, normalize ordinance/resolution identity, reference, title and official document/source URLs, and reconcile duplicates against the existing 20-record seed. No topic tagging or lifecycle inference in the same step."
   },
   "inheritedKnownItems": [
     {
