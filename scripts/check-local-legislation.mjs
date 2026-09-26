@@ -1,6 +1,7 @@
 import { readFile } from 'node:fs/promises';
 
 const source = await readFile('src/data/localLegislation.ts', 'utf8');
+const serviceSource = await readFile('src/data/serviceDirectory.ts', 'utf8');
 
 const expectedOrdinances = [
   ['2020-074', '2020-03-19'],
@@ -154,6 +155,87 @@ if (
   );
 }
 
+const verifiedEnrichmentRecords = [
+  {
+    number: '2020-115',
+    targetId: 'civil-registration',
+    topicMarkers: ["'civil registry'", "'COVID-19'"],
+    evidenceMarker:
+      'suspending late registration fees on several civil registry documents',
+  },
+  {
+    number: '2020-116',
+    targetId: 'local-civil-registry-copy',
+    topicMarkers: ["'civil registry'", "'death records'", "'COVID-19'"],
+    evidenceMarker:
+      'waiving fees for certified true copies of certificates of death',
+  },
+];
+
+const enrichmentKeys = [
+  ...source.matchAll(/\n  '(\d{4}-\d{3})': \{\n    topics:/g),
+].map(match => match[1]);
+
+if (enrichmentKeys.length !== verifiedEnrichmentRecords.length) {
+  problems.push(
+    'W4-2f pilot must remain a small explicit relationship set; expected ' +
+      verifiedEnrichmentRecords.length +
+      ' enriched records, found ' +
+      enrichmentKeys.length +
+      '.'
+  );
+}
+
+for (const expected of verifiedEnrichmentRecords) {
+  if (!enrichmentKeys.includes(expected.number)) {
+    problems.push('Missing verified W4-2f enrichment for ' + expected.number + '.');
+  }
+  if (!serviceSource.includes("id: '" + expected.targetId + "'")) {
+    problems.push(
+      'Legislation relationship target does not resolve to serviceDirectory: ' +
+        expected.targetId
+    );
+  }
+  if (!source.includes("targetId: '" + expected.targetId + "'")) {
+    problems.push(
+      'Missing legislation relationship target ' +
+        expected.targetId +
+        ' for ' +
+        expected.number +
+        '.'
+    );
+  }
+  for (const topicMarker of expected.topicMarkers) {
+    if (!source.includes(topicMarker)) {
+      problems.push(
+        'Missing evidence-bounded topic ' +
+          topicMarker +
+          ' for ' +
+          expected.number +
+          '.'
+      );
+    }
+  }
+  if (!source.includes(expected.evidenceMarker)) {
+    problems.push(
+      'Missing explicit relationship evidence statement for ' +
+        expected.number +
+        '.'
+    );
+  }
+}
+
+for (const marker of [
+  "kind: 'affects-service'",
+  "targetType: 'service'",
+  "basis: 'official-title'",
+  'does not infer current fees, implementation status or later legal effect',
+]) {
+  if (!source.includes(marker)) {
+    problems.push('W4-2f relationship guard missing: ' + marker);
+  }
+}
+
 const allReferences = [...ordinanceCalls, ...resolutionCalls].map(
   item => item.number
 );
@@ -174,5 +256,6 @@ if (problems.length) {
 
 console.log(
   'Local legislation audit passed: 15/15 Annex A ordinances, 5/5 Annex A resolutions, ' +
-    'official source preserved, approval-date evidence kept non-inferential.'
+    'official source preserved, approval-date evidence kept non-inferential, ' +
+    'and 2 evidence-bounded civic relationships resolve to serviceDirectory.'
 );
