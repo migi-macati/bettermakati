@@ -178,25 +178,25 @@ export default function CivicAuditResults() {
         <div className="mt-7 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
           <div className="rounded-2xl border border-primary-100 bg-white p-4">
             <div className="text-2xl font-extrabold text-gray-950">
-              {state === 'loading' ? '—' : data?.observationCount ?? 0}
+              {state !== 'ready' ? '—' : data?.observationCount ?? 0}
             </div>
             <div className="mt-1 text-xs font-bold text-gray-600">campaign observations</div>
           </div>
           <div className="rounded-2xl border border-primary-100 bg-white p-4">
             <div className="text-2xl font-extrabold text-gray-950">
-              {state === 'loading' ? '—' : (data?.observedEntities ?? 0) + '/13'}
+              {state !== 'ready' ? '—' : (data?.observedEntities ?? 0) + '/13'}
             </div>
             <div className="mt-1 text-xs font-bold text-gray-600">parks with observations</div>
           </div>
           <div className="rounded-2xl border border-primary-100 bg-white p-4">
             <div className="text-2xl font-extrabold text-gray-950">
-              {state === 'loading' ? '—' : (data?.completeEntities ?? 0) + '/13'}
+              {state !== 'ready' ? '—' : (data?.completeEntities ?? 0) + '/13'}
             </div>
             <div className="mt-1 text-xs font-bold text-gray-600">parks meeting the pilot completion rule</div>
           </div>
           <div className="rounded-2xl border border-primary-100 bg-white p-4">
             <div className="text-lg font-extrabold text-gray-950">
-              {state === 'loading'
+              {state !== 'ready'
                 ? '—'
                 : data?.latestObservedAt
                   ? formatDate(data.latestObservedAt)
@@ -230,7 +230,11 @@ export default function CivicAuditResults() {
                   n={question.sampleCount}
                 </div>
 
-                {distribution.length > 0 ? (
+                {state === 'failed' ? (
+                  <p className="mt-3 text-sm text-gray-500">
+                    Live observations unavailable.
+                  </p>
+                ) : distribution.length > 0 ? (
                   <div className="mt-4 flex flex-wrap gap-2">
                     {distribution.map(([value, count]) => (
                       <span
@@ -274,11 +278,16 @@ export default function CivicAuditResults() {
           {entities.map(entity => {
             const place = placeRegistryById.get(entity.entityId);
             const barangay = place?.location.barangays.join(' · ') || '';
-            const stateLabel = entity.isComplete
-              ? 'Complete'
-              : entity.observationCount > 0
-                ? 'In progress'
-                : 'No observations';
+            const stateLabel =
+              state === 'failed'
+                ? 'Live data unavailable'
+                : state === 'loading'
+                  ? 'Loading'
+                  : entity.isComplete
+                    ? 'Complete'
+                    : entity.observationCount > 0
+                      ? 'In progress'
+                      : 'No observations';
 
             return (
               <article
@@ -303,17 +312,19 @@ export default function CivicAuditResults() {
                       <MapPin className="h-3.5 w-3.5" /> {barangay}
                     </div>
                   )}
-                  <div className="mt-3 flex flex-wrap gap-x-5 gap-y-1 text-sm text-gray-600">
-                    <span>
-                      {entity.observationCount} observation{entity.observationCount === 1 ? '' : 's'}
-                    </span>
-                    <span>
-                      {entity.substantiveQuestionCount}/{entity.requiredQuestionCount} required questions observed
-                    </span>
-                    {entity.latestObservedAt && (
-                      <span>Latest {formatDate(entity.latestObservedAt)}</span>
-                    )}
-                  </div>
+                  {state === 'ready' && (
+                    <div className="mt-3 flex flex-wrap gap-x-5 gap-y-1 text-sm text-gray-600">
+                      <span>
+                        {entity.observationCount} observation{entity.observationCount === 1 ? '' : 's'}
+                      </span>
+                      <span>
+                        {entity.substantiveQuestionCount}/{entity.requiredQuestionCount} required questions observed
+                      </span>
+                      {entity.latestObservedAt && (
+                        <span>Latest {formatDate(entity.latestObservedAt)}</span>
+                      )}
+                    </div>
+                  )}
                 </div>
 
                 <Link
