@@ -1,0 +1,211 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-09-26",
+  "workstream": "W4-3a — Audit Integrity, procurement and accountability overlap",
+  "scope": {
+    "rule": "Current-state inventory only. No public UI changes, entity normalization, beneficial-ownership research, audit-status inference, risk scoring or wrongdoing labels.",
+    "inspected": [
+      "src/pages/Integrity.tsx",
+      "src/pages/ProjectsBudget.tsx",
+      "src/pages/Accountability.tsx",
+      "src/data/accountability.ts",
+      "src/data/accountabilitySupplement.ts",
+      "src/data/publicRecords.ts",
+      "src/data/civicTypes.ts"
+    ]
+  },
+  "currentStateCounts": {
+    "procurementSeedRecords": 21,
+    "procurementUniqueSupplierStrings": 17,
+    "procurementRecordsWithSeparatePublicOccurrenceEvidence": 2,
+    "structuredAuditRecords": 4,
+    "integrityStandardSourceCards": 5,
+    "integrityPublishedGapCards": 4
+  },
+  "canonicalOwners": [
+    {
+      "concept": "budget and fiscal plan data",
+      "currentOwner": "src/data/budget2025.ts",
+      "primarySurface": "/projects-budget",
+      "otherConsumers": [
+        "src/data/accountability.ts"
+      ],
+      "disposition": "keep",
+      "note": "Projects & Budget owns fiscal exploration. Accountability should keep only selected follow-through records rather than duplicate the complete budget explorer."
+    },
+    {
+      "concept": "structured procurement award/project records",
+      "currentOwner": "src/data/accountabilitySupplement.ts#procurementSeeds -> procurementProjectEntries",
+      "primarySurface": "/projects-budget#procurement",
+      "otherConsumers": [
+        "/accountability?type=project"
+      ],
+      "disposition": "keep-shared",
+      "note": "The 21 procurement records are one dataset rendered in two views. Do not create a second Integrity procurement dataset."
+    },
+    {
+      "concept": "supplier names on procurement awards",
+      "currentOwner": "embedded strings in procurementSeeds",
+      "primarySurface": "/projects-budget#procurement",
+      "otherConsumers": [
+        "/accountability?type=project"
+      ],
+      "disposition": "normalize-next",
+      "note": "21 award records contain 17 unique supplier strings. Repeated suppliers are not yet canonical entities; W4-3c owns normalization."
+    },
+    {
+      "concept": "procurement lifecycle evidence",
+      "currentOwner": "AccountabilityEntry.procurement stages in src/data/accountabilitySupplement.ts",
+      "primarySurface": "/accountability?type=project",
+      "otherConsumers": [
+        "/projects-budget#procurement"
+      ],
+      "disposition": "keep-shared",
+      "note": "Bid result is documented for the seed set; contract/notice, NTP and implementation/completion stages remain explicit documented/source-gap states."
+    },
+    {
+      "concept": "COA finding, recommendation, management response and follow-up fields",
+      "currentOwner": "src/data/accountabilitySupplement.ts#auditFindingEntries",
+      "primarySurface": "/accountability?type=audit",
+      "otherConsumers": [
+        "/projects-budget#audit"
+      ],
+      "disposition": "keep-shared",
+      "note": "The four structured audit records are one dataset rendered in multiple views. Integrity should consume these records later instead of restating them."
+    },
+    {
+      "concept": "generic COA annual-audit archive source",
+      "currentOwner": "source-only audit entry in src/data/accountability.ts plus source catalog coverage in src/data/publicRecords.ts",
+      "primarySurface": "/records",
+      "otherConsumers": [
+        "/accountability?type=audit",
+        "/projects-budget#audit"
+      ],
+      "disposition": "merge-source-level",
+      "note": "The generic archive URL is a source/discovery record, not a finding. Keep source identity in Public Records and use finding-level Accountability rows for evidence."
+    },
+    {
+      "concept": "public-service ethics standard",
+      "currentOwner": "inline integritySources in src/pages/Integrity.tsx",
+      "primarySurface": "/integrity",
+      "otherConsumers": [
+        "global Search metadata only"
+      ],
+      "disposition": "structure-next",
+      "note": "RA 6713 is currently presentation data embedded in the page, not a canonical integrity-evidence object. W4-3b should define its structured role."
+    },
+    {
+      "concept": "procurement law, IRR and GPPB guidance",
+      "currentOwner": "inline integritySources in src/pages/Integrity.tsx",
+      "primarySurface": "/integrity",
+      "otherConsumers": [
+        "global Search metadata only"
+      ],
+      "disposition": "structure-next",
+      "note": "RA 12009, the IRR/advisory and beneficial-ownership guidance are standards/context, not Makati-specific findings."
+    },
+    {
+      "concept": "beneficial-ownership linkage to Makati procurement entities",
+      "currentOwner": null,
+      "primarySurface": "/integrity gap card",
+      "otherConsumers": [],
+      "disposition": "gap",
+      "note": "No specific Makati procurement entity is currently linked to an authoritative ownership/disclosure record. W4-3d owns research and classification."
+    },
+    {
+      "concept": "conflict-of-interest, recusal and disclosure records",
+      "currentOwner": null,
+      "primarySurface": "/integrity gap card",
+      "otherConsumers": [],
+      "disposition": "gap",
+      "note": "No systematic index exists. Missing data must not be treated as evidence of a conflict. W4-3d owns research."
+    },
+    {
+      "concept": "supplier/contractor entity graph",
+      "currentOwner": null,
+      "primarySurface": "/integrity gap card",
+      "otherConsumers": [],
+      "disposition": "gap",
+      "note": "Procurement records have supplier strings but no canonical supplier entities, award relationships, aliases or entity-level source lineage. W4-3c owns this."
+    },
+    {
+      "concept": "audit resolution trail",
+      "currentOwner": "partial fields in auditFindingEntries",
+      "primarySurface": "/accountability?type=audit",
+      "otherConsumers": [
+        "/projects-budget#audit",
+        "/integrity gap card"
+      ],
+      "disposition": "partial",
+      "note": "Finding/recommendation/response/follow-up fields already exist, but later closure is not inferred where public records do not map a specific recommendation to a resolved status. W4-3e owns continuity trails."
+    },
+    {
+      "concept": "Integrity page",
+      "currentOwner": "src/pages/Integrity.tsx",
+      "primarySurface": "/integrity",
+      "otherConsumers": [],
+      "disposition": "redesign-later",
+      "note": "Current page is mostly standards, cross-links and gap cards. W4-3g should become an evidence/entity/audit-trail surface consuming canonical datasets rather than a second evidence store."
+    }
+  ],
+  "overlapDispositions": [
+    {
+      "overlap": "Projects & Budget procurement table ↔ Accountability project ledger",
+      "classification": "same canonical data, different user job",
+      "action": "keep both views; cross-link; never fork the dataset"
+    },
+    {
+      "overlap": "Projects & Budget audit section ↔ Accountability audit ledger",
+      "classification": "same canonical data, different user job",
+      "action": "keep both views; Accountability owns detailed follow-through"
+    },
+    {
+      "overlap": "Integrity standards ↔ procurement/audit evidence",
+      "classification": "context versus evidence",
+      "action": "keep standards as contextual sources; Integrity must consume canonical evidence records instead of restating them"
+    },
+    {
+      "overlap": "generic COA archive row ↔ finding-level audit records",
+      "classification": "source catalog versus evidence entity",
+      "action": "source belongs in Public Records; findings belong in Accountability"
+    }
+  ],
+  "gapsForNextSteps": [
+    {
+      "id": "integrity-schema",
+      "owner": "W4-3b",
+      "gap": "No canonical integrity evidence/entity schema separates standards, entities, relationships, disclosures and audit evidence."
+    },
+    {
+      "id": "supplier-normalization",
+      "owner": "W4-3c",
+      "gap": "17 unique current supplier strings are not normalized into canonical entities."
+    },
+    {
+      "id": "ownership-disclosure-research",
+      "owner": "W4-3d",
+      "gap": "No authoritative beneficial-ownership/conflict/recusal linkage has been classified for implemented procurement entities."
+    },
+    {
+      "id": "audit-continuity",
+      "owner": "W4-3e",
+      "gap": "Four audit records contain partial trails, but specific later corrective/closure continuity is incomplete or explicitly unresolved."
+    },
+    {
+      "id": "integrity-evidence-relationships",
+      "owner": "W4-3f",
+      "gap": "No canonical entity graph yet connects supplier/entity, award/project, disclosure and audit evidence."
+    },
+    {
+      "id": "integrity-page-evidence-first",
+      "owner": "W4-3g",
+      "gap": "Integrity currently presents standards and gaps rather than searchable canonical evidence/entities."
+    }
+  ],
+  "guardrails": [
+    "Do not score suppliers, officials, projects or agencies for corruption/integrity risk.",
+    "Do not infer beneficial ownership, conflicts, related parties, wrongdoing or audit closure from missing or indirect data.",
+    "Keep source-level documents distinct from finding/entity records.",
+    "Reuse procurementProjectEntries and auditFindingEntries as canonical evidence inputs; do not clone them into an Integrity-only dataset."
+  ]
+}
