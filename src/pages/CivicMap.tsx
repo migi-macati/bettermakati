@@ -194,6 +194,24 @@ export default function CivicMap() {
           className="mt-5"
         />
 
+        <Link
+          to="/civic-map/audits/park-accessibility-2026"
+          className="mt-5 flex items-center justify-between gap-4 rounded-2xl border border-primary-200 bg-primary-50 p-5 transition hover:border-primary-300"
+        >
+          <div>
+            <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+              Civic audit pilot
+            </div>
+            <div className="mt-1 font-extrabold text-gray-950">
+              Public park accessibility check
+            </div>
+            <p className="mt-1 text-sm text-gray-600">
+              Record entrance access, step-free access, seating and toilets across 13 public parks.
+            </p>
+          </div>
+          <ArrowRight className="h-5 w-5 shrink-0 text-primary-700" />
+        </Link>
+
         <div className="mt-5 rounded-2xl border border-primary-100 bg-white p-5">
           <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
             National infrastructure
