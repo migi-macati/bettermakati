@@ -1423,12 +1423,41 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Define civic audit campaigns",
       "maximumScope": "Campaign schema/workflow only: geography, place set, questions, period and completion. No generalized campaign UI.",
-      "status": "next",
+      "status": "complete",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
       ],
-      "stopWhen": "Campaign schema/workflow only: geography, place set, questions, period and completion. No generalized campaign UI."
+      "stopWhen": "Campaign schema/workflow only: geography, place set, questions, period and completion. No generalized campaign UI.",
+      "schemaFile": "data/civic-audit-campaign-schema.json",
+      "validation": {
+        "schemaFile": "data/civic-audit-campaign-schema.json",
+        "campaignFamilies": 5,
+        "workflowStages": [
+          "draft",
+          "freeze",
+          "configure",
+          "collect",
+          "monitor",
+          "close",
+          "publish"
+        ],
+        "frozenTargetRule": "Campaigns freeze explicit canonical place IDs before launch; selectors are drafting aids only.",
+        "verificationGate": "Every target must be verification.status=verified at freeze time.",
+        "coverageDiscipline": "Campaign output cannot claim geography-wide coverage beyond the frozen place set and must show missing target places.",
+        "completion": "Completion is operational coverage only, based on minimum observations and required-question coverage; it is not a condition score.",
+        "noScores": "Campaigns explicitly forbid overall scores, star ratings, weighted composites, rankings, best/worst labels and hidden numeric conversion.",
+        "streetSegmentFinding": {
+          "streetSegments": 3,
+          "verifiedStreetSegments": 0,
+          "provisionalStreetSegments": 3,
+          "sidewalkSegments": 0,
+          "explanation": "W3R-4a verified-only browsing filtered out all three pilot street segments because none has identity/coordinate source URLs."
+        },
+        "legacyReviewCorrection": "Repository issue search returned 0 [Civic Reviews] issues. Obsolete review compatibility, rating aggregates and rating UI were removed, and planning records were corrected.",
+        "integrityGate": "check:civic-audits validates family parity, workflow stages, frozen-place requirements, verified-only campaign targeting, score prohibitions and the current street-segment coverage snapshot.",
+        "ci": "Latest completed CI after the cleanup shows only the same three unrelated baseline unused-import errors and six existing warnings; no new blocking errors are reported in CivicReports, Civic Map, CivicDiscussion or civic-report changes."
+      }
     },
     {
       "id": "W3R-7b",
@@ -1436,8 +1465,8 @@
       "priority": "medium",
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Pilot one civic audit",
-      "maximumScope": "One geography and one audit theme only, such as BetterPoblacion sidewalks or Makati park accessibility.",
-      "status": "planned",
+      "maximumScope": "One bounded pilot campaign using a registry-ready verified place set. Park accessibility is ready; street/sidewalk auditing remains blocked until segment inventory is expanded and verified.",
+      "status": "next",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
@@ -1760,9 +1789,9 @@
     }
   ],
   "immediateNext": {
-    "id": "W3R-7a",
-    "title": "Define civic audit campaigns",
-    "maximumScope": "Campaign schema/workflow only: geography, place set, questions, period and completion. No generalized campaign UI."
+    "id": "W3R-7b",
+    "title": "Pilot one civic audit",
+    "maximumScope": "One bounded pilot campaign using a registry-ready verified place set. Park accessibility is ready; street/sidewalk auditing remains blocked until segment inventory is expanded and verified."
   },
   "reopenedExecutionOrder": [
     "3C-2a",
@@ -1830,5 +1859,14 @@
     ],
     "current": "W3R-2a",
     "capabilityDispositionAuditFile": "data/wave3-capability-disposition-audit.json"
+  },
+  "knownCoverageGaps": {
+    "streetSegments": {
+      "status": "known-gap",
+      "streetSegments": 3,
+      "verifiedStreetSegments": 0,
+      "sidewalkSegments": 0,
+      "consequence": "Do not claim Poblacion-wide or Makati-wide street/sidewalk audit coverage yet."
+    }
   }
 }
