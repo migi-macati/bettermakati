@@ -68,7 +68,7 @@ const isSubstantive = value =>
 
 const fetchObservationThreads = async token => {
   const query = encodeURIComponent(
-    'repo:' + repository() + ' is:issue in:title "[Civic Observations]"'
+    'repo:' + repository() + ' is:issue in:body "civic-observation-thread"'
   );
   const response = await fetch(
     'https://api.github.com/search/issues?q=' + query + '&per_page=100',
@@ -152,16 +152,18 @@ export default async function handler(req, res) {
           if (observation.familyId !== CAMPAIGN.familyId) return null;
           if (observation.questionSetId !== CAMPAIGN.questionSetId) return null;
           if (!inCampaignWindow(observation.observedAt)) return null;
+          const answers = Array.isArray(observation.answers)
+            ? observation.answers.filter(answer =>
+                CAMPAIGN.questionIds.includes(answer.questionId)
+              )
+            : [];
+          if (!answers.length) return null;
           return {
             id: comment.id,
             url: comment.html_url,
             submittedAt: comment.created_at,
             ...observation,
-            answers: Array.isArray(observation.answers)
-              ? observation.answers.filter(answer =>
-                  CAMPAIGN.questionIds.includes(answer.questionId)
-                )
-              : [],
+            answers,
           };
         })
       )
@@ -189,7 +191,6 @@ export default async function handler(req, res) {
       return {
         entityId,
         name: canonical?.name || entityId,
-        barangays: canonical?.barangays || [],
         observationCount: entityObservations.length,
         latestObservedAt: entityObservations[0]?.observedAt || null,
         substantiveQuestionCount: substantiveQuestionIds.size,
