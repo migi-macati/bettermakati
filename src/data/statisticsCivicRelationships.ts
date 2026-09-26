@@ -6,18 +6,10 @@ import {
   civicEcosystemResourceById,
 } from './ecosystemResources';
 import {
-  reports,
-} from './reports';
-import {
   createCivicIntelligenceRelationshipIndex,
   type CivicIntelligenceNodeResolver,
   type CivicIntelligenceRelationship,
 } from './civicIntelligenceRelationships';
-import type {
-  FeaturedReportV2,
-  ReportCanonicalRecordRef,
-  ReportContentBlock,
-} from './reportTypes';
 
 const statisticsHrefByIndicatorId: Record<string, string> = {
   'population-total': '/statistics#population-trend',
@@ -25,75 +17,6 @@ const statisticsHrefByIndicatorId: Record<string, string> = {
   'real-gdp-level': '/statistics#economy-work',
   'gdp-per-capita': '/statistics#economy-work',
 };
-
-const reportRecordRefs = (
-  report: FeaturedReportV2
-): ReportCanonicalRecordRef[] => {
-  const refs: ReportCanonicalRecordRef[] = [];
-
-  const appendBlock = (block: ReportContentBlock) => {
-    const records =
-      block.kind === 'paragraph'
-        ? block.evidence?.records
-        : block.evidence.records;
-    if (records) refs.push(...records);
-  };
-
-  for (const section of report.sections) {
-    for (const block of section.blocks) appendBlock(block);
-  }
-
-  if (report.methodology?.evidence?.records) {
-    refs.push(...report.methodology.evidence.records);
-  }
-
-  return refs;
-};
-
-const reportIndicatorRelationships: CivicIntelligenceRelationship[] =
-  reports.flatMap(report => {
-    const indicatorIds = [
-      ...new Set(
-        reportRecordRefs(report)
-          .filter(
-            (
-              ref
-            ): ref is Extract<
-              ReportCanonicalRecordRef,
-              { recordType: 'statistics-indicator' }
-            > => ref.recordType === 'statistics-indicator'
-          )
-          .map(ref => ref.id)
-      ),
-    ];
-
-    return indicatorIds.map(indicatorId => {
-      if (!cityIndicatorById.has(indicatorId)) {
-        throw new Error(
-          'Report references unknown Statistics indicator: ' +
-            report.slug +
-            ' -> ' +
-            indicatorId
-        );
-      }
-
-      return {
-        id:
-          'statistics-report-' +
-          indicatorId +
-          '-' +
-          report.slug,
-        kind: 'evidence-for' as const,
-        from: { type: 'indicator' as const, id: indicatorId },
-        to: { type: 'report' as const, id: report.slug },
-        evidence: {
-          basis: 'declared-analysis-input' as const,
-          note:
-            'The v2 report explicitly cites this canonical Statistics indicator in its evidence record references.',
-        },
-      };
-    });
-  });
 
 const populationBarangayRelationships: CivicIntelligenceRelationship[] =
   barangays.map(barangay => ({
@@ -158,7 +81,6 @@ for (const relationship of ecosystemRelationships) {
 
 export const statisticsCivicRelationships: CivicIntelligenceRelationship[] = [
   ...populationBarangayRelationships,
-  ...reportIndicatorRelationships,
   ...ecosystemRelationships,
 ];
 
@@ -188,17 +110,6 @@ export const statisticsCivicNodeResolver: CivicIntelligenceNodeResolver =
         label: barangay.name,
         href: '/barangays/' + barangay.slug,
         owner: 'barangays',
-      };
-    }
-
-    if (ref.type === 'report') {
-      const report = reports.find(item => item.slug === ref.id);
-      if (!report) return undefined;
-      return {
-        ref,
-        label: report.headline,
-        href: '/reports/' + report.slug,
-        owner: 'reports',
       };
     }
 
@@ -242,7 +153,7 @@ export const statisticsRelatedRecords = (indicatorId: string) =>
 
 export const statisticsRelationshipCoverage = {
   indicatorToBarangay: populationBarangayRelationships.length,
-  indicatorToReport: reportIndicatorRelationships.length,
+  indicatorToReport: 0,
   indicatorToEcosystem: ecosystemRelationships.length,
   inferredPlaceLinks: 0,
   inferredServiceLinks: 0,
