@@ -80,7 +80,7 @@ const rawDispositionByIndex = new Map(
   rawDispositions.map(item => [item.index, item])
 );
 
-const records = [];
+const candidateRecords = [];
 const unresolved = [];
 const matchedSeedKeys = new Set();
 
@@ -133,8 +133,6 @@ for (let index = 0; index < rawRows.length; index += 1) {
         generatedId
     );
   }
-  if (seedRecordId) matchedSeedKeys.add(key);
-
   const yearMatch = officialNumber.match(/^(\d{4})(?:-|$)/);
   const sequenceMatch = officialNumber.match(/^\d{4}-(.+)$/);
 
@@ -149,26 +147,72 @@ for (let index = 0; index < rawRows.length; index += 1) {
   if (yearMatch) reference.seriesYear = Number(yearMatch[1]);
   if (sequenceMatch?.[1]) reference.sequence = sequenceMatch[1];
 
-  records.push({
-    id: generatedId,
-    archiveLegislationId,
-    measureType,
-    reference,
-    title,
-    sourceIds: [archiveSourceId],
-    officialDocument: {
-      url: null,
-      status: 'not-exposed-by-enumerated-archive-row',
+  candidateRecords.push({
+    rawIndex: index,
+    seedKey: seedRecordId ? key : null,
+    record: {
+      id: generatedId,
+      archiveLegislationId,
+      measureType,
+      reference,
+      title,
+      sourceIds: [archiveSourceId],
+      officialDocument: {
+        url: null,
+        status: 'not-exposed-by-enumerated-archive-row',
+      },
+      ...(seedRecordId
+        ? {
+            seedReconciliation: {
+              status: 'matched-existing-seed',
+              seedRecordId,
+            },
+          }
+        : {}),
     },
-    ...(seedRecordId
-      ? {
-          seedReconciliation: {
-            status: 'matched-existing-seed',
-            seedRecordId,
-          },
-        }
-      : {}),
   });
+}
+
+const normalizedIdGroups = new Map();
+for (const candidate of candidateRecords) {
+  const id = candidate.record.id;
+  if (!normalizedIdGroups.has(id)) normalizedIdGroups.set(id, []);
+  normalizedIdGroups.get(id).push(candidate);
+}
+
+const normalizationCollisions = [...normalizedIdGroups.entries()]
+  .filter(([, candidates]) => candidates.length > 1)
+  .map(([normalizedId, candidates]) => ({
+    normalizedId,
+    rows: candidates.map(candidate => ({
+      rawIndex: candidate.rawIndex,
+      archiveLegislationId: candidate.record.archiveLegislationId,
+      type: candidate.record.measureType.toUpperCase(),
+      officialNumber: candidate.record.reference.officialNumber,
+      title: candidate.record.title,
+    })),
+  }));
+
+const collisionIds = new Set(
+  normalizationCollisions.map(group => group.normalizedId)
+);
+
+const records = [];
+for (const candidate of candidateRecords) {
+  if (collisionIds.has(candidate.record.id)) {
+    unresolved.push({
+      rawIndex: candidate.rawIndex,
+      archiveLegislationId: candidate.record.archiveLegislationId,
+      type: candidate.record.measureType.toUpperCase(),
+      officialNumber: candidate.record.reference.officialNumber,
+      normalizedId: candidate.record.id,
+      reasons: ['normalized-id-collision'],
+    });
+    continue;
+  }
+
+  records.push(candidate.record);
+  if (candidate.seedKey) matchedSeedKeys.add(candidate.seedKey);
 }
 
 const missingSeedKeys = [...seedByKey.keys()].filter(
@@ -278,6 +322,7 @@ const normalized = {
     uniqueCanonicalIdTotal: records.length,
     uniqueArchiveLegislationIdTotal: records.length,
     uniqueTypeReferenceTotal: records.length,
+    normalizationCollisionGroupCount: normalizationCollisions.length,
   },
   seedReconciliation: {
     existingSeedCount: seedByKey.size,
@@ -286,6 +331,7 @@ const normalized = {
     missingSeedKeys,
     archiveOnlyCount: records.length - matchedSeedKeys.size,
   },
+  normalizationCollisions,
   records,
   unresolved,
 };
@@ -300,6 +346,7 @@ console.log(
       inputRowTotal: rawRows.length,
       canonicalRecordTotal: records.length,
       unresolvedTotal: unresolved.length,
+      normalizationCollisionGroupCount: normalizationCollisions.length,
       countByType,
       seedReconciliation: normalized.seedReconciliation,
     },
