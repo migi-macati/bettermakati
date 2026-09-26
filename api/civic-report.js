@@ -1,4 +1,4 @@
-const prefixes = ['[Civic Report]', '[Civic Proposal]', '[Civic Update]', '[Civic Reviews]'];
+const prefixes = ['[Civic Report]', '[Civic Proposal]', '[Civic Update]'];
 
 const parseJsonComment = (body, marker) => {
   const match = String(body || '').match(new RegExp('<!--\\s*' + marker + '\\s+({[\\s\\S]*?})\\s*-->'));
@@ -24,7 +24,7 @@ const apiBase = () => 'https://api.github.com/repos/' + repository();
 const kindOf = issue =>
   String(issue.title || '').startsWith('[Civic Report]') ? 'report' :
   String(issue.title || '').startsWith('[Civic Proposal]') ? 'proposal' :
-  String(issue.title || '').startsWith('[Civic Update]') ? 'update' : 'reviews';
+  'update';
 
 const publicTitle = issue => String(issue.title || '').replace(/^\[Civic [^\]]+\]\s*/, '');
 
