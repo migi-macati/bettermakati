@@ -1811,12 +1811,17 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Run human page audit on redesigned participation",
       "maximumScope": "Participation, Get Involved, Civic Map/place pages and reports only.",
-      "status": "next",
+      "status": "complete",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
       ],
-      "stopWhen": "Participation, Get Involved, Civic Map/place pages and reports only."
+      "stopWhen": "Participation, Get Involved, Civic Map/place pages and reports only.",
+      "completedAt": "2026-09-26",
+      "commits": [
+        "f99e1a6344a6be5ccdf12afca35bcbd22b5e4971",
+        "6e6b55cfe0da6ce2b6b462843967985faa9f1496"
+      ]
     },
     {
       "id": "W3R-11b",
@@ -1825,7 +1830,7 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Add Place Registry integrity audit",
       "maximumScope": "Guard duplicate IDs, barangays, coordinates, lifecycle states, provenance and broken relationships. No browser testing.",
-      "status": "planned",
+      "status": "next",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
@@ -2029,9 +2034,10 @@
       "W3R-9e",
       "W3R-10a",
       "W3R-10b",
-      "W3R-10c"
+      "W3R-10c",
+      "W3R-11a"
     ],
-    "current": "W3R-11a",
+    "current": "W3R-11b",
     "capabilityDispositionAuditFile": "data/wave3-capability-disposition-audit.json"
   },
   "knownCoverageGaps": {
