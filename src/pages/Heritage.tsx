@@ -12,6 +12,7 @@ import { heritageSites } from '../data/visitMakati';
 import SEO from '../components/SEO';
 import LastReviewed from '../components/ui/LastReviewed';
 import SharePage from '../components/ui/SharePage';
+import { placeRegistryById } from '../data/placeRegistry';
 
 const mapsUrl = (query: string) =>
   `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
@@ -78,48 +79,70 @@ export default function Heritage() {
         <LastReviewed note="Historical summaries link to NHCP, city or Department of Tourism sources." />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-8">
-          {heritageSites.map(site => (
-            <article
-              key={site.name}
-              className="rounded-2xl border border-gray-200 bg-white p-6"
-            >
-              <div className="flex items-start justify-between gap-4">
-                <span className="rounded-full bg-primary-50 px-3 py-1 text-xs font-bold text-primary-700">
-                  {site.category}
-                </span>
-                <span className="text-sm font-bold text-secondary-700">
-                  {site.period}
-                </span>
-              </div>
+          {heritageSites.map(site => {
+            const registryPlace = site.placeId
+              ? placeRegistryById.get(site.placeId)
+              : undefined;
+            const mapHref = registryPlace?.location.point
+              ? mapsUrl(
+                  registryPlace.location.point.lat +
+                    ',' +
+                    registryPlace.location.point.lng
+                )
+              : mapsUrl(site.mapsQuery);
+            const address = registryPlace?.location.address ?? site.address;
 
-              <h2 className="font-extrabold text-xl text-gray-950 mt-4">
-                {site.name}
-              </h2>
-              <p className="text-sm text-gray-500 mt-1">{site.address}</p>
-              <p className="text-sm text-gray-700 mt-4 leading-relaxed">
-                {site.summary}
-              </p>
+            return (
+              <article
+                key={site.name}
+                className="rounded-2xl border border-gray-200 bg-white p-6"
+              >
+                <div className="flex items-start justify-between gap-4">
+                  <span className="rounded-full bg-primary-50 px-3 py-1 text-xs font-bold text-primary-700">
+                    {site.category}
+                  </span>
+                  <span className="text-sm font-bold text-secondary-700">
+                    {site.period}
+                  </span>
+                </div>
 
-              <div className="mt-5 flex flex-wrap gap-3 text-sm">
-                <a
-                  href={mapsUrl(site.mapsQuery)}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-1 font-bold text-primary-700"
-                >
-                  <MapPin className="h-4 w-4" /> Map
-                </a>
-                <a
-                  href={site.sourceUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-1 text-gray-500 underline underline-offset-2"
-                >
-                  {site.sourceLabel} <ExternalLink className="h-3.5 w-3.5" />
-                </a>
-              </div>
-            </article>
-          ))}
+                <h2 className="font-extrabold text-xl text-gray-950 mt-4">
+                  {site.name}
+                </h2>
+                <p className="text-sm text-gray-500 mt-1">{address}</p>
+                <p className="text-sm text-gray-700 mt-4 leading-relaxed">
+                  {site.summary}
+                </p>
+
+                <div className="mt-5 flex flex-wrap gap-3 text-sm">
+                  <a
+                    href={mapHref}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-1 font-bold text-primary-700"
+                  >
+                    <MapPin className="h-4 w-4" /> Map
+                  </a>
+                  {registryPlace && (
+                    <Link
+                      to={'/civic-map/' + registryPlace.id}
+                      className="inline-flex items-center gap-1 font-bold text-primary-700"
+                    >
+                      Place details <ArrowRight className="h-3.5 w-3.5" />
+                    </Link>
+                  )}
+                  <a
+                    href={site.sourceUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-1 text-gray-500 underline underline-offset-2"
+                  >
+                    {site.sourceLabel} <ExternalLink className="h-3.5 w-3.5" />
+                  </a>
+                </div>
+              </article>
+            );
+          })}
         </div>
       </Section>
 
