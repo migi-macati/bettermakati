@@ -234,9 +234,9 @@
     "uiChanges": 0
   },
   "nextImplementationStep": {
-    "id": "W3R-7b",
-    "title": "Pilot one civic audit",
-    "constraint": "One bounded pilot using one entity kind. Verified-place pilots are ready; named partial segment pilots may use explicit bounded provisional segments without wider completeness claims."
+    "id": "W3R-7c",
+    "title": "Publish one audit output",
+    "constraint": "Use only the frozen 13-park target set and campaign-period structured observations. Show coverage, dates, sample counts and question distributions; no composite scores or rankings."
   },
   "betterBarangayReuse": {
     "workstream": "W3R-3a",
@@ -462,7 +462,14 @@
       "Coverage and missing target entities remain visible.",
       "Campaign completion is not a condition score.",
       "No composite scores or rankings are allowed."
-    ]
+    ],
+    "activePilot": {
+      "id": "makati-public-park-accessibility-2026-pilot",
+      "route": "/civic-map/audits/park-accessibility-2026",
+      "entityKind": "place",
+      "targetCount": 13,
+      "targetRule": "Exactly the reconciled government/public park set; verified-only."
+    }
   },
   "updatedAt": "2026-09-26",
   "canonicalCivicRecord": {
