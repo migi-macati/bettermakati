@@ -1,0 +1,348 @@
+export type LocalMeasureType = 'ordinance' | 'resolution';
+
+export interface LocalLegislationSource {
+  id: string;
+  label: string;
+  publisher: string;
+  url: string;
+  sourceClass:
+    | 'city-legislation-archive'
+    | 'official-measure-document'
+    | 'official-city-publication'
+    | 'official-session-video'
+    | 'official-agenda'
+    | 'official-minutes'
+    | 'official-transcript'
+    | 'other-official';
+  role:
+    | 'identity'
+    | 'official-text'
+    | 'lifecycle-evidence'
+    | 'session-evidence'
+    | 'relationship-evidence'
+    | 'record-access'
+    | 'context';
+  note?: string;
+}
+
+export interface LocalLegislationRecord {
+  id: string;
+  measureType: LocalMeasureType;
+  reference: {
+    officialNumber: string;
+    seriesYear?: number;
+    sequence?: string;
+    display: string;
+    sourceIds: string[];
+  };
+  title: string;
+  jurisdiction: {
+    level: 'city';
+    name: 'Makati City';
+    legislativeBody: 'Sangguniang Panlungsod ng Makati';
+  };
+  documents: Array<{
+    id: string;
+    kind:
+      | 'official-text'
+      | 'archive-record'
+      | 'certified-copy'
+      | 'agenda'
+      | 'minutes'
+      | 'session-video'
+      | 'official-transcript'
+      | 'bettermakati-reviewed-transcript'
+      | 'other';
+    label: string;
+    url: string;
+    publisher: string;
+    sourceIds: string[];
+    note?: string;
+  }>;
+  provenance: {
+    sourceIds: string[];
+    note?: string;
+  };
+  lifecycle: Array<{
+    id: string;
+    eventType:
+      | 'filed-introduced'
+      | 'referred-calendared'
+      | 'committee-consideration'
+      | 'first-reading'
+      | 'second-reading'
+      | 'third-final-reading'
+      | 'deliberated'
+      | 'approved-by-council'
+      | 'transmitted-for-mayoral-action'
+      | 'mayor-signed-approved'
+      | 'mayor-vetoed'
+      | 'mayor-other-action'
+      | 'published'
+      | 'effective'
+      | 'implemented'
+      | 'amended'
+      | 'repealed'
+      | 'other-as-stated';
+    date?: string;
+    actionAsStated?: string;
+    evidenceStatus:
+      | 'explicit-official-document'
+      | 'explicit-official-agenda-minutes'
+      | 'reviewed-official-session-recording'
+      | 'official-publication'
+      | 'official-cross-reference';
+    sourceIds: string[];
+    cityMonitorRecordId?: string;
+    note?: string;
+  }>;
+  sessionEvidence: Array<{
+    cityMonitorRecordId?: string;
+    sessionDate: string;
+    sessionType:
+      | 'regular-session'
+      | 'special-session'
+      | 'committee-hearing'
+      | 'public-hearing'
+      | 'other-official-session';
+    relationship:
+      | 'mentioned'
+      | 'calendared'
+      | 'referred'
+      | 'deliberated'
+      | 'read'
+      | 'voted'
+      | 'approved'
+      | 'enacted'
+      | 'other-as-stated';
+    evidenceStatus:
+      | 'official-agenda'
+      | 'official-minutes'
+      | 'official-measure-text'
+      | 'reviewed-official-video'
+      | 'multiple-official-sources';
+    sourceIds: string[];
+    note?: string;
+  }>;
+  measureRelationships: Array<{
+    kind:
+      | 'amends'
+      | 'amended-by'
+      | 'repeals'
+      | 'repealed-by'
+      | 'implements'
+      | 'implemented-by'
+      | 'supersedes'
+      | 'superseded-by'
+      | 'cites'
+      | 'related-as-stated';
+    targetMeasureId: string;
+    sourceIds: string[];
+    note?: string;
+  }>;
+  topics: string[];
+  relationships: Array<{
+    kind: string;
+    targetType: string;
+    targetId: string;
+    sourceIds: string[];
+    note?: string;
+  }>;
+  revision: {
+    schemaVersion: 1;
+    lastReviewed: string;
+    recordStatus: 'verified' | 'provisional' | 'needs-review' | 'retired';
+    changeNote?: string;
+  };
+}
+
+export const localLegislationSources: Record<string, LocalLegislationSource> = {
+  'makati-covid-recovery-plan-2020': {
+    id: 'makati-covid-recovery-plan-2020',
+    label: 'Makati City COVID-19 Recovery Plan — Annex A: City Policies and Legislation',
+    publisher: 'City Government of Makati',
+    url: 'https://www.makati.gov.ph/assets/uploads/downloads/2/61/681/pdf/Final_Makati%20City%20COVID-19%20Recovery%20Plan.pdf',
+    sourceClass: 'official-city-publication',
+    role: 'identity',
+    note:
+      'Annex A lists the measure reference, title and date of approval. It is an official source for this bounded batch but is not treated as the full official text of each ordinance.',
+  },
+};
+
+export const ordinanceBatch2020CovidResponse = {
+  id: 'ordinance-batch-2020-covid-response',
+  label: 'COVID-19 response ordinances listed in Annex A of the Makati City COVID-19 Recovery Plan',
+  declaredScope:
+    'All City Ordinance entries in Annex A, City Policies and Legislation, from 19 March through 6 May 2020.',
+  sourceId: 'makati-covid-recovery-plan-2020',
+  periodStart: '2020-03-19',
+  periodEnd: '2020-05-06',
+  expectedCount: 15,
+  completenessRule:
+    'This batch is complete only for ordinance entries in the cited Annex A and period. It does not claim to contain every Makati ordinance enacted in 2020.',
+} as const;
+
+const annexSource = localLegislationSources['makati-covid-recovery-plan-2020'];
+
+const ordinanceFromAnnex = (
+  officialNumber: string,
+  approvalDate: string,
+  title: string
+): LocalLegislationRecord => {
+  const sequence = officialNumber.split('-').at(-1) ?? officialNumber;
+  const id = 'ordinance-' + officialNumber;
+
+  return {
+    id,
+    measureType: 'ordinance',
+    reference: {
+      officialNumber,
+      seriesYear: 2020,
+      sequence,
+      display: 'City Ordinance No. ' + officialNumber,
+      sourceIds: [annexSource.id],
+    },
+    title,
+    jurisdiction: {
+      level: 'city',
+      name: 'Makati City',
+      legislativeBody: 'Sangguniang Panlungsod ng Makati',
+    },
+    documents: [
+      {
+        id: 'annex-a-' + officialNumber,
+        kind: 'archive-record',
+        label: annexSource.label,
+        url: annexSource.url,
+        publisher: annexSource.publisher,
+        sourceIds: [annexSource.id],
+        note:
+          'Official city publication listing the ordinance reference, title and date of approval; not the ordinance’s full legal text.',
+      },
+    ],
+    provenance: {
+      sourceIds: [annexSource.id],
+      note:
+        'Identity/title/date are normalized from Annex A only. Authors, readings, vote, mayoral action, effectivity and later legal status remain unset unless separately evidenced.',
+    },
+    lifecycle: [
+      {
+        id: 'annex-a-approval-' + officialNumber,
+        eventType: 'other-as-stated',
+        date: approvalDate,
+        actionAsStated: 'Date of approval listed in Annex A',
+        evidenceStatus: 'official-publication',
+        sourceIds: [annexSource.id],
+        note:
+          'The source labels the field Date of Approval but does not, in this table alone, identify the approving body or establish other lifecycle stages.',
+      },
+    ],
+    sessionEvidence: [],
+    measureRelationships: [],
+    topics: [],
+    relationships: [],
+    revision: {
+      schemaVersion: 1,
+      lastReviewed: '2026-09-26',
+      recordStatus: 'verified',
+      changeNote:
+        'First bounded ordinance registry batch; further lifecycle/source enrichment is deferred to later legislation steps.',
+    },
+  };
+};
+
+export const localOrdinanceRecords: LocalLegislationRecord[] = [
+  ordinanceFromAnnex(
+    '2020-074',
+    '2020-03-19',
+    "Mandating the Strict Implementation of Curfew Hours From 8:00 P.M. to 5:00 A.M. of the Following Day to All Persons Within the City of Makati During a State of Calamity, Public Health Emergency"
+  ),
+  ordinanceFromAnnex(
+    '2020-075',
+    '2020-03-19',
+    "Extending the Deadline of Payment and Suspending the Imposition of Penalties, Interests, and Surcharges in the Revenue-Generating Activities of the City, Subject to Existing Laws, Rules and Regulations"
+  ),
+  ordinanceFromAnnex(
+    '2020-080',
+    '2020-03-26',
+    "Temporarily Suspending the Implementation of Sections 21–23 of City Ordinance No. 2003-095, Otherwise Known as the Solid Waste Management Code of the City of Makati, During a State of Calamity, Public Health Emergency and the Like, Subject to Existing Laws, Rules and Regulations"
+  ),
+  ordinanceFromAnnex(
+    '2020-086',
+    '2020-04-08',
+    "Appropriating the Amount of Three Hundred Forty-Seven Million Nine Hundred Fifty Thousand One Hundred Seven Pesos and 22/100 (₱347,950,107.22) as Supplemental Budget No. 2 for Calendar Year 2020, Sourced from the Realignment of Existing Programs, Projects and Activities of the Continuing Appropriations Under the 20% Development Fund, for Various COVID-19-Related Expenses, Subject to Applicable Laws and Auditing Rules and Regulations"
+  ),
+  ordinanceFromAnnex(
+    '2020-087',
+    '2020-04-08',
+    "Prohibiting Any Person from Committing Any Act of Discrimination Against Any Person Who Is Infected or Suspected to Be Infected with an Infectious/Communicable Disease, Whether as a Patient or as a Frontliner/Service Worker, Subject to Existing Laws, Rules and Regulations"
+  ),
+  ordinanceFromAnnex(
+    '2020-088',
+    '2020-04-08',
+    "Mandating the Imposition of Quarantine to All Persons Who Shall Be Infected or Suspected to Be Infected with an Infectious/Communicable Disease, Providing Penalties for Violations Thereof and for Other Purposes, Subject to Existing Laws, Rules and Regulations"
+  ),
+  ordinanceFromAnnex(
+    '2020-089',
+    '2020-04-08',
+    "Requiring All Persons Within the Territorial Jurisdiction of the City of Makati to Wear Face Masks or Other Similar Protective Equipment Outside Their Home Premises During the Existence of a State of Public Health Emergency or Similar Declarations, Providing Penalties for Violations Thereof and for Other Purposes, Subject to Existing Laws, Rules and Regulations"
+  ),
+  ordinanceFromAnnex(
+    '2020-090',
+    '2020-04-15',
+    "Extending the Deadline of Payment and Likewise Suspending the Imposition of Penalties, Interests and Surcharges in the Revenue-Generating Activities/Sources of the City Due to the Extension of the Enhanced Community Quarantine Relative to the Coronavirus Disease 2019 (COVID-19) Outbreak, Subject to Existing Laws, Rules and Regulations"
+  ),
+  ordinanceFromAnnex(
+    '2020-092',
+    '2020-04-15',
+    "Appropriating the Amount of One Hundred Twenty-Four Million Four Hundred Fifty-Three Thousand Pesos (₱124,453,000.00) as Supplemental Budget No. 3 for Calendar Year 2020 for the Grant of COVID-19 Hazard Pay and Special Risk Allowance, Subject to Applicable Laws and Auditing Rules and Procedures"
+  ),
+  ordinanceFromAnnex(
+    '2020-095',
+    '2020-04-18',
+    "Appropriating the Amount of One Hundred Ten Million Eight Hundred Ninety-Two Thousand and Twenty-Two Pesos (₱110,892,022.00) as Supplemental Budget No. 4 for Calendar Year 2020, Sourced from the National Government’s Bayanihan Grant to Cities and Municipalities, for Various COVID-19-Related Expenses, and Authorizing the Creation of a Special Account in the General Fund for the Grant, Subject to Applicable Laws and Auditing Rules and Procedures"
+  ),
+  ordinanceFromAnnex(
+    '2020-100',
+    '2020-04-21',
+    "Establishing and Funding the MAKA-Tulong 5K for 500K+ Makatizens Economic Relief Program for Eligible Makatizens Affected by the Coronavirus Disease 2019 (COVID-19) Pandemic by Way of Enactment of Supplemental Budget No. 5, Subject to Applicable Laws and Auditing Rules and Procedures"
+  ),
+  ordinanceFromAnnex(
+    '2020-115',
+    '2020-04-29',
+    "Suspending the Imposition of Late Registration Fees on Several Civil Registry Documents Due to the Implementation of Community Quarantine Relative to the Coronavirus Disease 2019 (COVID-19) Pandemic, Subject to Existing Laws, Rules and Regulations"
+  ),
+  ordinanceFromAnnex(
+    '2020-116',
+    '2020-04-29',
+    "Waiving the Collection of Fees Pertaining to the Issuance of Certified True Copies of Certificates of Death During the Community Quarantine Relative to the Coronavirus Disease 2019 (COVID-19) Pandemic, Subject to Existing Laws, Rules and Regulations"
+  ),
+  ordinanceFromAnnex(
+    '2020-117',
+    '2020-04-29',
+    "Waiving the Collection of Cremation Permit Fees, Subject to Existing Laws, Rules and Regulations"
+  ),
+  ordinanceFromAnnex(
+    '2020-128',
+    '2020-05-06',
+    "Approving the Reprogramming of the Unexpended Balances of the 2015 to 2019 LDRRM Fund Amounting to One Hundred Seventy-Two Million Forty-Seven Thousand Six Hundred Thirty-Eight Pesos and 18/100 (₱172,047,638.18) for Programs, Projects and Activities Addressing the Coronavirus Disease 2019 (COVID-19) Situation, Subject to Applicable Laws and Auditing Rules and Procedures"
+  ),
+];
+
+export const localResolutionRecords: LocalLegislationRecord[] = [];
+
+export const localLegislationRecords: LocalLegislationRecord[] = [
+  ...localOrdinanceRecords,
+  ...localResolutionRecords,
+];
+
+export const localLegislationById = new Map(
+  localLegislationRecords.map(record => [record.id, record] as const)
+);
+
+export const localLegislationByReference = new Map(
+  localLegislationRecords.map(record => [
+    record.reference.officialNumber,
+    record,
+  ] as const)
+);
