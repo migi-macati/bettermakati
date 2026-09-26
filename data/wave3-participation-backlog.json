@@ -1689,12 +1689,19 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Connect places to Projects and Accountability",
       "maximumScope": "Relationship model plus a small verified example set only. No mass fuzzy matching.",
-      "status": "next",
+      "status": "complete",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
       ],
-      "stopWhen": "Relationship model plus a small verified example set only. No mass fuzzy matching."
+      "stopWhen": "Relationship model plus a small verified example set only. No mass fuzzy matching.",
+      "completedAt": "2026-09-26",
+      "commits": [
+        "9005861d38da7f0929fde7b627f4cbb2f91dcbd2",
+        "0acb525e42b1aa9725e75ec0bcd74ca6350fc9f6",
+        "b8cad55b49b6112d9bef99df711039ed2a6ae450",
+        "ee95859c5801f06adcd047a9c86e3ccda38ac580"
+      ]
     },
     {
       "id": "W3R-9d",
@@ -1703,7 +1710,7 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Connect City Monitor items to places",
       "maximumScope": "One-way explicit relationships only for clearly named places. No automated fuzzy matching.",
-      "status": "planned",
+      "status": "next",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
@@ -1985,9 +1992,10 @@
       "W3R-8b",
       "W3R-8c",
       "W3R-9a",
-      "W3R-9b"
+      "W3R-9b",
+      "W3R-9c"
     ],
-    "current": "W3R-9c",
+    "current": "W3R-9d",
     "capabilityDispositionAuditFile": "data/wave3-capability-disposition-audit.json"
   },
   "knownCoverageGaps": {
