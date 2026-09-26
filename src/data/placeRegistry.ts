@@ -2054,3 +2054,49 @@ export const placesWithinDistance = (
     .sort((a, b) => a.distanceKm - b.distanceKm || a.place.name.localeCompare(b.place.name));
 };
 
+export interface NearbyPlaceOptions {
+  initialDistanceKm?: number;
+  fallbackDistanceKm?: number;
+  limit?: number;
+}
+
+/**
+ * Shared "near me" selector for verified physical places.
+ *
+ * It never auto-selects a place. The caller still decides what a nearby result means
+ * for reporting, browsing or another workflow.
+ */
+export const nearbyVerifiedPlaces = (
+  origin: Pick<PlacePoint, 'lat' | 'lng'>,
+  options: NearbyPlaceOptions = {},
+  places: readonly PlaceRegistryRecord[] = placeRegistry
+): PlaceDistanceResult[] => {
+  const initialDistanceKm = options.initialDistanceKm ?? 0.25;
+  const fallbackDistanceKm = Math.max(
+    initialDistanceKm,
+    options.fallbackDistanceKm ?? 0.5
+  );
+  const limit = Math.max(1, Math.floor(options.limit ?? 5));
+
+  const eligiblePlaces = places.filter(place => {
+    if (place.entityKind !== 'place') return false;
+    if (place.verification.status !== 'verified') return false;
+    if (!place.location.point) return false;
+    if (place.lifecycle.status === 'closed' || place.lifecycle.status === 'future')
+      return false;
+    return place.location.relationToMakati !== 'serves-makati-outside';
+  });
+
+  const initial = placesWithinDistance(
+    origin,
+    initialDistanceKm,
+    eligiblePlaces
+  );
+  const matches =
+    initial.length > 0
+      ? initial
+      : placesWithinDistance(origin, fallbackDistanceKm, eligiblePlaces);
+
+  return matches.slice(0, limit);
+};
+
