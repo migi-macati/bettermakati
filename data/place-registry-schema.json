@@ -418,9 +418,9 @@
     "uiChanges": 0
   },
   "nextImplementationStep": {
-    "id": "W3R-6a",
-    "title": "Define structured observations",
-    "constraint": "Observation schema only by place/asset family. No UI."
+    "id": "W3R-6b",
+    "title": "Replace generic ratings with observations",
+    "constraint": "One reusable observation form and storage path. No derived scores."
   },
   "betterBarangayReuse": {
     "workstream": "W3R-3a",
@@ -563,6 +563,27 @@
       "Location-only cases remain citywide cases without a canonical place relationship.",
       "Matched-place cases remain visible on their canonical place page.",
       "No automatic forwarding or lifecycle inference is introduced."
+    ]
+  },
+  "structuredObservations": {
+    "workstream": "W3R-6a",
+    "specificationFile": "data/structured-observation-schema.json",
+    "entity": "StructuredObservation",
+    "relationship": "Each observation references exactly one canonical Place Registry placeId.",
+    "families": [
+      "street-public-realm",
+      "park-public-space",
+      "public-facility",
+      "transport-stop-terminal",
+      "transport-route"
+    ],
+    "rules": [
+      "Observations are dated condition snapshots, not ratings or civic cases.",
+      "Every Place Registry category maps to exactly one observation family.",
+      "Unknown/not-observed responses are first-class and the contributor is never forced to guess.",
+      "No overall score or hidden numeric composite is permitted.",
+      "Observation submission never mutates canonical place facts or civic case lifecycle.",
+      "Legacy 1–5 reviews remain historical and are not converted."
     ]
   }
 }
