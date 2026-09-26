@@ -4,13 +4,13 @@
   "workstream": "W3R-7a",
   "title": "BetterMakati civic audit campaign schema",
   "status": "approved-for-pilot",
-  "purpose": "Define bounded, repeatable community audits that collect structured observations across an explicit set of canonical places during a fixed period.",
+  "purpose": "Define bounded, repeatable community audits that collect structured observations across an explicit set of civic registry entities during a fixed period.",
   "principles": [
     "A campaign is a coordinated observation drive, not a rating contest or open-ended survey.",
-    "Every campaign freezes an explicit canonical placeId set before launch.",
-    "A campaign may be barangay-, corridor-, citywide-, or explicit-place-set scoped, but its public coverage claim cannot exceed the actual frozen place set.",
+    "Every campaign freezes an explicit canonical registry-entity set before launch.",
+    "A campaign may be barangay-, corridor-, citywide-, or explicit-place-set scoped, but its public coverage claim cannot exceed the actual frozen entity set.",
     "Campaign questions are selected from the existing structured-observation schema; campaigns do not invent new response scales.",
-    "No campaign creates composite place scores, rankings, grades, winners, losers, or best/worst lists.",
+    "No campaign creates composite entity scores, rankings, grades, winners, losers, or best/worst lists.",
     "Missing observations remain visible as coverage gaps rather than being imputed.",
     "Problem reports remain separate from observations; a campaign answer never creates a civic case automatically.",
     "Campaign completion is an operational coverage measure, not a claim that the observed place is good, bad, compliant, or resolved."
@@ -21,7 +21,7 @@
       "title",
       "themeId",
       "geography",
-      "placeSet",
+      "targetSet",
       "questions",
       "period",
       "completion"
@@ -78,51 +78,6 @@
           "scopeStatement": {
             "type": "string",
             "description": "Plain factual statement of what area the campaign does and does not cover."
-          }
-        }
-      },
-      "placeSet": {
-        "required": [
-          "frozenPlaceIds",
-          "frozenAt",
-          "inventoryClaim",
-          "verificationRequirement"
-        ],
-        "properties": {
-          "selectorDraft": {
-            "optional": true,
-            "description": "Optional drafting selector such as category+barangay. It is never the live campaign target after launch."
-          },
-          "frozenPlaceIds": {
-            "type": "array",
-            "minItems": 1,
-            "uniqueItems": true,
-            "items": {
-              "type": "string"
-            }
-          },
-          "frozenAt": {
-            "type": "date-time"
-          },
-          "inventoryClaim": {
-            "type": "enum",
-            "values": [
-              "complete-for-declared-scope",
-              "partial",
-              "unknown"
-            ]
-          },
-          "coverageNote": {
-            "type": "string",
-            "optional": true,
-            "description": "Required when inventoryClaim is partial or unknown."
-          },
-          "verificationRequirement": {
-            "type": "enum",
-            "values": [
-              "verified-only"
-            ],
-            "default": "verified-only"
           }
         }
       },
@@ -198,20 +153,16 @@
       },
       "completion": {
         "required": [
-          "minimumObservationsPerPlace",
+          "minimumObservationsPerEntity",
           "coverageTargetPercent",
           "requiredQuestionCoverage"
         ],
         "properties": {
-          "minimumObservationsPerPlace": {
-            "type": "integer",
-            "minimum": 1
-          },
           "coverageTargetPercent": {
             "type": "number",
             "minimum": 0,
             "maximum": 100,
-            "description": "Share of frozen target places meeting the place-complete rule."
+            "description": "Share of frozen target entities meeting the entity-complete rule."
           },
           "requiredQuestionCoverage": {
             "type": "enum",
@@ -219,23 +170,23 @@
               "all-required-questions-have-substantive-answer"
             ]
           },
-          "placeCompleteRule": {
-            "type": "string",
-            "default": "A place is complete when it has at least minimumObservationsPerPlace campaign-period observations and each required question has at least one substantive answer."
-          },
           "campaignCompleteRule": {
             "type": "string",
-            "default": "A campaign is operationally complete when coverageTargetPercent of frozen target places meet the placeCompleteRule or the period ends, whichever comes first; period end does not imply full coverage."
+            "default": "A campaign is operationally complete when coverageTargetPercent of frozen target entities meet the entityCompleteRule or the period ends, whichever comes first; period end does not imply full coverage."
+          },
+          "minimumObservationsPerEntity": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "entityCompleteRule": {
+            "type": "string",
+            "default": "A target entity is complete when it has at least minimumObservationsPerEntity campaign-period observations and each required question has at least one substantive answer."
           }
         }
       },
       "output": {
         "properties": {
           "showCoverage": {
-            "type": "boolean",
-            "const": true
-          },
-          "showMissingPlaces": {
             "type": "boolean",
             "const": true
           },
@@ -261,6 +212,66 @@
               "best-worst-label",
               "hidden-numeric-conversion"
             ]
+          },
+          "showMissingEntities": {
+            "type": "boolean",
+            "const": true
+          }
+        }
+      },
+      "targetSet": {
+        "required": [
+          "entityKind",
+          "frozenEntityIds",
+          "frozenAt",
+          "inventoryClaim",
+          "verificationRequirement"
+        ],
+        "properties": {
+          "selectorDraft": {
+            "optional": true,
+            "description": "Optional drafting selector such as entity kind + category + barangay/corridor. It is never the live campaign target after launch."
+          },
+          "frozenAt": {
+            "type": "date-time"
+          },
+          "inventoryClaim": {
+            "type": "enum",
+            "values": [
+              "complete-for-declared-scope",
+              "partial",
+              "unknown"
+            ]
+          },
+          "coverageNote": {
+            "type": "string",
+            "optional": true,
+            "description": "Required when inventoryClaim is partial or unknown."
+          },
+          "verificationRequirement": {
+            "type": "enum",
+            "values": [
+              "verified-only"
+            ],
+            "default": "verified-only",
+            "description": "Places require verified status. Segment and route pilots may use provisional records only when the campaign scope names the exact bounded records and does not claim geography-wide completeness."
+          },
+          "frozenEntityIds": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "entityKind": {
+            "type": "enum",
+            "values": [
+              "place",
+              "segment",
+              "route"
+            ],
+            "description": "All frozen target IDs in one campaign use the same registry entity form."
           }
         }
       }
@@ -272,16 +283,16 @@
       "requirements": [
         "Choose one observation family/theme.",
         "Declare geography.",
-        "Build candidate place set from Place Registry.",
+        "Build a candidate entity set from the Civic Registry.",
         "Run inventory coverage check before making a geography-wide claim."
       ]
     },
     {
       "stage": "freeze",
       "requirements": [
-        "Resolve all target place IDs.",
-        "Require verification.status=verified for every target.",
-        "Freeze explicit place IDs and frozenAt timestamp.",
+        "Resolve all target entity IDs.",
+        "Apply the entity-kind verification rule before freezing targets.",
+        "Freeze explicit entity IDs and frozenAt timestamp.",
         "Record inventoryClaim and coverageNote."
       ]
     },
@@ -304,7 +315,7 @@
     {
       "stage": "monitor",
       "requirements": [
-        "Track places with and without observations.",
+        "Track target entities with and without observations.",
         "Track required-question coverage.",
         "Do not publish a score to represent completion."
       ]
@@ -313,7 +324,7 @@
       "stage": "close",
       "requirements": [
         "Freeze the campaign observation set at close.",
-        "Record achieved place coverage and unanswered/missing places.",
+        "Record achieved entity coverage and unanswered/missing entities.",
         "Retain incomplete status if target coverage was not achieved."
       ]
     },
@@ -321,26 +332,26 @@
       "stage": "publish",
       "requirements": [
         "Publish coverage, dates, sample counts and question-level distributions.",
-        "State the frozen geography/place-set scope.",
-        "Do not extrapolate beyond the frozen place set.",
+        "State the frozen geography/entity-set scope.",
+        "Do not extrapolate beyond the frozen entity set.",
         "Do not rank places or convert categories to scores."
       ]
     }
   ],
   "integrityRules": [
-    "Every frozenPlaceId must resolve to exactly one Place Registry record.",
-    "Every target record must be verification.status=verified at freeze time.",
-    "Every target place primaryCategory must map to the campaign familyId.",
+    "Every frozenEntityId must resolve to exactly one Civic Registry record.",
+    "Place targets must be verified at freeze time; provisional segment/route targets require an explicitly bounded partial-scope campaign.",
+    "Every target entity primaryCategory must map to the campaign familyId.",
     "Every questionId must exist in the declared questionSetId and be applicable to every target place category, unless the campaign defines explicit per-category question subsets.",
     "endsAt must be after startsAt.",
-    "The frozen place set cannot change after campaign start; a changed target set requires a new campaign revision/id.",
+    "The frozen entity set cannot change after campaign start; a changed target set requires a new campaign revision/id.",
     "Inventory claim complete-for-declared-scope requires an explicit completeness basis; a selector result alone is insufficient evidence of completeness.",
     "Campaign completion and observation freshness cannot mutate Place Registry verification or lifecycle.",
-    "Campaign output cannot silently omit target places with zero observations."
+    "Campaign output cannot silently omit target entities with zero observations."
   ],
   "streetSegmentCoverage": {
     "status": "known-gap",
-    "finding": "Street segmentation remains a valid Place Registry concept, but the current seed inventory is not a usable geography-wide street audit frame.",
+    "finding": "Street segmentation remains a valid Civic Registry entity form, but the current seed inventory is not a usable geography-wide street audit frame.",
     "currentRecords": {
       "streetSegmentCount": 3,
       "verifiedStreetSegmentCount": 0,
@@ -369,7 +380,7 @@
       ]
     },
     "whyTheyDisappearedFromDefaultCivicMap": "W3R-4a changed the Civic Map entry to verified-only records. All three existing street-segment seeds migrated as provisional because they are pilot records with no identity or coordinate source URLs, so the verified-only browser filters them out.",
-    "campaignRule": "Do not launch or describe a barangay-wide street/sidewalk audit from the current segment inventory. First expand and verify the segment place set, then freeze those IDs into a campaign.",
+    "campaignRule": "Do not launch or describe a barangay-wide street/sidewalk audit from the current segment inventory. Expand or explicitly bound the segment set first; provisional segments may be used only in a named partial-scope pilot.",
     "segmentationPolicy": [
       "Use stable street name + explicit from/to boundary for each street segment.",
       "Do not create arbitrary segment IDs without a reproducible boundary.",
@@ -390,7 +401,24 @@
   },
   "implementationBoundary": {
     "W3R7a": "Schema/workflow only. No campaign UI, storage endpoint, campaign instance, or published audit.",
-    "W3R7b": "Create one bounded pilot campaign using a registry-ready place set. If a street/sidewalk pilot is chosen, first satisfy the streetSegmentCoverage campaignRule.",
+    "W3R7b": "Create one bounded pilot campaign using an entity-kind-appropriate target set. Place pilots may use verified site records; segment/route pilots use explicit bounded records and cannot imply wider geographic completeness.",
     "W3R7c": "Publish one output using the frozen campaign scope, coverage and structured observation distributions."
+  },
+  "entityTreatment": {
+    "place": {
+      "scope": "Destination-like physical sites such as parks, facilities, offices, stops and terminals.",
+      "targeting": "Usually verification.status=verified before campaign launch.",
+      "geography": "Point/area place coverage."
+    },
+    "segment": {
+      "scope": "Bounded infrastructure units such as street, sidewalk, crossing, bike-lane, bridge and drainage segments.",
+      "targeting": "Uses explicit from/to or otherwise reproducible boundaries. Provisional pilot segments may be audited only as named partial segments, not as barangay-wide coverage.",
+      "geography": "Linear or network-element coverage; representative points are not treated as place locations."
+    },
+    "route": {
+      "scope": "Transport service/network routes.",
+      "targeting": "Uses a route definition and lifecycle/service status rather than destination-style place verification.",
+      "geography": "Network/service coverage; not proximity-matched as a nearby place."
+    }
   }
 }
