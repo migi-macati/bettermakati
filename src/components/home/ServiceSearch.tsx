@@ -16,6 +16,9 @@ import {
 } from 'lucide-react';
 import { useNavigate } from 'react-router';
 import { searchIndex, type SearchItem } from '../../data/searchIndex';
+import { serviceDirectory } from '../../data/serviceDirectory';
+import { officesForAgency } from '../../data/governmentServiceOffices';
+import { placeRegistryById } from '../../data/placeRegistry';
 
 type SearchScope = 'site' | 'services';
 
@@ -148,11 +151,13 @@ export default function ServiceSearch({
   title,
   placeholder,
   initialQuery = '',
+  showServicePlaces = false,
 }: {
   scope?: SearchScope;
   title?: string;
   placeholder?: string;
   initialQuery?: string;
+  showServicePlaces?: boolean;
 }) {
   const tabs = scope === 'services' ? serviceTabs : siteTabs;
   const [query, setQuery] = useState(initialQuery);
@@ -174,6 +179,26 @@ export default function ServiceSearch({
       .filter(item => !query.trim() || item.score > 0)
       .sort((a, b) => b.score - a.score || a.title.localeCompare(b.title));
   }, [query, scope, tab]);
+
+  const servicePlaceById = useMemo(() => {
+    if (!showServicePlaces) return new Map<string, { name: string; address: string; placeId: string }>();
+
+    const resolved = new Map<string, { name: string; address: string; placeId: string }>();
+    for (const service of serviceDirectory) {
+      const office = officesForAgency(service.agency).find(item => item.placeId);
+      if (!office?.placeId) continue;
+
+      const place = placeRegistryById.get(office.placeId);
+      if (!place) continue;
+
+      resolved.set(service.id, {
+        name: office.name,
+        address: office.address,
+        placeId: place.id,
+      });
+    }
+    return resolved;
+  }, [showServicePlaces]);
 
   const visibleResults = useMemo(() => {
     if (!query.trim()) {
@@ -406,6 +431,16 @@ export default function ServiceSearch({
                   <p className="mt-2 text-sm leading-relaxed text-gray-700">
                     {item.description}
                   </p>
+                  {showServicePlaces && item.serviceId && servicePlaceById.has(item.serviceId) && (
+                    <div className="mt-3 rounded-lg bg-white/80 px-3 py-2 text-sm text-gray-700">
+                      <div className="font-bold text-gray-900">
+                        Where to go: {servicePlaceById.get(item.serviceId)?.name}
+                      </div>
+                      <div className="mt-0.5 text-xs leading-relaxed text-gray-500">
+                        {servicePlaceById.get(item.serviceId)?.address}
+                      </div>
+                    </div>
+                  )}
                 </button>
               ))
             ) : (
