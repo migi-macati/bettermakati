@@ -20,7 +20,9 @@
     "procurementRecordsWithSeparatePublicOccurrenceEvidence": 2,
     "structuredAuditRecords": 4,
     "integrityStandardSourceCards": 5,
-    "integrityPublishedGapCards": 4
+    "integrityPublishedGapCards": 4,
+    "auditRecordsWithStructuredTrace": 3,
+    "auditRecordsPendingFindingLevelRetrieval": 1
   },
   "canonicalOwners": [
     {
@@ -189,7 +191,7 @@
     {
       "id": "audit-continuity",
       "owner": "W4-3e",
-      "gap": "Four audit records contain partial trails, but specific later corrective/closure continuity is incomplete or explicitly unresolved."
+      "gap": "Three audit records contain structured finding/recommendation/follow-up traces; the 2024 SEF compliance record remains source-level pending finding-text retrieval. Specific later corrective/closure continuity is incomplete or explicitly unresolved."
     },
     {
       "id": "integrity-evidence-relationships",
