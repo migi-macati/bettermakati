@@ -1,3 +1,5 @@
+import { currentMakatiPopulation2024 } from './barangays';
+
 import { officeBudgetDetails2026Remaining } from './budgetOfficeDetails2026Remaining';
 
 export const budgetSources = {
@@ -16,7 +18,7 @@ export const budgetSources = {
   audit: 'https://www.coa.gov.ph/reports/annual-audit-reports/',
 };
 
-export const cityPopulation = 309770;
+export const cityPopulation = currentMakatiPopulation2024;
 
 export const annualBudgetDocuments = [
   {
