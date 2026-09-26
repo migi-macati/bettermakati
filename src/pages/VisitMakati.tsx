@@ -24,6 +24,15 @@ import { placeRegistryById } from '../data/placeRegistry';
 const mapsUrl = (query: string) =>
   `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
 
+const visitStarts = [
+  { label: 'Places to go', href: '#places-to-start', icon: Map },
+  { label: 'Getting around', href: '/mobility', icon: Bus },
+  { label: 'Eat & drink', href: '/visit#places-to-start', icon: Utensils },
+  { label: 'What\'s on', href: '/whats-on', icon: CalendarDays },
+  { label: 'Heritage', href: '/heritage', icon: Landmark },
+  { label: 'Parking', href: '/parking', icon: ParkingCircle },
+];
+
 export default function VisitMakati() {
   return (
     <>
@@ -32,26 +41,54 @@ export default function VisitMakati() {
         description="Places to visit, food, markets, parks, heritage and history in Makati City."
       />
 
-      <Section className="bg-[#fffdf8]">
-        <div className="section-eyebrow">Visit Makati</div>
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-          <div>
-            <Heading>Explore the city</Heading>
-            <p className="max-w-3xl text-gray-600">
-              Start with Makati&apos;s major districts, markets, parks, culture
-              and practical visitor tools.
-            </p>
-          </div>
-          <SharePage title="Visit Makati | BetterMakati" />
-        </div>
-        <LastReviewed note="Place details and operating conditions can change; current map and official links are provided." />
+      <section className="border-b border-primary-100 bg-[#fffdf8]">
+        <div className="container px-5 py-12 md:px-6 md:py-16 lg:px-8">
+          <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+            <div>
+              <div className="section-eyebrow">Visit Makati</div>
+              <h1 className="text-4xl font-extrabold tracking-tight text-gray-950 md:text-6xl">
+                What do you want to do in Makati?
+              </h1>
+              <p className="mt-4 max-w-2xl text-lg leading-relaxed text-gray-700">
+                Find places, plan your trip, see what&apos;s on and explore the city.
+              </p>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_0.95fr] gap-8 mt-8 items-start">
+              <div className="mt-7 grid grid-cols-2 gap-3 sm:grid-cols-3">
+                {visitStarts.map(item => {
+                  const Icon = item.icon;
+                  return (
+                    <Link
+                      key={item.label}
+                      to={item.href}
+                      className="group rounded-2xl border border-primary-100 bg-white p-4 transition hover:border-primary-400 hover:shadow-sm"
+                    >
+                      <Icon className="h-5 w-5 text-primary-700" aria-hidden="true" />
+                      <div className="mt-3 font-extrabold text-gray-950">{item.label}</div>
+                      <ArrowRight className="mt-3 h-4 w-4 text-primary-700 transition group-hover:translate-x-0.5" />
+                    </Link>
+                  );
+                })}
+              </div>
+
+              <div className="mt-6 flex flex-wrap items-center gap-3">
+                <SharePage title="Visit Makati | BetterMakati" />
+                <LastReviewed note="Place details and operating conditions can change; current map and official links are provided." />
+              </div>
+            </div>
+
+            <PhotoCarousel images={visitImageSet} title="See Makati" />
+          </div>
+        </div>
+      </section>
+
+      <Section id="places-to-start" className="bg-white">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_0.95fr] lg:items-start">
           <div>
-            <h2 className="text-2xl font-extrabold text-gray-950">
-              Start here
+            <div className="section-eyebrow">Places to start</div>
+            <h2 className="text-3xl font-extrabold tracking-tight text-gray-950 md:text-4xl">
+              Explore the city
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-5">
+            <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
               {visitorPlaces.map(place => {
                 const registryPlace = place.placeId
                   ? placeRegistryById.get(place.placeId)
@@ -72,10 +109,10 @@ export default function VisitMakati() {
                     <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
                       {place.category}
                     </div>
-                    <h3 className="font-extrabold text-lg text-gray-950 mt-2">
+                    <h3 className="mt-2 text-lg font-extrabold text-gray-950">
                       {place.name}
                     </h3>
-                    <p className="text-sm text-gray-600 mt-2">{place.summary}</p>
+                    <p className="mt-2 text-sm text-gray-600">{place.summary}</p>
                     {registryPlace?.location.address && (
                       <p className="mt-2 text-xs leading-relaxed text-gray-500">
                         {registryPlace.location.address}
@@ -86,14 +123,14 @@ export default function VisitMakati() {
                         href={mapHref}
                         target="_blank"
                         rel="noreferrer"
-                        className="font-bold text-primary-700 inline-flex items-center gap-1"
+                        className="inline-flex items-center gap-1 font-bold text-primary-700"
                       >
                         Google Maps <ExternalLink className="h-3.5 w-3.5" />
                       </a>
                       {registryPlace && (
                         <Link
                           to={'/civic-map/' + registryPlace.id}
-                          className="font-bold text-primary-700 inline-flex items-center gap-1"
+                          className="inline-flex items-center gap-1 font-bold text-primary-700"
                         >
                           Place details <ArrowRight className="h-3.5 w-3.5" />
                         </Link>
@@ -113,8 +150,7 @@ export default function VisitMakati() {
             </div>
           </div>
 
-          <div className="space-y-6 min-w-0">
-            <PhotoCarousel images={visitImageSet} title="See Makati" />
+          <div className="min-w-0">
             <PlacesExplorer />
           </div>
         </div>
