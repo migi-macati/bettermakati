@@ -157,10 +157,24 @@ for (const marker of [
   }
 }
 
+const ordinanceFactoryStart = source.indexOf('const ordinanceFromAnnex =');
+const ordinanceFactoryEnd = source.indexOf(
+  'export const localOrdinanceRecords',
+  ordinanceFactoryStart
+);
+const resolutionFactoryStart = source.indexOf('const resolutionFromAnnex =');
+const resolutionFactoryEnd = source.indexOf(
+  'export const localResolutionRecords',
+  resolutionFactoryStart
+);
+const annexFactorySource =
+  source.slice(ordinanceFactoryStart, ordinanceFactoryEnd) +
+  source.slice(resolutionFactoryStart, resolutionFactoryEnd);
+
 if (
-  source.includes("eventType: 'approved-by-council'") ||
-  source.includes("eventType: 'mayor-signed-approved'") ||
-  source.includes("recordStatus: 'verified'")
+  annexFactorySource.includes("eventType: 'approved-by-council'") ||
+  annexFactorySource.includes("eventType: 'mayor-signed-approved'") ||
+  annexFactorySource.includes("recordStatus: 'verified'")
 ) {
   problems.push(
     'Annex A batches must not infer council approval, mayoral action or full verification from a generic Date of Approval column.'
@@ -262,7 +276,6 @@ for (const marker of [
   "localLegislationRecords",
   "Search local records",
   "Indexed records",
-  "makati-legislation-index.json",
   "View record",
   "Related records",
   "visibleResultLimit = 60",
@@ -303,6 +316,16 @@ for (const marker of [
   if (!packageSource.includes(marker)) {
     problems.push('W4-2g package wiring missing: ' + marker);
   }
+}
+
+if (
+  !browserIndexSource.includes(
+    "legislationBrowserIndexUrl = '/data/makati-legislation-index.json'"
+  )
+) {
+  problems.push(
+    'W4-2g browser-index loader must own the canonical public index URL.'
+  );
 }
 
 for (const marker of [
