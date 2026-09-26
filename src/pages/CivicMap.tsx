@@ -112,8 +112,12 @@ export default function CivicMap() {
     const localIds = barangay
       ? new Set(
           placesByBarangay(barangay.name)
-            .filter(place => place.verification.status === 'verified')
-            .map(place => place.id)
+            .filter(record =>
+              record.entityKind === 'place'
+                ? record.verification.status === 'verified'
+                : record.verification.status !== 'needs-verification'
+            )
+            .map(record => record.id)
         )
       : null;
 
