@@ -1,0 +1,844 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://bettermakati.org/schemas/local-legislation.schema.json",
+  "title": "BetterMakati Local Legislation Record",
+  "description": "Canonical schema for Makati City ordinances and resolutions, with evidence-backed lifecycle events and reusable City Monitor council-session relationships.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "measureType",
+    "reference",
+    "title",
+    "jurisdiction",
+    "documents",
+    "provenance",
+    "lifecycle",
+    "sessionEvidence",
+    "relationships",
+    "revision"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "description": "Stable BetterMakati local-measure ID independent of display title."
+    },
+    "measureType": {
+      "type": "string",
+      "enum": [
+        "ordinance",
+        "resolution"
+      ]
+    },
+    "reference": {
+      "$ref": "#/$defs/officialReference"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "shortTitle": {
+      "type": "string",
+      "minLength": 1
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Neutral BetterMakati summary grounded in the official text; never substitutes for the official title/text."
+    },
+    "jurisdiction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "level",
+        "name"
+      ],
+      "properties": {
+        "level": {
+          "const": "city"
+        },
+        "name": {
+          "const": "Makati City"
+        },
+        "legislativeBody": {
+          "type": "string",
+          "default": "Sangguniang Panlungsod ng Makati"
+        }
+      }
+    },
+    "authors": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/personAsStated"
+      },
+      "uniqueItems": true,
+      "description": "Only authors/sponsors explicitly stated by an official source."
+    },
+    "keyDates": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "session": {
+          "$ref": "#/$defs/dateEvidence"
+        },
+        "enacted": {
+          "$ref": "#/$defs/dateEvidence"
+        },
+        "approvedByMayor": {
+          "$ref": "#/$defs/dateEvidence"
+        },
+        "vetoedByMayor": {
+          "$ref": "#/$defs/dateEvidence"
+        },
+        "effective": {
+          "$ref": "#/$defs/dateEvidence"
+        },
+        "published": {
+          "$ref": "#/$defs/dateEvidence"
+        }
+      },
+      "description": "Convenience dates only when separately evidenced. Absence means unknown/not yet normalized, not 'did not occur'."
+    },
+    "documents": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/document"
+      },
+      "description": "Measure-level documents such as official text/archive records. Shared session evidence should normally be linked through sessionEvidence/City Monitor instead of copied."
+    },
+    "provenance": {
+      "$ref": "#/$defs/provenance"
+    },
+    "lifecycle": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/lifecycleEvent"
+      },
+      "description": "Evidence-backed events. There is deliberately no single guessed lifecycle status field."
+    },
+    "sessionEvidence": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/sessionEvidence"
+      },
+      "description": "Typed links between this measure and official council-session evidence. A video existing for a session does not by itself prove a measure action."
+    },
+    "measureRelationships": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/measureRelationship"
+      },
+      "default": []
+    },
+    "topics": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true,
+      "description": "Controlled/curated topics only; do not auto-tag from loose keyword similarity."
+    },
+    "relationships": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/civicRelationship"
+      },
+      "description": "Explicit typed cross-links to BetterMakati and BetterGov ecosystem records."
+    },
+    "recordAccess": {
+      "$ref": "#/$defs/recordAccess",
+      "description": "Optional instructions for obtaining an official/certified copy when public text is unavailable or certification is needed."
+    },
+    "revision": {
+      "$ref": "#/$defs/revision"
+    }
+  },
+  "$defs": {
+    "officialReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "officialNumber",
+        "display"
+      ],
+      "properties": {
+        "officialNumber": {
+          "type": "string",
+          "minLength": 1
+        },
+        "seriesYear": {
+          "type": "integer",
+          "minimum": 1900,
+          "maximum": 2200
+        },
+        "sequence": {
+          "type": "string",
+          "minLength": 1
+        },
+        "display": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceIds": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      },
+      "description": "Preserve the official measure reference as published; parsed year/sequence are optional helper fields."
+    },
+    "personAsStated": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "role",
+        "sourceIds"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "role": {
+          "type": "string",
+          "enum": [
+            "author",
+            "co-author",
+            "sponsor",
+            "co-sponsor",
+            "introduced-by",
+            "other-as-stated"
+          ]
+        },
+        "roleLabelAsStated": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceIds": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "dateEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "date",
+        "sourceIds"
+      ],
+      "properties": {
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "sourceIds": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "document": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "label",
+        "url",
+        "publisher",
+        "sourceIds"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "official-text",
+            "archive-record",
+            "certified-copy",
+            "agenda",
+            "minutes",
+            "session-video",
+            "official-transcript",
+            "bettermakati-reviewed-transcript",
+            "other"
+          ]
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "publisher": {
+          "type": "string",
+          "minLength": 1
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "sourceIds": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "label",
+        "publisher",
+        "url",
+        "sourceClass",
+        "role"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "publisher": {
+          "type": "string",
+          "minLength": 1
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "sourceClass": {
+          "type": "string",
+          "enum": [
+            "city-legislation-archive",
+            "official-measure-document",
+            "official-city-publication",
+            "official-session-video",
+            "official-agenda",
+            "official-minutes",
+            "official-transcript",
+            "city-charter",
+            "national-statute",
+            "national-legislature",
+            "bettergov-upstream",
+            "other-official",
+            "secondary"
+          ]
+        },
+        "role": {
+          "type": "string",
+          "enum": [
+            "identity",
+            "official-text",
+            "lifecycle-evidence",
+            "session-evidence",
+            "relationship-evidence",
+            "cross-check",
+            "record-access",
+            "context"
+          ]
+        },
+        "publishedOrObserved": {
+          "type": "string",
+          "minLength": 1
+        },
+        "publicRecordId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cityMonitorSourceId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sources"
+      ],
+      "properties": {
+        "sources": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/source"
+          }
+        },
+        "sourceNote": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "lifecycleEvent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "eventType",
+        "evidenceStatus",
+        "sourceIds"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "eventType": {
+          "type": "string",
+          "enum": [
+            "filed-introduced",
+            "referred-calendared",
+            "committee-consideration",
+            "first-reading",
+            "second-reading",
+            "third-final-reading",
+            "deliberated",
+            "approved-by-council",
+            "transmitted-for-mayoral-action",
+            "mayor-signed-approved",
+            "mayor-vetoed",
+            "mayor-other-action",
+            "published",
+            "effective",
+            "implemented",
+            "amended",
+            "repealed",
+            "other-as-stated"
+          ]
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "actionAsStated": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evidenceStatus": {
+          "type": "string",
+          "enum": [
+            "explicit-official-document",
+            "explicit-official-agenda-minutes",
+            "reviewed-official-session-recording",
+            "official-publication",
+            "official-cross-reference"
+          ]
+        },
+        "sourceIds": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "cityMonitorRecordId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "sessionEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sessionDate",
+        "sessionType",
+        "relationship",
+        "evidenceStatus",
+        "sourceIds"
+      ],
+      "properties": {
+        "cityMonitorRecordId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Preferred once the official session has a canonical City Monitor record."
+        },
+        "sessionDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "sessionType": {
+          "type": "string",
+          "enum": [
+            "regular-session",
+            "special-session",
+            "committee-hearing",
+            "public-hearing",
+            "other-official-session"
+          ]
+        },
+        "relationship": {
+          "type": "string",
+          "enum": [
+            "mentioned",
+            "calendared",
+            "referred",
+            "deliberated",
+            "read",
+            "voted",
+            "approved",
+            "enacted",
+            "other-as-stated"
+          ]
+        },
+        "actionAsStated": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evidenceStatus": {
+          "type": "string",
+          "enum": [
+            "official-agenda",
+            "official-minutes",
+            "official-measure-text",
+            "reviewed-official-video",
+            "multiple-official-sources"
+          ]
+        },
+        "sourceIds": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "documentIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "measureRelationship": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "targetMeasureId",
+        "sourceIds"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "amends",
+            "amended-by",
+            "repeals",
+            "repealed-by",
+            "implements",
+            "implemented-by",
+            "supersedes",
+            "superseded-by",
+            "cites",
+            "related-as-stated"
+          ]
+        },
+        "targetMeasureId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceIds": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "civicRelationship": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "targetType",
+        "targetId",
+        "sourceIds"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "applies-to",
+            "barangay-context",
+            "service-context",
+            "place-context",
+            "project-context",
+            "accountability-context",
+            "city-monitor-context",
+            "public-record-source",
+            "report-analysis",
+            "indicator-context",
+            "integrity-context",
+            "national-law-context",
+            "national-bill-context",
+            "ecosystem-context"
+          ]
+        },
+        "targetType": {
+          "type": "string",
+          "enum": [
+            "barangay",
+            "service",
+            "place",
+            "segment",
+            "route",
+            "project",
+            "accountability-record",
+            "city-monitor-record",
+            "public-record",
+            "report",
+            "indicator",
+            "integrity-entity",
+            "national-law",
+            "national-bill",
+            "ecosystem-resource"
+          ]
+        },
+        "targetId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceIds": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "recordAccess": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "office",
+        "accessType",
+        "sourceUrl"
+      ],
+      "properties": {
+        "office": {
+          "type": "string",
+          "minLength": 1
+        },
+        "accessType": {
+          "type": "string",
+          "enum": [
+            "certified-true-copy",
+            "photocopy",
+            "official-record-request",
+            "other"
+          ]
+        },
+        "sourceUrl": {
+          "type": "string",
+          "format": "uri"
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "revision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "lastReviewed",
+        "recordStatus"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "lastReviewed": {
+          "type": "string",
+          "format": "date"
+        },
+        "lastChanged": {
+          "type": "string",
+          "format": "date"
+        },
+        "recordStatus": {
+          "type": "string",
+          "enum": [
+            "verified",
+            "provisional",
+            "needs-review",
+            "retired"
+          ]
+        },
+        "changeNote": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  },
+  "x-bettermakati-rules": [
+    "The canonical local legislation record represents a Makati ordinance or resolution only; national bills/laws remain separate records or ecosystem context.",
+    "Do not infer lifecycle stages from the existence of an official archive entry, a session video, a person speaking in a video, or a later implementation record.",
+    "A council-session video proves a recording/session exists; a measure-to-session action is recorded only when official text, agenda/minutes, or reviewed session evidence explicitly supports it.",
+    "There is deliberately no single currentStatus field. Lifecycle facts are independent evidence-backed events and missing events remain unknown.",
+    "Authors/sponsors are stored only as stated in an official source; speaking, voting or appearing in a session is not authorship evidence.",
+    "Mayoral approval, veto, effectiveness, amendment and repeal require explicit official legal/document evidence.",
+    "Measure-to-measure amend/repeal/implement relationships require an explicit source; do not infer them from title/topic similarity.",
+    "Place, segment and route links must use canonical Place Registry IDs and explicit textual evidence; no fuzzy or proximity linking.",
+    "Barangay, service, project, Accountability, Public Records, indicator, report and Integrity links must be explicit and source-backed.",
+    "BetterGov/Open Congress/Lawphil/Juris-style national handoffs are context, not substitutes for the canonical Makati measure text.",
+    "The same council session should be represented once in City Monitor and reused by relationship; do not duplicate one video as independent session objects per measure.",
+    "If public text is unavailable, keep the gap visible and use the Office of the Secretary to the Sangguniang Panlungsod record-access path rather than reconstructing legal text.",
+    "A BetterMakati summary is descriptive convenience only; the official title and official text remain authoritative."
+  ],
+  "examples": [
+    {
+      "id": "ordinance-2020-176",
+      "measureType": "ordinance",
+      "reference": {
+        "officialNumber": "2020-176",
+        "seriesYear": 2020,
+        "sequence": "176",
+        "display": "City Ordinance No. 2020-176",
+        "sourceIds": [
+          "makati-official-measure-2020-176"
+        ]
+      },
+      "title": "Example title from official measure text",
+      "jurisdiction": {
+        "level": "city",
+        "name": "Makati City",
+        "legislativeBody": "Sangguniang Panlungsod ng Makati"
+      },
+      "keyDates": {
+        "session": {
+          "date": "2020-09-09",
+          "sourceIds": [
+            "makati-official-measure-2020-176"
+          ]
+        }
+      },
+      "documents": [
+        {
+          "id": "official-text-2020-176",
+          "kind": "official-text",
+          "label": "Official City Ordinance No. 2020-176",
+          "url": "https://www.makati.gov.ph/",
+          "publisher": "City Government of Makati",
+          "sourceIds": [
+            "makati-official-measure-2020-176"
+          ]
+        }
+      ],
+      "provenance": {
+        "sources": [
+          {
+            "id": "makati-official-measure-2020-176",
+            "label": "Official Makati measure document",
+            "publisher": "City Government of Makati",
+            "url": "https://www.makati.gov.ph/",
+            "sourceClass": "official-measure-document",
+            "role": "official-text"
+          }
+        ]
+      },
+      "lifecycle": [
+        {
+          "id": "third-final-reading-2020-176",
+          "eventType": "third-final-reading",
+          "date": "2020-09-09",
+          "evidenceStatus": "explicit-official-document",
+          "sourceIds": [
+            "makati-official-measure-2020-176"
+          ]
+        }
+      ],
+      "sessionEvidence": [],
+      "measureRelationships": [],
+      "topics": [],
+      "relationships": [],
+      "revision": {
+        "schemaVersion": 1,
+        "lastReviewed": "2026-09-26",
+        "recordStatus": "verified"
+      }
+    }
+  ]
+}
