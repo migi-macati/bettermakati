@@ -265,10 +265,6 @@ export default function CivicContributionForm({
         })}
       </div>
 
-      <div className="mt-5 rounded-xl border border-secondary-200 bg-secondary-50 p-4 text-xs leading-relaxed text-gray-700">
-        <strong>Independent platform.</strong> BetterMakati is not an official City Government or agency reporting system. Ordinary reports are consolidated and reviewed before any government referral. Emergency reports must use official emergency channels.
-      </div>
-
       <form onSubmit={submit} className="mt-6" aria-busy={status === 'submitting'}>
         <fieldset disabled={status === 'submitting'} className="min-w-0">
         <legend className="sr-only">Contribution details</legend>
