@@ -1,10 +1,12 @@
 import { useMemo, useState } from 'react';
 import { ArrowUpRight, Download, Info, MapPinned } from 'lucide-react';
+import { cityComparisonRows } from '../../data/cityComparison';
 import {
-  cityComparisonPdf,
-  cityComparisonRows,
-  cityComparisonSource,
-} from '../../data/cityComparison';
+  cityComparisonCsv,
+  cityComparisonDownload,
+  cityComparisonFilename,
+  csvDataHref,
+} from '../../data/statisticsExports';
 
 type CityFilter = 'top10' | 'ncr' | 'outsideNcr';
 
@@ -14,15 +16,6 @@ const pesos = (value: number) =>
     currency: 'PHP',
     maximumFractionDigits: 0,
   }).format(value);
-
-const csv = [
-  'City,Region,2024 GDP per person (PHP, constant 2018 prices)',
-  ...cityComparisonRows.map(row =>
-    [row.city, row.region, row.gdpPerPerson]
-      .map(value => `"${value}"`)
-      .join(',')
-  ),
-].join('\n');
 
 export default function CityComparison() {
   const [filter, setFilter] = useState<CityFilter>('top10');
@@ -42,6 +35,10 @@ export default function CityComparison() {
     cityComparisonRows.reduce((sum, row) => sum + row.gdpPerPerson, 0) /
       cityComparisonRows.length
   );
+  const downloadCsv = useMemo(() => cityComparisonCsv(rows), [rows]);
+  const downloadHref = useMemo(() => csvDataHref(downloadCsv), [downloadCsv]);
+  const primarySource = cityComparisonDownload.provenance.sources[0];
+  const briefSource = cityComparisonDownload.provenance.sources[1];
 
   return (
     <section aria-labelledby="city-comparison-title" className="mt-12">
@@ -147,8 +144,8 @@ export default function CityComparison() {
               {showTable ? 'Hide table' : 'Show data table'}
             </button>
             <a
-              href={`data:text/csv;charset=utf-8,${encodeURIComponent(csv)}`}
-              download="makati-city-comparison-2024.csv"
+              href={downloadHref}
+              download={cityComparisonFilename(filter)}
               className="inline-flex items-center gap-1 font-bold text-primary-700"
             >
               Download CSV <Download className="h-3.5 w-3.5" />
@@ -226,28 +223,37 @@ export default function CityComparison() {
           </div>
         )}
 
-        <p className="mt-6 text-xs leading-relaxed text-gray-500">
-          Source:{' '}
-          <a
-            href={cityComparisonSource}
-            target="_blank"
-            rel="noreferrer"
-            className="font-bold text-primary-700 underline underline-offset-2"
-          >
-            PSA special release
-          </a>{' '}
-          and its{' '}
-          <a
-            href={cityComparisonPdf}
-            target="_blank"
-            rel="noreferrer"
-            className="font-bold text-primary-700 underline underline-offset-2"
-          >
-            two-page statistical brief{' '}
-            <ArrowUpRight className="inline h-3 w-3" />
-          </a>
-          . The 2024 GDP per capita uses the 2024 POPCEN population base.
-        </p>
+        <div className="mt-6 rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-xs leading-relaxed text-gray-600">
+          <div>
+            <strong className="text-gray-800">Definition:</strong>{' '}
+            {cityComparisonDownload.provenance.definition}
+          </div>
+          <div className="mt-1">
+            <strong className="text-gray-800">Basis:</strong>{' '}
+            {cityComparisonDownload.provenance.basis}
+          </div>
+          <div className="mt-1">
+            <strong className="text-gray-800">Source:</strong>{' '}
+            <a
+              href={primarySource.url}
+              target="_blank"
+              rel="noreferrer"
+              className="font-bold text-primary-700 underline underline-offset-2"
+            >
+              {primarySource.publisher}
+            </a>{' '}
+            ·{' '}
+            <a
+              href={briefSource.url}
+              target="_blank"
+              rel="noreferrer"
+              className="font-bold text-primary-700 underline underline-offset-2"
+            >
+              Statistical brief <ArrowUpRight className="inline h-3 w-3" />
+            </a>{' '}
+            · Reviewed {cityComparisonDownload.provenance.lastReviewed}
+          </div>
+        </div>
       </div>
     </section>
   );
