@@ -598,14 +598,50 @@
     {
       "id": "W3R-7b",
       "title": "Pilot one civic audit",
-      "status": "next",
-      "maximumScope": "One bounded pilot campaign using one entity kind. Verified-place pilots are ready; a named partial segment pilot may use explicitly bounded provisional segments, but no barangay- or citywide street/sidewalk completeness claim."
+      "status": "complete",
+      "maximumScope": "One bounded pilot campaign using one entity kind. Implemented as a 13-park verified-place accessibility pilot.",
+      "implementationFiles": [
+        "data/civic-audit-pilot-park-accessibility-2026.json",
+        "src/data/civicAuditPilot.ts",
+        "src/pages/CivicAuditPilot.tsx",
+        "src/pages/CivicMap.tsx",
+        "src/App.tsx",
+        "scripts/check-civic-audits.mjs",
+        "scripts/generate-site-files.mjs",
+        "scripts/postbuild-routes.mjs",
+        "scripts/check-built-metadata.mjs"
+      ],
+      "validation": {
+        "campaignId": "makati-public-park-accessibility-2026-pilot",
+        "status": "collecting",
+        "entityKind": "place",
+        "themeId": "park-accessibility",
+        "targetCount": 13,
+        "targetEligibility": "verified-only",
+        "inventoryClaim": "complete-for-declared-scope",
+        "targetBasis": "The frozen target IDs exactly match currentCivicMapParkLayer.governmentPublicIds in the completed park reconciliation.",
+        "questions": [
+          "entrance-access",
+          "step-free-access",
+          "seating",
+          "toilets"
+        ],
+        "questionSetId": "park-public-space-v1",
+        "period": "2026-09-26T10:03:00+08:00 to 2026-10-26T23:59:59+08:00",
+        "completionGoal": "2 observations per park; 100% of the 13 frozen targets; each required question answered substantively at least once per completed park.",
+        "minimumObservationGoal": 26,
+        "storage": "Reuses /api/civic-observation. Observations are counted by frozen entityId and observedAt window; no campaign-specific response store.",
+        "publicRoute": "/civic-map/audits/park-accessibility-2026",
+        "outputBoundary": "W3R-7b collects observations only. Campaign results/publication remain W3R-7c.",
+        "focusedValidation": "13/13 target IDs matched the reconciled government/public park set; every target is a verified government-public park; all four question IDs exist in park-public-space-v1; frontend and frozen target IDs match.",
+        "ci": "Latest completed CI after the pilot page reports only the same three pre-existing unused-import ESLint errors and six existing warnings; no new lint errors were reported for the pilot page/data/route."
+      }
     },
     {
       "id": "W3R-7c",
       "title": "Publish one audit output",
-      "status": "planned",
-      "maximumScope": "One report/output template from pilot observations. Validate usefulness before expanding campaign machinery."
+      "status": "next",
+      "maximumScope": "Publish one output for the 13-park accessibility pilot using only frozen target IDs and campaign-period observations. Coverage, dates, sample counts and question-level distributions only; no composite scores or rankings."
     },
     {
       "id": "W3R-8a",
@@ -711,9 +747,9 @@
     }
   ],
   "immediateNext": {
-    "id": "W3R-7b",
-    "title": "Pilot one civic audit",
-    "maximumScope": "One bounded pilot campaign using one entity kind. Verified-place pilots are ready; a named partial segment pilot may use explicitly bounded provisional segments, but no barangay- or citywide street/sidewalk completeness claim."
+    "id": "W3R-7c",
+    "title": "Publish one audit output",
+    "maximumScope": "Publish one output for the 13-park accessibility pilot using only frozen target IDs and campaign-period observations. Coverage, dates, sample counts and question-level distributions only; no composite scores or rankings."
   },
   "capabilityDispositionAuditFile": "data/wave3-capability-disposition-audit.json",
   "completedSteps": [
