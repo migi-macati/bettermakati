@@ -1752,12 +1752,16 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Redefine participation outcome metrics",
       "maximumScope": "Metric definitions only: routing, review, acknowledgement, action, resolution, observation freshness, audit coverage and repeat contribution. No instrumentation.",
-      "status": "next",
+      "status": "complete",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
       ],
-      "stopWhen": "Metric definitions only: routing, review, acknowledgement, action, resolution, observation freshness, audit coverage and repeat contribution. No instrumentation."
+      "stopWhen": "Metric definitions only: routing, review, acknowledgement, action, resolution, observation freshness, audit coverage and repeat contribution. No instrumentation.",
+      "completedAt": "2026-09-26",
+      "commits": [
+        "db7254e8e41b38ef9073e7feeada7462dd2553ee"
+      ]
     },
     {
       "id": "W3R-10b",
@@ -1766,7 +1770,7 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Define metric publication thresholds",
       "maximumScope": "Separate internal operational metrics from public metrics and set minimum sample/time thresholds. No dashboards.",
-      "status": "planned",
+      "status": "next",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
@@ -2009,9 +2013,10 @@
       "W3R-9b",
       "W3R-9c",
       "W3R-9d",
-      "W3R-9e"
+      "W3R-9e",
+      "W3R-10a"
     ],
-    "current": "W3R-10a",
+    "current": "W3R-10b",
     "capabilityDispositionAuditFile": "data/wave3-capability-disposition-audit.json"
   },
   "knownCoverageGaps": {
