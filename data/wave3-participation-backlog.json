@@ -968,12 +968,32 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Add place results to Saan Ako Lalapit",
       "maximumScope": "Concern Finder only. Where appropriate, answer both which service and where the user can go.",
-      "status": "next",
+      "status": "complete",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
       ],
-      "stopWhen": "Concern Finder only. Where appropriate, answer both which service and where the user can go."
+      "stopWhen": "Concern Finder only. Where appropriate, answer both which service and where the user can go.",
+      "implementationFiles": [
+        "src/pages/ConcernFinder.tsx",
+        "src/components/home/ServiceSearch.tsx",
+        "src/data/searchIndex.ts"
+      ],
+      "validation": {
+        "behavior": "Saan Ako Lalapit search results can now show both the matched service and a concrete office location when an explicit service→agency→office.placeId relationship exists.",
+        "exactCoverage": 12,
+        "coveredServiceGroups": {
+          "bfpFireSafety": 2,
+          "psaCivilRegistryAndNationalId": 5,
+          "ltoDriverAndVehicle": 2,
+          "secCompanyServices": 3
+        },
+        "placeSources": "Where-to-go labels use governmentServiceOffices name/address records and require an explicit placeId that resolves in the shared Place Registry.",
+        "scope": "The enrichment is opt-in through showServicePlaces and is enabled only on ConcernFinder; other ServiceSearch uses are unchanged.",
+        "noGuessing": "No fuzzy place matching, nearest-place inference or automatic office migration was introduced.",
+        "guardrail": "scripts/check-place-registry.mjs now guards the serviceId search-index bridge, Concern Finder opt-in, explicit office resolver and the 12-service coverage set.",
+        "ci": "The last completed app-level CI runs after the W3R-3d UI changes report only the same three pre-existing unused-import ESLint errors; no new errors are reported for ConcernFinder.tsx, ServiceSearch.tsx or searchIndex.ts. The repo build step remains skipped behind that lint baseline."
+      }
     },
     {
       "id": "W3R-4a",
@@ -982,7 +1002,7 @@
       "ownerWorkstream": "Wave 3 Revision",
       "goal": "Reframe Civic Map entry experience",
       "maximumScope": "Civic Map landing only. Center Report something, Check a place, Suggest an improvement and Help document Makati. Remove ratings-first positioning.",
-      "status": "planned",
+      "status": "next",
       "planFile": "data/wave3-redesign-plan.json",
       "dependencies": [
         "previous W3R step"
@@ -1445,9 +1465,9 @@
     }
   ],
   "immediateNext": {
-    "id": "W3R-3d",
-    "title": "Add place results to Saan Ako Lalapit",
-    "maximumScope": "Concern Finder only. Where appropriate, answer both which service and where the user can go."
+    "id": "W3R-4a",
+    "title": "Reframe Civic Map entry",
+    "maximumScope": "Civic Map entry surface only. Present the map as one way to browse verified places and start place-based tasks, not as a destination for generic ratings."
   },
   "reopenedExecutionOrder": [
     "3C-2a",
