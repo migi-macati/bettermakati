@@ -755,13 +755,43 @@
     {
       "id": "W3R-8c",
       "title": "Revise BetterBarangay participation",
-      "status": "next",
-      "maximumScope": "Barangay participation integration only: local places, issues, improvements, civic audits and barangay contact."
+      "status": "complete",
+      "maximumScope": "Barangay participation integration only: local places, issues, improvements, civic audits and barangay contact.",
+      "implementationFiles": [
+        "src/pages/BarangayProfile.tsx"
+      ],
+      "validation": {
+        "implementationFile": "src/pages/BarangayProfile.tsx",
+        "quickActions": [
+          "Find a service",
+          "Report a local problem",
+          "Participate locally",
+          "Barangay government"
+        ],
+        "localParticipation": {
+          "report": "/civic-map/report with barangay scope",
+          "improvement": "barangay-scoped Civic Map place browse",
+          "existingCases": "each verified local place links directly to its community records",
+          "contribute": "each verified local place links directly to its report/suggest section",
+          "barangayContact": "#local-government verified hall/official channels"
+        },
+        "civicAudit": {
+          "campaign": "Makati Public Park Accessibility Check",
+          "behavior": "Barangays containing one or more frozen pilot parks show a local audit task with the local target count; each eligible park card links directly to the campaign-scoped observation form.",
+          "fallback": "Barangays with no pilot park show a local source/correction contribution task instead of implying local audit coverage."
+        },
+        "scopePreservation": "Barangay scope is retained on Civic Map, nearby reporting and place-detail participation links.",
+        "removedOrCorrected": [
+          "Quick action no longer sends 'Report a public-place issue' to generic Civic Map browse.",
+          "Participate locally now lands on the barangay page's own task section instead of sending the user to a generic participation page."
+        ],
+        "focusedValidation": "Local report, participation anchor, community-case, report/suggest and audit campaign links are present; the two superseded quick-action routes are absent."
+      }
     },
     {
       "id": "W3R-9a",
       "title": "Add places to global Search",
-      "status": "planned",
+      "status": "next",
       "maximumScope": "Global Search only. Places become first-class searchable results."
     },
     {
@@ -844,9 +874,9 @@
     }
   ],
   "immediateNext": {
-    "id": "W3R-8c",
-    "title": "Revise BetterBarangay participation",
-    "maximumScope": "Barangay participation integration only: local places, issues, improvements, civic audits and barangay contact."
+    "id": "W3R-9a",
+    "title": "Add places to global Search",
+    "maximumScope": "Global Search only. Places become first-class searchable results."
   },
   "capabilityDispositionAuditFile": "data/wave3-capability-disposition-audit.json",
   "completedSteps": [
@@ -872,7 +902,8 @@
     "W3R-7b",
     "W3R-7c",
     "W3R-8a",
-    "W3R-8b"
+    "W3R-8b",
+    "W3R-8c"
   ],
   "placeRegistrySchemaFile": "data/place-registry-schema.json",
   "placeRegistryDataFile": "src/data/placeRegistry.ts",
