@@ -2,8 +2,8 @@
   "version": 1,
   "generatedAt": "2026-09-25T00:43:52.454Z",
   "summary": {
-    "pages": 21,
-    "current": 17,
+    "pages": 27,
+    "current": 23,
     "needsReview": 4,
     "untrackedAffectedPages": 0
   },
@@ -258,7 +258,7 @@
       "path": "/participate",
       "label": "Participation",
       "editorialStatus": "reviewed",
-      "reviewedAt": "2026-09-20",
+      "reviewedAt": "2026-09-26",
       "freshnessStatus": "current",
       "needsReview": false,
       "dependencySignals": [],
@@ -277,8 +277,8 @@
     {
       "path": "/civic-map",
       "label": "Civic Map",
-      "editorialStatus": "partial",
-      "reviewedAt": "2026-09-21",
+      "editorialStatus": "reviewed",
+      "reviewedAt": "2026-09-26",
       "freshnessStatus": "current",
       "needsReview": false,
       "dependencySignals": [],
@@ -289,6 +289,66 @@
       "label": "BetterMakati Status",
       "editorialStatus": "partial",
       "reviewedAt": "2026-09-25",
+      "freshnessStatus": "current",
+      "needsReview": false,
+      "dependencySignals": [],
+      "latestDependencySignalAt": null
+    },
+    {
+      "path": "/get-involved",
+      "label": "Get Involved",
+      "editorialStatus": "reviewed",
+      "reviewedAt": "2026-09-26",
+      "freshnessStatus": "current",
+      "needsReview": false,
+      "dependencySignals": [],
+      "latestDependencySignalAt": null
+    },
+    {
+      "path": "/civic-map/report",
+      "label": "Report something near me",
+      "editorialStatus": "reviewed",
+      "reviewedAt": "2026-09-26",
+      "freshnessStatus": "current",
+      "needsReview": false,
+      "dependencySignals": [],
+      "latestDependencySignalAt": null
+    },
+    {
+      "path": "/civic-map/:assetId",
+      "label": "Civic entity detail",
+      "editorialStatus": "reviewed",
+      "reviewedAt": "2026-09-26",
+      "freshnessStatus": "current",
+      "needsReview": false,
+      "dependencySignals": [],
+      "latestDependencySignalAt": null
+    },
+    {
+      "path": "/civic-map/reports",
+      "label": "Civic Map reports",
+      "editorialStatus": "reviewed",
+      "reviewedAt": "2026-09-27",
+      "freshnessStatus": "current",
+      "needsReview": false,
+      "dependencySignals": [],
+      "latestDependencySignalAt": null
+    },
+    {
+      "path": "/civic-map/audits/park-accessibility-2026",
+      "label": "Public Park Accessibility Check",
+      "editorialStatus": "reviewed",
+      "reviewedAt": "2026-09-26",
+      "freshnessStatus": "current",
+      "needsReview": false,
+      "dependencySignals": [],
+      "latestDependencySignalAt": null
+    },
+    {
+      "path": "/civic-map/audits/park-accessibility-2026/results",
+      "label": "Public Park Accessibility Check live output",
+      "editorialStatus": "reviewed",
+      "reviewedAt": "2026-09-27",
       "freshnessStatus": "current",
       "needsReview": false,
       "dependencySignals": [],
