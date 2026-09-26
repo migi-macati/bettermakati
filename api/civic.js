@@ -8,7 +8,7 @@ const dayBuckets = globalThis.__betterMakatiCivicDayBuckets || new Map();
 globalThis.__betterMakatiCivicMinuteBuckets = minuteBuckets;
 globalThis.__betterMakatiCivicDayBuckets = dayBuckets;
 
-const prefixes = ['[Civic Report]', '[Civic Proposal]', '[Civic Update]', '[Civic Reviews]'];
+const prefixes = ['[Civic Report]', '[Civic Proposal]', '[Civic Update]'];
 
 const ip = req =>
   String(req.headers['x-forwarded-for'] || req.socket?.remoteAddress || 'unknown')
@@ -168,9 +168,7 @@ const issueView = issue => ({
     ? 'report'
     : String(issue.title || '').startsWith('[Civic Proposal]')
       ? 'proposal'
-      : String(issue.title || '').startsWith('[Civic Update]')
-        ? 'update'
-        : 'reviews',
+      : 'update',
   state: issue.state,
   url: issue.html_url,
   createdAt: issue.created_at,
