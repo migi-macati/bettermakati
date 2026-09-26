@@ -18,13 +18,13 @@ const localDateTimeValue = () => {
 };
 
 export default function CivicObservationForm({
-  place,
+  entity,
   onSubmitted,
 }: {
-  place: PlaceRegistryRecord;
+  entity: PlaceRegistryRecord;
   onSubmitted?: () => void;
 }) {
-  const questionSet = useMemo(() => observationQuestionSetForPlace(place), [place]);
+  const questionSet = useMemo(() => observationQuestionSetForPlace(place), [entity]);
   const [observedAt, setObservedAt] = useState(localDateTimeValue);
   const [timeContext, setTimeContext] = useState<ObservationTimeContext>('unknown');
   const [weatherContext, setWeatherContext] = useState<ObservationWeatherContext>('unknown');
@@ -80,9 +80,9 @@ export default function CivicObservationForm({
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          placeId: place.id,
-          placeName: place.name,
-          placeCategory: place.primaryCategory,
+          entityId: entity.id,
+          entityName: entity.name,
+          entityCategory: entity.primaryCategory,
           familyId: questionSet.familyId,
           questionSetId: questionSet.id,
           observedAt: observedDate.toISOString(),
