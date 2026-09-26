@@ -43,6 +43,7 @@ const NotFound = lazy(() => import('./pages/NotFound'));
 const Accountability = lazy(() => import('./pages/Accountability'));
 const Participate = lazy(() => import('./pages/Participate'));
 const PublicRecords = lazy(() => import('./pages/PublicRecords'));
+const PublicRecordDetail = lazy(() => import('./pages/PublicRecordDetail'));
 const Today = lazy(() => import('./pages/Today'));
 const OpenGovernment = lazy(() => import('./pages/OpenGovernment'));
 const Integrity = lazy(() => import('./pages/Integrity'));
@@ -117,6 +118,7 @@ function App() {
                       element={<Accountability />}
                     />
                     <Route path="/records" element={<PublicRecords />} />
+                    <Route path="/records/:id" element={<PublicRecordDetail />} />
                     <Route path="/participate" element={<Participate />} />
                     <Route path="/today" element={<Today />} />
                     <Route
