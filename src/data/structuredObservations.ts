@@ -263,16 +263,16 @@ const questionSets: Record<ObservationFamilyId, ObservationQuestionSet> = {
   },
 };
 
-export const observationQuestionSetForPlace = (
-  place: PlaceRegistryRecord
+export const observationQuestionSetForEntity = (
+  entity: PlaceRegistryRecord
 ): ObservationQuestionSet => {
-  const familyId = observationFamilyForCategory(place.primaryCategory);
+  const familyId = observationFamilyForCategory(entity.primaryCategory);
   const set = questionSets[familyId];
   return {
     ...set,
     questions: set.questions.filter(
       question =>
-        !question.appliesTo || question.appliesTo.includes(place.primaryCategory)
+        !question.appliesTo || question.appliesTo.includes(entity.primaryCategory)
     ),
   };
 };
