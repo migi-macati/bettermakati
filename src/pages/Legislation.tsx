@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Link } from 'react-router';
+import { Link, useSearchParams } from 'react-router';
 import {
   BookOpen,
   ChevronDown,
@@ -19,33 +19,21 @@ import {
   localLegislationRecords,
   type LocalMeasureType,
 } from '../data/localLegislation';
+import {
+  legislationRecordDisplay,
+  legislationRecordHref,
+  legislationRecordId,
+  loadLegislationBrowserIndex,
+  matchLegislationRecords,
+  type BrowserLegislationIndex,
+  type BrowserLegislationRecord,
+} from '../data/legislationBrowserIndex';
 
 const officialArchive =
   'https://www.makati.gov.ph/content/resolutions-and-ordinances/author';
 const charterUrl =
   'https://lawphil.net/statutes/repacts/ra1995/ra_7854_1995.html';
-const browserIndexUrl = '/data/makati-legislation-index.json';
 const visibleResultLimit = 60;
-
-type BrowserLegislationRecord = [
-  archiveLegislationId: string,
-  measureType: LocalMeasureType,
-  officialNumber: string,
-  seriesYear: number | null,
-  title: string,
-  officialDocumentUrl: string | null,
-];
-
-interface BrowserLegislationIndex {
-  schemaVersion: number;
-  generatedAt: string;
-  sourceDate: string;
-  archiveUrl: string | null;
-  total: number;
-  countByType: Partial<Record<LocalMeasureType, number>>;
-  years: number[];
-  records: BrowserLegislationRecord[];
-}
 
 const fallbackRecords: BrowserLegislationRecord[] = localLegislationRecords.map(
   record => [
@@ -59,25 +47,6 @@ const fallbackRecords: BrowserLegislationRecord[] = localLegislationRecords.map(
   ]
 );
 
-const recordIdFor = (record: BrowserLegislationRecord) => {
-  const [, measureType, officialNumber] = record;
-  const slug = officialNumber
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
-  return measureType + '-' + slug;
-};
-
-const displayFor = (record: BrowserLegislationRecord) => {
-  const [, measureType, officialNumber] = record;
-  return (
-    'City ' +
-    (measureType === 'ordinance' ? 'Ordinance' : 'Resolution') +
-    ' No. ' +
-    officialNumber
-  );
-};
-
 const measureFilters: Array<{
   value: 'all' | LocalMeasureType;
   label: string;
@@ -88,7 +57,9 @@ const measureFilters: Array<{
 ];
 
 export default function Legislation() {
-  const [query, setQuery] = useState('');
+  const [params] = useSearchParams();
+  const recordParam = params.get('record');
+  const [query, setQuery] = useState(params.get('q') ?? '');
   const [measureType, setMeasureType] = useState<'all' | LocalMeasureType>('all');
   const [year, setYear] = useState('all');
   const [archiveIndex, setArchiveIndex] = useState<BrowserLegislationIndex | null>(
@@ -100,15 +71,20 @@ export default function Legislation() {
   useEffect(() => {
     let cancelled = false;
 
-    fetch(browserIndexUrl)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Unable to load legislation index.');
-        }
-        return response.json() as Promise<BrowserLegislationIndex>;
-      })
+    loadLegislationBrowserIndex()
       .then(index => {
-        if (!cancelled) setArchiveIndex(index);
+        if (cancelled) return;
+        setArchiveIndex(index);
+
+        if (recordParam) {
+          const matched = index.records.find(
+            record => legislationRecordId(record) === recordParam
+          );
+          if (matched) {
+            setQuery(matched[2]);
+            setExpandedRecordId(recordParam);
+          }
+        }
       })
       .catch(() => {
         if (!cancelled) setArchiveError(true);
@@ -117,44 +93,42 @@ export default function Legislation() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [recordParam]);
 
   const records = archiveIndex?.records ?? fallbackRecords;
 
   const resultSet = useMemo(() => {
-    const normalizedQuery = query.trim().toLowerCase();
+    if (!archiveIndex) {
+      const normalizedQuery = query.trim().toLowerCase();
+      const matches = records.filter(record => {
+        if (measureType !== 'all' && record[1] !== measureType) return false;
+        if (year !== 'all' && String(record[3] ?? '') !== year) return false;
+        if (!normalizedQuery) return true;
 
-    const matches = records.filter(record => {
-      if (measureType !== 'all' && record[1] !== measureType) return false;
-      if (year !== 'all' && String(record[3] ?? '') !== year) return false;
-      if (!normalizedQuery) return true;
+        const seed = localLegislationById.get(legislationRecordId(record));
+        return [
+          legislationRecordDisplay(record),
+          record[2],
+          record[4],
+          ...(seed?.topics ?? []),
+        ]
+          .join(' ')
+          .toLowerCase()
+          .includes(normalizedQuery);
+      });
 
-      const seed = localLegislationById.get(recordIdFor(record));
-      const haystack = [
-        displayFor(record),
-        record[2],
-        record[4],
-        ...(seed?.topics ?? []),
-      ]
-        .join(' ')
-        .toLowerCase();
+      return {
+        total: matches.length,
+        visible: matches.slice(0, visibleResultLimit),
+      };
+    }
 
-      return haystack.includes(normalizedQuery);
+    return matchLegislationRecords(archiveIndex, query, {
+      measureType,
+      year,
+      limit: visibleResultLimit,
     });
-
-    matches.sort(
-      (a, b) =>
-        (b[3] ?? 0) - (a[3] ?? 0) ||
-        b[2].localeCompare(a[2], undefined, {
-          numeric: true,
-        })
-    );
-
-    return {
-      total: matches.length,
-      visible: matches.slice(0, visibleResultLimit),
-    };
-  }, [records, query, measureType, year]);
+  }, [archiveIndex, records, query, measureType, year]);
 
   const indexedTotal = archiveIndex?.total ?? fallbackRecords.length;
   const ordinanceCount =
@@ -303,8 +277,8 @@ export default function Legislation() {
         {resultSet.visible.length ? (
           <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-2">
             {resultSet.visible.map(record => {
-              const seed = localLegislationById.get(recordIdFor(record));
-              const expanded = expandedRecordId === recordIdFor(record);
+              const seed = localLegislationById.get(legislationRecordId(record));
+              const expanded = expandedRecordId === legislationRecordId(record);
               const sourceUrl =
                 record[5] ||
                 archiveIndex?.archiveUrl ||
@@ -312,7 +286,7 @@ export default function Legislation() {
 
               return (
                 <article
-                  key={recordIdFor(record)}
+                  key={legislationRecordId(record)}
                   className="rounded-2xl border border-primary-100 bg-white p-5"
                 >
                   <div className="flex flex-wrap items-center gap-2 text-xs font-bold uppercase tracking-[0.08em] text-gray-500">
@@ -345,7 +319,7 @@ export default function Legislation() {
                     <button
                       type="button"
                       onClick={() =>
-                        setExpandedRecordId(expanded ? null : recordIdFor(record))
+                        setExpandedRecordId(expanded ? null : legislationRecordId(record))
                       }
                       className="text-primary-700 underline underline-offset-2"
                       aria-expanded={expanded}
@@ -369,11 +343,11 @@ export default function Legislation() {
                     <dl className="mt-5 grid grid-cols-1 gap-3 border-t border-gray-200 pt-4 text-sm sm:grid-cols-2">
                       <div>
                         <dt className="font-bold text-gray-500">BetterMakati ID</dt>
-                        <dd className="mt-1 break-words text-gray-900">{recordIdFor(record)}</dd>
+                        <dd className="mt-1 break-words text-gray-900">{legislationRecordId(record)}</dd>
                       </div>
                       <div>
                         <dt className="font-bold text-gray-500">Official reference</dt>
-                        <dd className="mt-1 text-gray-900">{displayFor(record)}</dd>
+                        <dd className="mt-1 text-gray-900">{legislationRecordDisplay(record)}</dd>
                       </div>
                       {record[0] ? (
                         <div className="sm:col-span-2">
