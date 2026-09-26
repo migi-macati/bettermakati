@@ -9,7 +9,6 @@ import {
   ExternalLink,
   MapPin,
   Newspaper,
-  Radio,
   Rss,
   ShieldCheck,
   WalletCards,
