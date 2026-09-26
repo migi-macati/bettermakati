@@ -66,7 +66,7 @@ for (const marker of [
   'EvidenceLinks',
   'Methodology & limits',
   'role="img"',
-  'Open source',
+  'report.sources.map',
 ]) {
   if (!article.includes(marker) && !reports.includes(marker)) {
     problems.push('Missing v2 report renderer marker: ' + marker);
