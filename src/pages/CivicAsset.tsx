@@ -4,6 +4,7 @@ import {
   AlertTriangle,
   ArrowLeft,
   Building2,
+  ClipboardCheck,
   ExternalLink,
   MapPin,
   Route,
@@ -16,6 +17,7 @@ import { Heading } from '../components/ui/Heading';
 import Breadcrumbs from '../components/ui/Breadcrumbs';
 import CivicMapEmbed from '../components/civic/CivicMapEmbed';
 import CivicContributionForm from '../components/civic/CivicContributionForm';
+import CivicObservationForm from '../components/civic/CivicObservationForm';
 import CivicDiscussion from '../components/civic/CivicDiscussion';
 import { useBarangayScope, withBarangayScope } from '../hooks/useBarangayScope';
 import {
@@ -158,6 +160,7 @@ export default function CivicAsset() {
 
         <nav aria-label="On this place page" className="mt-6 flex flex-wrap gap-3">
           <a href="#place-information" className="brand-btn-secondary">Place information</a>
+          <a href="#observe" className="brand-btn-secondary">Observe conditions</a>
           <a href="#community-records" className="brand-btn-secondary">Community cases</a>
           <a href="#contribute" className="brand-btn-primary">Report or suggest</a>
         </nav>
@@ -234,6 +237,29 @@ export default function CivicAsset() {
               </div>
             )}
           </div>
+        </div>
+      </Section>
+
+      <Section className="bg-white" id="observe">
+        <div className="grid gap-8 lg:grid-cols-[0.65fr_1.35fr]">
+          <div>
+            <div className="section-eyebrow">Observe this place</div>
+            <Heading level={2}>Record current conditions</Heading>
+            <div className="mt-5 flex gap-3 rounded-xl border border-gray-200 bg-[#fffdf8] p-4">
+              <ClipboardCheck className="mt-0.5 h-5 w-5 shrink-0 text-primary-700" />
+              <p className="text-sm leading-relaxed text-gray-600">
+                Choose only what you checked. Skip the rest.
+              </p>
+            </div>
+            <a
+              href="#contribute"
+              className="mt-4 inline-flex text-sm font-bold text-primary-700 underline underline-offset-2"
+            >
+              Report a problem instead
+            </a>
+          </div>
+
+          <CivicObservationForm place={place} />
         </div>
       </Section>
 
