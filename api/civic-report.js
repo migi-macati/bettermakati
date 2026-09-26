@@ -114,9 +114,11 @@ export default async function handler(req, res) {
         !blocksReferral &&
         (meta.severity === 'high' || corroborated);
 
-      const placeId = meta.placeId || meta.assetId || null;
+      const entityId = meta.entityId || meta.placeId || meta.assetId || null;
+      const entityKind = meta.entityKind || (meta.placeId ? 'place' : null);
       const locationMode =
-        meta.locationMode || (placeId ? 'matched-place' : 'location-only');
+        meta.locationMode ||
+        (entityId ? (meta.placeId ? 'matched-place' : 'matched-entity') : 'location-only');
 
       records.push({
         number: issue.number,
@@ -128,11 +130,13 @@ export default async function handler(req, res) {
         updatedAt: issue.updated_at,
         meta: {
           ...meta,
-          placeId,
+          entityId,
+          entityKind,
           locationMode,
           locationLabel: meta.locationLabel || meta.location || '',
         },
-        placeId,
+        entityId,
+        entityKind,
         locationMode,
         counts,
         evidenceStatus,
