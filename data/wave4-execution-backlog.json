@@ -923,9 +923,36 @@
       "id": "W4-4e",
       "phase": "Reports & Insights",
       "title": "Publish one records-derived flagship report",
-      "status": "planned",
+      "status": "complete",
       "maximumScope": "Exactly one high-quality synthesis from legislation/integrity/accountability records where the evidence supports a meaningful story.",
-      "stopWhen": "The report has one synthesis and distinguishes source facts from BetterMakati analysis."
+      "stopWhen": "The report has one synthesis and distinguishes source facts from BetterMakati analysis.",
+      "completedAt": "2026-09-26",
+      "implementationFiles": [
+        "src/data/reports.ts",
+        "data/wave4-records-flagship.json",
+        "scripts/check-records-flagship-report.mjs",
+        "package.json"
+      ],
+      "validation": {
+        "publishedReportCount": 1,
+        "publishedReportSlug": "audit-follow-up-closure-trails",
+        "synthesis": "Three historical Makati audit findings have later response or implementation-evidence records in the indexed public trail, but none currently has finding-specific closure established by an explicit later status mapping.",
+        "canonicalInputs": {
+          "findingLevelAuditRecords": 3,
+          "followUpActionRecords": 4,
+          "resolutionTrails": 3,
+          "sourceOnlyAuditRecords": 1
+        },
+        "findingRecords": [
+          "2017 Development Fund loan payments",
+          "2018 DepEd-Makati cash advances",
+          "2018 Special Education Fund eligibility"
+        ],
+        "sourceBoundary": "The report reuses the canonical Integrity audit finding/action/trail layer and Accountability entries plus their already-registered direct sources; it adds no new external research.",
+        "analysisBoundary": "Documentary closure not established is explicitly separated from any conclusion that the underlying condition continued, that later corrective work did not occur, or that wrongdoing persisted.",
+        "sourceOnlyBoundary": "The 2024 SEF compliance audit is disclosed separately and excluded from the three finding-level trails because finding-level text is not currently retrievable.",
+        "guardrail": "Exactly one W4-4e report is published, secondary sources remain typed as secondary, and the report checker forbids corruption/fraud/guilt/continuing-violation inference."
+      }
     },
     {
       "id": "W4-4f",
@@ -1032,11 +1059,11 @@
       "stopWhen": "Wave 4 is closed only to the extent supported by evidence, with future work reopened as specific capabilities rather than vague unfinished work."
     }
   ],
-  "current": "W4-4e",
+  "current": "W4-4f",
   "immediateNext": {
-    "id": "W4-4e",
-    "title": "Publish one records-derived flagship report",
-    "maximumScope": "Exactly one high-quality synthesis from legislation/integrity/accountability records where the evidence supports a meaningful story."
+    "id": "W4-4f",
+    "title": "Redesign Reports & Insights landing",
+    "maximumScope": "Reports landing only. One report per card; headline, subheadline, date, Read more; strong carousel/list hierarchy and no overview/meta copy."
   },
   "carriedForward": [
     {
