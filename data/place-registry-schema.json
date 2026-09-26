@@ -236,7 +236,7 @@
   "nextImplementationStep": {
     "id": "W3R-7b",
     "title": "Pilot one civic audit",
-    "constraint": "One bounded pilot using an entity-kind-appropriate target set. Park accessibility is registry-ready; street/sidewalk geography-wide claims remain blocked until segment coverage is expanded or explicitly bounded."
+    "constraint": "One bounded pilot using one entity kind. Verified-place pilots are ready; named partial segment pilots may use explicit bounded provisional segments without wider completeness claims."
   },
   "betterBarangayReuse": {
     "workstream": "W3R-3a",
@@ -298,14 +298,18 @@
       "src/pages/CivicMap.tsx",
       "src/data/searchIndex.ts"
     ],
-    "visibleVerificationStatus": "verified",
-    "currentVisibleCount": 79,
     "behavior": [
-      "Civic Map is one browse surface over canonical place records.",
-      "The entry page starts from place discovery and user tasks rather than ratings.",
-      "Only verified registry records are listed on the entry page.",
-      "Place-detail and reporting mechanics remain unchanged for later W3R steps."
-    ]
+      "Civic Map browses one canonical registry through separate Places, Segments and Routes views.",
+      "Places use destination-style cards and verified-only default browsing.",
+      "Segments use bounded infrastructure records and may surface provisional records explicitly as Draft segment.",
+      "Routes use network/service treatment rather than destination treatment.",
+      "Nearby matching considers physical place entities only; segments and routes require deliberate search/selection."
+    ],
+    "visiblePolicy": {
+      "place": "verified-only",
+      "segment": "verified or provisional; explicit Draft segment state",
+      "route": "verified or provisional; never proximity-matched as a nearby place"
+    }
   },
   "civicPlaceDetailReframe": {
     "workstream": "W3R-4b",
@@ -395,10 +399,10 @@
     ],
     "rules": [
       "Observations are dated condition snapshots, not ratings or civic cases.",
-      "Every Place Registry category maps to exactly one observation family.",
+      "Every Civic Registry category maps to exactly one observation family.",
       "Unknown/not-observed responses are first-class and the contributor is never forced to guess.",
       "No overall score or hidden numeric composite is permitted.",
-      "Observation submission never mutates canonical place facts or civic case lifecycle.",
+      "Observation submission never mutates canonical civic-registry facts or civic case lifecycle.",
       "No rating migration is required."
     ]
   },
