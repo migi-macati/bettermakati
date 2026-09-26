@@ -181,6 +181,76 @@ const interactive = await page
   )
   .catch(() => []);
 
+
+const authorResponse = responses.find(
+  item => item.url.includes('/api/ROMS/Author/List/ByType/all') && Array.isArray(item.json)
+);
+const authors = authorResponse?.json || [];
+const sampleAuthor = authors.find(
+  item => item.memberId === 'd0777ebb-6631-ac47-aa0a-240bf9f57075'
+) || authors[0] || null;
+
+let angularApiCandidates = [];
+try {
+  const bundleText = await page.evaluate(async () => {
+    const response = await fetch('/Scripts/NgApp/main.js', { credentials: 'same-origin' });
+    return response.text();
+  });
+  const candidates = bundleText.match(/.{0,140}\/api\/ROMS\/.{0,220}/g) || [];
+  angularApiCandidates = [...new Set(candidates)].slice(0, 200);
+} catch {
+  angularApiCandidates = [];
+}
+
+const sampleDetailResponses = [];
+if (sampleAuthor) {
+  const detailPage = await context.newPage();
+  detailPage.on('response', async response => {
+    if (!response.url().includes('/api/ROMS/')) return;
+    const headers = await response.allHeaders().catch(() => ({}));
+    const contentType = headers['content-type'] || '';
+    const record = {
+      url: response.url(),
+      status: response.status(),
+      method: response.request().method(),
+      resourceType: response.request().resourceType(),
+      contentType,
+    };
+    if (/json/i.test(contentType)) {
+      try {
+        record.json = await response.json();
+      } catch {
+        // Metadata is still useful when JSON decoding fails.
+      }
+    }
+    sampleDetailResponses.push(record);
+  });
+
+  const slug = [sampleAuthor.lastname, sampleAuthor.firstname]
+    .filter(Boolean)
+    .join(', ')
+    .toLowerCase()
+    .replace(/\s+/g, '-');
+  const detailUrl =
+    'https://www.makati.gov.ph/content/resolutions-and-ordinances/author/' +
+    encodeURIComponent(slug) +
+    '/' +
+    sampleAuthor.memberId +
+    '?type=all';
+
+  await detailPage.goto(detailUrl, {
+    waitUntil: 'domcontentloaded',
+    timeout: 60_000,
+  }).catch(() => {});
+  await detailPage.waitForTimeout(4_000);
+  await detailPage.waitForLoadState('networkidle', { timeout: 15_000 }).catch(() => {});
+  for (let i = 0; i < 8; i += 1) {
+    await detailPage.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+    await detailPage.waitForTimeout(500);
+  }
+  await detailPage.close();
+}
+
 const result = {
   schemaVersion: 1,
   capturedAt,
@@ -196,6 +266,9 @@ const result = {
   scriptSources,
   interactive,
   bodyText,
+  angularApiCandidates,
+  sampleAuthor,
+  sampleDetailResponses,
 };
 
 await writeFile(outputPath, JSON.stringify(result, null, 2) + '\n', 'utf8');
