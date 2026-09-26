@@ -28,7 +28,7 @@ type GeolocationState =
   | 'denied'
   | 'unavailable';
 
-type LocationSource = 'device' | 'manual-pin' | 'place-search' | 'none';
+type LocationSource = 'device' | 'manual-pin' | 'registry-search' | 'none';
 type EntityMatchState = 'confirmed-entity' | 'location-only' | 'unresolved';
 
 interface ReportLocationState {
@@ -62,7 +62,7 @@ const normalizeSearch = (value: string) =>
     .toLocaleLowerCase('en-PH')
     .replace(/\s+/g, ' ');
 
-const searchTextForPlace = (place: PlaceRegistryRecord) =>
+const searchTextForEntity = (place: PlaceRegistryRecord) =>
   normalizeSearch(
     [
       place.name,
@@ -127,7 +127,7 @@ export default function CivicNearbyReport() {
     if (!needle) return [];
 
     return searchablePlaces
-      .filter(place => searchTextForPlace(place).includes(needle))
+      .filter(place => searchTextForEntity(place).includes(needle))
       .slice(0, 8);
   }, [query]);
 
@@ -201,7 +201,7 @@ export default function CivicNearbyReport() {
     setSelectedEntity(entity);
     setMatchState('confirmed-entity');
     setLocation(current => ({
-      source: current.source === 'none' ? 'place-search' : current.source,
+      source: current.source === 'none' ? 'registry-search' : current.source,
       point: current.point ?? entity.location.point ?? null,
       accuracyMeters: current.accuracyMeters,
     }));
@@ -226,7 +226,7 @@ export default function CivicNearbyReport() {
       <SEO
         title="Report something near me | Civic Map"
         description="Use your location or search BetterMakati places, infrastructure segments or routes to identify where a non-emergency civic problem is happening."
-        keywords="Makati report problem near me, civic issue location, Makati place finder"
+        keywords="Makati report problem near me, civic issue location, Makati civic registry"
       />
 
       <Section className="bg-[#fffdf8]">
@@ -300,7 +300,7 @@ export default function CivicNearbyReport() {
             <AlertCircle className="mt-0.5 h-5 w-5 shrink-0" />
             <p>
               {geoState === 'denied'
-                ? 'Location permission was not granted. Search for a place or choose the location manually instead.'
+                ? 'Location permission was not granted. Search the civic registry or choose the location manually instead.'
                 : 'Current location is unavailable. Search for a place or choose the location manually instead.'}
             </p>
           </div>
@@ -375,7 +375,7 @@ export default function CivicNearbyReport() {
               None of these — report this location
             </button>
             <a href="#search-place" className="brand-btn-secondary">
-              Search another place
+              Search another record
             </a>
           </div>
         </Section>
@@ -383,7 +383,7 @@ export default function CivicNearbyReport() {
 
       <Section className="bg-white" id="search-place">
         <div className="section-eyebrow">Place search</div>
-        <Heading level={2}>Search for a place or street</Heading>
+        <Heading level={2}>Search the civic registry</Heading>
 
         <label className="relative mt-5 block max-w-3xl">
           <span className="sr-only">Search verified places</span>
@@ -429,7 +429,7 @@ export default function CivicNearbyReport() {
             })}
             {searchResults.length === 0 && (
               <div className="rounded-xl border border-gray-200 bg-[#fffdf8] p-5 text-sm text-gray-600 md:col-span-2">
-                No verified place matches that search.
+                No civic registry record matches that search.
               </div>
             )}
           </div>
@@ -489,7 +489,7 @@ export default function CivicNearbyReport() {
                 <p className="mt-1 text-sm leading-relaxed text-gray-700">
                   {matchState === 'confirmed-entity' && selectedEntity
                     ? selectedEntity.name
-                    : 'Location only — no canonical place selected.'}
+                    : 'Location only — no canonical civic entity selected.'}
                 </p>
               </div>
             </div>
