@@ -756,9 +756,39 @@
       "id": "W4-4a",
       "phase": "Reports & Insights",
       "title": "Audit existing Featured Reports",
-      "status": "planned",
+      "status": "complete",
       "maximumScope": "Content audit only of current reports, homepage/Reports presentation and underlying source links.",
-      "stopWhen": "Each existing report is classified keep, rewrite, merge into another synthesis or retire; no new report is written."
+      "stopWhen": "Each existing report is classified keep, rewrite, merge into another synthesis or retire; no new report is written.",
+      "completedAt": "2026-09-26",
+      "implementationFiles": [
+        "data/wave4-featured-reports-audit.json",
+        "scripts/check-featured-reports-audit.mjs",
+        "package.json"
+      ],
+      "validation": {
+        "currentReportCount": 4,
+        "disposition": {
+          "keep": 0,
+          "rewrite": 2,
+          "merge": 2,
+          "retire": 0
+        },
+        "futureArticleCountFromCurrentInventory": 3,
+        "rewriteReports": [
+          "2026-budget-operating-expenses",
+          "2024-barangay-population"
+        ],
+        "mergeGroup": {
+          "id": "2025-fiscal-profile",
+          "reports": [
+            "2025-local-revenue",
+            "2025-social-services"
+          ]
+        },
+        "keyFinding": "The 2026 budget report must make explicit that its increase is versus the 2025 adopted plan; the same canonical budget surface shows a higher 2025 current-year estimate.",
+        "presentationFinding": "Homepage and /reports already reuse the canonical reports array; preserve that. The Reports landing should demote unrelated national-data links and gain stronger editorial hierarchy in W4-4f.",
+        "guardrail": "W4-4a changes no public report content and writes no new report."
+      }
     },
     {
       "id": "W4-4b",
@@ -897,11 +927,11 @@
       "stopWhen": "Wave 4 is closed only to the extent supported by evidence, with future work reopened as specific capabilities rather than vague unfinished work."
     }
   ],
-  "current": "W4-4a",
+  "current": "W4-4b",
   "immediateNext": {
-    "id": "W4-4a",
-    "title": "Audit existing Featured Reports",
-    "maximumScope": "Content audit only of current reports, homepage/Reports presentation and underlying source links."
+    "id": "W4-4b",
+    "title": "Define report schema v2",
+    "maximumScope": "Schema only: one synthesis, headline, subheadline, date, paragraphs/sections, inline evidence, charts/tables, related canonical records, methodology note only when necessary."
   },
   "carriedForward": [
     {
