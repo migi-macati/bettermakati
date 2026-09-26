@@ -159,15 +159,20 @@
       "id": "W4-1d",
       "phase": "Statistics",
       "title": "Inventory economic and business indicators",
-      "status": "next",
+      "status": "complete",
       "maximumScope": "Official-source research only for GDP/economic structure, establishments/employment/business indicators that can be stated consistently.",
-      "stopWhen": "Each candidate indicator has a source, definition, period and decision: implement, hold or reject."
+      "stopWhen": "Each candidate indicator has a source, definition, period and decision: implement, hold or reject.",
+      "completedAt": "2026-09-26",
+      "inventoryFile": "data/wave4-economic-business-source-inventory.json",
+      "commits": [
+        "3eb2f2ded221f69c18f6289015e444e81dc4ed82"
+      ]
     },
     {
       "id": "W4-1e",
       "phase": "Statistics",
       "title": "Inventory service, land and infrastructure indicators",
-      "status": "planned",
+      "status": "next",
       "maximumScope": "Official-source research only; prioritize measures that connect to services, barangays, facilities or Place Registry records.",
       "stopWhen": "A bounded source-backed indicator set is frozen with no inferred counts from incomplete Place Registry coverage."
     },
@@ -468,11 +473,11 @@
       "stopWhen": "Wave 4 is closed only to the extent supported by evidence, with future work reopened as specific capabilities rather than vague unfinished work."
     }
   ],
-  "current": "W4-1d",
+  "current": "W4-1e",
   "immediateNext": {
-    "id": "W4-1d",
-    "title": "Inventory economic and business indicators",
-    "maximumScope": "Official-source research only for GDP/economic structure, establishments/employment/business indicators that can be stated consistently."
+    "id": "W4-1e",
+    "title": "Inventory service, land and infrastructure indicators",
+    "maximumScope": "Official-source research only; prioritize measures that connect to services, barangays, facilities or Place Registry records."
   },
   "carriedForward": [
     {
