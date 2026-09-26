@@ -4,6 +4,7 @@ import { electedOfficials } from './electedOfficials';
 import { serviceDirectory } from './serviceDirectory';
 import { governmentServiceOffices } from './governmentServiceOffices';
 import { civicAssets, civicAssetTypeLabels } from './civicMap';
+import { civicEntityKindForCategory } from './placeRegistry';
 
 export type SearchGroup =
   | 'Service'
@@ -442,27 +443,43 @@ const civicMapItems: SearchItem[] = [
     title: 'Civic Map',
     group: 'Tool',
     category: 'Participation',
-    description: 'Browse sourced civic places, report non-emergency problems, suggest improvements and help document Makati.',
+    description: 'Browse civic places, bounded infrastructure segments and transport routes; report non-emergency problems and suggest improvements.',
     href: '/civic-map',
-    keywords: 'civic map report pothole sidewalk blocked park review public infrastructure road street proposal crosswalk trees jeepney route public transport',
+    keywords: 'civic map report pothole sidewalk blocked park public infrastructure road street segment proposal crosswalk trees jeepney route public transport',
     featured: true,
   },
-  ...civicAssets.map(asset => ({
-    title: asset.title,
-    group: 'Tool' as const,
-    category: 'Civic Map',
-    description: asset.subtitle,
-    href: '/civic-map/' + asset.id,
-    keywords: [
-      civicAssetTypeLabels[asset.type],
-      asset.barangay ?? '',
-      asset.street ?? '',
-      asset.from ?? '',
-      asset.to ?? '',
-      asset.tags.join(' '),
-      'place source report problem proposal improve correct document',
-    ].join(' '),
-  })),
+  ...civicAssets.map(asset => {
+    const entityKind = civicEntityKindForCategory(asset.type);
+    return {
+      title: asset.title,
+      group: 'Tool' as const,
+      category:
+        entityKind === 'place'
+          ? 'Civic places'
+          : entityKind === 'segment'
+            ? 'Civic segments'
+            : 'Transport routes',
+      description:
+        entityKind === 'place'
+          ? asset.subtitle
+          : entityKind === 'segment'
+            ? [asset.street, asset.from && asset.to ? asset.from + ' to ' + asset.to : '', asset.subtitle]
+                .filter(Boolean)
+                .join(' · ')
+            : asset.subtitle,
+      href: '/civic-map/' + asset.id,
+      keywords: [
+        civicAssetTypeLabels[asset.type],
+        entityKind,
+        asset.barangay ?? '',
+        asset.street ?? '',
+        asset.from ?? '',
+        asset.to ?? '',
+        asset.tags.join(' '),
+        'source report problem proposal improve correct document',
+      ].join(' '),
+    };
+  }),
 ];
 
 const radicalCivicItems: SearchItem[] = [
