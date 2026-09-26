@@ -11,7 +11,7 @@ import {
 interface CivicFeedItem {
   number: number;
   title: string;
-  kind: 'report' | 'proposal' | 'update' | 'reviews';
+  kind: 'report' | 'proposal' | 'update';
   state: 'open' | 'closed';
   url: string;
   createdAt: string;
@@ -65,7 +65,6 @@ const kindLabel: Record<CivicFeedItem['kind'], string> = {
   report: 'Issue case',
   proposal: 'Improvement proposal',
   update: 'Information update',
-  reviews: 'Legacy reviews',
 };
 
 const lifecycleStep = (status: string) =>
