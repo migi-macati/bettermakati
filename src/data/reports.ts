@@ -27,7 +27,7 @@ import {
   integrityAuditSourceOnlyRecords,
   integrityAuditSources,
 } from './integrityAuditTrails';
-import type { FeaturedReportV2 } from './reportTypes';
+import type { FeaturedReportV2, ReportSourceV2 } from './reportTypes';
 
 const reviewedOn = '26 September 2026';
 
@@ -300,6 +300,38 @@ const auditFindingSourceIds = (findingId: string) => {
   }
   return auditReportSourceIds(finding.sourceIds);
 };
+
+
+const recordsFlagshipSources: [ReportSourceV2, ...ReportSourceV2[]] = [
+  {
+    id: '1',
+    label: 'Integrity — audit finding trails',
+    href: '/integrity#audits',
+    sourceKind: 'canonical-internal',
+    publisher: 'BetterMakati',
+    note: 'Canonical finding, action-evidence and resolution-trail records.',
+    checkedOn: reviewedOn,
+  },
+  {
+    id: '2',
+    label: 'Accountability — audit ledger',
+    href: '/accountability?type=audit',
+    sourceKind: 'canonical-internal',
+    publisher: 'BetterMakati',
+    note:
+      'Underlying canonical Accountability entries from which finding-level records are derived.',
+    checkedOn: reviewedOn,
+  },
+  ...[
+    'coa-annual-audit-reports',
+    'gma-2018-development-fund-finding',
+    'gma-2018-development-fund-city-response',
+    'coa-makati-2018-audit-archive',
+    'makati-2018-unliquidated-cash-advances',
+    'makati-deped-sef-q4-2024',
+    'coa-makati-sef-compliance-2024',
+  ].map(auditDirectSource),
+];
 
 export const reports: [
   FeaturedReportV2,
@@ -1220,57 +1252,7 @@ export const reports: [
         ],
       },
     ],
-    sources: [
-      {
-        id: '1',
-        label: 'Integrity — audit finding trails',
-        href: '/integrity#audits',
-        sourceKind: 'canonical-internal',
-        publisher: 'BetterMakati',
-        note:
-          'Canonical finding, action-evidence and resolution-trail records.',
-        checkedOn: reviewedOn,
-      },
-      {
-        id: '2',
-        label: 'Accountability — audit ledger',
-        href: '/accountability?type=audit',
-        sourceKind: 'canonical-internal',
-        publisher: 'BetterMakati',
-        note:
-          'Underlying canonical Accountability entries from which finding-level records are derived.',
-        checkedOn: reviewedOn,
-      },
-      ...[
-        'coa-annual-audit-reports',
-        'gma-2018-development-fund-finding',
-        'gma-2018-development-fund-city-response',
-        'coa-makati-2018-audit-archive',
-        'makati-2018-unliquidated-cash-advances',
-        'makati-deped-sef-q4-2024',
-        'coa-makati-sef-compliance-2024',
-      ].map(auditDirectSource),
-    ] as [
-      {
-        id: string;
-        label: string;
-        href: string;
-        sourceKind: 'canonical-internal';
-        publisher: string;
-        note: string;
-        checkedOn: string;
-      },
-      ...Array<{
-        id: string;
-        label: string;
-        href: string;
-        sourceKind: 'canonical-internal' | 'official-external' | 'secondary';
-        publisher?: string;
-        publishedOrPeriod?: string;
-        note?: string;
-        checkedOn?: string;
-      }>,
-    ],
+    sources: recordsFlagshipSources,
     methodology: {
       text:
         '“Closure” is used only when a later source explicitly maps back to the same finding or recommendation and states an implementation status. Aggregate audit implementation counts, related control activity and later reporting are retained as follow-up evidence but are not promoted to finding-specific closure without that continuity.',
