@@ -142,6 +142,7 @@ for (const marker of [
   'Last {SUMMARY_WINDOW_DAYS} days · n={summary.sampleCount}',
   'isNotObservedValue(row.answer.value)',
   'observationValueLabel(',
+  'new Date(asOf).getTime() - SUMMARY_WINDOW_DAYS * DAY_MS',
 ]) {
   if (!summarySource.includes(marker)) {
     problems.push('Condition summary contract is missing: ' + marker);
@@ -159,11 +160,16 @@ for (const marker of [
   'validQuestionSetId(payload.familyId, payload.questionSetId)',
   'sanitizeAnswers(payload.familyId, payload.placeCategory, payload.answers)',
   'questionCategoryLimits[familyId]?.[questionId]',
-  "return res.status(200).json({ observations: [] })",
+  "if (!thread) return res.status(200).json({ observations: [], asOf })",
+  "asOf,",
 ]) {
   if (!observationApi.includes(marker)) {
     problems.push('Observation storage path is missing: ' + marker);
   }
+}
+
+if (summarySource.includes('Date.now()')) {
+  problems.push('Condition summary must use the API asOf timestamp, not render-time Date.now().');
 }
 
 for (const forbidden of [
