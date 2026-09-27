@@ -96,6 +96,13 @@ export interface MobilityServiceRecord {
   responsibleBodies: MobilityResponsibleBody[];
   placeConnections: MobilityPlaceConnection[];
   relatedAreaIds?: string[];
+
+  /**
+   * Optional repository-owned default alignment artifact.
+   * Geometry lives in mobilityRouteGeometry.ts.
+   */
+  geometryArtifactId?: string;
+
   links: MobilityLink[];
   provenance: {
     assertions: MobilityAssertion[];
@@ -517,6 +524,16 @@ export const validateMobilityServices = (
       throw new Error('Duplicate mobility service ID: ' + service.id);
     }
     ids.add(service.id);
+
+    if (
+      service.geometryArtifactId !== undefined &&
+      !service.geometryArtifactId.trim()
+    ) {
+      throw new Error(
+        'Mobility service geometryArtifactId must not be empty: ' +
+          service.id
+      );
+    }
 
     requireSources(
       service.lifecycle.sourceIds,
