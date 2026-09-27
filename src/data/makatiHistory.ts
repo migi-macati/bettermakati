@@ -583,6 +583,89 @@ const manilaSouth1945: HistorySource = {
   rights:
     'U.S. federal government map; public-domain status is also identified in the linked derivative catalog records.',
 };
+const ayalaHistory: HistorySource = {
+  id: 'ayala-corporation-history',
+  label: 'Ayala Corporation · History',
+  url: 'https://ayala.com/about-ayala/history/',
+  kind: 'Institutional history',
+  evidenceLevel: 'Secondary',
+  format: 'institutional record',
+  repository: 'Ayala Corporation',
+  citationNote:
+    'Corporate institutional history identifying the postwar Makati master plan and development of the business, commercial and residential district.',
+};
+const forbesParkDeed: HistorySource = {
+  id: 'sc-forbes-park-deed-1949',
+  label: 'Supreme Court · RMFPU Holdings, Inc. v. Forbes Park Association, Inc.',
+  url: 'https://elibrary.judiciary.gov.ph/thebookshelf/showdocs/1/67788',
+  kind: 'Legal record',
+  evidenceLevel: 'Near-primary',
+  format: 'law',
+  repository: 'Supreme Court E-Library',
+  date: '2021 decision reproducing title restrictions effective 1 January 1949',
+  citationNote:
+    'Reproduces the deed restrictions annotated on Forbes Park titles, including their effectivity from 1 January 1949 and Ayala Securities Corporation as seller.',
+};
+const ayalaTimeline2008: HistorySource = {
+  id: 'ayala-2008-history-timeline',
+  label: 'Ayala Corporation · 2008 Annual Report history timeline',
+  url: 'https://ayala.com/app/uploads/2023/05/AC-2008-AR.pdf',
+  kind: 'Institutional history',
+  evidenceLevel: 'Secondary',
+  format: 'institutional record',
+  repository: 'Ayala Corporation',
+  date: '2008',
+  citationNote:
+    'Corporate timeline dates Ayala Securities to 1948, the Makati master plan and Forbes Park opening to 1949, and Makati Commercial Center development to 1960.',
+};
+const barrioCharter1959: HistorySource = {
+  id: 'ra-2370-barrio-charter',
+  label: 'Republic Act No. 2370 · Barrio Charter Act',
+  url: 'https://lawphil.net/statutes/repacts/ra1959/ra_2370_1959.html',
+  kind: 'Legal record',
+  evidenceLevel: 'Primary',
+  format: 'law',
+  repository: 'Lawphil',
+  date: '20 June 1959; effective 1 January 1960',
+  citationNote:
+    'Made barrios quasi-municipal corporations, provided for elected barrio councils, and permitted creation of new barrios meeting the statutory requirements.',
+};
+const psaPopulation: HistorySource = {
+  id: 'psa-ncr-rset-2016-population',
+  label: 'Philippine Statistics Authority · NCR Regional Social and Economic Trends 2016',
+  url: 'https://rssoncr.psa.gov.ph/system/files/publication/RSET-NCR%202016.pdf',
+  kind: 'Institutional history',
+  evidenceLevel: 'Primary',
+  format: 'dataset',
+  repository: 'Philippine Statistics Authority · NCR',
+  date: '2016 compilation',
+  locator: 'Table 1.1 · censal years 1948–2015',
+  citationNote:
+    'Official census series reports Makati at 41,335 people in 1948, 114,540 in 1960 and 264,918 in 1970.',
+};
+const makatiPoblacionHistory: HistorySource = {
+  id: 'makati-poblacion-history',
+  label: 'City Government of Makati · Barangay Poblacion history',
+  url: 'https://www.makati.gov.ph/barangay/poblacion/34page?tab=1',
+  kind: 'Institutional history',
+  evidenceLevel: 'Secondary',
+  format: 'institutional record',
+  repository: 'City Government of Makati',
+  citationNote:
+    'City history notes the 1961 order to build a new municipal building at the present site on donated Ayala land.',
+};
+const makatiMedHistory: HistorySource = {
+  id: 'makati-med-history',
+  label: 'Makati Medical Center · Our History',
+  url: 'https://www.makatimed.net.ph/about-us/history/',
+  kind: 'Institutional history',
+  evidenceLevel: 'Secondary',
+  format: 'institutional record',
+  repository: 'Makati Medical Center',
+  date: 'institutional history',
+  citationNote:
+    'Dates the hospital’s public opening to 31 May 1969 and places its planning within Makati’s rapid residential and commercial growth.',
+};
 export const historyReviewed = '27 September 2026';
 export const historyEras = [
   { label: 'Early & Spanish colonial', from: 0, to: 1895 },
@@ -1442,21 +1525,107 @@ const rows: Row[] = [
   [
     'nielson-redevelopment',
     1948,
-    '1948 · FHL account',
-    'From airport to urban district',
+    '1948',
+    'Nielson closes and its airfield becomes development land',
     transport,
-    'FHL dates the airport’s closure and transfer of permanent facilities to Ayala to 1948.',
-    library,
-    'Earlier site copy used 1947. Service relocation and final closure dates still need reconciliation.',
+    'Nielson Airport ceased Makati operations in 1948 and its permanent facilities reverted to Ayala. The former runways were subsequently absorbed into the street framework of the emerging commercial and business district.',
+    fhlNielsonHistory,
+    'The closure marks a land-use transition rather than an overnight conversion; redevelopment unfolded over the following decades.',
+    {
+      additionalSources: [ayalaHistory, ayalaTimeline2008],
+      evidenceStatus: 'established',
+      relations: {
+        institutions: [
+          { label: 'Nielson Airport' },
+          { label: 'Ayala y Cia.' },
+        ],
+        eventIds: ['makati-master-plan-1949', 'makati-commercial-center-1960'],
+      },
+    },
+  ],
+  [
+    'makati-master-plan-1949',
+    1949,
+    '1949',
+    'Ayala’s postwar Makati master plan moves into implementation',
+    transport,
+    'Ayala’s postwar plan reorganized large parts of the former hacienda and airfield into residential, business and commercial districts. Forbes Park opened as the first major high-end residential village in this new development pattern.',
+    ayalaTimeline2008,
+    undefined,
+    {
+      additionalSources: [ayalaHistory, forbesParkDeed],
+      evidenceStatus: 'established',
+      relations: {
+        districtIds: ['makati-cbd'],
+        institutions: [
+          { label: 'Ayala Securities Corporation' },
+          { label: 'Forbes Park Association' },
+        ],
+        people: [{ label: 'Joseph R. McMicking' }],
+        eventIds: ['nielson-redevelopment', 'makati-commercial-center-1960'],
+      },
+    },
+  ],
+
+  [
+    'barrio-charter-1960',
+    1960,
+    '1 January 1960',
+    'The Barrio Charter changes local community government',
+    government,
+    'Republic Act No. 2370 took effect nationwide on 1 January 1960, giving barrios quasi-municipal corporate status, elected councils and a legal path for creating new barrios. These rules formed part of the governance framework through which fast-growing Makati communities were reorganized during the postwar population boom.',
+    barrioCharter1959,
+    'BetterMakati does not use this national law by itself to assign a 1960 creation date to every present-day Makati barangay; individual barangay origins require their own local resolutions and records.',
+    {
+      evidenceStatus: 'established',
+    },
+  ],
+  [
+    'makati-commercial-center-1960',
+    1960,
+    '1960',
+    'Development of the Makati Commercial Center begins',
+    transport,
+    'Ayala’s institutional timeline dates development of the Makati Commercial Center to 1960, advancing the commercial phase of the postwar master plan around Ayala and Makati avenues.',
+    ayalaTimeline2008,
+    undefined,
+    {
+      evidenceStatus: 'established',
+      relations: {
+        districtIds: ['makati-cbd'],
+        institutions: [{ label: 'Ayala y Cia.' }],
+        eventIds: ['makati-master-plan-1949'],
+      },
+    },
+  ],
+  [
+    'population-boom-1960',
+    1960,
+    '1960 census',
+    'Makati’s population passes 100,000',
+    community,
+    'Official census series records Makati growing from 41,335 people in 1948 to 114,540 in 1960. By 1970 the population had reached 264,918, showing the scale of migration and urbanization accompanying residential, industrial and commercial expansion.',
+    psaPopulation,
+    'Population counts describe the municipality as defined at each census date; they should not be treated as directly comparable to later post-boundary-change Makati without noting territorial changes.',
+    {
+      evidenceStatus: 'established',
+    },
   ],
   [
     'municipal-building',
     1962,
     '1962',
-    'A new municipal building',
+    'A new municipal building anchors civic government',
     government,
-    'The city profile records construction on land donated by Ayala Securities Corporation.',
-    city,
+    'Mayor Maximo Estrella ordered construction of a new municipal building at Makati’s present civic-center site in 1961; city histories record the new building as completed in 1962 on land donated by the Ayala interests.',
+    makatiPoblacionHistory,
+    undefined,
+    {
+      additionalSources: [city],
+      evidenceStatus: 'probable',
+      evidenceNote:
+        'The official barangay history gives the 1961 construction order while the city profile dates the building to 1962; BetterMakati preserves both stages rather than forcing a single construction date.',
+    },
   ],
   [
     'makatimed',
@@ -1464,11 +1633,20 @@ const rows: Row[] = [
     '31 May 1969',
     'Makati Medical Center opens',
     health,
-    'The hospital opened to the public, following a project led by physicians Constantino Manahan, Jose Fores, and Mariano Alimurung.',
+    'Makati Medical Center opened to the public on 31 May 1969 after a project led by Constantino Manahan, Jose Fores and Mariano Alimurung. Its institutional history explicitly links the hospital’s creation to the rapid rise of Makati as a residential and commercial center.',
+    makatiMedHistory,
+    undefined,
     {
-      label: 'Makati Medical Center · Our History',
-      url: 'https://www.makatimed.net.ph/about-us/history/',
-      kind: 'Institutional history',
+      evidenceStatus: 'established',
+      relations: {
+        people: [
+          { label: 'Constantino P. Manahan' },
+          { label: 'Jose Y. Fores' },
+          { label: 'Mariano M. Alimurung' },
+        ],
+        institutions: [{ label: 'Makati Medical Center' }],
+        eventIds: ['makati-commercial-center-1960', 'population-boom-1960'],
+      },
     },
   ],
   [
@@ -1629,5 +1807,6 @@ export const historyResearchGaps = [
   'Deepen the 1896–1899 revolutionary record from Filipino and Spanish field documents: verify the Magtagumpay council and flag against contemporary Katipunan material, reconcile Pio del Pilar’s conflicting birth-year traditions, and map the San Pedro/Guadalupe operations beyond U.S. military records.',
   'Complete the 1900–1934 social landscape beyond institutions: verify the 1918 barrio census, municipal presidencia and schools, workers and migration, local markets and industries, Santa Ana/Tejeros leisure economy, and the 1925–1926 transition from the Makati orphanage to Welfareville.',
   'Deepen Makati’s 1935–1945 civilian and neighborhood history: wartime population movements, resistance and collaboration records, bombing and structural damage, food and public-health conditions, Fort McKinley/Guadalupe military geography, and liberation at street level need sources beyond the Nielson and administrative record.',
+  'Deepen the 1946–1972 transformation below the master-plan level: industrial workers and factories, informal and military-linked settlements, individual village and barrio creation records, schools and churches, housing and land tenure, and the lived contrast between “old” and “new” Makati need neighborhood-level primary sources.',
   'Complete the 2022–2023 boundary finality and implementation chronology, and subsequent civic milestones, from dated official records.',
 ];
