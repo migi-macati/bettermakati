@@ -15,7 +15,7 @@ import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
 import LastReviewed from '../components/ui/LastReviewed';
 import SharePage from '../components/ui/SharePage';
-import CivicMapEmbed from '../components/civic/CivicMapEmbed';
+import CivicAreaContextMap from '../components/civic/CivicAreaContextMap';
 import NearMePlaces from '../components/civic/NearMePlaces';
 import { useBarangayScope, withBarangayScope } from '../hooks/useBarangayScope';
 import {
@@ -430,7 +430,7 @@ export default function CivicMap() {
 
       <Section className="bg-white" id="what-you-can-do">
         <div className="grid gap-8 xl:grid-cols-[1.05fr_0.95fr]">
-          <CivicMapEmbed lat={14.5652} lng={121.0278} title="Makati Civic Map" zoom={14} />
+          <CivicAreaContextMap />
 
           <div>
             <div className="section-eyebrow">From the civic registry</div>
