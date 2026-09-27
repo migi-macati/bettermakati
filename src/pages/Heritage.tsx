@@ -2,6 +2,7 @@ import {
   ArrowRight,
   ExternalLink,
   Footprints,
+  Layers3,
   MapPin,
   Route,
 } from 'lucide-react';
@@ -9,7 +10,10 @@ import { Link } from 'react-router';
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
 import { heritageSites } from '../data/visitMakati';
-import { heritageWalkingRoutes } from '../data/heritageCollections';
+import {
+  heritagePlaceCollections,
+  heritageWalkingRoutes,
+} from '../data/heritageCollections';
 import SEO from '../components/SEO';
 import LastReviewed from '../components/ui/LastReviewed';
 import SharePage from '../components/ui/SharePage';
@@ -183,6 +187,53 @@ export default function Heritage() {
                       </a>
                     )}
                   </div>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </Section>
+
+      <Section className="bg-white">
+        <div className="section-eyebrow">Collections</div>
+        <Heading level={2}>Explore by theme</Heading>
+
+        <div className="mt-6 grid grid-cols-1 gap-5 lg:grid-cols-2">
+          {heritagePlaceCollections.map(collection => {
+            const places = collection.placeIds.flatMap(placeId => {
+              const place = placeRegistryById.get(placeId);
+              return place ? [place] : [];
+            });
+
+            return (
+              <article
+                key={collection.id}
+                className="rounded-2xl border border-primary-100 bg-[#fffdf8] p-6"
+              >
+                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+                  <Layers3 className="h-5 w-5" />
+                  Thematic collection
+                </div>
+                <h3 className="mt-4 text-xl font-extrabold text-gray-950">
+                  {collection.name}
+                </h3>
+                <p className="mt-2 text-sm font-bold leading-relaxed text-secondary-800">
+                  {collection.theme}
+                </p>
+                <p className="mt-2 text-sm leading-relaxed text-gray-600">
+                  {collection.description}
+                </p>
+
+                <div className="mt-5 flex flex-wrap gap-2">
+                  {places.map(place => (
+                    <Link
+                      key={place.id}
+                      to={'/civic-map/' + place.id}
+                      className="rounded-full border border-primary-200 bg-white px-3 py-1.5 text-xs font-bold text-primary-800 hover:border-primary-400"
+                    >
+                      {place.name}
+                    </Link>
+                  ))}
                 </div>
               </article>
             );
