@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   ArrowRight,
   ExternalLink,
@@ -11,6 +12,7 @@ import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
 import { heritageSites } from '../data/visitMakati';
 import {
+  heritageCollections,
   heritagePlaceCollections,
   heritageWalkingRoutes,
 } from '../data/heritageCollections';
@@ -18,6 +20,7 @@ import SEO from '../components/SEO';
 import LastReviewed from '../components/ui/LastReviewed';
 import SharePage from '../components/ui/SharePage';
 import { placeRegistryById } from '../data/placeRegistry';
+import HeritageMap from '../components/heritage/HeritageMap';
 
 const mapsUrl = (lat: number, lng: number) =>
   `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
@@ -58,6 +61,17 @@ const directionsUrl = (placeIds: string[]) => {
 
 
 export default function Heritage() {
+  const [mapSelection, setMapSelection] = useState('all');
+  const selectedCollection = heritageCollections.find(
+    collection => collection.id === mapSelection
+  );
+  const mapPlaceIds =
+    selectedCollection?.placeIds ?? heritageSites.map(site => site.placeId);
+  const mapPathPlaceIds =
+    selectedCollection?.kind === 'walking-route'
+      ? selectedCollection.placeIds
+      : [];
+
   return (
     <>
       <SEO
@@ -191,6 +205,79 @@ export default function Heritage() {
               </article>
             );
           })}
+        </div>
+      </Section>
+
+      <Section className="bg-[#f5f8f2]" id="heritage-map">
+        <div className="section-eyebrow">Heritage map</div>
+        <div className="grid gap-6 xl:grid-cols-[0.68fr_1.32fr] xl:items-start">
+          <div>
+            <Heading level={2}>See the places together</Heading>
+            <p className="mt-2 max-w-xl text-sm leading-relaxed text-gray-600">
+              Switch between the full heritage set, walking routes and thematic
+              collections. Every pin comes from the canonical Place Registry.
+            </p>
+
+            <div
+              className="mt-5 flex max-h-[360px] flex-wrap gap-2 overflow-y-auto"
+              role="group"
+              aria-label="Heritage map view"
+            >
+              <button
+                type="button"
+                onClick={() => setMapSelection('all')}
+                aria-pressed={mapSelection === 'all'}
+                className={
+                  mapSelection === 'all'
+                    ? 'rounded-full bg-primary-800 px-3 py-2 text-xs font-bold text-white'
+                    : 'rounded-full border border-primary-200 bg-white px-3 py-2 text-xs font-bold text-primary-800 hover:border-primary-400'
+                }
+              >
+                All heritage places
+              </button>
+              {heritageCollections.map(collection => (
+                <button
+                  key={collection.id}
+                  type="button"
+                  onClick={() => setMapSelection(collection.id)}
+                  aria-pressed={mapSelection === collection.id}
+                  className={
+                    mapSelection === collection.id
+                      ? 'rounded-full bg-primary-800 px-3 py-2 text-xs font-bold text-white'
+                      : 'rounded-full border border-primary-200 bg-white px-3 py-2 text-xs font-bold text-primary-800 hover:border-primary-400'
+                  }
+                >
+                  {collection.name}
+                </button>
+              ))}
+            </div>
+
+            {selectedCollection && (
+              <div className="mt-5 rounded-xl border border-secondary-200 bg-secondary-50 p-4">
+                <div className="text-xs font-bold uppercase tracking-[0.08em] text-secondary-800">
+                  {selectedCollection.kind === 'walking-route'
+                    ? 'Walking route'
+                    : 'Thematic collection'}
+                </div>
+                <div className="mt-1 font-extrabold text-gray-950">
+                  {selectedCollection.name}
+                </div>
+                <p className="mt-1 text-sm leading-relaxed text-gray-700">
+                  {selectedCollection.description}
+                </p>
+              </div>
+            )}
+          </div>
+
+          <HeritageMap
+            placeIds={mapPlaceIds}
+            pathPlaceIds={mapPathPlaceIds}
+            title={
+              selectedCollection
+                ? selectedCollection.name + ' heritage map'
+                : 'Makati heritage map'
+            }
+          />
         </div>
       </Section>
 
