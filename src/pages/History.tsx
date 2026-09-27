@@ -28,6 +28,7 @@ import PhotoCarousel from '../components/ui/PhotoCarousel';
 import { historyImageSet } from '../data/cityImages';
 import { placeRegistryById } from '../data/placeRegistry';
 import { findBarangay } from '../data/barangays';
+import { heritageCollectionById } from '../data/heritageCollections';
 
 const topics = [...new Set(makatiHistory.map(event => event.topic))];
 
@@ -64,6 +65,12 @@ const eventSearchText = (event: HistoryEvent) =>
     ...(event.relations?.people?.map(item => item.label) ?? []),
     ...(event.relations?.institutions?.map(item => item.label) ?? []),
     ...(event.relations?.barangaySlugs ?? []),
+    ...(event.relations?.placeIds?.flatMap(id => {
+      const place = placeRegistryById.get(id);
+      return place
+        ? [place.name, ...((place.aliases ?? []).map(alias => alias.name))]
+        : [id];
+    }) ?? []),
     ...(event.interpretations?.flatMap(item => [item.label, item.summary]) ?? []),
     ...(event.media?.flatMap(item => [item.title, item.caption]) ?? []),
   ]
@@ -136,7 +143,7 @@ const SourceLink = ({
 );
 
 export default function History() {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [query, setQuery] = useState(searchParams.get('query') || '');
   const [era, setEra] = useState('');
   const [topic, setTopic] = useState('');
@@ -144,6 +151,9 @@ export default function History() {
   const [newestFirst, setNewestFirst] = useState(false);
 
   const selectedEra = historyEras.find(item => item.label === era);
+  const selectedHeritageCollection = heritageCollectionById(
+    searchParams.get('collection')
+  );
   const words = query.toLocaleLowerCase().trim().split(/\s+/).filter(Boolean);
 
   const events = makatiHistory
@@ -152,6 +162,10 @@ export default function History() {
         (!selectedEra ||
           (event.year >= selectedEra.from && event.year <= selectedEra.to)) &&
         (!topic || event.topic === topic) &&
+        (!selectedHeritageCollection ||
+          event.relations?.placeIds?.some(placeId =>
+            selectedHeritageCollection.placeIds.includes(placeId)
+          )) &&
         (!primaryOnly ||
           event.sources.some(source => source.evidenceLevel === 'Primary')) &&
         words.every(word => eventSearchText(event).includes(word))
@@ -163,6 +177,10 @@ export default function History() {
     setEra('');
     setTopic('');
     setPrimaryOnly(false);
+    const nextParams = new URLSearchParams(searchParams);
+    nextParams.delete('collection');
+    nextParams.delete('query');
+    setSearchParams(nextParams, { replace: true });
   };
 
   const download = () => {
@@ -210,6 +228,26 @@ export default function History() {
         </div>
 
         <LastReviewed label="Timeline review" date={historyReviewed} />
+
+        {selectedHeritageCollection && (
+          <div className="mt-5 rounded-2xl border border-secondary-200 bg-secondary-50 p-5">
+            <div className="text-xs font-bold uppercase tracking-[0.08em] text-secondary-800">
+              Heritage collection
+            </div>
+            <div className="mt-1 text-lg font-extrabold text-gray-950">
+              {selectedHeritageCollection.name}
+            </div>
+            <p className="mt-1 max-w-3xl text-sm leading-relaxed text-gray-700">
+              Showing timeline entries linked to places in this collection.
+            </p>
+            <Link
+              to={'/heritage#collection-' + selectedHeritageCollection.id}
+              className="mt-3 inline-flex text-sm font-bold text-primary-700 underline underline-offset-2"
+            >
+              Back to this heritage collection
+            </Link>
+          </div>
+        )}
 
         <PhotoCarousel
           images={historyImageSet}
