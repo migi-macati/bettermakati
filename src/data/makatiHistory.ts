@@ -652,6 +652,16 @@ const rows: Row[] = [
     study,
   ],
   [
+    'uprising-1639',
+    1639,
+    '28 November 1639',
+    'Violence reaches the novitiate',
+    war,
+    'A Jesuit account examined by Tueller describes fighting during the Chinese uprising.',
+    study,
+    'A mediated colonial account, not a neutral eyewitness consensus.',
+  ],
+  [
     'san-pedro-estate-1656',
     1656,
     '1656 · Colín survey',
@@ -668,16 +678,6 @@ const rows: Row[] = [
         eventIds: ['buenavista-foundation', 'san-pedro-church'],
       },
     },
-  ],
-  [
-    'uprising-1639',
-    1639,
-    '28 November 1639',
-    'Violence reaches the novitiate',
-    war,
-    'A Jesuit account examined by Tueller describes fighting during the Chinese uprising.',
-    study,
-    'A mediated colonial account, not a neutral eyewitness consensus.',
   ],
   [
     'town-1670',
@@ -1077,6 +1077,44 @@ const rows: Row[] = [
     },
   ],
   [
+    'electric-railway',
+    1906,
+    '30 January 1906',
+    'Electric railway franchise',
+    transport,
+    'Act 1446 authorized Charles M. Swift’s Manila–Pasig electric railway, describing a route along San Pedro Macati road.',
+    legal(
+      'Philippine Commission · Act 1446, §1',
+      'https://lawphil.net/statutes/acts/act1906/act_1446_1906.html'
+    ),
+    'An authorization date, not an opening date.',
+  ],
+  [
+    'guadalupe-station',
+    1913,
+    '1913',
+    'Guadalupe station in an executive order',
+    transport,
+    'Executive Order 6 identifies Guadalupe passenger station on the Manila–Pasig electric railway and names the municipality San Pedro Macati.',
+    legal(
+      'Executive Order 6, series of 1913',
+      'https://lawphil.net/executive/execord/eo1913/eo_6_1913.html'
+    ),
+  ],
+  [
+    'name-makati',
+    1914,
+    '28 February 1914',
+    'San Pedro Macati becomes Makati',
+    government,
+    'Act 2390 formally changed the municipality’s name to Makati, effective upon passage.',
+    legal(
+      'Philippine Legislature · Act 2390, §§1–2',
+      'https://lawphil.net/statutes/acts/act1914/act_2390_1914.html'
+    ),
+    'The act uses “San Pedro Macati”, without “de”. This is the naming authority used here.',
+  ],
+  [
     'government-orphanage-1917',
     1917,
     'January–February 1917',
@@ -1157,44 +1195,6 @@ const rows: Row[] = [
         },
       ],
     },
-  ],
-  [
-    'electric-railway',
-    1906,
-    '30 January 1906',
-    'Electric railway franchise',
-    transport,
-    'Act 1446 authorized Charles M. Swift’s Manila–Pasig electric railway, describing a route along San Pedro Macati road.',
-    legal(
-      'Philippine Commission · Act 1446, §1',
-      'https://lawphil.net/statutes/acts/act1906/act_1446_1906.html'
-    ),
-    'An authorization date, not an opening date.',
-  ],
-  [
-    'guadalupe-station',
-    1913,
-    '1913',
-    'Guadalupe station in an executive order',
-    transport,
-    'Executive Order 6 identifies Guadalupe passenger station on the Manila–Pasig electric railway and names the municipality San Pedro Macati.',
-    legal(
-      'Executive Order 6, series of 1913',
-      'https://lawphil.net/executive/execord/eo1913/eo_6_1913.html'
-    ),
-  ],
-  [
-    'name-makati',
-    1914,
-    '28 February 1914',
-    'San Pedro Macati becomes Makati',
-    government,
-    'Act 2390 formally changed the municipality’s name to Makati, effective upon passage.',
-    legal(
-      'Philippine Legislature · Act 2390, §§1–2',
-      'https://lawphil.net/statutes/acts/act1914/act_2390_1914.html'
-    ),
-    'The act uses “San Pedro Macati”, without “de”. This is the naming authority used here.',
   ],
   [
     'nielson-opening',
