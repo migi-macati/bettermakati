@@ -666,6 +666,103 @@ const makatiMedHistory: HistorySource = {
   citationNote:
     'Dates the hospital’s public opening to 31 May 1969 and places its planning within Makati’s rapid residential and commercial growth.',
 };
+const martialLaw1081: HistorySource = {
+  id: 'proc-1081-martial-law',
+  label: 'Proclamation No. 1081 · Proclaiming a State of Martial Law',
+  url: 'https://lawphil.net/executive/proc/proc1972/proc_1081_1972.html',
+  kind: 'Legal record',
+  evidenceLevel: 'Primary',
+  format: 'law',
+  repository: 'Lawphil',
+  date: '21 September 1972',
+  citationNote:
+    'Primary text of the proclamation. Its recitals are the Marcos administration’s stated justifications and should be attributed as such rather than presented as independent findings.',
+};
+const pd824MetroManila: HistorySource = {
+  id: 'pd-824-metropolitan-manila',
+  label: 'Presidential Decree No. 824 · Creating Metropolitan Manila',
+  url: 'https://lawphil.net/statutes/presdecs/pd1975/pd_824_1975.html',
+  kind: 'Legal record',
+  evidenceLevel: 'Primary',
+  format: 'law',
+  repository: 'Lawphil',
+  date: '7 November 1975',
+  citationNote:
+    'Created Metropolitan Manila and the Metropolitan Manila Commission and expressly included Makati.',
+};
+const mbcFounding: HistorySource = {
+  id: 'mbc-founding-1981',
+  label: 'Makati Business Club · “Creating the Forum for Constructive Ideas”',
+  url: 'https://mbc.com.ph/2016/08/23/creating-the-forum-for-constructive-ideas/',
+  kind: 'Institutional history',
+  evidenceLevel: 'Secondary',
+  format: 'institutional record',
+  creator: 'Cesar A. Buenaventura',
+  repository: 'Makati Business Club',
+  date: 'speech delivered 29 January 1997',
+  locator: 'MBC launched 29 October 1981 at Nielson Tower',
+  citationNote:
+    'Retrospective account by an MBC founder/trustee describing the club’s formation, early public-policy agenda and 1983 media dialogue.',
+};
+const wpConfetti1983: HistorySource = {
+  id: 'washington-post-makati-protest-1983',
+  label: 'The Washington Post · “Thousands in Manila Hold Anti-Marcos Protest”',
+  url: 'https://www.washingtonpost.com/archive/politics/1983/09/17/thousands-in-manila-hold-anti-marcos-protest/24016ee8-2a6f-471d-8d13-af5850512dc7/',
+  kind: 'Scholarly account',
+  evidenceLevel: 'Primary',
+  format: 'newspaper',
+  repository: 'The Washington Post',
+  date: '17 September 1983',
+  locator: 'Report on 16 September 1983 Makati protest',
+  citationNote:
+    'Contemporary news report describing the office-worker walkout, yellow confetti and estimated crowd on Ayala Avenue.',
+};
+const nhcpAquino1983Archive: HistorySource = {
+  id: 'nhcp-national-memory-aquino-1983',
+  label: 'NHCP National Memory Project · Ninoy Aquino 1983 periodical collection',
+  url: 'https://memory.nhcp.gov.ph/collections/?ptermid=3706',
+  kind: 'Institutional history',
+  evidenceLevel: 'Primary',
+  format: 'institutional record',
+  repository: 'National Historical Commission of the Philippines',
+  date: '1983 periodicals',
+  citationNote:
+    'Archival collection includes Mr. & Ms. issues from September 1983 and WHO’s “From Makati to Mendiola: A Cry of Protest.”',
+};
+const ugarte1986: HistorySource = {
+  id: 'inquirer-ugarte-tent-city-1986',
+  label: 'Philippine Daily Inquirer · “The nonviolent revolution”',
+  url: 'https://opinion.inquirer.net/92997/the-nonviolent-revolution',
+  kind: 'Scholarly account',
+  evidenceLevel: 'Secondary',
+  format: 'newspaper',
+  repository: 'Philippine Daily Inquirer',
+  date: '2016 retrospective',
+  citationNote:
+    'Retrospective account of nonviolent organizing that describes the Ugarte Field tent city during the February 1986 snap-election period.',
+};
+const makatiPostEdsa: HistorySource = {
+  id: 'makati-city-history-post-edsa',
+  label: 'City Government of Makati · city historical profile',
+  url: 'https://www.makati.gov.ph/assets/uploads/downloads/901/845/pdf/90109032018164725.pdf',
+  kind: 'Institutional history',
+  evidenceLevel: 'Secondary',
+  format: 'institutional record',
+  repository: 'City Government of Makati',
+  citationNote:
+    'Official city historical profile records Jejomar Binay’s appointment after the February 1986 Revolution.',
+};
+const binayAppointment1986: HistorySource = {
+  id: 'philstar-binay-appointment-1986',
+  label: 'The Philippine Star · retrospective on Jejomar Binay’s appointment',
+  url: 'https://www.philstar.com/lifestyle/health-and-family/2015/10/13/1510440/candidate-number-1-jejomar-binay-philippine-presidentiables-2016-series-part-1-3/amp/',
+  kind: 'Scholarly account',
+  evidenceLevel: 'Secondary',
+  format: 'newspaper',
+  repository: 'The Philippine Star',
+  date: '2015 retrospective',
+  locator: 'Dates appointment to 27 February 1986',
+};
 export const historyReviewed = '27 September 2026';
 export const historyEras = [
   { label: 'Early & Spanish colonial', from: 0, to: 1895 },
@@ -1648,35 +1745,122 @@ const rows: Row[] = [
     },
   ],
   [
+    'martial-law-1972',
+    1972,
+    '21–23 September 1972',
+    'Martial Law changes the national political framework',
+    government,
+    'Proclamation No. 1081, dated 21 September 1972, placed the entire Philippines under Martial Law. Among the incidents cited by the Marcos administration in the proclamation’s recitals was a 14 September bombing at the San Miguel building in Makati.',
+    martialLaw1081,
+    'The proclamation’s allegations and stated reasons are presented as the government’s own claims. This entry records the legal change and its Makati reference, not an independent validation of those claims.',
+    {
+      evidenceStatus: 'established',
+      relations: {
+        people: [{ label: 'Ferdinand E. Marcos' }],
+      },
+    },
+  ],
+  [
     'metropolitan-manila',
     1975,
     '7 November 1975',
     'Makati joins Metropolitan Manila',
     government,
     'Presidential Decree 824 included Makati among the municipalities under the new Metropolitan Manila Commission.',
-    legal(
-      'Presidential Decree 824, §2',
-      'https://lawphil.net/statutes/presdecs/pd1975/pd_824_1975.html'
-    ),
+    pd824MetroManila,
+    undefined,
+    {
+      evidenceStatus: 'established',
+    },
   ],
+  [
+    'makati-business-club-1981',
+    1981,
+    '29 October 1981',
+    'Makati Business Club launches at Nielson Tower',
+    community,
+    'The Makati Business Club was launched at Nielson Tower as a business-sector forum on national economic and public-policy issues. Its founders later described governance, media control, crony capitalism and democratic institutions as part of the club’s early agenda.',
+    mbcFounding,
+    'This entry describes the organization’s documented institutional role and self-described agenda; it does not treat the business community as politically uniform.',
+    {
+      evidenceStatus: 'established',
+      relations: {
+        people: [
+          { label: 'Enrique Zobel' },
+          { label: 'Cesar A. Buenaventura' },
+          { label: 'Jaime Ongpin' },
+        ],
+        institutions: [{ label: 'Makati Business Club' }],
+      },
+    },
+  ],
+
   [
     'confetti-protests',
     1983,
-    '1980s · late Marcos period',
-    'Ayala Avenue and the confetti protests',
+    '16 September 1983',
+    'Office workers fill Ayala Avenue in a yellow-confetti protest',
     war,
-    'Ayala Avenue and Ugarte Field became major venues of opposition protest.',
-    city,
-    'Period entry; not a single dated event.',
+    'Thousands of office workers left buildings in Makati’s financial district and joined an Ayala Avenue protest after the assassination of former senator Benigno Aquino Jr. A contemporary Washington Post report described more than 8,000 participants and yellow confetti falling from high-rise offices.',
+    wpConfetti1983,
+    'The protest was one episode in a much larger national opposition movement after Aquino’s assassination. Contemporary and later sources differ in crowd estimates and in how they characterize the movement’s leadership.',
+    {
+      additionalSources: [nhcpAquino1983Archive, mbcFounding],
+      evidenceStatus: 'established',
+      relations: {
+        people: [
+          { label: 'Benigno S. Aquino Jr.' },
+          { label: 'Ferdinand E. Marcos' },
+        ],
+        institutions: [{ label: 'Makati Business Club' }],
+      },
+      interpretations: [
+        {
+          id: 'confetti-protests-social-base',
+          label: 'What made the Makati protests distinctive',
+          summary:
+            'The Ayala demonstrations visibly brought office workers, professionals and parts of the business community into street protest, while remaining only one component of a broader opposition movement that included labor, students, religious groups and other sectors.',
+          sourceRefs: [
+            'washington-post-makati-protest-1983',
+            'nhcp-national-memory-aquino-1983',
+          ],
+        },
+      ],
+    },
+  ],
+  [
+    'ugarte-field-1986',
+    1986,
+    'February 1986',
+    'Ugarte Field becomes a civic gathering place during the snap-election crisis',
+    war,
+    'During the February 1986 snap-election period, a tent city was established at Ugarte Field near Ayala Avenue as a place for collective reflection, prayer and nonviolent civic action.',
+    ugarte1986,
+    'This is a retrospective account of one Makati site within a nationwide political crisis; BetterMakati should add contemporaneous photographs, flyers or press coverage when located.',
+    {
+      evidenceStatus: 'probable',
+    },
   ],
   [
     'binay-appointment',
     1986,
-    '1986',
-    'Post-EDSA municipal leadership',
+    '27 February 1986 · retrospective date',
+    'Jejomar Binay is appointed officer-in-charge of Makati',
     government,
-    'Corazon Aquino appointed Jejomar Binay to head the municipal government after the February Revolution.',
-    city,
+    'After the February 1986 change of government and the death of Mayor Nemesio Yabut on 25 February, President Corazon Aquino appointed Jejomar Binay officer-in-charge of the Makati municipal government. Later accounts date the appointment to 27 February.',
+    makatiPostEdsa,
+    'The city’s official historical profile confirms the post-Revolution appointment but does not provide the exact day; the 27 February date comes from later press accounts.',
+    {
+      additionalSources: [binayAppointment1986],
+      evidenceStatus: 'probable',
+      relations: {
+        people: [
+          { label: 'Corazon C. Aquino' },
+          { label: 'Jejomar C. Binay' },
+          { label: 'Nemesio I. Yabut' },
+        ],
+      },
+    },
   ],
   [
     'boundary-case-filed',
@@ -1806,5 +1990,6 @@ export const historyResearchGaps = [
   'Complete the 1900–1934 social landscape beyond institutions: verify the 1918 barrio census, municipal presidencia and schools, workers and migration, local markets and industries, Santa Ana/Tejeros leisure economy, and the 1925–1926 transition from the Makati orphanage to Welfareville.',
   'Deepen Makati’s 1935–1945 civilian and neighborhood history: wartime population movements, resistance and collaboration records, bombing and structural damage, food and public-health conditions, Fort McKinley/Guadalupe military geography, and liberation at street level need sources beyond the Nielson and administrative record.',
   'Deepen the 1946–1972 transformation below the master-plan level: industrial workers and factories, informal and military-linked settlements, individual village and barrio creation records, schools and churches, housing and land tenure, and the lived contrast between “old” and “new” Makati need neighborhood-level primary sources.',
+  'Deepen the 1972–1986 political history with Makati-specific primary sources: local government records under Mayor Nemesio Yabut, contemporaneous photos and leaflets from Ayala/Ugarte protests, business and labor participation, police responses, and records of how national Martial Law policies were implemented in Makati.',
   'Complete the 2022–2023 boundary finality and implementation chronology, and subsequent civic milestones, from dated official records.',
 ];
