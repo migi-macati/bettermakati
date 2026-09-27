@@ -218,6 +218,9 @@ export default function CivicAsset() {
 
         <nav aria-label={'On this ' + entityKind + ' page'} className="mt-6 flex flex-wrap gap-3">
           <a href="#place-information" className="brand-btn-secondary">{informationLabel}</a>
+          {(heritageDesignations.length > 0 || heritageFacts.length > 0) && (
+            <a href="#heritage-record" className="brand-btn-secondary">Heritage record</a>
+          )}
           <a href="#observe" className="brand-btn-secondary">Observe conditions</a>
           <a href="#community-records" className="brand-btn-secondary">Community cases</a>
           <a href="#contribute" className="brand-btn-primary">Report or suggest</a>
@@ -309,7 +312,10 @@ export default function CivicAsset() {
             </dl>
 
             {(heritageDesignations.length > 0 || heritageFacts.length > 0) && (
-              <div className="mt-6 rounded-2xl border border-secondary-200 bg-[#fff8e6] p-5">
+              <div
+                id="heritage-record"
+                className="mt-6 scroll-mt-24 rounded-2xl border border-secondary-200 bg-[#fff8e6] p-5"
+              >
                 <div className="flex items-center gap-2">
                   <Landmark className="h-5 w-5 text-secondary-800" />
                   <div className="text-xs font-bold uppercase tracking-[0.08em] text-secondary-800">
