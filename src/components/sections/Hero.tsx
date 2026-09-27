@@ -1,7 +1,6 @@
 import { Link } from 'react-router';
 import ServiceSearch from '../home/ServiceSearch';
-import PhotoCarousel from '../ui/PhotoCarousel';
-import { homeImageSet } from '../../data/cityImages';
+import CapabilityCarousel from '../home/CapabilityCarousel';
 
 const popularStarts = [
   { label: 'Business permit', href: '/services/business/new-business-permit' },
@@ -14,7 +13,7 @@ export default function Hero() {
   return (
     <section className="overflow-visible border-b border-primary-900 bg-primary-800 text-white">
       <div className="container px-5 py-12 md:px-6 md:py-16 lg:px-8 lg:py-20">
-        <div className="grid gap-8 lg:grid-cols-[1.08fr_0.92fr] lg:items-center lg:gap-10">
+        <div className="grid gap-8 lg:grid-cols-[1.04fr_0.96fr] lg:items-center lg:gap-10">
           <div className="min-w-0">
             <div className="mb-3 text-xs font-extrabold uppercase tracking-[0.12em] text-secondary-300 md:text-sm">
               Makati City · Civic Guide
@@ -52,13 +51,7 @@ export default function Hero() {
             </div>
           </div>
 
-          <PhotoCarousel
-            images={homeImageSet}
-            title="Around Makati"
-            compact
-            priority
-            className="min-w-0"
-          />
+          <CapabilityCarousel />
         </div>
       </div>
     </section>

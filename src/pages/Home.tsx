@@ -20,10 +20,11 @@ import {
 } from 'lucide-react';
 import Hero from '../components/sections/Hero';
 import CommunityToolsGrid from '../components/community/CommunityToolsGrid';
-import CapabilityCarousel from '../components/home/CapabilityCarousel';
 import FeaturedInsightsCarousel from '../components/home/FeaturedInsightsCarousel';
+import PhotoCarousel from '../components/ui/PhotoCarousel';
 import SEO from '../components/SEO';
 import { barangays } from '../data/barangays';
+import { homeImageSet } from '../data/cityImages';
 
 const quickServices = [
   {
@@ -151,7 +152,18 @@ const Home: React.FC = () => {
       />
 
       <Hero />
-      <CapabilityCarousel />
+
+      <section className="border-b border-primary-100 bg-[#fffdf8] py-8 md:py-10">
+        <div className="container px-5 md:px-6 lg:px-8">
+          <PhotoCarousel
+            images={homeImageSet}
+            title="Around Makati"
+            compact
+            className="mx-auto max-w-6xl"
+          />
+        </div>
+      </section>
+
       <FeaturedInsightsCarousel />
 
       <section className="border-b border-primary-100 bg-[#f5f8f2] py-8">

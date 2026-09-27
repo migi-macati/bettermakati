@@ -12,31 +12,31 @@ import { Link } from 'react-router';
 const entryPoints = [
   {
     title: 'Get a service',
-    description: 'Permits, IDs, health, education, property and other government services.',
+    description: 'Permits, IDs, health, education and other government services.',
     href: '/services',
     icon: ClipboardList,
   },
   {
     title: 'Explore your barangay',
-    description: 'Local officials, contacts, services, places, projects, statistics and records.',
+    description: 'Officials, contacts, services, places, projects and local records.',
     href: '/barangays',
     icon: MapPinned,
   },
   {
     title: 'Find a place',
-    description: 'Parks, clinics, heritage sites, cinemas, government offices and other places.',
+    description: 'Parks, clinics, heritage sites, cinemas and government offices.',
     href: '/civic-map',
     icon: Building2,
   },
   {
     title: 'Check government & public records',
-    description: 'Budgets, projects, legislation, procurement, audit records and source documents.',
+    description: 'Budgets, projects, legislation, procurement and audit records.',
     href: '/records',
     icon: Landmark,
   },
   {
     title: 'Report a local issue',
-    description: 'Check an existing place or issue, then add a localized report when needed.',
+    description: 'Check a place or issue, then add a localized report when needed.',
     href: '/civic-map',
     icon: MessageSquareWarning,
   },
@@ -50,49 +50,48 @@ const entryPoints = [
 
 export default function CapabilityCarousel() {
   return (
-    <section
-      className="border-b border-primary-100 bg-[#fffdf8] py-10"
+    <aside
+      className="min-w-0 rounded-3xl border border-white/20 bg-[#fffdf8] p-5 text-gray-950 shadow-[0_22px_60px_rgba(0,0,0,0.18)] md:p-6"
       aria-labelledby="what-brings-you-here"
     >
-      <div className="container px-5 md:px-6 lg:px-8">
-        <div className="section-eyebrow">Start here</div>
-        <h2
-          id="what-brings-you-here"
-          className="text-3xl font-extrabold tracking-tight text-gray-950 md:text-4xl"
-        >
-          What brings you here?
-        </h2>
-
-        <div className="mt-7 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {entryPoints.map(item => {
-            const Icon = item.icon;
-            return (
-              <Link
-                key={item.title}
-                to={item.href}
-                className="group rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-400 hover:shadow-sm"
-              >
-                <div className="flex items-start gap-4">
-                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-primary-50 text-primary-700 transition group-hover:bg-primary-100">
-                    <Icon className="h-5 w-5" aria-hidden="true" />
-                  </span>
-                  <div className="min-w-0">
-                    <h3 className="font-extrabold leading-snug text-gray-950">
-                      {item.title}
-                    </h3>
-                    <p className="mt-1 text-sm leading-relaxed text-gray-600">
-                      {item.description}
-                    </p>
-                    <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
-                      Open <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                    </span>
-                  </div>
-                </div>
-              </Link>
-            );
-          })}
-        </div>
+      <div className="text-xs font-extrabold uppercase tracking-[0.12em] text-primary-700">
+        Start here
       </div>
-    </section>
+      <h2
+        id="what-brings-you-here"
+        className="mt-1 text-2xl font-extrabold tracking-tight text-gray-950 md:text-3xl"
+      >
+        What brings you here?
+      </h2>
+
+      <div className="mt-4 divide-y divide-gray-200">
+        {entryPoints.map(item => {
+          const Icon = item.icon;
+          return (
+            <Link
+              key={item.title}
+              to={item.href}
+              className="group flex min-h-[72px] items-center gap-3 py-3 first:pt-1 last:pb-1"
+            >
+              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-primary-50 text-primary-700 transition group-hover:bg-primary-100">
+                <Icon className="h-5 w-5" aria-hidden="true" />
+              </span>
+              <span className="min-w-0 flex-1">
+                <span className="block text-sm font-extrabold leading-snug text-gray-950">
+                  {item.title}
+                </span>
+                <span className="mt-0.5 block text-xs leading-relaxed text-gray-600">
+                  {item.description}
+                </span>
+              </span>
+              <ArrowRight
+                className="h-4 w-4 shrink-0 text-primary-600 transition group-hover:translate-x-0.5"
+                aria-hidden="true"
+              />
+            </Link>
+          );
+        })}
+      </div>
+    </aside>
   );
 }
