@@ -55,7 +55,11 @@ for (const marker of [
 }
 
 const assetBlock = text.split('export const civicAssets')[1]?.split('const geometryTypeFor')[0] ?? '';
-const assetIds = [...assetBlock.matchAll(/\bid:\s*'([^']+)'/g)].map(match => match[1]);
+// Count top-level Place Registry records only. Nested media entries also
+// contain `id` fields and are not canonical civic assets.
+const assetIds = [...assetBlock.matchAll(/^    id:\s*'([^']+)'/gm)].map(
+  match => match[1]
+);
 if (assetIds.length !== 93) {
   problems.push('Expected 93 canonical Civic Map / Place Registry assets but found ' + assetIds.length + '.');
 }
