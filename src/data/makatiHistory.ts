@@ -168,6 +168,21 @@ const britoStudy: HistorySource = {
   citationNote:
     'The study cites Francisco Colín (1663) for the Buenavista endowment and foundation.',
 };
+const paresBritoEncomienda: HistorySource = {
+  id: 'pares-brito-encomienda-nayon-calilaya',
+  label:
+    'PARES · Pedro de Brito v. fiscal over the encomiendas of Nayon and Calilaya',
+  url: 'https://pares.cultura.gob.es/ParesBusquedas20/catalogo/description/85968',
+  kind: 'Institutional history',
+  evidenceLevel: 'Primary',
+  format: 'archival document',
+  creator: 'Consejo de Indias',
+  repository: 'Archivo General de Indias / PARES',
+  date: '1597–1607',
+  locator: 'ES.41091.AGI/23//ESCRIBANIA,403A',
+  citationNote:
+    'The archival catalog documents Brito as an encomendero in litigation over Nayon and Calilaya. It does not identify the Buenavista agricultural estate in Makati as either of those encomiendas.',
+};
 const colinSanPedro: HistorySource = {
   id: 'colin-san-pedro-1656',
   label: 'Francisco Colín · Jesuit missions in 1656, “House of San Pedro”',
@@ -222,6 +237,21 @@ const nhcpGuadalupe: HistorySource = {
   date: '1937 marker',
   citationNote:
     'Retrospective marker; the underlying Augustinian records should be linked when a stable public edition is available.',
+};
+const augustinianGuadalupeProfile: HistorySource = {
+  id: 'osa-guadalupe-historical-profile-2024',
+  label:
+    'Augustinian Province · “A Historical Profile of the Monasterio de Guadalupe”',
+  url: 'https://augustiniansphilippines.net/wp-content/uploads/2024/08/Cor-Inquietum-Newsletter-2024-No.-1-Website-Format.pdf',
+  kind: 'Institutional history',
+  evidenceLevel: 'Secondary',
+  format: 'institutional record',
+  creator: 'Ric Anthony A. Reyes, OSA',
+  repository: 'Augustinian Province of Santo Niño de Cebu – Philippines',
+  date: '2024',
+  locator: 'Cor Inquietum, Issue 1, pp. 34–35 · citing Libro del Gobierno, fol. 124',
+  citationNote:
+    'Cites the 7 March 1601 provincial council record receiving Nuestra Señora de Gracia en los Montes as a religious house and discusses the elevated Guadalupe site above the Pasig.',
 };
 const lorenzoTemporalities: HistorySource = {
   id: 'lorenzo-garcia-jesuit-expulsion',
@@ -630,6 +660,21 @@ const barrioCharter1959: HistorySource = {
   citationNote:
     'Made barrios quasi-municipal corporations, provided for elected barrio councils, and permitted creation of new barrios meeting the statutory requirements.',
 };
+const spanishCensus1887: HistorySource = {
+  id: 'us-gazetteer-san-pedro-macati-1887-census',
+  label:
+    'U.S. Bureau of Insular Affairs · Pronouncing Gazetteer and Geographical Dictionary of the Philippine Islands',
+  url: 'https://upload.wikimedia.org/wikipedia/commons/f/f0/A_pronouncing_gazetteer_and_geographical_dictionary_of_the_Philippine_islands_.._%28IA_pronouncinggazet00unit%29.pdf',
+  kind: 'Institutional history',
+  evidenceLevel: 'Near-primary',
+  format: 'dataset',
+  creator: 'United States Bureau of Insular Affairs',
+  repository: 'U.S. Government Printing Office',
+  date: '1902',
+  locator: 'Pueblos table, p. 61',
+  citationNote:
+    'The official compilation reproduces the 1887 Spanish census count for San Pedro Macati as 3,625 and gives a later 1898–1899 estimate of 3,921.',
+};
 const psaPopulation: HistorySource = {
   id: 'psa-ncr-rset-2016-population',
   label: 'Philippine Statistics Authority · NCR Regional Social and Economic Trends 2016',
@@ -895,30 +940,36 @@ const rows: Row[] = [
   [
     'visita',
     1578,
-    '1578–1670',
-    'A visita of Santa Ana de Sapa',
+    '1578 · later marker tradition',
+    'San Pedro Makati described as a visita of Santa Ana de Sapa',
     community,
-    'The city profile places Makati under Santa Ana de Sapa during this period.',
+    'The City of Makati history and the 1991 NHCP marker describe San Pedro Makati as a visita of Santa Ana de Sapa in 1578.',
     city,
-    'Retrospective accounts; no contemporaneous foundation instrument has yet been added to the BetterMakati corpus.',
+    'These are retrospective accounts; no contemporaneous 1578 foundation or visitation instrument has yet been added to the BetterMakati corpus.',
     {
-      additionalSources: [nhcpMakati],
+      additionalSources: [nhcpMakati, colinSanPedro],
       evidenceStatus: 'probable',
       evidenceNote:
-        'City and NHCP institutional histories agree on the 1578 visita tradition; this entry does not treat that agreement as a surviving primary foundation record.',
+        'This entry records the 1578 tradition only. It does not extend visita status continuously to 1670: by 1656 Francisco Colín described San Pedro as a Jesuit residence and novitiate with an estate workforce and ministry to nearby people.',
+      relations: {
+        eventIds: ['san-pedro-estate-1656', 'town-1670'],
+      },
     },
   ],
   [
     'guadalupe-foundations',
     1601,
     '1601–1629',
-    'Guadalupe church and monastery take shape',
+    'Guadalupe church and monastery take shape on the high ground',
     community,
-    'The NHCP marker dates the laying of the Augustinian church and monastery foundations to 1601 and completion to 1629, establishing a second early religious center in the landscape of present-day Makati.',
+    'An Augustinian historical profile citing the order’s Libro del Gobierno records the reception on 7 March 1601 of a religious house dedicated to Nuestra Señora de Gracia en los Montes. The same profile explains “en los montes” through the elevated Guadalupe site above the Pasig, reached historically by a long stone stair; the NHCP marker dates the church and monastery foundations to 1601 and completion to 1629.',
     nhcpGuadalupe,
-    'The dates currently rest on the 1937 historical marker; underlying Augustinian records remain a research target.',
+    'The 1601 institutional act is supported through a modern Augustinian profile citing the order’s governance book; the 1629 completion date remains dependent on the retrospective NHCP marker.',
     {
+      additionalSources: [augustinianGuadalupeProfile],
       evidenceStatus: 'probable',
+      evidenceNote:
+        'The terrain description is useful evidence for how the early Guadalupe site was understood: elevated ground overlooking the Pasig, rather than a generic flat riverside setting.',
       relations: {
         barangaySlugs: ['guadalupe-viejo'],
         institutions: [{ label: 'Order of Saint Augustine' }],
@@ -937,17 +988,17 @@ const rows: Row[] = [
   [
     'buenavista-foundation',
     1607,
-    '1607',
+    '19 October 1607',
     'Buenavista endowed for the Jesuit novitiate',
     community,
-    'Pedro de Brito and Ana de Herrera endowed the Jesuits with the Buenavista estate and funds for a church and house for novices, establishing the institutional core later known as San Pedro Macati.',
+    'Pedro de Brito and Ana de Herrera endowed the Jesuits with an agricultural estate called Buenavista and enlarged the endowment to 14,000 pesos. The public foundation deed of 19 October 1607 obliged the Jesuit provincial Gregorio López to establish a church and house for novices on the donated lands.',
     britoStudy,
-    'The year 1607 is well supported, but retrospective sources differ on the exact date of the deed; BetterMakati does not force a day-level date here.',
+    'Brito was also an encomendero, but the surviving evidence presently in the BetterMakati corpus should not collapse his Buenavista landholding and his encomienda rights into the same legal institution.',
     {
-      additionalSources: [nhcpSanPedro],
+      additionalSources: [nhcpSanPedro, nhcpMakati, paresBritoEncomienda],
       evidenceStatus: 'established',
       evidenceNote:
-        'Manchado López cites Francisco Colín’s 1663 account and gives a 1607 public foundation deed; the NHCP marker independently places the Buenavista donation in 1607.',
+        'Manchado López, drawing on Colín, describes Buenavista as cultivated land donated to the Jesuits. PARES separately documents Brito’s encomienda litigation over Nayon and Calilaya. The later NHCP Makati marker calls Makati an encomienda granted to Brito in 1608, but a primary Makati encomienda grant has not yet been located.',
       relations: {
         barangaySlugs: ['poblacion'],
         people: [
@@ -956,8 +1007,21 @@ const rows: Row[] = [
           { label: 'Gregorio López, S.J.' },
         ],
         institutions: [{ label: 'Society of Jesus' }],
-        eventIds: ['san-pedro-church'],
+        eventIds: ['san-pedro-church', 'san-pedro-estate-1656'],
       },
+      interpretations: [
+        {
+          id: 'brito-estate-versus-encomienda',
+          label: 'Estate and encomienda are not interchangeable',
+          summary:
+            'The documented 1607 Buenavista donation was an agricultural landholding endowed to the Jesuits. Brito’s status as an encomendero is independently documented for Nayon and Calilaya. Until a primary Makati encomienda grant is located, BetterMakati treats the NHCP marker’s 1608 encomienda statement as a separate retrospective claim rather than proof that Buenavista itself was the encomienda.',
+          sourceRefs: [
+            'manchado-lopez-brito-2024',
+            'pares-brito-encomienda-nayon-calilaya',
+            'nhcp-makati-marker',
+          ],
+        },
+      ],
     },
   ],
   [
@@ -1002,17 +1066,17 @@ const rows: Row[] = [
     'san-pedro-estate-1656',
     1656,
     '1656 · Colín survey',
-    'A working estate around the House of San Pedro',
+    'San Pedro is documented as estate, residence and native ministry',
     community,
-    'Francisco Colín’s survey describes two Jesuits at the House of San Pedro and sixty tributarios of Tagalog Indians working the estate, alongside religious ministry to the surrounding population.',
+    'Francisco Colín’s near-contemporary survey describes two Jesuits at the House of San Pedro, sixty tributarios of Tagalog Indians working the estate, and religious ministry to people in the surrounding lands and settlements.',
     colinSanPedro,
-    'This is evidence about the documented estate community, not a complete census of everyone living in what is now Makati.',
+    'This is evidence about the documented estate community, not a complete census of everyone living in what is now Makati. Colín’s institutional language also does not by itself determine San Pedro’s civil status as a pueblo or bayan.',
     {
       evidenceStatus: 'established',
       relations: {
         barangaySlugs: ['poblacion'],
         institutions: [{ label: 'Society of Jesus' }],
-        eventIds: ['buenavista-foundation', 'san-pedro-church'],
+        eventIds: ['buenavista-foundation', 'san-pedro-church', 'town-1670'],
       },
     },
   ],
@@ -1020,15 +1084,28 @@ const rows: Row[] = [
     'town-1670',
     1670,
     '1670 · NHCP marker',
-    'San Pedro Makati becomes a bayan',
+    'San Pedro Makati is retrospectively dated as becoming a bayan',
     government,
-    'The NHCP’s Makati historical marker dates San Pedro Makati’s becoming a town to 1670.',
+    'The NHCP’s 1991 Makati historical marker states “naging bayan, 1670,” making 1670 the official retrospective date presently available for San Pedro Makati’s town status.',
     nhcpMakati,
-    'A contemporaneous town-creation instrument has not yet been located in the BetterMakati research corpus.',
+    'A contemporaneous 1670 town-creation or erection instrument has not yet been located in the BetterMakati research corpus.',
     {
+      additionalSources: [colinSanPedro],
       evidenceStatus: 'probable',
       evidenceNote:
-        'This milestone is retained as an official marker-based date while primary documentation is still being sought.',
+        'Do not read “bayan” and “visita” as equivalent categories or infer that San Pedro remained continuously a visita until the exact moment it became a town. The 1656 Jesuit survey already describes a residence, novitiate, estate workforce and surrounding ministry; the missing evidence is the civil erection record behind the marker’s 1670 date.',
+      relations: {
+        eventIds: ['visita', 'san-pedro-estate-1656'],
+      },
+      interpretations: [
+        {
+          id: 'bayan-versus-visita-1670',
+          label: 'Civil and ecclesiastical labels answer different questions',
+          summary:
+            'The NHCP marker supplies a retrospective civil milestone in 1670. The earlier “visita” tradition describes an ecclesiastical relationship. Without the original erection record, the timeline should not manufacture a precise institutional handoff between those two labels.',
+          sourceRefs: ['nhcp-makati-marker', 'colin-san-pedro-1656'],
+        },
+      ],
     },
   ],
   [
@@ -1246,6 +1323,22 @@ const rows: Row[] = [
       evidenceStatus: 'established',
       relations: {
         barangaySlugs: ['guadalupe-viejo', 'poblacion'],
+      },
+    },
+  ],
+  [
+    'spanish-census-1887',
+    1887,
+    '1887 Spanish census · published in a 1902 U.S. compilation',
+    'Spanish census counts 3,625 people in San Pedro Macati',
+    community,
+    'The U.S. Bureau of Insular Affairs’ 1902 official gazetteer reproduces the 1887 Spanish census population of San Pedro Macati as 3,625. The same table gives a later 1898–1899 estimate of 3,921.',
+    spanishCensus1887,
+    'The 1887 figure is reported through an official 1902 U.S. government compilation rather than the original Spanish census register. It should therefore be cited as a reproduced historical census count.',
+    {
+      evidenceStatus: 'established',
+      relations: {
+        eventIds: ['archbishop-visitation-1773', 'segui-visitation-1831'],
       },
     },
   ],
@@ -2237,6 +2330,7 @@ export const makatiHistory: HistoryEvent[] = rows.map(
 );
 export const historyResearchGaps = [
   'Precolonial Makati remains under-documented: no Makati-specific archaeological evidence has yet been added to the corpus. Keep regional Namayan context and name-origin traditions separate from locally demonstrated evidence.',
+  'Locate the original civil record behind the NHCP marker’s “naging bayan, 1670” date. Keep the 1578 visita tradition, the 1656 Jesuit residence/novitiate record and the 1670 bayan claim distinct until an erection instrument or equivalent contemporary record establishes the institutional sequence.',
   'Resolve the two-Casas problem without collapsing distinct evidence: compare the documented 1773/1831 casa de Hacienda, the 1775–1826 map sequence, the later Poblacion Oficinas, and the Olympia structure photographed in 1910/1926 against archival property records.',
   'Deepen the 1896–1899 revolutionary record from Filipino and Spanish field documents: verify the Magtagumpay council and flag against contemporary Katipunan material, reconcile Pio del Pilar’s conflicting birth-year traditions, and map the San Pedro/Guadalupe operations beyond U.S. military records.',
   'Complete the 1900–1934 social landscape beyond institutions: verify the 1918 barrio census, municipal presidencia and schools, workers and migration, local markets and industries, Santa Ana/Tejeros leisure economy, and the 1925–1926 transition from the Makati orphanage to Welfareville.',
