@@ -521,6 +521,68 @@ const manilaVicinity1919: HistorySource = {
   rights:
     'Library of Congress states this digitized Geography and Map Division item is free to use and reuse unless a rights advisory says otherwise.',
 };
+const fhlNielsonHistory: HistorySource = {
+  id: 'fhl-nielson-history',
+  label: 'Filipinas Heritage Library · History of the Filipinas Heritage Library / Nielson Airport',
+  url: 'https://www.filipinaslibrary.org.ph/articles/history-of-the-filipinas-heritage-library/',
+  kind: 'Institutional history',
+  evidenceLevel: 'Secondary',
+  format: 'institutional record',
+  repository: 'Filipinas Heritage Library',
+  citationNote:
+    'Institutional history covering the construction, wartime military use, Japanese occupation, liberation, restoration and closure of Nielson Airport.',
+};
+const fhlMiningAviation: HistorySource = {
+  id: 'fhl-mining-aviation',
+  label: 'Filipinas Heritage Library · “Mining and Aviation”',
+  url: 'https://www.filipinaslibrary.org.ph/articles/mining-and-aviation/',
+  kind: 'Institutional history',
+  evidenceLevel: 'Secondary',
+  format: 'institutional record',
+  repository: 'Filipinas Heritage Library',
+  citationNote:
+    'Dates Nielson Airport’s inauguration to 17 July 1937 and summarizes its prewar aviation role.',
+};
+const greaterManila1942: HistorySource = {
+  id: 'eo-400-greater-manila-1942',
+  label: 'Executive Order No. 400 · Creating the City of Greater Manila',
+  url: 'https://elibrary.judiciary.gov.ph/thebookshelf/showdocs/5/84503',
+  kind: 'Legal record',
+  evidenceLevel: 'Primary',
+  format: 'law',
+  repository: 'Supreme Court E-Library',
+  date: '1 January 1942',
+  citationNote:
+    'Expressly included the municipality of Makati in the City of Greater Manila.',
+};
+const restoreMakati1945: HistorySource = {
+  id: 'eo-58-restore-makati-1945',
+  label: 'Executive Order No. 58 · Reducing the territory of Greater Manila',
+  url: 'https://elibrary.judiciary.gov.ph/thebookshelf/showdocs/5/76937',
+  kind: 'Legal record',
+  evidenceLevel: 'Primary',
+  format: 'law',
+  repository: 'Supreme Court E-Library',
+  date: '26 July 1945; effective 1 August 1945',
+  citationNote:
+    'Removed Makati from Greater Manila and restored it as a municipality of Rizal, while temporarily retaining Greater Manila police jurisdiction.',
+};
+const manilaSouth1945: HistorySource = {
+  id: 'ams-manila-south-1945',
+  label: 'U.S. Army Map Service · Manila South, Philippines',
+  url: 'https://maps.lib.utexas.edu/maps/ams/philippines_city_plans/',
+  kind: 'Institutional history',
+  evidenceLevel: 'Primary',
+  format: 'historical map',
+  creator: 'U.S. Army Map Service',
+  repository: 'Perry-Castañeda Library Map Collection · University of Texas at Austin',
+  date: '1945',
+  locator: 'Manila South · scale 1:12,500 · Series S901',
+  citationNote:
+    'Wartime city plan showing the built and transport landscape south of the Pasig River, including Makati.',
+  rights:
+    'U.S. federal government map; public-domain status is also identified in the linked derivative catalog records.',
+};
 export const historyReviewed = '27 September 2026';
 export const historyEras = [
   { label: 'Early & Spanish colonial', from: 0, to: 1895 },
@@ -1199,57 +1261,183 @@ const rows: Row[] = [
   [
     'nielson-opening',
     1937,
-    'July 1937',
-    'Nielson Airport inaugurated',
+    '17 July 1937',
+    'Nielson Airport opens in Makati',
     transport,
-    'The airport opened on land leased from Ayala y Cia.',
-    library,
+    'Nielson Airport was inaugurated on 17 July 1937 on 42 hectares leased from Ayala y Cia., giving Manila a major civil airport at the edge of Makati’s then-sparsely built hacienda landscape.',
+    fhlMiningAviation,
+    undefined,
+    {
+      additionalSources: [fhlNielsonHistory],
+      evidenceStatus: 'established',
+      relations: {
+        institutions: [
+          { label: 'Nielson Airport' },
+          { label: 'Ayala y Cia.' },
+        ],
+        people: [
+          { label: 'Laurie Reuben Nielson' },
+          { label: 'Enrique Zobel de Ayala' },
+        ],
+      },
+    },
   ],
   [
     'pal-flight',
     1941,
-    'March 1941',
+    '15 March 1941',
     'PAL’s first flight leaves Nielson',
     transport,
-    'Philippine Air Lines’ first flight departed Nielson for Baguio.',
-    library,
+    'Two days after the company was renamed Philippine Air Lines, its inaugural flight departed Nielson Airport for Baguio on 15 March 1941.',
+    {
+      id: 'fhl-pal-before-war',
+      label: 'Filipinas Heritage Library · “Philippine Air Lines: Before the War”',
+      url: 'https://www.filipinaslibrary.org.ph/articles/philippine-air-lines-before-the-war/',
+      kind: 'Institutional history',
+      evidenceLevel: 'Secondary',
+      format: 'institutional record',
+      repository: 'Filipinas Heritage Library',
+    },
+    undefined,
+    {
+      evidenceStatus: 'established',
+      relations: {
+        institutions: [
+          { label: 'Philippine Air Lines' },
+          { label: 'Nielson Airport' },
+        ],
+      },
+    },
   ],
   [
     'military-airfield',
     1941,
     'October 1941',
-    'Commercial flights halted',
+    'Nielson shifts from civil airport to military headquarters',
     war,
-    'Civilian carriers relocated to make room for the U.S. Army Air Corps.',
-    library,
+    'Commercial flights were halted in October 1941 as private carriers were ordered to relocate and the Far East Air Force headquarters was established at Nielson Airport.',
+    fhlNielsonHistory,
+    undefined,
+    {
+      evidenceStatus: 'established',
+      relations: {
+        institutions: [
+          { label: 'Far East Air Force' },
+          { label: 'Nielson Airport' },
+        ],
+        eventIds: ['nielson-opening', 'nielson-attack'],
+      },
+    },
   ],
   [
     'nielson-attack',
     1941,
-    'December 1941',
-    'War reaches Nielson Airport',
+    '8–9 December 1941',
+    'Japanese attacks reach Nielson Airport',
     war,
-    'FHL records attacks on the airport by 9 December.',
-    library,
+    'After the Japanese attack on the Philippines began on 8 December, Nielson’s Far East Air Force headquarters received warnings from northern Luzon. By 9 December the airport itself was under attack.',
+    fhlNielsonHistory,
+    'The entry describes the opening phase of the Pacific War in the Philippines; it does not imply that Makati’s civilian experience was limited to the airfield.',
+    {
+      evidenceStatus: 'established',
+      relations: {
+        institutions: [
+          { label: 'Far East Air Force' },
+          { label: 'Nielson Airport' },
+        ],
+        eventIds: ['military-airfield', 'nielson-occupation'],
+      },
+    },
+  ],
+  [
+    'greater-manila-1942',
+    1942,
+    '1 January 1942',
+    'Makati is incorporated into the City of Greater Manila',
+    government,
+    'Executive Order No. 400 incorporated Makati, together with Manila, Quezon City and several neighboring municipalities, into the wartime City of Greater Manila. Makati’s mayor became an assistant mayor with jurisdiction limited to the former municipal boundaries.',
+    greaterManila1942,
+    'This was a legal-administrative reorganization during the emergency at the opening of the Japanese occupation, not the same institution as the post-1975 Metropolitan Manila government.',
+    {
+      evidenceStatus: 'established',
+      relations: {
+        eventIds: ['makati-restored-1945'],
+      },
+    },
   ],
   [
     'nielson-occupation',
     1942,
-    'Japanese occupation',
-    'Airport facilities under Japanese control',
+    '1942–1945',
+    'Japanese forces use Nielson as a headquarters',
     war,
-    'The occupying forces used the terminal and radio tower as headquarters.',
-    library,
-    'Placed within the occupation period; an exact takeover date is not established here.',
+    'After U.S. forces withdrew, Japanese occupation forces sequestered Nielson Airport and used its radio tower and passenger terminal as headquarters until Allied forces recovered the airport during the liberation of Manila.',
+    fhlNielsonHistory,
+    'The source establishes the military reuse of the airport but does not provide a complete chronology of wartime activity elsewhere in Makati.',
+    {
+      evidenceStatus: 'established',
+      relations: {
+        institutions: [{ label: 'Nielson Airport' }],
+        eventIds: ['nielson-attack'],
+      },
+    },
+  ],
+  [
+    'makati-restored-1945',
+    1945,
+    '1 August 1945',
+    'Makati is restored as a municipality of Rizal',
+    government,
+    'Executive Order No. 58 removed Makati from Greater Manila and restored it to its prewar status as a municipality of Rizal effective 1 August 1945. Greater Manila’s police jurisdiction temporarily continued over the restored municipalities.',
+    restoreMakati1945,
+    undefined,
+    {
+      evidenceStatus: 'established',
+      relations: {
+        eventIds: ['greater-manila-1942'],
+      },
+      media: [
+        {
+          id: 'manila-south-1945',
+          kind: 'map',
+          title: 'Manila South, Philippines',
+          source: manilaSouth1945,
+          date: '1945',
+          caption:
+            'U.S. Army Map Service city plan showing Makati and the wider southern Manila landscape at the end of the war.',
+          rights:
+            'Public-domain U.S. federal government map; use the high-resolution institutional scan when publishing.',
+        },
+      ],
+    },
   ],
   [
     'nielson-restoration',
     1946,
-    '1946',
-    'Commercial aviation resumes',
+    '14 February 1946',
+    'Commercial aviation resumes at Nielson',
     transport,
-    'Restored airport facilities returned to commercial service after the war.',
-    library,
+    'After wartime damage was repaired, Philippine Air Lines resumed commercial service from Nielson Airport on 14 February 1946.',
+    {
+      id: 'fhl-commercial-air-travel',
+      label: 'Filipinas Heritage Library · “Commercial Air Travel in the Philippines: The Early Years”',
+      url: 'https://www.filipinaslibrary.org.ph/articles/commercial-air-travel-in-the-philippines-the-early-years/',
+      kind: 'Institutional history',
+      evidenceLevel: 'Secondary',
+      format: 'institutional record',
+      repository: 'Filipinas Heritage Library',
+    },
+    undefined,
+    {
+      additionalSources: [fhlNielsonHistory],
+      evidenceStatus: 'established',
+      relations: {
+        institutions: [
+          { label: 'Philippine Air Lines' },
+          { label: 'Nielson Airport' },
+        ],
+      },
+    },
   ],
   [
     'nielson-redevelopment',
@@ -1440,5 +1628,6 @@ export const historyResearchGaps = [
   'Resolve the two-Casas problem without collapsing distinct evidence: compare the documented 1773/1831 casa de Hacienda, the 1775–1826 map sequence, the later Poblacion Oficinas, and the Olympia structure photographed in 1910/1926 against archival property records.',
   'Deepen the 1896–1899 revolutionary record from Filipino and Spanish field documents: verify the Magtagumpay council and flag against contemporary Katipunan material, reconcile Pio del Pilar’s conflicting birth-year traditions, and map the San Pedro/Guadalupe operations beyond U.S. military records.',
   'Complete the 1900–1934 social landscape beyond institutions: verify the 1918 barrio census, municipal presidencia and schools, workers and migration, local markets and industries, Santa Ana/Tejeros leisure economy, and the 1925–1926 transition from the Makati orphanage to Welfareville.',
+  'Deepen Makati’s 1935–1945 civilian and neighborhood history: wartime population movements, resistance and collaboration records, bombing and structural damage, food and public-health conditions, Fort McKinley/Guadalupe military geography, and liberation at street level need sources beyond the Nielson and administrative record.',
   'Complete the 2022–2023 boundary finality and implementation chronology, and subsequent civic milestones, from dated official records.',
 ];
