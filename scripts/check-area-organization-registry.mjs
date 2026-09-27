@@ -1,9 +1,9 @@
 import { readFile } from 'node:fs/promises';
 
-const source = await readFile(
-  'src/data/areaOrganizationRegistry.ts',
-  'utf8'
-);
+const [source, placeRegistrySource] = await Promise.all([
+  readFile('src/data/areaOrganizationRegistry.ts', 'utf8'),
+  readFile('src/data/placeRegistry.ts', 'utf8'),
+]);
 
 const problems = [];
 
@@ -93,14 +93,14 @@ if (organizationRows.length !== 11) {
       '.'
   );
 }
-if (relationshipRows.length !== 21) {
+if (relationshipRows.length !== 29) {
   problems.push(
-    'Expected 21 source-backed area relationships, found ' +
+    'Expected 29 source-backed area relationships, found ' +
       relationshipRows.length +
       '.'
   );
 }
-if (registrySourceRows.length < 30) {
+if (registrySourceRows.length < 35) {
   problems.push(
     'Expected the W5-3a2 authoritative source set to be populated; found only ' +
       registrySourceRows.length +
@@ -198,6 +198,95 @@ for (const row of relationshipRows) {
   }
 }
 
+const placeRegistryBlock =
+  placeRegistrySource
+    .split('export const civicAssets: CivicAsset[] = [')[1]
+    ?.split('const geometryTypeFor')[0] ?? '';
+const placeIds = new Set(
+  [...placeRegistryBlock.matchAll(/\bid:\s*'([^']+)'/g)].map(match => match[1])
+);
+
+const placeWithinAreaRows = relationshipRows.filter(row =>
+  row.includes("kind: 'place-within-area'")
+);
+
+if (placeWithinAreaRows.length !== 8) {
+  problems.push(
+    'Expected 8 directly sourced place-to-area relationships, found ' +
+      placeWithinAreaRows.length +
+      '.'
+  );
+}
+
+const expectedPlaceAreaPairs = [
+  ['ayala-triangle-gardens', 'makati-cbd'],
+  ['one-ayala-terminal', 'makati-cbd'],
+  ['ayala-fire-satellite', 'ayala-center'],
+  ['jaime-velasquez-park', 'salcedo-village'],
+  ['sec-headquarters', 'salcedo-village'],
+  ['washington-sycip-park', 'makati-cbd'],
+  ['legazpi-active-park', 'makati-cbd'],
+  ['psa-makati-crs', 'circuit-makati'],
+];
+
+for (const row of placeWithinAreaRows) {
+  const placeId =
+    row.match(/from:\s*\{ type: 'place', id: '([^']+)' \}/)?.[1];
+  const areaId =
+    row.match(/to:\s*\{ type: 'area', id: '([^']+)' \}/)?.[1];
+
+  if (!placeId || !areaId) {
+    problems.push(
+      'Malformed place-within-area relationship: ' +
+        (parseId(row) ?? 'unknown')
+    );
+    continue;
+  }
+
+  if (!placeIds.has(placeId)) {
+    problems.push(
+      'Place-to-area relationship points to missing canonical place: ' +
+        placeId
+    );
+  }
+
+  if (!areaIds.includes(areaId)) {
+    problems.push(
+      'Place-to-area relationship points to missing canonical area: ' +
+        areaId
+    );
+  }
+}
+
+for (const [placeId, areaId] of expectedPlaceAreaPairs) {
+  const matched = placeWithinAreaRows.some(
+    row =>
+      row.includes("from: { type: 'place', id: '" + placeId + "' }") &&
+      row.includes("to: { type: 'area', id: '" + areaId + "' }")
+  );
+
+  if (!matched) {
+    problems.push(
+      'Missing directly sourced place-to-area relationship: ' +
+        placeId +
+        ' -> ' +
+        areaId
+    );
+  }
+}
+
+for (const deferredArea of ['century-city', 'rockwell-center']) {
+  const hasDirectPlaceMembership = placeWithinAreaRows.some(row =>
+    row.includes("to: { type: 'area', id: '" + deferredArea + "' }")
+  );
+  if (hasDirectPlaceMembership) {
+    problems.push(
+      'Century City / Rockwell place membership should remain deferred until a canonical Place record has direct source support: ' +
+        deferredArea
+    );
+  }
+}
+
 if (problems.length) {
   console.error(
     'Area/organization registry schema check failed:\n- ' +
@@ -219,6 +308,7 @@ console.log(
     areaRows.length + ' canonical areas',
     organizationRows.length + ' canonical organizations',
     relationshipRows.length + ' source-backed relationships',
+    placeWithinAreaRows.length + ' directly sourced place-to-area links',
     registrySourceRows.length + ' authoritative source records',
     'no unsourced geometry promoted',
   ].join(' ')
