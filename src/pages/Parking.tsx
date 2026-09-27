@@ -4,23 +4,31 @@ import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
 import SEO from '../components/SEO';
 import SharePage from '../components/ui/SharePage';
+import {
+  resolveDistrictReference,
+  type DistrictReference,
+} from '../data/districtReferences';
 
-const popularAreas = [
-  'Ayala Center Makati',
-  'Salcedo Village Makati',
-  'Legazpi Village Makati',
-  'Poblacion Makati',
-  'Rockwell Center Makati',
-  'Circuit Makati',
-  'Century City Makati',
+const popularAreas: DistrictReference[] = [
+  { type: 'area', id: 'ayala-center' },
+  { type: 'area', id: 'salcedo-village' },
+  { type: 'area', id: 'legazpi-village' },
+  { type: 'barangay', id: 'poblacion' },
+  { type: 'area', id: 'rockwell-center' },
+  { type: 'area', id: 'circuit-makati' },
+  { type: 'area', id: 'century-city' },
 ];
+
+const popularAreaRecords = popularAreas.map(resolveDistrictReference);
 
 const parkingUrl = (destination: string) =>
   'https://www.google.com/maps/search/?api=1&query=' +
   encodeURIComponent('parking near ' + destination + ', Makati City, Metro Manila, Philippines');
 
 export default function Parking() {
-  const [destination, setDestination] = useState('Ayala Center Makati');
+  const [destination, setDestination] = useState(
+    popularAreaRecords[0].mapQuery
+  );
 
   const submit = (event: FormEvent) => {
     event.preventDefault();
@@ -64,20 +72,32 @@ export default function Parking() {
         </form>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
-          {popularAreas.map(area => (
-            <a
-              key={area}
-              href={parkingUrl(area)}
-              target="_blank"
-              rel="noreferrer"
+          {popularAreaRecords.map(area => (
+            <article
+              key={area.ref.type + ':' + area.ref.id}
               className="rounded-2xl border border-gray-200 bg-white p-5 hover:border-primary-300 hover:shadow-sm transition"
             >
               <MapPin className="h-5 w-5 text-primary-700" />
-              <h2 className="font-extrabold text-gray-950 mt-3">{area}</h2>
-              <span className="inline-flex items-center gap-1 text-sm font-bold text-primary-700 mt-4">
-                Parking nearby <ExternalLink className="h-3.5 w-3.5" />
-              </span>
-            </a>
+              <h2 className="mt-3 font-extrabold text-gray-950">
+                {area.label}
+              </h2>
+              <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2">
+                <a
+                  href={parkingUrl(area.mapQuery)}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1 text-sm font-bold text-primary-700"
+                >
+                  Parking nearby <ExternalLink className="h-3.5 w-3.5" />
+                </a>
+                <a
+                  href={area.href}
+                  className="text-sm font-bold text-gray-600 underline underline-offset-2"
+                >
+                  Area details
+                </a>
+              </div>
+            </article>
           ))}
         </div>
       </Section>
