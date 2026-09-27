@@ -56,8 +56,8 @@ for (const marker of [
 
 const assetBlock = text.split('export const civicAssets')[1]?.split('const geometryTypeFor')[0] ?? '';
 const assetIds = [...assetBlock.matchAll(/\bid:\s*'([^']+)'/g)].map(match => match[1]);
-if (assetIds.length !== 88) {
-  problems.push('Expected 88 migrated Civic Map assets but found ' + assetIds.length + '.');
+if (assetIds.length !== 93) {
+  problems.push('Expected 93 canonical Civic Map / Place Registry assets but found ' + assetIds.length + '.');
 }
 const duplicateIds = assetIds.filter((id, index) => assetIds.indexOf(id) !== index);
 if (duplicateIds.length) {
