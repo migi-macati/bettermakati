@@ -3,6 +3,10 @@ import { readFile } from 'node:fs/promises';
 const source = await readFile('src/data/barangays.ts', 'utf8');
 const profilePage = await readFile('src/pages/BarangayProfile.tsx', 'utf8');
 const registrySource = await readFile('src/data/placeRegistry.ts', 'utf8');
+const areaRegistrySource = await readFile(
+  'src/data/areaOrganizationRegistry.ts',
+  'utf8'
+);
 const problems = [];
 
 const profileStart = source.indexOf('const barangayBaseProfiles');
@@ -110,11 +114,95 @@ if (!registrySource.includes(".replace(/\\bsta\\.?(?=\\s|$)/g, 'santa')")) {
   problems.push('Place Registry barangay matching must normalize Sta. Cruz / Santa Cruz.');
 }
 
+/* BetterBarangay estate/village links must resolve through canonical area IDs. */
+if (/\bassociations\s*:/.test(profileBlock) || source.includes('associations?:')) {
+  problems.push(
+    'BetterBarangay still contains duplicated association names/URLs instead of canonical Area Registry references.'
+  );
+}
+
+const communityAreaRefs = [
+  ...profileBlock.matchAll(/communityAreaIds:\s*\[([^\]]*)\]/g),
+].flatMap(match =>
+  [...match[1].matchAll(/'([^']+)'/g)].map(item => item[1])
+);
+
+const areaBlock =
+  areaRegistrySource
+    .split('export const civicAreas: CivicAreaRecord[] = [')[1]
+    ?.split('\n];\n\nexport const civicOrganizations')[0] ?? '';
+const areaIds = new Set(
+  [...areaBlock.matchAll(/\bid:\s*'([^']+)'/g)].map(match => match[1])
+);
+
+for (const areaId of communityAreaRefs) {
+  if (!areaIds.has(areaId)) {
+    problems.push(
+      'BetterBarangay community area reference does not resolve: ' + areaId
+    );
+  }
+}
+
+const expectedCommunityAreaRefs = [
+  'bel-air-village',
+  'dasmarinas-village',
+  'forbes-park-village',
+  'magallanes-village',
+  'san-lorenzo-village',
+  'urdaneta-village',
+];
+
+if (
+  communityAreaRefs.length !== expectedCommunityAreaRefs.length ||
+  expectedCommunityAreaRefs.some(areaId => !communityAreaRefs.includes(areaId))
+) {
+  problems.push(
+    'BetterBarangay private-village references must contain exactly the six reconciled canonical residential areas.'
+  );
+}
+
+for (const forbidden of [
+  'Makati Central Estate Association (MACEA)',
+  'Magallanes%20Village%20Association%20Makati',
+  'Urdaneta%20Village%20Association%20Makati',
+  'centurycitymall.com.ph',
+]) {
+  if (profileBlock.includes(forbidden)) {
+    problems.push(
+      'BetterBarangay still carries unreconciled estate/association content: ' +
+        forbidden
+    );
+  }
+}
+
+for (const marker of [
+  'civicAreaRelationships',
+  'civicAreaById',
+  'civicOrganizationById',
+  "relationship.kind === 'within-barangay'",
+  'barangay.communityAreaIds ?? []',
+  "href: '/estates#area-' + area.id",
+  "href: '/estates#organization-' + organization.id",
+  "item.href.startsWith('/')",
+]) {
+  if (!profilePage.includes(marker)) {
+    problems.push(
+      'BetterBarangay canonical Area Registry integration is missing: ' + marker
+    );
+  }
+}
+
+if (profilePage.includes('barangay.associations')) {
+  problems.push(
+    'BetterBarangay page still renders legacy association payloads.'
+  );
+}
+
 if (problems.length) {
   console.error(problems.join('\n'));
   process.exit(1);
 }
 
 console.log(
-  `BetterBarangay guardrails passed: 23 profiles, 23 council rosters, ${population.toLocaleString('en-PH')} residents on the current 2024 boundary.`
+  `BetterBarangay guardrails passed: 23 profiles, 23 council rosters, ${population.toLocaleString('en-PH')} residents on the current 2024 boundary, ${communityAreaRefs.length} canonical private-village references, and estate/district links resolved through the Area Registry.`
 );
