@@ -1556,7 +1556,6 @@ const rows: Row[] = [
       additionalSources: [ayalaHistory, forbesParkDeed],
       evidenceStatus: 'established',
       relations: {
-        districtIds: ['makati-cbd'],
         institutions: [
           { label: 'Ayala Securities Corporation' },
           { label: 'Forbes Park Association' },
@@ -1592,7 +1591,6 @@ const rows: Row[] = [
     {
       evidenceStatus: 'established',
       relations: {
-        districtIds: ['makati-cbd'],
         institutions: [{ label: 'Ayala y Cia.' }],
         eventIds: ['makati-master-plan-1949'],
       },
