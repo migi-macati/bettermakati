@@ -558,6 +558,39 @@ export const civicAreaRegistrySources: CivicAreaRegistrySource[] = [
     kind: 'official-primary',
   },
   {
+    id: 'dva-about-boundary',
+    label: 'Dasmariñas Village Association · About Us / village perimeter',
+    url: 'https://dva.org.ph/about-us/',
+    publisher: 'Dasmariñas Village Association, Inc.',
+    checkedOn: areaRegistryCheckedOn,
+    kind: 'official-primary',
+  },
+  {
+    id: 'dva-village-map',
+    label: 'Dasmariñas Village Association · Village Map',
+    url: 'https://dva.org.ph/village-map/',
+    publisher: 'Dasmariñas Village Association, Inc.',
+    checkedOn: areaRegistryCheckedOn,
+    kind: 'official-primary',
+  },
+  {
+    id: 'psgc-2023-makati-barangay-geojson',
+    label: 'Philippines JSON Maps · Makati barangay boundaries (2023 PSGC-derived high-resolution GeoJSON)',
+    url: 'https://github.com/faeldon/philippines-json-maps/blob/8eeead560246863c8c820c31ca6fbca81a279477/2023/geojson/municities/hires/bgysubmuns-municity-1380300000.0.1.json',
+    publisher: 'faeldon/philippines-json-maps',
+    publishedOrPeriod: '2023',
+    checkedOn: areaRegistryCheckedOn,
+    kind: 'reference-map',
+  },
+  {
+    id: 'osm-dasmarinas-boundary-snapshot',
+    label: 'OpenStreetMap relation 103761 · Dasmariñas administrative boundary snapshot',
+    url: 'https://github.com/missinglink/osm-boundaries/blob/4b9b610f25ec3477683c8a203ed486ecdb8c9f9f/data/000/103/761/000103761.geojson',
+    publisher: 'OpenStreetMap contributors / missinglink snapshot',
+    checkedOn: areaRegistryCheckedOn,
+    kind: 'reference-map',
+  },
+  {
     id: 'forbes-park-website',
     label: 'Forbes Park Association · official website',
     url: 'https://www.forbesparkassociation.com/',
@@ -866,12 +899,34 @@ export const civicAreas: CivicAreaRecord[] = [
     summary:
       'A private residential subdivision served by Dasmariñas Village Association, Inc.',
     barangaySlugs: [],
+    geometryId: 'dasmarinas-village-boundary-2026-09',
+    attributes: [
+      {
+        label: 'DVA documented land area',
+        value: '187 hectares',
+        sourceIds: ['dva-about-boundary'],
+        note:
+          'The renderable approximate boundary uses a PSGC-derived barangay trace for display; its computed polygon area is not treated as the authoritative land-area figure.',
+      },
+    ],
     provenance: {
       assertions: [
         {
           fieldPaths: ['name', 'kind'],
           sourceIds: ['dva-audited-financial-statements'],
           evidenceStrength: 'direct',
+        },
+        {
+          fieldPaths: ['geometryId'],
+          sourceIds: [
+            'dva-about-boundary',
+            'dva-village-map',
+            'psgc-2023-makati-barangay-geojson',
+            'osm-dasmarinas-boundary-snapshot',
+          ],
+          evidenceStrength: 'corroborated',
+          note:
+            'DVA states that Barangay Dasmariñas is exactly located within the gated village perimeter. The renderable trace therefore uses public barangay boundary geometry as an approximate display boundary and is checked against a second OSM boundary snapshot.',
         },
       ],
     },
