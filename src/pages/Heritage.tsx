@@ -105,66 +105,104 @@ export default function Heritage() {
             const primarySource = place.provenance.sources.find(
               source => source.kind !== 'reference-map'
             );
+            const primaryMedia = place.media?.[0];
 
             return (
               <article
                 key={place.id}
-                className="rounded-2xl border border-gray-200 bg-white p-6"
+                className="overflow-hidden rounded-2xl border border-gray-200 bg-white"
               >
-                <div className="flex items-start justify-between gap-4">
-                  <span className="rounded-full bg-primary-50 px-3 py-1 text-xs font-bold text-primary-700">
-                    {site.category}
-                  </span>
-                  <span className="text-right text-sm font-bold text-secondary-700">
-                    {site.period}
-                  </span>
-                </div>
-
-                <h2 className="mt-4 text-xl font-extrabold text-gray-950">
-                  {place.name}
-                </h2>
-                {place.location.address && (
-                  <p className="mt-1 text-sm text-gray-500">
-                    {place.location.address}
-                  </p>
+                {primaryMedia && (
+                  <figure className="border-b border-gray-100">
+                    <img
+                      src={primaryMedia.src}
+                      alt={primaryMedia.alt}
+                      width={1400}
+                      height={933}
+                      loading="lazy"
+                      decoding="async"
+                      referrerPolicy="no-referrer"
+                      className="aspect-[16/9] w-full object-cover"
+                      style={{ objectPosition: primaryMedia.objectPosition ?? '50% 50%' }}
+                    />
+                    <figcaption className="flex flex-wrap gap-x-2 gap-y-1 px-4 py-2 text-[11px] leading-relaxed text-gray-500">
+                      <span>{primaryMedia.date}</span>
+                      <a
+                        href={primaryMedia.sourceUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="font-semibold text-primary-700 underline underline-offset-2"
+                      >
+                        {primaryMedia.credit}
+                      </a>
+                      <a
+                        href={primaryMedia.licenseUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="underline underline-offset-2"
+                      >
+                        {primaryMedia.license}
+                      </a>
+                    </figcaption>
+                  </figure>
                 )}
-                {(place.aliases?.length ?? 0) > 0 && (
-                  <p className="mt-2 text-xs leading-relaxed text-gray-500">
-                    Also listed as: {place.aliases?.map(alias => alias.name).join(' · ')}
-                  </p>
-                )}
-                <p className="mt-4 text-sm leading-relaxed text-gray-700">
-                  {site.context}
-                </p>
 
-                <div className="mt-5 flex flex-wrap gap-3 text-sm">
-                  {place.location.point && (
-                    <a
-                      href={mapsUrl(place.location.point.lat, place.location.point.lng)}
-                      target="_blank"
-                      rel="noreferrer"
+                <div className="p-6">
+                  <div className="flex items-start justify-between gap-4">
+                    <span className="rounded-full bg-primary-50 px-3 py-1 text-xs font-bold text-primary-700">
+                      {site.category}
+                    </span>
+                    <span className="text-right text-sm font-bold text-secondary-700">
+                      {site.period}
+                    </span>
+                  </div>
+
+                  <h2 className="mt-4 text-xl font-extrabold text-gray-950">
+                    {place.name}
+                  </h2>
+                  {place.location.address && (
+                    <p className="mt-1 text-sm text-gray-500">
+                      {place.location.address}
+                    </p>
+                  )}
+                  {(place.aliases?.length ?? 0) > 0 && (
+                    <p className="mt-2 text-xs leading-relaxed text-gray-500">
+                      Also listed as: {place.aliases?.map(alias => alias.name).join(' · ')}
+                    </p>
+                  )}
+                  <p className="mt-4 text-sm leading-relaxed text-gray-700">
+                    {site.context}
+                  </p>
+
+                  <div className="mt-5 flex flex-wrap gap-3 text-sm">
+                    {place.location.point && (
+                      <a
+                        href={mapsUrl(place.location.point.lat, place.location.point.lng)}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-1 font-bold text-primary-700"
+                      >
+                        <MapPin className="h-4 w-4" /> Map
+                      </a>
+                    )}
+                    <Link
+                      to={'/civic-map/' + place.id}
                       className="inline-flex items-center gap-1 font-bold text-primary-700"
                     >
-                      <MapPin className="h-4 w-4" /> Map
-                    </a>
-                  )}
-                  <Link
-                    to={'/civic-map/' + place.id}
-                    className="inline-flex items-center gap-1 font-bold text-primary-700"
-                  >
-                    Place details <ArrowRight className="h-3.5 w-3.5" />
-                  </Link>
-                  {primarySource && (
-                    <a
-                      href={primarySource.url}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-1 text-gray-500 underline underline-offset-2"
-                    >
-                      {primarySource.label}{' '}
-                      <ExternalLink className="h-3.5 w-3.5" />
-                    </a>
-                  )}
+                      Place details <ArrowRight className="h-3.5 w-3.5" />
+                    </Link>
+                    {primarySource && (
+                      <a
+                        href={primarySource.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-1 text-gray-500 underline underline-offset-2"
+                      >
+                        {primarySource.label}{' '}
+                        <ExternalLink className="h-3.5 w-3.5" />
+                      </a>
+                    )}
+                  </div>
                 </div>
               </article>
             );
