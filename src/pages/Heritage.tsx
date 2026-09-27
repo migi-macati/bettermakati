@@ -265,6 +265,20 @@ export default function Heritage() {
                 <p className="mt-1 text-sm leading-relaxed text-gray-700">
                   {selectedCollection.description}
                 </p>
+                <div className="mt-3 flex flex-wrap gap-3 text-sm font-bold">
+                  <a
+                    href={'#collection-' + selectedCollection.id}
+                    className="text-primary-700 underline underline-offset-2"
+                  >
+                    View collection
+                  </a>
+                  <Link
+                    to={'/history?collection=' + selectedCollection.id}
+                    className="text-primary-700 underline underline-offset-2"
+                  >
+                    Related history
+                  </Link>
+                </div>
               </div>
             )}
           </div>
@@ -295,7 +309,8 @@ export default function Heritage() {
             return (
               <article
                 key={collection.id}
-                className="rounded-2xl border border-primary-100 bg-[#fffdf8] p-6"
+                id={'collection-' + collection.id}
+                className="scroll-mt-24 rounded-2xl border border-primary-100 bg-[#fffdf8] p-6"
               >
                 <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
                   <Layers3 className="h-5 w-5" />
@@ -322,6 +337,12 @@ export default function Heritage() {
                     </Link>
                   ))}
                 </div>
+                <Link
+                  to={'/history?collection=' + collection.id}
+                  className="mt-5 inline-flex items-center gap-1 text-sm font-bold text-primary-700"
+                >
+                  Related history <ArrowRight className="h-3.5 w-3.5" />
+                </Link>
               </article>
             );
           })}
@@ -347,8 +368,9 @@ export default function Heritage() {
 
             return (
               <article
-                key={route.name}
-                className="rounded-2xl border border-primary-100 bg-white p-6"
+                key={route.id}
+                id={'collection-' + route.id}
+                className="scroll-mt-24 rounded-2xl border border-primary-100 bg-white p-6"
               >
                 <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
                   <Footprints className="h-5 w-5" />
@@ -376,14 +398,22 @@ export default function Heritage() {
                     </li>
                   ))}
                 </ol>
-                <a
-                  href={directionsUrl(route.placeIds)}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="brand-btn-primary mt-6"
-                >
-                  <Route className="h-4 w-4" /> Open walking route
-                </a>
+                <div className="mt-6 flex flex-wrap gap-3">
+                  <a
+                    href={directionsUrl(route.placeIds)}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="brand-btn-primary"
+                  >
+                    <Route className="h-4 w-4" /> Open walking route
+                  </a>
+                  <Link
+                    to={'/history?collection=' + route.id}
+                    className="brand-btn-secondary"
+                  >
+                    Related history <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </div>
               </article>
             );
           })}
