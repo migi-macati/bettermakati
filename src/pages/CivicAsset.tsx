@@ -37,6 +37,8 @@ import {
   accountabilityStatusLabel,
 } from '../data/accountability';
 import { makatiHistory } from '../data/makatiHistory';
+import { barangays } from '../data/barangays';
+import { heritageCollectionsForPlace } from '../data/heritageCollections';
 
 const verificationLabel = {
   verified: 'Verified',
@@ -133,6 +135,11 @@ export default function CivicAsset() {
   const relatedHistoryEvents = makatiHistory.filter(event =>
     event.relations?.placeIds?.includes(place.id)
   );
+  const relatedHeritageCollections = heritageCollectionsForPlace(place.id);
+  const relatedBarangays = place.location.barangays.flatMap(name => {
+    const barangay = barangays.find(item => item.name === name);
+    return barangay ? [barangay] : [];
+  });
   const primaryMedia = place.media?.[0];
 
   return (
@@ -200,9 +207,21 @@ export default function CivicAsset() {
 
             <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-sm text-gray-600">
               {place.location.barangays.length > 0 && (
-                <span className="inline-flex items-center gap-1.5">
+                <span className="inline-flex flex-wrap items-center gap-1.5">
                   <MapPin className="h-4 w-4 text-primary-700" />
-                  {place.location.barangays.join(' · ')}
+                  {relatedBarangays.length > 0
+                    ? relatedBarangays.map((barangay, index) => (
+                        <span key={barangay.slug}>
+                          {index > 0 && <span className="mr-1">·</span>}
+                          <Link
+                            to={'/barangays/' + barangay.slug}
+                            className="font-semibold text-primary-700 underline underline-offset-2"
+                          >
+                            {barangay.name}
+                          </Link>
+                        </span>
+                      ))
+                    : place.location.barangays.join(' · ')}
                 </span>
               )}
               {place.management.responsibilityText && (
@@ -229,6 +248,9 @@ export default function CivicAsset() {
           <a href="#place-information" className="brand-btn-secondary">{informationLabel}</a>
           {(heritageDesignations.length > 0 || heritageFacts.length > 0) && (
             <a href="#heritage-record" className="brand-btn-secondary">Heritage record</a>
+          )}
+          {relatedHeritageCollections.length > 0 && (
+            <a href="#heritage-connections" className="brand-btn-secondary">Heritage connections</a>
           )}
           <a href="#observe" className="brand-btn-secondary">Observe conditions</a>
           <a href="#community-records" className="brand-btn-secondary">Community cases</a>
@@ -351,7 +373,19 @@ export default function CivicAsset() {
               {place.location.barangays.length > 0 && (
                 <div>
                   <dt className="font-bold text-gray-950">Barangay</dt>
-                  <dd className="mt-1 text-gray-600">{place.location.barangays.join(' · ')}</dd>
+                  <dd className="mt-1 flex flex-wrap gap-x-2 gap-y-1 text-gray-600">
+                    {relatedBarangays.length > 0
+                      ? relatedBarangays.map(barangay => (
+                          <Link
+                            key={barangay.slug}
+                            to={'/barangays/' + barangay.slug}
+                            className="font-semibold text-primary-700 underline underline-offset-2"
+                          >
+                            Better{barangay.name}
+                          </Link>
+                        ))
+                      : place.location.barangays.join(' · ')}
+                  </dd>
                 </div>
               )}
               {place.management.responsibilityText && (
@@ -483,6 +517,48 @@ export default function CivicAsset() {
                     </div>
                   </div>
                 )}
+              </div>
+            )}
+
+            {relatedHeritageCollections.length > 0 && (
+              <div
+                id="heritage-connections"
+                className="mt-6 scroll-mt-24 border-t border-gray-200 pt-5"
+              >
+                <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+                  Heritage routes & collections
+                </div>
+                <div className="mt-3 grid gap-3">
+                  {relatedHeritageCollections.map(collection => (
+                    <div
+                      key={collection.id}
+                      className="rounded-xl border border-primary-100 bg-white p-4"
+                    >
+                      <div className="text-xs font-bold uppercase tracking-[0.06em] text-gray-500">
+                        {collection.kind === 'walking-route'
+                          ? 'Walking route'
+                          : 'Thematic collection'}
+                      </div>
+                      <div className="mt-1 font-extrabold text-gray-950">
+                        {collection.name}
+                      </div>
+                      <div className="mt-3 flex flex-wrap gap-4 text-sm font-bold">
+                        <Link
+                          to={'/heritage#collection-' + collection.id}
+                          className="text-primary-700 underline underline-offset-2"
+                        >
+                          View in Heritage
+                        </Link>
+                        <Link
+                          to={'/history?collection=' + collection.id}
+                          className="text-primary-700 underline underline-offset-2"
+                        >
+                          Related history
+                        </Link>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             )}
 
