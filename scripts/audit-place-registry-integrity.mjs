@@ -210,6 +210,82 @@ if (
   problems.push('Place Registry provenance derivation is missing.');
 }
 
+const heritageCanonicalIds = [
+  'nuestra-senora-de-gracia-church',
+  'sts-peter-and-paul-parish-church',
+  'nielson-tower',
+  'dambana-ng-banal-na-krus',
+  'museo-ng-makati',
+  'ayala-museum',
+  'plaza-cristo-rey',
+];
+
+for (const heritageId of heritageCanonicalIds) {
+  const asset = assets.find(item => item.id === heritageId);
+  if (!asset) {
+    problems.push('Canonical heritage record is missing: ' + heritageId);
+    continue;
+  }
+  if (!/\bheritage:\s*\{/.test(asset.row)) {
+    problems.push('Canonical heritage metadata is missing: ' + heritageId);
+  }
+
+  const availableSourceIds = new Set();
+  if (asset.sourceUrl) availableSourceIds.add(heritageId + ':identity');
+  if (asset.coordinateSourceUrl) availableSourceIds.add(heritageId + ':coordinates');
+  for (const match of asset.row.matchAll(/\bidSuffix:\s*'([^']+)'/g)) {
+    availableSourceIds.add(heritageId + ':' + match[1]);
+  }
+
+  const referencedSourceIds = [
+    ...asset.row.matchAll(/\bsourceIds:\s*\[([^\]]*)\]/g),
+  ].flatMap(match =>
+    [...match[1].matchAll(/'([^']+)'/g)].map(sourceMatch => sourceMatch[1])
+  );
+
+  for (const sourceId of referencedSourceIds) {
+    if (!availableSourceIds.has(sourceId)) {
+      problems.push(
+        'Heritage metadata source reference is unresolved on ' +
+          heritageId +
+          ': ' +
+          sourceId
+      );
+    }
+  }
+}
+
+for (const heritageId of [
+  'nuestra-senora-de-gracia-church',
+  'sts-peter-and-paul-parish-church',
+  'nielson-tower',
+  'museo-ng-makati',
+]) {
+  const asset = assets.find(item => item.id === heritageId);
+  if (asset && !asset.row.includes("classification: 'Important Cultural Property'")) {
+    problems.push('Expected National Museum ICP designation is missing: ' + heritageId);
+  }
+}
+
+for (const [heritageId, markerYear] of [
+  ['nuestra-senora-de-gracia-church', '1937'],
+  ['sts-peter-and-paul-parish-church', '1937'],
+  ['nielson-tower', '1996'],
+  ['dambana-ng-banal-na-krus', '1991'],
+]) {
+  const asset = assets.find(item => item.id === heritageId);
+  if (
+    asset &&
+    !asset.row.includes("classification: 'Level II – Historical marker'") &&
+    !asset.row.includes("dateOrYear: '" + markerYear + "'")
+  ) {
+    problems.push(
+      'Expected NHCP marker metadata is missing or incomplete: ' +
+        heritageId
+    );
+  }
+}
+
 for (const asset of assets) {
   const identityUrl = Boolean(asset.sourceUrl);
   const identityLabel = Boolean(asset.sourceLabel);
@@ -543,8 +619,12 @@ for (const requiredPlaceId of [
 for (const marker of [
   "aliasKinds?: Record<string, PlaceAlias['kind']>",
   "sourceKind?: PlaceSource['kind']",
+  "additionalSources?: CivicAssetAdditionalSource[]",
+  "heritage?: PlaceHeritageMetadata",
   "kind: asset.aliasKinds?.[name] ?? 'unclassified'",
   "kind: asset.sourceKind ?? 'other'",
+  "for (const source of asset.additionalSources ?? [])",
+  "heritage: asset.heritage",
 ]) {
   if (!registrySource.includes(marker)) {
     problems.push('Heritage metadata normalization is missing: ' + marker);
@@ -645,6 +725,7 @@ console.log(
     verifiedCount + ' source-complete verified records',
     relationships.length + ' explicit relationships resolved',
     heritagePlaceIds.length + ' canonical-driven Heritage presentation records',
+    heritageCanonicalIds.length + ' enriched canonical heritage records',
     historyPlaceIds.length + ' History-to-place links resolved',
     barangayHeritageMarkerPlaceIds.length + ' BetterBarangay heritage links resolved',
     indexEntries.length + ' generated index entries in parity',
