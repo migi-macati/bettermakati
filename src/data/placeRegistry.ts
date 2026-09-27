@@ -199,7 +199,9 @@ export interface CivicAsset {
   authority?: string;
   address?: string;
   aliases?: string[];
+  aliasKinds?: Record<string, PlaceAlias['kind']>;
   secondaryCategories?: string[];
+  sourceKind?: PlaceSource['kind'];
   servicesAtLocation?: string[];
   accessClass?: CivicAccessClass;
   sourceUrl?: string;
@@ -404,6 +406,7 @@ export const civicAssets: CivicAsset[] = [
     authority: 'City Government of Makati',
     address: 'P. Gomez Street / D.M. Rivera Street, Barangay Poblacion, Makati City',
     secondaryCategories: ['heritage-site', 'historic-landscape'],
+    sourceKind: 'official-secondary',
     accessClass: 'government-public',
     sourceUrl: 'https://www.makati.gov.ph/assets/uploads/downloads/2/541/pdf/Final%20Makati%20Cultural%20Development%20Plan.pdf',
     sourceLabel: 'City Government of Makati · Cultural Development Plan',
@@ -1244,7 +1247,13 @@ export const civicAssets: CivicAsset[] = [
     authority: 'City Government of Makati',
     address: 'J.P. Rizal Street corner A. Mabini Street, Barangay Poblacion, Makati City',
     aliases: ['Makati Museum', 'Old Presidencia of San Pedro Macati', 'Old Presidencia of Makati'],
+    aliasKinds: {
+      'Makati Museum': 'current-alternate',
+      'Old Presidencia of San Pedro Macati': 'historical-name',
+      'Old Presidencia of Makati': 'historical-name',
+    },
     secondaryCategories: ['museum', 'important-cultural-property', 'registered-cultural-property'],
+    sourceKind: 'official-secondary',
     accessClass: 'government-public',
     sourceUrl: 'https://talapamana.ncca.gov.ph/index.php/component/content/article/talapamana-metro-manila?Itemid=101&catid=12',
     sourceLabel: 'NCCA Talapamana · Old Presidencia of San Pedro Macati / Museo ng Makati',
@@ -1264,7 +1273,12 @@ export const civicAssets: CivicAsset[] = [
     authority: 'Nuestra Señora de Gracia Parish / Order of Saint Augustine',
     address: '7440 Bernardino Street, Barangay Guadalupe Viejo, Makati City',
     aliases: ['Guadalupe Church', 'Church and Monastery of Guadalupe'],
+    aliasKinds: {
+      'Guadalupe Church': 'local-name',
+      'Church and Monastery of Guadalupe': 'current-alternate',
+    },
     secondaryCategories: ['religious-heritage', 'historical-marker', 'marked-structure'],
+    sourceKind: 'official-secondary',
     accessClass: 'public-access-private-managed',
     sourceUrl: 'https://philhistoricsites.nhcp.gov.ph/registry_database/church-and-monastery-of-guadalupe/',
     sourceLabel: 'NHCP · Church and Monastery of Guadalupe historical marker',
@@ -1284,7 +1298,13 @@ export const civicAssets: CivicAsset[] = [
     authority: 'Archdiocese of Manila / Sts. Peter and Paul Parish',
     address: '5539 D.M. Rivera Street, Barangay Poblacion, Makati City',
     aliases: ['San Pedro Macati Church', 'Makati Church', 'Sampiro Church'],
+    aliasKinds: {
+      'San Pedro Macati Church': 'historical-name',
+      'Makati Church': 'local-name',
+      'Sampiro Church': 'local-name',
+    },
     secondaryCategories: ['religious-heritage', 'historical-marker', 'marked-structure'],
+    sourceKind: 'official-secondary',
     accessClass: 'public-access-private-managed',
     sourceUrl: 'https://philhistoricsites.nhcp.gov.ph/registry_database/san-pedro-macati/',
     sourceLabel: 'NHCP · San Pedro Macati historical marker',
@@ -1303,8 +1323,8 @@ export const civicAssets: CivicAsset[] = [
     lng: 121.02452,
     authority: 'Ayala Triangle estate / current building operator',
     address: 'Makati Avenue, Ayala Triangle, Barangay Bel-Air, Makati City',
-    aliases: ['Nielsen Tower'],
     secondaryCategories: ['historical-marker', 'marked-structure', 'aviation-heritage'],
+    sourceKind: 'official-secondary',
     accessClass: 'public-access-private-managed',
     sourceUrl: 'https://philhistoricsites.nhcp.gov.ph/registry_database/nielson-tower/',
     sourceLabel: 'NHCP · Nielson Tower historical marker',
@@ -1324,7 +1344,13 @@ export const civicAssets: CivicAsset[] = [
     authority: 'Archdiocese of Manila / Holy Cross Parish',
     address: '211 J.P. Rizal Avenue, Barangay Tejeros, Makati City',
     aliases: ['Holy Cross Parish Church', 'Holy Cross Shrine', 'Simbahan ng Banal na Krus'],
+    aliasKinds: {
+      'Holy Cross Parish Church': 'current-alternate',
+      'Holy Cross Shrine': 'current-alternate',
+      'Simbahan ng Banal na Krus': 'local-name',
+    },
     secondaryCategories: ['religious-heritage', 'historical-marker', 'marked-structure'],
+    sourceKind: 'official-secondary',
     accessClass: 'public-access-private-managed',
     sourceUrl: 'https://philhistoricsites.nhcp.gov.ph/registry_database/dambana-ng-banal-na-krus/',
     sourceLabel: 'NHCP · Dambana ng Banal na Krus historical marker',
@@ -1343,7 +1369,6 @@ export const civicAssets: CivicAsset[] = [
     lng: 121.02325,
     authority: 'Ayala Foundation, Inc.',
     address: 'Makati Avenue corner De La Rosa Street, Greenbelt Park, Barangay San Lorenzo, Makati City',
-    aliases: ['Museo ng Ayala'],
     secondaryCategories: ['museum', 'cultural-institution'],
     accessClass: 'public-access-private-managed',
     sourceUrl: 'https://shop.ayalamuseum.org/',
@@ -1918,7 +1943,7 @@ const placeSourcesFor = (asset: CivicAsset): PlaceSource[] => {
       id: asset.id + ':identity',
       label: asset.sourceLabel,
       url: asset.sourceUrl,
-      kind: 'other',
+      kind: asset.sourceKind ?? 'other',
     });
   }
   if (asset.coordinateSourceUrl && asset.coordinateSourceLabel) {
