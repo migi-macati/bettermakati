@@ -107,8 +107,15 @@ for (const marker of [
   }
 }
 
+const dasmarinasArtifact =
+  artifactBlock
+    .split("id: 'dasmarinas-village-boundary-2026-09'")[1]
+    ?.split("\n  },")[0] ?? '';
+
 const coordinatePairs = [
-  ...artifactBlock.matchAll(/\[([0-9]+\.[0-9]+),\s*([0-9]+\.[0-9]+)\]/g),
+  ...dasmarinasArtifact.matchAll(
+    /\[([0-9]+\.[0-9]+),\s*([0-9]+\.[0-9]+)\]/g
+  ),
 ].map(match => [Number(match[1]), Number(match[2])]);
 
 if (coordinatePairs.length !== 24) {
