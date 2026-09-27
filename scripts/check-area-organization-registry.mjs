@@ -173,8 +173,11 @@ if (source.includes("id: 'rockwell-center-association'")) {
 }
 
 if (
-  relationshipBlock.includes("id: 'poblacion'") &&
-  relationshipBlock.includes("makati-central-estate-association")
+  relationshipRows.some(
+    row =>
+      row.includes("id: 'poblacion'") &&
+      row.includes("makati-central-estate-association")
+  )
 ) {
   problems.push(
     'Unsupported MACEA-to-Poblacion relationship was propagated into the canonical registry.'

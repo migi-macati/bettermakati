@@ -77,6 +77,12 @@ corrected in parallel, preserving its existing **93 canonical record**
 expectation. W5-4e3's new explanatory prose check is also whitespace-normalized
 so ordinary source formatting cannot invalidate the semantic guard.
 
+A later Area Registry guard also tested the entire relationship array for both
+`poblacion` and the MACEA organization ID. Those strings legitimately occur in
+different canonical rows, so the global conjunction produced a false positive.
+The guard now tests each relationship row individually; no MACEA-to-Poblacion
+edge is added or removed.
+
 These repairs restore the validation baseline needed to test W5-4e3 itself.
 
 ## Automated checks
