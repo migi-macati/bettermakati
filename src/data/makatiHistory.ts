@@ -1022,6 +1022,7 @@ const rows: Row[] = [
       evidenceNote:
         'Colín describes the San Pedro house as founded on a “montecillo” and the Guadalupe convent and church on another nearby hill. This directly supports a seventeenth-century landscape of paired elevated sites above the Pasig.',
       relations: {
+        placeIds: ['nuestra-senora-de-gracia-church'],
         barangaySlugs: ['guadalupe-viejo'],
         institutions: [{ label: 'Order of Saint Augustine' }],
       },
@@ -1105,6 +1106,7 @@ const rows: Row[] = [
       additionalSources: [nhcpSanPedro],
       evidenceStatus: 'established',
       relations: {
+        placeIds: ['sts-peter-and-paul-parish-church'],
         barangaySlugs: ['poblacion'],
         institutions: [{ label: 'Society of Jesus' }],
         eventIds: ['buenavista-foundation'],
@@ -1308,6 +1310,7 @@ const rows: Row[] = [
       additionalSources: [galarragaArchive, zunigaMacati],
       evidenceStatus: 'established',
       relations: {
+        placeIds: ['sts-peter-and-paul-parish-church'],
         barangaySlugs: ['poblacion'],
         people: [
           { label: 'Pedro de Galarraga' },
@@ -1375,6 +1378,7 @@ const rows: Row[] = [
       evidenceNote:
         'The date may refer to a later reconstruction or major repair rather than replacement of the 1796 church.',
       relations: {
+        placeIds: ['sts-peter-and-paul-parish-church'],
         barangaySlugs: ['poblacion'],
         eventIds: ['san-pedro-church-rebuilt-1796'],
       },
@@ -1422,6 +1426,7 @@ const rows: Row[] = [
     {
       evidenceStatus: 'established',
       relations: {
+        placeIds: ['sts-peter-and-paul-parish-church'],
         barangaySlugs: ['poblacion'],
         eventIds: ['segui-visitation-1831'],
       },
@@ -1756,6 +1761,7 @@ const rows: Row[] = [
       additionalSources: [fhlNielsonHistory],
       evidenceStatus: 'established',
       relations: {
+        placeIds: ['nielson-tower'],
         institutions: [
           { label: 'Nielson Airport' },
           { label: 'Ayala y Cia.' },
@@ -1787,6 +1793,7 @@ const rows: Row[] = [
     {
       evidenceStatus: 'established',
       relations: {
+        placeIds: ['nielson-tower'],
         institutions: [
           { label: 'Philippine Air Lines' },
           { label: 'Nielson Airport' },
@@ -1806,6 +1813,7 @@ const rows: Row[] = [
     {
       evidenceStatus: 'established',
       relations: {
+        placeIds: ['nielson-tower'],
         institutions: [
           { label: 'Far East Air Force' },
           { label: 'Nielson Airport' },
@@ -1826,6 +1834,7 @@ const rows: Row[] = [
     {
       evidenceStatus: 'established',
       relations: {
+        placeIds: ['nielson-tower'],
         institutions: [
           { label: 'Far East Air Force' },
           { label: 'Nielson Airport' },
@@ -1862,6 +1871,7 @@ const rows: Row[] = [
     {
       evidenceStatus: 'established',
       relations: {
+        placeIds: ['nielson-tower'],
         institutions: [{ label: 'Nielson Airport' }],
         eventIds: ['nielson-attack'],
       },
@@ -1917,6 +1927,7 @@ const rows: Row[] = [
       additionalSources: [fhlNielsonHistory],
       evidenceStatus: 'established',
       relations: {
+        placeIds: ['nielson-tower'],
         institutions: [
           { label: 'Philippine Air Lines' },
           { label: 'Nielson Airport' },
@@ -1937,6 +1948,7 @@ const rows: Row[] = [
       additionalSources: [ayalaHistory, ayalaTimeline2008],
       evidenceStatus: 'established',
       relations: {
+        placeIds: ['nielson-tower'],
         institutions: [
           { label: 'Nielson Airport' },
           { label: 'Ayala y Cia.' },
@@ -2094,7 +2106,7 @@ const rows: Row[] = [
     {
       evidenceStatus: 'established',
       relations: {
-        placeIds: ['ayala-triangle-gardens'],
+        placeIds: ['ayala-triangle-gardens', 'nielson-tower'],
         barangaySlugs: ['bel-air'],
         people: [
           { label: 'Enrique Zobel' },
@@ -2225,7 +2237,7 @@ const rows: Row[] = [
     {
       evidenceStatus: 'established',
       relations: {
-        placeIds: ['ayala-triangle-gardens'],
+        placeIds: ['ayala-triangle-gardens', 'nielson-tower'],
         barangaySlugs: ['bel-air'],
       },
     },
@@ -2275,7 +2287,7 @@ const rows: Row[] = [
     {
       evidenceStatus: 'established',
       relations: {
-        placeIds: ['ayala-triangle-gardens'],
+        placeIds: ['ayala-triangle-gardens', 'nielson-tower'],
         barangaySlugs: ['bel-air'],
       },
     },
@@ -2338,6 +2350,15 @@ const rows: Row[] = [
     community,
     'The museum’s sixth floor became the library’s new home.',
     library,
+    undefined,
+    {
+      evidenceStatus: 'established',
+      relations: {
+        placeIds: ['ayala-museum'],
+        barangaySlugs: ['san-lorenzo'],
+        institutions: [{ label: 'Filipinas Heritage Library' }],
+      },
+    },
   ],
   [
     'sc-forum-shopping-2016',
