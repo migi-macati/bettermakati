@@ -2,6 +2,12 @@ import { readFile } from 'node:fs/promises';
 
 const placeText = await readFile('src/data/placeRegistry.ts', 'utf8');
 const civicMapText = await readFile('src/data/civicMap.ts', 'utf8');
+const areaGeometryText = await readFile('src/data/areaGeometry.ts', 'utf8');
+const areaContextMapText = await readFile(
+  'src/components/civic/CivicAreaContextMap.tsx',
+  'utf8'
+);
+const civicMapPageText = await readFile('src/pages/CivicMap.tsx', 'utf8');
 const problems = [];
 
 const assetBlock = placeText.split('export const civicAssets')[1]?.split('const geometryTypeFor')[0] ?? '';
@@ -614,11 +620,91 @@ if (assetIds.length < 21) problems.push('Civic Map needs at least twenty-one map
 if (issueIds.length < 20) problems.push('Civic Map issue taxonomy appears unexpectedly small.');
 if (proposalIds.length < 10) problems.push('Civic Map proposal taxonomy appears unexpectedly small.');
 
+/* Districts & estates are a separate context layer, not Civic Asset records. */
+const areaArtifactBlock =
+  areaGeometryText
+    .split(
+      'export const civicAreaGeometryArtifacts: CivicAreaGeometryArtifact[] = ['
+    )[1]
+    ?.split('\n];\n\nvalidateCivicAreaGeometryArtifacts')[0] ?? '';
+const areaArtifactCount = (areaArtifactBlock.match(/^  \{$/gm) ?? []).length;
+
+if (areaArtifactCount !== 2) {
+  problems.push(
+    'Civic Map area context layer currently expects exactly two sourced area geometry artifacts; found ' +
+      areaArtifactCount +
+      '.'
+  );
+}
+
+for (const marker of [
+  'civicAreaGeometryArtifacts',
+  'boundsForAreaGeometry',
+  'civicAreaById',
+  'geometryPath',
+  'Districts &amp; estates',
+  'Approximate boundary',
+  'Areas without sourced geometry are not drawn.',
+  "to={'/estates#area-' + area.id}",
+  'pointer-events-none',
+  '&layer=mapnik',
+]) {
+  if (!areaContextMapText.includes(marker)) {
+    problems.push('Civic Map area context marker missing: ' + marker);
+  }
+}
+
+for (const areaId of [
+  'dasmarinas-village',
+  'forbes-park-village',
+]) {
+  if (!areaArtifactBlock.includes("areaId: '" + areaId + "'")) {
+    problems.push(
+      'Civic Map area context layer is missing sourced geometry for: ' +
+        areaId
+    );
+  }
+}
+
+if (areaContextMapText.includes('&marker=')) {
+  problems.push(
+    'Civic Map area context layer must not invent a marker/centroid for polygon areas.'
+  );
+}
+
+if (/\bcentroid\b/i.test(areaContextMapText)) {
+  problems.push(
+    'Civic Map area context layer must derive its viewport from polygon bounds, not synthetic centroids.'
+  );
+}
+
+if (!civicMapPageText.includes("import CivicAreaContextMap from '../components/civic/CivicAreaContextMap';")) {
+  problems.push(
+    'Civic Map page is not wired to the Districts & estates context layer.'
+  );
+}
+
+if (!civicMapPageText.includes('<CivicAreaContextMap />')) {
+  problems.push(
+    'Civic Map page does not render the Districts & estates context layer.'
+  );
+}
+
+if (
+  civicMapPageText.includes(
+    '<CivicMapEmbed lat={14.5652} lng={121.0278}'
+  )
+) {
+  problems.push(
+    'Civic Map overview still uses the old hard-coded center marker instead of sourced area bounds.'
+  );
+}
+
 if (problems.length) {
   console.error(problems.join('\n'));
   process.exit(1);
 }
 
 console.log(
-  `Civic Map integrity passed: ${assetIds.length} assets, ${issueIds.length} issue categories, ${proposalIds.length} proposal categories, ${emergencyRows.length} emergency categories routed to 911.`
+  `Civic Map integrity passed: ${assetIds.length} assets, ${issueIds.length} issue categories, ${proposalIds.length} proposal categories, ${emergencyRows.length} emergency categories routed to 911, and ${areaArtifactCount} sourced Districts & estates context polygons with no synthetic centroids.`
 );
