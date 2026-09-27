@@ -1,5 +1,5 @@
 export interface VisitorPlace {
-  name: string;
+  name?: string;
   category:
     | 'Culture'
     | 'Food & Markets'
@@ -7,7 +7,7 @@ export interface VisitorPlace {
     | 'Shopping & Lifestyle'
     | 'District';
   summary: string;
-  mapsQuery: string;
+  mapsQuery?: string;
   placeId?: string;
   sourceUrl: string;
   sourceLabel: string;
@@ -22,10 +22,8 @@ export interface HeritageSite {
 
 export const visitorPlaces: VisitorPlace[] = [
   {
-    name: 'Ayala Museum',
     category: 'Culture',
     summary: 'Philippine history, art and archaeology in the Ayala Center.',
-    mapsQuery: 'Ayala Museum Makati',
     placeId: 'ayala-museum',
     sourceUrl:
       'https://www.tourism.gov.ph/destination/national-capital-region/makati/',
@@ -59,10 +57,8 @@ export const visitorPlaces: VisitorPlace[] = [
     sourceLabel: 'Department of Tourism',
   },
   {
-    name: 'Ayala Triangle Gardens',
     category: 'Parks',
     summary: 'Urban park and walking space in the central business district.',
-    mapsQuery: 'Ayala Triangle Gardens Makati',
     placeId: 'ayala-triangle-gardens',
     sourceUrl:
       'https://www.tourism.gov.ph/destination/national-capital-region/makati/',
