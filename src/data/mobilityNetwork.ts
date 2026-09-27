@@ -134,6 +134,15 @@ const serviceAreaRelationships: MobilityNetworkRelationship[] =
         );
       }
 
+      if (areaAssertion.evidenceStrength === 'inferred') {
+        throw new Error(
+          'Mobility service -> Area network relationships require direct or corroborated evidence: ' +
+            service.id +
+            ' -> ' +
+            areaId
+        );
+      }
+
       return {
         id: 'service-area-' + service.id + '-' + areaId,
         kind: 'service-related-area' as const,
