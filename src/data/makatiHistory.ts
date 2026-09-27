@@ -320,6 +320,102 @@ const alvarezGuerra: HistorySource = {
   citationNote:
     'Travel account describing the Pasig river corridor, San Pedro Macati, Guadalupe and the Guadalupe stone trade.',
 };
+const roxasPurchaseStudy: HistorySource = {
+  id: 'co-makati-liveable-city-2010',
+  label: 'Eliseo T. Co · “Makati City as a ‘Liveable City’ — Lines in Pleasant Places”',
+  url: 'https://pssc.org.ph/wp-content/pssc-archives/Aghamtao/2010/08_Makati%20City%20as%20a%20Liveable%20City-Lines%20in%20Pleasant%20Places.pdf',
+  kind: 'Scholarly account',
+  evidenceLevel: 'Secondary',
+  format: 'scholarly work',
+  creator: 'Eliseo T. Co',
+  repository: 'AghamTao / Philippine Social Science Council',
+  date: '2010',
+  locator: 'vol. 19, pp. 50–51',
+  citationNote:
+    'Dates José Bonifacio Roxas’s purchase of the hacienda to 7 April 1851; the article cites earlier published histories for the ownership sequence.',
+};
+const roxasLandCase: HistorySource = {
+  id: 'sc-roxas-tuason-1907',
+  label: 'Supreme Court · Pedro P. Roxas v. Julia Tuason, G.R. No. L-3788',
+  url: 'https://lawphil.net/judjuris/juri1907/dec1907/gr_l-3788_1907.html',
+  kind: 'Legal record',
+  evidenceLevel: 'Near-primary',
+  format: 'law',
+  repository: 'Supreme Court / Lawphil',
+  date: '21 December 1907',
+  locator: '9 Phil. 408',
+  citationNote:
+    'Confirms that Pedro P. Roxas inherited Hacienda de San Pedro Macati from his father José Bonifacio Roxas and records the Casa-Quinta/Casa de Ingenieros in the registered estate.',
+};
+const elComercio1880: HistorySource = {
+  id: 'el-comercio-tremors-1880',
+  label: 'El Comercio · supplement on the July 1880 earthquakes',
+  url: 'https://bdh-rd.bne.es/viewer.vm?id=0000203725&page=1',
+  kind: 'Institutional history',
+  evidenceLevel: 'Primary',
+  format: 'newspaper',
+  repository: 'Biblioteca Digital Hispánica · Biblioteca Nacional de España',
+  date: '31 July 1880',
+  citationNote:
+    'Contemporary supplement reproducing reports on the July 1880 earthquakes, including damage at San Pedro Macati.',
+};
+const nhiPioDelPilar: HistorySource = {
+  id: 'nhi-filipinos-in-history-pio-del-pilar',
+  label: 'National Historical Institute · Filipinos in History, vol. II · Pio del Pilar',
+  url: 'https://dfa.gov.ph/images/AMabini/C__Managepoint_sessions_Diane_Rar1423.pdf',
+  kind: 'Institutional history',
+  evidenceLevel: 'Secondary',
+  format: 'institutional record',
+  creator: 'National Historical Institute',
+  repository: 'Republic of the Philippines · government-hosted copy',
+  date: '1990; second printing 1996',
+  locator: 'pp. 102–104',
+  citationNote:
+    'Institutional biography recording the 28 May 1896 organization of the Magtagumpay Katipunan council in Culi-Culi and its war standard.',
+};
+const spanishFieldHospital1898: HistorySource = {
+  id: 'aycart-lopez-campana-filipinas',
+  label: 'Lorenzo Aycart y López · La campaña de Filipinas',
+  url: 'https://quod.lib.umich.edu/p/philamer/aca6005.0001.001/42?page=root;rgn=full+text;size=100;view=image;q1=macati',
+  kind: 'Institutional history',
+  evidenceLevel: 'Primary',
+  format: 'historical map',
+  creator: 'Lorenzo Aycart y López',
+  repository: 'University of Michigan · Philippine Studies digital collection',
+  date: 'campaign record published 1900/1910 edition',
+  locator: 'map/table of Manila military medical installations · Casa de Pedro Roxas en San Pedro Macati',
+  citationNote:
+    'Military medical account identifies the Casa de Pedro Roxas in San Pedro Macati as a provisional hospital. The label alone does not settle which later Makati building corresponds to that house.',
+};
+const usActions1899: HistorySource = {
+  id: 'us-congress-actions-philippines-1899',
+  label: 'U.S. Congressional Record · chronological list of actions in the Philippine Islands',
+  url: 'https://www.congress.gov/56/crecb/1901/01/11/GPO-CRECB-1901-pt1-v34-25.pdf',
+  kind: 'Institutional history',
+  evidenceLevel: 'Primary',
+  format: 'institutional record',
+  repository: 'Congress.gov / U.S. Government Publishing Office',
+  date: '11 January 1901',
+  locator: 'chronological list of actions, February 1899 · San Pedro Macati and Guadalupe',
+  citationNote:
+    'Official U.S. compilation records repeated engagements at San Pedro Macati and Guadalupe in February 1899.',
+};
+const smithsonianKingHq: HistorySource = {
+  id: 'smithsonian-king-hq-san-pedro-1899',
+  label: 'Underwood & Underwood · General King’s Headquarters, San Pedro Macati',
+  url: 'https://americanhistory.si.edu/collections/ac-component/sova-nmah-ac-0143-ref13495',
+  kind: 'Institutional history',
+  evidenceLevel: 'Primary',
+  format: 'photograph',
+  creator: 'James Ricalton / Underwood & Underwood',
+  repository: 'Archives Center · National Museum of American History, Smithsonian Institution',
+  date: '1899',
+  locator: 'NMAH.AC.0143_ref13495 · caption no. 24185',
+  citationNote:
+    'Contemporary stereograph cataloged by the Smithsonian as General King’s headquarters in San Pedro Macati.',
+  rights:
+    'Smithsonian record states that usage conditions apply; do not republish the image without checking the institution’s terms.',
+};
 export const historyReviewed = '27 September 2026';
 export const historyEras = [
   { label: 'Early & Spanish colonial', from: 0, to: 1895 },
@@ -649,6 +745,27 @@ const rows: Row[] = [
     },
   ],
   [
+    'roxas-purchase-1851',
+    1851,
+    '7 April 1851 · published account',
+    'José Bonifacio Roxas acquires Hacienda de San Pedro Macati',
+    government,
+    'A scholarly local history dates José Bonifacio Roxas’s acquisition of the hacienda to 7 April 1851. A 1907 Supreme Court decision later confirms that Pedro P. Roxas inherited the Hacienda de San Pedro Macati from his father José Bonifacio Roxas.',
+    roxasPurchaseStudy,
+    'Published accounts differ on the stated purchase price; BetterMakati records the ownership transfer here without forcing a single price figure.',
+    {
+      additionalSources: [roxasLandCase],
+      evidenceStatus: 'established',
+      relations: {
+        people: [
+          { label: 'José Bonifacio Roxas' },
+          { label: 'Pedro P. Roxas' },
+        ],
+        eventIds: ['hacienda-sale-1795'],
+      },
+    },
+  ],
+  [
     'pottery',
     1865,
     '1865',
@@ -656,6 +773,23 @@ const rows: Row[] = [
     community,
     'Tueller cites a transaction involving pottery ovens, evidence of local manufacturing.',
     study,
+  ],
+  [
+    'earthquake-1880',
+    1880,
+    '20 July 1880',
+    'The July earthquake damages San Pedro Macati',
+    community,
+    'A contemporary supplement to El Comercio reports major damage to the San Pedro Macati church and to the hacienda house during the night earthquake of 20 July 1880.',
+    elComercio1880,
+    'The report establishes damage to a casa hacienda but, by itself, does not identify that house with either of the later Olympia or Poblacion buildings.',
+    {
+      evidenceStatus: 'established',
+      relations: {
+        barangaySlugs: ['poblacion'],
+        eventIds: ['segui-visitation-1831'],
+      },
+    },
   ],
   [
     'pasig-river-landscape-1887',
@@ -674,22 +808,82 @@ const rows: Row[] = [
     },
   ],
   [
-    'revolution-1896',
+    'magtagumpay-1896',
     1896,
-    '29 August 1896',
-    'Makati joins the uprising',
+    '28 May 1896',
+    'Magtagumpay is organized in Culi-Culi',
     war,
-    'Tueller includes Makati among towns that rose against Spanish rule.',
-    study,
+    'The National Historical Institute records that Pio del Pilar joined the Katipunan in May 1896 and that the Magtagumpay council was organized in Culi-Culi on 28 May. Del Pilar served as secretary under the name Pang-una and the council used its own war standard.',
+    nhiPioDelPilar,
+    'This is an institutional biography written decades later, not a surviving Katipunan minute book; the chapter and flag should still be traced to contemporary revolutionary records where possible.',
+    {
+      evidenceStatus: 'probable',
+      relations: {
+        barangaySlugs: ['pio-del-pilar'],
+        people: [{ label: 'Pio del Pilar' }],
+        institutions: [{ label: 'Katipunan · Magtagumpay council' }],
+      },
+    },
   ],
   [
-    'church-hospital',
+    'rojas-provisional-hospital-1898',
+    1898,
+    '1898',
+    'Casa de Pedro Roxas listed as a provisional military hospital',
+    health,
+    'A Spanish military medical account maps the “Casa de Pedro Roxas en San Pedro Macati” among the provisional hospitals supporting Manila during the 1898 campaign.',
+    spanishFieldHospital1898,
+    'The military label establishes the use and the historical name. BetterMakati does not use this record alone to decide whether the mapped house is the later Olympia Casa Hacienda or another Roxas estate building.',
+    {
+      evidenceStatus: 'established',
+      relations: {
+        people: [{ label: 'Pedro P. Roxas' }],
+        eventIds: ['roxas-purchase-1851'],
+      },
+      interpretations: [
+        {
+          id: 'pedro-roxas-hospital-location',
+          label: 'Documented use, location still to be cross-checked',
+          summary:
+            'The source identifies a Pedro Roxas house at San Pedro Macati as a provisional hospital; exact identification against later photographs, cadastral plans and the two-Casas evidence remains a separate question.',
+          sourceRefs: ['aycart-lopez-campana-filipinas', 'sc-roxas-tuason-1907'],
+        },
+      ],
+    },
+  ],
+  [
+    'san-pedro-fighting-1899',
     1899,
-    '1899',
-    'Church used as a wartime hospital',
+    '14–21 February 1899',
+    'Fighting repeatedly reaches San Pedro Macati and Guadalupe',
     war,
-    'Tueller documents American military use of the church as a hospital and campground.',
-    study,
+    'An official U.S. chronological list records engagements at San Pedro Macati on 14, 15, 16, 19, 20 and 21 February 1899, with additional fighting at Guadalupe during the same period.',
+    usActions1899,
+    'The U.S. list is a military record from one belligerent. It establishes dates and locations of engagements, not a neutral narrative of the fighting.',
+    {
+      additionalSources: [study, smithsonianKingHq],
+      evidenceStatus: 'established',
+      relations: {
+        barangaySlugs: ['poblacion', 'guadalupe-viejo'],
+        people: [
+          { label: 'Pio del Pilar' },
+          { label: 'Charles King' },
+        ],
+      },
+      media: [
+        {
+          id: 'king-headquarters-san-pedro-1899',
+          kind: 'photograph',
+          title: 'General King’s Headquarters, San Pedro Macati',
+          source: smithsonianKingHq,
+          date: '1899',
+          caption:
+            'A contemporary Underwood & Underwood stereograph cataloged by the Smithsonian as General King’s headquarters in San Pedro Macati.',
+          rights:
+            'Usage conditions apply. BetterMakati should link to the Smithsonian record unless publication rights are separately cleared.',
+        },
+      ],
+    },
   ],
   [
     'rizal-province',
@@ -983,7 +1177,7 @@ export const makatiHistory: HistoryEvent[] = rows.map(
 export const historyResearchGaps = [
   'Precolonial Makati remains under-documented: no Makati-specific archaeological evidence has yet been added to the corpus. Keep regional Namayan context and name-origin traditions separate from locally demonstrated evidence.',
   'Resolve the two-Casas problem without collapsing distinct evidence: compare the documented 1773/1831 casa de Hacienda, the 1775–1826 map sequence, the later Poblacion Oficinas, and the Olympia structure photographed in 1910/1926 against archival property records.',
-  'Pio del Pilar, the Matagumpay flag and 1896–1899 operations: obtain contemporary records and distinguish later commemorations.',
+  'Deepen the 1896–1899 revolutionary record from Filipino and Spanish field documents: verify the Magtagumpay council and flag against contemporary Katipunan material, reconcile Pio del Pilar’s conflicting birth-year traditions, and map the San Pedro/Guadalupe operations beyond U.S. military records.',
   'Barangay histories, workers, women, markets, schools, public health and postwar housing need broader coverage.',
   'Complete the 2022–2023 boundary finality and implementation chronology, and subsequent civic milestones, from dated official records.',
 ];
