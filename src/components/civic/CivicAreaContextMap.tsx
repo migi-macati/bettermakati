@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { Layers3, MapPinned, Train } from 'lucide-react';
+import { Layers3, MapPinned, Route } from 'lucide-react';
 import { Link } from 'react-router';
 import {
   boundsForAreaGeometry,
@@ -225,8 +225,8 @@ export default function CivicAreaContextMap() {
                 : 'inline-flex min-h-11 items-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-2 text-sm font-bold text-gray-700'
             }
           >
-            <Train className="h-4 w-4" aria-hidden="true" />
-            MRT-3 alignment
+            <Route className="h-4 w-4" aria-hidden="true" />
+            Mobility alignments
           </button>
         </div>
       </div>
@@ -272,7 +272,10 @@ export default function CivicAreaContextMap() {
                 d={lineGeometryPath(artifact.geometry, bounds)}
                 fill="none"
                 className="stroke-secondary-600"
-                strokeWidth="5"
+                strokeWidth={service.mode === 'busway' ? 6 : 5}
+                strokeDasharray={
+                  service.mode === 'busway' ? '10 7' : undefined
+                }
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 vectorEffect="non-scaling-stroke"
@@ -293,13 +296,22 @@ export default function CivicAreaContextMap() {
               Approximate boundary
             </span>
           )}
-          {mappedMobility.length > 0 && (
+          {mappedMobility.some(({ service }) => service.mode === 'rail') && (
             <span className="inline-flex items-center gap-1.5 rounded-full bg-secondary-50 px-2.5 py-1 text-secondary-900">
               <span
                 className="h-1 w-5 rounded-full bg-secondary-600"
                 aria-hidden="true"
               />
-              Mapped reference alignment
+              Rail reference alignment
+            </span>
+          )}
+          {mappedMobility.some(({ service }) => service.mode === 'busway') && (
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-secondary-50 px-2.5 py-1 text-secondary-900">
+              <span
+                className="w-5 border-t-2 border-dashed border-secondary-600"
+                aria-hidden="true"
+              />
+              Busway reference alignment
             </span>
           )}
         </div>
@@ -359,7 +371,7 @@ export default function CivicAreaContextMap() {
                   to="/mobility#transport-anchors"
                   className="inline-flex min-h-11 items-center rounded-xl border border-secondary-300 bg-white px-3 py-2 text-sm font-bold text-primary-800 transition hover:border-secondary-500"
                 >
-                  MRT-3 context
+                  {service.name} context
                 </Link>
               </div>
 

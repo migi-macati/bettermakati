@@ -720,13 +720,20 @@ const civicMapMobilityArtifactIds = [
   ...mobilityArtifactBlock.matchAll(/^      id: '([^']+)',$/gm),
 ].map(match => match[1]);
 
+const expectedCivicMapMobilityArtifacts = [
+  'mrt3-makati-alignment-2026-09',
+  'edsa-busway-makati-alignment-2026-09',
+];
+
 if (
-  civicMapMobilityArtifactIds.length !== 1 ||
-  civicMapMobilityArtifactIds[0] !==
-    'mrt3-makati-alignment-2026-09'
+  civicMapMobilityArtifactIds.length !==
+    expectedCivicMapMobilityArtifacts.length ||
+  expectedCivicMapMobilityArtifacts.some(
+    id => !civicMapMobilityArtifactIds.includes(id)
+  )
 ) {
   problems.push(
-    'W5-4e3 expects the Civic Map mobility layer to start from the single published MRT-3 geometry artifact.'
+    'W5-4e4 expects the Civic Map mobility layer to use the published MRT-3 and EDSA Busway geometry artifacts.'
   );
 }
 
@@ -737,8 +744,11 @@ for (const marker of [
   'showMobility',
   'service.placeConnections',
   "connection.role !== 'station'",
-  'MRT-3 alignment',
-  'Mapped reference alignment',
+  'Mobility alignments',
+  'Rail reference alignment',
+  'Busway reference alignment',
+  "service.mode === 'busway'",
+  'strokeDasharray',
   'stroke-secondary-600',
   'to="/mobility#transport-anchors"',
   "to={'/civic-map/' + connection.placeId}",

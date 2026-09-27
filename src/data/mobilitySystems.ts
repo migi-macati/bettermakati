@@ -318,6 +318,7 @@ export const mobilityServices: MobilityServiceRecord[] = [
         ],
       },
     ],
+    geometryArtifactId: 'edsa-busway-makati-alignment-2026-09',
     placeConnections: [
       {
         placeId: 'edsa-busway-guadalupe',

@@ -90,11 +90,12 @@ const expectedGeometrySources = [
   'osm-mrt3-southbound-route-109159',
   'osm-mrt3-rail-exposure-snapshot',
   'traintracks-mrt3-geojson-crosscheck',
+  'traintracks-edsa-carousel-geojson-2026',
 ];
 
-if (geometrySourceIds.length !== 4) {
+if (geometrySourceIds.length !== 5) {
   problems.push(
-    'W5-4e2 expects exactly four MRT-3 geometry/reference sources; found ' +
+    'W5-4e4 expects five mobility geometry/reference sources; found ' +
       geometrySourceIds.length +
       '.'
   );
@@ -119,17 +120,31 @@ const artifactIds = [
   ...artifactBlock.matchAll(/^      id: '([^']+)',$/gm),
 ].map(match => match[1]);
 
-if (artifactIds.length !== 1) {
+if (artifactIds.length !== 2) {
   problems.push(
-    'W5-4e2 expects exactly one published mobility geometry artifact; found ' +
+    'W5-4e4 expects exactly two published mobility geometry artifacts; found ' +
       artifactIds.length +
       '.'
   );
 }
 
-if (!artifactIds.includes('mrt3-makati-alignment-2026-09')) {
-  problems.push('MRT-3 Makati alignment artifact is missing.');
+for (const artifactId of [
+  'mrt3-makati-alignment-2026-09',
+  'edsa-busway-makati-alignment-2026-09',
+]) {
+  if (!artifactIds.includes(artifactId)) {
+    problems.push('Published mobility alignment artifact is missing: ' + artifactId);
+  }
 }
+
+const mrt3ArtifactBlock =
+  artifactBlock
+    .split("id: 'mrt3-makati-alignment-2026-09'")[1]
+    ?.split("id: 'edsa-busway-makati-alignment-2026-09'")[0] ?? '';
+
+const buswayArtifactBlock =
+  artifactBlock
+    .split("id: 'edsa-busway-makati-alignment-2026-09'")[1] ?? '';
 
 for (const marker of [
   "ownerType: 'service'",
@@ -149,13 +164,31 @@ for (const marker of [
   'TrainTracks MRT-3 GeoJSON feature Q13422345',
   'Canonical BetterMakati MRT-3 station points: Guadalupe, Buendia, Ayala and Magallanes',
 ]) {
-  if (!artifactBlock.includes(marker)) {
+  if (!mrt3ArtifactBlock.includes(marker)) {
     problems.push('MRT-3 geometry evidence marker missing: ' + marker);
   }
 }
 
+for (const marker of [
+  "ownerType: 'service'",
+  "ownerId: 'edsa-busway'",
+  "kind: 'infrastructure-alignment'",
+  "coverage: 'makati-segment'",
+  "type: 'MultiLineString'",
+  "sourceId: 'pia-edsa-busway-wifi-2026'",
+  "sourceId: 'traintracks-edsa-carousel-geojson-2026'",
+  'not a survey, engineering or cadastral product',
+  'not a legal Makati-boundary clip',
+  'do not define platform edges, lane widths or temporary traffic arrangements',
+  'Canonical BetterMakati EDSA Busway station points: Guadalupe, Buendia and Ayala',
+]) {
+  if (!buswayArtifactBlock.includes(marker)) {
+    problems.push('EDSA Busway geometry evidence marker missing: ' + marker);
+  }
+}
+
 const coordinatePairs = [
-  ...artifactBlock.matchAll(
+  ...mrt3ArtifactBlock.matchAll(
     /\[([0-9]+\.[0-9]+),\s*([0-9]+\.[0-9]+)\]/g
   ),
 ].map(match => [Number(match[1]), Number(match[2])]);
@@ -203,6 +236,34 @@ if (coordinatePairs.length) {
       'MRT-3 Makati alignment contains a coordinate outside its reviewed local envelope.'
     );
   }
+}
+
+const buswayCoordinatePairs = [
+  ...buswayArtifactBlock.matchAll(
+    /\[([0-9]+\.[0-9]+),\s*([0-9]+\.[0-9]+)\]/g
+  ),
+].map(match => [Number(match[1]), Number(match[2])]);
+
+if (buswayCoordinatePairs.length !== 16) {
+  problems.push(
+    'EDSA Busway Makati alignment should contain 16 directional reference positions; found ' +
+      buswayCoordinatePairs.length +
+      '.'
+  );
+}
+
+if (
+  !buswayCoordinatePairs.every(
+    ([lng, lat]) =>
+      lng >= 121.016 &&
+      lng <= 121.048 &&
+      lat >= 14.540 &&
+      lat <= 14.573
+  )
+) {
+  problems.push(
+    'EDSA Busway Makati alignment contains a coordinate outside its reviewed local envelope.'
+  );
 }
 
 /**
@@ -297,6 +358,61 @@ for (const [stationId, point] of stationPoints) {
   }
 }
 
+const buswayStationDistances = new Map();
+
+for (const stationId of [
+  'edsa-busway-guadalupe',
+  'edsa-busway-buendia',
+  'edsa-busway-ayala',
+]) {
+  const start = placeSource.indexOf("id: '" + stationId + "'");
+  if (start < 0) {
+    problems.push('Missing canonical EDSA Busway station Place: ' + stationId);
+    continue;
+  }
+
+  const block = placeSource.slice(start, start + 2200);
+  const lat = Number(block.match(/\blat:\s*([0-9.]+)/)?.[1]);
+  const lng = Number(block.match(/\blng:\s*([0-9.]+)/)?.[1]);
+
+  if (!Number.isFinite(lat) || !Number.isFinite(lng)) {
+    problems.push(
+      'Could not read canonical Busway station coordinates: ' + stationId
+    );
+    continue;
+  }
+
+  const point = { lat, lng };
+  let minimum = Number.POSITIVE_INFINITY;
+
+  for (
+    let index = 0;
+    index < buswayCoordinatePairs.length - 1;
+    index += 1
+  ) {
+    minimum = Math.min(
+      minimum,
+      distancePointToSegment(
+        point,
+        buswayCoordinatePairs[index],
+        buswayCoordinatePairs[index + 1]
+      )
+    );
+  }
+
+  buswayStationDistances.set(stationId, minimum);
+
+  if (minimum > 50) {
+    problems.push(
+      'EDSA Busway alignment is more than 50 m from canonical station point ' +
+        stationId +
+        ': ' +
+        Math.round(minimum) +
+        ' m.'
+    );
+  }
+}
+
 const serviceRecordBlock =
   systemsSource
     .split(
@@ -321,6 +437,21 @@ if (
   );
 }
 
+const buswayBlock =
+  serviceRecordBlock
+    .split("id: 'edsa-busway'")[1]
+    ?.split("\n  },")[0] ?? '';
+
+if (
+  !buswayBlock.includes(
+    "geometryArtifactId: 'edsa-busway-makati-alignment-2026-09'"
+  )
+) {
+  problems.push(
+    'Canonical EDSA Busway service does not reciprocally reference its geometry artifact.'
+  );
+}
+
 const attachedServiceGeometryIds = [
   ...serviceRecordBlock.matchAll(
     /geometryArtifactId:\s*'([^']+)'/g
@@ -328,12 +459,12 @@ const attachedServiceGeometryIds = [
 ].map(match => match[1]);
 
 if (
-  attachedServiceGeometryIds.length !== 1 ||
-  attachedServiceGeometryIds[0] !==
-    'mrt3-makati-alignment-2026-09'
+  attachedServiceGeometryIds.length !== 2 ||
+  !attachedServiceGeometryIds.includes('mrt3-makati-alignment-2026-09') ||
+  !attachedServiceGeometryIds.includes('edsa-busway-makati-alignment-2026-09')
 ) {
   problems.push(
-    'W5-4e2 should attach geometry only to MRT-3 service.'
+    'W5-4e4 should attach geometry only to MRT-3 and EDSA Busway services.'
   );
 }
 
@@ -403,14 +534,23 @@ const distanceSummary = [...stationDistances.entries()]
   )
   .join(', ');
 
+const buswayDistanceSummary = [...buswayStationDistances.entries()]
+  .map(
+    ([stationId, distance]) =>
+      stationId + '=' + Math.round(distance) + 'm'
+  )
+  .join(', ');
+
 console.log(
   [
     'Mobility route-geometry check passed:',
-    artifactIds.length + ' published artifact',
+    artifactIds.length + ' published artifacts',
     coordinatePairs.length + ' MRT-3 positions',
-    'MRT-3 service reciprocity intact',
-    'station proximity ' + distanceSummary,
-    '4 geometry/reference sources',
+    buswayCoordinatePairs.length + ' EDSA Busway positions',
+    'service reciprocity intact',
+    'MRT station proximity ' + distanceSummary,
+    'Busway station proximity ' + buswayDistanceSummary,
+    geometrySourceIds.length + ' geometry/reference sources',
     '0 road-route geometry artifacts',
     'build + quality gate active',
   ].join(' ')

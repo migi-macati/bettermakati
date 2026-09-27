@@ -120,6 +120,16 @@ export const mobilityGeometrySources: MobilityGeometrySource[] = [
     checkedOn: mobilityGeometryReviewedOn,
     kind: 'reference-map',
   },
+  {
+    id: 'traintracks-edsa-carousel-geojson-2026',
+    label:
+      'TrainTracks · EDSA Carousel directional GeoJSON',
+    url: 'https://github.com/karaagexc/TrainTracks/blob/82c5d199eaf4165f5ac21a54ba24a1766d1e20f3/src/data/edsa_carousel.json',
+    publisher: 'TrainTracks',
+    publishedOrPeriod: '2026-06-01',
+    checkedOn: mobilityGeometryReviewedOn,
+    kind: 'reference-map',
+  },
 ];
 
 /**
@@ -231,6 +241,58 @@ export const mobilityRouteGeometryArtifacts: MobilityRouteGeometryArtifact[] =
         'OpenStreetMap MRT Line 3 route master relation 8000255',
         'TrainTracks MRT-3 GeoJSON feature Q13422345',
         'Canonical BetterMakati MRT-3 station points: Guadalupe, Buendia, Ayala and Magallanes',
+      ],
+      reviewedOn: mobilityGeometryReviewedOn,
+    },
+    {
+      id: 'edsa-busway-makati-alignment-2026-09',
+      ownerType: 'service',
+      ownerId: 'edsa-busway',
+      kind: 'infrastructure-alignment',
+      coverage: 'makati-segment',
+      geometry: {
+        type: 'MultiLineString',
+        coordinates: [
+          [
+            [121.04736, 14.5727],
+            [121.04572, 14.56799],
+            [121.04491, 14.56517],
+            [121.04328, 14.56243],
+            [121.03916, 14.55871],
+            [121.03512, 14.55552],
+            [121.02952, 14.55064],
+            [121.02353, 14.54528],
+            [121.01923, 14.54181],
+            [121.01663, 14.54047],
+          ],
+          [
+            [121.01668, 14.54033],
+            [121.0261, 14.54752],
+            [121.03803, 14.55752],
+            [121.04322, 14.56209],
+            [121.04571, 14.56703],
+            [121.04717, 14.57213],
+          ],
+        ],
+      },
+      sourceRefs: [
+        {
+          registry: 'system',
+          sourceId: 'pia-edsa-busway-wifi-2026',
+        },
+        {
+          registry: 'geometry',
+          sourceId: 'traintracks-edsa-carousel-geojson-2026',
+        },
+      ],
+      precisionNote:
+        'Mapped reference alignment for the EDSA Busway Makati corridor, not a survey, engineering or cadastral product. Coordinates preserve the southbound and northbound reference paths from just north of Guadalupe through the Magallanes corridor as encoded in the cited June 2026 route map; they are not a legal Makati-boundary clip and do not define platform edges, lane widths or temporary traffic arrangements.',
+      tracedFrom:
+        'TrainTracks EDSA Carousel directional GeoJSON at commit 82c5d199eaf4165f5ac21a54ba24a1766d1e20f3; its feature provenance records extraction from the RushPH embedded EDSA Carousel map route path on 2026-06-01.',
+      checkedAgainst: [
+        'Philippine Information Agency / DOTr current EDSA Busway station evidence',
+        'Canonical BetterMakati EDSA Busway station points: Guadalupe, Buendia and Ayala',
+        'EDSA median corridor through Makati',
       ],
       reviewedOn: mobilityGeometryReviewedOn,
     },
