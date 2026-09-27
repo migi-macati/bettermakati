@@ -6,17 +6,22 @@ import {
   ExternalLink,
   PhoneCall,
   Search,
+  MapPin,
 } from 'lucide-react';
 import { mainNavigation } from '../../data/navigation';
-import { Link, useLocation } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import BrandMark from '../BrandMark';
 import BetterBarangayContextBar from '../barangay/BetterBarangayContextBar';
+import { barangays } from '../../data/barangays';
+import { useBarangayScope } from '../../hooks/useBarangayScope';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const nav = useRef<HTMLElement>(null);
+  const navigate = useNavigate();
   const { pathname, hash } = useLocation();
+  const { preferredBarangay, rememberBarangay } = useBarangayScope();
   const menuId = (label: string | null) =>
     label?.toLowerCase().replace(/\s+/g, '-') ?? '';
   const closeMenu = () => {
@@ -158,6 +163,32 @@ export default function Navbar() {
                   </div>
                 );
               })}
+              {preferredBarangay && (
+                <div className="relative ml-2">
+                  <div className="pointer-events-none inline-flex min-h-11 items-center gap-1.5 rounded-full border border-secondary-200 bg-secondary-50 px-3 text-sm font-extrabold text-primary-900">
+                    <MapPin className="h-4 w-4 text-secondary-800" aria-hidden="true" />
+                    Better{preferredBarangay.name.replace(/\s+/g, '')}
+                    <ChevronDown className="h-3.5 w-3.5" aria-hidden="true" />
+                  </div>
+                  <select
+                    value={preferredBarangay.slug}
+                    onChange={event => {
+                      const slug = event.target.value;
+                      rememberBarangay(slug);
+                      navigate(slug ? '/barangays/' + slug : '/barangays');
+                    }}
+                    aria-label="Open or change your barangay"
+                    className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
+                  >
+                    <option value="">All barangays</option>
+                    {barangays.map(item => (
+                      <option key={item.slug} value={item.slug}>
+                        Better{item.name.replace(/\s+/g, '')}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
               <Link
                 to="/search"
                 onClick={closeMenu}
@@ -168,6 +199,16 @@ export default function Navbar() {
               </Link>
             </div>
             <div className="ml-auto flex items-center gap-1 xl:hidden">
+              {preferredBarangay && (
+                <Link
+                  to={'/barangays/' + preferredBarangay.slug}
+                  onClick={closeMenu}
+                  aria-label={'Open Better' + preferredBarangay.name.replace(/\s+/g, '')}
+                  className="flex h-11 w-11 items-center justify-center rounded-lg text-secondary-800 hover:bg-secondary-50"
+                >
+                  <MapPin className="h-5 w-5" aria-hidden="true" />
+                </Link>
+              )}
               <Link
                 to="/search"
                 onClick={closeMenu}
@@ -204,6 +245,28 @@ export default function Navbar() {
           className="xl:hidden border-t border-[#eadfca] bg-[#fffdf8]"
         >
           <div className="container px-3 py-3 space-y-1 max-h-[70dvh] overflow-y-auto overscroll-contain">
+            <label className="mb-3 block rounded-xl border border-secondary-200 bg-secondary-50 p-3">
+              <span className="mb-1.5 block text-xs font-extrabold uppercase tracking-[0.08em] text-primary-800">
+                Your barangay
+              </span>
+              <select
+                value={preferredBarangay?.slug ?? ''}
+                onChange={event => {
+                  const slug = event.target.value;
+                  rememberBarangay(slug);
+                  closeMenu();
+                  navigate(slug ? '/barangays/' + slug : '/barangays');
+                }}
+                className="min-h-11 w-full rounded-lg border border-secondary-200 bg-white px-3 text-sm font-bold text-primary-900"
+              >
+                <option value="">Choose a barangay</option>
+                {barangays.map(item => (
+                  <option key={item.slug} value={item.slug}>
+                    Better{item.name.replace(/\s+/g, '')}
+                  </option>
+                ))}
+              </select>
+            </label>
             {mainNavigation.map(item => (
               <div key={item.label}>
                 {item.children ? (
