@@ -626,6 +626,49 @@ export const civicAreaRegistrySources: CivicAreaRegistrySource[] = [
     checkedOn: areaRegistryCheckedOn,
     kind: 'official-primary',
   },
+  {
+    id: 'macea-jaime-velasquez-park',
+    label: 'MACEA · Jaime Velasquez Park: A refreshed introduction',
+    url: 'https://macea.com.ph/2022/02/25/jaime-velasquez-park-a-refreshed-introduction/',
+    publisher: 'Makati Central Estate Association, Inc.',
+    publishedOrPeriod: '2022',
+    checkedOn: areaRegistryCheckedOn,
+    kind: 'official-primary',
+  },
+  {
+    id: 'sec-headquarters',
+    label: 'Securities and Exchange Commission · Headquarters',
+    url: 'https://www.sec.gov.ph/',
+    publisher: 'Securities and Exchange Commission',
+    checkedOn: areaRegistryCheckedOn,
+    kind: 'official-primary',
+  },
+  {
+    id: 'ali-2025-integrated-report',
+    label: 'Ayala Land · 2025 Integrated Report',
+    url: 'https://ir.ayalaland.com.ph/wp-content/uploads/2026/04/ALI-2025-Integrated-Report.pdf',
+    publisher: 'Ayala Land, Inc.',
+    publishedOrPeriod: '2025',
+    checkedOn: areaRegistryCheckedOn,
+    kind: 'official-primary',
+  },
+  {
+    id: 'psa-crs-directory',
+    label: 'Philippine Statistics Authority · Metro Manila CRS outlets',
+    url: 'https://psa.gov.ph/directory/census-serbilis-center-metro-manila',
+    publisher: 'Philippine Statistics Authority',
+    checkedOn: areaRegistryCheckedOn,
+    kind: 'official-primary',
+  },
+  {
+    id: 'ali-makati-business-district-2019',
+    label: 'Ayala Land · An ever more vibrant Makati business district',
+    url: 'https://ir.ayalaland.com.ph/news-and-updates/an-ever-more-vibrant-makati-business-district/',
+    publisher: 'Ayala Land, Inc.',
+    publishedOrPeriod: '2019',
+    checkedOn: areaRegistryCheckedOn,
+    kind: 'official-primary',
+  },
 ];
 
 export const civicAreas: CivicAreaRecord[] = [
@@ -1514,6 +1557,110 @@ export const civicAreaRelationships: CivicAreaRelationship[] = [
       evidenceStrength: 'direct',
       statement:
         'Supreme Court jurisprudence identifies Magallanes Village Association, Inc. and association membership tied to covered Magallanes Village lots.',
+      checkedOn: areaRegistryCheckedOn,
+    },
+  },
+  {
+    id: 'ayala-triangle-gardens-within-makati-cbd',
+    kind: 'place-within-area',
+    from: { type: 'place', id: 'ayala-triangle-gardens' },
+    to: { type: 'area', id: 'makati-cbd' },
+    evidence: {
+      sourceIds: ['ali-makati-business-district-2019'],
+      evidenceStrength: 'direct',
+      statement:
+        'Ayala Land explicitly describes Ayala Triangle Gardens as being within the Makati CBD.',
+      checkedOn: areaRegistryCheckedOn,
+    },
+  },
+  {
+    id: 'one-ayala-terminal-within-makati-cbd',
+    kind: 'place-within-area',
+    from: { type: 'place', id: 'one-ayala-terminal' },
+    to: { type: 'area', id: 'makati-cbd' },
+    evidence: {
+      sourceIds: ['ali-makati-business-district-2019'],
+      evidenceStrength: 'direct',
+      statement:
+        'Ayala Land describes One Ayala as an addition to the Makati CBD.',
+      checkedOn: areaRegistryCheckedOn,
+    },
+  },
+  {
+    id: 'ayala-fire-satellite-within-ayala-center',
+    kind: 'place-within-area',
+    from: { type: 'place', id: 'ayala-fire-satellite' },
+    to: { type: 'area', id: 'ayala-center' },
+    evidence: {
+      sourceIds: ['makati-ayala-fire-station'],
+      evidenceStrength: 'direct',
+      statement:
+        'The City of Makati lists Ayala Satellite at East Street, Ayala Center Park Square.',
+      checkedOn: areaRegistryCheckedOn,
+    },
+  },
+  {
+    id: 'jaime-velasquez-park-within-salcedo-village',
+    kind: 'place-within-area',
+    from: { type: 'place', id: 'jaime-velasquez-park' },
+    to: { type: 'area', id: 'salcedo-village' },
+    evidence: {
+      sourceIds: ['macea-jaime-velasquez-park'],
+      evidenceStrength: 'direct',
+      statement:
+        'MACEA explicitly states that Jaime Velasquez Park is located at Salcedo Village.',
+      checkedOn: areaRegistryCheckedOn,
+    },
+  },
+  {
+    id: 'sec-headquarters-within-salcedo-village',
+    kind: 'place-within-area',
+    from: { type: 'place', id: 'sec-headquarters' },
+    to: { type: 'area', id: 'salcedo-village' },
+    evidence: {
+      sourceIds: ['sec-headquarters'],
+      evidenceStrength: 'direct',
+      statement:
+        'The SEC gives its headquarters address as 7907 Makati Avenue, Salcedo Village, Bel-Air, Makati City.',
+      checkedOn: areaRegistryCheckedOn,
+    },
+  },
+  {
+    id: 'washington-sycip-park-within-makati-cbd',
+    kind: 'place-within-area',
+    from: { type: 'place', id: 'washington-sycip-park' },
+    to: { type: 'area', id: 'makati-cbd' },
+    evidence: {
+      sourceIds: ['ali-2025-integrated-report'],
+      evidenceStrength: 'direct',
+      statement:
+        'Ayala Land identifies Washington SyCip Park among the existing landmarks linked by the Makati CBD Emerald Network.',
+      checkedOn: areaRegistryCheckedOn,
+    },
+  },
+  {
+    id: 'legazpi-active-park-within-makati-cbd',
+    kind: 'place-within-area',
+    from: { type: 'place', id: 'legazpi-active-park' },
+    to: { type: 'area', id: 'makati-cbd' },
+    evidence: {
+      sourceIds: ['ali-2025-integrated-report'],
+      evidenceStrength: 'direct',
+      statement:
+        'Ayala Land identifies Legazpi Active Park among the existing landmarks linked by the Makati CBD Emerald Network.',
+      checkedOn: areaRegistryCheckedOn,
+    },
+  },
+  {
+    id: 'psa-makati-crs-within-circuit-makati',
+    kind: 'place-within-area',
+    from: { type: 'place', id: 'psa-makati-crs' },
+    to: { type: 'area', id: 'circuit-makati' },
+    evidence: {
+      sourceIds: ['psa-crs-directory', 'ayala-land-estates-circuit'],
+      evidenceStrength: 'corroborated',
+      statement:
+        'PSA lists its Makati CRS outlet at Ayala Malls Circuit in Barangay Carmona, while Ayala Land identifies Circuit Makati as the estate containing the Circuit commercial complex.',
       checkedOn: areaRegistryCheckedOn,
     },
   },
