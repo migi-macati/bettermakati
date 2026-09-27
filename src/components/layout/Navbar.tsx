@@ -42,7 +42,7 @@ export default function Navbar() {
   return (
     <>
       <div className="bg-primary-900 text-white">
-        <div className="container px-4 min-h-9 flex items-center justify-between gap-4 text-xs">
+        <div className="container px-5 md:px-6 lg:px-8 min-h-9 flex items-center justify-between gap-4 text-xs">
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1 py-2">
             <a
               href="tel:911"
@@ -92,12 +92,12 @@ export default function Navbar() {
           if (!event.currentTarget.contains(event.relatedTarget)) closeMenu();
         }}
       >
-        <div className="container px-4">
-          <div className="flex justify-between items-center py-3 gap-3">
+        <div className="container px-5 md:px-6 lg:px-8">
+          <div className="flex w-full items-center py-3 gap-3">
             <div onClick={closeMenu}>
               <BrandMark />
             </div>
-            <div className="hidden xl:flex items-center gap-1">
+            <div className="ml-auto hidden xl:flex items-center gap-1">
               {mainNavigation.map(item => {
                 const expanded = activeMenu === item.label;
                 const current =
@@ -167,7 +167,7 @@ export default function Navbar() {
                 <Search className="h-5 w-5" aria-hidden="true" />
               </Link>
             </div>
-            <div className="flex items-center gap-1 xl:hidden">
+            <div className="ml-auto flex items-center gap-1 xl:hidden">
               <Link
                 to="/search"
                 onClick={closeMenu}

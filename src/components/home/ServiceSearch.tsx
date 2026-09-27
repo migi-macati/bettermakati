@@ -163,12 +163,14 @@ export default function ServiceSearch({
   placeholder,
   initialQuery = '',
   showServicePlaces = false,
+  goldAction = false,
 }: {
   scope?: SearchScope;
   title?: string;
   placeholder?: string;
   initialQuery?: string;
   showServicePlaces?: boolean;
+  goldAction?: boolean;
 }) {
   const tabs = scope === 'services' ? serviceTabs : siteTabs;
   const [query, setQuery] = useState(initialQuery);
@@ -429,7 +431,12 @@ export default function ServiceSearch({
 
           <button
             type="submit"
-            className="grid h-[50px] w-[54px] shrink-0 place-items-center rounded-xl bg-primary-800 text-white shadow-md transition hover:bg-primary-900"
+            className={
+              'grid h-[50px] w-[54px] shrink-0 place-items-center rounded-xl shadow-md transition ' +
+              (goldAction
+                ? 'border border-secondary-400 bg-secondary-500 text-primary-900 hover:bg-secondary-300'
+                : 'bg-primary-800 text-white hover:bg-primary-900')
+            }
             aria-label="Open selected result"
           >
             <ArrowRight className="h-5 w-5" />

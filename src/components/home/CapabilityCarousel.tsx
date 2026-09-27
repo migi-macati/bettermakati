@@ -51,7 +51,7 @@ const entryPoints = [
 export default function CapabilityCarousel() {
   return (
     <aside
-      className="min-w-0 rounded-3xl border border-white/20 bg-[#fffdf8] p-5 text-gray-950 shadow-[0_22px_60px_rgba(0,0,0,0.18)] md:p-6"
+      className="min-w-0 rounded-3xl border border-secondary-200/70 bg-[#fffdf8] p-5 text-gray-950 shadow-[0_24px_64px_rgba(0,0,0,0.2)] md:p-5 lg:p-6"
       aria-labelledby="what-brings-you-here"
     >
       <div className="text-xs font-extrabold uppercase tracking-[0.12em] text-primary-700">
@@ -71,7 +71,7 @@ export default function CapabilityCarousel() {
             <Link
               key={item.title}
               to={item.href}
-              className="group flex min-h-[72px] items-center gap-3 py-3 first:pt-1 last:pb-1"
+              className="group flex min-h-[64px] items-center gap-3 py-2.5 first:pt-1 last:pb-1"
             >
               <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-primary-50 text-primary-700 transition group-hover:bg-primary-100">
                 <Icon className="h-5 w-5" aria-hidden="true" />
@@ -85,7 +85,7 @@ export default function CapabilityCarousel() {
                 </span>
               </span>
               <ArrowRight
-                className="h-4 w-4 shrink-0 text-primary-600 transition group-hover:translate-x-0.5"
+                className="h-4 w-4 shrink-0 text-secondary-700 transition group-hover:translate-x-0.5 group-hover:text-secondary-600"
                 aria-hidden="true"
               />
             </Link>

@@ -179,8 +179,8 @@ export default function PhotoCarousel({
                       className={
                         'block h-2.5 w-2.5 rounded-full transition ' +
                         (photoIndex === index
-                          ? 'bg-primary-700'
-                          : 'bg-gray-300 hover:bg-primary-300')
+                          ? 'bg-secondary-500'
+                          : 'bg-gray-300 hover:bg-secondary-300')
                       }
                       aria-hidden="true"
                     />

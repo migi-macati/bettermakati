@@ -149,6 +149,14 @@ body {
   font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
 }
 
+/* Keep shared page containers fluid through laptop widths instead of
+   snapping to Tailwind's narrower breakpoint plateaus. */
+.container {
+  width: 100%;
+  max-width: 90rem;
+  margin-inline: auto;
+}
+
 h1,
 h2,
 h3,
@@ -208,8 +216,8 @@ nav a[aria-current='page'] {
   text-align: center;
   cursor: pointer;
 }
-.brand-btn-primary { background: var(--brand-green); color: white; }
-.brand-btn-primary:hover { background: var(--brand-green-dark); }
+.brand-btn-primary { background: var(--brand-gold); color: var(--brand-green-dark); border-color: #e4b52f; }
+.brand-btn-primary:hover { background: #edc85e; color: #01472c; }
 .brand-btn-secondary { background: white; color: var(--brand-green-dark); border-color: #b5cdbf; }
 .brand-btn-secondary:hover { background: #f1f8f4; }
 button:disabled { cursor: not-allowed; opacity: .6; }

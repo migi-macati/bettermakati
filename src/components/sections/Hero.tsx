@@ -12,14 +12,14 @@ const popularStarts = [
 export default function Hero() {
   return (
     <section className="overflow-visible border-b border-primary-900 bg-primary-800 text-white">
-      <div className="container px-5 py-12 md:px-6 md:py-16 lg:px-8 lg:py-20">
-        <div className="grid gap-8 lg:grid-cols-[1.04fr_0.96fr] lg:items-center lg:gap-10">
+      <div className="container px-5 py-12 md:px-6 md:py-14 lg:px-8 lg:py-16 xl:py-20">
+        <div className="grid gap-8 md:grid-cols-[minmax(0,1.04fr)_minmax(320px,0.96fr)] md:items-center md:gap-7 lg:gap-10">
           <div className="min-w-0">
             <div className="mb-3 text-xs font-extrabold uppercase tracking-[0.12em] text-secondary-300 md:text-sm">
               Makati City · Civic Guide
             </div>
 
-            <h1 className="max-w-4xl text-5xl font-extrabold leading-[0.98] tracking-tight text-white md:text-6xl lg:text-7xl">
+            <h1 className="max-w-4xl text-5xl font-extrabold leading-[0.98] tracking-tight text-white md:text-5xl lg:text-6xl xl:text-7xl">
               Let&apos;s make Makati{' '}
               <span className="text-secondary-500">Better!</span>
             </h1>
@@ -34,6 +34,7 @@ export default function Hero() {
                 scope="site"
                 title="What can we help you find?"
                 placeholder="Try Yellow Card, Poblacion, business permit, budget..."
+                goldAction
               />
             </div>
 
