@@ -221,6 +221,20 @@ const jesuitRelation1639: HistorySource = {
   citationNote:
     'The reproduced contemporary relation says that more than one hundred people from the “pueblo de los naturales” took refuge at San Pedro. The phrase proves a native settlement was being called a pueblo in the account, but does not by itself establish formal municipal erection.',
 };
+const deLaCostaJesuits: HistorySource = {
+  id: 'delacosta-jesuits-san-pedro',
+  label: 'Horacio de la Costa, S.J. · The Jesuits in the Philippines, 1581–1768',
+  url: 'https://archive.org/details/jesuitsinphilipp0000dela',
+  kind: 'Scholarly account',
+  evidenceLevel: 'Secondary',
+  format: 'scholarly work',
+  creator: 'Horacio de la Costa, S.J.',
+  repository: 'Harvard University Press / Internet Archive',
+  date: '1961',
+  locator: 'Book II · San Pedro Makati novitiate and estate',
+  citationNote:
+    'Synthesizes Jesuit archival records on the 1608 endowment, 1622 occupation of the novitiate, the return of the novices to Manila by 1630, and San Pedro’s continued use as a villa and retreat house.',
+};
 const escotoVisitation: HistorySource = {
   id: 'escoto-visitation-1773',
   label:
@@ -1094,6 +1108,42 @@ const rows: Row[] = [
         barangaySlugs: ['poblacion'],
         institutions: [{ label: 'Society of Jesus' }],
         eventIds: ['buenavista-foundation'],
+      },
+    },
+  ],
+  [
+    'san-pedro-novitiate-opens-1622',
+    1622,
+    '1622',
+    'The novices move into San Pedro',
+    community,
+    'After years of construction financed from the endowment’s income, the Jesuit novices finally moved into the San Pedro house in 1622.',
+    deLaCostaJesuits,
+    'The foundation deed dates to 1607, but the house was not occupied by the novitiate community until 1622.',
+    {
+      evidenceStatus: 'established',
+      relations: {
+        barangaySlugs: ['poblacion'],
+        institutions: [{ label: 'Society of Jesus' }],
+        eventIds: ['buenavista-foundation', 'san-pedro-church', 'san-pedro-novitiate-ends-1630'],
+      },
+    },
+  ],
+  [
+    'san-pedro-novitiate-ends-1630',
+    1630,
+    'By 1630',
+    'The novitiate returns to Manila, but San Pedro remains active',
+    community,
+    'By 1630 the novices had returned to the College of Manila. San Pedro ceased to function as the province’s separate novitiate but continued as a villa, retreat house and income-producing estate.',
+    deLaCostaJesuits,
+    'This is a change of institutional use, not abandonment of the San Pedro complex.',
+    {
+      evidenceStatus: 'established',
+      relations: {
+        barangaySlugs: ['poblacion'],
+        institutions: [{ label: 'Society of Jesus' }],
+        eventIds: ['san-pedro-novitiate-opens-1622', 'uprising-1639', 'san-pedro-estate-1656'],
       },
     },
   ],
