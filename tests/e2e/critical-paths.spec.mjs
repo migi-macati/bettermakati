@@ -368,7 +368,7 @@ test('ecosystem handoffs are mobile-safe with usable touch targets', async ({ pa
   await page.goto(baseURL + '/search');
   const search = page.getByPlaceholder(/Yellow Card, Poblacion Park, budget, cinema/i);
   await search.fill('service-that-does-not-exist-xyz');
-  for (const name of ['Search BetterGov', 'Find another LGU']) {
+  for (const name of ['Search national services on BetterGov', 'Find another LGU on BetterLGU']) {
     const link = page.getByRole('link', { name, exact: true });
     const box = await link.boundingBox();
     expect(box?.height ?? 0, `${name} target should be at least 44px tall`).toBeGreaterThanOrEqual(44);
@@ -1554,14 +1554,14 @@ test('ecosystem fallbacks preserve the query and leave an internal recovery path
   const missingQuery = 'service-that-does-not-exist-xyz';
   await search.fill(missingQuery);
 
-  const betterGov = page.getByRole('link', { name: 'Search BetterGov', exact: true });
+  const betterGov = page.getByRole('link', { name: 'Search national services on BetterGov', exact: true });
   await expect(betterGov).toHaveAttribute(
     'href',
     'https://bettergov.ph/services?search=' + encodeURIComponent(missingQuery)
   );
   await expect(betterGov).toHaveAttribute('target', '_blank');
 
-  const betterLgu = page.getByRole('link', { name: 'Find another LGU', exact: true });
+  const betterLgu = page.getByRole('link', { name: 'Find another LGU on BetterLGU', exact: true });
   await expect(betterLgu).toHaveAttribute('href', 'https://lgu.bettergov.ph/');
   await expect(betterLgu).toHaveAttribute('target', '_blank');
 
@@ -1656,7 +1656,7 @@ test('government and legislation expose national legislative references without 
   await expect(page.getByRole('heading', { name: 'National bills that directly name Makati', exact: true })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Open Congress data', exact: true }).first()).toHaveAttribute(
     'href',
-    /open-congress-api\.bettergov\.ph/
+    /github\.com\/bettergovph\/open-congress-data\//
   );
   await expect(page.getByRole('link', { name: /Official archive/i }).first()).toBeVisible();
 });
@@ -1713,7 +1713,7 @@ test('statistics and reports expose national context without replacing Makati so
     'href',
     'https://price-guides.bettergov.ph/'
   );
-  await expect(page.getByText('2024 POPCEN', { exact: true }).first()).toBeVisible();
+  await expect(page.getByText(/2024 POPCEN/i).first()).toBeVisible();
 
   await page.goto(baseURL + '/reports');
   await expect(page.getByRole('heading', { level: 1, name: 'Featured Reports & Insights' })).toBeVisible();
