@@ -416,6 +416,111 @@ const smithsonianKingHq: HistorySource = {
   rights:
     'Smithsonian record states that usage conditions apply; do not republish the image without checking the institution’s terms.',
 };
+const zobelPorcelain: HistorySource = {
+  id: 'zobel-first-philippine-porcelain',
+  label: 'Fernando Zobel de Ayala · “The First Philippine Porcelain”',
+  url: 'https://archium.ateneo.edu/phstudies/vol9/iss1/2/',
+  kind: 'Scholarly account',
+  evidenceLevel: 'Secondary',
+  format: 'scholarly work',
+  creator: 'Fernando Zobel de Ayala',
+  repository: 'Philippine Studies / Ateneo de Manila University',
+  date: '1961',
+  locator: 'vol. 9, no. 1, pp. 17–19',
+  citationNote:
+    'Historical account of La Porcelanica based on Ayala family and company records.',
+};
+const healthService1917: HistorySource = {
+  id: 'philippine-health-service-1917',
+  label: 'Philippine Health Service · Annual Report for 1917',
+  url: 'https://archive.org/details/acw9791.1917.001.umich.edu',
+  kind: 'Institutional history',
+  evidenceLevel: 'Primary',
+  format: 'institutional record',
+  creator: 'J. D. Long, Director of Health',
+  repository: 'Internet Archive / University of Michigan copy',
+  date: '1918',
+  citationNote:
+    'Contemporary government report describing the reconstruction of the Casa Quinta at San Pedro Makati for the Government Orphanage.',
+};
+const act2671: HistorySource = {
+  id: 'act-2671-charitable-purposes',
+  label: 'Philippine Legislature · Act No. 2671',
+  url: 'https://elibrary.judiciary.gov.ph/thebookshelf/showdocs/28/33265',
+  kind: 'Legal record',
+  evidenceLevel: 'Primary',
+  format: 'law',
+  repository: 'Supreme Court E-Library',
+  date: '10 January 1917',
+  citationNote:
+    'Appropriated funds for public charity, including care of orphans; contemporary reports document the Makati orphanage created under this authority.',
+};
+const act2815: HistorySource = {
+  id: 'act-2815-dependent-children',
+  label: 'Philippine Legislature · Act No. 2815',
+  url: 'https://elibrary.judiciary.gov.ph/thebookshelf/showdocs/28/34342',
+  kind: 'Legal record',
+  evidenceLevel: 'Primary',
+  format: 'law',
+  repository: 'Supreme Court E-Library',
+  date: '4 March 1919',
+  citationNote:
+    'Reorganized the Government Orphanage established under Act No. 2671 as the Bureau of Dependent Children.',
+};
+const fhlCasaPrincipal1910: HistorySource = {
+  id: 'fhl-casa-principal-1910',
+  label: 'Ayala Archives · “Casa Principal de San Pedro, Makati”',
+  url: 'https://www.filipinaslibrary.org.ph/biblio/18057/',
+  kind: 'Institutional history',
+  evidenceLevel: 'Primary',
+  format: 'photograph',
+  repository: 'Filipinas Heritage Library · Ayala Archives',
+  date: '1910',
+  locator: 'FHL bibliographic record 18057',
+  rights:
+    'Image publication requires compliance with Filipinas Heritage Library reproduction and rights terms.',
+};
+const fhlCasaHacienda1926: HistorySource = {
+  id: 'fhl-casa-hacienda-1926',
+  label: 'Ayala Archives · “Casa Hacienda, Makati”',
+  url: 'https://www.filipinaslibrary.org.ph/biblio/18040/',
+  kind: 'Institutional history',
+  evidenceLevel: 'Primary',
+  format: 'photograph',
+  repository: 'Filipinas Heritage Library · Ayala Archives',
+  date: '1926',
+  locator: 'FHL bibliographic record 18040',
+  rights:
+    'Image publication requires compliance with Filipinas Heritage Library reproduction and rights terms.',
+};
+const fhlOficinas1926: HistorySource = {
+  id: 'fhl-oficinas-hacienda-1926',
+  label: 'Ayala Archives · “Hacienda Makati office building”',
+  url: 'https://www.filipinaslibrary.org.ph/biblio/18052/',
+  kind: 'Institutional history',
+  evidenceLevel: 'Primary',
+  format: 'photograph',
+  repository: 'Filipinas Heritage Library · Ayala Archives',
+  date: '1926',
+  locator: 'FHL bibliographic record 18052 · notes identify Oficinas, Hacienda Makati',
+  rights:
+    'Image publication requires compliance with Filipinas Heritage Library reproduction and rights terms.',
+};
+const manilaVicinity1919: HistorySource = {
+  id: 'loc-manila-vicinity-1919',
+  label: 'Office of Department Engineer · Map of city of Manila and vicinity',
+  url: 'https://www.loc.gov/item/2012586259/',
+  kind: 'Institutional history',
+  evidenceLevel: 'Primary',
+  format: 'historical map',
+  repository: 'Library of Congress · Geography and Map Division',
+  date: 'June 1915; corrected to March 1919',
+  locator: 'G8064.M5 1919 .M3 · LCCN 2012586259',
+  citationNote:
+    'Primary topographic map of Manila and its metropolitan vicinity before Makati’s later large-scale urban redevelopment.',
+  rights:
+    'Library of Congress states this digitized Geography and Map Division item is free to use and reuse unless a rights advisory says otherwise.',
+};
 export const historyReviewed = '27 September 2026';
 export const historyEras = [
   { label: 'Early & Spanish colonial', from: 0, to: 1895 },
@@ -898,6 +1003,162 @@ const rows: Row[] = [
     ),
   ],
   [
+    'la-porcelanica-1903',
+    1903,
+    '1903–1911',
+    'La Porcelanica brings porcelain production to Makati',
+    community,
+    'Enrique Zobel de Ayala founded La Porcelanica in 1903, with production beginning the following year under Francisco Quintos and Japanese master potters. The short-lived factory extended Makati’s older clay, brick and pottery economy into porcelain manufacturing.',
+    zobelPorcelain,
+    'The exact factory location within the hacienda should be kept separate from the still-unresolved identification of the Casa Hacienda site.',
+    {
+      evidenceStatus: 'established',
+      relations: {
+        people: [
+          { label: 'Enrique Zobel de Ayala' },
+          { label: 'Francisco Quintos' },
+        ],
+        institutions: [{ label: 'La Porcelanica' }],
+      },
+    },
+  ],
+  [
+    'hacienda-registration-1906',
+    1906,
+    '19 February 1906 application · 21 December 1907 Supreme Court decision',
+    'The hacienda, its tenants and Casa Quinta enter the Torrens record',
+    government,
+    'Pedro P. Roxas applied to register Hacienda de San Pedro Macati under the Land Registration Act. The Supreme Court record describes about 1,761 hectares, roughly 429 tenants, and a strong-material building called the Casa-Quinta or Casa de Ingenieros occupying 8,430 square meters with its appurtenances.',
+    roxasLandCase,
+    'The judgment is unusually valuable because it documents the estate, tenants, municipal land uses and Casa Quinta in one legal record. It does not call the building the Poblacion Oficinas.',
+    {
+      evidenceStatus: 'established',
+      relations: {
+        people: [{ label: 'Pedro P. Roxas' }],
+        eventIds: ['roxas-purchase-1851', 'roxas-provisional-hospital-1898'],
+      },
+      media: [
+        {
+          id: 'casa-principal-1910',
+          kind: 'photograph',
+          title: 'Casa Principal de San Pedro, Makati',
+          source: fhlCasaPrincipal1910,
+          date: '1910',
+          caption:
+            'Ayala Archives photograph labeled “Casa Principal de San Pedro, Makati.” It is strong visual evidence for the early twentieth-century estate house, but not by itself proof of continuity back to the Jesuit-period house.',
+          rights:
+            'Link to the FHL catalog record unless reproduction permission is confirmed.',
+        },
+        {
+          id: 'manila-vicinity-1919',
+          kind: 'map',
+          title: 'Map of city of Manila and vicinity',
+          source: manilaVicinity1919,
+          date: '1919',
+          caption:
+            'The 1915 map corrected to March 1919 captures Makati before the later CBD-scale redevelopment and preserves the relationship among roads, river, open land and built-up areas.',
+          rights:
+            'Free to use and reuse under the Library of Congress item’s stated rights note.',
+        },
+      ],
+      interpretations: [
+        {
+          id: 'casa-quinta-identity-chain',
+          label: 'What the Torrens-era evidence adds',
+          summary:
+            'By 1906 the Roxas estate indisputably contained a substantial Casa-Quinta/Casa de Ingenieros. Later labeled photographs can be compared against this legal description, but continuity with the 1773/1831 hacienda house remains a separate historical argument.',
+          sourceRefs: [
+            'sc-roxas-tuason-1907',
+            'fhl-casa-principal-1910',
+            'fhl-casa-hacienda-1926',
+          ],
+        },
+      ],
+    },
+  ],
+  [
+    'government-orphanage-1917',
+    1917,
+    'January–February 1917',
+    'The Casa Quinta becomes the Government Orphanage',
+    health,
+    'The Philippine Health Service reconstructed a large Spanish building known as the Casa Quinta at San Pedro Makati for the Government Orphanage. The project adapted the estate building for institutional child care and linked Makati to the beginnings of national public child-welfare administration.',
+    healthService1917,
+    'Act No. 2671 supplied the charitable appropriation; the Health Service report provides the Makati site and reconstruction details.',
+    {
+      additionalSources: [act2671, fhlCasaHacienda1926],
+      evidenceStatus: 'established',
+      relations: {
+        people: [{ label: 'José F. Fabella' }],
+        institutions: [
+          { label: 'Government Orphanage' },
+          { label: 'Philippine Health Service' },
+        ],
+        eventIds: ['hacienda-registration-1906', 'bureau-dependent-children-1919'],
+      },
+      media: [
+        {
+          id: 'casa-hacienda-1926',
+          kind: 'photograph',
+          title: 'Casa Hacienda, Makati',
+          source: fhlCasaHacienda1926,
+          date: '1926',
+          caption:
+            'Ayala Archives photograph explicitly labeled “Casa Hacienda, Makati.” It documents the building during the orphanage-era transition.',
+          rights:
+            'Link to the FHL catalog record unless reproduction permission is confirmed.',
+        },
+      ],
+    },
+  ],
+  [
+    'bureau-dependent-children-1919',
+    1919,
+    '4 March 1919',
+    'The Makati orphanage becomes the Bureau of Dependent Children',
+    government,
+    'Act No. 2815 reorganized the Government Orphanage established under Act No. 2671 as the Bureau of Dependent Children, turning the Makati institution into a formal national bureau for dependent children.',
+    act2815,
+    undefined,
+    {
+      evidenceStatus: 'established',
+      relations: {
+        institutions: [
+          { label: 'Government Orphanage' },
+          { label: 'Bureau of Dependent Children' },
+        ],
+        eventIds: ['government-orphanage-1917'],
+      },
+    },
+  ],
+  [
+    'casa-hacienda-oficinas-1926',
+    1926,
+    '1926',
+    'Ayala Archives preserves two different hacienda buildings',
+    community,
+    'Two Ayala Archives photographs dated 1926 distinguish a building labeled “Casa Hacienda, Makati” from another labeled “Hacienda Makati office building” or Oficinas. The paired records are important evidence that the two names should not be casually treated as one structure.',
+    fhlCasaHacienda1926,
+    'This is an evidence milestone rather than a claim that either 1926 building can yet be traced continuously to the Jesuit period.',
+    {
+      additionalSources: [fhlOficinas1926, fhlCasaPrincipal1910],
+      evidenceStatus: 'established',
+      interpretations: [
+        {
+          id: 'two-casas-1926-archive',
+          label: 'The archive distinguishes the buildings',
+          summary:
+            'The 1926 catalog labels support treating Casa Hacienda and Oficinas as distinct photographic subjects. Their earlier functions, locations and continuity must still be reconstructed from maps, titles and other records.',
+          sourceRefs: [
+            'fhl-casa-hacienda-1926',
+            'fhl-oficinas-hacienda-1926',
+            'fhl-casa-principal-1910',
+          ],
+        },
+      ],
+    },
+  ],
+  [
     'electric-railway',
     1906,
     '30 January 1906',
@@ -1178,6 +1439,6 @@ export const historyResearchGaps = [
   'Precolonial Makati remains under-documented: no Makati-specific archaeological evidence has yet been added to the corpus. Keep regional Namayan context and name-origin traditions separate from locally demonstrated evidence.',
   'Resolve the two-Casas problem without collapsing distinct evidence: compare the documented 1773/1831 casa de Hacienda, the 1775–1826 map sequence, the later Poblacion Oficinas, and the Olympia structure photographed in 1910/1926 against archival property records.',
   'Deepen the 1896–1899 revolutionary record from Filipino and Spanish field documents: verify the Magtagumpay council and flag against contemporary Katipunan material, reconcile Pio del Pilar’s conflicting birth-year traditions, and map the San Pedro/Guadalupe operations beyond U.S. military records.',
-  'Barangay histories, workers, women, markets, schools, public health and postwar housing need broader coverage.',
+  'Complete the 1900–1934 social landscape beyond institutions: verify the 1918 barrio census, municipal presidencia and schools, workers and migration, local markets and industries, Santa Ana/Tejeros leisure economy, and the 1925–1926 transition from the Makati orphanage to Welfareville.',
   'Complete the 2022–2023 boundary finality and implementation chronology, and subsequent civic milestones, from dated official records.',
 ];
