@@ -142,11 +142,17 @@ const matchesTab = (item: SearchItem, tab: string, scope: SearchScope) => {
   if (tab === 'Government')
     return (
       item.group === 'Government' ||
+      item.group === 'Organization' ||
       (item.group === 'Contact' && item.category === 'Government')
     );
   if (tab === 'Barangays') return item.group === 'Barangay';
   if (tab === 'Places')
-    return item.group === 'Place' || item.group === 'Segment' || item.group === 'Route';
+    return (
+      item.group === 'Place' ||
+      item.group === 'Segment' ||
+      item.group === 'Route' ||
+      item.group === 'Area'
+    );
   if (tab === 'Records') return item.group === 'Record';
   if (tab === 'Tools')
     return (
