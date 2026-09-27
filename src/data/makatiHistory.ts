@@ -193,6 +193,34 @@ const colinSanPedro: HistorySource = {
   citationNote:
     'English translation of Colín’s near-contemporary Jesuit survey.',
 };
+const colinBuenavista: HistorySource = {
+  id: 'colin-labor-evangelica-buenavista',
+  label: 'Francisco Colín · Labor evangélica · foundation of San Pedro',
+  url: 'https://archive.org/details/laborevangelica00chirgoog/page/124/mode/2up?view=theater',
+  kind: 'Scholarly account',
+  evidenceLevel: 'Near-primary',
+  format: 'archival document',
+  creator: 'Francisco Colín, drawing on Pedro Chirino; annotated edition by Pablo Pastells',
+  repository: 'Internet Archive',
+  date: '1663 text; annotated edition 1900–1902',
+  locator: 'Part I · chapter IX · foundation of the House of Probation of San Pedro',
+  citationNote:
+    'Records the 19 October 1607 foundation deed, describes Buenavista as a “montecillo, o altozano,” pairs it with the nearby Guadalupe hill, and preserves a Jesuit report of what local naturales said about the hills’ medicinal abundance before Spanish rule.',
+};
+const jesuitRelation1639: HistorySource = {
+  id: 'jesuit-relation-san-pedro-1639',
+  label: 'Jesuit relation on the 1639 Sangley uprising · San Pedro Macati',
+  url: 'https://archive.org/details/woodstockletters6611unse/page/120/mode/2up?q=macati',
+  kind: 'Scholarly account',
+  evidenceLevel: 'Near-primary',
+  format: 'archival document',
+  creator: 'Anonymous Jesuit relation, 1639–1640; reproduced in Woodstock Letters',
+  repository: 'Internet Archive / Woodstock Letters',
+  date: '1639–1640 relation; reproduced 1937',
+  locator: 'Account of the attack on the San Pedro novitiate',
+  citationNote:
+    'The reproduced contemporary relation says that more than one hundred people from the “pueblo de los naturales” took refuge at San Pedro. The phrase proves a native settlement was being called a pueblo in the account, but does not by itself establish formal municipal erection.',
+};
 const escotoVisitation: HistorySource = {
   id: 'escoto-visitation-1773',
   label:
@@ -958,14 +986,14 @@ const rows: Row[] = [
     '1601–1629',
     'Guadalupe church and monastery take shape on the high ground',
     community,
-    'An Augustinian historical profile citing the order’s Libro del Gobierno records the reception on 7 March 1601 of a religious house dedicated to Nuestra Señora de Gracia en los Montes. The same profile explains “en los montes” through the elevated Guadalupe site above the Pasig, reached historically by a long stone stair; the NHCP marker dates the church and monastery foundations to 1601 and completion to 1629.',
+    'An Augustinian historical profile citing the order’s Libro del Gobierno records the reception on 7 March 1601 of a religious house dedicated to Nuestra Señora de Gracia en los Montes. Colín’s seventeenth-century Labor evangélica independently describes the Augustinian convent and Guadalupe church as standing on another hill very near the Buenavista hill of San Pedro.',
     nhcpGuadalupe,
-    'The 1601 institutional act is supported through a modern Augustinian profile citing the order’s governance book; the 1629 completion date remains dependent on the retrospective NHCP marker.',
+    'The 1601 institutional act is supported through a modern Augustinian profile citing the order’s governance book; the NHCP marker supplies the 1629 completion date. Colín is the stronger early source for the paired high-ground landscape itself.',
     {
-      additionalSources: [augustinianGuadalupeProfile],
+      additionalSources: [augustinianGuadalupeProfile, colinBuenavista],
       evidenceStatus: 'probable',
       evidenceNote:
-        'The terrain description is useful evidence for how the early Guadalupe site was understood: elevated ground overlooking the Pasig, rather than a generic flat riverside setting.',
+        'Colín describes the San Pedro house as founded on a “montecillo” and the Guadalupe convent and church on another nearby hill. This directly supports a seventeenth-century landscape of paired elevated sites above the Pasig.',
       relations: {
         barangaySlugs: ['guadalupe-viejo'],
         institutions: [{ label: 'Order of Saint Augustine' }],
@@ -988,13 +1016,13 @@ const rows: Row[] = [
     'Buenavista endowed for the Jesuit novitiate',
     community,
     'Pedro de Brito and Ana de Herrera endowed the Jesuits with an agricultural estate called Buenavista and enlarged the endowment to 14,000 pesos. The public foundation deed of 19 October 1607 obliged the Jesuit provincial Gregorio López to establish a church and house for novices on the donated lands.',
-    britoStudy,
+    colinBuenavista,
     'Brito was also an encomendero, but the surviving evidence presently in the BetterMakati corpus should not collapse his Buenavista landholding and his encomienda rights into the same legal institution.',
     {
-      additionalSources: [nhcpSanPedro, nhcpMakati, paresBritoEncomienda],
+      additionalSources: [britoStudy, nhcpSanPedro, nhcpMakati, paresBritoEncomienda],
       evidenceStatus: 'established',
       evidenceNote:
-        'Manchado López, drawing on Colín, describes Buenavista as cultivated land donated to the Jesuits. PARES separately documents Brito’s encomienda litigation over Nayon and Calilaya. The later NHCP Makati marker calls Makati an encomienda granted to Brito in 1608, but a primary Makati encomienda grant has not yet been located.',
+        'Labor evangélica gives the public foundation deed as 19 October 1607 and describes Buenavista as an estancia and tierras de labor on a “montecillo, o altozano.” PARES separately documents Brito’s encomienda litigation over Nayon and Calilaya. The later NHCP Makati marker calls Makati an encomienda granted to Brito in 1608, but a primary Makati encomienda grant has not yet been located.',
       relations: {
         barangaySlugs: ['poblacion'],
         people: [
@@ -1012,10 +1040,18 @@ const rows: Row[] = [
           summary:
             'The documented 1607 Buenavista donation was an agricultural landholding endowed to the Jesuits. Brito’s status as an encomendero is independently documented for Nayon and Calilaya. Until a primary Makati encomienda grant is located, BetterMakati treats the NHCP marker’s 1608 encomienda statement as a separate retrospective claim rather than proof that Buenavista itself was the encomienda.',
           sourceRefs: [
+            'colin-labor-evangelica-buenavista',
             'manchado-lopez-brito-2024',
             'pares-brito-encomienda-nayon-calilaya',
             'nhcp-makati-marker',
           ],
+        },
+        {
+          id: 'early-makati-hills-native-memory',
+          label: 'What Colín records about the hills and local memory',
+          summary:
+            'Colín describes Buenavista as a small hill or rise and the nearby Guadalupe complex as standing on another hill. He adds that local naturales said the medicinal abundance of these hills also existed in the “time of the Moros” before the Spaniards arrived. This is a seventeenth-century Jesuit record of Indigenous oral memory, not a direct Indigenous-authored account.',
+          sourceRefs: ['colin-labor-evangelica-buenavista'],
         },
       ],
     },
@@ -1052,11 +1088,20 @@ const rows: Row[] = [
     'uprising-1639',
     1639,
     '28 November 1639',
-    'Violence reaches the novitiate',
+    'The 1639 uprising reaches San Pedro and its native settlement',
     war,
-    'A Jesuit account examined by Tueller describes fighting during the Chinese uprising.',
-    study,
-    'A mediated colonial account, not a neutral eyewitness consensus.',
+    'A Jesuit relation from the 1639 Sangley uprising says the rebels reached the San Pedro novitiate and that more than one hundred people from the “pueblo de los naturales” gathered there and resisted before the house was burned.',
+    jesuitRelation1639,
+    'The relation is a colonial Jesuit account of violent conflict and must be read critically. Its phrase “pueblo de los naturales” is nevertheless important evidence for the existence and terminology of a native settlement at San Pedro by 1639.',
+    {
+      additionalSources: [study],
+      evidenceStatus: 'established',
+      relations: {
+        barangaySlugs: ['poblacion'],
+        institutions: [{ label: 'Society of Jesus' }],
+        eventIds: ['town-1670', 'san-pedro-estate-1656'],
+      },
+    },
   ],
   [
     'san-pedro-estate-1656',
@@ -1086,20 +1131,24 @@ const rows: Row[] = [
     nhcpMakati,
     'A contemporaneous 1670 town-creation or erection instrument has not yet been located in the BetterMakati research corpus.',
     {
-      additionalSources: [colinSanPedro],
+      additionalSources: [jesuitRelation1639, colinSanPedro],
       evidenceStatus: 'probable',
       evidenceNote:
-        'Do not read “bayan” and “visita” as equivalent categories or infer that San Pedro remained continuously a visita until the exact moment it became a town. The 1656 Jesuit survey already describes a residence, novitiate, estate workforce and surrounding ministry; the missing evidence is the civil erection record behind the marker’s 1670 date.',
+        'Do not read “bayan,” “pueblo” and “visita” as interchangeable categories. A 1639 Jesuit relation already refers to a “pueblo de los naturales” at San Pedro, while the 1656 survey describes a Jesuit residence, estate workforce and native ministry. Neither text is a civil erection instrument, so the legal basis and exact meaning of the marker’s 1670 “naging bayan” date remain open.',
       relations: {
-        eventIds: ['visita', 'san-pedro-estate-1656'],
+        eventIds: ['visita', 'uprising-1639', 'san-pedro-estate-1656'],
       },
       interpretations: [
         {
           id: 'bayan-versus-visita-1670',
           label: 'Civil and ecclesiastical labels answer different questions',
           summary:
-            'The NHCP marker supplies a retrospective civil milestone in 1670. The earlier “visita” tradition describes an ecclesiastical relationship. Without the original erection record, the timeline should not manufacture a precise institutional handoff between those two labels.',
-          sourceRefs: ['nhcp-makati-marker', 'colin-san-pedro-1656'],
+            'The NHCP marker supplies a retrospective civil milestone in 1670. The 1578 “visita” tradition describes an ecclesiastical relationship, while a 1639 relation already uses “pueblo de los naturales” for a San Pedro native settlement. Without the original erection record, the timeline should not manufacture a precise institutional handoff among these labels.',
+          sourceRefs: [
+            'nhcp-makati-marker',
+            'jesuit-relation-san-pedro-1639',
+            'colin-san-pedro-1656',
+          ],
         },
       ],
     },
@@ -2326,7 +2375,7 @@ export const makatiHistory: HistoryEvent[] = rows.map(
 );
 export const historyResearchGaps = [
   'Precolonial Makati remains under-documented: no Makati-specific archaeological evidence has yet been added to the corpus. Keep regional Namayan context and name-origin traditions separate from locally demonstrated evidence.',
-  'Locate the original civil record behind the NHCP marker’s “naging bayan, 1670” date. Keep the 1578 visita tradition, the 1656 Jesuit residence/novitiate record and the 1670 bayan claim distinct until an erection instrument or equivalent contemporary record establishes the institutional sequence.',
+  'Locate the original civil record behind the NHCP marker’s “naging bayan, 1670” date. A 1639 Jesuit relation already speaks of a “pueblo de los naturales” at San Pedro, while the 1656 Jesuit survey documents a residence, estate workforce and native ministry. Keep those descriptions distinct from the 1578 visita tradition and the formal 1670 bayan claim until an erection instrument or equivalent contemporary record establishes the legal sequence.',
   'Resolve the two-Casas problem without collapsing distinct evidence: compare the documented 1773/1831 casa de Hacienda, the 1775–1826 map sequence, the later Poblacion Oficinas, and the Olympia structure photographed in 1910/1926 against archival property records.',
   'Deepen the 1896–1899 revolutionary record from Filipino and Spanish field documents: verify the Magtagumpay council and flag against contemporary Katipunan material, reconcile Pio del Pilar’s conflicting birth-year traditions, and map the San Pedro/Guadalupe operations beyond U.S. military records.',
   'Complete the 1900–1934 social landscape beyond institutions: verify the 1918 barrio census, municipal presidencia and schools, workers and migration, local markets and industries, Santa Ana/Tejeros leisure economy, and the 1925–1926 transition from the Makati orphanage to Welfareville.',
