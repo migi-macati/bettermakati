@@ -826,7 +826,7 @@ const rows: Row[] = [
     },
   ],
   [
-    'rojas-provisional-hospital-1898',
+    'roxas-provisional-hospital-1898',
     1898,
     '1898',
     'Casa de Pedro Roxas listed as a provisional military hospital',
