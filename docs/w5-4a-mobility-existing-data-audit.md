@@ -78,7 +78,7 @@ Disposition at closure:
 - zero route geometries were promoted;
 - zero historical association/operator acronyms were assumed current merely from corridor continuity.
 
-This work remains useful evidence, but it is **not yet a canonical current route registry**.
+This work is already a substantial current-route evidence base and should be **migrated forward**, not re-researched from scratch. It is not yet a canonical current route registry because the reconciled rows still live in Wave 3 research JSON and have no runtime route entity or renderable geometry.
 
 ### PNR / NSCR lifecycle
 
@@ -279,35 +279,55 @@ Refresh only the unstable system-level facts needed for the user-facing Mobility
 - Century City E-Bus current status;
 - current ride-hailing links shown on the page.
 
-Do not re-research the entire Wave 3 jeepney corpus yet.
+Do not re-research the 38-row Wave 3 jeepney corpus. Treat it as migration input for W5-4c2.
 
-### W5-4c — canonical mobility-system model
+### W5-4c1 — canonical mobility-system/service model
 
-Introduce a small canonical model for transport systems/services, separate from physical Places:
-- system/service identity;
-- mode;
-- operator/regulator;
-- lifecycle;
-- official links;
-- member stops/terminals;
-- route geometry reference only when defensible.
+Introduce the canonical system/service layer for:
+- MRT-3;
+- EDSA Busway;
+- Pasig River Ferry Service;
+- Century City Shuttle.
+
+Keep physical stations/terminals in the Place Registry.
+
+### W5-4c2 — canonical route-corridor model + Wave 3 jeepney migration
+
+Introduce a route/corridor record that can exist **without fake point geometry**.
+
+Migrate the already reconciled 38 historical jeepney rows into canonical route evidence:
+- 35 current/successor-corridor records;
+- 3 unresolved historical rows retained as unresolved, not current;
+- operator/association continuity stays separate from corridor continuity.
+
+This is migration of existing research, not a new 38-route research pass.
+
+### W5-4c3 — bus + tricycle/TODA evidence gap pass
+
+Research the modes we do **not** yet have at comparable route-level resolution:
+- current Makati bus routes beyond the EDSA Busway/system layer;
+- current tricycle/TODA terminals, service areas or route rules;
+- UV Express where source quality supports a canonical route/service record.
+
+Keep the unresolved 32 DEPW bus-stop denominator separate from bus-route evidence.
 
 ### W5-4d — transfers and network relationships
 
 Connect:
 - MRT ↔ EDSA Busway;
 - MRT Ayala ↔ One Ayala;
-- ferry stations to nearby canonical Places/Areas where directly supported.
+- ferry stations to nearby canonical Places/Areas where directly supported;
+- systems/services ↔ canonical route/corridor records where evidence supports membership.
 
 ### W5-4e — route geometry architecture
 
-Create repository-owned route/polyline artifacts before promoting route objects.
+Create repository-owned route/polyline artifacts before rendering linear routes.
 
-The first candidates should be fixed, strongly sourced systems rather than the most volatile jeepney routes.
+Start with fixed, strongly sourced systems/corridors. Route identity must not depend on inventing a representative point.
 
 ### W5-4f — Mobility page rebuild
 
-Render systems, transport anchors, transfers and route information from canonical data.
+Render systems, current route/corridor knowledge, transport anchors, transfers and evidence gaps from canonical data.
 
 Keep live external directions for door-to-door routing.
 
@@ -323,6 +343,6 @@ Audit:
 
 ## Next micro-step
 
-**W5-4b — current source reconciliation for the six user-facing mobility families already on the page: MRT-3, EDSA Busway, Pasig River Ferry, One Ayala, Century City E-Bus and ride-hailing.**
+**W5-4b — current source reconciliation for the user-facing mobility families already on the page.**
 
-Keep the step bounded: verify current identity/service status and official/public-facing links only. Do not yet create route geometries or expand the historical jeepney-route corpus.
+After W5-4b, proceed to **W5-4c1** for the system/service schema, then **W5-4c2** to migrate the already-reconciled jeepney route evidence. The jeepney corpus should not be researched from scratch again.
