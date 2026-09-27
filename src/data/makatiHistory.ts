@@ -763,6 +763,101 @@ const binayAppointment1986: HistorySource = {
   date: '2015 retrospective',
   locator: 'Dates appointment to 27 February 1986',
 };
+const localElections1988: HistorySource = {
+  id: 'ra-6637-local-elections-1988',
+  label: 'Republic Act No. 6637 · 18 January 1988 local elections',
+  url: 'https://lawphil.net/statutes/repacts/ra1987/ra_6637_1987.html',
+  kind: 'Legal record',
+  evidenceLevel: 'Primary',
+  format: 'law',
+  repository: 'Lawphil',
+  date: '21 November 1987',
+  citationNote:
+    'Set the nationwide local elections for 18 January 1988, including municipal officials in Metropolitan Manila.',
+};
+const makatiHistoryProfile: HistorySource = {
+  id: 'makati-official-history-profile',
+  label: 'City Government of Makati · historical profile',
+  url: 'https://www.makati.gov.ph/assets/uploads/downloads/901/845/pdf/90109032018164725.pdf',
+  kind: 'Institutional history',
+  evidenceLevel: 'Secondary',
+  format: 'institutional record',
+  repository: 'City Government of Makati',
+  citationNote:
+    'Official historical profile records Binay’s January 1988 election, 1992 re-election, and the 1995 cityhood plebiscite.',
+};
+const makatiCityCharter: HistorySource = {
+  id: 'ra-7854-makati-city-charter',
+  label: 'Republic Act No. 7854 · Charter of the City of Makati',
+  url: 'https://lawphil.net/statutes/repacts/ra1995/ra_7854_1995.html',
+  kind: 'Legal record',
+  evidenceLevel: 'Primary',
+  format: 'law',
+  repository: 'Lawphil',
+  date: '2 January 1995',
+  citationNote:
+    'Converted Makati into a highly urbanized city subject to plebiscite ratification and expressly preserved pending boundary disputes.',
+};
+const taguigMakati2016: HistorySource = {
+  id: 'sc-taguig-makati-2016',
+  label: 'Supreme Court · City of Taguig v. City of Makati, G.R. No. 208393',
+  url: 'https://lawphil.net/judjuris/juri2016/jun2016/gr_208393_2016.html',
+  kind: 'Legal record',
+  evidenceLevel: 'Primary',
+  format: 'law',
+  repository: 'Supreme Court / Lawphil',
+  date: '15 June 2016',
+  citationNote:
+    'Held that Makati had engaged in willful and deliberate forum shopping in pursuing simultaneous remedies in the territorial dispute.',
+};
+const taguigMakati2021: HistorySource = {
+  id: 'sc-makati-taguig-2021',
+  label: 'Supreme Court · Municipality of Makati v. Municipality of Taguig, G.R. No. 235316',
+  url: 'https://lawphil.net/judjuris/juri2021/dec2021/gr_235316_2021.html',
+  kind: 'Legal record',
+  evidenceLevel: 'Primary',
+  format: 'law',
+  repository: 'Supreme Court / Lawphil',
+  date: '1 December 2021',
+  citationNote:
+    'Contains the procedural history from the 1993 filing through the 2017 Court of Appeals resolutions and resolves the territorial dispute on the merits.',
+};
+const scFinality2022: HistorySource = {
+  id: 'sc-makati-taguig-finality-2022',
+  label: 'Supreme Court · resolution denying reconsideration with finality in G.R. No. 235316',
+  url: 'https://sc.judiciary.gov.ph/sc-writes-finis-to-makati-city-taguig-city-land-dispute/',
+  kind: 'Legal record',
+  evidenceLevel: 'Primary',
+  format: 'institutional record',
+  repository: 'Supreme Court of the Philippines',
+  date: '28 September 2022; public notice 4 April 2023',
+  citationNote:
+    'Supreme Court public information notice states that the Special Third Division denied Makati’s omnibus motion for reconsideration with finality.',
+};
+const scTransition2023: HistorySource = {
+  id: 'sc-jurisdiction-transition-2023',
+  label: 'Supreme Court · guidelines on jurisdiction transfer for the Taguig areas',
+  url: 'https://sc.judiciary.gov.ph/sc-issues-guidelines-on-transfer-and-assumption-of-jurisdiction-over-areas-in-taguig-city/',
+  kind: 'Legal record',
+  evidenceLevel: 'Primary',
+  format: 'institutional record',
+  repository: 'Supreme Court of the Philippines',
+  date: '14 November 2023',
+  citationNote:
+    'Set court and prosecution transition rules for cases and offenses in the areas declared part of Taguig, including an operational cutoff on 1 January 2024.',
+};
+const comelecEmbo2024: HistorySource = {
+  id: 'comelec-embo-districts-2024',
+  label: 'COMELEC Resolution No. 11069 · Taguig legislative and councilor districts',
+  url: 'https://www.comelec.gov.ph/php-tpls-attachments/2025NLE/Resolutions/com_res_11069.pdf',
+  kind: 'Legal record',
+  evidenceLevel: 'Primary',
+  format: 'institutional record',
+  repository: 'Commission on Elections',
+  date: '2024',
+  citationNote:
+    'Assigned the ten EMBO barangays to Taguig’s first and second legislative/councilor districts for subsequent elections.',
+};
 export const historyReviewed = '27 September 2026';
 export const historyEras = [
   { label: 'Early & Spanish colonial', from: 0, to: 1895 },
@@ -1861,15 +1956,44 @@ const rows: Row[] = [
         ],
       },
     },
+  ],  [
+    'makati-local-election-1988',
+    1988,
+    '18 January 1988',
+    'Makati returns to elected municipal government',
+    government,
+    'The nationwide local elections of 18 January 1988 restored elected local executives and councils after the post-EDSA transition. Makati’s official historical profile records Jejomar Binay as elected municipal mayor in that election.',
+    localElections1988,
+    'The statute establishes the election date; the Makati historical profile supplies the local result.',
+    {
+      additionalSources: [makatiHistoryProfile],
+      evidenceStatus: 'established',
+      relations: {
+        people: [{ label: 'Jejomar C. Binay' }],
+        eventIds: ['binay-appointment'],
+      },
+    },
   ],
+
   [
     'boundary-case-filed',
     1993,
     '22 November 1993',
-    'Taguig files the boundary case',
+    'Taguig files the Fort Bonifacio territorial case',
     government,
-    'Taguig brought its territorial case over Fort Bonifacio and the EMBO areas before the Pasig Regional Trial Court.',
-    boundary,
+    'Taguig filed Civil Case No. 63896 before the Regional Trial Court of Pasig, seeking judicial confirmation of its territorial boundaries and challenging parts of Presidential Proclamations 2475 and 518 affecting Fort Bonifacio and the EMBO areas.',
+    taguigMakati2021,
+    undefined,
+    {
+      evidenceStatus: 'established',
+      relations: {
+        institutions: [
+          { label: 'City of Makati' },
+          { label: 'City of Taguig' },
+        ],
+        eventIds: ['rtc-boundary', 'ca-boundary-2013', 'sc-forum-shopping-2016', 'ca-boundary-dismissal-2017', 'sc-boundary-decision', 'sc-boundary-finality-2022'],
+      },
+    },
   ],
   [
     'library-conversion',
@@ -1884,22 +2008,34 @@ const rows: Row[] = [
     'city-charter',
     1995,
     '2 January 1995',
-    'Makati’s city charter enacted',
+    'Makati’s city charter is enacted',
     government,
-    'Republic Act 7854 provided for conversion into a highly urbanized city, subject to ratification. Section 2 expressly preserved resolution of existing boundary disputes.',
-    legal(
-      'Republic Act 7854 · City Charter',
-      'https://lawphil.net/statutes/repacts/ra1995/ra_7854_1995.html'
-    ),
+    'Republic Act No. 7854 provided for Makati’s conversion into a highly urbanized city, subject to plebiscite ratification. The charter expressly preserved pending boundary disputes for resolution by the appropriate forum.',
+    makatiCityCharter,
+    undefined,
+    {
+      evidenceStatus: 'established',
+      relations: {
+        eventIds: ['cityhood-plebiscite', 'boundary-case-filed'],
+      },
+    },
   ],
   [
     'cityhood-plebiscite',
     1995,
     '4 February 1995',
-    'Residents ratify cityhood',
+    'Makati voters ratify cityhood',
     government,
-    'The city profile dates the successful cityhood plebiscite to 4 February.',
-    city,
+    'Makati’s official historical profile records the cityhood plebiscite on 4 February 1995 as approving the conversion authorized by Republic Act No. 7854.',
+    makatiHistoryProfile,
+    undefined,
+    {
+      additionalSources: [makatiCityCharter],
+      evidenceStatus: 'established',
+      relations: {
+        eventIds: ['city-charter'],
+      },
+    },
   ],
   [
     'fhl-opens',
@@ -1932,11 +2068,67 @@ const rows: Row[] = [
     'rtc-boundary',
     2011,
     '8 July 2011',
-    'Trial court rules for Taguig',
+    'Pasig RTC rules for Taguig',
     government,
-    'The RTC confirmed Fort Bonifacio parcels 3 and 4 as Taguig territory. Later appeals followed; this was not the final appellate ruling.',
-    boundary,
+    'The Pasig Regional Trial Court ruled that Fort Bonifacio Military Reservation Parcels 3 and 4 were part of Taguig and invalidated parts of Presidential Proclamations 2475 and 518 insofar as they altered territorial boundaries without a plebiscite.',
+    taguigMakati2021,
+    'This was a trial-court ruling and was followed by multiple appellate proceedings.',
+    {
+      evidenceStatus: 'established',
+      relations: {
+        eventIds: ['boundary-case-filed', 'ca-boundary-2013'],
+      },
+    },
   ],
+  [
+    'ca-boundary-2013',
+    2013,
+    '30 July 2013',
+    'Court of Appeals reverses the RTC and rules for Makati',
+    government,
+    'The Court of Appeals reversed the 2011 RTC decision, dismissed Taguig’s complaint, and declared the disputed EMBO and Inner Fort areas within Makati’s territorial jurisdiction. Taguig sought reconsideration.',
+    taguigMakati2021,
+    'This appellate decision did not end the dispute and was later displaced by subsequent rulings on procedure and merits.',
+    {
+      evidenceStatus: 'established',
+      relations: {
+        eventIds: ['rtc-boundary', 'sc-forum-shopping-2016', 'ca-boundary-dismissal-2017'],
+      },
+    },
+  ],
+  [
+    'sc-forum-shopping-2016',
+    2016,
+    '15 June 2016',
+    'Supreme Court rules that Makati engaged in forum shopping',
+    government,
+    'In G.R. No. 208393, the Supreme Court held that Makati had willfully and deliberately pursued simultaneous remedies in the territorial dispute and imposed contempt fines on the lawyers who filed the annulment petition.',
+    taguigMakati2016,
+    'This ruling addressed litigation procedure and sanctions; it did not itself decide the territorial merits.',
+    {
+      evidenceStatus: 'established',
+      relations: {
+        eventIds: ['ca-boundary-2013', 'ca-boundary-dismissal-2017'],
+      },
+    },
+  ],
+  [
+    'ca-boundary-dismissal-2017',
+    2017,
+    '8 March / 3 October 2017',
+    'Court of Appeals dismisses Makati’s territorial appeal with prejudice',
+    government,
+    'Following the Supreme Court’s forum-shopping ruling, the Court of Appeals granted Taguig’s motion to dismiss Makati’s appeal with prejudice on 8 March 2017 and denied Makati’s motion for reconsideration on 3 October 2017.',
+    taguigMakati2021,
+    undefined,
+    {
+      evidenceStatus: 'established',
+      relations: {
+        eventIds: ['sc-forum-shopping-2016', 'sc-boundary-decision'],
+      },
+    },
+  ],
+
   [
     'library-move',
     2013,
@@ -1959,10 +2151,70 @@ const rows: Row[] = [
     'sc-boundary-decision',
     2021,
     '1 December 2021',
-    'Supreme Court denies Makati’s petition',
+    'Supreme Court resolves the territorial merits for Taguig',
     government,
-    'In G.R. 235316, the Court upheld Taguig’s claim on substantive grounds. This decision date differs from later finality and administrative implementation.',
-    boundary,
+    'In G.R. No. 235316, the Supreme Court denied Makati’s petition and resolved the long-running territorial dispute over Fort Bonifacio Parcels 3 and 4 in Taguig’s favor on the merits.',
+    taguigMakati2021,
+    'This decision preceded the later denial of reconsideration with finality and the administrative transition of services and jurisdiction.',
+    {
+      evidenceStatus: 'established',
+      relations: {
+        eventIds: ['ca-boundary-dismissal-2017', 'sc-boundary-finality-2022'],
+      },
+    },
+  ],
+  [
+    'sc-boundary-finality-2022',
+    2022,
+    '28 September 2022',
+    'Supreme Court denies Makati’s reconsideration with finality',
+    government,
+    'The Supreme Court’s Special Third Division denied with finality Makati’s omnibus motion for reconsideration of the 1 December 2021 decision and also denied referral of the case to the Court En Banc.',
+    scFinality2022,
+    'The Supreme Court publicly announced the final denial on 4 April 2023; the resolution itself is dated 28 September 2022.',
+    {
+      evidenceStatus: 'established',
+      relations: {
+        eventIds: ['sc-boundary-decision', 'boundary-transition-2023'],
+      },
+    },
+  ],
+  [
+    'boundary-transition-2023',
+    2023,
+    '2023–1 January 2024 transition',
+    'Courts and public agencies begin implementing the new territorial jurisdiction',
+    government,
+    'After the territorial judgment became final, agencies began shifting jurisdiction and services for the ten EMBO barangays and other affected areas to Taguig. Supreme Court guidelines dated 14 November 2023 set a 1 January 2024 cutoff for newly filed criminal complaints and preserved pending Makati court cases already filed before that date.',
+    scTransition2023,
+    'Service and administrative transfers occurred through multiple agencies and did not all happen on a single day.',
+    {
+      evidenceStatus: 'established',
+      relations: {
+        institutions: [
+          { label: 'City of Makati' },
+          { label: 'City of Taguig' },
+          { label: 'Supreme Court of the Philippines' },
+        ],
+        eventIds: ['sc-boundary-finality-2022', 'embo-electoral-districts-2024'],
+      },
+    },
+  ],
+  [
+    'embo-electoral-districts-2024',
+    2024,
+    '2024 COMELEC resolution',
+    'COMELEC places the ten EMBO barangays in Taguig electoral districts',
+    government,
+    'COMELEC Resolution No. 11069 incorporated the ten EMBO barangays into Taguig’s first and second legislative and councilor districts for subsequent elections.',
+    comelecEmbo2024,
+    'This is an electoral-administration consequence of the territorial transfer, distinct from the 2021 judicial decision itself.',
+    {
+      evidenceStatus: 'established',
+      relations: {
+        eventIds: ['boundary-transition-2023'],
+      },
+    },
   ],
 ];
 export const makatiHistory: HistoryEvent[] = rows.map(
@@ -1991,5 +2243,5 @@ export const historyResearchGaps = [
   'Deepen Makati’s 1935–1945 civilian and neighborhood history: wartime population movements, resistance and collaboration records, bombing and structural damage, food and public-health conditions, Fort McKinley/Guadalupe military geography, and liberation at street level need sources beyond the Nielson and administrative record.',
   'Deepen the 1946–1972 transformation below the master-plan level: industrial workers and factories, informal and military-linked settlements, individual village and barrio creation records, schools and churches, housing and land tenure, and the lived contrast between “old” and “new” Makati need neighborhood-level primary sources.',
   'Deepen the 1972–1986 political history with Makati-specific primary sources: local government records under Mayor Nemesio Yabut, contemporaneous photos and leaflets from Ayala/Ugarte protests, business and labor participation, police responses, and records of how national Martial Law policies were implemented in Makati.',
-  'Complete the 2022–2023 boundary finality and implementation chronology, and subsequent civic milestones, from dated official records.',
+  'Continue contemporary Makati history beyond the boundary case with source-led civic milestones rather than officeholder lists: major service reforms, infrastructure, heritage actions, disasters and recovery, public-health shocks, and changes in the city’s economic and residential geography need their own evidence-based batches.',
 ];
