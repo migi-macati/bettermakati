@@ -408,11 +408,46 @@ const cityMonitorIds = new Set(
 );
 const heritageBlock =
   visitMakatiSource.split('export const heritageSites')[1] ?? '';
-const heritageIds = new Set(
-  [...heritageBlock.matchAll(/\bid:\s*['"]([^'"]+)['"]/g)].map(
-    match => match[1]
-  )
-);
+const heritageRows = [
+  ...heritageBlock.matchAll(/\n  \{\n([\s\S]*?)\n  \},?/g),
+].map(match => match[1]);
+const heritagePlaceIds = heritageRows
+  .map(row => parseSingleQuotedProperty(row, 'placeId'))
+  .filter(Boolean);
+const heritageIds = new Set(heritagePlaceIds);
+
+if (heritageRows.length !== 6) {
+  problems.push(
+    'Expected 6 current Heritage & Culture records but parsed ' +
+      heritageRows.length +
+      '.'
+  );
+}
+
+for (const row of heritageRows) {
+  const name = parseSingleQuotedProperty(row, 'name') ?? 'Unnamed heritage record';
+  const placeId = parseSingleQuotedProperty(row, 'placeId');
+  if (!placeId) {
+    problems.push('Heritage record is not linked to a canonical place: ' + name);
+    continue;
+  }
+  if (!assetIds.includes(placeId)) {
+    problems.push(
+      'Heritage record points to a missing canonical place: ' +
+        name +
+        ' -> ' +
+        placeId
+    );
+  }
+}
+
+const duplicateHeritagePlaceIds = duplicateValues(heritagePlaceIds);
+if (duplicateHeritagePlaceIds.length) {
+  problems.push(
+    'Multiple Heritage records point to the same canonical place: ' +
+      duplicateHeritagePlaceIds.join(', ')
+  );
+}
 
 const targetExists = relationship => {
   switch (relationship.targetType) {
@@ -507,6 +542,7 @@ console.log(
     assets.length + ' coordinate pairs checked',
     verifiedCount + ' source-complete verified records',
     relationships.length + ' explicit relationships resolved',
+    heritagePlaceIds.length + ' Heritage records linked to canonical places',
     indexEntries.length + ' generated index entries in parity',
   ].join(' ')
 );
