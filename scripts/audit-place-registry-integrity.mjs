@@ -9,6 +9,7 @@ const [
   accountabilitySupplementSource,
   cityMonitorSource,
   visitMakatiSource,
+  makatiHistorySource,
 ] = await Promise.all([
   readFile('src/data/placeRegistry.ts', 'utf8'),
   readFile('src/data/barangays.ts', 'utf8'),
@@ -18,6 +19,7 @@ const [
   readFile('src/data/accountabilitySupplement.ts', 'utf8'),
   readFile('src/data/cityMonitor.ts', 'utf8'),
   readFile('src/data/visitMakati.ts', 'utf8'),
+  readFile('src/data/makatiHistory.ts', 'utf8'),
 ]);
 
 const problems = [];
@@ -449,6 +451,64 @@ if (duplicateHeritagePlaceIds.length) {
   );
 }
 
+/* History and BetterBarangay heritage cross-links */
+const historyPlaceIds = [
+  ...makatiHistorySource.matchAll(/placeIds:\s*\[([^\]]+)\]/g),
+].flatMap(match =>
+  [...match[1].matchAll(/'([^']+)'/g)].map(idMatch => idMatch[1])
+);
+
+for (const placeId of historyPlaceIds) {
+  if (!assetIds.includes(placeId)) {
+    problems.push(
+      'History event points to a missing canonical place: ' + placeId
+    );
+  }
+}
+
+const barangayHeritageMarkerPlaceIds = [
+  ...barangaySource.matchAll(
+    /heritageMarkers:\s*\[[\s\S]*?\](?=\s*[,}])/g
+  ),
+].flatMap(match =>
+  [...match[0].matchAll(/placeId:\s*'([^']+)'/g)].map(idMatch => idMatch[1])
+);
+
+for (const placeId of barangayHeritageMarkerPlaceIds) {
+  if (!assetIds.includes(placeId)) {
+    problems.push(
+      'BetterBarangay heritage marker points to a missing canonical place: ' +
+        placeId
+    );
+  }
+}
+
+for (const requiredPlaceId of [
+  'nuestra-senora-de-gracia-church',
+  'sts-peter-and-paul-parish-church',
+  'nielson-tower',
+  'dambana-ng-banal-na-krus',
+  'museo-ng-makati',
+]) {
+  if (!barangayHeritageMarkerPlaceIds.includes(requiredPlaceId)) {
+    problems.push(
+      'Expected canonical BetterBarangay heritage link is missing: ' +
+        requiredPlaceId
+    );
+  }
+}
+
+for (const marker of [
+  "aliasKinds?: Record<string, PlaceAlias['kind']>",
+  "sourceKind?: PlaceSource['kind']",
+  "kind: asset.aliasKinds?.[name] ?? 'unclassified'",
+  "kind: asset.sourceKind ?? 'other'",
+]) {
+  if (!registrySource.includes(marker)) {
+    problems.push('Heritage metadata normalization is missing: ' + marker);
+  }
+}
+
 const targetExists = relationship => {
   switch (relationship.targetType) {
     case 'place':
@@ -543,6 +603,8 @@ console.log(
     verifiedCount + ' source-complete verified records',
     relationships.length + ' explicit relationships resolved',
     heritagePlaceIds.length + ' Heritage records linked to canonical places',
+    historyPlaceIds.length + ' History-to-place links resolved',
+    barangayHeritageMarkerPlaceIds.length + ' BetterBarangay heritage links resolved',
     indexEntries.length + ' generated index entries in parity',
   ].join(' ')
 );
