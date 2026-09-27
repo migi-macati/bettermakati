@@ -7,6 +7,7 @@ import {
   Building2,
   ClipboardCheck,
   ExternalLink,
+  Landmark,
   MapPin,
   Route,
   Trees,
@@ -101,6 +102,18 @@ export default function CivicAsset() {
   const placeSources = place.provenance.sources;
   const primarySources = placeSources.filter(source => source.kind !== 'reference-map');
   const mapSources = placeSources.filter(source => source.kind === 'reference-map');
+  const heritageDesignations = place.heritage?.designations ?? [];
+  const heritageFacts = place.heritage?.facts ?? [];
+  const heritageSourceIds = new Set([
+    ...heritageDesignations.flatMap(designation => designation.sourceIds),
+    ...heritageFacts.flatMap(fact => fact.sourceIds),
+  ]);
+  const heritageSources = placeSources.filter(source =>
+    heritageSourceIds.has(source.id)
+  );
+  const generalPrimarySources = primarySources.filter(
+    source => !heritageSourceIds.has(source.id)
+  );
   const relatedAccountability = place.relationships
     .filter(relationship => relationship.targetType === 'accountability-record')
     .flatMap(relationship => {
@@ -295,13 +308,126 @@ export default function CivicAsset() {
               )}
             </dl>
 
-            {(primarySources.length > 0 || mapSources.length > 0) && (
+            {(heritageDesignations.length > 0 || heritageFacts.length > 0) && (
+              <div className="mt-6 rounded-2xl border border-secondary-200 bg-[#fff8e6] p-5">
+                <div className="flex items-center gap-2">
+                  <Landmark className="h-5 w-5 text-secondary-800" />
+                  <div className="text-xs font-bold uppercase tracking-[0.08em] text-secondary-800">
+                    Heritage record
+                  </div>
+                </div>
+
+                {heritageDesignations.length > 0 && (
+                  <div className="mt-4">
+                    <div className="text-sm font-extrabold text-gray-950">
+                      Official designations
+                    </div>
+                    <div className="mt-3 grid gap-3">
+                      {heritageDesignations.map((designation, index) => (
+                        <div
+                          key={
+                            designation.authority +
+                            designation.classification +
+                            index
+                          }
+                          className="rounded-xl border border-secondary-200 bg-white p-4"
+                        >
+                          <div className="flex flex-wrap items-center gap-2">
+                            <span className="rounded-full bg-secondary-50 px-2.5 py-1 text-xs font-bold text-secondary-900">
+                              {designation.classification}
+                            </span>
+                            {designation.dateOrYear && (
+                              <span className="text-xs font-semibold text-gray-500">
+                                {designation.dateOrYear}
+                              </span>
+                            )}
+                          </div>
+                          <div className="mt-2 text-sm font-bold text-gray-900">
+                            {designation.authority}
+                          </div>
+                          {designation.officialName &&
+                            designation.officialName !== place.name && (
+                              <div className="mt-1 text-sm leading-relaxed text-gray-600">
+                                Official name: {designation.officialName}
+                              </div>
+                            )}
+                          {designation.note && (
+                            <p className="mt-2 text-xs leading-relaxed text-gray-500">
+                              {designation.note}
+                            </p>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {heritageFacts.length > 0 && (
+                  <div className="mt-5">
+                    <div className="text-sm font-extrabold text-gray-950">
+                      Key historical phases
+                    </div>
+                    <dl className="mt-3 space-y-3">
+                      {heritageFacts.map((fact, index) => (
+                        <div
+                          key={fact.label + index}
+                          className="border-l-2 border-secondary-300 pl-4"
+                        >
+                          <dt className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                            {fact.dateOrPeriod && (
+                              <span className="text-xs font-bold text-secondary-900">
+                                {fact.dateOrPeriod}
+                              </span>
+                            )}
+                            <span className="text-sm font-extrabold text-gray-950">
+                              {fact.label}
+                            </span>
+                          </dt>
+                          <dd className="mt-1 text-sm leading-relaxed text-gray-700">
+                            {fact.value}
+                          </dd>
+                          {fact.note && (
+                            <dd className="mt-1 text-xs leading-relaxed text-gray-500">
+                              {fact.note}
+                            </dd>
+                          )}
+                        </div>
+                      ))}
+                    </dl>
+                  </div>
+                )}
+
+                {heritageSources.length > 0 && (
+                  <div className="mt-5 border-t border-secondary-200 pt-4">
+                    <div className="text-xs font-bold uppercase tracking-[0.08em] text-secondary-800">
+                      Heritage sources
+                    </div>
+                    <div className="mt-2 flex flex-wrap gap-x-4 gap-y-2">
+                      {heritageSources.map(source => (
+                        <a
+                          key={source.id}
+                          href={source.url}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex items-center gap-1 text-xs font-semibold text-primary-700 underline underline-offset-2"
+                        >
+                          {source.label}{' '}
+                          <ExternalLink className="h-3 w-3" />
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {(generalPrimarySources.length > 0 || mapSources.length > 0) && (
               <div className="mt-6 border-t border-gray-200 pt-5">
                 <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
                   Sources
                 </div>
                 <div className="mt-3 flex flex-wrap gap-x-4 gap-y-2">
-                  {primarySources.map(source => (
+                  {generalPrimarySources.map(source => (
                     <a
                       key={source.id}
                       href={source.url}
