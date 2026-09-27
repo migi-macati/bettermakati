@@ -147,6 +147,26 @@ export interface PlaceHeritageMetadata {
   facts?: PlaceHeritageFact[];
 }
 
+export interface PlaceMedia {
+  id: string;
+  src: string;
+  alt: string;
+  title: string;
+  caption?: string;
+  date?: string;
+  sourceUrl: string;
+  credit: string;
+  license: string;
+  licenseUrl: string;
+  reuseStatus:
+    | 'reusable-with-attribution'
+    | 'public-domain'
+    | 'link-only'
+    | 'permission-required'
+    | 'unknown';
+  objectPosition?: string;
+}
+
 export interface CivicAssetAdditionalSource
   extends Omit<PlaceSource, 'id'> {
   idSuffix: string;
@@ -180,6 +200,7 @@ export interface PlaceRegistryRecord {
   secondaryCategories?: string[];
   aliases?: PlaceAlias[];
   heritage?: PlaceHeritageMetadata;
+  media?: PlaceMedia[];
   location: {
     relationToMakati: 'in-makati' | 'makati-boundary' | 'serves-makati-outside' | 'route-or-network' | 'unknown';
     barangays: string[];
@@ -232,6 +253,7 @@ export interface CivicAsset {
   sourceKind?: PlaceSource['kind'];
   additionalSources?: CivicAssetAdditionalSource[];
   heritage?: PlaceHeritageMetadata;
+  media?: PlaceMedia[];
   servicesAtLocation?: string[];
   accessClass?: CivicAccessClass;
   sourceUrl?: string;
@@ -245,6 +267,12 @@ export interface CivicAsset {
   side?: 'north' | 'south' | 'east' | 'west' | 'both';
   tags: string[];
 }
+
+const commonsImageUrl = (file: string, width = 1400) =>
+  'https://commons.wikimedia.org/wiki/Special:Redirect/file/' +
+  encodeURIComponent(file) +
+  '?width=' +
+  width;
 
 export const civicAssetTypeLabels: Record<CivicAssetType, string> = {
   'street-segment': 'Street / road segment',
@@ -1353,6 +1381,22 @@ export const civicAssets: CivicAsset[] = [
     coordinateSourceUrl: 'https://www.openstreetmap.org/way/222312242',
     coordinateSourceLabel: 'OpenStreetMap · Museo ng Makati building',
     status: 'mapped',
+    media: [
+      {
+        id: 'museo-ng-makati-2023-commons',
+        src: commonsImageUrl('Museo ng Makati, Oct 2023.jpg'),
+        alt: 'Exterior of Museo ng Makati in Poblacion.',
+        title: 'Museo ng Makati',
+        caption: 'The Old Presidencia building now used as Museo ng Makati.',
+        date: '22 October 2023',
+        sourceUrl: 'https://commons.wikimedia.org/wiki/File:Museo_ng_Makati,_Oct_2023.jpg',
+        credit: 'Ralff Nestor Nacor',
+        license: 'CC BY-SA 4.0',
+        licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/',
+        reuseStatus: 'reusable-with-attribution',
+        objectPosition: '50% 48%',
+      },
+    ],
     tags: ['heritage', 'museum', 'culture', 'Old Presidencia', 'Important Cultural Property', 'Poblacion'],
   },
   {
@@ -1423,6 +1467,22 @@ export const civicAssets: CivicAsset[] = [
     coordinateSourceUrl: 'https://www.openstreetmap.org/way/148413569',
     coordinateSourceLabel: 'OpenStreetMap · Nuestra Señora de Gracia Church geometry',
     status: 'mapped',
+    media: [
+      {
+        id: 'guadalupe-church-2009-commons',
+        src: commonsImageUrl('Nuestra Senora de Gracia Church Makati Philippines.jpg'),
+        alt: 'Exterior of Nuestra Señora de Gracia Church in Guadalupe Viejo.',
+        title: 'Nuestra Señora de Gracia Church',
+        caption: 'The historic church and monastery complex on Guadalupe’s high ground.',
+        date: '19 April 2009',
+        sourceUrl: 'https://commons.wikimedia.org/wiki/File:Nuestra_Senora_de_Gracia_Church_Makati_Philippines.jpg',
+        credit: 'Normanpena',
+        license: 'CC BY-SA 3.0',
+        licenseUrl: 'https://creativecommons.org/licenses/by-sa/3.0/',
+        reuseStatus: 'reusable-with-attribution',
+        objectPosition: '50% 50%',
+      },
+    ],
     tags: ['heritage', 'church', 'Augustinian', 'historical marker', 'Guadalupe Viejo'],
   },
   {
@@ -1490,6 +1550,22 @@ export const civicAssets: CivicAsset[] = [
     coordinateSourceUrl: 'https://www.openstreetmap.org/way/405673650',
     coordinateSourceLabel: 'OpenStreetMap · San Pedro Macati Church geometry',
     status: 'mapped',
+    media: [
+      {
+        id: 'san-pedro-macati-church-2020-commons',
+        src: commonsImageUrl('San Pedro Macati Church, Makati City.jpg'),
+        alt: 'Exterior of Sts. Peter and Paul Parish Church in Poblacion.',
+        title: 'Sts. Peter and Paul Parish Church',
+        caption: 'The historic parish church of San Pedro Macati in present-day Poblacion.',
+        date: '14 March 2020',
+        sourceUrl: 'https://commons.wikimedia.org/wiki/File:San_Pedro_Macati_Church,_Makati_City.jpg',
+        credit: 'Ralff Nestor Nacor',
+        license: 'CC BY-SA 4.0',
+        licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/',
+        reuseStatus: 'reusable-with-attribution',
+        objectPosition: '50% 50%',
+      },
+    ],
     tags: ['heritage', 'church', 'San Pedro Macati', 'historical marker', 'Poblacion'],
   },
   {
@@ -1573,6 +1649,22 @@ export const civicAssets: CivicAsset[] = [
     coordinateSourceUrl: 'https://www.openstreetmap.org/way/241951590',
     coordinateSourceLabel: 'OpenStreetMap · Nielson Tower building',
     status: 'mapped',
+    media: [
+      {
+        id: 'nielson-tower-2026-commons',
+        src: commonsImageUrl('Exterior entrance Blackbird at the Nielson Tower 2026-05-24 Makati Avenue 05.jpg'),
+        alt: 'Restored exterior entrance of Nielson Tower at Ayala Triangle.',
+        title: 'Nielson Tower',
+        caption: 'The surviving terminal and control-tower building of the former Nielson Airport.',
+        date: '24 May 2026',
+        sourceUrl: 'https://commons.wikimedia.org/wiki/File:Exterior_entrance_Blackbird_at_the_Nielson_Tower_2026-05-24_Makati_Avenue_05.jpg',
+        credit: 'P1898',
+        license: 'CC BY 4.0',
+        licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
+        reuseStatus: 'reusable-with-attribution',
+        objectPosition: '50% 45%',
+      },
+    ],
     tags: ['heritage', 'Nielson Airport', 'aviation', 'historical marker', 'Ayala Triangle', 'Bel-Air'],
   },
   {
@@ -1630,6 +1722,22 @@ export const civicAssets: CivicAsset[] = [
     coordinateSourceUrl: 'https://www.openstreetmap.org/way/389341246',
     coordinateSourceLabel: 'OpenStreetMap · Holy Cross Parish Church geometry',
     status: 'mapped',
+    media: [
+      {
+        id: 'holy-cross-tejeros-2020-commons',
+        src: commonsImageUrl('Holy Church Parish Makati.jpg'),
+        alt: 'Facade of Holy Cross Parish Church in Tejeros.',
+        title: 'Dambana ng Banal na Krus',
+        caption: 'Holy Cross Parish Church, the present home of the Dambana ng Banal na Krus.',
+        date: '16 January 2020',
+        sourceUrl: 'https://commons.wikimedia.org/wiki/File:Holy_Church_Parish_Makati.jpg',
+        credit: 'Roel Balingit',
+        license: 'CC BY-SA 4.0',
+        licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/',
+        reuseStatus: 'reusable-with-attribution',
+        objectPosition: '50% 45%',
+      },
+    ],
     tags: ['heritage', 'church', 'shrine', 'historical marker', 'Tejeros'],
   },
   {
@@ -1680,6 +1788,22 @@ export const civicAssets: CivicAsset[] = [
     coordinateSourceUrl: 'https://www.openstreetmap.org/node/21717872',
     coordinateSourceLabel: 'OpenStreetMap · Ayala Museum',
     status: 'mapped',
+    media: [
+      {
+        id: 'ayala-museum-2025-commons',
+        src: commonsImageUrl('Ayala Museum, Makati, Feb 2025 (8).jpg'),
+        alt: 'Exterior of Ayala Museum in Makati.',
+        title: 'Ayala Museum',
+        caption: 'Ayala Museum in the Greenbelt complex, home of the Filipinas Heritage Library.',
+        date: '23 February 2025',
+        sourceUrl: 'https://commons.wikimedia.org/wiki/File:Ayala_Museum,_Makati,_Feb_2025_(8).jpg',
+        credit: 'Ralff Nestor Nacor',
+        license: 'CC BY-SA 4.0',
+        licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/',
+        reuseStatus: 'reusable-with-attribution',
+        objectPosition: '50% 48%',
+      },
+    ],
     tags: ['museum', 'culture', 'art', 'history', 'archaeology', 'Ayala Center', 'San Lorenzo'],
   },
   {
@@ -2328,6 +2452,7 @@ export const placeRegistry: PlaceRegistryRecord[] = civicAssets.map((asset): Pla
   primaryCategory: asset.type,
   secondaryCategories: asset.secondaryCategories,
   heritage: asset.heritage,
+  media: asset.media,
   aliases: asset.aliases?.map(name => ({
     name,
     kind: asset.aliasKinds?.[name] ?? 'unclassified',
