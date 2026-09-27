@@ -21,6 +21,10 @@ import {
   placesByCategory,
   type PlaceRegistryRecord,
 } from '../data/placeRegistry';
+import {
+  resolveDistrictReference,
+  type DistrictReference,
+} from '../data/districtReferences';
 
 const verifiedTransportPlaces = [
   ...placesByCategory('transport-stop'),
@@ -51,6 +55,11 @@ const primaryTransportSource = (place: PlaceRegistryRecord) =>
   place.provenance.sources.find(source => source.kind !== 'reference-map') ??
   place.provenance.sources[0];
 
+const centuryCity = resolveDistrictReference({
+  type: 'area',
+  id: 'century-city',
+});
+
 const transitLinks = [
   {
     title: 'MRT-3',
@@ -71,8 +80,8 @@ const transitLinks = [
     icon: Bus,
   },
   {
-    title: 'Century City E-Bus',
-    description: 'Century City transport hub route map and schedule.',
+    title: centuryCity.label + ' E-Bus',
+    description: centuryCity.label + ' transport hub route map and schedule.',
     href: 'https://ccth.framer.ai/',
     icon: Bus,
   },
@@ -85,51 +94,69 @@ const rideApps = [
   { name: 'MOVE IT', href: 'https://moveit.com.ph/how-it-works/', type: 'Motorcycle taxi' },
 ];
 
+type TripEndpoint =
+  | DistrictReference
+  | { type: 'external'; label: string; mapQuery: string };
+
+const resolveTripEndpoint = (endpoint: TripEndpoint) =>
+  endpoint.type === 'external'
+    ? endpoint
+    : resolveDistrictReference(endpoint);
+
 const commonTrips = [
   {
-    origin: 'One Ayala',
-    destination: 'Poblacion Makati',
-    label: 'Ayala Center → Poblacion',
+    origin: { type: 'area', id: 'ayala-center' } as DistrictReference,
+    destination: { type: 'barangay', id: 'poblacion' } as DistrictReference,
     icon: Bus,
   },
   {
-    origin: 'Ayala Triangle Gardens',
-    destination: 'Power Plant Mall',
-    label: 'CBD → Rockwell',
+    origin: { type: 'area', id: 'makati-cbd' } as DistrictReference,
+    destination: { type: 'area', id: 'rockwell-center' } as DistrictReference,
     icon: Navigation,
   },
   {
-    origin: 'Circuit Makati',
-    destination: 'One Ayala',
-    label: 'Circuit → Ayala Center',
+    origin: { type: 'area', id: 'circuit-makati' } as DistrictReference,
+    destination: { type: 'area', id: 'ayala-center' } as DistrictReference,
     icon: Bus,
   },
   {
-    origin: 'Ayala Triangle Gardens Makati',
-    destination: 'NAIA Terminal 3',
-    label: 'Makati → NAIA Terminal 3',
+    origin: { type: 'area', id: 'makati-cbd' } as DistrictReference,
+    destination: {
+      type: 'external',
+      label: 'NAIA Terminal 3',
+      mapQuery: 'NAIA Terminal 3, Pasay City, Metro Manila, Philippines',
+    } as const,
     icon: Plane,
   },
-];
+].map(trip => {
+  const origin = resolveTripEndpoint(trip.origin);
+  const destination = resolveTripEndpoint(trip.destination);
+  return {
+    ...trip,
+    origin,
+    destination,
+    label: origin.label + ' → ' + destination.label,
+  };
+});
 
-const mapsDirections = (destination: string, mode: string, origin?: string) => {
+const mapsDirections = (
+  destination: string,
+  mode: string,
+  origin?: string,
+  qualifyAsMakati = true
+) => {
+  const qualify = (query: string) =>
+    qualifyAsMakati && !query.toLowerCase().includes('makati')
+      ? query + ', Makati City, Metro Manila, Philippines'
+      : query;
+
   const params = new URLSearchParams({
     api: '1',
-    destination:
-      destination +
-      (destination.toLowerCase().includes('makati')
-        ? ''
-        : ', Makati City, Metro Manila, Philippines'),
+    destination: qualify(destination),
     travelmode: mode,
   });
   if (origin) {
-    params.set(
-      'origin',
-      origin +
-        (origin.toLowerCase().includes('makati')
-          ? ''
-          : ', Makati City, Metro Manila, Philippines')
-    );
+    params.set('origin', qualify(origin));
   }
   return 'https://www.google.com/maps/dir/?' + params.toString();
 };
@@ -310,7 +337,12 @@ export default function Mobility() {
             return (
               <a
                 key={trip.label}
-                href={mapsDirections(trip.destination, 'transit', trip.origin)}
+                href={mapsDirections(
+                  trip.destination.mapQuery,
+                  'transit',
+                  trip.origin.mapQuery,
+                  false
+                )}
                 target="_blank"
                 rel="noreferrer"
                 className="rounded-2xl border border-gray-200 bg-white p-5 hover:border-primary-300"
