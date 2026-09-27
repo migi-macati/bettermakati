@@ -76,10 +76,14 @@ test('Barangays is a top-level main navigation option', async ({ page }) => {
 
 test('homepage exposes and opens barangay editions', async ({ page }) => {
   await page.goto(baseURL + '/');
-  await expect(page.getByRole('heading', { name: /Go straight to your barangay/i })).toBeVisible();
-  await page.getByLabel('Choose a barangay edition').selectOption('poblacion');
+  await expect(page.getByText('Go to your barangay', { exact: true })).toBeVisible();
+  await page.getByLabel('Choose a barangay').selectOption('poblacion');
   await expect(page).toHaveURL(/\/barangays\/poblacion$/);
   await expect(page.getByRole('heading', { level: 1 })).toContainText(/Poblacion Better/i);
+
+  await page.goto(baseURL + '/');
+  await expect(page.getByLabel('Choose a barangay')).toHaveValue('poblacion');
+  await expect(page.getByLabel('Open or change your barangay')).toHaveValue('poblacion');
 });
 
 
