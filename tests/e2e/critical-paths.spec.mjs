@@ -111,16 +111,21 @@ test('reports page lists standalone articles and never shows Makati Overview', a
   await page.goto(baseURL + '/reports');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Featured Reports & Insights');
   await expect(page.getByText('Makati Overview', { exact: true })).toHaveCount(0);
-  await expect(page.getByRole('link', { name: /Three older Makati audit findings/i })).toBeVisible();
-  await expect(page.getByRole('link', { name: /Makati’s population growth accelerated/i })).toBeVisible();
-  await expect(page.getByRole('link', { name: /Makati’s largest barangay has more than eighteen times/i })).toBeVisible();
-  await expect(page.getByRole('link', { name: /Makati’s 2025 receipts were overwhelmingly local/i })).toBeVisible();
-  await expect(page.getByRole('link', { name: /Makati’s 2026 budget proposal is above the adopted 2025 plan/i })).toBeVisible();
+
+  for (const slug of [
+    'audit-follow-up-closure-trails',
+    '2024-population-growth-acceleration',
+    '2024-barangay-population',
+    '2025-fiscal-profile',
+    '2026-budget-operating-expenses',
+  ]) {
+    await expect(page.locator(`a[href="/reports/${slug}"]`).first()).toBeVisible();
+  }
 });
 
 test('featured report article is a single narrative synthesis with internal citations', async ({ page }) => {
   await page.goto(baseURL + '/reports/2025-fiscal-profile');
-  expect(await page.locator('article p').count()).toBeGreaterThanOrEqual(1);
+  await expect(page.locator('article p').first()).toBeVisible();
   await expect(page.getByRole('heading', { level: 1 })).toContainText(/Makati’s 2025 receipts were overwhelmingly local/i);
   await expect(page.getByText('Sources', { exact: true })).toBeVisible();
   await expect(page.getByText('Key findings', { exact: true })).toHaveCount(0);
@@ -242,7 +247,7 @@ test('ancillary building and veterinary guides expose transaction details', asyn
   await expect(page.getByText(/₱500 for large-scale \/ ₱300 for small-scale/i)).toBeVisible();
 
   await page.goto(baseURL + '/services/guide/veterinary-clearance');
-  await expect(page.getByText(/Animal Welfare Accreditation/i)).toBeVisible();
+  await expect(page.getByText(/Animal-holding facility: Animal Welfare Accreditation/i)).toBeVisible();
 });
 
 test('city and barangay long-tail guides expose current transaction details', async ({ page }) => {
