@@ -1020,21 +1020,54 @@ export default function BarangayProfile() {
             </h2>
             <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
               {barangay.heritageMarkers?.map(marker => (
-                <a
+                <article
                   key={marker.name + marker.agency}
-                  href={marker.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="rounded-2xl border border-primary-100 bg-white p-5 hover:border-primary-300"
+                  className="rounded-2xl border border-primary-100 bg-white p-5"
                 >
                   <Landmark className="h-5 w-5 text-primary-700" />
                   <div className="mt-3 text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
                     {marker.agency}
                   </div>
-                  <h3 className="mt-1 font-extrabold text-gray-950">{marker.name}</h3>
+                  <h3 className="mt-1 font-extrabold text-gray-950">
+                    {marker.placeId ? (
+                      <Link
+                        to={withBarangayScope('/civic-map/' + marker.placeId, barangay.slug)}
+                        className="hover:text-primary-700"
+                      >
+                        {marker.name}
+                      </Link>
+                    ) : (
+                      <a
+                        href={marker.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="hover:text-primary-700"
+                      >
+                        {marker.name}
+                      </a>
+                    )}
+                  </h3>
                   <p className="mt-2 text-sm text-gray-600">{marker.status}</p>
                   {marker.location && <p className="mt-2 text-xs text-gray-500">{marker.location}</p>}
-                </a>
+                  <div className="mt-4 flex flex-wrap gap-3 text-xs">
+                    {marker.placeId && (
+                      <Link
+                        to={withBarangayScope('/civic-map/' + marker.placeId, barangay.slug)}
+                        className="font-bold text-primary-700"
+                      >
+                        Place details
+                      </Link>
+                    )}
+                    <a
+                      href={marker.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-1 text-gray-600 underline underline-offset-2"
+                    >
+                      {marker.agency} record <ExternalLink className="h-3 w-3" />
+                    </a>
+                  </div>
+                </article>
               ))}
             </div>
           </div>
