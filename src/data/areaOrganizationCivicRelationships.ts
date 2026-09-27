@@ -71,7 +71,7 @@ export const areaOrganizationCivicNodeResolver: CivicIntelligenceNodeResolver =
       return {
         ref,
         label: area.name,
-        href: '/estates',
+        href: '/estates#area-' + area.id,
         owner: 'area-registry',
       };
     }
@@ -82,7 +82,7 @@ export const areaOrganizationCivicNodeResolver: CivicIntelligenceNodeResolver =
       return {
         ref,
         label: organization.name,
-        href: '/estates',
+        href: '/estates#organization-' + organization.id,
         owner: 'area-registry',
       };
     }
