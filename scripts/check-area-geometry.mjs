@@ -75,9 +75,9 @@ const artifactIds = [
   ...artifactBlock.matchAll(/\bid:\s*'([^']+)'/g),
 ].map(match => match[1]);
 
-if (artifactIds.length !== 1) {
+if (artifactIds.length !== 2) {
   problems.push(
-    'W5-3d3 expects exactly one published area geometry artifact; found ' +
+    'W5-3d4 expects exactly two published area geometry artifacts; found ' +
       artifactIds.length +
       '.'
   );
@@ -127,6 +127,50 @@ if (coordinatePairs.length) {
   }
 }
 
+if (!artifactIds.includes('forbes-park-village-boundary-2026-09')) {
+  problems.push('Forbes Park approximate boundary artifact is missing.');
+}
+
+const forbesArtifact =
+  artifactBlock
+    .split("id: 'forbes-park-village-boundary-2026-09'")[1]
+    ?.split("\n  },")[0] ?? '';
+
+for (const marker of [
+  "areaId: 'forbes-park-village'",
+  "kind: 'approximate-boundary'",
+  "'forbes-park-articles'",
+  "'forbes-park-village-map'",
+  "'psgc-2023-makati-barangay-geojson'",
+  "'osm-forbes-park-boundary-snapshot'",
+  'BetterMakati does not assert legal identity between Barangay Forbes Park and the private subdivision.',
+  'OpenStreetMap administrative relation 109972 snapshot',
+]) {
+  if (!forbesArtifact.includes(marker)) {
+    problems.push('Forbes Park geometry evidence marker missing: ' + marker);
+  }
+}
+
+const forbesCoordinatePairs = [
+  ...forbesArtifact.matchAll(/\[([0-9]+\.[0-9]+),\s*([0-9]+\.[0-9]+)\]/g),
+].map(match => [Number(match[1]), Number(match[2])]);
+
+if (forbesCoordinatePairs.length !== 34) {
+  problems.push(
+    'Forbes Park boundary should contain the 34-position high-resolution PSGC-derived ring; found ' +
+      forbesCoordinatePairs.length +
+      '.'
+  );
+}
+
+if (forbesCoordinatePairs.length) {
+  const first = forbesCoordinatePairs[0];
+  const last = forbesCoordinatePairs[forbesCoordinatePairs.length - 1];
+  if (first[0] !== last[0] || first[1] !== last[1]) {
+    problems.push('Forbes Park geometry ring is not closed.');
+  }
+}
+
 const circuitRow =
   areaRegistrySource
     .split("id: 'circuit-makati'")[1]
@@ -162,6 +206,35 @@ for (const sourceId of [
   if (!areaRegistrySource.includes("id: '" + sourceId + "'")) {
     problems.push(
       'Dasmariñas Village geometry source is missing from the canonical source registry: ' +
+        sourceId
+    );
+  }
+}
+
+const forbesRow =
+  areaRegistrySource
+    .split("id: 'forbes-park-village'")[1]
+    ?.split('\n  },')[0] ?? '';
+
+if (
+  !forbesRow.includes(
+    "geometryId: 'forbes-park-village-boundary-2026-09'"
+  )
+) {
+  problems.push(
+    'Canonical Forbes Park area must reference its published geometry artifact.'
+  );
+}
+
+for (const sourceId of [
+  'forbes-park-articles',
+  'forbes-park-village-map',
+  'psgc-2023-makati-barangay-geojson',
+  'osm-forbes-park-boundary-snapshot',
+]) {
+  if (!areaRegistrySource.includes("id: '" + sourceId + "'")) {
+    problems.push(
+      'Forbes Park geometry source is missing from the canonical source registry: ' +
         sourceId
     );
   }
@@ -203,11 +276,13 @@ console.log(
     'GeoJSON-compatible Polygon/MultiPolygon model',
     'closed-ring and coordinate validation',
     'canonical area/source linkage validation',
-    artifactIds.length + ' published geometry artifact',
+    artifactIds.length + ' published geometry artifacts',
     'Dasmariñas Village approximate boundary linked to canonical area',
-    coordinatePairs.length + ' ring positions',
-    'DVA perimeter + Village Map govern interpretation',
-    'PSGC-derived polygon checked against OSM relation 103761',
+    coordinatePairs.length + ' Dasmariñas ring positions',
+    'Forbes Park approximate boundary linked to canonical area',
+    forbesCoordinatePairs.length + ' Forbes Park ring positions',
+    'FPA map + articles govern Forbes interpretation',
+    'PSGC-derived traces checked against separate OSM snapshots',
     'Circuit Makati remains geometry-less',
   ].join(' ')
 );
