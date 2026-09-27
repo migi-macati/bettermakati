@@ -276,8 +276,10 @@ for (const [heritageId, markerYear] of [
   const asset = assets.find(item => item.id === heritageId);
   if (
     asset &&
-    !asset.row.includes("classification: 'Level II – Historical marker'") &&
-    !asset.row.includes("dateOrYear: '" + markerYear + "'")
+    (
+      !asset.row.includes("classification: 'Level II – Historical marker'") ||
+      !asset.row.includes("dateOrYear: '" + markerYear + "'")
+    )
   ) {
     problems.push(
       'Expected NHCP marker metadata is missing or incomplete: ' +
