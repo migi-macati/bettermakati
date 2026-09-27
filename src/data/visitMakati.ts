@@ -31,6 +31,7 @@ export const visitorPlaces: VisitorPlace[] = [
     category: 'Culture',
     summary: 'Philippine history, art and archaeology in the Ayala Center.',
     mapsQuery: 'Ayala Museum Makati',
+    placeId: 'ayala-museum',
     sourceUrl:
       'https://www.tourism.gov.ph/destination/national-capital-region/makati/',
     sourceLabel: 'Department of Tourism',
@@ -92,6 +93,7 @@ export const heritageSites: HeritageSite[] = [
     summary:
       'Augustinian church and monastery with foundations laid in 1601 and construction completed in 1629.',
     mapsQuery: 'Nuestra Señora de Gracia Church Makati',
+    placeId: 'nuestra-senora-de-gracia-church',
     sourceUrl:
       'https://philhistoricsites.nhcp.gov.ph/registry_database/church-and-monastery-of-guadalupe/',
     sourceLabel: 'NHCP',
@@ -104,6 +106,7 @@ export const heritageSites: HeritageSite[] = [
     summary:
       'Historic San Pedro Macati church associated with the old town of San Pedro Macati.',
     mapsQuery: 'Saints Peter and Paul Parish Church Makati',
+    placeId: 'sts-peter-and-paul-parish-church',
     sourceUrl:
       'https://philhistoricsites.nhcp.gov.ph/registry_database/san-pedro-macati/',
     sourceLabel: 'NHCP',
@@ -116,6 +119,7 @@ export const heritageSites: HeritageSite[] = [
     summary:
       'Former passenger station and control center of Nielson Airport, used from 1937 to 1947.',
     mapsQuery: 'Nielson Tower Ayala Triangle Makati',
+    placeId: 'nielson-tower',
     sourceUrl:
       'https://philhistoricsites.nhcp.gov.ph/registry_database/nielson-tower/',
     sourceLabel: 'NHCP',
@@ -127,6 +131,7 @@ export const heritageSites: HeritageSite[] = [
     period: '1882',
     summary: 'Historic Holy Cross shrine whose earlier chapel dates to 1882.',
     mapsQuery: 'Holy Cross Parish Church Tejeros Makati',
+    placeId: 'dambana-ng-banal-na-krus',
     sourceUrl:
       'https://philhistoricsites.nhcp.gov.ph/registry_database/dambana-ng-banal-na-krus/',
     sourceLabel: 'NHCP',
@@ -151,6 +156,7 @@ export const heritageSites: HeritageSite[] = [
     period: 'Contemporary museum',
     summary: 'Museum of Philippine history, art, archaeology and culture.',
     mapsQuery: 'Ayala Museum Makati',
+    placeId: 'ayala-museum',
     sourceUrl:
       'https://www.tourism.gov.ph/destination/national-capital-region/makati/',
     sourceLabel: 'Department of Tourism',
