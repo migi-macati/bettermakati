@@ -77,12 +77,12 @@ test('Barangays is a top-level main navigation option', async ({ page }) => {
 test('homepage exposes and opens barangay editions', async ({ page }) => {
   await page.goto(baseURL + '/');
   await expect(page.getByText('Go to your barangay', { exact: true })).toBeVisible();
-  await page.getByLabel('Choose a barangay').first().selectOption('poblacion');
+  await page.locator('select:visible').filter({ has: page.locator('option[value="poblacion"]') }).first().selectOption('poblacion');
   await expect(page).toHaveURL(/\/barangays\/poblacion$/);
   await expect(page.getByRole('heading', { level: 1 })).toContainText(/Poblacion Better/i);
 
   await page.goto(baseURL + '/');
-  await expect(page.getByLabel('Choose a barangay').first()).toHaveValue('poblacion');
+  await expect(page.locator('select:visible').filter({ has: page.locator('option[value="poblacion"]') }).first()).toHaveValue('poblacion');
   await expect(page.getByLabel('Open or change your barangay')).toHaveValue('poblacion');
 });
 
