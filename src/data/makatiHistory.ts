@@ -1,10 +1,90 @@
 export type Evidence =
   'Legal record' | 'Institutional history' | 'Scholarly account';
+
+export type HistoryEvidenceLevel =
+  | 'Primary'
+  | 'Near-primary'
+  | 'Secondary'
+  | 'Reference';
+
+export type HistorySourceFormat =
+  | 'law'
+  | 'archival document'
+  | 'institutional record'
+  | 'historical map'
+  | 'photograph'
+  | 'newspaper'
+  | 'scholarly work'
+  | 'dataset'
+  | 'website'
+  | 'other';
+
 export interface HistorySource {
+  /** Optional stable key for linking interpretations and media back to a citation. */
+  id?: string;
   label: string;
   url: string;
+  /** Legacy display grouping retained for the current History UI. */
   kind: Evidence;
+  evidenceLevel?: HistoryEvidenceLevel;
+  format?: HistorySourceFormat;
+  creator?: string;
+  repository?: string;
+  date?: string;
+  /** Page, folio, section, call number, map sheet, photograph identifier, etc. */
+  locator?: string;
+  citationNote?: string;
+  /** Public-facing credit / reuse note when a source also supplies media. */
+  rights?: string;
 }
+
+export type HistoryEvidenceStatus =
+  | 'established'
+  | 'probable'
+  | 'contested'
+  | 'uncertain'
+  | 'tradition';
+
+export interface HistoryNamedReference {
+  id?: string;
+  label: string;
+  href?: string;
+}
+
+export interface HistoryRelations {
+  /** Canonical BetterMakati Civic Registry IDs. */
+  placeIds?: string[];
+  /** Canonical BetterBarangay slugs. */
+  barangaySlugs?: string[];
+  districtIds?: string[];
+  heritageIds?: string[];
+  people?: HistoryNamedReference[];
+  institutions?: HistoryNamedReference[];
+  eventIds?: string[];
+}
+
+export interface HistoryMedia {
+  id: string;
+  kind: 'photograph' | 'map' | 'document' | 'illustration';
+  title: string;
+  /** Local/public asset path only. Private research-file URLs do not belong here. */
+  src?: string;
+  source: HistorySource;
+  date?: string;
+  caption?: string;
+  alt?: string;
+  rights?: string;
+  relatedPlaceIds?: string[];
+}
+
+export interface HistoryInterpretation {
+  id: string;
+  label: string;
+  summary: string;
+  /** IDs of HistorySource records supporting this reading. */
+  sourceRefs?: string[];
+}
+
 export interface HistoryEvent {
   id: string;
   year: number;
@@ -12,7 +92,17 @@ export interface HistoryEvent {
   title: string;
   topic: string;
   summary: string;
+  /**
+   * Primary citation retained for backward compatibility with the existing UI.
+   * New research may attach additional citations through sources.
+   */
   source: HistorySource;
+  sources: HistorySource[];
+  evidenceStatus?: HistoryEvidenceStatus;
+  evidenceNote?: string;
+  relations?: HistoryRelations;
+  media?: HistoryMedia[];
+  interpretations?: HistoryInterpretation[];
   note?: string;
 }
 const city: HistorySource = {
@@ -52,6 +142,15 @@ const community = 'Community & culture',
   transport = 'Transport & urban change',
   war = 'War & resistance',
   health = 'Health & education';
+interface HistoryEventMeta {
+  additionalSources?: HistorySource[];
+  evidenceStatus?: HistoryEvidenceStatus;
+  evidenceNote?: string;
+  relations?: HistoryRelations;
+  media?: HistoryMedia[];
+  interpretations?: HistoryInterpretation[];
+}
+
 type Row = [
   string,
   number,
@@ -61,6 +160,7 @@ type Row = [
   string,
   HistorySource,
   string?,
+  HistoryEventMeta?,
 ];
 const rows: Row[] = [
   [
@@ -436,7 +536,7 @@ const rows: Row[] = [
   ],
 ];
 export const makatiHistory: HistoryEvent[] = rows.map(
-  ([id, year, date, title, topic, summary, source, note]) => ({
+  ([id, year, date, title, topic, summary, source, note, meta]) => ({
     id,
     year,
     date,
@@ -444,6 +544,12 @@ export const makatiHistory: HistoryEvent[] = rows.map(
     topic,
     summary,
     source,
+    sources: [source, ...(meta?.additionalSources ?? [])],
+    evidenceStatus: meta?.evidenceStatus ?? 'established',
+    evidenceNote: meta?.evidenceNote,
+    relations: meta?.relations,
+    media: meta?.media,
+    interpretations: meta?.interpretations,
     note,
   })
 );
