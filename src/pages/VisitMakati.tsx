@@ -92,24 +92,26 @@ export default function VisitMakati() {
                 const registryPlace = place.placeId
                   ? placeRegistryById.get(place.placeId)
                   : undefined;
+                const displayName =
+                  registryPlace?.name ?? place.name ?? 'Visitor place';
                 const mapHref = registryPlace?.location.point
                   ? mapsUrl(
                       registryPlace.location.point.lat +
                         ',' +
                         registryPlace.location.point.lng
                     )
-                  : mapsUrl(place.mapsQuery);
+                  : mapsUrl(place.mapsQuery ?? displayName + ' Makati');
 
                 return (
                   <div
-                    key={place.name}
+                    key={place.placeId ?? displayName}
                     className="rounded-2xl border border-gray-200 bg-white p-5"
                   >
                     <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
                       {place.category}
                     </div>
                     <h3 className="mt-2 text-lg font-extrabold text-gray-950">
-                      {place.name}
+                      {displayName}
                     </h3>
                     <p className="mt-2 text-sm text-gray-600">{place.summary}</p>
                     {registryPlace?.location.address && (
