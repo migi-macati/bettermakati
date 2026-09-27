@@ -125,10 +125,6 @@ const legal = (label: string, url: string): HistorySource => ({
   url,
   kind: 'Legal record',
 });
-const boundary = legal(
-  'Supreme Court · G.R. 235316, 1 December 2021',
-  'https://lawphil.net/judjuris/juri2021/dec2021/gr_235316_2021.html'
-);
 const nhcpSanPedro: HistorySource = {
   id: 'nhcp-san-pedro-macati',
   label: 'NHCP · San Pedro Macati historical marker',
