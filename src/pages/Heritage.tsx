@@ -14,24 +14,39 @@ import LastReviewed from '../components/ui/LastReviewed';
 import SharePage from '../components/ui/SharePage';
 import { placeRegistryById } from '../data/placeRegistry';
 
-const mapsUrl = (query: string) =>
-  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+const mapsUrl = (lat: number, lng: number) =>
+  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+    lat + ',' + lng
+  )}`;
 
-const directionsUrl = (stops: string[]) => {
+const routeStop = (placeId: string) => {
+  const place = placeRegistryById.get(placeId);
+  if (!place) return null;
+  if (place.location.point) {
+    return place.location.point.lat + ',' + place.location.point.lng;
+  }
+  return place.name + ', Makati City, Philippines';
+};
+
+const directionsUrl = (placeIds: string[]) => {
+  const stops = placeIds.flatMap(placeId => {
+    const stop = routeStop(placeId);
+    return stop ? [stop] : [];
+  });
+
+  if (stops.length < 2) return '/heritage';
+
   const [origin, ...rest] = stops;
   const destination = rest.at(-1) || origin;
   const waypoints = rest.slice(0, -1);
   const params = new URLSearchParams({
     api: '1',
-    origin: origin + ', Makati City, Philippines',
-    destination: destination + ', Makati City, Philippines',
+    origin,
+    destination,
     travelmode: 'walking',
   });
   if (waypoints.length) {
-    params.set(
-      'waypoints',
-      waypoints.map(stop => stop + ', Makati City, Philippines').join('|')
-    );
+    params.set('waypoints', waypoints.join('|'));
   }
   return 'https://www.google.com/maps/dir/?' + params.toString();
 };
@@ -40,19 +55,20 @@ const walks = [
   {
     name: 'Old Makati to Ayala',
     note: 'A cross-city route linking the old town, civic museum and early modern business district.',
-    stops: [
-      'Museo ng Makati',
-      'Saints Peter and Paul Parish Church Makati',
-      'Nielson Tower Ayala Triangle Makati',
-      'Ayala Museum Makati',
+    placeIds: [
+      'museo-ng-makati',
+      'plaza-cristo-rey',
+      'sts-peter-and-paul-parish-church',
+      'nielson-tower',
+      'ayala-museum',
     ],
   },
   {
     name: 'Guadalupe to Tejeros',
     note: 'A longer walk connecting two of Makati’s historic religious sites.',
-    stops: [
-      'Nuestra Señora de Gracia Church Makati',
-      'Holy Cross Parish Church Tejeros Makati',
+    placeIds: [
+      'nuestra-senora-de-gracia-church',
+      'dambana-ng-banal-na-krus',
     ],
   },
 ];
@@ -76,69 +92,79 @@ export default function Heritage() {
           </div>
           <SharePage title="Heritage & Culture in Makati | BetterMakati" />
         </div>
-        <LastReviewed date="2026-09-20" note="Historical summaries link to NHCP, city or Department of Tourism sources." />
+        <LastReviewed
+          date="2026-09-27"
+          note="Place identity and location come from the canonical BetterMakati place registry; historical context links to the underlying official sources."
+        />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-8">
+        <div className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-2">
           {heritageSites.map(site => {
-            const registryPlace = site.placeId
-              ? placeRegistryById.get(site.placeId)
-              : undefined;
-            const mapHref = registryPlace?.location.point
-              ? mapsUrl(
-                  registryPlace.location.point.lat +
-                    ',' +
-                    registryPlace.location.point.lng
-                )
-              : mapsUrl(site.mapsQuery);
-            const address = registryPlace?.location.address ?? site.address;
+            const place = placeRegistryById.get(site.placeId);
+            if (!place) return null;
+
+            const primarySource = place.provenance.sources.find(
+              source => source.kind !== 'reference-map'
+            );
 
             return (
               <article
-                key={site.name}
+                key={place.id}
                 className="rounded-2xl border border-gray-200 bg-white p-6"
               >
                 <div className="flex items-start justify-between gap-4">
                   <span className="rounded-full bg-primary-50 px-3 py-1 text-xs font-bold text-primary-700">
                     {site.category}
                   </span>
-                  <span className="text-sm font-bold text-secondary-700">
+                  <span className="text-right text-sm font-bold text-secondary-700">
                     {site.period}
                   </span>
                 </div>
 
-                <h2 className="font-extrabold text-xl text-gray-950 mt-4">
-                  {site.name}
+                <h2 className="mt-4 text-xl font-extrabold text-gray-950">
+                  {place.name}
                 </h2>
-                <p className="text-sm text-gray-500 mt-1">{address}</p>
-                <p className="text-sm text-gray-700 mt-4 leading-relaxed">
-                  {site.summary}
+                {place.location.address && (
+                  <p className="mt-1 text-sm text-gray-500">
+                    {place.location.address}
+                  </p>
+                )}
+                {(place.aliases?.length ?? 0) > 0 && (
+                  <p className="mt-2 text-xs leading-relaxed text-gray-500">
+                    Also listed as: {place.aliases?.map(alias => alias.name).join(' · ')}
+                  </p>
+                )}
+                <p className="mt-4 text-sm leading-relaxed text-gray-700">
+                  {site.context}
                 </p>
 
                 <div className="mt-5 flex flex-wrap gap-3 text-sm">
-                  <a
-                    href={mapHref}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-1 font-bold text-primary-700"
-                  >
-                    <MapPin className="h-4 w-4" /> Map
-                  </a>
-                  {registryPlace && (
-                    <Link
-                      to={'/civic-map/' + registryPlace.id}
+                  {place.location.point && (
+                    <a
+                      href={mapsUrl(place.location.point.lat, place.location.point.lng)}
+                      target="_blank"
+                      rel="noreferrer"
                       className="inline-flex items-center gap-1 font-bold text-primary-700"
                     >
-                      Place details <ArrowRight className="h-3.5 w-3.5" />
-                    </Link>
+                      <MapPin className="h-4 w-4" /> Map
+                    </a>
                   )}
-                  <a
-                    href={site.sourceUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-1 text-gray-500 underline underline-offset-2"
+                  <Link
+                    to={'/civic-map/' + place.id}
+                    className="inline-flex items-center gap-1 font-bold text-primary-700"
                   >
-                    {site.sourceLabel} <ExternalLink className="h-3.5 w-3.5" />
-                  </a>
+                    Place details <ArrowRight className="h-3.5 w-3.5" />
+                  </Link>
+                  {primarySource && (
+                    <a
+                      href={primarySource.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-1 text-gray-500 underline underline-offset-2"
+                    >
+                      {primarySource.label}{' '}
+                      <ExternalLink className="h-3.5 w-3.5" />
+                    </a>
+                  )}
                 </div>
               </article>
             );
@@ -156,42 +182,54 @@ export default function Heritage() {
           out.
         </p>
 
-        <div className="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-5">
-          {walks.map(walk => (
-            <article
-              key={walk.name}
-              className="rounded-2xl border border-primary-100 bg-white p-6"
-            >
-              <Footprints className="h-6 w-6 text-primary-700" />
-              <h3 className="mt-4 text-xl font-extrabold text-gray-950">
-                {walk.name}
-              </h3>
-              <p className="mt-2 text-sm text-gray-600">{walk.note}</p>
-              <ol className="mt-5 space-y-3">
-                {walk.stops.map((stop, index) => (
-                  <li key={stop} className="flex items-start gap-3 text-sm">
-                    <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-primary-50 font-extrabold text-primary-800">
-                      {index + 1}
-                    </span>
-                    <span className="pt-1 text-gray-800">{stop}</span>
-                  </li>
-                ))}
-              </ol>
-              <a
-                href={directionsUrl(walk.stops)}
-                target="_blank"
-                rel="noreferrer"
-                className="brand-btn-primary mt-6"
+        <div className="mt-6 grid grid-cols-1 gap-5 lg:grid-cols-2">
+          {walks.map(walk => {
+            const stops = walk.placeIds.flatMap(placeId => {
+              const place = placeRegistryById.get(placeId);
+              return place ? [{ id: place.id, name: place.name }] : [];
+            });
+
+            return (
+              <article
+                key={walk.name}
+                className="rounded-2xl border border-primary-100 bg-white p-6"
               >
-                <Route className="h-4 w-4" /> Open walking route
-              </a>
-            </article>
-          ))}
+                <Footprints className="h-6 w-6 text-primary-700" />
+                <h3 className="mt-4 text-xl font-extrabold text-gray-950">
+                  {walk.name}
+                </h3>
+                <p className="mt-2 text-sm text-gray-600">{walk.note}</p>
+                <ol className="mt-5 space-y-3">
+                  {stops.map((stop, index) => (
+                    <li key={stop.id} className="flex items-start gap-3 text-sm">
+                      <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-primary-50 font-extrabold text-primary-800">
+                        {index + 1}
+                      </span>
+                      <Link
+                        to={'/civic-map/' + stop.id}
+                        className="pt-1 font-semibold text-gray-800 hover:text-primary-700"
+                      >
+                        {stop.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ol>
+                <a
+                  href={directionsUrl(walk.placeIds)}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="brand-btn-primary mt-6"
+                >
+                  <Route className="h-4 w-4" /> Open walking route
+                </a>
+              </article>
+            );
+          })}
         </div>
       </Section>
 
       <Section className="bg-white">
-        <div className="rounded-2xl border border-primary-100 bg-[#fffdf8] p-6 md:p-8 flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
+        <div className="flex flex-col gap-5 rounded-2xl border border-primary-100 bg-[#fffdf8] p-6 md:flex-row md:items-center md:justify-between md:p-8">
           <div>
             <div className="section-eyebrow">Go deeper</div>
             <h2 className="text-2xl font-extrabold text-gray-950">
