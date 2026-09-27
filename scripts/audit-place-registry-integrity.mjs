@@ -12,6 +12,7 @@ const [
   makatiHistorySource,
   heritageCollectionsSource,
   heritagePageSource,
+  heritageMapSource,
 ] = await Promise.all([
   readFile('src/data/placeRegistry.ts', 'utf8'),
   readFile('src/data/barangays.ts', 'utf8'),
@@ -24,6 +25,7 @@ const [
   readFile('src/data/makatiHistory.ts', 'utf8'),
   readFile('src/data/heritageCollections.ts', 'utf8'),
   readFile('src/pages/Heritage.tsx', 'utf8'),
+  readFile('src/components/heritage/HeritageMap.tsx', 'utf8'),
 ]);
 
 const problems = [];
@@ -728,6 +730,41 @@ if (/\bconst\s+walks\s*=/.test(heritagePageSource)) {
   problems.push('Heritage page still contains an ad-hoc local walks array.');
 }
 
+/* Heritage map reuses canonical place coordinates */
+for (const marker of [
+  "placeRegistryById } from '../../data/placeRegistry'",
+  "const place = placeRegistryById.get(placeId)",
+  "place.location.point",
+  "to={'/civic-map/' + place.id}",
+]) {
+  if (!heritageMapSource.includes(marker)) {
+    problems.push('Heritage map canonical-place integration is missing: ' + marker);
+  }
+}
+
+if (/\b(?:lat|lng):\s*14\./.test(heritageMapSource)) {
+  problems.push(
+    'Heritage map contains hard-coded Makati coordinates instead of using the Place Registry.'
+  );
+}
+
+for (const marker of [
+  "const [mapSelection, setMapSelection] = useState('all')",
+  'heritageCollections.find(',
+  'heritageSites.map(site => site.placeId)',
+  'pathPlaceIds={mapPathPlaceIds}',
+]) {
+  if (!heritagePageSource.includes(marker)) {
+    problems.push('Heritage page map selection wiring is missing: ' + marker);
+  }
+}
+
+if (/\b(?:lat|lng):\s*14\./.test(heritageCollectionsSource)) {
+  problems.push(
+    'Heritage collection data duplicates coordinates instead of referencing canonical Place IDs.'
+  );
+}
+
 for (const requiredHeritagePlaceId of [
   'nuestra-senora-de-gracia-church',
   'sts-peter-and-paul-parish-church',
@@ -907,6 +944,7 @@ console.log(
     heritageMediaIds.length + ' rights-safe heritage images with provenance',
     heritageWalkingRouteCount + ' canonical heritage walking routes',
     heritagePlaceCollectionCount + ' thematic heritage place collections',
+    '1 canonical heritage overview map reusing Place Registry coordinates',
     historyPlaceIds.length + ' History-to-place links resolved',
     barangayHeritageMarkerPlaceIds.length + ' BetterBarangay heritage links resolved',
     indexEntries.length + ' generated index entries in parity',
