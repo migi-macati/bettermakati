@@ -3,6 +3,10 @@ import { readFile } from 'node:fs/promises';
 const placeText = await readFile('src/data/placeRegistry.ts', 'utf8');
 const civicMapText = await readFile('src/data/civicMap.ts', 'utf8');
 const areaGeometryText = await readFile('src/data/areaGeometry.ts', 'utf8');
+const mobilityRouteGeometryText = await readFile(
+  'src/data/mobilityRouteGeometry.ts',
+  'utf8'
+);
 const areaContextMapText = await readFile(
   'src/components/civic/CivicAreaContextMap.tsx',
   'utf8'
@@ -700,11 +704,59 @@ if (
   );
 }
 
+/* W5-4e3 adds mobility lines as their own sourced context layer. */
+const mobilityArtifactBlock =
+  mobilityRouteGeometryText
+    .split(
+      'export const mobilityRouteGeometryArtifacts: MobilityRouteGeometryArtifact[] ='
+    )[1]
+    ?.split('\n\nconst systemSourceIds')[0] ?? '';
+
+const civicMapMobilityArtifactIds = [
+  ...mobilityArtifactBlock.matchAll(/^      id: '([^']+)',$/gm),
+].map(match => match[1]);
+
+if (
+  civicMapMobilityArtifactIds.length !== 1 ||
+  civicMapMobilityArtifactIds[0] !==
+    'mrt3-makati-alignment-2026-09'
+) {
+  problems.push(
+    'W5-4e3 expects the Civic Map mobility layer to start from the single published MRT-3 geometry artifact.'
+  );
+}
+
+for (const marker of [
+  'mobilityRouteGeometryArtifacts',
+  'boundsForMobilityRouteGeometry',
+  'lineGeometryPath',
+  'showMobility',
+  'service.placeConnections',
+  "connection.role !== 'station'",
+  'MRT-3 alignment',
+  'Mapped reference alignment',
+  'stroke-secondary-600',
+  'to="/mobility#transport-anchors"',
+  "to={'/civic-map/' + connection.placeId}",
+  'mobility services without published',
+  'without invented map lines',
+]) {
+  if (!areaContextMapText.includes(marker)) {
+    problems.push('Civic Map mobility context marker missing: ' + marker);
+  }
+}
+
+if (areaContextMapText.includes('mobilityRouteCorridors')) {
+  problems.push(
+    'Civic Map context renderer must not manufacture geometry from geometry-less route records.'
+  );
+}
+
 if (problems.length) {
   console.error(problems.join('\n'));
   process.exit(1);
 }
 
 console.log(
-  `Civic Map integrity passed: ${assetIds.length} assets, ${issueIds.length} issue categories, ${proposalIds.length} proposal categories, ${emergencyRows.length} emergency categories routed to 911, and ${areaArtifactCount} sourced Districts & estates context polygons with no synthetic centroids.`
+  `Civic Map integrity passed: ${assetIds.length} assets, ${issueIds.length} issue categories, ${proposalIds.length} proposal categories, ${emergencyRows.length} emergency categories routed to 911, ${areaArtifactCount} sourced Districts & estates context polygons, and ${civicMapMobilityArtifactIds.length} sourced mobility alignment with no synthetic route geometry.`
 );

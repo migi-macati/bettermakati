@@ -272,7 +272,7 @@ export const civicAreaGeometryArtifacts: CivicAreaGeometryArtifact[] = [
       'OpenStreetMap administrative relation 103761 snapshot',
     ],
     reviewedOn: '2026-09-27',
-  },,
+  },
   {
     id: 'forbes-park-village-boundary-2026-09',
     areaId: 'forbes-park-village',
