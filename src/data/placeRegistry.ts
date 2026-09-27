@@ -2004,8 +2004,10 @@ export const placeRegistry: PlaceRegistryRecord[] = civicAssets.map((asset): Pla
   secondaryCategories: asset.secondaryCategories,
   aliases: asset.aliases?.map(name => ({
     name,
-    kind: 'unclassified' as const,
-    note: 'Migrated from the Civic Map alias list without inferring whether the name is current, historical or local.',
+    kind: asset.aliasKinds?.[name] ?? 'unclassified',
+    note: asset.aliasKinds?.[name]
+      ? undefined
+      : 'Migrated from the Civic Map alias list without inferring whether the name is current, historical or local.',
   })),
   location: {
     relationToMakati: asset.type === 'transport-route' ? 'route-or-network' : 'in-makati',
