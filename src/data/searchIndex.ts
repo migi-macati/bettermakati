@@ -11,6 +11,13 @@ import {
 import { cityIndicators } from './cityIndicators';
 import { integrityProcurementEntities } from './integrityData';
 import { reports } from './reports';
+import {
+  civicAreaById,
+  civicAreaRelationships,
+  civicAreas,
+  civicOrganizationById,
+  civicOrganizations,
+} from './areaOrganizationRegistry';
 
 export type SearchGroup =
   | 'Service'
@@ -22,7 +29,9 @@ export type SearchGroup =
   | 'Contact'
   | 'Place'
   | 'Segment'
-  | 'Route';
+  | 'Route'
+  | 'Area'
+  | 'Organization';
 
 export interface SearchItem {
   title: string;
@@ -276,46 +285,14 @@ const governmentItems: SearchItem[] = [
     keywords: 'news announcement events city government update',
   },
   {
-    title: 'Estates & Associations',
+    title: 'Estates, Districts & Associations',
     group: 'Government',
-    category: 'Government',
+    category: 'City geography',
     description:
-      'MACEA, Century City, Rockwell Center and Circuit Makati estate associations.',
+      'Browse canonical Makati business districts, estates, residential villages and their organizations.',
     href: '/estates',
     keywords:
-      'macea estate association century city rockwell circuit cmea private estate',
-  },
-  {
-    title: 'Bel-Air Village Association',
-    group: 'Government',
-    category: 'Government',
-    description: 'Homeowners association for Bel-Air Village.',
-    href: '/barangays#bel-air',
-    keywords: 'bava bel air village homeowners association',
-  },
-  {
-    title: 'Dasmariñas Village Association',
-    group: 'Government',
-    category: 'Government',
-    description: 'Homeowners association for Dasmariñas Village.',
-    href: '/barangays#dasmarinas',
-    keywords: 'dva dasmarinas village homeowners association',
-  },
-  {
-    title: 'Forbes Park Association',
-    group: 'Government',
-    category: 'Government',
-    description: 'Homeowners association for Forbes Park.',
-    href: '/barangays#forbes-park',
-    keywords: 'fpa forbes park homeowners association',
-  },
-  {
-    title: 'San Lorenzo Village Association',
-    group: 'Government',
-    category: 'Government',
-    description: 'Homeowners association for San Lorenzo Village.',
-    href: '/barangays#san-lorenzo',
-    keywords: 'slva san lorenzo village homeowners association',
+      'estate district village association homeowners hoa business district managed area organization',
   },
   {
     title: 'Live Makati',
@@ -524,6 +501,68 @@ const civicIntelligenceItems: SearchItem[] = [
   })),
 ];
 
+const areaOrganizationItems: SearchItem[] = [
+  ...civicAreas.map(area => ({
+    title: area.name,
+    group: 'Area' as const,
+    category:
+      area.kind === 'business-district'
+        ? 'Business district'
+        : area.kind === 'commercial-estate'
+          ? 'Commercial estate'
+          : area.kind === 'mixed-use-estate'
+            ? 'Mixed-use estate'
+            : area.kind === 'named-subdistrict'
+              ? 'District'
+              : area.kind === 'residential-village'
+                ? 'Residential village'
+                : 'Managed area',
+    description:
+      area.summary ??
+      'Canonical managed area in the BetterMakati Area Registry.',
+    href: '/estates#area-' + area.id,
+    keywords: [
+      area.id,
+      ...(area.aliases?.map(alias => alias.name) ?? []),
+      ...area.barangaySlugs,
+      ...area.tags,
+      ...(area.attributes?.flatMap(attribute => [
+        attribute.label,
+        attribute.value,
+      ]) ?? []),
+      'area estate district village neighborhood geography',
+    ].join(' '),
+    canonicalKey: 'area:' + area.id,
+  })),
+  ...civicOrganizations.map(organization => ({
+    title: organization.name,
+    group: 'Organization' as const,
+    category:
+      organization.kind === 'estate-association'
+        ? 'Estate association'
+        : organization.kind === 'homeowners-association'
+          ? 'Homeowners association'
+          : organization.kind === 'developer'
+            ? 'Developer'
+            : organization.kind === 'property-manager'
+              ? 'Property manager'
+              : 'Organization',
+    description:
+      organization.summary ??
+      'Canonical organization connected to a Makati managed area.',
+    href: '/estates#organization-' + organization.id,
+    keywords: [
+      organization.id,
+      ...(organization.abbreviations ?? []),
+      ...(organization.aliases?.map(alias => alias.name) ?? []),
+      ...organization.tags,
+      ...organization.channels.map(channel => channel.label),
+      'estate association homeowners hoa developer organization',
+    ].join(' '),
+    canonicalKey: 'organization:' + organization.id,
+  })),
+];
+
 const civicRegistryItems: SearchItem[] = [
   {
     title: 'Civic Map',
@@ -708,11 +747,45 @@ const barangayItems: SearchItem[] = barangayProfiles.map(barangay => {
     barangay.officials?.treasurer,
     ...(barangay.officials?.kagawads ?? []),
   ].filter(Boolean);
+  const relatedAreaIds = [
+    ...new Set([
+      ...(barangay.communityAreaIds ?? []),
+      ...civicAreaRelationships.flatMap(relationship =>
+        relationship.kind === 'within-barangay' &&
+        relationship.from.type === 'area' &&
+        relationship.to.type === 'barangay' &&
+        relationship.to.id === barangay.slug
+          ? [relationship.from.id]
+          : []
+      ),
+    ]),
+  ];
+  const relatedAreaNames = relatedAreaIds.flatMap(areaId => {
+    const area = civicAreaById.get(areaId);
+    return area ? [area.name] : [];
+  });
+  const relatedOrganizationNames = civicAreaRelationships.flatMap(
+    relationship => {
+      if (
+        !['managed-by', 'developed-by', 'operated-by'].includes(
+          relationship.kind
+        ) ||
+        relationship.from.type !== 'area' ||
+        !relatedAreaIds.includes(relationship.from.id) ||
+        relationship.to.type !== 'organization'
+      ) {
+        return [];
+      }
+      const organization = civicOrganizationById.get(relationship.to.id);
+      return organization ? [organization.name] : [];
+    }
+  );
   const localPlaces = [
     ...facilities.map(item => item.name),
     ...(barangay.notablePlaces?.map(item => item.name) ?? []),
-    ...(barangay.associations?.map(item => item.name) ?? []),
     ...(barangay.heritageMarkers?.map(item => item.name) ?? []),
+    ...relatedAreaNames,
+    ...relatedOrganizationNames,
   ];
 
   return {
@@ -769,6 +842,7 @@ export const searchIndex: SearchItem[] = [
   ...civicIntelligenceItems,
   ...radicalCivicItems,
   ...civicRegistryItems,
+  ...areaOrganizationItems,
   ...visitItems,
   ...governmentItems,
   ...officeItems,
