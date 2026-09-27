@@ -218,6 +218,10 @@ export const mobilityRouteGeometryArtifacts: MobilityRouteGeometryArtifact[] =
           registry: 'geometry',
           sourceId: 'osm-mrt3-rail-exposure-snapshot',
         },
+        {
+          registry: 'geometry',
+          sourceId: 'traintracks-mrt3-geojson-crosscheck',
+        },
       ],
       precisionNote:
         'Mapped reference alignment for the MRT-3 Makati station corridor, not a survey, engineering or cadastral product. Coordinates follow one southbound OSM light-rail track alignment from just north of Guadalupe Station through just south of Magallanes Station; they are not a legal Makati-boundary clip and do not depict the full width or both tracks of the railway.',
