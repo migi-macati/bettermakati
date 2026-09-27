@@ -43,8 +43,10 @@ const areaRelationshipBlock =
     .split('export const civicAreaRelationships: CivicAreaRelationship[] = [')[1]
     ?.split('\n];\n\nvalidateAreaOrganizationRegistry')[0] ?? '';
 
+// Match only top-level relationship IDs. Each endpoint also has its own
+// nested `id` field, so an unanchored matcher would count 29 rows as 87 IDs.
 const canonicalRelationshipIds = [
-  ...areaRelationshipBlock.matchAll(/\bid:\s*'([^']+)'/g),
+  ...areaRelationshipBlock.matchAll(/^    id:\s*'([^']+)'/gm),
 ].map(match => match[1]);
 
 if (canonicalRelationshipIds.length !== 29) {

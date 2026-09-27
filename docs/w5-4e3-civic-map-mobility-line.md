@@ -56,14 +56,20 @@ The Civic Map renderer does not import `mobilityRouteCorridors`, which prevents
 endpoint labels or historical route rows from being turned into invented
 polylines.
 
-## CI baseline repair
+## CI baseline repairs
 
 The previous `main` CI failure was unrelated to MRT-3 geometry. ESLint stopped
 on an accidental sparse-array comma in `src/data/areaGeometry.ts`
 (`},,` between the two area artifacts).
 
-W5-4e3 removes that extra comma in the same atomic commit so the new map layer
-is tested against a valid baseline.
+Once lint could proceed, the Area Civic Intelligence guard exposed a second
+pre-existing checker defect: its unanchored `id:` matcher counted the
+relationship ID plus both endpoint IDs in every row, so the canonical 29
+relationships appeared as 87. The matcher is now restricted to top-level
+relationship IDs. The frozen expectation remains **29** and no area relationship
+data is changed.
+
+These repairs restore the validation baseline needed to test W5-4e3 itself.
 
 ## Automated checks
 
