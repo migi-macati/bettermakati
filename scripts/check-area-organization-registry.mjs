@@ -1,8 +1,9 @@
 import { readFile } from 'node:fs/promises';
 
-const [source, placeRegistrySource] = await Promise.all([
+const [source, placeRegistrySource, estatesPageSource] = await Promise.all([
   readFile('src/data/areaOrganizationRegistry.ts', 'utf8'),
   readFile('src/data/placeRegistry.ts', 'utf8'),
+  readFile('src/pages/Estates.tsx', 'utf8'),
 ]);
 
 const problems = [];
@@ -287,6 +288,60 @@ for (const deferredArea of ['century-city', 'rockwell-center']) {
   }
 }
 
+/* Estates page must render from canonical area/organization owners. */
+for (const marker of [
+  'civicAreas',
+  'civicOrganizations',
+  'civicAreaRelationships',
+  'civicAreaById',
+  'civicOrganizationById',
+  "id={'area-' + area.id}",
+  "id={'organization-' + organization.id}",
+  'businessAreas.map(area =>',
+  'residentialAreas.map(area =>',
+  'civicOrganizations.map(organization =>',
+  "to={'/barangays/' + barangay.slug}",
+  "to={'/civic-map/' + place.id}",
+]) {
+  if (!estatesPageSource.includes(marker)) {
+    problems.push('Estates canonical-rendering marker missing: ' + marker);
+  }
+}
+
+if (/\bconst\s+estates\s*=/.test(estatesPageSource)) {
+  problems.push(
+    'Estates page still contains a hard-coded local estates array instead of canonical registry data.'
+  );
+}
+
+for (const legacy of [
+  'Rockwell Center Association, Inc.',
+  'https://www.cpmi.com.ph/projects/',
+  'https://www.centurycitymall.com.ph/news-and-events/',
+]) {
+  if (estatesPageSource.includes(legacy)) {
+    problems.push(
+      'Estates page still carries unreconciled legacy content: ' + legacy
+    );
+  }
+}
+
+if (estatesPageSource.includes('mapsUrl(')) {
+  problems.push(
+    'Estates page must not synthesize point-map links for area entities without sourced area geometry.'
+  );
+}
+
+for (const section of [
+  'id="business-areas"',
+  'id="residential-villages"',
+  'id="organizations"',
+]) {
+  if (!estatesPageSource.includes(section)) {
+    problems.push('Estates page section missing: ' + section);
+  }
+}
+
 if (problems.length) {
   console.error(
     'Area/organization registry schema check failed:\n- ' +
@@ -310,6 +365,8 @@ console.log(
     relationshipRows.length + ' source-backed relationships',
     placeWithinAreaRows.length + ' directly sourced place-to-area links',
     registrySourceRows.length + ' authoritative source records',
+    'canonical Estates page rendering',
+    'no unsourced area map points',
     'no unsourced geometry promoted',
   ].join(' ')
 );
