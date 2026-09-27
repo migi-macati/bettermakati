@@ -60,8 +60,8 @@ interface MobilityRouteRecordBase {
   note: string;
 
   /**
-   * Linear geometry is optional and repository-owned. W5-4c4 still publishes
-   * no route geometry rather than inventing a representative point.
+   * Linear geometry is optional and repository-owned.
+   * Geometry lives in mobilityRouteGeometry.ts; absence is valid.
    */
   geometryArtifactId?: string;
 }
@@ -1785,9 +1785,12 @@ export const validateMobilityRouteCorridors = (
       }
     }
 
-    if (route.geometryArtifactId) {
+    if (
+      route.geometryArtifactId !== undefined &&
+      !route.geometryArtifactId.trim()
+    ) {
       throw new Error(
-        'W5-4c4 must not publish route geometry before the geometry workstream: ' +
+        'Mobility route geometryArtifactId must not be empty: ' +
           route.id
       );
     }
