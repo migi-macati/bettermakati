@@ -46,7 +46,7 @@ export default function BetterBarangayContextBar() {
             <span className="truncate text-base font-black tracking-tight sm:text-lg">
               <span className="text-secondary-300">Better</span>
               <span className="text-white">
-                {barangay ? compactEditionName(barangay.name) : 'Barangay View'}
+                {barangay ? compactEditionName(barangay.name) : 'All Makati'}
               </span>
             </span>
             <ChevronDown className="h-4 w-4 shrink-0 text-primary-100" aria-hidden="true" />
@@ -58,7 +58,7 @@ export default function BetterBarangayContextBar() {
             aria-label="Choose BetterBarangay view"
             className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
           >
-            <option value="">BetterBarangay View</option>
+            <option value="">{isProfile ? 'All barangays' : 'All Makati'}</option>
             {barangays.map(item => (
               <option key={item.slug} value={item.slug}>
                 Better{compactEditionName(item.name)}
