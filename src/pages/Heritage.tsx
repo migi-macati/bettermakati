@@ -9,6 +9,7 @@ import { Link } from 'react-router';
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
 import { heritageSites } from '../data/visitMakati';
+import { heritageWalkingRoutes } from '../data/heritageCollections';
 import SEO from '../components/SEO';
 import LastReviewed from '../components/ui/LastReviewed';
 import SharePage from '../components/ui/SharePage';
@@ -51,27 +52,6 @@ const directionsUrl = (placeIds: string[]) => {
   return 'https://www.google.com/maps/dir/?' + params.toString();
 };
 
-const walks = [
-  {
-    name: 'Old Makati to Ayala',
-    note: 'A cross-city route linking the old town, civic museum and early modern business district.',
-    placeIds: [
-      'museo-ng-makati',
-      'plaza-cristo-rey',
-      'sts-peter-and-paul-parish-church',
-      'nielson-tower',
-      'ayala-museum',
-    ],
-  },
-  {
-    name: 'Guadalupe to Tejeros',
-    note: 'A longer walk connecting two of Makati’s historic religious sites.',
-    placeIds: [
-      'nuestra-senora-de-gracia-church',
-      'dambana-ng-banal-na-krus',
-    ],
-  },
-];
 
 export default function Heritage() {
   return (
@@ -221,22 +201,27 @@ export default function Heritage() {
         </p>
 
         <div className="mt-6 grid grid-cols-1 gap-5 lg:grid-cols-2">
-          {walks.map(walk => {
-            const stops = walk.placeIds.flatMap(placeId => {
+          {heritageWalkingRoutes.map(route => {
+            const stops = route.placeIds.flatMap(placeId => {
               const place = placeRegistryById.get(placeId);
               return place ? [{ id: place.id, name: place.name }] : [];
             });
 
             return (
               <article
-                key={walk.name}
+                key={route.name}
                 className="rounded-2xl border border-primary-100 bg-white p-6"
               >
-                <Footprints className="h-6 w-6 text-primary-700" />
+                <div className="flex items-center justify-between gap-3">
+                  <Footprints className="h-6 w-6 text-primary-700" />
+                  <span className="rounded-full bg-secondary-50 px-3 py-1 text-xs font-bold text-secondary-800">
+                    {route.theme}
+                  </span>
+                </div>
                 <h3 className="mt-4 text-xl font-extrabold text-gray-950">
-                  {walk.name}
+                  {route.name}
                 </h3>
-                <p className="mt-2 text-sm text-gray-600">{walk.note}</p>
+                <p className="mt-2 text-sm text-gray-600">{route.description}</p>
                 <ol className="mt-5 space-y-3">
                   {stops.map((stop, index) => (
                     <li key={stop.id} className="flex items-start gap-3 text-sm">
@@ -253,13 +238,18 @@ export default function Heritage() {
                   ))}
                 </ol>
                 <a
-                  href={directionsUrl(walk.placeIds)}
+                  href={directionsUrl(route.placeIds)}
                   target="_blank"
                   rel="noreferrer"
                   className="brand-btn-primary mt-6"
                 >
                   <Route className="h-4 w-4" /> Open walking route
                 </a>
+                {route.sourceNote && (
+                  <p className="mt-3 text-xs leading-relaxed text-gray-500">
+                    {route.sourceNote}
+                  </p>
+                )}
               </article>
             );
           })}
