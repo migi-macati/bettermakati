@@ -212,14 +212,68 @@ export const validateCivicAreaGeometryArtifacts = (
 };
 
 /**
- * W5-3d2 establishes the renderable GeoJSON-compatible artifact model.
+ * Renderable area boundaries are intentionally sparse.
  *
- * This array is intentionally empty after direct visual verification showed
- * that the previously cited Ayala Land slide does not draw Circuit Makati's
- * estate boundary. The first publishable polygon is deferred to the next
- * source-backed tracing step.
+ * Dasmariñas Village is the first published artifact because DVA states that
+ * Barangay Dasmariñas is exactly located within the gated village perimeter.
+ * The polygon below uses the 2023 PSGC-derived high-resolution barangay trace
+ * as a display approximation, checked against DVA's own perimeter description,
+ * Village Map and a separate OSM administrative-boundary snapshot.
  */
-export const civicAreaGeometryArtifacts: CivicAreaGeometryArtifact[] = [];
+export const civicAreaGeometryArtifacts: CivicAreaGeometryArtifact[] = [
+  {
+    id: 'dasmarinas-village-boundary-2026-09',
+    areaId: 'dasmarinas-village',
+    kind: 'approximate-boundary',
+    geometry: {
+      type: 'Polygon',
+      coordinates: [
+        [
+          [121.03630348500008, 14.535864222000045],
+          [121.0357227090001, 14.537514744000077],
+          [121.03469838700005, 14.539200263000055],
+          [121.03261826200003, 14.541071922000068],
+          [121.03164074500013, 14.542774247000068],
+          [121.0306801800001, 14.54532418700006],
+          [121.03255968500002, 14.545989328000077],
+          [121.03234665500008, 14.547119746000023],
+          [121.03265640400004, 14.548401031000026],
+          [121.02985204400011, 14.549659965000043],
+          [121.02936955400003, 14.550221296000075],
+          [121.02148477300013, 14.543573020000052],
+          [121.0195819170001, 14.542052689000057],
+          [121.0220763420001, 14.53750464500007],
+          [121.02496136800005, 14.53210108300004],
+          [121.02651239300008, 14.532098977000032],
+          [121.02735404500004, 14.532943209000042],
+          [121.02863720900005, 14.533443947000023],
+          [121.02952792400004, 14.534304501000065],
+          [121.0312109140001, 14.53492598400004],
+          [121.033448635, 14.533932557000071],
+          [121.034401924, 14.534554703000024],
+          [121.03523479800003, 14.535583252000041],
+          [121.03630348500008, 14.535864222000045],
+        ],
+      ],
+    },
+    sourceIds: [
+      'dva-about-boundary',
+      'dva-village-map',
+      'psgc-2023-makati-barangay-geojson',
+      'osm-dasmarinas-boundary-snapshot',
+    ],
+    precisionNote:
+      'Approximate display boundary, not a cadastral or survey polygon. DVA states that the barangay is exactly within the gated village perimeter. Coordinates use a public 2023 PSGC-derived Barangay Dasmariñas boundary trace and were retained only after comparison with DVA’s stated perimeter and a separate OSM boundary snapshot. DVA’s 187-hectare figure remains the authoritative land-area statement shown on BetterMakati.',
+    tracedFrom:
+      '2023 PSGC-derived high-resolution Barangay Dasmariñas GeoJSON published by faeldon/philippines-json-maps',
+    checkedAgainst: [
+      'Dasmariñas Village Association Village Map',
+      'DVA perimeter description: EDSA; Maricaban Creek / Fort Bonifacio; Kayamanan C / Chino Roces; McKinley Road / Forbes',
+      'OpenStreetMap administrative relation 103761 snapshot',
+    ],
+    reviewedOn: '2026-09-27',
+  },
+];
 
 validateCivicAreaGeometryArtifacts(civicAreaGeometryArtifacts);
 
