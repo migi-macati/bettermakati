@@ -1,7 +1,23 @@
 # BetterMakati freshness review queue
 
-Published source state: 2026-09-25T00:43:52.454Z
-Open items: 2
+Published source state: 2026-09-27T00:06:30.701Z
+Open items: 4
+
+## COMELEC precinct finder — Check failed
+
+- Source: https://precinctfinder.comelec.gov.ph/voter_precinct
+- Affected pages: /elections
+- Last successful check: none recorded
+- Last checked: 2026-09-27T00:06:08.533Z
+- Action: Recheck source availability. If the failure persists, inspect affected pages for links or claims that may no longer be supportable.
+
+## COMELEC 2025 election results portal — Check failed
+
+- Source: https://2025electionresults.comelec.gov.ph/
+- Affected pages: /elections
+- Last successful check: none recorded
+- Last checked: 2026-09-27T00:06:04.281Z
+- Action: Recheck source availability. If the failure persists, inspect affected pages for links or claims that may no longer be supportable.
 
 ## PhilGEPS — Content changed
 

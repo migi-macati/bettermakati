@@ -1,14 +1,48 @@
 {
   "version": 1,
-  "generatedAt": "2026-09-25T00:43:52.454Z",
+  "generatedAt": "2026-09-27T00:06:30.701Z",
   "summary": {
-    "open": 2,
+    "open": 4,
     "contentChanged": 1,
-    "failed": 0,
+    "failed": 2,
     "manualReview": 1,
-    "affectedPages": 4
+    "affectedPages": 5
   },
   "items": [
+    {
+      "key": "general-source-freshness:comelec-precinct-finder:check-failed",
+      "status": "open",
+      "system": "general-source-freshness",
+      "signal": "check-failed",
+      "signalLabel": "Check failed",
+      "sourceId": "comelec-precinct-finder",
+      "label": "COMELEC precinct finder",
+      "url": "https://precinctfinder.comelec.gov.ph/voter_precinct",
+      "affectedPages": ["/elections"],
+      "firstDetectedAt": "2026-09-27T00:06:30.701Z",
+      "latestDetectedAt": "2026-09-27T00:06:08.533Z",
+      "detections": 1,
+      "lastCheckedAt": "2026-09-27T00:06:08.533Z",
+      "lastSuccessfulAt": null,
+      "action": "Recheck source availability. If the failure persists, inspect affected pages for links or claims that may no longer be supportable."
+    },
+    {
+      "key": "general-source-freshness:comelec-2025-results:check-failed",
+      "status": "open",
+      "system": "general-source-freshness",
+      "signal": "check-failed",
+      "signalLabel": "Check failed",
+      "sourceId": "comelec-2025-results",
+      "label": "COMELEC 2025 election results portal",
+      "url": "https://2025electionresults.comelec.gov.ph/",
+      "affectedPages": ["/elections"],
+      "firstDetectedAt": "2026-09-27T00:06:30.701Z",
+      "latestDetectedAt": "2026-09-27T00:06:04.281Z",
+      "detections": 1,
+      "lastCheckedAt": "2026-09-27T00:06:04.281Z",
+      "lastSuccessfulAt": null,
+      "action": "Recheck source availability. If the failure persists, inspect affected pages for links or claims that may no longer be supportable."
+    },
     {
       "key": "city-monitor:philgeps:content-changed",
       "status": "open",
@@ -40,10 +74,7 @@
       "sourceId": "mymakati-broadcasts",
       "label": "MyMakati official social broadcasts",
       "url": "https://www.facebook.com/mymakativerified",
-      "affectedPages": [
-        "/city-monitor",
-        "/briefs"
-      ],
+      "affectedPages": ["/city-monitor", "/briefs"],
       "firstDetectedAt": "2026-09-25T00:43:52.454Z",
       "latestDetectedAt": "2026-09-25T00:43:52.454Z",
       "detections": 1,

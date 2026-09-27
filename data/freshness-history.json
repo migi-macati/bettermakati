@@ -1,14 +1,79 @@
 {
   "version": 1,
-  "generatedAt": "2026-09-25T00:43:52.454Z",
+  "generatedAt": "2026-09-27T00:06:30.701Z",
   "summary": {
-    "events": 2,
+    "events": 3,
     "changed": 1,
-    "failed": 0,
-    "newBaselines": 7,
+    "failed": 2,
+    "newBaselines": 14,
     "manualReview": 1
   },
   "events": [
+    {
+      "system": "general-source-freshness",
+      "checkedAt": "2026-09-27T00:06:30.701Z",
+      "cadence": "due",
+      "changed": [],
+      "failed": [
+        {
+          "sourceId": "comelec-2025-results",
+          "label": "COMELEC 2025 election results portal",
+          "url": "https://2025electionresults.comelec.gov.ph/",
+          "affectedPages": ["/elections"]
+        },
+        {
+          "sourceId": "comelec-precinct-finder",
+          "label": "COMELEC precinct finder",
+          "url": "https://precinctfinder.comelec.gov.ph/voter_precinct",
+          "affectedPages": ["/elections"]
+        }
+      ],
+      "newBaselines": [
+        {
+          "sourceId": "comelec-2026-bske-calendar",
+          "label": "COMELEC 2026 BSKE election calendar",
+          "url": "https://www.comelec.gov.ph/php-tpls-attachments/2025BSKE/Resolutions/com_res_11191.pdf",
+          "affectedPages": ["/elections"]
+        },
+        {
+          "sourceId": "comelec-2026-bske-registration",
+          "label": "COMELEC 2026 BSKE voter registration rules",
+          "url": "https://www.comelec.gov.ph/php-tpls-attachments/2025BSKE/Resolutions/com_res_11177.pdf",
+          "affectedPages": ["/elections"]
+        },
+        {
+          "sourceId": "makati-q2-2025-bid-results",
+          "label": "Makati Q2 2025 bid results",
+          "url": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/online_forms/pdf/Q2%20Bids.pdf",
+          "affectedPages": ["/projects-budget", "/accountability"]
+        },
+        {
+          "sourceId": "makati-q3-2024-bid-results",
+          "label": "Makati Q3 2024 bid results",
+          "url": "https://www.makati.gov.ph/assets/uploads/staticmenu/docs/online_forms/pdf/Q3%20Bid%20Results%20FDP.pdf",
+          "affectedPages": ["/projects-budget", "/accountability"]
+        },
+        {
+          "sourceId": "comelec-2026-bske-filing-rules",
+          "label": "COMELEC 2026 BSKE certificate-of-candidacy filing rules",
+          "url": "https://www.comelec.gov.ph/php-tpls-attachments/2025BSKE/Resolutions/com_res11196.pdf",
+          "affectedPages": ["/elections"]
+        },
+        {
+          "sourceId": "comelec-2026-bske-term-rules",
+          "label": "COMELEC implementing rules for RA 12232",
+          "url": "https://www.comelec.gov.ph/php-tpls-attachments/2025BSKE/Resolutions/com_res_11207.pdf",
+          "affectedPages": ["/elections"]
+        },
+        {
+          "sourceId": "comelec-makati-2025-candidate-list",
+          "label": "COMELEC 2025 Makati certified candidate list",
+          "url": "https://www.comelec.gov.ph/php-tpls-attachments/2025NLE/COC_2025NLE/CLC2025_NCR/CITY_OF_MAKATI.pdf",
+          "affectedPages": ["/elections"]
+        }
+      ],
+      "manualReview": []
+    },
     {
       "system": "city-monitor",
       "checkedAt": "2026-09-25T00:43:52.454Z",
@@ -42,11 +107,7 @@
           "sourceId": "makati-publications",
           "label": "Makati official publications",
           "url": "https://www.makati.gov.ph/",
-          "affectedPages": [
-            "/city-monitor",
-            "/briefs",
-            "/reports"
-          ]
+          "affectedPages": ["/city-monitor", "/briefs", "/reports"]
         }
       ],
       "manualReview": [
@@ -54,10 +115,7 @@
           "sourceId": "mymakati-broadcasts",
           "label": "MyMakati official social broadcasts",
           "url": "https://www.facebook.com/mymakativerified",
-          "affectedPages": [
-            "/city-monitor",
-            "/briefs"
-          ]
+          "affectedPages": ["/city-monitor", "/briefs"]
         }
       ]
     },
@@ -72,41 +130,25 @@
           "sourceId": "makati-legislation",
           "label": "Makati resolutions & ordinances",
           "url": "https://www.makati.gov.ph/content/resolutions-and-ordinances/author",
-          "affectedPages": [
-            "/legislation",
-            "/city-monitor",
-            "/briefs"
-          ]
+          "affectedPages": ["/legislation", "/city-monitor", "/briefs"]
         },
         {
           "sourceId": "makati-mayor-speeches",
           "label": "Mayor's Corner — Speeches",
           "url": "https://www.makati.gov.ph/content/mayors-corner/speeches/803",
-          "affectedPages": [
-            "/city-monitor",
-            "/briefs",
-            "/accountability"
-          ]
+          "affectedPages": ["/city-monitor", "/briefs", "/accountability"]
         },
         {
           "sourceId": "makati-events",
           "label": "Makati Events",
           "url": "https://www.makati.gov.ph/content/events",
-          "affectedPages": [
-            "/city-monitor",
-            "/briefs",
-            "/today"
-          ]
+          "affectedPages": ["/city-monitor", "/briefs", "/today"]
         },
         {
           "sourceId": "makati-news",
           "label": "Makati News",
           "url": "https://www.makati.gov.ph/content/news",
-          "affectedPages": [
-            "/city-monitor",
-            "/briefs",
-            "/today"
-          ]
+          "affectedPages": ["/city-monitor", "/briefs", "/today"]
         },
         {
           "sourceId": "philgeps",

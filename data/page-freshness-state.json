@@ -1,10 +1,10 @@
 {
   "version": 1,
-  "generatedAt": "2026-09-25T00:43:52.454Z",
+  "generatedAt": "2026-09-27T00:06:30.701Z",
   "summary": {
     "pages": 27,
-    "current": 23,
-    "needsReview": 4,
+    "current": 22,
+    "needsReview": 5,
     "untrackedAffectedPages": 0
   },
   "pages": [
@@ -63,10 +63,35 @@
       "label": "Elections",
       "editorialStatus": "partial",
       "reviewedAt": "2026-09-24",
-      "freshnessStatus": "current",
-      "needsReview": false,
-      "dependencySignals": [],
-      "latestDependencySignalAt": null
+      "freshnessStatus": "needs-review",
+      "needsReview": true,
+      "dependencySignals": [
+        {
+          "key": "general-source-freshness:comelec-precinct-finder:check-failed",
+          "system": "general-source-freshness",
+          "signal": "check-failed",
+          "signalLabel": "Check failed",
+          "sourceId": "comelec-precinct-finder",
+          "label": "COMELEC precinct finder",
+          "url": "https://precinctfinder.comelec.gov.ph/voter_precinct",
+          "detectedAt": "2026-09-27T00:06:08.533Z",
+          "lastSuccessfulAt": null,
+          "action": "Recheck source availability. If the failure persists, inspect affected pages for links or claims that may no longer be supportable."
+        },
+        {
+          "key": "general-source-freshness:comelec-2025-results:check-failed",
+          "system": "general-source-freshness",
+          "signal": "check-failed",
+          "signalLabel": "Check failed",
+          "sourceId": "comelec-2025-results",
+          "label": "COMELEC 2025 election results portal",
+          "url": "https://2025electionresults.comelec.gov.ph/",
+          "detectedAt": "2026-09-27T00:06:04.281Z",
+          "lastSuccessfulAt": null,
+          "action": "Recheck source availability. If the failure persists, inspect affected pages for links or claims that may no longer be supportable."
+        }
+      ],
+      "latestDependencySignalAt": "2026-09-27T00:06:08.533Z"
     },
     {
       "path": "/projects-budget",
