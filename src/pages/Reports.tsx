@@ -48,6 +48,28 @@ export default function Reports() {
           </div>
         </Section>
       )}
+
+      <Section className="border-t border-primary-100 bg-[#fffdf8]">
+        <div className="section-eyebrow">National context</div>
+        <div className="mt-4 flex flex-wrap gap-3">
+          <a
+            href="https://visualizations.bettergov.ph/"
+            target="_blank"
+            rel="noreferrer"
+            className="brand-btn-secondary"
+          >
+            National data research
+          </a>
+          <a
+            href="https://2026-budget.bettergov.ph/"
+            target="_blank"
+            rel="noreferrer"
+            className="brand-btn-secondary"
+          >
+            2026 national budget
+          </a>
+        </div>
+      </Section>
     </>
   );
 }

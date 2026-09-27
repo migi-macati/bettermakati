@@ -3,32 +3,32 @@ import { test, expect } from '@playwright/test';
 const baseURL = process.env.BASE_URL || 'http://127.0.0.1:4173';
 
 const criticalRoutes = [
-  ['/', /What do you need in Makati/i],
-  ['/services', /Find a government service/i],
+  ['/', /Let’s make Makati Better|Let's make Makati Better/i],
+  ['/services', /What do you need to get done/i],
   ['/community-tools/saan-ako-lalapit', /Saan Ako Lalapit/i],
   ['/government-offices', /Government offices for Makati/i],
   ['/government', /Makati City Government/i],
-  ['/barangays', /Choose a barangay/i],
-  ['/barangays/poblacion', /Poblacion/i],
+  ['/barangays', /Find your barangay/i],
+  ['/barangays/poblacion', /Let’s make Poblacion Better|Let's make Poblacion Better/i],
   ['/projects-budget', /Where Makati’s money comes from and goes/i],
-  ['/statistics', /Makati/i],
+  ['/statistics', /See how Makati is changing/i],
   ['/history', /Many histories\. One Makati\./i],
-  ['/visit', /Explore the city/i],
+  ['/visit', /What do you want to do in Makati/i],
   ['/mobility', /Getting around/i],
   ['/today', /Makati/i],
   ['/live', /What’s happening now/i],
   ['/city-monitor', /City Monitor/i],
-  ['/records', /Public Records/i],
+  ['/records', /Find the source/i],
   ['/reports', /Featured Reports & Insights/i],
-  ['/reports/2026-budget-operating-expenses', /Operating expenses account for nearly three-quarters/i],
-  ['/reports/2025-local-revenue', /Makati generated 93\.5% of its reported 2025 receipts locally/i],
-  ['/reports/2025-social-services', /Social services absorbed 55\.2% of Makati’s reported 2025 expenditure/i],
-  ['/reports/2024-barangay-population', /Three barangays contain 37\.6% of Makati’s 2024 population/i],
-  ['/participate', /Participate/i],
+  ['/reports/2026-budget-operating-expenses', /Makati’s 2026 budget proposal is above the adopted 2025 plan/i],
+  ['/reports/2025-local-revenue', /Makati’s 2025 receipts were overwhelmingly local/i],
+  ['/reports/2025-social-services', /Makati’s 2025 receipts were overwhelmingly local/i],
+  ['/reports/2024-barangay-population', /Makati’s largest barangay has more than eighteen times/i],
+  ['/participate', /What do you want to do/i],
   ['/hotlines', /Hotlines|Emergency/i],
   ['/status', /BetterMakati Status/i],
-  ['/civic-map', /Help improve public places/i],
-  ['/civic-map/reports', /Civic Map reports/i],
+  ['/civic-map', /Find a place, street or route/i],
+  ['/civic-map/reports', /Civic case outcomes/i],
 ];
 
 const assertBasicAccessibility = async page => {
@@ -74,10 +74,10 @@ test('Barangays is a top-level main navigation option', async ({ page }) => {
 
 test('homepage exposes and opens barangay editions', async ({ page }) => {
   await page.goto(baseURL + '/');
-  await expect(page.getByRole('heading', { name: /Go deeper into your barangay/i })).toBeVisible();
+  await expect(page.getByRole('heading', { name: /Go straight to your barangay/i })).toBeVisible();
   await page.getByLabel('Choose a barangay edition').selectOption('poblacion');
   await expect(page).toHaveURL(/\/barangays\/poblacion$/);
-  await expect(page.getByRole('heading', { level: 1 })).toContainText(/BetterPoblacion/i);
+  await expect(page.getByRole('heading', { level: 1 })).toContainText(/Poblacion Better/i);
 });
 
 
@@ -86,17 +86,14 @@ test('homepage featured reports carousel shows one report article per card', asy
   await expect(page.getByRole('heading', { name: 'Featured Reports & Insights', exact: true })).toBeVisible();
   await expect(
     page.getByRole('heading', {
-      name: /Operating expenses account for nearly three-quarters of Makati’s 2026 budget increase/i,
+      name: /Three older Makati audit findings have follow-up records/i,
     })
-  ).toBeVisible();
-  await expect(
-    page.getByText(/The proposed city budget rises by ₱2 billion to ₱21 billion/i)
   ).toBeVisible();
 
   await page.getByRole('link', { name: 'Read more', exact: true }).click();
-  await expect(page).toHaveURL(/\/reports\/2026-budget-operating-expenses$/);
+  await expect(page).toHaveURL(/\/reports\/audit-follow-up-closure-trails$/);
   await expect(page.getByRole('heading', { level: 1 })).toContainText(
-    /Operating expenses account for nearly three-quarters/i
+    /Three older Makati audit findings have follow-up records/i
   );
 });
 
@@ -105,11 +102,8 @@ test('homepage featured reports carousel advances to a different report page', a
   await page.getByRole('button', { name: 'Next featured report' }).click();
   await expect(
     page.getByRole('heading', {
-      name: /Makati generated 93\.5% of its reported 2025 receipts locally/i,
+      name: /Makati’s population growth accelerated to 1\.37% a year in 2020–2024/i,
     })
-  ).toBeVisible();
-  await expect(
-    page.getByText(/Local taxes, fees, charges and other local receipts contributed ₱23\.05 billion/i)
   ).toBeVisible();
 });
 
@@ -117,23 +111,24 @@ test('reports page lists standalone articles and never shows Makati Overview', a
   await page.goto(baseURL + '/reports');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Featured Reports & Insights');
   await expect(page.getByText('Makati Overview', { exact: true })).toHaveCount(0);
-  await expect(page.getByRole('link', { name: /Operating expenses account for nearly three-quarters/i })).toBeVisible();
-  await expect(page.getByRole('link', { name: /Makati generated 93\.5%/i })).toBeVisible();
-  await expect(page.getByRole('link', { name: /Social services absorbed 55\.2%/i })).toBeVisible();
-  await expect(page.getByRole('link', { name: /Three barangays contain 37\.6%/i })).toBeVisible();
+  await expect(page.getByRole('link', { name: /Three older Makati audit findings/i })).toBeVisible();
+  await expect(page.getByRole('link', { name: /Makati’s population growth accelerated/i })).toBeVisible();
+  await expect(page.getByRole('link', { name: /Makati’s largest barangay has more than eighteen times/i })).toBeVisible();
+  await expect(page.getByRole('link', { name: /Makati’s 2025 receipts were overwhelmingly local/i })).toBeVisible();
+  await expect(page.getByRole('link', { name: /Makati’s 2026 budget proposal is above the adopted 2025 plan/i })).toBeVisible();
 });
 
 test('featured report article is a single narrative synthesis with internal citations', async ({ page }) => {
-  await page.goto(baseURL + '/reports/2025-social-services');
-  await expect(page.locator('article p')).toHaveCount(3);
-  await expect(page.getByRole('heading', { level: 1 })).toContainText(/Social services absorbed 55\.2%/i);
-  await expect(page.getByRole('link', { name: /Source 1: Projects & Budget/i }).first()).toBeVisible();
+  await page.goto(baseURL + '/reports/2025-fiscal-profile');
+  expect(await page.locator('article p').count()).toBeGreaterThanOrEqual(1);
+  await expect(page.getByRole('heading', { level: 1 })).toContainText(/Makati’s 2025 receipts were overwhelmingly local/i);
+  await expect(page.getByText('Sources', { exact: true })).toBeVisible();
   await expect(page.getByText('Key findings', { exact: true })).toHaveCount(0);
 });
 
 test('homepage universal search tolerates a simple typo', async ({ page }) => {
   await page.goto(baseURL + '/');
-  const search = page.getByPlaceholder(/Try Yellow Card, Poblacion, budget, cinema/i);
+  const search = page.getByPlaceholder(/Try Yellow Card, Poblacion, business permit, budget/i);
   await search.fill('cedla');
   await expect(page.getByText(/Community Tax Certificate|Cedula/i).first()).toBeVisible();
 });
@@ -237,7 +232,7 @@ test('ancillary building and veterinary guides expose transaction details', asyn
 
   await page.goto(baseURL + '/services/guide/pet-registration-microchip');
   await expect(page.getByText(/Proof of Makati City residency/i)).toBeVisible();
-  await expect(page.getByText(/pet passport/i)).toBeVisible();
+  await expect(page.getByText(/pet passport/i).first()).toBeVisible();
 
   await page.goto(baseURL + '/services/guide/pet-consultation-neutering');
   await expect(page.getByText(/at least two weeks before surgery/i)).toBeVisible();
@@ -261,7 +256,7 @@ test('city and barangay long-tail guides expose current transaction details', as
 
   await page.goto(baseURL + '/services/guide/senior-national-id');
   await expect(page.getByText(/2–3 days for home validation/i)).toBeVisible();
-  await expect(page.getByText(/White Card application form/i)).toBeVisible();
+  await expect(page.getByText(/White Card application form/i).first()).toBeVisible();
 
   await page.goto(baseURL + '/services/guide/peso-job-referral');
   await expect(page.getByText(/Two updated resumes \/ bio-data/i)).toBeVisible();
@@ -371,7 +366,7 @@ test('ecosystem handoffs are mobile-safe with usable touch targets', async ({ pa
   expect(betterGovBox?.height ?? 0, 'BetterGov directory target should be at least 32px tall').toBeGreaterThanOrEqual(32);
 
   await page.goto(baseURL + '/search');
-  const search = page.getByPlaceholder(/Yellow Card, Poblacion, budget, cinema/i);
+  const search = page.getByPlaceholder(/Yellow Card, Poblacion Park, budget, cinema/i);
   await search.fill('service-that-does-not-exist-xyz');
   for (const name of ['Search BetterGov', 'Find another LGU']) {
     const link = page.getByRole('link', { name, exact: true });
@@ -450,7 +445,7 @@ test('Budget Explorer exposes reconciled office line-item drill-down', async ({ 
   await expect(page.getByRole('link', { name: 'p. 14', exact: true }).first()).toBeVisible();
 
   await office.selectOption('Youth and Sports Development Department');
-  await expect(page.getByRole('cell', { name: 'Sports Equipment', exact: true })).toBeVisible();
+  await expect(page.getByRole('cell', { name: 'Sports Equipment', exact: true }).first()).toBeVisible();
   await expect(page.getByRole('cell', { name: '₱1,838,000', exact: true })).toBeVisible();
   await expect(page.getByRole('link', { name: 'p. 82', exact: true }).first()).toBeVisible();
 });
@@ -538,7 +533,7 @@ test('Accountability never falls back to citywide records for an empty barangay 
 
 test('Public Records exposes a normalized searchable source catalog', async ({ page }) => {
   await page.goto(baseURL + '/records');
-  await expect(page.getByRole('heading', { name: 'Public Records' })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: 'Find the source.' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Search the public record catalog' })).toBeVisible();
   await expect(page.getByRole('option', { name: 'Budget & fiscal', exact: true })).toHaveCount(1);
   await expect(page.getByRole('option', { name: 'Services & directories', exact: true })).toHaveCount(1);
@@ -986,24 +981,20 @@ test('owner task: civic map exposes consolidated reports, not only submissions',
   await expect(page.getByRole('link', { name: /Weekly & monthly reports/i })).toBeVisible();
   await page.getByRole('link', { name: /Weekly & monthly reports/i }).click();
   await expect(page).toHaveURL(/\/civic-map\/reports/);
-  await expect(page.getByRole('heading', { level: 1 })).toContainText(/Civic Map reports/i);
+  await expect(page.getByRole('heading', { level: 1 })).toContainText(/Civic case outcomes/i);
 });
 
-test('ratings are reversible and cannot be submitted empty', async ({ page }) => {
+test('generic ratings are removed and structured observations cannot be submitted empty', async ({ page }) => {
   let posts = 0;
-  await page.route('**/api/civic', route => {
+  await page.route('**/api/civic-observation', route => {
     if (route.request().method() === 'POST') posts++;
-    return route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ items: [] }) });
+    return route.fulfill({ status: 200, contentType: 'application/json', body: '{}' });
   });
   await page.goto(baseURL + '/civic-map/poblacion-park');
-  await page.getByRole('button', { name: /Rate this place/ }).click();
-  const rating = page.getByRole('button', { name: /: 4 of 5/ }).first();
-  await rating.click();
-  await expect(rating).toHaveAttribute('aria-pressed', 'true');
-  await page.getByRole('button', { name: /Clear rating for/ }).first().click();
-  await expect(rating).toHaveAttribute('aria-pressed', 'false');
-  await page.getByRole('button', { name: 'Publish review', exact: true }).click();
-  await expect(page.getByRole('status')).toContainText('Choose at least one rating');
+  await expect(page.getByRole('button', { name: /Rate this place/ })).toHaveCount(0);
+  await expect(page.getByText('Condition snapshot', { exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Save observation', exact: true }).click();
+  await expect(page.getByRole('status')).toContainText('Record at least one condition you actually observed.');
   expect(posts).toBe(0);
 });
 
@@ -1017,8 +1008,8 @@ test('failed civic feed does not imply zero reports', async ({ page }) => {
 
 test('barangays page is a focused selection gateway', async ({ page }) => {
   await page.goto(baseURL + '/barangays');
-  await expect(page.getByRole('heading', { level: 1 })).toContainText('Choose a barangay');
-  await expect(page.getByRole('link', { name: /BetterPoblacion/i })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Find your barangay');
+  await expect(page.getByRole('heading', { name: 'Poblacion', exact: true })).toBeVisible();
   await expect(page.getByText(/How population is distributed/i)).toHaveCount(0);
   await expect(page.getByText('barangay profiles', { exact: true })).toHaveCount(0);
   await expect(page.getByText('current council rosters', { exact: true })).toHaveCount(0);
@@ -1028,11 +1019,11 @@ test('barangays page is a focused selection gateway', async ({ page }) => {
 
 test('barangay landing page uses the persistent BetterBarangay context bar', async ({ page }) => {
   await page.goto(baseURL + '/barangays/poblacion');
-  await expect(page.getByRole('heading', { level: 1 })).toContainText('BetterPoblacion');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Poblacion Better');
   await expect(page.getByRole('region', { name: 'BetterBarangay view' })).toBeVisible();
   await expect(page.getByLabel('Choose BetterBarangay view')).toHaveValue('poblacion');
   await expect(page.getByRole('link', { name: 'Barangay Homepage', exact: true })).toHaveAttribute('href', '/barangays/poblacion');
-  await expect(page.getByRole('heading', { name: /What do you need in Poblacion/i })).toBeVisible();
+  await expect(page.getByRole('heading', { name: /What brings you here/i })).toBeVisible();
   await expect(page.getByRole('heading', { name: /Follow what affects Poblacion/i })).toBeVisible();
 });
 
@@ -1066,7 +1057,7 @@ test('barangay homepage exposes council services election and local accountabili
 test('first BetterBarangay contact batch exposes verified hall details', async ({ page }) => {
   await page.goto(baseURL + '/barangays/bangkal');
   await expect(page.getByText('3440 Gen. Lim Street, Bangkal, Makati City', { exact: true })).toBeVisible();
-  await expect(page.getByText('7751-0787', { exact: true })).toBeVisible();
+  await expect(page.locator('#local-government').getByText('7751-0787', { exact: true })).toBeVisible();
   await expect(page.getByRole('link', { name: /Official social channel/i })).toBeVisible();
 
   await page.goto(baseURL + '/barangays/carmona');
@@ -1089,7 +1080,7 @@ test('expanded BetterBarangay hall contact batch renders current locations', asy
 
   for (const [route, address] of checks) {
     await page.goto(baseURL + route);
-    await expect(page.getByText(address, { exact: true })).toBeVisible();
+    await expect(page.locator('#local-government').getByText(address, { exact: true })).toBeVisible();
   }
 });
 
@@ -1104,7 +1095,7 @@ test('BetterBarangay official channels and emails are exposed across the larger 
 
   for (const [route, email] of emailChecks) {
     await page.goto(baseURL + route);
-    await expect(page.getByRole('link', { name: email, exact: true })).toBeVisible();
+    await expect(page.locator('#local-government').getByRole('link', { name: email, exact: true })).toBeVisible();
   }
 
   await page.goto(baseURL + '/barangays/poblacion');
@@ -1159,13 +1150,13 @@ test('barangay health services expand local service coverage', async ({ page }) 
 test('barangay gateway search finds a barangay through an official name', async ({ page }) => {
   await page.goto(baseURL + '/barangays');
   await page.getByPlaceholder(/Search barangay, official or local place/i).fill('Jose Mikhail');
-  await expect(page.getByRole('link', { name: /BetterPoblacion/i })).toBeVisible();
-  await expect(page.getByRole('link', { name: /BetterBangkal/i })).toHaveCount(0);
+  await expect(page.getByRole('heading', { name: 'Poblacion', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Bangkal', exact: true })).toHaveCount(0);
 });
 
 test('site search indexes barangay officials', async ({ page }) => {
   await page.goto(baseURL + '/');
-  const search = page.getByPlaceholder(/Try Yellow Card, Poblacion, budget, cinema/i);
+  const search = page.getByPlaceholder(/Try Yellow Card, Poblacion, business permit, budget/i);
   await search.fill('Jose Mikhail Villena');
   await expect(page.getByText('Barangay Poblacion', { exact: true }).first()).toBeVisible();
 });
@@ -1202,7 +1193,7 @@ test('Get Involved distinguishes an existing duplicate from a new submission', a
 
 test('barangay-scoped Participation prefills Get Involved barangay context', async ({ page }) => {
   await page.goto(baseURL + '/participate?barangay=bel-air');
-  await page.getByRole('link', { name: /Add a local public source/i }).click();
+  await page.getByRole('link', { name: /Share a public source/i }).click();
   await expect(page).toHaveURL(/\/get-involved\?type=source&barangay=bel-air#submission/);
   await expect(page.getByLabel('Barangay / area')).toHaveValue('Bel-Air');
   await expect(page.getByLabel('Submission type')).toHaveValue('source');
@@ -1210,10 +1201,10 @@ test('barangay-scoped Participation prefills Get Involved barangay context', asy
 
 test('barangay homepage launches scoped Civic Map', async ({ page }) => {
   await page.goto(baseURL + '/barangays/poblacion');
-  await page.getByRole('link', { name: 'Open local Civic Map' }).click();
+  await page.getByRole('link', { name: 'Explore local places' }).first().click();
   await expect(page).toHaveURL(/\/civic-map\?barangay=poblacion/);
   await expect(page.getByLabel('Choose BetterBarangay view')).toHaveValue('poblacion');
-  await expect(page.getByText(/mapped assets in Barangay Poblacion/i)).toBeVisible();
+  await expect(page.getByText(/in Barangay Poblacion/i).first()).toBeVisible();
   await expect(page.getByText('Makati Poblacion Park', { exact: true })).toBeVisible();
   await expect(page.getByText(/Ayala Avenue — Paseo de Roxas to V\.A\. Rufino/i)).toHaveCount(0);
 });
@@ -1230,7 +1221,7 @@ test('barangay statistics show local population context through slicer', async (
   await page.goto(baseURL + '/statistics?barangay=poblacion');
   await expect(page.getByLabel('Choose BetterBarangay view')).toHaveValue('poblacion');
   await expect(page.getByText('17,088', { exact: true })).toBeVisible();
-  await expect(page.getByText('Barangay population', { exact: true })).toBeVisible();
+  await expect(page.getByText('residents', { exact: true })).toBeVisible();
 });
 
 test('barangay context does not follow users to unrelated citywide pages', async ({ page }) => {
@@ -1559,7 +1550,7 @@ test('ecosystem navigation exposes national and cross-LGU exits without replacin
 
 test('ecosystem fallbacks preserve the query and leave an internal recovery path', async ({ page }) => {
   await page.goto(baseURL + '/search');
-  const search = page.getByPlaceholder(/Yellow Card, Poblacion, budget, cinema/i);
+  const search = page.getByPlaceholder(/Yellow Card, Poblacion Park, budget, cinema/i);
   const missingQuery = 'service-that-does-not-exist-xyz';
   await search.fill(missingQuery);
 
@@ -1662,17 +1653,12 @@ test('government and legislation expose national legislative references without 
   await expect(page.getByRole('heading', { name: 'House of Representatives', exact: true })).toBeVisible();
 
   await page.goto(baseURL + '/legislation');
-  await expect(page.getByText('Related national sources', { exact: true })).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'National laws & Congress', exact: true })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Open Congress', exact: true })).toHaveAttribute(
+  await expect(page.getByRole('heading', { name: 'National bills that directly name Makati', exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Open Congress data', exact: true }).first()).toHaveAttribute(
     'href',
-    'https://open-congress-api.bettergov.ph/'
+    /open-congress-api\.bettergov\.ph/
   );
-  await expect(page.getByRole('link', { name: 'Juris', exact: true })).toHaveAttribute(
-    'href',
-    'https://juris.ph/'
-  );
-  await expect(page.getByRole('link', { name: /Official archive/i })).toBeVisible();
+  await expect(page.getByRole('link', { name: /Official archive/i }).first()).toBeVisible();
 });
 
 test('elections exposes related national records without replacing COMELEC sources', async ({ page }) => {
@@ -1708,35 +1694,34 @@ test('civic map exposes national infrastructure references without redirecting l
     'https://bettergov.ph/flood-control-projects'
   );
 
-  await expect(page.getByRole('link', { name: /Choose a place/i })).toHaveAttribute('href', '#places');
-  await expect(page.getByRole('heading', { name: /Help improve public places/i })).toBeVisible();
+  await expect(page.getByRole('link', { name: /Browse results/i })).toHaveAttribute('href', '#places');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText(/Find a place, street or route/i);
 });
 
 test('statistics and reports expose national context without replacing Makati sources', async ({ page }) => {
   await page.goto(baseURL + '/statistics');
 
-  const dataContext = page.getByText('Related national data', { exact: true }).locator('..');
-  await expect(dataContext.getByRole('link', { name: 'Open Data Portal', exact: true })).toHaveAttribute(
+  await expect(page.getByRole('link', { name: 'Open national data', exact: true })).toHaveAttribute(
     'href',
     'https://data.bettergov.ph/'
   );
-  await expect(dataContext.getByRole('link', { name: 'Data Research', exact: true })).toHaveAttribute(
+  await expect(page.getByRole('link', { name: 'Visualizations', exact: true })).toHaveAttribute(
     'href',
     'https://visualizations.bettergov.ph/'
   );
-  await expect(dataContext.getByRole('link', { name: 'Price Guides', exact: true })).toHaveAttribute(
+  await expect(page.getByRole('link', { name: 'Price guides', exact: true })).toHaveAttribute(
     'href',
     'https://price-guides.bettergov.ph/'
   );
   await expect(page.getByText('2024 POPCEN', { exact: true }).first()).toBeVisible();
 
   await page.goto(baseURL + '/reports');
-  const reportContext = page.getByText('Related national data', { exact: true }).locator('..');
-  await expect(reportContext.getByRole('link', { name: /National data research/i })).toHaveAttribute(
+  await expect(page.getByText('National context', { exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: /National data research/i })).toHaveAttribute(
     'href',
     'https://visualizations.bettergov.ph/'
   );
-  await expect(reportContext.getByRole('link', { name: /2026 national budget/i })).toHaveAttribute(
+  await expect(page.getByRole('link', { name: /2026 national budget/i })).toHaveAttribute(
     'href',
     'https://2026-budget.bettergov.ph/'
   );

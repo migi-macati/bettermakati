@@ -144,7 +144,7 @@ export default function Participate() {
           </Link>
 
           <Link
-            to="/get-involved?type=source#submission"
+            to={withBarangayScope('/get-involved?type=source#submission', barangay?.slug)}
             className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
           >
             <FileSearch className="h-5 w-5 text-primary-700" />

@@ -16,7 +16,7 @@ export default function Hero() {
       <div className="container px-5 py-12 md:px-6 md:py-16 lg:px-8 lg:py-20">
         <div className="grid gap-8 lg:grid-cols-[1.08fr_0.92fr] lg:items-center lg:gap-10">
           <div className="min-w-0">
-            <div className="mb-3 text-xs font-extrabold uppercase tracking-[0.12em] text-secondary-400 md:text-sm">
+            <div className="mb-3 text-xs font-extrabold uppercase tracking-[0.12em] text-secondary-300 md:text-sm">
               Makati City · Civic Guide
             </div>
 
