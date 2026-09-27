@@ -976,8 +976,21 @@ const rows: Row[] = [
       evidenceNote:
         'This entry records the 1578 tradition only. It does not extend visita status continuously to 1670: by 1656 Francisco Colín described San Pedro as a Jesuit residence and novitiate with an estate workforce and ministry to nearby people.',
       relations: {
-        eventIds: ['san-pedro-estate-1656', 'town-1670'],
+        eventIds: ['uprising-1639', 'san-pedro-estate-1656', 'town-1670'],
       },
+      interpretations: [
+        {
+          id: 'visita-1578-1670-retrospective-range',
+          label: 'Why the timeline does not use “1578–1670” as one continuous visita period',
+          summary:
+            'The City of Makati’s modern historical profile gives a 1578–1670 visita range, but the NHCP marker itself only says San Pedro Makati was a visita in 1578 and became a bayan in 1670. No contemporary source located so far states that it remained a visita continuously through 1670; a 1639 Jesuit relation already mentions a “pueblo de los naturales” at San Pedro.',
+          sourceRefs: [
+            'nhcp-makati-marker',
+            'jesuit-relation-san-pedro-1639',
+            'colin-san-pedro-1656',
+          ],
+        },
+      ],
     },
   ],
   [
