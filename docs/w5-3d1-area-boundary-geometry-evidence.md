@@ -22,7 +22,7 @@ Never infer an area from a center point, mall footprint, association office, sim
 | Ayala Center | APMC confirms the estate under ACEA and its San Lorenzo location, but no estate perimeter was found. | **NO BOUNDARY YET** |
 | Salcedo Village | MACEA confirms the named area and operations there, but no authoritative full perimeter was found. | **NO BOUNDARY YET** |
 | Legazpi Village | MACEA confirms the named area and operations there, but no authoritative full perimeter was found. | **NO BOUNDARY YET** |
-| Circuit Makati | Ayala Land Estates publishes a current map with Circuit Makati as a clearly outlined site. | **SOURCE-DEFINED BOUNDARY CANDIDATE** |
+| Circuit Makati | Direct visual review of the cited Ayala Land Estates presentation shows that the black outline is labeled **“Makati CBD Projects with MACEA”**. Circuit Makati is shown as a separate callout/location, not as the outlined polygon. Other Ayala Land sources confirm Circuit’s identity and land area but do not supply a usable outer perimeter. | **NO BOUNDARY YET** |
 | Century City | Century Properties identifies the 3.4-hectare project and publishes a site plan of the full development. The plan is not a legal survey. | **APPROXIMATE BOUNDARY CANDIDATE** |
 | Rockwell Center | Rockwell publishes “The Rockwell Center Masterplan,” says the center grew from 15.5 hectares by another 3.6 hectares, and shows the complete masterplan. The graphic is marked “Artist’s Illustration.” | **APPROXIMATE BOUNDARY CANDIDATE** |
 | Bel-Air Village | BAVA confirms 787,234 sqm, four phases, 950 lots and 32 streets, but no complete perimeter was found. | **NO BOUNDARY YET** |
@@ -72,9 +72,10 @@ CBD / Ayala Center / Salcedo / Legazpi:
 
 ### Tier 1 — first geometry candidates
 
-1. **Circuit Makati** — trace the developer-drawn site outline as `source-defined-boundary`.
-2. **Dasmariñas Village** — trace from the DVA Village Map plus stated perimeter as `approximate-boundary`.
-3. **Forbes Park** — trace from the FPA map plus articles boundary description as `approximate-boundary`.
+1. **Dasmariñas Village** — trace from the DVA Village Map plus stated perimeter as `approximate-boundary`.
+2. **Forbes Park** — trace from the FPA map plus articles boundary description as `approximate-boundary`.
+
+**Circuit Makati is removed from Tier 1.** The originally cited presentation does not draw a Circuit Makati estate boundary; its black polygon is explicitly the “Makati CBD Projects with MACEA” outline.
 
 ### Tier 2 — require a second visual QA source before publication
 
@@ -91,6 +92,7 @@ CBD / Ayala Center / Salcedo / Legazpi:
 - Bel-Air Village
 - Urdaneta Village
 - Magallanes Village
+- Circuit Makati
 
 ## Civic Map implications
 
@@ -110,6 +112,6 @@ The next implementation should use a real repository-owned GeoJSON-compatible Po
 
 ## Next micro-step
 
-**W5-3d2 — introduce the renderable area-geometry artifact model and implement Circuit Makati only.**
+**W5-3d2 — introduce the renderable area-geometry artifact model, but do not publish a polygon yet.**
 
-Circuit goes first because its current developer source explicitly draws the estate extent. After the model and validation work with one polygon, Dasmariñas Village and Forbes Park should be separate follow-up micro-steps.
+Direct visual verification blocked the planned Circuit Makati polygon. W5-3d2 should therefore establish the storage and validation model with zero geometry artifacts rather than encode a false boundary. The first actual polygon should be **Dasmariñas Village** in W5-3d3, followed by Forbes Park in a separate micro-step.
