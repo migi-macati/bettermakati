@@ -12,6 +12,14 @@
       "checkedOn": "2026-09-27"
     },
     {
+      "id": "one-ayala-routes-windowseat-2026",
+      "kind": "current-secondary-terminal-roster",
+      "label": "WindowSeat.ph — One Ayala Terminal Guide 2026",
+      "url": "https://www.windowseat.ph/one-ayala-terminal-guide-2026-routes-stops-and-schedules-you-need-to-know/",
+      "checkedOn": "2026-09-27",
+      "note": "Independent May 2026 terminal guide corroborating the same One Ayala bus, P2P and UV route identities used for current-only route promotion."
+    },
+    {
       "id": "one-ayala-first-party-hub",
       "kind": "first-party-hub-identity",
       "label": "Ayala Land — One Ayala intermodal transport hub",
@@ -59,7 +67,7 @@
   "bus": {
     "currentOneAyalaRosterAsOf": "2026-04-02",
     "evidenceClass": "current-secondary-terminal-roster",
-    "canonicalizationDecision": "candidate-current-routes-pending-primary-or-operator-crosscheck",
+    "canonicalizationDecision": "promoted-current-only-routes-with-corroborated-secondary-evidence",
     "cityBusRoutes": [
       "EDSA Carousel (Southbound)",
       "Sta. Rosa / Balibago",
@@ -86,12 +94,23 @@
       "The current roster is strong evidence that these services were using One Ayala as of 2 April 2026, but BetterMakati should not freeze schedules, gates or fares.",
       "EDSA Carousel is already represented canonically as a mobility system; its One Ayala route entry must not create a duplicate system identity.",
       "The separate Makati DEPW headline count of 32 bus stops remains unresolved and must not be used as a route denominator."
-    ]
+    ],
+    "promotedRouteCount": 17,
+    "excludedFromRoutePromotion": [
+      {
+        "route": "EDSA Carousel (Southbound)",
+        "reason": "Already represented by the canonical EDSA Busway mobility system; defer direction/system↔route modeling to W5-4d rather than duplicate the system as a current-only route."
+      }
+    ],
+    "evidencePolicy": {
+      "class": "current-secondary-corroborated",
+      "requirement": "Two independent current 2026 One Ayala terminal rosters must agree on route identity. Operator, schedule, fare, gate and intermediate stops are not inferred or frozen."
+    }
   },
   "uvExpress": {
     "currentOneAyalaRosterAsOf": "2026-04-02",
     "evidenceClass": "current-secondary-terminal-roster",
-    "canonicalizationDecision": "candidate-current-routes-pending-primary-or-operator-crosscheck",
+    "canonicalizationDecision": "promoted-current-only-routes-with-corroborated-secondary-evidence",
     "routes": [
       "Suki Market–Mayon",
       "FTI–Palar Arca South",
@@ -109,7 +128,12 @@
     "notes": [
       "Current route names may be promoted later as geometry-less route records if their evidence class is kept explicit.",
       "Schedules, fares, gates and intermediate stops are volatile and should remain live-source information."
-    ]
+    ],
+    "promotedRouteCount": 12,
+    "evidencePolicy": {
+      "class": "current-secondary-corroborated",
+      "requirement": "Two independent current 2026 One Ayala terminal rosters must agree on route identity. Operator, schedule, fare, gate and intermediate stops are not inferred or frozen."
+    }
   },
   "tricycle": {
     "governance": {
@@ -166,11 +190,15 @@
     "currentUvExpressEntriesAtOneAyala": 12,
     "currentTricycleRoutesCanonicalized": 0,
     "currentTricycleTerminalsCanonicalized": 0,
-    "routeGeometriesAdded": 0
+    "routeGeometriesAdded": 0,
+    "currentBusRoutesCanonicalized": 17,
+    "currentUvExpressRoutesCanonicalized": 12,
+    "currentOnlyRouteRecordsAdded": 29,
+    "edsaCarouselDuplicateRoutesAdded": 0
   },
   "nextStep": {
-    "id": "W5-4c4",
-    "title": "Generalize canonical route records for current-only bus and UV services",
-    "scope": "Extend the route model beyond historical-lineage jeepney rows, preserve evidence class, then promote only current One Ayala bus/UV candidates that pass source-policy checks. Keep tricycle/TODA on hold until an MFRB/MATRIFED roster or equivalent city record is resolved."
+    "id": "W5-4d",
+    "title": "Connect mobility systems, routes, transfers and canonical Places",
+    "scope": "Add source-backed system↔Place and transfer/network relationships, including MRT↔Busway, MRT Ayala↔One Ayala, ferry/area links where supported, and current route membership without inventing geometry."
   }
 }
