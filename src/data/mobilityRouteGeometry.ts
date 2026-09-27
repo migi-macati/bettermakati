@@ -84,7 +84,43 @@ export const mobilityGeometryReviewedOn = '2026-09-28';
  * is actually used by a published artifact. System identity/status sources
  * stay in mobilitySystems.ts and route evidence stays in mobilityRoutes.ts.
  */
-export const mobilityGeometrySources: MobilityGeometrySource[] = [];
+export const mobilityGeometrySources: MobilityGeometrySource[] = [
+  {
+    id: 'osm-mrt3-route-master-8000255',
+    label: 'OpenStreetMap · MRT Line 3 route master relation 8000255',
+    url: 'https://www.openstreetmap.org/relation/8000255',
+    publisher: 'OpenStreetMap contributors',
+    checkedOn: mobilityGeometryReviewedOn,
+    kind: 'reference-map',
+  },
+  {
+    id: 'osm-mrt3-southbound-route-109159',
+    label:
+      'OpenStreetMap · MRT Line 3 North Avenue → Taft Avenue route relation 109159',
+    url: 'https://www.openstreetmap.org/relation/109159',
+    publisher: 'OpenStreetMap contributors',
+    checkedOn: mobilityGeometryReviewedOn,
+    kind: 'reference-map',
+  },
+  {
+    id: 'osm-mrt3-rail-exposure-snapshot',
+    label:
+      'OpenStreetMap-derived rail exposure snapshot · MRT Line 3 way geometries',
+    url: 'https://github.com/luxizhou/PH_TC_Risk/blob/e207cdb7f24f0b1e63401d049d44652dfc22805c/Project_1_Tropical_cyclon_risks_in_Philippines/OpenStreetMap/rail_exposures.csv',
+    publisher: 'PH_TC_Risk / OpenStreetMap contributors',
+    checkedOn: mobilityGeometryReviewedOn,
+    kind: 'reference-map',
+  },
+  {
+    id: 'traintracks-mrt3-geojson-crosscheck',
+    label:
+      'TrainTracks · MRT-3 GeoJSON feature Q13422345',
+    url: 'https://github.com/karaagexc/TrainTracks/blob/82c5d199eaf4165f5ac21a54ba24a1766d1e20f3/src/data/mrt3.json',
+    publisher: 'TrainTracks',
+    checkedOn: mobilityGeometryReviewedOn,
+    kind: 'reference-map',
+  },
+];
 
 /**
  * W5-4e1 establishes the repository-owned LineString/MultiLineString artifact
@@ -97,7 +133,104 @@ export const mobilityGeometrySources: MobilityGeometrySource[] = [];
  * their own to manufacture a current route polyline.
  */
 export const mobilityRouteGeometryArtifacts: MobilityRouteGeometryArtifact[] =
-  [];
+  [
+    {
+      id: 'mrt3-makati-alignment-2026-09',
+      ownerType: 'service',
+      ownerId: 'mrt3',
+      kind: 'infrastructure-alignment',
+      coverage: 'makati-segment',
+      geometry: {
+        type: 'LineString',
+        coordinates: [
+          [121.0464023, 14.5701072],
+          [121.0463331, 14.5698174],
+          [121.04613, 14.5690545],
+          [121.0457281, 14.5676731],
+          [121.0454381, 14.5667194],
+          [121.0454083, 14.5666116],
+          [121.0452875, 14.5661742],
+          [121.0449635, 14.5650844],
+          [121.0447259, 14.5644354],
+          [121.0445645, 14.5640806],
+          [121.0443237, 14.5636123],
+          [121.0440542, 14.5631589],
+          [121.0437086, 14.5626731],
+          [121.0430071, 14.5618481],
+          [121.0424313, 14.5613093],
+          [121.0406042, 14.5597563],
+          [121.0402596, 14.5594882],
+          [121.0391919, 14.5585696],
+          [121.0387352, 14.5581823],
+          [121.0385109, 14.5579889],
+          [121.0378405, 14.5574165],
+          [121.0355262, 14.5554401],
+          [121.0354176, 14.5553494],
+          [121.0353102, 14.5552621],
+          [121.0348492, 14.5548959],
+          [121.034811, 14.5548695],
+          [121.0347805, 14.5548499],
+          [121.0347463, 14.5548305],
+          [121.034715, 14.5548127],
+          [121.0346694, 14.55478],
+          [121.0346209, 14.5547421],
+          [121.0336836, 14.553952],
+          [121.0336463, 14.5539205],
+          [121.0336022, 14.5538817],
+          [121.0335606, 14.553845],
+          [121.0334432, 14.5537382],
+          [121.0333829, 14.5536863],
+          [121.0333189, 14.5536307],
+          [121.0330601, 14.5534175],
+          [121.0330104, 14.5533752],
+          [121.0328532, 14.5532414],
+          [121.0327817, 14.5531834],
+          [121.0322291, 14.5527238],
+          [121.0295093, 14.5504187],
+          [121.029115, 14.5500932],
+          [121.0284814, 14.5495675],
+          [121.0275404, 14.5487554],
+          [121.0274082, 14.548639],
+          [121.0262661, 14.5476619],
+          [121.0258106, 14.5473275],
+          [121.0206831, 14.5430113],
+          [121.019828, 14.5423342],
+          [121.0190284, 14.5417712],
+          [121.0188767, 14.5416656],
+          [121.0178432, 14.5410174],
+          [121.0174488, 14.5408093],
+        ],
+      },
+      sourceRefs: [
+        {
+          registry: 'system',
+          sourceId: 'mrt3-about-2026',
+        },
+        {
+          registry: 'geometry',
+          sourceId: 'osm-mrt3-route-master-8000255',
+        },
+        {
+          registry: 'geometry',
+          sourceId: 'osm-mrt3-southbound-route-109159',
+        },
+        {
+          registry: 'geometry',
+          sourceId: 'osm-mrt3-rail-exposure-snapshot',
+        },
+      ],
+      precisionNote:
+        'Mapped reference alignment for the MRT-3 Makati station corridor, not a survey, engineering or cadastral product. Coordinates follow one southbound OSM light-rail track alignment from just north of Guadalupe Station through just south of Magallanes Station; they are not a legal Makati-boundary clip and do not depict the full width or both tracks of the railway.',
+      tracedFrom:
+        'OSM route relation 109159 member ways 810673631, 642764191, 547163412, 810673628, 810673626, 810634546, 799249439, 642764192, 810634542, 642764189 and 38192006; coordinates recovered from the cited OpenStreetMap-derived rail exposure snapshot.',
+      checkedAgainst: [
+        'OpenStreetMap MRT Line 3 route master relation 8000255',
+        'TrainTracks MRT-3 GeoJSON feature Q13422345',
+        'Canonical BetterMakati MRT-3 station points: Guadalupe, Buendia, Ayala and Magallanes',
+      ],
+      reviewedOn: mobilityGeometryReviewedOn,
+    },
+  ];
 
 const systemSourceIds = new Set(mobilitySources.map(source => source.id));
 const routeSourceIds = new Set(
