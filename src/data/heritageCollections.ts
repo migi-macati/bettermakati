@@ -45,8 +45,71 @@ export const heritageCollections: HeritageCollection[] = [
     sourceNote:
       'Curated by BetterMakati from canonical heritage places. Check current pedestrian conditions before using the route.',
   },
-];
+  {
+    id: 'old-san-pedro-macati',
+    name: 'Old San Pedro Macati',
+    kind: 'place-collection',
+    theme: 'Civic and parish core of old Makati',
+    description:
+      'Three surviving places that anchor the historic Poblacion core: the old Presidencia, Plaza Cristo Rey and the parish church of San Pedro Macati.',
+    placeIds: [
+      'museo-ng-makati',
+      'plaza-cristo-rey',
+      'sts-peter-and-paul-parish-church',
+    ],
+    sourceNote:
+      'A BetterMakati thematic collection assembled from canonical place records; it does not imply that the three sites share one construction period.',
+  },
+  {
+    id: 'religious-heritage',
+    name: 'Religious heritage',
+    kind: 'place-collection',
+    theme: 'Marked churches and shrines across Makati',
+    description:
+      'Historic religious sites in Guadalupe Viejo, Poblacion and Tejeros with distinct foundation, rebuilding and parish histories.',
+    placeIds: [
+      'nuestra-senora-de-gracia-church',
+      'sts-peter-and-paul-parish-church',
+      'dambana-ng-banal-na-krus',
+    ],
+    sourceNote:
+      'The collection groups canonical places by heritage theme; chronology and designation details remain attached to each place.',
+  },
+  {
+    id: 'nielson-and-modern-makati',
+    name: 'Nielson and modern Makati',
+    kind: 'place-collection',
+    theme: 'From the former airfield landscape to the modern CBD',
+    description:
+      'Use Nielson Tower, Ayala Triangle Gardens and Ayala Museum to orient the former airport site and the later business and cultural district that developed around it.',
+    placeIds: [
+      'nielson-tower',
+      'ayala-triangle-gardens',
+      'ayala-museum',
+    ],
+    sourceNote:
+      'This is an interpretive orientation collection, not a claim that every included place is itself a designated aviation heritage property.',
+  },
+  {
+    id: 'museums-and-cultural-institutions',
+    name: 'Museums and cultural institutions',
+    kind: 'place-collection',
+    theme: 'Places for Makati and Philippine history, art and culture',
+    description:
+      'Makati’s city museum in the Old Presidencia and Ayala Museum in the modern cultural district.',
+    placeIds: [
+      'museo-ng-makati',
+      'ayala-museum',
+    ],
+    sourceNote:
+      'The collection groups cultural institutions; heritage status belongs to the individual canonical place record.',
+  },
+]; 
 
 export const heritageWalkingRoutes = heritageCollections.filter(
   collection => collection.kind === 'walking-route'
+);
+
+export const heritagePlaceCollections = heritageCollections.filter(
+  collection => collection.kind === 'place-collection'
 );
