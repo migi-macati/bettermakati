@@ -18,6 +18,12 @@ const integrity = await readFile(
   'utf8'
 );
 const reports = await readFile('src/data/reports.ts', 'utf8');
+const areas = await readFile(
+  'src/data/areaOrganizationRegistry.ts',
+  'utf8'
+);
+const navigation = await readFile('src/data/navigation.ts', 'utf8');
+const searchPage = await readFile('src/pages/Search.tsx', 'utf8');
 
 const problems = [];
 
@@ -25,6 +31,8 @@ for (const marker of [
   "import { cityIndicators } from './cityIndicators'",
   "import { integrityProcurementEntities } from './integrityData'",
   "import { reports } from './reports'",
+  "civicAreas,",
+  "civicOrganizations,",
   'canonicalKey?: string',
   'const civicIntelligenceItems: SearchItem[] = [',
   '...cityIndicators',
@@ -40,6 +48,88 @@ for (const marker of [
   if (!index.includes(marker)) {
     problems.push('Civic Intelligence search-index marker missing: ' + marker);
   }
+}
+
+for (const marker of [
+  "'Area'",
+  "'Organization'",
+  'const areaOrganizationItems: SearchItem[] = [',
+  '...civicAreas.map',
+  "canonicalKey: 'area:' + area.id",
+  '...civicOrganizations.map',
+  "canonicalKey: 'organization:' + organization.id",
+  '...areaOrganizationItems',
+  "href: '/estates#area-' + area.id",
+  "href: '/estates#organization-' + organization.id",
+]) {
+  if (!index.includes(marker)) {
+    problems.push(
+      'Canonical Area/Organization search marker missing: ' + marker
+    );
+  }
+}
+
+const areaBlock =
+  areas
+    .split('export const civicAreas: CivicAreaRecord[] = [')[1]
+    ?.split('\n];\n\nexport const civicOrganizations')[0] ?? '';
+const organizationBlock =
+  areas
+    .split('export const civicOrganizations: CivicOrganizationRecord[] = [')[1]
+    ?.split('\n];\n\nexport const civicAreaRelationships')[0] ?? '';
+
+const areaCount = (
+  areaBlock.match(/^    id: '[^']+',$/gm) ?? []
+).length;
+const organizationCount = (
+  organizationBlock.match(/^    id: '[^']+',$/gm) ?? []
+).length;
+
+if (areaCount !== 13) {
+  problems.push(
+    'Expected 13 canonical Area search sources; found ' + areaCount + '.'
+  );
+}
+if (organizationCount !== 11) {
+  problems.push(
+    'Expected 11 canonical Organization search sources; found ' +
+      organizationCount +
+      '.'
+  );
+}
+
+for (const requiredSearchName of [
+  'Ayala Center Estate Association, Inc.',
+  'Circuit Makati Estate Association, Inc.',
+  'Magallanes Village Association, Inc.',
+  'Urdaneta Village Association, Inc.',
+]) {
+  if (!areas.includes("name: '" + requiredSearchName + "'")) {
+    problems.push(
+      'Expected canonical organization missing from searchable registry: ' +
+        requiredSearchName
+    );
+  }
+}
+
+for (const legacy of [
+  "title: 'Bel-Air Village Association'",
+  "title: 'Dasmariñas Village Association'",
+  "title: 'Forbes Park Association'",
+  "title: 'San Lorenzo Village Association'",
+]) {
+  if (index.includes(legacy)) {
+    problems.push(
+      'Legacy hand-written HOA search entry remains instead of canonical registry indexing: ' +
+        legacy
+    );
+  }
+}
+
+if (index.includes('barangay.associations')) {
+  problems.push(
+    'Barangay search keywords still depend on removed legacy association payloads.'
+  );
 }
 
 for (const forbidden of [
@@ -58,6 +148,8 @@ for (const forbidden of [
 }
 
 for (const marker of [
+  "item.group === 'Organization'",
+  "item.group === 'Area'",
   'legislationRecordId',
   "canonicalKey: 'legislation-record:' + legislationRecordId(record)",
   "query.trim().length >= 3",
@@ -152,6 +244,24 @@ for (const forbidden of [
   }
 }
 
+for (const marker of [
+  "label: 'Estates, Districts & Associations', href: '/estates'",
+  "label: 'Estates & Districts', href: '/estates'",
+]) {
+  if (!navigation.includes(marker)) {
+    problems.push('Area/Organization navigation marker missing: ' + marker);
+  }
+}
+
+if (
+  !searchPage.includes('districts and estates') ||
+  !searchPage.includes('organizations')
+) {
+  problems.push(
+    'Search page scope copy must explicitly include canonical areas and organizations.'
+  );
+}
+
 if (problems.length) {
   console.error(
     'Civic Intelligence Search check failed:\n- ' + problems.join('\n- ')
@@ -160,5 +270,5 @@ if (problems.length) {
 }
 
 console.log(
-  'Civic Intelligence Search check passed: 30 Statistics indicators, 17 Integrity entities and 5 reports are statically indexed with canonical keys; 11,355 legislation records remain lazy; duplicate canonical keys collapse once; BetterGov/BetterLGU remain external handoffs rather than cloned local records.'
+  'Civic Intelligence Search check passed: 30 Statistics indicators, 17 Integrity entities, 5 reports, 13 Areas and 11 Organizations are statically indexed with canonical keys; ACEA/CMEA/MVA/UVA are searchable; Area results join Places and Organization results join Government; 11,355 legislation records remain lazy; duplicate canonical keys collapse once; BetterGov/BetterLGU remain external handoffs rather than cloned local records.'
 );
