@@ -1,0 +1,176 @@
+{
+  "schemaVersion": 1,
+  "reviewedOn": "2026-09-27",
+  "workstream": "W5-4c3 — current Makati bus, UV Express, and tricycle/TODA evidence-gap reconciliation",
+  "scope": "Research and source reconciliation only. No route geometry and no unsupported tricycle/TODA roster promotion.",
+  "sources": [
+    {
+      "id": "one-ayala-routes-2026-spot",
+      "kind": "current-secondary-terminal-roster",
+      "label": "SPOT.ph — One Ayala jeepney, UV Express, city bus and P2P routes (as of 2 April 2026)",
+      "url": "https://www.spot.ph/newsfeatures/mobility/routes-at-one-ayala-2026-a5229-20260422-bsc",
+      "checkedOn": "2026-09-27"
+    },
+    {
+      "id": "one-ayala-first-party-hub",
+      "kind": "first-party-hub-identity",
+      "label": "Ayala Land — One Ayala intermodal transport hub",
+      "url": "https://groundbreakers.ayalaland.com.ph/articles/the-ultimate-mixed-use-development-in-makati-cbd-enhancing-connectivity-with-ease-and-convenience.html",
+      "checkedOn": "2026-09-27"
+    },
+    {
+      "id": "makati-citizens-charter-tricycle-franchise",
+      "kind": "official-primary",
+      "label": "City Government of Makati Citizen's Charter — Tricycle for Hire Operator's Permit / Franchise Renewal",
+      "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/481/pdf/Makati%20Citizen%27s%20Charter%20-%20FOR%20PRINT.pdf",
+      "checkedOn": "2026-09-27"
+    },
+    {
+      "id": "makati-traffic-code-tricycle-routes",
+      "kind": "official-law-secondary-copy",
+      "label": "Makati Traffic Management Code — Section 96 tricycle/pedicab routes and areas of operation",
+      "url": "https://pdfcoffee.com/traffic-code-of-makati-pdf-free.html",
+      "checkedOn": "2026-09-27",
+      "note": "Used to recover the text of City Ordinance No. 2003-089; later canonical legal citation should prefer the official Makati ordinance repository when a directly fetchable copy is resolved."
+    },
+    {
+      "id": "makati-annual-report-2020-transport",
+      "kind": "official-primary-historical",
+      "label": "City Government of Makati Annual Report 2020 — UTFM/MATRIFED traffic management",
+      "url": "https://www.makati.gov.ph/assets/uploads/downloads/2/55/601/pdf/Annual%20Report%202020.pdf",
+      "checkedOn": "2026-09-27"
+    },
+    {
+      "id": "makati-gis-going-around-lines",
+      "kind": "official-primary-historical-map",
+      "label": "City Government of Makati GIS — Makati Going Around Lines",
+      "url": "https://securedmaps.makati.gov.ph/arcgis/rest/services/Points/Makati_Going_Around_Lines/MapServer",
+      "checkedOn": "2026-09-27"
+    },
+    {
+      "id": "moovit-sandico-tricycle-terminal",
+      "kind": "current-route-feed-reference",
+      "label": "Moovit — Tricycle Terminal, Sandico Street, Makati City",
+      "url": "https://moovitapp.com/index/en/public_transit-Tricycle_Terminal-Manila-site_77919625-1022",
+      "checkedOn": "2026-09-27",
+      "note": "Current map/reference evidence only. It does not identify the franchised TODA or legally defined service area."
+    }
+  ],
+  "bus": {
+    "currentOneAyalaRosterAsOf": "2026-04-02",
+    "evidenceClass": "current-secondary-terminal-roster",
+    "canonicalizationDecision": "candidate-current-routes-pending-primary-or-operator-crosscheck",
+    "cityBusRoutes": [
+      "EDSA Carousel (Southbound)",
+      "Sta. Rosa / Balibago",
+      "Biñan",
+      "Pacita",
+      "Alabang",
+      "Sucat",
+      "Bicutan",
+      "FTI"
+    ],
+    "p2pRoutes": [
+      "Calamba",
+      "Fairview",
+      "Sta. Rosa / Nuvali",
+      "Antipolo",
+      "Katipunan",
+      "Imus",
+      "Noveleta",
+      "Las Piñas",
+      "Bacoor",
+      "Cainta"
+    ],
+    "notes": [
+      "The current roster is strong evidence that these services were using One Ayala as of 2 April 2026, but BetterMakati should not freeze schedules, gates or fares.",
+      "EDSA Carousel is already represented canonically as a mobility system; its One Ayala route entry must not create a duplicate system identity.",
+      "The separate Makati DEPW headline count of 32 bus stops remains unresolved and must not be used as a route denominator."
+    ]
+  },
+  "uvExpress": {
+    "currentOneAyalaRosterAsOf": "2026-04-02",
+    "evidenceClass": "current-secondary-terminal-roster",
+    "canonicalizationDecision": "candidate-current-routes-pending-primary-or-operator-crosscheck",
+    "routes": [
+      "Suki Market–Mayon",
+      "FTI–Palar Arca South",
+      "Antipolo",
+      "Pacita–Biñan",
+      "Sucat Evacom–Parañaque",
+      "BF El Grande–Parañaque",
+      "BF Resort–Las Piñas",
+      "Molino via Skyway MCX",
+      "Molino via Coastal Road–Ligas",
+      "Imus via Coastal Road",
+      "Russia–Moonwalk",
+      "Bicutan"
+    ],
+    "notes": [
+      "Current route names may be promoted later as geometry-less route records if their evidence class is kept explicit.",
+      "Schedules, fares, gates and intermediate stops are volatile and should remain live-source information."
+    ]
+  },
+  "tricycle": {
+    "governance": {
+      "franchisingAuthority": "Makati Franchising Regulatory Board (MFRB)",
+      "membershipEvidence": "TODA certification plus Makati Tricycle Federation (MATRIFED) certification are required in the published City Citizen's Charter for franchise renewal.",
+      "routeRule": "Makati's Traffic Code treats tricycle permissions as routes or areas of operations, not generic citywide service."
+    },
+    "operatingConstraints": [
+      "Tricycles are not permitted on national roads.",
+      "The Traffic Code says routes/areas of operations should consider traffic-safety recommendations.",
+      "The Traffic Code says tricycles/pedicabs should not operate along bus or jeepney routes.",
+      "Where no off-street terminal/station exists, tricycle numbers may be restricted to reduce congestion."
+    ],
+    "currentPublicRosterFound": false,
+    "currentTODAServiceAreaRosterFound": false,
+    "currentTerminalRosterFound": false,
+    "currentReferenceCandidates": [
+      {
+        "name": "Tricycle Terminal — Sandico Street",
+        "evidence": "Moovit page last updated 2026-09-19",
+        "disposition": "reference-only-not-canonical",
+        "reason": "No current TODA identity, franchise/service-area definition, or official terminal source was established."
+      }
+    ],
+    "excludedEvidence": [
+      {
+        "item": "Barangay Rizal TODA route-planning case study",
+        "reason": "Barangay Rizal is among the transferred EMBO barangays and is no longer present-day Makati; do not use it as current Makati route coverage."
+      }
+    ],
+    "canonicalizationDecision": "hold-until-mfrb-or-matrifed-roster-resolved"
+  },
+  "historicalGeometryDiscovery": {
+    "sourceId": "makati-gis-going-around-lines",
+    "layers": [
+      "E-Jeepneys",
+      "Jeepney Routes",
+      "Bus Rapit Transits"
+    ],
+    "busLayerLabels": [
+      "Blue Line (Poblacion Line)",
+      "Green Line (Taguig Line)",
+      "Orange Line (Airport Link)",
+      "Red Line (Ayala)",
+      "The Fort Bus",
+      "Yellow Line (MCBD-BGC)"
+    ],
+    "disposition": "historical-lineage-and-geometry-reference-only",
+    "note": "The official GIS service is a 2013-era Going Around layer. Its polylines may help future geometry crosswalks but do not prove a route is operating in 2026."
+  },
+  "summary": {
+    "currentBusEntriesAtOneAyala": 18,
+    "currentBusEntriesBeyondEdsaBusway": 17,
+    "currentUvExpressEntriesAtOneAyala": 12,
+    "currentTricycleRoutesCanonicalized": 0,
+    "currentTricycleTerminalsCanonicalized": 0,
+    "routeGeometriesAdded": 0
+  },
+  "nextStep": {
+    "id": "W5-4c4",
+    "title": "Generalize canonical route records for current-only bus and UV services",
+    "scope": "Extend the route model beyond historical-lineage jeepney rows, preserve evidence class, then promote only current One Ayala bus/UV candidates that pass source-policy checks. Keep tricycle/TODA on hold until an MFRB/MATRIFED roster or equivalent city record is resolved."
+  }
+}
