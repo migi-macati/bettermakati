@@ -13,7 +13,7 @@ for (const marker of [
   "export interface CivicOrganizationRecord",
   "export interface CivicAreaRelationship",
   "barangaySlugs: string[]",
-  "geometry?: CivicAreaGeometry",
+  "geometryId?: string",
   "'within-area'",
   "'within-barangay'",
   "'managed-by'",
@@ -183,7 +183,7 @@ if (
 
 if (/\bgeometry:\s*\{/.test(areaBlock)) {
   problems.push(
-    'W5-3b2 must not fabricate estate/village geometry before the separate boundary evidence pass.'
+    'Renderable area geometry must live in repository-owned geometry artifacts, not embedded inside canonical area records.'
   );
 }
 
@@ -353,7 +353,7 @@ if (problems.length) {
 console.log(
   [
     'Area/organization registry schema check passed:',
-    'optional sourced area geometry',
+    'optional repository-owned area geometry references',
     'multi-barangay support',
     'area hierarchy',
     'management/developer relationships',
