@@ -19,9 +19,16 @@ import PhotoCarousel from '../components/ui/PhotoCarousel';
 import { visitImageSet } from '../data/cityImages';
 import SharePage from '../components/ui/SharePage';
 import { placeRegistryById } from '../data/placeRegistry';
+import { resolveDistrictReferences } from '../data/districtReferences';
 
 const mapsUrl = (query: string) =>
   `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+
+const makeItMakatiAreas = resolveDistrictReferences([
+  { type: 'area', id: 'makati-cbd' },
+  { type: 'area', id: 'ayala-center' },
+  { type: 'area', id: 'circuit-makati' },
+]);
 
 const visitStarts = [
   { label: 'Places to go', href: '#places-to-start', icon: Map },
@@ -266,19 +273,33 @@ export default function VisitMakati() {
       <Section id="resources" className="bg-[#fffdf8]">
         <div className="section-eyebrow">Visitor resources</div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <a
-            href="https://makeitmakati.com/"
-            target="_blank"
-            rel="noreferrer"
-            className="rounded-2xl border border-gray-200 bg-white p-5 hover:border-primary-300 hover:shadow-sm transition"
-          >
+          <article className="rounded-2xl border border-gray-200 bg-white p-5 hover:border-primary-300 hover:shadow-sm transition">
             <h2 className="font-extrabold text-lg text-gray-950">
               Make It Makati
             </h2>
-            <p className="text-sm text-gray-600 mt-1">
-              Ayala Land's guide to Makati CBD, Ayala Center and Circuit Makati.
+            <p className="mt-1 text-sm text-gray-600">
+              Ayala Land visitor guide covering these Makati areas.
             </p>
-          </a>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {makeItMakatiAreas.map(area => (
+                <Link
+                  key={area.ref.type + ':' + area.ref.id}
+                  to={area.href}
+                  className="rounded-full border border-primary-200 px-3 py-1.5 text-xs font-bold text-primary-700"
+                >
+                  {area.label}
+                </Link>
+              ))}
+            </div>
+            <a
+              href="https://makeitmakati.com/"
+              target="_blank"
+              rel="noreferrer"
+              className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700"
+            >
+              Open Make It Makati <ExternalLink className="h-3.5 w-3.5" />
+            </a>
+          </article>
           <a
             href="https://www.makati.gov.ph/"
             target="_blank"
