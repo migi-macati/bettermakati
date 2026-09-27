@@ -129,7 +129,89 @@ const boundary = legal(
   'Supreme Court · G.R. 235316, 1 December 2021',
   'https://lawphil.net/judjuris/juri2021/dec2021/gr_235316_2021.html'
 );
-export const historyReviewed = '19 September 2026';
+const nhcpSanPedro: HistorySource = {
+  id: 'nhcp-san-pedro-macati',
+  label: 'NHCP · San Pedro Macati historical marker',
+  url: 'https://philhistoricsites.nhcp.gov.ph/registry_database/san-pedro-macati/',
+  kind: 'Institutional history',
+  evidenceLevel: 'Reference',
+  format: 'institutional record',
+  repository: 'National Historical Commission of the Philippines',
+  date: '1937 marker',
+  citationNote:
+    'Retrospective historical marker; useful as an official reference but not a contemporaneous foundation record.',
+};
+const nhcpMakati: HistorySource = {
+  id: 'nhcp-makati-marker',
+  label: 'NHCP · Makati historical marker',
+  url: 'https://philhistoricsites.nhcp.gov.ph/registry_database/makati/',
+  kind: 'Institutional history',
+  evidenceLevel: 'Reference',
+  format: 'institutional record',
+  repository: 'National Historical Commission of the Philippines',
+  date: '1991 marker',
+  citationNote:
+    'Retrospective city marker; dates should be checked against surviving contemporary instruments where available.',
+};
+const britoStudy: HistorySource = {
+  id: 'manchado-lopez-brito-2024',
+  label:
+    'Marta María Manchado López · “Los primeros años de la Manila española y la presencia portuguesa”',
+  url: 'https://estudiosamericanos.revistas.csic.es/index.php/estudiosamericanos/article/download/1085/1096?inline=1',
+  kind: 'Scholarly account',
+  evidenceLevel: 'Secondary',
+  format: 'scholarly work',
+  creator: 'Marta María Manchado López',
+  repository: 'Anuario de Estudios Americanos / CSIC',
+  date: '2024',
+  locator: '81(2), e28 · section on Pedro de Brito’s 1607 foundation',
+  citationNote:
+    'The study cites Francisco Colín (1663) for the Buenavista endowment and foundation.',
+};
+const colinSanPedro: HistorySource = {
+  id: 'colin-san-pedro-1656',
+  label: 'Francisco Colín · Jesuit missions in 1656, “House of San Pedro”',
+  url: 'https://www.gutenberg.org/cache/epub/25930/pg25930-images.html',
+  kind: 'Scholarly account',
+  evidenceLevel: 'Near-primary',
+  format: 'archival document',
+  creator: 'Francisco Colín; English edition by Emma Helen Blair and James Alexander Robertson',
+  repository: 'Project Gutenberg',
+  date: '1656 survey; published 1663; English edition 1905',
+  locator: 'The Philippine Islands, 1493–1898, vol. XXVIII · “House of San Pedro”',
+  citationNote:
+    'English translation of Colín’s near-contemporary Jesuit survey.',
+};
+const escotoVisitation: HistorySource = {
+  id: 'escoto-visitation-1773',
+  label:
+    'Salvador P. Escoto · “The Manila Archbishop’s Visitation of Parishes, 1773–1775”',
+  url: 'https://archium.ateneo.edu/phstudies/vol58/iss1/7/',
+  kind: 'Scholarly account',
+  evidenceLevel: 'Near-primary',
+  format: 'scholarly work',
+  creator: 'Salvador P. Escoto',
+  repository: 'Philippine Studies / Ateneo de Manila University',
+  date: '2010',
+  locator: 'pp. 242–246 · San Pedro Makati, 20–22 February 1773',
+  citationNote:
+    'Escoto translates and summarizes the 5 April 1773 visitation record held by the Archivo General de Indias.',
+};
+const kelly1775: HistorySource = {
+  id: 'kelly-manila-environs-1775',
+  label: 'Dionisio Kelly · plan of the environs of Manila, 1775',
+  url: 'https://searcharchives.bl.uk/catalog/040-002027896',
+  kind: 'Institutional history',
+  evidenceLevel: 'Primary',
+  format: 'historical map',
+  creator: 'Dionisio Kelly',
+  repository: 'British Library',
+  date: '1775',
+  locator: 'Add MS 17641 C',
+  citationNote:
+    'Primary cartographic evidence for the Manila environs; building-level interpretations require separate corroboration.',
+};
+export const historyReviewed = '27 September 2026';
 export const historyEras = [
   { label: 'Early & Spanish colonial', from: 0, to: 1895 },
   { label: 'Revolution & American period', from: 1896, to: 1934 },
@@ -171,7 +253,13 @@ const rows: Row[] = [
     community,
     'The city profile places Makati under Santa Ana de Sapa during this period.',
     city,
-    'Retrospective account; not a surviving foundation instrument.',
+    'Retrospective accounts; no contemporaneous foundation instrument has yet been added to the BetterMakati corpus.',
+    {
+      additionalSources: [nhcpMakati],
+      evidenceStatus: 'probable',
+      evidenceNote:
+        'City and NHCP institutional histories agree on the 1578 visita tradition; this entry does not treat that agreement as a surviving primary foundation record.',
+    },
   ],
   [
     'cattle-fields',
@@ -183,13 +271,49 @@ const rows: Row[] = [
     study,
   ],
   [
+    'buenavista-foundation',
+    1607,
+    '1607',
+    'Buenavista endowed for the Jesuit novitiate',
+    community,
+    'Pedro de Brito and Ana de Herrera endowed the Jesuits with the Buenavista estate and funds for a church and house for novices, establishing the institutional core later known as San Pedro Macati.',
+    britoStudy,
+    'The year 1607 is well supported, but retrospective sources differ on the exact date of the deed; BetterMakati does not force a day-level date here.',
+    {
+      additionalSources: [nhcpSanPedro],
+      evidenceStatus: 'established',
+      evidenceNote:
+        'Manchado López cites Francisco Colín’s 1663 account and gives a 1607 public foundation deed; the NHCP marker independently places the Buenavista donation in 1607.',
+      relations: {
+        barangaySlugs: ['poblacion'],
+        people: [
+          { label: 'Pedro de Brito' },
+          { label: 'Ana de Herrera' },
+          { label: 'Gregorio López, S.J.' },
+        ],
+        institutions: [{ label: 'Society of Jesus' }],
+        eventIds: ['san-pedro-church'],
+      },
+    },
+  ],
+  [
     'san-pedro-church',
     1620,
     '1620',
-    'San Pedro Macati church',
+    'San Pedro Macati church and Jesuit house',
     community,
-    'Tueller dates the Jesuit church to 1620, linking its patronage to Pedro de Brito.',
+    'The San Pedro complex was taking permanent form by 1620, with the Jesuit church associated with the adjoining novitiate and retreat house.',
     study,
+    undefined,
+    {
+      additionalSources: [nhcpSanPedro],
+      evidenceStatus: 'established',
+      relations: {
+        barangaySlugs: ['poblacion'],
+        institutions: [{ label: 'Society of Jesus' }],
+        eventIds: ['buenavista-foundation'],
+      },
+    },
   ],
   [
     'chirino',
@@ -201,6 +325,24 @@ const rows: Row[] = [
     study,
   ],
   [
+    'san-pedro-estate-1656',
+    1656,
+    '1656 · Colín survey',
+    'A working estate around the House of San Pedro',
+    community,
+    'Francisco Colín’s survey describes two Jesuits at the House of San Pedro and sixty tributarios of Tagalog Indians working the estate, alongside religious ministry to the surrounding population.',
+    colinSanPedro,
+    'This is evidence about the documented estate community, not a complete census of everyone living in what is now Makati.',
+    {
+      evidenceStatus: 'established',
+      relations: {
+        barangaySlugs: ['poblacion'],
+        institutions: [{ label: 'Society of Jesus' }],
+        eventIds: ['buenavista-foundation', 'san-pedro-church'],
+      },
+    },
+  ],
+  [
     'uprising-1639',
     1639,
     '28 November 1639',
@@ -209,6 +351,21 @@ const rows: Row[] = [
     'A Jesuit account examined by Tueller describes fighting during the Chinese uprising.',
     study,
     'A mediated colonial account, not a neutral eyewitness consensus.',
+  ],
+  [
+    'town-1670',
+    1670,
+    '1670 · NHCP marker',
+    'San Pedro Makati becomes a bayan',
+    government,
+    'The NHCP’s Makati historical marker dates San Pedro Makati’s becoming a town to 1670.',
+    nhcpMakati,
+    'A contemporaneous town-creation instrument has not yet been located in the BetterMakati research corpus.',
+    {
+      evidenceStatus: 'probable',
+      evidenceNote:
+        'This milestone is retained as an official marker-based date while primary documentation is still being sought.',
+    },
   ],
   [
     'british-occupation',
@@ -227,6 +384,38 @@ const rows: Row[] = [
     government,
     'The expulsion of the Jesuits brought confiscation of their lands, including the local estate.',
     study,
+  ],
+  [
+    'archbishop-visitation-1773',
+    1773,
+    '20–22 February 1773',
+    'An archiepiscopal visitation records the hacienda town',
+    community,
+    'Archbishop Basilio Sancho’s visitation recorded San Pedro Makati as a former Jesuit hacienda town with 1,009 people. The earthquake-damaged church had no rectory, so the parish priest lived in a separate quarter of the hacienda house.',
+    escotoVisitation,
+    'The demographic categories come from an eighteenth-century ecclesiastical visitation and should not be read as a modern census.',
+    {
+      evidenceStatus: 'established',
+      relations: {
+        people: [
+          { label: 'Basilio Sancho de Santa Justa y Rufina' },
+          { label: 'Manuel de Guzman' },
+        ],
+      },
+      media: [
+        {
+          id: 'kelly-manila-environs-1775',
+          kind: 'map',
+          title: 'Plan of the environs, coast and bay adjacent to Manila',
+          source: kelly1775,
+          date: '1775',
+          caption:
+            'A near-contemporary map of the Manila environs used for landscape reconstruction. Building-level identifications require separate corroboration.',
+          rights:
+            'Catalog metadata only in BetterMakati until a reusable digital surrogate and its terms are confirmed.',
+        },
+      ],
+    },
   ],
   [
     'church-rebuilding',
@@ -554,7 +743,7 @@ export const makatiHistory: HistoryEvent[] = rows.map(
   })
 );
 export const historyResearchGaps = [
-  'Precolonial settlement and archaeology: separate material evidence from origin traditions.',
+  'Precolonial Makati remains under-documented: no Makati-specific archaeological evidence has yet been added to the corpus. Keep regional Namayan context and name-origin traditions separate from locally demonstrated evidence.',
   'Guadalupe, the Jesuit estate, Casa Hacienda and the Oficinas: verify documents, locations and ownership transitions separately.',
   'Pio del Pilar, the Matagumpay flag and 1896–1899 operations: obtain contemporary records and distinguish later commemorations.',
   'Barangay histories, workers, women, markets, schools, public health and postwar housing need broader coverage.',
