@@ -418,28 +418,53 @@ const heritagePlaceIds = heritageRows
   .filter(Boolean);
 const heritageIds = new Set(heritagePlaceIds);
 
-if (heritageRows.length !== 6) {
+if (heritageRows.length !== 7) {
   problems.push(
-    'Expected 6 current Heritage & Culture records but parsed ' +
+    'Expected 7 current Heritage & Culture presentation records but parsed ' +
       heritageRows.length +
       '.'
   );
 }
 
 for (const row of heritageRows) {
-  const name = parseSingleQuotedProperty(row, 'name') ?? 'Unnamed heritage record';
   const placeId = parseSingleQuotedProperty(row, 'placeId');
   if (!placeId) {
-    problems.push('Heritage record is not linked to a canonical place: ' + name);
+    problems.push('Heritage presentation record is not linked to a canonical place.');
     continue;
   }
   if (!assetIds.includes(placeId)) {
     problems.push(
-      'Heritage record points to a missing canonical place: ' +
-        name +
-        ' -> ' +
+      'Heritage presentation record points to a missing canonical place: ' +
         placeId
     );
+  }
+
+  for (const forbiddenField of [
+    'name',
+    'address',
+    'mapsQuery',
+    'sourceUrl',
+    'sourceLabel',
+  ]) {
+    if (parseSingleQuotedProperty(row, forbiddenField)) {
+      problems.push(
+        'Heritage presentation duplicates canonical Place data (' +
+          forbiddenField +
+          '): ' +
+          placeId
+      );
+    }
+  }
+
+  for (const requiredField of ['category', 'period', 'context']) {
+    if (!parseSingleQuotedProperty(row, requiredField)) {
+      problems.push(
+        'Heritage presentation is missing ' +
+          requiredField +
+          ': ' +
+          placeId
+      );
+    }
   }
 }
 
@@ -449,6 +474,23 @@ if (duplicateHeritagePlaceIds.length) {
     'Multiple Heritage records point to the same canonical place: ' +
       duplicateHeritagePlaceIds.join(', ')
   );
+}
+
+for (const requiredHeritagePlaceId of [
+  'nuestra-senora-de-gracia-church',
+  'sts-peter-and-paul-parish-church',
+  'nielson-tower',
+  'dambana-ng-banal-na-krus',
+  'museo-ng-makati',
+  'ayala-museum',
+  'plaza-cristo-rey',
+]) {
+  if (!heritagePlaceIds.includes(requiredHeritagePlaceId)) {
+    problems.push(
+      'Expected Heritage & Culture place is missing: ' +
+        requiredHeritagePlaceId
+    );
+  }
 }
 
 /* History and BetterBarangay heritage cross-links */
@@ -602,7 +644,7 @@ console.log(
     assets.length + ' coordinate pairs checked',
     verifiedCount + ' source-complete verified records',
     relationships.length + ' explicit relationships resolved',
-    heritagePlaceIds.length + ' Heritage records linked to canonical places',
+    heritagePlaceIds.length + ' canonical-driven Heritage presentation records',
     historyPlaceIds.length + ' History-to-place links resolved',
     barangayHeritageMarkerPlaceIds.length + ' BetterBarangay heritage links resolved',
     indexEntries.length + ' generated index entries in parity',
