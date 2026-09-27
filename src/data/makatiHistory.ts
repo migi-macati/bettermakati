@@ -211,6 +211,115 @@ const kelly1775: HistorySource = {
   citationNote:
     'Primary cartographic evidence for the Manila environs; building-level interpretations require separate corroboration.',
 };
+const nhcpGuadalupe: HistorySource = {
+  id: 'nhcp-guadalupe-church-monastery',
+  label: 'NHCP · Church and Monastery of Guadalupe historical marker',
+  url: 'https://philhistoricsites.nhcp.gov.ph/registry_database/church-and-monastery-of-guadalupe/',
+  kind: 'Institutional history',
+  evidenceLevel: 'Reference',
+  format: 'institutional record',
+  repository: 'National Historical Commission of the Philippines',
+  date: '1937 marker',
+  citationNote:
+    'Retrospective marker; the underlying Augustinian records should be linked when a stable public edition is available.',
+};
+const lorenzoTemporalities: HistorySource = {
+  id: 'lorenzo-garcia-jesuit-expulsion',
+  label: 'Santiago Lorenzo García · La expulsión de los Jesuitas de Filipinas',
+  url: 'https://public.digitaliapublishing.com/a/647/la-expulsion-de-los-jesuitas-de-filipinas',
+  kind: 'Scholarly account',
+  evidenceLevel: 'Secondary',
+  format: 'scholarly work',
+  creator: 'Santiago Lorenzo García',
+  repository: 'Universidad de Alicante / Digitalia',
+  date: '1999',
+  citationNote:
+    'Documents the administration and sale of former Jesuit temporalities, including San Pedro Macati.',
+};
+const galarragaArchive: HistorySource = {
+  id: 'nap-galarraga-san-pedro-macati',
+  label: 'National Archives of the Philippines · Erecciones de los Pueblos, SDS 14020, Exp. 25',
+  url: 'https://erecciones.nationalarchives.gov.ph/searchdata.php?end_date=1899&number=014020&start_date=1731',
+  kind: 'Institutional history',
+  evidenceLevel: 'Primary',
+  format: 'archival document',
+  repository: 'National Archives of the Philippines',
+  date: '1785–1855 series',
+  locator: 'SDS 14020 · Exp. 25',
+  citationNote:
+    'Catalog entry identifies Pedro de Galarraga as purchaser of Hacienda de San Pedro Macati and records his petition to rebuild its ruined church.',
+};
+const zunigaMacati: HistorySource = {
+  id: 'zuniga-estadismo-macati',
+  label: 'Joaquín Martínez de Zúñiga · Estadismo de las Islas Filipinas',
+  url: 'https://books.google.com/books?id=zFJFAAAAYAAJ',
+  kind: 'Scholarly account',
+  evidenceLevel: 'Near-primary',
+  format: 'other',
+  creator: 'Joaquín Martínez de Zúñiga; W. E. Retana, editor',
+  repository: 'Google Books digitization of the 1893 edition',
+  date: 'early-19th-century account; published 1893',
+  locator: 'vol. 1, pp. 211–212',
+  citationNote:
+    'Zúñiga records Villamediana’s purchase from the Crown and repairs to both the hacienda house and church; the passage does not identify the modern location of the house.',
+};
+const pilapil1796: HistorySource = {
+  id: 'pilapil-san-pedro-blessing-1796',
+  label: 'Mariano Pilapil · Oración panegírica for the blessing of San Pedro Macati church',
+  url: 'https://issuu.com/filipinasheritagelibrary/docs/oracion_20panegiricaque?e=18015266/55448844',
+  kind: 'Institutional history',
+  evidenceLevel: 'Primary',
+  format: 'archival document',
+  creator: 'Mariano Pilapil',
+  repository: 'Filipinas Heritage Library',
+  date: '29 June 1796',
+  citationNote:
+    'Contemporary printed sermon identifying the church as rebuilt by Pedro de Galarraga.',
+};
+const segui1831: HistorySource = {
+  id: 'segui-visitation-1831',
+  label: '1831 diocesan visitation of San Pedro Macati · transcription by Jesús Álvarez Fernández',
+  url: 'https://www.agustinosvalladolid.es/estudio/investigacion/archivoagustiniano/archivofondos/archivo2012/archivo_2012_01.pdf',
+  kind: 'Scholarly account',
+  evidenceLevel: 'Near-primary',
+  format: 'archival document',
+  creator: 'Juan Bonifacio; transcription by Jesús Álvarez Fernández',
+  repository: 'Archivo Agustiniano',
+  date: '26 October 1831',
+  locator: 'Act 6 · pp. 19–20 of the published transcription',
+  citationNote:
+    'Published transcription of the diocesan visitation act; it states that the casa de Hacienda served as the parish house.',
+};
+const aragon1814: HistorySource = {
+  id: 'aragon-manila-environs-1814',
+  label: 'Ildefonso de Aragón · Plano de la plaza de Manila y sus contornos',
+  url: 'https://pares.cultura.gob.es/ParesBusquedas20/catalogo/description/18966',
+  kind: 'Institutional history',
+  evidenceLevel: 'Primary',
+  format: 'historical map',
+  creator: 'Ildefonso de Aragón y Abollado',
+  repository: 'Archivo General de Indias / PARES',
+  date: '4 January 1814',
+  locator: 'MP-FILIPINAS,133',
+  citationNote:
+    'Primary map of Manila and neighboring settlements. Unlabeled building compounds are not identified without independent evidence.',
+  rights:
+    'PARES states that public-domain document images in the Spanish State Archives may be reproduced and used without prior permission.',
+};
+const alvarezGuerra: HistorySource = {
+  id: 'alvarez-guerra-viajes-tayabas',
+  label: 'Juan Álvarez Guerra · Viajes por Filipinas: De Manila á Tayabas',
+  url: 'https://www.gutenberg.org/cache/epub/12276/pg12276-images.html',
+  kind: 'Scholarly account',
+  evidenceLevel: 'Near-primary',
+  format: 'other',
+  creator: 'Juan Álvarez Guerra',
+  repository: 'Project Gutenberg',
+  date: 'observations from the 1870s; second edition 1887',
+  locator: 'Chapter I',
+  citationNote:
+    'Travel account describing the Pasig river corridor, San Pedro Macati, Guadalupe and the Guadalupe stone trade.',
+};
 export const historyReviewed = '27 September 2026';
 export const historyEras = [
   { label: 'Early & Spanish colonial', from: 0, to: 1895 },
@@ -259,6 +368,23 @@ const rows: Row[] = [
       evidenceStatus: 'probable',
       evidenceNote:
         'City and NHCP institutional histories agree on the 1578 visita tradition; this entry does not treat that agreement as a surviving primary foundation record.',
+    },
+  ],
+  [
+    'guadalupe-foundations',
+    1601,
+    '1601–1629',
+    'Guadalupe church and monastery take shape',
+    community,
+    'The NHCP marker dates the laying of the Augustinian church and monastery foundations to 1601 and completion to 1629, establishing a second early religious center in the landscape of present-day Makati.',
+    nhcpGuadalupe,
+    'The dates currently rest on the 1937 historical marker; underlying Augustinian records remain a research target.',
+    {
+      evidenceStatus: 'probable',
+      relations: {
+        barangaySlugs: ['guadalupe-viejo'],
+        institutions: [{ label: 'Order of Saint Augustine' }],
+      },
     },
   ],
   [
@@ -418,13 +544,109 @@ const rows: Row[] = [
     },
   ],
   [
+    'hacienda-sale-1795',
+    1795,
+    '1795',
+    'The former Jesuit hacienda passes into private ownership',
+    government,
+    'The former Jesuit Hacienda de San Pedro Macati was sold from the Crown’s temporalities in 1795. Pedro de Galarraga acquired the estate and appears in the National Archives catalog as its purchaser.',
+    lorenzoTemporalities,
+    undefined,
+    {
+      additionalSources: [galarragaArchive, zunigaMacati],
+      evidenceStatus: 'established',
+      evidenceNote:
+        'The sale is distinct from the later question of which surviving or mapped building should be identified as the estate’s principal house.',
+      relations: {
+        people: [{ label: 'Pedro de Galarraga' }],
+        eventIds: ['san-pedro-church-rebuilt-1796'],
+      },
+    },
+  ],
+  [
+    'san-pedro-church-rebuilt-1796',
+    1796,
+    '29 June 1796',
+    'Galarraga’s rebuilt San Pedro church is blessed',
+    community,
+    'A contemporary printed sermon records the blessing of the San Pedro Macati church rebuilt by Pedro de Galarraga after the Jesuit expulsion.',
+    pilapil1796,
+    undefined,
+    {
+      additionalSources: [galarragaArchive, zunigaMacati],
+      evidenceStatus: 'established',
+      relations: {
+        barangaySlugs: ['poblacion'],
+        people: [
+          { label: 'Pedro de Galarraga' },
+          { label: 'Mariano Pilapil' },
+          { label: 'Facundo Marino' },
+        ],
+        eventIds: ['hacienda-sale-1795'],
+      },
+    },
+  ],
+  [
+    'segui-visitation-1831',
+    1831,
+    '26 October 1831',
+    'The hacienda house serves as San Pedro Macati’s rectory',
+    community,
+    'The diocesan visitation recorded a masonry, tile-roofed church and stated that the casa de Hacienda served as the parish house. The same record counted 2,033 people and 625 tributes.',
+    segui1831,
+    'The act establishes the existence and parish use of a hacienda house but does not locate it precisely enough to identify a modern site.',
+    {
+      evidenceStatus: 'established',
+      media: [
+        {
+          id: 'aragon-manila-environs-1814',
+          kind: 'map',
+          title: 'Plano de la plaza de Manila y sus contornos',
+          source: aragon1814,
+          date: '1814',
+          caption:
+            'The primary map records San Pedro Macati in its wider river landscape. BetterMakati does not identify unlabeled compounds on the map solely from their appearance.',
+          rights:
+            'Public-domain archival image; PARES permits reuse of public-domain State Archives images without prior permission.',
+        },
+      ],
+      interpretations: [
+        {
+          id: 'casa-hacienda-documented-not-located',
+          label: 'What the 1831 record establishes',
+          summary:
+            'A casa de Hacienda existed and was functioning as the parish priest’s residence in San Pedro Macati.',
+          sourceRefs: ['segui-visitation-1831'],
+        },
+        {
+          id: 'two-casas-location-unresolved',
+          label: 'What remains unresolved',
+          summary:
+            'The 1831 wording alone cannot determine whether this house corresponds to the later Poblacion Oficinas, the Olympia structure photographed in 1910 and 1926, or another phase in the estate complex.',
+          sourceRefs: ['segui-visitation-1831', 'aragon-manila-environs-1814'],
+        },
+      ],
+    },
+  ],
+  [
     'church-rebuilding',
     1849,
-    '1849',
-    'Rebuilding the parish church',
+    '1849 · later rebuilding account',
+    'Further rebuilding of the San Pedro church',
     community,
-    'Tueller records rebuilding following the earlier church plan.',
+    'Tueller dates another rebuilding phase to 1849. This follows the securely documented Galarraga reconstruction blessed in 1796, so the scope of the 1849 works still needs reconciliation.',
     study,
+    'Do not treat 1849 as the first post-Jesuit reconstruction; a 1796 blessing of Galarraga’s rebuilt church is directly documented.',
+    {
+      additionalSources: [pilapil1796],
+      evidenceStatus: 'uncertain',
+      evidenceNote:
+        'The date may refer to a later reconstruction or major repair rather than replacement of the 1796 church.',
+      relations: {
+        barangaySlugs: ['poblacion'],
+        eventIds: ['san-pedro-church-rebuilt-1796'],
+      },
+    },
   ],
   [
     'pottery',
@@ -434,6 +656,22 @@ const rows: Row[] = [
     community,
     'Tueller cites a transaction involving pottery ovens, evidence of local manufacturing.',
     study,
+  ],
+  [
+    'pasig-river-landscape-1887',
+    1887,
+    '1870s observations · published 1887',
+    'San Pedro and Guadalupe in the Pasig River economy',
+    transport,
+    'Juan Álvarez Guerra’s travel account describes San Pedro Macati and Guadalupe along the Pasig and notes large deposits of quarried Guadalupe stone being transported by banca to supply Manila and its suburbs.',
+    alvarezGuerra,
+    'The publication date is used for sorting; the journey described in the text occurred during the 1870s.',
+    {
+      evidenceStatus: 'established',
+      relations: {
+        barangaySlugs: ['guadalupe-viejo', 'poblacion'],
+      },
+    },
   ],
   [
     'revolution-1896',
@@ -744,7 +982,7 @@ export const makatiHistory: HistoryEvent[] = rows.map(
 );
 export const historyResearchGaps = [
   'Precolonial Makati remains under-documented: no Makati-specific archaeological evidence has yet been added to the corpus. Keep regional Namayan context and name-origin traditions separate from locally demonstrated evidence.',
-  'Guadalupe, the Jesuit estate, Casa Hacienda and the Oficinas: verify documents, locations and ownership transitions separately.',
+  'Resolve the two-Casas problem without collapsing distinct evidence: compare the documented 1773/1831 casa de Hacienda, the 1775–1826 map sequence, the later Poblacion Oficinas, and the Olympia structure photographed in 1910/1926 against archival property records.',
   'Pio del Pilar, the Matagumpay flag and 1896–1899 operations: obtain contemporary records and distinguish later commemorations.',
   'Barangay histories, workers, women, markets, schools, public health and postwar housing need broader coverage.',
   'Complete the 2022–2023 boundary finality and implementation chronology, and subsequent civic milestones, from dated official records.',
