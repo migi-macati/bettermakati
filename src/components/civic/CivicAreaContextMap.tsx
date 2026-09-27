@@ -381,9 +381,10 @@ export default function CivicAreaContextMap() {
         })}
 
         <p className="mt-3 text-xs leading-relaxed text-gray-500">
-          Areas without sourced geometry and mobility services without published
-          geometry are not drawn. Geometry-less jeepney, bus and UV records
-          remain searchable in the registry without invented map lines.
+          Areas without sourced geometry are not drawn. Unmapped mobility
+          services without published geometry are not drawn either. Geometry-less
+          jeepney, bus and UV records remain searchable in the registry without
+          invented map lines.
         </p>
       </div>
     </div>
