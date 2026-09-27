@@ -200,9 +200,9 @@ const visitItems: SearchItem[] = [
     group: 'Visit',
     category: 'Visit',
     description:
-      'Ayala Land guide to Makati CBD, Ayala Center and Circuit Makati.',
+      'Ayala Land visitor guide for its Makati district and estate destinations.',
     href: '/visit#resources',
-    keywords: 'make it makati ayala cbd circuit visitor guide lifestyle',
+    keywords: 'make it makati ayala visitor guide lifestyle district estate',
   },
 ];
 
