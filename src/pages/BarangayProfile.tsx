@@ -46,6 +46,13 @@ import {
 import { withBarangayScope } from '../hooks/useBarangayScope';
 import { civicAuditPilot } from '../data/civicAuditPilot';
 import { barangayPhotoSetFor } from '../data/cityImages';
+import {
+  civicAreaById,
+  civicAreaRelationships,
+  civicOrganizationById,
+  type CivicAreaKind,
+  type CivicOrganizationKind,
+} from '../data/areaOrganizationRegistry';
 
 const compactEditionName = (name: string) => name.replace(/\s+/g, '');
 const normalizePlaceName = (name: string) =>
@@ -54,6 +61,24 @@ const normalizePlaceName = (name: string) =>
 const primaryPlaceSource = (place: PlaceRegistryRecord) =>
   place.provenance.sources.find(source => source.kind !== 'reference-map') ??
   place.provenance.sources[0];
+
+const communityAreaLabel = (kind: CivicAreaKind) => {
+  if (kind === 'business-district') return 'Business district';
+  if (kind === 'commercial-estate') return 'Commercial estate';
+  if (kind === 'mixed-use-estate') return 'Mixed-use estate';
+  if (kind === 'named-subdistrict') return 'District';
+  if (kind === 'residential-village') return 'Residential village';
+  return 'Managed area';
+};
+
+const communityOrganizationLabel = (kind: CivicOrganizationKind) => {
+  if (kind === 'estate-association') return 'Estate association';
+  if (kind === 'homeowners-association') return 'Homeowners association';
+  if (kind === 'developer') return 'Developer';
+  if (kind === 'property-manager') return 'Property manager';
+  if (kind === 'government') return 'Government organization';
+  return 'Organization';
+};
 
 export default function BarangayProfile() {
   const { slug } = useParams();
@@ -109,6 +134,46 @@ export default function BarangayProfile() {
       .toLowerCase()
       .includes(needle)
   );
+
+  const sourcedAreaIds = civicAreaRelationships.flatMap(relationship =>
+    relationship.kind === 'within-barangay' &&
+    relationship.from.type === 'area' &&
+    relationship.to.type === 'barangay' &&
+    relationship.to.id === barangay.slug
+      ? [relationship.from.id]
+      : []
+  );
+  const relatedAreaIds = [
+    ...new Set([
+      ...sourcedAreaIds,
+      ...(barangay.communityAreaIds ?? []),
+    ]),
+  ];
+  const relatedAreas = relatedAreaIds.flatMap(areaId => {
+    const area = civicAreaById.get(areaId);
+    return area ? [area] : [];
+  });
+  const relatedOrganizations = [
+    ...new Map(
+      civicAreaRelationships.flatMap(relationship => {
+        if (
+          !['managed-by', 'developed-by', 'operated-by'].includes(
+            relationship.kind
+          ) ||
+          relationship.from.type !== 'area' ||
+          !relatedAreaIds.includes(relationship.from.id) ||
+          relationship.to.type !== 'organization'
+        ) {
+          return [];
+        }
+
+        const organization = civicOrganizationById.get(relationship.to.id);
+        return organization
+          ? [[organization.id, organization] as const]
+          : [];
+      })
+    ).values(),
+  ];
 
   const quickActions = [
     {
@@ -177,16 +242,25 @@ export default function BarangayProfile() {
   ];
 
   const communityLinks = [
-    ...(barangay.notablePlaces ?? []).map(place => ({
-      label: place.name,
-      description: place.type,
-      href: place.href,
-    })),
-    ...(barangay.associations ?? []).map(association => ({
-      label: association.name,
-      description: association.linkLabel,
-      href: association.href,
-    })),
+    ...new Map(
+      [
+        ...relatedAreas.map(area => ({
+          label: area.name,
+          description: communityAreaLabel(area.kind),
+          href: '/estates#area-' + area.id,
+        })),
+        ...relatedOrganizations.map(organization => ({
+          label: organization.name,
+          description: communityOrganizationLabel(organization.kind),
+          href: '/estates#organization-' + organization.id,
+        })),
+        ...(barangay.notablePlaces ?? []).map(place => ({
+          label: place.name,
+          description: place.type,
+          href: place.href,
+        })),
+      ].map(item => [normalizePlaceName(item.label), item] as const)
+    ).values(),
   ];
 
   return (
@@ -1080,7 +1154,7 @@ export default function BarangayProfile() {
             <div className="section-eyebrow">Around the barangay</div>
             <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
               <h2 className="text-3xl font-extrabold tracking-tight text-gray-950">
-                Institutions, places and associations
+                Places, managed areas and organizations
               </h2>
               <Link
                 to={'/history?query=' + encodeURIComponent(barangay.name)}
@@ -1090,19 +1164,39 @@ export default function BarangayProfile() {
               </Link>
             </div>
             <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-              {communityLinks.map(item => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="rounded-2xl border border-gray-200 bg-[#fffdf8] p-5 hover:border-primary-300"
-                >
-                  <Landmark className="h-5 w-5 text-primary-700" />
-                  <h3 className="mt-3 font-extrabold text-gray-950">{item.label}</h3>
-                  <p className="mt-1 text-sm text-gray-600">{item.description}</p>
-                </a>
-              ))}
+              {communityLinks.map(item =>
+                item.href.startsWith('/') ? (
+                  <Link
+                    key={item.label}
+                    to={item.href}
+                    className="rounded-2xl border border-gray-200 bg-[#fffdf8] p-5 hover:border-primary-300"
+                  >
+                    <Landmark className="h-5 w-5 text-primary-700" />
+                    <h3 className="mt-3 font-extrabold text-gray-950">
+                      {item.label}
+                    </h3>
+                    <p className="mt-1 text-sm text-gray-600">
+                      {item.description}
+                    </p>
+                  </Link>
+                ) : (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="rounded-2xl border border-gray-200 bg-[#fffdf8] p-5 hover:border-primary-300"
+                  >
+                    <Landmark className="h-5 w-5 text-primary-700" />
+                    <h3 className="mt-3 font-extrabold text-gray-950">
+                      {item.label}
+                    </h3>
+                    <p className="mt-1 text-sm text-gray-600">
+                      {item.description}
+                    </p>
+                  </a>
+                )
+              )}
             </div>
           </div>
         </section>
