@@ -267,6 +267,61 @@ for (const heritageId of [
   }
 }
 
+const heritageMediaIds = [
+  'nuestra-senora-de-gracia-church',
+  'sts-peter-and-paul-parish-church',
+  'nielson-tower',
+  'dambana-ng-banal-na-krus',
+  'museo-ng-makati',
+  'ayala-museum',
+];
+
+for (const heritageId of heritageMediaIds) {
+  const asset = assets.find(item => item.id === heritageId);
+  if (!asset) continue;
+
+  if (!/\bmedia:\s*\[/.test(asset.row)) {
+    problems.push('Expected heritage media is missing: ' + heritageId);
+    continue;
+  }
+
+  for (const requiredMediaField of [
+    'src:',
+    'alt:',
+    'title:',
+    'caption:',
+    'date:',
+    'sourceUrl:',
+    'credit:',
+    'license:',
+    'licenseUrl:',
+    "reuseStatus: 'reusable-with-attribution'",
+  ]) {
+    if (!asset.row.includes(requiredMediaField)) {
+      problems.push(
+        'Heritage media provenance is incomplete on ' +
+          heritageId +
+          ': ' +
+          requiredMediaField
+      );
+    }
+  }
+
+  if (!asset.row.includes('commons.wikimedia.org')) {
+    problems.push(
+      'Current reusable heritage image is not linked to Wikimedia Commons: ' +
+        heritageId
+    );
+  }
+}
+
+const plazaCristoRey = assets.find(item => item.id === 'plaza-cristo-rey');
+if (plazaCristoRey && /\bmedia:\s*\[/.test(plazaCristoRey.row)) {
+  problems.push(
+    'Plaza Cristo Rey should not receive a placeholder image until a verified reusable image is sourced.'
+  );
+}
+
 for (const [heritageId, markerYear] of [
   ['nuestra-senora-de-gracia-church', '1937'],
   ['sts-peter-and-paul-parish-church', '1937'],
@@ -623,6 +678,8 @@ for (const marker of [
   "sourceKind?: PlaceSource['kind']",
   "additionalSources?: CivicAssetAdditionalSource[]",
   "heritage?: PlaceHeritageMetadata",
+  "media?: PlaceMedia[]",
+  "media: asset.media",
   "kind: asset.aliasKinds?.[name] ?? 'unclassified'",
   "kind: asset.sourceKind ?? 'other'",
   "for (const source of asset.additionalSources ?? [])",
@@ -728,6 +785,7 @@ console.log(
     relationships.length + ' explicit relationships resolved',
     heritagePlaceIds.length + ' canonical-driven Heritage presentation records',
     heritageCanonicalIds.length + ' enriched canonical heritage records',
+    heritageMediaIds.length + ' rights-safe heritage images with provenance',
     historyPlaceIds.length + ' History-to-place links resolved',
     barangayHeritageMarkerPlaceIds.length + ' BetterBarangay heritage links resolved',
     indexEntries.length + ' generated index entries in parity',
