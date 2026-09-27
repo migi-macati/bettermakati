@@ -12,7 +12,7 @@ This step verifies:
 - the public-facing link BetterMakati should prefer;
 - what claims are stable enough to normalize later.
 
-It does **not** create route geometry, freeze volatile schedules/fare tables, or expand the historical jeepney corpus.
+It does **not** create route geometry or freeze volatile schedules/fare tables. The already-reconciled Wave 3 jeepney corpus is retained as migration input rather than treated as an unresearched future scope.
 
 ---
 
@@ -348,9 +348,50 @@ Page classification:
 
 ---
 
+## Existing route evidence carried forward
+
+The current-source reconciliation above is only the **system/service** refresh. It does not replace the route work already completed in Wave 3.
+
+### Jeepney
+
+BetterMakati already has a reconciled 38-row Makati jeepney corpus from the 2020 city inventory:
+
+- 38 published route rows reconciled;
+- 35 with current or successor-corridor evidence;
+- 3 without an exact current match:
+  - Washington–Mantrade;
+  - Mantrade–Pasong Tamo Extension;
+  - Kalayaan–PICC;
+- 0 corridors proven obsolete;
+- 0 historical association/operator acronyms proven continuously current;
+- 0 route geometries published.
+
+The W5 migration rule is:
+
+**preserve the route/corridor disposition already researched, separate corridor continuity from operator continuity, and do not convert any route into a fake point.**
+
+### Bus
+
+BetterMakati has:
+- the current EDSA Busway system and its three Makati stations;
+- the One Ayala intermodal terminal;
+- a source-backed 2023 DEPW headline count of 32 bus stops.
+
+It does **not** yet have a defensible current Makati-wide bus-route inventory or a named roster of all 32 DEPW stops.
+
+Those are separate evidence gaps.
+
+### Tricycle / TODA
+
+The city transport profile establishes tricycle as a Makati transport mode, but the current repository does **not** contain a dedicated current tricycle/TODA route, terminal or service-area inventory comparable to the jeepney reconciliation.
+
+W5-4 must research this separately rather than imply it was already completed.
+
+---
+
 ## Canonical-model implications
 
-W5-4c should introduce two concepts, not one:
+W5-4c should introduce three concepts, not one:
 
 ### Transport system / service
 
@@ -375,11 +416,29 @@ Examples:
 
 The system/service model should reference member Place IDs rather than duplicate station names and addresses.
 
-Ride-hailing apps remain outside both canonical sets as external mobility resources.
+### Route / corridor evidence
 
-## Next micro-step
+Examples:
+- Makati Loop–PRC Circuit;
+- Guadalupe–FTI;
+- Libertad–PRC;
+- the other Wave 3 reconciled jeepney corridors.
 
-**W5-4c — introduce the canonical mobility-system/service schema and populate exactly four current services: MRT-3, EDSA Busway, Pasig River Ferry Service and Century City Shuttle.**
+A route/corridor record must be allowed to exist without point geometry. It should carry:
+- current/successor/unresolved disposition;
+- historical source row;
+- current evidence;
+- endpoint/corridor labels;
+- operator/association continuity status;
+- optional geometry artifact reference only when defensible.
+
+Ride-hailing apps remain outside these canonical sets as external mobility resources.
+
+## Revised next micro-steps
+
+1. **W5-4c1** — introduce the canonical mobility-system/service schema and populate exactly four current services: MRT-3, EDSA Busway, Pasig River Ferry Service and Century City Shuttle.
+2. **W5-4c2** — introduce the canonical route/corridor schema and migrate the already-reconciled 38-row jeepney corpus: 35 current/successor corridors + 3 unresolved rows.
+3. **W5-4c3** — research current Makati bus-route and tricycle/TODA evidence gaps.
 
 Do not create route polylines yet.
 
