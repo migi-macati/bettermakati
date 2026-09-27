@@ -342,7 +342,7 @@ test('ecosystem handoffs are mobile-safe with usable touch targets', async ({ pa
 
   const routes = [
     '/services',
-    '/search?q=zzqxv-noresult-92817',
+    '/search?q=zzqxvptk92817',
     '/services/guide/national-id',
     '/participate',
     '/get-involved',
@@ -372,7 +372,7 @@ test('ecosystem handoffs are mobile-safe with usable touch targets', async ({ pa
 
   await page.goto(baseURL + '/search');
   const search = page.getByPlaceholder(/Yellow Card, Poblacion Park, budget, cinema/i);
-  await search.fill('zzqxv-noresult-92817');
+  await search.fill('zzqxvptk92817');
   for (const name of ['Search national services on BetterGov', 'Find another LGU on BetterLGU']) {
     const link = page.getByRole('link', { name, exact: true });
     const box = await link.boundingBox();
@@ -1070,7 +1070,7 @@ test('first BetterBarangay contact batch exposes verified hall details', async (
   await expect(page.locator('#local-government').getByRole('link', { name: 'barangaycarmona2013@gmail.com', exact: true })).toBeVisible();
 
   await page.goto(baseURL + '/barangays/forbes-park');
-  await expect(page.getByText('Kalayaan Road corner Pandan Street, Forbes Park, Makati City', { exact: true })).toBeVisible();
+  await expect(page.locator('#local-government').getByText('Kalayaan Road corner Pandan Street, Forbes Park, Makati City', { exact: true })).toBeVisible();
 });
 
 test('expanded BetterBarangay hall contact batch renders current locations', async ({ page }) => {
@@ -1556,7 +1556,7 @@ test('ecosystem navigation exposes national and cross-LGU exits without replacin
 test('ecosystem fallbacks preserve the query and leave an internal recovery path', async ({ page }) => {
   await page.goto(baseURL + '/search');
   const search = page.getByPlaceholder(/Yellow Card, Poblacion Park, budget, cinema/i);
-  const missingQuery = 'zzqxv-noresult-92817';
+  const missingQuery = 'zzqxvptk92817';
   await search.fill(missingQuery);
 
   const betterGov = page.getByRole('link', { name: 'Search national services on BetterGov', exact: true });
