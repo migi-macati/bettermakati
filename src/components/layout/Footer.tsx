@@ -4,7 +4,6 @@ import { footerNavigation } from '../../data/navigation';
 import { Link } from 'react-router';
 import BrandMark from '../BrandMark';
 import { isBarangaySliceableHref, useBarangayScope, withBarangayScope } from '../../hooks/useBarangayScope';
-import { isBarangaySliceableHref, useBarangayScope, withBarangayScope } from '../../hooks/useBarangayScope';
 
 const isExternal = (href: string) => href.startsWith('http');
 
