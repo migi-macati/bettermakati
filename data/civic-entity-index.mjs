@@ -342,6 +342,36 @@ export const civicEntityIndex = [
     "entityKind": "place"
   },
   {
+    "id": "nuestra-senora-de-gracia-church",
+    "name": "Nuestra Señora de Gracia Church",
+    "category": "heritage-site",
+    "entityKind": "place"
+  },
+  {
+    "id": "sts-peter-and-paul-parish-church",
+    "name": "Sts. Peter and Paul Parish Church",
+    "category": "heritage-site",
+    "entityKind": "place"
+  },
+  {
+    "id": "nielson-tower",
+    "name": "Nielson Tower",
+    "category": "heritage-site",
+    "entityKind": "place"
+  },
+  {
+    "id": "dambana-ng-banal-na-krus",
+    "name": "Dambana ng Banal na Krus",
+    "category": "heritage-site",
+    "entityKind": "place"
+  },
+  {
+    "id": "ayala-museum",
+    "name": "Ayala Museum",
+    "category": "heritage-site",
+    "entityKind": "place"
+  },
+  {
     "id": "ayala-triangle-gardens",
     "name": "Ayala Triangle Gardens",
     "category": "park",
