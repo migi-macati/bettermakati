@@ -1003,11 +1003,20 @@ const rows: Row[] = [
   [
     'cattle-fields',
     1606,
-    'July 1606',
-    'Cultivators and cattle on the Pasig',
+    'June–July 1606',
+    'Brito’s cattle ranch sits beside older cultivated settlements',
     community,
-    'Tueller discusses a complaint about Pedro de Brito’s cattle damaging cultivated fields.',
+    'A 1606 dispute concerned cattle from Pedro de Brito’s estancia damaging Indigenous cultivated fields. The annotated Labor evangélica records the ranch near the pueblos of Capaynamayan and Santa Ana and cites a 30 June 1606 fiscal letter seeking stronger separation of cattle ranches from settlements and sementeras.',
     study,
+    'This evidence locates Brito’s agricultural estate in relation to existing native settlements; it does not show that those settlements formed part of a Makati encomienda held by Brito.',
+    {
+      additionalSources: [colinBuenavista],
+      evidenceStatus: 'established',
+      relations: {
+        people: [{ label: 'Pedro de Brito' }],
+        eventIds: ['buenavista-foundation'],
+      },
+    },
   ],
   [
     'buenavista-foundation',
