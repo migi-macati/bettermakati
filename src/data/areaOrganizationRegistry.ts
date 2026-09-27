@@ -615,6 +615,22 @@ export const civicAreaRegistrySources: CivicAreaRegistrySource[] = [
     kind: 'official-primary',
   },
   {
+    id: 'forbes-park-village-map',
+    label: 'Forbes Park Association · Village Map',
+    url: 'https://www.forbesparkassociation.com/contacts',
+    publisher: 'Forbes Park Association, Inc.',
+    checkedOn: areaRegistryCheckedOn,
+    kind: 'official-primary',
+  },
+  {
+    id: 'osm-forbes-park-boundary-snapshot',
+    label: 'OpenStreetMap relation 109972 · Forbes Park administrative boundary snapshot',
+    url: 'https://github.com/missinglink/osm-boundaries/blob/4b9b610f25ec3477683c8a203ed486ecdb8c9f9f/data/000/109/972/000109972.geojson',
+    publisher: 'OpenStreetMap contributors / missinglink snapshot',
+    checkedOn: areaRegistryCheckedOn,
+    kind: 'reference-map',
+  },
+  {
     id: 'san-lorenzo-village-portal',
     label: 'San Lorenzo Village Association · MySLV',
     url: 'https://www.myslv.ph/',
@@ -942,12 +958,25 @@ export const civicAreas: CivicAreaRecord[] = [
     summary:
       'A private residential community represented by Forbes Park Association, Inc.',
     barangaySlugs: [],
+    geometryId: 'forbes-park-village-boundary-2026-09',
     provenance: {
       assertions: [
         {
           fieldPaths: ['name', 'kind', 'aliases'],
           sourceIds: ['forbes-park-about', 'forbes-park-articles'],
           evidenceStrength: 'direct',
+        },
+        {
+          fieldPaths: ['geometryId'],
+          sourceIds: [
+            'forbes-park-articles',
+            'forbes-park-village-map',
+            'psgc-2023-makati-barangay-geojson',
+            'osm-forbes-park-boundary-snapshot',
+          ],
+          evidenceStrength: 'corroborated',
+          note:
+            'FPA’s articles define the subdivision using named perimeter features and FPA publishes a current village map. The display polygon uses the public 2023 PSGC-derived Barangay Forbes Park trace only as a geometry guide after comparison with those FPA sources and a second OSM boundary snapshot. BetterMakati does not assert that the government barangay and private subdivision are legally identical.',
         },
       ],
     },
