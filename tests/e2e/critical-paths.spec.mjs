@@ -1716,15 +1716,8 @@ test('statistics and reports expose national context without replacing Makati so
   await expect(page.getByText('2024 POPCEN', { exact: true }).first()).toBeVisible();
 
   await page.goto(baseURL + '/reports');
-  await expect(page.getByText('National context', { exact: true })).toBeVisible();
-  await expect(page.getByRole('link', { name: /National data research/i })).toHaveAttribute(
-    'href',
-    'https://visualizations.bettergov.ph/'
-  );
-  await expect(page.getByRole('link', { name: /2026 national budget/i })).toHaveAttribute(
-    'href',
-    'https://2026-budget.bettergov.ph/'
-  );
+  await expect(page.getByRole('heading', { level: 1, name: 'Featured Reports & Insights' })).toBeVisible();
+  await expect(page.getByText('National context', { exact: true })).toHaveCount(0);
   await expect(page.getByRole('link', { name: /Read more/i }).first()).toBeVisible();
 });
 
