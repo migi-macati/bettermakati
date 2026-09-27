@@ -2025,6 +2025,10 @@ const rows: Row[] = [
       evidenceStatus: 'probable',
       evidenceNote:
         'The official barangay history gives the 1961 construction order while the city profile dates the building to 1962; BetterMakati preserves both stages rather than forcing a single construction date.',
+      relations: {
+        placeIds: ['makati-city-hall'],
+        barangaySlugs: ['poblacion'],
+      },
     },
   ],
   [
@@ -2090,6 +2094,8 @@ const rows: Row[] = [
     {
       evidenceStatus: 'established',
       relations: {
+        placeIds: ['ayala-triangle-gardens'],
+        barangaySlugs: ['bel-air'],
         people: [
           { label: 'Enrique Zobel' },
           { label: 'Cesar A. Buenaventura' },
@@ -2113,6 +2119,8 @@ const rows: Row[] = [
       additionalSources: [nhcpAquino1983Archive, mbcFounding],
       evidenceStatus: 'established',
       relations: {
+        placeIds: ['ayala-paseo-rufino'],
+        barangaySlugs: ['bel-air', 'san-lorenzo'],
         people: [
           { label: 'Benigno S. Aquino Jr.' },
           { label: 'Ferdinand E. Marcos' },
@@ -2213,6 +2221,14 @@ const rows: Row[] = [
     community,
     'Ayala approved adapting the preserved terminal for the heritage library.',
     library,
+    undefined,
+    {
+      evidenceStatus: 'established',
+      relations: {
+        placeIds: ['ayala-triangle-gardens'],
+        barangaySlugs: ['bel-air'],
+      },
+    },
   ],
   [
     'city-charter',
@@ -2255,6 +2271,14 @@ const rows: Row[] = [
     community,
     'The library opened to readers in April and was formally inaugurated in August.',
     library,
+    undefined,
+    {
+      evidenceStatus: 'established',
+      relations: {
+        placeIds: ['ayala-triangle-gardens'],
+        barangaySlugs: ['bel-air'],
+      },
+    },
   ],
   [
     'first-woman-mayor',
