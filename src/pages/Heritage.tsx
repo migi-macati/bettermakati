@@ -212,15 +212,16 @@ export default function Heritage() {
                 key={route.name}
                 className="rounded-2xl border border-primary-100 bg-white p-6"
               >
-                <div className="flex items-center justify-between gap-3">
-                  <Footprints className="h-6 w-6 text-primary-700" />
-                  <span className="rounded-full bg-secondary-50 px-3 py-1 text-xs font-bold text-secondary-800">
-                    {route.theme}
-                  </span>
+                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+                  <Footprints className="h-5 w-5" />
+                  Walking route
                 </div>
                 <h3 className="mt-4 text-xl font-extrabold text-gray-950">
                   {route.name}
                 </h3>
+                <p className="mt-2 text-sm font-bold leading-relaxed text-secondary-800">
+                  {route.theme}
+                </p>
                 <p className="mt-2 text-sm text-gray-600">{route.description}</p>
                 <ol className="mt-5 space-y-3">
                   {stops.map((stop, index) => (
@@ -245,11 +246,6 @@ export default function Heritage() {
                 >
                   <Route className="h-4 w-4" /> Open walking route
                 </a>
-                {route.sourceNote && (
-                  <p className="mt-3 text-xs leading-relaxed text-gray-500">
-                    {route.sourceNote}
-                  </p>
-                )}
               </article>
             );
           })}
