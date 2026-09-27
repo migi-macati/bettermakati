@@ -623,9 +623,9 @@ const heritageCollectionRows = [
   ...heritageCollectionBlock.matchAll(/\n  \{\n([\s\S]*?)\n  \},?/g),
 ].map(match => match[1]);
 
-if (heritageCollectionRows.length !== 2) {
+if (heritageCollectionRows.length !== 6) {
   problems.push(
-    'Expected 2 canonical heritage route/collection records but parsed ' +
+    'Expected 6 canonical heritage route/collection records but parsed ' +
       heritageCollectionRows.length +
       '.'
   );
@@ -639,6 +639,27 @@ if (duplicateHeritageCollectionIds.length) {
   problems.push(
     'Duplicate heritage collection IDs: ' +
       duplicateHeritageCollectionIds.join(', ')
+  );
+}
+const heritageWalkingRouteCount = heritageCollectionRows.filter(
+  row => parseSingleQuotedProperty(row, 'kind') === 'walking-route'
+).length;
+const heritagePlaceCollectionCount = heritageCollectionRows.filter(
+  row => parseSingleQuotedProperty(row, 'kind') === 'place-collection'
+).length;
+
+if (heritageWalkingRouteCount !== 2) {
+  problems.push(
+    'Expected 2 canonical heritage walking routes but found ' +
+      heritageWalkingRouteCount +
+      '.'
+  );
+}
+if (heritagePlaceCollectionCount !== 4) {
+  problems.push(
+    'Expected 4 thematic heritage place collections but found ' +
+      heritagePlaceCollectionCount +
+      '.'
   );
 }
 
@@ -669,6 +690,9 @@ for (const row of heritageCollectionRows) {
   if (kind === 'walking-route' && placeIds.length < 2) {
     problems.push('Walking heritage route needs at least two ordered stops: ' + id);
   }
+  if (kind === 'place-collection' && placeIds.length < 2) {
+    problems.push('Heritage place collection needs at least two places: ' + id);
+  }
 
   const duplicateStops = duplicateValues(placeIds);
   if (duplicateStops.length) {
@@ -693,11 +717,11 @@ for (const row of heritageCollectionRows) {
 }
 
 if (
-  !heritagePageSource.includes(
-    "import { heritageWalkingRoutes } from '../data/heritageCollections';"
-  )
+  !heritagePageSource.includes('heritageWalkingRoutes') ||
+  !heritagePageSource.includes('heritagePlaceCollections') ||
+  !heritagePageSource.includes("from '../data/heritageCollections'")
 ) {
-  problems.push('Heritage page is not using canonical heritage route data.');
+  problems.push('Heritage page is not using canonical heritage route and collection data.');
 }
 
 if (/\bconst\s+walks\s*=/.test(heritagePageSource)) {
@@ -881,7 +905,8 @@ console.log(
     heritagePlaceIds.length + ' canonical-driven Heritage presentation records',
     heritageCanonicalIds.length + ' enriched canonical heritage records',
     heritageMediaIds.length + ' rights-safe heritage images with provenance',
-    heritageCollectionIds.length + ' canonical heritage route/collection records',
+    heritageWalkingRouteCount + ' canonical heritage walking routes',
+    heritagePlaceCollectionCount + ' thematic heritage place collections',
     historyPlaceIds.length + ' History-to-place links resolved',
     barangayHeritageMarkerPlaceIds.length + ' BetterBarangay heritage links resolved',
     indexEntries.length + ' generated index entries in parity',
