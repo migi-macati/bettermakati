@@ -342,7 +342,7 @@ test('ecosystem handoffs are mobile-safe with usable touch targets', async ({ pa
 
   const routes = [
     '/services',
-    '/search?q=service-that-does-not-exist-xyz',
+    '/search?q=zzqxv-noresult-92817',
     '/services/guide/national-id',
     '/participate',
     '/get-involved',
@@ -372,7 +372,7 @@ test('ecosystem handoffs are mobile-safe with usable touch targets', async ({ pa
 
   await page.goto(baseURL + '/search');
   const search = page.getByPlaceholder(/Yellow Card, Poblacion Park, budget, cinema/i);
-  await search.fill('service-that-does-not-exist-xyz');
+  await search.fill('zzqxv-noresult-92817');
   for (const name of ['Search national services on BetterGov', 'Find another LGU on BetterLGU']) {
     const link = page.getByRole('link', { name, exact: true });
     const box = await link.boundingBox();
@@ -1067,7 +1067,7 @@ test('first BetterBarangay contact batch exposes verified hall details', async (
 
   await page.goto(baseURL + '/barangays/carmona');
   await expect(page.locator('#local-government').getByText('A.P. Reyes Avenue, Barangay Carmona, Makati City', { exact: true })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'barangaycarmona2013@gmail.com', exact: true })).toBeVisible();
+  await expect(page.locator('#local-government').getByRole('link', { name: 'barangaycarmona2013@gmail.com', exact: true })).toBeVisible();
 
   await page.goto(baseURL + '/barangays/forbes-park');
   await expect(page.getByText('Kalayaan Road corner Pandan Street, Forbes Park, Makati City', { exact: true })).toBeVisible();
@@ -1556,7 +1556,7 @@ test('ecosystem navigation exposes national and cross-LGU exits without replacin
 test('ecosystem fallbacks preserve the query and leave an internal recovery path', async ({ page }) => {
   await page.goto(baseURL + '/search');
   const search = page.getByPlaceholder(/Yellow Card, Poblacion Park, budget, cinema/i);
-  const missingQuery = 'service-that-does-not-exist-xyz';
+  const missingQuery = 'zzqxv-noresult-92817';
   await search.fill(missingQuery);
 
   const betterGov = page.getByRole('link', { name: 'Search national services on BetterGov', exact: true });
@@ -1723,7 +1723,7 @@ test('statistics and reports expose national context without replacing Makati so
   await page.goto(baseURL + '/reports');
   await expect(page.getByRole('heading', { level: 1, name: 'Featured Reports & Insights' })).toBeVisible();
   await expect(page.getByText('National context', { exact: true })).toHaveCount(0);
-  await expect(page.getByRole('link', { name: /Read more/i }).first()).toBeVisible();
+  await expect(page.locator('a[href="/reports/audit-follow-up-closure-trails"]').first()).toBeVisible();
 });
 
 test('2022 Makati mayoral history uses the cached OpenHalalan extract with BetterGov provenance', async ({ page }) => {
