@@ -1,6 +1,7 @@
 {
   "version": 2,
-  "checkedAt": "2026-09-25T00:43:52.454Z",
+  "checkedAt": "2026-09-27T00:45:23.835Z",
+  "publishRequired": true,
   "sources": [
     {
       "id": "makati-legislation",
@@ -8,6 +9,8 @@
       "url": "https://www.makati.gov.ph/content/resolutions-and-ordinances/author",
       "stream": "legislation",
       "monitoringMode": "reachability",
+      "owner": "city-monitor",
+      "affectedPages": ["/legislation", "/city-monitor", "/briefs"],
       "status": "ok",
       "statusCode": 200,
       "contentType": "text/html; charset=utf-8",
@@ -15,12 +18,8 @@
       "sha256": "8dc808b586137d72b032d81a25324d9e596e8bf4b87b2d4ee2704831f6d6e5ff",
       "lastSuccessfulHash": "8dc808b586137d72b032d81a25324d9e596e8bf4b87b2d4ee2704831f6d6e5ff",
       "change": "reachable",
-      "owner": "city-monitor",
-      "affectedPages": [
-        "/legislation",
-        "/city-monitor",
-        "/briefs"
-      ]
+      "lastCheckedAt": "2026-09-27T00:45:23.835Z",
+      "lastSuccessfulAt": "2026-09-27T00:45:23.835Z"
     },
     {
       "id": "makati-mayor-speeches",
@@ -28,6 +27,8 @@
       "url": "https://www.makati.gov.ph/content/mayors-corner/speeches/803",
       "stream": "executive-speech",
       "monitoringMode": "reachability",
+      "owner": "city-monitor",
+      "affectedPages": ["/city-monitor", "/briefs", "/accountability"],
       "status": "ok",
       "statusCode": 200,
       "contentType": "text/html; charset=utf-8",
@@ -35,12 +36,26 @@
       "sha256": "8dc808b586137d72b032d81a25324d9e596e8bf4b87b2d4ee2704831f6d6e5ff",
       "lastSuccessfulHash": "8dc808b586137d72b032d81a25324d9e596e8bf4b87b2d4ee2704831f6d6e5ff",
       "change": "reachable",
+      "lastCheckedAt": "2026-09-27T00:45:23.835Z",
+      "lastSuccessfulAt": "2026-09-27T00:45:23.835Z"
+    },
+    {
+      "id": "makati-council-videos",
+      "label": "Makati official council-session videos",
+      "url": "https://www.makati.gov.ph/",
+      "stream": "council-session",
+      "monitoringMode": "reachability",
       "owner": "city-monitor",
-      "affectedPages": [
-        "/city-monitor",
-        "/briefs",
-        "/accountability"
-      ]
+      "affectedPages": ["/legislation", "/city-monitor", "/briefs"],
+      "status": "ok",
+      "statusCode": 200,
+      "contentType": "text/html; charset=utf-8",
+      "contentLength": 14019,
+      "sha256": "8dc808b586137d72b032d81a25324d9e596e8bf4b87b2d4ee2704831f6d6e5ff",
+      "lastSuccessfulHash": "8dc808b586137d72b032d81a25324d9e596e8bf4b87b2d4ee2704831f6d6e5ff",
+      "change": "new-baseline",
+      "lastCheckedAt": "2026-09-27T00:45:23.835Z",
+      "lastSuccessfulAt": "2026-09-27T00:45:23.835Z"
     },
     {
       "id": "mymakati-broadcasts",
@@ -48,6 +63,8 @@
       "url": "https://www.facebook.com/mymakativerified",
       "stream": "council-session",
       "monitoringMode": "manual-review",
+      "owner": "city-monitor",
+      "affectedPages": ["/city-monitor", "/briefs"],
       "status": "manual-review",
       "statusCode": null,
       "contentType": "",
@@ -55,11 +72,8 @@
       "sha256": "",
       "lastSuccessfulHash": "",
       "change": "manual-review",
-      "owner": "city-monitor",
-      "affectedPages": [
-        "/city-monitor",
-        "/briefs"
-      ]
+      "lastCheckedAt": "2026-09-27T00:45:23.835Z",
+      "lastSuccessfulAt": null
     },
     {
       "id": "makati-events",
@@ -67,6 +81,8 @@
       "url": "https://www.makati.gov.ph/content/events",
       "stream": "consultation",
       "monitoringMode": "reachability",
+      "owner": "city-monitor",
+      "affectedPages": ["/city-monitor", "/briefs", "/today"],
       "status": "ok",
       "statusCode": 200,
       "contentType": "text/html; charset=utf-8",
@@ -74,12 +90,8 @@
       "sha256": "8dc808b586137d72b032d81a25324d9e596e8bf4b87b2d4ee2704831f6d6e5ff",
       "lastSuccessfulHash": "8dc808b586137d72b032d81a25324d9e596e8bf4b87b2d4ee2704831f6d6e5ff",
       "change": "reachable",
-      "owner": "city-monitor",
-      "affectedPages": [
-        "/city-monitor",
-        "/briefs",
-        "/today"
-      ]
+      "lastCheckedAt": "2026-09-27T00:45:23.835Z",
+      "lastSuccessfulAt": "2026-09-27T00:45:23.835Z"
     },
     {
       "id": "makati-news",
@@ -87,6 +99,8 @@
       "url": "https://www.makati.gov.ph/content/news",
       "stream": "official-notice",
       "monitoringMode": "reachability",
+      "owner": "city-monitor",
+      "affectedPages": ["/city-monitor", "/briefs", "/today"],
       "status": "ok",
       "statusCode": 200,
       "contentType": "text/html; charset=utf-8",
@@ -94,12 +108,8 @@
       "sha256": "8dc808b586137d72b032d81a25324d9e596e8bf4b87b2d4ee2704831f6d6e5ff",
       "lastSuccessfulHash": "8dc808b586137d72b032d81a25324d9e596e8bf4b87b2d4ee2704831f6d6e5ff",
       "change": "reachable",
-      "owner": "city-monitor",
-      "affectedPages": [
-        "/city-monitor",
-        "/briefs",
-        "/today"
-      ]
+      "lastCheckedAt": "2026-09-27T00:45:23.835Z",
+      "lastSuccessfulAt": "2026-09-27T00:45:23.835Z"
     },
     {
       "id": "makati-full-disclosure",
@@ -107,19 +117,17 @@
       "url": "https://www.makati.gov.ph/",
       "stream": "procurement",
       "monitoringMode": "reachability",
+      "owner": "city-monitor",
+      "affectedPages": ["/projects-budget", "/accountability", "/city-monitor"],
       "status": "ok",
       "statusCode": 200,
       "contentType": "text/html; charset=utf-8",
       "contentLength": 14019,
       "sha256": "8dc808b586137d72b032d81a25324d9e596e8bf4b87b2d4ee2704831f6d6e5ff",
       "lastSuccessfulHash": "8dc808b586137d72b032d81a25324d9e596e8bf4b87b2d4ee2704831f6d6e5ff",
-      "change": "new-baseline",
-      "owner": "city-monitor",
-      "affectedPages": [
-        "/projects-budget",
-        "/accountability",
-        "/city-monitor"
-      ]
+      "change": "reachable",
+      "lastCheckedAt": "2026-09-27T00:45:23.835Z",
+      "lastSuccessfulAt": "2026-09-27T00:45:23.835Z"
     },
     {
       "id": "philgeps",
@@ -127,20 +135,22 @@
       "url": "https://notices.philgeps.gov.ph/",
       "stream": "procurement",
       "monitoringMode": "content-hash",
-      "status": "ok",
-      "statusCode": 200,
-      "contentType": "text/html",
-      "contentLength": 60955,
-      "sha256": "c13c9126548b7e9182bb5993b062ddc5b7ca9a46c90bc1892a68fd12af785508",
-      "lastSuccessfulHash": "c13c9126548b7e9182bb5993b062ddc5b7ca9a46c90bc1892a68fd12af785508",
-      "change": "content-changed",
       "owner": "city-monitor",
       "affectedPages": [
         "/projects-budget",
         "/accountability",
         "/city-monitor",
         "/briefs"
-      ]
+      ],
+      "status": "ok",
+      "statusCode": 200,
+      "contentType": "text/html",
+      "contentLength": 61154,
+      "sha256": "16bbf3f2bf739401d56e988fd78de4f5b58e2ec237e0bee30db2eac92b7831a8",
+      "lastSuccessfulHash": "16bbf3f2bf739401d56e988fd78de4f5b58e2ec237e0bee30db2eac92b7831a8",
+      "change": "content-changed",
+      "lastCheckedAt": "2026-09-27T00:45:23.835Z",
+      "lastSuccessfulAt": "2026-09-27T00:45:23.835Z"
     },
     {
       "id": "makati-publications",
@@ -148,19 +158,17 @@
       "url": "https://www.makati.gov.ph/",
       "stream": "publication",
       "monitoringMode": "reachability",
+      "owner": "city-monitor",
+      "affectedPages": ["/city-monitor", "/briefs", "/reports"],
       "status": "ok",
       "statusCode": 200,
       "contentType": "text/html; charset=utf-8",
       "contentLength": 14019,
       "sha256": "8dc808b586137d72b032d81a25324d9e596e8bf4b87b2d4ee2704831f6d6e5ff",
       "lastSuccessfulHash": "8dc808b586137d72b032d81a25324d9e596e8bf4b87b2d4ee2704831f6d6e5ff",
-      "change": "new-baseline",
-      "owner": "city-monitor",
-      "affectedPages": [
-        "/city-monitor",
-        "/briefs",
-        "/reports"
-      ]
+      "change": "reachable",
+      "lastCheckedAt": "2026-09-27T00:45:23.835Z",
+      "lastSuccessfulAt": "2026-09-27T00:45:23.835Z"
     }
   ]
 }

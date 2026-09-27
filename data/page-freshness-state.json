@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-09-27T00:06:30.701Z",
+  "generatedAt": "2026-09-27T00:45:23.835Z",
   "summary": {
     "pages": 27,
     "current": 22,
@@ -109,12 +109,12 @@
           "sourceId": "philgeps",
           "label": "PhilGEPS",
           "url": "https://notices.philgeps.gov.ph/",
-          "detectedAt": "2026-09-25T00:43:52.454Z",
-          "lastSuccessfulAt": "2026-09-25T00:43:52.454Z",
+          "detectedAt": "2026-09-27T00:45:23.835Z",
+          "lastSuccessfulAt": "2026-09-27T00:45:23.835Z",
           "action": "Compare the changed source with each affected page, verify the underlying fact, then update only claims the source actually changes."
         }
       ],
-      "latestDependencySignalAt": "2026-09-25T00:43:52.454Z"
+      "latestDependencySignalAt": "2026-09-27T00:45:23.835Z"
     },
     {
       "path": "/statistics",
@@ -192,8 +192,8 @@
           "sourceId": "philgeps",
           "label": "PhilGEPS",
           "url": "https://notices.philgeps.gov.ph/",
-          "detectedAt": "2026-09-25T00:43:52.454Z",
-          "lastSuccessfulAt": "2026-09-25T00:43:52.454Z",
+          "detectedAt": "2026-09-27T00:45:23.835Z",
+          "lastSuccessfulAt": "2026-09-27T00:45:23.835Z",
           "action": "Compare the changed source with each affected page, verify the underlying fact, then update only claims the source actually changes."
         },
         {
@@ -204,12 +204,12 @@
           "sourceId": "mymakati-broadcasts",
           "label": "MyMakati official social broadcasts",
           "url": "https://www.facebook.com/mymakativerified",
-          "detectedAt": "2026-09-25T00:43:52.454Z",
+          "detectedAt": "2026-09-27T00:45:23.835Z",
           "lastSuccessfulAt": null,
           "action": "Open the source manually and review new official content relevant to the affected pages before publishing a civic record."
         }
       ],
-      "latestDependencySignalAt": "2026-09-25T00:43:52.454Z"
+      "latestDependencySignalAt": "2026-09-27T00:45:23.835Z"
     },
     {
       "path": "/briefs",
@@ -227,8 +227,8 @@
           "sourceId": "philgeps",
           "label": "PhilGEPS",
           "url": "https://notices.philgeps.gov.ph/",
-          "detectedAt": "2026-09-25T00:43:52.454Z",
-          "lastSuccessfulAt": "2026-09-25T00:43:52.454Z",
+          "detectedAt": "2026-09-27T00:45:23.835Z",
+          "lastSuccessfulAt": "2026-09-27T00:45:23.835Z",
           "action": "Compare the changed source with each affected page, verify the underlying fact, then update only claims the source actually changes."
         },
         {
@@ -239,12 +239,12 @@
           "sourceId": "mymakati-broadcasts",
           "label": "MyMakati official social broadcasts",
           "url": "https://www.facebook.com/mymakativerified",
-          "detectedAt": "2026-09-25T00:43:52.454Z",
+          "detectedAt": "2026-09-27T00:45:23.835Z",
           "lastSuccessfulAt": null,
           "action": "Open the source manually and review new official content relevant to the affected pages before publishing a civic record."
         }
       ],
-      "latestDependencySignalAt": "2026-09-25T00:43:52.454Z"
+      "latestDependencySignalAt": "2026-09-27T00:45:23.835Z"
     },
     {
       "path": "/accountability",
@@ -262,12 +262,12 @@
           "sourceId": "philgeps",
           "label": "PhilGEPS",
           "url": "https://notices.philgeps.gov.ph/",
-          "detectedAt": "2026-09-25T00:43:52.454Z",
-          "lastSuccessfulAt": "2026-09-25T00:43:52.454Z",
+          "detectedAt": "2026-09-27T00:45:23.835Z",
+          "lastSuccessfulAt": "2026-09-27T00:45:23.835Z",
           "action": "Compare the changed source with each affected page, verify the underlying fact, then update only claims the source actually changes."
         }
       ],
-      "latestDependencySignalAt": "2026-09-25T00:43:52.454Z"
+      "latestDependencySignalAt": "2026-09-27T00:45:23.835Z"
     },
     {
       "path": "/records",

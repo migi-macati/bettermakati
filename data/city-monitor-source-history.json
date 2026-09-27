@@ -2,6 +2,47 @@
   "version": 2,
   "runs": [
     {
+      "checkedAt": "2026-09-27T00:45:23.835Z",
+      "checked": 8,
+      "unchanged": 6,
+      "changed": [
+        {
+          "id": "philgeps",
+          "label": "PhilGEPS",
+          "url": "https://notices.philgeps.gov.ph/",
+          "stream": "procurement",
+          "monitoringMode": "content-hash",
+          "affectedPages": [
+            "/projects-budget",
+            "/accountability",
+            "/city-monitor",
+            "/briefs"
+          ]
+        }
+      ],
+      "failed": [],
+      "newBaselines": [
+        {
+          "id": "makati-council-videos",
+          "label": "Makati official council-session videos",
+          "url": "https://www.makati.gov.ph/",
+          "stream": "council-session",
+          "monitoringMode": "reachability",
+          "affectedPages": ["/legislation", "/city-monitor", "/briefs"]
+        }
+      ],
+      "manualReview": [
+        {
+          "id": "mymakati-broadcasts",
+          "label": "MyMakati official social broadcasts",
+          "url": "https://www.facebook.com/mymakativerified",
+          "stream": "council-session",
+          "monitoringMode": "manual-review",
+          "affectedPages": ["/city-monitor", "/briefs"]
+        }
+      ]
+    },
+    {
       "checkedAt": "2026-09-25T00:43:52.454Z",
       "checked": 7,
       "unchanged": 4,
@@ -40,11 +81,7 @@
           "url": "https://www.makati.gov.ph/",
           "stream": "publication",
           "monitoringMode": "reachability",
-          "affectedPages": [
-            "/city-monitor",
-            "/briefs",
-            "/reports"
-          ]
+          "affectedPages": ["/city-monitor", "/briefs", "/reports"]
         }
       ],
       "manualReview": [
@@ -54,10 +91,7 @@
           "url": "https://www.facebook.com/mymakativerified",
           "stream": "council-session",
           "monitoringMode": "manual-review",
-          "affectedPages": [
-            "/city-monitor",
-            "/briefs"
-          ]
+          "affectedPages": ["/city-monitor", "/briefs"]
         }
       ]
     },
@@ -71,44 +105,28 @@
           "label": "Makati resolutions & ordinances",
           "url": "https://www.makati.gov.ph/content/resolutions-and-ordinances/author",
           "stream": "legislation",
-          "affectedPages": [
-            "/legislation",
-            "/city-monitor",
-            "/briefs"
-          ]
+          "affectedPages": ["/legislation", "/city-monitor", "/briefs"]
         },
         {
           "id": "makati-mayor-speeches",
           "label": "Mayor's Corner — Speeches",
           "url": "https://www.makati.gov.ph/content/mayors-corner/speeches/803",
           "stream": "executive-speech",
-          "affectedPages": [
-            "/city-monitor",
-            "/briefs",
-            "/accountability"
-          ]
+          "affectedPages": ["/city-monitor", "/briefs", "/accountability"]
         },
         {
           "id": "makati-events",
           "label": "Makati Events",
           "url": "https://www.makati.gov.ph/content/events",
           "stream": "events",
-          "affectedPages": [
-            "/city-monitor",
-            "/briefs",
-            "/today"
-          ]
+          "affectedPages": ["/city-monitor", "/briefs", "/today"]
         },
         {
           "id": "makati-news",
           "label": "Makati News",
           "url": "https://www.makati.gov.ph/content/news",
           "stream": "official-notice",
-          "affectedPages": [
-            "/city-monitor",
-            "/briefs",
-            "/today"
-          ]
+          "affectedPages": ["/city-monitor", "/briefs", "/today"]
         },
         {
           "id": "philgeps",

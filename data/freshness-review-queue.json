@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-09-27T00:06:30.701Z",
+  "generatedAt": "2026-09-27T00:45:23.835Z",
   "summary": {
     "open": 4,
     "contentChanged": 1,
@@ -9,6 +9,45 @@
     "affectedPages": 5
   },
   "items": [
+    {
+      "key": "city-monitor:philgeps:content-changed",
+      "status": "open",
+      "system": "city-monitor",
+      "signal": "content-changed",
+      "signalLabel": "Content changed",
+      "sourceId": "philgeps",
+      "label": "PhilGEPS",
+      "url": "https://notices.philgeps.gov.ph/",
+      "affectedPages": [
+        "/projects-budget",
+        "/accountability",
+        "/city-monitor",
+        "/briefs"
+      ],
+      "firstDetectedAt": "2026-09-25T00:43:52.454Z",
+      "latestDetectedAt": "2026-09-27T00:45:23.835Z",
+      "detections": 2,
+      "lastCheckedAt": "2026-09-27T00:45:23.835Z",
+      "lastSuccessfulAt": "2026-09-27T00:45:23.835Z",
+      "action": "Compare the changed source with each affected page, verify the underlying fact, then update only claims the source actually changes."
+    },
+    {
+      "key": "city-monitor:mymakati-broadcasts:manual-review",
+      "status": "open",
+      "system": "city-monitor",
+      "signal": "manual-review",
+      "signalLabel": "Manual review",
+      "sourceId": "mymakati-broadcasts",
+      "label": "MyMakati official social broadcasts",
+      "url": "https://www.facebook.com/mymakativerified",
+      "affectedPages": ["/city-monitor", "/briefs"],
+      "firstDetectedAt": "2026-09-25T00:43:52.454Z",
+      "latestDetectedAt": "2026-09-27T00:45:23.835Z",
+      "detections": 1,
+      "lastCheckedAt": "2026-09-27T00:45:23.835Z",
+      "lastSuccessfulAt": null,
+      "action": "Open the source manually and review new official content relevant to the affected pages before publishing a civic record."
+    },
     {
       "key": "general-source-freshness:comelec-precinct-finder:check-failed",
       "status": "open",
@@ -42,45 +81,6 @@
       "lastCheckedAt": "2026-09-27T00:06:04.281Z",
       "lastSuccessfulAt": null,
       "action": "Recheck source availability. If the failure persists, inspect affected pages for links or claims that may no longer be supportable."
-    },
-    {
-      "key": "city-monitor:philgeps:content-changed",
-      "status": "open",
-      "system": "city-monitor",
-      "signal": "content-changed",
-      "signalLabel": "Content changed",
-      "sourceId": "philgeps",
-      "label": "PhilGEPS",
-      "url": "https://notices.philgeps.gov.ph/",
-      "affectedPages": [
-        "/projects-budget",
-        "/accountability",
-        "/city-monitor",
-        "/briefs"
-      ],
-      "firstDetectedAt": "2026-09-25T00:43:52.454Z",
-      "latestDetectedAt": "2026-09-25T00:43:52.454Z",
-      "detections": 1,
-      "lastCheckedAt": "2026-09-25T00:43:52.454Z",
-      "lastSuccessfulAt": "2026-09-25T00:43:52.454Z",
-      "action": "Compare the changed source with each affected page, verify the underlying fact, then update only claims the source actually changes."
-    },
-    {
-      "key": "city-monitor:mymakati-broadcasts:manual-review",
-      "status": "open",
-      "system": "city-monitor",
-      "signal": "manual-review",
-      "signalLabel": "Manual review",
-      "sourceId": "mymakati-broadcasts",
-      "label": "MyMakati official social broadcasts",
-      "url": "https://www.facebook.com/mymakativerified",
-      "affectedPages": ["/city-monitor", "/briefs"],
-      "firstDetectedAt": "2026-09-25T00:43:52.454Z",
-      "latestDetectedAt": "2026-09-25T00:43:52.454Z",
-      "detections": 1,
-      "lastCheckedAt": "2026-09-25T00:43:52.454Z",
-      "lastSuccessfulAt": null,
-      "action": "Open the source manually and review new official content relevant to the affected pages before publishing a civic record."
     }
   ]
 }

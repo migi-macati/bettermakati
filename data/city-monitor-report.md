@@ -1,12 +1,12 @@
 # BetterMakati City Monitor daily source check
 
-Checked: 2026-09-25T00:43:52.454Z
+Checked: 2026-09-27T00:45:23.835Z
 
-Automatic checks: 7. Unchanged/reachable: 4. Changed: 1. Failed: 0. Manual-review channels: 1.
+Automatic checks: 8. Unchanged/reachable: 6. Changed: 1. Failed: 0. Manual-review channels: 1.
 
 ## Changed sources requiring editorial review
 
-- **PhilGEPS** — https://notices.philgeps.gov.ph/
+- **PhilGEPS** — review /projects-budget, /accountability, /city-monitor, /briefs: https://notices.philgeps.gov.ph/
 
 ## Failed automatic checks
 
@@ -14,7 +14,7 @@ Automatic checks: 7. Unchanged/reachable: 4. Changed: 1. Failed: 0. Manual-revie
 
 ## Manual-review channels
 
-- **MyMakati official social broadcasts** — https://www.facebook.com/mymakativerified
+- **MyMakati official social broadcasts** — review /city-monitor, /briefs manually: https://www.facebook.com/mymakativerified
 
 ### Editorial rule
 

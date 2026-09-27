@@ -1,14 +1,49 @@
 {
   "version": 1,
-  "generatedAt": "2026-09-27T00:06:30.701Z",
+  "generatedAt": "2026-09-27T00:45:23.835Z",
   "summary": {
-    "events": 3,
-    "changed": 1,
+    "events": 4,
+    "changed": 2,
     "failed": 2,
-    "newBaselines": 14,
-    "manualReview": 1
+    "newBaselines": 15,
+    "manualReview": 2
   },
   "events": [
+    {
+      "system": "city-monitor",
+      "checkedAt": "2026-09-27T00:45:23.835Z",
+      "cadence": "daily",
+      "changed": [
+        {
+          "sourceId": "philgeps",
+          "label": "PhilGEPS",
+          "url": "https://notices.philgeps.gov.ph/",
+          "affectedPages": [
+            "/projects-budget",
+            "/accountability",
+            "/city-monitor",
+            "/briefs"
+          ]
+        }
+      ],
+      "failed": [],
+      "newBaselines": [
+        {
+          "sourceId": "makati-council-videos",
+          "label": "Makati official council-session videos",
+          "url": "https://www.makati.gov.ph/",
+          "affectedPages": ["/legislation", "/city-monitor", "/briefs"]
+        }
+      ],
+      "manualReview": [
+        {
+          "sourceId": "mymakati-broadcasts",
+          "label": "MyMakati official social broadcasts",
+          "url": "https://www.facebook.com/mymakativerified",
+          "affectedPages": ["/city-monitor", "/briefs"]
+        }
+      ]
+    },
     {
       "system": "general-source-freshness",
       "checkedAt": "2026-09-27T00:06:30.701Z",
