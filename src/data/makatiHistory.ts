@@ -2097,6 +2097,15 @@ const rows: Row[] = [
     },
   ],
   [
+    'library-move',
+    2013,
+    '2013',
+    'FHL moves to Ayala Museum',
+    community,
+    'The museum’s sixth floor became the library’s new home.',
+    library,
+  ],
+  [
     'sc-forum-shopping-2016',
     2016,
     '15 June 2016',
@@ -2111,6 +2120,15 @@ const rows: Row[] = [
         eventIds: ['ca-boundary-2013', 'ca-boundary-dismissal-2017'],
       },
     },
+  ],
+  [
+    'abby-election',
+    2016,
+    '2016',
+    'Abigail Binay elected mayor',
+    government,
+    'Abigail Binay became city mayor after serving as second-district representative.',
+    city,
   ],
   [
     'ca-boundary-dismissal-2017',
@@ -2129,24 +2147,6 @@ const rows: Row[] = [
     },
   ],
 
-  [
-    'library-move',
-    2013,
-    '2013',
-    'FHL moves to Ayala Museum',
-    community,
-    'The museum’s sixth floor became the library’s new home.',
-    library,
-  ],
-  [
-    'abby-election',
-    2016,
-    '2016',
-    'Abigail Binay elected mayor',
-    government,
-    'Abigail Binay became city mayor after serving as second-district representative.',
-    city,
-  ],
   [
     'sc-boundary-decision',
     2021,
