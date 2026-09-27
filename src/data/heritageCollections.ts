@@ -113,3 +113,9 @@ export const heritageWalkingRoutes = heritageCollections.filter(
 export const heritagePlaceCollections = heritageCollections.filter(
   collection => collection.kind === 'place-collection'
 );
+
+export const heritageCollectionsForPlace = (placeId: string) =>
+  heritageCollections.filter(collection => collection.placeIds.includes(placeId));
+
+export const heritageCollectionById = (collectionId?: string | null) =>
+  heritageCollections.find(collection => collection.id === collectionId);
