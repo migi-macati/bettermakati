@@ -164,6 +164,7 @@ export default function ServiceSearch({
   initialQuery = '',
   showServicePlaces = false,
   goldAction = false,
+  barangaySlug = '',
 }: {
   scope?: SearchScope;
   title?: string;
@@ -171,6 +172,7 @@ export default function ServiceSearch({
   initialQuery?: string;
   showServicePlaces?: boolean;
   goldAction?: boolean;
+  barangaySlug?: string;
 }) {
   const tabs = scope === 'services' ? serviceTabs : siteTabs;
   const [query, setQuery] = useState(initialQuery);
@@ -299,13 +301,24 @@ export default function ServiceSearch({
     };
   }, []);
 
+  const scopedInternalHref = (href: string) => {
+    if (!barangaySlug || href.startsWith('http://') || href.startsWith('https://')) {
+      return href;
+    }
+
+    const [pathAndQuery, hash] = href.split('#', 2);
+    const separator = pathAndQuery.includes('?') ? '&' : '?';
+    const scoped = pathAndQuery + separator + 'barangay=' + encodeURIComponent(barangaySlug);
+    return hash ? scoped + '#' + hash : scoped;
+  };
+
   const selectResult = (href: string) => {
     setOpen(false);
     if (href.startsWith('http://') || href.startsWith('https://')) {
       window.location.assign(href);
       return;
     }
-    navigate(href);
+    navigate(scopedInternalHref(href));
   };
 
   const submit = (event: FormEvent) => {
@@ -317,7 +330,9 @@ export default function ServiceSearch({
       return;
     }
     navigate(
-      scope === 'services' ? '/services' : '/community-tools/saan-ako-lalapit'
+      scopedInternalHref(
+        scope === 'services' ? '/services' : '/community-tools/saan-ako-lalapit'
+      )
     );
   };
 

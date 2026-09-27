@@ -20,6 +20,7 @@ import { Link, useParams } from 'react-router';
 import SEO from '../components/SEO';
 import LastReviewed from '../components/ui/LastReviewed';
 import PhotoCarousel from '../components/ui/PhotoCarousel';
+import ServiceSearch from '../components/home/ServiceSearch';
 import {
   barangays,
   barangayFacilities,
@@ -222,19 +223,14 @@ export default function BarangayProfile() {
                 ways to take part in Barangay {barangay.name}.
               </p>
 
-              <div className="mt-7 flex flex-wrap gap-3">
-                <Link
-                  to={withBarangayScope('/services', barangay.slug)}
-                  className="brand-btn-primary"
-                >
-                  Find a service <ArrowRight className="h-4 w-4" />
-                </Link>
-                <Link
-                  to={withBarangayScope('/civic-map', barangay.slug)}
-                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-white/60 px-4 py-2.5 text-sm font-bold text-white transition hover:border-secondary-400 hover:text-secondary-300"
-                >
-                  Explore local places <ArrowRight className="h-4 w-4" />
-                </Link>
+              <div className="mt-7 max-w-3xl">
+                <ServiceSearch
+                  scope="site"
+                  title="What can we help you find?"
+                  placeholder="Try barangay clearance, hall contacts, park, project..."
+                  goldAction
+                  barangaySlug={barangay.slug}
+                />
               </div>
 
               <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-primary-50">
