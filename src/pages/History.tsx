@@ -7,6 +7,7 @@ import {
   FileText,
   Link as LinkIcon,
   Map as MapIcon,
+  MapPin,
   Search,
 } from 'lucide-react';
 import { Link, useSearchParams } from 'react-router';
@@ -25,6 +26,8 @@ import LastReviewed from '../components/ui/LastReviewed';
 import SharePage from '../components/ui/SharePage';
 import PhotoCarousel from '../components/ui/PhotoCarousel';
 import { historyImageSet } from '../data/cityImages';
+import { placeRegistryById } from '../data/placeRegistry';
+import { findBarangay } from '../data/barangays';
 
 const topics = [...new Set(makatiHistory.map(event => event.topic))];
 
@@ -67,6 +70,36 @@ const eventSearchText = (event: HistoryEvent) =>
     .filter(Boolean)
     .join(' ')
     .toLocaleLowerCase();
+
+const ReferenceChip = ({
+  item,
+}: {
+  item: { label: string; href?: string };
+}) => {
+  const classes =
+    'rounded-full border border-gray-200 px-3 py-1.5 text-xs font-semibold text-gray-700';
+
+  if (!item.href) return <span className={classes}>{item.label}</span>;
+
+  if (item.href.startsWith('/')) {
+    return (
+      <Link to={item.href} className={`${classes} hover:border-primary-400 hover:text-primary-800`}>
+        {item.label}
+      </Link>
+    );
+  }
+
+  return (
+    <a
+      href={item.href}
+      target="_blank"
+      rel="noreferrer"
+      className={`${classes} hover:border-primary-400 hover:text-primary-800`}
+    >
+      {item.label}
+    </a>
+  );
+};
 
 const SourceLink = ({
   source,
@@ -320,6 +353,13 @@ export default function History() {
             const relatedEvents = event.relations?.eventIds
               ?.map(id => makatiHistory.find(item => item.id === id))
               .filter((item): item is HistoryEvent => Boolean(item));
+            const relatedPlaces = event.relations?.placeIds
+              ?.map(id => placeRegistryById.get(id))
+              .filter(item => Boolean(item));
+            const relatedBarangays = event.relations?.barangaySlugs?.map(slug => ({
+              slug,
+              name: findBarangay(slug)?.name ?? slug.replaceAll('-', ' '),
+            }));
 
             return (
               <li
@@ -453,38 +493,40 @@ export default function History() {
                       </div>
                     )}
 
-                  {(event.relations?.barangaySlugs?.length ||
+                  {(relatedPlaces?.length ||
+                    relatedBarangays?.length ||
                     event.relations?.people?.length ||
                     event.relations?.institutions?.length ||
                     relatedEvents?.length) && (
                     <div className="border-b border-gray-100 px-5 py-4 sm:px-6">
                       <div className="flex flex-wrap gap-2">
-                        {event.relations?.barangaySlugs?.map(slug => (
+                        {relatedPlaces?.map(place => (
                           <Link
-                            key={slug}
-                            to={`/barangays/${slug}`}
+                            key={place.id}
+                            to={`/civic-map/${place.id}`}
+                            className="inline-flex items-center gap-1.5 rounded-full border border-secondary-300 bg-secondary-50 px-3 py-1.5 text-xs font-bold text-secondary-900 hover:border-secondary-500"
+                          >
+                            <MapPin className="h-3.5 w-3.5" aria-hidden="true" />
+                            {place.name}
+                          </Link>
+                        ))}
+
+                        {relatedBarangays?.map(barangay => (
+                          <Link
+                            key={barangay.slug}
+                            to={`/barangays/${barangay.slug}`}
                             className="rounded-full border border-primary-200 bg-primary-50 px-3 py-1.5 text-xs font-bold text-primary-800 hover:border-primary-400"
                           >
-                            Barangay {slug.replaceAll('-', ' ')}
+                            Barangay {barangay.name}
                           </Link>
                         ))}
 
                         {event.relations?.people?.map(person => (
-                          <span
-                            key={person.label}
-                            className="rounded-full border border-gray-200 px-3 py-1.5 text-xs font-semibold text-gray-700"
-                          >
-                            {person.label}
-                          </span>
+                          <ReferenceChip key={person.label} item={person} />
                         ))}
 
                         {event.relations?.institutions?.map(institution => (
-                          <span
-                            key={institution.label}
-                            className="rounded-full border border-gray-200 px-3 py-1.5 text-xs font-semibold text-gray-700"
-                          >
-                            {institution.label}
-                          </span>
+                          <ReferenceChip key={institution.label} item={institution} />
                         ))}
                       </div>
 
