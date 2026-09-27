@@ -353,9 +353,10 @@ export default function History() {
             const relatedEvents = event.relations?.eventIds
               ?.map(id => makatiHistory.find(item => item.id === id))
               .filter((item): item is HistoryEvent => Boolean(item));
-            const relatedPlaces = event.relations?.placeIds
-              ?.map(id => placeRegistryById.get(id))
-              .filter(item => Boolean(item));
+            const relatedPlaces = event.relations?.placeIds?.flatMap(id => {
+              const place = placeRegistryById.get(id);
+              return place ? [place] : [];
+            });
             const relatedBarangays = event.relations?.barangaySlugs?.map(slug => ({
               slug,
               name: findBarangay(slug)?.name ?? slug.replaceAll('-', ' '),
