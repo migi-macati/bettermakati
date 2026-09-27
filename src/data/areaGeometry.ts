@@ -38,6 +38,11 @@ export interface CivicAreaGeometryArtifact {
   reviewedOn: string;
 }
 
+export const civicAreaGeometryDeferralNotes: Readonly<Record<string, string>> = {
+  'circuit-makati':
+    'Circuit Makati remains geometry-less because the previously cited Ayala Land slide does not draw Circuit Makati as the outlined polygon; it shows Circuit as a separate callout while the black outline is labeled “Makati CBD Projects with MACEA”. No usable source-backed outer perimeter is published yet.',
+};
+
 const geometrySourceIds = new Set(
   civicAreaRegistrySources.map(source => source.id)
 );

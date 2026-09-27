@@ -83,6 +83,13 @@ different canonical rows, so the global conjunction produced a false positive.
 The guard now tests each relationship row individually; no MACEA-to-Poblacion
 edge is added or removed.
 
+The Area Geometry guard then found a genuine missing invariant in the geometry
+module: W5-3d1 had established why Circuit Makati must remain geometry-less, but
+that reason was preserved only in the evidence note. The module now carries an
+explicit deferral note stating that the cited Ayala Land slide outlines “Makati
+CBD Projects with MACEA” and shows Circuit only as a separate callout. Circuit
+still has **no polygon**.
+
 These repairs restore the validation baseline needed to test W5-4e3 itself.
 
 ## Automated checks
