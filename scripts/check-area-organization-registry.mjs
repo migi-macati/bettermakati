@@ -21,9 +21,10 @@ for (const marker of [
   "channels: CivicOrganizationChannel[]",
   "sourceIds: string[]",
   "validateAreaOrganizationRegistry",
-  "export const civicAreas: CivicAreaRecord[] = []",
-  "export const civicOrganizations: CivicOrganizationRecord[] = []",
-  "export const civicAreaRelationships: CivicAreaRelationship[] = []",
+  "export const civicAreaRegistrySources: CivicAreaRegistrySource[] = [",
+  "export const civicAreas: CivicAreaRecord[] = [",
+  "export const civicOrganizations: CivicOrganizationRecord[] = [",
+  "export const civicAreaRelationships: CivicAreaRelationship[] = [",
 ]) {
   if (!source.includes(marker)) {
     problems.push('Area/organization registry schema marker missing: ' + marker);
@@ -52,14 +53,149 @@ if (!source.includes("['place', 'area']")) {
   problems.push('Place-to-area endpoint validation is missing.');
 }
 
+const blockBetween = (start, end) =>
+  source.split(start)[1]?.split(end)[0] ?? '';
+
+const areaBlock = blockBetween(
+  'export const civicAreas: CivicAreaRecord[] = [',
+  '\n];\n\nexport const civicOrganizations'
+);
+const organizationBlock = blockBetween(
+  'export const civicOrganizations: CivicOrganizationRecord[] = [',
+  '\n];\n\nexport const civicAreaRelationships'
+);
+const relationshipBlock = blockBetween(
+  'export const civicAreaRelationships: CivicAreaRelationship[] = [',
+  '\n];\n\nvalidateAreaOrganizationRegistry'
+);
+const sourceBlock = blockBetween(
+  'export const civicAreaRegistrySources: CivicAreaRegistrySource[] = [',
+  '\n];\n\nexport const civicAreas'
+);
+
+const parseRows = block =>
+  [...block.matchAll(/\n  \{\n([\s\S]*?)\n  \},?/g)].map(match => match[1]);
+
+const parseId = row => row.match(/\bid:\s*'([^']+)'/)?.[1] ?? null;
+
+const areaRows = parseRows(areaBlock);
+const organizationRows = parseRows(organizationBlock);
+const relationshipRows = parseRows(relationshipBlock);
+const registrySourceRows = parseRows(sourceBlock);
+
+if (areaRows.length !== 13) {
+  problems.push('Expected 13 canonical areas, found ' + areaRows.length + '.');
+}
+if (organizationRows.length !== 11) {
+  problems.push(
+    'Expected 11 canonical organizations, found ' +
+      organizationRows.length +
+      '.'
+  );
+}
+if (relationshipRows.length !== 21) {
+  problems.push(
+    'Expected 21 source-backed area relationships, found ' +
+      relationshipRows.length +
+      '.'
+  );
+}
+if (registrySourceRows.length < 30) {
+  problems.push(
+    'Expected the W5-3a2 authoritative source set to be populated; found only ' +
+      registrySourceRows.length +
+      ' sources.'
+  );
+}
+
+const areaIds = areaRows.map(parseId).filter(Boolean);
+const organizationIds = organizationRows.map(parseId).filter(Boolean);
+const relationshipIds = relationshipRows.map(parseId).filter(Boolean);
+
+for (const [label, ids] of [
+  ['area', areaIds],
+  ['organization', organizationIds],
+  ['relationship', relationshipIds],
+]) {
+  const duplicates = ids.filter((id, index) => ids.indexOf(id) !== index);
+  if (duplicates.length) {
+    problems.push(
+      'Duplicate ' + label + ' IDs: ' + [...new Set(duplicates)].join(', ')
+    );
+  }
+}
+
+for (const expectedArea of [
+  'makati-cbd',
+  'ayala-center',
+  'salcedo-village',
+  'legazpi-village',
+  'circuit-makati',
+  'century-city',
+  'rockwell-center',
+  'bel-air-village',
+  'dasmarinas-village',
+  'forbes-park-village',
+  'san-lorenzo-village',
+  'urdaneta-village',
+  'magallanes-village',
+]) {
+  if (!areaIds.includes(expectedArea)) {
+    problems.push('Missing reconciled canonical area: ' + expectedArea);
+  }
+}
+
+for (const expectedOrganization of [
+  'makati-central-estate-association',
+  'ayala-center-estate-association',
+  'circuit-makati-estate-association',
+  'century-city-estate-association',
+  'rockwell-land-corporation',
+  'bel-air-village-association',
+  'dasmarinas-village-association',
+  'forbes-park-association',
+  'san-lorenzo-village-association',
+  'urdaneta-village-association',
+  'magallanes-village-association',
+]) {
+  if (!organizationIds.includes(expectedOrganization)) {
+    problems.push(
+      'Missing reconciled canonical organization: ' + expectedOrganization
+    );
+  }
+}
+
+if (source.includes("id: 'rockwell-center-association'")) {
+  problems.push(
+    'Unverified Rockwell Center Association must remain noncanonical.'
+  );
+}
+
 if (
-  !source.includes(
-    "W5-3b2 will populate source-backed area, organization and relationship records."
-  )
+  relationshipBlock.includes("id: 'poblacion'") &&
+  relationshipBlock.includes("makati-central-estate-association")
 ) {
   problems.push(
-    'Schema-only guard is missing; W5-3b1 should not silently populate unsourced records.'
+    'Unsupported MACEA-to-Poblacion relationship was propagated into the canonical registry.'
   );
+}
+
+if (/\bgeometry:\s*\{/.test(areaBlock)) {
+  problems.push(
+    'W5-3b2 must not fabricate estate/village geometry before the separate boundary evidence pass.'
+  );
+}
+
+for (const row of relationshipRows) {
+  if (
+    !row.includes('sourceIds: [') ||
+    !row.includes('evidenceStrength:')
+  ) {
+    problems.push(
+      'Relationship lacks explicit source-backed evidence: ' +
+        (parseId(row) ?? 'unknown')
+    );
+  }
 }
 
 if (problems.length) {
@@ -80,6 +216,10 @@ console.log(
     'organization channels',
     'place-to-area relationships',
     'relationship provenance',
-    'W5-3b1 data arrays intentionally empty',
+    areaRows.length + ' canonical areas',
+    organizationRows.length + ' canonical organizations',
+    relationshipRows.length + ' source-backed relationships',
+    registrySourceRows.length + ' authoritative source records',
+    'no unsourced geometry promoted',
   ].join(' ')
 );
