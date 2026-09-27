@@ -113,23 +113,22 @@ const barangaySlugs = new Set(
   )
 );
 
+const areaBlock =
+  areaRegistrySource
+    .split('export const civicAreas: CivicAreaRecord[] = [')[1]
+    ?.split('\n];\n\nexport const civicOrganizations')[0] ?? '';
+const organizationBlock =
+  areaRegistrySource
+    .split('export const civicOrganizations: CivicOrganizationRecord[] = [')[1]
+    ?.split('\n];\n\nexport const civicAreaRelationships')[0] ?? '';
+
 const areaIds = new Set(
-  [
-    ...areaRegistrySource.matchAll(
-      /export const civicAreas: CivicAreaRecord\[\] = \[([\s\S]*?)\n\];/
-    ),
-  ].flatMap(match =>
-    [...match[1].matchAll(/\bid:\s*'([^']+)'/g)].map(item => item[1])
-  )
+  [...areaBlock.matchAll(/\bid:\s*'([^']+)'/g)].map(match => match[1])
 );
 
 const organizationIds = new Set(
-  [
-    ...areaRegistrySource.matchAll(
-      /export const civicOrganizations: CivicOrganizationRecord\[\] = \[([\s\S]*?)\n\];/
-    ),
-  ].flatMap(match =>
-    [...match[1].matchAll(/\bid:\s*'([^']+)'/g)].map(item => item[1])
+  [...organizationBlock.matchAll(/\bid:\s*'([^']+)'/g)].map(
+    match => match[1]
   )
 );
 
