@@ -75,12 +75,56 @@ const artifactIds = [
   ...artifactBlock.matchAll(/\bid:\s*'([^']+)'/g),
 ].map(match => match[1]);
 
-if (artifactIds.length !== 0) {
+if (artifactIds.length !== 1) {
   problems.push(
-    'W5-3d2 must keep geometry artifacts empty after the Circuit Makati source correction; found ' +
+    'W5-3d3 expects exactly one published area geometry artifact; found ' +
       artifactIds.length +
       '.'
   );
+}
+
+if (!artifactIds.includes('dasmarinas-village-boundary-2026-09')) {
+  problems.push(
+    'Dasmariñas Village approximate boundary artifact is missing.'
+  );
+}
+
+for (const marker of [
+  "areaId: 'dasmarinas-village'",
+  "kind: 'approximate-boundary'",
+  "type: 'Polygon'",
+  "'dva-about-boundary'",
+  "'dva-village-map'",
+  "'psgc-2023-makati-barangay-geojson'",
+  "'osm-dasmarinas-boundary-snapshot'",
+  'Approximate display boundary, not a cadastral or survey polygon.',
+  'OpenStreetMap administrative relation 103761 snapshot',
+]) {
+  if (!artifactBlock.includes(marker)) {
+    problems.push(
+      'Dasmariñas Village geometry evidence marker missing: ' + marker
+    );
+  }
+}
+
+const coordinatePairs = [
+  ...artifactBlock.matchAll(/\[([0-9]+\.[0-9]+),\s*([0-9]+\.[0-9]+)\]/g),
+].map(match => [Number(match[1]), Number(match[2])]);
+
+if (coordinatePairs.length !== 24) {
+  problems.push(
+    'Dasmariñas Village boundary should contain the 24-position simplified PSGC-derived ring; found ' +
+      coordinatePairs.length +
+      '.'
+  );
+}
+
+if (coordinatePairs.length) {
+  const first = coordinatePairs[0];
+  const last = coordinatePairs[coordinatePairs.length - 1];
+  if (first[0] !== last[0] || first[1] !== last[1]) {
+    problems.push('Dasmariñas Village geometry ring is not closed.');
+  }
 }
 
 const circuitRow =
@@ -92,6 +136,35 @@ if (circuitRow.includes('geometryId:')) {
   problems.push(
     'Circuit Makati must not receive geometry from the misread MACEA outline.'
   );
+}
+
+const dasmarinasRow =
+  areaRegistrySource
+    .split("id: 'dasmarinas-village'")[1]
+    ?.split('\n  },')[0] ?? '';
+
+if (
+  !dasmarinasRow.includes(
+    "geometryId: 'dasmarinas-village-boundary-2026-09'"
+  )
+) {
+  problems.push(
+    'Canonical Dasmariñas Village area must reference its published geometry artifact.'
+  );
+}
+
+for (const sourceId of [
+  'dva-about-boundary',
+  'dva-village-map',
+  'psgc-2023-makati-barangay-geojson',
+  'osm-dasmarinas-boundary-snapshot',
+]) {
+  if (!areaRegistrySource.includes("id: '" + sourceId + "'")) {
+    problems.push(
+      'Dasmariñas Village geometry source is missing from the canonical source registry: ' +
+        sourceId
+    );
+  }
 }
 
 for (const marker of [
@@ -130,8 +203,11 @@ console.log(
     'GeoJSON-compatible Polygon/MultiPolygon model',
     'closed-ring and coordinate validation',
     'canonical area/source linkage validation',
-    '0 published geometry artifacts after Circuit source correction',
+    artifactIds.length + ' published geometry artifact',
+    'Dasmariñas Village approximate boundary linked to canonical area',
+    coordinatePairs.length + ' ring positions',
+    'DVA perimeter + Village Map govern interpretation',
+    'PSGC-derived polygon checked against OSM relation 103761',
     'Circuit Makati remains geometry-less',
-    'Dasmariñas Village is the next trace candidate',
   ].join(' ')
 );
