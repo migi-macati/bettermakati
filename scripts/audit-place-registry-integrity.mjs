@@ -13,6 +13,8 @@ const [
   heritageCollectionsSource,
   heritagePageSource,
   heritageMapSource,
+  civicAssetPageSource,
+  historyPageSource,
 ] = await Promise.all([
   readFile('src/data/placeRegistry.ts', 'utf8'),
   readFile('src/data/barangays.ts', 'utf8'),
@@ -26,6 +28,8 @@ const [
   readFile('src/data/heritageCollections.ts', 'utf8'),
   readFile('src/pages/Heritage.tsx', 'utf8'),
   readFile('src/components/heritage/HeritageMap.tsx', 'utf8'),
+  readFile('src/pages/CivicAsset.tsx', 'utf8'),
+  readFile('src/pages/History.tsx', 'utf8'),
 ]);
 
 const problems = [];
@@ -765,6 +769,56 @@ if (/\b(?:lat|lng):\s*14\./.test(heritageCollectionsSource)) {
   );
 }
 
+/* Heritage cross-linking: place -> collection/history -> barangay */
+for (const marker of [
+  'export const heritageCollectionsForPlace',
+  'export const heritageCollectionById',
+]) {
+  if (!heritageCollectionsSource.includes(marker)) {
+    problems.push('Heritage collection selector is missing: ' + marker);
+  }
+}
+
+for (const marker of [
+  "id={'collection-' + collection.id}",
+  "id={'collection-' + route.id}",
+  "to={'/history?collection=' + collection.id}",
+  "to={'/history?collection=' + route.id}",
+]) {
+  if (!heritagePageSource.includes(marker)) {
+    problems.push('Heritage collection cross-link is missing: ' + marker);
+  }
+}
+
+for (const marker of [
+  "heritageCollectionById(",
+  "searchParams.get('collection')",
+  "selectedHeritageCollection.placeIds.includes(placeId)",
+  "to={'/heritage#collection-' + selectedHeritageCollection.id}",
+]) {
+  if (!historyPageSource.includes(marker)) {
+    problems.push('History heritage-collection integration is missing: ' + marker);
+  }
+}
+
+for (const marker of [
+  "heritageCollectionsForPlace(place.id)",
+  "to={'/heritage#collection-' + collection.id}",
+  "to={'/history?collection=' + collection.id}",
+  "to={'/barangays/' + barangay.slug}",
+  'Better{barangay.name}',
+]) {
+  if (!civicAssetPageSource.includes(marker)) {
+    problems.push('Place-page heritage/BetterBarangay cross-link is missing: ' + marker);
+  }
+}
+
+if (!historyPageSource.includes("place.aliases ?? []")) {
+  problems.push(
+    'History search does not index canonical Place names and aliases.'
+  );
+}
+
 for (const requiredHeritagePlaceId of [
   'nuestra-senora-de-gracia-church',
   'sts-peter-and-paul-parish-church',
@@ -945,6 +999,7 @@ console.log(
     heritageWalkingRouteCount + ' canonical heritage walking routes',
     heritagePlaceCollectionCount + ' thematic heritage place collections',
     '1 canonical heritage overview map reusing Place Registry coordinates',
+    'heritage place/collection/history/BetterBarangay cross-links wired',
     historyPlaceIds.length + ' History-to-place links resolved',
     barangayHeritageMarkerPlaceIds.length + ' BetterBarangay heritage links resolved',
     indexEntries.length + ' generated index entries in parity',
