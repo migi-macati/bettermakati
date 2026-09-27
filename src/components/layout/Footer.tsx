@@ -3,10 +3,17 @@ import { Github, ExternalLink } from 'lucide-react';
 import { footerNavigation } from '../../data/navigation';
 import { Link } from 'react-router';
 import BrandMark from '../BrandMark';
+import { isBarangaySliceableHref, useBarangayScope, withBarangayScope } from '../../hooks/useBarangayScope';
 
 const isExternal = (href: string) => href.startsWith('http');
 
 const Footer: React.FC = () => {
+  const { barangay } = useBarangayScope();
+  const scopedHref = (href: string) =>
+    barangay && isBarangaySliceableHref(href)
+      ? withBarangayScope(href, barangay.slug)
+      : href;
+
   return (
     <footer className="bg-primary-900 text-white">
       <div className="h-1.5 bg-secondary-500" />
@@ -75,7 +82,7 @@ const Footer: React.FC = () => {
                       </a>
                     ) : (
                       <Link
-                        to={link.href}
+                        to={scopedHref(link.href)}
                         className="inline-flex min-h-9 items-center text-primary-100 hover:text-white text-sm transition-colors"
                       >
                         {link.label}

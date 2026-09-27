@@ -13,7 +13,7 @@ import { Link, useLocation, useNavigate } from 'react-router';
 import BrandMark from '../BrandMark';
 import BetterBarangayContextBar from '../barangay/BetterBarangayContextBar';
 import { barangays } from '../../data/barangays';
-import { useBarangayScope } from '../../hooks/useBarangayScope';
+import { isBarangaySliceableHref, useBarangayScope, withBarangayScope } from '../../hooks/useBarangayScope';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,7 +21,7 @@ export default function Navbar() {
   const nav = useRef<HTMLElement>(null);
   const navigate = useNavigate();
   const { pathname, hash } = useLocation();
-  const { preferredBarangay, rememberBarangay } = useBarangayScope();
+  const { barangay, preferredBarangay, rememberBarangay } = useBarangayScope();
   const menuId = (label: string | null) =>
     label?.toLowerCase().replace(/\s+/g, '-') ?? '';
   const closeMenu = () => {
@@ -32,6 +32,10 @@ export default function Navbar() {
     href === pathname + hash || (!hash && href === pathname);
   const isSection = (href: string) =>
     pathname === href || pathname.startsWith(href + '/');
+  const scopedHref = (href: string) =>
+    barangay && isBarangaySliceableHref(href)
+      ? withBarangayScope(href, barangay.slug)
+      : href;
 
   useEffect(() => {
     const outside = (event: PointerEvent) => {
@@ -131,7 +135,7 @@ export default function Navbar() {
                       </button>
                     ) : (
                       <Link
-                        to={item.href}
+                        to={scopedHref(item.href)}
                         onClick={closeMenu}
                         aria-current={isCurrent(item.href) ? 'page' : undefined}
                         className="inline-flex min-h-11 items-center rounded-lg px-3 text-sm font-semibold text-gray-700 hover:bg-primary-50"
@@ -148,7 +152,7 @@ export default function Navbar() {
                         {item.children.map(child => (
                           <Link
                             key={child.label}
-                            to={child.href}
+                            to={scopedHref(child.href)}
                             onClick={closeMenu}
                             aria-current={
                               isCurrent(child.href) ? 'page' : undefined
@@ -296,7 +300,7 @@ export default function Navbar() {
                       {item.children.map(child => (
                         <Link
                           key={child.label}
-                          to={child.href}
+                          to={scopedHref(child.href)}
                           onClick={closeMenu}
                           aria-current={
                             isCurrent(child.href) ? 'page' : undefined
@@ -310,7 +314,7 @@ export default function Navbar() {
                   </>
                 ) : (
                   <Link
-                    to={item.href}
+                    to={scopedHref(item.href)}
                     onClick={closeMenu}
                     aria-current={isCurrent(item.href) ? 'page' : undefined}
                     className="flex min-h-12 items-center rounded-lg px-3 py-3 font-semibold text-gray-800 hover:bg-primary-50"

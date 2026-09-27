@@ -2,16 +2,7 @@ import { useEffect } from 'react';
 import { ArrowRight, ChevronDown } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router';
 import { barangays, findBarangay } from '../../data/barangays';
-import { useBarangayScope } from '../../hooks/useBarangayScope';
-
-const sliceableRoutes = new Set([
-  '/services',
-  '/projects-budget',
-  '/accountability',
-  '/participate',
-  '/statistics',
-  '/civic-map',
-]);
+import { barangaySliceablePaths, useBarangayScope } from '../../hooks/useBarangayScope';
 
 const compactEditionName = (name: string) => name.replace(/\s+/g, '');
 
@@ -23,7 +14,7 @@ export default function BetterBarangayContextBar() {
   const profileMatch = location.pathname.match(/^\/barangays\/([^/]+)$/);
   const profileBarangay = findBarangay(profileMatch?.[1]);
   const isProfile = Boolean(profileBarangay);
-  const isSliceable = sliceableRoutes.has(location.pathname);
+  const isSliceable = barangaySliceablePaths.has(location.pathname);
 
   useEffect(() => {
     if (profileBarangay) rememberBarangay(profileBarangay.slug);

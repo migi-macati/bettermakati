@@ -4,6 +4,20 @@ import { barangays, findBarangay } from '../data/barangays';
 
 const rememberedBarangayKey = 'bettermakati:barangay-scope';
 
+export const barangaySliceablePaths = new Set([
+  '/services',
+  '/projects-budget',
+  '/accountability',
+  '/participate',
+  '/statistics',
+  '/civic-map',
+]);
+
+export const isBarangaySliceableHref = (href: string) => {
+  const path = href.split('#')[0].split('?')[0];
+  return barangaySliceablePaths.has(path);
+};
+
 const isValidBarangay = (slug?: string | null) =>
   Boolean(slug && barangays.some(item => item.slug === slug));
 
