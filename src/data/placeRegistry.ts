@@ -125,6 +125,33 @@ export interface PlaceAssertion {
   note?: string;
 }
 
+export interface PlaceHeritageDesignation {
+  authority: string;
+  classification: string;
+  officialName?: string;
+  dateOrYear?: string;
+  sourceIds: string[];
+  note?: string;
+}
+
+export interface PlaceHeritageFact {
+  label: string;
+  value: string;
+  dateOrPeriod?: string;
+  sourceIds: string[];
+  note?: string;
+}
+
+export interface PlaceHeritageMetadata {
+  designations?: PlaceHeritageDesignation[];
+  facts?: PlaceHeritageFact[];
+}
+
+export interface CivicAssetAdditionalSource
+  extends Omit<PlaceSource, 'id'> {
+  idSuffix: string;
+}
+
 export interface PlaceRelationship {
   kind:
     | 'part-of'
@@ -152,6 +179,7 @@ export interface PlaceRegistryRecord {
   primaryCategory: PlaceCategory;
   secondaryCategories?: string[];
   aliases?: PlaceAlias[];
+  heritage?: PlaceHeritageMetadata;
   location: {
     relationToMakati: 'in-makati' | 'makati-boundary' | 'serves-makati-outside' | 'route-or-network' | 'unknown';
     barangays: string[];
@@ -202,6 +230,8 @@ export interface CivicAsset {
   aliasKinds?: Record<string, PlaceAlias['kind']>;
   secondaryCategories?: string[];
   sourceKind?: PlaceSource['kind'];
+  additionalSources?: CivicAssetAdditionalSource[];
+  heritage?: PlaceHeritageMetadata;
   servicesAtLocation?: string[];
   accessClass?: CivicAccessClass;
   sourceUrl?: string;
@@ -407,6 +437,37 @@ export const civicAssets: CivicAsset[] = [
     address: 'P. Gomez Street / D.M. Rivera Street, Barangay Poblacion, Makati City',
     secondaryCategories: ['heritage-site', 'historic-landscape'],
     sourceKind: 'official-secondary',
+    additionalSources: [
+      {
+        idSuffix: 'ncca-talapamana',
+        label: 'NCCA Talapamana · Plaza Cristo Rey',
+        url: 'https://talapamana.ncca.gov.ph/index.php/component/content/article/talapamana-metro-manila?Itemid=101&catid=12',
+        kind: 'official-secondary',
+      },
+      {
+        idSuffix: 'poblacion-history',
+        label: 'City Government of Makati · Barangay Poblacion history',
+        url: 'https://www.makati.gov.ph/barangay/poblacion/34page?tab=1',
+        kind: 'official-secondary',
+      },
+    ],
+    heritage: {
+      designations: [
+        {
+          authority: 'National Commission for Culture and the Arts',
+          classification: 'Work of National Artist for Architecture Francisco T. Mañosa',
+          officialName: 'Plaza Cristo Rey',
+          sourceIds: ['plaza-cristo-rey:ncca-talapamana'],
+        },
+      ],
+      facts: [
+        {
+          label: 'Historic site use',
+          value: 'The plaza occupies the former San Pedro Macati cemetery site.',
+          sourceIds: ['plaza-cristo-rey:poblacion-history'],
+        },
+      ],
+    },
     accessClass: 'government-public',
     sourceUrl: 'https://www.makati.gov.ph/assets/uploads/downloads/2/541/pdf/Final%20Makati%20Cultural%20Development%20Plan.pdf',
     sourceLabel: 'City Government of Makati · Cultural Development Plan',
@@ -1254,6 +1315,38 @@ export const civicAssets: CivicAsset[] = [
     },
     secondaryCategories: ['museum', 'important-cultural-property', 'registered-cultural-property'],
     sourceKind: 'official-secondary',
+    additionalSources: [
+      {
+        idSuffix: 'nmp-icp-2019',
+        label: 'National Museum of the Philippines · FY 2019 Annual Report · Important Cultural Properties',
+        url: 'https://weblinks.nationalmuseum.gov.ph/wp-content/uploads/2021/07/NMP-Annual-Report-FY-2019.pdf',
+        kind: 'official-primary',
+      },
+      {
+        idSuffix: 'poblacion-history',
+        label: 'City Government of Makati · Barangay Poblacion history',
+        url: 'https://www.makati.gov.ph/barangay/poblacion/34page?tab=1',
+        kind: 'official-secondary',
+      },
+    ],
+    heritage: {
+      designations: [
+        {
+          authority: 'National Museum of the Philippines',
+          classification: 'Important Cultural Property',
+          officialName: 'Old Presidencia of San Pedro Macati (Museo ng Makati)',
+          dateOrYear: '2019',
+          sourceIds: ['museo-ng-makati:nmp-icp-2019'],
+        },
+      ],
+      facts: [
+        {
+          label: 'Former civic use',
+          value: 'The building served as Makati’s former Presidencia before its reuse as Museo ng Makati.',
+          sourceIds: ['museo-ng-makati:poblacion-history'],
+        },
+      ],
+    },
     accessClass: 'government-public',
     sourceUrl: 'https://talapamana.ncca.gov.ph/index.php/component/content/article/talapamana-metro-manila?Itemid=101&catid=12',
     sourceLabel: 'NCCA Talapamana · Old Presidencia of San Pedro Macati / Museo ng Makati',
@@ -1277,8 +1370,53 @@ export const civicAssets: CivicAsset[] = [
       'Guadalupe Church': 'local-name',
       'Church and Monastery of Guadalupe': 'current-alternate',
     },
-    secondaryCategories: ['religious-heritage', 'historical-marker', 'marked-structure'],
+    secondaryCategories: ['religious-heritage', 'historical-marker', 'marked-structure', 'important-cultural-property'],
     sourceKind: 'official-secondary',
+    additionalSources: [
+      {
+        idSuffix: 'nmp-icp-2019',
+        label: 'National Museum of the Philippines · FY 2019 Annual Report · Important Cultural Properties',
+        url: 'https://weblinks.nationalmuseum.gov.ph/wp-content/uploads/2021/07/NMP-Annual-Report-FY-2019.pdf',
+        kind: 'official-primary',
+      },
+    ],
+    heritage: {
+      designations: [
+        {
+          authority: 'National Historical Commission of the Philippines',
+          classification: 'Level II – Historical marker',
+          officialName: 'Church and Monastery of Guadalupe',
+          dateOrYear: '1937',
+          sourceIds: ['nuestra-senora-de-gracia-church:identity'],
+        },
+        {
+          authority: 'National Museum of the Philippines',
+          classification: 'Important Cultural Property',
+          officialName: 'Church Complex of Nuestra Señora de Gracia',
+          sourceIds: ['nuestra-senora-de-gracia-church:nmp-icp-2019'],
+        },
+      ],
+      facts: [
+        {
+          label: 'Foundation',
+          value: 'The NHCP marker dates the laying of the church and monastery foundations to 1601.',
+          dateOrPeriod: '1601',
+          sourceIds: ['nuestra-senora-de-gracia-church:identity'],
+        },
+        {
+          label: 'Construction milestone',
+          value: 'The NHCP marker records completion of construction work in 1629.',
+          dateOrPeriod: '1629',
+          sourceIds: ['nuestra-senora-de-gracia-church:identity'],
+        },
+        {
+          label: 'Rebuilding phase',
+          value: 'After the masonry roof collapsed in the 1880 earthquakes, the structure was rebuilt in 1882.',
+          dateOrPeriod: '1880–1882',
+          sourceIds: ['nuestra-senora-de-gracia-church:identity'],
+        },
+      ],
+    },
     accessClass: 'public-access-private-managed',
     sourceUrl: 'https://philhistoricsites.nhcp.gov.ph/registry_database/church-and-monastery-of-guadalupe/',
     sourceLabel: 'NHCP · Church and Monastery of Guadalupe historical marker',
@@ -1303,8 +1441,49 @@ export const civicAssets: CivicAsset[] = [
       'Makati Church': 'local-name',
       'Sampiro Church': 'local-name',
     },
-    secondaryCategories: ['religious-heritage', 'historical-marker', 'marked-structure'],
+    secondaryCategories: ['religious-heritage', 'historical-marker', 'marked-structure', 'important-cultural-property'],
     sourceKind: 'official-secondary',
+    additionalSources: [
+      {
+        idSuffix: 'nmp-icp-2019',
+        label: 'National Museum of the Philippines · FY 2019 Annual Report · Important Cultural Properties',
+        url: 'https://weblinks.nationalmuseum.gov.ph/wp-content/uploads/2021/07/NMP-Annual-Report-FY-2019.pdf',
+        kind: 'official-primary',
+      },
+    ],
+    heritage: {
+      designations: [
+        {
+          authority: 'National Historical Commission of the Philippines',
+          classification: 'Level II – Historical marker',
+          officialName: 'San Pedro Macati',
+          dateOrYear: '1937',
+          sourceIds: ['sts-peter-and-paul-parish-church:identity'],
+        },
+        {
+          authority: 'National Museum of the Philippines',
+          classification: 'Important Cultural Property',
+          officialName: 'Church Complex of San Pedro y San Pablo',
+          sourceIds: ['sts-peter-and-paul-parish-church:nmp-icp-2019'],
+        },
+      ],
+      facts: [
+        {
+          label: 'Buenavista endowment',
+          value: 'The NHCP marker records Pedro de Brito’s 1607 donation of the Buenavista site and endowment of the Jesuit novitiate.',
+          dateOrPeriod: '1607',
+          sourceIds: ['sts-peter-and-paul-parish-church:identity'],
+          note: 'This is the site/endowment date, not a claim that the surviving church fabric dates from 1607.',
+        },
+        {
+          label: 'Jesuit church',
+          value: 'The NHCP marker dates the Jesuit church to 1620.',
+          dateOrPeriod: '1620',
+          sourceIds: ['sts-peter-and-paul-parish-church:identity'],
+          note: 'Later rebuilding phases are documented separately in BetterMakati History.',
+        },
+      ],
+    },
     accessClass: 'public-access-private-managed',
     sourceUrl: 'https://philhistoricsites.nhcp.gov.ph/registry_database/san-pedro-macati/',
     sourceLabel: 'NHCP · San Pedro Macati historical marker',
@@ -1323,8 +1502,71 @@ export const civicAssets: CivicAsset[] = [
     lng: 121.02452,
     authority: 'Ayala Triangle estate / current building operator',
     address: 'Makati Avenue, Ayala Triangle, Barangay Bel-Air, Makati City',
-    secondaryCategories: ['historical-marker', 'marked-structure', 'aviation-heritage'],
+    secondaryCategories: ['historical-marker', 'marked-structure', 'aviation-heritage', 'important-cultural-property', 'registered-cultural-property'],
     sourceKind: 'official-secondary',
+    additionalSources: [
+      {
+        idSuffix: 'nmp-icp-2019',
+        label: 'National Museum of the Philippines · FY 2019 Annual Report · Important Cultural Properties',
+        url: 'https://weblinks.nationalmuseum.gov.ph/wp-content/uploads/2021/07/NMP-Annual-Report-FY-2019.pdf',
+        kind: 'official-primary',
+      },
+      {
+        idSuffix: 'ncca-talapamana',
+        label: 'NCCA Talapamana · Nielson Tower',
+        url: 'https://talapamana.ncca.gov.ph/index.php/component/content/article/talapamana-metro-manila?Itemid=101&catid=12',
+        kind: 'official-secondary',
+      },
+      {
+        idSuffix: 'fhl-history',
+        label: 'Filipinas Heritage Library · History of the Filipinas Heritage Library / Nielson Airport',
+        url: 'https://www.filipinaslibrary.org.ph/articles/history-of-the-filipinas-heritage-library/',
+        kind: 'official-secondary',
+      },
+    ],
+    heritage: {
+      designations: [
+        {
+          authority: 'National Historical Commission of the Philippines',
+          classification: 'Level II – Historical marker',
+          officialName: 'Nielson Tower',
+          dateOrYear: '1996',
+          sourceIds: ['nielson-tower:identity'],
+        },
+        {
+          authority: 'National Museum of the Philippines',
+          classification: 'Important Cultural Property',
+          officialName: 'Passenger Terminal and Control Tower of the old Nielson Airport',
+          sourceIds: ['nielson-tower:nmp-icp-2019'],
+        },
+        {
+          authority: 'National Commission for Culture and the Arts',
+          classification: 'Registered Property, City of Makati',
+          officialName: 'Nielson Tower',
+          sourceIds: ['nielson-tower:ncca-talapamana'],
+        },
+      ],
+      facts: [
+        {
+          label: 'Airport opening',
+          value: 'The airport complex was inaugurated in July 1937; the surviving tower served as its passenger terminal and control building.',
+          dateOrPeriod: '1937',
+          sourceIds: ['nielson-tower:identity', 'nielson-tower:fhl-history'],
+        },
+        {
+          label: 'Airfield closure',
+          value: 'Nielson Airport ceased operations in Makati in 1948, while the passenger terminal and control tower were preserved.',
+          dateOrPeriod: '1948',
+          sourceIds: ['nielson-tower:fhl-history'],
+        },
+        {
+          label: 'Heritage-library reuse',
+          value: 'The tower became the home of the Filipinas Heritage Library in 1996; the library moved to Ayala Museum in 2013.',
+          dateOrPeriod: '1996–2013',
+          sourceIds: ['nielson-tower:fhl-history'],
+        },
+      ],
+    },
     accessClass: 'public-access-private-managed',
     sourceUrl: 'https://philhistoricsites.nhcp.gov.ph/registry_database/nielson-tower/',
     sourceLabel: 'NHCP · Nielson Tower historical marker',
@@ -1351,6 +1593,37 @@ export const civicAssets: CivicAsset[] = [
     },
     secondaryCategories: ['religious-heritage', 'historical-marker', 'marked-structure'],
     sourceKind: 'official-secondary',
+    heritage: {
+      designations: [
+        {
+          authority: 'National Historical Commission of the Philippines',
+          classification: 'Level II – Historical marker',
+          officialName: 'Dambana ng Banal na Krus',
+          dateOrYear: '1991',
+          sourceIds: ['dambana-ng-banal-na-krus:identity'],
+        },
+      ],
+      facts: [
+        {
+          label: 'Original chapel',
+          value: 'The NHCP marker records an earlier nipa-and-bamboo chapel built in Matungaw in 1882.',
+          dateOrPeriod: '1882',
+          sourceIds: ['dambana-ng-banal-na-krus:identity'],
+        },
+        {
+          label: 'Move to present site',
+          value: 'The shrine was transferred to its present site in 1918.',
+          dateOrPeriod: '1918',
+          sourceIds: ['dambana-ng-banal-na-krus:identity'],
+        },
+        {
+          label: 'Parish status',
+          value: 'Holy Cross became a full parish on 24 February 1982.',
+          dateOrPeriod: '1982',
+          sourceIds: ['dambana-ng-banal-na-krus:identity'],
+        },
+      ],
+    },
     accessClass: 'public-access-private-managed',
     sourceUrl: 'https://philhistoricsites.nhcp.gov.ph/registry_database/dambana-ng-banal-na-krus/',
     sourceLabel: 'NHCP · Dambana ng Banal na Krus historical marker',
@@ -1370,6 +1643,37 @@ export const civicAssets: CivicAsset[] = [
     authority: 'Ayala Foundation, Inc.',
     address: 'Makati Avenue corner De La Rosa Street, Greenbelt Park, Barangay San Lorenzo, Makati City',
     secondaryCategories: ['museum', 'cultural-institution'],
+    sourceKind: 'official-secondary',
+    additionalSources: [
+      {
+        idSuffix: 'museum-history',
+        label: 'Ayala Museum · Diorama Experience of Philippine History · museum history',
+        url: 'https://shop.ayalamuseum.org/products/diorama-experience-of-philippine-history-2025-edition',
+        kind: 'official-secondary',
+      },
+      {
+        idSuffix: 'fhl-history',
+        label: 'Filipinas Heritage Library · History of the Filipinas Heritage Library',
+        url: 'https://www.filipinaslibrary.org.ph/articles/history-of-the-filipinas-heritage-library/',
+        kind: 'official-secondary',
+      },
+    ],
+    heritage: {
+      facts: [
+        {
+          label: 'Museum opening',
+          value: 'Ayala Museum opened to the public in 1974.',
+          dateOrPeriod: '1974',
+          sourceIds: ['ayala-museum:museum-history'],
+        },
+        {
+          label: 'Filipinas Heritage Library',
+          value: 'Since 2013, the sixth floor of Ayala Museum has been the home of the Filipinas Heritage Library.',
+          dateOrPeriod: '2013–present',
+          sourceIds: ['ayala-museum:fhl-history'],
+        },
+      ],
+    },
     accessClass: 'public-access-private-managed',
     sourceUrl: 'https://shop.ayalamuseum.org/',
     sourceLabel: 'Ayala Museum · official site and contact information',
@@ -1954,6 +2258,13 @@ const placeSourcesFor = (asset: CivicAsset): PlaceSource[] => {
       kind: 'reference-map',
     });
   }
+  for (const source of asset.additionalSources ?? []) {
+    const { idSuffix, ...details } = source;
+    sources.push({
+      id: asset.id + ':' + idSuffix,
+      ...details,
+    });
+  }
   return sources;
 };
 
@@ -1973,6 +2284,20 @@ const placeAssertionsFor = (asset: CivicAsset): PlaceAssertion[] => {
       evidenceStrength: 'direct',
     });
   }
+  asset.heritage?.designations?.forEach((designation, index) => {
+    assertions.push({
+      fieldPaths: ['heritage.designations.' + index],
+      sourceIds: designation.sourceIds,
+      evidenceStrength: 'direct',
+    });
+  });
+  asset.heritage?.facts?.forEach((fact, index) => {
+    assertions.push({
+      fieldPaths: ['heritage.facts.' + index],
+      sourceIds: fact.sourceIds,
+      evidenceStrength: 'direct',
+    });
+  });
   return assertions;
 };
 
@@ -2002,6 +2327,7 @@ export const placeRegistry: PlaceRegistryRecord[] = civicAssets.map((asset): Pla
   summary: asset.subtitle,
   primaryCategory: asset.type,
   secondaryCategories: asset.secondaryCategories,
+  heritage: asset.heritage,
   aliases: asset.aliases?.map(name => ({
     name,
     kind: asset.aliasKinds?.[name] ?? 'unclassified',
