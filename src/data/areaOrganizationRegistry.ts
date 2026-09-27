@@ -50,16 +50,6 @@ export interface CivicAreaAssertion {
   note?: string;
 }
 
-export interface CivicAreaGeometry {
-  kind:
-    | 'official-boundary'
-    | 'source-defined-boundary'
-    | 'approximate-boundary';
-  geometryRef: string;
-  sourceIds: string[];
-  note?: string;
-}
-
 export interface CivicAreaAttribute {
   label: string;
   value: string;
@@ -81,10 +71,11 @@ export interface CivicAreaRecord {
   barangaySlugs: string[];
 
   /**
-   * Optional sourced geometry. Area records do not require a point,
-   * centroid or polygon in order to exist canonically.
+   * Optional repository-owned renderable geometry artifact.
+   * Area records do not require a point, centroid or polygon to exist
+   * canonically. Geometry is stored separately in areaGeometry.ts.
    */
-  geometry?: CivicAreaGeometry;
+  geometryId?: string;
 
   attributes?: CivicAreaAttribute[];
 
@@ -268,10 +259,6 @@ export const validateAreaOrganizationRegistry = ({
       )
     );
 
-    if (area.geometry) {
-      nonEmpty(area.geometry.geometryRef, 'area geometry reference');
-      requireSources(area.geometry.sourceIds, 'Area geometry ' + area.id);
-    }
   }
 
   for (const organization of organizations) {
