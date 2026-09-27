@@ -53,6 +53,14 @@ const accessLabel = {
   unknown: 'Access not yet classified',
 } as const;
 
+const mediaReuseLabel = {
+  'reusable-with-attribution': 'Reusable with attribution',
+  'public-domain': 'Public domain',
+  'link-only': 'Link only',
+  'permission-required': 'Permission required',
+  unknown: 'Reuse status unknown',
+} as const;
+
 export default function CivicAsset() {
   const { assetId } = useParams();
   const [searchParams] = useSearchParams();
@@ -125,6 +133,7 @@ export default function CivicAsset() {
   const relatedHistoryEvents = makatiHistory.filter(event =>
     event.relations?.placeIds?.includes(place.id)
   );
+  const primaryMedia = place.media?.[0];
 
   return (
     <>
@@ -230,11 +239,61 @@ export default function CivicAsset() {
       <Section className="bg-[#f5f8f2]" id="place-information">
         <div className="grid gap-8 xl:grid-cols-[1.05fr_0.95fr]">
           {entityKind === 'place' ? (
-            <CivicMapEmbed
-              lat={place.location.point?.lat ?? asset.lat}
-              lng={place.location.point?.lng ?? asset.lng}
-              title={place.name}
-            />
+            <div className="space-y-4">
+              {primaryMedia && (
+                <figure className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
+                  <img
+                    src={primaryMedia.src}
+                    alt={primaryMedia.alt}
+                    width={1400}
+                    height={933}
+                    loading="lazy"
+                    decoding="async"
+                    referrerPolicy="no-referrer"
+                    className="aspect-[16/9] w-full object-cover"
+                    style={{ objectPosition: primaryMedia.objectPosition ?? '50% 50%' }}
+                  />
+                  <figcaption className="space-y-2 px-4 py-3">
+                    <div>
+                      <div className="font-extrabold text-gray-950">
+                        {primaryMedia.title}
+                      </div>
+                      {primaryMedia.caption && (
+                        <p className="mt-1 text-sm leading-relaxed text-gray-600">
+                          {primaryMedia.caption}
+                        </p>
+                      )}
+                    </div>
+                    <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs text-gray-500">
+                      {primaryMedia.date && <span>{primaryMedia.date}</span>}
+                      <a
+                        href={primaryMedia.sourceUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="font-semibold text-primary-700 underline underline-offset-2"
+                      >
+                        {primaryMedia.credit}
+                      </a>
+                      <a
+                        href={primaryMedia.licenseUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="underline underline-offset-2"
+                      >
+                        {primaryMedia.license}
+                      </a>
+                      <span>{mediaReuseLabel[primaryMedia.reuseStatus]}</span>
+                    </div>
+                  </figcaption>
+                </figure>
+              )}
+
+              <CivicMapEmbed
+                lat={place.location.point?.lat ?? asset.lat}
+                lng={place.location.point?.lng ?? asset.lng}
+                title={place.name}
+              />
+            </div>
           ) : (
             <div className="rounded-2xl border border-primary-100 bg-white p-6">
               <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
