@@ -3,6 +3,7 @@ import { Link, useParams, useSearchParams } from 'react-router';
 import {
   AlertTriangle,
   ArrowLeft,
+  BookOpen,
   Building2,
   ClipboardCheck,
   ExternalLink,
@@ -34,6 +35,7 @@ import {
   accountabilityEntries,
   accountabilityStatusLabel,
 } from '../data/accountability';
+import { makatiHistory } from '../data/makatiHistory';
 
 const verificationLabel = {
   verified: 'Verified',
@@ -107,6 +109,9 @@ export default function CivicAsset() {
       );
       return entry ? [{ relationship, entry }] : [];
     });
+  const relatedHistoryEvents = makatiHistory.filter(event =>
+    event.relations?.placeIds?.includes(place.id)
+  );
 
   return (
     <>
@@ -317,6 +322,35 @@ export default function CivicAsset() {
                     >
                       {source.label} <ExternalLink className="h-3.5 w-3.5" />
                     </a>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {relatedHistoryEvents.length > 0 && (
+              <div className="mt-6 border-t border-gray-200 pt-5">
+                <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+                  Related history
+                </div>
+                <div className="mt-3 space-y-3">
+                  {relatedHistoryEvents.map(event => (
+                    <Link
+                      key={event.id}
+                      to={'/history#' + event.id}
+                      className="block rounded-xl border border-primary-100 bg-white p-4 hover:border-primary-300"
+                    >
+                      <div className="flex items-start gap-3">
+                        <BookOpen className="mt-0.5 h-4 w-4 shrink-0 text-primary-700" />
+                        <div>
+                          <div className="text-xs font-bold text-primary-700">
+                            {event.date}
+                          </div>
+                          <div className="mt-1 font-extrabold text-gray-950">
+                            {event.title}
+                          </div>
+                        </div>
+                      </div>
+                    </Link>
                   ))}
                 </div>
               </div>
