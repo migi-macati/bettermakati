@@ -118,21 +118,33 @@ export default function BarangayProfile() {
     },
     {
       label: 'Explore local places',
-      description: 'Public facilities, parks, streets and other mapped places in this barangay.',
+      description: 'Facilities, parks, streets and other mapped places nearby.',
       href: withBarangayScope('/civic-map', barangay.slug),
       icon: MapPin,
     },
     {
       label: 'Barangay government',
-      description: 'See the current council, hall contacts and official channels.',
+      description: 'Council members, hall contacts and official channels.',
       href: '#local-government',
       icon: Building2,
     },
     {
       label: 'Projects & records',
-      description: 'Open locally relevant projects, budgets, accountability records and statistics.',
+      description: 'Projects, budgets, accountability records and statistics.',
       href: withBarangayScope('/projects-budget', barangay.slug),
       icon: ClipboardCheck,
+    },
+    {
+      label: 'Report a local issue',
+      description: 'Start a non-emergency report tied to a local place or location.',
+      href: withBarangayScope('/civic-map/report', barangay.slug),
+      icon: Wrench,
+    },
+    {
+      label: 'Take part locally',
+      description: 'Suggest improvements, share sources or contribute local information.',
+      href: '#participate',
+      icon: Users,
     },
   ];
 
@@ -187,32 +199,33 @@ export default function BarangayProfile() {
         }
       />
 
-      <section className="border-b border-primary-900 bg-primary-800 py-12 text-white md:py-16">
-        <div className="container px-5 md:px-6 lg:px-8">
+      <section className="border-b border-primary-900 bg-primary-800 text-white">
+        <div className="container px-5 py-12 md:px-6 md:py-14 lg:px-8 lg:py-16 xl:py-20">
           <Link
             to="/barangays"
-            className="inline-flex items-center gap-1 text-sm font-bold text-primary-50 transition hover:text-secondary-300"
+            className="inline-flex min-h-11 items-center gap-1 text-sm font-bold text-primary-50 transition hover:text-secondary-300"
           >
             <ArrowLeft className="h-4 w-4" /> All barangays
           </Link>
 
-          <div className="mt-7 grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
-            <div>
-              <div className="mb-3 text-xs font-extrabold uppercase tracking-[0.12em] text-secondary-400 md:text-sm">
+          <div className="mt-5 grid gap-8 md:grid-cols-[minmax(0,1.04fr)_minmax(320px,0.96fr)] md:items-center md:gap-7 lg:gap-10">
+            <div className="min-w-0">
+              <div className="mb-3 text-xs font-extrabold uppercase tracking-[0.12em] text-secondary-300 md:text-sm">
                 Better{compactEditionName(barangay.name)} · Barangay homepage
               </div>
-              <h1 className="text-4xl font-extrabold leading-[1.02] tracking-tight text-white md:text-6xl">
+              <h1 className="max-w-4xl text-5xl font-extrabold leading-[0.98] tracking-tight text-white md:text-5xl lg:text-6xl xl:text-7xl">
                 Let&apos;s make {barangay.name}{' '}
                 <span className="text-secondary-500">Better!</span>
               </h1>
-              <p className="mt-4 max-w-2xl text-lg leading-relaxed text-primary-50">
+              <p className="mt-5 max-w-3xl text-lg leading-relaxed text-primary-50 md:text-xl">
                 Find local services, officials, public places, projects, records and
                 ways to take part in Barangay {barangay.name}.
               </p>
-              <div className="mt-6 flex flex-wrap gap-3">
+
+              <div className="mt-7 flex flex-wrap gap-3">
                 <Link
                   to={withBarangayScope('/services', barangay.slug)}
-                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-white px-4 py-2.5 text-sm font-bold text-primary-800 transition hover:bg-primary-50"
+                  className="brand-btn-primary"
                 >
                   Find a service <ArrowRight className="h-4 w-4" />
                 </Link>
@@ -220,164 +233,128 @@ export default function BarangayProfile() {
                   to={withBarangayScope('/civic-map', barangay.slug)}
                   className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-white/60 px-4 py-2.5 text-sm font-bold text-white transition hover:border-secondary-400 hover:text-secondary-300"
                 >
-                  Explore local places
+                  Explore local places <ArrowRight className="h-4 w-4" />
                 </Link>
               </div>
+
+              <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-primary-50">
+                <span className="font-medium text-primary-100">Start with:</span>
+                <a href="#local-government" className="min-h-11 content-center font-semibold underline decoration-white/40 underline-offset-4 hover:text-secondary-300">
+                  Hall contacts
+                </a>
+                <Link
+                  to={withBarangayScope('/projects-budget', barangay.slug)}
+                  className="min-h-11 content-center font-semibold underline decoration-white/40 underline-offset-4 hover:text-secondary-300"
+                >
+                  Local projects
+                </Link>
+                <Link
+                  to={withBarangayScope('/civic-map', barangay.slug)}
+                  className="min-h-11 content-center font-semibold underline decoration-white/40 underline-offset-4 hover:text-secondary-300"
+                >
+                  Places
+                </Link>
+              </div>
+
               <LastReviewed
                 date={barangayProfilesReviewed}
                 note="Population: 2024 POPCEN · Council term: 2023–2026"
-                className="mt-5 rounded-xl bg-white/10 px-3 py-2 !text-primary-50 [&_strong]:!text-white [&_svg]:!text-secondary-400"
+                className="mt-4 rounded-xl bg-white/10 px-3 py-2 !text-primary-50 [&_strong]:!text-white [&_svg]:!text-secondary-400"
               />
             </div>
 
-            <div className="space-y-3">
-              {barangayPhotos.length > 0 && (
-                <PhotoCarousel
-                  images={barangayPhotos}
-                  title={'Around ' + barangay.name}
-                  compact
-                />
-              )}
-
-              <div className="grid grid-cols-2 gap-3">
-                <a
-                  href={psaBarangaySource}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="rounded-2xl border border-white/20 bg-white p-5"
-                >
-                  <div className="text-2xl font-extrabold text-primary-800">
-                    {barangay.population2024.toLocaleString('en-PH')}
-                  </div>
-                  <div className="mt-1 text-sm font-semibold text-gray-900">Population</div>
-                  <div className="mt-1 text-xs text-gray-500">2024 POPCEN</div>
-                </a>
-                <div className="rounded-2xl border border-white/20 bg-white p-5">
-                  <div className="text-2xl font-extrabold text-primary-800">
-                    {populationShare.toFixed(1)}%
-                  </div>
-                  <div className="mt-1 text-sm font-semibold text-gray-900">of Makati</div>
-                  <div className="mt-1 text-xs text-gray-500">2024 population</div>
-                </div>
-                <div className="col-span-2 rounded-2xl border border-white/20 bg-white p-5">
-                  <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
-                    Legislative district
-                  </div>
-                  <div className="mt-1 text-xl font-extrabold text-gray-950">
-                    {barangay.legislativeDistrict}
-                  </div>
-                </div>
+            <aside
+              className="min-w-0 rounded-3xl border border-secondary-200/70 bg-[#fffdf8] p-5 text-gray-950 shadow-[0_24px_64px_rgba(0,0,0,0.2)] md:p-5 lg:p-6"
+              aria-labelledby="barangay-what-brings-you-here"
+            >
+              <div className="text-xs font-extrabold uppercase tracking-[0.12em] text-primary-700">
+                Start here
               </div>
-            </div>
+              <h2
+                id="barangay-what-brings-you-here"
+                className="mt-1 text-2xl font-extrabold tracking-tight text-gray-950 md:text-3xl"
+              >
+                What brings you here?
+              </h2>
+
+              <div className="mt-4 divide-y divide-gray-200">
+                {quickActions.map(item => {
+                  const Icon = item.icon;
+                  return (
+                    <Link
+                      key={item.label}
+                      to={item.href}
+                      className="group flex min-h-[64px] items-center gap-3 py-2.5 first:pt-1 last:pb-1"
+                    >
+                      <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-primary-50 text-primary-700 transition group-hover:bg-primary-100">
+                        <Icon className="h-5 w-5" aria-hidden="true" />
+                      </span>
+                      <span className="min-w-0 flex-1">
+                        <span className="block text-sm font-extrabold leading-snug text-gray-950">
+                          {item.label}
+                        </span>
+                        <span className="mt-0.5 block text-xs leading-relaxed text-gray-600">
+                          {item.description}
+                        </span>
+                      </span>
+                      <ArrowRight
+                        className="h-4 w-4 shrink-0 text-secondary-700 transition group-hover:translate-x-0.5 group-hover:text-secondary-600"
+                        aria-hidden="true"
+                      />
+                    </Link>
+                  );
+                })}
+              </div>
+            </aside>
           </div>
         </div>
       </section>
 
-      <section className="bg-[#fffdf8] py-14">
-        <div className="container px-5 md:px-6 lg:px-8">
-          <div className="section-eyebrow">Start here</div>
-          <h2 className="text-3xl font-extrabold tracking-tight text-gray-950 md:text-4xl">
-            What brings you here?
-          </h2>
-          <div className="mt-7 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {quickActions.map(item => {
-              const Icon = item.icon;
-              return (
-                <Link key={item.label} to={item.href} className="home-service-card">
-                  <div className="home-service-card-icon">
-                    <Icon className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-gray-950">{item.label}</h3>
-                    <p className="mt-1 text-sm text-gray-600">{item.description}</p>
-                  </div>
-                  <ArrowRight className="ml-auto h-4 w-4 shrink-0 text-primary-600" />
-                </Link>
-              );
-            })}
+      {barangayPhotos.length > 0 && (
+        <section className="border-b border-primary-100 bg-[#fffdf8] py-8 md:py-10">
+          <div className="container px-5 md:px-6 lg:px-8">
+            <PhotoCarousel
+              images={barangayPhotos}
+              title={'Around ' + barangay.name}
+              compact
+              className="mx-auto max-w-6xl"
+            />
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
-      <section id="participate" className="bg-[#fffdf8] py-14">
+      <section className="border-b border-primary-100 bg-[#f5f8f2] py-10 md:py-12">
         <div className="container px-5 md:px-6 lg:px-8">
-          <div className="section-eyebrow">Participate locally</div>
-          <h2 className="text-3xl font-extrabold tracking-tight text-gray-950 md:text-4xl">
-            Take action in {barangay.name}
-          </h2>
-
-          <div className="mt-7 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-            <Link
-              to={withBarangayScope('/civic-map/report', barangay.slug)}
-              className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
-            >
-              <Wrench className="h-6 w-6 text-primary-700" />
-              <h3 className="mt-4 font-extrabold text-gray-950">Report a local problem</h3>
-              <p className="mt-2 text-sm leading-relaxed text-gray-600">
-                Start a non-emergency report and identify the affected place, segment or location.
-              </p>
-              <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
-                Start report <ArrowRight className="h-4 w-4" />
-              </span>
-            </Link>
-
-            <Link
-              to={withBarangayScope('/civic-map', barangay.slug) + '#places'}
-              className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
-            >
-              <MapPin className="h-6 w-6 text-primary-700" />
-              <h3 className="mt-4 font-extrabold text-gray-950">Suggest a place improvement</h3>
-              <p className="mt-2 text-sm leading-relaxed text-gray-600">
-                Choose a local civic place, review its community records and propose a specific improvement.
-              </p>
-              <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
-                Browse local places <ArrowRight className="h-4 w-4" />
-              </span>
-            </Link>
-
-            {localAuditPlaces.length > 0 ? (
-              <Link
-                to={civicAuditPilot.route}
-                className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
-              >
-                <ClipboardCheck className="h-6 w-6 text-primary-700" />
-                <h3 className="mt-4 font-extrabold text-gray-950">Record park accessibility</h3>
-                <p className="mt-2 text-sm leading-relaxed text-gray-600">
-                  {localAuditPlaces.length} pilot {localAuditPlaces.length === 1 ? 'park is' : 'parks are'} in {barangay.name}. Record entrance access, step-free access, seating and toilets.
-                </p>
-                <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
-                  Join the audit <ArrowRight className="h-4 w-4" />
-                </span>
-              </Link>
-            ) : (
-              <Link
-                to={'/get-involved?type=source&barangay=' + encodeURIComponent(barangay.slug) + '#submission'}
-                className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
-              >
-                <FileCheck2 className="h-6 w-6 text-primary-700" />
-                <h3 className="mt-4 font-extrabold text-gray-950">Add or correct local information</h3>
-                <p className="mt-2 text-sm leading-relaxed text-gray-600">
-                  Share a public source or flag information about {barangay.name} that needs correction.
-                </p>
-                <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
-                  Contribute information <ArrowRight className="h-4 w-4" />
-                </span>
-              </Link>
-            )}
-
+          <div className="section-eyebrow">Better{compactEditionName(barangay.name)} at a glance</div>
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 md:gap-5">
             <a
-              href="#local-government"
-              className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
+              href={psaBarangaySource}
+              target="_blank"
+              rel="noreferrer"
+              className="stat-card hover:border-primary-300 transition"
             >
-              <Building2 className="h-6 w-6 text-primary-700" />
-              <h3 className="mt-4 font-extrabold text-gray-950">Contact barangay government</h3>
-              <p className="mt-2 text-sm leading-relaxed text-gray-600">
-                Go to the verified hall contact details and official channels on this page.
-              </p>
-              <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
-                Barangay contacts <ArrowRight className="h-4 w-4" />
-              </span>
+              <div className="text-2xl font-extrabold text-primary-800 md:text-3xl">
+                {barangay.population2024.toLocaleString('en-PH')}
+              </div>
+              <div className="mt-1 font-semibold text-gray-900">Population</div>
+              <div className="mt-1 text-xs text-gray-500">2024 POPCEN</div>
             </a>
+            <div className="stat-card">
+              <div className="text-2xl font-extrabold text-primary-800 md:text-3xl">
+                {populationShare.toFixed(1)}%
+              </div>
+              <div className="mt-1 font-semibold text-gray-900">of Makati</div>
+              <div className="mt-1 text-xs text-gray-500">2024 population</div>
+            </div>
+            <div className="stat-card">
+              <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+                Legislative district
+              </div>
+              <div className="mt-2 text-xl font-extrabold text-gray-950">
+                {barangay.legislativeDistrict}
+              </div>
+              <div className="mt-1 text-xs text-gray-500">Current district</div>
+            </div>
           </div>
         </div>
       </section>
@@ -838,6 +815,90 @@ export default function BarangayProfile() {
           </div>
         </div>
       </section>
+
+      <section id="participate" className="bg-[#fffdf8] py-14">
+        <div className="container px-5 md:px-6 lg:px-8">
+          <div className="section-eyebrow">Participate locally</div>
+          <h2 className="text-3xl font-extrabold tracking-tight text-gray-950 md:text-4xl">
+            Take action in {barangay.name}
+          </h2>
+
+          <div className="mt-7 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            <Link
+              to={withBarangayScope('/civic-map/report', barangay.slug)}
+              className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
+            >
+              <Wrench className="h-6 w-6 text-primary-700" />
+              <h3 className="mt-4 font-extrabold text-gray-950">Report a local problem</h3>
+              <p className="mt-2 text-sm leading-relaxed text-gray-600">
+                Start a non-emergency report and identify the affected place, segment or location.
+              </p>
+              <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
+                Start report <ArrowRight className="h-4 w-4" />
+              </span>
+            </Link>
+
+            <Link
+              to={withBarangayScope('/civic-map', barangay.slug) + '#places'}
+              className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
+            >
+              <MapPin className="h-6 w-6 text-primary-700" />
+              <h3 className="mt-4 font-extrabold text-gray-950">Suggest a place improvement</h3>
+              <p className="mt-2 text-sm leading-relaxed text-gray-600">
+                Choose a local civic place, review its community records and propose a specific improvement.
+              </p>
+              <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
+                Browse local places <ArrowRight className="h-4 w-4" />
+              </span>
+            </Link>
+
+            {localAuditPlaces.length > 0 ? (
+              <Link
+                to={civicAuditPilot.route}
+                className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
+              >
+                <ClipboardCheck className="h-6 w-6 text-primary-700" />
+                <h3 className="mt-4 font-extrabold text-gray-950">Record park accessibility</h3>
+                <p className="mt-2 text-sm leading-relaxed text-gray-600">
+                  {localAuditPlaces.length} pilot {localAuditPlaces.length === 1 ? 'park is' : 'parks are'} in {barangay.name}. Record entrance access, step-free access, seating and toilets.
+                </p>
+                <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
+                  Join the audit <ArrowRight className="h-4 w-4" />
+                </span>
+              </Link>
+            ) : (
+              <Link
+                to={'/get-involved?type=source&barangay=' + encodeURIComponent(barangay.slug) + '#submission'}
+                className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
+              >
+                <FileCheck2 className="h-6 w-6 text-primary-700" />
+                <h3 className="mt-4 font-extrabold text-gray-950">Add or correct local information</h3>
+                <p className="mt-2 text-sm leading-relaxed text-gray-600">
+                  Share a public source or flag information about {barangay.name} that needs correction.
+                </p>
+                <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
+                  Contribute information <ArrowRight className="h-4 w-4" />
+                </span>
+              </Link>
+            )}
+
+            <a
+              href="#local-government"
+              className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
+            >
+              <Building2 className="h-6 w-6 text-primary-700" />
+              <h3 className="mt-4 font-extrabold text-gray-950">Contact barangay government</h3>
+              <p className="mt-2 text-sm leading-relaxed text-gray-600">
+                Go to the verified hall contact details and official channels on this page.
+              </p>
+              <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
+                Barangay contacts <ArrowRight className="h-4 w-4" />
+              </span>
+            </a>
+          </div>
+        </div>
+      </section>
+
 
       <section className="bg-white py-14">
         <div className="container px-5 md:px-6 lg:px-8">
