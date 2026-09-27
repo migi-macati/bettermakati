@@ -15,7 +15,11 @@ const civicMapPageText = await readFile('src/pages/CivicMap.tsx', 'utf8');
 const problems = [];
 
 const assetBlock = placeText.split('export const civicAssets')[1]?.split('const geometryTypeFor')[0] ?? '';
-const assetIds = [...assetBlock.matchAll(/\bid:\s*'([^']+)'/g)].map(match => match[1]);
+// Match top-level Civic Map records only. Nested media objects also carry IDs
+// and must not inflate the asset count.
+const assetIds = [...assetBlock.matchAll(/^    id:\s*'([^']+)'/gm)].map(
+  match => match[1]
+);
 const duplicateAssets = assetIds.filter((id, index) => assetIds.indexOf(id) !== index);
 if (duplicateAssets.length) {
   problems.push('Duplicate Civic Map asset IDs: ' + [...new Set(duplicateAssets)].join(', '));
@@ -738,11 +742,19 @@ for (const marker of [
   'stroke-secondary-600',
   'to="/mobility#transport-anchors"',
   "to={'/civic-map/' + connection.placeId}",
-  'mobility services without published',
-  'without invented map lines',
 ]) {
   if (!areaContextMapText.includes(marker)) {
     problems.push('Civic Map mobility context marker missing: ' + marker);
+  }
+}
+
+const normalizedAreaContextMapText = areaContextMapText.replace(/\s+/g, ' ');
+for (const phrase of [
+  'Unmapped mobility services without published geometry are not drawn either.',
+  'Geometry-less jeepney, bus and UV records remain searchable in the registry without invented map lines.',
+]) {
+  if (!normalizedAreaContextMapText.includes(phrase)) {
+    problems.push('Civic Map mobility context prose missing: ' + phrase);
   }
 }
 

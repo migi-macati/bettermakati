@@ -69,6 +69,12 @@ relationships appeared as 87. The matcher is now restricted to top-level
 relationship IDs. The frozen expectation remains **29** and no area relationship
 data is changed.
 
+The Civic Map checker had the same issue in its asset counter: six nested media
+objects have their own IDs, so 93 top-level civic records were miscounted as 99.
+The asset matcher is now top-level only; all 93 current records retain
+coordinates. W5-4e3's new explanatory prose check is also whitespace-normalized
+so ordinary source formatting cannot invalidate the semantic guard.
+
 These repairs restore the validation baseline needed to test W5-4e3 itself.
 
 ## Automated checks
