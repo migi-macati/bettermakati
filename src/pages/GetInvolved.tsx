@@ -264,7 +264,7 @@ export default function GetInvolved() {
       <Section id="submission" className="bg-[#f5f8f2]">
         <div className="max-w-3xl mx-auto">
           <div className="section-eyebrow">Submission</div>
-          <Heading>Send something to BetterMakati</Heading>
+          <Heading level={2}>Send something to BetterMakati</Heading>
           <p className="mt-2 text-sm leading-relaxed text-gray-600">
             Successful submissions return a public BetterMakati tracking link when
             the native workflow is available. This is not a City Government case

@@ -1572,7 +1572,8 @@ test('ecosystem fallbacks preserve the query and leave an internal recovery path
 
   await page.getByRole('button', { name: 'Report a missing result', exact: true }).click();
   await expect(page).toHaveURL(/\/get-involved\?type=idea&tool=saan-ako-lalapit&subject=Missing(?:%20|\+)search(?:%20|\+)result/);
-  await expect(page.getByRole('heading', { level: 1 })).toContainText(/Help improve BetterMakati/i);
+  await expect(page.getByRole('heading', { level: 1, name: 'How do you want to help?' })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 2, name: 'Send something to BetterMakati' })).toBeVisible();
 
   await page.goto(baseURL + '/participate');
   for (const name of [/Open BetterLGU/i, /Open Petitions\.ph/i, /Open OpenBayan/i]) {
