@@ -72,9 +72,9 @@ const registryEntityIds = [
   ...registryAssetBlock.matchAll(/\n\s+id:\s*'([^']+)',\n\s+title:/g),
 ].map(match => match[1]);
 
-if (indexedEntityIds.length !== 88 || registryEntityIds.length !== 88) {
+if (indexedEntityIds.length !== 93 || registryEntityIds.length !== 93) {
   problems.push(
-    'Observation civic-entity index must preserve all 88 registry IDs.'
+    'Observation civic-entity index must preserve all 93 registry IDs.'
   );
 }
 const missingEntityIndexIds = registryEntityIds.filter(id => !indexedEntityIds.includes(id));
