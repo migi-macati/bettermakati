@@ -4,11 +4,13 @@ const [
   geometrySource,
   systemsSource,
   routesSource,
+  placeSource,
   packageSource,
 ] = await Promise.all([
   readFile('src/data/mobilityRouteGeometry.ts', 'utf8'),
   readFile('src/data/mobilitySystems.ts', 'utf8'),
   readFile('src/data/mobilityRoutes.ts', 'utf8'),
+  readFile('src/data/placeRegistry.ts', 'utf8'),
   readFile('package.json', 'utf8'),
 ]);
 
@@ -70,14 +72,38 @@ if (!routesSource.includes('geometryArtifactId?: string;')) {
   );
 }
 
-if (
-  routesSource.includes(
-    'W5-4c4 must not publish route geometry before the geometry workstream'
-  )
-) {
+const geometrySourceBlock =
+  geometrySource
+    .split(
+      'export const mobilityGeometrySources: MobilityGeometrySource[] = ['
+    )[1]
+    ?.split(
+      '\n];\n\n/**\n * W5-4e1 establishes'
+    )[0] ?? '';
+
+const geometrySourceIds = [
+  ...geometrySourceBlock.matchAll(/^    id: '([^']+)',$/gm),
+].map(match => match[1]);
+
+const expectedGeometrySources = [
+  'osm-mrt3-route-master-8000255',
+  'osm-mrt3-southbound-route-109159',
+  'osm-mrt3-rail-exposure-snapshot',
+  'traintracks-mrt3-geojson-crosscheck',
+];
+
+if (geometrySourceIds.length !== 4) {
   problems.push(
-    'Legacy W5-4c4 geometry prohibition remains after route-geometry architecture was introduced.'
+    'W5-4e2 expects exactly four MRT-3 geometry/reference sources; found ' +
+      geometrySourceIds.length +
+      '.'
   );
+}
+
+for (const sourceId of expectedGeometrySources) {
+  if (!geometrySourceIds.includes(sourceId)) {
+    problems.push('Missing MRT-3 geometry source: ' + sourceId);
+  }
 }
 
 const artifactBlock =
@@ -89,24 +115,225 @@ const artifactBlock =
       '\n\nconst systemSourceIds'
     )[0] ?? '';
 
-if (!artifactBlock.includes('[];')) {
+const artifactIds = [
+  ...artifactBlock.matchAll(/^      id: '([^']+)',$/gm),
+].map(match => match[1]);
+
+if (artifactIds.length !== 1) {
   problems.push(
-    'W5-4e1 must keep route geometry artifacts empty until a coordinate trace is independently QAed.'
+    'W5-4e2 expects exactly one published mobility geometry artifact; found ' +
+      artifactIds.length +
+      '.'
   );
 }
 
-const geometrySourceBlock =
-  geometrySource
+if (!artifactIds.includes('mrt3-makati-alignment-2026-09')) {
+  problems.push('MRT-3 Makati alignment artifact is missing.');
+}
+
+for (const marker of [
+  "ownerType: 'service'",
+  "ownerId: 'mrt3'",
+  "kind: 'infrastructure-alignment'",
+  "coverage: 'makati-segment'",
+  "type: 'LineString'",
+  "registry: 'system'",
+  "sourceId: 'mrt3-about-2026'",
+  "sourceId: 'osm-mrt3-route-master-8000255'",
+  "sourceId: 'osm-mrt3-southbound-route-109159'",
+  "sourceId: 'osm-mrt3-rail-exposure-snapshot'",
+  'not a survey, engineering or cadastral product',
+  'not a legal Makati-boundary clip',
+  'do not depict the full width or both tracks of the railway',
+  'member ways 810673631, 642764191, 547163412, 810673628, 810673626, 810634546, 799249439, 642764192, 810634542, 642764189 and 38192006',
+  'TrainTracks MRT-3 GeoJSON feature Q13422345',
+  'Canonical BetterMakati MRT-3 station points: Guadalupe, Buendia, Ayala and Magallanes',
+]) {
+  if (!artifactBlock.includes(marker)) {
+    problems.push('MRT-3 geometry evidence marker missing: ' + marker);
+  }
+}
+
+const coordinatePairs = [
+  ...artifactBlock.matchAll(
+    /\[([0-9]+\.[0-9]+),\s*([0-9]+\.[0-9]+)\]/g
+  ),
+].map(match => [Number(match[1]), Number(match[2])]);
+
+if (coordinatePairs.length !== 56) {
+  problems.push(
+    'MRT-3 Makati alignment should contain 56 OSM-derived positions; found ' +
+      coordinatePairs.length +
+      '.'
+  );
+}
+
+if (coordinatePairs.length) {
+  const first = coordinatePairs[0];
+  const last = coordinatePairs[coordinatePairs.length - 1];
+
+  if (
+    first[0] !== 121.0464023 ||
+    first[1] !== 14.5701072
+  ) {
+    problems.push(
+      'MRT-3 Makati alignment north endpoint changed unexpectedly.'
+    );
+  }
+
+  if (
+    last[0] !== 121.0174488 ||
+    last[1] !== 14.5408093
+  ) {
+    problems.push(
+      'MRT-3 Makati alignment south endpoint changed unexpectedly.'
+    );
+  }
+
+  if (
+    !coordinatePairs.every(
+      ([lng, lat]) =>
+        lng >= 121.017 &&
+        lng <= 121.047 &&
+        lat >= 14.540 &&
+        lat <= 14.571
+    )
+  ) {
+    problems.push(
+      'MRT-3 Makati alignment contains a coordinate outside its reviewed local envelope.'
+    );
+  }
+}
+
+/**
+ * QA canonical station points against the stored track line using a local
+ * equirectangular projection. This is not a survey-distance calculation; it
+ * simply catches a polyline that no longer passes the four Makati stations.
+ */
+const stationIds = [
+  'mrt3-guadalupe',
+  'mrt3-buendia',
+  'mrt3-ayala',
+  'mrt3-magallanes',
+];
+
+const stationPoints = new Map();
+
+for (const stationId of stationIds) {
+  const start = placeSource.indexOf("id: '" + stationId + "'");
+  if (start < 0) {
+    problems.push('Missing canonical MRT-3 station Place: ' + stationId);
+    continue;
+  }
+
+  const block = placeSource.slice(start, start + 2200);
+  const lat = Number(block.match(/\blat:\s*([0-9.]+)/)?.[1]);
+  const lng = Number(block.match(/\blng:\s*([0-9.]+)/)?.[1]);
+
+  if (!Number.isFinite(lat) || !Number.isFinite(lng)) {
+    problems.push(
+      'Could not read canonical station coordinates: ' + stationId
+    );
+    continue;
+  }
+
+  stationPoints.set(stationId, { lat, lng });
+}
+
+const earthRadius = 6371000;
+const referenceLatitude = (14.555 * Math.PI) / 180;
+
+const xy = ([lng, lat]) => [
+  earthRadius *
+    ((lng * Math.PI) / 180) *
+    Math.cos(referenceLatitude),
+  earthRadius * ((lat * Math.PI) / 180),
+];
+
+const distancePointToSegment = (point, start, end) => {
+  const [px, py] = xy([point.lng, point.lat]);
+  const [ax, ay] = xy(start);
+  const [bx, by] = xy(end);
+  const dx = bx - ax;
+  const dy = by - ay;
+  const denominator = dx * dx + dy * dy;
+  const rawT =
+    denominator === 0
+      ? 0
+      : ((px - ax) * dx + (py - ay) * dy) / denominator;
+  const t = Math.max(0, Math.min(1, rawT));
+  return Math.hypot(
+    px - (ax + t * dx),
+    py - (ay + t * dy)
+  );
+};
+
+const stationDistances = new Map();
+
+for (const [stationId, point] of stationPoints) {
+  let minimum = Number.POSITIVE_INFINITY;
+
+  for (let index = 0; index < coordinatePairs.length - 1; index += 1) {
+    minimum = Math.min(
+      minimum,
+      distancePointToSegment(
+        point,
+        coordinatePairs[index],
+        coordinatePairs[index + 1]
+      )
+    );
+  }
+
+  stationDistances.set(stationId, minimum);
+
+  if (minimum > 20) {
+    problems.push(
+      'MRT-3 alignment is more than 20 m from canonical station point ' +
+        stationId +
+        ': ' +
+        Math.round(minimum) +
+        ' m.'
+    );
+  }
+}
+
+const serviceRecordBlock =
+  systemsSource
     .split(
-      'export const mobilityGeometrySources: MobilityGeometrySource[] ='
+      'export const mobilityServices: MobilityServiceRecord[] = ['
     )[1]
     ?.split(
-      '\n\n/**\n * W5-4e1 establishes'
+      '\n];\n\nexport const validateMobilityServices'
     )[0] ?? '';
 
-if (!geometrySourceBlock.includes('[];')) {
+const mrt3Block =
+  serviceRecordBlock
+    .split("id: 'mrt3'")[1]
+    ?.split("\n  },")[0] ?? '';
+
+if (
+  !mrt3Block.includes(
+    "geometryArtifactId: 'mrt3-makati-alignment-2026-09'"
+  )
+) {
   problems.push(
-    'Geometry-specific sources should not be populated before an artifact actually uses them.'
+    'Canonical MRT-3 service does not reciprocally reference its geometry artifact.'
+  );
+}
+
+const attachedServiceGeometryIds = [
+  ...serviceRecordBlock.matchAll(
+    /geometryArtifactId:\s*'([^']+)'/g
+  ),
+].map(match => match[1]);
+
+if (
+  attachedServiceGeometryIds.length !== 1 ||
+  attachedServiceGeometryIds[0] !==
+    'mrt3-makati-alignment-2026-09'
+) {
+  problems.push(
+    'W5-4e2 should attach geometry only to MRT-3 service.'
   );
 }
 
@@ -119,35 +346,12 @@ const routeRecordBlock =
       '\n];\n\nexport const validateMobilityRouteCorridors'
     )[0] ?? '';
 
-const serviceRecordBlock =
-  systemsSource
-    .split(
-      'export const mobilityServices: MobilityServiceRecord[] = ['
-    )[1]
-    ?.split(
-      '\n];\n\nexport const validateMobilityServices'
-    )[0] ?? '';
-
 if (
-  /geometryArtifactId:\s*['"][^'"]+['"]/.test(routeRecordBlock) ||
-  /geometryArtifactId:\s*['"][^'"]+['"]/.test(serviceRecordBlock)
+  /geometryArtifactId:\s*'[^']+'/.test(routeRecordBlock)
 ) {
   problems.push(
-    'W5-4e1 architecture step must not attach an unreviewed geometry artifact to a route or service.'
+    'W5-4e2 must not attach geometry to jeepney/bus/UV route records.'
   );
-}
-
-for (const forbidden of [
-  'representative point',
-  'station points are enough',
-  'endpoint names are enough',
-]) {
-  if (geometrySource.toLowerCase().includes(forbidden.toLowerCase())) {
-    problems.push(
-      'Route-geometry architecture contains unsafe geometry shortcut language: ' +
-        forbidden
-    );
-  }
 }
 
 for (const requiredDoctrine of [
@@ -186,22 +390,28 @@ if (
 
 if (problems.length) {
   console.error(
-    'Mobility route-geometry architecture check failed:\n- ' +
+    'Mobility route-geometry check failed:\n- ' +
       problems.join('\n- ')
   );
   process.exit(1);
 }
 
+const distanceSummary = [...stationDistances.entries()]
+  .map(
+    ([stationId, distance]) =>
+      stationId + '=' + Math.round(distance) + 'm'
+  )
+  .join(', ');
+
 console.log(
   [
-    'Mobility route-geometry architecture check passed:',
-    'LineString + MultiLineString supported',
-    'service + route owners supported',
-    'source registry separation intact',
-    'Metro Manila coordinate envelope guarded',
-    'owner reciprocity guarded',
-    '0 published geometry artifacts',
-    '0 invented route points/polylines',
+    'Mobility route-geometry check passed:',
+    artifactIds.length + ' published artifact',
+    coordinatePairs.length + ' MRT-3 positions',
+    'MRT-3 service reciprocity intact',
+    'station proximity ' + distanceSummary,
+    '4 geometry/reference sources',
+    '0 road-route geometry artifacts',
     'build + quality gate active',
   ].join(' ')
 );
