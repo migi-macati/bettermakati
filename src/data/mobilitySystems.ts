@@ -234,6 +234,7 @@ export const mobilityServices: MobilityServiceRecord[] = [
         sourceIds: ['mrt3-about-2026'],
       },
     ],
+    geometryArtifactId: 'mrt3-makati-alignment-2026-09',
     placeConnections: [
       {
         placeId: 'mrt3-guadalupe',
