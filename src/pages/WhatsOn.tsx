@@ -12,6 +12,7 @@ import { Heading } from '../components/ui/Heading';
 import SEO from '../components/SEO';
 import LastReviewed from '../components/ui/LastReviewed';
 import SharePage from '../components/ui/SharePage';
+import { resolveDistrictReference } from '../data/districtReferences';
 
 const eventSources = [
   {
@@ -23,24 +24,27 @@ const eventSources = [
   },
   {
     title: 'Make It Makati',
-    description: 'CBD, Ayala Center and Circuit lifestyle and event updates.',
+    description: 'Lifestyle and event updates across its Makati district coverage.',
     href: 'https://makeitmakati.com/',
     icon: CalendarDays,
     type: 'District guide',
+    areaIds: ['makati-cbd', 'ayala-center', 'circuit-makati'],
   },
   {
     title: 'Ayala Malls',
-    description: 'Promos and events for Glorietta, Greenbelt and Circuit.',
+    description: 'Promos and events for major Makati mall venues.',
     href: 'https://www.ayalamalls.com/explore/ayala-glorietta/store/AYALA-GLORIETTA-1326818',
     icon: ShoppingBag,
     type: 'Venue source',
+    areaIds: ['ayala-center', 'circuit-makati'],
   },
   {
-    title: 'Power Plant Mall / Rockwell',
-    description: 'Rockwell news, events and Proscenium updates.',
+    title: 'Power Plant Mall',
+    description: 'Mall and Proscenium event updates.',
     href: 'https://e-rockwell.com/property/proscenium-theater/',
     icon: CalendarDays,
     type: 'Venue source',
+    areaIds: ['rockwell-center'],
   },
   {
     title: 'Century City Mall',
@@ -48,6 +52,7 @@ const eventSources = [
     href: 'https://www.centurycitymall.com.ph/news-and-events/',
     icon: ShoppingBag,
     type: 'Venue source',
+    areaIds: ['century-city'],
   },
 ];
 
@@ -115,26 +120,49 @@ export default function WhatsOn() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-7">
           {eventSources.map(source => {
             const Icon = source.icon;
+            const areas = (source.areaIds ?? []).map(areaId =>
+              resolveDistrictReference({ type: 'area', id: areaId })
+            );
+
             return (
-              <a
+              <article
                 key={source.title}
-                href={source.href}
-                target="_blank"
-                rel="noreferrer"
                 className="rounded-2xl border border-primary-100 bg-white p-5 hover:border-primary-300 hover:shadow-sm transition"
               >
                 <Icon className="h-6 w-6 text-primary-700" />
                 <div className="mt-4 text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
                   {source.type}
                 </div>
-                <h3 className="mt-1 font-extrabold text-lg text-gray-950">
+                <h3 className="mt-1 text-lg font-extrabold text-gray-950">
                   {source.title}
                 </h3>
-                <p className="text-sm text-gray-600 mt-1">{source.description}</p>
-                <span className="inline-flex items-center gap-1 text-sm font-bold text-primary-700 mt-4">
+                <p className="mt-1 text-sm text-gray-600">
+                  {source.description}
+                </p>
+
+                {areas.length > 0 && (
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {areas.map(area => (
+                      <Link
+                        key={area.ref.id}
+                        to={area.href}
+                        className="rounded-full border border-primary-200 px-3 py-1.5 text-xs font-bold text-primary-700"
+                      >
+                        {area.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+
+                <a
+                  href={source.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700"
+                >
                   Open <ExternalLink className="h-3.5 w-3.5" />
-                </span>
-              </a>
+                </a>
+              </article>
             );
           })}
         </div>
