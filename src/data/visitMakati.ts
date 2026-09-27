@@ -14,15 +14,10 @@ export interface VisitorPlace {
 }
 
 export interface HeritageSite {
-  name: string;
-  category: 'Historic marker' | 'Museum & culture';
-  address: string;
+  placeId: string;
+  category: 'Historic marker' | 'Historic landscape' | 'Museum & culture';
   period: string;
-  summary: string;
-  mapsQuery: string;
-  placeId?: string;
-  sourceUrl: string;
-  sourceLabel: string;
+  context: string;
 }
 
 export const visitorPlaces: VisitorPlace[] = [
@@ -86,79 +81,52 @@ export const visitorPlaces: VisitorPlace[] = [
 
 export const heritageSites: HeritageSite[] = [
   {
-    name: 'Nuestra Señora de Gracia Church',
-    category: 'Historic marker',
-    address: '7440 Bernardino Street, Guadalupe Viejo, Makati',
-    period: '1601–1629',
-    summary:
-      'Augustinian church and monastery with foundations laid in 1601 and construction completed in 1629.',
-    mapsQuery: 'Nuestra Señora de Gracia Church Makati',
     placeId: 'nuestra-senora-de-gracia-church',
-    sourceUrl:
-      'https://philhistoricsites.nhcp.gov.ph/registry_database/church-and-monastery-of-guadalupe/',
-    sourceLabel: 'NHCP',
+    category: 'Historic marker',
+    period: '1601–1629',
+    context:
+      'An early Augustinian religious complex on Guadalupe’s high ground, with the NHCP marker and surviving institutional records documenting its long history.',
   },
   {
-    name: 'Sts. Peter and Paul Parish Church',
-    category: 'Historic marker',
-    address: '5539 D.M. Rivera Street, Poblacion, Makati',
-    period: '1600s',
-    summary:
-      'Historic San Pedro Macati church associated with the old town of San Pedro Macati.',
-    mapsQuery: 'Saints Peter and Paul Parish Church Makati',
     placeId: 'sts-peter-and-paul-parish-church',
-    sourceUrl:
-      'https://philhistoricsites.nhcp.gov.ph/registry_database/san-pedro-macati/',
-    sourceLabel: 'NHCP',
+    category: 'Historic marker',
+    period: '1607 foundation · later rebuilding',
+    context:
+      'The historic parish church of San Pedro Macati. Its history includes multiple construction and rebuilding phases, so BetterMakati keeps foundation, later fabric and the surviving church distinct.',
   },
   {
-    name: 'Nielson Tower',
-    category: 'Historic marker',
-    address: 'Ayala Triangle, Makati Avenue, Makati',
-    period: '1937',
-    summary:
-      'Former passenger station and control center of Nielson Airport, used from 1937 to 1947.',
-    mapsQuery: 'Nielson Tower Ayala Triangle Makati',
     placeId: 'nielson-tower',
-    sourceUrl:
-      'https://philhistoricsites.nhcp.gov.ph/registry_database/nielson-tower/',
-    sourceLabel: 'NHCP',
-  },
-  {
-    name: 'Dambana ng Banal na Krus',
     category: 'Historic marker',
-    address: '211 J.P. Rizal Avenue, Tejeros, Makati',
-    period: '1882',
-    summary: 'Historic Holy Cross shrine whose earlier chapel dates to 1882.',
-    mapsQuery: 'Holy Cross Parish Church Tejeros Makati',
+    period: '1937',
+    context:
+      'The surviving terminal and control building of Nielson Airport, later reused after the airfield closed and Makati’s business district grew around it.',
+  },
+  {
     placeId: 'dambana-ng-banal-na-krus',
-    sourceUrl:
-      'https://philhistoricsites.nhcp.gov.ph/registry_database/dambana-ng-banal-na-krus/',
-    sourceLabel: 'NHCP',
+    category: 'Historic marker',
+    period: '1882 chapel tradition',
+    context:
+      'The Holy Cross shrine and parish church in Tejeros, recognized by an NHCP historical marker.',
   },
   {
-    name: 'Museo ng Makati',
-    category: 'Museum & culture',
-    address: '986 J.P. Rizal corner A. Mabini Streets, Poblacion, Makati',
-    period: '1918',
-    summary:
-      'Makati cultural institution housed in a heritage structure in Poblacion.',
-    mapsQuery: 'Museo ng Makati',
     placeId: 'museo-ng-makati',
-    sourceUrl:
-      'https://www.makati.gov.ph/assets/uploads/downloads/2/45/561/pdf/Facts%20and%20FIgures%202020.pdf',
-    sourceLabel: 'City of Makati',
+    category: 'Museum & culture',
+    period: '1918 Presidencia',
+    context:
+      'Makati’s city museum occupies the Old Presidencia of San Pedro Macati, a registered Important Cultural Property.',
   },
   {
-    name: 'Ayala Museum',
-    category: 'Museum & culture',
-    address: 'Makati Avenue corner Dela Rosa Street, Ayala Center, Makati',
-    period: 'Contemporary museum',
-    summary: 'Museum of Philippine history, art, archaeology and culture.',
-    mapsQuery: 'Ayala Museum Makati',
     placeId: 'ayala-museum',
-    sourceUrl:
-      'https://www.tourism.gov.ph/destination/national-capital-region/makati/',
-    sourceLabel: 'Department of Tourism',
+    category: 'Museum & culture',
+    period: 'Contemporary museum',
+    context:
+      'A museum of Philippine history, art, archaeology and culture, and the present home of the Filipinas Heritage Library.',
+  },
+  {
+    placeId: 'plaza-cristo-rey',
+    category: 'Historic landscape',
+    period: 'Historic Poblacion landscape',
+    context:
+      'A public heritage plaza beside Sts. Peter and Paul Parish Church, included in Makati’s cultural planning record as part of the historic Poblacion setting.',
   },
 ];
