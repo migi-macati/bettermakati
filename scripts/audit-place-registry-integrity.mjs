@@ -10,6 +10,8 @@ const [
   cityMonitorSource,
   visitMakatiSource,
   makatiHistorySource,
+  heritageCollectionsSource,
+  heritagePageSource,
 ] = await Promise.all([
   readFile('src/data/placeRegistry.ts', 'utf8'),
   readFile('src/data/barangays.ts', 'utf8'),
@@ -20,6 +22,8 @@ const [
   readFile('src/data/cityMonitor.ts', 'utf8'),
   readFile('src/data/visitMakati.ts', 'utf8'),
   readFile('src/data/makatiHistory.ts', 'utf8'),
+  readFile('src/data/heritageCollections.ts', 'utf8'),
+  readFile('src/pages/Heritage.tsx', 'utf8'),
 ]);
 
 const problems = [];
@@ -609,6 +613,97 @@ if (duplicateHeritagePlaceIds.length) {
   );
 }
 
+/* Canonical heritage routes and collections */
+const heritageCollectionBlock =
+  heritageCollectionsSource
+    .split('export const heritageCollections: HeritageCollection[] = [')[1]
+    ?.split('\n];')[0] ?? '';
+
+const heritageCollectionRows = [
+  ...heritageCollectionBlock.matchAll(/\n  \{\n([\s\S]*?)\n  \},?/g),
+].map(match => match[1]);
+
+if (heritageCollectionRows.length !== 2) {
+  problems.push(
+    'Expected 2 canonical heritage route/collection records but parsed ' +
+      heritageCollectionRows.length +
+      '.'
+  );
+}
+
+const heritageCollectionIds = heritageCollectionRows
+  .map(row => parseSingleQuotedProperty(row, 'id'))
+  .filter(Boolean);
+const duplicateHeritageCollectionIds = duplicateValues(heritageCollectionIds);
+if (duplicateHeritageCollectionIds.length) {
+  problems.push(
+    'Duplicate heritage collection IDs: ' +
+      duplicateHeritageCollectionIds.join(', ')
+  );
+}
+
+for (const row of heritageCollectionRows) {
+  const id = parseSingleQuotedProperty(row, 'id') ?? 'unknown-heritage-collection';
+  const kind = parseSingleQuotedProperty(row, 'kind');
+  const name = parseSingleQuotedProperty(row, 'name');
+  const theme = parseSingleQuotedProperty(row, 'theme');
+  const description = parseSingleQuotedProperty(row, 'description');
+  const travelMode = parseSingleQuotedProperty(row, 'travelMode');
+  const placeIdsMatch = row.match(/placeIds:\s*\[([\s\S]*?)\]/);
+  const placeIds = placeIdsMatch
+    ? [...placeIdsMatch[1].matchAll(/'([^']+)'/g)].map(match => match[1])
+    : [];
+
+  if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(id)) {
+    problems.push('Heritage collection ID is not lowercase kebab-case: ' + id);
+  }
+  if (!name || !theme || !description) {
+    problems.push('Heritage collection metadata is incomplete: ' + id);
+  }
+  if (!['walking-route', 'place-collection'].includes(kind)) {
+    problems.push('Unknown heritage collection kind on ' + id + ': ' + kind);
+  }
+  if (kind === 'walking-route' && travelMode !== 'walking') {
+    problems.push('Walking heritage route lacks walking travel mode: ' + id);
+  }
+  if (kind === 'walking-route' && placeIds.length < 2) {
+    problems.push('Walking heritage route needs at least two ordered stops: ' + id);
+  }
+
+  const duplicateStops = duplicateValues(placeIds);
+  if (duplicateStops.length) {
+    problems.push(
+      'Heritage collection repeats canonical place stops on ' +
+        id +
+        ': ' +
+        duplicateStops.join(', ')
+    );
+  }
+
+  for (const placeId of placeIds) {
+    if (!assetIds.includes(placeId)) {
+      problems.push(
+        'Heritage collection points to a missing canonical place: ' +
+          id +
+          ' -> ' +
+          placeId
+      );
+    }
+  }
+}
+
+if (
+  !heritagePageSource.includes(
+    "import { heritageWalkingRoutes } from '../data/heritageCollections';"
+  )
+) {
+  problems.push('Heritage page is not using canonical heritage route data.');
+}
+
+if (/\bconst\s+walks\s*=/.test(heritagePageSource)) {
+  problems.push('Heritage page still contains an ad-hoc local walks array.');
+}
+
 for (const requiredHeritagePlaceId of [
   'nuestra-senora-de-gracia-church',
   'sts-peter-and-paul-parish-church',
@@ -786,6 +881,7 @@ console.log(
     heritagePlaceIds.length + ' canonical-driven Heritage presentation records',
     heritageCanonicalIds.length + ' enriched canonical heritage records',
     heritageMediaIds.length + ' rights-safe heritage images with provenance',
+    heritageCollectionIds.length + ' canonical heritage route/collection records',
     historyPlaceIds.length + ' History-to-place links resolved',
     barangayHeritageMarkerPlaceIds.length + ' BetterBarangay heritage links resolved',
     indexEntries.length + ' generated index entries in parity',
