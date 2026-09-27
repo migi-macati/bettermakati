@@ -14,7 +14,7 @@ const criticalRoutes = [
   ['/barangays/poblacion', /Let’s make Poblacion Better|Let's make Poblacion Better/i],
   ['/projects-budget', /Where Makati’s money comes from and goes/i],
   ['/statistics', /See how Makati is changing/i],
-  ['/history', /Many histories\. One Makati\./i],
+  ['/history', /History of Makati/i],
   ['/visit', /What do you want to do in Makati/i],
   ['/mobility', /Getting around/i],
   ['/today', /Makati/i],
@@ -77,12 +77,12 @@ test('Barangays is a top-level main navigation option', async ({ page }) => {
 test('homepage exposes and opens barangay editions', async ({ page }) => {
   await page.goto(baseURL + '/');
   await expect(page.getByText('Go to your barangay', { exact: true })).toBeVisible();
-  await page.getByLabel('Choose a barangay').selectOption('poblacion');
+  await page.getByLabel('Choose a barangay').first().selectOption('poblacion');
   await expect(page).toHaveURL(/\/barangays\/poblacion$/);
   await expect(page.getByRole('heading', { level: 1 })).toContainText(/Poblacion Better/i);
 
   await page.goto(baseURL + '/');
-  await expect(page.getByLabel('Choose a barangay')).toHaveValue('poblacion');
+  await expect(page.getByLabel('Choose a barangay').first()).toHaveValue('poblacion');
   await expect(page.getByLabel('Open or change your barangay')).toHaveValue('poblacion');
 });
 
@@ -983,7 +983,7 @@ test('owner task: project spending is reachable from homepage capability example
 
 test('owner task: history search surface loads without a dead end', async ({ page }) => {
   await page.goto(baseURL + '/history');
-  await expect(page.getByRole('heading', { level: 1 })).toContainText(/Many histories\. One Makati\./i);
+  await expect(page.getByRole('heading', { level: 1 })).toContainText(/History of Makati/i);
   await expect(page.locator('input[type="search"]').first()).toBeVisible();
 });
 
@@ -1041,7 +1041,7 @@ test('barangay landing page uses the persistent BetterBarangay context bar', asy
 test('sliceable city pages always expose the persistent BetterBarangay bar', async ({ page }) => {
   await page.goto(baseURL + '/services');
   await expect(page.getByRole('region', { name: 'BetterBarangay view' })).toBeVisible();
-  await expect(page.getByRole('region', { name: 'BetterBarangay view' }).locator('span').filter({ hasText: 'BetterBarangay View' }).first()).toBeVisible();
+  await expect(page.getByRole('region', { name: 'BetterBarangay view' }).getByLabel('Choose BetterBarangay view')).toBeVisible();
   await expect(page.getByLabel('Choose BetterBarangay view')).toHaveValue('');
   await page.getByLabel('Choose BetterBarangay view').selectOption('poblacion');
   await expect(page).toHaveURL(/\/services\?barangay=poblacion/);
