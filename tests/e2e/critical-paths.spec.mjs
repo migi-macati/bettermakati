@@ -1,6 +1,8 @@
 import { test, expect } from '@playwright/test';
 
 const baseURL = process.env.BASE_URL || 'http://127.0.0.1:4173';
+// Single improbable token: avoids accidental substring or fuzzy-search matches.
+const guaranteedMissingQuery = 'zzqxvptk92817';
 
 const criticalRoutes = [
   ['/', /Let’s make Makati Better|Let's make Makati Better/i],
@@ -342,7 +344,7 @@ test('ecosystem handoffs are mobile-safe with usable touch targets', async ({ pa
 
   const routes = [
     '/services',
-    '/search?q=zzqxvptk92817',
+    '/search?q=' + guaranteedMissingQuery,
     '/services/guide/national-id',
     '/participate',
     '/get-involved',
@@ -372,7 +374,7 @@ test('ecosystem handoffs are mobile-safe with usable touch targets', async ({ pa
 
   await page.goto(baseURL + '/search');
   const search = page.getByPlaceholder(/Yellow Card, Poblacion Park, budget, cinema/i);
-  await search.fill('zzqxvptk92817');
+  await search.fill(guaranteedMissingQuery);
   for (const name of ['Search national services on BetterGov', 'Find another LGU on BetterLGU']) {
     const link = page.getByRole('link', { name, exact: true });
     const box = await link.boundingBox();
@@ -1556,7 +1558,7 @@ test('ecosystem navigation exposes national and cross-LGU exits without replacin
 test('ecosystem fallbacks preserve the query and leave an internal recovery path', async ({ page }) => {
   await page.goto(baseURL + '/search');
   const search = page.getByPlaceholder(/Yellow Card, Poblacion Park, budget, cinema/i);
-  const missingQuery = 'zzqxvptk92817';
+  const missingQuery = guaranteedMissingQuery;
   await search.fill(missingQuery);
 
   const betterGov = page.getByRole('link', { name: 'Search national services on BetterGov', exact: true });

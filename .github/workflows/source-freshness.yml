@@ -32,12 +32,12 @@ jobs:
     timeout-minutes: 20
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
       - name: Set up Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
@@ -127,9 +127,18 @@ jobs:
 
       - name: Sync freshness review issue
         if: steps.publish_git.outputs.published == 'true'
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           script: |
+            const { data: repository } = await github.rest.repos.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            });
+            if (!repository.has_issues) {
+              core.info('GitHub Issues are disabled; the published freshness queue remains available in data/freshness-review-queue.md.');
+              return;
+            }
+
             const fs = require('fs');
             const title = 'Freshness review queue';
             const report = fs.readFileSync('data/freshness-review-queue.md', 'utf8');

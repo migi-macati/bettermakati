@@ -13,18 +13,22 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: scheduled-main-writer
+  cancel-in-progress: false
+
 jobs:
   extract:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
       - name: Set up Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
@@ -65,4 +69,22 @@ jobs:
             exit 0
           fi
           git commit -m "Snapshot and normalize official Makati legislation archive"
-          git push origin HEAD:main
+
+          for attempt in 1 2 3; do
+            git fetch origin main
+            if ! git rebase origin/main; then
+              git rebase --abort || true
+              echo "Legislation snapshot conflicted with main; refusing to overwrite."
+              exit 1
+            fi
+
+            if git push origin HEAD:main; then
+              exit 0
+            fi
+
+            echo "Push attempt $attempt failed because main moved; retrying after rebase."
+            sleep $((attempt * 5))
+          done
+
+          echo "Unable to publish legislation snapshot after 3 attempts."
+          exit 1
