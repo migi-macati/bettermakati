@@ -1061,7 +1061,7 @@ test('first BetterBarangay contact batch exposes verified hall details', async (
   await expect(page.getByRole('link', { name: /Official social channel/i })).toBeVisible();
 
   await page.goto(baseURL + '/barangays/carmona');
-  await expect(page.getByText('A.P. Reyes Avenue, Barangay Carmona, Makati City', { exact: true })).toBeVisible();
+  await expect(page.locator('#local-government').getByText('A.P. Reyes Avenue, Barangay Carmona, Makati City', { exact: true })).toBeVisible();
   await expect(page.getByRole('link', { name: 'barangaycarmona2013@gmail.com', exact: true })).toBeVisible();
 
   await page.goto(baseURL + '/barangays/forbes-park');
@@ -1099,7 +1099,7 @@ test('BetterBarangay official channels and emails are exposed across the larger 
   }
 
   await page.goto(baseURL + '/barangays/poblacion');
-  await expect(page.getByText('J.P. Rizal cor. D.M. Rivera Street, Makati City', { exact: true })).toBeVisible();
+  await expect(page.locator('#local-government').getByText('J.P. Rizal cor. D.M. Rivera Street, Makati City', { exact: true })).toBeVisible();
   await expect(page.getByRole('link', { name: /Barangay website/i })).toHaveAttribute('href', 'https://epoblacion.net/');
 
   await page.goto(baseURL + '/barangays/san-lorenzo');
