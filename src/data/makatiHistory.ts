@@ -941,6 +941,31 @@ const comelecEmbo2024: HistorySource = {
   citationNote:
     'Assigned the ten EMBO barangays to Taguig’s first and second legislative/councilor districts for subsequent elections.',
 };
+const nhcpDambana: HistorySource = {
+  id: 'nhcp-dambana-ng-banal-na-krus',
+  label: 'NHCP · Dambana ng Banal na Krus historical marker',
+  url: 'https://philhistoricsites.nhcp.gov.ph/registry_database/dambana-ng-banal-na-krus/',
+  kind: 'Institutional history',
+  evidenceLevel: 'Reference',
+  format: 'institutional record',
+  repository: 'National Historical Commission of the Philippines',
+  date: '1991 marker',
+  citationNote:
+    'The marker records the 1882 chapel tradition, transfer to the present site in 1918 and later parish milestones.',
+};
+const makatiCulturalPlan: HistorySource = {
+  id: 'makati-cultural-development-plan',
+  label: 'City Government of Makati · Cultural Development Plan',
+  url: 'https://www.makati.gov.ph/assets/uploads/downloads/2/541/pdf/Final%20Makati%20Cultural%20Development%20Plan.pdf',
+  kind: 'Institutional history',
+  evidenceLevel: 'Secondary',
+  format: 'institutional record',
+  repository: 'City Government of Makati',
+  date: '2025 plan',
+  locator: 'Poblacion Heritage Preservation Zone discussion',
+  citationNote:
+    'The plan records the 2019 barangay heritage listing and the city declaration of significant built and cultural heritage sites in Poblacion.',
+};
 export const historyReviewed = '27 September 2026';
 export const historyEras = [
   { label: 'Early & Spanish colonial', from: 0, to: 1895 },
@@ -1433,6 +1458,23 @@ const rows: Row[] = [
     },
   ],
   [
+    'dambana-chapel-and-transfer',
+    1882,
+    '1882–1918',
+    'The Holy Cross shrine begins in Matungaw and moves to its present site',
+    community,
+    'The NHCP marker records a nipa-and-bamboo chapel built in Matungaw in 1882 and its transfer to the present Tejeros site in 1918.',
+    nhcpDambana,
+    'The marker is retrospective; this timeline entry keeps the original chapel date distinct from the present-site transfer.',
+    {
+      evidenceStatus: 'established',
+      relations: {
+        placeIds: ['dambana-ng-banal-na-krus'],
+        barangaySlugs: ['tejeros'],
+      },
+    },
+  ],
+  [
     'pasig-river-landscape-1887',
     1887,
     '1870s observations · published 1887',
@@ -1699,6 +1741,24 @@ const rows: Row[] = [
             'Link to the FHL catalog record unless reproduction permission is confirmed.',
         },
       ],
+    },
+  ],
+  [
+    'presidencia-built-1918',
+    1918,
+    '1918',
+    'Makati builds its first municipal Presidencia in Poblacion',
+    government,
+    'The City Government of Makati’s Barangay Poblacion history dates the first municipal building, the Presidencia, to 1918 at Plaza Trece de Agosto, now J.P. Rizal Street. The building is now occupied by Museo ng Makati.',
+    makatiPoblacionHistory,
+    undefined,
+    {
+      evidenceStatus: 'established',
+      relations: {
+        placeIds: ['museo-ng-makati'],
+        barangaySlugs: ['poblacion'],
+        institutions: [{ label: 'Municipality of Makati' }],
+      },
     },
   ],
   [
@@ -2402,6 +2462,28 @@ const rows: Row[] = [
     },
   ],
 
+  [
+    'poblacion-heritage-listing-2019',
+    2019,
+    '2019',
+    'Poblacion heritage sites receive local heritage listings',
+    community,
+    'Makati’s Cultural Development Plan records a 2019 Barangay Poblacion heritage listing and a city declaration of significant built and cultural heritage sites. The listed places include Sts. Peter and Paul Parish Church, Plaza Cristo Rey, Museo ng Makati and Poblacion Park.',
+    makatiCulturalPlan,
+    'The city plan summarizes the local heritage actions; BetterMakati keeps the individual place designations and source details on each canonical Place page.',
+    {
+      evidenceStatus: 'established',
+      relations: {
+        placeIds: [
+          'sts-peter-and-paul-parish-church',
+          'plaza-cristo-rey',
+          'museo-ng-makati',
+          'poblacion-park',
+        ],
+        barangaySlugs: ['poblacion'],
+      },
+    },
+  ],
   [
     'sc-boundary-decision',
     2021,
