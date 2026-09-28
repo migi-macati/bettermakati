@@ -138,19 +138,6 @@ const Home: React.FC = () => {
 
       <Hero />
 
-      <section className="border-b border-primary-100 bg-[#fffdf8] py-8 md:py-10">
-        <div className="container px-5 md:px-6 lg:px-8">
-          <PhotoCarousel
-            images={homeImageSet}
-            title="Around Makati"
-            compact
-            className="mx-auto max-w-6xl"
-          />
-        </div>
-      </section>
-
-      <FeaturedInsightsCarousel />
-
       <section className="bg-[#fffdf8] py-14">
         <div className="container px-5 md:px-6 lg:px-8">
           <div className="section-eyebrow">Services</div>
@@ -233,6 +220,33 @@ const Home: React.FC = () => {
         </div>
       </section>
 
+      <section className="bg-white py-14 border-t border-gray-100">
+        <div className="container px-5 md:px-6 lg:px-8">
+          <div className="flex flex-col gap-5 rounded-2xl border border-primary-100 bg-[#fffdf8] p-6 md:flex-row md:items-center md:justify-between md:p-8">
+            <div>
+              <div className="section-eyebrow">Participation</div>
+              <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight text-gray-950">
+                Take part in Makati
+              </h2>
+              <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600 md:text-base">
+                Start here for non-emergency public-place reports, civic participation and the right route for a community concern.
+              </p>
+              <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm font-bold">
+                <Link to="/get-involved" className="text-primary-700 hover:text-primary-900">
+                  Improve BetterMakati
+                </Link>
+                <Link to="/community-tools" className="text-primary-700 hover:text-primary-900">
+                  More community tools
+                </Link>
+              </div>
+            </div>
+            <Link to="/participate" className="brand-btn-primary shrink-0">
+              Participate in Makati <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
       <section className="bg-white py-14 border-y border-gray-100">
         <div className="container px-5 md:px-6 lg:px-8">
           <div className="section-eyebrow">Explore Makati</div>
@@ -294,6 +308,8 @@ const Home: React.FC = () => {
         </div>
       </section>
 
+      <FeaturedInsightsCarousel />
+
       <section className="bg-[#f5f8f2] py-14 border-y border-primary-100/70">
         <div className="container px-5 md:px-6 lg:px-8">
           <div className="section-eyebrow">Makati at a glance</div>
@@ -345,32 +361,30 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      <section className="bg-white py-14 border-t border-gray-100">
+      <section className="border-b border-primary-100 bg-[#fffdf8] py-8 md:py-10">
         <div className="container px-5 md:px-6 lg:px-8">
-          <div className="flex flex-col gap-5 rounded-2xl border border-primary-100 bg-[#fffdf8] p-6 md:flex-row md:items-center md:justify-between md:p-8">
-            <div>
-              <div className="section-eyebrow">Participation</div>
-              <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight text-gray-950">
-                Take part in Makati
-              </h2>
-              <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600 md:text-base">
-                Start here for non-emergency public-place reports, civic participation and the right route for a community concern.
-              </p>
-              <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm font-bold">
-                <Link to="/get-involved" className="text-primary-700 hover:text-primary-900">
-                  Improve BetterMakati
-                </Link>
-                <Link to="/community-tools" className="text-primary-700 hover:text-primary-900">
-                  More community tools
-                </Link>
-              </div>
-            </div>
-            <Link to="/participate" className="brand-btn-primary shrink-0">
-              Participate in Makati <ArrowRight className="h-4 w-4" />
-            </Link>
-          </div>
+          <PhotoCarousel
+            images={homeImageSet}
+            title="Around Makati"
+            compact
+            className="mx-auto max-w-6xl"
+          />
         </div>
       </section>
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
 
     </>
   );
