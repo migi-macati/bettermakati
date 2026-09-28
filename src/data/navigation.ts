@@ -1,12 +1,18 @@
 import type { NavigationItem } from '../types';
 
 export const mainNavigation: NavigationItem[] = [
-  { label: 'Services', href: '/services' },
+  {
+    label: 'Services',
+    href: '/services',
+    children: [
+      { label: 'Saan Ako Lalapit?', href: '/community-tools/saan-ako-lalapit' },
+      { label: 'Government Offices', href: '/government-offices' },
+    ],
+  },
   {
     label: 'Today',
     href: '/today',
     children: [
-      { label: 'Today in Makati', href: '/today' },
       { label: 'City Monitor', href: '/city-monitor' },
       { label: 'Civic Briefs', href: '/briefs' },
       { label: 'Live Makati', href: '/live' },
@@ -19,12 +25,10 @@ export const mainNavigation: NavigationItem[] = [
     label: 'City',
     href: '/government',
     children: [
-      { label: 'Government', href: '/government' },
       { label: 'Elections & Voting', href: '/elections' },
       { label: 'Makati Statistics', href: '/statistics' },
       { label: 'Reports & Insights', href: '/reports' },
       { label: 'Legislation', href: '/legislation' },
-      { label: 'Estates, Districts & Associations', href: '/estates' },
       { label: 'History of Makati', href: '/history' },
     ],
   },
@@ -33,26 +37,20 @@ export const mainNavigation: NavigationItem[] = [
     label: 'Accountability',
     href: '/accountability',
     children: [
-      { label: 'Accountability Ledger', href: '/accountability' },
       { label: 'Projects & Budget', href: '/projects-budget' },
       { label: 'Procurement Tracker', href: '/accountability?type=project' },
       { label: 'Audit & Follow-through', href: '/accountability?type=audit' },
       { label: 'Public Commitments', href: '/accountability?type=commitment' },
       { label: 'Public Records', href: '/records' },
       { label: 'Integrity & Public Interest', href: '/integrity' },
-      { label: 'Open Government Audit', href: '/open-government' },
-      { label: 'BetterMakati Status', href: '/status' },
     ],
   },
   {
     label: 'Participate',
     href: '/participate',
     children: [
-      { label: 'Participation Hub', href: '/participate' },
       { label: 'Civic Map', href: '/civic-map' },
       { label: 'Civic Map Reports', href: '/civic-map/reports' },
-      { label: 'Saan Ako Lalapit?', href: '/community-tools/saan-ako-lalapit' },
-      { label: 'Community Tools', href: '/community-tools' },
       {
         label: 'Propose Something',
         href: '/get-involved?type=proposal#submission',
@@ -71,12 +69,10 @@ export const mainNavigation: NavigationItem[] = [
     label: 'Explore Makati',
     href: '/visit',
     children: [
-      { label: 'City starting points', href: '/visit#places-to-start' },
       { label: 'Areas & Districts', href: '/estates' },
       { label: 'Getting Around', href: '/mobility' },
       { label: 'Cinemas', href: '/cinemas' },
       { label: 'Heritage & Culture', href: '/heritage' },
-      { label: 'History of Makati', href: '/history' },
     ],
   },
 ];
