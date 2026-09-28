@@ -199,7 +199,7 @@ const TimelineCard = ({ item }: { item: CivicTimelineItem }) => {
             <Link
               key={location.key}
               to={location.href}
-              className="inline-flex min-h-10 items-center rounded-full border border-gray-200 px-3 py-1.5 text-xs font-bold text-primary-700 hover:border-primary-300 hover:bg-primary-50"
+              className="inline-flex min-h-11 items-center rounded-full border border-gray-200 px-3 py-1.5 text-xs font-bold text-primary-700 hover:border-primary-300 hover:bg-primary-50"
             >
               {location.label}
             </Link>
@@ -408,7 +408,7 @@ export default function Calendar() {
               <select
                 value={topic}
                 onChange={event => setParam('topic', event.target.value, 'all')}
-                className="w-full rounded-xl border border-gray-300 bg-white px-3 py-2.5 text-sm text-gray-950"
+                className="min-h-11 w-full rounded-xl border border-gray-300 bg-white px-3 py-2.5 text-sm text-gray-950"
               >
                 {civicCalendarTopicOptions.map(option => (
                   <option key={option.id} value={option.id}>{option.label}</option>
@@ -420,7 +420,7 @@ export default function Calendar() {
               <select
                 value={barangaySlug}
                 onChange={event => setParam('barangay', event.target.value)}
-                className="w-full rounded-xl border border-gray-300 bg-white px-3 py-2.5 text-sm text-gray-950"
+                className="min-h-11 w-full rounded-xl border border-gray-300 bg-white px-3 py-2.5 text-sm text-gray-950"
               >
                 <option value="">All barangays + citywide</option>
                 {barangays.map(barangay => (
@@ -433,7 +433,7 @@ export default function Calendar() {
               <select
                 value={actionability}
                 onChange={event => setParam('action', event.target.value, 'all')}
-                className="w-full rounded-xl border border-gray-300 bg-white px-3 py-2.5 text-sm text-gray-950"
+                className="min-h-11 w-full rounded-xl border border-gray-300 bg-white px-3 py-2.5 text-sm text-gray-950"
               >
                 {civicCalendarActionabilityOptions.map(option => (
                   <option key={option.id} value={option.id}>{option.label}</option>
@@ -449,7 +449,7 @@ export default function Calendar() {
                   value={query}
                   onChange={event => setParam('q', event.target.value)}
                   placeholder="Title, source, topic…"
-                  className="w-full rounded-xl border border-gray-300 bg-white py-2.5 pl-9 pr-3 text-sm text-gray-950"
+                  className="min-h-11 w-full rounded-xl border border-gray-300 bg-white py-2.5 pl-9 pr-3 text-sm text-gray-950"
                 />
               </span>
             </label>
@@ -459,7 +459,7 @@ export default function Calendar() {
                 type="date"
                 value={from}
                 onChange={event => setParam('from', event.target.value)}
-                className="w-full rounded-xl border border-gray-300 bg-white px-3 py-2.5 text-sm text-gray-950"
+                className="min-h-11 w-full rounded-xl border border-gray-300 bg-white px-3 py-2.5 text-sm text-gray-950"
               />
             </label>
             <label className="block">
@@ -468,7 +468,7 @@ export default function Calendar() {
                 type="date"
                 value={to}
                 onChange={event => setParam('to', event.target.value)}
-                className="w-full rounded-xl border border-gray-300 bg-white px-3 py-2.5 text-sm text-gray-950"
+                className="min-h-11 w-full rounded-xl border border-gray-300 bg-white px-3 py-2.5 text-sm text-gray-950"
               />
             </label>
           </div>
