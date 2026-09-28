@@ -15,6 +15,8 @@ import { mobilityNetworkRelationships } from './mobilityNetwork';
 import { cityIndicators } from './cityIndicators';
 import { integrityProcurementEntities } from './integrityData';
 import { reports } from './reports';
+import { publicRecords } from './publicRecords';
+import { heritageCollections } from './heritageCollections';
 import {
   civicAreaById,
   civicAreaRelationships,
@@ -55,6 +57,42 @@ export interface SearchItem {
   featured?: boolean;
   canonicalKey?: string;
 }
+
+const canonicalPageItems: SearchItem[] = [
+  {
+    title: 'Services',
+    group: 'Service',
+    category: 'Services',
+    description:
+      'Browse Makati city and national services, permits, certificates, health services and citizen transaction guides.',
+    href: '/services',
+    keywords:
+      'services permits licenses certificates transactions citizen charter city services national services apply requirements',
+    canonicalKey: 'page:services',
+  },
+  {
+    title: 'Barangays',
+    group: 'Barangay',
+    category: 'Barangays',
+    description:
+      'Browse BetterBarangay profiles, officials, local facilities, services and civic information for Makati’s 23 barangays.',
+    href: '/barangays',
+    keywords:
+      'barangays betterbarangay neighborhoods local government barangay profiles officials facilities services 23 barangays',
+    canonicalKey: 'page:barangays',
+  },
+  {
+    title: 'Reports & Insights',
+    group: 'Record',
+    category: 'Reports',
+    description:
+      'Read BetterMakati reports and evidence-backed analysis about Makati government, budgets, services and city development.',
+    href: '/reports',
+    keywords:
+      'reports insights analysis research evidence synthesis featured reports civic intelligence',
+    canonicalKey: 'page:reports',
+  },
+];
 
 const serviceItems: SearchItem[] = serviceDirectory.map(item => ({
   title: item.title,
@@ -271,6 +309,46 @@ const governmentItems: SearchItem[] = [
     featured: true,
   },
 ];
+
+const publicRecordItems: SearchItem[] = publicRecords.map(record => ({
+  title: record.title,
+  group: 'Record',
+  category: record.category,
+  description: record.description,
+  href: '/records/' + record.id,
+  keywords: [
+    record.publisher,
+    record.sourceClass,
+    record.format,
+    record.period ?? '',
+    ...record.usedBy,
+    ...record.contexts.flatMap(context => [context.label, context.href]),
+    'public record source document evidence',
+  ].join(' '),
+  canonicalKey: 'public-record:' + record.id,
+}));
+
+const heritageCollectionItems: SearchItem[] = heritageCollections.map(
+  collection => ({
+    title: collection.name,
+    group: 'Visit',
+    category:
+      collection.kind === 'walking-route'
+        ? 'Heritage walking route'
+        : 'Heritage collection',
+    description: collection.description,
+    href: '/heritage#collection-' + collection.id,
+    keywords: [
+      collection.id,
+      collection.theme,
+      collection.kind,
+      collection.travelMode ?? '',
+      ...collection.placeIds,
+      'heritage culture history collection walking route',
+    ].join(' '),
+    canonicalKey: 'heritage-collection:' + collection.id,
+  })
+);
 
 const recordItems: SearchItem[] = [
   {
@@ -929,6 +1007,7 @@ const officialItems: SearchItem[] = electedOfficials.map(official => ({
 }));
 
 const coreSearchIndex: SearchItem[] = [
+  ...canonicalPageItems,
   ...makatiHistory.map(event => ({
     title: event.title,
     group: 'Record' as const,
@@ -940,6 +1019,8 @@ const coreSearchIndex: SearchItem[] = [
   })),
   ...serviceItems,
   ...civicIntelligenceItems,
+  ...publicRecordItems,
+  ...heritageCollectionItems,
   ...radicalCivicItems,
   ...mobilitySearchItems,
   ...civicRegistryItems,
