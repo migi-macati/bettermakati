@@ -7,12 +7,14 @@ const [
   todayPage,
   feed,
   types,
+  mobilityPage,
 ] = await Promise.all([
   readFile('src/data/newsCivicRelationships.ts', 'utf8'),
   readFile('src/pages/News.tsx', 'utf8'),
   readFile('src/pages/Today.tsx', 'utf8'),
   readFile('scripts/news-feed.mjs', 'utf8'),
   readFile('src/data/newsTypes.ts', 'utf8'),
+  readFile('src/pages/Mobility.tsx', 'utf8'),
 ]);
 
 const problems = [];
@@ -61,6 +63,13 @@ if (!todayPage.includes('.filter(isTodayNewsCandidate)')) {
 
 if (!feed.includes('clusterNewsItems(items)')) {
   problems.push('Live news feed does not apply story clustering.');
+}
+
+if (
+  !relationships.includes("href: '/mobility#system-' + service.id") ||
+  !mobilityPage.includes("id={'system-' + service.id}")
+) {
+  problems.push('News-to-mobility relationships do not deep-link to canonical system cards.');
 }
 
 for (const marker of ['storyClusterId?', 'clusterSize?', 'relatedCoverage?']) {
