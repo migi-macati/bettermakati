@@ -1,6 +1,6 @@
 import { access, readFile } from 'node:fs/promises';
 
-const [page, views, app, navigation, searchIndex, home, explore, generateSite, postbuild, packageJson] =
+const [page, views, app, navigation, searchIndex, home, capability, explore, generateSite, postbuild, packageJson] =
   await Promise.all([
     readFile('src/pages/Calendar.tsx', 'utf8'),
     readFile('src/data/civicTimelineViews.ts', 'utf8'),
@@ -8,6 +8,7 @@ const [page, views, app, navigation, searchIndex, home, explore, generateSite, p
     readFile('src/data/navigation.ts', 'utf8'),
     readFile('src/data/searchIndex.ts', 'utf8'),
     readFile('src/pages/Home.tsx', 'utf8'),
+    readFile('src/components/home/CapabilityCarousel.tsx', 'utf8'),
     readFile('src/pages/VisitMakati.tsx', 'utf8'),
     readFile('scripts/generate-site-files.mjs', 'utf8'),
     readFile('scripts/postbuild-routes.mjs', 'utf8'),
@@ -75,7 +76,15 @@ if (navigation.includes("label: 'What’s On'") || navigation.includes("href: '/
 if (!searchIndex.includes("title: 'Makati Calendar'") || !searchIndex.includes("canonicalKey: 'tool:makati-calendar'")) problems.push('Canonical Calendar Search record missing.');
 if (searchIndex.includes("title: 'What’s On'") || searchIndex.includes("title: 'What’s On in Makati'") || searchIndex.includes("href: '/whats-on'")) problems.push('Old What’s On Search record remains.');
 
-if (!home.includes("label: 'Makati Calendar'") || !home.includes("href: '/calendar'")) problems.push('Homepage Calendar card missing.');
+if (
+  !capability.includes("title: 'See what matters now'") ||
+  !capability.includes("href: '/today'")
+) {
+  problems.push('Homepage current-information entry must resolve through Today.');
+}
+if (home.includes("label: 'Makati Calendar'") || home.includes("href: '/calendar'")) {
+  problems.push('Calendar must not return as a first-order homepage peer to Today.');
+}
 if (home.includes("label: 'What’s on'") || home.includes("href: '/whats-on'")) problems.push('Homepage old event framing remains.');
 
 if (!explore.includes("label: 'Makati Calendar'") || !explore.includes("href: '/calendar'")) problems.push('Explore Calendar cross-link missing.');
@@ -97,4 +106,4 @@ if (problems.length) {
   console.error('W5-7R5 Makati Calendar check failed:\n- ' + problems.join('\n- '));
   process.exit(1);
 }
-console.log('W5-7R5 Makati Calendar check passed: civic views, canonical/source links, filters, route redirect, candidate boundary and retired What’s On surface are intact.');
+console.log('W5-7R5 Makati Calendar check passed: civic views, canonical/source links, filters, route redirect, Today-owned homepage discovery, candidate boundary and retired What’s On surface are intact.');
