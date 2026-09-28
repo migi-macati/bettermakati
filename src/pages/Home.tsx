@@ -6,11 +6,9 @@ import {
   GraduationCap,
   Home as HomeIcon,
   Compass,
-  UtensilsCrossed,
   Church,
   Bus,
   Film,
-  ParkingCircle,
   CalendarDays,
   Radio,
   BarChart3,
@@ -54,14 +52,15 @@ const quickServices = [
 
 const visitPaths = [
   {
-    label: 'Places to go',
-    description: 'Museums, markets, parks, shopping and neighborhoods.',
+    label: 'Explore Makati',
+    description:
+      'Start with durable places, districts and city experiences, then follow their civic context.',
     href: '/visit',
     icon: Compass,
   },
   {
     label: 'Getting around',
-    description: 'Public transport, directions and ride-hailing.',
+    description: 'Public transport, transfers, routes and live directions.',
     href: '/mobility',
     icon: Bus,
   },
@@ -80,9 +79,9 @@ const visitPaths = [
 ];
 
 const visitShortcuts = [
-  { label: 'Eat & drink', href: '/visit', icon: UtensilsCrossed },
+  { label: 'Areas & districts', href: '/estates', icon: Compass },
+  { label: 'Barangays', href: '/barangays', icon: HomeIcon },
   { label: 'Cinemas', href: '/cinemas', icon: Film },
-  { label: 'Parking', href: '/parking', icon: ParkingCircle },
 ];
 
 const civicControl = [
@@ -145,7 +144,7 @@ const Home: React.FC = () => {
       <SEO
         title="Home"
         description="BetterMakati is an independent civic information and participation platform for Makati."
-        keywords="Makati, Makati City, public services, local government, civic information, civic participation, tourism, heritage"
+        keywords="Makati, Makati City, public services, local government, civic information, civic participation, city exploration, heritage"
       />
 
       <Hero />
@@ -264,16 +263,22 @@ const Home: React.FC = () => {
 
       <section className="bg-white py-14 border-y border-gray-100">
         <div className="container px-5 md:px-6 lg:px-8">
-          <div className="section-eyebrow">Visit Makati</div>
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-3 mb-7">
-            <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-950">
-              Explore, eat and discover
-            </h2>
+          <div className="section-eyebrow">Explore Makati</div>
+          <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between mb-7">
+            <div>
+              <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-950">
+                Understand the city as you explore it
+              </h2>
+              <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600 md:text-base">
+                Move from places and experiences into districts, barangays,
+                heritage, history, mobility and current activity.
+              </p>
+            </div>
             <Link
               to="/visit"
               className="inline-flex items-center gap-1.5 text-sm font-bold text-primary-700 hover:text-primary-900"
             >
-              Visit Makati <ArrowRight className="h-4 w-4" />
+              Explore Makati <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
 

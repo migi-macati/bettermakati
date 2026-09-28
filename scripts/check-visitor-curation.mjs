@@ -1,9 +1,20 @@
 import { readFile } from 'node:fs/promises';
 
-const [curation, page, legacyData, packageJson] = await Promise.all([
+const [
+  curation,
+  page,
+  legacyData,
+  navigation,
+  home,
+  searchIndex,
+  packageJson,
+] = await Promise.all([
   readFile('src/data/visitorCuration.ts', 'utf8'),
   readFile('src/pages/VisitMakati.tsx', 'utf8'),
   readFile('src/data/visitMakati.ts', 'utf8'),
+  readFile('src/data/navigation.ts', 'utf8'),
+  readFile('src/pages/Home.tsx', 'utf8'),
+  readFile('src/data/searchIndex.ts', 'utf8'),
   readFile('package.json', 'utf8'),
 ]);
 
@@ -93,6 +104,13 @@ for (const marker of [
   'Cinemas &amp; showtimes',
   'Plan how to get there',
   'External resources',
+  "id={'explore-' + experience.id}",
+  "href: '/estates'",
+  "href: '/barangays'",
+  "href: '/heritage'",
+  "href: '/history'",
+  "href: '/mobility'",
+  "href: '/whats-on'",
 ]) {
   if (!page.includes(marker)) {
     problems.push('Visit page migration marker missing: ' + marker);
@@ -112,6 +130,76 @@ if (
   );
 }
 
+for (const marker of [
+  "label: 'Explore Makati'",
+  "{ label: 'City starting points', href: '/visit#places-to-start' }",
+  "{ label: 'Explore Makati', href: '/visit' }",
+]) {
+  if (!navigation.includes(marker)) {
+    problems.push('Explore Makati navigation marker missing: ' + marker);
+  }
+}
+
+for (const forbidden of [
+  "label: 'Visit Makati'",
+  "{ label: 'Parking', href: '/parking'",
+]) {
+  if (navigation.includes(forbidden)) {
+    problems.push('Legacy Explore Makati navigation returned: ' + forbidden);
+  }
+}
+
+for (const marker of [
+  "label: 'Explore Makati'",
+  'Understand the city as you explore it',
+  "{ label: 'Areas & districts', href: '/estates'",
+  "{ label: 'Barangays', href: '/barangays'",
+  "{ label: 'Cinemas', href: '/cinemas'",
+]) {
+  if (!home.includes(marker)) {
+    problems.push('Homepage Explore Makati marker missing: ' + marker);
+  }
+}
+
+for (const forbidden of [
+  "label: 'Eat & drink'",
+  "label: 'Parking'",
+  "href: '/parking'",
+  'Explore, eat and discover',
+]) {
+  if (home.includes(forbidden)) {
+    problems.push('Homepage legacy visitor/directory pattern returned: ' + forbidden);
+  }
+}
+
+for (const marker of [
+  "from './visitorCuration'",
+  'const recurringVisitorItems: SearchItem[]',
+  'const visitorResourceItems: SearchItem[]',
+  "title: 'Explore Makati'",
+  "canonicalKey: 'visitor:explore-makati'",
+  "canonicalKey: 'visitor-experience:' + experience.id",
+  "canonicalKey: 'visitor-resource:' + resource.id",
+  "href: '/visit#explore-' + experience.id",
+]) {
+  if (!searchIndex.includes(marker)) {
+    problems.push('Search Explore Makati marker missing: ' + marker);
+  }
+}
+
+for (const forbidden of [
+  "title: 'Visit Makati'",
+  "title: 'Poblacion dining & nightlife'",
+  "title: 'Ayala Museum',\n    group: 'Visit'",
+  "title: 'Ayala Triangle Gardens',\n    group: 'Visit'",
+]) {
+  if (searchIndex.includes(forbidden)) {
+    problems.push(
+      'Search still duplicates or misframes Explore Makati content: ' + forbidden
+    );
+  }
+}
+
 if ((packageJson.match(/npm run check:visitor-curation/g) ?? []).length < 2) {
   problems.push(
     'Visitor-curation guard is not present in both build and quality.'
@@ -126,5 +214,5 @@ if (problems.length) {
 }
 
 console.log(
-  'W5-6c visitor-curation check passed: six curated orientation records use four canonical identities plus two recurring experiences; Greenbelt is represented through Ayala Center; visitor resources are source-backed; legacy visitorPlaces and Parking stay removed.'
+  'W5-6e Explore Makati check passed: six curated orientation records remain canonical/source-backed; Explore naming is aligned across page, navigation, homepage and Search; recurring experiences deep-link from Search; Civic Map/Areas/Barangays/Mobility/What’s On/Heritage/History cross-links remain explicit; legacy tourism-directory and Parking patterns stay removed.'
 );

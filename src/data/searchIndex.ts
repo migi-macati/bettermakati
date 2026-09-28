@@ -22,6 +22,7 @@ import {
   civicOrganizationById,
   civicOrganizations,
 } from './areaOrganizationRegistry';
+import { visitorExperiences, visitorResources } from './visitorCuration';
 
 export type SearchGroup =
   | 'Service'
@@ -65,57 +66,63 @@ const serviceItems: SearchItem[] = serviceDirectory.map(item => ({
   featured: item.featured,
 }));
 
+const recurringVisitorItems: SearchItem[] = visitorExperiences.flatMap(
+  experience => {
+    if (experience.kind !== 'recurring-experience') return [];
+
+    return [
+      {
+        title: experience.name,
+        group: 'Visit' as const,
+        category: experience.category,
+        description: experience.summary,
+        href: '/visit#explore-' + experience.id,
+        keywords: [
+          experience.id,
+          ...experience.tags,
+          'Explore Makati recurring experience market city context',
+        ].join(' '),
+        canonicalKey: 'visitor-experience:' + experience.id,
+      },
+    ];
+  }
+);
+
+const visitorResourceItems: SearchItem[] = visitorResources.map(resource => ({
+  title: resource.name,
+  group: 'Visit' as const,
+  category:
+    resource.role === 'official-city'
+      ? 'Official visitor resource'
+      : 'Visitor resource',
+  description: resource.summary,
+  href: '/visit#resources',
+  keywords: [
+    resource.id,
+    resource.role,
+    ...(resource.areaRefs ?? []),
+    'Explore Makati visitor source guide current information',
+  ].join(' '),
+  canonicalKey: 'visitor-resource:' + resource.id,
+}));
+
 const visitItems: SearchItem[] = [
   {
-    title: 'Visit Makati',
+    title: 'Explore Makati',
     group: 'Visit',
-    category: 'Visit',
-    description: 'Places to go, food, markets, parks, shopping and culture.',
+    category: 'Explore',
+    description:
+      'Understand Makati through places, districts, barangays, heritage, history, mobility and current activity.',
     href: '/visit',
-    keywords:
-      'visit tourist tourism attractions places restaurant cafe market park shopping nightlife',
+    keywords: [
+      'explore visit Makati city orientation places districts barangays heritage history mobility markets current activity',
+      'restaurants cafes shopping nightlife live discovery',
+      ...visitorExperiences.flatMap(experience => experience.tags),
+    ].join(' '),
     featured: true,
+    canonicalKey: 'visitor:explore-makati',
   },
-  {
-    title: 'Ayala Museum',
-    group: 'Visit',
-    category: 'Culture',
-    description: 'Philippine history, art and archaeology.',
-    href: '/visit',
-    keywords: 'ayala museum culture art history gallery',
-  },
-  {
-    title: 'Poblacion dining & nightlife',
-    group: 'Visit',
-    category: 'Food',
-    description: 'Dining, cafés, bars and nightlife in Poblacion.',
-    href: '/visit',
-    keywords: 'poblacion food restaurant cafe bar nightlife eat drink',
-  },
-  {
-    title: 'Salcedo Saturday Market',
-    group: 'Visit',
-    category: 'Food',
-    description: 'Weekend food and market destination.',
-    href: '/visit',
-    keywords: 'salcedo saturday market food weekend',
-  },
-  {
-    title: 'Legazpi Sunday Market',
-    group: 'Visit',
-    category: 'Food',
-    description: 'Sunday food and market destination.',
-    href: '/visit',
-    keywords: 'legazpi sunday market food weekend',
-  },
-  {
-    title: 'Ayala Triangle Gardens',
-    group: 'Visit',
-    category: 'Parks',
-    description: 'Urban park in the Makati CBD.',
-    href: '/visit',
-    keywords: 'ayala triangle gardens park walking green space',
-  },
+  ...recurringVisitorItems,
   {
     title: 'Heritage & Culture',
     group: 'Visit',
@@ -126,37 +133,10 @@ const visitItems: SearchItem[] = [
     featured: true,
   },
   {
-    title: 'Nuestra Señora de Gracia Church',
-    group: 'Visit',
-    category: 'Heritage',
-    description:
-      'Historic Augustinian church and monastery in Guadalupe Viejo.',
-    href: '/heritage',
-    keywords:
-      'guadalupe church nuestra senora gracia monastery heritage historical',
-  },
-  {
-    title: 'Sts. Peter and Paul Parish Church',
-    group: 'Visit',
-    category: 'Heritage',
-    description: 'Historic San Pedro Macati church in Poblacion.',
-    href: '/heritage',
-    keywords:
-      'saints peter paul sampiro san pedro macati poblacion heritage church',
-  },
-  {
-    title: 'Nielson Tower',
-    group: 'Visit',
-    category: 'Heritage',
-    description: 'Historic airport tower at Ayala Triangle.',
-    href: '/heritage',
-    keywords: 'nielson tower airport ayala triangle heritage aviation history',
-  },
-  {
     title: 'History of Makati',
     group: 'Visit',
     category: 'History',
-    description: 'Timeline from San Pedro Macati to cityhood.',
+    description: 'Timeline from San Pedro Macati to the modern city.',
     href: '/history',
     keywords: 'history timeline san pedro macati sampiro cityhood origin name',
     featured: true,
@@ -165,7 +145,7 @@ const visitItems: SearchItem[] = [
     title: 'Getting around Makati',
     group: 'Visit',
     category: 'Transport',
-    description: 'Public transport, route planning and ride-hailing.',
+    description: 'Public transport, route knowledge, transfers and live directions.',
     href: '/mobility',
     keywords:
       'transport commute mrt one ayala bus jeep uv express grab angkas joyride move it',
@@ -175,7 +155,7 @@ const visitItems: SearchItem[] = [
     title: 'Cinemas in Makati',
     group: 'Visit',
     category: 'Entertainment',
-    description: 'Cinema locations and showtime links.',
+    description: 'Cinema locations and current showtime links.',
     href: '/cinemas',
     keywords:
       'cinema movie theater showtimes power plant glorietta greenbelt circuit century waltermart cash carry',
@@ -183,22 +163,14 @@ const visitItems: SearchItem[] = [
   {
     title: 'What’s On in Makati',
     group: 'Visit',
-    category: 'Entertainment',
-    description: 'Events, activities and entertainment sources.',
+    category: 'Current activity',
+    description: 'Current events, activities and entertainment sources.',
     href: '/whats-on',
     keywords:
-      'events activities whats on show concert mall festival theatre entertainment',
+      'events activities whats on show concert mall festival theatre entertainment current',
     featured: true,
   },
-  {
-    title: 'Make It Makati',
-    group: 'Visit',
-    category: 'Visit',
-    description:
-      'Ayala Land visitor guide for its Makati district and estate destinations.',
-    href: '/visit#resources',
-    keywords: 'make it makati ayala visitor guide lifestyle district estate',
-  },
+  ...visitorResourceItems,
 ];
 
 const governmentItems: SearchItem[] = [

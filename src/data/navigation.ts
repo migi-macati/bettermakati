@@ -68,10 +68,10 @@ export const mainNavigation: NavigationItem[] = [
     ],
   },
   {
-    label: 'Visit Makati',
+    label: 'Explore Makati',
     href: '/visit',
     children: [
-      { label: 'Places to Go', href: '/visit' },
+      { label: 'City starting points', href: '/visit#places-to-start' },
       { label: 'Getting Around', href: '/mobility' },
       { label: 'Cinemas', href: '/cinemas' },
       { label: 'What’s On', href: '/whats-on' },
@@ -91,7 +91,7 @@ export const footerNavigation = {
         { label: 'City Monitor', href: '/city-monitor' },
         { label: 'Civic Briefs', href: '/briefs' },
         { label: 'Live Makati', href: '/live' },
-        { label: 'Visit Makati', href: '/visit' },
+        { label: 'Explore Makati', href: '/visit' },
         { label: 'Getting Around', href: '/mobility' },
         { label: 'Hotlines', href: '/hotlines' },
       ],

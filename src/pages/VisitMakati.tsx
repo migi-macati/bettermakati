@@ -131,7 +131,10 @@ const VisitorExperienceCard = ({
   const primarySource = visitorCurationSourceById.get(experience.sourceIds[0]);
 
   return (
-    <article className="flex h-full min-w-0 flex-col rounded-2xl border border-gray-200 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm">
+    <article
+      id={'explore-' + experience.id}
+      className="flex h-full min-w-0 flex-col rounded-2xl border border-gray-200 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
+    >
       <div className="flex flex-wrap gap-2 text-[11px] font-extrabold uppercase tracking-[0.08em]">
         <span className="rounded-full bg-primary-50 px-2.5 py-1 text-primary-800">
           {identity.kindLabel}
