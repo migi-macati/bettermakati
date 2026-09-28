@@ -882,7 +882,7 @@ export const barangayCoverageGaps = barangays.map(item => ({
     ...(!(yakapHealthCenters[item.slug]?.length) ? ['verified YAKAP health center'] : []),
     ...(!(item.websiteUrl) ? ['verified barangay website'] : []),
     ...(!(item.facebookUrl) ? ['verified official social channel'] : []),
-    ...(!(item.notablePlaces?.length || item.associations?.length || item.heritageMarkers?.length)
+    ...(!(item.notablePlaces?.length || item.communityAreaIds?.length || item.heritageMarkers?.length)
       ? ['verified community places / associations']
       : []),
   ],
