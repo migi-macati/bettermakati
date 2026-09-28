@@ -1,8 +1,9 @@
 import { readFile } from 'node:fs/promises';
 
-const [pageSource, routeSource, packageSource] = await Promise.all([
+const [pageSource, routeSource, networkSource, packageSource] = await Promise.all([
   readFile('src/pages/Mobility.tsx', 'utf8'),
   readFile('src/data/mobilityRoutes.ts', 'utf8'),
+  readFile('src/data/mobilityNetwork.ts', 'utf8'),
   readFile('package.json', 'utf8'),
 ]);
 
@@ -34,6 +35,18 @@ for (const marker of [
   "Historical association labels are retained as",
   "Current status unresolved",
   "not presented",
+  "mobilityNetworkRelationships",
+  "mobilityNetworkSources",
+  "transferRelationships",
+  "serviceHubRelationships",
+  "relationship.kind === 'transfer'",
+  "relationship.kind === 'service-connected-hub'",
+  "Verified transfers and hub connections",
+  "Transfer points",
+  "One Ayala system connections",
+  "Directly documented",
+  "Corroborated",
+  "not transfers inferred from nearby",
 ]) {
   if (!pageSource.includes(marker)) {
     problems.push('Mobility page canonical presentation marker missing: ' + marker);
@@ -79,6 +92,48 @@ if (
   );
 }
 
+const explicitNetworkBlock =
+  networkSource
+    .split(
+      'const explicitNetworkRelationships: MobilityNetworkRelationship[] = ['
+    )[1]
+    ?.split(
+      '\n];\n\nexport const mobilityNetworkRelationships'
+    )[0] ?? '';
+
+const explicitNetworkIds = [
+  ...explicitNetworkBlock.matchAll(/^    id: '([^']+)',$/gm),
+].map(match => match[1]);
+
+const explicitTransferIds = explicitNetworkIds.filter(id =>
+  id.startsWith('transfer-')
+);
+const explicitServiceHubIds = explicitNetworkIds.filter(id =>
+  id.startsWith('service-hub-')
+);
+
+if (explicitTransferIds.length !== 5) {
+  problems.push(
+    'Mobility page expects 5 canonical explicit transfer relationships; found ' +
+      explicitTransferIds.length +
+      '.'
+  );
+}
+
+if (explicitServiceHubIds.length !== 2) {
+  problems.push(
+    'Mobility page expects 2 canonical One Ayala service-hub relationships; found ' +
+      explicitServiceHubIds.length +
+      '.'
+  );
+}
+
+if (/transfer-[^\n']*magallanes/i.test(explicitNetworkBlock)) {
+  problems.push(
+    'Mobility page must not surface an invented Magallanes MRT/Busway transfer.'
+  );
+}
+
 const gateCount = (
   packageSource.match(/npm run check:mobility-page/g) ?? []
 ).length;
@@ -105,5 +160,5 @@ if (problems.length) {
 }
 
 console.log(
-  'Mobility page check passed: canonical systems, internal One Ayala hub, 67 route records surfaced by evidence class, unresolved jeepney rows separated, no synthetic route geometry.'
+  'Mobility page check passed: canonical systems, 5 verified transfers, 2 One Ayala system-hub connections, 67 route records by evidence class, unresolved jeepney rows separated, no synthetic route geometry.'
 );

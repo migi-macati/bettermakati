@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router';
 import {
+  ArrowRightLeft,
   Bike,
   Bus,
   Car,
@@ -29,6 +30,7 @@ import {
 } from '../data/districtReferences';
 import {
   mobilityServices,
+  mobilitySources,
   type MobilityServiceRecord,
 } from '../data/mobilitySystems';
 import {
@@ -40,6 +42,12 @@ import {
   type MobilityCurrentServiceRouteRecord,
   type MobilityHistoricalRouteRecord,
 } from '../data/mobilityRoutes';
+import {
+  mobilityNetworkRelationships,
+  mobilityNetworkSources,
+  type MobilityNetworkNodeRef,
+  type MobilityNetworkRelationship,
+} from '../data/mobilityNetwork';
 
 const verifiedTransportPlaces = [
   ...placesByCategory('transport-stop'),
@@ -151,6 +159,51 @@ const routeEvidenceSources = (
 
 const historicalSourceFor = (route: MobilityHistoricalRouteRecord) =>
   mobilityRouteSourceById.get(route.historical.sourceId);
+
+const mobilityServiceById = new Map(
+  mobilityServices.map(service => [service.id, service])
+);
+
+const mobilitySystemSourceById = new Map(
+  mobilitySources.map(source => [source.id, source])
+);
+
+const mobilityNetworkSourceById = new Map(
+  mobilityNetworkSources.map(source => [source.id, source])
+);
+
+const transferRelationships = mobilityNetworkRelationships.filter(
+  relationship => relationship.kind === 'transfer'
+);
+
+const serviceHubRelationships = mobilityNetworkRelationships.filter(
+  relationship => relationship.kind === 'service-connected-hub'
+);
+
+const mobilityNetworkNodeLabel = (node: MobilityNetworkNodeRef) => {
+  if (node.type === 'place') {
+    return placeRegistryById.get(node.id)?.name ?? node.id;
+  }
+  if (node.type === 'service') {
+    return mobilityServiceById.get(node.id)?.name ?? node.id;
+  }
+  return node.id;
+};
+
+const networkEvidenceSources = (
+  relationship: MobilityNetworkRelationship
+) =>
+  relationship.sourceRefs
+    .map(sourceRef => {
+      if (sourceRef.registry === 'network') {
+        return mobilityNetworkSourceById.get(sourceRef.sourceId);
+      }
+      if (sourceRef.registry === 'system') {
+        return mobilitySystemSourceById.get(sourceRef.sourceId);
+      }
+      return mobilityRouteSourceById.get(sourceRef.sourceId);
+    })
+    .filter(source => source !== undefined);
 
 const rideApps = [
   { name: 'Grab', href: 'https://www.grab.com/ph/download/', type: 'Car & taxi' },
@@ -511,6 +564,155 @@ export default function Mobility() {
               </article>
             );
           })}
+        </div>
+      </Section>
+
+      <Section id="interchanges" className="bg-[#fffdf8]">
+        <div className="section-eyebrow">Interchanges</div>
+        <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <Heading level={2}>Verified transfers and hub connections</Heading>
+            <p className="max-w-3xl text-sm leading-relaxed text-gray-600">
+              These connections come from the canonical mobility network. They
+              are documented relationships, not transfers inferred from nearby
+              map points.
+            </p>
+          </div>
+          <div className="text-sm font-bold text-gray-600">
+            {transferRelationships.length} transfers ·{' '}
+            {serviceHubRelationships.length} system–hub connections
+          </div>
+        </div>
+
+        <div className="mt-7">
+          <h3 className="text-lg font-extrabold text-gray-950">
+            Transfer points
+          </h3>
+          <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-2">
+            {transferRelationships.map(relationship => {
+              const fromPlace = placeRegistryById.get(relationship.from.id);
+              const toPlace = placeRegistryById.get(relationship.to.id);
+              const sources = networkEvidenceSources(relationship);
+
+              return (
+                <article
+                  key={relationship.id}
+                  className="rounded-2xl border border-gray-200 bg-white p-5"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="text-xs font-extrabold uppercase tracking-[0.08em] text-primary-700">
+                      {relationship.evidenceStrength === 'direct'
+                        ? 'Directly documented'
+                        : 'Corroborated'}
+                    </div>
+                    <ArrowRightLeft
+                      className="h-5 w-5 shrink-0 text-primary-700"
+                      aria-hidden="true"
+                    />
+                  </div>
+
+                  <h4 className="mt-2 text-lg font-extrabold text-gray-950">
+                    {mobilityNetworkNodeLabel(relationship.from)} ↔{' '}
+                    {mobilityNetworkNodeLabel(relationship.to)}
+                  </h4>
+
+                  {relationship.note && (
+                    <p className="mt-2 text-sm leading-relaxed text-gray-600">
+                      {relationship.note}
+                    </p>
+                  )}
+
+                  <div className="mt-4 flex flex-wrap gap-3">
+                    {fromPlace && (
+                      <Link
+                        to={'/civic-map/' + fromPlace.id}
+                        className="text-sm font-bold text-primary-700 underline underline-offset-2"
+                      >
+                        {fromPlace.name}
+                      </Link>
+                    )}
+                    {toPlace && (
+                      <Link
+                        to={'/civic-map/' + toPlace.id}
+                        className="text-sm font-bold text-primary-700 underline underline-offset-2"
+                      >
+                        {toPlace.name}
+                      </Link>
+                    )}
+                    {sources.map((source, index) => (
+                      <a
+                        key={source.id}
+                        href={source.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-1 text-sm font-bold text-primary-700 underline underline-offset-2"
+                      >
+                        Evidence
+                        {sources.length > 1 ? ' ' + (index + 1) : ''}
+                        <ExternalLink className="h-3.5 w-3.5" />
+                      </a>
+                    ))}
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="mt-8">
+          <h3 className="text-lg font-extrabold text-gray-950">
+            One Ayala system connections
+          </h3>
+          <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
+            {serviceHubRelationships.map(relationship => {
+              const hub = placeRegistryById.get(relationship.to.id);
+              const sources = networkEvidenceSources(relationship);
+
+              return (
+                <article
+                  key={relationship.id}
+                  className="rounded-2xl border border-secondary-200 bg-white p-5"
+                >
+                  <div className="text-xs font-extrabold uppercase tracking-[0.08em] text-secondary-900">
+                    System–hub connection
+                  </div>
+                  <h4 className="mt-2 text-lg font-extrabold text-gray-950">
+                    {mobilityNetworkNodeLabel(relationship.from)} ↔{' '}
+                    {mobilityNetworkNodeLabel(relationship.to)}
+                  </h4>
+
+                  {relationship.note && (
+                    <p className="mt-2 text-sm leading-relaxed text-gray-600">
+                      {relationship.note}
+                    </p>
+                  )}
+
+                  <div className="mt-4 flex flex-wrap gap-3">
+                    {hub && (
+                      <Link
+                        to={'/civic-map/' + hub.id}
+                        className="text-sm font-bold text-primary-700 underline underline-offset-2"
+                      >
+                        Open {hub.name}
+                      </Link>
+                    )}
+                    {sources.map(source => (
+                      <a
+                        key={source.id}
+                        href={source.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-1 text-sm font-bold text-primary-700 underline underline-offset-2"
+                      >
+                        Evidence
+                        <ExternalLink className="h-3.5 w-3.5" />
+                      </a>
+                    ))}
+                  </div>
+                </article>
+              );
+            })}
+          </div>
         </div>
       </Section>
 
