@@ -74,7 +74,6 @@ export const mainNavigation: NavigationItem[] = [
       { label: 'Places to Go', href: '/visit' },
       { label: 'Getting Around', href: '/mobility' },
       { label: 'Cinemas', href: '/cinemas' },
-      { label: 'Parking', href: '/parking' },
       { label: 'What’s On', href: '/whats-on' },
       { label: 'Heritage & Culture', href: '/heritage' },
       { label: 'History of Makati', href: '/history' },

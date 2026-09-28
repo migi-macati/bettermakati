@@ -10,7 +10,6 @@ const [
   searchIndex,
   navigation,
   districtResolver,
-  parking,
   mobility,
   visit,
   whatsOn,
@@ -27,7 +26,6 @@ const [
   readFile('src/data/searchIndex.ts', 'utf8'),
   readFile('src/data/navigation.ts', 'utf8'),
   readFile('src/data/districtReferences.ts', 'utf8'),
-  readFile('src/pages/Parking.tsx', 'utf8'),
   readFile('src/pages/Mobility.tsx', 'utf8'),
   readFile('src/pages/VisitMakati.tsx', 'utf8'),
   readFile('src/pages/WhatsOn.tsx', 'utf8'),
@@ -318,7 +316,6 @@ for (const marker of [
 }
 
 const districtSurfaceChecks = [
-  [parking, 'Parking', 'popularAreas.map(resolveDistrictReference)'],
   [mobility, 'Mobility', 'resolveTripEndpoint'],
   [visit, 'Visit Makati', 'resolveDistrictReferences'],
   [whatsOn, "What's On", "resolveDistrictReference({ type: 'area', id: areaId })"],
@@ -391,7 +388,6 @@ const migratedSurfaces = [
   barangayPage,
   estatesPage,
   searchIndex,
-  parking,
   mobility,
   visit,
   whatsOn,
@@ -457,7 +453,7 @@ console.log(
     communityAreaRefs.length + ' BetterBarangay private-village refs',
     artifactIds.length + ' approximate Area polygons',
     'registry-driven Estates/Search/Navigation',
-    'canonical district refs on Parking/Mobility/Visit/What’s On',
+    'canonical district refs on Mobility/Visit/What’s On',
     'Civic Intelligence bridge intact',
     'Civic Map context layer intact',
     'no known legacy duplicate estate strings on migrated surfaces',

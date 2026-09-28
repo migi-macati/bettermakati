@@ -181,15 +181,6 @@ const visitItems: SearchItem[] = [
       'cinema movie theater showtimes power plant glorietta greenbelt circuit century waltermart cash carry',
   },
   {
-    title: 'Parking in Makati',
-    group: 'Visit',
-    category: 'Transport',
-    description: 'Find parking near destinations in Makati.',
-    href: '/parking',
-    keywords:
-      'parking car park garage ayala rockwell circuit century poblacion salcedo legazpi',
-  },
-  {
     title: 'What’s On in Makati',
     group: 'Visit',
     category: 'Entertainment',
@@ -384,14 +375,6 @@ const toolItems: SearchItem[] = [
     href: '/mobility',
     keywords:
       'commute transport route bus jeep terminal traffic fare mrt grab angkas joyride move it',
-  },
-  {
-    title: 'Parking Finder',
-    group: 'Tool',
-    category: 'Tools',
-    description: 'Find parking near destinations in Makati.',
-    href: '/parking',
-    keywords: 'parking finder car park garage',
   },
   {
     title: 'What’s On',

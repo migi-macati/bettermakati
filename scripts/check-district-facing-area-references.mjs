@@ -4,7 +4,6 @@ const [
   resolverSource,
   areaRegistrySource,
   barangaySource,
-  parkingSource,
   mobilitySource,
   visitSource,
   whatsOnSource,
@@ -12,7 +11,6 @@ const [
   readFile('src/data/districtReferences.ts', 'utf8'),
   readFile('src/data/areaOrganizationRegistry.ts', 'utf8'),
   readFile('src/data/barangays.ts', 'utf8'),
-  readFile('src/pages/Parking.tsx', 'utf8'),
   readFile('src/pages/Mobility.tsx', 'utf8'),
   readFile('src/pages/VisitMakati.tsx', 'utf8'),
   readFile('src/pages/WhatsOn.tsx', 'utf8'),
@@ -66,38 +64,6 @@ for (const areaId of expectedAreaIds) {
 
 if (!barangaySlugs.has('poblacion')) {
   problems.push('District-facing Poblacion reference must reuse Barangay Poblacion.');
-}
-
-/* Parking */
-for (const marker of [
-  "const popularAreas: DistrictReference[]",
-  "{ type: 'area', id: 'ayala-center' }",
-  "{ type: 'area', id: 'salcedo-village' }",
-  "{ type: 'area', id: 'legazpi-village' }",
-  "{ type: 'barangay', id: 'poblacion' }",
-  "{ type: 'area', id: 'rockwell-center' }",
-  "{ type: 'area', id: 'circuit-makati' }",
-  "{ type: 'area', id: 'century-city' }",
-  'popularAreas.map(resolveDistrictReference)',
-  'parkingUrl(area.mapQuery)',
-  'href={area.href}',
-]) {
-  if (!parkingSource.includes(marker)) {
-    problems.push('Parking canonical district marker missing: ' + marker);
-  }
-}
-
-for (const legacy of [
-  "'Ayala Center Makati'",
-  "'Salcedo Village Makati'",
-  "'Legazpi Village Makati'",
-  "'Poblacion Makati'",
-  "'Rockwell Center Makati'",
-  "'Century City Makati'",
-]) {
-  if (parkingSource.includes(legacy)) {
-    problems.push('Parking still stores a duplicated district string: ' + legacy);
-  }
 }
 
 /* Mobility */
@@ -188,7 +154,6 @@ if (problems.length) {
 console.log(
   [
     'District-facing canonical area reference check passed:',
-    'Parking uses 6 canonical areas + Barangay Poblacion',
     'Mobility trip labels/queries resolve from canonical districts',
     'Visit Makati resolves Make It Makati coverage from area IDs',
     "What's On resolves district context from area IDs",

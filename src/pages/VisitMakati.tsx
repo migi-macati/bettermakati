@@ -6,7 +6,6 @@ import {
   Film,
   Landmark,
   Map,
-  ParkingCircle,
   Utensils,
 } from 'lucide-react';
 import { Link } from 'react-router';
@@ -36,7 +35,6 @@ const visitStarts = [
   { label: 'Eat & drink', href: '/visit#places-to-start', icon: Utensils },
   { label: 'What\'s on', href: '/whats-on', icon: CalendarDays },
   { label: 'Heritage', href: '/heritage', icon: Landmark },
-  { label: 'Parking', href: '/parking', icon: ParkingCircle },
 ];
 
 export default function VisitMakati() {
@@ -196,22 +194,6 @@ export default function VisitMakati() {
             </p>
             <span className="inline-flex items-center gap-1 text-sm font-bold text-primary-700 mt-5">
               Find a cinema <ArrowRight className="h-4 w-4" />
-            </span>
-          </Link>
-
-          <Link
-            to="/parking"
-            className="rounded-2xl border border-primary-100 bg-white p-6 hover:border-primary-300 hover:shadow-sm transition"
-          >
-            <ParkingCircle className="h-7 w-7 text-primary-700" />
-            <h2 className="font-extrabold text-xl text-gray-950 mt-4">
-              Parking
-            </h2>
-            <p className="text-sm text-gray-600 mt-2">
-              Find parking near your destination.
-            </p>
-            <span className="inline-flex items-center gap-1 text-sm font-bold text-primary-700 mt-5">
-              Find parking <ArrowRight className="h-4 w-4" />
             </span>
           </Link>
 
