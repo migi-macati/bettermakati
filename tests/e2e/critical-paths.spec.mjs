@@ -359,12 +359,13 @@ test('empty search filters recover to broader BetterMakati matches', async ({ pa
 test('true zero-result search recovers through BetterMakati before ecosystem exits', async ({ page }) => {
   await page.goto(baseURL + '/search');
   const search = page.locator('#site-search');
+  const recovery = page.getByRole('listbox', { name: /matches/i });
   await search.fill(guaranteedMissingQuery);
 
   await expect(
-    page.getByText('No BetterMakati match for “' + guaranteedMissingQuery + '”', { exact: true })
+    recovery.getByText('No BetterMakati match for “' + guaranteedMissingQuery + '”', { exact: true })
   ).toBeVisible();
-  await expect(page.getByText('Browse BetterMakati', { exact: true })).toBeVisible();
+  await expect(recovery.getByText('Browse BetterMakati', { exact: true })).toBeVisible();
 
   for (const [name, href] of [
     ['Services', '/services'],
@@ -373,13 +374,13 @@ test('true zero-result search recovers through BetterMakati before ecosystem exi
     ['Reports & insights', '/reports'],
     ['Places & map', '/civic-map'],
   ]) {
-    await expect(page.getByRole('link', { name, exact: true })).toHaveAttribute('href', href);
+    await expect(recovery.getByRole('link', { name, exact: true })).toHaveAttribute('href', href);
   }
 
-  await expect(page.getByRole('link', { name: 'Saan Ako Lalapit?', exact: true })).toHaveCount(0);
-  await expect(page.getByRole('link', { name: 'Search national services on BetterGov', exact: true })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Find another LGU on BetterLGU', exact: true })).toBeVisible();
-  await expect(page.getByRole('button', { name: 'Report a missing result', exact: true })).toBeVisible();
+  await expect(recovery.getByRole('link', { name: 'Saan Ako Lalapit?', exact: true })).toHaveCount(0);
+  await expect(recovery.getByRole('link', { name: 'Search national services on BetterGov', exact: true })).toBeVisible();
+  await expect(recovery.getByRole('link', { name: 'Find another LGU on BetterLGU', exact: true })).toBeVisible();
+  await expect(recovery.getByRole('button', { name: 'Report a missing result', exact: true })).toBeVisible();
 });
 
 test('service directory tolerates a common typo', async ({ page }) => {
