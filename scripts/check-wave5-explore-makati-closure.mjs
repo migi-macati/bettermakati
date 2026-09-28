@@ -258,7 +258,8 @@ for (const forbidden of [
 for (const marker of [
   "label: 'Explore Makati'",
   'Understand the city as you explore it',
-  "{ label: 'Areas & districts', href: '/estates'",
+  "label: 'Areas & districts'",
+  "href: '/estates'",
   "{ label: 'Barangays', href: '/barangays'",
 ]) {
   if (!home.includes(marker)) {
