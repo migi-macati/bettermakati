@@ -36,7 +36,9 @@ if (
   problems.push('Homepage no longer exposes shared site Search.');
 }
 
-const navbarSearchLinks = (navbar.match(/to="\/search"/g) ?? []).length;
+const navbarSearchLinks =
+  (navbar.match(/to="\/search"/g) ?? []).length +
+  (navbar.match(/to=\{searchHref\}/g) ?? []).length;
 if (navbarSearchLinks < 2) {
   problems.push(
     'Navbar must expose Search in both desktop and compact/mobile controls.'
