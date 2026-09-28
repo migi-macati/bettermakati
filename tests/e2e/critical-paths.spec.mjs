@@ -1133,7 +1133,7 @@ test('BetterBarangay scope survives service and civic detail drilldowns', async 
   ).toHaveAttribute('href', '/services?barangay=poblacion');
 
   await page.goto(baseURL + '/civic-map?barangay=poblacion');
-  await page.getByRole('link', { name: 'Makati Poblacion Park', exact: true }).first().click();
+  await page.locator('a[href="/civic-map/poblacion-park?barangay=poblacion"]').click();
   await expect(page).toHaveURL(/\/civic-map\/[^?]+\?barangay=poblacion/);
   await expect(page.getByLabel('Choose BetterBarangay view')).toHaveValue('poblacion');
 });
