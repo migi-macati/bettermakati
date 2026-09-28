@@ -1846,13 +1846,6 @@ export const validateMobilityRouteCorridors = (
       continue;
     }
 
-    if (route.disposition !== 'current-service') {
-      throw new Error(
-        'Current-service mobility route has incompatible disposition: ' +
-          route.id
-      );
-    }
-
     const service = route.currentService;
 
     if (
