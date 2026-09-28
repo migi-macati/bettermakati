@@ -58,6 +58,46 @@ const normalize = (value: string) =>
     .replace(/\s+/g, ' ')
     .trim();
 
+const searchTermSynonyms: Record<string, string[]> = {
+  brgy: ['barangay'],
+  bgy: ['barangay'],
+  govt: ['government'],
+  gov: ['government'],
+  stats: ['statistics'],
+  doc: ['document', 'record'],
+  docs: ['documents', 'records'],
+  bid: ['bidding', 'procurement'],
+  bids: ['bidding', 'procurement'],
+  commute: ['mobility', 'transport'],
+  transportation: ['mobility', 'transport'],
+  law: ['legislation'],
+  laws: ['legislation'],
+  ordinance: ['legislation'],
+  ordinances: ['legislation'],
+  resolution: ['legislation'],
+  resolutions: ['legislation'],
+  hotline: ['hotlines'],
+  hotlines: ['emergency'],
+};
+
+const queryVariants = (query: string) => {
+  const needle = normalize(query);
+  if (!needle) return [];
+
+  const variants = new Set([needle]);
+  const tokens = needle.split(' ').filter(Boolean);
+
+  tokens.forEach((token, index) => {
+    for (const synonym of searchTermSynonyms[token] ?? []) {
+      const next = [...tokens];
+      next[index] = synonym;
+      variants.add(next.join(' '));
+    }
+  });
+
+  return [...variants];
+};
+
 const editDistance = (a: string, b: string) => {
   if (a === b) return 0;
   if (!a.length) return b.length;
@@ -91,44 +131,118 @@ const fuzzyMatch = (word: string, tokens: string[]) => {
   );
 };
 
-const scoreItem = (item: SearchItem, query: string) => {
-  const needle = normalize(query);
-  if (!needle) return item.featured ? 5 : 1;
-
+const scoreVariant = (
+  item: SearchItem,
+  variant: string,
+  {
+    primary,
+    allowFuzzy,
+  }: {
+    primary: boolean;
+    allowFuzzy: boolean;
+  }
+) => {
   const title = normalize(item.title);
   const description = normalize(item.description);
   const keywords = normalize(item.keywords);
-  const words = needle.split(' ').filter(Boolean);
+  const category = normalize(item.category);
+  const group = normalize(item.group);
+  const aliases = (item.aliases ?? []).map(normalize).filter(Boolean);
+  const words = variant.split(' ').filter(Boolean);
   const titleTokens = title.split(' ').filter(Boolean);
+  const aliasTokens = aliases.flatMap(alias => alias.split(' ').filter(Boolean));
   const keywordTokens = keywords.split(' ').filter(Boolean);
   const descriptionTokens = description.split(' ').filter(Boolean);
-  const allTokens = [...titleTokens, ...keywordTokens, ...descriptionTokens];
+  const allTokens = [
+    ...titleTokens,
+    ...aliasTokens,
+    ...keywordTokens,
+    ...descriptionTokens,
+  ];
 
+  const weight = primary ? 1 : 0.72;
   let score = 0;
 
-  if (title === needle) score += 50;
-  if (title.startsWith(needle)) score += 28;
-  if (title.includes(needle)) score += 20;
-  if (keywords.includes(needle)) score += 14;
-  if (description.includes(needle)) score += 8;
+  // Canonical title remains strongest. Exact aliases come next, then phrase matches.
+  if (title === variant) score = Math.max(score, 100 * weight);
+  if (aliases.some(alias => alias === variant)) {
+    score = Math.max(score, 88 * weight);
+  }
+  if (title.startsWith(variant)) score = Math.max(score, 72 * weight);
+  if (aliases.some(alias => alias.startsWith(variant))) {
+    score = Math.max(score, 62 * weight);
+  }
+  if (title.includes(variant)) score = Math.max(score, 54 * weight);
+  if (aliases.some(alias => alias.includes(variant))) {
+    score = Math.max(score, 48 * weight);
+  }
+  if (category === variant || group === variant) {
+    score = Math.max(score, 38 * weight);
+  }
+  if (keywords.includes(variant)) score = Math.max(score, 30 * weight);
+  if (description.includes(variant)) score = Math.max(score, 16 * weight);
 
+  let wordScore = 0;
+  let matchedWords = 0;
   for (const word of words) {
-    if (titleTokens.some(token => token.startsWith(word))) score += 7;
-    else if (title.includes(word)) score += 5;
-    if (keywords.includes(word)) score += 3;
-    if (description.includes(word)) score += 1;
+    let matched = false;
+    if (titleTokens.some(token => token === word)) {
+      wordScore += 11;
+      matched = true;
+    } else if (titleTokens.some(token => token.startsWith(word))) {
+      wordScore += 9;
+      matched = true;
+    } else if (title.includes(word)) {
+      wordScore += 7;
+      matched = true;
+    }
+
+    if (aliases.some(alias => alias.includes(word))) {
+      wordScore += 7;
+      matched = true;
+    }
+    if (keywords.includes(word)) {
+      wordScore += 4;
+      matched = true;
+    }
+    if (description.includes(word)) {
+      wordScore += 1;
+      matched = true;
+    }
 
     if (
-      !title.includes(word) &&
-      !keywords.includes(word) &&
-      !description.includes(word) &&
+      allowFuzzy &&
+      !matched &&
       fuzzyMatch(word, allTokens)
     ) {
-      score += 4;
+      wordScore += 4;
+      matched = true;
     }
+
+    if (matched) matchedWords += 1;
   }
 
-  return score;
+  if (words.length > 1 && matchedWords === words.length) {
+    wordScore += title.includes(variant) || aliases.some(alias => alias.includes(variant))
+      ? 14
+      : 8;
+  }
+
+  return Math.max(score, wordScore * weight);
+};
+
+const scoreItem = (item: SearchItem, query: string) => {
+  const variants = queryVariants(query);
+  if (variants.length === 0) return item.featured ? 5 : 1;
+
+  const scores = variants.map((variant, index) =>
+    scoreVariant(item, variant, {
+      primary: index === 0,
+      allowFuzzy: index === 0,
+    })
+  );
+
+  return Math.max(...scores);
 };
 
 const matchesTab = (item: SearchItem, tab: string, scope: SearchScope) => {
