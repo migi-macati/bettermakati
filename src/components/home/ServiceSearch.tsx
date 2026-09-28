@@ -484,8 +484,8 @@ export default function ServiceSearch({
                   }}
                   className={
                     tab === item
-                      ? 'rounded-full bg-primary-800 px-4 py-1.5 text-sm font-semibold text-white shadow-sm'
-                      : 'rounded-full border border-gray-200 bg-white px-4 py-1.5 text-sm font-medium text-gray-700 hover:border-primary-300 hover:bg-primary-50'
+                      ? 'inline-flex min-h-11 items-center rounded-full bg-primary-800 px-4 py-1.5 text-sm font-semibold text-white shadow-sm'
+                      : 'inline-flex min-h-11 items-center rounded-full border border-gray-200 bg-white px-4 py-1.5 text-sm font-medium text-gray-700 hover:border-primary-300 hover:bg-primary-50'
                   }
                 >
                   {item}
