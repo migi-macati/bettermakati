@@ -336,6 +336,52 @@ test('broad search tabs and specific type filters do not create hidden intersect
   ).toBeVisible();
 });
 
+test('empty search filters recover to broader BetterMakati matches', async ({ page }) => {
+  await page.goto(baseURL + '/search');
+  const search = page.locator('#site-search');
+  const typeFilter = page.getByLabel('Filter by type');
+
+  await search.fill('cedula');
+  await typeFilter.selectOption('news');
+
+  await expect(page.getByText('No News matches', { exact: true })).toBeVisible();
+  const showAll = page.getByRole('button', { name: /Show all \d+ matching results?/i });
+  await expect(showAll).toBeVisible();
+  await expect(page.getByText(/outside this filter/i)).toContainText('cedula');
+
+  await showAll.click();
+  await expect(typeFilter).toHaveValue('all');
+  await expect(
+    page.getByRole('listbox', { name: /matches/i }).getByRole('option').first()
+  ).toContainText(/Community Tax Certificate|Cedula/i);
+});
+
+test('true zero-result search recovers through BetterMakati before ecosystem exits', async ({ page }) => {
+  await page.goto(baseURL + '/search');
+  const search = page.locator('#site-search');
+  await search.fill(guaranteedMissingQuery);
+
+  await expect(
+    page.getByText('No BetterMakati match for “' + guaranteedMissingQuery + '”', { exact: true })
+  ).toBeVisible();
+  await expect(page.getByText('Browse BetterMakati', { exact: true })).toBeVisible();
+
+  for (const [name, href] of [
+    ['Services', '/services'],
+    ['Barangays', '/barangays'],
+    ['Public records', '/records'],
+    ['Reports & insights', '/reports'],
+    ['Places & map', '/civic-map'],
+  ]) {
+    await expect(page.getByRole('link', { name, exact: true })).toHaveAttribute('href', href);
+  }
+
+  await expect(page.getByRole('link', { name: 'Saan Ako Lalapit?', exact: true })).toHaveCount(0);
+  await expect(page.getByRole('link', { name: 'Search national services on BetterGov', exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Find another LGU on BetterLGU', exact: true })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Report a missing result', exact: true })).toBeVisible();
+});
+
 test('service directory tolerates a common typo', async ({ page }) => {
   await page.goto(baseURL + '/services');
   const search = page.getByPlaceholder(/Search permit, clearance, ID, test or service/i);
@@ -1851,7 +1897,7 @@ test('ecosystem fallbacks preserve the query and leave an internal recovery path
   await expect(betterLgu).toHaveAttribute('target', '_blank');
 
   await page.getByRole('button', { name: 'Report a missing result', exact: true }).click();
-  await expect(page).toHaveURL(/\/get-involved\?type=idea&tool=saan-ako-lalapit&subject=Missing(?:%20|\+)search(?:%20|\+)result/);
+  await expect(page).toHaveURL(/\/get-involved\?type=idea&tool=search&subject=Missing(?:%20|\+)search(?:%20|\+)result/);
   await expect(page.getByRole('heading', { level: 1, name: 'How do you want to help?' })).toBeVisible();
   await expect(page.getByRole('heading', { level: 2, name: 'Send something to BetterMakati' })).toBeVisible();
 
