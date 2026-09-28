@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useSearchParams } from 'react-router';
+import { useLocation, useSearchParams } from 'react-router';
 import { barangays, findBarangay } from '../data/barangays';
 
 const rememberedBarangayKey = 'bettermakati:barangay-scope';
@@ -44,8 +44,11 @@ export const withBarangayScope = (href: string, slug?: string | null) => {
 
 export function useBarangayScope() {
   const [params, setParams] = useSearchParams();
+  const { pathname } = useLocation();
   const explicitSlug = params.get('barangay');
   const barangaySlug = isValidBarangay(explicitSlug) ? explicitSlug ?? '' : '';
+  const profileSlug = pathname.match(/^\/barangays\/([^/]+)$/)?.[1] ?? '';
+  const profileBarangaySlug = isValidBarangay(profileSlug) ? profileSlug : '';
   const [rememberedBarangaySlug, setRememberedBarangaySlug] = useState(
     readRememberedBarangay
   );
@@ -75,8 +78,11 @@ export function useBarangayScope() {
   );
 
   const preferredBarangay = useMemo(
-    () => findBarangay(barangaySlug || rememberedBarangaySlug),
-    [barangaySlug, rememberedBarangaySlug]
+    () =>
+      findBarangay(
+        barangaySlug || profileBarangaySlug || rememberedBarangaySlug
+      ),
+    [barangaySlug, profileBarangaySlug, rememberedBarangaySlug]
   );
 
   const setBarangay = (slug: string) => {

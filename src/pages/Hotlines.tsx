@@ -84,7 +84,7 @@ export default function Hotlines() {
           </div>
           <a
             href="tel:911"
-            className="brand-btn-primary !bg-red-700 hover:!bg-red-800 self-start md:self-center"
+            className="brand-btn-primary !bg-red-700 !text-white hover:!bg-red-800 hover:!text-white self-start md:self-center"
           >
             Call 911 <PhoneCall className="h-4 w-4" />
           </a>
