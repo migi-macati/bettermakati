@@ -4,7 +4,6 @@ import {
   Camera,
   Download,
   ExternalLink,
-  FileText,
   Link as LinkIcon,
   Map as MapIcon,
   MapPin,
@@ -16,7 +15,6 @@ import { Heading } from '../components/ui/Heading';
 import {
   makatiHistory,
   historyEras,
-  historyResearchGaps,
   historyReviewed,
   type HistoryEvent,
   type HistorySource,
@@ -444,9 +442,9 @@ export default function History() {
                       {event.summary}
                     </p>
 
-                    {(event.evidenceNote || event.note) && (
+                    {event.evidenceNote && (
                       <div className="mt-4 rounded-xl border-l-4 border-secondary-400 bg-secondary-50 px-4 py-3 text-sm leading-relaxed text-gray-700">
-                        {event.evidenceNote ?? event.note}
+                        {event.evidenceNote}
                       </div>
                     )}
                   </div>
@@ -634,25 +632,6 @@ export default function History() {
           </div>
         )}
 
-        <details className="mt-12 rounded-2xl border border-gray-200 bg-white p-5 sm:p-6">
-          <summary className="cursor-pointer list-none">
-            <span className="inline-flex items-center gap-2 font-extrabold text-gray-950">
-              <FileText className="h-5 w-5 text-primary-700" aria-hidden="true" />
-              Open research questions
-            </span>
-          </summary>
-          <ul className="mt-5 list-disc space-y-3 pl-5 text-sm leading-relaxed text-gray-700">
-            {historyResearchGaps.map(gap => (
-              <li key={gap}>{gap}</li>
-            ))}
-          </ul>
-          <Link
-            to="/get-involved"
-            className="mt-5 inline-flex min-h-11 items-center font-bold text-primary-800 underline"
-          >
-            Contribute a document or correction →
-          </Link>
-        </details>
       </Section>
     </>
   );
