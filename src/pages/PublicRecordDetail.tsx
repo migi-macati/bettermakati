@@ -1,8 +1,9 @@
-import { ArrowLeft, ExternalLink } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 import { Link, useParams } from 'react-router';
 import SEO from '../components/SEO';
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
+import Breadcrumbs from '../components/ui/Breadcrumbs';
 import { publicRecordById } from '../data/publicRecords';
 
 export default function PublicRecordDetail() {
@@ -12,14 +13,15 @@ export default function PublicRecordDetail() {
   if (!record) {
     return (
       <Section className="bg-[#fffdf8]">
-        <Link
-          to="/records"
-          className="inline-flex items-center gap-1 text-sm font-bold text-primary-700"
-        >
-          <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-          Public Records
-        </Link>
-        <Heading className="mt-6">Record not found</Heading>
+        <Breadcrumbs
+          className="mb-6"
+          items={[
+            { label: 'Home', href: '/' },
+            { label: 'Public Records', href: '/records' },
+            { label: 'Record not found' },
+          ]}
+        />
+        <Heading>Record not found</Heading>
         <p className="mt-3 text-gray-600">
           This Public Records entry is unavailable or its identifier has changed.
         </p>
@@ -35,15 +37,17 @@ export default function PublicRecordDetail() {
       />
 
       <Section className="border-b border-primary-800 bg-primary-900 text-white">
-        <Link
-          to="/records"
-          className="inline-flex items-center gap-1 text-sm font-bold text-secondary-300"
-        >
-          <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-          Public Records
-        </Link>
+        <Breadcrumbs
+          tone="dark"
+          className="mb-6"
+          items={[
+            { label: 'Home', href: '/' },
+            { label: 'Public Records', href: '/records' },
+            { label: record.title },
+          ]}
+        />
 
-        <div className="mt-6 flex flex-wrap gap-2 text-xs font-bold">
+        <div className="flex flex-wrap gap-2 text-xs font-bold">
           <span className="rounded-full bg-white/10 px-2.5 py-1 text-primary-50">
             {record.category}
           </span>
