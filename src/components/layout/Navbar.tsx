@@ -13,29 +13,94 @@ import { Link, useLocation, useNavigate } from 'react-router';
 import BrandMark from '../BrandMark';
 import BetterBarangayContextBar from '../barangay/BetterBarangayContextBar';
 import { barangays } from '../../data/barangays';
-import { isBarangaySliceableHref, useBarangayScope, withBarangayScope } from '../../hooks/useBarangayScope';
+import {
+  isBarangaySliceableHref,
+  useBarangayScope,
+  withBarangayScope,
+} from '../../hooks/useBarangayScope';
+import type { NavigationItem } from '../../types';
+
+const menuId = (label: string | null) =>
+  label?.toLowerCase().replace(/\s+/g, '-') ?? '';
+
+const hrefParts = (href: string) => {
+  const [pathAndSearch, targetHash = ''] = href.split('#', 2);
+  const [path, targetSearch = ''] = pathAndSearch.split('?', 2);
+  return {
+    path,
+    hash: targetHash ? '#' + targetHash : '',
+    search: new URLSearchParams(targetSearch),
+  };
+};
+
+const comparableSearch = (params: URLSearchParams) => {
+  const copy = new URLSearchParams(params);
+  copy.delete('barangay');
+  return [...copy.entries()]
+    .sort(([leftKey, leftValue], [rightKey, rightValue]) =>
+      leftKey.localeCompare(rightKey) || leftValue.localeCompare(rightValue)
+    )
+    .map(([key, value]) => key + '=' + value)
+    .join('&');
+};
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const nav = useRef<HTMLElement>(null);
   const navigate = useNavigate();
-  const { pathname, hash } = useLocation();
+  const { pathname, search, hash } = useLocation();
   const { barangay, preferredBarangay, rememberBarangay } = useBarangayScope();
-  const menuId = (label: string | null) =>
-    label?.toLowerCase().replace(/\s+/g, '-') ?? '';
+
+  const currentSearch = new URLSearchParams(search);
+
   const closeMenu = () => {
     setIsOpen(false);
     setActiveMenu(null);
   };
-  const isCurrent = (href: string) =>
-    href === pathname + hash || (!hash && href === pathname);
-  const isSection = (href: string) =>
-    pathname === href || pathname.startsWith(href + '/');
+
+  const isCurrent = (href: string) => {
+    const target = hrefParts(href);
+    if (target.path !== pathname) return false;
+    if (
+      comparableSearch(target.search) !== comparableSearch(currentSearch)
+    ) {
+      return false;
+    }
+    return !target.hash || target.hash === hash;
+  };
+
+  const isSection = (href: string) => {
+    const { path } = hrefParts(href);
+    return pathname === path || pathname.startsWith(path + '/');
+  };
+
+  const familyOwnsPath = (item: NavigationItem) => {
+    if (isSection(item.href)) return true;
+    if (item.children?.some(child => isSection(child.href))) return true;
+
+    if (item.label === 'City' && pathname.startsWith('/officials/')) return true;
+    if (item.label === 'Participate' && pathname === '/get-involved') return true;
+
+    return false;
+  };
+
+  const currentFamily = mainNavigation.find(familyOwnsPath);
+
   const scopedHref = (href: string) =>
     barangay && isBarangaySliceableHref(href)
       ? withBarangayScope(href, barangay.slug)
       : href;
+
+  const toggleMobileMenu = () => {
+    if (isOpen) {
+      closeMenu();
+      return;
+    }
+
+    setIsOpen(true);
+    setActiveMenu(currentFamily?.children ? currentFamily.label : null);
+  };
 
   useEffect(() => {
     const outside = (event: PointerEvent) => {
@@ -106,43 +171,65 @@ export default function Navbar() {
             <div onClick={closeMenu}>
               <BrandMark />
             </div>
+
             <div className="ml-auto hidden xl:flex items-center gap-1">
               {mainNavigation.map(item => {
                 const expanded = activeMenu === item.label;
-                const current =
-                  isSection(item.href) ||
-                  item.children?.some(child =>
-                    isSection(child.href.split('#')[0].split('?')[0])
-                  );
+                const current = familyOwnsPath(item);
+                const directCurrent = isCurrent(item.href);
+
                 return (
                   <div key={item.label} className="relative">
                     {item.children ? (
-                      <button
-                        id={`desktop-toggle-${menuId(item.label)}`}
-                        type="button"
-                        aria-expanded={expanded}
-                        aria-controls={`desktop-panel-${menuId(item.label)}`}
-                        onClick={() =>
-                          setActiveMenu(expanded ? null : item.label)
+                      <div
+                        className={
+                          'flex items-stretch rounded-lg ' +
+                          (current ? 'bg-primary-50 text-primary-800' : 'text-gray-700')
                         }
-                        className={`inline-flex min-h-11 items-center gap-1 rounded-lg px-2 text-sm font-semibold whitespace-nowrap hover:bg-primary-50 ${current ? 'text-primary-800 bg-primary-50' : 'text-gray-700'}`}
                       >
-                        {item.label}
-                        <ChevronDown
-                          aria-hidden="true"
-                          className={`h-4 w-4 transition-transform ${expanded ? 'rotate-180' : ''}`}
-                        />
-                      </button>
+                        <Link
+                          to={scopedHref(item.href)}
+                          onClick={closeMenu}
+                          aria-current={directCurrent ? 'page' : undefined}
+                          className="inline-flex min-h-11 items-center rounded-l-lg px-2.5 text-sm font-semibold whitespace-nowrap hover:bg-primary-50"
+                        >
+                          {item.label}
+                        </Link>
+                        <button
+                          id={`desktop-toggle-${menuId(item.label)}`}
+                          type="button"
+                          aria-expanded={expanded}
+                          aria-controls={`desktop-panel-${menuId(item.label)}`}
+                          aria-label={`${expanded ? 'Close' : 'Open'} ${item.label} menu`}
+                          onClick={() =>
+                            setActiveMenu(expanded ? null : item.label)
+                          }
+                          className="inline-flex min-h-11 min-w-9 items-center justify-center rounded-r-lg hover:bg-primary-100"
+                        >
+                          <ChevronDown
+                            aria-hidden="true"
+                            className={`h-4 w-4 transition-transform ${
+                              expanded ? 'rotate-180' : ''
+                            }`}
+                          />
+                        </button>
+                      </div>
                     ) : (
                       <Link
                         to={scopedHref(item.href)}
                         onClick={closeMenu}
-                        aria-current={isCurrent(item.href) ? 'page' : undefined}
-                        className="inline-flex min-h-11 items-center rounded-lg px-3 text-sm font-semibold text-gray-700 hover:bg-primary-50"
+                        aria-current={directCurrent ? 'page' : undefined}
+                        className={
+                          'inline-flex min-h-11 items-center rounded-lg px-3 text-sm font-semibold hover:bg-primary-50 ' +
+                          (current
+                            ? 'bg-primary-50 text-primary-800'
+                            : 'text-gray-700')
+                        }
                       >
                         {item.label}
                       </Link>
                     )}
+
                     {item.children && (
                       <div
                         id={`desktop-panel-${menuId(item.label)}`}
@@ -154,10 +241,13 @@ export default function Navbar() {
                             key={child.label}
                             to={scopedHref(child.href)}
                             onClick={closeMenu}
-                            aria-current={
-                              isCurrent(child.href) ? 'page' : undefined
+                            aria-current={isCurrent(child.href) ? 'page' : undefined}
+                            className={
+                              'flex min-h-11 items-center rounded-lg px-3 py-2 text-sm hover:bg-primary-50 hover:text-primary-800 ' +
+                              (isCurrent(child.href)
+                                ? 'bg-primary-50 font-bold text-primary-800'
+                                : 'text-gray-700')
                             }
-                            className="flex min-h-11 items-center rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-primary-50 hover:text-primary-800"
                           >
                             {child.label}
                           </Link>
@@ -167,6 +257,7 @@ export default function Navbar() {
                   </div>
                 );
               })}
+
               {preferredBarangay && (
                 <div className="relative ml-2">
                   <div className="pointer-events-none inline-flex min-h-11 items-center gap-1.5 rounded-full border border-secondary-200 bg-secondary-50 px-3 text-sm font-extrabold text-primary-900">
@@ -193,6 +284,7 @@ export default function Navbar() {
                   </select>
                 </div>
               )}
+
               <Link
                 to="/search"
                 onClick={closeMenu}
@@ -202,12 +294,15 @@ export default function Navbar() {
                 <Search className="h-5 w-5" aria-hidden="true" />
               </Link>
             </div>
+
             <div className="ml-auto flex items-center gap-1 xl:hidden">
               {preferredBarangay && (
                 <Link
                   to={'/barangays/' + preferredBarangay.slug}
                   onClick={closeMenu}
-                  aria-label={'Open Better' + preferredBarangay.name.replace(/\s+/g, '')}
+                  aria-label={
+                    'Open Better' + preferredBarangay.name.replace(/\s+/g, '')
+                  }
                   className="flex h-11 w-11 items-center justify-center rounded-lg text-secondary-800 hover:bg-secondary-50"
                 >
                   <MapPin className="h-5 w-5" aria-hidden="true" />
@@ -224,10 +319,7 @@ export default function Navbar() {
               <button
                 id="mobile-menu-toggle"
                 type="button"
-                onClick={() => {
-                  setIsOpen(!isOpen);
-                  setActiveMenu(null);
-                }}
+                onClick={toggleMobileMenu}
                 className="inline-flex h-11 w-11 items-center justify-center rounded-lg text-gray-700 hover:bg-primary-50"
                 aria-expanded={isOpen}
                 aria-controls="mobile-navigation"
@@ -242,7 +334,9 @@ export default function Navbar() {
             </div>
           </div>
         </div>
+
         <BetterBarangayContextBar />
+
         <div
           id="mobile-navigation"
           hidden={!isOpen}
@@ -271,59 +365,95 @@ export default function Navbar() {
                 ))}
               </select>
             </label>
-            {mainNavigation.map(item => (
-              <div key={item.label}>
-                {item.children ? (
-                  <>
-                    <button
-                      type="button"
-                      onClick={() =>
-                        setActiveMenu(
-                          activeMenu === item.label ? null : item.label
-                        )
+
+            {mainNavigation.map(item => {
+              const current = familyOwnsPath(item);
+              const expanded = activeMenu === item.label;
+
+              return (
+                <div key={item.label}>
+                  {item.children ? (
+                    <>
+                      <div
+                        className={
+                          'flex min-h-12 items-stretch rounded-lg ' +
+                          (current ? 'bg-primary-50' : '')
+                        }
+                      >
+                        <Link
+                          to={scopedHref(item.href)}
+                          onClick={closeMenu}
+                          aria-current={isCurrent(item.href) ? 'page' : undefined}
+                          className={
+                            'flex flex-1 items-center rounded-l-lg px-3 py-3 font-semibold hover:bg-primary-50 ' +
+                            (current ? 'text-primary-800' : 'text-gray-800')
+                          }
+                        >
+                          {item.label}
+                        </Link>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setActiveMenu(expanded ? null : item.label)
+                          }
+                          aria-expanded={expanded}
+                          aria-controls={`mobile-panel-${menuId(item.label)}`}
+                          aria-label={`${expanded ? 'Close' : 'Open'} ${item.label} menu`}
+                          className={
+                            'flex min-w-12 items-center justify-center rounded-r-lg hover:bg-primary-100 ' +
+                            (current ? 'text-primary-800' : 'text-gray-700')
+                          }
+                        >
+                          <ChevronDown
+                            aria-hidden="true"
+                            className={`h-5 w-5 transition-transform ${
+                              expanded ? 'rotate-180' : ''
+                            }`}
+                          />
+                        </button>
+                      </div>
+
+                      <div
+                        id={`mobile-panel-${menuId(item.label)}`}
+                        hidden={!expanded}
+                        className="ml-3 border-l-2 border-primary-200 pl-2 py-1"
+                      >
+                        {item.children.map(child => (
+                          <Link
+                            key={child.label}
+                            to={scopedHref(child.href)}
+                            onClick={closeMenu}
+                            aria-current={isCurrent(child.href) ? 'page' : undefined}
+                            className={
+                              'flex min-h-11 items-center rounded-lg px-3 py-2 text-sm hover:bg-primary-50 ' +
+                              (isCurrent(child.href)
+                                ? 'bg-primary-50 font-bold text-primary-800'
+                                : 'text-gray-700')
+                            }
+                          >
+                            {child.label}
+                          </Link>
+                        ))}
+                      </div>
+                    </>
+                  ) : (
+                    <Link
+                      to={scopedHref(item.href)}
+                      onClick={closeMenu}
+                      aria-current={isCurrent(item.href) ? 'page' : undefined}
+                      className={
+                        'flex min-h-12 items-center rounded-lg px-3 py-3 font-semibold hover:bg-primary-50 ' +
+                        (current
+                          ? 'bg-primary-50 text-primary-800'
+                          : 'text-gray-800')
                       }
-                      aria-expanded={activeMenu === item.label}
-                      aria-controls={`mobile-panel-${menuId(item.label)}`}
-                      className="w-full min-h-12 flex justify-between items-center rounded-lg px-3 py-3 font-semibold text-gray-800 hover:bg-primary-50"
                     >
                       {item.label}
-                      <ChevronDown
-                        aria-hidden="true"
-                        className={`h-5 w-5 transition-transform ${activeMenu === item.label ? 'rotate-180' : ''}`}
-                      />
-                    </button>
-                    <div
-                      id={`mobile-panel-${menuId(item.label)}`}
-                      hidden={activeMenu !== item.label}
-                      className="ml-3 border-l-2 border-primary-200 pl-2 py-1"
-                    >
-                      {item.children.map(child => (
-                        <Link
-                          key={child.label}
-                          to={scopedHref(child.href)}
-                          onClick={closeMenu}
-                          aria-current={
-                            isCurrent(child.href) ? 'page' : undefined
-                          }
-                          className="flex min-h-11 items-center rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-primary-50"
-                        >
-                          {child.label}
-                        </Link>
-                      ))}
-                    </div>
-                  </>
-                ) : (
-                  <Link
-                    to={scopedHref(item.href)}
-                    onClick={closeMenu}
-                    aria-current={isCurrent(item.href) ? 'page' : undefined}
-                    className="flex min-h-12 items-center rounded-lg px-3 py-3 font-semibold text-gray-800 hover:bg-primary-50"
-                  >
-                    {item.label}
-                  </Link>
-                )}
-              </div>
-            ))}
+                    </Link>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
       </nav>
