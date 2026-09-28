@@ -279,7 +279,7 @@ test('site search ranks civic aliases and synonyms ahead of incidental matches',
 
   for (const [query, expectedTitle] of cases) {
     await search.fill(query);
-    const firstResult = page.getByRole('option').first();
+    const firstResult = page.getByRole('listbox', { name: /matches/i }).getByRole('option').first();
     await expect(firstResult).toBeVisible();
     await expect(firstResult).toContainText(expectedTitle);
   }
@@ -290,10 +290,50 @@ test('site search keeps canonical titles above alias-only matches', async ({ pag
   const search = page.getByRole('combobox');
 
   await search.fill('Public Records');
-  await expect(page.getByRole('option').first()).toContainText('Public Records');
+  await expect(page.getByRole('listbox', { name: /matches/i }).getByRole('option').first()).toContainText('Public Records');
 
   await search.fill('Barangays');
-  await expect(page.getByRole('option').first()).toContainText('Barangays');
+  await expect(page.getByRole('listbox', { name: /matches/i }).getByRole('option').first()).toContainText('Barangays');
+});
+
+test('site search filters by frozen civic result domains', async ({ page }) => {
+  await page.goto(baseURL + '/search');
+  const search = page.getByRole('combobox');
+  const typeFilter = page.getByLabel('Filter by type');
+  const results = page.getByRole('listbox', { name: /matches/i });
+
+  await search.fill('Poblacion');
+  await typeFilter.selectOption('barangays');
+  await expect(typeFilter).toHaveValue('barangays');
+  await expect(results.getByRole('option').first()).toContainText('Barangay Poblacion');
+
+  await typeFilter.selectOption('places');
+  await expect(typeFilter).toHaveValue('places');
+  await expect(results.getByRole('option').first()).toContainText(/Poblacion/i);
+
+  await search.fill('budget');
+  await typeFilter.selectOption('reports');
+  await expect(results.getByRole('option').first()).toContainText(/budget|fiscal|receipts|operating/i);
+
+  await typeFilter.selectOption('public-records');
+  await expect(results.getByRole('option').first()).toContainText(/budget|record|appropriation/i);
+});
+
+test('broad search tabs and specific type filters do not create hidden intersections', async ({ page }) => {
+  await page.goto(baseURL + '/search');
+  const search = page.getByRole('combobox');
+  const typeFilter = page.getByLabel('Filter by type');
+
+  await search.fill('Makati');
+  await page.getByRole('button', { name: 'Records', exact: true }).click();
+  await expect(typeFilter).toHaveValue('all');
+
+  await typeFilter.selectOption('mobility');
+  await expect(typeFilter).toHaveValue('mobility');
+  await expect(page.getByRole('button', { name: 'All', exact: true })).toHaveClass(/bg-primary-800/);
+  await expect(
+    page.getByRole('listbox', { name: /matches/i }).getByRole('option').first()
+  ).toBeVisible();
 });
 
 test('service directory tolerates a common typo', async ({ page }) => {
