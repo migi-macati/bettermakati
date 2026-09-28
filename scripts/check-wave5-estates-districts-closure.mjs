@@ -12,7 +12,7 @@ const [
   districtResolver,
   mobility,
   visit,
-  whatsOn,
+  calendar,
   civicMapPage,
   civicAreaMap,
   packageJson,
@@ -28,7 +28,7 @@ const [
   readFile('src/data/districtReferences.ts', 'utf8'),
   readFile('src/pages/Mobility.tsx', 'utf8'),
   readFile('src/pages/VisitMakati.tsx', 'utf8'),
-  readFile('src/pages/WhatsOn.tsx', 'utf8'),
+  readFile('src/pages/Calendar.tsx', 'utf8'),
   readFile('src/pages/CivicMap.tsx', 'utf8'),
   readFile('src/components/civic/CivicAreaContextMap.tsx', 'utf8'),
   readFile('package.json', 'utf8'),
@@ -317,8 +317,8 @@ for (const marker of [
 
 const districtSurfaceChecks = [
   [mobility, 'Mobility', 'resolveTripEndpoint'],
-  [visit, 'Visit Makati', 'resolveDistrictReferences'],
-  [whatsOn, "What's On", "resolveDistrictReference({ type: 'area', id: areaId })"],
+  [visit, 'Explore Makati', 'resolveDistrictReference'],
+  [calendar, 'Makati Calendar', "resolveDistrictReference({ type: 'area', id: areaId })"],
 ];
 for (const [source, label, marker] of districtSurfaceChecks) {
   if (!source.includes(marker)) {
@@ -390,7 +390,7 @@ const migratedSurfaces = [
   searchIndex,
   mobility,
   visit,
-  whatsOn,
+  calendar,
 ];
 for (const legacy of [
   'Rockwell Center Association, Inc.',
@@ -453,7 +453,7 @@ console.log(
     communityAreaRefs.length + ' BetterBarangay private-village refs',
     artifactIds.length + ' approximate Area polygons',
     'registry-driven Estates/Search/Navigation',
-    'canonical district refs on Mobility/Visit/What’s On',
+    'canonical district refs on Mobility/Explore/Calendar',
     'Civic Intelligence bridge intact',
     'Civic Map context layer intact',
     'no known legacy duplicate estate strings on migrated surfaces',
