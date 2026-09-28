@@ -133,7 +133,7 @@ for (const marker of [
   "place.primaryCategory === 'health-center'",
   "place.primaryCategory === 'community-center'",
   "place.tags.includes('service')",
-  "to={'/civic-map/' + place.id}",
+  "to={withBarangayScope('/civic-map/' + place.id, barangay.slug)}",
   "withBarangayScope('/civic-map', barangay.slug)",
 ]) {
   if (!servicesPage.includes(marker)) {
