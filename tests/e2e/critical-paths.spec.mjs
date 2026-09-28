@@ -263,6 +263,39 @@ test('homepage universal search tolerates a simple typo', async ({ page }) => {
   await expect(page.getByText(/Community Tax Certificate|Cedula/i).first()).toBeVisible();
 });
 
+test('site search ranks civic aliases and synonyms ahead of incidental matches', async ({ page }) => {
+  await page.goto(baseURL + '/search');
+  const search = page.getByRole('combobox');
+
+  const cases = [
+    ['brgy poblacion', 'Barangay Poblacion'],
+    ['city hall', 'City offices'],
+    ['city stats', 'Makati statistics'],
+    ['bids', 'Procurement'],
+    ['commute', 'Getting around Makati'],
+    ['laws', 'Legislation'],
+    ['historical sites', 'Heritage & Culture'],
+  ];
+
+  for (const [query, expectedTitle] of cases) {
+    await search.fill(query);
+    const firstResult = page.getByRole('option').first();
+    await expect(firstResult).toBeVisible();
+    await expect(firstResult).toContainText(expectedTitle);
+  }
+});
+
+test('site search keeps canonical titles above alias-only matches', async ({ page }) => {
+  await page.goto(baseURL + '/search');
+  const search = page.getByRole('combobox');
+
+  await search.fill('Public Records');
+  await expect(page.getByRole('option').first()).toContainText('Public Records');
+
+  await search.fill('Barangays');
+  await expect(page.getByRole('option').first()).toContainText('Barangays');
+});
+
 test('service directory tolerates a common typo', async ({ page }) => {
   await page.goto(baseURL + '/services');
   const search = page.getByPlaceholder(/Search permit, clearance, ID, test or service/i);
