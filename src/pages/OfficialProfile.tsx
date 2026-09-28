@@ -1,5 +1,4 @@
 import {
-  ArrowLeft,
   ExternalLink,
   Landmark,
   Vote,
@@ -10,6 +9,7 @@ import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
 import SEO from '../components/SEO';
 import SharePage from '../components/ui/SharePage';
+import Breadcrumbs from '../components/ui/Breadcrumbs';
 import { findOfficial } from '../data/electedOfficials';
 import {
   election2025Sources,
@@ -27,10 +27,15 @@ export default function OfficialProfile() {
   if (!official) {
     return (
       <Section className="bg-[#fffdf8]">
+        <Breadcrumbs
+          className="mb-6"
+          items={[
+            { label: 'Home', href: '/' },
+            { label: 'Government', href: '/government' },
+            { label: 'Official not found' },
+          ]}
+        />
         <Heading>Official not found</Heading>
-        <Link to="/government" className="brand-btn-secondary mt-6">
-          <ArrowLeft className="h-4 w-4" /> Back to government
-        </Link>
       </Section>
     );
   }
@@ -60,14 +65,16 @@ export default function OfficialProfile() {
       />
 
       <Section className="bg-[#fffdf8]">
-        <Link
-          to="/government"
-          className="inline-flex items-center gap-1 text-sm font-bold text-primary-700"
-        >
-          <ArrowLeft className="h-4 w-4" /> Government
-        </Link>
+        <Breadcrumbs
+          className="mb-6"
+          items={[
+            { label: 'Home', href: '/' },
+            { label: 'Government', href: '/government' },
+            { label: official.displayName },
+          ]}
+        />
 
-        <div className="mt-6 grid grid-cols-1 lg:grid-cols-[1fr_0.72fr] gap-6">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_0.72fr]">
           <div>
             <div className="section-eyebrow">Elected official</div>
             <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
