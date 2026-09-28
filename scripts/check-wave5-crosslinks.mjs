@@ -130,7 +130,7 @@ for (const [label, content] of parkingForbiddenSurfaces) {
 
 if (
   !app.includes(
-    '<Route path="/parking" element={<Navigate to="/visit" replace />} />'
+    '<Route path="/parking" element={<CompatibilityRedirect to="/visit" />} />'
   )
 ) {
   problems.push(
