@@ -20,6 +20,7 @@ import { barangays } from '../data/barangays';
 import { briefArchiveHref, briefPeriodLabel } from '../data/civicBriefs';
 import CivicTimelinePreview from '../components/civic/CivicTimelinePreview';
 import type { NewsItem } from '../data/newsTypes';
+import { isTodayNewsCandidate } from '../data/newsCivicRelationships';
 
 interface Weather {
   temperature?: number;
@@ -191,7 +192,7 @@ export default function Today() {
           if (Array.isArray(data.items)) {
             setNews(
               (data.items as NewsItem[])
-                .filter(item => item.todayEligible)
+                .filter(isTodayNewsCandidate)
                 .slice(0, 3)
             );
             setNewsFailed(false);
@@ -491,7 +492,7 @@ export default function Today() {
             </a>
           )) : (
             <div className="rounded-2xl border border-gray-200 p-5 text-sm text-gray-600 lg:col-span-3">
-              {newsFailed ? 'The live news feed is unavailable. ' : 'No headline from the last 7 days met the Today freshness rule. '}
+              {newsFailed ? 'The live news feed is unavailable. ' : 'No headline from the last 7 days met the Today freshness and direct-Makati relevance rules. '}
               <Link to="/news" className="font-bold text-primary-700">Open Makati in the News</Link>.
             </div>
           )}
