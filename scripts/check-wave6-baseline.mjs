@@ -109,7 +109,7 @@ for (const forbidden of ["href: '/parking'", "href: '/whats-on'"]) {
 for (const redirect of [
   '<Route path="/parking" element={<Navigate to="/visit" replace />} />',
   '<Route path="/whats-on" element={<Navigate to="/calendar" replace />} />',
-  '<Route path="/transparency"',
+  'path="/transparency"',
   '<Navigate to="/projects-budget" replace />',
   '<Route path="/reports/makati-overview"',
   '<Navigate to="/reports/2026-budget-operating-expenses" replace />',
