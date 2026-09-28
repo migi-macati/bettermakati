@@ -58,6 +58,20 @@ for (const marker of [
   "to={'/estates#area-' + areaId}",
   "Search route records",
   "to=\"/search?q=route\"",
+  "routeDisplayLimit = 12",
+  "mobilityRouteMatchesQuery",
+  "routeQuery",
+  "showAllRoutes",
+  "Filter this route list",
+  "mobility-route-filter",
+  "visibleCurrentRoutes",
+  "visibleJeepneyRoutes",
+  "visibleUnresolvedRoutes",
+  "Evidence &amp; limits",
+  "Show all ",
+  "Show fewer",
+  "overflow-x-auto",
+  "min-h-11 shrink-0 whitespace-nowrap",
 ]) {
   if (!pageSource.includes(marker)) {
     problems.push('Mobility page canonical presentation marker missing: ' + marker);

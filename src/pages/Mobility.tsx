@@ -43,6 +43,7 @@ import {
   unresolvedJeepneyRows,
   type MobilityCurrentServiceRouteRecord,
   type MobilityHistoricalRouteRecord,
+  type MobilityRouteCorridorRecord,
 } from '../data/mobilityRoutes';
 import {
   mobilityNetworkRelationships,
@@ -161,6 +162,38 @@ const routeEvidenceSources = (
 
 const historicalSourceFor = (route: MobilityHistoricalRouteRecord) =>
   mobilityRouteSourceById.get(route.historical.sourceId);
+
+const routeDisplayLimit = 12;
+
+const mobilityRouteMatchesQuery = (
+  route: MobilityRouteCorridorRecord,
+  query: string
+) => {
+  if (!query) return true;
+
+  const haystack =
+    route.recordKind === 'current-service'
+      ? [
+          route.id,
+          route.mode,
+          route.currentService.routeLabel,
+          route.currentService.originLabel,
+          route.currentService.destinationLabel,
+          route.currentService.serviceClass,
+        ]
+      : [
+          route.id,
+          route.mode,
+          route.historical.from,
+          route.historical.to,
+          route.historical.associationLabel,
+          route.disposition,
+          route.reconciliationStatus,
+          route.note,
+        ];
+
+  return haystack.join(' ').toLowerCase().includes(query);
+};
 
 const mobilityServiceById = new Map(
   mobilityServices.map(service => [service.id, service])
@@ -302,6 +335,41 @@ export default function Mobility() {
   const [destination, setDestination] = useState('Ayala Triangle Gardens');
   const [mode, setMode] = useState('transit');
   const [routeView, setRouteView] = useState<MobilityRouteView>('bus');
+  const [routeQuery, setRouteQuery] = useState('');
+  const [showAllRoutes, setShowAllRoutes] = useState(false);
+
+  const normalizedRouteQuery = routeQuery.trim().toLowerCase();
+
+  const filteredCurrentRoutes = (
+    routeView === 'bus' ? currentBusRoutes : currentUvExpressRoutes
+  ).filter(route => mobilityRouteMatchesQuery(route, normalizedRouteQuery));
+
+  const filteredJeepneyRoutes = currentOrSuccessorJeepneyCorridors.filter(
+    route => mobilityRouteMatchesQuery(route, normalizedRouteQuery)
+  );
+
+  const filteredUnresolvedRoutes = unresolvedJeepneyRows.filter(route =>
+    mobilityRouteMatchesQuery(route, normalizedRouteQuery)
+  );
+
+  const activeRouteCount =
+    routeView === 'bus' || routeView === 'uv-express'
+      ? filteredCurrentRoutes.length
+      : routeView === 'jeepney'
+        ? filteredJeepneyRoutes.length
+        : filteredUnresolvedRoutes.length;
+
+  const visibleCurrentRoutes = showAllRoutes
+    ? filteredCurrentRoutes
+    : filteredCurrentRoutes.slice(0, routeDisplayLimit);
+
+  const visibleJeepneyRoutes = showAllRoutes
+    ? filteredJeepneyRoutes
+    : filteredJeepneyRoutes.slice(0, routeDisplayLimit);
+
+  const visibleUnresolvedRoutes = showAllRoutes
+    ? filteredUnresolvedRoutes
+    : filteredUnresolvedRoutes.slice(0, routeDisplayLimit);
 
   return (
     <>
@@ -334,22 +402,37 @@ export default function Mobility() {
         />
 
         <nav
-          className="mt-6 flex flex-wrap gap-2"
+          className="-mx-5 mt-6 flex gap-2 overflow-x-auto px-5 pb-2 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0"
           aria-label="Getting around sections"
         >
-          <a href="#transport-anchors" className="brand-chip">
+          <a
+            href="#transport-anchors"
+            className="brand-chip min-h-11 shrink-0 whitespace-nowrap"
+          >
             Stations &amp; terminals
           </a>
-          <a href="#interchanges" className="brand-chip">
+          <a
+            href="#interchanges"
+            className="brand-chip min-h-11 shrink-0 whitespace-nowrap"
+          >
             Transfers
           </a>
-          <a href="#routes" className="brand-chip">
+          <a
+            href="#routes"
+            className="brand-chip min-h-11 shrink-0 whitespace-nowrap"
+          >
             Routes
           </a>
-          <Link to="/civic-map" className="brand-chip">
+          <Link
+            to="/civic-map"
+            className="brand-chip min-h-11 shrink-0 whitespace-nowrap"
+          >
             Civic Map
           </Link>
-          <Link to="/search?q=transport" className="brand-chip">
+          <Link
+            to="/search?q=transport"
+            className="brand-chip min-h-11 shrink-0 whitespace-nowrap"
+          >
             <Search className="h-4 w-4" aria-hidden="true" />
             Search transport
           </Link>
@@ -818,7 +901,7 @@ export default function Mobility() {
         </div>
 
         <div
-          className="mt-6 flex flex-wrap gap-2"
+          className="-mx-5 mt-6 flex gap-2 overflow-x-auto px-5 pb-2 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0"
           role="group"
           aria-label="Route registry view"
         >
@@ -826,17 +909,61 @@ export default function Mobility() {
             <button
               key={view.id}
               type="button"
-              onClick={() => setRouteView(view.id)}
+              onClick={() => {
+                setRouteView(view.id);
+                setShowAllRoutes(false);
+              }}
               aria-pressed={routeView === view.id}
               className={
                 routeView === view.id
-                  ? 'brand-chip !bg-primary-800 !text-white'
-                  : 'brand-chip'
+                  ? 'brand-chip min-h-11 shrink-0 whitespace-nowrap !bg-primary-800 !text-white'
+                  : 'brand-chip min-h-11 shrink-0 whitespace-nowrap'
               }
             >
               {view.label} ({view.count})
             </button>
           ))}
+        </div>
+
+        <div className="mt-4 max-w-xl">
+          <label
+            htmlFor="mobility-route-filter"
+            className="text-sm font-bold text-gray-700"
+          >
+            Filter this route list
+          </label>
+          <div className="relative mt-2">
+            <Search
+              className="pointer-events-none absolute left-3 top-3.5 h-4 w-4 text-gray-500"
+              aria-hidden="true"
+            />
+            <input
+              id="mobility-route-filter"
+              value={routeQuery}
+              onChange={event => {
+                setRouteQuery(event.target.value);
+                setShowAllRoutes(false);
+              }}
+              placeholder="e.g., Bicutan, Guadalupe, PRC"
+              className="min-h-11 w-full rounded-xl border border-gray-300 bg-white py-2.5 pl-10 pr-20 text-sm text-gray-950"
+            />
+            {routeQuery && (
+              <button
+                type="button"
+                onClick={() => {
+                  setRouteQuery('');
+                  setShowAllRoutes(false);
+                }}
+                className="absolute right-2 top-1.5 min-h-8 rounded-lg px-3 text-xs font-bold text-primary-700 hover:bg-primary-50"
+              >
+                Clear
+              </button>
+            )}
+          </div>
+          <p className="mt-2 text-xs text-gray-500">
+            {activeRouteCount} matching record
+            {activeRouteCount === 1 ? '' : 's'} in this view.
+          </p>
         </div>
 
         {(routeView === 'bus' || routeView === 'uv-express') && (
@@ -848,27 +975,25 @@ export default function Mobility() {
             </p>
 
             <div className="mt-5 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-              {(routeView === 'bus'
-                ? currentBusRoutes
-                : currentUvExpressRoutes
-              ).map(route => {
+              {visibleCurrentRoutes.map(route => {
                 if (route.recordKind !== 'current-service') return null;
                 const evidenceSources = routeEvidenceSources(route);
 
                 return (
                   <article
                     key={route.id}
-                    className="rounded-2xl border border-gray-200 bg-white p-5"
+                    className="min-w-0 rounded-2xl border border-gray-200 bg-white p-5"
                   >
                     <div className="text-xs font-extrabold uppercase tracking-[0.08em] text-primary-700">
                       {currentRouteClassLabel(route)}
                     </div>
-                    <h3 className="mt-2 text-lg font-extrabold text-gray-950">
+                    <h3 className="mt-2 break-words text-lg font-extrabold text-gray-950">
                       {route.currentService.routeLabel}
                     </h3>
                     <p className="mt-2 text-sm text-gray-600">
                       From {route.currentService.originLabel}
                     </p>
+
                     <div className="mt-4 flex flex-wrap gap-3">
                       <Link
                         to="/civic-map/one-ayala-terminal"
@@ -876,19 +1001,32 @@ export default function Mobility() {
                       >
                         One Ayala terminal
                       </Link>
-                      {evidenceSources.map((source, index) => (
-                        <a
-                          key={source.id}
-                          href={source.url}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="inline-flex items-center gap-1 text-sm font-bold text-primary-700 underline underline-offset-2"
-                        >
-                          Source {index + 1}
-                          <ExternalLink className="h-3.5 w-3.5" />
-                        </a>
-                      ))}
                     </div>
+
+                    <details className="mt-4 border-t border-gray-100 pt-3 text-sm text-gray-600">
+                      <summary className="cursor-pointer font-bold text-primary-700">
+                        Evidence &amp; limits
+                      </summary>
+                      <p className="mt-2 leading-relaxed">
+                        Route identity is corroborated by two 2026 terminal
+                        rosters. Operator, fare, schedule, gate and complete stop
+                        sequence remain live information.
+                      </p>
+                      <div className="mt-3 flex flex-wrap gap-3">
+                        {evidenceSources.map((source, index) => (
+                          <a
+                            key={source.id}
+                            href={source.url}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="inline-flex items-center gap-1 font-bold text-primary-700 underline underline-offset-2"
+                          >
+                            Source {index + 1}
+                            <ExternalLink className="h-3.5 w-3.5" />
+                          </a>
+                        ))}
+                      </div>
+                    </details>
                   </article>
                 );
               })}
@@ -905,14 +1043,14 @@ export default function Mobility() {
             </p>
 
             <div className="mt-5 grid grid-cols-1 gap-4 md:grid-cols-2">
-              {currentOrSuccessorJeepneyCorridors.map(route => {
+              {visibleJeepneyRoutes.map(route => {
                 if (route.recordKind !== 'historical-reconciliation') return null;
                 const evidenceSources = routeEvidenceSources(route);
 
                 return (
                   <article
                     key={route.id}
-                    className="rounded-2xl border border-gray-200 bg-white p-5"
+                    className="min-w-0 rounded-2xl border border-gray-200 bg-white p-5"
                   >
                     <div className="flex flex-wrap items-center justify-between gap-2">
                       <span className="text-xs font-extrabold uppercase tracking-[0.08em] text-primary-700">
@@ -922,7 +1060,7 @@ export default function Mobility() {
                         2020 city row {route.historical.publishedNo}
                       </span>
                     </div>
-                    <h3 className="mt-2 text-lg font-extrabold text-gray-950">
+                    <h3 className="mt-2 break-words text-lg font-extrabold text-gray-950">
                       {route.historical.from} ↔ {route.historical.to}
                     </h3>
                     <details className="mt-3 text-sm text-gray-600">
@@ -930,22 +1068,22 @@ export default function Mobility() {
                         Evidence note
                       </summary>
                       <p className="mt-2 leading-relaxed">{route.note}</p>
+                      <div className="mt-3 flex flex-wrap gap-3">
+                        {evidenceSources.map((source, index) => (
+                          <a
+                            key={source.id}
+                            href={source.url}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="inline-flex items-center gap-1 font-bold text-primary-700 underline underline-offset-2"
+                          >
+                            Current evidence
+                            {evidenceSources.length > 1 ? ' ' + (index + 1) : ''}
+                            <ExternalLink className="h-3.5 w-3.5" />
+                          </a>
+                        ))}
+                      </div>
                     </details>
-                    <div className="mt-4 flex flex-wrap gap-3">
-                      {evidenceSources.map((source, index) => (
-                        <a
-                          key={source.id}
-                          href={source.url}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="inline-flex items-center gap-1 text-sm font-bold text-primary-700 underline underline-offset-2"
-                        >
-                          Current evidence
-                          {evidenceSources.length > 1 ? ' ' + (index + 1) : ''}
-                          <ExternalLink className="h-3.5 w-3.5" />
-                        </a>
-                      ))}
-                    </div>
                   </article>
                 );
               })}
@@ -962,19 +1100,19 @@ export default function Mobility() {
             </p>
 
             <div className="mt-5 grid grid-cols-1 gap-4 md:grid-cols-3">
-              {unresolvedJeepneyRows.map(route => {
+              {visibleUnresolvedRoutes.map(route => {
                 if (route.recordKind !== 'historical-reconciliation') return null;
                 const historicalSource = historicalSourceFor(route);
 
                 return (
                   <article
                     key={route.id}
-                    className="rounded-2xl border border-amber-200 bg-white p-5"
+                    className="min-w-0 rounded-2xl border border-amber-200 bg-white p-5"
                   >
                     <div className="text-xs font-extrabold uppercase tracking-[0.08em] text-amber-800">
                       Current status unresolved
                     </div>
-                    <h3 className="mt-2 text-lg font-extrabold text-gray-950">
+                    <h3 className="mt-2 break-words text-lg font-extrabold text-gray-950">
                       {route.historical.from} ↔ {route.historical.to}
                     </h3>
                     <p className="mt-2 text-sm leading-relaxed text-gray-600">
@@ -998,6 +1136,30 @@ export default function Mobility() {
                 );
               })}
             </div>
+          </div>
+        )}
+
+        {activeRouteCount === 0 && (
+          <div className="mt-6 rounded-2xl border border-gray-200 bg-white p-6 text-sm text-gray-600">
+            No route record in this view matches “{routeQuery}”.
+          </div>
+        )}
+
+        {activeRouteCount > routeDisplayLimit && (
+          <div className="mt-6 flex flex-wrap items-center gap-3">
+            <button
+              type="button"
+              onClick={() => setShowAllRoutes(value => !value)}
+              className="brand-btn-secondary min-h-11"
+            >
+              {showAllRoutes
+                ? 'Show fewer'
+                : 'Show all ' + activeRouteCount + ' records'}
+            </button>
+            <span className="text-sm text-gray-500">
+              Showing {showAllRoutes ? activeRouteCount : routeDisplayLimit} of{' '}
+              {activeRouteCount}
+            </span>
           </div>
         )}
       </Section>
