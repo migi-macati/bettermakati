@@ -60,7 +60,7 @@ interface BriefArchive {
   briefs?: BriefArchiveEntry[];
 }
 
-const todayReviewed = '24 September 2026';
+const todayReviewed = '28 September 2026';
 
 const weatherLabel = (code?: number) => {
   if (code === 0) return 'Clear';
