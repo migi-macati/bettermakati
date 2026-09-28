@@ -4,6 +4,13 @@ import {
   routeNewsForReview,
   shouldCreateNewsReviewCandidate,
 } from './news-review-routing.mjs';
+import {
+  newsCandidateMaterialEvidenceKeys,
+  newsReviewResolutionPolicyVersion,
+  newsResolutionDisposition,
+  newsResolutionMatchesCandidate,
+  validateNewsReviewResolution,
+} from './news-review-resolution-policy.mjs';
 
 const readJson = async (path, fallback) => {
   try {
@@ -28,6 +35,25 @@ const snapshot = await readJson('data/news-discovery-snapshot.json', {
   generatedAt: null,
   items: [],
 });
+
+const resolutionLedger = await readJson('data/news-review-resolutions.json', {
+  version: 1,
+  resolutions: [],
+});
+
+for (const resolution of resolutionLedger.resolutions || []) {
+  const problem = validateNewsReviewResolution(resolution);
+  if (problem) {
+    throw new Error(
+      'Invalid news review resolution ' +
+        String(resolution?.id || '(missing id)') +
+        ': ' +
+        problem
+    );
+  }
+}
+
+const resolutions = resolutionLedger.resolutions || [];
 
 const [
   accountabilityText,
@@ -261,7 +287,7 @@ const entityContextMatches = item => {
   ];
 };
 
-const candidates = (snapshot.items || [])
+const rawCandidates = (snapshot.items || [])
   .filter(shouldCreateNewsReviewCandidate)
   .map(item => {
     const routes = routeNewsForReview(item);
@@ -281,16 +307,31 @@ const candidates = (snapshot.items || [])
       ? 'canonical-match-found'
       : 'owner-review-needed';
 
-    return {
+    const candidate = {
       id,
       reviewStatus,
       publicEligible: false,
       storyClusterId: item.storyClusterId || null,
+      clusterKey: item.clusterKey || null,
       title: item.title,
       description: item.description,
       publisher: item.source,
       sourceClass: item.sourceClass,
       sourceUrl: item.link,
+      coverageSources: [
+        {
+          url: item.link,
+          publisher: item.source,
+          sourceClass: item.sourceClass,
+          publishedAt: item.pubDate,
+        },
+        ...(item.relatedCoverage || []).map(source => ({
+          url: source.link,
+          publisher: source.source,
+          sourceClass: source.sourceClass,
+          publishedAt: source.pubDate,
+        })),
+      ],
       publishedAt: item.pubDate,
       retrievedAt: item.retrievedAt || snapshot.generatedAt || null,
       freshness: item.freshness,
@@ -311,12 +352,68 @@ const candidates = (snapshot.items || [])
       note:
         'This is an internal discovery/review candidate. News reporting is not itself a canonical BetterMakati record.',
     };
-  })
-  .sort(
-    (a, b) =>
-      String(b.publishedAt || '').localeCompare(String(a.publishedAt || '')) ||
-      a.id.localeCompare(b.id)
+
+    return {
+      ...candidate,
+      materialEvidenceKeys: newsCandidateMaterialEvidenceKeys(candidate),
+    };
+  });
+
+const activeCandidates = [];
+const suppressedResolved = [];
+
+for (const candidate of rawCandidates) {
+  const matchingResolutions = resolutions
+    .filter(resolution =>
+      newsResolutionMatchesCandidate(resolution, candidate)
+    )
+    .sort((a, b) =>
+      String(b.resolvedAt || '').localeCompare(String(a.resolvedAt || ''))
+    );
+
+  const latestResolution = matchingResolutions[0];
+  const disposition = newsResolutionDisposition(
+    latestResolution,
+    candidate
   );
+
+  if (disposition.suppress) {
+    suppressedResolved.push({
+      candidateId: candidate.id,
+      storyClusterId: candidate.storyClusterId,
+      title: candidate.title,
+      resolutionId: latestResolution.id,
+      decision: latestResolution.decision,
+      resolvedAt: latestResolution.resolvedAt,
+    });
+    continue;
+  }
+
+  if (disposition.resurfaced) {
+    activeCandidates.push({
+      ...candidate,
+      reviewStatus: 'material-update-review',
+      priorResolution: {
+        id: latestResolution.id,
+        decision: latestResolution.decision,
+        resolvedAt: latestResolution.resolvedAt,
+        canonicalRef: latestResolution.canonicalRef || null,
+      },
+      newMaterialEvidenceKeys: disposition.newMaterialEvidenceKeys,
+      nextAction:
+        'This story was resolved before, but materially new official/canonical evidence is now present. Review only the new evidence and update the canonical owner if warranted.',
+    });
+    continue;
+  }
+
+  activeCandidates.push(candidate);
+}
+
+const candidates = activeCandidates.sort(
+  (a, b) =>
+    String(b.publishedAt || '').localeCompare(String(a.publishedAt || '')) ||
+    a.id.localeCompare(b.id)
+);
 
 const summary = {
   total: candidates.length,
@@ -326,6 +423,11 @@ const summary = {
   canonicalMatchFound: candidates.filter(
     item => item.reviewStatus === 'canonical-match-found'
   ).length,
+  materialUpdateReview: candidates.filter(
+    item => item.reviewStatus === 'material-update-review'
+  ).length,
+  suppressedResolved: suppressedResolved.length,
+  resolutionCount: resolutions.length,
   byOwner: Object.fromEntries(
     [...new Set(candidates.flatMap(item => item.suggestedOwners))]
       .sort()
@@ -337,9 +439,10 @@ const summary = {
 };
 
 const output = {
-  version: 1,
+  version: 2,
   generatedAt: snapshot.generatedAt || null,
   sourceSnapshotVersion: snapshot.version || 1,
+  resolutionPolicyVersion: newsReviewResolutionPolicyVersion,
   doctrine: {
     publicBoundary:
       'This queue is internal review state. No queue item is public civic data.',
@@ -349,9 +452,12 @@ const output = {
       'Exact canonical references and exact source URLs are checked before review. A matched record should be updated rather than duplicated.',
     routing:
       'Topic routing suggests canonical owners. It does not decide that a reported claim is true or that a canonical record must change.',
+    recurrence:
+      'Resolved stories stay out of the active queue unless materially new official/canonical evidence appears. Resolution history lives in the append-only resolution ledger.',
   },
   summary,
   candidates,
+  suppressedResolved,
 };
 
 await writeFile(
@@ -366,9 +472,12 @@ const lines = [
   '',
   'Internal review only. Headlines are discovery signals, not canonical civic records.',
   '',
-  '- Total candidates: ' + summary.total,
+  '- Active candidates: ' + summary.total,
   '- Owner review needed: ' + summary.ownerReviewNeeded,
   '- Canonical match found: ' + summary.canonicalMatchFound,
+  '- Material-update review: ' + summary.materialUpdateReview,
+  '- Resolved stories suppressed: ' + summary.suppressedResolved,
+  '- Resolution history entries: ' + summary.resolutionCount,
   '',
   ...candidates.flatMap(candidate => [
     '## ' + candidate.title,
@@ -384,6 +493,17 @@ const lines = [
             .map(match => match.owner + ':' + match.id)
             .join(', ')
         : 'none'),
+    ...(candidate.priorResolution
+      ? [
+          '- Prior resolution: ' +
+            candidate.priorResolution.decision +
+            ' (' +
+            candidate.priorResolution.id +
+            ')',
+          '- New material evidence: ' +
+            candidate.newMaterialEvidenceKeys.join(', '),
+        ]
+      : []),
     '- Source: ' + candidate.sourceUrl,
     '- Public item: no',
     '- Next action: ' + candidate.nextAction,
@@ -396,9 +516,13 @@ await writeFile('data/news-review-queue.md', lines.join('\n') + '\n');
 console.log(
   'News review queue built: ' +
     summary.total +
-    ' total; ' +
+    ' active; ' +
     summary.ownerReviewNeeded +
     ' owner-review; ' +
     summary.canonicalMatchFound +
-    ' canonical-match; 0 auto-published.'
+    ' canonical-match; ' +
+    summary.materialUpdateReview +
+    ' material-update; ' +
+    summary.suppressedResolved +
+    ' resolved suppressed; 0 auto-published.'
 );
