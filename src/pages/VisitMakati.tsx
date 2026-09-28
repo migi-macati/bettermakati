@@ -194,7 +194,7 @@ const VisitorExperienceCard = ({
 
         {(experience.links.length > 0 || primarySource) && (
           <details className="mt-3 border-t border-gray-100 pt-3 text-sm">
-            <summary className="cursor-pointer font-bold text-gray-700">
+            <summary className="flex min-h-11 cursor-pointer items-center font-bold text-gray-700">
               Current links &amp; source
             </summary>
             <div className="mt-3 flex flex-wrap gap-x-4 gap-y-3">
