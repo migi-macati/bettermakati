@@ -1,0 +1,82 @@
+{
+  "version": 1,
+  "reviewedOn": "2026-09-28",
+  "closureStatus": "closed-with-editorial-review-and-deployment-verification-deferred",
+  "canonicalRoute": "/news",
+  "publicSurfaces": [
+    {
+      "surface": "Makati in the News",
+      "route": "/news",
+      "role": "current-affairs discovery and cross-linking"
+    },
+    {
+      "surface": "Today in Makati",
+      "route": "/today",
+      "role": "fresh direct-Makati headline preview only"
+    }
+  ],
+  "internalArtifacts": [
+    "data/news-discovery-snapshot.json",
+    "data/news-review-queue.json",
+    "data/news-review-queue.md",
+    "data/news-review-resolutions.json"
+  ],
+  "invariants": [
+    "News is a discovery layer; canonical domains own civic facts and statuses.",
+    "Publisher class is descriptive and never a credibility score.",
+    "Today requires both freshness and direct Makati/entity relevance.",
+    "Story clustering preserves alternate coverage and uses a conservative time-bounded similarity rule.",
+    "Canonical relationships require explicit names, references or exact source matches; news never creates canonical entities.",
+    "Topic routing creates internal review candidates only.",
+    "Every review candidate is publicEligible=false.",
+    "Resolved stories are suppressed until materially new official/canonical evidence appears; stale and out-of-scope are terminal for the matched story.",
+    "Resolution history is human/editorial state and is never overwritten by the daily generator.",
+    "Internal news-review artifacts are not copied to the public site."
+  ],
+  "contracts": {
+    "sourcePolicyVersion": "2026-09-28.w5-8b",
+    "reviewRoutingPolicyVersion": "2026-09-28.w5-8d",
+    "resolutionPolicyVersion": "2026-09-28.w5-8e",
+    "todayMaxAgeDays": 7,
+    "generalFeedMaxAgeDays": 45,
+    "reviewDecisionCount": 7,
+    "reviewTopicCount": 8,
+    "refreshCadence": "daily-09:00-Asia-Manila"
+  },
+  "bounded": [
+    {
+      "id": "semantic-story-clustering",
+      "status": "conservative-rule-based",
+      "reason": "W5-8 intentionally avoids broad semantic/AI clustering that could merge distinct civic developments."
+    },
+    {
+      "id": "automatic-canonical-promotion",
+      "status": "not-supported",
+      "reason": "Owner-specific primary/official evidence and destination-domain review remain mandatory."
+    },
+    {
+      "id": "commercial-and-lifestyle-routing",
+      "status": "news-only",
+      "reason": "Ordinary dining, entertainment, lifestyle and commercial coverage may appear in News but does not enter the civic review queue without a civic-change signal."
+    },
+    {
+      "id": "review-queue-publication",
+      "status": "internal-only",
+      "reason": "The queue and resolution ledger are editorial workflow state rather than public civic records."
+    }
+  ],
+  "deferred": [
+    {
+      "id": "deployment-live-browser-verification",
+      "status": "unverified",
+      "reason": "Repository closure precedes a fresh deployment/browser pass.",
+      "nonClaim": "No repository-level result in W5-8 establishes that production has already deployed these changes."
+    },
+    {
+      "id": "editorial-resolution-of-current-candidates",
+      "status": "ongoing",
+      "reason": "A closed discovery/review system may still contain active editorial candidates. Closure concerns the workflow architecture, not the resolution of every future headline."
+    }
+  ],
+  "finalStatement": "W5-8 News & Discovery is closed at repository level with human editorial review, canonical-owner evidence boundaries, recurrence suppression, and deployment verification explicitly preserved."
+}
