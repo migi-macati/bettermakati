@@ -392,6 +392,9 @@ export default function ServiceGuide() {
   const prepare = guidance?.prepare || prepareByType[item.type] || prepareByType.Other;
   const steps = guidance?.steps || standardSteps(item);
   const destinationIsExternal = item.href.startsWith('http');
+  const officialSourceUrl = detail?.sourceUrl || item.sourceUrl;
+  const relatedInternalPage =
+    !destinationIsExternal && item.href !== '/services/guide/' + item.id;
   const betterGovOwnsNationalGuide =
     item.level === 'National' &&
     item.nationalIntegration?.betterGov.status === 'listed' &&
@@ -617,7 +620,12 @@ export default function ServiceGuide() {
             <p className="text-sm leading-relaxed text-gray-700">
               Barangay services are handled by the barangay hall. Open your barangay profile for local office and contact information.
             </p>
-            <Link to="/barangays" className="brand-btn-primary mt-4">Find your barangay</Link>
+            <Link
+              to={barangay ? '/barangays/' + barangay.slug : '/barangays'}
+              className="brand-btn-primary mt-4"
+            >
+              {barangay ? 'Open Barangay ' + barangay.name : 'Find your barangay'}
+            </Link>
           </div>
         ) : offices.length ? (
           <div className="mt-5 grid grid-cols-1 gap-4 lg:grid-cols-2">
@@ -738,7 +746,7 @@ export default function ServiceGuide() {
           <div className="section-eyebrow">Official transaction</div>
           <Heading level={2}>Continue with the issuing agency</Heading>
           <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600">
-            Check the agency page for current eligibility, forms, fees, schedules and any appointment requirement.
+            BetterMakati helps you prepare and find the right office. Use the issuing agency’s official source for current eligibility, forms, fees, schedules and any appointment requirement.
           </p>
           <div className="mt-5 flex flex-wrap gap-3">
             {destinationIsExternal ? (
@@ -746,14 +754,19 @@ export default function ServiceGuide() {
                 Continue to official service <ExternalLink className="h-4 w-4" />
               </a>
             ) : (
-              <Link to={item.href} className="brand-btn-primary">
-                Open detailed BetterMakati guide
-              </Link>
+              <a href={officialSourceUrl} target="_blank" rel="noreferrer" className="brand-btn-primary">
+                Open official source <ExternalLink className="h-4 w-4" />
+              </a>
             )}
-            {item.sourceUrl !== item.href && (
-              <a href={item.sourceUrl} target="_blank" rel="noreferrer" className="brand-btn-secondary">
+            {destinationIsExternal && officialSourceUrl !== item.href && (
+              <a href={officialSourceUrl} target="_blank" rel="noreferrer" className="brand-btn-secondary">
                 Official source <FileText className="h-4 w-4" />
               </a>
+            )}
+            {relatedInternalPage && (
+              <Link to={item.href} className="brand-btn-secondary">
+                Related BetterMakati page
+              </Link>
             )}
           </div>
         </Section>
