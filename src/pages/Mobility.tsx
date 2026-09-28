@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import {
   ArrowRightLeft,
   Bike,
+  Building2,
   Bus,
   Car,
   ExternalLink,
@@ -1234,12 +1235,14 @@ export default function Mobility() {
             <p className="text-sm text-gray-600 mt-1">Find bike parking and cycling destinations.</p>
           </a>
           <Link
-            to="/parking"
+            to="/estates"
             className="rounded-2xl border border-gray-200 bg-white p-6 hover:border-primary-300 transition"
           >
-            <Car className="h-6 w-6 text-primary-700" />
-            <h2 className="font-extrabold text-lg mt-4">Parking</h2>
-            <p className="text-sm text-gray-600 mt-1">Search parking near a Makati destination.</p>
+            <Building2 className="h-6 w-6 text-primary-700" />
+            <h2 className="font-extrabold text-lg mt-4">Areas &amp; districts</h2>
+            <p className="text-sm text-gray-600 mt-1">
+              Put transport connections in the context of Makati&apos;s districts, estates and villages.
+            </p>
           </Link>
           <a
             href="#transport-anchors"
