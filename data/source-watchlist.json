@@ -118,10 +118,10 @@
   },
   {
     "id": "comelec-2026-bske-calendar",
-    "label": "COMELEC 2026 BSKE election calendar",
+    "label": "COMELEC 2026 BSKE election calendar — superseded",
     "url": "https://www.comelec.gov.ph/php-tpls-attachments/2025BSKE/Resolutions/com_res_11191.pdf",
     "kind": "election",
-    "cadence": "daily",
+    "cadence": "monthly",
     "monitoringMode": "content-hash",
     "owner": "general-source-freshness",
     "affectedPages": [
@@ -130,10 +130,10 @@
   },
   {
     "id": "comelec-2026-bske-registration",
-    "label": "COMELEC 2026 BSKE voter registration rules",
+    "label": "COMELEC 2026 BSKE voter-registration rules — historical",
     "url": "https://www.comelec.gov.ph/php-tpls-attachments/2025BSKE/Resolutions/com_res_11177.pdf",
     "kind": "election",
-    "cadence": "daily",
+    "cadence": "monthly",
     "monitoringMode": "content-hash",
     "owner": "general-source-freshness",
     "affectedPages": [
@@ -1119,10 +1119,10 @@
   },
   {
     "id": "comelec-2026-bske-filing-rules",
-    "label": "COMELEC 2026 BSKE certificate-of-candidacy filing rules",
+    "label": "COMELEC 2026 BSKE COC filing rules — superseded schedule",
     "url": "https://www.comelec.gov.ph/php-tpls-attachments/2025BSKE/Resolutions/com_res11196.pdf",
     "kind": "election",
-    "cadence": "daily",
+    "cadence": "monthly",
     "monitoringMode": "content-hash",
     "owner": "general-source-freshness",
     "affectedPages": [
@@ -1131,10 +1131,10 @@
   },
   {
     "id": "comelec-2026-bske-term-rules",
-    "label": "COMELEC implementing rules for RA 12232",
+    "label": "COMELEC implementing rules for RA 12232 — previous law",
     "url": "https://www.comelec.gov.ph/php-tpls-attachments/2025BSKE/Resolutions/com_res_11207.pdf",
     "kind": "election",
-    "cadence": "daily",
+    "cadence": "monthly",
     "monitoringMode": "content-hash",
     "owner": "general-source-freshness",
     "affectedPages": [
@@ -1143,10 +1143,10 @@
   },
   {
     "id": "lawphil-ra-12232",
-    "label": "Republic Act No. 12232 barangay and SK term law",
+    "label": "Republic Act No. 12232 — previous barangay and SK term law",
     "url": "https://lawphil.net/statutes/repacts/ra2025/ra_12232_2025.html",
     "kind": "election-law",
-    "cadence": "daily",
+    "cadence": "monthly",
     "monitoringMode": "reachability",
     "owner": "general-source-freshness",
     "affectedPages": [
