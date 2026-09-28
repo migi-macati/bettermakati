@@ -229,8 +229,8 @@ export default function Heritage() {
                 aria-pressed={mapSelection === 'all'}
                 className={
                   mapSelection === 'all'
-                    ? 'rounded-full bg-primary-800 px-3 py-2 text-xs font-bold text-white'
-                    : 'rounded-full border border-primary-200 bg-white px-3 py-2 text-xs font-bold text-primary-800 hover:border-primary-400'
+                    ? 'min-h-11 rounded-full bg-primary-800 px-3 py-2 text-xs font-bold text-white'
+                    : 'min-h-11 rounded-full border border-primary-200 bg-white px-3 py-2 text-xs font-bold text-primary-800 hover:border-primary-400'
                 }
               >
                 All heritage places
@@ -243,8 +243,8 @@ export default function Heritage() {
                   aria-pressed={mapSelection === collection.id}
                   className={
                     mapSelection === collection.id
-                      ? 'rounded-full bg-primary-800 px-3 py-2 text-xs font-bold text-white'
-                      : 'rounded-full border border-primary-200 bg-white px-3 py-2 text-xs font-bold text-primary-800 hover:border-primary-400'
+                      ? 'min-h-11 rounded-full bg-primary-800 px-3 py-2 text-xs font-bold text-white'
+                      : 'min-h-11 rounded-full border border-primary-200 bg-white px-3 py-2 text-xs font-bold text-primary-800 hover:border-primary-400'
                   }
                 >
                   {collection.name}
