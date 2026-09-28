@@ -7,6 +7,16 @@ export type NewsSourceClass =
 
 export type NewsFreshness = 'current' | 'recent' | 'older' | 'undated';
 
+export type NewsRelatedCoverage = {
+  title: string;
+  link: string;
+  source: string;
+  sourceUrl: string;
+  pubDate: string;
+  sourceClass: NewsSourceClass;
+  sourceClassLabel: string;
+};
+
 export type NewsItem = {
   title: string;
   link: string;
@@ -23,4 +33,7 @@ export type NewsItem = {
   retrievedAt: string;
   reviewCandidate: boolean;
   reviewReasons: string[];
+  storyClusterId?: string;
+  clusterSize?: number;
+  relatedCoverage?: NewsRelatedCoverage[];
 };
