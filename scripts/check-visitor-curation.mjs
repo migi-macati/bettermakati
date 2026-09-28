@@ -155,7 +155,6 @@ for (const marker of [
   'Understand the city as you explore it',
   "label: 'Areas & districts'",
   "href: '/estates'",
-  "{ label: 'Barangays', href: '/barangays'",
   "{ label: 'Cinemas', href: '/cinemas'",
 ]) {
   if (!home.includes(marker)) {
@@ -216,5 +215,5 @@ if (problems.length) {
 }
 
 console.log(
-  'W5-6e Explore Makati check passed: six curated orientation records remain canonical/source-backed; Explore naming is aligned across page, navigation, homepage and Search; recurring experiences deep-link from Search; Civic Map/Areas/Barangays/Mobility/Makati Calendar/Heritage/History cross-links remain explicit; legacy tourism-directory and Parking patterns stay removed.'
+  'W5-6e Explore Makati check passed: six curated orientation records remain canonical/source-backed; Explore naming is aligned across page, navigation, homepage and Search; recurring experiences deep-link from Search; Civic Map/Areas/Mobility/Makati Calendar/Heritage/History cross-links remain explicit while BetterBarangay owns the homepage barangay entry; legacy tourism-directory and Parking patterns stay removed.'
 );
