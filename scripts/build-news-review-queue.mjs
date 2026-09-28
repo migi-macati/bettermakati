@@ -70,7 +70,7 @@ const extractPairs = (content, secondField, maxSpan = 1800) => {
   while ((match = idRegex.exec(content))) {
     const slice = content.slice(match.index, match.index + maxSpan);
     const second = slice.match(
-      new RegExp('\\b' + secondField + ':\\s*[\\'\"]([^\\'\"]+)[\\'\"]')
+      new RegExp("\\b" + secondField + ":\\s*['\"]([^'\"]+)['\"]")
     );
     if (!second) continue;
     pairs.push({ id: match[1], value: second[1] });
