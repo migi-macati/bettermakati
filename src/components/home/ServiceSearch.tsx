@@ -416,7 +416,7 @@ export default function ServiceSearch({
   const [query, setQuery] = useState(initialQuery);
   const [tab, setTab] = useState<string>('All');
   const [domainFilter, setDomainFilter] = useState<SearchDomainId>('all');
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(Boolean(initialQuery.trim()));
   const [activeIndex, setActiveIndex] = useState(0);
   const [legislationIndex, setLegislationIndex] =
     useState<BrowserLegislationIndex | null>(null);
