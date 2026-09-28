@@ -53,6 +53,7 @@ export interface SearchItem {
   description: string;
   href: string;
   keywords: string;
+  aliases?: string[];
   serviceId?: string;
   featured?: boolean;
   canonicalKey?: string;
@@ -68,6 +69,7 @@ const canonicalPageItems: SearchItem[] = [
     href: '/services',
     keywords:
       'services permits licenses certificates transactions citizen charter city services national services apply requirements',
+    aliases: ['government services', 'city services', 'service directory'],
     canonicalKey: 'page:services',
   },
   {
@@ -79,6 +81,7 @@ const canonicalPageItems: SearchItem[] = [
     href: '/barangays',
     keywords:
       'barangays betterbarangay neighborhoods local government barangay profiles officials facilities services 23 barangays',
+    aliases: ['brgys', 'barangay directory', 'neighborhoods'],
     canonicalKey: 'page:barangays',
   },
   {
@@ -90,6 +93,7 @@ const canonicalPageItems: SearchItem[] = [
     href: '/reports',
     keywords:
       'reports insights analysis research evidence synthesis featured reports civic intelligence',
+    aliases: ['reports', 'insights', 'civic analysis'],
     canonicalKey: 'page:reports',
   },
 ];
@@ -174,6 +178,7 @@ const visitItems: SearchItem[] = [
     description: 'Historical markers, churches, museums and cultural sites.',
     href: '/heritage',
     keywords: 'heritage culture historical sites church museum old makati',
+    aliases: ['historical sites', 'historic sites', 'museums', 'old makati'],
     featured: true,
   },
   {
@@ -193,6 +198,7 @@ const visitItems: SearchItem[] = [
     href: '/mobility',
     keywords:
       'transport commute mrt one ayala bus jeep uv express grab angkas joyride move it',
+    aliases: ['commute', 'transport', 'public transport', 'jeep routes', 'bus routes'],
     featured: true,
   },
   {
@@ -261,6 +267,7 @@ const governmentItems: SearchItem[] = [
     href: '/government#offices',
     keywords:
       'office department city hall government engineering health social welfare environment budget finance',
+    aliases: ['city hall', 'makati city hall', 'government offices'],
     featured: true,
   },
   {
@@ -271,6 +278,7 @@ const governmentItems: SearchItem[] = [
     href: '/statistics',
     keywords:
       'statistics population demographic income class data city profile',
+    aliases: ['stats', 'city stats', 'makati data'],
   },
   {
     title: 'Legislation',
@@ -279,6 +287,7 @@ const governmentItems: SearchItem[] = [
     description: 'Resolutions, ordinances and the Makati City Charter.',
     href: '/legislation',
     keywords: 'legislation ordinance resolution law charter council',
+    aliases: ['laws', 'city laws', 'ordinances', 'resolutions'],
   },
   {
     title: 'Makati in the News',
@@ -287,6 +296,7 @@ const governmentItems: SearchItem[] = [
     description: 'Current Makati coverage with publisher and official-source handoffs.',
     href: '/news',
     keywords: 'news coverage headline publisher announcement city government update current affairs current events updates breaking',
+    aliases: ['city news', 'makati news', 'latest makati news'],
   },
   {
     title: 'Estates, Districts & Associations',
@@ -359,6 +369,7 @@ const recordItems: SearchItem[] = [
     href: '/projects-budget',
     keywords:
       'budget spending projects procurement audit public records transparency contract',
+    aliases: ['city budget', 'public spending', 'spending'],
     featured: true,
   },
   {
@@ -384,6 +395,7 @@ const recordItems: SearchItem[] = [
     description: 'Follow procurement awards toward contracts, implementation and completion evidence.',
     href: '/accountability?type=project',
     keywords: 'procurement bidding award supplier contractor philgeps purchase contract notice to proceed implementation completion evidence',
+    aliases: ['bids', 'bidding', 'bid awards', 'contracts'],
   },
   {
     title: 'Audit findings & follow-through',
@@ -405,6 +417,7 @@ const toolItems: SearchItem[] = [
     href: '/community-tools/saan-ako-lalapit',
     keywords:
       'where office concern help which department saan ako lalapit finder',
+    aliases: ['where do i go', 'where to go', 'which office', 'help with concern'],
     featured: true,
   },
   {
@@ -434,6 +447,7 @@ const toolItems: SearchItem[] = [
     href: '/calendar',
     keywords:
       'Makati calendar civic timeline whats on what is on event events upcoming happenings schedule deadline public hearing council session barangay assembly legislation procurement election report publication advisory archive',
+    aliases: ['civic calendar', 'deadlines', 'public hearings', 'council sessions', 'barangay assemblies'],
     featured: true,
     canonicalKey: 'tool:makati-calendar',
   },
@@ -561,6 +575,7 @@ const areaOrganizationItems: SearchItem[] = [
       area.summary ??
       'Canonical managed area in the BetterMakati Area Registry.',
     href: '/estates#area-' + area.id,
+    aliases: area.aliases?.map(alias => alias.name),
     keywords: [
       area.id,
       ...(area.aliases?.map(alias => alias.name) ?? []),
@@ -591,6 +606,10 @@ const areaOrganizationItems: SearchItem[] = [
       organization.summary ??
       'Canonical organization connected to a Makati managed area.',
     href: '/estates#organization-' + organization.id,
+    aliases: [
+      ...(organization.abbreviations ?? []),
+      ...(organization.aliases?.map(alias => alias.name) ?? []),
+    ],
     keywords: [
       organization.id,
       ...(organization.abbreviations ?? []),
@@ -631,6 +650,7 @@ const mobilitySearchItems: SearchItem[] = [
           : 'Public transport system',
     description: service.summary,
     href: '/mobility#transport-anchors',
+    aliases: service.aliases,
     keywords: [
       service.id,
       ...(service.aliases ?? []),
@@ -778,6 +798,7 @@ const civicRegistryItems: SearchItem[] = [
           description ||
           civicEntityKindLabels[record.entityKind] + ' in the BetterMakati Civic Registry.',
         href: '/civic-map/' + record.id,
+        aliases: record.aliases?.map(alias => alias.name),
         keywords: [
           record.id,
           civicAssetTypeLabels[record.primaryCategory],
@@ -871,6 +892,7 @@ const radicalCivicItems: SearchItem[] = [
     description: 'Citizen-facing index of Makati public records, structured data and original sources.',
     href: '/records',
     keywords: 'public records transparency data documents source ordinance audit budget election download',
+    aliases: ['records', 'documents', 'source documents', 'government records'],
     featured: true,
   },
   {
@@ -902,6 +924,7 @@ const contactItems: SearchItem[] = [
     href: '/hotlines',
     keywords:
       'hotline phone emergency 911 city hall drrmo action center contact',
+    aliases: ['emergency numbers', 'contact numbers', 'hotline numbers'],
     featured: true,
   },
   {
@@ -970,6 +993,12 @@ const barangayItems: SearchItem[] = barangayProfiles.map(barangay => {
     category: 'Barangays',
     description: `Local services, current barangay officials, 2024 population, ${barangay.legislativeDistrict}, facilities, civic records and 2025 mayoral context.`,
     href: `/barangays/${barangay.slug}`,
+    aliases: [
+      barangay.name,
+      'Brgy ' + barangay.name,
+      'Brgy. ' + barangay.name,
+      'Barangay ' + barangay.name,
+    ],
     keywords: [
       barangay.name,
       'barangay hall local neighborhood population district profile council captain kagawad sk chairperson services facilities 2025 election mayor result voting',
