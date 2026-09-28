@@ -18,6 +18,11 @@ export const isBarangaySliceableHref = (href: string) => {
   return barangaySliceablePaths.has(path);
 };
 
+export const isBarangayContextPath = (path: string) =>
+  barangaySliceablePaths.has(path) ||
+  path.startsWith('/services/') ||
+  path.startsWith('/civic-map/');
+
 const isValidBarangay = (slug?: string | null) =>
   Boolean(slug && barangays.some(item => item.slug === slug));
 
