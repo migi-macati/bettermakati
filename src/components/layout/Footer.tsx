@@ -9,7 +9,6 @@ import {
   withBarangayScope,
 } from '../../hooks/useBarangayScope';
 
-const isExternal = (href: string) => href.startsWith('http');
 
 const Footer: React.FC = () => {
   const { barangay } = useBarangayScope();
