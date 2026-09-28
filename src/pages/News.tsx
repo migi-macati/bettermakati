@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import {
   AlertCircle,
-  CalendarDays,
   ExternalLink,
   Newspaper,
   RefreshCw,
@@ -196,7 +195,7 @@ export default function News() {
 
         <div className="mt-10 border-t border-gray-200 pt-8">
           <div className="section-eyebrow">Official city source</div>
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4">
             {officialLinks.map(item => {
               const Icon = item.icon;
               return (
