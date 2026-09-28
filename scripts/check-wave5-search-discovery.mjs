@@ -70,7 +70,7 @@ for (const marker of [
   "...mobilityServices.map",
   "...mobilityRouteCorridors.map",
   "...mobilityNetworkRelationships",
-  "...nativeCivicTimelineItems",
+  "for (const item of nativeCivicTimelineItems)",
 ]) {
   if (!index.includes(marker)) {
     problems.push('Wave 5 Search coverage marker missing: ' + marker);
