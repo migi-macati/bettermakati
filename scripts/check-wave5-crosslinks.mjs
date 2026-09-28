@@ -85,8 +85,8 @@ requireMarkers('Explore Makati', explore, [
 requireMarkers('Calendar', calendar, [
   'to={item.canonicalHref}',
   'href={primarySource.url}',
-  "to="/city-monitor"",
-  "to="/today"",
+  'to="/city-monitor"',
+  'to="/today"',
   "href: '/barangays/' + slug",
   "href: '/civic-map/' + placeId",
 ]);
