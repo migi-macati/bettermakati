@@ -15,8 +15,13 @@ const criticalRoutes = [
   ['/projects-budget', /Where Makati’s money comes from and goes/i],
   ['/statistics', /See how Makati is changing/i],
   ['/history', /History of Makati/i],
-  ['/visit', /What do you want to do in Makati/i],
+  ['/heritage', /Historical and cultural sites/i],
+  ['/estates', /Estates, Districts & Associations/i],
+  ['/visit', /Understand the city as you explore it/i],
   ['/mobility', /Getting around/i],
+  ['/calendar', /Makati Calendar/i],
+  ['/news', /Makati in the News/i],
+  ['/search', /Search BetterMakati/i],
   ['/today', /Makati/i],
   ['/live', /What’s happening now/i],
   ['/city-monitor', /City Monitor/i],
@@ -388,7 +393,7 @@ test('ecosystem handoffs are mobile-safe with usable touch targets', async ({ pa
 
 test('mobile homepage and services have no material horizontal overflow', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  for (const route of ['/', '/services', '/community-tools/saan-ako-lalapit', '/projects-budget', '/accountability', '/accountability?barangay=bel-air', '/records', '/elections', '/city-monitor', '/briefs', '/today', '/live', '/status', '/barangays', '/barangays/poblacion', '/reports', '/reports/2026-budget-operating-expenses', '/reports/2025-local-revenue', '/civic-map', '/civic-map/poblacion-park', '/civic-map/reports']) {
+  for (const route of ['/', '/services', '/community-tools/saan-ako-lalapit', '/projects-budget', '/accountability', '/accountability?barangay=bel-air', '/records', '/elections', '/city-monitor', '/briefs', '/today', '/live', '/status', '/barangays', '/barangays/poblacion', '/reports', '/reports/2026-budget-operating-expenses', '/reports/2025-local-revenue', '/civic-map', '/civic-map/poblacion-park', '/civic-map/reports', '/history', '/heritage', '/estates', '/visit', '/mobility', '/calendar', '/news', '/search']) {
     await page.goto(baseURL + route);
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     expect(overflow, `Horizontal overflow on ${route}`).toBeLessThanOrEqual(2);
@@ -1742,4 +1747,31 @@ test('2022 Makati mayoral history uses the cached OpenHalalan extract with Bette
     'href',
     'https://data.bettergov.ph/datasets/25'
   );
+});
+
+
+test('Wave 5 interactive controls keep mobile touch targets', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+
+  await page.goto(baseURL + '/history');
+  const period = page.getByRole('button', { name: /All periods/i });
+  expect((await period.boundingBox())?.height ?? 0).toBeGreaterThanOrEqual(44);
+
+  await page.goto(baseURL + '/heritage');
+  const allHeritage = page.getByRole('button', { name: /All heritage places/i });
+  expect((await allHeritage.boundingBox())?.height ?? 0).toBeGreaterThanOrEqual(44);
+
+  await page.goto(baseURL + '/calendar');
+  const topic = page.getByLabel('Topic');
+  expect((await topic.boundingBox())?.height ?? 0).toBeGreaterThanOrEqual(44);
+
+  await page.goto(baseURL + '/news');
+  const refresh = page.getByRole('button', { name: /Refresh|Checking/i });
+  expect((await refresh.boundingBox())?.height ?? 0).toBeGreaterThanOrEqual(44);
+
+  await page.goto(baseURL + '/search');
+  const siteSearch = page.getByRole('combobox');
+  await siteSearch.focus();
+  const allTab = page.getByRole('button', { name: 'All', exact: true });
+  expect((await allTab.boundingBox())?.height ?? 0).toBeGreaterThanOrEqual(44);
 });
