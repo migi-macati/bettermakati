@@ -127,10 +127,9 @@ test('unknown deep links land on recoverable noindex 404', async ({ page }) => {
     'href',
     '/'
   );
-  await expect(page.getByRole('link', { name: 'Search BetterMakati', exact: true })).toHaveAttribute(
-    'href',
-    '/search'
-  );
+  await expect(
+    page.locator('#main-content').getByRole('link', { name: 'Search BetterMakati', exact: true })
+  ).toHaveAttribute('href', '/search');
   await expect(page.getByLabel('Choose BetterBarangay view')).toHaveCount(0);
   await expect(
     page.getByPlaceholder('Try a service, barangay, official, place or topic')
