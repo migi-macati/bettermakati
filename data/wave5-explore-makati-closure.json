@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "wave": "W5-6",
+  "title": "Explore Makati",
+  "reviewedOn": "2026-09-28",
+  "closureStatus": "closed-with-live-commercial-boundary-and-deployment-verification-deferred",
+  "productRole": "City orientation layer that connects durable places and experiences to BetterMakati's canonical places, areas, barangays, heritage, history, mobility and current activity.",
+  "complete": [
+    {
+      "id": "source-reconciliation",
+      "capability": "Current source reconciliation for the six starter experiences and two external resources"
+    },
+    {
+      "id": "visitor-curation-model",
+      "capability": "Canonical destination + recurring-experience curation model",
+      "count": 6
+    },
+    {
+      "id": "page-rebuild",
+      "capability": "Explore Makati orientation-layer page"
+    },
+    {
+      "id": "canonical-crosslinks",
+      "capability": "Civic Map, Areas, Barangays, Heritage, History, Mobility and What’s On cross-links"
+    },
+    {
+      "id": "search-integration",
+      "capability": "Explore-specific Search entries without duplicating canonical Place/Area/Barangay identities"
+    },
+    {
+      "id": "site-language",
+      "capability": "Explore Makati naming aligned across navigation, footer and homepage"
+    },
+    {
+      "id": "live-discovery-boundary",
+      "capability": "Volatile commercial discovery kept in live external/API search rather than canonical registries"
+    }
+  ],
+  "bounded": [
+    {
+      "id": "commercial-directory",
+      "capability": "Comprehensive restaurants, cafés, bars, hotels, shops and mall-tenant directory",
+      "status": "out-of-scope",
+      "reason": "These listings change quickly and are better handled through live discovery and first-party/operator sources."
+    },
+    {
+      "id": "market-operating-details",
+      "capability": "Hard-coded recurring market hours and temporary-location schedules",
+      "status": "live-handoff",
+      "reason": "Salcedo Saturday Market and Legazpi Sunday Market remain recurring experiences whose current operating details stay with live sources."
+    },
+    {
+      "id": "greenbelt-identity",
+      "capability": "Standalone canonical Greenbelt commercial-complex object in Explore Makati",
+      "status": "not-created",
+      "reason": "Ayala Center is the durable canonical orientation identity; Greenbelt remains a current external commercial-discovery handoff and is not conflated with Greenbelt Park."
+    },
+    {
+      "id": "parking",
+      "capability": "Parking discovery or parking facility registry",
+      "status": "removed",
+      "reason": "Parking was explicitly removed from BetterMakati and remains outside Explore Makati."
+    }
+  ],
+  "deferred": [
+    {
+      "id": "deployment-live-browser-verification",
+      "capability": "Fresh production deployment and live-browser verification of W5-6",
+      "status": "unverified",
+      "reason": "The latest Vercel deployment reports failure and current connector access cannot retrieve build logs for the BetterMakati deployment, so repository closure does not claim a successful fresh deployment or browser pass.",
+      "nonClaim": "The failed deployment status without build-log evidence does not establish that W5-6 code caused the failure."
+    }
+  ],
+  "counts": {
+    "curationSources": 13,
+    "firstPartySources": 8,
+    "officialGovernmentSources": 2,
+    "currentSecondarySources": 3,
+    "curatedExperiences": 6,
+    "canonicalDestinations": 4,
+    "recurringExperiences": 2,
+    "visitorResources": 2
+  },
+  "canonicalDestinations": [
+    "ayala-museum",
+    "ayala-triangle-gardens",
+    "poblacion",
+    "ayala-center"
+  ],
+  "recurringExperiences": [
+    "salcedo-saturday-market",
+    "legazpi-sunday-market"
+  ],
+  "futureCapabilities": [
+    "new-durable-city-experience-with-source-and-canonical-anchor",
+    "stronger-current-source-for-existing-experience",
+    "new-cross-surface-city-context-link",
+    "fresh-deployment-and-live-browser-verification"
+  ],
+  "finalStatement": "W5-6 Explore Makati is closed at repository level as a bounded city-orientation layer, with volatile commercial discovery externalized and fresh deployment/live-browser verification deferred."
+}
