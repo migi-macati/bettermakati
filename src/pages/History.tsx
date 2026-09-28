@@ -227,6 +227,15 @@ export default function History() {
 
         <LastReviewed label="Timeline review" date={historyReviewed} />
 
+        <div className="mt-5 flex flex-wrap gap-3">
+          <Link to="/heritage" className="brand-btn-secondary">
+            Heritage places
+          </Link>
+          <Link to="/visit" className="brand-btn-secondary">
+            Explore Makati
+          </Link>
+        </div>
+
         {selectedHeritageCollection && (
           <div className="mt-5 rounded-2xl border border-secondary-200 bg-secondary-50 p-5">
             <div className="text-xs font-bold uppercase tracking-[0.08em] text-secondary-800">
