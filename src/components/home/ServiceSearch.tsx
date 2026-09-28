@@ -14,7 +14,7 @@ import {
   Search,
   X,
 } from 'lucide-react';
-import { useNavigate } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { searchIndex, type SearchItem } from '../../data/searchIndex';
 import { serviceDirectory } from '../../data/serviceDirectory';
 import { officesForAgency } from '../../data/governmentServiceOffices';
@@ -466,7 +466,7 @@ export default function ServiceSearch({
     );
   }, [legislationIndex, query, shouldSearchLegislation]);
 
-  const rankedResults = useMemo(() => {
+  const allRankedResults = useMemo(() => {
     const base =
       scope === 'services'
         ? searchIndex.filter(item => item.group === 'Service')
@@ -483,11 +483,15 @@ export default function ServiceSearch({
     });
 
     return canonical
-      .filter(item => matchesTab(item, tab, scope))
       .map(item => ({ ...item, score: scoreItem(item, query) }))
       .filter(item => !query.trim() || item.score > 0)
       .sort((a, b) => b.score - a.score || a.title.localeCompare(b.title));
-  }, [legislationItems, query, scope, tab]);
+  }, [legislationItems, query, scope]);
+
+  const rankedResults = useMemo(
+    () => allRankedResults.filter(item => matchesTab(item, tab, scope)),
+    [allRankedResults, scope, tab]
+  );
 
   const domainCounts = useMemo(() => {
     const counts = new Map<SearchDomainId, number>();
@@ -540,6 +544,23 @@ export default function ServiceSearch({
     }
     return results.slice(0, 12);
   }, [query, results, scope]);
+
+  const hasBroaderMatches = visibleResults.length === 0 && allRankedResults.length > 0;
+  const activeFilterLabel =
+    domainFilter !== 'all'
+      ? searchDomainOptions.find(option => option.id === domainFilter)?.label ?? 'this type'
+      : tab !== 'All'
+        ? tab
+        : scope === 'services'
+          ? 'this service category'
+          : 'this view';
+
+  const showAllMatches = () => {
+    setTab('All');
+    setDomainFilter('all');
+    setActiveIndex(0);
+    setOpen(true);
+  };
 
   useEffect(() => {
     const handlePointerDown = (event: MouseEvent | TouchEvent) => {
@@ -824,36 +845,111 @@ export default function ServiceSearch({
                   )}
                 </button>
               ))
+            ) : hasBroaderMatches ? (
+              <div className="px-5 py-8 text-center">
+                <div className="font-semibold text-gray-900">
+                  No {activeFilterLabel} matches
+                </div>
+                <p className="mx-auto mt-1 max-w-xl text-sm leading-relaxed text-gray-600">
+                  {query.trim()
+                    ? 'BetterMakati has ' +
+                      allRankedResults.length +
+                      ' matching ' +
+                      (allRankedResults.length === 1 ? 'result' : 'results') +
+                      ' for “' +
+                      query.trim() +
+                      '” outside this filter.'
+                    : 'There are BetterMakati results outside this filter.'}
+                </p>
+                <button
+                  type="button"
+                  onClick={showAllMatches}
+                  className="mt-4 inline-flex min-h-11 items-center rounded-lg bg-primary-800 px-4 py-2 text-sm font-bold text-white hover:bg-primary-900"
+                >
+                  Show all {allRankedResults.length} matching{' '}
+                  {allRankedResults.length === 1 ? 'result' : 'results'}
+                </button>
+              </div>
             ) : (
               <div className="px-5 py-8 text-center">
                 <div className="font-semibold text-gray-900">
-                  No matching result
+                  {query.trim()
+                    ? 'No BetterMakati match for “' + query.trim() + '”'
+                    : 'No matching result'}
                 </div>
-                <p className="mt-1 text-sm text-gray-500">
-                  Try another keyword, or tell BetterMakati what information is missing.
+                <p className="mx-auto mt-1 max-w-xl text-sm leading-relaxed text-gray-600">
+                  Try a broader keyword, or continue in the part of BetterMakati most likely to help.
                 </p>
-                <div className="mt-4 flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
-                  <a
-                    href={'https://bettergov.ph/services?search=' + encodeURIComponent(query)}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex min-h-11 items-center text-sm font-bold text-primary-700 underline underline-offset-2"
-                  >
-                    Search national services on BetterGov
-                  </a>
-                  <a
-                    href="https://lgu.bettergov.ph/"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex min-h-11 items-center text-sm font-bold text-primary-700 underline underline-offset-2"
-                  >
-                    Find another LGU on BetterLGU
-                  </a>
+
+                {scope === 'site' && (
+                  <>
+                    <div className="mt-5 text-xs font-bold uppercase tracking-wide text-gray-500">
+                      Browse BetterMakati
+                    </div>
+                    <div className="mt-2 flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
+                      <Link
+                        to="/services"
+                        className="inline-flex min-h-11 items-center text-sm font-bold text-primary-700 underline underline-offset-2"
+                      >
+                        Services
+                      </Link>
+                      <Link
+                        to="/barangays"
+                        className="inline-flex min-h-11 items-center text-sm font-bold text-primary-700 underline underline-offset-2"
+                      >
+                        Barangays
+                      </Link>
+                      <Link
+                        to="/records"
+                        className="inline-flex min-h-11 items-center text-sm font-bold text-primary-700 underline underline-offset-2"
+                      >
+                        Public records
+                      </Link>
+                      <Link
+                        to="/reports"
+                        className="inline-flex min-h-11 items-center text-sm font-bold text-primary-700 underline underline-offset-2"
+                      >
+                        Reports & insights
+                      </Link>
+                      <Link
+                        to="/civic-map"
+                        className="inline-flex min-h-11 items-center text-sm font-bold text-primary-700 underline underline-offset-2"
+                      >
+                        Places & map
+                      </Link>
+                    </div>
+                  </>
+                )}
+
+                <div className="mt-5 text-xs font-bold uppercase tracking-wide text-gray-500">
+                  {scope === 'site' ? 'Outside BetterMakati' : 'Still need help'}
+                </div>
+                <div className="mt-2 flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
+                  {scope === 'site' && (
+                    <>
+                      <a
+                        href={'https://bettergov.ph/services?search=' + encodeURIComponent(query)}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex min-h-11 items-center text-sm font-bold text-primary-700 underline underline-offset-2"
+                      >
+                        Search national services on BetterGov
+                      </a>
+                      <a
+                        href="https://lgu.bettergov.ph/"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex min-h-11 items-center text-sm font-bold text-primary-700 underline underline-offset-2"
+                      >
+                        Find another LGU on BetterLGU
+                      </a>
+                    </>
+                  )}
                   <button
                     type="button"
                     onClick={() =>
                       navigate(
-                        '/get-involved?type=idea&tool=saan-ako-lalapit&subject=' +
+                        '/get-involved?type=idea&tool=search&subject=' +
                           encodeURIComponent('Missing search result: ' + query) +
                           '#submission'
                       )
