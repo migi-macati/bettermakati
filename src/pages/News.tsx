@@ -11,7 +11,8 @@ import { Link } from 'react-router';
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
 import SEO from '../components/SEO';
-import { newsSnapshot, type NewsItem } from '../data/newsSnapshot';
+import { newsSnapshot } from '../data/newsSnapshot';
+import type { NewsItem } from '../data/newsTypes';
 
 const officialLinks = [
   {
@@ -19,12 +20,6 @@ const officialLinks = [
     description: 'City Government news and announcements.',
     href: 'https://www.makati.gov.ph/content/news',
     icon: Newspaper,
-  },
-  {
-    title: 'Makati Events',
-    description: 'City Government event listings.',
-    href: 'https://www.makati.gov.ph/content/events',
-    icon: CalendarDays,
   },
 ];
 
@@ -79,6 +74,7 @@ export default function News() {
 
         <div className="mt-5 flex flex-wrap gap-3">
           <Link to="/city-monitor" className="brand-btn-secondary">City Monitor</Link>
+          <Link to="/calendar" className="brand-btn-secondary">Makati Calendar</Link>
         </div>
 
         <div className="mt-6 rounded-2xl border border-primary-100 bg-primary-50 p-5 md:p-6">
@@ -92,7 +88,7 @@ export default function News() {
                   Makati news, checked automatically
                 </h2>
                 <p className="mt-1 max-w-3xl text-sm leading-relaxed text-gray-700">
-                  Current Makati headlines linked to the original publisher.
+                  Current Makati coverage linked to the original publisher, with source type and publication time shown.
                 </p>
               </div>
             </div>
@@ -139,10 +135,15 @@ export default function News() {
                 key={`${item.link}-${item.title}`}
                 className="rounded-2xl border border-gray-200 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
               >
-                <div className="flex items-center justify-between gap-3 text-xs text-gray-500">
-                  <span className="font-bold text-primary-700">
-                    {item.source || 'News publisher'}
-                  </span>
+                <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-gray-500">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="font-bold text-primary-700">
+                      {item.source || 'News publisher'}
+                    </span>
+                    <span className="rounded-full border border-gray-200 bg-gray-50 px-2 py-1 font-semibold text-gray-600">
+                      {item.sourceClassLabel}
+                    </span>
+                  </div>
                   <time dateTime={item.pubDate}>
                     {formatDate(item.pubDate)}
                   </time>
@@ -194,7 +195,7 @@ export default function News() {
         </div>
 
         <div className="mt-10 border-t border-gray-200 pt-8">
-          <div className="section-eyebrow">Official sources</div>
+          <div className="section-eyebrow">Official city source</div>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             {officialLinks.map(item => {
               const Icon = item.icon;
