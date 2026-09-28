@@ -6,14 +6,14 @@ const [
   barangaySource,
   mobilitySource,
   visitSource,
-  whatsOnSource,
+  calendarSource,
 ] = await Promise.all([
   readFile('src/data/districtReferences.ts', 'utf8'),
   readFile('src/data/areaOrganizationRegistry.ts', 'utf8'),
   readFile('src/data/barangays.ts', 'utf8'),
   readFile('src/pages/Mobility.tsx', 'utf8'),
   readFile('src/pages/VisitMakati.tsx', 'utf8'),
-  readFile('src/pages/WhatsOn.tsx', 'utf8'),
+  readFile('src/pages/Calendar.tsx', 'utf8'),
 ]);
 
 const problems = [];
@@ -95,17 +95,16 @@ for (const legacy of [
   }
 }
 
-/* Visit Makati */
+/* Explore Makati */
 for (const marker of [
-  'const makeItMakatiAreas = resolveDistrictReferences([',
-  "id: 'makati-cbd'",
-  "id: 'ayala-center'",
-  "id: 'circuit-makati'",
-  'makeItMakatiAreas.map(area =>',
+  'visitorResources.map(resource =>',
+  'resource.areaRefs ?? []',
+  "resolveDistrictReference({ type: 'area', id: areaId })",
+  'areas.map(area =>',
   'to={area.href}',
 ]) {
   if (!visitSource.includes(marker)) {
-    problems.push('Visit Makati canonical district marker missing: ' + marker);
+    problems.push('Explore Makati canonical district marker missing: ' + marker);
   }
 }
 
@@ -115,33 +114,23 @@ if (
   )
 ) {
   problems.push(
-    'Visit Makati still duplicates the Make It Makati district list in prose.'
+    'Explore Makati still duplicates the Make It Makati district list in prose.'
   );
 }
 
-/* What's On */
+/* Makati Calendar */
 for (const marker of [
-  "areaIds: ['makati-cbd', 'ayala-center', 'circuit-makati']",
-  "areaIds: ['ayala-center', 'circuit-makati']",
-  "areaIds: ['rockwell-center']",
-  "areaIds: ['century-city']",
+  'item.geography.areaIds ?? []',
   "resolveDistrictReference({ type: 'area', id: areaId })",
-  'to={area.href}',
+  "key: 'area:' + areaId",
+  'label: area.label',
+  'href: area.href',
 ]) {
-  if (!whatsOnSource.includes(marker)) {
-    problems.push("What's On canonical district marker missing: " + marker);
+  if (!calendarSource.includes(marker)) {
+    problems.push('Makati Calendar canonical district marker missing: ' + marker);
   }
 }
 
-for (const legacy of [
-  "'CBD, Ayala Center and Circuit lifestyle and event updates.'",
-  "'Power Plant Mall / Rockwell'",
-  "'Rockwell news, events and Proscenium updates.'",
-]) {
-  if (whatsOnSource.includes(legacy)) {
-    problems.push("What's On still stores duplicated district prose: " + legacy);
-  }
-}
 
 if (problems.length) {
   console.error(
@@ -155,8 +144,8 @@ console.log(
   [
     'District-facing canonical area reference check passed:',
     'Mobility trip labels/queries resolve from canonical districts',
-    'Visit Makati resolves Make It Makati coverage from area IDs',
-    "What's On resolves district context from area IDs",
+    'Explore Makati resolves visitor-resource coverage from canonical area IDs',
+    'Makati Calendar resolves district context from canonical area IDs',
     'no duplicate legacy district lists remain on these surfaces',
   ].join(' ')
 );
