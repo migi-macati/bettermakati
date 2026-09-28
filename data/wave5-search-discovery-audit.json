@@ -1,0 +1,172 @@
+{
+  "version": 1,
+  "reviewedOn": "2026-09-28",
+  "status": "complete-with-bounded-external-handoffs",
+  "scope": {
+    "step": "W5-9b",
+    "title": "Search & discovery audit",
+    "purpose": "Verify that Wave 5 content is findable from global Search, homepage entry points, main navigation and canonical entity aliases without recreating retired directories or cloning BetterGov/BetterLGU data."
+  },
+  "entryPoints": [
+    {
+      "id": "homepage-search",
+      "status": "pass",
+      "evidence": "Home hero renders the shared site-wide ServiceSearch."
+    },
+    {
+      "id": "navbar-search",
+      "status": "pass",
+      "evidence": "Desktop and mobile navigation both expose /search."
+    },
+    {
+      "id": "search-page",
+      "status": "pass",
+      "evidence": "Dedicated /search surface uses the same canonical Search component."
+    }
+  ],
+  "wave5Coverage": [
+    {
+      "id": "history",
+      "status": "pass",
+      "discoverability": [
+        "page result",
+        "individual history records",
+        "place aliases"
+      ]
+    },
+    {
+      "id": "heritage",
+      "status": "pass",
+      "discoverability": [
+        "Heritage page",
+        "canonical heritage places through Place Registry"
+      ]
+    },
+    {
+      "id": "estates-districts",
+      "status": "pass",
+      "discoverability": [
+        "Estates page",
+        "13 canonical areas",
+        "11 canonical organizations",
+        "aliases and abbreviations"
+      ]
+    },
+    {
+      "id": "mobility",
+      "status": "pass",
+      "discoverability": [
+        "Mobility page",
+        "4 systems",
+        "67 routes",
+        "7 transfer/hub relationships"
+      ]
+    },
+    {
+      "id": "explore-makati",
+      "status": "pass",
+      "discoverability": [
+        "Explore Makati page",
+        "recurring experiences",
+        "visitor resources",
+        "legacy Visit Makati wording"
+      ]
+    },
+    {
+      "id": "calendar",
+      "status": "pass-after-fix",
+      "discoverability": [
+        "Makati Calendar page",
+        "canonical civic timeline projections",
+        "legacy What's On/events wording"
+      ]
+    },
+    {
+      "id": "news",
+      "status": "pass-after-fix",
+      "discoverability": [
+        "Makati in the News page",
+        "current-affairs/current-events wording"
+      ]
+    },
+    {
+      "id": "barangays",
+      "status": "pass-after-fix",
+      "discoverability": [
+        "23 barangay profiles",
+        "official/facility/area/organization terms",
+        "stable canonical keys"
+      ]
+    },
+    {
+      "id": "civic-registry",
+      "status": "pass-after-fix",
+      "discoverability": [
+        "verified places",
+        "segments",
+        "routes",
+        "aliases",
+        "stable canonical keys"
+      ]
+    }
+  ],
+  "searchSemantics": {
+    "fuzzyMatching": "Token-level fuzzy matching remains enabled for words of four or more characters.",
+    "canonicalDeduplication": "Search collapses results by canonicalKey when one exists and otherwise by group/href/title.",
+    "legislation": "Full legislation remains lazily loaded for queries of at least three characters instead of cloning the whole index into the static bundle.",
+    "civicTimeline": "Timeline terms enrich an existing canonical result where canonical keys match; unmatched canonical timeline owners appear once as Record results.",
+    "organizations": "Canonical organizations now have a dedicated Organizations filter rather than being grouped under Government."
+  },
+  "legacyTerms": [
+    {
+      "term": "What's On / events",
+      "destination": "/calendar",
+      "treatment": "Search alias only; no retired What's On result is restored."
+    },
+    {
+      "term": "Visit Makati / visitor guide",
+      "destination": "/visit",
+      "treatment": "Search keywords resolve to Explore Makati."
+    },
+    {
+      "term": "Parking",
+      "destination": null,
+      "treatment": "No dedicated BetterMakati Parking result is restored; /parking remains compatibility redirect only."
+    }
+  ],
+  "ecosystem": {
+    "rule": "BetterGov and BetterLGU are external fallback handoffs, not local canonical Search entities.",
+    "betterGov": "Search national services on BetterGov appears only in the no-result state.",
+    "betterLgu": "Find another LGU on BetterLGU appears only in the no-result state."
+  },
+  "navigation": {
+    "status": "pass-after-fix",
+    "note": "Explore Makati navigation now exposes Areas & Districts alongside city starting points, mobility, cinemas, heritage and history."
+  },
+  "bounded": [
+    {
+      "id": "semantic-universal-search",
+      "status": "not-supported",
+      "reason": "Search remains deterministic token/fuzzy matching plus curated aliases; no opaque AI ranking is introduced."
+    },
+    {
+      "id": "external-ecosystem-cloning",
+      "status": "not-supported",
+      "reason": "BetterGov and BetterLGU remain handoffs rather than duplicated local search records."
+    },
+    {
+      "id": "retired-directory-restoration",
+      "status": "not-supported",
+      "reason": "Parking and What's On are not restored as canonical search destinations."
+    }
+  ],
+  "fixes": [
+    "Added explicit What's On/events/upcoming/schedule aliases to Makati Calendar.",
+    "Expanded Explore Makati aliases for Visit Makati, visitor guide, tourist and things-to-do language.",
+    "Expanded Makati in the News aliases for current affairs/current events wording.",
+    "Added stable canonical keys to History entries, Barangays and Civic Registry results.",
+    "Added a dedicated Organizations Search filter and removed private/civic organizations from the Government filter.",
+    "Added Areas & Districts to the Explore Makati navigation menu."
+  ],
+  "next": "W5-9c — Responsive, accessibility & visual QA"
+}
