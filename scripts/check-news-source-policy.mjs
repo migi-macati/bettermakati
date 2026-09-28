@@ -11,6 +11,7 @@ const [
   generator,
   newsPage,
   todayPage,
+  newsRelationships,
   searchIndex,
   snapshot,
 ] = await Promise.all([
@@ -19,6 +20,7 @@ const [
   readFile('scripts/update-news-snapshot.mjs', 'utf8'),
   readFile('src/pages/News.tsx', 'utf8'),
   readFile('src/pages/Today.tsx', 'utf8'),
+  readFile('src/data/newsCivicRelationships.ts', 'utf8'),
   readFile('src/data/searchIndex.ts', 'utf8'),
   readFile('src/data/newsSnapshot.ts', 'utf8'),
 ]);
@@ -87,8 +89,17 @@ if (!newsPage.includes('item.sourceClassLabel')) {
   problems.push('News page does not expose publisher/source class.');
 }
 
-if (!todayPage.includes('.filter(item => item.todayEligible)')) {
-  problems.push('Today does not enforce the news freshness gate.');
+if (!todayPage.includes('.filter(isTodayNewsCandidate)')) {
+  problems.push('Today does not use the shared news freshness/relevance gate.');
+}
+
+if (
+  !newsRelationships.includes('export const isTodayNewsCandidate') ||
+  !newsRelationships.includes('if (!item.todayEligible) return false;')
+) {
+  problems.push(
+    'Shared Today news candidate gate does not enforce the W5-8b freshness rule.'
+  );
 }
 
 if (searchIndex.includes("title: 'News & events'")) {
