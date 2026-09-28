@@ -69,14 +69,61 @@ for (const [route, heading] of criticalRoutes) {
   });
 }
 
-test('Barangays is a top-level main navigation option', async ({ page }) => {
+test('canonical navigation families are direct links with separate menus', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto(baseURL + '/');
-  await expect(page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'Barangays', exact: true })).toBeVisible();
 
-  await page.getByRole('button', { name: 'City', exact: true }).click();
+  const nav = page.getByRole('navigation', { name: 'Main navigation' });
+  for (const [label, href] of [
+    ['Services', '/services'],
+    ['Today', '/today'],
+    ['City', '/government'],
+    ['Barangays', '/barangays'],
+    ['Accountability', '/accountability'],
+    ['Participate', '/participate'],
+    ['Explore Makati', '/visit'],
+  ]) {
+    await expect(nav.getByRole('link', { name: label, exact: true })).toHaveAttribute('href', href);
+  }
+
+  await nav.getByRole('button', { name: 'Open Services menu', exact: true }).click();
+  const servicesPanel = page.locator('#desktop-panel-services');
+  await expect(servicesPanel.getByRole('link', { name: 'Saan Ako Lalapit?', exact: true })).toBeVisible();
+  await expect(servicesPanel.getByRole('link', { name: 'Government Offices', exact: true })).toBeVisible();
+
+  await nav.getByRole('button', { name: 'Open City menu', exact: true }).click();
   const cityPanel = page.locator('#desktop-panel-city');
-  await expect(cityPanel.getByRole('link', { name: 'Barangays', exact: true })).toHaveCount(0);
+  await expect(cityPanel.getByRole('link', { name: 'History of Makati', exact: true })).toBeVisible();
+  await expect(cityPanel.getByRole('link', { name: 'Areas & Districts', exact: true })).toHaveCount(0);
+
+  await nav.getByRole('button', { name: 'Open Explore Makati menu', exact: true }).click();
+  const explorePanel = page.locator('#desktop-panel-explore-makati');
+  await expect(explorePanel.getByRole('link', { name: 'Areas & Districts', exact: true })).toBeVisible();
+  await expect(explorePanel.getByRole('link', { name: 'History of Makati', exact: true })).toHaveCount(0);
+
+  await nav.getByRole('button', { name: 'Open Participate menu', exact: true }).click();
+  const participatePanel = page.locator('#desktop-panel-participate');
+  await expect(participatePanel.getByRole('link', { name: 'Saan Ako Lalapit?', exact: true })).toHaveCount(0);
+  await expect(participatePanel.getByRole('link', { name: 'Community Tools', exact: true })).toHaveCount(0);
+
+  await nav.getByRole('button', { name: 'Open Accountability menu', exact: true }).click();
+  const accountabilityPanel = page.locator('#desktop-panel-accountability');
+  await expect(accountabilityPanel.getByRole('link', { name: 'BetterMakati Status', exact: true })).toHaveCount(0);
+  await expect(accountabilityPanel.getByRole('link', { name: /Open Government/i })).toHaveCount(0);
+});
+
+test('mobile navigation opens the current family and keeps parent links usable', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto(baseURL + '/accountability?type=project');
+
+  await page.getByRole('button', { name: 'Open main menu', exact: true }).click();
+
+  const nav = page.getByRole('navigation', { name: 'Main navigation' });
+  await expect(nav.getByRole('link', { name: 'Accountability', exact: true })).toBeVisible();
+  await expect(nav.getByRole('button', { name: 'Close Accountability menu', exact: true })).toHaveAttribute('aria-expanded', 'true');
+  await expect(nav.getByRole('link', { name: 'Procurement Tracker', exact: true })).toHaveAttribute('aria-current', 'page');
+
+  await expect(nav.getByRole('link', { name: 'Accountability', exact: true })).toHaveAttribute('href', /\/accountability(?:\?barangay=[^&]+)?$/);
 });
 
 test('homepage exposes and opens barangay editions', async ({ page }) => {
