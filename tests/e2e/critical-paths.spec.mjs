@@ -69,6 +69,74 @@ for (const [route, heading] of criticalRoutes) {
   });
 }
 
+test('compatibility redirects preserve query and hash context', async ({ page }) => {
+  const redirects = [
+    ['/parking?source=legacy#resources', '/visit?source=legacy#resources'],
+    ['/whats-on?view=civic#today', '/calendar?view=civic#today'],
+    ['/transparency?barangay=poblacion#budget', '/projects-budget?barangay=poblacion#budget'],
+    ['/reports/makati-overview?from=legacy#sources', '/reports/2026-budget-operating-expenses?from=legacy#sources'],
+  ];
+
+  for (const [legacy, canonical] of redirects) {
+    const response = await page.goto(baseURL + legacy);
+    expect(response?.ok(), 'Legacy deep link should still load').toBeTruthy();
+    await expect(page).toHaveURL(baseURL + canonical);
+    await expect(page.locator('main#main-content')).toBeVisible();
+  }
+
+  await expect(page.getByRole('heading', { level: 1 })).toContainText(
+    /Makati’s 2026 budget proposal is above the adopted 2025 plan/i
+  );
+});
+
+test('representative nested deep links survive direct load and refresh', async ({ page }) => {
+  const deepLinks = [
+    '/services/guide/community-tax-certificate?barangay=poblacion',
+    '/civic-map/poblacion-park?barangay=poblacion',
+    '/reports/2026-budget-operating-expenses',
+    '/barangays/poblacion',
+  ];
+
+  for (const route of deepLinks) {
+    const response = await page.goto(baseURL + route);
+    expect(response?.ok(), `Direct response for ${route}`).toBeTruthy();
+    await expect(page.locator('main#main-content')).toBeVisible();
+    await expect(page.getByRole('heading', { level: 1 })).toHaveCount(1);
+
+    const reloadResponse = await page.reload();
+    expect(reloadResponse?.ok(), `Refresh response for ${route}`).toBeTruthy();
+    await expect(page).toHaveURL(baseURL + route);
+    await expect(page.locator('main#main-content')).toBeVisible();
+  }
+});
+
+test('unknown deep links land on recoverable noindex 404', async ({ page }) => {
+  const response = await page.goto(
+    baseURL + '/this-route-does-not-exist/deep-link?barangay=poblacion#missing'
+  );
+  expect(response?.ok(), 'SPA fallback should serve the recovery page').toBeTruthy();
+
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText(
+    /We couldn’t find that page/i
+  );
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
+    'content',
+    'noindex, nofollow'
+  );
+  await expect(page.getByRole('link', { name: 'Home', exact: true })).toHaveAttribute(
+    'href',
+    '/'
+  );
+  await expect(page.getByRole('link', { name: 'Search BetterMakati', exact: true })).toHaveAttribute(
+    'href',
+    '/search'
+  );
+  await expect(page.getByLabel('Choose BetterBarangay view')).toHaveCount(0);
+  await expect(
+    page.getByPlaceholder('Try a service, barangay, official, place or topic')
+  ).toBeVisible();
+});
+
 test('canonical navigation families are direct links with separate menus', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto(baseURL + '/');
