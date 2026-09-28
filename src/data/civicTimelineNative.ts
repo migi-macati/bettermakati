@@ -789,16 +789,32 @@ const previousElectionCalendarSource: CivicTimelineSourceRef = {
   kind: 'official-primary',
 };
 
+const previousElectionTermLawSource: CivicTimelineSourceRef = {
+  id: 'election:bske-2026:previous-term-law',
+  label: 'Republic Act No. 12232 — previous schedule',
+  url: electionCivicSources.previousTermLaw,
+  publisher: 'Republic of the Philippines / Lawphil',
+  kind: 'official-primary',
+};
+
 const currentElectionCanonicalRef = {
   owner: 'elections' as const,
   type: 'election-record' as const,
   id: currentBskeSchedule.canonicalId,
 };
 
+const supersededElectionSource = (
+  item: (typeof supersededBske2026Milestones)[number]
+) =>
+  item.id === 'term-start'
+    ? previousElectionTermLawSource
+    : previousElectionCalendarSource;
+
 const supersededElectionTemporal = (
   item: (typeof supersededBske2026Milestones)[number]
-): CivicTimelineTemporal =>
-  item.start === item.end
+): CivicTimelineTemporal => {
+  const previousSource = supersededElectionSource(item);
+  return item.start === item.end
     ? {
         semantic: 'occurrence',
         precision: 'date',
@@ -806,10 +822,7 @@ const supersededElectionTemporal = (
         origin: {
           role: 'occurrence-date',
           sourceFields: ['supersededBske2026Milestones[].start'],
-          sourceIds: [
-            previousElectionCalendarSource.id,
-            currentElectionLawSource.id,
-          ],
+          sourceIds: [previousSource.id, currentElectionLawSource.id],
         },
       }
     : {
@@ -820,12 +833,10 @@ const supersededElectionTemporal = (
         origin: {
           role: 'occurrence-date',
           sourceFields: ['supersededBske2026Milestones[].start'],
-          sourceIds: [
-            previousElectionCalendarSource.id,
-            currentElectionLawSource.id,
-          ],
+          sourceIds: [previousSource.id, currentElectionLawSource.id],
         },
       };
+};
 
 export const nativeCurrentElectionTimelineItems: CivicTimelineItem[] = [
   projectCivicTimelineItem(
@@ -861,6 +872,40 @@ export const nativeCurrentElectionTimelineItems: CivicTimelineItem[] = [
     },
     resolveNativeCivicTimelineCanonical
   ),
+  projectCivicTimelineItem(
+    {
+      id: 'election:bske-current:update-published',
+      kind: 'election-milestone',
+      title: 'Current BSKE schedule update published — Republic Act No. 12326',
+      summary:
+        'Official government communication documented the new November 2028 schedule and five-year term.',
+      status: 'published',
+      actionability: 'information-only',
+      canonicalRef: currentElectionCanonicalRef,
+      temporal: {
+        semantic: 'publication-release',
+        precision: 'date',
+        publishedAt: currentBskeSchedule.updatePublishedOn,
+        origin: {
+          role: 'publication-date',
+          sourceFields: ['currentBskeSchedule.updatePublishedOn'],
+          sourceIds: [currentElectionLawSource.id],
+        },
+      },
+      geography: { scope: 'citywide', basis: 'canonical-owner' },
+      sourceRefs: [currentElectionLawSource, currentElectionReportSource],
+      primarySourceId: currentElectionLawSource.id,
+      provenance: {
+        basis: 'official-publication',
+        lastVerifiedAt: nativeCivicTimelineReviewedAt,
+        note:
+          'This is the publication date of the official schedule update, separate from the September 24 signing occurrence.',
+      },
+      update: { revision: 1, changeType: 'updated' },
+      tags: ['elections', 'BSKE', 'Republic Act No. 12326', '2028', 'schedule update'],
+    },
+    resolveNativeCivicTimelineCanonical
+  ),
   ...supersededBske2026Milestones.map(item =>
     projectCivicTimelineItem(
       {
@@ -874,7 +919,7 @@ export const nativeCurrentElectionTimelineItems: CivicTimelineItem[] = [
         temporal: supersededElectionTemporal(item),
         geography: { scope: 'citywide', basis: 'canonical-owner' },
         sourceRefs: [
-          previousElectionCalendarSource,
+          supersededElectionSource(item),
           currentElectionLawSource,
           currentElectionReportSource,
         ],

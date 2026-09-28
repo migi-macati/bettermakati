@@ -34,6 +34,7 @@ export const currentBskeSchedule = {
   canonicalId: 'bske-schedule',
   law: 'Republic Act No. 12326',
   lawSignedOn: '2026-09-24',
+  updatePublishedOn: '2026-09-25',
   electionDate: '2028-11-13',
   electionDateBasis: 'Second Monday of November 2028',
   termYears: 5,

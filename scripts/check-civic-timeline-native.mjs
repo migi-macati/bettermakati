@@ -54,6 +54,7 @@ for (const marker of [
   "sourceFields: ['procurement.bidDate']",
   "sourceFields: ['HistoricalMayoralRace.electionDate']",
   "sourceFields: ['currentBskeSchedule.lawSignedOn']",
+  "sourceFields: ['currentBskeSchedule.updatePublishedOn']",
   "sourceFields: ['currentBskeSchedule.electionDate']",
   "sourceFields: ['supersededBske2026Milestones[].start']",
   "sourceFields: ['FeaturedReportV2.date']",
@@ -181,6 +182,9 @@ if (
   );
 }
 
+if (!native.includes("id: 'election:bske-current:update-published'")) {
+  problems.push('Current BSKE official-publication projection identity is missing.');
+}
 if (!native.includes("id: 'election:bske-current:next-election'")) {
   problems.push('Current BSKE election projection identity is missing.');
 }
@@ -229,7 +233,7 @@ console.log(
     directCityMonitorCount + ' direct City Monitor procurement records',
     procurementCount + ' Accountability procurement records',
     electionCount + ' historical mayoral election dates',
-    '6 current/superseded BSKE schedule items',
+    '7 current/superseded BSKE schedule items',
     reportCount + ' BetterMakati report releases',
     'no new external fetching',
     'and maintenance/observation date protections retained.',

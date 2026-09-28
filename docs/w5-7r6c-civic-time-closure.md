@@ -37,6 +37,8 @@ Elections & Voting now:
 
 The native Civic Timeline now includes:
 - the September 24, 2026 law-signing occurrence;
+- the September 25 official schedule-update publication, so the change appears
+  in **Recently Published** rather than being hidden in Archive;
 - four superseded 2026 schedule milestones for traceability;
 - the November 13, 2028 next regular BSKE.
 
