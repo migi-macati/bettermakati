@@ -70,7 +70,7 @@ export default function ConcernFinder() {
           <div className="section-eyebrow">Service finder</div>
           <Heading>Saan Ako Lalapit?</Heading>
           <p className="mt-2 max-w-3xl text-base leading-relaxed text-gray-700">
-            Describe what you need. Describe what you need. Matches can show the service and a place to go.
+            Describe what you need. Matches can show the service, responsible office and a place to go.
           </p>
 
           <div className="mt-5 flex items-start gap-3 rounded-2xl border border-warning-200 bg-warning-50 p-4 text-sm text-warning-950">
@@ -91,6 +91,15 @@ export default function ConcernFinder() {
               placeholder="e.g., hospital bill, PWD ID, business permit, cedula"
               showServicePlaces
             />
+          </div>
+
+          <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm font-bold">
+            <Link to="/services" className="text-primary-700 underline underline-offset-2">
+              Browse all services
+            </Link>
+            <Link to="/government-offices" className="text-primary-700 underline underline-offset-2">
+              Browse government offices
+            </Link>
           </div>
         </div>
       </Section>
