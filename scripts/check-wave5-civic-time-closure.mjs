@@ -96,7 +96,7 @@ if (
   problems.push('Calendar product boundary changed.');
 }
 
-if (!app.includes('<Route path="/whats-on" element={<Navigate to="/calendar" replace />} />')) {
+if (!app.includes('<Route path="/whats-on" element={<CompatibilityRedirect to="/calendar" />} />')) {
   problems.push('What’s On compatibility redirect is missing.');
 }
 
