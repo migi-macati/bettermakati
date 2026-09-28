@@ -1,3 +1,14 @@
+import {
+  assessDomainReviewCandidate,
+  classifyNewsFreshness,
+  classifyPublisher,
+  newsClusterKey,
+  newsPolicyVersion,
+  newsSourceRegistry,
+  normalizeNewsTitle,
+  sourceClassLabel,
+} from './news-policy.mjs';
+
 const GOOGLE_NEWS_BASE = 'https://news.google.com/rss/search';
 
 export const defaultNewsQuery = 'Makati OR "Makati City"';
@@ -50,24 +61,48 @@ const sourceValue = item => {
     : { name: '', url: '' };
 };
 
-export const parseGoogleNewsXml = (xml, limit = 30) => {
+export const parseGoogleNewsXml = (xml, limit = 30, now = new Date()) => {
   const items = [];
-  const seen = new Set();
+  const seenLinks = new Set();
+  const seenClusters = new Set();
   const itemMatches = xml.match(/<item>[\s\S]*?<\/item>/gi) || [];
+  const retrievedAt = now.toISOString();
 
   for (const item of itemMatches) {
-    const title = stripMarkup(tagValue(item, 'title'));
+    const source = sourceValue(item);
+    const title = normalizeNewsTitle(
+      stripMarkup(tagValue(item, 'title')),
+      source.name
+    );
     const link = stripMarkup(tagValue(item, 'link'));
     const description = stripMarkup(tagValue(item, 'description'));
     const pubDate = stripMarkup(tagValue(item, 'pubDate'));
-    const source = sourceValue(item);
     const searchable = `${title} ${description}`.toLowerCase();
 
     if (!title || !link || !/\bmakati\b/i.test(searchable)) continue;
 
-    const key = link || title;
-    if (seen.has(key)) continue;
-    seen.add(key);
+    const clusterKey = newsClusterKey(title);
+    if (seenLinks.has(link) || (clusterKey && seenClusters.has(clusterKey))) {
+      continue;
+    }
+
+    const freshness = classifyNewsFreshness(pubDate, now);
+    if (!freshness.generalFeedEligible) continue;
+
+    const sourceClass = classifyPublisher({
+      source: source.name,
+      sourceUrl: source.url,
+    });
+    const review = assessDomainReviewCandidate({
+      title,
+      description,
+      sourceClass,
+      pubDate,
+      now,
+    });
+
+    seenLinks.add(link);
+    if (clusterKey) seenClusters.add(clusterKey);
 
     items.push({
       title,
@@ -76,11 +111,24 @@ export const parseGoogleNewsXml = (xml, limit = 30) => {
       pubDate,
       source: source.name,
       sourceUrl: source.url,
+      sourceClass,
+      sourceClassLabel: sourceClassLabel(sourceClass),
+      freshness: freshness.freshness,
+      ageDays: freshness.ageDays,
+      todayEligible: freshness.todayEligible,
+      clusterKey,
+      retrievedAt,
+      reviewCandidate: review.reviewCandidate,
+      reviewReasons: review.reviewReasons,
     });
   }
 
   return items
-    .sort((a, b) => Date.parse(b.pubDate) - Date.parse(a.pubDate))
+    .sort((a, b) => {
+      const aTime = Date.parse(a.pubDate);
+      const bTime = Date.parse(b.pubDate);
+      return (Number.isNaN(bTime) ? 0 : bTime) - (Number.isNaN(aTime) ? 0 : aTime);
+    })
     .slice(0, limit);
 };
 
@@ -97,7 +145,7 @@ export const fetchGoogleNews = async ({
       signal: controller.signal,
       headers: {
         accept: 'application/rss+xml, application/xml, text/xml',
-        'user-agent': 'BetterMakati/1.0 (+https://bettermakati.vercel.app/)',
+        'user-agent': 'BetterMakati/1.0 (+https://bettermakati.org/)',
       },
     });
 
@@ -105,7 +153,24 @@ export const fetchGoogleNews = async ({
       throw new Error(`Google News returned HTTP ${response.status}`);
     }
 
-    return parseGoogleNewsXml(await response.text(), limit);
+    const checkedAt = new Date();
+    const items = parseGoogleNewsXml(await response.text(), limit, checkedAt);
+    return {
+      items,
+      meta: {
+        policyVersion: newsPolicyVersion,
+        retrievedAt: checkedAt.toISOString(),
+        sourceHealth: [
+          {
+            id: 'google-news-rss',
+            status: 'ok',
+            checkedAt: checkedAt.toISOString(),
+            itemCount: items.length,
+          },
+        ],
+        sourceRegistry: newsSourceRegistry,
+      },
+    };
   } finally {
     clearTimeout(timeout);
   }
