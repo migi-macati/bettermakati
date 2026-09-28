@@ -2,11 +2,12 @@ import PageHelp from './components/ui/PageHelp';
 import { lazy, Suspense } from 'react';
 import { NuqsAdapter } from 'nuqs/adapters/react';
 import { HelmetProvider } from 'react-helmet-async';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router';
+import { BrowserRouter as Router, Routes, Route } from 'react-router';
 import PageBoundary from './components/ui/PageBoundary';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import ScrollToTop from './components/ui/ScrollToTop';
+import CompatibilityRedirect from './components/ui/CompatibilityRedirect';
 import Home from './pages/Home';
 const About = lazy(() => import('./pages/About'));
 const Services = lazy(() => import('./pages/Services'));
@@ -106,9 +107,9 @@ function App() {
                     <Route path="/visit" element={<VisitMakati />} />
                     <Route path="/mobility" element={<Mobility />} />
                     <Route path="/cinemas" element={<Cinemas />} />
-                    <Route path="/parking" element={<Navigate to="/visit" replace />} />
+                    <Route path="/parking" element={<CompatibilityRedirect to="/visit" />} />
                     <Route path="/calendar" element={<Calendar />} />
-                    <Route path="/whats-on" element={<Navigate to="/calendar" replace />} />
+                    <Route path="/whats-on" element={<CompatibilityRedirect to="/calendar" />} />
                     <Route path="/heritage" element={<Heritage />} />
                     <Route path="/history" element={<History />} />
 
@@ -134,7 +135,7 @@ function App() {
                     />
                     <Route path="/briefs" element={<CivicBriefs />} />
                     <Route path="/reports" element={<Reports />} />
-                    <Route path="/reports/makati-overview" element={<Navigate to="/reports/2026-budget-operating-expenses" replace />} />
+                    <Route path="/reports/makati-overview" element={<CompatibilityRedirect to="/reports/2026-budget-operating-expenses" />} />
                     <Route path="/reports/:slug" element={<ReportArticle />} />
                     <Route path="/civic-map" element={<CivicMap />} />
                     <Route path="/civic-map/reports" element={<CivicReports />} />
@@ -164,7 +165,7 @@ function App() {
                     />
                     <Route
                       path="/transparency"
-                      element={<Navigate to="/projects-budget" replace />}
+                      element={<CompatibilityRedirect to="/projects-budget" />}
                     />
 
                     <Route
