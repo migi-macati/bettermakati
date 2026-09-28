@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams, Link } from 'react-router';
 import {
   Bell,
-  CalendarDays,
   CheckCircle2,
   Clock3,
   CloudRain,
@@ -19,6 +18,7 @@ import { Heading } from '../components/ui/Heading';
 import LastReviewed from '../components/ui/LastReviewed';
 import { barangays } from '../data/barangays';
 import { briefArchiveHref, briefPeriodLabel } from '../data/civicBriefs';
+import CivicTimelinePreview from '../components/civic/CivicTimelinePreview';
 
 interface NewsItem {
   title: string;
@@ -247,7 +247,7 @@ export default function Today() {
     <>
       <SEO
         title="Today in Makati"
-        description="A daily Makati dashboard for weather, civic updates, news, events and emergency links."
+        description="A daily Makati dashboard for weather, civic dates, official activity, news, advisories and emergency links."
       />
 
       <section className="border-b border-primary-900 bg-primary-800 text-white">
@@ -365,6 +365,17 @@ export default function Today() {
         )}
       </Section>
 
+      <CivicTimelinePreview
+        barangaySlug={barangaySlug || undefined}
+        contextLabel={barangay ? 'Barangay ' + barangay.name : 'Makati'}
+        heading={
+          barangay
+            ? 'Civic dates for ' + barangay.name
+            : 'What’s next in Makati'
+        }
+        className="bg-white"
+      />
+
       <Section className="bg-white">
         <div className="section-eyebrow">Civic brief</div>
         <Heading level={2}>Latest published brief</Heading>
@@ -439,13 +450,8 @@ export default function Today() {
 
       <Section className="bg-[#f5f8f2]">
         <div className="section-eyebrow">Around the city</div>
-        <Heading level={2}>Events, advisories & useful links</Heading>
-        <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
-          <Link to="/whats-on" className="rounded-2xl border border-primary-100 bg-white p-5">
-            <CalendarDays className="h-5 w-5 text-primary-700" />
-            <h3 className="mt-3 font-extrabold text-gray-950">What’s on</h3>
-            <p className="mt-1 text-sm text-gray-600">Current event discovery with original organizer sources.</p>
-          </Link>
+        <Heading level={2}>Advisories & useful links</Heading>
+        <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
           <Link to="/live" className="rounded-2xl border border-primary-100 bg-white p-5">
             <Bell className="h-5 w-5 text-primary-700" />
             <h3 className="mt-3 font-extrabold text-gray-950">Advisories & utilities</h3>

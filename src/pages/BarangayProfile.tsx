@@ -21,6 +21,7 @@ import SEO from '../components/SEO';
 import LastReviewed from '../components/ui/LastReviewed';
 import PhotoCarousel from '../components/ui/PhotoCarousel';
 import ServiceSearch from '../components/home/ServiceSearch';
+import CivicTimelinePreview from '../components/civic/CivicTimelinePreview';
 import {
   barangays,
   barangayFacilities,
@@ -428,6 +429,13 @@ export default function BarangayProfile() {
           </div>
         </div>
       </section>
+
+      <CivicTimelinePreview
+        barangaySlug={barangay.slug}
+        contextLabel={'Barangay ' + barangay.name}
+        heading={'Civic dates for ' + barangay.name}
+        className="bg-[#fffdf8]"
+      />
 
       <section id="services" className="bg-[#f5f8f2] py-14">
         <div className="container px-5 md:px-6 lg:px-8">
