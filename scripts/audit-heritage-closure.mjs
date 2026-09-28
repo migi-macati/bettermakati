@@ -242,12 +242,14 @@ for (const row of visitorRows) {
 }
 
 for (const marker of [
-  'registryPlace?.name ?? place.name',
-  'registryPlace.location.point.lat',
-  'registryPlace.location.point.lng',
+  'const visitorRefView',
+  'const place = placeRegistryById.get(ref.id)',
+  'label: place.name',
+  'place.location.point.lat',
+  'place.location.point.lng',
 ]) {
   if (!visitPageSource.includes(marker)) {
-    problems.push('Visit Makati canonical-place derivation missing: ' + marker);
+    problems.push('Explore Makati canonical-place derivation missing: ' + marker);
   }
 }
 
