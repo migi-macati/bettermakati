@@ -122,8 +122,9 @@ if (arrayStart < 0 || arrayEnd < 0) {
   problems.push('Could not parse Civic Registry seed list.');
 } else {
   registryAssets = Function(
+    'commonsImageUrl',
     'return (' + registrySource.slice(arrayStart, arrayEnd) + ')'
-  )();
+  )((file, width = 1400) => 'commons:' + width + ':' + file);
 
   const streetSegments = registryAssets.filter(asset => asset.type === 'street-segment');
   const provisionalStreetSegments = streetSegments.filter(
