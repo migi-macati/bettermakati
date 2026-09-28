@@ -32,7 +32,7 @@ export default function Barangays() {
         barangay.officials?.skChairperson,
         ...(barangay.officials?.kagawads ?? []),
         ...(barangay.notablePlaces?.map(item => item.name) ?? []),
-        ...(barangay.associations?.map(item => item.name) ?? []),
+        ...(barangay.communityAreaIds ?? []),
       ]
         .filter(Boolean)
         .join(' ')
