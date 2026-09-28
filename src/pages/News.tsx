@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   AlertCircle,
   ExternalLink,
@@ -12,6 +12,7 @@ import { Heading } from '../components/ui/Heading';
 import SEO from '../components/SEO';
 import { newsSnapshot } from '../data/newsSnapshot';
 import type { NewsItem } from '../data/newsTypes';
+import { enrichNewsItem } from '../data/newsCivicRelationships';
 
 const officialLinks = [
   {
@@ -60,6 +61,11 @@ export default function News() {
     const task = window.setTimeout(() => void loadNews(), 0);
     return () => window.clearTimeout(task);
   }, []);
+
+  const enrichedItems = useMemo(
+    () => items.map(item => ({ item, enrichment: enrichNewsItem(item) })),
+    [items]
+  );
 
   return (
     <>
@@ -127,9 +133,9 @@ export default function News() {
           </div>
         )}
 
-        {items.length > 0 && (
+        {enrichedItems.length > 0 && (
           <div className="mt-7 grid grid-cols-1 gap-4 lg:grid-cols-2">
-            {items.map(item => (
+            {enrichedItems.map(({ item, enrichment }) => (
               <article
                 key={`${item.link}-${item.title}`}
                 className="rounded-2xl border border-gray-200 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
@@ -141,6 +147,9 @@ export default function News() {
                     </span>
                     <span className="rounded-full border border-gray-200 bg-gray-50 px-2 py-1 font-semibold text-gray-600">
                       {item.sourceClassLabel}
+                    </span>
+                    <span className="rounded-full border border-primary-100 bg-primary-50 px-2 py-1 font-semibold text-primary-800">
+                      {enrichment.relevanceLabel}
                     </span>
                   </div>
                   <time dateTime={item.pubDate}>
@@ -155,14 +164,62 @@ export default function News() {
                     {item.description}
                   </p>
                 )}
-                <a
-                  href={item.link}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700 underline underline-offset-2"
-                >
-                  Read at publisher <ExternalLink className="h-3.5 w-3.5" />
-                </a>
+
+                {enrichment.relationships.length > 0 && (
+                  <div className="mt-4 border-t border-gray-100 pt-3">
+                    <div className="text-xs font-extrabold uppercase tracking-[0.08em] text-gray-500">
+                      Related in BetterMakati
+                    </div>
+                    <div className="mt-2 flex flex-wrap gap-2">
+                      {enrichment.relationships.slice(0, 5).map(relationship => (
+                        <Link
+                          key={relationship.id}
+                          to={relationship.href}
+                          className="rounded-full border border-primary-100 bg-primary-50 px-2.5 py-1.5 text-xs font-bold text-primary-800 hover:border-primary-300"
+                        >
+                          {relationship.label}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2">
+                  <a
+                    href={item.link}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-1 text-sm font-bold text-primary-700 underline underline-offset-2"
+                  >
+                    Read at publisher <ExternalLink className="h-3.5 w-3.5" />
+                  </a>
+                  {(item.clusterSize ?? 1) > 1 && (
+                    <span className="text-xs font-semibold text-gray-500">
+                      {item.clusterSize} reports clustered
+                    </span>
+                  )}
+                </div>
+
+                {item.relatedCoverage && item.relatedCoverage.length > 0 && (
+                  <details className="mt-3 rounded-xl border border-gray-100 bg-gray-50 px-3 py-2">
+                    <summary className="cursor-pointer text-xs font-bold text-gray-700">
+                      Other coverage
+                    </summary>
+                    <div className="mt-2 space-y-2">
+                      {item.relatedCoverage.map(coverage => (
+                        <a
+                          key={coverage.link}
+                          href={coverage.link}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="block text-xs font-semibold text-primary-700 underline underline-offset-2"
+                        >
+                          {coverage.source || 'News publisher'}: {coverage.title}
+                        </a>
+                      ))}
+                    </div>
+                  </details>
+                )}
               </article>
             ))}
           </div>
