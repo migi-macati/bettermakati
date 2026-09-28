@@ -1,11 +1,11 @@
 import {
   ArrowRight,
-  Building2,
   ClipboardList,
+  HeartPulse,
   Landmark,
   MapPinned,
   MessageSquareWarning,
-  Navigation,
+  SunMedium,
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router';
 import { barangays } from '../../data/barangays';
@@ -15,34 +15,34 @@ const compactEditionName = (name: string) => name.replace(/\s+/g, '');
 
 const entryPoints = [
   {
+    title: 'Get urgent help',
+    description: 'Emergency hotlines and official contacts for urgent situations.',
+    href: '/hotlines',
+    icon: HeartPulse,
+  },
+  {
     title: 'Get a service',
     description: 'Permits, IDs, health, education and other government services.',
     href: '/services',
     icon: ClipboardList,
   },
   {
-    title: 'Find a place',
-    description: 'Parks, clinics, heritage sites, cinemas and government offices.',
-    href: '/civic-map',
-    icon: Building2,
+    title: 'See what matters now',
+    description: 'Start with Today for advisories, civic activity and current city information.',
+    href: '/today',
+    icon: SunMedium,
   },
   {
-    title: 'Check government & public records',
-    description: 'Budgets, projects, legislation, procurement and audit records.',
-    href: '/records',
+    title: 'Follow public action & evidence',
+    description: 'Budgets, projects, procurement, audit findings and source records.',
+    href: '/accountability',
     icon: Landmark,
   },
   {
-    title: 'Report a local issue',
-    description: 'Check a place or issue, then add a localized report when needed.',
-    href: '/civic-map',
+    title: 'Participate or report',
+    description: 'Choose the right non-emergency route for concerns, reports or civic participation.',
+    href: '/participate',
     icon: MessageSquareWarning,
-  },
-  {
-    title: 'Visit or get around Makati',
-    description: 'Transport, parking, events, food, heritage and places to go.',
-    href: '/visit',
-    icon: Navigation,
   },
 ];
 
