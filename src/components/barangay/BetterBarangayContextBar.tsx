@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { ArrowRight, ChevronDown } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router';
 import { barangays, findBarangay } from '../../data/barangays';
-import { barangaySliceablePaths, useBarangayScope } from '../../hooks/useBarangayScope';
+import { barangaySliceablePaths, isBarangayContextPath, useBarangayScope } from '../../hooks/useBarangayScope';
 
 const compactEditionName = (name: string) => name.replace(/\s+/g, '');
 
@@ -15,12 +15,16 @@ export default function BetterBarangayContextBar() {
   const profileBarangay = findBarangay(profileMatch?.[1]);
   const isProfile = Boolean(profileBarangay);
   const isSliceable = barangaySliceablePaths.has(location.pathname);
+  const isScopedDetail =
+    !isSliceable &&
+    isBarangayContextPath(location.pathname) &&
+    Boolean(scopedBarangay);
 
   useEffect(() => {
     if (profileBarangay) rememberBarangay(profileBarangay.slug);
   }, [profileBarangay?.slug]);
 
-  if (!isProfile && !isSliceable) return null;
+  if (!isProfile && !isSliceable && !isScopedDetail) return null;
 
   const barangay = profileBarangay || scopedBarangay;
   const value = barangay?.slug ?? '';
@@ -46,7 +50,7 @@ export default function BetterBarangayContextBar() {
             <span className="truncate text-base font-black tracking-tight sm:text-lg">
               <span className="text-secondary-300">Better</span>
               <span className="text-white">
-                {barangay ? compactEditionName(barangay.name) : 'All Makati'}
+                {barangay ? compactEditionName(barangay.name) : 'Barangay View'}
               </span>
             </span>
             <ChevronDown className="h-4 w-4 shrink-0 text-primary-100" aria-hidden="true" />
