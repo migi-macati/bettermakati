@@ -932,8 +932,9 @@ export const nativeCurrentElectionTimelineItems: CivicTimelineItem[] = [
         },
         update: {
           revision: 2,
-          changeType: 'superseded',
-          note: 'Superseded by Republic Act No. 12326.',
+          changeType: 'updated',
+          note:
+            'This existing 2026 milestone is now marked superseded by Republic Act No. 12326.',
         },
         tags: ['elections', 'BSKE', '2026', 'superseded'],
       },
@@ -969,7 +970,12 @@ export const nativeCurrentElectionTimelineItems: CivicTimelineItem[] = [
         note:
           'The source states the second Monday of November 2028; 2028-11-13 is the normalized calendar date.',
       },
-      update: { revision: 1, changeType: 'rescheduled' },
+      update: {
+        revision: 1,
+        changeType: 'rescheduled',
+        supersedesTimelineItemId:
+          'election:bske-2026:superseded:election-day',
+      },
       tags: ['elections', 'BSKE', '2028', 'election day'],
     },
     resolveNativeCivicTimelineCanonical
