@@ -243,12 +243,12 @@ const governmentItems: SearchItem[] = [
     keywords: 'legislation ordinance resolution law charter council',
   },
   {
-    title: 'News & events',
+    title: 'Makati in the News',
     group: 'Government',
     category: 'Government',
-    description: 'Official city news and event listings.',
+    description: 'Current Makati coverage with publisher and official-source handoffs.',
     href: '/news',
-    keywords: 'news announcement events city government update',
+    keywords: 'news coverage headline publisher announcement city government update',
   },
   {
     title: 'Estates, Districts & Associations',
