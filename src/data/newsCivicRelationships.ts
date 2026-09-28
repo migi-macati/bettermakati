@@ -266,7 +266,7 @@ const legislationRelationships = (item: NewsItem): NewsCivicRelationship[] => {
 const cityMonitorRelationships = (item: NewsItem): NewsCivicRelationship[] => {
   const text = item.title + ' ' + item.description;
 
-  return cityMonitorRecords.flatMap(record => {
+  return cityMonitorRecords.flatMap((record): NewsCivicRelationship[] => {
     const sourceUrls = [
       record.sourceUrl,
       ...(record.documents?.map(document => document.url) ?? []),
