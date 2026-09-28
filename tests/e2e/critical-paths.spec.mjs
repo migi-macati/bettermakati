@@ -1097,8 +1097,10 @@ test('barangay landing page uses the persistent BetterBarangay context bar', asy
 
 test('sliceable city pages always expose the persistent BetterBarangay bar', async ({ page }) => {
   await page.goto(baseURL + '/services');
-  await expect(page.getByRole('region', { name: 'BetterBarangay view' })).toBeVisible();
-  await expect(page.getByRole('region', { name: 'BetterBarangay view' }).getByLabel('Choose BetterBarangay view')).toBeVisible();
+  const bar = page.getByRole('region', { name: 'BetterBarangay view' });
+  await expect(bar).toBeVisible();
+  await expect(bar).toContainText('BetterBarangay View');
+  await expect(bar.getByLabel('Choose BetterBarangay view')).toBeVisible();
   await expect(page.getByLabel('Choose BetterBarangay view')).toHaveValue('');
   await page.getByLabel('Choose BetterBarangay view').selectOption('poblacion');
   await expect(page).toHaveURL(/\/services\?barangay=poblacion/);
@@ -1111,6 +1113,29 @@ test('scoped city pages show the selected BetterBarangay in the persistent bar',
   await expect(page.getByRole('region', { name: 'BetterBarangay view' }).locator('span').filter({ hasText: 'BetterCarmona' }).first()).toBeVisible();
   await expect(page.getByLabel('Choose BetterBarangay view')).toHaveValue('carmona');
   await expect(page.getByText('Deep dive into a BetterBarangay', { exact: true })).toHaveCount(0);
+});
+
+test('BetterBarangay scope survives service and civic detail drilldowns', async ({ page }) => {
+  await page.goto(baseURL + '/services?barangay=poblacion');
+  await page.getByRole('link', { name: 'Cedula', exact: true }).click();
+  await expect(page).toHaveURL(/\/services\/guide\/community-tax-certificate\?barangay=poblacion/);
+  await expect(page.getByLabel('Choose BetterBarangay view')).toHaveValue('poblacion');
+  await expect(
+    page.getByRole('navigation', { name: 'Breadcrumb' }).getByRole('link', { name: 'Services', exact: true })
+  ).toHaveAttribute('href', '/services?barangay=poblacion');
+
+  await page.goto(baseURL + '/services?barangay=poblacion');
+  await page.getByRole('link', { name: 'Business permit', exact: true }).click();
+  await expect(page).toHaveURL(/\/services\/business\/new-business-permit\?barangay=poblacion/);
+  await expect(page.getByLabel('Choose BetterBarangay view')).toHaveValue('poblacion');
+  await expect(
+    page.getByRole('navigation', { name: 'Breadcrumb' }).getByRole('link', { name: 'Services', exact: true })
+  ).toHaveAttribute('href', '/services?barangay=poblacion');
+
+  await page.goto(baseURL + '/civic-map?barangay=poblacion');
+  await page.getByRole('link', { name: 'Makati Poblacion Park', exact: true }).first().click();
+  await expect(page).toHaveURL(/\/civic-map\/[^?]+\?barangay=poblacion/);
+  await expect(page.getByLabel('Choose BetterBarangay view')).toHaveValue('poblacion');
 });
 
 test('barangay homepage exposes council services election and local accountability', async ({ page }) => {
@@ -1292,10 +1317,12 @@ test('barangay statistics show local population context through slicer', async (
   await expect(page.getByText('residents', { exact: true })).toBeVisible();
 });
 
-test('barangay context does not follow users to unrelated citywide pages', async ({ page }) => {
+test('barangay context does not follow users to unrelated or unscoped citywide pages', async ({ page }) => {
   await page.goto(baseURL + '/services?barangay=poblacion');
   await expect(page.getByLabel('Choose BetterBarangay view')).toHaveValue('poblacion');
   await page.goto(baseURL + '/history');
+  await expect(page.getByLabel('Choose BetterBarangay view')).toHaveCount(0);
+  await page.goto(baseURL + '/services/guide/national-id');
   await expect(page.getByLabel('Choose BetterBarangay view')).toHaveCount(0);
   await page.goto(baseURL + '/services');
   await expect(page.getByLabel('Choose BetterBarangay view')).toHaveValue('');
