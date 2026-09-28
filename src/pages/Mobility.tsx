@@ -495,6 +495,7 @@ export default function Mobility() {
                 return (
                   <article
                     key={service.id}
+                    id={'system-' + service.id}
                     className="rounded-2xl border border-gray-200 bg-white p-5"
                   >
                     <div className="flex items-start justify-between gap-3">
@@ -595,6 +596,7 @@ export default function Mobility() {
             return (
               <article
                 key={service.id}
+                    id={'system-' + service.id}
                 className="rounded-2xl border border-gray-200 bg-white p-5"
               >
                 <div className="flex items-start justify-between gap-3">
