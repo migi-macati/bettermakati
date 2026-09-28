@@ -20,6 +20,7 @@ import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
 import LastReviewed from '../components/ui/LastReviewed';
 import SharePage from '../components/ui/SharePage';
+import CivicDomainTimelinePreview from '../components/civic/CivicDomainTimelinePreview';
 import {
   accountabilityEntries,
   accountabilityReviewed,
@@ -618,6 +619,14 @@ export default function Accountability() {
           </Link>
         </div>
       </Section>
+
+      <CivicDomainTimelinePreview
+        owner="accountability"
+        calendarTopic="projects-procurement"
+        heading="Procurement and project dates"
+        description="Exact source-backed procurement milestones are indexed here without turning broad reporting periods or verification dates into civic events."
+        className="bg-[#f5f8f2]"
+      />
 
       <Section id="ledger-records" className="scroll-mt-24 bg-white">
         <div className="section-eyebrow">Explore the evidence</div>

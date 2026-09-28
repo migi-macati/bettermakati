@@ -13,6 +13,7 @@ import { Heading } from '../components/ui/Heading';
 import SEO from '../components/SEO';
 import LastReviewed from '../components/ui/LastReviewed';
 import SharePage from '../components/ui/SharePage';
+import CivicDomainTimelinePreview from '../components/civic/CivicDomainTimelinePreview';
 import { openCongressMakatiRecords } from '../data/openCongressMakati';
 import {
   localLegislationById,
@@ -262,6 +263,13 @@ export default function Legislation() {
           ) : null}
         </div>
       </Section>
+
+      <CivicDomainTimelinePreview
+        owner="legislation"
+        calendarTopic="legislation"
+        heading="Dated legislative milestones"
+        description="See source-backed readings, approvals, publication, effectivity and session evidence on the same civic time axis."
+      />
 
       <Section className="bg-[#f5f8f2]">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">

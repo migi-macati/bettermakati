@@ -3,6 +3,7 @@ import ReportTeaser from '../components/reports/ReportTeaser';
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
 import { publicationReports } from '../data/reports';
+import CivicDomainTimelinePreview from '../components/civic/CivicDomainTimelinePreview';
 
 export default function Reports() {
   const leadReport = publicationReports[0];
@@ -32,6 +33,14 @@ export default function Reports() {
           <ReportTeaser report={leadReport} variant="lead" />
         </div>
       </Section>
+
+      <CivicDomainTimelinePreview
+        owner="reports"
+        calendarTopic="publications-data"
+        heading="Report releases"
+        description="BetterMakati report publication dates also appear in Recently Published, separate from the periods covered by their source data."
+        className="bg-white"
+      />
 
       {moreReports.length > 0 && (
         <Section className="border-t border-primary-100 bg-white">

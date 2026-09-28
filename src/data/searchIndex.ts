@@ -23,6 +23,12 @@ import {
   civicOrganizations,
 } from './areaOrganizationRegistry';
 import { visitorExperiences, visitorResources } from './visitorCuration';
+import {
+  civicTimelineCanonicalRefKey,
+  type CivicTimelineItem,
+} from './civicTimeline';
+import { nativeCivicTimelineItems } from './civicTimelineNative';
+import { civicTimelinePrimaryValue } from './civicTimelineViews';
 
 export type SearchGroup =
   | 'Service'
@@ -915,7 +921,7 @@ const officialItems: SearchItem[] = electedOfficials.map(official => ({
   keywords: `${official.name} ${official.displayName} ${official.office} ${official.district ?? ''} elected official councilor congress representative mayor vice mayor`,
 }));
 
-export const searchIndex: SearchItem[] = [
+const coreSearchIndex: SearchItem[] = [
   ...makatiHistory.map(event => ({
     title: event.title,
     group: 'Record' as const,
@@ -938,4 +944,102 @@ export const searchIndex: SearchItem[] = [
   ...toolItems,
   ...contactItems,
   ...barangayItems,
+];
+
+const timelineCanonicalSearchKey = (item: CivicTimelineItem) => {
+  const ref = item.canonicalRef;
+  if (ref.owner === 'legislation') return 'legislation-record:' + ref.id;
+  if (ref.owner === 'reports') return 'report:' + ref.id;
+  if (ref.owner === 'statistics') return 'indicator:' + ref.id;
+  return 'civic-owner:' + civicTimelineCanonicalRefKey(ref);
+};
+
+const timelineSearchDateKeywords = (item: CivicTimelineItem) => {
+  const value = civicTimelinePrimaryValue(item);
+  const date = new Date(
+    value.includes('T') ? value : value + 'T00:00:00+08:00'
+  );
+  return [
+    value,
+    new Intl.DateTimeFormat('en-PH', {
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric',
+      timeZone: 'Asia/Manila',
+    }).format(date),
+  ];
+};
+
+const civicTimelineSearchGroups = new Map<string, CivicTimelineItem[]>();
+
+for (const item of nativeCivicTimelineItems) {
+  const key = timelineCanonicalSearchKey(item);
+  const existing = civicTimelineSearchGroups.get(key) ?? [];
+  existing.push(item);
+  civicTimelineSearchGroups.set(key, existing);
+}
+
+const civicTimelineSearchItems: SearchItem[] = [
+  ...civicTimelineSearchGroups.entries(),
+].map(([canonicalKey, items]) => {
+  const ordered = [...items].sort((left, right) =>
+    civicTimelinePrimaryValue(right).localeCompare(
+      civicTimelinePrimaryValue(left)
+    )
+  );
+  const representative = ordered[0];
+
+  return {
+    title: representative.canonicalLabel,
+    group: 'Record' as const,
+    category: 'Civic timeline',
+    description:
+      ordered.length +
+      ' source-backed dated civic milestone' +
+      (ordered.length === 1 ? '' : 's') +
+      ' linked to this canonical record.',
+    href: representative.canonicalHref,
+    keywords: ordered
+      .flatMap(item => [
+        item.id,
+        item.title,
+        item.summary,
+        item.kind,
+        item.temporal.semantic,
+        item.actionability,
+        ...timelineSearchDateKeywords(item),
+        ...item.tags,
+        ...item.sourceRefs.flatMap(source => [
+          source.label,
+          source.publisher,
+        ]),
+        'Makati Calendar civic timeline date milestone',
+      ])
+      .join(' '),
+    canonicalKey,
+  };
+});
+
+const civicTimelineSearchByKey = new Map(
+  civicTimelineSearchItems.map(item => [item.canonicalKey!, item] as const)
+);
+const coreCanonicalKeys = new Set(
+  coreSearchIndex.flatMap(item =>
+    item.canonicalKey ? [item.canonicalKey] : []
+  )
+);
+
+export const searchIndex: SearchItem[] = [
+  ...coreSearchIndex.map(item => {
+    if (!item.canonicalKey) return item;
+    const timeline = civicTimelineSearchByKey.get(item.canonicalKey);
+    if (!timeline) return item;
+    return {
+      ...item,
+      keywords: item.keywords + ' ' + timeline.keywords,
+    };
+  }),
+  ...civicTimelineSearchItems.filter(
+    item => !coreCanonicalKeys.has(item.canonicalKey!)
+  ),
 ];

@@ -12,7 +12,7 @@ export default function Search() {
     <>
       <SEO
         title="Search"
-        description="Search BetterMakati services, barangays, areas, organizations, officials, records, places and civic tools."
+        description="Search BetterMakati services, barangays, civic dates, areas, organizations, officials, records, places and civic tools."
         noIndex
       />
       <Section className="bg-[#fffdf8]">
@@ -20,14 +20,14 @@ export default function Search() {
           <div className="section-eyebrow">Search</div>
           <Heading>Search BetterMakati</Heading>
           <p className="mb-6 text-gray-600">
-            One search for services, barangays, districts and estates,
+            One search for services, barangays, civic dates, districts and estates,
             organizations, civic places, officials, records, visitor information
             and community tools.
           </p>
           <ServiceSearch
             scope="site"
             title="What are you looking for?"
-            placeholder="e.g., Yellow Card, Poblacion Park, budget, cinema"
+            placeholder="e.g., deadline, council session, Poblacion, budget"
             initialQuery={initialQuery}
           />
         </div>
