@@ -20,6 +20,7 @@ import { officesForAgency } from '../data/governmentServiceOffices';
 import { serviceGuideDetails } from '../data/serviceGuideDetails';
 import { placeRegistryById } from '../data/placeRegistry';
 import NationalServiceHandoff from '../components/services/NationalServiceHandoff';
+import { useBarangayScope, withBarangayScope } from '../hooks/useBarangayScope';
 import { legislationForService } from '../data/legislationCivicRelationships';
 
 const mapsUrl = (query: string) =>
@@ -365,6 +366,8 @@ const standardSteps = (item: ServiceDirectoryItem) => [
 
 export default function ServiceGuide() {
   const { id } = useParams();
+  const { barangay } = useBarangayScope();
+  const servicesHref = withBarangayScope('/services', barangay?.slug);
   const item = serviceDirectory.find(entry => entry.id === id);
 
   if (!item) {
@@ -374,7 +377,7 @@ export default function ServiceGuide() {
           className="mb-6"
           items={[
             { label: 'Home', href: '/' },
-            { label: 'Services', href: '/services' },
+            { label: 'Services', href: servicesHref },
             { label: 'Service guide not found' },
           ]}
         />
@@ -407,7 +410,7 @@ export default function ServiceGuide() {
           className="mb-5"
           items={[
             { label: 'Home', href: '/' },
-            { label: 'Services', href: '/services' },
+            { label: 'Services', href: servicesHref },
             { label: item.title },
           ]}
         />
