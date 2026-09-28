@@ -64,6 +64,10 @@ jobs:
           done
           cat /tmp/bettermakati-preview.log
           exit 1
+      - name: Run browser bootstrap diagnostic
+        env:
+          BASE_URL: http://127.0.0.1:4173
+        run: npx playwright test tests/e2e/runtime-smoke.spec.mjs --reporter=line
       - name: Run critical browser and accessibility tests
         env:
           BASE_URL: http://127.0.0.1:4173
