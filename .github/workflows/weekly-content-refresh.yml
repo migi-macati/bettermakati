@@ -1,9 +1,9 @@
-name: Weekly news snapshot refresh
+name: Daily news discovery refresh
 
 on:
   schedule:
-    # 09:00 Philippine time every Monday (UTC is used by GitHub Actions).
-    - cron: '0 1 * * 1'
+    # 09:00 Philippine time every day (UTC is used by GitHub Actions).
+    - cron: '0 1 * * *'
   workflow_dispatch:
 
 permissions:
@@ -26,8 +26,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Refresh Google News snapshot
+      - name: Refresh Google News discovery snapshot
         run: npm run update:news
+
+      - name: Build internal news review queue
+        run: npm run build:news-review-queue
 
       - name: Verify the site build
         run: npm run build
@@ -36,11 +39,16 @@ jobs:
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          branch: automation/weekly-content-refresh
+          branch: automation/daily-news-discovery
           delete-branch: true
-          commit-message: 'chore: refresh Makati news snapshot'
-          title: 'Weekly Makati news snapshot refresh'
+          commit-message: 'chore: refresh Makati news discovery'
+          title: 'Daily Makati news discovery refresh'
           body: |
-            Automated refresh of the fallback Makati news snapshot. Live /api/news remains the primary feed.
+            Automated refresh of the fallback Makati news snapshot and internal review queue.
+            The queue is not public civic data and does not auto-promote headlines into canonical records.
+            Live /api/news remains the primary public feed.
           add-paths: |
             src/data/newsSnapshot.ts
+            data/news-discovery-snapshot.json
+            data/news-review-queue.json
+            data/news-review-queue.md
