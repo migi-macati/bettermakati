@@ -52,7 +52,7 @@ export default function Barangays() {
       <section className="border-b border-primary-900 bg-primary-800 text-white">
         <div className="container px-5 py-12 md:px-6 md:py-16 lg:px-8">
           <div className="max-w-4xl">
-            <div className="mb-3 text-xs font-extrabold uppercase tracking-[0.12em] text-secondary-400 md:text-sm">
+            <div className="mb-3 text-xs font-extrabold uppercase tracking-[0.12em] text-secondary-300 md:text-sm">
               BetterBarangay
             </div>
             <h1 className="text-4xl font-extrabold tracking-tight text-white md:text-6xl">
@@ -98,7 +98,7 @@ export default function Barangays() {
             <LastReviewed
               date={barangayProfilesReviewed}
               note="Population: 2024 POPCEN · Council rosters: 2023–2026 term"
-              className="mt-5 !text-primary-50 [&_strong]:!text-white [&_svg]:!text-secondary-400"
+              className="mt-5 !text-primary-50 [&_strong]:!text-white [&_svg]:!text-secondary-300"
             />
           </div>
         </div>
