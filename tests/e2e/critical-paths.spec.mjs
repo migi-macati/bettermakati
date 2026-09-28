@@ -183,6 +183,77 @@ test('representative nested deep links survive direct load and refresh', async (
   }
 });
 
+test('W6-3c service journey stays task-first and recovers from dead ends', async ({ page }) => {
+  await page.goto(baseURL + '/services');
+
+  await expect(
+    page.getByRole('link', { name: 'Business permit', exact: true })
+  ).toHaveAttribute('href', '/services/guide/new-business-permit');
+  await expect(
+    page.getByRole('link', { name: 'Yellow Card', exact: true })
+  ).toHaveAttribute('href', '/services/guide/yellow-card');
+  await expect(
+    page.getByRole('link', { name: 'Real property tax', exact: true })
+  ).toHaveAttribute('href', '/services/guide/real-property-tax');
+
+  await page
+    .getByPlaceholder('Search permit, clearance, ID, test or service')
+    .fill(guaranteedMissingQuery);
+  await expect(page.getByText('No indexed service matches this search yet.')).toBeVisible();
+  await expect(
+    page.getByRole('link', { name: 'Use Saan Ako Lalapit?', exact: true })
+  ).toHaveAttribute('href', '/community-tools/saan-ako-lalapit');
+  await expect(
+    page.getByRole('link', { name: 'Browse government offices', exact: true })
+  ).toHaveAttribute('href', '/government-offices');
+
+  await page.goto(baseURL + '/community-tools/saan-ako-lalapit');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Saan Ako Lalapit?');
+  await expect(
+    page.getByText(
+      'Describe what you need. Matches can show the service, responsible office and a place to go.',
+      { exact: true }
+    )
+  ).toBeVisible();
+  await expect(
+    page.getByText('Describe what you need. Describe what you need.', { exact: false })
+  ).toHaveCount(0);
+  await expect(
+    page.getByRole('link', { name: 'Browse all services', exact: true })
+  ).toHaveAttribute('href', '/services');
+  await expect(
+    page.getByRole('link', { name: 'Browse government offices', exact: true })
+  ).toHaveAttribute('href', '/government-offices');
+
+  await page.goto(baseURL + '/services/guide/new-business-permit');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('New business permit');
+  await expect(
+    page.getByRole('heading', { level: 2, name: 'What you need to complete this' })
+  ).toBeVisible();
+  await expect(
+    page.getByRole('heading', { level: 2, name: 'Continue with the issuing agency' })
+  ).toBeVisible();
+  await expect(
+    page.getByRole('link', { name: 'Open official source', exact: true })
+  ).toHaveAttribute('href', /^https:\/\//);
+  await expect(
+    page.getByRole('link', { name: 'Related BetterMakati page', exact: true })
+  ).toHaveAttribute('href', '/services/business/new-business-permit');
+
+  await page.goto(baseURL + '/government-offices');
+  await expect(
+    page.getByRole('link', { name: 'Start with a service', exact: true })
+  ).toHaveAttribute('href', '/services');
+  await expect(
+    page.getByRole('link', { name: 'Not sure which office handles it?', exact: true })
+  ).toHaveAttribute('href', '/community-tools/saan-ako-lalapit');
+  await page.getByRole('searchbox', { name: 'Search government offices' }).fill(guaranteedMissingQuery);
+  await expect(page.getByText('No office matches this search.')).toBeVisible();
+  await expect(
+    page.getByRole('link', { name: 'Find a service by task', exact: true })
+  ).toHaveAttribute('href', '/services');
+});
+
 test('unknown deep links land on recoverable noindex 404', async ({ page }) => {
   const response = await page.goto(
     baseURL + '/this-route-does-not-exist/deep-link?barangay=poblacion#missing'
