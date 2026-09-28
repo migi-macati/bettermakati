@@ -96,7 +96,7 @@ const Footer: React.FC = () => {
         </div>
 
         <div className="mt-10 border-t border-white/10 pt-6">
-          <div className="text-xs font-bold uppercase tracking-[0.12em] text-white/60">
+          <div className="text-xs font-bold uppercase tracking-[0.12em] text-white/80">
             Official & broader ecosystem
           </div>
           <div className="mt-3 flex flex-wrap gap-x-6 gap-y-2">
