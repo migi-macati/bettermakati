@@ -9,14 +9,11 @@ import {
   Church,
   Bus,
   Film,
-  CalendarDays,
-  Radio,
   BarChart3,
   ClipboardCheck,
-  SunMedium,
+  Landmark,
 } from 'lucide-react';
 import Hero from '../components/sections/Hero';
-import CommunityToolsGrid from '../components/community/CommunityToolsGrid';
 import FeaturedInsightsCarousel from '../components/home/FeaturedInsightsCarousel';
 import PhotoCarousel from '../components/ui/PhotoCarousel';
 import SEO from '../components/SEO';
@@ -30,8 +27,8 @@ const quickServices = [
     icon: Store,
   },
   {
-    label: 'Health & emergency',
-    description: 'Yellow Card and emergency access',
+    label: 'Health services',
+    description: 'Yellow Card, clinics and care access',
     href: '/services/health-services',
     icon: HeartPulse,
   },
@@ -78,35 +75,28 @@ const visitPaths = [
 ];
 
 const visitShortcuts = [
-  { label: 'Barangays', href: '/barangays', icon: HomeIcon },
   { label: 'Cinemas', href: '/cinemas', icon: Film },
   { label: 'Live place discovery', href: '/visit#live-discovery', icon: Compass },
 ];
 
-const civicControl = [
+const publicActionPaths = [
   {
-    label: 'Today in Makati',
-    description: 'Weather, advisories and current city activity.',
-    href: '/today',
-    icon: SunMedium,
-  },
-  {
-    label: 'Makati Calendar',
-    description: 'Civic dates, deadlines, publications and historical milestones.',
-    href: '/calendar',
-    icon: CalendarDays,
-  },
-  {
-    label: 'City activity',
-    description: 'Council, legislation, procurement, projects and notices.',
-    href: '/city-monitor',
-    icon: Radio,
-  },
-  {
-    label: 'Projects & money',
-    description: 'Budgets, spending, projects, procurement and audit records.',
-    href: '/projects-budget',
+    label: 'Accountability',
+    description: 'Track projects, procurement, audit findings and public commitments.',
+    href: '/accountability',
     icon: ClipboardCheck,
+  },
+  {
+    label: 'Projects & budget',
+    description: 'See where city money comes from, where it goes and what is being built.',
+    href: '/projects-budget',
+    icon: BarChart3,
+  },
+  {
+    label: 'Public records',
+    description: 'Open the underlying documents, datasets and source records behind civic claims.',
+    href: '/records',
+    icon: Landmark,
   },
 ];
 
@@ -161,26 +151,6 @@ const Home: React.FC = () => {
 
       <FeaturedInsightsCarousel />
 
-      <section className="border-b border-primary-100 bg-[#f5f8f2] py-8">
-        <div className="container px-5 md:px-6 lg:px-8">
-          <div className="flex flex-col gap-4 rounded-2xl border border-primary-200 bg-white p-5 md:flex-row md:items-center md:justify-between md:p-6">
-            <div>
-              <div className="section-eyebrow">BetterBarangay</div>
-              <h2 className="text-2xl font-extrabold tracking-tight text-gray-950 md:text-3xl">
-                Explore Makati by barangay
-              </h2>
-              <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600 md:text-base">
-                Browse all 23 local editions for barangay services, officials, places,
-                projects, statistics and public records.
-              </p>
-            </div>
-            <Link to="/barangays" className="brand-btn-secondary shrink-0">
-              Browse all barangays <ArrowRight className="h-4 w-4" />
-            </Link>
-          </div>
-        </div>
-      </section>
-
       <section className="bg-[#fffdf8] py-14">
         <div className="container px-5 md:px-6 lg:px-8">
           <div className="section-eyebrow">Services</div>
@@ -225,17 +195,20 @@ const Home: React.FC = () => {
       <section className="bg-primary-900 py-12 text-white border-b border-primary-900">
         <div className="container px-5 md:px-6 lg:px-8">
           <div className="section-eyebrow !text-white/80">
-            Civic records
+            Public action & evidence
           </div>
           <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
             <div>
               <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight">
-                Follow what&apos;s happening in Makati.
+                Follow decisions, money and the records behind them.
               </h2>
+              <p className="mt-2 max-w-3xl text-sm leading-relaxed text-primary-100 md:text-base">
+                Start with accountability, then move into budgets, projects and the original public records when you need the source.
+              </p>
             </div>
           </div>
-          <div className="mt-7 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
-            {civicControl.map(item => {
+          <div className="mt-7 grid grid-cols-1 md:grid-cols-3 gap-4">
+            {publicActionPaths.map(item => {
               const Icon = item.icon;
               return (
                 <Link
@@ -372,40 +345,33 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      <section className="bg-white py-14">
+      <section className="bg-white py-14 border-t border-gray-100">
         <div className="container px-5 md:px-6 lg:px-8">
-          <div className="section-eyebrow">Community Tools</div>
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-3 mb-7">
-            <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-950">
-              Tools for everyday Makati
-            </h2>
-            <Link
-              to="/community-tools"
-              className="inline-flex items-center gap-1.5 text-sm font-bold text-primary-700 hover:text-primary-900"
-            >
-              View all tools <ArrowRight className="h-4 w-4" />
+          <div className="flex flex-col gap-5 rounded-2xl border border-primary-100 bg-[#fffdf8] p-6 md:flex-row md:items-center md:justify-between md:p-8">
+            <div>
+              <div className="section-eyebrow">Participation</div>
+              <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight text-gray-950">
+                Take part in Makati
+              </h2>
+              <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600 md:text-base">
+                Start here for non-emergency public-place reports, civic participation and the right route for a community concern.
+              </p>
+              <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm font-bold">
+                <Link to="/get-involved" className="text-primary-700 hover:text-primary-900">
+                  Improve BetterMakati
+                </Link>
+                <Link to="/community-tools" className="text-primary-700 hover:text-primary-900">
+                  More community tools
+                </Link>
+              </div>
+            </div>
+            <Link to="/participate" className="brand-btn-primary shrink-0">
+              Participate in Makati <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
-          <CommunityToolsGrid limit={4} />
         </div>
       </section>
 
-      <section className="bg-[#fffdf8] py-14 border-t border-gray-100">
-        <div className="container px-5 md:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-5 rounded-2xl border border-primary-100 bg-white p-6 md:p-8">
-            <div>
-              <div className="section-eyebrow">Get Involved</div>
-              <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight text-gray-950">
-                Improve BetterMakati
-              </h2>
-            </div>
-            <Link to="/get-involved" className="brand-btn-primary">
-              Suggest, contribute or volunteer{' '}
-              <ArrowRight className="h-4 w-4" />
-            </Link>
-          </div>
-        </div>
-      </section>
     </>
   );
 };
