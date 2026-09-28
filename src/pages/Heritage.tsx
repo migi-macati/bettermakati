@@ -150,7 +150,7 @@ export default function Heritage() {
                     <span className="rounded-full bg-primary-50 px-3 py-1 text-xs font-bold text-primary-700">
                       {site.category}
                     </span>
-                    <span className="text-right text-sm font-bold text-secondary-700">
+                    <span className="text-right text-sm font-bold text-secondary-900">
                       {site.period}
                     </span>
                   </div>
