@@ -12,6 +12,7 @@ const [
   home,
   explore,
   today,
+  watchlistRaw,
   packageJson,
 ] = await Promise.all([
   readFile('data/wave5-civic-time-closure.json', 'utf8'),
@@ -25,6 +26,7 @@ const [
   readFile('src/pages/Home.tsx', 'utf8'),
   readFile('src/pages/VisitMakati.tsx', 'utf8'),
   readFile('src/pages/Today.tsx', 'utf8'),
+  readFile('data/source-watchlist.json', 'utf8'),
   readFile('package.json', 'utf8'),
 ]);
 
@@ -112,6 +114,17 @@ for (const [label, content] of [
     content.includes("label: 'What’s on'")
   ) {
     problems.push(label + ' still exposes retired What’s On navigation/content.');
+  }
+}
+
+const watchlist = JSON.parse(watchlistRaw);
+for (const id of [
+  'pia-ra-12326-bske-current-schedule',
+  'pna-ra-12326-bske-postponement',
+]) {
+  const watched = watchlist.find(item => item.id === id);
+  if (!watched || !watched.affectedPages?.includes('/calendar')) {
+    problems.push('Current election source is not monitored for Calendar freshness: ' + id);
   }
 }
 

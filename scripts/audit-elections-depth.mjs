@@ -117,6 +117,18 @@ if (!publicRecords.includes('COMELEC 2026 BSKE calendar — superseded')) {
 const electionWatch = watchlist.filter(item =>
   String(item.kind || '').startsWith('election')
 );
+for (const id of [
+  'pia-ra-12326-bske-current-schedule',
+  'pna-ra-12326-bske-postponement',
+]) {
+  if (!electionWatch.some(item => item.id === id)) {
+    problems.push('Current RA 12326 source-watch entry missing: ' + id);
+  }
+}
+const comelecHome = electionWatch.find(item => item.id === 'comelec-home');
+if (!comelecHome?.affectedPages?.includes('/calendar')) {
+  problems.push('COMELEC announcement monitoring does not feed the Calendar.');
+}
 if (electionWatch.length < 9) {
   problems.push('Election source-watch coverage fell below 9 sources: ' + electionWatch.length + '.');
 }

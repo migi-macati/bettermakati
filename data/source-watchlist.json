@@ -149,7 +149,8 @@
     "monitoringMode": "reachability",
     "owner": "general-source-freshness",
     "affectedPages": [
-      "/elections"
+      "/elections",
+      "/calendar"
     ]
   },
   {
@@ -1385,6 +1386,32 @@
       "/projects-budget",
       "/accountability",
       "/records"
+    ]
+  },
+  {
+    "id": "pia-ra-12326-bske-current-schedule",
+    "label": "Republic Act No. 12326 current BSKE schedule update",
+    "url": "https://pia.gov.ph/news/pbbm-signs-law-fixing-the-terms-of-barangay-and-sk-officials/",
+    "kind": "election-law",
+    "cadence": "monthly",
+    "monitoringMode": "content-hash",
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/elections",
+      "/calendar"
+    ]
+  },
+  {
+    "id": "pna-ra-12326-bske-postponement",
+    "label": "RA 12326 BSKE postponement and COMELEC response",
+    "url": "https://www.pna.gov.ph/index.php/articles/1284830",
+    "kind": "election",
+    "cadence": "weekly",
+    "monitoringMode": "content-hash",
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/elections",
+      "/calendar"
     ]
   }
 ]

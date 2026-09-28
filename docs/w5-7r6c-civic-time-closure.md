@@ -78,6 +78,15 @@ dates.
 5. What’s On remains retired; `/whats-on` exists only as a compatibility
    redirect to `/calendar`.
 
+## Freshness monitoring
+
+The current RA 12326 government update and the government report documenting
+COMELEC's response are now in the source watchlist for both Elections and the
+Calendar. COMELEC's announcement surface also feeds Calendar freshness.
+
+The superseded 2026 source files remain available as historical evidence rather
+than being mistaken for the current schedule.
+
 ## Search and distribution
 
 Current election milestones use the existing Elections & Voting Search identity,
