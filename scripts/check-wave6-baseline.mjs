@@ -107,12 +107,12 @@ for (const forbidden of ["href: '/parking'", "href: '/whats-on'"]) {
 }
 
 for (const redirect of [
-  '<Route path="/parking" element={<Navigate to="/visit" replace />} />',
-  '<Route path="/whats-on" element={<Navigate to="/calendar" replace />} />',
+  '<Route path="/parking" element={<CompatibilityRedirect to="/visit" />} />',
+  '<Route path="/whats-on" element={<CompatibilityRedirect to="/calendar" />} />',
   'path="/transparency"',
-  '<Navigate to="/projects-budget" replace />',
+  'element={<CompatibilityRedirect to="/projects-budget" />}',
   '<Route path="/reports/makati-overview"',
-  '<Navigate to="/reports/2026-budget-operating-expenses" replace />',
+  '<CompatibilityRedirect to="/reports/2026-budget-operating-expenses" />',
 ]) {
   if (!app.includes(redirect)) {
     problems.push('Wave 6 compatibility-route contract missing: ' + redirect);
