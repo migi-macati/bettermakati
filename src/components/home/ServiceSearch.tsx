@@ -15,6 +15,7 @@ import {
   X,
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router';
+import { isBarangayContextPath, withBarangayScope } from '../../hooks/useBarangayScope';
 import { searchIndex, type SearchItem } from '../../data/searchIndex';
 import { serviceDirectory } from '../../data/serviceDirectory';
 import { officesForAgency } from '../../data/governmentServiceOffices';
@@ -586,10 +587,20 @@ export default function ServiceSearch({
       return href;
     }
 
-    const [pathAndQuery, hash] = href.split('#', 2);
-    const separator = pathAndQuery.includes('?') ? '&' : '?';
-    const scoped = pathAndQuery + separator + 'barangay=' + encodeURIComponent(barangaySlug);
-    return hash ? scoped + '#' + hash : scoped;
+    const pathname = href.split('#')[0].split('?')[0];
+    if (pathname !== '/search' && !isBarangayContextPath(pathname)) {
+      return href;
+    }
+
+    return withBarangayScope(href, barangaySlug);
+  };
+
+  const searchResultsHref = () => {
+    const params = new URLSearchParams();
+    if (query.trim()) params.set('q', query.trim());
+    if (barangaySlug) params.set('barangay', barangaySlug);
+    const search = params.toString();
+    return '/search' + (search ? '?' + search : '');
   };
 
   const selectResult = (href: string) => {
@@ -609,11 +620,13 @@ export default function ServiceSearch({
       );
       return;
     }
-    navigate(
-      scopedInternalHref(
-        scope === 'services' ? '/services' : '/community-tools/saan-ako-lalapit'
-      )
-    );
+
+    if (hasBroaderMatches) {
+      showAllMatches();
+      return;
+    }
+
+    navigate(scope === 'services' ? scopedInternalHref('/services') : searchResultsHref());
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
