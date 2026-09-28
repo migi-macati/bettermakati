@@ -19,13 +19,7 @@ import LastReviewed from '../components/ui/LastReviewed';
 import { barangays } from '../data/barangays';
 import { briefArchiveHref, briefPeriodLabel } from '../data/civicBriefs';
 import CivicTimelinePreview from '../components/civic/CivicTimelinePreview';
-
-interface NewsItem {
-  title: string;
-  link: string;
-  source?: string;
-  pubDate: string;
-}
+import type { NewsItem } from '../data/newsTypes';
 
 interface Weather {
   temperature?: number;
@@ -195,7 +189,11 @@ export default function Today() {
         try {
           const data = await newsTask.value.json();
           if (Array.isArray(data.items)) {
-            setNews(data.items.slice(0, 3));
+            setNews(
+              (data.items as NewsItem[])
+                .filter(item => item.todayEligible)
+                .slice(0, 3)
+            );
             setNewsFailed(false);
           }
         } catch {
@@ -478,17 +476,22 @@ export default function Today() {
               className="rounded-2xl border border-gray-200 bg-white p-5 hover:border-primary-300"
             >
               <Newspaper className="h-5 w-5 text-primary-700" />
-              <div className="mt-3 text-xs font-bold text-primary-700">
-                {item.source || 'News publisher'}
+              <div className="mt-3 flex flex-wrap items-center gap-2 text-xs">
+                <span className="font-bold text-primary-700">
+                  {item.source || 'News publisher'}
+                </span>
+                <span className="rounded-full border border-gray-200 bg-gray-50 px-2 py-1 font-semibold text-gray-600">
+                  {item.sourceClassLabel}
+                </span>
               </div>
-              <h3 className="mt-1 font-extrabold leading-snug text-gray-950">{item.title}</h3>
+              <h3 className="mt-2 font-extrabold leading-snug text-gray-950">{item.title}</h3>
               <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
                 Read <ExternalLink className="h-3.5 w-3.5" />
               </span>
             </a>
           )) : (
             <div className="rounded-2xl border border-gray-200 p-5 text-sm text-gray-600 lg:col-span-3">
-              {newsFailed ? 'The live news feed is unavailable. ' : 'No current headlines were returned. '}
+              {newsFailed ? 'The live news feed is unavailable. ' : 'No headline from the last 7 days met the Today freshness rule. '}
               <Link to="/news" className="font-bold text-primary-700">Open Makati in the News</Link>.
             </div>
           )}
