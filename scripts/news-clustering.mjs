@@ -89,7 +89,17 @@ const storyClusterId = item => {
     .replace(/^-|-$/g, '')
     .slice(0, 80);
 
-  return 'story:' + (tokens.join('-') || fallback || 'unclassified');
+  const parsedDate = Date.parse(item.pubDate);
+  const day = Number.isNaN(parsedDate)
+    ? 'undated'
+    : new Date(parsedDate).toISOString().slice(0, 10);
+
+  return (
+    'story:' +
+    day +
+    ':' +
+    (tokens.join('-') || fallback || 'unclassified')
+  );
 };
 
 const relatedCoverage = item => ({
