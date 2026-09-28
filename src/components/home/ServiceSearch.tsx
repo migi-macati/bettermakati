@@ -30,6 +30,37 @@ import {
 
 type SearchScope = 'site' | 'services';
 
+type SearchDomainId =
+  | 'all'
+  | 'services'
+  | 'barangays'
+  | 'officials'
+  | 'statistics'
+  | 'reports'
+  | 'legislation'
+  | 'public-records'
+  | 'places'
+  | 'heritage'
+  | 'mobility'
+  | 'calendar'
+  | 'news';
+
+const searchDomainOptions: Array<{ id: SearchDomainId; label: string }> = [
+  { id: 'all', label: 'All types' },
+  { id: 'services', label: 'Services' },
+  { id: 'barangays', label: 'Barangays' },
+  { id: 'officials', label: 'Officials' },
+  { id: 'statistics', label: 'Statistics' },
+  { id: 'reports', label: 'Reports & insights' },
+  { id: 'legislation', label: 'Legislation' },
+  { id: 'public-records', label: 'Public records' },
+  { id: 'places', label: 'Places & map' },
+  { id: 'heritage', label: 'Heritage' },
+  { id: 'mobility', label: 'Mobility' },
+  { id: 'calendar', label: 'Civic calendar' },
+  { id: 'news', label: 'News' },
+];
+
 const siteTabs = [
   'All',
   'Services',
@@ -245,6 +276,91 @@ const scoreItem = (item: SearchItem, query: string) => {
   return Math.max(...scores);
 };
 
+const searchDomainForItem = (item: SearchItem): Exclude<SearchDomainId, 'all'> | null => {
+  if (item.group === 'Service') return 'services';
+  if (item.group === 'Barangay') return 'barangays';
+
+  if (
+    item.category === 'Elected officials' ||
+    item.href.startsWith('/officials/')
+  ) {
+    return 'officials';
+  }
+
+  if (
+    item.canonicalKey?.startsWith('indicator:') ||
+    item.href === '/statistics' ||
+    item.href.startsWith('/statistics#')
+  ) {
+    return 'statistics';
+  }
+
+  if (
+    item.canonicalKey?.startsWith('report:') ||
+    item.href === '/reports' ||
+    item.href.startsWith('/reports/')
+  ) {
+    return 'reports';
+  }
+
+  if (
+    item.category === 'Legislation' ||
+    item.canonicalKey?.startsWith('legislation-record:') ||
+    item.href === '/legislation' ||
+    item.href.startsWith('/legislation#')
+  ) {
+    return 'legislation';
+  }
+
+  if (
+    item.canonicalKey?.startsWith('public-record:') ||
+    item.href === '/records' ||
+    item.href.startsWith('/records/')
+  ) {
+    return 'public-records';
+  }
+
+  if (
+    item.canonicalKey?.startsWith('mobility-') ||
+    item.href === '/mobility' ||
+    item.href.startsWith('/mobility#')
+  ) {
+    return 'mobility';
+  }
+
+  if (
+    item.href === '/heritage' ||
+    item.href.startsWith('/heritage#') ||
+    item.canonicalKey?.startsWith('heritage-collection:')
+  ) {
+    return 'heritage';
+  }
+
+  if (
+    item.href === '/calendar' ||
+    item.href.startsWith('/calendar#') ||
+    item.canonicalKey?.startsWith('civic-timeline:')
+  ) {
+    return 'calendar';
+  }
+
+  if (item.href === '/news' || item.href.startsWith('/news#')) {
+    return 'news';
+  }
+
+  if (
+    item.group === 'Place' ||
+    item.group === 'Segment' ||
+    item.group === 'Route' ||
+    item.href === '/civic-map' ||
+    item.href.startsWith('/civic-map/')
+  ) {
+    return 'places';
+  }
+
+  return null;
+};
+
 const matchesTab = (item: SearchItem, tab: string, scope: SearchScope) => {
   if (tab === 'All') return true;
 
@@ -298,6 +414,7 @@ export default function ServiceSearch({
   const tabs = scope === 'services' ? serviceTabs : siteTabs;
   const [query, setQuery] = useState(initialQuery);
   const [tab, setTab] = useState<string>('All');
+  const [domainFilter, setDomainFilter] = useState<SearchDomainId>('all');
   const [open, setOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const [legislationIndex, setLegislationIndex] =
@@ -349,7 +466,7 @@ export default function ServiceSearch({
     );
   }, [legislationIndex, query, shouldSearchLegislation]);
 
-  const results = useMemo(() => {
+  const rankedResults = useMemo(() => {
     const base =
       scope === 'services'
         ? searchIndex.filter(item => item.group === 'Service')
@@ -371,6 +488,27 @@ export default function ServiceSearch({
       .filter(item => !query.trim() || item.score > 0)
       .sort((a, b) => b.score - a.score || a.title.localeCompare(b.title));
   }, [legislationItems, query, scope, tab]);
+
+  const domainCounts = useMemo(() => {
+    const counts = new Map<SearchDomainId, number>();
+    counts.set('all', rankedResults.length);
+
+    for (const item of rankedResults) {
+      const domain = searchDomainForItem(item);
+      if (!domain) continue;
+      counts.set(domain, (counts.get(domain) ?? 0) + 1);
+    }
+
+    return counts;
+  }, [rankedResults]);
+
+  const results = useMemo(
+    () =>
+      domainFilter === 'all'
+        ? rankedResults
+        : rankedResults.filter(item => searchDomainForItem(item) === domainFilter),
+    [domainFilter, rankedResults]
+  );
 
   const servicePlaceById = useMemo(() => {
     if (!showServicePlaces) return new Map<string, { name: string; address: string; placeId: string }>();
@@ -594,6 +732,7 @@ export default function ServiceSearch({
                   type="button"
                   onClick={() => {
                     setTab(item);
+                    setDomainFilter('all');
                     setActiveIndex(0);
                   }}
                   className={
@@ -607,6 +746,36 @@ export default function ServiceSearch({
               ))}
             </div>
           </div>
+
+          {scope === 'site' && (
+            <div className="flex items-center justify-between gap-3 border-b border-gray-200 bg-gray-50 px-4 py-3">
+              <label
+                htmlFor="site-search-domain"
+                className="text-xs font-bold uppercase tracking-wide text-gray-600"
+              >
+                Filter by type
+              </label>
+              <select
+                id="site-search-domain"
+                value={domainFilter}
+                onChange={event => {
+                  setDomainFilter(event.target.value as SearchDomainId);
+                  setTab('All');
+                  setActiveIndex(0);
+                }}
+                className="min-h-11 max-w-[68%] rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-semibold text-gray-800 outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-200"
+              >
+                {searchDomainOptions.map(option => (
+                  <option key={option.id} value={option.id}>
+                    {option.label}
+                    {domainCounts.has(option.id)
+                      ? ' (' + (domainCounts.get(option.id) ?? 0) + ')'
+                      : ''}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
 
           <div
             className="max-h-[360px] overflow-y-auto"
