@@ -1588,6 +1588,33 @@ test('national service handoff batch D2 covers OWWA, TESDA, PHLPost, DPWH and CO
   await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toHaveCount(0);
 });
 
+test('detail pages expose canonical breadcrumb parents without self-linking the current page', async ({ page }) => {
+  await page.goto(baseURL + '/services/guide/national-id');
+  let trail = page.getByRole('navigation', { name: 'Breadcrumb' });
+  await expect(trail.getByRole('link', { name: 'Home', exact: true })).toHaveAttribute('href', '/');
+  await expect(trail.getByRole('link', { name: 'Services', exact: true })).toHaveAttribute('href', '/services');
+  await expect(trail.locator('[aria-current="page"]')).toHaveCount(1);
+  await expect(trail.locator('a[aria-current="page"]')).toHaveCount(0);
+
+  await page.goto(baseURL + '/government');
+  const officialHref = await page.locator('a[href^="/officials/"]').first().getAttribute('href');
+  expect(officialHref).toBeTruthy();
+  await page.goto(baseURL + officialHref);
+  trail = page.getByRole('navigation', { name: 'Breadcrumb' });
+  await expect(trail.getByRole('link', { name: 'Government', exact: true })).toHaveAttribute('href', '/government');
+  await expect(trail.locator('[aria-current="page"]')).toHaveCount(1);
+  await expect(trail.locator('a[aria-current="page"]')).toHaveCount(0);
+
+  await page.goto(baseURL + '/records');
+  const recordHref = await page.locator('a[href^="/records/"]').first().getAttribute('href');
+  expect(recordHref).toBeTruthy();
+  await page.goto(baseURL + recordHref);
+  trail = page.getByRole('navigation', { name: 'Breadcrumb' });
+  await expect(trail.getByRole('link', { name: 'Public Records', exact: true })).toHaveAttribute('href', '/records');
+  await expect(trail.locator('[aria-current="page"]')).toHaveCount(1);
+  await expect(trail.locator('a[aria-current="page"]')).toHaveCount(0);
+});
+
 test('footer prioritizes recovery, civic understanding and institutional trust', async ({ page }) => {
   await page.goto(baseURL + '/');
   const footer = page.locator('footer');
