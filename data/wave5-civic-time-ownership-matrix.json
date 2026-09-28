@@ -1,0 +1,742 @@
+{
+  "version": 1,
+  "reviewedOn": "2026-09-28",
+  "doctrine": {
+    "canonicalOwnership": "Civic Timeline is a temporal projection. Domain records remain canonical in their existing owner.",
+    "projectionRule": "Project only a date/time that means an occurrence, deadline, effective change, sourced target, or publication/release. Never treat review/check/as-of metadata or an observation period as a public civic occurrence.",
+    "sourceChangeRule": "A source-change signal is a review candidate, not a public timeline item.",
+    "duplicateRule": "When a City Monitor record is already linked to a canonical domain record, the timeline should project the domain owner and use City Monitor as provenance/evidence rather than publish two timeline identities."
+  },
+  "dateSemantics": [
+    {
+      "id": "occurrence",
+      "publicTimelineEligible": true,
+      "meaning": "A meeting, session, hearing, assembly, closure or other sourced occurrence date/time."
+    },
+    {
+      "id": "deadline",
+      "publicTimelineEligible": true,
+      "meaning": "A sourced citizen, filing, procurement, election or service deadline."
+    },
+    {
+      "id": "effective-change",
+      "publicTimelineEligible": true,
+      "meaning": "A sourced effective/start/end date for a rule, closure, service change or other civic state."
+    },
+    {
+      "id": "publication-release",
+      "publicTimelineEligible": true,
+      "meaning": "The date a record, report, dataset, audit or other civic information was actually published/released."
+    },
+    {
+      "id": "target-milestone",
+      "publicTimelineEligible": "conditional",
+      "meaning": "A source-backed target date may project when precision is sufficient and the canonical owner clearly distinguishes target from achieved outcome."
+    },
+    {
+      "id": "observation-period",
+      "publicTimelineEligible": false,
+      "meaning": "The period a statistic or fiscal value describes. It is not the date the information was published."
+    },
+    {
+      "id": "source-period-label",
+      "publicTimelineEligible": false,
+      "meaning": "A broad period label such as 2025, Q2 2025 or Current. It cannot be used as a public timeline occurrence without a more precise date."
+    },
+    {
+      "id": "verification-review",
+      "publicTimelineEligible": false,
+      "meaning": "checkedOn, reviewedOn, lastVerified, reconciledOn and similar maintenance metadata."
+    },
+    {
+      "id": "status-as-of",
+      "publicTimelineEligible": false,
+      "meaning": "A date proving a record was current as of a review point; not itself a civic occurrence unless an underlying effective change date is sourced."
+    }
+  ],
+  "domains": [
+    {
+      "id": "city-monitor",
+      "owner": "City Monitor",
+      "files": [
+        "src/data/cityMonitor.ts",
+        "data/city-monitor-sources.json",
+        "data/city-monitor-source-history.json"
+      ],
+      "routes": [
+        "/city-monitor"
+      ],
+      "existingTemporalFields": [
+        "CityMonitorRecord.date",
+        "CityMonitorRecord.status",
+        "transcript.generatedAt",
+        "transcript.reviewedAt"
+      ],
+      "eligibleSemantics": [
+        "occurrence",
+        "publication-release"
+      ],
+      "projectionKinds": [
+        "meeting",
+        "public-hearing",
+        "consultation",
+        "legislation-milestone",
+        "procurement-milestone",
+        "publication",
+        "advisory",
+        "record-update"
+      ],
+      "readiness": "partial-native",
+      "r3Eligibility": true,
+      "r4Candidate": true,
+      "geography": [
+        "barangaySlug",
+        "placeIds",
+        "location"
+      ],
+      "strengths": [
+        "A common dated record model already spans council sessions, legislation, procurement, projects, publications, consultations and notices.",
+        "City Monitor already runs a daily source-monitor workflow."
+      ],
+      "constraints": [
+        "The record date is type-dependent and must be mapped to a precise semantic before projection.",
+        "Several monitored sources are reachability-only; a changed/reachable page does not identify a public occurrence.",
+        "When a linked canonical domain record exists, City Monitor must not become a duplicate timeline identity."
+      ],
+      "doNotProject": [
+        "cityMonitorReviewed",
+        "source checkedAt timestamps",
+        "raw changed/failed monitor signals"
+      ]
+    },
+    {
+      "id": "legislation",
+      "owner": "Legislation",
+      "files": [
+        "src/data/localLegislation.ts",
+        "src/data/legislationCivicRelationships.ts"
+      ],
+      "routes": [
+        "/legislation"
+      ],
+      "existingTemporalFields": [
+        "lifecycle[].date",
+        "lifecycle[].eventType",
+        "sessionEvidence[].sessionDate",
+        "sessionEvidence[].sessionType",
+        "revision.lastReviewed"
+      ],
+      "eligibleSemantics": [
+        "occurrence",
+        "effective-change",
+        "publication-release"
+      ],
+      "projectionKinds": [
+        "legislation-milestone",
+        "meeting",
+        "public-hearing"
+      ],
+      "readiness": "native-ready",
+      "r3Eligibility": true,
+      "r4Candidate": false,
+      "geography": [
+        "relationships to barangay/place/service/project when explicitly modeled"
+      ],
+      "strengths": [
+        "Lifecycle already distinguishes filing, readings, council approval, mayoral action, publication, effectivity, implementation, amendment and repeal.",
+        "Session evidence can point to a City Monitor record."
+      ],
+      "constraints": [
+        "Only lifecycle/session rows with an explicit date may project.",
+        "Incomplete lifecycle coverage must remain visible as a coverage gap."
+      ],
+      "doNotProject": [
+        "revision.lastReviewed"
+      ]
+    },
+    {
+      "id": "council-sessions",
+      "owner": "City Monitor / Legislation session evidence",
+      "files": [
+        "src/data/councilSessions.ts",
+        "src/data/cityMonitor.ts"
+      ],
+      "routes": [
+        "/city-monitor",
+        "/legislation"
+      ],
+      "existingTemporalFields": [
+        "CouncilSessionSeed.date",
+        "transcript.generatedAt",
+        "transcript.reviewedAt"
+      ],
+      "eligibleSemantics": [
+        "occurrence"
+      ],
+      "projectionKinds": [
+        "meeting",
+        "public-hearing"
+      ],
+      "readiness": "native-ready-partial-coverage",
+      "r3Eligibility": true,
+      "r4Candidate": true,
+      "geography": [
+        "citywide unless a source explicitly scopes the session/hearing"
+      ],
+      "strengths": [
+        "Session date and session type are already structured."
+      ],
+      "constraints": [
+        "Current official video listing is not a complete legislative calendar.",
+        "Stable item-specific source URLs are still missing for some sessions.",
+        "Transcript processing timestamps are maintenance metadata, not civic occurrences."
+      ],
+      "doNotProject": [
+        "transcript.generatedAt",
+        "transcript.reviewedAt"
+      ]
+    },
+    {
+      "id": "elections",
+      "owner": "Elections",
+      "files": [
+        "src/data/election2025.ts",
+        "src/data/electionHistory.ts",
+        "src/data/publicRecords.ts"
+      ],
+      "routes": [
+        "/elections"
+      ],
+      "existingTemporalFields": [
+        "HistoricalMayoralRace.electionDate",
+        "Public Record period labels for election rules/registration"
+      ],
+      "eligibleSemantics": [
+        "occurrence",
+        "deadline"
+      ],
+      "projectionKinds": [
+        "election-milestone",
+        "deadline"
+      ],
+      "readiness": "archive-native-future-gap",
+      "r3Eligibility": true,
+      "r4Candidate": true,
+      "geography": [
+        "citywide",
+        "barangay where explicitly modeled"
+      ],
+      "strengths": [
+        "Historical election dates are exact and canonical."
+      ],
+      "constraints": [
+        "Future voter-registration deadlines and election milestones are not yet a canonical structured dataset.",
+        "PublicRecord.period cannot be converted into a deadline without item-level official dates."
+      ],
+      "doNotProject": [
+        "election result publication assumptions without a sourced release date"
+      ]
+    },
+    {
+      "id": "accountability-procurement-projects",
+      "owner": "Accountability / Projects & Budget",
+      "files": [
+        "src/data/accountability.ts",
+        "src/data/accountabilitySupplement.ts"
+      ],
+      "routes": [
+        "/accountability",
+        "/projects-budget"
+      ],
+      "existingTemporalFields": [
+        "ProcurementSeed.bidDate",
+        "publicEvidence.date",
+        "AccountabilityEntry.targetDate",
+        "AccountabilityEntry.period",
+        "lastVerified"
+      ],
+      "eligibleSemantics": [
+        "deadline",
+        "target-milestone",
+        "publication-release",
+        "record-update"
+      ],
+      "projectionKinds": [
+        "procurement-milestone",
+        "project-milestone",
+        "deadline",
+        "record-update"
+      ],
+      "readiness": "partial-native",
+      "r3Eligibility": true,
+      "r4Candidate": true,
+      "geography": [
+        "barangaySlug",
+        "location"
+      ],
+      "strengths": [
+        "Selected procurement rows already have exact bid dates; some project/commitment entries carry target dates and later public evidence."
+      ],
+      "constraints": [
+        "Many targetDate values are broad strings such as quarters, not exact dates.",
+        "Contract, notice-to-proceed, implementation and completion linkage remains incomplete for many procurements.",
+        "period and lastVerified are not occurrence dates."
+      ],
+      "doNotProject": [
+        "period",
+        "lastVerified",
+        "followUpCheckedOn"
+      ]
+    },
+    {
+      "id": "reports",
+      "owner": "Reports & Insights",
+      "files": [
+        "src/data/reports.ts",
+        "src/data/reportTypes.ts"
+      ],
+      "routes": [
+        "/reports"
+      ],
+      "existingTemporalFields": [
+        "FeaturedReportV2.date",
+        "ReportSourceV2.publishedOrPeriod",
+        "ReportSourceV2.checkedOn"
+      ],
+      "eligibleSemantics": [
+        "publication-release"
+      ],
+      "projectionKinds": [
+        "report-release"
+      ],
+      "readiness": "partial-native",
+      "r3Eligibility": true,
+      "r4Candidate": false,
+      "geography": [
+        "citywide by default; topic/domain relationships may provide narrower scope later"
+      ],
+      "strengths": [
+        "Each report already has a stable slug, canonical URL and date field."
+      ],
+      "constraints": [
+        "Before projecting automatically, FeaturedReportV2.date must be formally defined as the BetterMakati report publication/release date rather than a general review date.",
+        "Source publishedOrPeriod describes sources, not necessarily the report release."
+      ],
+      "doNotProject": [
+        "source.checkedOn",
+        "source.publishedOrPeriod as BetterMakati report date"
+      ]
+    },
+    {
+      "id": "statistics",
+      "owner": "Statistics",
+      "files": [
+        "src/data/cityIndicators.ts"
+      ],
+      "routes": [
+        "/statistics"
+      ],
+      "existingTemporalFields": [
+        "CityIndicatorObservation.period",
+        "CityIndicatorSource.checkedAt",
+        "revision/review metadata"
+      ],
+      "eligibleSemantics": [
+        "publication-release",
+        "record-update"
+      ],
+      "projectionKinds": [
+        "statistics-release",
+        "record-update"
+      ],
+      "readiness": "source-release-gap",
+      "r3Eligibility": false,
+      "r4Candidate": true,
+      "geography": [
+        "CityIndicatorGeography"
+      ],
+      "strengths": [
+        "Indicators already preserve period, geography, source IDs and publication/provisional/revised observation status."
+      ],
+      "constraints": [
+        "Observation period/asOf means when the statistic applies, not when the dataset was released.",
+        "Source checkedAt is maintenance metadata.",
+        "A release/catalogued date must be captured separately before Statistics can project 'newly published' items."
+      ],
+      "doNotProject": [
+        "observation period as release date",
+        "source.checkedAt"
+      ]
+    },
+    {
+      "id": "public-records",
+      "owner": "Public Records",
+      "files": [
+        "src/data/publicRecords.ts"
+      ],
+      "routes": [
+        "/records"
+      ],
+      "existingTemporalFields": [
+        "PublicRecordItem.period"
+      ],
+      "eligibleSemantics": [
+        "publication-release",
+        "record-update"
+      ],
+      "projectionKinds": [
+        "publication",
+        "audit-release",
+        "record-update"
+      ],
+      "readiness": "catalogue-date-gap",
+      "r3Eligibility": false,
+      "r4Candidate": true,
+      "geography": [
+        "contexts/canonical owner relationships when available"
+      ],
+      "strengths": [
+        "Records already have stable IDs, publishers, categories, source class, canonical contexts and URLs."
+      ],
+      "constraints": [
+        "period is descriptive metadata, not a publication or first-seen timestamp.",
+        "Need cataloguedAt/firstSeenAt or a source-backed publishedAt before a record can appear in Recently Published."
+      ],
+      "doNotProject": [
+        "period as publication date"
+      ]
+    },
+    {
+      "id": "services",
+      "owner": "Services",
+      "files": [
+        "src/data/serviceDirectory.ts"
+      ],
+      "routes": [
+        "/services",
+        "/services/guide/:id"
+      ],
+      "existingTemporalFields": [
+        "No canonical deadline/effective-date field in ServiceDirectoryItem"
+      ],
+      "eligibleSemantics": [
+        "deadline",
+        "effective-change"
+      ],
+      "projectionKinds": [
+        "deadline",
+        "service-change"
+      ],
+      "readiness": "source-discovery-required",
+      "r3Eligibility": false,
+      "r4Candidate": true,
+      "geography": [
+        "citywide; barangay for barangay-owned services where explicitly scoped"
+      ],
+      "strengths": [
+        "Stable service IDs provide excellent canonical targets for future deadlines and changes."
+      ],
+      "constraints": [
+        "Current service directory is largely durable guidance; scheduled availability mentioned in prose is not a structured date.",
+        "Deadlines/temporary service changes require official item-level notices."
+      ],
+      "doNotProject": [
+        "generic annual-renewal language without a sourced date",
+        "source document year as a service deadline"
+      ]
+    },
+    {
+      "id": "barangays",
+      "owner": "BetterBarangay",
+      "files": [
+        "src/data/barangays.ts"
+      ],
+      "routes": [
+        "/barangays",
+        "/barangays/:slug"
+      ],
+      "existingTemporalFields": [
+        "officials.lastVerified",
+        "official term labels",
+        "publishedServices.availability prose"
+      ],
+      "eligibleSemantics": [
+        "occurrence",
+        "deadline",
+        "effective-change",
+        "publication-release"
+      ],
+      "projectionKinds": [
+        "barangay-assembly",
+        "meeting",
+        "consultation",
+        "service-change",
+        "advisory",
+        "publication"
+      ],
+      "readiness": "source-discovery-required",
+      "r3Eligibility": false,
+      "r4Candidate": true,
+      "geography": [
+        "barangay by definition"
+      ],
+      "strengths": [
+        "All 23 barangays have stable canonical slugs and dedicated pages."
+      ],
+      "constraints": [
+        "Assemblies, local advisories and dated notices are not structured today.",
+        "Official social/page coverage is uneven and may require manual-review adapters."
+      ],
+      "doNotProject": [
+        "official term label as an occurrence",
+        "officials.lastVerified",
+        "service availability prose without a date"
+      ]
+    },
+    {
+      "id": "mobility-civic-map",
+      "owner": "Mobility / Civic Map",
+      "files": [
+        "src/data/mobilitySystems.ts",
+        "src/data/mobilityRoutes.ts",
+        "src/data/placeRegistry.ts"
+      ],
+      "routes": [
+        "/mobility",
+        "/civic-map"
+      ],
+      "existingTemporalFields": [
+        "mobility lifecycle.statusAsOf",
+        "route reviewedOn/reconciledOn",
+        "source publishedOrPeriod/checkedOn"
+      ],
+      "eligibleSemantics": [
+        "effective-change",
+        "occurrence"
+      ],
+      "projectionKinds": [
+        "road-closure",
+        "service-change",
+        "advisory"
+      ],
+      "readiness": "source-discovery-required",
+      "r3Eligibility": false,
+      "r4Candidate": true,
+      "geography": [
+        "canonical Place IDs",
+        "route/segment IDs",
+        "Area IDs"
+      ],
+      "strengths": [
+        "Transport services, routes, stations, places and selected geometries already have canonical identities."
+      ],
+      "constraints": [
+        "Current statusAsOf/reviewedOn/reconciledOn are verification dates, not service-change effective dates.",
+        "Road closures and temporary disruptions need item-level official advisory records."
+      ],
+      "doNotProject": [
+        "statusAsOf",
+        "reviewedOn",
+        "reconciledOn",
+        "source.checkedOn"
+      ]
+    }
+  ],
+  "cityMonitorSourceStreams": [
+    {
+      "sourceId": "makati-legislation",
+      "stream": "legislation",
+      "monitoringMode": "reachability",
+      "timelinePotential": [
+        "legislation-milestone",
+        "publication"
+      ],
+      "readiness": "candidate-discovery-only",
+      "note": "Reachability does not identify a new measure or its lifecycle date."
+    },
+    {
+      "sourceId": "makati-mayor-speeches",
+      "stream": "executive-speech",
+      "monitoringMode": "reachability",
+      "timelinePotential": [
+        "publication"
+      ],
+      "readiness": "low-priority-review",
+      "note": "Only source-backed publication dates with durable civic relevance should appear; do not turn the calendar into a speech feed."
+    },
+    {
+      "sourceId": "makati-council-videos",
+      "stream": "council-session",
+      "monitoringMode": "reachability",
+      "timelinePotential": [
+        "meeting",
+        "publication"
+      ],
+      "readiness": "partial",
+      "note": "Session identity/date can project after stable item evidence is preserved."
+    },
+    {
+      "sourceId": "mymakati-broadcasts",
+      "stream": "council-session",
+      "monitoringMode": "manual-review",
+      "timelinePotential": [
+        "meeting",
+        "public-hearing"
+      ],
+      "readiness": "manual-review",
+      "note": "Social broadcasts are discovery/evidence, not automatic timeline items."
+    },
+    {
+      "sourceId": "makati-events",
+      "stream": "consultation",
+      "monitoringMode": "reachability",
+      "timelinePotential": [
+        "consultation",
+        "public-hearing",
+        "barangay-assembly",
+        "deadline"
+      ],
+      "readiness": "classification-required",
+      "note": "Only civic/service/public-information occurrences should be promoted; generic entertainment stays excluded."
+    },
+    {
+      "sourceId": "makati-news",
+      "stream": "official-notice",
+      "monitoringMode": "reachability",
+      "timelinePotential": [
+        "advisory",
+        "service-change",
+        "road-closure",
+        "publication"
+      ],
+      "readiness": "classification-required",
+      "note": "A changed news page requires item-level extraction and canonical routing."
+    },
+    {
+      "sourceId": "makati-full-disclosure",
+      "stream": "procurement",
+      "monitoringMode": "reachability",
+      "timelinePotential": [
+        "procurement-milestone",
+        "publication"
+      ],
+      "readiness": "partial",
+      "note": "Exact item and milestone date are required."
+    },
+    {
+      "sourceId": "philgeps",
+      "stream": "procurement",
+      "monitoringMode": "content-hash",
+      "timelinePotential": [
+        "procurement-milestone",
+        "deadline"
+      ],
+      "readiness": "candidate-discovery-only",
+      "note": "A page hash change is not an exact Makati procurement match."
+    },
+    {
+      "sourceId": "makati-publications",
+      "stream": "publication",
+      "monitoringMode": "reachability",
+      "timelinePotential": [
+        "publication",
+        "statistics-release",
+        "audit-release"
+      ],
+      "readiness": "classification-required",
+      "note": "Need item-level publication identity and release date."
+    }
+  ],
+  "additionalSourceGaps": [
+    {
+      "id": "comelec-current-calendar",
+      "owner": "Elections",
+      "need": "Structured current/future COMELEC milestones relevant to Makati, including registration and election deadlines.",
+      "priority": "high"
+    },
+    {
+      "id": "barangay-dated-notices",
+      "owner": "BetterBarangay",
+      "need": "Item-level assembly, hearing, service and advisory notices from official barangay/city channels.",
+      "priority": "high"
+    },
+    {
+      "id": "mobility-temporary-advisories",
+      "owner": "Mobility / Civic Map",
+      "need": "Official road closure, route change and temporary transport advisory items with effective windows.",
+      "priority": "high"
+    },
+    {
+      "id": "statistics-release-metadata",
+      "owner": "Statistics",
+      "need": "Official dataset release/publication timestamps distinct from observation periods and BetterMakati check dates.",
+      "priority": "medium"
+    },
+    {
+      "id": "public-record-first-seen",
+      "owner": "Public Records",
+      "need": "Catalogued/first-seen timestamp and source publication date when available.",
+      "priority": "medium"
+    },
+    {
+      "id": "service-deadline-notices",
+      "owner": "Services",
+      "need": "Official item-level dates for renewals, application windows and temporary service changes.",
+      "priority": "medium"
+    }
+  ],
+  "r3NativePilot": [
+    {
+      "domain": "legislation",
+      "projection": "Dated lifecycle and session-evidence rows",
+      "condition": "date is explicit and canonical legislation record owns the milestone"
+    },
+    {
+      "domain": "council-sessions",
+      "projection": "Dated current/historical session seeds",
+      "condition": "stable evidence exists; City Monitor/canonical relationship prevents duplicates"
+    },
+    {
+      "domain": "city-monitor",
+      "projection": "Dated publication/notice/consultation/procurement records without a stronger canonical owner",
+      "condition": "record.date semantic is classified and relatedHref is canonical"
+    },
+    {
+      "domain": "accountability-procurement-projects",
+      "projection": "Exact bid dates and exact source-backed project/commitment milestones",
+      "condition": "date precision is exact enough for the timeline"
+    },
+    {
+      "domain": "elections",
+      "projection": "Historical election-day archive entries",
+      "condition": "archive only; future deadlines await current official structured sources"
+    },
+    {
+      "domain": "reports",
+      "projection": "BetterMakati report releases",
+      "condition": "formalize report.date as publication date before auto-projection"
+    }
+  ],
+  "r3ExcludedUntilMetadataImproves": [
+    {
+      "domain": "statistics",
+      "reason": "Observation period/asOf is not release date."
+    },
+    {
+      "domain": "public-records",
+      "reason": "period is not publication/catalogue timestamp."
+    },
+    {
+      "domain": "services",
+      "reason": "No structured canonical deadlines/effective dates yet."
+    },
+    {
+      "domain": "barangays",
+      "reason": "No structured assembly/advisory occurrence model yet."
+    },
+    {
+      "domain": "mobility-civic-map",
+      "reason": "Verification dates are not temporary closure/service-change dates."
+    }
+  ]
+}
