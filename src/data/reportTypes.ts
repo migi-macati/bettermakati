@@ -139,6 +139,11 @@ export interface ReportMethodologyNote {
 export interface FeaturedReportV2 {
   schemaVersion: 2;
   slug: string;
+  /**
+   * BetterMakati publication date for this report, displayed as
+   * "D Month YYYY". This is the report's own release date, not a source
+   * observation period or source-review timestamp.
+   */
   date: string;
   headline: string;
   subheadline: string;

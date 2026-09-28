@@ -29,7 +29,8 @@ import {
 } from './integrityAuditTrails';
 import type { FeaturedReportV2, ReportContentBlock, ReportSourceV2 } from './reportTypes';
 
-const reviewedOn = '26 September 2026';
+const reportPublishedOn = '26 September 2026';
+const reviewedOn = reportPublishedOn;
 
 const moneyB = (millions: number) =>
   '₱' + (millions / 1000).toFixed(2).replace(/\.00$/, '') + 'B';
@@ -337,7 +338,7 @@ export const reports: FeaturedReportV2[] = [
   {
     schemaVersion: 2,
     slug: '2026-budget-operating-expenses',
-    date: reviewedOn,
+    date: reportPublishedOn,
     headline:
       'Makati’s 2026 budget proposal is above the adopted 2025 plan but below the city’s later 2025 estimate',
     subheadline:
@@ -512,7 +513,7 @@ export const reports: FeaturedReportV2[] = [
   {
     schemaVersion: 2,
     slug: '2025-fiscal-profile',
-    date: reviewedOn,
+    date: reportPublishedOn,
     headline:
       'Makati’s 2025 receipts were overwhelmingly local while social services led reported spending',
     subheadline:
@@ -689,7 +690,7 @@ export const reports: FeaturedReportV2[] = [
   {
     schemaVersion: 2,
     slug: '2024-barangay-population',
-    date: reviewedOn,
+    date: reportPublishedOn,
     headline:
       'Makati’s largest barangay has more than eighteen times the resident population of its smallest',
     subheadline:
@@ -853,7 +854,7 @@ export const reports: FeaturedReportV2[] = [
   {
     schemaVersion: 2,
     slug: '2024-population-growth-acceleration',
-    date: reviewedOn,
+    date: reportPublishedOn,
     headline:
       'Makati’s population growth accelerated to 1.37% a year in 2020–2024',
     subheadline:
@@ -1077,7 +1078,7 @@ export const reports: FeaturedReportV2[] = [
   {
     schemaVersion: 2,
     slug: 'audit-follow-up-closure-trails',
-    date: reviewedOn,
+    date: reportPublishedOn,
     headline:
       'Three older Makati audit findings have follow-up records but no item-level closure in the indexed trail',
     subheadline:
