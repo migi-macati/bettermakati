@@ -1638,7 +1638,7 @@ test('BetterBarangay scope survives service and civic detail drilldowns', async 
 
   await page.goto(baseURL + '/services?barangay=poblacion');
   await page.getByRole('link', { name: 'Business permit', exact: true }).click();
-  await expect(page).toHaveURL(/\/services\/business\/new-business-permit\?barangay=poblacion/);
+  await expect(page).toHaveURL(/\/services\/guide\/new-business-permit\?barangay=poblacion/);
   await expect(page.getByLabel('Choose BetterBarangay view')).toHaveValue('poblacion');
   await expect(
     page.getByRole('navigation', { name: 'Breadcrumb' }).getByRole('link', { name: 'Services', exact: true })
