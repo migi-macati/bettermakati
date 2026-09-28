@@ -3,10 +3,12 @@ import SEO from '../components/SEO';
 import ServiceSearch from '../components/home/ServiceSearch';
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
+import { useBarangayScope } from '../hooks/useBarangayScope';
 
 export default function Search() {
   const [params] = useSearchParams();
   const initialQuery = params.get('q') || '';
+  const { barangaySlug } = useBarangayScope();
 
   return (
     <>
@@ -29,6 +31,7 @@ export default function Search() {
             title="What are you looking for?"
             placeholder="e.g., deadline, council session, Poblacion, budget"
             initialQuery={initialQuery}
+            barangaySlug={barangaySlug}
           />
         </div>
       </Section>

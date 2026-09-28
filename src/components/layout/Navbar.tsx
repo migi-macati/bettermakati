@@ -54,6 +54,10 @@ export default function Navbar() {
 
   const currentSearch = new URLSearchParams(search);
 
+  const searchHref = preferredBarangay
+    ? withBarangayScope('/search', preferredBarangay.slug)
+    : '/search';
+
   const closeMenu = () => {
     setIsOpen(false);
     setActiveMenu(null);
@@ -286,12 +290,13 @@ export default function Navbar() {
               )}
 
               <Link
-                to="/search"
+                to={searchHref}
                 onClick={closeMenu}
                 aria-label="Search BetterMakati"
-                className="ml-2 inline-flex h-11 w-11 items-center justify-center rounded-full border border-primary-200 bg-primary-50 text-primary-800 hover:bg-primary-100"
+                className="ml-2 inline-flex min-h-11 items-center gap-2 rounded-full border border-primary-200 bg-primary-50 px-3.5 text-sm font-bold text-primary-800 hover:bg-primary-100"
               >
                 <Search className="h-5 w-5" aria-hidden="true" />
+                <span>Search</span>
               </Link>
             </div>
 
@@ -309,7 +314,7 @@ export default function Navbar() {
                 </Link>
               )}
               <Link
-                to="/search"
+                to={searchHref}
                 onClick={closeMenu}
                 aria-label="Search BetterMakati"
                 className="flex h-11 w-11 items-center justify-center rounded-lg text-primary-800 hover:bg-primary-50"

@@ -4,8 +4,15 @@ import SEO from '../components/SEO';
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
 import ServiceSearch from '../components/home/ServiceSearch';
+import { useBarangayScope, withBarangayScope } from '../hooks/useBarangayScope';
 
 export default function NotFound() {
+  const { preferredBarangay } = useBarangayScope();
+  const barangaySlug = preferredBarangay?.slug ?? '';
+  const searchHref = barangaySlug
+    ? withBarangayScope('/search', barangaySlug)
+    : '/search';
+
   return (
     <>
       <SEO
@@ -25,7 +32,7 @@ export default function NotFound() {
             <Link to="/" className="brand-btn-primary">
               <Home className="h-4 w-4" /> Home
             </Link>
-            <Link to="/search" className="brand-btn-secondary">
+            <Link to={searchHref} className="brand-btn-secondary">
               <Search className="h-4 w-4" /> Search BetterMakati
             </Link>
           </div>
@@ -34,6 +41,7 @@ export default function NotFound() {
               scope="site"
               title="Find the information instead"
               placeholder="Try a service, barangay, official, place or topic"
+              barangaySlug={barangaySlug}
             />
           </div>
         </div>

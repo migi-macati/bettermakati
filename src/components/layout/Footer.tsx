@@ -11,11 +11,16 @@ import {
 
 
 const Footer: React.FC = () => {
-  const { barangay } = useBarangayScope();
-  const scopedHref = (href: string) =>
-    barangay && isBarangaySliceableHref(href)
+  const { barangay, preferredBarangay } = useBarangayScope();
+  const scopedHref = (href: string) => {
+    if (href === '/search' && preferredBarangay) {
+      return withBarangayScope(href, preferredBarangay.slug);
+    }
+
+    return barangay && isBarangaySliceableHref(href)
       ? withBarangayScope(href, barangay.slug)
       : href;
+  };
 
   return (
     <footer className="bg-primary-900 text-white">

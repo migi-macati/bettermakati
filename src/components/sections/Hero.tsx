@@ -1,6 +1,7 @@
 import { Link } from 'react-router';
 import ServiceSearch from '../home/ServiceSearch';
 import CapabilityCarousel from '../home/CapabilityCarousel';
+import { useBarangayScope } from '../../hooks/useBarangayScope';
 
 const popularStarts = [
   { label: 'Business permit', href: '/services/business/new-business-permit' },
@@ -10,6 +11,8 @@ const popularStarts = [
 ];
 
 export default function Hero() {
+  const { preferredBarangay } = useBarangayScope();
+
   return (
     <section className="overflow-visible border-b border-primary-900 bg-primary-800 text-white">
       <div className="container px-5 py-12 md:px-6 md:py-14 lg:px-8 lg:py-16 xl:py-20">
@@ -35,6 +38,7 @@ export default function Hero() {
                 title="What can we help you find?"
                 placeholder="Try Yellow Card, Poblacion, business permit, budget..."
                 goldAction
+                barangaySlug={preferredBarangay?.slug ?? ''}
               />
             </div>
 
