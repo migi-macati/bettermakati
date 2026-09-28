@@ -160,16 +160,6 @@ const visitItems: SearchItem[] = [
     keywords:
       'cinema movie theater showtimes power plant glorietta greenbelt circuit century waltermart cash carry',
   },
-  {
-    title: 'What’s On in Makati',
-    group: 'Visit',
-    category: 'Current activity',
-    description: 'Current events, activities and entertainment sources.',
-    href: '/whats-on',
-    keywords:
-      'events activities whats on show concert mall festival theatre entertainment current',
-    featured: true,
-  },
   ...visitorResourceItems,
 ];
 
@@ -349,12 +339,16 @@ const toolItems: SearchItem[] = [
       'commute transport route bus jeep terminal traffic fare mrt grab angkas joyride move it',
   },
   {
-    title: 'What’s On',
+    title: 'Makati Calendar',
     group: 'Tool',
-    category: 'Tools',
-    description: 'Event and entertainment sources across Makati.',
-    href: '/whats-on',
-    keywords: 'events calendar whats on activities entertainment',
+    category: 'Civic timeline',
+    description:
+      'Civic dates, deadlines, meetings, legislation milestones, publications and historical records in one timeline.',
+    href: '/calendar',
+    keywords:
+      'Makati calendar civic timeline deadline public hearing council session barangay assembly legislation procurement election report publication advisory archive',
+    featured: true,
+    canonicalKey: 'tool:makati-calendar',
   },
   {
     title: 'Live Makati',

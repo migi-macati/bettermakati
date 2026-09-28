@@ -100,7 +100,7 @@ for (const marker of [
   'id="live-discovery"',
   'Looking for something specific?',
   'Restaurants, cafés, shops and nightlife change quickly.',
-  'Current events',
+  'Makati Calendar',
   'Cinemas &amp; showtimes',
   'Plan how to get there',
   'External resources',
@@ -110,7 +110,7 @@ for (const marker of [
   "href: '/heritage'",
   "href: '/history'",
   "href: '/mobility'",
-  "href: '/whats-on'",
+  "href: '/calendar'",
 ]) {
   if (!page.includes(marker)) {
     problems.push('Visit page migration marker missing: ' + marker);
@@ -214,5 +214,5 @@ if (problems.length) {
 }
 
 console.log(
-  'W5-6e Explore Makati check passed: six curated orientation records remain canonical/source-backed; Explore naming is aligned across page, navigation, homepage and Search; recurring experiences deep-link from Search; Civic Map/Areas/Barangays/Mobility/What’s On/Heritage/History cross-links remain explicit; legacy tourism-directory and Parking patterns stay removed.'
+  'W5-6e Explore Makati check passed: six curated orientation records remain canonical/source-backed; Explore naming is aligned across page, navigation, homepage and Search; recurring experiences deep-link from Search; Civic Map/Areas/Barangays/Mobility/Makati Calendar/Heritage/History cross-links remain explicit; legacy tourism-directory and Parking patterns stay removed.'
 );

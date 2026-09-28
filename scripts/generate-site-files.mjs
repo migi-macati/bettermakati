@@ -14,7 +14,7 @@ const staticRoutes = [
   '/visit',
   '/mobility',
   '/cinemas',
-  '/whats-on',
+  '/calendar',
   '/heritage',
   '/history',
   '/government',

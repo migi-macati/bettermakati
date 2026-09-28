@@ -59,7 +59,7 @@ const exploreStarts = [
   { label: 'Understand Makati', href: '#city-context', icon: Landmark },
   { label: 'Live discovery', href: '#live-discovery', icon: CalendarDays },
   { label: 'Getting around', href: '/mobility', icon: Bus },
-  { label: 'What’s on', href: '/whats-on', icon: CalendarDays },
+  { label: 'Makati Calendar', href: '/calendar', icon: CalendarDays },
 ];
 
 const exploreLayers = [
@@ -99,10 +99,10 @@ const exploreLayers = [
     icon: Bus,
   },
   {
-    label: 'What’s on',
-    href: '/whats-on',
+    label: 'Makati Calendar',
+    href: '/calendar',
     description:
-      'Check current activities and event sources after you understand where you want to spend time.',
+      'Connect places to civic dates, deadlines, meetings, publications and historical milestones.',
     icon: CalendarDays,
   },
 ];
@@ -391,16 +391,6 @@ export default function VisitMakati() {
             </p>
 
             <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-1">
-              <Link
-                to="/whats-on"
-                className="flex min-h-11 items-center justify-between gap-3 rounded-xl border border-primary-200 bg-white px-4 py-3 font-bold text-primary-800"
-              >
-                <span className="inline-flex items-center gap-2">
-                  <CalendarDays className="h-4 w-4" aria-hidden="true" />
-                  Current events
-                </span>
-                <ArrowRight className="h-4 w-4" />
-              </Link>
               <Link
                 to="/cinemas"
                 className="flex min-h-11 items-center justify-between gap-3 rounded-xl border border-primary-200 bg-white px-4 py-3 font-bold text-primary-800"

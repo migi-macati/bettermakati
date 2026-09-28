@@ -13,7 +13,6 @@ import {
   Radio,
   BarChart3,
   ClipboardCheck,
-  Files,
   SunMedium,
 } from 'lucide-react';
 import Hero from '../components/sections/Hero';
@@ -65,10 +64,10 @@ const visitPaths = [
     icon: Bus,
   },
   {
-    label: 'What’s on',
-    description: 'Current events, activities and entertainment sources.',
-    href: '/whats-on',
-    icon: CalendarDays,
+    label: 'Areas & districts',
+    description: 'Understand Makati CBD, Ayala Center, Rockwell, Circuit and other city areas.',
+    href: '/estates',
+    icon: Compass,
   },
   {
     label: 'Heritage & history',
@@ -79,17 +78,23 @@ const visitPaths = [
 ];
 
 const visitShortcuts = [
-  { label: 'Areas & districts', href: '/estates', icon: Compass },
   { label: 'Barangays', href: '/barangays', icon: HomeIcon },
   { label: 'Cinemas', href: '/cinemas', icon: Film },
+  { label: 'Live place discovery', href: '/visit#live-discovery', icon: Compass },
 ];
 
 const civicControl = [
   {
     label: 'Today in Makati',
-    description: 'Weather, advisories, events and current city activity.',
+    description: 'Weather, advisories and current city activity.',
     href: '/today',
     icon: SunMedium,
+  },
+  {
+    label: 'Makati Calendar',
+    description: 'Civic dates, deadlines, publications and historical milestones.',
+    href: '/calendar',
+    icon: CalendarDays,
   },
   {
     label: 'City activity',
@@ -102,12 +107,6 @@ const civicControl = [
     description: 'Budgets, spending, projects, procurement and audit records.',
     href: '/projects-budget',
     icon: ClipboardCheck,
-  },
-  {
-    label: 'Public records',
-    description: 'Open the source documents and structured civic datasets.',
-    href: '/records',
-    icon: Files,
   },
 ];
 

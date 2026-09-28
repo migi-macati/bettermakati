@@ -36,7 +36,7 @@ const Mobility = lazy(() => import('./pages/Mobility'));
 const Cinemas = lazy(() => import('./pages/Cinemas'));
 const Estates = lazy(() => import('./pages/Estates'));
 const LiveMakati = lazy(() => import('./pages/LiveMakati'));
-const WhatsOn = lazy(() => import('./pages/WhatsOn'));
+const Calendar = lazy(() => import('./pages/Calendar'));
 const Search = lazy(() => import('./pages/Search'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const Accountability = lazy(() => import('./pages/Accountability'));
@@ -107,7 +107,8 @@ function App() {
                     <Route path="/mobility" element={<Mobility />} />
                     <Route path="/cinemas" element={<Cinemas />} />
                     <Route path="/parking" element={<Navigate to="/visit" replace />} />
-                    <Route path="/whats-on" element={<WhatsOn />} />
+                    <Route path="/calendar" element={<Calendar />} />
+                    <Route path="/whats-on" element={<Navigate to="/calendar" replace />} />
                     <Route path="/heritage" element={<Heritage />} />
                     <Route path="/history" element={<History />} />
 

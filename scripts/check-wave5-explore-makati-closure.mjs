@@ -170,7 +170,7 @@ for (const marker of [
   "href: '/heritage'",
   "href: '/history'",
   "href: '/mobility'",
-  "href: '/whats-on'",
+  "href: '/calendar'",
 ]) {
   if (!page.includes(marker)) {
     problems.push('Explore cross-link missing: ' + marker);

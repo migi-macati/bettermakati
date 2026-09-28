@@ -10,11 +10,10 @@ const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(match => match[1]
 const staticMeta = {
   '/': ['BetterMakati', 'Understand Makati, find what you need, and see the source.'],
   '/services': ['Makati Services', 'Find Makati public services, requirements and official channels.'],
-  '/visit': ['Visit Makati', 'Places, food, mobility, heritage and practical visitor tools for Makati City.'],
+  '/visit': ['Explore Makati', 'Understand Makati through durable places, districts, barangays, heritage, history, mobility and live place discovery.'],
   '/mobility': ['Getting Around Makati', 'Public transport, common trips, directions and ride-hailing options in Makati.'],
   '/cinemas': ['Cinemas in Makati', 'Cinema locations and current showtime sources in Makati City.'],
-  '/parking': ['Parking in Makati', 'Search parking map listings near destinations in Makati City.'],
-  '/whats-on': ["What’s On in Makati", 'Current event discovery and official activity sources in Makati.'],
+  '/calendar': ['Makati Calendar', 'Source-backed civic dates, deadlines, meetings, publications and historical milestones across Makati.'],
   '/heritage': ['Heritage & Culture in Makati', 'Historical sites, museums and self-guided heritage routes in Makati.'],
   '/history': ['History of Makati', 'A searchable, source-linked chronology of Makati history.'],
   '/government': ['Makati City Government', 'Current elected officials, city representation, offices and contacts.'],
