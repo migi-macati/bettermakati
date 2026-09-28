@@ -382,7 +382,7 @@ test('ecosystem handoffs are mobile-safe with usable touch targets', async ({ pa
   expect(betterGovBox?.height ?? 0, 'BetterGov directory target should be at least 32px tall').toBeGreaterThanOrEqual(32);
 
   await page.goto(baseURL + '/search');
-  const search = page.getByPlaceholder(/Yellow Card, Poblacion Park, budget, cinema/i);
+  const search = page.getByRole('combobox');
   await search.fill(guaranteedMissingQuery);
   for (const name of ['Search national services on BetterGov', 'Find another LGU on BetterLGU']) {
     const link = page.getByRole('link', { name, exact: true });
@@ -757,14 +757,19 @@ test('Elections exposes the full 2025 council candidate fields', async ({ page }
   await expect(page.getByText('Reynante Saludo', { exact: true })).toBeVisible();
 });
 
-test('Elections publishes 2026 BSKE legal framework and candidate-source guardrail', async ({ page }) => {
-  await page.goto(baseURL + '/elections#bske-2026');
-  await expect(page.getByRole('heading', { name: 'Calendar & legal framework' })).toBeVisible();
-  await expect(page.getByText('Four-year term', { exact: true })).toBeVisible();
-  await expect(page.getByText('Barangay term limit', { exact: true })).toBeVisible();
-  await expect(page.getByText('SK transition', { exact: true })).toBeVisible();
+test('Elections publishes the current 2028 BSKE framework and preserves the superseded 2026 schedule', async ({ page }) => {
+  await page.goto(baseURL + '/elections#bske-schedule');
+  await expect(page.getByRole('heading', { name: '2028 schedule & legal framework' })).toBeVisible();
+  await expect(page.getByText('Five-year term', { exact: true })).toBeVisible();
+  await expect(page.getByText('Next regular election', { exact: true })).toBeVisible();
+  await expect(page.getByText('2026 schedule superseded', { exact: true })).toBeVisible();
+  await expect(page.getByText('November 13, 2028', { exact: true })).toBeVisible();
+
+  const supersededSchedule = page.getByText('Superseded 2026 schedule', { exact: true });
+  await expect(supersededSchedule).toBeVisible();
+
   await expect(page.getByRole('heading', { name: 'Candidate directory status' })).toBeVisible();
-  await expect(page.getByText(/Official Makati candidate list pending COMELEC publication/i)).toBeVisible();
+  await expect(page.getByText(/No operative 2026 COC filing period remains/i)).toBeVisible();
 });
 
 test('Elections provides downloadable local, barangay and historical datasets', async ({ page }) => {
@@ -1566,7 +1571,7 @@ test('ecosystem navigation exposes national and cross-LGU exits without replacin
 
 test('ecosystem fallbacks preserve the query and leave an internal recovery path', async ({ page }) => {
   await page.goto(baseURL + '/search');
-  const search = page.getByPlaceholder(/Yellow Card, Poblacion Park, budget, cinema/i);
+  const search = page.getByRole('combobox');
   const missingQuery = guaranteedMissingQuery;
   await search.fill(missingQuery);
 
