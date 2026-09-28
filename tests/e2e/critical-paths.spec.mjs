@@ -266,6 +266,71 @@ test('mobile navigation opens the current family and keeps parent links usable',
   await expect(nav.getByRole('link', { name: 'Accountability', exact: true })).toHaveAttribute('href', /\/accountability(?:\?barangay=[^&]+)?$/);
 });
 
+test('homepage priority chooser exposes Tier A and Tier B citizen jobs', async ({ page }) => {
+  await page.goto(baseURL + '/');
+
+  const chooser = page.locator('aside[aria-labelledby="what-brings-you-here"]');
+  await expect(chooser).toBeVisible();
+
+  for (const [name, href] of [
+    ['Get urgent help', '/hotlines'],
+    ['Get a service', '/services'],
+    ['See what matters now', '/today'],
+    ['Follow public action & evidence', '/accountability'],
+    ['Participate or report', '/participate'],
+  ]) {
+    await expect(chooser.getByRole('link', { name: new RegExp('^' + name) })).toHaveAttribute(
+      'href',
+      href
+    );
+  }
+
+  await expect(chooser.getByRole('combobox')).toBeVisible();
+  await expect(chooser.getByText('Find a place', { exact: true })).toHaveCount(0);
+  await expect(chooser.getByText('Visit or get around Makati', { exact: true })).toHaveCount(0);
+});
+
+test('homepage supports evidence and participation without restoring feature-family clutter', async ({ page }) => {
+  await page.goto(baseURL + '/');
+
+  const evidence = page.locator('section').filter({
+    has: page.getByText('Public action & evidence', { exact: true }),
+  });
+  await expect(evidence.getByRole('link', { name: /Accountability/i })).toHaveAttribute(
+    'href',
+    '/accountability'
+  );
+  await expect(evidence.getByRole('link', { name: /Projects & budget/i })).toHaveAttribute(
+    'href',
+    '/projects-budget'
+  );
+  await expect(evidence.getByRole('link', { name: /Public records/i })).toHaveAttribute(
+    'href',
+    '/records'
+  );
+
+  const participation = page.locator('section').filter({
+    has: page.getByRole('heading', { name: 'Take part in Makati', exact: true }),
+  });
+  await expect(participation.getByRole('link', { name: 'Participate in Makati', exact: true })).toHaveAttribute(
+    'href',
+    '/participate'
+  );
+  await expect(participation.getByRole('link', { name: 'Improve BetterMakati', exact: true })).toHaveAttribute(
+    'href',
+    '/get-involved'
+  );
+  await expect(participation.getByRole('link', { name: 'More community tools', exact: true })).toHaveAttribute(
+    'href',
+    '/community-tools'
+  );
+
+  await expect(page.getByRole('heading', { name: 'Tools for everyday Makati', exact: true })).toHaveCount(0);
+  await expect(page.getByText('Explore Makati by barangay', { exact: true })).toHaveCount(0);
+  await expect(page.getByText('Health & emergency', { exact: true })).toHaveCount(0);
+  await expect(page.getByText('Health services', { exact: true })).toBeVisible();
+});
+
 test('homepage exposes and opens barangay editions', async ({ page }) => {
   await page.goto(baseURL + '/');
   await expect(page.getByText('Go to your barangay', { exact: true })).toBeVisible();
