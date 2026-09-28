@@ -21,9 +21,6 @@ for (const marker of [
   'What&apos;s coming up, what changed, and what was just published',
   'Choose a view',
   'Filter the civic timeline',
-  'Now & Next',
-  'Recently Published',
-  'Archive',
   'nativeCivicTimelineItems',
   'civicCalendarViewItems',
   'Original source',
@@ -47,6 +44,9 @@ for (const forbidden of [
 
 for (const marker of [
   "export type CivicCalendarView = 'now-next' | 'published' | 'archive'",
+  "label: 'Now & Next'",
+  "label: 'Recently Published'",
+  "label: 'Archive'",
   'export const civicCalendarRecentPublicationDays = 45',
   'export const civicCalendarViewForItem',
   "item.status === 'superseded'",
