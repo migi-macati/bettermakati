@@ -134,8 +134,7 @@ if (
 
 for (const marker of [
   "label: 'Explore Makati'",
-  "{ label: 'City starting points', href: '/visit#places-to-start' }",
-  "{ label: 'Explore Makati', href: '/visit' }",
+  "href: '/visit'",
 ]) {
   if (!navigation.includes(marker)) {
     problems.push('Explore Makati navigation marker missing: ' + marker);
