@@ -82,7 +82,9 @@ if (
 }
 
 for (const marker of [
-  'visitorExperiences.map',
+  'visitorExperiences.filter',
+  'canonicalStarts.map',
+  'recurringExperiences.map',
   'visitorRefView',
   'visitorResources.map',
   'resource.areaRefs',
@@ -152,7 +154,8 @@ for (const forbidden of [
 for (const marker of [
   "label: 'Explore Makati'",
   'Understand the city as you explore it',
-  "{ label: 'Areas & districts', href: '/estates'",
+  "label: 'Areas & districts'",
+  "href: '/estates'",
   "{ label: 'Barangays', href: '/barangays'",
   "{ label: 'Cinemas', href: '/cinemas'",
 ]) {
