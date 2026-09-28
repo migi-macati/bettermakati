@@ -122,7 +122,7 @@ for (const [label, content] of parkingForbiddenSurfaces) {
   if (
     content.includes('to="/parking"') ||
     content.includes("href: '/parking'") ||
-    content.includes("href="/parking"")
+    content.includes('href="/parking"')
   ) {
     problems.push(label + ' restored a public Parking link.');
   }
