@@ -1,8 +1,8 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router';
 import { ChevronRight, Home } from 'lucide-react';
+import { Link, useLocation } from 'react-router';
 
-interface BreadcrumbItem {
+export interface BreadcrumbItem {
   label: string;
   href?: string;
 }
@@ -10,9 +10,14 @@ interface BreadcrumbItem {
 interface BreadcrumbsProps {
   items?: BreadcrumbItem[];
   className?: string;
+  tone?: 'light' | 'dark';
 }
 
-const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items, className = '' }) => {
+const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
+  items,
+  className = '',
+  tone = 'light',
+}) => {
   const location = useLocation();
 
   const generateBreadcrumbs = (): BreadcrumbItem[] => {
@@ -36,30 +41,54 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items, className = '' }) => {
   };
 
   const breadcrumbItems = items || generateBreadcrumbs();
+  const isDark = tone === 'dark';
 
   return (
     <nav className={className} aria-label="Breadcrumb">
-      <ol className="flex flex-wrap items-center gap-x-1 gap-y-2 text-sm text-gray-600">
-        {breadcrumbItems.map((item, index) => (
-          <li key={item.href || item.label} className="flex items-center gap-1">
-            {index === 0 && <Home className="h-4 w-4" aria-hidden="true" />}
-            {index > 0 && (
-              <ChevronRight className="h-4 w-4 text-gray-400" aria-hidden="true" />
-            )}
-            {item.href ? (
-              <Link
-                to={item.href}
-                className="hover:text-primary-600 transition-colors duration-200"
-              >
-                {item.label.charAt(0).toUpperCase() + item.label.slice(1)}
-              </Link>
-            ) : (
-              <span className="text-gray-900 font-medium" aria-current="page">
-                {item.label.charAt(0).toUpperCase() + item.label.slice(1)}
-              </span>
-            )}
-          </li>
-        ))}
+      <ol
+        className={
+          'flex flex-wrap items-center gap-x-1 gap-y-2 text-sm ' +
+          (isDark ? 'text-primary-100' : 'text-gray-600')
+        }
+      >
+        {breadcrumbItems.map((item, index) => {
+          const isCurrent = index === breadcrumbItems.length - 1;
+
+          return (
+            <li key={item.href || item.label} className="flex items-center gap-1">
+              {index === 0 && (
+                <Home
+                  className={'h-4 w-4 ' + (isDark ? 'text-primary-200' : 'text-gray-500')}
+                  aria-hidden="true"
+                />
+              )}
+              {index > 0 && (
+                <ChevronRight
+                  className={'h-4 w-4 ' + (isDark ? 'text-primary-300' : 'text-gray-400')}
+                  aria-hidden="true"
+                />
+              )}
+              {!isCurrent && item.href ? (
+                <Link
+                  to={item.href}
+                  className={
+                    'transition-colors duration-200 ' +
+                    (isDark ? 'hover:text-white' : 'hover:text-primary-600')
+                  }
+                >
+                  {item.label}
+                </Link>
+              ) : (
+                <span
+                  className={isDark ? 'font-semibold text-white' : 'font-medium text-gray-900'}
+                  aria-current={isCurrent ? 'page' : undefined}
+                >
+                  {item.label}
+                </span>
+              )}
+            </li>
+          );
+        })}
       </ol>
     </nav>
   );
