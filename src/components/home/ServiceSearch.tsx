@@ -443,7 +443,7 @@ export default function ServiceSearch({
                   setActiveIndex(0);
                   setOpen(true);
                 }}
-                className="absolute right-3 top-1/2 -translate-y-1/2 rounded-md p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-700"
+                className="absolute right-0 top-1/2 grid min-h-11 min-w-11 -translate-y-1/2 place-items-center rounded-lg text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                 aria-label="Clear search"
               >
                 <X className="h-4 w-4" />
