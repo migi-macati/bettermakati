@@ -194,16 +194,16 @@ const Services: React.FC = () => {
 
               <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-primary-50">
                 <span className="font-medium text-primary-100">Start with:</span>
-                <Link to={scopedServiceHref('/services/business/new-business-permit')} className="min-h-11 content-center font-semibold underline decoration-white/40 underline-offset-4 hover:text-secondary-300">
+                <Link to={scopedServiceHref('/services/guide/new-business-permit')} className="min-h-11 content-center font-semibold underline decoration-white/40 underline-offset-4 hover:text-secondary-300">
                   Business permit
                 </Link>
-                <Link to={scopedServiceHref('/services/health-services/makati-health-plus')} className="min-h-11 content-center font-semibold underline decoration-white/40 underline-offset-4 hover:text-secondary-300">
+                <Link to={scopedServiceHref('/services/guide/yellow-card')} className="min-h-11 content-center font-semibold underline decoration-white/40 underline-offset-4 hover:text-secondary-300">
                   Yellow Card
                 </Link>
                 <Link to={scopedServiceHref('/services/guide/community-tax-certificate')} className="min-h-11 content-center font-semibold underline decoration-white/40 underline-offset-4 hover:text-secondary-300">
                   Cedula
                 </Link>
-                <Link to={scopedServiceHref('/services/housing-land-use/real-property-tax-payment')} className="min-h-11 content-center font-semibold underline decoration-white/40 underline-offset-4 hover:text-secondary-300">
+                <Link to={scopedServiceHref('/services/guide/real-property-tax')} className="min-h-11 content-center font-semibold underline decoration-white/40 underline-offset-4 hover:text-secondary-300">
                   Real property tax
                 </Link>
               </div>
@@ -405,8 +405,32 @@ const Services: React.FC = () => {
               );
             })}
             {visibleDirectory.length === 0 && (
-              <div className="p-8 text-center text-sm text-gray-600">
-                No indexed service matches this search yet.
+              <div className="p-8 text-center">
+                <div className="font-extrabold text-gray-950">
+                  No indexed service matches this search yet.
+                </div>
+                <p className="mx-auto mt-2 max-w-xl text-sm leading-relaxed text-gray-600">
+                  Clear the filters and try a broader task, or use the service-help routes below if you are unsure what the service is called.
+                </p>
+                <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setDirectoryQuery('');
+                      setDirectoryLevel('All');
+                      setDirectoryCategory('All');
+                    }}
+                    className="brand-btn-secondary"
+                  >
+                    Clear search and filters
+                  </button>
+                  <Link to="/community-tools/saan-ako-lalapit" className="brand-btn-primary">
+                    Use Saan Ako Lalapit?
+                  </Link>
+                  <Link to="/government-offices" className="brand-btn-secondary">
+                    Browse government offices
+                  </Link>
+                </div>
               </div>
             )}
           </div>
