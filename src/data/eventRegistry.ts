@@ -136,7 +136,8 @@ export const eventSources: EventRegistrySource[] = [
  * The registry intentionally contains one still-current first-party event plus
  * three ended records from strong item-level sources. Ended pilot records are
  * retained to prove source provenance, canonical context, date precision and
- * lifecycle handling before W5-7c introduces current/archive selectors.
+ * lifecycle handling. W5-7c selectors live in eventLifecycle.ts and keep ended
+ * records out of the default current feed.
  *
  * No event is promoted from a title-only listing or an undated source.
  */
