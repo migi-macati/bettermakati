@@ -35,7 +35,7 @@ export default function PageHelp() {
           </Link>
           <Link to="/status" className="brand-btn-secondary">
             <Activity className="h-4 w-4" aria-hidden="true" />
-            Site status
+            Coverage & limitations
           </Link>
         </div>
       </div>
