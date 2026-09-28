@@ -142,8 +142,8 @@ if (
 }
 
 for (const redirect of [
-  '<Route path="/whats-on" element={<Navigate to="/calendar" replace />} />',
-  '<Route path="/parking" element={<Navigate to="/visit" replace />} />',
+  '<Route path="/whats-on" element={<CompatibilityRedirect to="/calendar" />} />',
+  '<Route path="/parking" element={<CompatibilityRedirect to="/visit" />} />',
 ]) {
   if (!app.includes(redirect)) {
     problems.push('Legacy compatibility redirect missing: ' + redirect);
