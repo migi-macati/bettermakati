@@ -8,6 +8,7 @@ const [
   legislation,
   accountability,
   reports,
+  elections,
   searchIndex,
   searchPage,
   packageJson,
@@ -19,6 +20,7 @@ const [
   readFile('src/pages/Legislation.tsx', 'utf8'),
   readFile('src/pages/Accountability.tsx', 'utf8'),
   readFile('src/pages/Reports.tsx', 'utf8'),
+  readFile('src/pages/Elections.tsx', 'utf8'),
   readFile('src/data/searchIndex.ts', 'utf8'),
   readFile('src/pages/Search.tsx', 'utf8'),
   readFile('package.json', 'utf8'),
@@ -109,6 +111,7 @@ for (const [label, page, markers] of [
   ['Legislation', legislation, ['owner="legislation"', 'calendarTopic="legislation"', 'Dated legislative milestones']],
   ['Accountability', accountability, ['owner="accountability"', 'calendarTopic="projects-procurement"', 'Procurement and project dates']],
   ['Reports', reports, ['owner="reports"', 'calendarTopic="publications-data"', 'Report releases']],
+  ['Elections', elections, ['owner="elections"', 'calendarTopic="elections"', 'Election dates and schedule changes']],
 ]) {
   for (const marker of markers) {
     if (!page.includes(marker)) {

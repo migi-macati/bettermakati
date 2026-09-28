@@ -533,37 +533,67 @@ add({
   usedBy: 'Elections',
 });
 for (const [key, source] of Object.entries(electionCivicSources)) {
-  const meta: Record<string, { title: string; publisher: string; period: string; description: string; sourceClass?: PublicRecordSourceClass }> = {
-    bskeCalendar: {
-      title: 'COMELEC 2026 BSKE calendar',
+  const meta: Record<
+    string,
+    {
+      title: string;
+      publisher: string;
+      period: string;
+      description: string;
+      sourceClass?: PublicRecordSourceClass;
+    }
+  > = {
+    currentLawUpdate: {
+      title: 'Republic Act No. 12326 — current BSKE schedule update',
+      publisher: 'Philippine Information Agency',
+      period: '2026–2028',
+      description:
+        'Official government communication on the law moving the next regular BSKE to November 2028 and setting five-year terms.',
+      sourceClass: 'National government',
+    },
+    currentLawReport: {
+      title: 'BSKE postponement and COMELEC response to Republic Act No. 12326',
+      publisher: 'Philippine News Agency',
+      period: '2026–2028',
+      description:
+        'Government news report documenting the signed law and the halt of preparations for the superseded November 2026 BSKE.',
+      sourceClass: 'National government',
+    },
+    previousBskeCalendar: {
+      title: 'COMELEC 2026 BSKE calendar — superseded',
       publisher: 'Commission on Elections',
       period: '2026',
-      description: 'Official calendar of activities for the November 2, 2026 Barangay and Sangguniang Kabataan Elections.',
+      description:
+        'Previous official calendar retained as a historical source after Republic Act No. 12326 moved the next regular BSKE to 2028.',
     },
     registrationRules: {
       title: 'COMELEC 2026 BSKE voter-registration rules',
       publisher: 'Commission on Elections',
       period: '2025–2026',
-      description: 'Official rules governing the continuing registration period for the 2026 BSKE.',
+      description:
+        'Official rules for the registration period that preceded the 2026 schedule change.',
     },
-    filingRules: {
-      title: 'COMELEC 2026 BSKE certificate-of-candidacy filing rules',
+    previousFilingRules: {
+      title: 'COMELEC 2026 certificate-of-candidacy filing rules — superseded schedule',
       publisher: 'Commission on Elections',
       period: '2026',
-      description: 'Official amended filing rules for certificates of candidacy in the 2026 BSKE.',
+      description:
+        'Previous filing rules retained for traceability; the 2026 filing period is no longer operative for the next regular BSKE.',
     },
-    termLaw: {
-      title: 'Republic Act No. 12232',
+    previousTermLaw: {
+      title: 'Republic Act No. 12232 — previous barangay and SK term law',
       publisher: 'Republic of the Philippines / Lawphil',
-      period: '2025',
-      description: 'Statute setting four-year barangay and SK terms and the November 2026 election schedule.',
+      period: '2025–2026',
+      description:
+        'Previous statutory schedule retained for legal history after Republic Act No. 12326 amended the term and election timetable.',
       sourceClass: 'Court / statute',
     },
-    termRules: {
-      title: 'COMELEC Resolution No. 11207',
+    previousTermRules: {
+      title: 'COMELEC Resolution No. 11207 — previous transition rules',
       publisher: 'Commission on Elections',
       period: '2026',
-      description: 'COMELEC implementing rules for Republic Act No. 12232, including the 2026 transition.',
+      description:
+        'Previous implementing rules retained as historical context for the superseded 2026 schedule.',
     },
     precinctFinder: {
       title: 'COMELEC Precinct Finder',
@@ -575,7 +605,8 @@ for (const [key, source] of Object.entries(electionCivicSources)) {
       title: 'COMELEC official website',
       publisher: 'Commission on Elections',
       period: 'Current',
-      description: 'Primary election-authority portal for resolutions, candidate records and late changes.',
+      description:
+        'Primary election-authority portal for resolutions, candidate records and later schedule changes.',
     },
   };
   const item = meta[key];

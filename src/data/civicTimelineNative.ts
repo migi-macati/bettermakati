@@ -7,6 +7,11 @@ import {
   type CityMonitorRecord,
 } from './cityMonitor';
 import { currentCouncilSessionSeeds } from './councilSessions';
+import {
+  currentBskeSchedule,
+  electionCivicSources,
+  supersededBske2026Milestones,
+} from './electionCivic';
 import { makatiMayoralHistory } from './electionHistory';
 import {
   localLegislationById,
@@ -66,12 +71,19 @@ export const resolveNativeCivicTimelineCanonical: CivicTimelineCanonicalResolver
     }
 
     if (ref.owner === 'elections' && ref.type === 'election-record') {
+      if (ref.id === currentBskeSchedule.canonicalId) {
+        return {
+          ref,
+          label: currentBskeSchedule.title,
+          href: '/elections#bske-schedule',
+        };
+      }
       const race = historicalElectionById.get(ref.id);
       if (!race) return undefined;
       return {
         ref,
         label: 'Makati mayoral election ' + race.year,
-        href: '/elections',
+        href: '/elections#mayoral-history',
       };
     }
 
@@ -753,6 +765,172 @@ export const nativeElectionArchiveTimelineItems: CivicTimelineItem[] =
     );
   });
 
+const currentElectionLawSource: CivicTimelineSourceRef = {
+  id: 'election:bske-current:ra-12326',
+  label: 'Republic Act No. 12326 — current BSKE schedule update',
+  url: electionCivicSources.currentLawUpdate,
+  publisher: 'Philippine Information Agency',
+  kind: 'official-primary',
+};
+
+const currentElectionReportSource: CivicTimelineSourceRef = {
+  id: 'election:bske-current:postponement-report',
+  label: 'Marcos postpones BSKE',
+  url: electionCivicSources.currentLawReport,
+  publisher: 'Philippine News Agency',
+  kind: 'official-secondary',
+};
+
+const previousElectionCalendarSource: CivicTimelineSourceRef = {
+  id: 'election:bske-2026:previous-calendar',
+  label: 'COMELEC 2026 BSKE calendar — superseded',
+  url: electionCivicSources.previousBskeCalendar,
+  publisher: 'Commission on Elections',
+  kind: 'official-primary',
+};
+
+const currentElectionCanonicalRef = {
+  owner: 'elections' as const,
+  type: 'election-record' as const,
+  id: currentBskeSchedule.canonicalId,
+};
+
+const supersededElectionTemporal = (
+  item: (typeof supersededBske2026Milestones)[number]
+): CivicTimelineTemporal =>
+  item.start === item.end
+    ? {
+        semantic: 'occurrence',
+        precision: 'date',
+        startsAt: item.start,
+        origin: {
+          role: 'occurrence-date',
+          sourceFields: ['supersededBske2026Milestones[].start'],
+          sourceIds: [
+            previousElectionCalendarSource.id,
+            currentElectionLawSource.id,
+          ],
+        },
+      }
+    : {
+        semantic: 'occurrence',
+        precision: 'date-range',
+        startsAt: item.start,
+        endsAt: item.end,
+        origin: {
+          role: 'occurrence-date',
+          sourceFields: ['supersededBske2026Milestones[].start'],
+          sourceIds: [
+            previousElectionCalendarSource.id,
+            currentElectionLawSource.id,
+          ],
+        },
+      };
+
+export const nativeCurrentElectionTimelineItems: CivicTimelineItem[] = [
+  projectCivicTimelineItem(
+    {
+      id: 'election:bske-current:ra-12326-signed',
+      kind: 'election-milestone',
+      title: 'Republic Act No. 12326 signed — regular BSKE moved to 2028',
+      summary: currentBskeSchedule.summary,
+      status: 'completed',
+      actionability: 'information-only',
+      canonicalRef: currentElectionCanonicalRef,
+      temporal: {
+        semantic: 'occurrence',
+        precision: 'date',
+        startsAt: currentBskeSchedule.lawSignedOn,
+        origin: {
+          role: 'occurrence-date',
+          sourceFields: ['currentBskeSchedule.lawSignedOn'],
+          sourceIds: [currentElectionLawSource.id],
+        },
+      },
+      geography: { scope: 'citywide', basis: 'canonical-owner' },
+      sourceRefs: [currentElectionLawSource, currentElectionReportSource],
+      primarySourceId: currentElectionLawSource.id,
+      provenance: {
+        basis: 'source-stated',
+        lastVerifiedAt: nativeCivicTimelineReviewedAt,
+        note:
+          'The signing date is projected as an occurrence. It is not treated as the statute effectivity date.',
+      },
+      update: { revision: 1, changeType: 'updated' },
+      tags: ['elections', 'BSKE', 'Republic Act No. 12326', '2028'],
+    },
+    resolveNativeCivicTimelineCanonical
+  ),
+  ...supersededBske2026Milestones.map(item =>
+    projectCivicTimelineItem(
+      {
+        id: 'election:bske-2026:superseded:' + item.id,
+        kind: 'election-milestone',
+        title: 'Superseded 2026 BSKE schedule — ' + item.title,
+        summary: item.detail,
+        status: 'superseded',
+        actionability: 'information-only',
+        canonicalRef: currentElectionCanonicalRef,
+        temporal: supersededElectionTemporal(item),
+        geography: { scope: 'citywide', basis: 'canonical-owner' },
+        sourceRefs: [
+          previousElectionCalendarSource,
+          currentElectionLawSource,
+          currentElectionReportSource,
+        ],
+        primarySourceId: currentElectionLawSource.id,
+        provenance: {
+          basis: 'source-stated',
+          lastVerifiedAt: nativeCivicTimelineReviewedAt,
+          note:
+            'Retained for change history only; this 2026 schedule is no longer operative.',
+        },
+        update: {
+          revision: 2,
+          changeType: 'superseded',
+          note: 'Superseded by Republic Act No. 12326.',
+        },
+        tags: ['elections', 'BSKE', '2026', 'superseded'],
+      },
+      resolveNativeCivicTimelineCanonical
+    )
+  ),
+  projectCivicTimelineItem(
+    {
+      id: 'election:bske-current:next-election',
+      kind: 'election-milestone',
+      title: 'Next regular Barangay & SK Elections',
+      summary:
+        'Republic Act No. 12326 schedules the next regular BSKE for the second Monday of November 2028.',
+      status: 'scheduled',
+      actionability: 'information-only',
+      canonicalRef: currentElectionCanonicalRef,
+      temporal: {
+        semantic: 'occurrence',
+        precision: 'date',
+        startsAt: currentBskeSchedule.electionDate,
+        origin: {
+          role: 'occurrence-date',
+          sourceFields: ['currentBskeSchedule.electionDate'],
+          sourceIds: [currentElectionLawSource.id],
+        },
+      },
+      geography: { scope: 'citywide', basis: 'canonical-owner' },
+      sourceRefs: [currentElectionLawSource, currentElectionReportSource],
+      primarySourceId: currentElectionLawSource.id,
+      provenance: {
+        basis: 'source-stated',
+        lastVerifiedAt: nativeCivicTimelineReviewedAt,
+        note:
+          'The source states the second Monday of November 2028; 2028-11-13 is the normalized calendar date.',
+      },
+      update: { revision: 1, changeType: 'rescheduled' },
+      tags: ['elections', 'BSKE', '2028', 'election day'],
+    },
+    resolveNativeCivicTimelineCanonical
+  ),
+];
+
 const reportMonthNumber: Record<string, string> = {
   January: '01',
   February: '02',
@@ -862,6 +1040,7 @@ export const nativeCivicTimelineItems: CivicTimelineItem[] = [
   ...nativeDirectCityMonitorTimelineItems,
   ...nativeProcurementTimelineItems,
   ...nativeElectionArchiveTimelineItems,
+  ...nativeCurrentElectionTimelineItems,
   ...nativeReportReleaseTimelineItems,
 ].sort(
   (left, right) =>
@@ -890,6 +1069,7 @@ export const nativeCivicTimelineCoverage = {
   directCityMonitor: nativeDirectCityMonitorTimelineItems.length,
   procurement: nativeProcurementTimelineItems.length,
   electionArchive: nativeElectionArchiveTimelineItems.length,
+  currentElection: nativeCurrentElectionTimelineItems.length,
   reportReleases: nativeReportReleaseTimelineItems.length,
   total: nativeCivicTimelineItems.length,
 } as const;

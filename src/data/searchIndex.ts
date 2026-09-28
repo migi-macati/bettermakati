@@ -191,10 +191,13 @@ const governmentItems: SearchItem[] = [
     title: 'Elections & Voting',
     group: 'Government',
     category: 'Elections',
-    description: 'Neutral voter information, 2025 results, barangay voting patterns and Makati election history.',
+    description:
+      'Neutral voter information, 2025 results, Makati election history and the current November 2028 Barangay and SK election schedule.',
     href: '/elections',
-    keywords: 'elections voting vote voter registration precinct polling place comelec barangay sk bske candidates mayor history 1998 2001 2004 2007 2010 2013 2016 2019 2022 2025',
+    keywords:
+      'elections voting vote voter registration precinct polling place comelec barangay sk bske candidates mayor history 1998 2001 2004 2007 2010 2013 2016 2019 2022 2025 2028 Republic Act 12326 postponed schedule',
     featured: true,
+    canonicalKey: 'civic-owner:elections:election-record:bske-schedule',
   },
   {
     title: '2025 Makati results by barangay',

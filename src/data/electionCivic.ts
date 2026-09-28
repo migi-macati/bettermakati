@@ -9,21 +9,38 @@ import {
   makatiMayoralHistory,
 } from './electionHistory';
 
-export const electionsReviewed = '24 September 2026';
+export const electionsReviewed = '28 September 2026';
 
 export const electionCivicSources = {
-  bskeCalendar:
+  currentLawUpdate:
+    'https://pia.gov.ph/news/pbbm-signs-law-fixing-the-terms-of-barangay-and-sk-officials/',
+  currentLawReport:
+    'https://www.pna.gov.ph/index.php/articles/1284830',
+  previousBskeCalendar:
     'https://www.comelec.gov.ph/php-tpls-attachments/2025BSKE/Resolutions/com_res_11191.pdf',
   registrationRules:
     'https://www.comelec.gov.ph/php-tpls-attachments/2025BSKE/Resolutions/com_res_11177.pdf',
-  filingRules:
+  previousFilingRules:
     'https://www.comelec.gov.ph/php-tpls-attachments/2025BSKE/Resolutions/com_res11196.pdf',
-  termLaw:
+  previousTermLaw:
     'https://lawphil.net/statutes/repacts/ra2025/ra_12232_2025.html',
-  termRules:
+  previousTermRules:
     'https://www.comelec.gov.ph/php-tpls-attachments/2025BSKE/Resolutions/com_res_11207.pdf',
   precinctFinder: 'https://precinctfinder.comelec.gov.ph/voter_precinct',
   comelec: 'https://www.comelec.gov.ph/',
+} as const;
+
+export const currentBskeSchedule = {
+  canonicalId: 'bske-schedule',
+  law: 'Republic Act No. 12326',
+  lawSignedOn: '2026-09-24',
+  electionDate: '2028-11-13',
+  electionDateBasis: 'Second Monday of November 2028',
+  termYears: 5,
+  title: 'Barangay & SK election schedule',
+  summary:
+    'Republic Act No. 12326 moved the next regular Barangay and Sangguniang Kabataan Elections to the second Monday of November 2028 and set five-year terms.',
+  href: electionCivicSources.currentLawUpdate,
 } as const;
 
 export interface ElectionCoverageArea {
@@ -89,93 +106,111 @@ export const electionCoverageAreas: ElectionCoverageArea[] = [
       'Barangay officials are maintained on BetterBarangay pages rather than duplicated in this city-election dataset.',
   },
   {
-    id: 'bske-2026',
-    label: '2026 Barangay & SK Elections',
-    status: 'pending',
-    countLabel: 'Calendar, registration, term rules & voter tools',
+    id: 'bske-current',
+    label: 'Barangay & SK election schedule',
+    status: 'structured',
+    countLabel: 'Current 2028 schedule · superseded 2026 schedule retained',
     included:
-      'COMELEC calendar, registration rules, legal basis for the four-year term, filing rules, term-limit transition and precinct-verification tool.',
+      'Republic Act No. 12326, the November 2028 election schedule, current voter tools, and an explicit record of the superseded 2026 calendar.',
     limit:
-      'As of the review date, COC filing had not yet opened. BetterMakati will not publish or infer a Makati candidate directory before an official COMELEC candidate source exists.',
+      'Detailed 2028 filing, campaign and other operational dates should not be inferred until COMELEC publishes the corresponding current calendar and rules.',
   },
 ];
 
 export const bskeMilestones = [
   {
-    start: '2026-05-18',
-    end: '2026-05-18',
-    date: 'May 18, 2026',
-    title: 'Regular local voter registration closed',
+    id: 'ra-12326-signed',
+    start: currentBskeSchedule.lawSignedOn,
+    end: currentBskeSchedule.lawSignedOn,
+    date: 'September 24, 2026',
+    title: 'Republic Act No. 12326 signed',
     detail:
-      'The regular non-BARMM registration period for the November 2, 2026 BSKE ended on this date.',
-    href: electionCivicSources.registrationRules,
+      'The law reset the next regular BSKE to the second Monday of November 2028 and fixed barangay and SK terms at five years.',
+    href: electionCivicSources.currentLawUpdate,
   },
   {
+    id: 'next-regular-bske',
+    start: currentBskeSchedule.electionDate,
+    end: currentBskeSchedule.electionDate,
+    date: 'November 13, 2028',
+    title: 'Next regular Barangay & SK Elections',
+    detail:
+      'November 13, 2028 is the second Monday of November 2028, the schedule stated by Republic Act No. 12326.',
+    href: electionCivicSources.currentLawUpdate,
+  },
+] as const;
+
+export const supersededBske2026Milestones = [
+  {
+    id: 'coc-filing',
     start: '2026-09-28',
     end: '2026-10-05',
     date: 'September 28 – October 5, 2026',
-    title: 'Certificates of candidacy',
+    title: 'Certificate-of-candidacy filing',
     detail:
-      'COMELEC’s election calendar sets this period for filing certificates of candidacy.',
-    href: electionCivicSources.bskeCalendar,
+      'This filing window appeared in the prior 2026 COMELEC calendar. It is no longer operative after Republic Act No. 12326 moved the regular BSKE to 2028.',
+    href: electionCivicSources.previousBskeCalendar,
   },
   {
+    id: 'campaign-period',
     start: '2026-10-22',
     end: '2026-10-31',
     date: 'October 22 – 31, 2026',
     title: 'Campaign period',
     detail:
-      'COMELEC’s calendar sets this as the campaign period for barangay and SK candidates.',
-    href: electionCivicSources.bskeCalendar,
+      'This campaign window belonged to the superseded 2026 election schedule.',
+    href: electionCivicSources.previousBskeCalendar,
   },
   {
+    id: 'election-day',
     start: '2026-11-02',
     end: '2026-11-02',
     date: 'November 2, 2026',
     title: 'Election day',
     detail:
-      'The next regular Barangay and Sangguniang Kabataan Elections are scheduled for the first Monday of November 2026.',
-    href: electionCivicSources.bskeCalendar,
+      'This former election date was superseded when Republic Act No. 12326 moved the next regular BSKE to November 2028.',
+    href: electionCivicSources.previousBskeCalendar,
   },
   {
+    id: 'term-start',
     start: '2026-12-01',
     end: '2026-12-01',
     date: 'December 1, 2026',
     title: 'New term begins',
     detail:
-      'Republic Act No. 12232 provides that officials elected after the law took effect begin their term on the first day of December following the election.',
-    href: electionCivicSources.termLaw,
+      'This former transition date was tied to the superseded 2026 schedule under the previous law.',
+    href: electionCivicSources.previousTermLaw,
   },
 ] as const;
 
 export const bskeRuleCards = [
   {
-    title: 'Four-year term',
+    title: 'Five-year term',
     body:
-      'Republic Act No. 12232 sets a four-year term for elected barangay and Sangguniang Kabataan officials and schedules regular BSKEs every four years starting in November 2026.',
-    href: electionCivicSources.termLaw,
-    sourceLabel: 'Republic Act No. 12232',
+      'Republic Act No. 12326 fixes the term of elected barangay and Sangguniang Kabataan officials at five years.',
+    href: electionCivicSources.currentLawUpdate,
+    sourceLabel: 'Republic Act No. 12326 update',
   },
   {
-    title: 'Barangay term limit',
+    title: 'Next regular election',
     body:
-      'The law limits an elective barangay official to three consecutive terms in the same position. COMELEC’s 2026 implementing rules apply the transition rule to incumbents already serving a third consecutive term.',
-    href: electionCivicSources.termRules,
-    sourceLabel: 'COMELEC Resolution No. 11207',
+      'The law schedules the next regular Barangay and SK Elections for the second Monday of November 2028, then every five years thereafter.',
+    href: electionCivicSources.currentLawUpdate,
+    sourceLabel: 'Republic Act No. 12326 update',
   },
   {
-    title: 'SK transition',
+    title: '2026 schedule superseded',
     body:
-      'COMELEC’s implementing rules state that incumbent SK officials elected in 2023 may seek the same position in the November 2026 BSKE if they otherwise meet the qualifications and are not disqualified.',
-    href: electionCivicSources.termRules,
-    sourceLabel: 'COMELEC Resolution No. 11207',
+      'The November 2, 2026 BSKE and its associated filing and campaign schedule no longer govern the next regular election.',
+    href: electionCivicSources.currentLawReport,
+    sourceLabel: 'Current postponement report',
   },
   {
-    title: 'Candidate filing',
+    title: 'Transition rule',
     body:
-      'COMELEC Resolution No. 11196 amends the certificate-of-candidacy filing rules for the November 2026 BSKE. BetterMakati links the official rule rather than paraphrasing candidate eligibility beyond what is needed for public navigation.',
-    href: electionCivicSources.filingRules,
-    sourceLabel: 'COMELEC Resolution No. 11196',
+      'The new law treats the two-year extension of incumbent elective barangay officials as one completed term for the transition rule described in the law.',
+    href: electionCivicSources.currentLawUpdate,
+    sourceLabel: 'Republic Act No. 12326 update',
   },
 ] as const;
 
@@ -193,54 +228,24 @@ const manilaDateKey = (date = new Date()) => {
 
 export const getBskePhase = (date = new Date()) => {
   const key = manilaDateKey(date);
-  if (key < '2026-09-28') {
+  if (key < currentBskeSchedule.electionDate) {
     return {
-      label: 'Pre-filing',
-      detail: 'Certificate-of-candidacy filing opens September 28, 2026.',
-    };
-  }
-  if (key <= '2026-10-05') {
-    return {
-      label: 'COC filing period',
-      detail: 'Certificate-of-candidacy filing runs through October 5, 2026.',
-    };
-  }
-  if (key < '2026-10-22') {
-    return {
-      label: 'Post-filing / candidate verification',
+      label: '2028 election cycle',
       detail:
-        'Use COMELEC’s official releases for candidate status before treating a filing as a final certified candidate list.',
+        'Republic Act No. 12326 moved the next regular BSKE to November 13, 2028. Check COMELEC for the eventual 2028 filing, campaign and precinct calendar.',
     };
   }
-  if (key <= '2026-10-31') {
-    return {
-      label: 'Campaign period',
-      detail: 'The official campaign period runs through October 31, 2026.',
-    };
-  }
-  if (key === '2026-11-01') {
-    return {
-      label: 'Election eve',
-      detail: 'Election day is November 2, 2026.',
-    };
-  }
-  if (key === '2026-11-02') {
+  if (key === currentBskeSchedule.electionDate) {
     return {
       label: 'Election day',
-      detail: 'Verify polling information and official election updates through COMELEC.',
-    };
-  }
-  if (key < '2026-12-01') {
-    return {
-      label: 'Post-election',
       detail:
-        'Treat canvass and proclamation records from COMELEC as controlling for final election outcomes.',
+        'Use COMELEC for current polling information, precinct assignments and official election updates.',
     };
   }
   return {
-    label: 'New term period',
+    label: 'Post-election',
     detail:
-      'Republic Act No. 12232 provides for the new term to begin on December 1 following the election.',
+      'Use COMELEC canvass and proclamation records for official results and transition information.',
   };
 };
 
@@ -261,18 +266,23 @@ export const electionDataSources = [
     kind: 'Official candidate record',
   },
   {
-    label: 'COMELEC 2026 BSKE calendar',
-    href: electionCivicSources.bskeCalendar,
-    kind: 'Official election calendar',
+    label: 'Republic Act No. 12326 — current BSKE schedule update',
+    href: electionCivicSources.currentLawUpdate,
+    kind: 'Official government communication',
   },
   {
-    label: 'Republic Act No. 12232',
-    href: electionCivicSources.termLaw,
-    kind: 'Controlling statute',
+    label: 'COMELEC 2026 BSKE calendar — superseded',
+    href: electionCivicSources.previousBskeCalendar,
+    kind: 'Superseded official election calendar',
   },
   {
-    label: 'COMELEC Resolution No. 11207',
-    href: electionCivicSources.termRules,
-    kind: 'Official implementing rules',
+    label: 'Republic Act No. 12232 — previous schedule',
+    href: electionCivicSources.previousTermLaw,
+    kind: 'Previous statutory schedule',
+  },
+  {
+    label: 'COMELEC',
+    href: electionCivicSources.comelec,
+    kind: 'Official election authority',
   },
 ] as const;

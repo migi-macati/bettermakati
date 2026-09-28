@@ -17,6 +17,7 @@ import LastReviewed from '../components/ui/LastReviewed';
 import SharePage from '../components/ui/SharePage';
 import SectionNav from '../components/ui/SectionNav';
 import CitizenSummary from '../components/ui/CitizenSummary';
+import CivicDomainTimelinePreview from '../components/civic/CivicDomainTimelinePreview';
 import {
   election2025CouncilCandidates,
   election2025Electorate,
@@ -34,6 +35,7 @@ import {
 import {
   bskeMilestones,
   bskeRuleCards,
+  supersededBske2026Milestones,
   electionCivicSources,
   electionDataSources,
   electionsReviewed,
@@ -146,7 +148,7 @@ export default function Elections() {
     <>
       <SEO
         title="Elections & Voting"
-        description="Neutral Makati election information with 2025 city and barangay results, a 1998–2025 mayoral history, voter dates and source-quality notes."
+        description="Neutral Makati election information with 2025 results, a 1998–2025 mayoral history, the current 2028 Barangay and SK election schedule, voter tools and source-quality notes."
         jsonLd={{
           '@context': 'https://schema.org',
           '@type': 'Dataset',
@@ -173,7 +175,7 @@ export default function Elections() {
           { label: 'By barangay', href: '#barangay-results-2025' },
           { label: '1998–2025 history', href: '#mayoral-history' },
           { label: 'Council', href: '#council-results' },
-          { label: '2026 BSKE', href: '#bske-2026' },
+          { label: '2028 BSKE', href: '#bske-schedule' },
           { label: 'Voter tools', href: '#voter-tools' },
           { label: 'Data & sources', href: '#election-data' },
           { label: 'Candidates', href: '#candidates' },
@@ -189,10 +191,10 @@ export default function Elections() {
               Next local election in Makati
             </div>
             <div className="mt-1 text-2xl font-extrabold text-gray-950">
-              2026 Barangay & SK Elections
+              2028 Barangay & SK Elections
             </div>
             <p className="mt-2 text-sm text-gray-600">
-              Election day: November 2, 2026
+              Election day: November 13, 2028
             </p>
           </div>
 
@@ -209,6 +211,14 @@ export default function Elections() {
         </div>
       </Section>
 
+
+      <CivicDomainTimelinePreview
+        owner="elections"
+        calendarTopic="elections"
+        heading="Election dates and schedule changes"
+        description="Current and superseded election milestones share one civic time axis while Elections & Voting remains the canonical owner."
+        className="bg-white"
+      />
 
       <Section id="results-2025" className="bg-[#fffdf8]">
         <div className="section-eyebrow">Latest completed election</div>
@@ -651,13 +661,15 @@ export default function Elections() {
         </details>
       </Section>
 
-      <Section id="bske-2026" className="bg-[#f5f8f2]">
-        <div className="section-eyebrow">2026 BSKE</div>
+      <Section id="bske-schedule" className="bg-[#f5f8f2]">
+        <div className="section-eyebrow">Current BSKE schedule</div>
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <Heading level={2}>Calendar & legal framework</Heading>
+            <Heading level={2}>2028 schedule & legal framework</Heading>
             <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-600">
-              BetterMakati keeps the operative COMELEC calendar beside the statute and implementing rules so a schedule change or legal transition can be traced to its source.
+              Republic Act No. 12326 replaced the former November 2026 schedule.
+              BetterMakati keeps the current rule and the superseded dates together
+              so the change can be traced instead of silently overwriting history.
             </p>
           </div>
           <div className="rounded-xl border border-secondary-200 bg-white px-4 py-3">
@@ -669,11 +681,11 @@ export default function Elections() {
           </div>
         </div>
 
-        <div className="mt-7 grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div className="mt-7 grid grid-cols-1 gap-4 lg:grid-cols-2">
           {bskeMilestones.map(item => (
-            <article key={item.title} className="rounded-2xl border border-primary-100 bg-white p-5">
+            <article key={item.id} className="rounded-2xl border border-primary-100 bg-white p-5">
               <div className="text-sm font-extrabold text-primary-800">{item.date}</div>
-              <h3 className="mt-1 font-extrabold text-lg text-gray-950">{item.title}</h3>
+              <h3 className="mt-1 text-lg font-extrabold text-gray-950">{item.title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-gray-600">{item.detail}</p>
               <a
                 href={item.href}
@@ -681,7 +693,7 @@ export default function Elections() {
                 rel="noreferrer"
                 className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700"
               >
-                Open official source <ExternalLink className="h-3.5 w-3.5" />
+                Open source <ExternalLink className="h-3.5 w-3.5" />
               </a>
             </article>
           ))}
@@ -704,6 +716,39 @@ export default function Elections() {
             </article>
           ))}
         </div>
+
+        <details className="mt-8 overflow-hidden rounded-2xl border border-gray-200 bg-white">
+          <summary className="cursor-pointer px-5 py-4 font-extrabold text-gray-950">
+            Superseded 2026 schedule
+          </summary>
+          <div className="border-t border-gray-200 p-5">
+            <p className="max-w-4xl text-sm leading-relaxed text-gray-600">
+              These dates were part of the prior official schedule. They are
+              retained for traceability but are no longer operative for the next
+              regular BSKE.
+            </p>
+            <div className="mt-4 grid grid-cols-1 gap-3 lg:grid-cols-2">
+              {supersededBske2026Milestones.map(item => (
+                <article key={item.id} className="rounded-xl border border-gray-200 bg-gray-50 p-4">
+                  <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">
+                    Superseded
+                  </div>
+                  <div className="mt-2 text-sm font-extrabold text-gray-800">{item.date}</div>
+                  <h3 className="mt-1 font-extrabold text-gray-950">{item.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-gray-600">{item.detail}</p>
+                  <a
+                    href={item.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="mt-3 inline-flex items-center gap-1 text-xs font-bold text-primary-700"
+                  >
+                    Previous source <ExternalLink className="h-3.5 w-3.5" />
+                  </a>
+                </article>
+              ))}
+            </div>
+          </div>
+        </details>
       </Section>
 
       <Section id="voter-tools" className="bg-white">
@@ -725,15 +770,15 @@ export default function Elections() {
           </a>
 
           <a
-            href={electionCivicSources.bskeCalendar}
+            href={electionCivicSources.currentLawUpdate}
             target="_blank"
             rel="noreferrer"
             className="rounded-2xl border border-gray-200 bg-white p-5 hover:border-primary-300"
           >
             <FileText className="h-5 w-5 text-primary-700" />
-            <h3 className="mt-3 font-extrabold text-gray-950">Official election calendar</h3>
+            <h3 className="mt-3 font-extrabold text-gray-950">Current BSKE schedule update</h3>
             <p className="mt-1 text-sm text-gray-600">
-              COMELEC Resolution No. 11191 for the November 2, 2026 BSKE.
+              Republic Act No. 12326 moved the next regular BSKE to November 2028.
             </p>
           </a>
 
@@ -862,23 +907,26 @@ export default function Elections() {
       </Section>
 
       <Section id="candidates" className="bg-white">
-        <div className="section-eyebrow">2026 candidates</div>
+        <div className="section-eyebrow">2028 candidates</div>
         <Heading level={2}>Candidate directory status</Heading>
         <div className="mt-5 rounded-2xl border border-secondary-200 bg-secondary-50 p-6">
           <div className="text-xs font-bold uppercase tracking-[0.08em] text-secondary-900">
             {bskePhase.label}
           </div>
           <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-700">
-            Official Makati candidate list pending COMELEC publication. Certificate-of-candidacy filing runs September 28–October 5, 2026.
+            No operative 2026 COC filing period remains. The next regular BSKE is
+            in November 2028. BetterMakati will publish a Makati candidate
+            directory only when authoritative COMELEC records for that election
+            become available.
           </p>
           <div className="mt-4 flex flex-wrap gap-3">
             <a
-              href={electionCivicSources.filingRules}
+              href={electionCivicSources.currentLawUpdate}
               target="_blank"
               rel="noreferrer"
               className="brand-btn-secondary"
             >
-              COC filing rules <ExternalLink className="h-4 w-4" />
+              Current law update <ExternalLink className="h-4 w-4" />
             </a>
             <a
               href={electionCivicSources.comelec}

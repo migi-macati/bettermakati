@@ -7,6 +7,7 @@ const [
   council,
   accountabilitySupplement,
   elections,
+  electionCivic,
   reports,
   reportTypes,
   cityMonitor,
@@ -18,6 +19,7 @@ const [
   readFile('src/data/councilSessions.ts', 'utf8'),
   readFile('src/data/accountabilitySupplement.ts', 'utf8'),
   readFile('src/data/electionHistory.ts', 'utf8'),
+  readFile('src/data/electionCivic.ts', 'utf8'),
   readFile('src/data/reports.ts', 'utf8'),
   readFile('src/data/reportTypes.ts', 'utf8'),
   readFile('src/data/cityMonitor.ts', 'utf8'),
@@ -32,6 +34,7 @@ for (const marker of [
   'export const nativeDirectCityMonitorTimelineItems',
   'export const nativeProcurementTimelineItems',
   'export const nativeElectionArchiveTimelineItems',
+  'export const nativeCurrentElectionTimelineItems',
   'export const nativeReportReleaseTimelineItems',
   'export const nativeCivicTimelineItems',
   'export const nativeCivicTimelineCoverage',
@@ -50,6 +53,9 @@ for (const marker of [
   "sourceFields: ['CityMonitorRecord.date']",
   "sourceFields: ['procurement.bidDate']",
   "sourceFields: ['HistoricalMayoralRace.electionDate']",
+  "sourceFields: ['currentBskeSchedule.lawSignedOn']",
+  "sourceFields: ['currentBskeSchedule.electionDate']",
+  "sourceFields: ['supersededBske2026Milestones[].start']",
   "sourceFields: ['FeaturedReportV2.date']",
 ]) {
   if (!native.includes(marker)) {
@@ -144,6 +150,13 @@ const electionBlock =
     ?.split('\n];')[0] ?? '';
 const electionCount = (electionBlock.match(/\n    year: /g) ?? []).length;
 const reportCount = (reports.match(/schemaVersion: 2,/g) ?? []).length;
+const supersededElectionBlock =
+  electionCivic
+    .split('export const supersededBske2026Milestones = [')[1]
+    ?.split('] as const;')[0] ?? '';
+const supersededElectionCount = (
+  supersededElectionBlock.match(/\n    id: '/g) ?? []
+).length;
 
 const baseCityMonitorBlock =
   cityMonitor
@@ -160,11 +173,22 @@ if (
   procurementCount !== 21 ||
   electionCount !== 10 ||
   reportCount !== 5 ||
+  supersededElectionCount !== 4 ||
   directCityMonitorCount !== 2
 ) {
   problems.push(
     'W5-7R3 source baseline changed; re-audit native projection counts before continuing.'
   );
+}
+
+if (!native.includes("id: 'election:bske-current:next-election'")) {
+  problems.push('Current BSKE election projection identity is missing.');
+}
+if (!native.includes("id: 'election:bske-current:ra-12326-signed'")) {
+  problems.push('Current BSKE law-change projection identity is missing.');
+}
+if (!native.includes("status: 'superseded'")) {
+  problems.push('Superseded 2026 election schedule is not preserved in the timeline.');
 }
 
 if (!native.includes("id: 'report:' + report.slug + ':release'")) {
@@ -205,6 +229,7 @@ console.log(
     directCityMonitorCount + ' direct City Monitor procurement records',
     procurementCount + ' Accountability procurement records',
     electionCount + ' historical mayoral election dates',
+    '6 current/superseded BSKE schedule items',
     reportCount + ' BetterMakati report releases',
     'no new external fetching',
     'and maintenance/observation date protections retained.',

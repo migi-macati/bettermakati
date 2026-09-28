@@ -1,0 +1,54 @@
+{
+  "id": "w5-7-civic-time",
+  "reviewedOn": "2026-09-28",
+  "status": "closed-with-deployment-verification-deferred",
+  "canonicalRoute": "/calendar",
+  "capability": "Cross-domain civic-time index and distribution",
+  "readyDomains": [
+    {
+      "domain": "legislation",
+      "basis": "dated legislative lifecycle and session evidence"
+    },
+    {
+      "domain": "council-city-monitor",
+      "basis": "source-backed council sessions and direct monitored civic records"
+    },
+    {
+      "domain": "accountability",
+      "basis": "exact procurement bid-result dates"
+    },
+    {
+      "domain": "elections",
+      "basis": "historical election dates plus reconciled RA 12326 / November 2028 schedule"
+    },
+    {
+      "domain": "reports",
+      "basis": "explicit BetterMakati report publication dates"
+    }
+  ],
+  "deferredDomains": [
+    {
+      "domain": "statistics",
+      "reason": "observation/as-of dates are not publication-release dates"
+    },
+    {
+      "domain": "public-records",
+      "reason": "record period and source-monitor dates do not establish publication dates"
+    },
+    {
+      "domain": "services",
+      "reason": "lastVerified is maintenance metadata; no canonical effective/deadline contract"
+    },
+    {
+      "domain": "mobility",
+      "reason": "route review/lifecycle metadata is not a universal source-backed effective-change date; live closures remain City Monitor-owned"
+    }
+  ],
+  "invariants": [
+    "calendar-is-an-index-not-a-second-owner",
+    "maintenance-and-observation-dates-cannot-be-projected",
+    "superseded-schedules-remain-traceable",
+    "candidate-queue-is-not-public-calendar-data",
+    "whats-on-is-retired-except-compatibility-redirect"
+  ]
+}
