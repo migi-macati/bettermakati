@@ -74,6 +74,8 @@ for (const marker of [
   'visitorExperiences.map',
   'visitorRefView',
   'visitorResources.map',
+  'resource.areaRefs',
+  "resolveDistrictReference({ type: 'area', id: areaId })",
   'visitorCurationSourceById',
   'date="2026-09-28"',
 ]) {

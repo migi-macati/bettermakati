@@ -23,10 +23,7 @@ import PhotoCarousel from '../components/ui/PhotoCarousel';
 import { visitImageSet } from '../data/cityImages';
 import SharePage from '../components/ui/SharePage';
 import { placeRegistryById } from '../data/placeRegistry';
-import {
-  resolveDistrictReference,
-  resolveDistrictReferences,
-} from '../data/districtReferences';
+import { resolveDistrictReference } from '../data/districtReferences';
 
 const mapsUrl = (query: string) =>
   `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
@@ -54,12 +51,6 @@ const visitorRefView = (ref: VisitorCanonicalReference) => {
     address: undefined,
   };
 };
-
-const makeItMakatiAreas = resolveDistrictReferences([
-  { type: 'area', id: 'makati-cbd' },
-  { type: 'area', id: 'ayala-center' },
-  { type: 'area', id: 'circuit-makati' },
-]);
 
 const visitStarts = [
   { label: 'Places to go', href: '#places-to-start', icon: Map },
@@ -327,10 +318,9 @@ export default function VisitMakati() {
         <div className="section-eyebrow">Visitor resources</div>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           {visitorResources.map(resource => {
-            const areas =
-              resource.id === 'make-it-makati'
-                ? makeItMakatiAreas
-                : [];
+            const areas = (resource.areaRefs ?? []).map(areaId =>
+              resolveDistrictReference({ type: 'area', id: areaId })
+            );
 
             return (
               <article
