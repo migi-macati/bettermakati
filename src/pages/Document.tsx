@@ -1,5 +1,5 @@
 import Section from '../components/ui/Section';
-import Breadcrumbs from '../components/ui/Breadcrumbs';
+import Breadcrumbs, { type BreadcrumbItem } from '../components/ui/Breadcrumbs';
 import { Heading } from '../components/ui/Heading';
 import { Text } from '../components/ui/Text';
 import { Banner } from '@bettergov/kapwa/banner';
@@ -48,7 +48,7 @@ export default function Document({
     getTypographyTheme(initialTheme)
   );
 
-  const [breadcrumbs, setBreadcrumbs] = useState([
+  const [breadcrumbs, setBreadcrumbs] = useState<BreadcrumbItem[]>([
     { label: 'Home', href: '/' },
   ]);
 
