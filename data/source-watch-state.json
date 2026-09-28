@@ -23,7 +23,11 @@
       "owner": "city-monitor",
       "delegated": true,
       "ownerReason": "City Monitor owns this official Makati activity/discovery channel.",
-      "affectedPages": ["/city-monitor", "/briefs", "/today"],
+      "affectedPages": [
+        "/city-monitor",
+        "/briefs",
+        "/today"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -45,7 +49,11 @@
       "owner": "city-monitor",
       "delegated": true,
       "ownerReason": "City Monitor owns this official Makati activity/discovery channel.",
-      "affectedPages": ["/city-monitor", "/briefs", "/today"],
+      "affectedPages": [
+        "/city-monitor",
+        "/briefs",
+        "/today"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -65,7 +73,11 @@
       "cadence": "monthly",
       "monitoringMode": "content-hash",
       "owner": "general-source-freshness",
-      "affectedPages": ["/projects-budget", "/accountability", "/reports"],
+      "affectedPages": [
+        "/projects-budget",
+        "/accountability",
+        "/reports"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -86,7 +98,11 @@
       "cadence": "monthly",
       "monitoringMode": "content-hash",
       "owner": "general-source-freshness",
-      "affectedPages": ["/projects-budget", "/statistics", "/reports"],
+      "affectedPages": [
+        "/projects-budget",
+        "/statistics",
+        "/reports"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -107,7 +123,10 @@
       "cadence": "monthly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/statistics", "/reports"],
+      "affectedPages": [
+        "/statistics",
+        "/reports"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -128,7 +147,10 @@
       "cadence": "monthly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/statistics", "/reports"],
+      "affectedPages": [
+        "/statistics",
+        "/reports"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -149,7 +171,11 @@
       "cadence": "monthly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/projects-budget", "/accountability", "/integrity"],
+      "affectedPages": [
+        "/projects-budget",
+        "/accountability",
+        "/integrity"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -197,7 +223,9 @@
       "cadence": "daily",
       "monitoringMode": "content-hash",
       "owner": "general-source-freshness",
-      "affectedPages": ["/elections"],
+      "affectedPages": [
+        "/elections"
+      ],
       "status": "ok",
       "statusCode": 200,
       "contentType": "application/pdf",
@@ -217,7 +245,9 @@
       "cadence": "daily",
       "monitoringMode": "content-hash",
       "owner": "general-source-freshness",
-      "affectedPages": ["/elections"],
+      "affectedPages": [
+        "/elections"
+      ],
       "status": "ok",
       "statusCode": 200,
       "contentType": "application/pdf",
@@ -237,7 +267,9 @@
       "cadence": "daily",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/elections"],
+      "affectedPages": [
+        "/elections"
+      ],
       "status": "ok",
       "statusCode": 200,
       "contentType": "text/html",
@@ -257,7 +289,9 @@
       "cadence": "daily",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/elections"],
+      "affectedPages": [
+        "/elections"
+      ],
       "status": "http-error",
       "statusCode": 403,
       "contentType": "text/html; charset=UTF-8",
@@ -279,7 +313,11 @@
       "owner": "city-monitor",
       "delegated": true,
       "ownerReason": "City Monitor owns this official Makati activity/discovery channel.",
-      "affectedPages": ["/legislation", "/city-monitor", "/briefs"],
+      "affectedPages": [
+        "/legislation",
+        "/city-monitor",
+        "/briefs"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -299,7 +337,9 @@
       "cadence": "weekly",
       "monitoringMode": "content-hash",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -320,7 +360,9 @@
       "cadence": "daily",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/mobility"],
+      "affectedPages": [
+        "/mobility"
+      ],
       "status": "ok",
       "statusCode": 200,
       "contentType": "text/html; charset=UTF-8",
@@ -340,7 +382,9 @@
       "cadence": "weekly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/mobility"],
+      "affectedPages": [
+        "/mobility"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -361,7 +405,9 @@
       "cadence": "weekly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/participate"],
+      "affectedPages": [
+        "/participate"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -382,7 +428,11 @@
       "cadence": "monthly",
       "monitoringMode": "content-hash",
       "owner": "general-source-freshness",
-      "affectedPages": ["/projects-budget", "/participate", "/reports"],
+      "affectedPages": [
+        "/projects-budget",
+        "/participate",
+        "/reports"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -403,7 +453,9 @@
       "cadence": "monthly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/open-government"],
+      "affectedPages": [
+        "/open-government"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -424,7 +476,9 @@
       "cadence": "monthly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/open-government"],
+      "affectedPages": [
+        "/open-government"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -445,7 +499,9 @@
       "cadence": "monthly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/open-government"],
+      "affectedPages": [
+        "/open-government"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -466,7 +522,10 @@
       "cadence": "monthly",
       "monitoringMode": "content-hash",
       "owner": "general-source-freshness",
-      "affectedPages": ["/integrity", "/accountability"],
+      "affectedPages": [
+        "/integrity",
+        "/accountability"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -487,7 +546,10 @@
       "cadence": "monthly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/projects-budget", "/accountability"],
+      "affectedPages": [
+        "/projects-budget",
+        "/accountability"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -508,7 +570,10 @@
       "cadence": "monthly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/projects-budget", "/accountability"],
+      "affectedPages": [
+        "/projects-budget",
+        "/accountability"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -529,7 +594,10 @@
       "cadence": "monthly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/projects-budget", "/accountability"],
+      "affectedPages": [
+        "/projects-budget",
+        "/accountability"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -550,7 +618,10 @@
       "cadence": "monthly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/projects-budget", "/accountability"],
+      "affectedPages": [
+        "/projects-budget",
+        "/accountability"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -571,7 +642,9 @@
       "cadence": "weekly",
       "monitoringMode": "content-hash",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -592,7 +665,9 @@
       "cadence": "weekly",
       "monitoringMode": "content-hash",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -613,7 +688,9 @@
       "cadence": "weekly",
       "monitoringMode": "content-hash",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -634,7 +711,9 @@
       "cadence": "weekly",
       "monitoringMode": "content-hash",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -655,7 +734,9 @@
       "cadence": "weekly",
       "monitoringMode": "content-hash",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -676,7 +757,9 @@
       "cadence": "weekly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -697,7 +780,9 @@
       "cadence": "weekly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -718,7 +803,9 @@
       "cadence": "weekly",
       "monitoringMode": "content-hash",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -739,7 +826,9 @@
       "cadence": "weekly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -760,7 +849,9 @@
       "cadence": "weekly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -781,7 +872,9 @@
       "cadence": "weekly",
       "monitoringMode": "content-hash",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -802,7 +895,9 @@
       "cadence": "weekly",
       "monitoringMode": "content-hash",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -823,7 +918,9 @@
       "cadence": "weekly",
       "monitoringMode": "content-hash",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -844,7 +941,9 @@
       "cadence": "weekly",
       "monitoringMode": "content-hash",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -865,7 +964,9 @@
       "cadence": "weekly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -886,7 +987,9 @@
       "cadence": "weekly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -907,7 +1010,9 @@
       "cadence": "weekly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -928,7 +1033,9 @@
       "cadence": "weekly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -949,7 +1056,9 @@
       "cadence": "weekly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -970,7 +1079,9 @@
       "cadence": "weekly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -991,7 +1102,9 @@
       "cadence": "weekly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -1012,7 +1125,9 @@
       "cadence": "weekly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -1033,7 +1148,9 @@
       "cadence": "weekly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -1054,7 +1171,9 @@
       "cadence": "weekly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -1075,7 +1194,9 @@
       "cadence": "weekly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -1096,7 +1217,9 @@
       "cadence": "weekly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -1117,7 +1240,9 @@
       "cadence": "weekly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -1138,7 +1263,9 @@
       "cadence": "weekly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -1159,7 +1286,9 @@
       "cadence": "weekly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -1180,7 +1309,9 @@
       "cadence": "weekly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -1201,7 +1332,9 @@
       "cadence": "weekly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -1222,7 +1355,9 @@
       "cadence": "weekly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -1243,7 +1378,10 @@
       "cadence": "weekly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/hotlines", "/civic-map"],
+      "affectedPages": [
+        "/hotlines",
+        "/civic-map"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -1264,7 +1402,10 @@
       "cadence": "weekly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/mobility", "/civic-map"],
+      "affectedPages": [
+        "/mobility",
+        "/civic-map"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -1285,7 +1426,9 @@
       "cadence": "weekly",
       "monitoringMode": "content-hash",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -1306,7 +1449,9 @@
       "cadence": "weekly",
       "monitoringMode": "content-hash",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -1327,7 +1472,9 @@
       "cadence": "weekly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -1348,7 +1495,9 @@
       "cadence": "weekly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -1369,7 +1518,9 @@
       "cadence": "weekly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -1390,7 +1541,9 @@
       "cadence": "weekly",
       "monitoringMode": "content-hash",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -1411,7 +1564,9 @@
       "cadence": "weekly",
       "monitoringMode": "content-hash",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -1432,7 +1587,9 @@
       "cadence": "weekly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -1453,7 +1610,9 @@
       "cadence": "weekly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -1474,7 +1633,9 @@
       "cadence": "weekly",
       "monitoringMode": "content-hash",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -1495,7 +1656,9 @@
       "cadence": "weekly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -1516,7 +1679,9 @@
       "cadence": "weekly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -1537,7 +1702,9 @@
       "cadence": "weekly",
       "monitoringMode": "content-hash",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -1558,7 +1725,9 @@
       "cadence": "weekly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -1579,7 +1748,9 @@
       "cadence": "weekly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -1600,7 +1771,9 @@
       "cadence": "weekly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -1621,7 +1794,9 @@
       "cadence": "weekly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -1642,7 +1817,9 @@
       "cadence": "weekly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -1663,7 +1840,9 @@
       "cadence": "weekly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -1684,7 +1863,9 @@
       "cadence": "weekly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -1705,7 +1886,9 @@
       "cadence": "weekly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -1726,7 +1909,9 @@
       "cadence": "weekly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -1747,7 +1932,9 @@
       "cadence": "weekly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -1768,7 +1955,9 @@
       "cadence": "weekly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -1789,7 +1978,9 @@
       "cadence": "weekly",
       "monitoringMode": "content-hash",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -1810,7 +2001,9 @@
       "cadence": "weekly",
       "monitoringMode": "content-hash",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -1831,7 +2024,9 @@
       "cadence": "weekly",
       "monitoringMode": "content-hash",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -1852,7 +2047,10 @@
       "cadence": "daily",
       "monitoringMode": "content-hash",
       "owner": "general-source-freshness",
-      "affectedPages": ["/projects-budget", "/accountability"],
+      "affectedPages": [
+        "/projects-budget",
+        "/accountability"
+      ],
       "status": "ok",
       "statusCode": 200,
       "contentType": "application/pdf",
@@ -1872,7 +2070,10 @@
       "cadence": "daily",
       "monitoringMode": "content-hash",
       "owner": "general-source-freshness",
-      "affectedPages": ["/projects-budget", "/accountability"],
+      "affectedPages": [
+        "/projects-budget",
+        "/accountability"
+      ],
       "status": "ok",
       "statusCode": 200,
       "contentType": "application/pdf",
@@ -1892,7 +2093,10 @@
       "cadence": "monthly",
       "monitoringMode": "content-hash",
       "owner": "general-source-freshness",
-      "affectedPages": ["/projects-budget", "/accountability"],
+      "affectedPages": [
+        "/projects-budget",
+        "/accountability"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -1913,7 +2117,9 @@
       "cadence": "daily",
       "monitoringMode": "content-hash",
       "owner": "general-source-freshness",
-      "affectedPages": ["/elections"],
+      "affectedPages": [
+        "/elections"
+      ],
       "status": "ok",
       "statusCode": 200,
       "contentType": "application/pdf",
@@ -1933,7 +2139,9 @@
       "cadence": "daily",
       "monitoringMode": "content-hash",
       "owner": "general-source-freshness",
-      "affectedPages": ["/elections"],
+      "affectedPages": [
+        "/elections"
+      ],
       "status": "ok",
       "statusCode": 200,
       "contentType": "application/pdf",
@@ -1953,7 +2161,9 @@
       "cadence": "daily",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/elections"],
+      "affectedPages": [
+        "/elections"
+      ],
       "status": "ok",
       "statusCode": 200,
       "contentType": "text/html",
@@ -1973,7 +2183,9 @@
       "cadence": "daily",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/elections"],
+      "affectedPages": [
+        "/elections"
+      ],
       "status": "unreachable",
       "statusCode": null,
       "contentType": "",
@@ -1994,7 +2206,9 @@
       "cadence": "daily",
       "monitoringMode": "content-hash",
       "owner": "general-source-freshness",
-      "affectedPages": ["/elections"],
+      "affectedPages": [
+        "/elections"
+      ],
       "status": "ok",
       "statusCode": 200,
       "contentType": "application/pdf",
@@ -2014,7 +2228,9 @@
       "cadence": "weekly",
       "monitoringMode": "content-hash",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -2035,7 +2251,9 @@
       "cadence": "monthly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -2056,7 +2274,9 @@
       "cadence": "monthly",
       "monitoringMode": "content-hash",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -2077,7 +2297,9 @@
       "cadence": "weekly",
       "monitoringMode": "content-hash",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -2098,7 +2320,10 @@
       "cadence": "weekly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services", "/barangays"],
+      "affectedPages": [
+        "/services",
+        "/barangays"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -2119,7 +2344,10 @@
       "cadence": "weekly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services", "/barangays"],
+      "affectedPages": [
+        "/services",
+        "/barangays"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -2140,7 +2368,10 @@
       "cadence": "weekly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services", "/barangays"],
+      "affectedPages": [
+        "/services",
+        "/barangays"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -2161,7 +2392,9 @@
       "cadence": "weekly",
       "monitoringMode": "content-hash",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services"],
+      "affectedPages": [
+        "/services"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -2182,7 +2415,10 @@
       "cadence": "weekly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services", "/barangays"],
+      "affectedPages": [
+        "/services",
+        "/barangays"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -2203,7 +2439,10 @@
       "cadence": "weekly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/services", "/barangays"],
+      "affectedPages": [
+        "/services",
+        "/barangays"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -2224,7 +2463,9 @@
       "cadence": "weekly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/elections"],
+      "affectedPages": [
+        "/elections"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -2245,7 +2486,9 @@
       "cadence": "weekly",
       "monitoringMode": "content-hash",
       "owner": "general-source-freshness",
-      "affectedPages": ["/elections"],
+      "affectedPages": [
+        "/elections"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -2266,7 +2509,9 @@
       "cadence": "weekly",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/legislation"],
+      "affectedPages": [
+        "/legislation"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -2287,7 +2532,9 @@
       "cadence": "weekly",
       "monitoringMode": "content-hash",
       "owner": "general-source-freshness",
-      "affectedPages": ["/legislation"],
+      "affectedPages": [
+        "/legislation"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -2308,7 +2555,9 @@
       "cadence": "weekly",
       "monitoringMode": "content-hash",
       "owner": "general-source-freshness",
-      "affectedPages": ["/legislation"],
+      "affectedPages": [
+        "/legislation"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -2329,7 +2578,9 @@
       "cadence": "weekly",
       "monitoringMode": "content-hash",
       "owner": "general-source-freshness",
-      "affectedPages": ["/legislation"],
+      "affectedPages": [
+        "/legislation"
+      ],
       "status": "not-checked",
       "statusCode": null,
       "contentType": "",
@@ -2350,7 +2601,11 @@
       "cadence": "daily",
       "monitoringMode": "reachability",
       "owner": "general-source-freshness",
-      "affectedPages": ["/projects-budget", "/accountability", "/records"],
+      "affectedPages": [
+        "/projects-budget",
+        "/accountability",
+        "/records"
+      ],
       "status": "ok",
       "statusCode": 200,
       "contentType": "text/html",
@@ -2361,6 +2616,54 @@
       "lastCheckedAt": "2026-09-27T00:06:30.505Z",
       "lastSuccessfulAt": "2026-09-27T00:06:30.505Z",
       "lastChangedAt": null
+    },
+    {
+      "id": "pia-ra-12326-bske-current-schedule",
+      "label": "Republic Act No. 12326 current BSKE schedule update",
+      "url": "https://pia.gov.ph/news/pbbm-signs-law-fixing-the-terms-of-barangay-and-sk-officials/",
+      "kind": "election-law",
+      "cadence": "monthly",
+      "monitoringMode": "reachability",
+      "owner": "general-source-freshness",
+      "affectedPages": [
+        "/elections",
+        "/calendar"
+      ],
+      "status": "not-checked",
+      "statusCode": null,
+      "contentType": "",
+      "contentLength": 0,
+      "sha256": "",
+      "lastSuccessfulHash": "",
+      "change": "not-checked",
+      "lastCheckedAt": null,
+      "lastSuccessfulAt": null,
+      "lastChangedAt": null,
+      "delegated": false
+    },
+    {
+      "id": "pna-ra-12326-bske-postponement",
+      "label": "RA 12326 BSKE postponement and COMELEC response",
+      "url": "https://www.pna.gov.ph/index.php/articles/1284830",
+      "kind": "election",
+      "cadence": "weekly",
+      "monitoringMode": "reachability",
+      "owner": "general-source-freshness",
+      "affectedPages": [
+        "/elections",
+        "/calendar"
+      ],
+      "status": "not-checked",
+      "statusCode": null,
+      "contentType": "",
+      "contentLength": 0,
+      "sha256": "",
+      "lastSuccessfulHash": "",
+      "change": "not-checked",
+      "lastCheckedAt": null,
+      "lastSuccessfulAt": null,
+      "lastChangedAt": null,
+      "delegated": false
     }
   ]
 }
