@@ -84,6 +84,32 @@ requireAll(tests, 'W6-3b browser QA', [
   "name: 'Participate in Makati'",
 ]);
 
+
+
+const homepageOrder = [
+  '<Hero />',
+  'Common services',
+  'Public action & evidence',
+  'Take part in Makati',
+  'Understand the city as you explore it',
+  '<FeaturedInsightsCarousel />',
+  'Makati at a glance',
+  'title="Around Makati"',
+];
+
+let previousIndex = -1;
+for (const marker of homepageOrder) {
+  const index = home.indexOf(marker);
+  if (index < 0) {
+    problems.push('Homepage priority-order marker missing: ' + marker);
+    continue;
+  }
+  if (index <= previousIndex) {
+    problems.push('Homepage priority order regressed around: ' + marker);
+  }
+  previousIndex = index;
+}
+
 const occurrences = (
   packageJson.match(/npm run check:wave6-homepage-ia/g) ?? []
 ).length;
