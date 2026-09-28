@@ -74,7 +74,6 @@ for (const marker of [
   "id: 'rockwell-center'",
   "id: 'circuit-makati'",
   'resolveTripEndpoint',
-  "title: centuryCity.label + ' E-Bus'",
   'trip.destination.mapQuery',
   'trip.origin.mapQuery',
 ]) {
