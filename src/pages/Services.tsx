@@ -85,6 +85,7 @@ const Services: React.FC = () => {
   const [directoryLevel, setDirectoryLevel] = useState<'All' | ServiceLevel>('All');
   const [directoryCategory, setDirectoryCategory] = useState('All');
   const { barangay } = useBarangayScope();
+  const scopedServiceHref = (href: string) => withBarangayScope(href, barangay?.slug);
   const localServicePlaces = barangay
     ? placesByBarangay(barangay.name).filter(
         place =>
@@ -193,16 +194,16 @@ const Services: React.FC = () => {
 
               <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-primary-50">
                 <span className="font-medium text-primary-100">Start with:</span>
-                <Link to="/services/business/new-business-permit" className="min-h-11 content-center font-semibold underline decoration-white/40 underline-offset-4 hover:text-secondary-300">
+                <Link to={scopedServiceHref('/services/business/new-business-permit')} className="min-h-11 content-center font-semibold underline decoration-white/40 underline-offset-4 hover:text-secondary-300">
                   Business permit
                 </Link>
-                <Link to="/services/health-services/makati-health-plus" className="min-h-11 content-center font-semibold underline decoration-white/40 underline-offset-4 hover:text-secondary-300">
+                <Link to={scopedServiceHref('/services/health-services/makati-health-plus')} className="min-h-11 content-center font-semibold underline decoration-white/40 underline-offset-4 hover:text-secondary-300">
                   Yellow Card
                 </Link>
-                <Link to="/services/guide/community-tax-certificate" className="min-h-11 content-center font-semibold underline decoration-white/40 underline-offset-4 hover:text-secondary-300">
+                <Link to={scopedServiceHref('/services/guide/community-tax-certificate')} className="min-h-11 content-center font-semibold underline decoration-white/40 underline-offset-4 hover:text-secondary-300">
                   Cedula
                 </Link>
-                <Link to="/services/housing-land-use/real-property-tax-payment" className="min-h-11 content-center font-semibold underline decoration-white/40 underline-offset-4 hover:text-secondary-300">
+                <Link to={scopedServiceHref('/services/housing-land-use/real-property-tax-payment')} className="min-h-11 content-center font-semibold underline decoration-white/40 underline-offset-4 hover:text-secondary-300">
                   Real property tax
                 </Link>
               </div>
@@ -306,7 +307,7 @@ const Services: React.FC = () => {
                 {localServicePlaces.map(place => (
                   <Link
                     key={place.id}
-                    to={'/civic-map/' + place.id}
+                    to={withBarangayScope('/civic-map/' + place.id, barangay.slug)}
                     className="rounded-xl border border-gray-200 p-4 transition hover:border-primary-300"
                   >
                     <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
@@ -395,7 +396,7 @@ const Services: React.FC = () => {
                   </div>
 
                   <Link
-                    to={`/services/guide/${item.id}`}
+                    to={scopedServiceHref(`/services/guide/${item.id}`)}
                     className="inline-flex min-h-11 items-center justify-center rounded-xl bg-primary-800 px-4 py-2 text-sm font-bold text-white hover:bg-primary-900"
                   >
                     Open guide
@@ -500,7 +501,14 @@ const Services: React.FC = () => {
   if (!categoryData) {
     return (
       <Section className="p-3 mb-12">
-        <Breadcrumbs className="mb-8" />
+        <Breadcrumbs
+          className="mb-8"
+          items={[
+            { label: 'Home', href: '/' },
+            { label: 'Services', href: scopedServiceHref('/services') },
+            { label: category || 'Category not found' },
+          ]}
+        />
         <Banner
           type="error"
           title="Category not found"
@@ -519,7 +527,14 @@ const Services: React.FC = () => {
         keywords={`${categoryData.category}, Makati City services`}
       />
       <Section className="p-3 mb-12">
-        <Breadcrumbs className="mb-8" />
+        <Breadcrumbs
+          className="mb-8"
+          items={[
+            { label: 'Home', href: '/' },
+            { label: 'Services', href: scopedServiceHref('/services') },
+            { label: categoryData.category },
+          ]}
+        />
         {Icon && <Icon className="h-8 w-8 mb-4 text-primary-600 rounded-md" />}
         <Heading>{categoryData.category}</Heading>
         <Text className="text-gray-600 mb-3">{categoryData.description}</Text>
@@ -547,7 +562,7 @@ const Services: React.FC = () => {
             {subcategories.map(subcategory => (
               <Link
                 key={subcategory.slug}
-                to={`/services/${category}/${subcategory.slug}`}
+                to={scopedServiceHref(`/services/${category}/${subcategory.slug}`)}
               >
                 <Card hoverable className="mb-4 h-full">
                   <CardContent>
