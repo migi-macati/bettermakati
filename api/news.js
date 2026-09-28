@@ -3,6 +3,7 @@ import {
   fetchGoogleNews,
   googleNewsUrl,
 } from '../scripts/news-feed.mjs';
+import { newsPolicyVersion } from '../scripts/news-policy.mjs';
 
 export default async function handler(request, response) {
   if (request.method !== 'GET') {
@@ -12,7 +13,11 @@ export default async function handler(request, response) {
   }
 
   try {
-    const items = await fetchGoogleNews({ query: defaultNewsQuery, limit: 30 });
+    const result = await fetchGoogleNews({
+      query: defaultNewsQuery,
+      limit: 30,
+    });
+
     response.setHeader('Access-Control-Allow-Origin', '*');
     response.setHeader(
       'Cache-Control',
@@ -22,13 +27,27 @@ export default async function handler(request, response) {
       source: 'Google News RSS',
       sourceUrl: googleNewsUrl(defaultNewsQuery),
       query: defaultNewsQuery,
-      updatedAt: new Date().toISOString(),
-      items,
+      updatedAt: result.meta.retrievedAt,
+      meta: result.meta,
+      items: result.items,
     });
   } catch (error) {
+    const checkedAt = new Date().toISOString();
     response.status(502).json({
       error: 'The Google News feed is temporarily unavailable.',
       detail: error instanceof Error ? error.message : 'Unknown feed error',
+      meta: {
+        policyVersion: newsPolicyVersion,
+        retrievedAt: checkedAt,
+        sourceHealth: [
+          {
+            id: 'google-news-rss',
+            status: 'failed',
+            checkedAt,
+            itemCount: 0,
+          },
+        ],
+      },
     });
   }
 }
