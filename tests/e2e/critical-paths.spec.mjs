@@ -129,7 +129,7 @@ test('unknown deep links land on recoverable noindex 404', async ({ page }) => {
   );
   await expect(
     page.locator('#main-content').getByRole('link', { name: 'Search BetterMakati', exact: true })
-  ).toHaveAttribute('href', '/search');
+  ).toHaveAttribute('href', '/search?barangay=poblacion');
   await expect(page.getByLabel('Choose BetterBarangay view')).toHaveCount(0);
   await expect(
     page.getByPlaceholder('Try a service, barangay, official, place or topic')
@@ -261,6 +261,50 @@ test('homepage universal search tolerates a simple typo', async ({ page }) => {
   const search = page.getByPlaceholder(/Try Yellow Card, Poblacion, business permit, budget/i);
   await search.fill('cedla');
   await expect(page.getByText(/Community Tax Certificate|Cedula/i).first()).toBeVisible();
+});
+
+test('header search preserves a chosen BetterBarangay into local-capable results', async ({ page }) => {
+  await page.goto(baseURL + '/barangays/poblacion');
+
+  const headerSearch = page.locator('nav').getByRole('link', {
+    name: 'Search BetterMakati',
+    exact: true,
+  });
+  await expect(headerSearch).toContainText('Search');
+  await headerSearch.click();
+
+  await expect(page).toHaveURL(baseURL + '/search?barangay=poblacion');
+
+  const search = page.locator('#site-search');
+  await search.fill('cedula');
+  const result = page
+    .getByRole('listbox', { name: /matches/i })
+    .getByRole('option')
+    .filter({ hasText: /Community Tax Certificate|Cedula/i })
+    .first();
+  await expect(result).toBeVisible();
+  await result.click();
+
+  await expect(page).toHaveURL(
+    baseURL + '/services/guide/community-tax-certificate?barangay=poblacion'
+  );
+});
+
+test('homepage true miss enters canonical search recovery instead of Saan Ako Lalapit', async ({ page }) => {
+  await page.goto(baseURL + '/');
+  const search = page.getByPlaceholder(/Try Yellow Card, Poblacion, business permit, budget/i);
+  await search.fill(guaranteedMissingQuery);
+  await search.press('Enter');
+
+  await expect(page).toHaveURL(
+    baseURL + '/search?q=' + guaranteedMissingQuery
+  );
+  await expect(
+    page.getByText('No BetterMakati match for “' + guaranteedMissingQuery + '”', {
+      exact: true,
+    })
+  ).toBeVisible();
+  await expect(page).not.toHaveURL(/saan-ako-lalapit/);
 });
 
 test('site search ranks civic aliases and synonyms ahead of incidental matches', async ({ page }) => {
