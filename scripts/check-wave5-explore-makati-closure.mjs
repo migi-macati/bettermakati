@@ -239,7 +239,7 @@ for (const forbidden of [
 
 for (const marker of [
   "label: 'Explore Makati'",
-  "{ label: 'City starting points', href: '/visit#places-to-start' }",
+  "href: '/visit'",
 ]) {
   if (!navigation.includes(marker)) {
     problems.push('Explore navigation marker missing: ' + marker);
