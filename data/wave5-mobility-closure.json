@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 1,
+  "wave": "W5-4",
+  "title": "Mobility",
+  "reviewedOn": "2026-09-28",
+  "closureStatus": "closed-with-bounded-evidence-and-deployment-verification-deferred",
+  "complete": [
+    {
+      "id": "mobility-system-model",
+      "capability": "Canonical current system/service model",
+      "count": 4
+    },
+    {
+      "id": "mobility-route-registry",
+      "capability": "Canonical route/corridor registry",
+      "count": 67
+    },
+    {
+      "id": "mobility-network",
+      "capability": "Canonical mobility-network relationships",
+      "count": 48
+    },
+    {
+      "id": "mobility-geometry",
+      "capability": "Repository-owned mobility alignment geometry",
+      "count": 2
+    },
+    {
+      "id": "mobility-page",
+      "capability": "Canonical Getting Around page rebuild"
+    },
+    {
+      "id": "mobility-search",
+      "capability": "Search/Civic Intelligence mobility integration"
+    },
+    {
+      "id": "mobility-external-resources",
+      "capability": "Reviewed external ride-hailing resource handoffs",
+      "count": 4
+    },
+    {
+      "id": "mobility-responsive",
+      "capability": "Responsive/filterable route registry presentation"
+    }
+  ],
+  "bounded": [
+    {
+      "id": "tricycle-toda-inventory",
+      "capability": "Current tricycle/TODA route, terminal and service-area inventory",
+      "status": "not-canonicalized",
+      "reason": "Reviewed sources did not establish a sufficiently authoritative current MFRB/MATRIFED roster."
+    },
+    {
+      "id": "depw-bus-stop-roster",
+      "capability": "Named Makati-wide roster behind the 2023 DEPW headline count of 32 bus stops",
+      "status": "denominator-only",
+      "reason": "The reviewed official material establishes the count but not a stable named/location roster."
+    },
+    {
+      "id": "route-geometry-coverage",
+      "capability": "Linear geometry for current jeepney, city-bus, P2P and UV route records",
+      "status": "geometry-less-by-design",
+      "reason": "No route line is published without defensible repository-owned polyline evidence."
+    },
+    {
+      "id": "volatile-operating-fields",
+      "capability": "Fare, timetable, gate, operator and live availability fields",
+      "status": "live-handoff",
+      "reason": "Volatile operating details remain with current operator/service sources instead of being frozen into static canonical records."
+    }
+  ],
+  "deferred": [
+    {
+      "id": "deployment-live-browser-verification",
+      "capability": "Fresh production deployment and live-browser verification of the completed W5-4 surfaces",
+      "status": "unverified",
+      "reason": "The latest Vercel deployment is failing and current connector access cannot read build logs for the BetterMakati team scope; repository closure therefore does not claim a successful fresh deployment or live-browser pass.",
+      "nonClaim": "A failed deployment status without accessible build logs does not establish that the W5-4 code caused the failure."
+    }
+  ],
+  "counts": {
+    "mobilitySystems": 4,
+    "publicSystems": 3,
+    "privateServices": 1,
+    "canonicalRouteRecords": 67,
+    "historicalJeepneyRows": 38,
+    "currentOrSuccessorJeepneyCorridors": 35,
+    "unresolvedJeepneyRows": 3,
+    "currentBusP2pUvRoutes": 29,
+    "networkRelationships": 48,
+    "explicitTransfers": 5,
+    "explicitServiceHubConnections": 2,
+    "mobilityGeometryArtifacts": 2,
+    "externalMobilityResources": 4
+  },
+  "futureCapabilities": [
+    "authoritative-current-tricycle-toda-roster",
+    "named-depw-bus-stop-roster",
+    "additional-source-backed-route-geometry",
+    "fresh-deployment-and-live-browser-verification"
+  ],
+  "finalStatement": "W5-4 Mobility is closed at repository level with explicit evidence bounds and deployment/live-browser verification deferred."
+}

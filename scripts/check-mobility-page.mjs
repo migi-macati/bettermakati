@@ -1,9 +1,16 @@
 import { readFile } from 'node:fs/promises';
 
-const [pageSource, routeSource, networkSource, packageSource] = await Promise.all([
+const [
+  pageSource,
+  routeSource,
+  networkSource,
+  externalResourceSource,
+  packageSource,
+] = await Promise.all([
   readFile('src/pages/Mobility.tsx', 'utf8'),
   readFile('src/data/mobilityRoutes.ts', 'utf8'),
   readFile('src/data/mobilityNetwork.ts', 'utf8'),
+  readFile('src/data/mobilityExternalResources.ts', 'utf8'),
   readFile('package.json', 'utf8'),
 ]);
 
@@ -72,6 +79,10 @@ for (const marker of [
   "Show fewer",
   "overflow-x-auto",
   "min-h-11 shrink-0 whitespace-nowrap",
+  "mobilityExternalResources",
+  "mobilityExternalResources.map",
+  "resource.primaryUrl",
+  "resource.displayType",
 ]) {
   if (!pageSource.includes(marker)) {
     problems.push('Mobility page canonical presentation marker missing: ' + marker);
@@ -84,6 +95,7 @@ for (const forbidden of [
   'One%20Ayala%20Makati',
   "centuryCity.label + ' E-Bus'",
   "mobilityRouteGeometryArtifacts",
+  "const rideApps =",
 ]) {
   if (pageSource.includes(forbidden)) {
     problems.push('Mobility page still contains stale/manual system presentation: ' + forbidden);
@@ -157,6 +169,31 @@ if (/transfer-[^\n']*magallanes/i.test(explicitNetworkBlock)) {
   problems.push(
     'Mobility page must not surface an invented Magallanes MRT/Busway transfer.'
   );
+}
+
+const externalResourceIds = [
+  ...externalResourceSource.matchAll(/^    id: '([^']+)',$/gm),
+].map(match => match[1]);
+
+if (
+  JSON.stringify(externalResourceIds) !==
+  JSON.stringify(['grab-ph', 'angkas', 'joyride-ph', 'move-it-ph'])
+) {
+  problems.push(
+    'Mobility page expects the four reviewed external app-based mobility resources.'
+  );
+}
+
+for (const marker of [
+  'officialSourceUrls',
+  'volatilityNote',
+  'validateMobilityExternalResources',
+]) {
+  if (!externalResourceSource.includes(marker)) {
+    problems.push(
+      'Mobility external-resource evidence guard missing: ' + marker
+    );
+  }
 }
 
 const gateCount = (

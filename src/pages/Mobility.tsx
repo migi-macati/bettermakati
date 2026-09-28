@@ -45,6 +45,7 @@ import {
   type MobilityHistoricalRouteRecord,
   type MobilityRouteCorridorRecord,
 } from '../data/mobilityRoutes';
+import { mobilityExternalResources } from '../data/mobilityExternalResources';
 import {
   mobilityNetworkRelationships,
   mobilityNetworkSources,
@@ -256,13 +257,6 @@ const serviceHasInterchange = (service: MobilityServiceRecord) =>
   service.placeConnections.some(connection =>
     transferPlaceIds.has(connection.placeId)
   );
-
-const rideApps = [
-  { name: 'Grab', href: 'https://www.grab.com/ph/download/', type: 'Car & taxi' },
-  { name: 'Angkas', href: 'https://www.angkas.com/consumer', type: 'Motorcycle taxi' },
-  { name: 'JoyRide', href: 'https://joyride.com.ph/', type: 'Car, taxi & motorcycle' },
-  { name: 'MOVE IT', href: 'https://moveit.com.ph/how-it-works/', type: 'Motorcycle taxi' },
-];
 
 type TripEndpoint =
   | DistrictReference
@@ -1202,17 +1196,24 @@ export default function Mobility() {
         <div className="section-eyebrow">Ride-hailing</div>
         <Heading level={2}>Book a ride</Heading>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-7">
-          {rideApps.map(app => (
+          {mobilityExternalResources.map(resource => (
             <a
-              key={app.name}
-              href={app.href}
+              key={resource.id}
+              href={resource.primaryUrl}
               target="_blank"
               rel="noreferrer"
-              className="rounded-2xl border border-primary-100 bg-white p-5 hover:border-primary-300 hover:shadow-sm transition"
+              className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
             >
               <Car className="h-5 w-5 text-primary-700" />
-              <h3 className="font-extrabold text-gray-950 mt-3">{app.name}</h3>
-              <p className="text-sm text-gray-600 mt-1">{app.type}</p>
+              <h3 className="mt-3 font-extrabold text-gray-950">
+                {resource.name}
+              </h3>
+              <p className="mt-1 text-sm font-bold text-gray-700">
+                {resource.displayType}
+              </p>
+              <p className="mt-2 text-sm leading-relaxed text-gray-600">
+                {resource.summary}
+              </p>
             </a>
           ))}
         </div>
