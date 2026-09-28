@@ -8,6 +8,7 @@ import {
   MapPin,
   Navigation,
   Plane,
+  Ship,
   Train,
 } from 'lucide-react';
 import Section from '../components/ui/Section';
@@ -18,6 +19,7 @@ import SharePage from '../components/ui/SharePage';
 import PhotoCarousel from '../components/ui/PhotoCarousel';
 import { mobilityImageSet } from '../data/cityImages';
 import {
+  placeRegistryById,
   placesByCategory,
   type PlaceRegistryRecord,
 } from '../data/placeRegistry';
@@ -25,6 +27,10 @@ import {
   resolveDistrictReference,
   type DistrictReference,
 } from '../data/districtReferences';
+import {
+  mobilityServices,
+  type MobilityServiceRecord,
+} from '../data/mobilitySystems';
 
 const verifiedTransportPlaces = [
   ...placesByCategory('transport-stop'),
@@ -55,37 +61,35 @@ const primaryTransportSource = (place: PlaceRegistryRecord) =>
   place.provenance.sources.find(source => source.kind !== 'reference-map') ??
   place.provenance.sources[0];
 
-const centuryCity = resolveDistrictReference({
-  type: 'area',
-  id: 'century-city',
-});
+const publicMobilityServices = mobilityServices.filter(
+  service => service.governance === 'public'
+);
 
-const transitLinks = [
-  {
-    title: 'MRT-3',
-    description: 'Makati stations: Guadalupe, Buendia, Ayala and Magallanes.',
-    href: 'https://www.dotrmrt3.gov.ph/about-us',
-    icon: Train,
-  },
-  {
-    title: 'One Ayala Transport Hub',
-    description: 'MRT, EDSA Busway, city buses, P2P, UV Express and jeepneys.',
-    href: 'https://www.google.com/maps/search/?api=1&query=One%20Ayala%20Makati',
-    icon: Bus,
-  },
-  {
-    title: 'EDSA Busway',
-    description: 'Busway stations include Guadalupe, Buendia and Ayala.',
-    href: 'https://edsabus.com/route-map',
-    icon: Bus,
-  },
-  {
-    title: centuryCity.label + ' E-Bus',
-    description: centuryCity.label + ' transport hub route map and schedule.',
-    href: 'https://ccth.framer.ai/',
-    icon: Bus,
-  },
-];
+const privateMobilityServices = mobilityServices.filter(
+  service => service.governance === 'private'
+);
+
+const oneAyala = placeRegistryById.get('one-ayala-terminal');
+
+const mobilityServiceKind = (service: MobilityServiceRecord) => {
+  if (service.serviceClass === 'public-ferry') return 'Public ferry service';
+  if (service.serviceClass === 'private-estate-shuttle') {
+    return 'Private estate shuttle';
+  }
+  return 'Public transport system';
+};
+
+const mobilityServiceIcon = (service: MobilityServiceRecord) => {
+  if (service.mode === 'rail') return Train;
+  if (service.mode === 'ferry') return Ship;
+  return Bus;
+};
+
+const preferredMobilityServiceLink = (service: MobilityServiceRecord) =>
+  service.links.find(link => link.kind === 'official-site') ??
+  service.links.find(link => link.kind === 'current-service-info') ??
+  service.links.find(link => link.kind === 'route-schedule') ??
+  service.links[0];
 
 const rideApps = [
   { name: 'Grab', href: 'https://www.grab.com/ph/download/', type: 'Car & taxi' },
@@ -184,7 +188,10 @@ export default function Mobility() {
           </div>
           <SharePage title="Getting Around Makati | BetterMakati" />
         </div>
-        <LastReviewed date="2026-09-20" note="Schedules and routes can change; confirm current service with the linked operator or map." />
+        <LastReviewed
+          date="2026-09-28"
+          note="System identity and Makati transport anchors come from canonical BetterMakati records. Schedules, fares and live routing remain with the linked operator or map."
+        />
         <PhotoCarousel
           images={mobilityImageSet}
           title="Street-level Makati"
@@ -192,7 +199,7 @@ export default function Mobility() {
           className="mt-7"
         />
 
-        <div className="mt-8 grid grid-cols-1 lg:grid-cols-[0.95fr_1.05fr] gap-6 items-start">
+        <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
           <div className="rounded-2xl border border-gray-200 bg-white p-6">
             <div className="flex items-center gap-2 font-bold text-gray-950">
               <Navigation className="h-5 w-5 text-primary-700" />
@@ -208,7 +215,11 @@ export default function Mobility() {
               />
             </label>
 
-            <div className="mt-4 flex flex-wrap gap-2" role="group" aria-label="Travel mode">
+            <div
+              className="mt-4 flex flex-wrap gap-2"
+              role="group"
+              aria-label="Travel mode"
+            >
               {[
                 ['transit', 'Public transport'],
                 ['walking', 'Walk'],
@@ -220,7 +231,11 @@ export default function Mobility() {
                   type="button"
                   onClick={() => setMode(value)}
                   aria-pressed={mode === value}
-                  className={mode === value ? 'brand-chip !bg-primary-800 !text-white' : 'brand-chip'}
+                  className={
+                    mode === value
+                      ? 'brand-chip !bg-primary-800 !text-white'
+                      : 'brand-chip'
+                  }
                 >
                   {label}
                 </button>
@@ -237,24 +252,137 @@ export default function Mobility() {
             </a>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {transitLinks.map(item => {
-              const Icon = item.icon;
-              return (
-                <a
-                  key={item.title}
-                  href={item.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="rounded-2xl border border-gray-200 bg-white p-5 hover:border-primary-300 hover:shadow-sm transition"
-                >
-                  <Icon className="h-6 w-6 text-primary-700" />
-                  <h2 className="font-extrabold text-lg text-gray-950 mt-4">{item.title}</h2>
-                  <p className="text-sm text-gray-600 mt-1">{item.description}</p>
-                </a>
-              );
-            })}
+          <div>
+            <div className="section-eyebrow">Public transport</div>
+            <div className="mt-3 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {publicMobilityServices.map(service => {
+                const Icon = mobilityServiceIcon(service);
+                const currentLink = preferredMobilityServiceLink(service);
+
+                return (
+                  <article
+                    key={service.id}
+                    className="rounded-2xl border border-gray-200 bg-white p-5"
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <div>
+                        <div className="text-xs font-extrabold uppercase tracking-[0.08em] text-primary-700">
+                          {mobilityServiceKind(service)}
+                        </div>
+                        <h2 className="mt-2 text-lg font-extrabold text-gray-950">
+                          {service.name}
+                        </h2>
+                      </div>
+                      <Icon
+                        className="h-6 w-6 shrink-0 text-primary-700"
+                        aria-hidden="true"
+                      />
+                    </div>
+
+                    <p className="mt-2 text-sm leading-relaxed text-gray-600">
+                      {service.summary}
+                    </p>
+                    <p className="mt-3 text-xs font-bold text-gray-500">
+                      {service.placeConnections.length} Makati connection
+                      {service.placeConnections.length === 1 ? '' : 's'}
+                    </p>
+
+                    <div className="mt-4 flex flex-wrap gap-3">
+                      <a
+                        href="#transport-anchors"
+                        className="text-sm font-bold text-primary-700 underline underline-offset-2"
+                      >
+                        Stations and terminals
+                      </a>
+                      {currentLink && (
+                        <a
+                          href={currentLink.url}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex items-center gap-1 text-sm font-bold text-primary-700 underline underline-offset-2"
+                        >
+                          Current service info
+                          <ExternalLink className="h-3.5 w-3.5" />
+                        </a>
+                      )}
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
           </div>
+        </div>
+
+        <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
+          {oneAyala && (
+            <article className="rounded-2xl border border-secondary-200 bg-secondary-50/40 p-5">
+              <div className="text-xs font-extrabold uppercase tracking-[0.08em] text-secondary-900">
+                Intermodal hub
+              </div>
+              <h2 className="mt-2 text-lg font-extrabold text-gray-950">
+                {oneAyala.name}
+              </h2>
+              {oneAyala.summary && (
+                <p className="mt-2 text-sm leading-relaxed text-gray-600">
+                  {oneAyala.summary}
+                </p>
+              )}
+              {oneAyala.location.address && (
+                <p className="mt-3 text-sm text-gray-600">
+                  {oneAyala.location.address}
+                </p>
+              )}
+              <Link
+                to={'/civic-map/' + oneAyala.id}
+                className="mt-4 inline-flex text-sm font-bold text-primary-700 underline underline-offset-2"
+              >
+                Open One Ayala place record
+              </Link>
+            </article>
+          )}
+
+          {privateMobilityServices.map(service => {
+            const Icon = mobilityServiceIcon(service);
+            const currentLink = preferredMobilityServiceLink(service);
+
+            return (
+              <article
+                key={service.id}
+                className="rounded-2xl border border-gray-200 bg-white p-5"
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <div className="text-xs font-extrabold uppercase tracking-[0.08em] text-primary-700">
+                      {mobilityServiceKind(service)}
+                    </div>
+                    <h2 className="mt-2 text-lg font-extrabold text-gray-950">
+                      {service.name}
+                    </h2>
+                  </div>
+                  <Icon
+                    className="h-6 w-6 shrink-0 text-primary-700"
+                    aria-hidden="true"
+                  />
+                </div>
+
+                <p className="mt-2 text-sm leading-relaxed text-gray-600">
+                  {service.summary}
+                </p>
+
+                {currentLink && (
+                  <a
+                    href={currentLink.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700 underline underline-offset-2"
+                  >
+                    Current route and schedule
+                    <ExternalLink className="h-3.5 w-3.5" />
+                  </a>
+                )}
+              </article>
+            );
+          })}
         </div>
       </Section>
 
