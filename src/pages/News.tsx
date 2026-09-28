@@ -82,7 +82,7 @@ export default function News() {
           <Link to="/calendar" className="brand-btn-secondary">Makati Calendar</Link>
         </div>
 
-        <div className="mt-6 rounded-2xl border border-primary-100 bg-primary-50 p-5 md:p-6">
+        <div className="mt-6 rounded-2xl border border-primary-100 bg-primary-50 p-5 md:p-6" aria-busy={loading}>
           <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <div className="flex items-start gap-3">
               <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-white text-primary-700">
@@ -101,7 +101,7 @@ export default function News() {
               type="button"
               onClick={() => void loadNews()}
               disabled={loading}
-              className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl border border-primary-200 bg-white px-3 py-2 text-sm font-bold text-primary-800 hover:border-primary-500 disabled:cursor-wait disabled:opacity-60"
+              className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-xl border border-primary-200 bg-white px-3 py-2 text-sm font-bold text-primary-800 hover:border-primary-500 disabled:cursor-wait disabled:opacity-60"
             >
               <RefreshCw
                 className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`}
@@ -113,7 +113,7 @@ export default function News() {
         </div>
 
         {error && (
-          <div className="mt-5 flex items-start gap-3 rounded-xl border border-secondary-200 bg-secondary-50 p-4 text-sm text-gray-700">
+          <div role="alert" className="mt-5 flex items-start gap-3 rounded-xl border border-secondary-200 bg-secondary-50 p-4 text-sm text-gray-700">
             <AlertCircle
               className="mt-0.5 h-5 w-5 shrink-0 text-secondary-700"
               aria-hidden="true"
@@ -175,7 +175,7 @@ export default function News() {
                         <Link
                           key={relationship.id}
                           to={relationship.href}
-                          className="rounded-full border border-primary-100 bg-primary-50 px-2.5 py-1.5 text-xs font-bold text-primary-800 hover:border-primary-300"
+                          className="inline-flex min-h-11 items-center rounded-full border border-primary-100 bg-primary-50 px-2.5 py-1.5 text-xs font-bold text-primary-800 hover:border-primary-300"
                         >
                           {relationship.label}
                         </Link>
@@ -189,7 +189,7 @@ export default function News() {
                     href={item.link}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-1 text-sm font-bold text-primary-700 underline underline-offset-2"
+                    className="inline-flex min-h-11 items-center gap-1 text-sm font-bold text-primary-700 underline underline-offset-2"
                   >
                     Read at publisher <ExternalLink className="h-3.5 w-3.5" />
                   </a>
@@ -202,7 +202,7 @@ export default function News() {
 
                 {item.relatedCoverage && item.relatedCoverage.length > 0 && (
                   <details className="mt-3 rounded-xl border border-gray-100 bg-gray-50 px-3 py-2">
-                    <summary className="cursor-pointer text-xs font-bold text-gray-700">
+                    <summary className="flex min-h-11 cursor-pointer items-center text-xs font-bold text-gray-700">
                       Other coverage
                     </summary>
                     <div className="mt-2 space-y-2">
@@ -212,7 +212,7 @@ export default function News() {
                           href={coverage.link}
                           target="_blank"
                           rel="noreferrer"
-                          className="block text-xs font-semibold text-primary-700 underline underline-offset-2"
+                          className="flex min-h-11 items-center text-xs font-semibold text-primary-700 underline underline-offset-2"
                         >
                           {coverage.source || 'News publisher'}: {coverage.title}
                         </a>
