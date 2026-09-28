@@ -204,7 +204,7 @@ const mobilityRelationships = (item: NewsItem): NewsCivicRelationship[] =>
         targetType: 'mobility-service' as const,
         targetId: service.id,
         label: service.name,
-        href: '/mobility',
+        href: '/mobility#system-' + service.id,
         basis: match.basis,
         matchedText: match.matchedText,
       },
