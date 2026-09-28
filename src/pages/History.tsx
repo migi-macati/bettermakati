@@ -271,7 +271,7 @@ export default function History() {
             type="button"
             onClick={() => setEra('')}
             aria-pressed={!era}
-            className={`shrink-0 rounded-full border px-4 py-2 text-sm font-bold transition ${
+            className={`min-h-11 shrink-0 rounded-full border px-4 py-2 text-sm font-bold transition ${
               !era
                 ? 'border-primary-700 bg-primary-700 text-white'
                 : 'border-gray-300 bg-white text-gray-700 hover:border-primary-500'
@@ -290,7 +290,7 @@ export default function History() {
                 type="button"
                 onClick={() => setEra(active ? '' : item.label)}
                 aria-pressed={active}
-                className={`shrink-0 rounded-full border px-4 py-2 text-sm font-bold transition ${
+                className={`min-h-11 shrink-0 rounded-full border px-4 py-2 text-sm font-bold transition ${
                   active
                     ? 'border-primary-700 bg-primary-700 text-white'
                     : 'border-gray-300 bg-white text-gray-700 hover:border-primary-500'
@@ -599,7 +599,7 @@ export default function History() {
 
                   <div className="p-5 sm:p-6">
                     <details>
-                      <summary className="cursor-pointer list-none text-sm font-extrabold text-primary-800">
+                      <summary className="flex min-h-11 cursor-pointer list-none items-center text-sm font-extrabold text-primary-800">
                         <span className="inline-flex items-center gap-2">
                           <BookOpen
                             className="h-4 w-4"
