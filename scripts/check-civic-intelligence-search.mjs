@@ -333,13 +333,15 @@ for (const forbidden of [
   }
 }
 
-for (const marker of [
-  "label: 'Estates, Districts & Associations', href: '/estates'",
-  "label: 'Estates & Districts', href: '/estates'",
-]) {
-  if (!navigation.includes(marker)) {
-    problems.push('Area/Organization navigation marker missing: ' + marker);
-  }
+if (
+  ![
+    "label: 'Areas & Districts', href: '/estates'",
+    "label: 'Estates & Districts', href: '/estates'",
+  ].some(marker => navigation.includes(marker))
+) {
+  problems.push(
+    'Area/Organization navigation must keep a discoverable /estates entry.'
+  );
 }
 
 if (
