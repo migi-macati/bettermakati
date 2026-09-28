@@ -7,7 +7,11 @@ import {
   civicAssetTypeLabels,
   civicEntityKindLabels,
   placeRegistry,
+  placeRegistryById,
 } from './placeRegistry';
+import { mobilityServices } from './mobilitySystems';
+import { mobilityRouteCorridors } from './mobilityRoutes';
+import { mobilityNetworkRelationships } from './mobilityNetwork';
 import { cityIndicators } from './cityIndicators';
 import { integrityProcurementEntities } from './integrityData';
 import { reports } from './reports';
@@ -563,6 +567,139 @@ const areaOrganizationItems: SearchItem[] = [
   })),
 ];
 
+const mobilityServiceById = new Map(
+  mobilityServices.map(service => [service.id, service])
+);
+
+const mobilityNodeLabel = (
+  node: { type: 'service' | 'route' | 'place' | 'area'; id: string }
+) => {
+  if (node.type === 'service') {
+    return mobilityServiceById.get(node.id)?.name ?? node.id;
+  }
+  if (node.type === 'place') {
+    return placeRegistryById.get(node.id)?.name ?? node.id;
+  }
+  return node.id;
+};
+
+const mobilitySearchItems: SearchItem[] = [
+  ...mobilityServices.map(service => ({
+    title: service.name,
+    group: 'Route' as const,
+    category:
+      service.serviceClass === 'public-ferry'
+        ? 'Public ferry service'
+        : service.serviceClass === 'private-estate-shuttle'
+          ? 'Private estate shuttle'
+          : 'Public transport system',
+    description: service.summary,
+    href: '/mobility#transport-anchors',
+    keywords: [
+      service.id,
+      ...(service.aliases ?? []),
+      service.mode,
+      service.governance,
+      service.lifecycle.status,
+      ...service.tags,
+      ...service.placeConnections.map(connection =>
+        placeRegistryById.get(connection.placeId)?.name ?? connection.placeId
+      ),
+      ...(service.relatedAreaIds ?? []).map(
+        areaId => civicAreaById.get(areaId)?.name ?? areaId
+      ),
+      'mobility public transport commute getting around',
+    ].join(' '),
+    canonicalKey: 'mobility-service:' + service.id,
+  })),
+  ...mobilityRouteCorridors.map(route => {
+    if (route.recordKind === 'current-service') {
+      return {
+        title: route.currentService.routeLabel,
+        group: 'Route' as const,
+        category:
+          route.currentService.serviceClass === 'p2p-bus'
+            ? 'P2P bus route'
+            : route.currentService.serviceClass === 'city-bus'
+              ? 'Bus route'
+              : 'UV Express route',
+        description:
+          'Current route from ' +
+          route.currentService.originLabel +
+          '; identity corroborated by current terminal rosters.',
+        href: '/mobility#routes',
+        keywords: [
+          route.id,
+          route.mode,
+          route.currentService.routeLabel,
+          route.currentService.originLabel,
+          route.currentService.destinationLabel,
+          route.currentService.serviceClass,
+          'One Ayala current route transport commute',
+        ].join(' '),
+        canonicalKey: 'mobility-route:' + route.id,
+      };
+    }
+
+    const unresolved =
+      route.disposition === 'unresolved-current-status';
+
+    return {
+      title: route.historical.from + ' ↔ ' + route.historical.to,
+      group: 'Route' as const,
+      category: unresolved
+        ? 'Historical jeepney route · current status unresolved'
+        : route.disposition === 'successor-corridor'
+          ? 'Jeepney successor corridor'
+          : 'Jeepney current corridor',
+      description: unresolved
+        ? '2020 Makati city route row retained as historical lineage; exact current route status is unresolved.'
+        : '2020 Makati city route row reconciled against later current-corridor evidence.',
+      href: '/mobility#routes',
+      keywords: [
+        route.id,
+        route.historical.from,
+        route.historical.to,
+        route.historical.associationLabel,
+        route.disposition,
+        route.reconciliationStatus,
+        'jeepney route corridor Makati transport commute',
+      ].join(' '),
+      canonicalKey: 'mobility-route:' + route.id,
+    };
+  }),
+  ...mobilityNetworkRelationships
+    .filter(
+      relationship =>
+        relationship.kind === 'transfer' ||
+        relationship.kind === 'service-connected-hub'
+    )
+    .map(relationship => ({
+      title:
+        mobilityNodeLabel(relationship.from) +
+        ' ↔ ' +
+        mobilityNodeLabel(relationship.to),
+      group: 'Route' as const,
+      category:
+        relationship.kind === 'transfer'
+          ? 'Transfer'
+          : 'System–hub connection',
+      description:
+        relationship.note ??
+        'Verified relationship in the BetterMakati mobility network.',
+      href: '/mobility#interchanges',
+      keywords: [
+        relationship.id,
+        relationship.kind,
+        mobilityNodeLabel(relationship.from),
+        mobilityNodeLabel(relationship.to),
+        relationship.evidenceStrength,
+        'transfer interchange connection mobility commute',
+      ].join(' '),
+      canonicalKey: 'mobility-network:' + relationship.id,
+    })),
+];
+
 const civicRegistryItems: SearchItem[] = [
   {
     title: 'Civic Map',
@@ -841,6 +978,7 @@ export const searchIndex: SearchItem[] = [
   ...serviceItems,
   ...civicIntelligenceItems,
   ...radicalCivicItems,
+  ...mobilitySearchItems,
   ...civicRegistryItems,
   ...areaOrganizationItems,
   ...visitItems,

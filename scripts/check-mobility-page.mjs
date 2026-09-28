@@ -47,6 +47,17 @@ for (const marker of [
   "Directly documented",
   "Corroborated",
   "not transfers inferred from nearby",
+  "Getting around sections",
+  "Stations &amp; terminals",
+  "Search transport",
+  "to=\"/search?q=transport\"",
+  "serviceHasInterchange",
+  "Search this system",
+  "Search this service",
+  "civicAreaById",
+  "to={'/estates#area-' + areaId}",
+  "Search route records",
+  "to=\"/search?q=route\"",
 ]) {
   if (!pageSource.includes(marker)) {
     problems.push('Mobility page canonical presentation marker missing: ' + marker);

@@ -24,6 +24,18 @@ const areas = await readFile(
 );
 const navigation = await readFile('src/data/navigation.ts', 'utf8');
 const searchPage = await readFile('src/pages/Search.tsx', 'utf8');
+const mobilitySystems = await readFile(
+  'src/data/mobilitySystems.ts',
+  'utf8'
+);
+const mobilityRoutes = await readFile(
+  'src/data/mobilityRoutes.ts',
+  'utf8'
+);
+const mobilityNetwork = await readFile(
+  'src/data/mobilityNetwork.ts',
+  'utf8'
+);
 
 const problems = [];
 
@@ -67,6 +79,83 @@ for (const marker of [
       'Canonical Area/Organization search marker missing: ' + marker
     );
   }
+}
+
+for (const marker of [
+  "import { mobilityServices } from './mobilitySystems'",
+  "import { mobilityRouteCorridors } from './mobilityRoutes'",
+  "import { mobilityNetworkRelationships } from './mobilityNetwork'",
+  'const mobilitySearchItems: SearchItem[] = [',
+  "...mobilityServices.map",
+  "...mobilityRouteCorridors.map",
+  "...mobilityNetworkRelationships",
+  "canonicalKey: 'mobility-service:' + service.id",
+  "canonicalKey: 'mobility-route:' + route.id",
+  "canonicalKey: 'mobility-network:' + relationship.id",
+  "href: '/mobility#routes'",
+  "href: '/mobility#interchanges'",
+  '...mobilitySearchItems',
+]) {
+  if (!index.includes(marker)) {
+    problems.push('Canonical mobility search marker missing: ' + marker);
+  }
+}
+
+const mobilityServiceBlock =
+  mobilitySystems
+    .split('export const mobilityServices: MobilityServiceRecord[] = [')[1]
+    ?.split('\n];\n\nexport const validateMobilityServices')[0] ?? '';
+
+const mobilityRouteBlock =
+  mobilityRoutes
+    .split(
+      'export const mobilityRouteCorridors: MobilityRouteCorridorRecord[] = ['
+    )[1]
+    ?.split(
+      '\n];\n\nexport const validateMobilityRouteCorridors'
+    )[0] ?? '';
+
+const mobilityExplicitNetworkBlock =
+  mobilityNetwork
+    .split(
+      'const explicitNetworkRelationships: MobilityNetworkRelationship[] = ['
+    )[1]
+    ?.split(
+      '\n];\n\nexport const mobilityNetworkRelationships'
+    )[0] ?? '';
+
+const mobilityServiceCount = (
+  mobilityServiceBlock.match(/^    id: '[^']+',$/gm) ?? []
+).length;
+const mobilityRouteCount = (
+  mobilityRouteBlock.match(/^    id: '[^']+',$/gm) ?? []
+).length;
+const mobilitySearchableNetworkCount = (
+  mobilityExplicitNetworkBlock.match(
+    /^    id: '(?:transfer|service-hub)-[^']+',$/gm
+  ) ?? []
+).length;
+
+if (mobilityServiceCount !== 4) {
+  problems.push(
+    'Expected 4 canonical mobility services for Search; found ' +
+      mobilityServiceCount +
+      '.'
+  );
+}
+if (mobilityRouteCount !== 67) {
+  problems.push(
+    'Expected 67 canonical mobility routes for Search; found ' +
+      mobilityRouteCount +
+      '.'
+  );
+}
+if (mobilitySearchableNetworkCount !== 7) {
+  problems.push(
+    'Expected 7 canonical explicit mobility interchange relationships for Search; found ' +
+      mobilitySearchableNetworkCount +
+      '.'
+  );
 }
 
 const areaBlock =
@@ -270,5 +359,5 @@ if (problems.length) {
 }
 
 console.log(
-  'Civic Intelligence Search check passed: 30 Statistics indicators, 17 Integrity entities, 5 reports, 13 Areas and 11 Organizations are statically indexed with canonical keys; ACEA/CMEA/MVA/UVA are searchable; Area results join Places and Organization results join Government; 11,355 legislation records remain lazy; duplicate canonical keys collapse once; BetterGov/BetterLGU remain external handoffs rather than cloned local records.'
+  'Civic Intelligence Search check passed: canonical Statistics, Integrity, reports, Areas, Organizations and mobility entities are indexed; mobility contributes 4 systems, 67 routes and 7 explicit interchange relationships; legislation remains lazy; duplicate canonical keys collapse once; BetterGov/BetterLGU remain external handoffs rather than cloned local records.'
 );

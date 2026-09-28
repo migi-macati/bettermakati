@@ -9,6 +9,7 @@ import {
   MapPin,
   Navigation,
   Plane,
+  Search,
   Ship,
   Train,
 } from 'lucide-react';
@@ -28,6 +29,7 @@ import {
   resolveDistrictReference,
   type DistrictReference,
 } from '../data/districtReferences';
+import { civicAreaById } from '../data/areaOrganizationRegistry';
 import {
   mobilityServices,
   mobilitySources,
@@ -205,6 +207,23 @@ const networkEvidenceSources = (
     })
     .filter(source => source !== undefined);
 
+const transferPlaceIds = new Set(
+  transferRelationships.flatMap(relationship => [
+    relationship.from.id,
+    relationship.to.id,
+  ])
+);
+
+const serviceHasInterchange = (service: MobilityServiceRecord) =>
+  serviceHubRelationships.some(
+    relationship =>
+      relationship.from.type === 'service' &&
+      relationship.from.id === service.id
+  ) ||
+  service.placeConnections.some(connection =>
+    transferPlaceIds.has(connection.placeId)
+  );
+
 const rideApps = [
   { name: 'Grab', href: 'https://www.grab.com/ph/download/', type: 'Car & taxi' },
   { name: 'Angkas', href: 'https://www.angkas.com/consumer', type: 'Motorcycle taxi' },
@@ -314,6 +333,28 @@ export default function Mobility() {
           className="mt-7"
         />
 
+        <nav
+          className="mt-6 flex flex-wrap gap-2"
+          aria-label="Getting around sections"
+        >
+          <a href="#transport-anchors" className="brand-chip">
+            Stations &amp; terminals
+          </a>
+          <a href="#interchanges" className="brand-chip">
+            Transfers
+          </a>
+          <a href="#routes" className="brand-chip">
+            Routes
+          </a>
+          <Link to="/civic-map" className="brand-chip">
+            Civic Map
+          </Link>
+          <Link to="/search?q=transport" className="brand-chip">
+            <Search className="h-4 w-4" aria-hidden="true" />
+            Search transport
+          </Link>
+        </nav>
+
         <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
           <div className="rounded-2xl border border-gray-200 bg-white p-6">
             <div className="flex items-center gap-2 font-bold text-gray-950">
@@ -409,6 +450,20 @@ export default function Mobility() {
                       >
                         Stations and terminals
                       </a>
+                      {serviceHasInterchange(service) && (
+                        <a
+                          href="#interchanges"
+                          className="text-sm font-bold text-primary-700 underline underline-offset-2"
+                        >
+                          Transfers
+                        </a>
+                      )}
+                      <Link
+                        to={'/search?q=' + encodeURIComponent(service.name)}
+                        className="text-sm font-bold text-primary-700 underline underline-offset-2"
+                      >
+                        Search this system
+                      </Link>
                       {currentLink && (
                         <a
                           href={currentLink.url}
@@ -484,17 +539,37 @@ export default function Mobility() {
                   {service.summary}
                 </p>
 
-                {currentLink && (
-                  <a
-                    href={currentLink.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700 underline underline-offset-2"
+                <div className="mt-4 flex flex-wrap gap-3">
+                  {(service.relatedAreaIds ?? []).map(areaId => {
+                    const area = civicAreaById.get(areaId);
+                    return area ? (
+                      <Link
+                        key={areaId}
+                        to={'/estates#area-' + areaId}
+                        className="text-sm font-bold text-primary-700 underline underline-offset-2"
+                      >
+                        {area.name}
+                      </Link>
+                    ) : null;
+                  })}
+                  <Link
+                    to={'/search?q=' + encodeURIComponent(service.name)}
+                    className="text-sm font-bold text-primary-700 underline underline-offset-2"
                   >
-                    Current route and schedule
-                    <ExternalLink className="h-3.5 w-3.5" />
-                  </a>
-                )}
+                    Search this service
+                  </Link>
+                  {currentLink && (
+                    <a
+                      href={currentLink.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-1 text-sm font-bold text-primary-700 underline underline-offset-2"
+                    >
+                      Current route and schedule
+                      <ExternalLink className="h-3.5 w-3.5" />
+                    </a>
+                  )}
+                </div>
               </article>
             );
           })}
@@ -727,9 +802,18 @@ export default function Mobility() {
               remain listable here without invented map lines.
             </p>
           </div>
-          <div className="text-sm font-bold text-gray-600">
-            {routeViews.reduce((total, view) => total + view.count, 0)} canonical
-            route records
+          <div className="flex flex-wrap items-center gap-3">
+            <div className="text-sm font-bold text-gray-600">
+              {routeViews.reduce((total, view) => total + view.count, 0)} canonical
+              route records
+            </div>
+            <Link
+              to="/search?q=route"
+              className="inline-flex items-center gap-1 text-sm font-bold text-primary-700 underline underline-offset-2"
+            >
+              Search route records
+              <Search className="h-4 w-4" aria-hidden="true" />
+            </Link>
           </div>
         </div>
 
