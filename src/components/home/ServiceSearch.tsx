@@ -922,29 +922,25 @@ export default function ServiceSearch({
                 )}
 
                 <div className="mt-5 text-xs font-bold uppercase tracking-wide text-gray-500">
-                  {scope === 'site' ? 'Outside BetterMakati' : 'Still need help'}
+                  Outside BetterMakati
                 </div>
                 <div className="mt-2 flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
-                  {scope === 'site' && (
-                    <>
-                      <a
-                        href={'https://bettergov.ph/services?search=' + encodeURIComponent(query)}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex min-h-11 items-center text-sm font-bold text-primary-700 underline underline-offset-2"
-                      >
-                        Search national services on BetterGov
-                      </a>
-                      <a
-                        href="https://lgu.bettergov.ph/"
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex min-h-11 items-center text-sm font-bold text-primary-700 underline underline-offset-2"
-                      >
-                        Find another LGU on BetterLGU
-                      </a>
-                    </>
-                  )}
+                  <a
+                    href={'https://bettergov.ph/services?search=' + encodeURIComponent(query)}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex min-h-11 items-center text-sm font-bold text-primary-700 underline underline-offset-2"
+                  >
+                    Search national services on BetterGov
+                  </a>
+                  <a
+                    href="https://lgu.bettergov.ph/"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex min-h-11 items-center text-sm font-bold text-primary-700 underline underline-offset-2"
+                  >
+                    Find another LGU on BetterLGU
+                  </a>
                   <button
                     type="button"
                     onClick={() =>
