@@ -343,6 +343,15 @@ export default function Estates() {
         </div>
         <LastReviewed date="2026-09-27" />
 
+        <div className="mt-5 flex flex-wrap gap-3">
+          <Link to="/visit" className="brand-btn-secondary">
+            Explore Makati
+          </Link>
+          <Link to="/mobility" className="brand-btn-secondary">
+            Getting around
+          </Link>
+        </div>
+
         <nav
           className="mt-7 flex flex-wrap gap-2"
           aria-label="Estates and districts sections"
