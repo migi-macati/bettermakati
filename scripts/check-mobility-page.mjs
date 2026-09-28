@@ -1,7 +1,8 @@
 import { readFile } from 'node:fs/promises';
 
-const [pageSource, packageSource] = await Promise.all([
+const [pageSource, routeSource, packageSource] = await Promise.all([
   readFile('src/pages/Mobility.tsx', 'utf8'),
+  readFile('src/data/mobilityRoutes.ts', 'utf8'),
   readFile('package.json', 'utf8'),
 ]);
 
@@ -22,6 +23,17 @@ for (const marker of [
   "to={'/civic-map/' + oneAyala.id}",
   "date=\"2026-09-28\"",
   "Schedules, fares and live routing remain with the linked operator or map.",
+  "currentBusRoutes",
+  "currentUvExpressRoutes",
+  "currentOrSuccessorJeepneyCorridors",
+  "unresolvedJeepneyRows",
+  "routeViews",
+  "Route registry",
+  "Routes and corridors",
+  "One Ayala terminal",
+  "Historical association labels are retained as",
+  "Current status unresolved",
+  "not presented",
 ]) {
   if (!pageSource.includes(marker)) {
     problems.push('Mobility page canonical presentation marker missing: ' + marker);
@@ -33,10 +45,38 @@ for (const forbidden of [
   'https://edsabus.com/route-map',
   'One%20Ayala%20Makati',
   "centuryCity.label + ' E-Bus'",
+  "mobilityRouteGeometryArtifacts",
 ]) {
   if (pageSource.includes(forbidden)) {
     problems.push('Mobility page still contains stale/manual system presentation: ' + forbidden);
   }
+}
+
+const routeBlock =
+  routeSource
+    .split(
+      'export const mobilityRouteCorridors: MobilityRouteCorridorRecord[] = ['
+    )[1]
+    ?.split('\n];\n\nexport const validateMobilityRouteCorridors')[0] ?? '';
+
+const routeIds = [
+  ...routeBlock.matchAll(/^    id: '([^']+)',$/gm),
+].map(match => match[1]);
+
+if (routeIds.length !== 67) {
+  problems.push(
+    'Mobility page route presentation expects the canonical 67-record registry; found ' +
+      routeIds.length +
+      '.'
+  );
+}
+
+if (
+  (routeBlock.match(/geometryArtifactId: undefined/g) ?? []).length !== 67
+) {
+  problems.push(
+    'W5-4f2 route presentation must keep all 67 route records geometry-less.'
+  );
 }
 
 const gateCount = (
@@ -65,5 +105,5 @@ if (problems.length) {
 }
 
 console.log(
-  'Mobility page check passed: canonical public systems, canonical private service, internal One Ayala hub, no stale manual system cards.'
+  'Mobility page check passed: canonical systems, internal One Ayala hub, 67 route records surfaced by evidence class, unresolved jeepney rows separated, no synthetic route geometry.'
 );

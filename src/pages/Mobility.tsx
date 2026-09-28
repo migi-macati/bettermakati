@@ -31,6 +31,15 @@ import {
   mobilityServices,
   type MobilityServiceRecord,
 } from '../data/mobilitySystems';
+import {
+  currentBusRoutes,
+  currentOrSuccessorJeepneyCorridors,
+  currentUvExpressRoutes,
+  mobilityRouteSources,
+  unresolvedJeepneyRows,
+  type MobilityCurrentServiceRouteRecord,
+  type MobilityHistoricalRouteRecord,
+} from '../data/mobilityRoutes';
 
 const verifiedTransportPlaces = [
   ...placesByCategory('transport-stop'),
@@ -90,6 +99,58 @@ const preferredMobilityServiceLink = (service: MobilityServiceRecord) =>
   service.links.find(link => link.kind === 'current-service-info') ??
   service.links.find(link => link.kind === 'route-schedule') ??
   service.links[0];
+
+const mobilityRouteSourceById = new Map(
+  mobilityRouteSources.map(source => [source.id, source])
+);
+
+type MobilityRouteView = 'bus' | 'uv-express' | 'jeepney' | 'unresolved';
+
+const routeViews: {
+  id: MobilityRouteView;
+  label: string;
+  count: number;
+}[] = [
+  { id: 'bus', label: 'Bus & P2P', count: currentBusRoutes.length },
+  { id: 'uv-express', label: 'UV Express', count: currentUvExpressRoutes.length },
+  {
+    id: 'jeepney',
+    label: 'Jeepney corridors',
+    count: currentOrSuccessorJeepneyCorridors.length,
+  },
+  {
+    id: 'unresolved',
+    label: 'Unresolved',
+    count: unresolvedJeepneyRows.length,
+  },
+];
+
+const currentRouteClassLabel = (
+  route: MobilityCurrentServiceRouteRecord
+) => {
+  if (route.currentService.serviceClass === 'p2p-bus') return 'P2P bus';
+  if (route.currentService.serviceClass === 'uv-express') return 'UV Express';
+  return 'City / intercity bus';
+};
+
+const jeepneyDispositionLabel = (
+  route: MobilityHistoricalRouteRecord
+) =>
+  route.disposition === 'successor-corridor'
+    ? 'Successor corridor'
+    : route.disposition === 'current-corridor'
+      ? 'Current corridor'
+      : 'Current status unresolved';
+
+const routeEvidenceSources = (
+  route: MobilityCurrentServiceRouteRecord | MobilityHistoricalRouteRecord
+) =>
+  route.currentEvidenceSourceIds
+    .map(sourceId => mobilityRouteSourceById.get(sourceId))
+    .filter(source => source !== undefined);
+
+const historicalSourceFor = (route: MobilityHistoricalRouteRecord) =>
+  mobilityRouteSourceById.get(route.historical.sourceId);
 
 const rideApps = [
   { name: 'Grab', href: 'https://www.grab.com/ph/download/', type: 'Car & taxi' },
@@ -168,6 +229,7 @@ const mapsDirections = (
 export default function Mobility() {
   const [destination, setDestination] = useState('Ayala Triangle Gardens');
   const [mode, setMode] = useState('transit');
+  const [routeView, setRouteView] = useState<MobilityRouteView>('bus');
 
   return (
     <>
@@ -450,6 +512,208 @@ export default function Mobility() {
             );
           })}
         </div>
+      </Section>
+
+      <Section id="routes" className="bg-[#f5f8f2]">
+        <div className="section-eyebrow">Route registry</div>
+        <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <Heading level={2}>Routes and corridors</Heading>
+            <p className="max-w-3xl text-sm leading-relaxed text-gray-600">
+              Browse current One Ayala bus and UV services alongside reconciled
+              Makati jeepney corridors. Route records without sourced geometry
+              remain listable here without invented map lines.
+            </p>
+          </div>
+          <div className="text-sm font-bold text-gray-600">
+            {routeViews.reduce((total, view) => total + view.count, 0)} canonical
+            route records
+          </div>
+        </div>
+
+        <div
+          className="mt-6 flex flex-wrap gap-2"
+          role="group"
+          aria-label="Route registry view"
+        >
+          {routeViews.map(view => (
+            <button
+              key={view.id}
+              type="button"
+              onClick={() => setRouteView(view.id)}
+              aria-pressed={routeView === view.id}
+              className={
+                routeView === view.id
+                  ? 'brand-chip !bg-primary-800 !text-white'
+                  : 'brand-chip'
+              }
+            >
+              {view.label} ({view.count})
+            </button>
+          ))}
+        </div>
+
+        {(routeView === 'bus' || routeView === 'uv-express') && (
+          <div className="mt-6">
+            <p className="max-w-3xl text-sm leading-relaxed text-gray-600">
+              These current route identities are corroborated by two independent
+              2026 One Ayala terminal rosters. Operator, fare, schedule, gate
+              and complete stop sequence are not frozen here.
+            </p>
+
+            <div className="mt-5 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+              {(routeView === 'bus'
+                ? currentBusRoutes
+                : currentUvExpressRoutes
+              ).map(route => {
+                if (route.recordKind !== 'current-service') return null;
+                const evidenceSources = routeEvidenceSources(route);
+
+                return (
+                  <article
+                    key={route.id}
+                    className="rounded-2xl border border-gray-200 bg-white p-5"
+                  >
+                    <div className="text-xs font-extrabold uppercase tracking-[0.08em] text-primary-700">
+                      {currentRouteClassLabel(route)}
+                    </div>
+                    <h3 className="mt-2 text-lg font-extrabold text-gray-950">
+                      {route.currentService.routeLabel}
+                    </h3>
+                    <p className="mt-2 text-sm text-gray-600">
+                      From {route.currentService.originLabel}
+                    </p>
+                    <div className="mt-4 flex flex-wrap gap-3">
+                      <Link
+                        to="/civic-map/one-ayala-terminal"
+                        className="text-sm font-bold text-primary-700 underline underline-offset-2"
+                      >
+                        One Ayala terminal
+                      </Link>
+                      {evidenceSources.map((source, index) => (
+                        <a
+                          key={source.id}
+                          href={source.url}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex items-center gap-1 text-sm font-bold text-primary-700 underline underline-offset-2"
+                        >
+                          Source {index + 1}
+                          <ExternalLink className="h-3.5 w-3.5" />
+                        </a>
+                      ))}
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {routeView === 'jeepney' && (
+          <div className="mt-6">
+            <p className="max-w-3xl text-sm leading-relaxed text-gray-600">
+              These records reconcile Makati's 2020 city inventory with later
+              route evidence. Historical association labels are retained as
+              lineage and are not treated as verified current operators.
+            </p>
+
+            <div className="mt-5 grid grid-cols-1 gap-4 md:grid-cols-2">
+              {currentOrSuccessorJeepneyCorridors.map(route => {
+                if (route.recordKind !== 'historical-reconciliation') return null;
+                const evidenceSources = routeEvidenceSources(route);
+
+                return (
+                  <article
+                    key={route.id}
+                    className="rounded-2xl border border-gray-200 bg-white p-5"
+                  >
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <span className="text-xs font-extrabold uppercase tracking-[0.08em] text-primary-700">
+                        {jeepneyDispositionLabel(route)}
+                      </span>
+                      <span className="text-xs font-bold text-gray-500">
+                        2020 city row {route.historical.publishedNo}
+                      </span>
+                    </div>
+                    <h3 className="mt-2 text-lg font-extrabold text-gray-950">
+                      {route.historical.from} ↔ {route.historical.to}
+                    </h3>
+                    <details className="mt-3 text-sm text-gray-600">
+                      <summary className="cursor-pointer font-bold text-primary-700">
+                        Evidence note
+                      </summary>
+                      <p className="mt-2 leading-relaxed">{route.note}</p>
+                    </details>
+                    <div className="mt-4 flex flex-wrap gap-3">
+                      {evidenceSources.map((source, index) => (
+                        <a
+                          key={source.id}
+                          href={source.url}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex items-center gap-1 text-sm font-bold text-primary-700 underline underline-offset-2"
+                        >
+                          Current evidence
+                          {evidenceSources.length > 1 ? ' ' + (index + 1) : ''}
+                          <ExternalLink className="h-3.5 w-3.5" />
+                        </a>
+                      ))}
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {routeView === 'unresolved' && (
+          <div className="mt-6">
+            <p className="max-w-3xl text-sm leading-relaxed text-gray-600">
+              These three 2020 city rows remain in the registry because an exact
+              current route match has not been verified. They are not presented
+              as current services.
+            </p>
+
+            <div className="mt-5 grid grid-cols-1 gap-4 md:grid-cols-3">
+              {unresolvedJeepneyRows.map(route => {
+                if (route.recordKind !== 'historical-reconciliation') return null;
+                const historicalSource = historicalSourceFor(route);
+
+                return (
+                  <article
+                    key={route.id}
+                    className="rounded-2xl border border-amber-200 bg-white p-5"
+                  >
+                    <div className="text-xs font-extrabold uppercase tracking-[0.08em] text-amber-800">
+                      Current status unresolved
+                    </div>
+                    <h3 className="mt-2 text-lg font-extrabold text-gray-950">
+                      {route.historical.from} ↔ {route.historical.to}
+                    </h3>
+                    <p className="mt-2 text-sm leading-relaxed text-gray-600">
+                      {route.note}
+                    </p>
+                    <p className="mt-3 text-xs font-bold text-gray-500">
+                      2020 city row {route.historical.publishedNo}
+                    </p>
+                    {historicalSource && (
+                      <a
+                        href={historicalSource.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700 underline underline-offset-2"
+                      >
+                        Historical city source
+                        <ExternalLink className="h-3.5 w-3.5" />
+                      </a>
+                    )}
+                  </article>
+                );
+              })}
+            </div>
+          </div>
+        )}
       </Section>
 
       <Section className="bg-white">
