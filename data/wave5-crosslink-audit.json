@@ -1,0 +1,179 @@
+{
+  "version": 1,
+  "reviewedOn": "2026-09-28",
+  "status": "complete-with-bounded-ecosystem-handoffs",
+  "scope": {
+    "step": "W5-9a",
+    "title": "Wave 5 cross-link audit",
+    "purpose": "Ensure Wave 5 city-knowledge and practical-life surfaces connect users to the next useful BetterMakati record or task without restoring removed directories or duplicating canonical data."
+  },
+  "principles": [
+    "Prefer contextual links between canonical owners over duplicate summary databases.",
+    "A Wave 5 page does not need links to every other Wave 5 page; links should correspond to a real user continuation.",
+    "Dynamic entity links are preferred when the underlying record explicitly identifies a barangay, place, area, mobility system, legislation item, accountability record or City Monitor record.",
+    "Parking remains removed as a BetterMakati feature; the legacy /parking route may exist only as a compatibility redirect.",
+    "BetterGov and BetterLGU handoffs stay globally available through the footer unless a specific page has a concrete national or cross-LGU continuation. Do not add ecosystem links merely to advertise the ecosystem."
+  ],
+  "domains": [
+    {
+      "id": "history",
+      "route": "/history",
+      "status": "pass-after-fix",
+      "outbound": [
+        "/heritage",
+        "/visit",
+        "/civic-map/:placeId",
+        "/barangays/:slug"
+      ],
+      "inbound": [
+        "/heritage",
+        "/visit"
+      ],
+      "note": "Added generic Heritage and Explore Makati handoffs while retaining event-level place and barangay links."
+    },
+    {
+      "id": "heritage",
+      "route": "/heritage",
+      "status": "pass",
+      "outbound": [
+        "/history",
+        "/history?collection=:id",
+        "/civic-map/:placeId"
+      ],
+      "inbound": [
+        "/history",
+        "/visit"
+      ],
+      "note": "Heritage collections already bridge directly to place records and filtered history."
+    },
+    {
+      "id": "estates-districts",
+      "route": "/estates",
+      "status": "pass-after-fix",
+      "outbound": [
+        "/visit",
+        "/mobility",
+        "/barangays/:slug",
+        "/civic-map/:placeId"
+      ],
+      "inbound": [
+        "/visit",
+        "/mobility",
+        "/news via explicit area relationships"
+      ],
+      "note": "Added Explore Makati and Getting around handoffs; canonical area cards already link to barangays and places."
+    },
+    {
+      "id": "mobility",
+      "route": "/mobility",
+      "status": "pass-after-fix",
+      "outbound": [
+        "/estates",
+        "/civic-map",
+        "/civic-map/:placeId",
+        "/search"
+      ],
+      "inbound": [
+        "/visit",
+        "/estates",
+        "/news via explicit mobility relationships"
+      ],
+      "note": "Removed the stale Parking card and replaced it with Areas & districts."
+    },
+    {
+      "id": "explore-makati",
+      "route": "/visit",
+      "status": "pass",
+      "outbound": [
+        "/estates",
+        "/barangays",
+        "/heritage",
+        "/history",
+        "/mobility",
+        "/calendar",
+        "/cinemas"
+      ],
+      "inbound": [
+        "/history",
+        "/estates",
+        "/home"
+      ],
+      "note": "Explore Makati remains the broad city-discovery hub while volatile commercial discovery stays external/live."
+    },
+    {
+      "id": "calendar",
+      "route": "/calendar",
+      "status": "pass",
+      "outbound": [
+        ":canonicalHref",
+        ":primarySourceUrl",
+        "/barangays/:slug",
+        "/civic-map/:placeId",
+        "/city-monitor",
+        "/today"
+      ],
+      "inbound": [
+        "/visit",
+        "/news",
+        "/today",
+        "canonical domain previews"
+      ],
+      "note": "Each timeline item links back to its canonical owner and original source rather than duplicating the owner record."
+    },
+    {
+      "id": "news-discovery",
+      "route": "/news",
+      "status": "pass",
+      "outbound": [
+        "/city-monitor",
+        "/calendar",
+        "dynamic Related in BetterMakati links"
+      ],
+      "inbound": [
+        "/today",
+        "main navigation"
+      ],
+      "note": "News relationships are explicit and conservative; no headline auto-promotes into a canonical domain."
+    }
+  ],
+  "ecosystem": {
+    "status": "pass-no-forced-wave5-links",
+    "globalHandoffs": [
+      {
+        "label": "National services — BetterGov",
+        "href": "https://bettergov.ph/services",
+        "location": "footer"
+      },
+      {
+        "label": "Other LGUs — BetterLGU",
+        "href": "https://lgu.bettergov.ph/",
+        "location": "footer"
+      }
+    ],
+    "decision": "No additional Wave 5 page-level BetterGov links are required in W5-9a because the current Wave 5 journeys are Makati-local and the existing audited ecosystem resources have no stronger task-specific continuation for History, Heritage, Estates, Mobility, Calendar or News."
+  },
+  "removedOrBounded": [
+    {
+      "id": "parking-feature",
+      "status": "removed",
+      "rule": "No Wave 5 public page, Home, navigation or Search may link to /parking. App may retain a redirect for old URLs."
+    },
+    {
+      "id": "all-to-all-crosslinking",
+      "status": "rejected",
+      "rule": "Do not turn pages into generic link directories. Cross-links must correspond to a useful continuation."
+    },
+    {
+      "id": "ecosystem-promotion",
+      "status": "bounded",
+      "rule": "BetterGov/BetterLGU links should complete a task, not explain the ecosystem architecture."
+    }
+  ],
+  "fixes": [
+    "Mobility Parking card replaced with Areas & districts.",
+    "History now offers Heritage places and Explore Makati handoffs.",
+    "Estates & Districts now offers Explore Makati and Getting around handoffs.",
+    "Visitor/Explore guards updated to reflect the already-adopted split canonical/recurring rendering instead of stale string markers."
+  ],
+  "next": "W5-9b — Search & discovery audit"
+}
