@@ -62,24 +62,35 @@ const containsPhrase = (text, phrase) => {
   return Boolean(needle) && haystack.includes(' ' + needle + ' ');
 };
 
-const extractPairs = (content, secondField, maxSpan = 1800) => {
+const nearestIdBefore = (content, index, maxDistance = 2600) => {
+  const start = Math.max(0, index - maxDistance);
+  const slice = content.slice(start, index);
+  const matches = [...slice.matchAll(/\bid:\s*['"]([^'"]+)['"]/g)];
+  return matches.at(-1)?.[1] ?? null;
+};
+
+const extractFieldWithNearestId = (
+  content,
+  field,
+  maxDistance = 1800
+) => {
   const pairs = [];
-  const idRegex = /\bid:\s*['"]([^'"]+)['"]/g;
+  const pattern = new RegExp(
+    "\\b" + field + ":\\s*['\"]([^'\"]+)['\"]",
+    'g'
+  );
   let match;
 
-  while ((match = idRegex.exec(content))) {
-    const slice = content.slice(match.index, match.index + maxSpan);
-    const second = slice.match(
-      new RegExp("\\b" + secondField + ":\\s*['\"]([^'\"]+)['\"]")
-    );
-    if (!second) continue;
-    pairs.push({ id: match[1], value: second[1] });
+  while ((match = pattern.exec(content))) {
+    const id = nearestIdBefore(content, match.index, maxDistance);
+    if (!id) continue;
+    pairs.push({ id, value: match[1] });
   }
 
   return pairs;
 };
 
-const procurementRefs = extractPairs(
+const procurementRefs = extractFieldWithNearestId(
   accountabilityText,
   'referenceNo',
   1600
@@ -90,7 +101,7 @@ const procurementRefs = extractPairs(
   href: '/accountability#procurement-' + pair.id,
 }));
 
-const legislationRefs = extractPairs(
+const legislationRefs = extractFieldWithNearestId(
   legislationText,
   'officialNumber',
   2200
@@ -101,7 +112,7 @@ const legislationRefs = extractPairs(
   href: '/legislation?record=' + encodeURIComponent(pair.id),
 }));
 
-const cityMonitorRefs = extractPairs(
+const cityMonitorRefs = extractFieldWithNearestId(
   cityMonitorText,
   'referenceNo',
   2200
@@ -125,13 +136,6 @@ const raRefs = [
   recordType: 'election-record',
   href: '/elections',
 }));
-
-const nearestIdBefore = (content, index, maxDistance = 2600) => {
-  const start = Math.max(0, index - maxDistance);
-  const slice = content.slice(start, index);
-  const matches = [...slice.matchAll(/\bid:\s*['"]([^'"]+)['"]/g)];
-  return matches.at(-1)?.[1] ?? null;
-};
 
 const exactUrlMatch = (content, url, owner, recordType, hrefFor) => {
   if (!url) return [];
