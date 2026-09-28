@@ -1394,7 +1394,7 @@
     "url": "https://pia.gov.ph/news/pbbm-signs-law-fixing-the-terms-of-barangay-and-sk-officials/",
     "kind": "election-law",
     "cadence": "monthly",
-    "monitoringMode": "content-hash",
+    "monitoringMode": "reachability",
     "owner": "general-source-freshness",
     "affectedPages": [
       "/elections",
@@ -1407,7 +1407,7 @@
     "url": "https://www.pna.gov.ph/index.php/articles/1284830",
     "kind": "election",
     "cadence": "weekly",
-    "monitoringMode": "content-hash",
+    "monitoringMode": "reachability",
     "owner": "general-source-freshness",
     "affectedPages": [
       "/elections",
