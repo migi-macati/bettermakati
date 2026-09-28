@@ -1,3 +1,4 @@
+import { procurementProjectEntries } from './accountabilitySupplement';
 import { barangays } from './barangays';
 import { civicAreas } from './areaOrganizationRegistry';
 import { cityMonitorRecords } from './cityMonitor';
@@ -11,6 +12,7 @@ export type NewsCivicTargetType =
   | 'area'
   | 'place'
   | 'mobility-service'
+  | 'accountability-record'
   | 'legislation-record'
   | 'city-monitor-record';
 
@@ -209,6 +211,29 @@ const mobilityRelationships = (item: NewsItem): NewsCivicRelationship[] =>
     ];
   });
 
+const accountabilityRelationships = (
+  item: NewsItem
+): NewsCivicRelationship[] => {
+  const text = item.title + ' ' + item.description;
+
+  return procurementProjectEntries.flatMap(record => {
+    const referenceNo = record.procurement?.referenceNo;
+    if (!referenceNo || !containsPhrase(text, referenceNo)) return [];
+
+    return [
+      {
+        id: 'news-' + relationshipKey('accountability-record', record.id),
+        targetType: 'accountability-record' as const,
+        targetId: record.id,
+        label: record.title,
+        href: '/accountability#' + record.id,
+        basis: 'explicit-reference' as const,
+        matchedText: referenceNo,
+      },
+    ];
+  });
+};
+
 const legislationRelationships = (item: NewsItem): NewsCivicRelationship[] => {
   const text = item.title + ' ' + item.description;
 
@@ -246,9 +271,7 @@ const cityMonitorRelationships = (item: NewsItem): NewsCivicRelationship[] => {
       record.sourceUrl,
       ...(record.documents?.map(document => document.url) ?? []),
     ];
-    const sharedUrl =
-      sourceUrls.some(url => url && url === item.link) ||
-      sourceUrls.some(url => url && item.sourceUrl && url === item.sourceUrl);
+    const sharedUrl = sourceUrls.some(url => url && url === item.link);
 
     if (sharedUrl) {
       return [
@@ -292,6 +315,7 @@ export const newsCivicRelationshipsFor = (
     ...areaRelationships(item),
     ...placeRelationships(item),
     ...mobilityRelationships(item),
+    ...accountabilityRelationships(item),
     ...legislationRelationships(item),
     ...cityMonitorRelationships(item),
   ];
