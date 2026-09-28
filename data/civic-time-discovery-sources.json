@@ -1,0 +1,258 @@
+{
+  "version": 1,
+  "reviewedOn": "2026-09-28",
+  "doctrine": {
+    "signalRule": "A source monitor signal creates an internal review candidate only. It never creates a public Civic Timeline item.",
+    "promotionRule": "Promotion requires item-level evidence, an explicit public temporal semantic/date, and a canonical owner/reference.",
+    "reachabilityRule": "Reachability-only sources are discovery surfaces. A successful reachability check does not prove that no new civic date exists.",
+    "ownerRule": "If a stronger canonical owner exists, promote to that owner and keep the discovery source as provenance rather than create a City Monitor duplicate."
+  },
+  "sources": [
+    {
+      "id": "makati-events",
+      "sourceSystem": "city-monitor",
+      "sourceId": "makati-events",
+      "label": "Makati Events",
+      "ownerHint": "city-monitor",
+      "allowedKinds": [
+        "consultation",
+        "public-hearing",
+        "barangay-assembly",
+        "deadline",
+        "service-change"
+      ],
+      "signalModes": [
+        "manual-item-review"
+      ],
+      "extractionMode": "manual-item-review",
+      "note": "Promote civic/service/public-information occurrences only. Generic entertainment remains outside the Civic Timeline."
+    },
+    {
+      "id": "makati-news",
+      "sourceSystem": "city-monitor",
+      "sourceId": "makati-news",
+      "label": "Makati News",
+      "ownerHint": "city-monitor",
+      "allowedKinds": [
+        "advisory",
+        "service-change",
+        "road-closure",
+        "publication",
+        "record-update"
+      ],
+      "signalModes": [
+        "manual-item-review"
+      ],
+      "extractionMode": "manual-item-review",
+      "note": "News items need item-level dates and canonical routing before promotion."
+    },
+    {
+      "id": "mymakati-broadcasts",
+      "sourceSystem": "city-monitor",
+      "sourceId": "mymakati-broadcasts",
+      "label": "MyMakati official social broadcasts",
+      "ownerHint": "city-monitor",
+      "allowedKinds": [
+        "meeting",
+        "public-hearing",
+        "consultation",
+        "barangay-assembly"
+      ],
+      "signalModes": [
+        "manual-review"
+      ],
+      "extractionMode": "manual-item-review",
+      "note": "Social-platform broadcasts are discovery/evidence only until the exact official item and date are preserved."
+    },
+    {
+      "id": "philgeps",
+      "sourceSystem": "city-monitor",
+      "sourceId": "philgeps",
+      "label": "PhilGEPS",
+      "ownerHint": "accountability",
+      "allowedKinds": [
+        "procurement-milestone",
+        "deadline",
+        "publication"
+      ],
+      "signalModes": [
+        "content-changed"
+      ],
+      "extractionMode": "exact-record-match-required",
+      "note": "A portal hash change is not an exact Makati procurement match. Promotion requires an item-specific Makati record."
+    },
+    {
+      "id": "resilient-makati-consultations",
+      "sourceSystem": "general-source-freshness",
+      "sourceId": "resilient-makati-consultations",
+      "label": "Resilient Makati consultations and public participation",
+      "ownerHint": "city-monitor",
+      "allowedKinds": [
+        "consultation",
+        "public-hearing",
+        "deadline"
+      ],
+      "signalModes": [
+        "content-changed",
+        "manual-item-review"
+      ],
+      "extractionMode": "manual-item-review",
+      "note": "A specific consultation/hearing item needs an explicit date/window before promotion."
+    },
+    {
+      "id": "macea-circulars",
+      "sourceSystem": "general-source-freshness",
+      "sourceId": "macea-circulars",
+      "label": "MACEA circulars and advisories",
+      "ownerHint": "mobility",
+      "allowedKinds": [
+        "road-closure",
+        "service-change",
+        "advisory"
+      ],
+      "signalModes": [
+        "content-changed",
+        "manual-item-review"
+      ],
+      "extractionMode": "manual-item-review",
+      "note": "Estate circulars may support scoped Makati CBD mobility/service impacts when exact dates and affected roads/areas are stated."
+    },
+    {
+      "id": "comelec-2026-bske-calendar",
+      "sourceSystem": "general-source-freshness",
+      "sourceId": "comelec-2026-bske-calendar",
+      "label": "COMELEC 2026 BSKE election calendar",
+      "ownerHint": "elections",
+      "allowedKinds": [
+        "election-milestone",
+        "deadline"
+      ],
+      "signalModes": [
+        "content-changed",
+        "manual-item-review"
+      ],
+      "extractionMode": "reviewed-stable-document",
+      "note": "The base calendar must be reviewed together with later COMELEC amendments before any current milestone is promoted."
+    },
+    {
+      "id": "comelec-2026-bske-registration",
+      "sourceSystem": "general-source-freshness",
+      "sourceId": "comelec-2026-bske-registration",
+      "label": "COMELEC 2026 BSKE voter registration rules",
+      "ownerHint": "elections",
+      "allowedKinds": [
+        "deadline",
+        "election-milestone"
+      ],
+      "signalModes": [
+        "content-changed",
+        "manual-item-review"
+      ],
+      "extractionMode": "reviewed-stable-document",
+      "note": "Registration dates are official-source candidates; promotion still requires a canonical Elections milestone record."
+    },
+    {
+      "id": "comelec-home",
+      "sourceSystem": "general-source-freshness",
+      "sourceId": "comelec-home",
+      "label": "COMELEC announcements",
+      "ownerHint": "elections",
+      "allowedKinds": [
+        "election-milestone",
+        "deadline",
+        "record-update"
+      ],
+      "signalModes": [
+        "manual-item-review"
+      ],
+      "extractionMode": "manual-item-review",
+      "note": "Use to discover later amendments/notices. Reachability alone does not identify a milestone."
+    },
+    {
+      "id": "psa-population",
+      "sourceSystem": "general-source-freshness",
+      "sourceId": "psa-population",
+      "label": "PSA population table",
+      "ownerHint": "statistics",
+      "allowedKinds": [
+        "statistics-release",
+        "record-update"
+      ],
+      "signalModes": [
+        "content-changed",
+        "manual-item-review"
+      ],
+      "extractionMode": "release-metadata-required",
+      "note": "Observation/as-of periods never become release dates. Capture the official release/publication timestamp separately."
+    },
+    {
+      "id": "psa-ppa",
+      "sourceSystem": "general-source-freshness",
+      "sourceId": "psa-ppa",
+      "label": "PSA provincial product accounts",
+      "ownerHint": "statistics",
+      "allowedKinds": [
+        "statistics-release",
+        "record-update"
+      ],
+      "signalModes": [
+        "content-changed",
+        "manual-item-review"
+      ],
+      "extractionMode": "release-metadata-required",
+      "note": "Only official release/publication dates can feed Recently Published."
+    },
+    {
+      "id": "coa-audit",
+      "sourceSystem": "general-source-freshness",
+      "sourceId": "coa-audit",
+      "label": "Commission on Audit annual reports",
+      "ownerHint": "public-records",
+      "allowedKinds": [
+        "audit-release",
+        "publication"
+      ],
+      "signalModes": [
+        "content-changed",
+        "manual-item-review"
+      ],
+      "extractionMode": "release-metadata-required",
+      "note": "A newly catalogued audit needs item identity and publication/release evidence before promotion."
+    },
+    {
+      "id": "makati-publications",
+      "sourceSystem": "city-monitor",
+      "sourceId": "makati-publications",
+      "label": "Makati official publications",
+      "ownerHint": "public-records",
+      "allowedKinds": [
+        "publication",
+        "statistics-release",
+        "audit-release",
+        "record-update"
+      ],
+      "signalModes": [
+        "manual-item-review"
+      ],
+      "extractionMode": "manual-item-review",
+      "note": "Publication identity and release date are required; portal reachability is not enough."
+    },
+    {
+      "id": "makati-action-center",
+      "sourceSystem": "general-source-freshness",
+      "sourceId": "makati-action-center",
+      "label": "Makati Action Center Citizen's Charter",
+      "ownerHint": "services",
+      "allowedKinds": [
+        "deadline",
+        "service-change"
+      ],
+      "signalModes": [
+        "content-changed",
+        "manual-item-review"
+      ],
+      "extractionMode": "item-level-change-required",
+      "note": "A charter document change requires review; only explicit effective dates/deadlines become timeline candidates."
+    }
+  ]
+}

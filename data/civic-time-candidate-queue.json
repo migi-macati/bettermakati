@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "generatedAt": "2026-09-28T11:45:00+08:00",
+  "doctrine": {
+    "publicBoundary": "This queue is internal review state. No queue item is a public Civic Timeline item.",
+    "promotion": "Only a reviewed discovery with explicit temporal evidence and a resolved canonical owner may become ready-for-projection."
+  },
+  "summary": {
+    "total": 3,
+    "sourceReviewNeeded": 2,
+    "ownerGap": 1,
+    "readyForProjection": 0,
+    "publicEligible": 0
+  },
+  "candidates": [
+    {
+      "id": "reviewed:comelec-2026-bske-election-day",
+      "candidateType": "reviewed-discovery",
+      "reviewStatus": "owner-gap",
+      "publicEligible": false,
+      "title": "2026 Barangay and Sangguniang Kabataan Elections — election day",
+      "summary": "Official COMELEC materials identify November 2, 2026 as the 2026 BSKE election date. This remains an internal Civic Timeline candidate until the Elections domain owns a current 2026 BSKE milestone record.",
+      "kind": "election-milestone",
+      "actionability": "information-only",
+      "sourceSystem": "general-source-freshness",
+      "sourceId": "comelec-2026-bske-calendar",
+      "sourceUrl": "https://www.comelec.gov.ph/php-tpls-attachments/2025BSKE/Resolutions/com_res_11191.pdf",
+      "reviewedAt": "2026-09-28T11:45:00+08:00",
+      "temporal": {
+        "semantic": "occurrence",
+        "precision": "date",
+        "value": "2026-11-02",
+        "sourceField": "Resolution No. 11191 — election date"
+      },
+      "geography": {
+        "scope": "citywide",
+        "note": "National election calendar projected locally only after the Makati Elections canonical owner is ready."
+      },
+      "suggestedOwner": "elections",
+      "canonicalRef": null,
+      "reviewerNote": "Do not publish directly from this discovery object. First add/resolve the canonical 2026 BSKE milestone set in Elections and reconcile later COMELEC calendar amendments."
+    },
+    {
+      "id": "signal:city-monitor:philgeps:content-changed",
+      "candidateType": "source-signal",
+      "reviewStatus": "source-review-needed",
+      "publicEligible": false,
+      "title": "PhilGEPS — Content changed",
+      "sourceSystem": "city-monitor",
+      "sourceId": "philgeps",
+      "sourceUrl": "https://notices.philgeps.gov.ph/",
+      "detectedAt": "2026-09-27T00:45:23.835Z",
+      "allowedKinds": [
+        "procurement-milestone",
+        "deadline",
+        "publication"
+      ],
+      "suggestedOwner": "accountability",
+      "extractionMode": "exact-record-match-required",
+      "action": "Compare the changed source with each affected page, verify the underlying fact, then update only claims the source actually changes. Then preserve an item-level date and canonical owner before creating any Civic Timeline projection.",
+      "note": "A portal hash change is not an exact Makati procurement match. Promotion requires an item-specific Makati record."
+    },
+    {
+      "id": "signal:city-monitor:mymakati-broadcasts:manual-review",
+      "candidateType": "source-signal",
+      "reviewStatus": "source-review-needed",
+      "publicEligible": false,
+      "title": "MyMakati official social broadcasts — Manual review",
+      "sourceSystem": "city-monitor",
+      "sourceId": "mymakati-broadcasts",
+      "sourceUrl": "https://www.facebook.com/mymakativerified",
+      "detectedAt": "2026-09-27T00:45:23.835Z",
+      "allowedKinds": [
+        "meeting",
+        "public-hearing",
+        "consultation",
+        "barangay-assembly"
+      ],
+      "suggestedOwner": "city-monitor",
+      "extractionMode": "manual-item-review",
+      "action": "Open the source manually and review new official content relevant to the affected pages before publishing a civic record. Then preserve an item-level date and canonical owner before creating any Civic Timeline projection.",
+      "note": "Social-platform broadcasts are discovery/evidence only until the exact official item and date are preserved."
+    }
+  ]
+}

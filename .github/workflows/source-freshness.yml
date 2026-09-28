@@ -93,7 +93,9 @@ jobs:
             data/freshness-review-queue.json \
             data/freshness-review-queue.md \
             data/page-freshness-state.json \
-            data/freshness-history.json
+            data/freshness-history.json \
+            data/civic-time-candidate-queue.json \
+            data/civic-time-candidate-queue.md
 
           if git diff --cached --quiet; then
             echo "published=false" >> "$GITHUB_OUTPUT"

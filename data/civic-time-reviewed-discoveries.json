@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "reviewedOn": "2026-09-28",
+  "discoveries": [
+    {
+      "id": "comelec-2026-bske-election-day",
+      "reviewStatus": "owner-gap",
+      "title": "2026 Barangay and Sangguniang Kabataan Elections — election day",
+      "summary": "Official COMELEC materials identify November 2, 2026 as the 2026 BSKE election date. This remains an internal Civic Timeline candidate until the Elections domain owns a current 2026 BSKE milestone record.",
+      "kind": "election-milestone",
+      "actionability": "information-only",
+      "sourceSystem": "general-source-freshness",
+      "sourceId": "comelec-2026-bske-calendar",
+      "source": {
+        "label": "COMELEC Resolution No. 11191 — 2026 BSKE calendar",
+        "url": "https://www.comelec.gov.ph/php-tpls-attachments/2025BSKE/Resolutions/com_res_11191.pdf",
+        "publisher": "Commission on Elections",
+        "sourceClass": "official-primary"
+      },
+      "supportingSources": [
+        {
+          "label": "COMELEC 2026 BSKE resolutions index",
+          "url": "https://www.comelec.gov.ph/?r=2026BSKE/Resolutions",
+          "publisher": "Commission on Elections",
+          "note": "The official index lists Resolution No. 11266 as an August 11, 2026 amendment to the 2026 BSKE calendar; the amended calendar should be reviewed before promoting the full milestone set."
+        }
+      ],
+      "temporal": {
+        "semantic": "occurrence",
+        "precision": "date",
+        "value": "2026-11-02",
+        "sourceField": "Resolution No. 11191 — election date"
+      },
+      "geography": {
+        "scope": "citywide",
+        "note": "National election calendar projected locally only after the Makati Elections canonical owner is ready."
+      },
+      "suggestedOwner": "elections",
+      "canonicalRef": null,
+      "reviewedAt": "2026-09-28T11:45:00+08:00",
+      "reviewerNote": "Do not publish directly from this discovery object. First add/resolve the canonical 2026 BSKE milestone set in Elections and reconcile later COMELEC calendar amendments."
+    }
+  ]
+}
