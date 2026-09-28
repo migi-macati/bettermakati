@@ -951,7 +951,7 @@ export default function Mobility() {
                   setRouteQuery('');
                   setShowAllRoutes(false);
                 }}
-                className="absolute right-2 top-1.5 min-h-8 rounded-lg px-3 text-xs font-bold text-primary-700 hover:bg-primary-50"
+                className="absolute right-1 top-0 min-h-11 rounded-lg px-3 text-xs font-bold text-primary-700 hover:bg-primary-50"
               >
                 Clear
               </button>
@@ -1001,7 +1001,7 @@ export default function Mobility() {
                     </div>
 
                     <details className="mt-4 border-t border-gray-100 pt-3 text-sm text-gray-600">
-                      <summary className="cursor-pointer font-bold text-primary-700">
+                      <summary className="flex min-h-11 cursor-pointer items-center font-bold text-primary-700">
                         Evidence &amp; limits
                       </summary>
                       <p className="mt-2 leading-relaxed">
@@ -1061,7 +1061,7 @@ export default function Mobility() {
                       {route.historical.from} ↔ {route.historical.to}
                     </h3>
                     <details className="mt-3 text-sm text-gray-600">
-                      <summary className="cursor-pointer font-bold text-primary-700">
+                      <summary className="flex min-h-11 cursor-pointer items-center font-bold text-primary-700">
                         Evidence note
                       </summary>
                       <p className="mt-2 leading-relaxed">{route.note}</p>
