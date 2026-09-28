@@ -4,9 +4,12 @@ Generated: 2026-09-28T13:07:00+08:00
 
 Internal review only. Headlines are discovery signals, not canonical civic records.
 
-- Total candidates: 1
+- Active candidates: 1
 - Owner review needed: 1
 - Canonical match found: 0
+- Material-update review: 0
+- Resolved stories suppressed: 0
+- Resolution history entries: 0
 
 ## Makati City Hall adopts 4-day onsite workweek; extends service hours to 7 PM
 
