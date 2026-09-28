@@ -63,7 +63,7 @@ for (const marker of [
 for (const marker of [
   "const Calendar = lazy(() => import('./pages/Calendar'))",
   '<Route path="/calendar" element={<Calendar />} />',
-  '<Route path="/whats-on" element={<Navigate to="/calendar" replace />} />',
+  '<Route path="/whats-on" element={<CompatibilityRedirect to="/calendar" />} />',
 ]) {
   if (!app.includes(marker)) problems.push('Calendar route marker missing: ' + marker);
 }
