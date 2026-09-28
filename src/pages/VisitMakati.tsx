@@ -11,17 +11,49 @@ import {
 import { Link } from 'react-router';
 import Section from '../components/ui/Section';
 import PlacesExplorer from '../components/visit/PlacesExplorer';
-import { visitorPlaces } from '../data/visitMakati';
+import {
+  visitorCurationSourceById,
+  visitorExperiences,
+  visitorResources,
+  type VisitorCanonicalReference,
+} from '../data/visitorCuration';
 import SEO from '../components/SEO';
 import LastReviewed from '../components/ui/LastReviewed';
 import PhotoCarousel from '../components/ui/PhotoCarousel';
 import { visitImageSet } from '../data/cityImages';
 import SharePage from '../components/ui/SharePage';
 import { placeRegistryById } from '../data/placeRegistry';
-import { resolveDistrictReferences } from '../data/districtReferences';
+import {
+  resolveDistrictReference,
+  resolveDistrictReferences,
+} from '../data/districtReferences';
 
 const mapsUrl = (query: string) =>
   `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+
+const visitorRefView = (ref: VisitorCanonicalReference) => {
+  if (ref.type === 'place') {
+    const place = placeRegistryById.get(ref.id);
+    if (!place) throw new Error('Unknown visitor Place: ' + ref.id);
+
+    return {
+      label: place.name,
+      href: '/civic-map/' + place.id,
+      mapQuery: place.location.point
+        ? place.location.point.lat + ',' + place.location.point.lng
+        : place.name + ', Makati City, Philippines',
+      address: place.location.address,
+    };
+  }
+
+  const district = resolveDistrictReference(ref);
+  return {
+    label: district.label,
+    href: district.href,
+    mapQuery: district.mapQuery,
+    address: undefined,
+  };
+};
 
 const makeItMakatiAreas = resolveDistrictReferences([
   { type: 'area', id: 'makati-cbd' },
@@ -76,7 +108,10 @@ export default function VisitMakati() {
 
               <div className="mt-6 flex flex-wrap items-center gap-3">
                 <SharePage title="Visit Makati | BetterMakati" />
-                <LastReviewed date="2026-09-20" note="Place details and operating conditions can change; current map and official links are provided." />
+                <LastReviewed
+                  date="2026-09-28"
+                  note="Curated starting points now reuse canonical BetterMakati identities where possible; volatile schedules and commercial details remain with current external sources."
+                />
               </div>
             </div>
 
@@ -93,64 +128,100 @@ export default function VisitMakati() {
               Explore the city
             </h2>
             <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
-              {visitorPlaces.map(place => {
-                const registryPlace = place.placeId
-                  ? placeRegistryById.get(place.placeId)
-                  : undefined;
-                const displayName =
-                  registryPlace?.name ?? place.name ?? 'Visitor place';
-                const mapHref = registryPlace?.location.point
-                  ? mapsUrl(
-                      registryPlace.location.point.lat +
-                        ',' +
-                        registryPlace.location.point.lng
-                    )
-                  : mapsUrl(place.mapsQuery ?? displayName + ' Makati');
+              {visitorExperiences.map(experience => {
+                const identity =
+                  experience.kind === 'canonical-destination'
+                    ? visitorRefView(experience.identityRef)
+                    : {
+                        label: experience.name,
+                        href: visitorRefView(experience.anchorRefs[0]).href,
+                        mapQuery: experience.mapsQuery,
+                        address: undefined,
+                      };
+                const contextRefs =
+                  experience.kind === 'recurring-experience'
+                    ? experience.anchorRefs
+                    : experience.contextRefs ?? [];
+                const primarySource = visitorCurationSourceById.get(
+                  experience.sourceIds[0]
+                );
 
                 return (
-                  <div
-                    key={place.placeId ?? displayName}
+                  <article
+                    key={experience.id}
                     className="rounded-2xl border border-gray-200 bg-white p-5"
                   >
                     <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
-                      {place.category}
+                      {experience.category}
                     </div>
                     <h3 className="mt-2 text-lg font-extrabold text-gray-950">
-                      {displayName}
+                      {identity.label}
                     </h3>
-                    <p className="mt-2 text-sm text-gray-600">{place.summary}</p>
-                    {registryPlace?.location.address && (
+                    <p className="mt-2 text-sm text-gray-600">
+                      {experience.summary}
+                    </p>
+                    {identity.address && (
                       <p className="mt-2 text-xs leading-relaxed text-gray-500">
-                        {registryPlace.location.address}
+                        {identity.address}
                       </p>
                     )}
+
+                    {contextRefs.length > 0 && (
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        {contextRefs.map(ref => {
+                          const context = visitorRefView(ref);
+                          return (
+                            <Link
+                              key={ref.type + ':' + ref.id}
+                              to={context.href}
+                              className="rounded-full border border-primary-200 px-2.5 py-1 text-xs font-bold text-primary-700"
+                            >
+                              {context.label}
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    )}
+
                     <div className="mt-4 flex flex-wrap gap-3 text-sm">
+                      <Link
+                        to={identity.href}
+                        className="inline-flex items-center gap-1 font-bold text-primary-700"
+                      >
+                        Explore context <ArrowRight className="h-3.5 w-3.5" />
+                      </Link>
                       <a
-                        href={mapHref}
+                        href={mapsUrl(identity.mapQuery)}
                         target="_blank"
                         rel="noreferrer"
                         className="inline-flex items-center gap-1 font-bold text-primary-700"
                       >
                         Google Maps <ExternalLink className="h-3.5 w-3.5" />
                       </a>
-                      {registryPlace && (
-                        <Link
-                          to={'/civic-map/' + registryPlace.id}
+                      {experience.links.map(link => (
+                        <a
+                          key={link.url}
+                          href={link.url}
+                          target="_blank"
+                          rel="noreferrer"
                           className="inline-flex items-center gap-1 font-bold text-primary-700"
                         >
-                          Place details <ArrowRight className="h-3.5 w-3.5" />
-                        </Link>
+                          {link.label}
+                          <ExternalLink className="h-3.5 w-3.5" />
+                        </a>
+                      ))}
+                      {primarySource && (
+                        <a
+                          href={primarySource.url}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-gray-500 underline underline-offset-2"
+                        >
+                          Source
+                        </a>
                       )}
-                      <a
-                        href={place.sourceUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="text-gray-500 underline underline-offset-2"
-                      >
-                        {place.sourceLabel}
-                      </a>
                     </div>
-                  </div>
+                  </article>
                 );
               })}
             </div>
@@ -254,47 +325,48 @@ export default function VisitMakati() {
 
       <Section id="resources" className="bg-[#fffdf8]">
         <div className="section-eyebrow">Visitor resources</div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <article className="rounded-2xl border border-gray-200 bg-white p-5 hover:border-primary-300 hover:shadow-sm transition">
-            <h2 className="font-extrabold text-lg text-gray-950">
-              Make It Makati
-            </h2>
-            <p className="mt-1 text-sm text-gray-600">
-              Ayala Land visitor guide covering these Makati areas.
-            </p>
-            <div className="mt-3 flex flex-wrap gap-2">
-              {makeItMakatiAreas.map(area => (
-                <Link
-                  key={area.ref.type + ':' + area.ref.id}
-                  to={area.href}
-                  className="rounded-full border border-primary-200 px-3 py-1.5 text-xs font-bold text-primary-700"
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          {visitorResources.map(resource => {
+            const areas =
+              resource.id === 'make-it-makati'
+                ? makeItMakatiAreas
+                : [];
+
+            return (
+              <article
+                key={resource.id}
+                className="rounded-2xl border border-gray-200 bg-white p-5"
+              >
+                <h2 className="text-lg font-extrabold text-gray-950">
+                  {resource.name}
+                </h2>
+                <p className="mt-1 text-sm text-gray-600">
+                  {resource.summary}
+                </p>
+                {areas.length > 0 && (
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {areas.map(area => (
+                      <Link
+                        key={area.ref.type + ':' + area.ref.id}
+                        to={area.href}
+                        className="rounded-full border border-primary-200 px-3 py-1.5 text-xs font-bold text-primary-700"
+                      >
+                        {area.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+                <a
+                  href={resource.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700"
                 >
-                  {area.label}
-                </Link>
-              ))}
-            </div>
-            <a
-              href="https://makeitmakati.com/"
-              target="_blank"
-              rel="noreferrer"
-              className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700"
-            >
-              Open Make It Makati <ExternalLink className="h-3.5 w-3.5" />
-            </a>
-          </article>
-          <a
-            href="https://www.makati.gov.ph/"
-            target="_blank"
-            rel="noreferrer"
-            className="rounded-2xl border border-gray-200 bg-white p-5 hover:border-primary-300 hover:shadow-sm transition"
-          >
-            <h2 className="font-extrabold text-lg text-gray-950">
-              Official Makati Web Portal
-            </h2>
-            <p className="text-sm text-gray-600 mt-1">
-              City information, events and visitor resources.
-            </p>
-          </a>
+                  Open resource <ExternalLink className="h-3.5 w-3.5" />
+                </a>
+              </article>
+            );
+          })}
         </div>
       </Section>
 

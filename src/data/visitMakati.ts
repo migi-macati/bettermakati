@@ -1,79 +1,9 @@
-export interface VisitorPlace {
-  name?: string;
-  category:
-    | 'Culture'
-    | 'Food & Markets'
-    | 'Parks'
-    | 'Shopping & Lifestyle'
-    | 'District';
-  summary: string;
-  mapsQuery?: string;
-  placeId?: string;
-  sourceUrl: string;
-  sourceLabel: string;
-}
-
 export interface HeritageSite {
   placeId: string;
   category: 'Historic marker' | 'Historic landscape' | 'Museum & culture';
   period: string;
   context: string;
 }
-
-export const visitorPlaces: VisitorPlace[] = [
-  {
-    category: 'Culture',
-    summary: 'Philippine history, art and archaeology in the Ayala Center.',
-    placeId: 'ayala-museum',
-    sourceUrl:
-      'https://www.tourism.gov.ph/destination/national-capital-region/makati/',
-    sourceLabel: 'Department of Tourism',
-  },
-  {
-    name: 'Salcedo Saturday Market',
-    category: 'Food & Markets',
-    summary: 'Weekend food, produce, specialty goods and local makers.',
-    mapsQuery: 'Salcedo Saturday Market Makati',
-    sourceUrl:
-      'https://www.tourism.gov.ph/destination/national-capital-region/makati/',
-    sourceLabel: 'Department of Tourism',
-  },
-  {
-    name: 'Legazpi Sunday Market',
-    category: 'Food & Markets',
-    summary: 'Sunday market for food, produce and artisanal goods.',
-    mapsQuery: 'Legazpi Sunday Market Makati',
-    sourceUrl:
-      'https://www.tourism.gov.ph/destination/national-capital-region/makati/',
-    sourceLabel: 'Department of Tourism',
-  },
-  {
-    name: 'Poblacion',
-    category: 'District',
-    summary: 'Dining, cafés, nightlife and the historic core of old Makati.',
-    mapsQuery: 'Poblacion Makati restaurants',
-    sourceUrl:
-      'https://www.tourism.gov.ph/destination/national-capital-region/makati/',
-    sourceLabel: 'Department of Tourism',
-  },
-  {
-    category: 'Parks',
-    summary: 'Urban park and walking space in the central business district.',
-    placeId: 'ayala-triangle-gardens',
-    sourceUrl:
-      'https://www.tourism.gov.ph/destination/national-capital-region/makati/',
-    sourceLabel: 'Department of Tourism',
-  },
-  {
-    name: 'Greenbelt',
-    category: 'Shopping & Lifestyle',
-    summary: 'Shopping, dining, landscaped spaces and cultural destinations.',
-    mapsQuery: 'Greenbelt Makati',
-    sourceUrl:
-      'https://www.tourism.gov.ph/destination/national-capital-region/makati/',
-    sourceLabel: 'Department of Tourism',
-  },
-];
 
 export const heritageSites: HeritageSite[] = [
   {
