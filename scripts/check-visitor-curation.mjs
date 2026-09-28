@@ -78,6 +78,21 @@ for (const marker of [
   "resolveDistrictReference({ type: 'area', id: areaId })",
   'visitorCurationSourceById',
   'date="2026-09-28"',
+  'title="Explore Makati"',
+  'Understand the city as you explore it.',
+  'aria-label="Explore Makati sections"',
+  'Start with Makati itself.',
+  'Recurring experiences',
+  'Weekend markets',
+  'id="city-context"',
+  'Explore Makati by layer.',
+  'id="live-discovery"',
+  'Looking for something specific?',
+  'Restaurants, cafés, shops and nightlife change quickly.',
+  'Current events',
+  'Cinemas &amp; showtimes',
+  'Plan how to get there',
+  'External resources',
 ]) {
   if (!page.includes(marker)) {
     problems.push('Visit page migration marker missing: ' + marker);
@@ -87,9 +102,14 @@ for (const marker of [
 if (
   page.includes('visitorPlaces.map') ||
   page.includes("name: 'Greenbelt'") ||
-  page.includes('/parking')
+  page.includes('/parking') ||
+  page.includes('Plan your visit') ||
+  page.includes('Food & Places') ||
+  page.includes("label: 'Eat & drink'")
 ) {
-  problems.push('Visit page still contains a removed legacy visitor pattern.');
+  problems.push(
+    'Explore Makati page still contains a removed legacy visitor/directory pattern.'
+  );
 }
 
 if ((packageJson.match(/npm run check:visitor-curation/g) ?? []).length < 2) {
