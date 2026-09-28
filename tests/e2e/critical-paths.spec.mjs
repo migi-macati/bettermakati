@@ -1588,6 +1588,29 @@ test('national service handoff batch D2 covers OWWA, TESDA, PHLPost, DPWH and CO
   await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toHaveCount(0);
 });
 
+test('footer prioritizes recovery, civic understanding and institutional trust', async ({ page }) => {
+  await page.goto(baseURL + '/');
+  const footer = page.locator('footer');
+
+  for (const heading of ['Get things done', 'Understand Makati', 'BetterMakati']) {
+    await expect(footer.getByRole('heading', { name: heading, exact: true })).toBeVisible();
+  }
+
+  await expect(footer.getByRole('link', { name: 'Saan Ako Lalapit?', exact: true })).toBeVisible();
+  await expect(footer.getByRole('link', { name: 'Government Offices', exact: true })).toBeVisible();
+  await expect(footer.getByRole('link', { name: 'Contact', exact: true })).toHaveAttribute('href', '/contact');
+  await expect(footer.getByRole('link', { name: 'Coverage & limitations', exact: true }).first()).toHaveAttribute('href', '/status');
+  await expect(footer.getByRole('link', { name: 'About BetterMakati', exact: true })).toHaveAttribute('href', '/about');
+
+  await expect(footer.getByRole('link', { name: 'City Monitor', exact: true })).toHaveCount(0);
+  await expect(footer.getByRole('link', { name: 'Civic Briefs', exact: true })).toHaveCount(0);
+
+  await expect(footer.getByText('Official & broader ecosystem', { exact: true })).toBeVisible();
+  const official = footer.getByRole('link', { name: 'Official Makati City Portal', exact: true });
+  await expect(official).toHaveAttribute('href', 'https://www.makati.gov.ph/');
+  await expect(official).toHaveAttribute('target', '_blank');
+});
+
 test('ecosystem navigation exposes national and cross-LGU exits without replacing Makati services', async ({ page }) => {
   await page.goto(baseURL + '/services');
   await expect(page.getByRole('heading', { name: 'Need somewhere else?', exact: true })).toBeVisible();
