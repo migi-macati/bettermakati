@@ -1,0 +1,106 @@
+{
+  "version": 1,
+  "reviewedOn": "2026-09-28",
+  "status": "complete-static-qa-live-browser-deferred",
+  "scope": {
+    "step": "W5-9c",
+    "title": "Responsive, accessibility & visual QA",
+    "surfaces": [
+      "/history",
+      "/heritage",
+      "/estates",
+      "/mobility",
+      "/visit",
+      "/calendar",
+      "/news",
+      "/search"
+    ]
+  },
+  "baseline": {
+    "focusVisible": "Global focus-visible treatment remains defined for links, buttons, inputs, selects, textareas and summaries.",
+    "reducedMotion": "Global prefers-reduced-motion handling remains present.",
+    "touchTarget": "Interactive controls use a 44px baseline through global form/button classes or explicit min-h-11 sizing.",
+    "responsiveContainers": "Wave 5 pages use responsive grids/flex layouts and intentional horizontal scrolling for dense chip/tab controls instead of fixed desktop-width content containers."
+  },
+  "fixes": [
+    "History period filters and source disclosures now preserve 44px touch targets.",
+    "Heritage map filters now preserve 44px touch targets.",
+    "Makati Calendar geography chips and filter controls now preserve 44px touch targets.",
+    "Makati in the News now exposes aria-busy for refresh state, role=alert for feed failure, and larger related/source/summary targets.",
+    "Mobility route-filter Clear and expandable detail summaries now preserve 44px touch targets.",
+    "Explore Makati expandable resource disclosure now preserves a 44px touch target.",
+    "Global Search category chips now preserve 44px touch targets."
+  ],
+  "responsivePatterns": [
+    {
+      "surface": "History",
+      "pattern": "Period chips scroll horizontally on narrow screens; filter form moves to two columns only from sm."
+    },
+    {
+      "surface": "Heritage",
+      "pattern": "Map controls wrap and the text/map split is deferred to xl."
+    },
+    {
+      "surface": "Mobility",
+      "pattern": "Dense section chips use overflow-x-auto on narrow screens and wrap at sm."
+    },
+    {
+      "surface": "Explore Makati",
+      "pattern": "Discovery chips use overflow-x-auto on narrow screens and wrap at sm."
+    },
+    {
+      "surface": "Calendar",
+      "pattern": "Views are single-column until md; filter controls expand progressively to md/xl."
+    },
+    {
+      "surface": "News",
+      "pattern": "Headline cards remain single-column until lg; metadata uses flex-wrap."
+    },
+    {
+      "surface": "Search",
+      "pattern": "Result tabs intentionally scroll horizontally while results remain fluid-width."
+    }
+  ],
+  "accessibility": {
+    "search": [
+      "Search input remains a combobox with aria-expanded, aria-controls and active-descendant state.",
+      "Search results remain role=listbox with role=option rows.",
+      "No-result external handoffs and missing-result action preserve 44px targets."
+    ],
+    "async": [
+      "News refresh state exposes aria-busy.",
+      "News fetch failure is announced as an alert."
+    ],
+    "filters": [
+      "History and Calendar filters retain visible labels.",
+      "Toggle/view buttons preserve aria-pressed."
+    ]
+  },
+  "visualConsistency": {
+    "status": "pass-static",
+    "principles": [
+      "Warm-white/green/gold BetterMakati palette remains intact.",
+      "Wave 5 surfaces use shared Section, Heading, brand buttons/chips and responsive card patterns where appropriate.",
+      "No page was forced into a single template when its content model needs a different information hierarchy.",
+      "Dense metadata wraps rather than forcing horizontal page overflow."
+    ]
+  },
+  "bounded": [
+    {
+      "id": "live-browser-viewport-verification",
+      "status": "deferred",
+      "reason": "Repository/source QA cannot prove actual rendering at production viewport sizes."
+    },
+    {
+      "id": "automated-contrast-measurement",
+      "status": "not-added",
+      "reason": "Existing brand tokens and accessibility guardrails are preserved; a browser-based contrast pass belongs with live visual QA."
+    },
+    {
+      "id": "pixel-perfect-cross-device-parity",
+      "status": "not-claimed",
+      "reason": "Static source checks verify responsive intent, not every browser/device rendering outcome."
+    }
+  ],
+  "next": "W5-9d — Deployment & live-browser closeout"
+}
