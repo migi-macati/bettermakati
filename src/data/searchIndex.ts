@@ -121,7 +121,7 @@ const visitItems: SearchItem[] = [
       'Understand Makati through places, districts, barangays, heritage, history, mobility and current activity.',
     href: '/visit',
     keywords: [
-      'explore visit Makati city orientation places districts barangays heritage history mobility markets current activity',
+      'explore visit Makati visitor guide tourist tourism things to do sights destinations city orientation places districts barangays heritage history mobility markets current activity',
       'restaurants cafes shopping nightlife live discovery',
       ...visitorExperiences.flatMap(experience => experience.tags),
     ].join(' '),
@@ -248,7 +248,7 @@ const governmentItems: SearchItem[] = [
     category: 'Government',
     description: 'Current Makati coverage with publisher and official-source handoffs.',
     href: '/news',
-    keywords: 'news coverage headline publisher announcement city government update',
+    keywords: 'news coverage headline publisher announcement city government update current affairs current events updates breaking',
   },
   {
     title: 'Estates, Districts & Associations',
@@ -355,7 +355,7 @@ const toolItems: SearchItem[] = [
       'Civic dates, deadlines, meetings, legislation milestones, publications and historical records in one timeline.',
     href: '/calendar',
     keywords:
-      'Makati calendar civic timeline deadline public hearing council session barangay assembly legislation procurement election report publication advisory archive',
+      'Makati calendar civic timeline whats on what is on event events upcoming happenings schedule deadline public hearing council session barangay assembly legislation procurement election report publication advisory archive',
     featured: true,
     canonicalKey: 'tool:makati-calendar',
   },
@@ -701,6 +701,7 @@ const civicRegistryItems: SearchItem[] = [
           civicEntityKindLabels[record.entityKind] + ' in the BetterMakati Civic Registry.',
         href: '/civic-map/' + record.id,
         keywords: [
+          record.id,
           civicAssetTypeLabels[record.primaryCategory],
           civicEntityKindLabels[record.entityKind],
           ...record.location.barangays,
@@ -715,6 +716,8 @@ const civicRegistryItems: SearchItem[] = [
           ...record.tags,
           'civic registry place location map report problem proposal improve observe conditions',
         ].join(' '),
+        canonicalKey:
+          'civic-registry:' + record.entityKind + ':' + record.id,
       };
     }),
 ];
@@ -895,6 +898,7 @@ const barangayItems: SearchItem[] = barangayProfiles.map(barangay => {
       ...people,
       ...localPlaces,
     ].join(' '),
+    canonicalKey: 'barangay:' + barangay.slug,
   };
 });
 
@@ -932,6 +936,7 @@ const coreSearchIndex: SearchItem[] = [
     description: `${event.date} · ${event.summary}`,
     href: `/history#${event.id}`,
     keywords: `${event.date} ${event.topic} ${event.source.label} history timeline`,
+    canonicalKey: 'history:' + event.id,
   })),
   ...serviceItems,
   ...civicIntelligenceItems,
