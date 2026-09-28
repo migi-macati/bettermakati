@@ -260,7 +260,6 @@ for (const marker of [
   'Understand the city as you explore it',
   "label: 'Areas & districts'",
   "href: '/estates'",
-  "{ label: 'Barangays', href: '/barangays'",
 ]) {
   if (!home.includes(marker)) {
     problems.push('Explore homepage marker missing: ' + marker);
@@ -361,7 +360,7 @@ console.log(
     canonicalCount + ' canonical destinations',
     recurringCount + ' recurring experiences',
     resourceCount + ' visitor resources',
-    'canonical cross-links retained',
+    'canonical cross-links retained with BetterBarangay owning the homepage barangay entry',
     'live commercial discovery remains external',
     'Parking remains removed',
     'fresh deployment/live-browser verification explicitly deferred',
