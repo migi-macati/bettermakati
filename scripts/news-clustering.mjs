@@ -63,8 +63,8 @@ const withinHours = (leftDate, rightDate, hours) => {
 };
 
 const clusterCompatible = (left, right) => {
-  if (left.clusterKey && left.clusterKey === right.clusterKey) return true;
   if (!withinHours(left.pubDate, right.pubDate, 96)) return false;
+  if (left.clusterKey && left.clusterKey === right.clusterKey) return true;
 
   const leftTokens = tokenSet(left.title);
   const rightTokens = tokenSet(right.title);
