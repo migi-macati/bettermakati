@@ -24,6 +24,7 @@ import {
 } from '../data/yamlLoader';
 import SEO from '../components/SEO';
 import LastReviewed from '../components/ui/LastReviewed';
+import { useBarangayScope, withBarangayScope } from '../hooks/useBarangayScope';
 
 interface DocumentProps {
   theme?: string;
@@ -35,6 +36,8 @@ export default function Document({
   categoryType,
 }: DocumentProps) {
   const { documentSlug, category } = useParams();
+  const { barangay } = useBarangayScope();
+  const serviceScopeSlug = categoryType === 'service' ? barangay?.slug : undefined;
   const [markdownContent, setMarkdownContent] =
     useState<MarkdownContent | null>(null);
   const [nestedIndex, setNestedIndex] = useState<CategoryIndex | null>(null);
@@ -66,7 +69,12 @@ export default function Document({
           ? governmentCategories.categories
           : serviceCategories.categories;
         const sectionLabel = isGovernment ? 'Government' : 'Services';
-        const sectionHref = isGovernment ? '/government' : '/services';
+        const sectionPath = isGovernment ? '/government' : '/services';
+        const sectionHref = withBarangayScope(sectionPath, serviceScopeSlug);
+        const categoryHref = withBarangayScope(
+          sectionPath + '/' + category,
+          serviceScopeSlug
+        );
         const categoryData = categories.find(c => c.slug === category);
         if (!categoryData) {
           throw new Error('Service category not found');
@@ -81,7 +89,7 @@ export default function Document({
             { label: sectionLabel, href: sectionHref },
             {
               label: categoryData?.category ?? category,
-              href: `${sectionHref}/${category}`,
+              href: categoryHref,
             },
             {
               label: documentSlug,
@@ -103,11 +111,10 @@ export default function Document({
           { label: sectionLabel, href: sectionHref },
           {
             label: categoryData?.category ?? category,
-            href: `${sectionHref}/${category}`,
+            href: categoryHref,
           },
           {
             label: content.title ?? documentSlug,
-            href: `${sectionHref}/${category}/${documentSlug}`,
           },
         ]);
       } catch (err) {
@@ -120,7 +127,7 @@ export default function Document({
     };
 
     loadContent();
-  }, [documentSlug, category, categoryType]);
+  }, [documentSlug, category, categoryType, serviceScopeSlug]);
 
   if (loading) {
     return (
@@ -167,7 +174,7 @@ export default function Document({
               {nestedPages.map((page, i) => (
                 <Link
                   key={page.slug ?? i}
-                  to={`/services/${documentSlug}/${page.slug}`}
+                  to={withBarangayScope(`/services/${documentSlug}/${page.slug}`, serviceScopeSlug)}
                   className="block"
                 >
                   <Card hoverable className="h-full">
