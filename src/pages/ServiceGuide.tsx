@@ -1,5 +1,4 @@
 import {
-  ArrowLeft,
   ExternalLink,
   MapPin,
   Phone,
@@ -15,6 +14,7 @@ import SEO from '../components/SEO';
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
 import LastReviewed from '../components/ui/LastReviewed';
+import Breadcrumbs from '../components/ui/Breadcrumbs';
 import { serviceDirectory, type ServiceDirectoryItem } from '../data/serviceDirectory';
 import { officesForAgency } from '../data/governmentServiceOffices';
 import { serviceGuideDetails } from '../data/serviceGuideDetails';
@@ -370,10 +370,15 @@ export default function ServiceGuide() {
   if (!item) {
     return (
       <Section className="bg-[#fffdf8]">
+        <Breadcrumbs
+          className="mb-6"
+          items={[
+            { label: 'Home', href: '/' },
+            { label: 'Services', href: '/services' },
+            { label: 'Service guide not found' },
+          ]}
+        />
         <Heading>Service guide not found</Heading>
-        <Link to="/services" className="mt-5 inline-flex items-center gap-2 font-bold text-primary-700">
-          <ArrowLeft className="h-4 w-4" /> Back to services
-        </Link>
       </Section>
     );
   }
@@ -398,11 +403,16 @@ export default function ServiceGuide() {
       />
 
       <Section className="bg-[#fffdf8]">
-        <Link to="/services" className="inline-flex items-center gap-2 text-sm font-bold text-primary-700">
-          <ArrowLeft className="h-4 w-4" /> Services
-        </Link>
+        <Breadcrumbs
+          className="mb-5"
+          items={[
+            { label: 'Home', href: '/' },
+            { label: 'Services', href: '/services' },
+            { label: item.title },
+          ]}
+        />
 
-        <div className="mt-5 flex flex-wrap gap-2 text-xs font-bold">
+        <div className="flex flex-wrap gap-2 text-xs font-bold">
           <span className="rounded-full bg-primary-50 px-2.5 py-1 text-primary-800">{item.level}</span>
           <span className="rounded-full bg-white px-2.5 py-1 text-gray-600">{item.type}</span>
           <span className="rounded-full bg-white px-2.5 py-1 text-gray-600">{item.category}</span>
