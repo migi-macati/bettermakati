@@ -72,6 +72,7 @@ export const mainNavigation: NavigationItem[] = [
     href: '/visit',
     children: [
       { label: 'City starting points', href: '/visit#places-to-start' },
+      { label: 'Areas & Districts', href: '/estates' },
       { label: 'Getting Around', href: '/mobility' },
       { label: 'Cinemas', href: '/cinemas' },
       { label: 'Heritage & Culture', href: '/heritage' },
