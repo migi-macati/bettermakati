@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "reviewedOn": "2026-09-28",
+  "policyVersion": "2026-09-28.w5-8e",
+  "doctrine": {
+    "history": "Resolution records are append-only editorial decisions. Generated queue refreshes must not delete or rewrite them.",
+    "recurrence": "A resolved story stays out of the active queue unless materially new evidence appears. Stale and out-of-scope decisions are terminal for the matched story.",
+    "canonicalBoundary": "A resolution can direct work toward a canonical owner, but only the canonical domain may publish the resulting civic fact or status.",
+    "matchRule": "Preserve the original candidate id, story-cluster id and known source URLs so later refreshes can recognize the same story even when the lead publisher changes."
+  },
+  "resolutions": []
+}
