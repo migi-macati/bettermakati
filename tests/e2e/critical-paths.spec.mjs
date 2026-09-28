@@ -331,6 +331,31 @@ test('homepage supports evidence and participation without restoring feature-fam
   await expect(page.getByText('Health services', { exact: true })).toBeVisible();
 });
 
+test('homepage keeps priority journeys ahead of depth content', async ({ page }) => {
+  await page.goto(baseURL + '/');
+
+  const sectionText = await page.locator('#main-content section').allTextContents();
+  const markers = [
+    'Common services',
+    'Public action & evidence',
+    'Take part in Makati',
+    'Understand the city as you explore it',
+    'Featured Reports & Insights',
+    'Makati at a glance',
+    'Around Makati',
+  ];
+
+  const indices = markers.map(marker =>
+    sectionText.findIndex(text => text.includes(marker))
+  );
+
+  for (const [index, marker] of indices.map((index, i) => [index, markers[i]])) {
+    expect(index, marker + ' section should be present').toBeGreaterThanOrEqual(0);
+  }
+
+  expect(indices).toEqual([...indices].sort((a, b) => a - b));
+});
+
 test('homepage exposes and opens barangay editions', async ({ page }) => {
   await page.goto(baseURL + '/');
   await expect(page.getByText('Go to your barangay', { exact: true })).toBeVisible();
