@@ -35,7 +35,7 @@ requireAll(serviceSearch, 'Search filter behavior', [
   "const domainCounts = useMemo(() => {",
   "domainFilter === 'all'",
   'Filter by type',
-  'setDomainFilter('all');',
+  "setDomainFilter('all');",
   "setTab('All');",
 ]);
 
