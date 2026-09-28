@@ -44,6 +44,18 @@ export default function GovernmentOffices() {
           className="mt-4"
         />
 
+        <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-sm font-bold">
+          <Link to="/services" className="text-primary-700 underline underline-offset-2">
+            Start with a service
+          </Link>
+          <Link
+            to="/community-tools/saan-ako-lalapit"
+            className="text-primary-700 underline underline-offset-2"
+          >
+            Not sure which office handles it?
+          </Link>
+        </div>
+
         <label className="relative mt-7 block max-w-3xl">
           <span className="sr-only">Search government offices</span>
           <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-500" />
@@ -121,6 +133,30 @@ export default function GovernmentOffices() {
             );
           })}
         </div>
+
+        {visible.length === 0 && (
+          <div className="mt-5 rounded-2xl border border-gray-200 bg-[#fffdf8] p-6 text-center">
+            <div className="font-extrabold text-gray-950">No office matches this search.</div>
+            <p className="mx-auto mt-2 max-w-xl text-sm leading-relaxed text-gray-600">
+              Try the service directory if you know the task but not the agency, or clear the office search and try again.
+            </p>
+            <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
+              <button
+                type="button"
+                onClick={() => {
+                  setQuery('');
+                  setScope('All');
+                }}
+                className="brand-btn-secondary"
+              >
+                Clear office search
+              </button>
+              <Link to="/services" className="brand-btn-primary">
+                Find a service by task
+              </Link>
+            </div>
+          </div>
+        )}
       </Section>
     </>
   );
