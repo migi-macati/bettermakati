@@ -8,6 +8,7 @@ import {
   normalizeNewsTitle,
   sourceClassLabel,
 } from './news-policy.mjs';
+import { clusterNewsItems } from './news-clustering.mjs';
 
 const GOOGLE_NEWS_BASE = 'https://news.google.com/rss/search';
 
@@ -64,7 +65,6 @@ const sourceValue = item => {
 export const parseGoogleNewsXml = (xml, limit = 30, now = new Date()) => {
   const items = [];
   const seenLinks = new Set();
-  const seenClusters = new Set();
   const itemMatches = xml.match(/<item>[\s\S]*?<\/item>/gi) || [];
   const retrievedAt = now.toISOString();
 
@@ -82,9 +82,7 @@ export const parseGoogleNewsXml = (xml, limit = 30, now = new Date()) => {
     if (!title || !link || !/\bmakati\b/i.test(searchable)) continue;
 
     const clusterKey = newsClusterKey(title);
-    if (seenLinks.has(link) || (clusterKey && seenClusters.has(clusterKey))) {
-      continue;
-    }
+    if (seenLinks.has(link)) continue;
 
     const freshness = classifyNewsFreshness(pubDate, now);
     if (!freshness.generalFeedEligible) continue;
@@ -102,7 +100,6 @@ export const parseGoogleNewsXml = (xml, limit = 30, now = new Date()) => {
     });
 
     seenLinks.add(link);
-    if (clusterKey) seenClusters.add(clusterKey);
 
     items.push({
       title,
@@ -123,13 +120,7 @@ export const parseGoogleNewsXml = (xml, limit = 30, now = new Date()) => {
     });
   }
 
-  return items
-    .sort((a, b) => {
-      const aTime = Date.parse(a.pubDate);
-      const bTime = Date.parse(b.pubDate);
-      return (Number.isNaN(bTime) ? 0 : bTime) - (Number.isNaN(aTime) ? 0 : aTime);
-    })
-    .slice(0, limit);
+  return clusterNewsItems(items).slice(0, limit);
 };
 
 export const fetchGoogleNews = async ({
