@@ -265,7 +265,7 @@ test('homepage universal search tolerates a simple typo', async ({ page }) => {
 
 test('site search ranks civic aliases and synonyms ahead of incidental matches', async ({ page }) => {
   await page.goto(baseURL + '/search');
-  const search = page.getByRole('combobox');
+  const search = page.locator('#site-search');
 
   const cases = [
     ['brgy poblacion', 'Barangay Poblacion'],
@@ -287,7 +287,7 @@ test('site search ranks civic aliases and synonyms ahead of incidental matches',
 
 test('site search keeps canonical titles above alias-only matches', async ({ page }) => {
   await page.goto(baseURL + '/search');
-  const search = page.getByRole('combobox');
+  const search = page.locator('#site-search');
 
   await search.fill('Public Records');
   await expect(page.getByRole('listbox', { name: /matches/i }).getByRole('option').first()).toContainText('Public Records');
@@ -298,7 +298,7 @@ test('site search keeps canonical titles above alias-only matches', async ({ pag
 
 test('site search filters by frozen civic result domains', async ({ page }) => {
   await page.goto(baseURL + '/search');
-  const search = page.getByRole('combobox');
+  const search = page.locator('#site-search');
   const typeFilter = page.getByLabel('Filter by type');
   const results = page.getByRole('listbox', { name: /matches/i });
 
@@ -321,7 +321,7 @@ test('site search filters by frozen civic result domains', async ({ page }) => {
 
 test('broad search tabs and specific type filters do not create hidden intersections', async ({ page }) => {
   await page.goto(baseURL + '/search');
-  const search = page.getByRole('combobox');
+  const search = page.locator('#site-search');
   const typeFilter = page.getByLabel('Filter by type');
 
   await search.fill('Makati');
@@ -569,7 +569,7 @@ test('ecosystem handoffs are mobile-safe with usable touch targets', async ({ pa
   expect(betterGovBox?.height ?? 0, 'BetterGov directory target should be at least 32px tall').toBeGreaterThanOrEqual(32);
 
   await page.goto(baseURL + '/search');
-  const search = page.getByRole('combobox');
+  const search = page.locator('#site-search');
   await search.fill(guaranteedMissingQuery);
   for (const name of ['Search national services on BetterGov', 'Find another LGU on BetterLGU']) {
     const link = page.getByRole('link', { name, exact: true });
@@ -1835,7 +1835,7 @@ test('ecosystem navigation exposes national and cross-LGU exits without replacin
 
 test('ecosystem fallbacks preserve the query and leave an internal recovery path', async ({ page }) => {
   await page.goto(baseURL + '/search');
-  const search = page.getByRole('combobox');
+  const search = page.locator('#site-search');
   const missingQuery = guaranteedMissingQuery;
   await search.fill(missingQuery);
 
@@ -2039,7 +2039,7 @@ test('Wave 5 interactive controls keep mobile touch targets', async ({ page }) =
   expect((await refresh.boundingBox())?.height ?? 0).toBeGreaterThanOrEqual(44);
 
   await page.goto(baseURL + '/search');
-  const siteSearch = page.getByRole('combobox');
+  const siteSearch = page.locator('#site-search');
   await siteSearch.focus();
   const allTab = page.getByRole('button', { name: 'All', exact: true });
   expect((await allTab.boundingBox())?.height ?? 0).toBeGreaterThanOrEqual(44);
