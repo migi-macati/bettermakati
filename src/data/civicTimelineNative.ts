@@ -19,8 +19,6 @@ import { reports } from './reports';
 import {
   manilaDateKey,
   projectCivicTimelineItem,
-  type CivicTimelineActionability,
-  type CivicTimelineCanonicalRef,
   type CivicTimelineCanonicalResolver,
   type CivicTimelineGeography,
   type CivicTimelineItem,
