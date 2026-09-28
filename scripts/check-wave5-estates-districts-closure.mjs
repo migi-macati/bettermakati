@@ -294,13 +294,13 @@ for (const marker of [
 if (searchIndex.includes('barangay.associations')) {
   problems.push('Search index still depends on deleted barangay association payloads.');
 }
-for (const marker of [
-  "label: 'Estates, Districts & Associations', href: '/estates'",
-  "label: 'Estates & Districts', href: '/estates'",
-]) {
-  if (!navigation.includes(marker)) {
-    problems.push('Estates navigation marker missing: ' + marker);
-  }
+if (
+  ![
+    "label: 'Areas & Districts', href: '/estates'",
+    "label: 'Estates & Districts', href: '/estates'",
+  ].some(marker => navigation.includes(marker))
+) {
+  problems.push('Estates navigation must keep a discoverable /estates entry.');
 }
 
 /* District-facing surfaces must resolve IDs through one canonical helper. */
