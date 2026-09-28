@@ -4,6 +4,79 @@ const baseURL = process.env.BASE_URL || 'http://127.0.0.1:4173';
 // Single improbable token: avoids accidental substring or fuzzy-search matches.
 const guaranteedMissingQuery = 'zzqxvptk92817';
 
+const w6SearchJourneyMatrix = [
+  {
+    id: 'SJ1',
+    intent: 'common city service',
+    query: 'cedula',
+    expectedTitle: /Community Tax Certificate|Cedula/i,
+    expectedHref: '/services/guide/community-tax-certificate',
+  },
+  {
+    id: 'SJ2',
+    intent: 'known barangay',
+    query: 'brgy poblacion',
+    expectedTitle: 'Barangay Poblacion',
+    expectedHref: '/barangays/poblacion',
+  },
+  {
+    id: 'SJ3',
+    intent: 'city government office',
+    query: 'city hall',
+    expectedTitle: 'City offices',
+    expectedHref: '/government#offices',
+  },
+  {
+    id: 'SJ4',
+    intent: 'dated civic activity',
+    query: 'council sessions',
+    expectedTitle: 'Makati Calendar',
+    expectedHref: '/calendar',
+  },
+  {
+    id: 'SJ5',
+    intent: 'procurement/accountability',
+    query: 'bids',
+    expectedTitle: 'Procurement',
+    expectedHref: '/accountability?type=project',
+  },
+  {
+    id: 'SJ6',
+    intent: 'original evidence',
+    query: 'public records',
+    expectedTitle: 'Public Records',
+    expectedHref: '/records',
+  },
+  {
+    id: 'SJ7',
+    intent: 'mobility',
+    query: 'commute',
+    expectedTitle: 'Getting around Makati',
+    expectedHref: '/mobility',
+  },
+  {
+    id: 'SJ8',
+    intent: 'heritage place discovery',
+    query: 'historical sites',
+    expectedTitle: 'Heritage & Culture',
+    expectedHref: '/heritage',
+  },
+  {
+    id: 'SJ9',
+    intent: 'city research/statistics',
+    query: 'city stats',
+    expectedTitle: 'Makati statistics',
+    expectedHref: '/statistics',
+  },
+  {
+    id: 'SJ10',
+    intent: 'legislation',
+    query: 'laws',
+    expectedTitle: 'Legislation',
+    expectedHref: '/legislation',
+  },
+];
+
 const criticalRoutes = [
   ['/', /Let’s make Makati Better|Let's make Makati Better/i],
   ['/services', /What do you need to get done/i],
@@ -327,6 +400,53 @@ test('site search ranks civic aliases and synonyms ahead of incidental matches',
     await expect(firstResult).toBeVisible();
     await expect(firstResult).toContainText(expectedTitle);
   }
+});
+
+test('W6-2f search journeys reach useful canonical destinations across civic domains', async ({ page }) => {
+  for (const journey of w6SearchJourneyMatrix) {
+    await page.goto(baseURL + '/search');
+    const search = page.locator('#site-search');
+    await search.fill(journey.query);
+
+    const firstResult = page
+      .getByRole('listbox', { name: /matches/i })
+      .getByRole('option')
+      .first();
+
+    await expect(
+      firstResult,
+      journey.id + ' should expose a first ranked result for ' + journey.intent
+    ).toBeVisible();
+    await expect(
+      firstResult,
+      journey.id + ' should rank the intended canonical result first'
+    ).toContainText(journey.expectedTitle);
+
+    await firstResult.click();
+
+    await expect(
+      page,
+      journey.id + ' should reach the canonical destination'
+    ).toHaveURL(baseURL + journey.expectedHref);
+    await expect(page.locator('main#main-content')).toBeVisible();
+  }
+});
+
+test('positive search deep link restores the query and supports keyboard completion', async ({ page }) => {
+  await page.goto(baseURL + '/search?q=commute');
+
+  const search = page.locator('#site-search');
+  await expect(search).toHaveValue('commute');
+
+  const firstResult = page
+    .getByRole('listbox', { name: /matches/i })
+    .getByRole('option')
+    .first();
+  await expect(firstResult).toContainText('Getting around Makati');
+
+  await search.press('Enter');
+  await expect(page).toHaveURL(baseURL + '/mobility');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText(/Getting around/i);
 });
 
 test('site search keeps canonical titles above alias-only matches', async ({ page }) => {
