@@ -16,7 +16,23 @@ export default function ScrollToTop() {
         } catch {
           /* Keep malformed fragments harmless. */
         }
-        document.getElementById(id)?.scrollIntoView({ block: 'start' });
+
+        const target = document.getElementById(id);
+        target?.scrollIntoView({ block: 'start' });
+
+        if (routeChanged && target instanceof HTMLElement) {
+          const hadTabIndex = target.hasAttribute('tabindex');
+          if (!hadTabIndex) target.setAttribute('tabindex', '-1');
+          target.focus({ preventScroll: true });
+
+          if (!hadTabIndex) {
+            target.addEventListener(
+              'blur',
+              () => target.removeAttribute('tabindex'),
+              { once: true }
+            );
+          }
+        }
       } else {
         window.scrollTo({ top: 0, behavior: 'instant' });
         if (routeChanged)
