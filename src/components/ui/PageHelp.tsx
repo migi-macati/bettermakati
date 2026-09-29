@@ -31,7 +31,7 @@ export default function PageHelp() {
           </Link>
           <Link to="/records" className="brand-btn-secondary">
             <FileCheck2 className="h-4 w-4" aria-hidden="true" />
-            Source records
+            Browse source records
           </Link>
           <Link to="/status" className="brand-btn-secondary">
             <Activity className="h-4 w-4" aria-hidden="true" />
