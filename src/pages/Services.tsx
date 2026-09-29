@@ -82,6 +82,7 @@ const Services: React.FC = () => {
     pages: [],
   });
   const [loading, setLoading] = useState(false);
+  const [loadFailed, setLoadFailed] = useState(false);
   const [directoryQuery, setDirectoryQuery] = useState('');
   const [directoryLevel, setDirectoryLevel] = useState<'All' | ServiceLevel>('All');
   const [directoryCategory, setDirectoryCategory] = useState('All');
@@ -119,9 +120,13 @@ const Services: React.FC = () => {
   useEffect(() => {
     if (category && categoryData) {
       setLoading(true);
+      setLoadFailed(false);
       getCategorySubcategories(category)
         .then(setCategoryIndex)
-        .catch(console.error)
+        .catch(() => {
+          setCategoryIndex({ layout: 'list', pages: [] });
+          setLoadFailed(true);
+        })
         .finally(() => setLoading(false));
     }
   }, [category, categoryData]);
@@ -576,8 +581,15 @@ const Services: React.FC = () => {
         />
 
         {loading ? (
-          <div className="flex justify-center items-center p-8">
+          <div className="flex items-center justify-center p-8" role="status">
             <Text>Loading services...</Text>
+          </div>
+        ) : loadFailed ? (
+          <div
+            role="alert"
+            className="rounded-xl border border-warning-200 bg-warning-50 p-5 text-sm text-warning-950"
+          >
+            This service category could not be loaded. Return to the full service directory or try again later.
           </div>
         ) : subcategories.length === 0 ? (
           <Banner
