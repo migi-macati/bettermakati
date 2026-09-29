@@ -109,5 +109,15 @@
     "w6_4e": "complete",
     "w6_4f": "complete",
     "wave6_4": "complete"
+  },
+  "planReconciliation": {
+    "originalW64d": "BetterGov / BetterLGU ecosystem links",
+    "originalW64e": "loop / redundancy audit",
+    "originalW64dStatus": "complete",
+    "originalW64eStatus": "complete",
+    "additionalHardening": [
+      "contextual backlink QA",
+      "relationship UX consistency"
+    ]
   }
 }
