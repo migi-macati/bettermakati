@@ -22,6 +22,7 @@ export const districtOnePublicAssistanceProgram = {
     end: '2026-10-09',
   },
   operatingHours: '8:00 AM–3:00 PM',
+  operatingNote: 'Except Saturdays, Sundays and holidays',
   source: {
     id: 'district-1-public-assistance-facebook-2026-09',
     label: 'District One Public Assistance Desk schedule, September 28–October 9, 2026',
