@@ -510,6 +510,16 @@ export default function ServiceGuide() {
                   <li key={item}>• {item}</li>
                 ))}
               </ul>
+              <details className="mt-5 border-t border-gray-100 pt-4">
+                <summary className="flex min-h-11 cursor-pointer items-center font-bold text-primary-800">
+                  Guarantee Letter facilities named in the post
+                </summary>
+                <ul className="mt-2 space-y-1.5 text-sm leading-relaxed text-gray-700">
+                  {temporaryAvailability.guaranteeLetterFacilities.map(facility => (
+                    <li key={facility}>• {facility}</li>
+                  ))}
+                </ul>
+              </details>
             </div>
             <div className="rounded-2xl border border-secondary-200 bg-secondary-50 p-5">
               <h3 className="font-extrabold text-gray-950">
