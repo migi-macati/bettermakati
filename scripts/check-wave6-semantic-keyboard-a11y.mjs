@@ -120,7 +120,7 @@ for (const marker of [
   "target.setAttribute('tabindex', '-1')",
   'target.focus({ preventScroll: true })',
   "target.removeAttribute('tabindex')",
-  "document.getElementById('main-content')",
+  "getElementById('main-content')",
   '?.focus({ preventScroll: true });',
 ]) {
   need('SPA focus manager', scrollToTop, marker);
