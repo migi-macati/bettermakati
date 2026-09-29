@@ -1089,12 +1089,12 @@ export default function ProjectsBudget() {
               value={officeQuery}
               onChange={event => setOfficeQuery(event.target.value)}
               placeholder="Search office or department"
-              className="w-full rounded-xl border border-gray-300 py-2.5 pl-9 pr-3 text-sm outline-none focus:border-primary-500 lg:w-72"
+              className="min-h-11 w-full rounded-xl border border-gray-300 py-2.5 pl-9 pr-3 text-sm outline-none focus:border-primary-500 lg:w-72"
             />
           </div>
         </div>
 
-        <div className="mt-4 text-sm text-gray-500">
+        <div className="mt-4 text-sm text-gray-500" role="status" aria-live="polite" aria-atomic="true">
           Showing {visibleOffices.length} of {officeBudgetTotals2026.length} offices
         </div>
 
@@ -1187,13 +1187,13 @@ export default function ProjectsBudget() {
                   value={lineQuery}
                   onChange={event => setLineQuery(event.target.value)}
                   placeholder="Search line or account code"
-                  className="rounded-xl border border-gray-300 py-2.5 pl-9 pr-3 text-sm outline-none focus:border-primary-500"
+                  className="min-h-11 rounded-xl border border-gray-300 py-2.5 pl-9 pr-3 text-sm outline-none focus:border-primary-500"
                 />
               </div>
               <select
                 value={lineFilter}
                 onChange={event => setLineFilter(event.target.value)}
-                className="rounded-xl border border-gray-300 bg-white px-3 py-2.5 text-sm"
+                className="min-h-11 rounded-xl border border-gray-300 bg-white px-3 py-2.5 text-sm"
                 aria-label="Filter budget line category"
               >
                 <option>All</option>
@@ -1206,7 +1206,7 @@ export default function ProjectsBudget() {
             </div>
           </div>
 
-          <div className="mt-4 text-sm text-gray-500">
+          <div className="mt-4 text-sm text-gray-500" role="status" aria-live="polite" aria-atomic="true">
             Showing {visibleLines.length} of {selectedBudgetLines2026.length} lines
           </div>
 
@@ -1319,13 +1319,13 @@ export default function ProjectsBudget() {
               value={procurementQuery}
               onChange={event => setProcurementQuery(event.target.value)}
               placeholder="Search project, supplier or reference"
-              className="w-full rounded-xl border border-gray-300 py-2.5 pl-9 pr-3 text-sm outline-none focus:border-primary-500"
+              className="min-h-11 w-full rounded-xl border border-gray-300 py-2.5 pl-9 pr-3 text-sm outline-none focus:border-primary-500"
             />
           </div>
           <select
             value={procurementPeriod}
             onChange={event => setProcurementPeriod(event.target.value)}
-            className="rounded-xl border border-gray-300 bg-white px-3 py-2.5 text-sm"
+            className="min-h-11 rounded-xl border border-gray-300 bg-white px-3 py-2.5 text-sm"
             aria-label="Filter procurement period"
           >
             <option>All</option>
@@ -1336,7 +1336,7 @@ export default function ProjectsBudget() {
           <select
             value={procurementEvidence}
             onChange={event => setProcurementEvidence(event.target.value)}
-            className="rounded-xl border border-gray-300 bg-white px-3 py-2.5 text-sm"
+            className="min-h-11 rounded-xl border border-gray-300 bg-white px-3 py-2.5 text-sm"
             aria-label="Filter procurement evidence"
           >
             <option>All</option>
@@ -1345,7 +1345,7 @@ export default function ProjectsBudget() {
           </select>
         </div>
 
-        <div className="mt-4 text-sm text-gray-500">
+        <div className="mt-4 text-sm text-gray-500" role="status" aria-live="polite" aria-atomic="true">
           Showing {visibleProcurement.length} of {procurementProjectEntries.length} structured records
         </div>
 
