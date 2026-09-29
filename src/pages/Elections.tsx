@@ -50,7 +50,7 @@ const ElectionCandidateName = ({ name }: { name: string }) => {
   return officialSlug ? (
     <Link
       to={'/officials/' + officialSlug}
-      className="font-bold text-primary-800 hover:underline"
+      className="inline-flex min-h-11 items-center font-bold text-primary-800 underline decoration-primary-300 underline-offset-2 hover:decoration-primary-700"
     >
       {name}
     </Link>
