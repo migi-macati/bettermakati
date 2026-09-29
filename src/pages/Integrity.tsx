@@ -406,7 +406,12 @@ export default function Integrity() {
                     </div>
                   </div>
 
-                  <div className="mt-5 overflow-x-auto rounded-xl border border-gray-200">
+                                    <div
+                            className="scroll-region mt-5 overflow-x-auto rounded-xl border border-gray-200"
+                            role="region"
+                            aria-label="Procurement awards table — horizontally scrollable"
+                            tabIndex={0}
+                          >
                     <table className="w-full min-w-[760px] text-left text-sm">
                       <thead className="bg-gray-50">
                         <tr>
@@ -505,7 +510,12 @@ export default function Integrity() {
             “Not retrieved” means no entity-specific record surfaced in the checked authoritative sources.
           </p>
 
-          <div className="mt-5 overflow-x-auto rounded-2xl border border-primary-100 bg-white">
+                    <div
+                    className="scroll-region mt-5 overflow-x-auto rounded-2xl border border-primary-100 bg-white"
+                    role="region"
+                    aria-label="Integrity disclosure records table — horizontally scrollable"
+                    tabIndex={0}
+                  >
             <table className="w-full min-w-[980px] text-left text-sm">
               <thead className="bg-primary-50">
                 <tr>
