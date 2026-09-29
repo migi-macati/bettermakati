@@ -23,6 +23,10 @@ export type CivicIntelligenceNodeType =
   | 'accountability-record'
   | 'city-monitor-record'
   | 'public-record'
+  | 'budget-record'
+  | 'official'
+  | 'election-record'
+  | 'timeline-item'
   | 'ecosystem-resource';
 
 export type CivicIntelligenceIntegrityRecordKind =
@@ -76,7 +80,8 @@ export type CivicIntelligenceRelationshipKind =
   | 'operated-by'
   | 'comparison-context'
   | 'continuation-resource'
-  | 'related-as-stated';
+  | 'related-as-stated'
+  | 'chronicles';
 
 export type CivicIntelligenceRelationshipEvidence =
   | {
@@ -130,6 +135,10 @@ export interface CivicIntelligenceNodeDescriptor {
     | 'accountability'
     | 'city-monitor'
     | 'public-records'
+    | 'budgets'
+    | 'officials'
+    | 'elections'
+    | 'timeline'
     | 'ecosystem';
 }
 
