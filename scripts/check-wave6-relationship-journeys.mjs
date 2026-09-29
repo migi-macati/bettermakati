@@ -7,6 +7,8 @@ const [
   crosslinksDoc,
   backlinkDoc,
   uxDoc,
+  ecosystemDoc,
+  loopDoc,
   compactLinks,
   elections,
   officialRelationships,
@@ -26,6 +28,8 @@ const [
   readFile('docs/w6-4c-page-family-crosslinks.md', 'utf8'),
   readFile('docs/w6-4d-contextual-backlink-qa.md', 'utf8'),
   readFile('docs/w6-4e-relationship-ux-consistency.md', 'utf8'),
+  readFile('docs/w6-4d-ecosystem-links.md', 'utf8'),
+  readFile('docs/w6-4e-loop-redundancy-audit.md', 'utf8'),
   readFile('src/components/civic/CivicRelationshipLinks.tsx', 'utf8'),
   readFile('src/pages/Elections.tsx', 'utf8'),
   readFile('src/data/officialCivicRelationships.ts', 'utf8'),
@@ -56,6 +60,12 @@ if (matrix.status !== 'complete') {
 if (matrix.closure?.wave6_4 !== 'complete') {
   problems.push('Journey matrix does not close W6-4.');
 }
+if (matrix.planReconciliation?.originalW64dStatus !== 'complete') {
+  problems.push('Original W6-4d ecosystem-link scope is not reconciled as complete.');
+}
+if (matrix.planReconciliation?.originalW64eStatus !== 'complete') {
+  problems.push('Original W6-4e loop/redundancy scope is not reconciled as complete.');
+}
 if (!Array.isArray(matrix.journeys) || matrix.journeys.length < 9) {
   problems.push('Journey matrix must keep the representative W6-4 relationship set.');
 }
@@ -72,7 +82,9 @@ for (const [name, source] of [
   ['W6-4b', relationshipModelDoc],
   ['W6-4c', crosslinksDoc],
   ['W6-4d', backlinkDoc],
-  ['W6-4e', uxDoc],
+  ['W6-4e UX hardening', uxDoc],
+  ['W6-4d ecosystem', ecosystemDoc],
+  ['W6-4e loop audit', loopDoc],
   ['W6-4f', closureDoc],
 ]) {
   need(name + ' documentation', source, 'Status: complete');
@@ -149,6 +161,8 @@ for (const pipeline of ['build', 'quality']) {
   for (const prior of [
     'check:wave6-civic-relationship-model',
     'check:wave6-page-family-crosslinks',
+    'check:wave6-ecosystem-links',
+    'check:wave6-relationship-loops',
     'check:wave6-contextual-backlinks',
     'check:wave6-relationship-ux',
   ]) {
