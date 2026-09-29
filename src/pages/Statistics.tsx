@@ -330,7 +330,7 @@ export default function Statistics() {
                     href={stat.href}
                     target="_blank"
                     rel="noreferrer"
-                    className="mt-3 inline-flex min-h-11 items-center gap-1 text-xs font-bold text-secondary-300 underline underline-offset-2"
+                    className="mt-3 inline-flex min-h-11 items-center gap-1 text-xs font-bold text-secondary-100 underline underline-offset-2"
                   >
                     {stat.sourceLabel}
                     <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
