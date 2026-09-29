@@ -45,12 +45,12 @@ export default function GovernmentOffices() {
         />
 
         <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-sm font-bold">
-          <Link to="/services" className="text-primary-700 underline underline-offset-2">
+          <Link to="/services" className="inline-flex min-h-11 items-center text-primary-700 underline underline-offset-2">
             Start with a service
           </Link>
           <Link
             to="/community-tools/saan-ako-lalapit"
-            className="text-primary-700 underline underline-offset-2"
+            className="inline-flex min-h-11 items-center text-primary-700 underline underline-offset-2"
           >
             Not sure which office handles it?
           </Link>
@@ -64,7 +64,7 @@ export default function GovernmentOffices() {
             value={query}
             onChange={event => setQuery(event.target.value)}
             placeholder="Search SSS, Pag-IBIG, PhilHealth, DepEd, address..."
-            className="w-full rounded-2xl border border-gray-300 bg-white py-3.5 pl-12 pr-4 outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+            className="min-h-11 w-full rounded-2xl border border-gray-300 bg-white py-3.5 pl-12 pr-4 outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
           />
         </label>
 
@@ -74,16 +74,20 @@ export default function GovernmentOffices() {
               key={item}
               type="button"
               onClick={() => setScope(item)}
+              aria-pressed={scope === item}
               className={
                 scope === item
-                  ? 'rounded-full bg-primary-800 px-4 py-2 text-sm font-bold text-white'
-                  : 'rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-semibold text-gray-700'
+                  ? 'min-h-11 rounded-full bg-primary-800 px-4 py-2 text-sm font-bold text-white'
+                  : 'min-h-11 rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-semibold text-gray-700'
               }
             >
               {item}
             </button>
           ))}
         </div>
+        <p className="mt-4 text-sm text-gray-600" role="status" aria-live="polite" aria-atomic="true">
+          {visible.length} {visible.length === 1 ? 'office' : 'offices'} shown
+        </p>
       </Section>
 
       <Section className="bg-white">
@@ -114,16 +118,16 @@ export default function GovernmentOffices() {
               )}
               {office.note && <p className="mt-3 text-xs leading-relaxed text-gray-500">{office.note}</p>}
               <div className="mt-4 flex flex-wrap gap-3 text-sm">
-                <a href={mapsUrl(office.mapsQuery)} target="_blank" rel="noreferrer" className="font-bold text-primary-700 underline underline-offset-2">
+                <a href={mapsUrl(office.mapsQuery)} target="_blank" rel="noreferrer" className="inline-flex min-h-11 items-center font-bold text-primary-700 underline underline-offset-2">
                   Map
                 </a>
-                <a href={office.sourceUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 font-bold text-primary-700 underline underline-offset-2">
+                <a href={office.sourceUrl} target="_blank" rel="noreferrer" className="inline-flex min-h-11 items-center gap-1 font-bold text-primary-700 underline underline-offset-2">
                   Agency source <ExternalLink className="h-3.5 w-3.5" />
                 </a>
                 {place && (
                   <Link
                     to={'/civic-map/' + place.id}
-                    className="font-bold text-primary-700 underline underline-offset-2"
+                    className="inline-flex min-h-11 items-center font-bold text-primary-700 underline underline-offset-2"
                   >
                     Place details
                   </Link>
