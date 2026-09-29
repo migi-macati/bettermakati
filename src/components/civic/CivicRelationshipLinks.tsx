@@ -29,6 +29,12 @@ const toneClasses: Record<CivicRelationshipTone, string> = {
     'border-gray-200 bg-white text-gray-800 hover:border-primary-300 hover:text-primary-800',
 };
 
+const frameClasses: Record<CivicRelationshipTone, string> = {
+  primary: 'border-primary-100 bg-primary-50',
+  secondary: 'border-secondary-100 bg-secondary-50',
+  neutral: 'border-gray-200 bg-white',
+};
+
 export const civicRelationshipOwnerLabel = (owner: string) => {
   switch (owner) {
     case 'statistics':
@@ -81,7 +87,7 @@ export default function CivicRelationshipLinks({
     <div
       className={
         (framed
-          ? 'rounded-2xl border border-primary-100 bg-primary-50 p-5 '
+          ? 'rounded-2xl border p-5 ' + frameClasses[tone] + ' '
           : '') + className
       }
     >
