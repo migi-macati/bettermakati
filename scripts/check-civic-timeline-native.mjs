@@ -183,7 +183,7 @@ if (
   reportCount !== 5 ||
   supersededElectionCount !== 4 ||
   directCityMonitorCount !== 2 ||
-  serviceAvailabilityCount !== 9
+  serviceAvailabilityCount !== 10
 ) {
   problems.push(
     'W5-7R3 source baseline changed; re-audit native projection counts before continuing.'
