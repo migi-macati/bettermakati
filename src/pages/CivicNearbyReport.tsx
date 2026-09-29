@@ -238,6 +238,23 @@ export default function CivicNearbyReport() {
           <p className="mt-3 max-w-3xl text-lg leading-relaxed text-gray-700">
             Use your location, search the civic registry or enter a location manually. Nearby suggestions are limited to verified physical places; segments and routes must be selected deliberately from search.
           </p>
+
+          <div className="mt-5 rounded-2xl border border-secondary-200 bg-secondary-50 p-5">
+            <div className="font-extrabold text-gray-950">
+              This creates a public BetterMakati case.
+            </div>
+            <p className="mt-2 text-sm leading-relaxed text-gray-700">
+              It is not a Makati City Government complaint unless a separate official referral is later recorded. If you need direct city action, use the Makati Action Center. For an emergency or immediate danger, call 911 instead.
+            </p>
+            <div className="mt-4 flex flex-wrap gap-3">
+              <Link to="/hotlines#makati-action-center" className="brand-btn-secondary">
+                Makati Action Center contacts
+              </Link>
+              <a href="tel:911" className="brand-btn-secondary">
+                Call 911
+              </a>
+            </div>
+          </div>
         </div>
 
         <div className="mt-7 grid gap-4 lg:grid-cols-3">
