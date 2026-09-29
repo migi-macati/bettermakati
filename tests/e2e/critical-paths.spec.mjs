@@ -1642,6 +1642,34 @@ test('W6-3d BetterBarangay preference persists without overstating local data', 
   ).toBeVisible();
 });
 
+test('W6-3e Today is the synthesis door for current civic information', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto(baseURL + '/today');
+
+  const timelineHeading = page.getByRole('heading', { level: 2, name: 'What’s next in Makati' });
+  const currentSourcesHeading = page.getByRole('heading', { level: 2, name: 'Live conditions & current sources' });
+  await expect(timelineHeading).toBeVisible();
+  await expect(currentSourcesHeading).toBeVisible();
+
+  const timelineTop = await timelineHeading.evaluate(element => element.getBoundingClientRect().top + window.scrollY);
+  const currentSourcesTop = await currentSourcesHeading.evaluate(element => element.getBoundingClientRect().top + window.scrollY);
+  expect(timelineTop).toBeLessThan(currentSourcesTop);
+
+  await expect(page.getByText('monitored sources reachable', { exact: false })).toHaveCount(0);
+  await expect(page.getByText('failed checks in the latest monitor run', { exact: false })).toHaveCount(0);
+
+  await expect(page.getByRole('link', { name: 'Open full calendar', exact: true })).toHaveAttribute('href', '/calendar');
+  await expect(page.getByRole('link', { name: 'Official activity', exact: true })).toHaveAttribute('href', '/city-monitor');
+  await expect(page.getByRole('link', { name: 'Recent coverage', exact: true })).toHaveAttribute('href', '/news');
+  await expect(page.getByRole('link', { name: /Emergency & city contacts/i })).toHaveAttribute('href', '/hotlines');
+  await expect(page.getByRole('link', { name: 'Browse all Makati news', exact: true })).toHaveAttribute('href', '/news');
+
+  for (const route of ['/city-monitor', '/briefs', '/news', '/calendar', '/live']) {
+    await page.goto(baseURL + route);
+    await expect(page.getByRole('link', { name: 'Today in Makati', exact: true })).toHaveAttribute('href', '/today');
+  }
+});
+
 test('barangays page is a focused selection gateway', async ({ page }) => {
   await page.goto(baseURL + '/barangays');
   await expect(page.getByRole('heading', { level: 1 })).toContainText('Find your barangay');

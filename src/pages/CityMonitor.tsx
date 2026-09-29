@@ -180,8 +180,11 @@ export default function CityMonitor() {
         </div>
 
         <div className="mt-6 flex flex-wrap gap-3">
-          <Link to="/briefs" className="brand-btn-primary">
-            Civic Briefs <ArrowRight className="h-4 w-4" />
+          <Link to="/today" className="brand-btn-primary">
+            Today in Makati <ArrowRight className="h-4 w-4" />
+          </Link>
+          <Link to="/briefs" className="brand-btn-secondary">
+            Civic Briefs
           </Link>
           <Link to="/records" className="brand-btn-secondary">
             Public Records

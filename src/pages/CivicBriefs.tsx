@@ -236,6 +236,15 @@ export default function CivicBriefs() {
 
         <LastReviewed date={civicBriefsReviewed} />
 
+        <div className="mt-6 flex flex-wrap gap-3">
+          <Link to="/today" className="brand-btn-primary">
+            Today in Makati <ArrowRight className="h-4 w-4" />
+          </Link>
+          <Link to="/city-monitor" className="brand-btn-secondary">
+            City Monitor
+          </Link>
+        </div>
+
         <div className="mt-7 flex flex-wrap gap-2">
           {(Object.keys(civicBriefCadence) as CivicBriefCadence[]).map(value => (
             <button

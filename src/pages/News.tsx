@@ -78,6 +78,7 @@ export default function News() {
         <Heading>Makati in the News</Heading>
 
         <div className="mt-5 flex flex-wrap gap-3">
+          <Link to="/today" className="brand-btn-primary">Today in Makati</Link>
           <Link to="/city-monitor" className="brand-btn-secondary">City Monitor</Link>
           <Link to="/calendar" className="brand-btn-secondary">Makati Calendar</Link>
         </div>
