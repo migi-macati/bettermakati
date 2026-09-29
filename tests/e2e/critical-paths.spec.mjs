@@ -1672,6 +1672,39 @@ test('W6-3e Today is the synthesis door for current civic information', async ({
   }
 });
 
+test('W6-3f Explore is the coherent place, mobility and heritage journey', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto(baseURL + '/visit');
+
+  await expect(page.getByRole('heading', { level: 1, name: 'Understand the city as you explore it.' })).toBeVisible();
+
+  const layerSection = page.locator('#city-context');
+  for (const [name, href] of [
+    ['Areas & districts', '/estates'],
+    ['Barangays', '/barangays'],
+    ['Heritage', '/heritage'],
+    ['History', '/history'],
+    ['Getting around', '/mobility'],
+  ]) {
+    await expect(layerSection.getByRole('link', { name: new RegExp('^' + name) })).toHaveAttribute('href', href);
+  }
+
+  await expect(page.getByRole('link', { name: 'Explore context', exact: true }).first()).toBeVisible();
+
+  for (const route of ['/mobility', '/heritage', '/estates', '/history']) {
+    await page.goto(baseURL + route);
+    await expect(page.getByRole('link', { name: 'Explore Makati', exact: true }).first()).toHaveAttribute('href', '/visit');
+  }
+
+  await page.goto(baseURL + '/mobility');
+  await expect(page.getByText('Explore Makati', { exact: true }).first()).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Areas & districts', exact: true }).first()).toHaveAttribute('href', '/estates');
+
+  await page.goto(baseURL + '/heritage');
+  await expect(page.getByRole('link', { name: 'Getting around', exact: true }).first()).toHaveAttribute('href', '/mobility');
+  await expect(page.getByRole('link', { name: 'Open Makati history', exact: false })).toHaveAttribute('href', '/history');
+});
+
 test('barangays page is a focused selection gateway', async ({ page }) => {
   await page.goto(baseURL + '/barangays');
   await expect(page.getByRole('heading', { level: 1 })).toContainText('Find your barangay');

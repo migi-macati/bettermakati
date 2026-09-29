@@ -94,6 +94,14 @@ export default function Heritage() {
           date="2026-09-27"
           note="Place identity and location come from the canonical BetterMakati place registry; historical context links to the underlying official sources."
         />
+        <div className="mt-5 flex flex-wrap gap-3">
+          <Link to="/visit" className="brand-btn-primary">
+            Explore Makati
+          </Link>
+          <Link to="/mobility" className="brand-btn-secondary">
+            Getting around
+          </Link>
+        </div>
 
         <div className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-2">
           {heritageSites.map(site => {

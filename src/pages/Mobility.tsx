@@ -374,7 +374,7 @@ export default function Mobility() {
       />
 
       <Section className="bg-[#fffdf8]">
-        <div className="section-eyebrow">Visit Makati</div>
+        <div className="section-eyebrow">Explore Makati</div>
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
             <Heading>Getting around</Heading>
@@ -389,6 +389,14 @@ export default function Mobility() {
           date="2026-09-28"
           note="System identity and Makati transport anchors come from canonical BetterMakati records. Schedules, fares and live routing remain with the linked operator or map."
         />
+        <div className="mt-5 flex flex-wrap gap-3">
+          <Link to="/visit" className="brand-btn-primary">
+            Explore Makati
+          </Link>
+          <Link to="/estates" className="brand-btn-secondary">
+            Areas &amp; districts
+          </Link>
+        </div>
         <PhotoCarousel
           images={mobilityImageSet}
           title="Street-level Makati"
