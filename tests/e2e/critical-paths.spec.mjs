@@ -1586,6 +1586,55 @@ test('failed civic feed does not imply zero reports', async ({ page }) => {
 });
 
 
+test('W6-3d BetterBarangay preference persists without overstating local data', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto(baseURL + '/barangays/poblacion');
+
+  const nav = page.getByRole('navigation', { name: 'Main navigation' });
+  await expect(nav.getByRole('link', { name: 'Services', exact: true })).toHaveAttribute(
+    'href',
+    '/services?barangay=poblacion'
+  );
+  await expect(
+    nav.getByRole('link', { name: 'Accountability', exact: true })
+  ).toHaveAttribute('href', '/accountability?barangay=poblacion');
+  await expect(
+    page.locator('footer').getByRole('link', { name: 'Projects & Budget', exact: true })
+  ).toHaveAttribute('href', '/projects-budget?barangay=poblacion');
+
+  await nav.getByRole('link', { name: 'Services', exact: true }).click();
+  await expect(page).toHaveURL(/\/services\?barangay=poblacion/);
+  await expect(page.getByLabel('Choose BetterBarangay view')).toHaveValue('poblacion');
+
+  await page.getByLabel('Choose BetterBarangay view').selectOption('bel-air');
+  await expect(page).toHaveURL(/\/services\?barangay=bel-air/);
+  await expect(page.getByLabel('Choose BetterBarangay view')).toHaveValue('bel-air');
+  await expect(page.getByText('Barangay Bel-Air Hall', { exact: true })).toBeVisible();
+
+  await page.getByLabel('Choose BetterBarangay view').selectOption('');
+  await expect(page).toHaveURL(baseURL + '/services');
+  await expect(page.getByLabel('Choose BetterBarangay view')).toHaveValue('');
+  await expect(
+    page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'Services', exact: true })
+  ).toHaveAttribute('href', '/services');
+
+  await page.goto(baseURL + '/projects-budget?barangay=poblacion');
+  await expect(
+    page.getByText('Citywide budget, local evidence for Poblacion', { exact: true })
+  ).toBeVisible();
+  await expect(
+    page.getByText(/remain citywide unless a record explicitly identifies Poblacion/i)
+  ).toBeVisible();
+
+  await page.goto(baseURL + '/participate?barangay=poblacion');
+  await expect(
+    page.getByText('Local actions for Poblacion, citywide opportunities where noted', { exact: true })
+  ).toBeVisible();
+  await expect(
+    page.getByText(/Official consultation listings and project-wide community input remain citywide/i)
+  ).toBeVisible();
+});
+
 test('barangays page is a focused selection gateway', async ({ page }) => {
   await page.goto(baseURL + '/barangays');
   await expect(page.getByRole('heading', { level: 1 })).toContainText('Find your barangay');
