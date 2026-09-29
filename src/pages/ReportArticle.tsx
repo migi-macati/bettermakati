@@ -13,6 +13,7 @@ import {
   reportRecordRefToCivicRef,
   reportRelatedRecords,
 } from '../data/reportCivicRelationships';
+import { timelineForCivicRecord } from '../data/timelineCivicRelationships';
 import { publicRecordByUrl } from '../data/publicRecords';
 import type {
   ReportCanonicalRecordRef,
@@ -327,6 +328,10 @@ export default function ReportArticle() {
 
   const sourceById = new Map(report.sources.map(source => [source.id, source]));
   const underlyingRecords = reportRelatedRecords(report.slug);
+  const timelineLinks = timelineForCivicRecord({
+    type: 'report',
+    id: report.slug,
+  });
 
   return (
     <>
@@ -397,6 +402,32 @@ export default function ReportArticle() {
           )}
         </article>
       </Section>
+
+      {timelineLinks.length > 0 && (
+        <Section className="border-y border-primary-100 bg-[#f5f8f2]">
+          <div className="mx-auto max-w-4xl">
+            <div className="section-eyebrow">On the Makati Calendar</div>
+            <Heading level={2}>Publication timeline</Heading>
+            <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600">
+              This report release is also indexed on the civic timeline. The
+              report remains the canonical analysis.
+            </p>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {timelineLinks.map(item =>
+                item.node ? (
+                  <Link
+                    key={item.relationship.id}
+                    to={item.node.href}
+                    className="brand-btn-secondary"
+                  >
+                    View calendar entry
+                  </Link>
+                ) : null
+              )}
+            </div>
+          </div>
+        </Section>
+      )}
 
       {underlyingRecords.length > 0 && (
         <Section className="bg-[#fffdf8]">
