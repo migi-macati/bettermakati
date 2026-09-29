@@ -1705,6 +1705,55 @@ test('W6-3f Explore is the coherent place, mobility and heritage journey', async
   await expect(page.getByRole('link', { name: 'Open Makati history', exact: false })).toHaveAttribute('href', '/history');
 });
 
+test('W6-3g Participation distinguishes government action from BetterMakati contributions', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+
+  await page.goto(baseURL + '/');
+  await expect(page.getByRole('link', { name: /^Participate in Makati/ })).toHaveAttribute('href', '/participate');
+
+  await page.goto(baseURL + '/participate?barangay=poblacion');
+  await expect(page.getByRole('heading', { level: 1, name: 'What do you want to do?' })).toBeVisible();
+  await expect(page.getByText('Need government action?', { exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Makati Action Center contacts', exact: true })).toHaveAttribute(
+    'href',
+    '/hotlines#makati-action-center'
+  );
+  await expect(page.getByRole('link', { name: 'Find the right service or office', exact: true })).toHaveAttribute(
+    'href',
+    '/community-tools/saan-ako-lalapit'
+  );
+  await expect(page.getByRole('link', { name: /^Report a local problem to BetterMakati/ })).toHaveAttribute(
+    'href',
+    '/civic-map/report?barangay=poblacion'
+  );
+  await expect(page.getByRole('link', { name: 'Call 911', exact: true }).first()).toHaveAttribute('href', 'tel:911');
+  await expect(page.getByText(/not a city-government case unless a separate referral is recorded/i)).toBeVisible();
+
+  await page.goto(baseURL + '/get-involved?type=correction#submission');
+  await expect(page.getByText('These forms are for BetterMakati contributions.', { exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Back to participation choices', exact: true })).toHaveAttribute(
+    'href',
+    '/participate'
+  );
+  await expect(page.getByRole('link', { name: 'Need government action?', exact: true })).toHaveAttribute(
+    'href',
+    '/hotlines#makati-action-center'
+  );
+
+  await page.goto(baseURL + '/civic-map/report');
+  await expect(page.getByText('This creates a public BetterMakati case.', { exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Makati Action Center contacts', exact: true })).toHaveAttribute(
+    'href',
+    '/hotlines#makati-action-center'
+  );
+  await expect(page.getByRole('link', { name: 'Call 911', exact: true })).toHaveAttribute('href', 'tel:911');
+
+  await page.goto(baseURL + '/hotlines#makati-action-center');
+  await expect(page.locator('#makati-action-center')).toBeVisible();
+  await expect(page.locator('#makati-action-center')).toContainText('Makati Action Center');
+  await expect(page.locator('#makati-action-center')).toContainText('8870-1000');
+});
+
 test('barangays page is a focused selection gateway', async ({ page }) => {
   await page.goto(baseURL + '/barangays');
   await expect(page.getByRole('heading', { level: 1 })).toContainText('Find your barangay');
