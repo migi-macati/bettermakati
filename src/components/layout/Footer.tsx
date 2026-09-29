@@ -26,7 +26,7 @@ const Footer: React.FC = () => {
     <footer className="bg-primary-900 text-white">
       <div className="h-1.5 bg-secondary-500" />
       <div className="container px-5 md:px-6 lg:px-8 pt-12 pb-8">
-        <div className="grid grid-cols-1 gap-9 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-9 sm:grid-cols-2 xl:grid-cols-4">
           <div>
             <div className="mb-4">
               <BrandMark compact inverse />
