@@ -248,7 +248,7 @@ export default function CivicAreaContextMap() {
           role="img"
         >
           {showAreas &&
-            mappedAreas.map(({ artifact, area }) => (
+            mappedAreas.map(({ artifact }) => (
               <path
                 key={artifact.id}
                 d={geometryPath(artifact.geometry, bounds)}
