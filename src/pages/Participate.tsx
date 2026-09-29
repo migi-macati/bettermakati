@@ -7,6 +7,7 @@ import {
   Lightbulb,
   MapPinned,
   PencilLine,
+  PhoneCall,
   Scale,
   Send,
   ShieldAlert,
@@ -77,6 +78,52 @@ export default function Participate() {
         </div>
         <LastReviewed date={participationReviewed} />
 
+        <div className="mt-6 grid gap-4 lg:grid-cols-2">
+          <div className="rounded-2xl border border-primary-200 bg-primary-50 p-5">
+            <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+              Need government action?
+            </div>
+            <h2 className="mt-2 text-lg font-extrabold text-gray-950">
+              Use an official Makati channel
+            </h2>
+            <p className="mt-2 text-sm leading-relaxed text-gray-700">
+              BetterMakati does not automatically submit complaints or service requests to the City Government. Use an official city contact or find the responsible service or office.
+            </p>
+            <div className="mt-4 flex flex-wrap gap-3">
+              <Link to="/hotlines#makati-action-center" className="brand-btn-primary">
+                Makati Action Center contacts
+              </Link>
+              <Link to="/community-tools/saan-ako-lalapit" className="brand-btn-secondary">
+                Find the right service or office
+              </Link>
+            </div>
+          </div>
+
+          <div className="rounded-2xl border border-secondary-200 bg-secondary-50 p-5">
+            <div className="text-xs font-bold uppercase tracking-[0.08em] text-secondary-800">
+              Contributing through BetterMakati?
+            </div>
+            <h2 className="mt-2 text-lg font-extrabold text-gray-950">
+              BetterMakati records are public civic evidence
+            </h2>
+            <p className="mt-2 text-sm leading-relaxed text-gray-700">
+              Civic Map reports, observations, corrections, sources and ideas create or improve BetterMakati records. A Civic Map case becomes an official government referral only when separate referral evidence is recorded.
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-4 flex flex-col gap-3 rounded-2xl border border-error-200 bg-error-50 p-5 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <div className="font-extrabold text-error-950">Emergency or immediate danger?</div>
+            <p className="mt-1 text-sm text-error-900">
+              Do not wait for a participation or reporting workflow.
+            </p>
+          </div>
+          <a href="tel:911" className="brand-btn-primary !bg-error-700 !text-white hover:!bg-error-800">
+            Call 911
+          </a>
+        </div>
+
         {barangay && (
           <div className="mt-5 rounded-2xl border border-primary-100 bg-white p-5">
             <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
@@ -91,7 +138,7 @@ export default function Participate() {
           </div>
         )}
 
-        <div className="mt-7 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="mt-7 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
           <a
             href="#official-opportunities"
             className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
@@ -106,15 +153,28 @@ export default function Participate() {
           </a>
 
           <Link
+            to="/hotlines#makati-action-center"
+            className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
+          >
+            <PhoneCall className="h-5 w-5 text-primary-700" />
+            <div className="mt-3 font-extrabold text-gray-950">
+              Contact Makati government
+            </div>
+            <p className="mt-1 text-sm text-gray-600">
+              Use the official Makati Action Center contacts for a concern that needs city-government action.
+            </p>
+          </Link>
+
+          <Link
             to={withBarangayScope('/civic-map/report', barangay?.slug)}
             className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
           >
             <ShieldAlert className="h-5 w-5 text-primary-700" />
             <div className="mt-3 font-extrabold text-gray-950">
-              Report a local problem
+              Report a local problem to BetterMakati
             </div>
             <p className="mt-1 text-sm text-gray-600">
-              Report a non-emergency issue at a place, segment or location.
+              Create a public BetterMakati case for a non-emergency issue. It is not a city-government case unless a separate referral is recorded.
             </p>
           </Link>
 
