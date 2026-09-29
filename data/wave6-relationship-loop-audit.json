@@ -1,0 +1,89 @@
+{
+  "wave": "W6-4e",
+  "status": "complete",
+  "reviewedOn": "2026-09-29",
+  "definition": {
+    "usefulBidirectionalJourney": "A user reaches a different civic context and can return without losing identity or scope.",
+    "redundantLoop": "A link sends the user to another surface that adds no material context, or merely routes them back to the same generic domain."
+  },
+  "decisions": [
+    {
+      "id": "official-generic-domain-links",
+      "surface": "OfficialProfile",
+      "decision": "remove",
+      "reason": "Generic Accountability, Legislation and Public Records indexes implied office-specific relationships that the graph did not support.",
+      "status": "resolved"
+    },
+    {
+      "id": "calendar-title-search-backlink",
+      "surface": "ReportArticle / Calendar",
+      "decision": "replace",
+      "reason": "Title search was an indirect loop-prone way to rediscover a known timeline item.",
+      "replacement": "Exact timeline-item anchor by timeline ID.",
+      "status": "resolved"
+    },
+    {
+      "id": "hardcoded-ecosystem-url-duplicates",
+      "surface": "About / Government / Statistics / Projects & Budget",
+      "decision": "centralize",
+      "reason": "Repeated BetterGov/BetterLGU destinations could drift and obscured their context-only evidence role.",
+      "replacement": "src/data/ecosystemResources.ts",
+      "status": "resolved"
+    },
+    {
+      "id": "civic-asset-related-public-records-label",
+      "surface": "CivicAsset",
+      "decision": "rename",
+      "reason": "The links were specifically Accountability entries, so the generic label overstated the record family.",
+      "replacement": "Related accountability records",
+      "status": "resolved"
+    },
+    {
+      "id": "statistics-national-context-two-levels",
+      "surface": "Statistics",
+      "decision": "retain",
+      "reason": "The economy section offers indicator-relevant national data continuations; the footer offers broader page-level national datasets, visualizations and benchmarks. The two placements answer different next questions.",
+      "status": "intentional"
+    },
+    {
+      "id": "barangay-quick-actions-and-civic-information",
+      "surface": "BarangayProfile",
+      "decision": "retain",
+      "reason": "Top quick actions are task entry points; the later civic-information section is a domain-oriented hub on a long local homepage. Repeated destinations are separated by purpose and scroll distance.",
+      "status": "intentional"
+    },
+    {
+      "id": "official-election-two-way",
+      "surface": "OfficialProfile / Elections",
+      "decision": "retain",
+      "reason": "Election results provide race context while the official profile provides office/profile context. Exact anchors prevent a generic bounce.",
+      "status": "intentional"
+    },
+    {
+      "id": "report-calendar-two-way",
+      "surface": "ReportArticle / Calendar",
+      "decision": "retain",
+      "reason": "The report owns the analysis while Calendar owns the time-axis view. Exact timeline anchors make the round trip meaningful.",
+      "status": "intentional"
+    },
+    {
+      "id": "accountability-place-two-way",
+      "surface": "Accountability / CivicAsset",
+      "decision": "retain",
+      "reason": "The ledger explains the public record; the Civic Asset supplies place context. Typed record anchors preserve the return journey.",
+      "status": "intentional"
+    },
+    {
+      "id": "about-and-domain-ecosystem-links",
+      "surface": "About plus domain pages",
+      "decision": "retain",
+      "reason": "About provides broad ecosystem orientation. Domain pages expose only task-specific national context. BetterLGU remains on About rather than being repeated generically.",
+      "status": "intentional"
+    }
+  ],
+  "closure": {
+    "removedOrReplaced": 4,
+    "intentionalBidirectionalOrLayeredPatterns": 6,
+    "unresolved": 0
+  }
+}
