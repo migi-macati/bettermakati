@@ -298,13 +298,13 @@ export default function CityMonitor() {
               onChange={event => setQuery(event.target.value)}
               type="search"
               placeholder="Search records"
-              className="w-full rounded-xl border border-gray-300 py-3 pl-10 pr-4"
+              className="min-h-11 w-full rounded-xl border border-gray-300 py-3 pl-10 pr-4"
             />
           </label>
           <select
             value={stream}
             onChange={event => setStream(event.target.value as 'all' | CityMonitorType)}
-            className="rounded-xl border border-gray-300 bg-white px-4 py-3"
+            className="min-h-11 rounded-xl border border-gray-300 bg-white px-4 py-3"
             aria-label="Filter City Monitor stream"
           >
             {streamOptions.map(option => (
@@ -313,7 +313,7 @@ export default function CityMonitor() {
           </select>
         </div>
 
-        <div className="mt-4 text-sm text-gray-500">
+        <div className="mt-4 text-sm text-gray-500" role="status" aria-live="polite" aria-atomic="true">
           Showing <strong className="text-gray-900">{visibleRecords.length}</strong> of {cityMonitorRecords.length} validated records
         </div>
 
@@ -351,7 +351,7 @@ export default function CityMonitor() {
                       <Link
                         key={place.id}
                         to={'/civic-map/' + place.id}
-                        className="inline-flex items-center gap-1 rounded-full border border-primary-100 bg-primary-50 px-3 py-1.5 text-xs font-bold text-primary-800"
+                        className="inline-flex min-h-11 items-center gap-1 rounded-full border border-primary-100 bg-primary-50 px-3 py-1.5 text-xs font-bold text-primary-800"
                       >
                         <MapPin className="h-3.5 w-3.5" />
                         {place.name}
