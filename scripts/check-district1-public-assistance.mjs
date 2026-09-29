@@ -2,6 +2,7 @@ import { readFile } from 'node:fs/promises';
 
 const [
   availability,
+  integrationDoc,
   serviceDirectory,
   serviceGuideDetails,
   governmentOffices,
@@ -18,6 +19,7 @@ const [
   packageRaw,
 ] = await Promise.all([
   readFile('src/data/civicServiceAvailability.ts', 'utf8'),
+  readFile('docs/current-district1-public-assistance-2026.md', 'utf8'),
   readFile('src/data/serviceDirectory.ts', 'utf8'),
   readFile('src/data/serviceGuideDetails.ts', 'utf8'),
   readFile('src/data/governmentServiceOffices.ts', 'utf8'),
@@ -42,6 +44,10 @@ const need = (name, source, marker) => {
     problems.push(name + ' marker missing: ' + marker);
   }
 };
+
+need('Integration documentation', integrationDoc, 'Status: complete');
+need('Integration documentation', integrationDoc, '**10 dated sessions covering 11 barangays**');
+need('Integration documentation', integrationDoc, 'not projected as an indefinite recurring Calendar series');
 
 for (const marker of [
   "serviceId: 'district-1-public-assistance-desk'",
