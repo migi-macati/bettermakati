@@ -483,7 +483,12 @@ export default function ProjectsBudget() {
           }
         />
 
-        <div className="mt-6 overflow-x-auto rounded-2xl border border-gray-200 bg-white">
+                <div
+                    className="scroll-region mt-6 overflow-x-auto rounded-2xl border border-gray-200 bg-white"
+                    role="region"
+                    aria-label="2025 and 2026 budget plan comparison — horizontally scrollable"
+                    tabIndex={0}
+                  >
           <table className="w-full min-w-[980px] text-left">
             <thead className="bg-gray-50">
               <tr>
@@ -553,7 +558,12 @@ export default function ProjectsBudget() {
             formatValue={peso}
           />
 
-          <div className="mt-5 overflow-x-auto rounded-2xl border border-gray-200 bg-white">
+                    <div
+                      className="scroll-region mt-5 overflow-x-auto rounded-2xl border border-gray-200 bg-white"
+                      role="region"
+                      aria-label="DBM and BLGF fiscal history — horizontally scrollable"
+                      tabIndex={0}
+                    >
             <table className="w-full min-w-[680px] text-left">
               <thead className="bg-gray-50">
                 <tr>
@@ -722,7 +732,12 @@ export default function ProjectsBudget() {
           />
         </div>
 
-        <div className="mt-8 overflow-x-auto rounded-2xl border border-gray-200 bg-white">
+                <div
+                    className="scroll-region mt-8 overflow-x-auto rounded-2xl border border-gray-200 bg-white"
+                    role="region"
+                    aria-label="Local revenue source table — horizontally scrollable"
+                    tabIndex={0}
+                  >
           <table className="w-full min-w-[620px] text-left">
             <thead className="bg-gray-50">
               <tr>
@@ -942,7 +957,12 @@ export default function ProjectsBudget() {
             </div>
           </div>
 
-          <div className="mt-6 overflow-x-auto rounded-xl border border-gray-200">
+                    <div
+                      className="scroll-region mt-6 overflow-x-auto rounded-xl border border-gray-200"
+                      role="region"
+                      aria-label="Development Fund project reports — horizontally scrollable"
+                      tabIndex={0}
+                    >
             <table className="w-full min-w-[680px] text-left">
               <thead className="bg-gray-50">
                 <tr>
@@ -1078,7 +1098,12 @@ export default function ProjectsBudget() {
           Showing {visibleOffices.length} of {officeBudgetTotals2026.length} offices
         </div>
 
-        <div className="mt-3 overflow-x-auto rounded-2xl border border-gray-200">
+                <div
+                    className="scroll-region mt-3 overflow-x-auto rounded-2xl border border-gray-200"
+                    role="region"
+                    aria-label="2026 office budget totals — horizontally scrollable"
+                    tabIndex={0}
+                  >
           <table className="w-full min-w-[760px] text-left">
             <thead className="bg-gray-50">
               <tr>
@@ -1185,7 +1210,12 @@ export default function ProjectsBudget() {
             Showing {visibleLines.length} of {selectedBudgetLines2026.length} lines
           </div>
 
-          <div className="mt-3 overflow-x-auto rounded-2xl border border-gray-200">
+                    <div
+                      className="scroll-region mt-3 overflow-x-auto rounded-2xl border border-gray-200"
+                      role="region"
+                      aria-label="Selected 2026 budget lines — horizontally scrollable"
+                      tabIndex={0}
+                    >
             <table className="w-full min-w-[820px] text-left">
               <thead className="bg-gray-50">
                 <tr>
@@ -1319,7 +1349,12 @@ export default function ProjectsBudget() {
           Showing {visibleProcurement.length} of {procurementProjectEntries.length} structured records
         </div>
 
-        <div className="mt-3 overflow-x-auto rounded-2xl border border-gray-200 bg-white">
+                <div
+                    className="scroll-region mt-3 overflow-x-auto rounded-2xl border border-gray-200 bg-white"
+                    role="region"
+                    aria-label="Structured procurement records — horizontally scrollable"
+                    tabIndex={0}
+                  >
           <table className="w-full min-w-[1120px] text-left">
             <thead className="bg-gray-50">
               <tr>
