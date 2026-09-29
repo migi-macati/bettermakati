@@ -1604,16 +1604,23 @@ test('W6-3d BetterBarangay preference persists without overstating local data', 
 
   await nav.getByRole('link', { name: 'Services', exact: true }).click();
   await expect(page).toHaveURL(/\/services\?barangay=poblacion/);
-  await expect(page.getByLabel('Choose BetterBarangay view')).toHaveValue('poblacion');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText(
+    'What do you need to get done?'
+  );
 
-  await page.getByLabel('Choose BetterBarangay view').selectOption('bel-air');
+  const servicesBar = page.getByRole('region', { name: 'BetterBarangay view' });
+  await expect(servicesBar).toBeVisible();
+  const scopeSelect = servicesBar.getByLabel('Choose BetterBarangay view');
+  await expect(scopeSelect).toHaveValue('poblacion');
+
+  await scopeSelect.selectOption('bel-air');
   await expect(page).toHaveURL(/\/services\?barangay=bel-air/);
-  await expect(page.getByLabel('Choose BetterBarangay view')).toHaveValue('bel-air');
+  await expect(scopeSelect).toHaveValue('bel-air');
   await expect(page.getByText('Barangay Bel-Air Hall', { exact: true })).toBeVisible();
 
-  await page.getByLabel('Choose BetterBarangay view').selectOption('');
+  await scopeSelect.selectOption('');
   await expect(page).toHaveURL(baseURL + '/services');
-  await expect(page.getByLabel('Choose BetterBarangay view')).toHaveValue('');
+  await expect(scopeSelect).toHaveValue('');
   await expect(
     page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'Services', exact: true })
   ).toHaveAttribute('href', '/services');
