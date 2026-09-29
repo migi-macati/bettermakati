@@ -2452,11 +2452,11 @@ export const serviceDirectory: ServiceDirectoryItem[] = [
   },
 
   {
-    id: districtOnePublicAssistanceProgram.serviceId,
+    id: 'district-1-public-assistance-desk',
     title: districtOnePublicAssistanceProgram.title,
-    category: districtOnePublicAssistanceProgram.category,
-    level: districtOnePublicAssistanceProgram.level,
-    type: districtOnePublicAssistanceProgram.type,
+    category: 'Social services',
+    level: 'National',
+    type: 'Assistance',
     agency: districtOnePublicAssistanceProgram.agency,
     description:
       districtOnePublicAssistanceProgram.description +
