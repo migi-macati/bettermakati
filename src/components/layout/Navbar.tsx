@@ -120,24 +120,24 @@ export default function Navbar() {
   return (
     <>
       <div className="bg-primary-900 text-white">
-        <div className="container px-5 md:px-6 lg:px-8 min-h-9 flex items-center justify-between gap-4 text-xs">
-          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 py-2">
+        <div className="container flex min-h-11 items-center justify-between gap-4 px-5 text-xs md:px-6 lg:px-8">
+          <div className="flex flex-wrap items-center gap-x-3">
             <a
               href="tel:911"
-              className="inline-flex items-center gap-1.5 font-semibold text-secondary-200 hover:text-white"
+              className="inline-flex min-h-11 items-center gap-1.5 font-semibold text-secondary-200 hover:text-white"
             >
               <PhoneCall className="h-3.5 w-3.5" aria-hidden="true" /> Emergency
               911
             </a>
             <a
               href="tel:+63288701000"
-              className="hidden sm:inline hover:text-secondary-200"
+              className="hidden min-h-11 items-center sm:inline-flex hover:text-secondary-200"
             >
               City Hall: 8870-1000
             </a>
             <Link
               to="/hotlines"
-              className="underline underline-offset-2 hover:text-secondary-200"
+              className="inline-flex min-h-11 items-center underline underline-offset-2 hover:text-secondary-200"
             >
               All hotlines
             </Link>
@@ -146,7 +146,7 @@ export default function Navbar() {
             href="https://www.makati.gov.ph/"
             target="_blank"
             rel="noreferrer"
-            className="hidden sm:inline-flex items-center gap-1 text-primary-100 hover:text-white"
+            className="hidden min-h-11 items-center gap-1 text-primary-100 hover:text-white sm:inline-flex"
           >
             Official Makati site{' '}
             <ExternalLink className="h-3 w-3" aria-hidden="true" />
@@ -172,7 +172,7 @@ export default function Navbar() {
       >
         <div className="container px-5 md:px-6 lg:px-8">
           <div className="flex w-full items-center py-3 gap-3">
-            <div onClick={closeMenu}>
+            <div onClick={closeMenu} className="shrink-0">
               <BrandMark />
             </div>
 
@@ -208,7 +208,7 @@ export default function Navbar() {
                           onClick={() =>
                             setActiveMenu(expanded ? null : item.label)
                           }
-                          className="inline-flex min-h-11 min-w-9 items-center justify-center rounded-r-lg hover:bg-primary-100"
+                          className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-r-lg hover:bg-primary-100"
                         >
                           <ChevronDown
                             aria-hidden="true"
@@ -263,7 +263,7 @@ export default function Navbar() {
               })}
 
               {preferredBarangay && (
-                <div className="relative ml-2">
+                <div className="relative ml-2 rounded-full focus-within:outline focus-within:outline-3 focus-within:outline-offset-2 focus-within:outline-primary-700">
                   <div className="pointer-events-none inline-flex min-h-11 items-center gap-1.5 rounded-full border border-secondary-200 bg-secondary-50 px-3 text-sm font-extrabold text-primary-900">
                     <MapPin className="h-4 w-4 text-secondary-800" aria-hidden="true" />
                     Better{preferredBarangay.name.replace(/\s+/g, '')}
