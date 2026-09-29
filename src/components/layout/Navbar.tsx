@@ -50,7 +50,7 @@ export default function Navbar() {
   const nav = useRef<HTMLElement>(null);
   const navigate = useNavigate();
   const { pathname, search, hash } = useLocation();
-  const { barangay, preferredBarangay, rememberBarangay } = useBarangayScope();
+  const { preferredBarangay, rememberBarangay } = useBarangayScope();
 
   const currentSearch = new URLSearchParams(search);
 
@@ -92,8 +92,8 @@ export default function Navbar() {
   const currentFamily = mainNavigation.find(familyOwnsPath);
 
   const scopedHref = (href: string) =>
-    barangay && isBarangaySliceableHref(href)
-      ? withBarangayScope(href, barangay.slug)
+    preferredBarangay && isBarangaySliceableHref(href)
+      ? withBarangayScope(href, preferredBarangay.slug)
       : href;
 
   const toggleMobileMenu = () => {
