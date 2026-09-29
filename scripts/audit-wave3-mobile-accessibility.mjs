@@ -94,7 +94,7 @@ if (!/href="tel:911"[\s\S]{0,220}min-h-11/.test(getInvolved)) {
 }
 for (const marker of [
   'aria-pressed={type === action.type}',
-  'role="status"',
+  "role={status === 'error' ? 'alert' : 'status'}",
   "tabIndex={-1}",
   'aria-hidden="true"',
 ]) {
@@ -132,7 +132,7 @@ const observationForm =
   byPath.get('src/components/civic/CivicObservationForm.tsx') || '';
 for (const marker of [
   "aria-busy={status === 'submitting'}",
-  'role="status"',
+  "role={status === 'error' ? 'alert' : 'status'}",
   'aria-hidden="true"',
   'tabIndex={-1}',
 ]) {
