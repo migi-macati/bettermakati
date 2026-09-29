@@ -238,8 +238,10 @@ button:disabled { cursor: not-allowed; opacity: .6; }
 .form-field.hidden { display: none; }
 
 .scroll-region {
+  max-width: 100%;
+  min-width: 0;
   overscroll-behavior-x: contain;
-  scrollbar-gutter: stable;
+  scrollbar-gutter: auto;
 }
 .scroll-region:focus-visible {
   outline: 3px solid var(--brand-green);

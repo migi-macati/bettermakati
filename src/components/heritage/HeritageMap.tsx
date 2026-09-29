@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import { ExternalLink, MapPin } from 'lucide-react';
 import { Link } from 'react-router';
 import { placeRegistryById } from '../../data/placeRegistry';
@@ -6,6 +7,14 @@ const mercatorY = (lat: number) => {
   const radians = (lat * Math.PI) / 180;
   return Math.log(Math.tan(Math.PI / 4 + radians / 2));
 };
+
+const denseMarkerOffsetById: Record<string, { x: number; y: number }> = {
+  'museo-ng-makati': { x: 0, y: -30 },
+  'plaza-cristo-rey': { x: -30, y: 22 },
+  'sts-peter-and-paul-parish-church': { x: 30, y: 22 },
+};
+
+const denseMarkerIds = Object.keys(denseMarkerOffsetById);
 
 export default function HeritageMap({
   placeIds,
@@ -74,6 +83,18 @@ export default function HeritageMap({
     return position ? [position] : [];
   });
 
+  const denseMarkerPositions = denseMarkerIds.flatMap(placeId => {
+    const position = positionFor(placeId);
+    return position ? [{ placeId, x: position.x, y: position.y }] : [];
+  });
+  const useDenseMarkerOffsets = denseMarkerPositions.some((left, index) =>
+    denseMarkerPositions.slice(index + 1).some(
+      right =>
+        Math.abs(left.x - right.x) < 6 &&
+        Math.abs(left.y - right.y) < 6
+    )
+  );
+
   return (
     <figure className="overflow-hidden rounded-2xl border border-primary-100 bg-white shadow-sm">
       <div className="relative aspect-[16/9] min-h-[320px] overflow-hidden bg-gray-100">
@@ -109,22 +130,60 @@ export default function HeritageMap({
           const position = positionFor(place.id);
           if (!position) return null;
           const routeIndex = pathPlaceIds.indexOf(place.id);
+          const markerOffset =
+            useDenseMarkerOffsets && denseMarkerOffsetById[place.id]
+              ? denseMarkerOffsetById[place.id]
+              : { x: 0, y: 0 };
+          const isOffset = markerOffset.x !== 0 || markerOffset.y !== 0;
+          const leaderLength = Math.hypot(markerOffset.x, markerOffset.y);
+          const leaderAngle =
+            Math.atan2(markerOffset.y, markerOffset.x) * 180 / Math.PI;
 
           return (
-            <Link
-              key={place.id}
-              to={'/civic-map/' + place.id}
-              aria-label={'Open ' + place.name}
-              className="group absolute grid h-6 w-6 -translate-x-1/2 -translate-y-1/2 place-items-center"
-              style={{ left: position.x + '%', top: position.y + '%' }}
-            >
-              <span className="grid h-8 min-w-8 place-items-center rounded-full border-2 border-white bg-primary-800 px-2 text-xs font-extrabold text-white shadow-md transition group-hover:bg-secondary-600">
-                {routeIndex >= 0 ? routeIndex + 1 : <MapPin className="h-4 w-4" aria-hidden="true" />}
-              </span>
-              <span className="pointer-events-none absolute left-1/2 top-full mt-1 hidden max-w-44 -translate-x-1/2 whitespace-nowrap rounded-lg bg-gray-950/90 px-2 py-1 text-[11px] font-bold text-white shadow-sm group-hover:block group-focus:block">
-                {place.name}
-              </span>
-            </Link>
+            <Fragment key={place.id}>
+              {isOffset && (
+                <>
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute z-10 h-px bg-primary-800/50"
+                    style={{
+                      left: position.x + '%',
+                      top: position.y + '%',
+                      width: leaderLength,
+                      transform: 'rotate(' + leaderAngle + 'deg)',
+                      transformOrigin: '0 50%',
+                    }}
+                  />
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute z-10 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white bg-primary-800 shadow-sm"
+                    style={{ left: position.x + '%', top: position.y + '%' }}
+                  />
+                </>
+              )}
+              <Link
+                to={'/civic-map/' + place.id}
+                aria-label={'Open ' + place.name}
+                className="group absolute z-20 grid h-11 w-11 place-items-center"
+                style={{
+                  left: position.x + '%',
+                  top: position.y + '%',
+                  transform:
+                    'translate(calc(-50% + ' +
+                    markerOffset.x +
+                    'px), calc(-50% + ' +
+                    markerOffset.y +
+                    'px))',
+                }}
+              >
+                <span className="grid h-8 min-w-8 place-items-center rounded-full border-2 border-white bg-primary-800 px-2 text-xs font-extrabold text-white shadow-md transition group-hover:bg-secondary-600">
+                  {routeIndex >= 0 ? routeIndex + 1 : <MapPin className="h-4 w-4" aria-hidden="true" />}
+                </span>
+                <span className="pointer-events-none absolute left-1/2 top-full mt-1 hidden max-w-44 -translate-x-1/2 whitespace-nowrap rounded-lg bg-gray-950/90 px-2 py-1 text-[11px] font-bold text-white shadow-sm group-hover:block group-focus:block">
+                  {place.name}
+                </span>
+              </Link>
+            </Fragment>
           );
         })}
       </div>

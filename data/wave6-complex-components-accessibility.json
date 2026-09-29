@@ -35,7 +35,7 @@
     {
       "id": "scroll-region-focus",
       "status": "resolved",
-      "change": "Shared scroll-region CSS provides visible keyboard focus, contained horizontal overscroll and stable scrollbar space."
+      "change": "Shared scroll-region CSS provides visible keyboard focus, contained horizontal overscroll, full-width shrinkability and no forced classic-scrollbar gutter on horizontal-only table scrollers."
     },
     {
       "id": "dense-table-link-targets",
@@ -70,7 +70,7 @@
     {
       "id": "heritage-map-marker-targets",
       "status": "resolved",
-      "change": "Heritage map place markers expose a 44px link target while preserving the smaller visual pin."
+      "change": "Heritage map place markers retain a 44px link target; dense Poblacion points are displaced with leader lines back to their canonical coordinates so overlapping targets do not reduce the unobscured touch area."
     },
     {
       "id": "calendar-result-announcement",

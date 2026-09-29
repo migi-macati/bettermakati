@@ -136,7 +136,9 @@ need(
   'inline-flex min-h-11 items-center gap-1 font-bold'
 );
 for (const marker of [
-  'group absolute grid h-14 w-14',
+  'group absolute z-20 grid h-11 w-11',
+  'denseMarkerOffsetById',
+  'useDenseMarkerOffsets',
   'inline-flex min-h-11 items-center gap-1 font-bold',
   'tabIndex={-1}',
   'aria-hidden="true"',
@@ -154,7 +156,9 @@ for (const marker of [
 for (const marker of [
   '.scroll-region {',
   'overscroll-behavior-x: contain;',
-  'scrollbar-gutter: stable;',
+  'scrollbar-gutter: auto;',
+  'max-width: 100%;',
+  'min-width: 0;',
   '.scroll-region:focus-visible',
   '.scroll-region table :is(a, button)',
   'min-height: 44px;',

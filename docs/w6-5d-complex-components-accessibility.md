@@ -52,7 +52,8 @@ Shared `.scroll-region` CSS now provides:
 
 - visible focus;
 - horizontal overscroll containment;
-- stable scrollbar gutter.
+- full-width shrinkability inside narrow containers;
+- no forced classic-scrollbar gutter on horizontal-only table scrollers.
 
 Interactive links/buttons inside dense table regions inherit a 44px minimum interaction height.
 
@@ -111,7 +112,7 @@ The **Open full map** fallback is now a 44px target.
 
 The heritage map deliberately uses a non-interactive, `aria-hidden` background iframe. Canonical BetterMakati place links form the accessible interactive layer.
 
-Each marker now exposes a 44px clickable/focusable area while retaining the smaller visual pin.
+Each marker exposes a 44px clickable/focusable area while retaining the smaller visual pin. When the all-sites projection places the three Poblacion heritage points too close together for distinct touch targets, the interactive pins are displaced with leader lines back to the canonical coordinates instead of shrinking the targets.
 
 The external full-map fallback also meets the 44px baseline.
 
