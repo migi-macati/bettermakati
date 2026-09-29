@@ -21,6 +21,7 @@ import { Heading } from '../components/ui/Heading';
 import LastReviewed from '../components/ui/LastReviewed';
 import SharePage from '../components/ui/SharePage';
 import CivicDomainTimelinePreview from '../components/civic/CivicDomainTimelinePreview';
+import CivicRelationshipLinks from '../components/civic/CivicRelationshipLinks';
 import {
   accountabilityEntries,
   accountabilityReviewed,
@@ -780,51 +781,53 @@ export default function Accountability() {
                     <span>Last verified: {entry.lastVerified}</span>
                     {entry.barangaySlug && <span>Local tag: {entry.barangaySlug}</span>}
                   </div>
-                  {relatedPlaces.length > 0 && (
-                    <div className="mt-3 flex flex-wrap gap-2">
-                      {relatedPlaces.map(place => (
-                        <Link
-                          key={place.id}
-                          to={'/civic-map/' + place.id}
-                          className="inline-flex items-center gap-1 rounded-full border border-primary-100 bg-primary-50 px-3 py-1.5 text-xs font-bold text-primary-800"
-                        >
-                          <MapPin className="h-3.5 w-3.5" />
-                          {place.name}
-                        </Link>
-                      ))}
-                    </div>
-                  )}
-                  {integrityLinks.length > 0 && (
-                    <div className="mt-3 flex flex-wrap gap-2">
-                      {integrityLinks.map(item =>
-                        item.node ? (
-                          <Link
-                            key={item.relationship.id}
-                            to={item.node.href}
-                            className="inline-flex items-center gap-1 rounded-full border border-primary-100 bg-primary-50 px-3 py-1.5 text-xs font-bold text-primary-800"
-                          >
-                            <ShieldCheck className="h-3.5 w-3.5" />
-                            Integrity evidence
-                          </Link>
-                        ) : null
-                      )}
-                    </div>
-                  )}
-                  {analysisLinks.length > 0 && (
-                    <div className="mt-3 flex flex-wrap gap-2">
-                      {analysisLinks.map(item =>
-                        item.node ? (
-                          <Link
-                            key={item.relationship.id}
-                            to={item.node.href}
-                            className="inline-flex items-center gap-1 rounded-full border border-secondary-200 bg-secondary-50 px-3 py-1.5 text-xs font-bold text-secondary-900"
-                          >
-                            Analysis: {item.node.label}
-                          </Link>
-                        ) : null
-                      )}
-                    </div>
-                  )}
+                  <CivicRelationshipLinks
+                    label="Related places"
+                    className="mt-3"
+                    items={relatedPlaces.map(place => ({
+                      id: place.id,
+                      label: place.name,
+                      href: '/civic-map/' + place.id,
+                      icon: <MapPin className="h-3.5 w-3.5" aria-hidden="true" />,
+                    }))}
+                  />
+                  <CivicRelationshipLinks
+                    label="Integrity evidence"
+                    className="mt-3"
+                    items={integrityLinks.flatMap(item =>
+                      item.node
+                        ? [
+                            {
+                              id: item.relationship.id,
+                              label: item.node.label,
+                              href: item.node.href,
+                              icon: (
+                                <ShieldCheck
+                                  className="h-3.5 w-3.5"
+                                  aria-hidden="true"
+                                />
+                              ),
+                            },
+                          ]
+                        : []
+                    )}
+                  />
+                  <CivicRelationshipLinks
+                    label="Related analysis"
+                    tone="secondary"
+                    className="mt-3"
+                    items={analysisLinks.flatMap(item =>
+                      item.node
+                        ? [
+                            {
+                              id: item.relationship.id,
+                              label: item.node.label,
+                              href: item.node.href,
+                            },
+                          ]
+                        : []
+                    )}
+                  />
                 </div>
 
                 <div className="mt-4 grid grid-cols-2 gap-3 lg:grid-cols-4">
