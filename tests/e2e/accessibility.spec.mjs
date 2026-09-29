@@ -181,3 +181,17 @@ test('SPA pathname navigation moves focus to main content', async ({ page }) => 
   await expect(page).toHaveURL(baseURL + '/services');
   await expect(page.locator('main#main-content')).toBeFocused();
 });
+
+test('cross-route fragment navigation focuses the destination section', async ({ page }) => {
+  await page.goto(baseURL + '/about');
+
+  const correction = page.getByRole('link', {
+    name: 'Suggest a correction',
+    exact: true,
+  });
+  await correction.focus();
+  await page.keyboard.press('Enter');
+
+  await expect(page).toHaveURL(/\/get-involved\?.*#submission$/);
+  await expect(page.locator('#submission')).toBeFocused();
+});
