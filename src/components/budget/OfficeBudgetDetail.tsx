@@ -78,21 +78,21 @@ export default function OfficeBudgetDetail() {
 
       {detail && (
         <>
-          <div className="mt-5 grid grid-cols-2 gap-3 lg:grid-cols-4">
-            <div className="rounded-xl border border-gray-200 bg-white p-4">
+          <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="min-w-0 rounded-xl border border-gray-200 bg-white p-4">
               <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">
                 Office total
               </div>
-              <div className="mt-1 text-xl font-extrabold text-gray-950">
+              <div className="mt-1 break-words text-lg font-extrabold text-gray-950 sm:text-xl">
                 {pesoExact(detailTotalM)}
               </div>
             </div>
             {groups.map(item => (
-              <div key={item.group} className="rounded-xl border border-gray-200 bg-white p-4">
+              <div key={item.group} className="min-w-0 rounded-xl border border-gray-200 bg-white p-4">
                 <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">
                   {item.group}
                 </div>
-                <div className="mt-1 text-xl font-extrabold text-gray-950">
+                <div className="mt-1 break-words text-lg font-extrabold text-gray-950 sm:text-xl">
                   {pesoExact(item.amountM)}
                 </div>
               </div>
