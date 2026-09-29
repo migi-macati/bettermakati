@@ -11,7 +11,7 @@ import {
   type CivicIntelligenceRelationship,
 } from './civicIntelligenceRelationships';
 
-const statisticsHrefByIndicatorId: Record<string, string> = {
+export const statisticsHrefByIndicatorId: Record<string, string> = {
   'population-total': '/statistics#population-trend',
   'population-growth-rate': '/statistics#population-trend',
   'real-gdp-level': '/statistics#economy-work',
