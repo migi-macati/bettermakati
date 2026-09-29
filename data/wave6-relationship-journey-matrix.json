@@ -1,0 +1,113 @@
+{
+  "wave": "W6-4f",
+  "status": "complete",
+  "reviewedOn": "2026-09-29",
+  "principle": "A relationship journey is closed only when the user can understand the relationship, reach the most specific supported destination, and continue or return without losing record identity or scoped context.",
+  "journeys": [
+    {
+      "id": "statistics-report-statistics",
+      "from": "Statistics indicator",
+      "to": "Featured Report",
+      "return": "Exact Statistics section",
+      "identity": "indicator canonical ID",
+      "touch": "shared compact relationship control, 44px minimum",
+      "status": "pass"
+    },
+    {
+      "id": "elections-official-elections",
+      "from": "2025 election result",
+      "to": "Elected official profile",
+      "return": "Official-specific result anchor",
+      "identity": "official slug",
+      "touch": "elected-name links and relationship controls meet 44px minimum",
+      "status": "pass"
+    },
+    {
+      "id": "report-calendar-report",
+      "from": "Featured Report",
+      "to": "Exact Civic Timeline item",
+      "return": "Canonical report",
+      "identity": "timeline item ID plus report slug",
+      "touch": "brand button and Calendar record control meet 44px minimum",
+      "status": "pass"
+    },
+    {
+      "id": "accountability-place-accountability",
+      "from": "Accountability record",
+      "to": "Related Civic Asset",
+      "return": "Typed Accountability record anchor",
+      "identity": "accountability record ID and record type",
+      "touch": "relationship chip and full Civic Asset card are touch-friendly",
+      "status": "pass"
+    },
+    {
+      "id": "accountability-integrity-accountability",
+      "from": "Accountability record",
+      "to": "Integrity evidence",
+      "return": "Exact Accountability record",
+      "identity": "shared accountability/integrity relationship",
+      "touch": "Integrity reverse links meet 44px minimum",
+      "status": "pass"
+    },
+    {
+      "id": "legislation-public-record-context",
+      "from": "Legislation record",
+      "to": "Exact Public Record detail",
+      "return": "BetterMakati context attached to source",
+      "identity": "public record ID / exact source identity",
+      "touch": "relationship controls and Public Record context cards are touch-friendly",
+      "status": "pass"
+    },
+    {
+      "id": "legislation-city-monitor-context",
+      "from": "Legislation record",
+      "to": "Exact City Monitor record when linked",
+      "return": "Related BetterMakati record where supplied by the owner",
+      "identity": "city-monitor record ID",
+      "touch": "brand controls meet 44px minimum",
+      "status": "pass"
+    },
+    {
+      "id": "barangay-scoped-civic-domains",
+      "from": "BetterBarangay",
+      "to": "Statistics / Projects & Budget / Accountability / Civic Map",
+      "return": "Barangay-aware links and profile navigation",
+      "identity": "barangay slug in query scope",
+      "touch": "profile actions and scoped controls meet 44px minimum",
+      "status": "pass"
+    },
+    {
+      "id": "makati-external-civic-context",
+      "from": "Statistics or Projects & Budget",
+      "to": "BetterGov national context",
+      "return": "external / outside BetterMakati control",
+      "identity": "curated ecosystem resource",
+      "touch": "shared external relationship control meets 44px minimum",
+      "status": "pass",
+      "exception": "This is intentionally one-way. BetterGov is context, not evidence for a Makati-specific fact, and BetterMakati cannot guarantee a reverse link from an external site."
+    }
+  ],
+  "boundedExceptions": [
+    {
+      "id": "external-context-reverse-link",
+      "reason": "External ecosystem context is intentionally one-way and never treated as Makati-specific evidence."
+    },
+    {
+      "id": "calendar-projection-not-duplicate-record",
+      "reason": "The Calendar is a time index. Its item links back to the owning civic record instead of duplicating the full record."
+    },
+    {
+      "id": "rich-record-surfaces-remain-domain-specific",
+      "reason": "Reports, Integrity tables, Public Record context cards and Civic Asset relationship cards keep richer layouts rather than being forced into the compact relationship component."
+    }
+  ],
+  "closure": {
+    "w6_4a": "complete",
+    "w6_4b": "complete",
+    "w6_4c": "complete",
+    "w6_4d": "complete",
+    "w6_4e": "complete",
+    "w6_4f": "complete",
+    "wave6_4": "complete"
+  }
+}
