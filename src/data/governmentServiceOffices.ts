@@ -17,6 +17,18 @@ export interface GovernmentServiceOffice {
 
 export const governmentServiceOffices: GovernmentServiceOffice[] = [
   {
+    id: 'makati-district-1-public-assistance',
+    name: 'Makati District 1 Office — Public Assistance',
+    agency: 'Office of the Representative, Makati 1st District',
+    scope: 'In Makati',
+    address: '9221 Pateros St., Barangay Valenzuela, Makati City',
+    barangay: 'Valenzuela',
+    sourceUrl: 'https://www.facebook.com/share/p/19qKvhrw9E/',
+    mapsQuery: '9221 Pateros St Barangay Valenzuela Makati City',
+    note:
+      'The September 2026 Public Assistance Desk post says residents of Barangays Valenzuela and Olympia may submit documents at this district office every Wednesday. Confirm current requirements and office availability before visiting.',
+  },
+  {
     id: 'sss-makati-gil-puyat',
     name: 'SSS Makati – Gil Puyat',
     agency: 'Social Security System',
