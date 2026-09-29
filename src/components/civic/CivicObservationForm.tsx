@@ -81,7 +81,7 @@ export default function CivicObservationForm({
     }
 
     setStatus('submitting');
-    setMessage('');
+    setMessage('Saving your observation…');
     setTrackingUrl('');
     setFallbackUrl('');
 
@@ -279,9 +279,9 @@ export default function CivicObservationForm({
             </label>
           </div>
 
-          {status !== 'idle' && status !== 'submitting' && (
+          {status !== 'idle' && (
             <div
-              role="status"
+              role={status === 'error' ? 'alert' : 'status'}
               className={
                 status === 'success'
                   ? 'mt-5 rounded-xl border border-success-200 bg-success-50 p-4 text-sm text-success-900'
@@ -299,7 +299,7 @@ export default function CivicObservationForm({
                       href={trackingUrl}
                       target="_blank"
                       rel="noreferrer"
-                      className="mt-2 block font-bold underline underline-offset-2"
+                      className="mt-2 inline-flex min-h-11 items-center font-bold underline underline-offset-2"
                     >
                       Open public observation <ExternalLink className="inline h-3.5 w-3.5" />
                     </a>
@@ -309,7 +309,7 @@ export default function CivicObservationForm({
                       href={fallbackUrl}
                       target="_blank"
                       rel="noreferrer"
-                      className="mt-2 block font-bold underline underline-offset-2"
+                      className="mt-2 inline-flex min-h-11 items-center font-bold underline underline-offset-2"
                     >
                       Continue on GitHub <ExternalLink className="inline h-3.5 w-3.5" />
                     </a>
