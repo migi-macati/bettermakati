@@ -73,6 +73,7 @@ function App() {
             </a>
             <Navbar />
             <main id="main-content" tabIndex={-1} className="flex-grow">
+              <ScrollToTop />
               <PageBoundary>
                 <Suspense
                   fallback={
@@ -184,7 +185,6 @@ function App() {
 
                     <Route path="*" element={<NotFound />} />
                   </Routes>
-                  <ScrollToTop />
                 </Suspense>
               </PageBoundary>
             </main>
