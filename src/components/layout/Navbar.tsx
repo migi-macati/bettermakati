@@ -268,7 +268,7 @@ export default function Navbar() {
               })}
 
               {preferredBarangay && (
-                <div className="relative ml-2 rounded-full focus-within:ring-2 focus-within:ring-primary-700 focus-within:ring-offset-2">
+                <div className="relative ml-2 hidden rounded-full focus-within:ring-2 focus-within:ring-primary-700 focus-within:ring-offset-2 2xl:block">
                   <div className="pointer-events-none inline-flex min-h-11 items-center gap-1.5 rounded-full border border-secondary-200 bg-secondary-50 px-3 text-sm font-extrabold text-primary-900">
                     <MapPin className="h-4 w-4 text-secondary-800" aria-hidden="true" />
                     Better{preferredBarangay.name.replace(/\s+/g, '')}
@@ -313,7 +313,7 @@ export default function Navbar() {
                   aria-label={
                     'Open Better' + preferredBarangay.name.replace(/\s+/g, '')
                   }
-                  className="flex h-11 w-11 items-center justify-center rounded-lg text-secondary-800 hover:bg-secondary-50"
+                  className="hidden h-11 w-11 items-center justify-center rounded-lg text-secondary-800 hover:bg-secondary-50 sm:flex"
                 >
                   <MapPin className="h-5 w-5" aria-hidden="true" />
                 </Link>
