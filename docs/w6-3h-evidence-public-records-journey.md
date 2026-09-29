@@ -84,6 +84,8 @@ Browser coverage verifies:
 
 Home → Public Records → BetterMakati record detail → original publisher source / BetterMakati context.
 
+It also checks that a factual page can enter the evidence index through the shared Page Help source-record handoff.
+
 ## Closure condition
 
 W6-3h is closed when the repository guard, build/quality pipeline and browser journey test are green on the final commit.
