@@ -216,7 +216,7 @@ export default function CivicMap() {
                 to={withBarangayScope('/civic-map/report', barangay?.slug)}
                 className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-white px-4 py-2.5 text-sm font-bold text-primary-800 transition hover:bg-primary-50"
               >
-                Report a local problem <ArrowRight className="h-4 w-4" />
+                Report a local problem to BetterMakati <ArrowRight className="h-4 w-4" />
               </Link>
               <a
                 href="#places"
@@ -455,9 +455,9 @@ export default function CivicMap() {
               >
                 <Wrench className="mt-0.5 h-5 w-5 shrink-0 text-primary-700" />
                 <div>
-                  <div className="font-extrabold text-gray-950">Report something near me</div>
+                  <div className="font-extrabold text-gray-950">Report something near me to BetterMakati</div>
                   <p className="mt-1 text-sm leading-relaxed text-gray-600">
-                    Use your location or search for the affected place, then report the problem.
+                    Use your location or search for the affected place, then create a public BetterMakati case.
                   </p>
                 </div>
               </Link>
