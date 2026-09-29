@@ -411,7 +411,7 @@ export default function ReportArticle() {
             <Heading level={2}>Publication timeline</Heading>
             <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600">
               This report release is also indexed on the civic timeline. The
-              report remains the canonical analysis.
+              report remains the full analysis.
             </p>
             <div className="mt-4 flex flex-wrap gap-2">
               {timelineLinks.map(item =>
