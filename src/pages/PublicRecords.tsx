@@ -436,7 +436,7 @@ export default function PublicRecords() {
           <select
             value={category}
             onChange={event => setCategory(event.target.value)}
-            className="rounded-xl border border-gray-300 bg-white px-3 py-3 text-sm"
+            className="min-h-11 rounded-xl border border-gray-300 bg-white px-3 py-3 text-sm"
             aria-label="Filter records by category"
           >
             <option value="All">All record areas</option>
@@ -450,7 +450,7 @@ export default function PublicRecords() {
             onChange={event =>
               setSourceClass(event.target.value as 'All' | PublicRecordSourceClass)
             }
-            className="rounded-xl border border-gray-300 bg-white px-3 py-3 text-sm"
+            className="min-h-11 rounded-xl border border-gray-300 bg-white px-3 py-3 text-sm"
             aria-label="Filter records by source class"
           >
             {sourceClassOptions.map(item => (
@@ -458,7 +458,7 @@ export default function PublicRecords() {
             ))}
           </select>
 
-          <label className="flex items-center gap-2 rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm font-semibold text-gray-700">
+          <label className="flex min-h-11 items-center gap-2 rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm font-semibold text-gray-700">
             <input
               type="checkbox"
               checked={officialOnly}
@@ -469,7 +469,7 @@ export default function PublicRecords() {
         </div>
 
         <div className="mt-4 flex flex-wrap items-center justify-between gap-3 text-sm">
-          <div className="text-gray-600">
+          <div className="text-gray-600" role="status" aria-live="polite" aria-atomic="true">
             <strong className="text-gray-950">{visibleRecords.length}</strong> matching sources
             {watchedSources.length > 0 && (
               <>
@@ -486,7 +486,7 @@ export default function PublicRecords() {
                 setSourceClass('All');
                 setOfficialOnly(false);
               }}
-              className="font-bold text-primary-700 underline underline-offset-2"
+              className="inline-flex min-h-11 items-center font-bold text-primary-700 underline underline-offset-2"
             >
               Clear filters
             </button>
