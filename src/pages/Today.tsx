@@ -34,15 +34,13 @@ interface BriefArchiveEntry {
   periodEnd: string;
   publishedAt: string;
   recordIds: string[];
-  reviewSignals: unknown[];
-  failedChecks: unknown[];
 }
 
 interface BriefArchive {
   briefs?: BriefArchiveEntry[];
 }
 
-const todayReviewed = '28 September 2026';
+const todayReviewed = '29 September 2026';
 
 const weatherLabel = (code?: number) => {
   if (code === 0) return 'Clear';
@@ -335,15 +333,10 @@ export default function Today() {
                 Published {formatTimestamp(latestBrief.publishedAt)}
               </div>
             </div>
-            <div className="mt-4 flex flex-wrap gap-3 text-sm font-semibold text-gray-600">
-              <span>{latestBrief.reviewSignals.length} review signals</span>
-              <span>{latestBrief.failedChecks.length} failed checks</span>
-            </div>
             <div className="mt-5 flex flex-wrap gap-3">
               <Link to={briefArchiveHref(latestBrief.id)} className="brand-btn-primary">
                 Read this brief
               </Link>
-              <Link to="/briefs" className="brand-btn-secondary">Brief archive</Link>
             </div>
           </div>
         ) : (
@@ -351,6 +344,11 @@ export default function Today() {
             No published Civic Brief snapshot is available right now.
           </div>
         )}
+        <div className="mt-5">
+          <Link to="/briefs" className="brand-btn-secondary">
+            Open Civic Briefs
+          </Link>
+        </div>
       </Section>
 
       <Section className="bg-white">

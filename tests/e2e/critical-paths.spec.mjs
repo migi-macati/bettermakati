@@ -1659,9 +1659,10 @@ test('W6-3e Today is the synthesis door for current civic information', async ({
   await expect(page.getByText('failed checks in the latest monitor run', { exact: false })).toHaveCount(0);
 
   await expect(page.getByRole('link', { name: 'Open full calendar', exact: true })).toHaveAttribute('href', '/calendar');
-  await expect(page.getByRole('link', { name: 'Official activity', exact: true })).toHaveAttribute('href', '/city-monitor');
-  await expect(page.getByRole('link', { name: 'Recent coverage', exact: true })).toHaveAttribute('href', '/news');
-  await expect(page.getByRole('link', { name: /Emergency & city contacts/i })).toHaveAttribute('href', '/hotlines');
+  await expect(page.getByRole('link', { name: /^Official activity/ })).toHaveAttribute('href', '/city-monitor');
+  await expect(page.getByRole('link', { name: /^Recent coverage/ })).toHaveAttribute('href', '/news');
+  await expect(page.getByRole('link', { name: /^Emergency & city contacts/ })).toHaveAttribute('href', '/hotlines');
+  await expect(page.getByRole('link', { name: 'Open Civic Briefs', exact: true })).toHaveAttribute('href', '/briefs');
   await expect(page.getByRole('link', { name: 'Browse all Makati news', exact: true })).toHaveAttribute('href', '/news');
 
   for (const route of ['/city-monitor', '/briefs', '/news', '/calendar', '/live']) {

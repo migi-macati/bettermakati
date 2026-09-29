@@ -20,6 +20,7 @@ for (const marker of [
   'to="/city-monitor"',
   'to="/news"',
   'to="/hotlines"',
+  'Open Civic Briefs',
   'Browse all Makati news',
 ]) {
   if (!today.includes(marker)) problems.push('Today synthesis marker missing: ' + marker);
@@ -35,6 +36,8 @@ for (const forbidden of [
   'monitored sources reachable',
   'failed checks in the latest monitor run',
   'source-change signals in the latest monitor run',
+  'reviewSignals',
+  'failedChecks',
 ]) {
   if (today.includes(forbidden)) {
     problems.push('Today exposes platform-health diagnostics: ' + forbidden);
