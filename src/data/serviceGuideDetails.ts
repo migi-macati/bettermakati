@@ -1,3 +1,5 @@
+import { districtOnePublicAssistanceProgram } from './civicServiceAvailability';
+
 export type ServiceDetailVerification = 'verified' | 'partial';
 
 export interface ServiceRequirement {
@@ -32,9 +34,8 @@ const checked = '2026-09-20';
 export const serviceGuideDetails: Record<string, ServiceGuideDetail> = {
   'district-1-public-assistance-desk': {
     verification: 'verified',
-    sourceLabel:
-      'District One Public Assistance Desk schedule — September 28 to October 9, 2026',
-    sourceUrl: 'https://www.facebook.com/share/p/19qKvhrw9E/',
+    sourceLabel: districtOnePublicAssistanceProgram.source.label,
+    sourceUrl: districtOnePublicAssistanceProgram.source.url,
     lastVerified: '2026-09-29',
     whoMayAvail:
       'The source presents this as a Makati District One Public Assistance Desk. It specifically says residents of Barangays Valenzuela and Olympia may submit documents at the District Office on Wednesdays. The post does not publish a complete eligibility rule for every assistance category.',
