@@ -90,7 +90,7 @@ for (const forbiddenImport of [
 }
 
 if (
-  !calendar.includes('not an entertainment calendar') ||
+  !calendar.includes('does not fill gaps with entertainment listings') ||
   !calendar.includes('nativeCivicTimelineItems')
 ) {
   problems.push('Calendar product boundary changed.');
