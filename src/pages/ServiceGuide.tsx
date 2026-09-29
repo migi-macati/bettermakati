@@ -504,7 +504,7 @@ export default function ServiceGuide() {
 
           <div className="mt-6 grid gap-4 lg:grid-cols-2">
             <div className="rounded-2xl border border-primary-100 bg-white p-5">
-              <h3 className="font-extrabold text-gray-950">Assistance listed</h3>
+              <h3 className="font-extrabold text-gray-950">Requests/referrals listed</h3>
               <ul className="mt-3 space-y-2 text-sm leading-relaxed text-gray-700">
                 {temporaryAvailability.assistanceCategories.map(item => (
                   <li key={item}>• {item}</li>
