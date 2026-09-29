@@ -115,7 +115,7 @@ export default function HeritageMap({
               key={place.id}
               to={'/civic-map/' + place.id}
               aria-label={'Open ' + place.name}
-              className="group absolute grid h-14 w-14 -translate-x-1/2 -translate-y-1/2 place-items-center"
+              className="group absolute grid h-6 w-6 -translate-x-1/2 -translate-y-1/2 place-items-center"
               style={{ left: position.x + '%', top: position.y + '%' }}
             >
               <span className="grid h-8 min-w-8 place-items-center rounded-full border-2 border-white bg-primary-800 px-2 text-xs font-extrabold text-white shadow-md transition group-hover:bg-secondary-600">
