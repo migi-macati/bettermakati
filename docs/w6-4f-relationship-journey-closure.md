@@ -182,19 +182,40 @@ Complete.
 
 Complete.
 
-### W6-4d — contextual backlink QA
+### W6-4d — BetterGov / BetterLGU ecosystem links
 
 Complete.
 
-### W6-4e — relationship UX consistency
+The original ecosystem-link scope is closed in `docs/w6-4d-ecosystem-links.md`.
+
+The contextual-backlink QA completed during the same phase remains as additional hardening in `docs/w6-4d-contextual-backlink-qa.md`.
+
+### W6-4e — loop and redundancy audit
 
 Complete.
+
+The original loop/redundancy scope is closed in `docs/w6-4e-loop-redundancy-audit.md`.
+
+The relationship-UX consistency pass completed during the same phase remains as additional hardening in `docs/w6-4e-relationship-ux-consistency.md`.
 
 ### W6-4f — relationship journey closure
 
 Complete.
 
 **W6-4 is closed.**
+
+## Plan reconciliation
+
+The original W6-4 sequence is now fully represented:
+
+- 4a orphan/dead-end audit;
+- 4b civic relationship model;
+- 4c page-family cross-links;
+- 4d BetterGov / BetterLGU ecosystem links;
+- 4e loop / redundancy audit;
+- 4f relationship QA and closure.
+
+Contextual-backlink QA and relationship-UX consistency are retained as additional hardening rather than substitutes for the original 4d/4e scopes.
 
 ## Hosting status
 
