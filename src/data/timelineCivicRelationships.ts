@@ -178,13 +178,16 @@ export const timelineCivicNodeResolver: CivicIntelligenceNodeResolver =
       const item = timelineItemById.get(ref.id);
       if (!item) return undefined;
       const params = new URLSearchParams({
-        q: item.title,
         view: civicCalendarViewForItem(item),
       });
       return {
         ref,
         label: item.title,
-        href: '/calendar?' + params.toString(),
+        href:
+          '/calendar?' +
+          params.toString() +
+          '#timeline-item-' +
+          encodeURIComponent(item.id),
         owner: 'timeline',
       };
     }
