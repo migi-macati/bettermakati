@@ -626,7 +626,7 @@ export default function CivicAsset() {
             {relatedAccountability.length > 0 && (
               <div className="mt-6 border-t border-gray-200 pt-5">
                 <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
-                  Related public records
+                  Related accountability records
                 </div>
                 <div className="mt-3 space-y-3">
                   {relatedAccountability.map(({ relationship, entry }) => (
