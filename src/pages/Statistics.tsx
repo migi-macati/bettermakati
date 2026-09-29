@@ -505,7 +505,12 @@ export default function Statistics() {
             formatValue={people}
           />
 
-          <div className="overflow-x-auto rounded-2xl border border-gray-200 bg-white">
+          <div
+            className="scroll-region overflow-x-auto rounded-2xl border border-gray-200 bg-white"
+            role="region"
+            aria-label="Makati population trend table — horizontally scrollable"
+            tabIndex={0}
+          >
             <table className="w-full min-w-[420px] text-left">
               <caption className="sr-only">
                 Makati population and average annual population growth
