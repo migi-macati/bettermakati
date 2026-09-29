@@ -1,0 +1,132 @@
+{
+  "version": 1,
+  "reviewedOn": "2026-09-29",
+  "status": "complete-static-complex-components-live-browser-deferred",
+  "step": "W6-5d",
+  "title": "Complex components",
+  "scope": [
+    "TableWithToggle",
+    "raw horizontally scrollable civic data tables",
+    "PhotoCarousel",
+    "Featured Reports carousel",
+    "homepage capability selector",
+    "CivicAreaContextMap",
+    "CivicMapEmbed",
+    "HeritageMap",
+    "Calendar timeline results",
+    "dense Projects & Budget table filters"
+  ],
+  "resolvedFindings": [
+    {
+      "id": "table-toggle-semantics",
+      "status": "resolved",
+      "change": "Table/List controls now use type=button, aria-pressed and 44px minimum height; decorative icons are hidden from assistive technology."
+    },
+    {
+      "id": "table-toggle-debug-fallback",
+      "status": "resolved",
+      "change": "The user-facing debug dump was removed and replaced with a concise list-view-unavailable status."
+    },
+    {
+      "id": "keyboard-scrollable-dense-tables",
+      "status": "resolved",
+      "change": "TableWithToggle plus 14 raw dense tables in Statistics, Projects & Budget, Elections and Integrity now use named, focusable scroll regions."
+    },
+    {
+      "id": "scroll-region-focus",
+      "status": "resolved",
+      "change": "Shared scroll-region CSS provides visible keyboard focus, contained horizontal overscroll and stable scrollbar space."
+    },
+    {
+      "id": "dense-table-link-targets",
+      "status": "resolved",
+      "change": "Interactive links/buttons inside scroll-region tables inherit a 44px minimum target."
+    },
+    {
+      "id": "carousel-dot-targets",
+      "status": "resolved",
+      "change": "PhotoCarousel selector dots are now 44x44 and expose aria-pressed in addition to current-slide state."
+    },
+    {
+      "id": "carousel-source-targets",
+      "status": "resolved",
+      "change": "Photo fallback, credit and license links meet the 44px interaction-height baseline."
+    },
+    {
+      "id": "featured-carousel-handoff-targets",
+      "status": "resolved",
+      "change": "Featured Reports desktop/mobile View all links now meet the 44px interaction-height baseline."
+    },
+    {
+      "id": "homepage-barangay-selector-target",
+      "status": "resolved",
+      "change": "The Start here homepage barangay selector now uses the 44px baseline."
+    },
+    {
+      "id": "map-fallback-targets",
+      "status": "resolved",
+      "change": "Civic map full-map handoff and CivicAreaContextMap station/context links are touch sized."
+    },
+    {
+      "id": "heritage-map-marker-targets",
+      "status": "resolved",
+      "change": "Heritage map place markers expose a 44px link target while preserving the smaller visual pin."
+    },
+    {
+      "id": "calendar-result-announcement",
+      "status": "resolved",
+      "change": "Filtered Calendar timeline counts now have a polite live status without changing the visible heading."
+    },
+    {
+      "id": "budget-table-filter-controls",
+      "status": "resolved",
+      "change": "Office, budget-line and procurement search/filter controls tied to dense tables use the 44px baseline, with result counts announced."
+    }
+  ],
+  "intentionalHorizontalScroll": [
+    {
+      "surface": "ServiceSearch category chips",
+      "treatment": "Scroller itself is not an extra Tab stop because every chip is a 44px focusable button and focused controls can scroll into view."
+    },
+    {
+      "surface": "History navigation strip",
+      "treatment": "Scroller retains focusable child controls rather than adding a redundant focusable container."
+    },
+    {
+      "surface": "Mobility filter strips",
+      "treatment": "Scroller retains 44px focusable child controls and becomes wrapped/overflow-visible from sm upward."
+    }
+  ],
+  "mapAccessibility": {
+    "civicAreaContext": "Interactive OSM iframe has a title; layer buttons expose aria-pressed; textual area/mobility links remain below the map.",
+    "civicMapEmbed": "Interactive iframe has a title and a 44px external full-map fallback.",
+    "heritageMap": "Background iframe is deliberately pointer-disabled and aria-hidden; canonical place links are the accessible interactive map layer."
+  },
+  "carouselAccessibility": {
+    "photoCarousel": "Previous/next, selector and play/pause controls are >=44px; user interaction pauses rotation; reduced-motion disables rotation; manually changed slides announce their index.",
+    "featuredReports": "Previous/next and pause/resume controls are >=44px and use the shared reduced-motion/focus-aware carousel hook."
+  },
+  "bounded": [
+    {
+      "id": "actual-horizontal-overflow",
+      "status": "deferred-to-W6-5f",
+      "reason": "Only a real 320/390/768 viewport can prove which regions overflow and whether focus scrolling feels usable."
+    },
+    {
+      "id": "iframe-keyboard-behavior",
+      "status": "deferred-to-W6-5f",
+      "reason": "External OSM iframe keyboard behavior and browser focus transfer need runtime testing."
+    },
+    {
+      "id": "carousel-runtime-motion",
+      "status": "deferred-to-W6-5f",
+      "reason": "Actual pause-on-focus/hover and reduced-motion behavior must be sampled in a browser."
+    },
+    {
+      "id": "dense-data-screen-reader",
+      "status": "deferred-to-W6-5e/W6-5f",
+      "reason": "Source semantics do not replace manual table/list and map announcement sampling."
+    }
+  ],
+  "next": "W6-5e — Semantic & keyboard pass"
+}
