@@ -57,6 +57,12 @@ import {
 } from '../data/accountability';
 import { placesRelatedTo } from '../data/placeRegistry';
 import { integrityForAccountability } from '../data/integrityCivicRelationships';
+import { requireCivicEcosystemResource } from '../data/ecosystemResources';
+
+const nationalBudgetResource = requireCivicEcosystemResource('national-budget');
+const procurementResource = requireCivicEcosystemResource('philgeps');
+const transparencyResource = requireCivicEcosystemResource('transparency');
+const floodControlResource = requireCivicEcosystemResource('flood-control');
 
 const peso = (millions: number) => {
   const sign = millions < 0 ? '−' : '';
@@ -318,25 +324,25 @@ export default function ProjectsBudget() {
             {
               id: 'bettergov-2026-budget',
               label: '2026 national budget',
-              href: 'https://2026-budget.bettergov.ph/',
+              href: nationalBudgetResource.href,
               external: true,
             },
             {
               id: 'bettergov-procurement',
               label: 'Procurement browser',
-              href: 'https://transparency.bettergov.ph/procurement',
+              href: procurementResource.href,
               external: true,
             },
             {
               id: 'bettergov-transparency',
               label: 'Transparency records',
-              href: 'https://transparency.bettergov.ph/',
+              href: transparencyResource.href,
               external: true,
             },
             {
               id: 'bettergov-flood-control',
               label: 'Flood-control projects',
-              href: 'https://bettergov.ph/flood-control-projects',
+              href: floodControlResource.href,
               external: true,
             },
           ]}
