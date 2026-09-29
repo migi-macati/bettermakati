@@ -122,7 +122,7 @@ if (
 
 for (const marker of [
   '<div className="section-eyebrow">Indexed records</div>',
-  'Related records',
+  'Related civic records',
 ]) {
   if (!legislation.includes(marker)) {
     problems.push('Legislation cleanup marker missing: ' + marker);
