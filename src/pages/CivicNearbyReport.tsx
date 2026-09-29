@@ -300,7 +300,7 @@ export default function CivicNearbyReport() {
           </p>
         )}
         {(geoState === 'denied' || geoState === 'unavailable') && (
-          <div className="mt-4 flex gap-3 rounded-xl border border-warning-200 bg-warning-50 p-4 text-sm text-warning-950">
+          <div role="status" aria-live="polite" className="mt-4 flex gap-3 rounded-xl border border-warning-200 bg-warning-50 p-4 text-sm text-warning-950">
             <AlertCircle className="mt-0.5 h-5 w-5 shrink-0" />
             <p>
               {geoState === 'denied'
@@ -310,7 +310,7 @@ export default function CivicNearbyReport() {
           </div>
         )}
         {accuracyMessage && (
-          <div className="mt-4 flex gap-3 rounded-xl border border-warning-200 bg-warning-50 p-4 text-sm text-warning-950">
+          <div role="status" aria-live="polite" className="mt-4 flex gap-3 rounded-xl border border-warning-200 bg-warning-50 p-4 text-sm text-warning-950">
             <AlertCircle className="mt-0.5 h-5 w-5 shrink-0" />
             <p>{accuracyMessage}</p>
           </div>
@@ -400,12 +400,16 @@ export default function CivicNearbyReport() {
               resetMatch();
             }}
             placeholder="e.g., Poblacion Health Center, Makati Avenue, park"
-            className="w-full rounded-xl border border-gray-300 bg-white py-3 pl-12 pr-4"
+            className="min-h-11 w-full rounded-xl border border-gray-300 bg-white py-3 pl-12 pr-4"
           />
         </label>
 
         {query.trim() && (
-          <div className="mt-5 grid gap-3 md:grid-cols-2">
+          <>
+            <p className="sr-only" role="status" aria-live="polite" aria-atomic="true">
+              {searchResults.length} {searchResults.length === 1 ? 'matching place' : 'matching places'}
+            </p>
+            <div className="mt-5 grid gap-3 md:grid-cols-2">
             {searchResults.map(place => {
               const selected = selectedEntity?.id === place.id;
               return (
@@ -413,6 +417,7 @@ export default function CivicNearbyReport() {
                   key={place.id}
                   type="button"
                   onClick={() => chooseEntity(place)}
+                  aria-pressed={selected}
                   className={
                     selected
                       ? 'rounded-xl border border-primary-500 bg-primary-50 p-4 text-left ring-2 ring-primary-100'
@@ -436,7 +441,8 @@ export default function CivicNearbyReport() {
                 No civic registry record matches that search.
               </div>
             )}
-          </div>
+            </div>
+          </>
         )}
       </Section>
 
