@@ -1,0 +1,92 @@
+{
+  "version": 1,
+  "reviewedOn": "2026-09-29",
+  "status": "complete-static-semantic-keyboard-browser-suite-expanded",
+  "step": "W6-5e",
+  "title": "Semantic & keyboard pass",
+  "coverage": {
+    "substantiveRoutePatterns": 51,
+    "representativeAxeRoutes": 51,
+    "uncoveredPatterns": 0,
+    "wcagTags": [
+      "wcag2a",
+      "wcag2aa",
+      "wcag21a",
+      "wcag21aa",
+      "wcag22aa"
+    ],
+    "browserKeyboardRegressions": 6
+  },
+  "resolvedFindings": [
+    {
+      "id": "axe-route-coverage",
+      "status": "resolved",
+      "change": "Accessibility coverage expanded from 28 URLs to 51 representative URLs covering every substantive public route pattern, including dynamic detail-page representatives."
+    },
+    {
+      "id": "wcag22-automation-gap",
+      "status": "resolved",
+      "change": "Axe run set now includes WCAG 2.0 A/AA, WCAG 2.1 A/AA and axe-core's WCAG 2.2 AA tag."
+    },
+    {
+      "id": "route-semantic-baseline",
+      "status": "resolved",
+      "change": "Every accessibility route now asserts one main landmark, exactly one h1 inside main, no unnamed buttons, no images missing alt, and rejects accidental 404 coverage."
+    },
+    {
+      "id": "skip-link-keyboard",
+      "status": "resolved",
+      "change": "Browser regression verifies Skip to main content is the first keyboard stop and transfers focus to main."
+    },
+    {
+      "id": "desktop-menu-keyboard",
+      "status": "resolved",
+      "change": "Browser regression verifies Enter opens a desktop family menu and Escape closes it with focus returned to its toggle."
+    },
+    {
+      "id": "combobox-keyboard",
+      "status": "resolved",
+      "change": "Browser regression verifies ArrowDown changes aria-activedescendant while DOM focus stays on the search input, and Escape closes the popup without losing focus."
+    },
+    {
+      "id": "dense-table-keyboard",
+      "status": "resolved",
+      "change": "Browser regression verifies a named horizontal table region is directly keyboard focusable."
+    },
+    {
+      "id": "spa-path-focus",
+      "status": "resolved",
+      "change": "Browser regression verifies pathname navigation transfers focus to main content."
+    },
+    {
+      "id": "spa-fragment-focus",
+      "status": "resolved",
+      "change": "Cross-route fragment navigation now focuses the destination target; temporary tabindex is removed after blur when injected."
+    },
+    {
+      "id": "nonsemantic-logo-click",
+      "status": "resolved",
+      "change": "Removed redundant onClick behavior from the noninteractive BrandMark wrapper."
+    },
+    {
+      "id": "breadcrumb-targets",
+      "status": "resolved",
+      "change": "Shared breadcrumb links remain semantic navigation and now meet the 44px interaction-height baseline."
+    }
+  ],
+  "preservedStrengths": [
+    "Suspense loading state retains role=status.",
+    "PageBoundary retains error/alert semantics.",
+    "Breadcrumbs retain nav + aria-label and aria-current.",
+    "Navbar retains aria-expanded/aria-controls and Escape behavior.",
+    "Search retains combobox/listbox/option semantics.",
+    "ScrollToTop preserves same-page fragment behavior while improving cross-route focus."
+  ],
+  "manualLimits": [
+    "Axe does not establish full WCAG 2.2 AA conformance.",
+    "Screen-reader announcement quality and reading order still require manual sampling.",
+    "Focus visibility, clipping and virtual-keyboard behavior still require device/browser QA.",
+    "The browser suite can only execute when CI/current build infrastructure is available."
+  ],
+  "next": "W6-5f — Device & browser pass"
+}
