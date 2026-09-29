@@ -72,7 +72,7 @@ function App() {
               Skip to main content
             </a>
             <Navbar />
-            <main id="main-content" tabIndex={-1} className="flex-grow">
+            <main id="main-content" tabIndex={-1} className="min-w-0 flex-grow">
               <ScrollToTop />
               <PageBoundary>
                 <Suspense
