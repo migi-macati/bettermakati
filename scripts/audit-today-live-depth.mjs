@@ -11,11 +11,13 @@ const problems = [];
 
 for (const marker of [
   "fetch('/civic-briefs.json'",
-  "fetch('/city-monitor-source-history.json'",
-  "fetch('/city-monitor-source-state.json'",
   "fetch('/api/news')",
+  '<CivicTimelinePreview',
+  'Live conditions & current sources',
+  'to="/city-monitor"',
+  'to="/live"',
+  'to="/hotlines"',
   'Latest published brief',
-  'Current conditions',
   'Choose my barangay',
 ]) {
   if (!today.includes(marker)) {
@@ -62,9 +64,9 @@ if (!todayAudit) {
     'barangay-preference',
     'weather-freshness',
     'latest-civic-brief',
-    'city-monitor-health',
+    'city-monitor-handoff',
     'news-separation',
-    'events-and-hotlines',
+    'civic-timeline-and-hotlines',
   ]) {
     if (!todayAudit.checks?.includes(check)) {
       problems.push('/today page audit is missing check: ' + check);

@@ -1350,9 +1350,10 @@ test('Elections provides downloadable local, barangay and historical datasets', 
 test('Today in Makati combines current and validated layers', async ({ page }) => {
   await page.goto(baseURL + '/today');
   await expect(page.getByRole('heading', { level: 1, name: 'Today in Makati' })).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Current conditions' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'What’s next in Makati' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Live conditions & current sources' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Latest published brief' })).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'City Monitor' })).toBeVisible();
+  await expect(page.getByRole('link', { name: /^Official activity/ })).toHaveAttribute('href', '/city-monitor');
   await expect(page.getByLabel('Choose my barangay')).toBeVisible();
 });
 

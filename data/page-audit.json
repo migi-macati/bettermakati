@@ -225,20 +225,20 @@
     "path": "/today",
     "label": "Today in Makati",
     "status": "reviewed",
-    "reviewedAt": "2026-09-24",
+    "reviewedAt": "2026-09-29",
     "checks": [
       "barangay-preference",
       "weather-freshness",
       "latest-civic-brief",
-      "city-monitor-health",
+      "city-monitor-handoff",
       "news-separation",
-      "events-and-hotlines",
+      "civic-timeline-and-hotlines",
       "emergency-routing"
     ],
     "gaps": [
       "Weather, news and published civic feeds depend on upstream availability and can refresh at different times.",
       "Barangay context is currently a browser-saved preference; it does not infer or require the user's precise location.",
-      "Today surfaces the latest published Civic Brief and City Monitor status but does not treat raw news headlines or source-change signals as validated government activity."
+      "Today prioritizes canonical Civic Timeline records and published Civic Briefs, while City Monitor and Live Makati retain source-health and monitoring diagnostics."
     ]
   },
   {
