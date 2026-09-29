@@ -63,6 +63,7 @@ export const civicCalendarActionabilityOptions: Array<{
   { id: 'action-required', label: 'Action required' },
   { id: 'participation-opportunity', label: 'Participation opportunity' },
   { id: 'service-impact', label: 'Service impact' },
+  { id: 'service-available', label: 'Service available' },
   { id: 'information-only', label: 'Information only' },
 ];
 
@@ -143,7 +144,13 @@ export const civicCalendarTopicForKind = (
   ) {
     return 'publications-data';
   }
-  if (kind === 'deadline' || kind === 'service-change') return 'services';
+  if (
+    kind === 'deadline' ||
+    kind === 'service-change' ||
+    kind === 'service-availability'
+  ) {
+    return 'services';
+  }
   return 'advisories';
 };
 
