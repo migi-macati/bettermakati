@@ -1,3 +1,5 @@
+import { districtOnePublicAssistanceProgram } from './civicServiceAvailability';
+
 export type ServiceLevel = 'City' | 'Barangay' | 'National';
 
 export type ServiceType =
@@ -47,6 +49,11 @@ export interface ServiceDirectoryItem {
   keywords: string;
   featured?: boolean;
   nationalIntegration?: NationalServiceIntegration;
+  availabilityWindow?: {
+    startsOn: string;
+    endsOn: string;
+    label: string;
+  };
 }
 
 const makatiPermits =
@@ -2444,6 +2451,31 @@ export const serviceDirectory: ServiceDirectoryItem[] = [
     keywords: 'senior pwd medicine distribution prescription hemes hems makati action center pharmacy',
   },
 
+  {
+    id: districtOnePublicAssistanceProgram.serviceId,
+    title: districtOnePublicAssistanceProgram.title,
+    category: districtOnePublicAssistanceProgram.category,
+    level: districtOnePublicAssistanceProgram.level,
+    type: districtOnePublicAssistanceProgram.type,
+    agency: districtOnePublicAssistanceProgram.agency,
+    description:
+      districtOnePublicAssistanceProgram.description +
+      ' Scheduled September 28–October 9, 2026, 8:00 AM–3:00 PM at rotating District 1 barangay locations.',
+    href: districtOnePublicAssistanceProgram.source.url,
+    sourceUrl: districtOnePublicAssistanceProgram.source.url,
+    keywords: [
+      'public assistance desk district one district 1 congressional assistance',
+      'medical assistance medicines laboratory mobility aid hospital bill unpaid bills',
+      'burial assistance educational assistance college guarantee letter GL',
+      'Tejeros San Isidro Poblacion Palanan La Paz Pio del Pilar Carmona Kasilawan Santa Cruz Bangkal Singkamas Valenzuela Olympia',
+      'September 28 29 30 October 1 2 5 6 7 8 9 2026',
+    ].join(' '),
+    availabilityWindow: {
+      startsOn: districtOnePublicAssistanceProgram.scheduleWindow.start,
+      endsOn: districtOnePublicAssistanceProgram.scheduleWindow.end,
+      label: 'September 28–October 9, 2026',
+    },
+  },
   {
     id: 'comelec-voter-services',
     title: 'COMELEC voter services',
