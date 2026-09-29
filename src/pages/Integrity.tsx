@@ -344,7 +344,7 @@ export default function Integrity() {
             <div className="flex flex-wrap items-center gap-3">
               <Link
                 to="/projects-budget#procurement"
-                className="text-sm font-bold text-primary-700 underline"
+                className="inline-flex min-h-11 items-center text-sm font-bold text-primary-700 underline underline-offset-2"
               >
                 Open procurement table
               </Link>
@@ -355,7 +355,7 @@ export default function Integrity() {
                     href={item.node.href}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-sm font-bold text-primary-700 underline"
+                    className="inline-flex min-h-11 items-center text-sm font-bold text-primary-700 underline underline-offset-2"
                   >
                     {item.node.label}
                     <ExternalLink className="ml-1 inline h-3.5 w-3.5" />
@@ -434,7 +434,7 @@ export default function Integrity() {
                                       <Link
                                         key={item.relationship.id}
                                         to={item.node.href}
-                                        className="text-xs font-bold text-primary-700 underline underline-offset-2"
+                                        className="inline-flex min-h-11 items-center text-xs font-bold text-primary-700 underline underline-offset-2"
                                       >
                                         {item.node.owner === 'accountability'
                                           ? 'Accountability record'
@@ -625,7 +625,7 @@ export default function Integrity() {
             </div>
             <Link
               to="/accountability?type=audit"
-              className="text-sm font-bold text-primary-700 underline"
+              className="inline-flex min-h-11 items-center text-sm font-bold text-primary-700 underline underline-offset-2"
             >
               Open Accountability audit ledger
             </Link>
@@ -750,7 +750,7 @@ export default function Integrity() {
                           {publicRecord && (
                             <Link
                               to={'/records/' + publicRecord.id}
-                              className="text-sm font-bold text-primary-700 underline"
+                              className="inline-flex min-h-11 items-center text-sm font-bold text-primary-700 underline underline-offset-2"
                             >
                               Public record
                             </Link>
@@ -763,7 +763,7 @@ export default function Integrity() {
                         <Link
                           key={item.relationship.id}
                           to={item.node.href}
-                          className="text-sm font-bold text-primary-700 underline"
+                          className="inline-flex min-h-11 items-center text-sm font-bold text-primary-700 underline underline-offset-2"
                         >
                           {item.node.owner === 'accountability'
                             ? 'Accountability record'
@@ -776,7 +776,7 @@ export default function Integrity() {
                         <Link
                           key={item.relationship.id}
                           to={item.node.href}
-                          className="text-sm font-bold text-secondary-900 underline"
+                          className="inline-flex min-h-11 items-center text-sm font-bold text-secondary-900 underline underline-offset-2"
                         >
                           Analysis: {item.node.label}
                         </Link>
