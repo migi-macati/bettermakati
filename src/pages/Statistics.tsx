@@ -512,7 +512,7 @@ export default function Statistics() {
             tabIndex={0}
           >
             <table className="w-full min-w-[420px] text-left">
-              <caption className="sr-only">
+              <caption className="sr-only whitespace-normal break-all">
                 Makati population and average annual population growth
               </caption>
               <thead className="bg-gray-50">
