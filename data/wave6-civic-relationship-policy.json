@@ -1,0 +1,114 @@
+{
+  "id": "wave6-civic-relationship-policy",
+  "version": 1,
+  "adoptedOn": "2026-09-29",
+  "purpose": "Define which cross-domain civic relationships BetterMakati may store or render during W6-4, and the evidence needed to justify them.",
+  "requiredNodeTypes": [
+    "indicator",
+    "budget-record",
+    "project",
+    "accountability-record",
+    "legislation-record",
+    "official",
+    "election-record",
+    "report",
+    "timeline-item",
+    "barangay",
+    "place",
+    "service",
+    "public-record",
+    "ecosystem-resource"
+  ],
+  "requiredOwners": [
+    "statistics",
+    "budgets",
+    "accountability",
+    "legislation",
+    "officials",
+    "elections",
+    "reports",
+    "timeline",
+    "barangays",
+    "place-registry",
+    "services",
+    "public-records",
+    "ecosystem"
+  ],
+  "principles": [
+    "Canonical domain modules own labels, URLs, dates, amounts, status and source payloads; the relationship layer stores references and relationship evidence only.",
+    "A stored edge must explain a plausible civic question or continuation, not merely increase internal link count.",
+    "Reverse navigation is derived from one stored edge; the reverse edge is never duplicated.",
+    "A relationship that attributes responsibility, funding, authorship, effect or geography must be supported by explicit canonical data or source-backed evidence.",
+    "Curated BetterGov or BetterLGU links are continuation or comparison context, never evidence for a Makati-specific claim."
+  ],
+  "allowedPatterns": [
+    {
+      "from": "timeline-item",
+      "to": ["legislation-record", "accountability-record", "report", "indicator", "public-record", "service", "barangay", "place", "election-record"],
+      "allowedKinds": ["chronicles"],
+      "evidenceBasis": ["canonical-id", "explicit-geography"],
+      "rule": "Timeline items may point back to their canonical owner and explicit scoped geography; chronology alone does not create relationships."
+    },
+    {
+      "from": "official",
+      "to": ["election-record"],
+      "allowedKinds": ["context-for", "related-as-stated"],
+      "evidenceBasis": ["canonical-id", "official-cross-reference", "source-stated"],
+      "rule": "Election relationships require exact official/result identity. Do not infer legislative sponsorship, votes, procurement responsibility or project ownership from office alone."
+    },
+    {
+      "from": "budget-record",
+      "to": ["project", "accountability-record"],
+      "allowedKinds": ["funds", "context-for"],
+      "evidenceBasis": ["canonical-id", "official-cross-reference", "source-stated"],
+      "rule": "Budget-to-project links require an exact program/project identity, appropriation reference or explicit source statement."
+    },
+    {
+      "from": "legislation-record",
+      "to": ["service", "barangay", "place", "project", "accountability-record", "public-record"],
+      "allowedKinds": ["applies-to", "affects", "authorizes", "funds", "evidence-for"],
+      "evidenceBasis": ["official-cross-reference", "source-stated", "canonical-id", "shared-canonical-owner"],
+      "rule": "Legislation relationships must come from recorded civic relationships, lifecycle evidence or exact source identity."
+    },
+    {
+      "from": "report",
+      "to": ["indicator", "legislation-record", "place", "project", "accountability-record"],
+      "allowedKinds": ["synthesizes"],
+      "evidenceBasis": ["declared-analysis-input"],
+      "rule": "A report may relate only to canonical records explicitly declared in its evidence references."
+    },
+    {
+      "from": "indicator",
+      "to": ["barangay"],
+      "allowedKinds": ["context-for"],
+      "evidenceBasis": ["explicit-geography"],
+      "rule": "Citywide statistics are not attributed to a barangay or place unless the underlying observation is explicitly reconciled to that geography."
+    },
+    {
+      "from": "place",
+      "to": ["barangay"],
+      "allowedKinds": ["located-in"],
+      "evidenceBasis": ["canonical-id", "explicit-geography", "source-stated"],
+      "rule": "Place geography must use canonical registry geography or source-backed location evidence."
+    },
+    {
+      "from": "public-record",
+      "to": ["legislation-record", "accountability-record", "report"],
+      "allowedKinds": ["source-for", "evidence-for", "documents"],
+      "evidenceBasis": ["shared-canonical-owner", "canonical-id", "official-cross-reference"],
+      "rule": "Source relationships use exact canonical identity such as a stored record ID or exact shared source URL."
+    }
+  ],
+  "forbiddenInference": [
+    "title or keyword similarity",
+    "person-name similarity without a canonical ID",
+    "same district or same barangay without an explicit geographic relationship",
+    "chronological proximity",
+    "same broad topic",
+    "office held as proof of authorship, vote, responsibility or control",
+    "citywide statistic as proof about a specific place or barangay",
+    "budget category as proof that a specific project was funded",
+    "external ecosystem page as proof of a Makati-specific fact"
+  ],
+  "renderingRuleForW64c": "Page-family cross-links should answer the strongest next civic question first and should not render generic link dumps when no evidence-backed relationship exists."
+}
