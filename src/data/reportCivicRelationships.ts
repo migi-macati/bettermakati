@@ -1,5 +1,6 @@
 import { accountabilityEntries } from './accountability';
 import { cityIndicatorById } from './cityIndicators';
+import { statisticsHrefByIndicatorId } from './statisticsCivicRelationships';
 import {
   createCivicIntelligenceRelationshipIndex,
   civicIntelligenceRefKey,
@@ -128,7 +129,7 @@ export const reportCivicNodeResolver: CivicIntelligenceNodeResolver =
       return {
         ref,
         label: indicator.title,
-        href: '/statistics',
+        href: statisticsHrefByIndicatorId[ref.id] ?? '/statistics',
         owner: 'statistics',
       };
     }
