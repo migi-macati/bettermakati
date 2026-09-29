@@ -632,7 +632,12 @@ export default function CivicAsset() {
                   {relatedAccountability.map(({ relationship, entry }) => (
                     <Link
                       key={entry.id}
-                      to={'/accountability#' + entry.id}
+                      to={
+                        '/accountability?type=' +
+                        encodeURIComponent(entry.type) +
+                        '#' +
+                        entry.id
+                      }
                       className="block rounded-xl border border-primary-100 bg-white p-4 hover:border-primary-300"
                     >
                       <div className="font-extrabold text-gray-950">
