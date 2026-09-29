@@ -123,7 +123,7 @@ export default function CivicDomainTimelinePreview({
                   {item.summary}
                 </p>
                 <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
-                  Open canonical record
+                  Open record
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </span>
               </Link>
@@ -132,8 +132,7 @@ export default function CivicDomainTimelinePreview({
         </div>
 
         <p className="mt-4 text-xs leading-relaxed text-gray-500">
-          These are time-indexed views of canonical domain records. The Calendar
-          does not create a second copy of the underlying record.
+          These dates come from the same underlying civic records shown elsewhere on BetterMakati.
         </p>
       </div>
     </section>
