@@ -72,7 +72,7 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
                 <Link
                   to={item.href}
                   className={
-                    'transition-colors duration-200 ' +
+                    'inline-flex min-h-11 items-center transition-colors duration-200 ' +
                     (isDark ? 'hover:text-white' : 'hover:text-primary-600')
                   }
                 >
