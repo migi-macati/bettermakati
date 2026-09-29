@@ -16,12 +16,14 @@ const actionCenterSource =
 
 const contactCards = [
   {
+    id: 'makati-city-hall',
     title: 'Makati City Hall',
     icon: Building2,
     href: 'https://www.makati.gov.ph/',
     lines: ['8870-1000', 'makati@makati.gov.ph', 'Mon–Fri, 8:00 AM–5:00 PM'],
   },
   {
+    id: 'makati-action-center',
     title: 'Makati Action Center',
     icon: PhoneCall,
     href: actionCenterSource,
@@ -32,12 +34,14 @@ const contactCards = [
     ],
   },
   {
+    id: 'patient-relations',
     title: 'Patient Relations',
     icon: HeartPulse,
     href: actionCenterSource,
     lines: ['Community and Patient Relations Unit', '8899-8948'],
   },
   {
+    id: 'makati-drrmo',
     title: 'Makati DRRMO',
     icon: ShieldAlert,
     href: 'https://resilient.makati.gov.ph/',
@@ -96,7 +100,8 @@ export default function Hotlines() {
             return (
               <div
                 key={card.title}
-                className="rounded-2xl border border-[#e8dfd0] bg-white p-5 shadow-sm"
+                id={card.id}
+                className="scroll-mt-24 rounded-2xl border border-[#e8dfd0] bg-white p-5 shadow-sm"
               >
                 <Icon className="h-6 w-6 text-primary-700" />
                 <a
