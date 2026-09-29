@@ -158,7 +158,10 @@ const TimelineCard = ({ item }: { item: CivicTimelineItem }) => {
   const locations = geographyLinks(item);
 
   return (
-    <article className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+    <article
+      id={'timeline-item-' + item.id}
+      className="scroll-mt-28 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm"
+    >
       <div className="flex flex-wrap items-center gap-2 text-[11px] font-extrabold uppercase tracking-[0.08em]">
         <span className="rounded-full bg-primary-50 px-2.5 py-1 text-primary-800">
           {kindLabels[item.kind]}
