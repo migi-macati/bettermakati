@@ -170,12 +170,12 @@ export default function OfficialProfile() {
       </Section>
 
       <Section className="bg-white">
-        <div className="section-eyebrow">Public records</div>
+        <div className="section-eyebrow">Connected records</div>
         <Heading level={2}>Related records</Heading>
         <div className="mt-5 rounded-2xl border border-primary-100 bg-[#fffdf8] p-6">
           <Scale className="h-5 w-5 text-primary-700" />
           <p className="mt-3 max-w-4xl text-sm leading-relaxed text-gray-700">
-            Only records with an explicit canonical relationship to this profile are shown here.
+            Only records directly linked to this profile by the underlying public data are shown here.
           </p>
           <CivicRelationshipLinks
             label="Election record"
