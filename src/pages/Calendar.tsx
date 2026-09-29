@@ -43,7 +43,7 @@ import type {
   CivicTimelineItem,
 } from '../data/civicTimeline';
 
-const calendarReviewed = '2026-09-28';
+const calendarReviewed = '2026-09-29';
 
 const kindLabels: Record<CivicTimelineItem['kind'], string> = {
   deadline: 'Deadline',
