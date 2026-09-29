@@ -36,7 +36,7 @@ for (const marker of [
   'Open full calendar',
   'Now &amp; Next',
   'Recently Published',
-  'Raw source-change signals and unresolved review',
+  'Unverified source leads are not shown.',
 ]) {
   if (!preview.includes(marker)) {
     problems.push('Civic Timeline preview marker missing: ' + marker);
