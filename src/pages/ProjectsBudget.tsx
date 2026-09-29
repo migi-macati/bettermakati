@@ -264,29 +264,40 @@ export default function ProjectsBudget() {
         <LastReviewed date="2026-09-25" />
 
         {barangay && (
-          <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
-            <Link
-              to={withBarangayScope('/accountability', barangay.slug)}
-              className="rounded-2xl border border-primary-100 bg-white p-5 hover:border-primary-300"
-            >
-              <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
-                Local evidence
-              </div>
-              <div className="mt-1 font-extrabold text-gray-950">
-                Accountability records mentioning {barangay.name}
-              </div>
-            </Link>
-            <Link
-              to={withBarangayScope('/civic-map', barangay.slug)}
-              className="rounded-2xl border border-primary-100 bg-white p-5 hover:border-primary-300"
-            >
-              <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
-                Place-based view
-              </div>
-              <div className="mt-1 font-extrabold text-gray-950">
-                Infrastructure and reports in {barangay.name}
-              </div>
-            </Link>
+          <div className="mt-4 rounded-2xl border border-primary-100 bg-white p-5">
+            <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+              BetterBarangay context
+            </div>
+            <div className="mt-1 text-lg font-extrabold text-gray-950">
+              Citywide budget, local evidence for {barangay.name}
+            </div>
+            <p className="mt-2 text-sm leading-relaxed text-gray-600">
+              Budget totals, revenue, spending, office allocations, procurement tables and audit material on this page remain citywide unless a record explicitly identifies {barangay.name}. Use the local links below for geography-backed records and places.
+            </p>
+            <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <Link
+                to={withBarangayScope('/accountability', barangay.slug)}
+                className="rounded-xl border border-primary-100 bg-[#fffdf8] p-4 hover:border-primary-300"
+              >
+                <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+                  Local evidence
+                </div>
+                <div className="mt-1 font-extrabold text-gray-950">
+                  Accountability records tagged to {barangay.name}
+                </div>
+              </Link>
+              <Link
+                to={withBarangayScope('/civic-map', barangay.slug)}
+                className="rounded-xl border border-primary-100 bg-[#fffdf8] p-4 hover:border-primary-300"
+              >
+                <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+                  Place-based view
+                </div>
+                <div className="mt-1 font-extrabold text-gray-950">
+                  Infrastructure and reports in {barangay.name}
+                </div>
+              </Link>
+            </div>
           </div>
         )}
 
