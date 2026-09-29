@@ -120,7 +120,7 @@ for (const marker of [
 }
 
 for (const marker of [
-  'id: districtOnePublicAssistanceProgram.serviceId',
+  "id: 'district-1-public-assistance-desk'",
   'availabilityWindow:',
   'startsOn: districtOnePublicAssistanceProgram.scheduleWindow.start',
   'endsOn: districtOnePublicAssistanceProgram.scheduleWindow.end',
