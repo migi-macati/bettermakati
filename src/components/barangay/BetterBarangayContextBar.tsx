@@ -78,7 +78,7 @@ export default function BetterBarangayContextBar() {
               ? 'Open Barangay ' + barangay.name + ' homepage'
               : 'Open barangay directory'
           }
-          className="inline-flex min-h-11 shrink-0 items-center gap-1 rounded-lg px-2 text-sm font-bold text-white hover:bg-white/10 sm:px-3"
+          className="inline-flex min-h-11 shrink-0 items-center gap-1 rounded-lg px-2 text-sm font-bold text-white hover:bg-white/10 focus-visible:outline-secondary-300 sm:px-3"
         >
           <span>
             {barangay ? (
