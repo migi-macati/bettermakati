@@ -313,7 +313,7 @@ const Home: React.FC = () => {
       <section className="bg-[#f5f8f2] py-14 border-y border-primary-100/70">
         <div className="container px-5 md:px-6 lg:px-8">
           <div className="section-eyebrow">Makati at a glance</div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-5">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:gap-5 xl:grid-cols-4">
             {stats.map(stat => (
               <a
                 key={stat.label}
