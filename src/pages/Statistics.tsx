@@ -39,10 +39,15 @@ import {
 } from '../data/cityIndicators';
 import { statisticsRelatedRecords } from '../data/statisticsCivicRelationships';
 import { reportsForCivicRecord } from '../data/reportCivicRelationships';
+import { requireCivicEcosystemResource } from '../data/ecosystemResources';
 import {
   populationTrendDownload,
   populationTrendDownloadHref,
 } from '../data/statisticsExports';
+
+const nationalDataResource = requireCivicEcosystemResource('open-data');
+const visualizationResource = requireCivicEcosystemResource('data-research');
+const priceGuideResource = requireCivicEcosystemResource('price-guides');
 
 const people = (value: number) =>
   new Intl.NumberFormat('en-PH').format(value);
@@ -867,7 +872,7 @@ export default function Statistics() {
             </div>
             <div className="flex flex-wrap gap-3">
               <a
-                href="https://data.bettergov.ph/"
+                href={nationalDataResource.href}
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex min-h-11 items-center gap-1 rounded-xl bg-white px-4 py-2 text-sm font-bold text-primary-900"
@@ -875,7 +880,7 @@ export default function Statistics() {
                 Open national data <ArrowUpRight className="h-4 w-4" />
               </a>
               <a
-                href="https://visualizations.bettergov.ph/"
+                href={visualizationResource.href}
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex min-h-11 items-center gap-1 rounded-xl border border-white/30 px-4 py-2 text-sm font-bold text-white"
@@ -883,7 +888,7 @@ export default function Statistics() {
                 Visualizations <ArrowUpRight className="h-4 w-4" />
               </a>
               <a
-                href="https://price-guides.bettergov.ph/"
+                href={priceGuideResource.href}
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex min-h-11 items-center gap-1 rounded-xl border border-white/30 px-4 py-2 text-sm font-bold text-white"
