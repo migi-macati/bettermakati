@@ -1754,6 +1754,43 @@ test('W6-3g Participation distinguishes government action from BetterMakati cont
   await expect(page.locator('#makati-action-center')).toContainText('8870-1000');
 });
 
+test('W6-3h Evidence journey separates BetterMakati context from original sources', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+
+  await page.goto(baseURL + '/');
+  await expect(page.getByRole('link', { name: /^Public records/ })).toHaveAttribute('href', '/records');
+
+  await page.goto(baseURL + '/statistics');
+  await expect(page.getByRole('link', { name: 'Browse source records', exact: true })).toHaveAttribute('href', '/records');
+
+  await page.goto(baseURL + '/records');
+  await expect(page.getByRole('heading', { level: 1, name: 'Find the source.' })).toBeVisible();
+  await expect(page.getByText('BetterMakati evidence index', { exact: true })).toBeVisible();
+  await expect(page.getByText('Original evidence', { exact: true })).toBeVisible();
+
+  const firstRecord = page.getByRole('link', { name: 'View record', exact: true }).first();
+  await expect(firstRecord).toHaveAttribute('href', /\/records\/.+/);
+  const recordHref = await firstRecord.getAttribute('href');
+  expect(recordHref).toBeTruthy();
+
+  await page.goto(baseURL + recordHref);
+  await expect(page.getByText('BetterMakati catalog entry', { exact: true })).toBeVisible();
+
+  const originalSource = page.getByRole('link', { name: /^Open original source/ });
+  await expect(originalSource).toHaveAttribute('href', /^https?:\/\//);
+
+  await expect(
+    page.getByRole('heading', { level: 2, name: 'Where BetterMakati uses this source' })
+  ).toBeVisible();
+  const contextLink = page.getByRole('link', { name: /Open BetterMakati context/ }).first();
+  await expect(contextLink).toHaveAttribute('href', /^\//);
+
+  await expect(page.getByRole('link', { name: 'Browse the evidence index', exact: true })).toHaveAttribute(
+    'href',
+    '/records'
+  );
+});
+
 test('barangays page is a focused selection gateway', async ({ page }) => {
   await page.goto(baseURL + '/barangays');
   await expect(page.getByRole('heading', { level: 1 })).toContainText('Find your barangay');
