@@ -45,7 +45,7 @@ export default function BetterBarangayContextBar() {
       aria-label="BetterBarangay view"
     >
       <div className="container flex min-h-12 items-center justify-between gap-3 px-4 py-1.5">
-        <div className="relative min-w-0 rounded-lg focus-within:outline focus-within:outline-3 focus-within:outline-offset-2 focus-within:outline-secondary-300">
+        <div className="relative min-w-0 rounded-lg focus-within:ring-2 focus-within:ring-secondary-300 focus-within:ring-offset-2 focus-within:ring-offset-primary-900">
           <div className="pointer-events-none flex min-h-11 min-w-0 items-center gap-1.5">
             <span className="truncate text-base font-black tracking-tight sm:text-lg">
               <span className="text-secondary-300">Better</span>
