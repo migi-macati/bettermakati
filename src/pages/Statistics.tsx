@@ -22,6 +22,7 @@ import SectionNav from '../components/ui/SectionNav';
 import SharePage from '../components/ui/SharePage';
 import { HorizontalBarChart } from '../components/budget/BudgetCharts';
 import CityComparison from '../components/statistics/CityComparison';
+import CivicRelationshipLinks from '../components/civic/CivicRelationshipLinks';
 import { useBarangayScope } from '../hooks/useBarangayScope';
 import {
   barangays,
@@ -570,27 +571,22 @@ export default function Statistics() {
           {populationTrendDownload.provenance.lastReviewed}
         </div>
 
-        {populationAnalysisLinks.length > 0 && (
-          <div className="mt-5 rounded-2xl border border-primary-100 bg-primary-50 p-5">
-            <div className="text-xs font-extrabold uppercase tracking-[0.08em] text-primary-700">
-              Related analysis
-            </div>
-            <div className="mt-3 flex flex-wrap gap-2">
-              {populationAnalysisLinks.map(item =>
-                item.node ? (
-                  <Link
-                    key={item.node.href}
-                    to={item.node.href}
-                    className="inline-flex min-h-11 items-center gap-1 rounded-full border border-primary-200 bg-white px-4 text-sm font-bold text-primary-800 hover:border-primary-400"
-                  >
-                    {item.node.label}
-                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                  </Link>
-                ) : null
-              )}
-            </div>
-          </div>
-        )}
+        <CivicRelationshipLinks
+          label="Related analysis"
+          framed
+          className="mt-5"
+          items={populationAnalysisLinks.flatMap(item =>
+            item.node
+              ? [
+                  {
+                    id: item.relationship.id,
+                    label: item.node.label,
+                    href: item.node.href,
+                  },
+                ]
+              : []
+          )}
+        />
       </Section>
 
       <Section id="economy-work" className="border-y border-primary-100 bg-[#f5f8f2]">
