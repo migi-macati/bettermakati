@@ -129,20 +129,20 @@ export default function Navbar() {
           <div className="flex flex-wrap items-center gap-x-3">
             <a
               href="tel:911"
-              className="inline-flex min-h-11 items-center gap-1.5 font-semibold text-secondary-200 hover:text-white"
+              className="inline-flex min-h-11 items-center gap-1.5 font-semibold text-secondary-200 hover:text-white focus-visible:outline-secondary-300"
             >
               <PhoneCall className="h-3.5 w-3.5" aria-hidden="true" /> Emergency
               911
             </a>
             <a
               href="tel:+63288701000"
-              className="hidden min-h-11 items-center sm:inline-flex hover:text-secondary-200"
+              className="hidden min-h-11 items-center sm:inline-flex hover:text-secondary-200 focus-visible:outline-secondary-300"
             >
               City Hall: 8870-1000
             </a>
             <Link
               to="/hotlines"
-              className="inline-flex min-h-11 items-center underline underline-offset-2 hover:text-secondary-200"
+              className="inline-flex min-h-11 items-center underline underline-offset-2 hover:text-secondary-200 focus-visible:outline-secondary-300"
             >
               All hotlines
             </Link>
@@ -151,7 +151,7 @@ export default function Navbar() {
             href="https://www.makati.gov.ph/"
             target="_blank"
             rel="noreferrer"
-            className="hidden min-h-11 items-center gap-1 text-primary-100 hover:text-white sm:inline-flex"
+            className="hidden min-h-11 items-center gap-1 text-primary-100 hover:text-white sm:inline-flex focus-visible:outline-secondary-300"
           >
             Official Makati site{' '}
             <ExternalLink className="h-3 w-3" aria-hidden="true" />
