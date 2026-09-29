@@ -165,7 +165,7 @@ export default function CivicMap() {
       <section className="border-b border-primary-900 bg-primary-800 text-white">
         <div className="container px-5 py-12 md:px-6 md:py-16 lg:px-8">
           <div className="max-w-4xl">
-            <div className="mb-3 text-xs font-extrabold uppercase tracking-[0.12em] text-secondary-400 md:text-sm">
+            <div className="mb-3 text-xs font-extrabold uppercase tracking-[0.12em] text-secondary-200 md:text-sm">
               Civic Map
             </div>
             <h1 className="text-4xl font-extrabold tracking-tight text-white md:text-6xl">
