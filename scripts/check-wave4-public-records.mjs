@@ -68,8 +68,8 @@ for (const marker of [
   'src={record.url}',
   'Open original source',
   'record.contexts.map',
-  'Open related record',
-  'Where this source appears',
+  'Open BetterMakati context',
+  'Where BetterMakati uses this source',
 ]) {
   if (!detailPage.includes(marker)) {
     problems.push('Public Records detail/viewer marker missing: ' + marker);
@@ -139,5 +139,5 @@ if (problems.length) {
 }
 
 console.log(
-  'Wave 4 Public Records integration check passed: Statistics, Legislation, Integrity and Featured Report sources merge by exact URL into multi-context catalog entries; /records/:id provides source detail and PDF preview; record pages link back to matching catalog entries without fuzzy identity.'
+  'Wave 4 Public Records integration check passed: Statistics, Legislation, Integrity and Featured Report sources merge by exact URL into multi-context catalog entries; /records/:id distinguishes publisher evidence from BetterMakati context and retains PDF preview; record pages link back to matching catalog entries without fuzzy identity.'
 );
