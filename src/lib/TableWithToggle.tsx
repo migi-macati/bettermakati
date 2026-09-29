@@ -226,7 +226,7 @@ export const TableWithToggle = ({
               : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
           }`}
         >
-          <Table size={16} />
+          <Table size={16} aria-hidden="true" />
           Table
         </button>
         <button
@@ -235,11 +235,11 @@ export const TableWithToggle = ({
           aria-pressed={viewMode === 'list'}
           className={`inline-flex min-h-11 items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors ${
             viewMode === 'list'
-              ? 'bg-blue-600 text-white'
+              ? 'bg-primary-800 text-white'
               : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
           }`}
         >
-          <List size={16} />
+          <List size={16} aria-hidden="true" />
           List
         </button>
       </div>
