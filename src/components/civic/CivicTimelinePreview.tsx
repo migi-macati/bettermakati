@@ -20,6 +20,7 @@ const actionabilityLabel: Record<CivicTimelineItem['actionability'], string> = {
   'action-required': 'Action required',
   'participation-opportunity': 'Participation opportunity',
   'service-impact': 'Service impact',
+  'service-available': 'Service available',
   'information-only': 'Information only',
 };
 
