@@ -1,3 +1,5 @@
+import { findBarangay } from './barangays';
+import { placeRegistryById } from './placeRegistry';
 import {
   civicIntelligenceRefKey,
   createCivicIntelligenceRelationshipIndex,
@@ -187,7 +189,34 @@ export const timelineCivicNodeResolver: CivicIntelligenceNodeResolver =
       };
     }
 
-    return canonicalDescriptorByRefKey.get(civicIntelligenceRefKey(ref));
+    const canonical = canonicalDescriptorByRefKey.get(
+      civicIntelligenceRefKey(ref)
+    );
+    if (canonical) return canonical;
+
+    if (ref.type === 'barangay') {
+      const barangay = findBarangay(ref.id);
+      if (!barangay) return undefined;
+      return {
+        ref,
+        label: barangay.name,
+        href: '/barangays/' + barangay.slug,
+        owner: 'barangays',
+      };
+    }
+
+    if (ref.type === 'place') {
+      const place = placeRegistryById.get(ref.id);
+      if (!place) return undefined;
+      return {
+        ref,
+        label: place.name,
+        href: '/civic-map/' + place.id,
+        owner: 'place-registry',
+      };
+    }
+
+    return undefined;
   };
 
 for (const relationship of timelineCivicRelationships) {
