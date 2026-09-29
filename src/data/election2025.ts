@@ -342,6 +342,19 @@ const singleSeatOfficialMap = [
   },
 ] as const;
 
+
+export const election2025OfficialSlugByCandidateName = new Map<string, string>([
+  ...singleSeatOfficialMap.map(item => {
+    const race = election2025SingleSeatRaces.find(candidateRace => candidateRace.key === item.raceKey)!;
+    const winner = race.candidates.find(candidate => candidate.elected)!;
+    return [winner.name, item.officialSlug] as const;
+  }),
+  ...councilWinnerInputs.map(item => [item.name, item.officialSlug] as const),
+]);
+
+export const findElection2025OfficialSlug = (candidateName: string) =>
+  election2025OfficialSlugByCandidateName.get(candidateName);
+
 export interface OfficialElectionResult {
   officialSlug: string;
   raceLabel: string;
