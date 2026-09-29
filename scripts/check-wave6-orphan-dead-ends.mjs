@@ -17,7 +17,7 @@ if (audit.status !== 'complete') {
   problems.push('W6-4a audit status is not complete.');
 }
 
-const allRoutes = [...app.matchAll(/<Route\\s+path="([^"]+)"/g)].map(match => match[1]);
+const allRoutes = [...app.matchAll(/<Route\s+path="([^"]+)"/g)].map(match => match[1]);
 const compatibilityRoutes = new Set(
   (audit.routeInventory?.compatibilityRedirects ?? []).map(item => item.from)
 );
