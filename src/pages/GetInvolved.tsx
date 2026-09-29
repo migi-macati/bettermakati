@@ -22,7 +22,7 @@ const actionCards = [
   {
     type: 'proposal',
     title: 'Propose something',
-    description: 'Describe a civic problem, proposed change, evidence and trade-offs.',
+    description: 'Send a civic proposal for BetterMakati to document and follow publicly.',
     icon: MessagesSquare,
   },
   {
@@ -167,6 +167,23 @@ export default function GetInvolved() {
         <p className="mt-2 max-w-3xl text-gray-600">
           Choose what you want to send or do.
         </p>
+
+        <div className="mt-5 rounded-2xl border border-primary-200 bg-primary-50 p-5">
+          <div className="font-extrabold text-gray-950">
+            These forms are for BetterMakati contributions.
+          </div>
+          <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-700">
+            Submissions can be tracked publicly by BetterMakati. They are not automatically sent to the Makati City Government.
+          </p>
+          <div className="mt-4 flex flex-wrap gap-3">
+            <Link to="/participate" className="brand-btn-primary">
+              Back to participation choices
+            </Link>
+            <Link to="/hotlines#makati-action-center" className="brand-btn-secondary">
+              Need government action?
+            </Link>
+          </div>
+        </div>
 
         <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
           {actionCards.map(action => {
