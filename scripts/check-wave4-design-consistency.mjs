@@ -148,8 +148,8 @@ for (const marker of [
 }
 
 for (const marker of [
-  '<div className="section-eyebrow">Related records</div>',
-  '<Heading level={2}>Where this source appears</Heading>',
+  '<div className="section-eyebrow">BetterMakati context</div>',
+  '<Heading level={2}>Where BetterMakati uses this source</Heading>',
 ]) {
   if (!publicRecordDetail.includes(marker)) {
     problems.push('Public Record detail cleanup marker missing: ' + marker);
