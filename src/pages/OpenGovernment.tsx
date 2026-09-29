@@ -133,7 +133,7 @@ export default function OpenGovernment() {
         </div>
       </Section>
 
-      <Section className="bg-primary-950 text-white">
+      <Section className="bg-primary-900 text-white">
         <div className="section-eyebrow !text-secondary-200">The doctrine</div>
         <Heading level={2} className="!text-white">Five operating principles</Heading>
 
