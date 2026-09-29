@@ -37,6 +37,7 @@ import {
   civicAssetTypeLabels,
   placesByBarangay,
 } from '../data/placeRegistry';
+import { manilaDateKey } from '../data/civicTimeline';
 
 const normalize = (value: string) =>
   value
@@ -125,12 +126,7 @@ const Services: React.FC = () => {
     }
   }, [category, categoryData]);
 
-  const todayKey = new Intl.DateTimeFormat('en-CA', {
-    timeZone: 'Asia/Manila',
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  }).format(new Date());
+  const todayKey = manilaDateKey();
 
   const visibleDirectory = useMemo(() => {
     const query = normalize(directoryQuery);
