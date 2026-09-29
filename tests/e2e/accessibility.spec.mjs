@@ -65,6 +65,9 @@ const wcagTags = [
 const assertPageSemantics = async page => {
   await expect(page.locator('main#main-content')).toHaveCount(1);
   await expect(page.locator('main#main-content h1')).toHaveCount(1);
+  await expect(page.locator('main#main-content h1')).not.toContainText(
+    /We couldn’t find that page|We couldn't find that page/i
+  );
 
   const unnamedButtons = await page.locator('button').evaluateAll(buttons =>
     buttons.filter(button => {
@@ -164,4 +167,15 @@ test('dense horizontal table region is keyboard focusable and named', async ({ p
   });
   await region.focus();
   await expect(region).toBeFocused();
+});
+
+test('SPA pathname navigation moves focus to main content', async ({ page }) => {
+  await page.goto(baseURL + '/');
+
+  const services = page.getByRole('link', { name: 'Get a service', exact: true });
+  await services.focus();
+  await page.keyboard.press('Enter');
+
+  await expect(page).toHaveURL(baseURL + '/services');
+  await expect(page.locator('main#main-content')).toBeFocused();
 });
