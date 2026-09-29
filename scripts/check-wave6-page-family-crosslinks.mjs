@@ -87,7 +87,7 @@ requireMarkers('Reports', reportArticle, [
 ]);
 
 requireMarkers('Calendar', calendar, [
-  'Open canonical record',
+  'Open record',
   'geographyLinks',
   'Original source',
 ]);
