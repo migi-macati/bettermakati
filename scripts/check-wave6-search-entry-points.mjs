@@ -55,7 +55,7 @@ requireAll(notFound, '404 search recovery entry', [
 ]);
 
 requireAll(footer, 'Footer search entry', [
-  'const { barangay, preferredBarangay } = useBarangayScope();',
+  'const { preferredBarangay } = useBarangayScope();',
   "if (href === '/search' && preferredBarangay)",
   "withBarangayScope(href, preferredBarangay.slug)",
 ]);
