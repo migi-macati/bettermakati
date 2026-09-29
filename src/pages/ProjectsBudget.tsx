@@ -18,6 +18,7 @@ import LastReviewed from '../components/ui/LastReviewed';
 import SharePage from '../components/ui/SharePage';
 import SectionNav from '../components/ui/SectionNav';
 import CitizenSummary from '../components/ui/CitizenSummary';
+import CivicRelationshipLinks from '../components/civic/CivicRelationshipLinks';
 import OfficeBudgetDetail from '../components/budget/OfficeBudgetDetail';
 import {
   DonutChart,
@@ -308,45 +309,38 @@ export default function ProjectsBudget() {
           { label: 'Audit', href: '#audit' },
         ]} />
 
-        <div className="mt-5 rounded-2xl border border-primary-100 bg-white p-5">
-          <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
-            Related national records
-          </div>
-          <div className="mt-3 flex flex-wrap gap-x-5 gap-y-3 text-sm font-bold">
-            <a
-              href="https://2026-budget.bettergov.ph/"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-1 text-primary-700 underline underline-offset-2"
-            >
-              2026 national budget <ArrowUpRight className="h-3.5 w-3.5" />
-            </a>
-            <a
-              href="https://transparency.bettergov.ph/procurement"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-1 text-primary-700 underline underline-offset-2"
-            >
-              Procurement browser <ArrowUpRight className="h-3.5 w-3.5" />
-            </a>
-            <a
-              href="https://transparency.bettergov.ph/"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-1 text-primary-700 underline underline-offset-2"
-            >
-              Transparency records <ArrowUpRight className="h-3.5 w-3.5" />
-            </a>
-            <a
-              href="https://bettergov.ph/flood-control-projects"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-1 text-primary-700 underline underline-offset-2"
-            >
-              Flood-control projects <ArrowUpRight className="h-3.5 w-3.5" />
-            </a>
-          </div>
-        </div>
+        <CivicRelationshipLinks
+          label="National context"
+          tone="neutral"
+          framed
+          className="mt-5"
+          items={[
+            {
+              id: 'bettergov-2026-budget',
+              label: '2026 national budget',
+              href: 'https://2026-budget.bettergov.ph/',
+              external: true,
+            },
+            {
+              id: 'bettergov-procurement',
+              label: 'Procurement browser',
+              href: 'https://transparency.bettergov.ph/procurement',
+              external: true,
+            },
+            {
+              id: 'bettergov-transparency',
+              label: 'Transparency records',
+              href: 'https://transparency.bettergov.ph/',
+              external: true,
+            },
+            {
+              id: 'bettergov-flood-control',
+              label: 'Flood-control projects',
+              href: 'https://bettergov.ph/flood-control-projects',
+              external: true,
+            },
+          ]}
+        />
         <div className="mt-5 grid grid-cols-1 lg:grid-cols-2 gap-4">
         <Link
           to="/accountability#2025-medical-supplies-development-fund"
