@@ -6,7 +6,6 @@ import {
   ExternalLink,
   Newspaper,
   PhoneCall,
-  Rss,
   Settings2,
 } from 'lucide-react';
 import SEO from '../components/SEO';
