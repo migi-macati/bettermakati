@@ -273,7 +273,7 @@ export const integrityCivicNodeResolver: CivicIntelligenceNodeResolver =
       return {
         ref,
         label: record.title,
-        href: '/records',
+        href: '/records/' + record.id,
         owner: 'public-records',
       };
     }
