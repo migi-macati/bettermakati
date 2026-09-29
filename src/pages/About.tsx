@@ -10,6 +10,10 @@ import { Heading } from '../components/ui/Heading';
 import { Text } from '../components/ui/Text';
 import SEO from '../components/SEO';
 import LastReviewed from '../components/ui/LastReviewed';
+import { requireCivicEcosystemResource } from '../data/ecosystemResources';
+
+const betterGovHome = requireCivicEcosystemResource('bettergov-home');
+const betterLguDirectory = requireCivicEcosystemResource('betterlgu');
 
 export default function About() {
   return (
@@ -221,20 +225,20 @@ export default function About() {
             BetterMakati Status
           </a>
           <a
-            href="https://bettergov.ph/"
+            href={betterGovHome.href}
             target="_blank"
             rel="noreferrer"
             className="brand-btn-secondary"
           >
-            BetterGov <ExternalLink className="h-4 w-4" />
+            BetterGov ecosystem <ExternalLink className="h-4 w-4" />
           </a>
           <a
-            href="https://lgu.bettergov.ph/"
+            href={betterLguDirectory.href}
             target="_blank"
             rel="noreferrer"
             className="brand-btn-secondary"
           >
-            BetterLGU <ExternalLink className="h-4 w-4" />
+            Browse BetterLGU sites <ExternalLink className="h-4 w-4" />
           </a>
           <a
             href="https://www.openbayan.org/"
