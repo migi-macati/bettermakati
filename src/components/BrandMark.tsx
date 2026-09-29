@@ -12,7 +12,10 @@ export default function BrandMark({
   return (
     <Link
       to="/"
-      className="inline-flex min-h-11 items-center rounded-sm"
+      className={
+        'inline-flex min-h-11 items-center rounded-sm ' +
+        (inverse ? 'focus-visible:outline-secondary-300' : '')
+      }
       aria-label="BetterMakati home"
     >
       <img
