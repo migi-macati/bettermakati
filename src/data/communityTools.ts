@@ -41,7 +41,7 @@ export const communityTools: CommunityTool[] = [
   {
     id: 'civic-map',
     name: 'Civic Map',
-    summary: 'Rate public infrastructure, report non-emergency problems, suggest improvements and follow community cases.',
+    summary: 'Document public-place conditions, report non-emergency problems, suggest improvements and follow community cases.',
     status: 'Live',
     priority: 3.5,
     href: '/civic-map',
