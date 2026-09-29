@@ -2630,7 +2630,7 @@ test('W6-4a low-link surfaces keep a useful continuation', async ({ page }) => {
     page.getByRole('link', { name: 'Getting around Makati', exact: true })
   ).toHaveAttribute('href', '/mobility');
   await expect(
-    page.getByRole('link', { name: 'Explore Makati', exact: true })
+    page.locator('#main-content').getByRole('link', { name: 'Explore Makati', exact: true })
   ).toHaveAttribute('href', '/visit');
 
   await page.goto(baseURL + '/hotlines');
