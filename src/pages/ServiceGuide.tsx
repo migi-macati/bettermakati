@@ -414,6 +414,8 @@ export default function ServiceGuide() {
         ? 'Current schedule'
         : 'Past schedule'
     : undefined;
+  const temporaryCalendarView =
+    temporaryAvailabilityStatus === 'Past schedule' ? 'archive' : 'now-next';
 
   return (
     <>
@@ -530,7 +532,9 @@ export default function ServiceGuide() {
           <div className="mt-6 flex flex-wrap gap-3">
             <Link
               to={
-                '/calendar?topic=services&q=' +
+                '/calendar?view=' +
+                temporaryCalendarView +
+                '&topic=services&q=' +
                 encodeURIComponent(temporaryAvailability.title)
               }
               className="brand-btn-primary"
