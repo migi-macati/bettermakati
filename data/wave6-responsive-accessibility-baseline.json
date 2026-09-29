@@ -1,0 +1,332 @@
+{
+  "version": 1,
+  "reviewedOn": "2026-09-29",
+  "status": "complete-static-baseline-live-current-build-deferred",
+  "scope": {
+    "step": "W6-5a",
+    "title": "Responsive & accessibility baseline",
+    "purpose": "Establish the measurable global baseline, route/component risk inventory, device matrix and ownership for W6-5 before responsive or accessibility fixes are made."
+  },
+  "target": {
+    "accessibility": "WCAG 2.2 AA target; no compliance claim is made by this static baseline.",
+    "automatedBaseline": "Existing Axe browser coverage uses wcag2a, wcag2aa and wcag21aa tags; W6-5 must expand route coverage and decide how WCAG 2.2 criteria are covered by automation plus manual QA.",
+    "touch": "BetterMakati product baseline is at least 44px interaction height for primary and repeated touch controls; full-card links may satisfy the target through their padded clickable box.",
+    "reflow": "No whole-page horizontal scrolling at 320 CSS px. Local horizontal scrolling is allowed for dense tables or intentional chip/tab strips when the surrounding page remains usable.",
+    "keyboard": "All interactive functionality must remain keyboard reachable with visible focus and sensible focus return/order.",
+    "motion": "Reduced-motion preference must suppress or reduce non-essential animation and auto-rotation.",
+    "semantics": "Pages keep one primary main landmark, a usable skip link, accessible names for controls, and status/alert semantics for meaningful asynchronous state."
+  },
+  "deviceMatrix": [
+    {
+      "id": "narrow-mobile",
+      "viewport": "320x568",
+      "purpose": "WCAG reflow floor and smallest practical responsive stress case"
+    },
+    {
+      "id": "android-mobile",
+      "viewport": "390x844",
+      "purpose": "primary mobile interaction and touch-target pass"
+    },
+    {
+      "id": "tablet-portrait",
+      "viewport": "768x1024",
+      "purpose": "mid-breakpoint wrapping, navigation and form/table composition"
+    },
+    {
+      "id": "compact-landscape",
+      "viewport": "1024x768",
+      "purpose": "tablet/compact laptop landscape and breakpoint transitions"
+    },
+    {
+      "id": "desktop",
+      "viewport": "1440x900",
+      "purpose": "desktop navigation, keyboard menus, dense data and focus order"
+    }
+  ],
+  "globalPasses": [
+    {
+      "id": "skip-link-main",
+      "evidence": "App renders a Skip to main content link and one main#main-content landmark with tabIndex=-1.",
+      "owner": "App shell"
+    },
+    {
+      "id": "focus-visible",
+      "evidence": "Global focus-visible styling exists for links, buttons, inputs, selects, textareas and summaries.",
+      "owner": "src/index.css"
+    },
+    {
+      "id": "reduced-motion",
+      "evidence": "Global prefers-reduced-motion handling already exists.",
+      "owner": "src/index.css"
+    },
+    {
+      "id": "shared-touch-controls",
+      "evidence": "brand buttons and shared form inputs/selects/textareas have a 44px minimum height.",
+      "owner": "src/index.css"
+    },
+    {
+      "id": "desktop-mobile-nav-split",
+      "evidence": "Desktop navigation is deferred to xl and mobile navigation is used below xl, avoiding a compressed intermediate desktop menu.",
+      "owner": "Navbar"
+    },
+    {
+      "id": "nav-state-semantics",
+      "evidence": "Navbar submenu controls use aria-expanded/aria-controls, Escape closes menus and returns focus, and route changes close open navigation.",
+      "owner": "Navbar"
+    },
+    {
+      "id": "search-combobox",
+      "evidence": "Site search uses combobox/listbox/option semantics with keyboard navigation and active-descendant state.",
+      "owner": "ServiceSearch"
+    },
+    {
+      "id": "section-nav",
+      "evidence": "SectionNav wraps and uses 44px minimum-height internal anchors.",
+      "owner": "SectionNav"
+    },
+    {
+      "id": "map-layer-controls",
+      "evidence": "Civic area context map has a titled iframe and 44px layer toggles with aria-pressed.",
+      "owner": "CivicAreaContextMap"
+    }
+  ],
+  "findings": [
+    {
+      "id": "shell-utility-targets",
+      "severity": "high",
+      "ownerStep": "W6-5b",
+      "surface": "Navbar utility bar",
+      "finding": "Emergency, City Hall, Hotlines and official-site utility links do not consistently use the 44px product touch baseline.",
+      "evidence": "Top utility links have no explicit 44px minimum interaction height."
+    },
+    {
+      "id": "footer-targets",
+      "severity": "high",
+      "ownerStep": "W6-5b",
+      "surface": "Footer",
+      "finding": "Footer navigation and ecosystem links use min-h-9 (36px), while contact/social/legal links have no shared minimum target.",
+      "evidence": "Footer contains min-h-9 and plain inline links."
+    },
+    {
+      "id": "barangay-context-targets",
+      "severity": "medium",
+      "ownerStep": "W6-5b",
+      "surface": "BetterBarangay context bar",
+      "finding": "The visible edition control and homepage action use min-h-10 (40px), below BetterMakati’s 44px product baseline.",
+      "evidence": "Context bar uses min-h-10 for both visible control surfaces."
+    },
+    {
+      "id": "carousel-dot-targets",
+      "severity": "high",
+      "ownerStep": "W6-5d",
+      "surface": "PhotoCarousel",
+      "finding": "Photo-selection dot buttons use h-9/w-9 (36px). Attribution/fallback source links are also compact inline targets.",
+      "evidence": "Photo dot buttons are 36x36."
+    },
+    {
+      "id": "table-toggle-semantics",
+      "severity": "high",
+      "ownerStep": "W6-5d",
+      "surface": "TableWithToggle",
+      "finding": "Table/List toggle buttons do not expose aria-pressed, do not explicitly set type=button, and do not preserve the 44px product touch baseline.",
+      "evidence": "Toggle classes use px-3 py-2 without min-h-11; state is visual only."
+    },
+    {
+      "id": "dense-component-browser-proof",
+      "severity": "medium",
+      "ownerStep": "W6-5d/W6-5f",
+      "surface": "tables, maps, carousels, timeline grids and dense filters",
+      "finding": "Static responsive classes are present, but current-main rendering at narrow widths cannot be proven without a current browser build.",
+      "evidence": "Vercel is build-rate limited, so production may not contain the latest main branch."
+    },
+    {
+      "id": "axe-route-coverage",
+      "severity": "high",
+      "ownerStep": "W6-5e",
+      "surface": "tests/e2e/accessibility.spec.mjs",
+      "finding": "The Axe suite lists 28 routes while the router has 51 substantive public route patterns; several newer high-value domains have no representative Axe route.",
+      "evidence": {
+        "currentAxeRoutes": 28,
+        "substantiveRoutePatterns": 51,
+        "uncoveredPatterns": [
+          "/government-offices",
+          "/open-government",
+          "/integrity",
+          "/city-monitor",
+          "/briefs",
+          "/reports",
+          "/reports/:slug",
+          "/civic-map",
+          "/civic-map/reports",
+          "/civic-map/audits/park-accessibility-2026",
+          "/civic-map/audits/park-accessibility-2026/results",
+          "/civic-map/report",
+          "/civic-map/:assetId",
+          "/elections",
+          "/officials/:slug",
+          "/statistics",
+          "/community-tools",
+          "/contact"
+        ]
+      }
+    },
+    {
+      "id": "wcag22-automation-gap",
+      "severity": "medium",
+      "ownerStep": "W6-5e",
+      "surface": "automated accessibility",
+      "finding": "Existing Axe tags explicitly cover WCAG 2.0 A/AA and 2.1 AA, not a documented WCAG 2.2 automated target.",
+      "evidence": "accessibility.spec.mjs uses wcag2a, wcag2aa and wcag21aa."
+    },
+    {
+      "id": "live-viewport-pass",
+      "severity": "high",
+      "ownerStep": "W6-5f",
+      "surface": "whole site",
+      "finding": "No current-main visual proof yet exists for the full W6-5 device matrix, keyboard-only navigation, zoom/reflow, or runtime contrast/layout behavior.",
+      "evidence": "Current Vercel deployments are blocked by the project/account build-rate limit."
+    }
+  ],
+  "routeCohorts": [
+    {
+      "id": "shell-and-discovery",
+      "routes": [
+        "/",
+        "/search",
+        "/services",
+        "/barangays",
+        "/about"
+      ],
+      "priority": "critical"
+    },
+    {
+      "id": "transaction-and-forms",
+      "routes": [
+        "/services/guide/community-tax-certificate",
+        "/government-offices",
+        "/community-tools/saan-ako-lalapit",
+        "/participate",
+        "/get-involved",
+        "/contact",
+        "/civic-map/report"
+      ],
+      "priority": "critical"
+    },
+    {
+      "id": "evidence-and-government",
+      "routes": [
+        "/government",
+        "/elections",
+        "/officials/:slug",
+        "/legislation",
+        "/accountability",
+        "/projects-budget",
+        "/records",
+        "/records/:id",
+        "/integrity",
+        "/open-government",
+        "/city-monitor",
+        "/city-monitor/:id",
+        "/reports",
+        "/reports/:slug",
+        "/statistics"
+      ],
+      "priority": "critical"
+    },
+    {
+      "id": "place-and-explore",
+      "routes": [
+        "/civic-map",
+        "/civic-map/:assetId",
+        "/heritage",
+        "/history",
+        "/estates",
+        "/mobility",
+        "/visit",
+        "/calendar",
+        "/news"
+      ],
+      "priority": "high"
+    }
+  ],
+  "workPackages": [
+    {
+      "id": "W6-5b",
+      "title": "Global shell responsive/a11y",
+      "owns": [
+        "Navbar utility targets",
+        "Footer targets",
+        "BetterBarangay context bar",
+        "shell focus/navigation behavior"
+      ]
+    },
+    {
+      "id": "W6-5c",
+      "title": "Controls, forms & search",
+      "owns": [
+        "form/control target consistency",
+        "labels, instructions and async state",
+        "search keyboard/combobox regression",
+        "filter/chip overflow"
+      ]
+    },
+    {
+      "id": "W6-5d",
+      "title": "Complex components",
+      "owns": [
+        "tables",
+        "carousels",
+        "maps",
+        "dense timelines/cards",
+        "horizontal-scroll affordance"
+      ]
+    },
+    {
+      "id": "W6-5e",
+      "title": "Semantic & keyboard pass",
+      "owns": [
+        "Axe route expansion",
+        "WCAG 2.2 automation/manual coverage decision",
+        "landmarks/headings/names",
+        "keyboard state/focus"
+      ]
+    },
+    {
+      "id": "W6-5f",
+      "title": "Device & browser pass",
+      "owns": [
+        "320/390/768/1024/1440 viewports",
+        "whole-page overflow",
+        "zoom/reflow",
+        "contrast and runtime visual behavior"
+      ]
+    },
+    {
+      "id": "W6-5g",
+      "title": "Regression guard & closure",
+      "owns": [
+        "final responsive/a11y guard",
+        "bounded exceptions",
+        "Wave 6 responsive/accessibility closure"
+      ]
+    }
+  ],
+  "bounded": [
+    {
+      "id": "current-main-live-browser",
+      "status": "deferred-to-W6-5f",
+      "reason": "Vercel build-rate limiting prevents treating the live deployment as proof of the latest main branch."
+    },
+    {
+      "id": "contrast",
+      "status": "deferred-to-W6-5f",
+      "reason": "Static class inspection cannot establish computed contrast for every component/state."
+    },
+    {
+      "id": "screen-reader-behavior",
+      "status": "manual-sampling-required",
+      "reason": "ARIA/source inspection and Axe cannot fully establish practical screen-reader announcements and reading order."
+    }
+  ],
+  "next": "W6-5b — Global shell responsive/a11y"
+}
