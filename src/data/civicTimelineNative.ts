@@ -1076,7 +1076,7 @@ export const nativeServiceAvailabilityTimelineItems: CivicTimelineItem[] =
           districtOnePublicAssistanceProgram.operatingHours +
           ' at ' +
           session.venue +
-          '. Listed assistance includes medical assistance, unpaid hospital bills, burial assistance, college-level educational assistance and Guarantee Letter referrals.',
+          '. The source lists referrals for medical assistance, unpaid hospital bills, burial assistance, college-level educational assistance and Guarantee Letters.',
         status: serviceSessionStatus(session),
         actionability: 'service-available',
         canonicalRef: {
