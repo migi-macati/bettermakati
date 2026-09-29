@@ -190,7 +190,7 @@ export const legislationCivicNodeResolver: CivicIntelligenceNodeResolver =
       return {
         ref,
         label: record.title,
-        href: record.relatedHref ?? '/city-monitor',
+        href: record.relatedHref ?? '/city-monitor/' + record.id,
         owner: 'city-monitor',
       };
     }
@@ -201,7 +201,7 @@ export const legislationCivicNodeResolver: CivicIntelligenceNodeResolver =
       return {
         ref,
         label: record.title,
-        href: record.relatedHref ?? '/records',
+        href: record.relatedHref ?? '/records/' + record.id,
         owner: 'public-records',
       };
     }
