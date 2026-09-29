@@ -125,9 +125,21 @@ const Services: React.FC = () => {
     }
   }, [category, categoryData]);
 
+  const todayKey = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Asia/Manila',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).format(new Date());
+
   const visibleDirectory = useMemo(() => {
     const query = normalize(directoryQuery);
     return serviceDirectory
+      .filter(
+        item =>
+          !item.availabilityWindow ||
+          item.availabilityWindow.endsOn >= todayKey
+      )
       .filter(item => directoryLevel === 'All' || item.level === directoryLevel)
       .filter(item => directoryCategory === 'All' || item.category === directoryCategory)
       .filter(item => {
@@ -153,7 +165,7 @@ const Services: React.FC = () => {
         if (a.featured !== b.featured) return a.featured ? -1 : 1;
         return a.title.localeCompare(b.title);
       });
-  }, [directoryCategory, directoryLevel, directoryQuery]);
+  }, [directoryCategory, directoryLevel, directoryQuery, todayKey]);
 
   if (!category) {
     return (
