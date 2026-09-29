@@ -8,12 +8,18 @@ import LastReviewed from '../components/ui/LastReviewed';
 import SharePage from '../components/ui/SharePage';
 import PhotoCarousel from '../components/ui/PhotoCarousel';
 import CitizenSummary from '../components/ui/CitizenSummary';
+import CivicRelationshipLinks from '../components/civic/CivicRelationshipLinks';
 import { governmentImageSet } from '../data/cityImages';
+import { requireCivicEcosystemResource } from '../data/ecosystemResources';
 import {
   cityExecutiveOfficials,
   congressionalOfficials,
   councilOfficials,
 } from '../data/electedOfficials';
+
+const openCongressResource = requireCivicEcosystemResource('open-congress');
+const nationalGovernmentResource =
+  requireCivicEcosystemResource('national-government');
 
 const offices = [
   'Office of the City Mayor',
@@ -155,24 +161,25 @@ export default function Government() {
             <OfficialCard key={official.slug} official={official} />
           ))}
         </div>
-        <div className="mt-5 flex flex-wrap gap-x-5 gap-y-3 text-sm font-bold">
-          <a
-            href="https://open-congress-api.bettergov.ph/"
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-1 text-primary-700 underline underline-offset-2"
-          >
-            National legislative records <ExternalLink className="h-3.5 w-3.5" />
-          </a>
-          <a
-            href="https://bettergov.ph/government"
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-1 text-primary-700 underline underline-offset-2"
-          >
-            National government directory <ExternalLink className="h-3.5 w-3.5" />
-          </a>
-        </div>
+        <CivicRelationshipLinks
+          label="National context"
+          tone="neutral"
+          className="mt-5"
+          items={[
+            {
+              id: openCongressResource.id,
+              label: openCongressResource.name,
+              href: openCongressResource.href,
+              external: true,
+            },
+            {
+              id: nationalGovernmentResource.id,
+              label: nationalGovernmentResource.name,
+              href: nationalGovernmentResource.href,
+              external: true,
+            },
+          ]}
+        />
       </Section>
 
       <Section className="bg-[#f5f8f2]">
