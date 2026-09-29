@@ -4,7 +4,7 @@ import SEO from '../components/SEO';
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
 import SharePage from '../components/ui/SharePage';
-import { civicRelationshipOwnerLabel } from '../components/civic/CivicRelationshipLinks';
+import { civicRelationshipOwnerLabel } from '../data/civicRelationshipPresentation';
 import {
   findReport,
   resolveReportSlug,
