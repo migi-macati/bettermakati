@@ -179,7 +179,7 @@ export default function CivicContributionForm({
     if (emergency || status === 'submitting') return;
 
     setStatus('submitting');
-    setMessage('');
+    setMessage('Submitting your contribution…');
     setTrackingUrl('');
     setFallbackUrl('');
     try {
@@ -192,6 +192,7 @@ export default function CivicContributionForm({
 
   const confirmDuplicate = async (item: DuplicateCase) => {
     setStatus('submitting');
+    setMessage(kind === 'proposal' ? 'Adding your support…' : 'Adding your confirmation…');
     try {
       const response = await fetch('/api/civic', {
         method: 'POST',
@@ -227,6 +228,7 @@ export default function CivicContributionForm({
   const createSeparate = async () => {
     setForceNew(true);
     setStatus('submitting');
+    setMessage('Creating a separate record…');
     try {
       await submitPayload({ ...requestPayload(), forceNew: true });
     } catch {
@@ -359,7 +361,7 @@ export default function CivicContributionForm({
                     href={civicOfficialChannels['911'].source}
                     target="_blank"
                     rel="noreferrer"
-                    className="mt-3 block text-xs font-bold underline underline-offset-2"
+                    className="mt-3 inline-flex min-h-11 items-center text-xs font-bold underline underline-offset-2"
                   >
                     Official 911 information <ExternalLink className="inline h-3 w-3" />
                   </a>
@@ -443,14 +445,14 @@ export default function CivicContributionForm({
               <div className="mt-2 flex flex-wrap gap-3 text-xs">
                 <a
                   href={preferredChannel.href}
-                  className="font-bold text-primary-700 underline underline-offset-2"
+                  className="inline-flex min-h-11 items-center font-bold text-primary-700 underline underline-offset-2"
                 >
                   Open official channel
                 </a>
                 {'secondary' in preferredChannel && preferredChannel.secondary && (
                   <a
                     href={preferredChannel.secondary}
-                    className="font-bold text-primary-700 underline underline-offset-2"
+                    className="inline-flex min-h-11 items-center font-bold text-primary-700 underline underline-offset-2"
                   >
                     Alternate contact
                   </a>
@@ -460,7 +462,7 @@ export default function CivicContributionForm({
           )}
 
           {status === 'duplicate' && duplicates.length > 0 && (
-            <div role="status" className="mt-5 rounded-2xl border border-secondary-300 bg-secondary-50 p-5">
+            <div role="status" aria-live="polite" className="mt-5 rounded-2xl border border-secondary-300 bg-secondary-50 p-5">
               <div className="font-extrabold text-gray-950">This may already be reported</div>
               <p className="mt-1 text-sm text-gray-700">
                 If this is the same problem or proposal, use the existing record instead.
@@ -500,7 +502,7 @@ export default function CivicContributionForm({
               <button
                 type="button"
                 onClick={() => void createSeparate()}
-                className="mt-4 text-sm font-bold text-primary-700 underline underline-offset-2"
+                className="mt-4 inline-flex min-h-11 items-center text-sm font-bold text-primary-700 underline underline-offset-2"
               >
                 This is different — create a separate record
               </button>
@@ -509,7 +511,7 @@ export default function CivicContributionForm({
 
           {status !== 'idle' && status !== 'duplicate' && (
             <div
-              role="status"
+              role={status === 'error' ? 'alert' : 'status'}
               className={
                 status === 'success'
                   ? 'mt-5 rounded-xl border border-success-200 bg-success-50 p-4 text-sm text-success-900'
@@ -527,7 +529,7 @@ export default function CivicContributionForm({
                       href={trackingUrl}
                       target="_blank"
                       rel="noreferrer"
-                      className="mt-2 block font-bold underline underline-offset-2"
+                      className="mt-2 inline-flex min-h-11 items-center font-bold underline underline-offset-2"
                     >
                       Open public BetterMakati record <ExternalLink className="inline h-3.5 w-3.5" />
                     </a>
@@ -537,7 +539,7 @@ export default function CivicContributionForm({
                       href={fallbackUrl}
                       target="_blank"
                       rel="noreferrer"
-                      className="mt-2 block font-bold underline underline-offset-2"
+                      className="mt-2 inline-flex min-h-11 items-center font-bold underline underline-offset-2"
                     >
                       Continue on GitHub <ExternalLink className="inline h-3.5 w-3.5" />
                     </a>
