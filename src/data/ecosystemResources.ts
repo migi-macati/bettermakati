@@ -16,6 +16,66 @@ export interface CivicEcosystemResource {
 
 export const civicEcosystemResources: CivicEcosystemResource[] = [
   {
+    id: 'bettergov-home',
+    ecosystem: 'bettergov',
+    name: 'BetterGov',
+    href: 'https://bettergov.ph/',
+    role: 'other',
+    note:
+      'Entry point to the wider BetterGov civic-information ecosystem. It is a continuation resource, not evidence for a Makati-specific fact.',
+    auditedOn: '2026-09-29',
+  },
+  {
+    id: 'national-budget',
+    ecosystem: 'bettergov',
+    name: '2026 National Budget',
+    href: 'https://2026-budget.bettergov.ph/',
+    role: 'national-transparency-context',
+    note:
+      'National budget context for comparison and research. Makati local appropriations remain owned by BetterMakati records and official Makati sources.',
+    auditedOn: '2026-09-29',
+  },
+  {
+    id: 'price-guides',
+    ecosystem: 'bettergov',
+    name: 'Price Guides',
+    href: 'https://price-guides.bettergov.ph/',
+    role: 'national-data-context',
+    note:
+      'National price-benchmark continuation. It does not establish the reasonableness of a Makati procurement without a separately verified comparable basis.',
+    auditedOn: '2026-09-29',
+  },
+  {
+    id: 'flood-control',
+    ecosystem: 'bettergov',
+    name: 'Flood-control Projects',
+    href: 'https://bettergov.ph/flood-control-projects',
+    role: 'national-transparency-context',
+    note:
+      'National infrastructure context. It is not evidence that a Makati-local project is the same project unless an exact official identifier is verified.',
+    auditedOn: '2026-09-29',
+  },
+  {
+    id: 'open-congress',
+    ecosystem: 'bettergov',
+    name: 'National Legislative Records',
+    href: 'https://open-congress-api.bettergov.ph/',
+    role: 'other',
+    note:
+      'National legislative continuation for congressional research. It does not create a relationship to a Makati official or measure without exact record identity.',
+    auditedOn: '2026-09-29',
+  },
+  {
+    id: 'national-government',
+    ecosystem: 'bettergov',
+    name: 'National Government Directory',
+    href: 'https://bettergov.ph/government',
+    role: 'national-service-discovery',
+    note:
+      'National government-office discovery. Makati city offices and services remain owned by BetterMakati.',
+    auditedOn: '2026-09-29',
+  },
+  {
     id: 'data-research',
     ecosystem: 'bettergov',
     name: 'Data Research / Visualizations',
@@ -70,3 +130,11 @@ export const civicEcosystemResources: CivicEcosystemResource[] = [
 export const civicEcosystemResourceById = new Map(
   civicEcosystemResources.map(resource => [resource.id, resource] as const)
 );
+
+export const requireCivicEcosystemResource = (id: string) => {
+  const resource = civicEcosystemResourceById.get(id);
+  if (!resource) {
+    throw new Error('Unknown civic ecosystem resource: ' + id);
+  }
+  return resource;
+};
