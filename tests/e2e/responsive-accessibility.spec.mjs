@@ -36,7 +36,51 @@ const assertNoPageOverflow = async (page, route) => {
       }
       return false;
     };
-    const offenders = Array.from(document.querySelectorAll('body *'))
+    const elementLabel = element => ({
+      tag: element.tagName.toLowerCase(),
+      id: element.id || '',
+      className:
+        typeof element.className === 'string'
+          ? element.className.slice(0, 180)
+          : '',
+    });
+    const ancestorChain = element => {
+      const chain = [];
+      let parent = element.parentElement;
+      while (parent && chain.length < 6) {
+        const style = getComputedStyle(parent);
+        chain.push({
+          ...elementLabel(parent),
+          clientWidth: parent.clientWidth,
+          scrollWidth: parent.scrollWidth,
+          overflowX: style.overflowX,
+          minWidth: style.minWidth,
+          width: style.width,
+          transform: style.transform,
+        });
+        parent = parent.parentElement;
+      }
+      return chain;
+    };
+    const pseudoSummary = (element, pseudo) => {
+      const style = getComputedStyle(element, pseudo);
+      if (!style || style.content === 'none' || style.content === 'normal') {
+        return null;
+      }
+      return {
+        content: style.content.slice(0, 80),
+        display: style.display,
+        position: style.position,
+        width: style.width,
+        minWidth: style.minWidth,
+        maxWidth: style.maxWidth,
+        left: style.left,
+        right: style.right,
+        transform: style.transform,
+      };
+    };
+    const allElements = Array.from(document.querySelectorAll('body *'));
+    const offenders = allElements
       .flatMap(element => {
         const rect = element.getBoundingClientRect();
         if (
@@ -44,9 +88,7 @@ const assertNoPageOverflow = async (page, route) => {
           isClippedByAncestor(element)
         ) return [];
         return [{
-          tag: element.tagName.toLowerCase(),
-          id: element.id || '',
-          className: typeof element.className === 'string' ? element.className.slice(0, 180) : '',
+          ...elementLabel(element),
           left: Math.round(rect.left),
           right: Math.round(rect.right),
           width: Math.round(rect.width),
@@ -54,17 +96,65 @@ const assertNoPageOverflow = async (page, route) => {
         }];
       })
       .slice(0, 8);
+
+    const contributors = allElements
+      .flatMap(element => {
+        const rect = element.getBoundingClientRect();
+        const style = getComputedStyle(element);
+        const scrollExcess = Math.max(0, element.scrollWidth - element.clientWidth);
+        const rightExcess = Math.max(0, rect.right - viewport);
+        const leftExcess = Math.max(0, -rect.left);
+        const widthExcess = Math.max(0, rect.width - viewport);
+        const score = Math.max(scrollExcess, rightExcess, leftExcess, widthExcess);
+        if (score <= 1) return [];
+        return [{
+          ...elementLabel(element),
+          score: Math.round(score),
+          depth: (() => {
+            let depth = 0;
+            let node = element.parentElement;
+            while (node) {
+              depth += 1;
+              node = node.parentElement;
+            }
+            return depth;
+          })(),
+          clientWidth: element.clientWidth,
+          scrollWidth: element.scrollWidth,
+          left: Math.round(rect.left),
+          right: Math.round(rect.right),
+          width: Math.round(rect.width),
+          overflowX: style.overflowX,
+          minWidth: style.minWidth,
+          maxWidth: style.maxWidth,
+          computedWidth: style.width,
+          transform: style.transform,
+          position: style.position,
+          before: pseudoSummary(element, '::before'),
+          after: pseudoSummary(element, '::after'),
+          ancestors: ancestorChain(element),
+          text: (element.textContent || '').trim().replace(/\\s+/g, ' ').slice(0, 120),
+        }];
+      })
+      .sort((left, right) => right.score - left.score || right.depth - left.depth)
+      .slice(0, 12);
+
     return {
       viewport,
       documentWidth: document.documentElement.scrollWidth,
       bodyWidth: document.body.scrollWidth,
       offenders,
+      contributors,
     };
   });
 
-  const overflowContext = metrics.offenders.length
-    ? ' Offenders: ' + JSON.stringify(metrics.offenders)
-    : '';
+  const overflowContext =
+    (metrics.offenders.length
+      ? ' Offenders: ' + JSON.stringify(metrics.offenders)
+      : '') +
+    (metrics.contributors.length
+      ? ' Contributors: ' + JSON.stringify(metrics.contributors)
+      : '');
   expect(
     metrics.documentWidth,
     'Document overflow on ' + route + ' at ' + metrics.viewport + 'px.' + overflowContext
