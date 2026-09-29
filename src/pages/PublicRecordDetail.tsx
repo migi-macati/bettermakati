@@ -68,6 +68,15 @@ export default function PublicRecordDetail() {
           {record.description}
         </p>
 
+        <div className="mt-5 max-w-4xl rounded-2xl border border-white/20 bg-white/10 p-5">
+          <div className="text-xs font-extrabold uppercase tracking-[0.08em] text-secondary-300">
+            BetterMakati catalog entry
+          </div>
+          <p className="mt-2 text-sm leading-relaxed text-primary-50">
+            This page describes and connects the source; it is not the original record itself. Open the publisher source below for the underlying evidence.
+          </p>
+        </div>
+
         <div className="mt-6 flex flex-wrap gap-3">
           <a
             href={record.url}
@@ -100,8 +109,11 @@ export default function PublicRecordDetail() {
       )}
 
       <Section className="bg-[#f5f8f2]">
-        <div className="section-eyebrow">Related records</div>
-        <Heading level={2}>Where this source appears</Heading>
+        <div className="section-eyebrow">BetterMakati context</div>
+        <Heading level={2}>Where BetterMakati uses this source</Heading>
+        <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600">
+          Return from the original evidence to the civic page, analysis or record that uses it.
+        </p>
 
         {record.contexts.length > 0 ? (
           <div className="mt-5 grid gap-3 md:grid-cols-2">
@@ -115,7 +127,7 @@ export default function PublicRecordDetail() {
                   {context.label}
                 </div>
                 <div className="mt-2 text-sm font-bold text-primary-700">
-                  Open related record
+                  Open BetterMakati context
                 </div>
               </Link>
             ))}
@@ -132,6 +144,11 @@ export default function PublicRecordDetail() {
           </div>
         )}
 
+        <div className="mt-6">
+          <Link to="/records" className="brand-btn-secondary">
+            Browse the evidence index
+          </Link>
+        </div>
       </Section>
     </>
   );
