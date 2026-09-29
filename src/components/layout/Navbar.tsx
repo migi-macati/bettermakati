@@ -117,6 +117,11 @@ export default function Navbar() {
     return () => document.removeEventListener('pointerdown', outside);
   }, []);
 
+  useEffect(() => {
+    setIsOpen(false);
+    setActiveMenu(null);
+  }, [pathname, search, hash]);
+
   return (
     <>
       <div className="bg-primary-900 text-white">
@@ -263,7 +268,7 @@ export default function Navbar() {
               })}
 
               {preferredBarangay && (
-                <div className="relative ml-2 rounded-full focus-within:outline focus-within:outline-3 focus-within:outline-offset-2 focus-within:outline-primary-700">
+                <div className="relative ml-2 rounded-full focus-within:ring-2 focus-within:ring-primary-700 focus-within:ring-offset-2">
                   <div className="pointer-events-none inline-flex min-h-11 items-center gap-1.5 rounded-full border border-secondary-200 bg-secondary-50 px-3 text-sm font-extrabold text-primary-900">
                     <MapPin className="h-4 w-4 text-secondary-800" aria-hidden="true" />
                     Better{preferredBarangay.name.replace(/\s+/g, '')}
