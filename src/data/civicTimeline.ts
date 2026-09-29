@@ -7,6 +7,7 @@ export type CivicTimelineKind =
   | 'barangay-assembly'
   | 'consultation'
   | 'service-change'
+  | 'service-availability'
   | 'road-closure'
   | 'advisory'
   | 'election-milestone'
@@ -60,6 +61,7 @@ export type CivicTimelineActionability =
   | 'action-required'
   | 'participation-opportunity'
   | 'service-impact'
+  | 'service-available'
   | 'information-only';
 
 export type CivicTimelineSourceKind =
@@ -326,6 +328,7 @@ export const civicTimelineKindSemantics: Record<
   'barangay-assembly': ['occurrence'],
   consultation: ['occurrence', 'deadline'],
   'service-change': ['effective-change', 'deadline'],
+  'service-availability': ['occurrence'],
   'road-closure': ['occurrence', 'effective-change'],
   advisory: [
     'occurrence',
