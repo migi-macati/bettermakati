@@ -90,7 +90,7 @@ for (const [name, source, url] of forbiddenHardcoded) {
 }
 
 for (const phrase of [
-  'external ecosystem page as proof of Makati-specific fact',
+  'external ecosystem page as proof of a Makati-specific fact',
   'Curated BetterGov or BetterLGU links are continuation or comparison context, never evidence for a Makati-specific claim.',
 ]) {
   const policyText = JSON.stringify(policy);
