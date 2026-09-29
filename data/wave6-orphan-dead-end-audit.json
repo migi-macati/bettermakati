@@ -1,0 +1,148 @@
+{
+  "version": 1,
+  "status": "complete",
+  "reviewedAt": "2026-09-29",
+  "scope": "W6-4a orphan and dead-end audit across the canonical public route surface.",
+  "routeInventory": {
+    "substantiveCount": 51,
+    "compatibilityRedirects": [
+      {
+        "from": "/parking",
+        "to": "/visit"
+      },
+      {
+        "from": "/whats-on",
+        "to": "/calendar"
+      },
+      {
+        "from": "/reports/makati-overview",
+        "to": "/reports/2026-budget-operating-expenses"
+      },
+      {
+        "from": "/transparency",
+        "to": "/projects-budget"
+      }
+    ],
+    "catchAll": "*"
+  },
+  "routeCoverage": [
+    "/",
+    "/about",
+    "/privacy",
+    "/terms",
+    "/services",
+    "/services/guide/:id",
+    "/government-offices",
+    "/services/:category",
+    "/services/:category/:documentSlug",
+    "/visit",
+    "/mobility",
+    "/cinemas",
+    "/calendar",
+    "/heritage",
+    "/history",
+    "/government",
+    "/accountability",
+    "/records",
+    "/records/:id",
+    "/participate",
+    "/today",
+    "/open-government",
+    "/integrity",
+    "/status",
+    "/city-monitor",
+    "/city-monitor/:id",
+    "/briefs",
+    "/reports",
+    "/reports/:slug",
+    "/civic-map",
+    "/civic-map/reports",
+    "/civic-map/audits/park-accessibility-2026",
+    "/civic-map/audits/park-accessibility-2026/results",
+    "/civic-map/report",
+    "/civic-map/:assetId",
+    "/barangays",
+    "/barangays/:slug",
+    "/elections",
+    "/officials/:slug",
+    "/estates",
+    "/statistics",
+    "/legislation",
+    "/news",
+    "/live",
+    "/projects-budget",
+    "/community-tools",
+    "/community-tools/saan-ako-lalapit",
+    "/search",
+    "/get-involved",
+    "/contact",
+    "/hotlines"
+  ],
+  "criticalOrphans": [],
+  "fixedDeadEnds": [
+    {
+      "route": "/cinemas",
+      "finding": "The page was discoverable from Explore Makati but ended with external showtime, map and venue links only.",
+      "resolution": "Added task-specific continuations to Getting around Makati and Explore Makati.",
+      "continuations": [
+        "/mobility",
+        "/visit"
+      ]
+    }
+  ],
+  "intentionalTerminals": [
+    {
+      "route": "/hotlines",
+      "reason": "Emergency and essential-contact tasks should end in phone or official external channels rather than force an internal browsing loop."
+    },
+    {
+      "route": "/privacy",
+      "reason": "Policy page; global shell navigation is sufficient and a contextual related-links block would add noise."
+    },
+    {
+      "route": "/terms",
+      "reason": "Policy page; global shell navigation is sufficient and a contextual related-links block would add noise."
+    }
+  ],
+  "componentOwnedContinuations": [
+    {
+      "route": "/search",
+      "owner": "ServiceSearch",
+      "reason": "Canonical result links are rendered by the shared search component rather than Search.tsx itself."
+    },
+    {
+      "route": "/reports",
+      "owner": "ReportTeaser",
+      "reason": "Report detail links are rendered by reusable teaser components rather than Reports.tsx itself."
+    }
+  ],
+  "weakButDiscoverable": [
+    {
+      "route": "/contact",
+      "inbound": "Footer and BetterMakati institutional context",
+      "disposition": "Keep secondary; it already hands off to Get Involved and Hotlines."
+    },
+    {
+      "route": "/open-government",
+      "inbound": "About, status and integrity/open-government context",
+      "disposition": "Keep as a depth/trust surface rather than promote to a first-order door."
+    },
+    {
+      "route": "/community-tools",
+      "inbound": "Footer, Home and Participate context",
+      "disposition": "Keep as a secondary participation/tool index."
+    },
+    {
+      "route": "/status",
+      "inbound": "Footer and accountability/trust context",
+      "disposition": "Keep as a secondary project-trust surface."
+    }
+  ],
+  "rules": [
+    "An orphan has no reasonable inbound route from a canonical hub, parent, workflow, search result or contextual relationship.",
+    "A dead end has no logical next step after the page's primary task, even if the page itself is discoverable.",
+    "Global navigation and Page Help are recovery mechanisms, not substitutes for a useful task-specific continuation.",
+    "Do not add generic related-link blocks to every page; terminal and policy surfaces can remain terminal when that matches the user task."
+  ],
+  "next": "W6-4b — civic relationship model"
+}

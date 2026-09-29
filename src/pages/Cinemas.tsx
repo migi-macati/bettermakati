@@ -1,4 +1,5 @@
 import { ExternalLink, Film, MapPin } from 'lucide-react';
+import { Link } from 'react-router';
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
 import SEO from '../components/SEO';
@@ -100,6 +101,26 @@ export default function Cinemas() {
               </div>
             </article>
           ))}
+        </div>
+      </Section>
+
+      <Section className="border-t border-primary-100 bg-white">
+        <div className="grid gap-5 lg:grid-cols-[1fr_auto] lg:items-center">
+          <div>
+            <div className="section-eyebrow">After choosing a cinema</div>
+            <Heading level={2}>Get there or explore nearby</Heading>
+            <p className="mt-2 max-w-2xl text-sm leading-relaxed text-gray-600">
+              Use the cinema links above for live showtimes. For the rest of the trip, check routes and explore the surrounding city.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-3 lg:justify-end">
+            <Link to="/mobility" className="brand-btn-primary">
+              Getting around Makati
+            </Link>
+            <Link to="/visit" className="brand-btn-secondary">
+              Explore Makati
+            </Link>
+          </div>
         </div>
       </Section>
     </>

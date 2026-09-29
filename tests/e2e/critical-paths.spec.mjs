@@ -2621,3 +2621,20 @@ test('Wave 5 interactive controls keep mobile touch targets', async ({ page }) =
   const allTab = page.getByRole('button', { name: 'All', exact: true });
   expect((await allTab.boundingBox())?.height ?? 0).toBeGreaterThanOrEqual(44);
 });
+
+
+test('W6-4a low-link surfaces keep a useful continuation', async ({ page }) => {
+  await page.goto(baseURL + '/cinemas');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Cinemas');
+  await expect(
+    page.getByRole('link', { name: 'Getting around Makati', exact: true })
+  ).toHaveAttribute('href', '/mobility');
+  await expect(
+    page.getByRole('link', { name: 'Explore Makati', exact: true })
+  ).toHaveAttribute('href', '/visit');
+
+  await page.goto(baseURL + '/hotlines');
+  await expect(
+    page.getByRole('link', { name: 'Browse nationwide hotlines', exact: false })
+  ).toHaveAttribute('href', /^https:\/\//);
+});
