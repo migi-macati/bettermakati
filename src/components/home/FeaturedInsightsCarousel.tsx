@@ -25,7 +25,7 @@ export default function FeaturedInsightsCarousel() {
           </h2>
           <Link
             to="/reports"
-            className="hidden text-sm font-bold text-primary-700 hover:text-primary-900 sm:inline-flex"
+            className="hidden min-h-11 items-center text-sm font-bold text-primary-700 hover:text-primary-900 sm:inline-flex"
           >
             View all
           </Link>
@@ -78,7 +78,7 @@ export default function FeaturedInsightsCarousel() {
 
         <Link
           to="/reports"
-          className="mt-4 inline-flex text-sm font-bold text-primary-700 hover:text-primary-900 sm:hidden"
+          className="mt-4 inline-flex min-h-11 items-center text-sm font-bold text-primary-700 hover:text-primary-900 sm:hidden"
         >
           View all
         </Link>
