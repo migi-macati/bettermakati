@@ -82,7 +82,7 @@ export default function GetInvolved() {
   const submit = async (event: FormEvent) => {
     event.preventDefault();
     setStatus('submitting');
-    setMessage('');
+    setMessage('Sending your submission…');
     setFallbackUrl('');
     setTrackingUrl('');
 
@@ -290,6 +290,8 @@ export default function GetInvolved() {
 
           <form
             onSubmit={submit}
+            aria-busy={status === 'submitting'}
+            aria-describedby="bettermakati-submission-privacy"
             className="mt-8 rounded-2xl border border-gray-200 bg-white p-6 md:p-8 shadow-sm"
           >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -370,7 +372,10 @@ export default function GetInvolved() {
               </label>
             </div>
 
-            <p className="mt-5 text-xs leading-relaxed text-gray-500">
+            <p
+              id="bettermakati-submission-privacy"
+              className="mt-5 text-xs leading-relaxed text-gray-500"
+            >
               Do not include passwords, IDs, medical information or other
               sensitive personal data. Project submissions may be recorded in
               BetterMakati’s public GitHub repository for transparent follow-up.
@@ -387,7 +392,7 @@ export default function GetInvolved() {
                       ? 'border-error-200 bg-error-50 text-error-800'
                       : 'border-secondary-200 bg-secondary-50 text-secondary-900'
                 }`}
-                role="status"
+                role={status === 'error' ? 'alert' : 'status'}
               >
                 {message}
                 {status === 'success' && trackingUrl && (
@@ -395,7 +400,7 @@ export default function GetInvolved() {
                     href={trackingUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="mt-3 inline-flex items-center gap-1 font-bold underline underline-offset-2"
+                    className="mt-3 inline-flex min-h-11 items-center gap-1 font-bold underline underline-offset-2"
                   >
                     Track this publicly <ExternalLink className="h-3.5 w-3.5" />
                   </a>
@@ -405,7 +410,7 @@ export default function GetInvolved() {
                     href={trackingUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="mt-3 inline-flex items-center gap-1 font-bold underline underline-offset-2"
+                    className="mt-3 inline-flex min-h-11 items-center gap-1 font-bold underline underline-offset-2"
                   >
                     Open existing item <ExternalLink className="h-3.5 w-3.5" />
                   </a>
@@ -415,7 +420,7 @@ export default function GetInvolved() {
                     href={fallbackUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="mt-3 inline-flex items-center gap-1 font-bold underline underline-offset-2"
+                    className="mt-3 inline-flex min-h-11 items-center gap-1 font-bold underline underline-offset-2"
                   >
                     Continue on GitHub <ExternalLink className="h-3.5 w-3.5" />
                   </a>
