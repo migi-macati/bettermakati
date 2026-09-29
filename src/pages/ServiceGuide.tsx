@@ -22,6 +22,7 @@ import { placeRegistryById } from '../data/placeRegistry';
 import NationalServiceHandoff from '../components/services/NationalServiceHandoff';
 import { useBarangayScope, withBarangayScope } from '../hooks/useBarangayScope';
 import { legislationForService } from '../data/legislationCivicRelationships';
+import { districtOnePublicAssistanceProgram } from '../data/civicServiceAvailability';
 
 const mapsUrl = (query: string) =>
   'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(query);
@@ -400,6 +401,23 @@ export default function ServiceGuide() {
     item.nationalIntegration?.betterGov.status === 'listed' &&
     !detail;
   const relatedLegislation = legislationForService(item.id);
+  const temporaryAvailability =
+    item.id === districtOnePublicAssistanceProgram.serviceId
+      ? districtOnePublicAssistanceProgram
+      : undefined;
+  const todayKey = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Asia/Manila',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).format(new Date());
+  const temporaryAvailabilityStatus = temporaryAvailability
+    ? todayKey < temporaryAvailability.scheduleWindow.start
+      ? 'Upcoming'
+      : todayKey <= temporaryAvailability.scheduleWindow.end
+        ? 'Current schedule'
+        : 'Past schedule'
+    : undefined;
 
   return (
     <>
@@ -436,6 +454,94 @@ export default function ServiceGuide() {
           className="mt-5"
         />
       </Section>
+
+      {temporaryAvailability && (
+        <Section className="border-y border-primary-100 bg-[#f5f8f2]">
+          <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+            <div>
+              <div className="section-eyebrow">Temporary service schedule</div>
+              <Heading level={2}>September 28–October 9, 2026</Heading>
+              <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600">
+                Public Assistance Desk sessions run from {temporaryAvailability.operatingHours}
+                {' '}at the listed District 1 barangay locations.
+              </p>
+            </div>
+            <span className={
+              temporaryAvailabilityStatus === 'Past schedule'
+                ? 'w-fit rounded-full border border-gray-200 bg-white px-3 py-2 text-xs font-extrabold text-gray-600'
+                : 'w-fit rounded-full border border-primary-200 bg-primary-50 px-3 py-2 text-xs font-extrabold text-primary-800'
+            }>
+              {temporaryAvailabilityStatus}
+            </span>
+          </div>
+
+          <div className="mt-6 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+            {temporaryAvailability.sessions.map(session => (
+              <article
+                key={session.id}
+                className="rounded-2xl border border-primary-100 bg-white p-5"
+              >
+                <div className="text-xs font-extrabold uppercase tracking-[0.08em] text-primary-700">
+                  {new Intl.DateTimeFormat('en-PH', {
+                    month: 'long',
+                    day: 'numeric',
+                    year: 'numeric',
+                    timeZone: 'Asia/Manila',
+                  }).format(new Date(session.date + 'T00:00:00+08:00'))}
+                </div>
+                <h3 className="mt-2 text-lg font-extrabold text-gray-950">
+                  {session.barangayLabel}
+                </h3>
+                <p className="mt-2 text-sm font-semibold text-gray-800">
+                  {session.venue}
+                </p>
+                <p className="mt-1 text-xs text-gray-500">
+                  {temporaryAvailability.operatingHours}
+                </p>
+              </article>
+            ))}
+          </div>
+
+          <div className="mt-6 grid gap-4 lg:grid-cols-2">
+            <div className="rounded-2xl border border-primary-100 bg-white p-5">
+              <h3 className="font-extrabold text-gray-950">Assistance listed</h3>
+              <ul className="mt-3 space-y-2 text-sm leading-relaxed text-gray-700">
+                {temporaryAvailability.assistanceCategories.map(item => (
+                  <li key={item}>• {item}</li>
+                ))}
+              </ul>
+            </div>
+            <div className="rounded-2xl border border-secondary-200 bg-secondary-50 p-5">
+              <h3 className="font-extrabold text-gray-950">
+                Valenzuela &amp; Olympia
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-gray-700">
+                {temporaryAvailability.districtOfficeNote.text}
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-6 flex flex-wrap gap-3">
+            <Link
+              to={
+                '/calendar?topic=services&q=' +
+                encodeURIComponent(temporaryAvailability.title)
+              }
+              className="brand-btn-primary"
+            >
+              View on Makati Calendar
+            </Link>
+            <a
+              href={temporaryAvailability.source.url}
+              target="_blank"
+              rel="noreferrer"
+              className="brand-btn-secondary"
+            >
+              Original Facebook post <ExternalLink className="h-4 w-4" />
+            </a>
+          </div>
+        </Section>
+      )}
 
       {!betterGovOwnsNationalGuide && (
         <Section className="bg-white">
@@ -478,32 +584,34 @@ export default function ServiceGuide() {
               </div>
             )}
 
-            <div className="mt-8">
-              <Heading level={3}>Requirements</Heading>
-              <div className="mt-4 overflow-hidden rounded-2xl border border-gray-200">
-                <div className="divide-y divide-gray-200">
-                  {detail.requirements.map((requirement, index) => (
-                    <div key={requirement.item} className="grid gap-2 bg-white p-4 md:grid-cols-[2rem_1fr_0.8fr]">
-                      <span className="grid h-7 w-7 place-items-center rounded-full bg-primary-50 text-xs font-extrabold text-primary-800">
-                        {index + 1}
-                      </span>
-                      <div>
-                        <div className="font-bold text-gray-950">{requirement.item}</div>
-                        {requirement.note && (
-                          <p className="mt-1 text-xs leading-relaxed text-warning-900">{requirement.note}</p>
+            {detail.requirements.length > 0 && (
+              <div className="mt-8">
+                <Heading level={3}>Requirements</Heading>
+                <div className="mt-4 overflow-hidden rounded-2xl border border-gray-200">
+                  <div className="divide-y divide-gray-200">
+                    {detail.requirements.map((requirement, index) => (
+                      <div key={requirement.item} className="grid gap-2 bg-white p-4 md:grid-cols-[2rem_1fr_0.8fr]">
+                        <span className="grid h-7 w-7 place-items-center rounded-full bg-primary-50 text-xs font-extrabold text-primary-800">
+                          {index + 1}
+                        </span>
+                        <div>
+                          <div className="font-bold text-gray-950">{requirement.item}</div>
+                          {requirement.note && (
+                            <p className="mt-1 text-xs leading-relaxed text-warning-900">{requirement.note}</p>
+                          )}
+                        </div>
+                        {requirement.whereToSecure && (
+                          <div className="text-sm text-gray-600">
+                            <span className="font-bold text-gray-700">Where to secure:</span>{' '}
+                            {requirement.whereToSecure}
+                          </div>
                         )}
                       </div>
-                      {requirement.whereToSecure && (
-                        <div className="text-sm text-gray-600">
-                          <span className="font-bold text-gray-700">Where to secure:</span>{' '}
-                          {requirement.whereToSecure}
-                        </div>
-                      )}
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
 
             <div className="mt-8 grid grid-cols-1 gap-7 lg:grid-cols-[1.15fr_0.85fr]">
               <div>
