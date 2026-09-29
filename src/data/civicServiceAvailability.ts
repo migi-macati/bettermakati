@@ -13,7 +13,7 @@ export const districtOnePublicAssistanceProgram = {
   title: 'District 1 Public Assistance Desk',
   agency: 'Office of the Representative, Makati 1st District',
   description:
-    'Temporary neighborhood public-assistance desks for medical, hospital-bill, burial and college-level educational assistance, plus guarantee-letter referrals.',
+    'Temporary neighborhood public-assistance desks receiving and referring medical, hospital-bill, burial, college-level educational and Guarantee Letter requests to the agencies concerned.',
   category: 'Social services',
   level: 'National' as const,
   type: 'Assistance' as const,
