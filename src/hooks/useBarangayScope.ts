@@ -3,6 +3,7 @@ import { useLocation, useSearchParams } from 'react-router';
 import { barangays, findBarangay } from '../data/barangays';
 
 const rememberedBarangayKey = 'bettermakati:barangay-scope';
+const rememberedBarangayChangeEvent = 'bettermakati:barangay-scope-change';
 
 export const barangaySliceablePaths = new Set([
   '/services',
@@ -63,8 +64,24 @@ export function useBarangayScope() {
       } else {
         window.localStorage.removeItem(rememberedBarangayKey);
       }
+      window.dispatchEvent(new Event(rememberedBarangayChangeEvent));
     }
   };
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const syncRememberedBarangay = () => {
+      setRememberedBarangaySlug(readRememberedBarangay());
+    };
+
+    window.addEventListener(rememberedBarangayChangeEvent, syncRememberedBarangay);
+    window.addEventListener('storage', syncRememberedBarangay);
+    return () => {
+      window.removeEventListener(rememberedBarangayChangeEvent, syncRememberedBarangay);
+      window.removeEventListener('storage', syncRememberedBarangay);
+    };
+  }, []);
 
   useEffect(() => {
     if (barangaySlug && barangaySlug !== rememberedBarangaySlug) {

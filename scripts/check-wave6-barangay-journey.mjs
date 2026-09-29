@@ -10,6 +10,7 @@ const [
   statistics,
   civicMap,
   contextBar,
+  barangayScope,
   packageJson,
 ] = await Promise.all([
   readFile('src/components/layout/Navbar.tsx', 'utf8'),
@@ -21,6 +22,7 @@ const [
   readFile('src/pages/Statistics.tsx', 'utf8'),
   readFile('src/pages/CivicMap.tsx', 'utf8'),
   readFile('src/components/barangay/BetterBarangayContextBar.tsx', 'utf8'),
+  readFile('src/hooks/useBarangayScope.ts', 'utf8'),
   readFile('package.json', 'utf8'),
 ]);
 
@@ -95,6 +97,16 @@ for (const marker of [
 ]) {
   if (!contextBar.includes(marker)) {
     problems.push('Persistent BetterBarangay context marker missing: ' + marker);
+  }
+}
+
+for (const marker of [
+  "const rememberedBarangayChangeEvent = 'bettermakati:barangay-scope-change';",
+  'window.dispatchEvent(new Event(rememberedBarangayChangeEvent))',
+  'window.addEventListener(rememberedBarangayChangeEvent, syncRememberedBarangay)',
+]) {
+  if (!barangayScope.includes(marker)) {
+    problems.push('BetterBarangay shared preference synchronization missing: ' + marker);
   }
 }
 
