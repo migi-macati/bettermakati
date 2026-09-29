@@ -4,6 +4,7 @@ import SEO from '../components/SEO';
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
 import SharePage from '../components/ui/SharePage';
+import { civicRelationshipOwnerLabel } from '../components/civic/CivicRelationshipLinks';
 import {
   findReport,
   resolveReportSlug,
@@ -445,11 +446,14 @@ export default function ReportArticle() {
                       rel="noreferrer"
                       className="rounded-2xl border border-gray-200 bg-white p-5 hover:border-primary-300"
                     >
-                      <div className="font-black text-gray-950">
+                      <div className="text-xs font-extrabold uppercase tracking-[0.08em] text-gray-500">
+                        {civicRelationshipOwnerLabel(item.node.owner)}
+                      </div>
+                      <div className="mt-1 font-black text-gray-950">
                         {item.node.label}
                       </div>
                       <div className="mt-2 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
-                        Open record
+                        Open external resource
                         <ExternalLink className="h-3.5 w-3.5" />
                       </div>
                     </a>
@@ -459,7 +463,10 @@ export default function ReportArticle() {
                       to={item.node.href}
                       className="rounded-2xl border border-gray-200 bg-white p-5 hover:border-primary-300"
                     >
-                      <div className="font-black text-gray-950">
+                      <div className="text-xs font-extrabold uppercase tracking-[0.08em] text-gray-500">
+                        {civicRelationshipOwnerLabel(item.node.owner)}
+                      </div>
+                      <div className="mt-1 font-black text-gray-950">
                         {item.node.label}
                       </div>
                       <div className="mt-2 text-sm font-bold text-primary-700">
