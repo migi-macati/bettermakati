@@ -42,6 +42,7 @@ export default function Participate() {
   const { barangay } = useBarangayScope();
   const [inputs, setInputs] = useState<CommunityInput[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadFailed, setLoadFailed] = useState(false);
 
   useEffect(() => {
     const load = async () => {
@@ -51,6 +52,7 @@ export default function Participate() {
         if (response.ok && Array.isArray(data.items)) setInputs(data.items);
       } catch {
         setInputs([]);
+        setLoadFailed(true);
       } finally {
         setLoading(false);
       }
@@ -325,8 +327,12 @@ export default function Participate() {
 
         <div className="mt-6">
           {loading ? (
-            <div className="rounded-xl border border-gray-200 p-5 text-sm text-gray-500">
+            <div role="status" className="rounded-xl border border-gray-200 p-5 text-sm text-gray-500">
               Loading public input…
+            </div>
+          ) : loadFailed ? (
+            <div role="alert" className="rounded-xl border border-warning-200 bg-warning-50 p-5 text-sm text-warning-950">
+              The public community-input feed is temporarily unavailable. You can still submit a new idea, source or correction below.
             </div>
           ) : inputs.length === 0 ? (
             <div className="rounded-xl border border-gray-200 p-5 text-sm text-gray-600">
