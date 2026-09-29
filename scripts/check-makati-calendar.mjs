@@ -25,9 +25,9 @@ for (const marker of [
   'nativeCivicTimelineItems',
   'civicCalendarViewItems',
   'Original source',
-  'Open canonical record',
+  'Open record',
   'How the Makati Calendar works',
-  'Internal source-discovery candidates are deliberately excluded',
+  'Unverified source leads are excluded until the date and its',
 ]) {
   if (!page.includes(marker)) problems.push('Calendar page marker missing: ' + marker);
 }
@@ -48,6 +48,8 @@ for (const marker of [
   "label: 'Now & Next'",
   "label: 'Recently Published'",
   "label: 'Archive'",
+  "kind === 'service-availability'",
+  "{ id: 'service-available', label: 'Service available' }",
   'export const civicCalendarRecentPublicationDays = 45',
   'export const civicCalendarViewForItem',
   "item.status === 'superseded'",
