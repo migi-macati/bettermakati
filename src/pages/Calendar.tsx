@@ -499,6 +499,9 @@ export default function Calendar() {
                 ? '1 civic timeline item'
                 : visible.length + ' civic timeline items'}
             </h2>
+            <p className="sr-only" role="status" aria-live="polite" aria-atomic="true">
+              {visible.length} {visible.length === 1 ? 'civic timeline item' : 'civic timeline items'} in {activeView.label}
+            </p>
             <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600">
               {activeView.description}
             </p>
