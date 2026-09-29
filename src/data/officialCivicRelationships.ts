@@ -56,11 +56,7 @@ export const officialCivicNodeResolver: CivicIntelligenceNodeResolver =
       return {
         ref,
         label: official.displayName + ' · 2025 election result',
-        href:
-          '/elections#' +
-          (official.office === 'City Councilor'
-            ? 'council-results'
-            : 'results-2025'),
+        href: '/elections#official-result-' + official.slug,
         owner: 'elections',
       };
     }
