@@ -23,6 +23,7 @@ import {
   election2025Electorate,
   election2025SingleSeatRaces,
   election2025Sources,
+  findElection2025OfficialSlug,
   percent,
 } from '../data/election2025';
 import {
@@ -43,6 +44,20 @@ import {
 } from '../data/electionCivic';
 
 const number = (value: number) => value.toLocaleString('en-PH');
+
+const ElectionCandidateName = ({ name }: { name: string }) => {
+  const officialSlug = findElection2025OfficialSlug(name);
+  return officialSlug ? (
+    <Link
+      to={'/officials/' + officialSlug}
+      className="font-bold text-primary-800 hover:underline"
+    >
+      {name}
+    </Link>
+  ) : (
+    <span className="font-bold text-gray-950">{name}</span>
+  );
+};
 const percentage = (value: number) => value.toFixed(2) + '%';
 
 const election2025Csv = [
@@ -279,7 +294,7 @@ export default function Elections() {
                     {race.label}
                   </div>
                   <div className="mt-2 text-xl font-extrabold text-gray-950">
-                    {winner.name}
+                    <ElectionCandidateName name={winner.name} />
                   </div>
                   <div className="mt-1 text-sm text-gray-600">
                     {number(winner.votes)} votes · {percentage(validShare)} of
@@ -376,7 +391,7 @@ export default function Elections() {
                       <tr key={candidate.name} className="border-t">
                         <td className="px-4 py-3 font-bold">{candidate.rank}</td>
                         <td className="px-4 py-3">
-                          <div className="font-bold text-gray-950">{candidate.name}</div>
+                          <ElectionCandidateName name={candidate.name} />
                           <div className="text-xs text-gray-500">{candidate.party}</div>
                         </td>
                         <td className="px-4 py-3">
