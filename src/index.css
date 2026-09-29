@@ -243,8 +243,8 @@ button:disabled { cursor: not-allowed; opacity: .6; }
 }
 .scroll-region:focus-visible {
   outline: 3px solid var(--brand-green);
-  box-shadow: 0 0 0 2px white;
-  outline-offset: 3px;
+  box-shadow: inset 0 0 0 2px white;
+  outline-offset: -3px;
 }
 
 .scroll-region table :is(a, button) {
