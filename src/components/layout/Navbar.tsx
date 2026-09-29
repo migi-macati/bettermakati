@@ -177,7 +177,7 @@ export default function Navbar() {
       >
         <div className="container px-5 md:px-6 lg:px-8">
           <div className="flex w-full items-center py-3 gap-3">
-            <div onClick={closeMenu} className="shrink-0">
+            <div className="shrink-0">
               <BrandMark />
             </div>
 
