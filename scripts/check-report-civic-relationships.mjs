@@ -123,7 +123,7 @@ for (const marker of [
   "import { reportsForCivicRecord } from '../data/reportCivicRelationships'",
   "type: 'accountability-record'",
   'const analysisLinks = reportsForCivicRecord',
-  'Analysis: {item.node.label}',
+  'Related analysis',
 ]) {
   if (!accountabilityPage.includes(marker)) {
     problems.push('Accountability report-backlink marker missing: ' + marker);
