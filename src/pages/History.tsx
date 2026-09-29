@@ -296,7 +296,7 @@ export default function History() {
                     : 'border-gray-300 bg-white text-gray-700 hover:border-primary-500'
                 }`}
               >
-                {item.label} <span className="font-normal opacity-75">{count}</span>
+                {item.label} <span className="font-normal">{count}</span>
               </button>
             );
           })}
