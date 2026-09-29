@@ -463,7 +463,7 @@ export default function ServiceGuide() {
               <Heading level={2}>September 28–October 9, 2026</Heading>
               <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600">
                 Public Assistance Desk sessions run from {temporaryAvailability.operatingHours}
-                {' '}at the listed District 1 barangay locations.
+                {' '}at the listed District 1 barangay locations. {temporaryAvailability.operatingNote}.
               </p>
             </div>
             <span className={
