@@ -12,6 +12,7 @@ const [
   domainTimeline,
   barangayTimeline,
   calendar,
+  relationshipPresentation,
   packageRaw,
 ] = await Promise.all([
   readFile('src/components/civic/CivicRelationshipLinks.tsx', 'utf8'),
@@ -25,6 +26,7 @@ const [
   readFile('src/components/civic/CivicDomainTimelinePreview.tsx', 'utf8'),
   readFile('src/components/civic/CivicTimelinePreview.tsx', 'utf8'),
   readFile('src/pages/Calendar.tsx', 'utf8'),
+  readFile('src/data/civicRelationshipPresentation.ts', 'utf8'),
   readFile('package.json', 'utf8'),
 ]);
 
@@ -44,11 +46,11 @@ for (const marker of [
   'min-h-11',
   'ExternalLink',
   'frameClasses',
-  'civicRelationshipOwnerLabel',
 ]) {
   need('Compact relationship component', compactLinks, marker);
 }
 
+need('Relationship presentation', relationshipPresentation, 'civicRelationshipOwnerLabel');
 need('Statistics', statistics, 'label="Related analysis"');
 need('Statistics', statistics, 'label="National data context"');
 need('Statistics', statistics, 'tone="neutral"');
