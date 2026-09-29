@@ -422,6 +422,7 @@ export default function ServiceSearch({
     useState<BrowserLegislationIndex | null>(null);
   const navigate = useNavigate();
   const containerRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const shouldSearchLegislation =
     scope === 'site' &&
@@ -696,6 +697,7 @@ export default function ServiceSearch({
         <div className="flex gap-2">
           <div className="relative flex-1">
             <input
+              ref={inputRef}
               id={scope === 'services' ? 'service-search' : 'site-search'}
               type="search"
               value={query}
@@ -728,6 +730,7 @@ export default function ServiceSearch({
                   setQuery('');
                   setActiveIndex(0);
                   setOpen(true);
+                  requestAnimationFrame(() => inputRef.current?.focus());
                 }}
                 className="absolute right-0 top-1/2 grid min-h-11 min-w-11 -translate-y-1/2 place-items-center rounded-lg text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                 aria-label="Clear search"
@@ -745,7 +748,13 @@ export default function ServiceSearch({
                 ? 'border border-secondary-400 bg-secondary-500 text-primary-900 hover:bg-secondary-300'
                 : 'bg-primary-800 text-white hover:bg-primary-900')
             }
-            aria-label="Open selected result"
+            aria-label={
+              visibleResults.length > 0
+                ? 'Open selected result'
+                : hasBroaderMatches
+                  ? 'Show all matching results'
+                  : 'Search BetterMakati'
+            }
           >
             <ArrowRight className="h-5 w-5" />
           </button>
@@ -756,7 +765,7 @@ export default function ServiceSearch({
         <div
           id={`search-results-${scope}`}
           aria-label={heading + ' results'}
-          className="absolute left-5 right-5 md:left-6 md:right-6 top-[118px] z-40 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-[0_24px_55px_rgba(26,43,32,0.22)]"
+          className="absolute left-5 right-5 top-full z-40 mt-2 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-[0_24px_55px_rgba(26,43,32,0.22)] md:left-6 md:right-6"
         >
           <div className="overflow-x-auto border-b border-gray-200 px-3 py-3">
             <div className="flex min-w-max gap-2">
@@ -764,6 +773,7 @@ export default function ServiceSearch({
                 <button
                   key={item}
                   type="button"
+                  aria-pressed={tab === item}
                   onClick={() => {
                     setTab(item);
                     setDomainFilter('all');
@@ -823,6 +833,7 @@ export default function ServiceSearch({
                   type="button"
                   role="option"
                   id={`search-result-${scope}-${index}`}
+                  tabIndex={-1}
                   aria-selected={index === activeIndex}
                   onMouseEnter={() => setActiveIndex(index)}
                   onClick={() => selectResult(item.href)}
@@ -973,7 +984,7 @@ export default function ServiceSearch({
           </div>
 
           <div className="flex items-center justify-between gap-3 border-t border-gray-200 bg-gray-50 px-4 py-2.5 text-xs text-gray-500">
-            <span>
+            <span role="status" aria-live="polite" aria-atomic="true">
               {results.length} {results.length === 1 ? 'result' : 'results'}
             </span>
             <div className="hidden md:flex items-center gap-3">
