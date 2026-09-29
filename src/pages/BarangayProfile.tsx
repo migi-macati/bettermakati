@@ -121,19 +121,8 @@ export default function BarangayProfile() {
   );
   const electionResult = findBarangayMayoralResult2025(barangay.slug);
   const barangayPhotos = barangayPhotoSetFor(barangay.slug);
-  const needle = barangay.name.toLowerCase();
-  const localAccountability = accountabilityEntries.filter(entry =>
-    [
-      entry.title,
-      entry.summary,
-      entry.location,
-      ...entry.responsibleBodies,
-      ...entry.sources.map(source => source.label),
-    ]
-      .filter(Boolean)
-      .join(' ')
-      .toLowerCase()
-      .includes(needle)
+  const localAccountability = accountabilityEntries.filter(
+    entry => entry.barangaySlug === barangay.slug
   );
 
   const sourcedAreaIds = civicAreaRelationships.flatMap(relationship =>
@@ -197,7 +186,7 @@ export default function BarangayProfile() {
     },
     {
       label: 'Projects & records',
-      description: 'Projects, budgets, accountability records and statistics.',
+      description: 'City projects and budgets, with locally tagged evidence where geography is available.',
       href: withBarangayScope('/projects-budget', barangay.slug),
       icon: ClipboardCheck,
     },
@@ -218,7 +207,7 @@ export default function BarangayProfile() {
   const civicLinks = [
     {
       label: 'Projects & money',
-      description: 'See city budget and project records, sliced locally where geography is available.',
+      description: 'See citywide budget and project records, with local evidence where geography is explicitly tagged.',
       href: withBarangayScope('/projects-budget', barangay.slug),
       icon: ClipboardCheck,
     },
