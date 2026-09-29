@@ -381,7 +381,7 @@ export default function CivicAreaContextMap() {
                     <Link
                       key={connection.placeId}
                       to={'/civic-map/' + connection.placeId}
-                      className="rounded-full border border-secondary-200 bg-white px-3 py-1.5 text-xs font-bold text-primary-800 transition hover:border-secondary-500"
+                      className="inline-flex min-h-11 items-center rounded-full border border-secondary-200 bg-white px-3 py-1.5 text-xs font-bold text-primary-800 transition hover:border-secondary-500"
                     >
                       {place.name}
                     </Link>
