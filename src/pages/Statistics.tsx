@@ -689,29 +689,24 @@ export default function Statistics() {
           </a>
         </div>
 
-        {economyContextLinks.length > 0 && (
-          <div className="mt-5 rounded-2xl border border-gray-200 bg-white p-5">
-            <div className="text-xs font-extrabold uppercase tracking-[0.08em] text-gray-500">
-              National data context
-            </div>
-            <div className="mt-3 flex flex-wrap gap-2">
-              {economyContextLinks.map(item =>
-                item.node ? (
-                  <a
-                    key={item.node.href}
-                    href={item.node.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex min-h-11 items-center gap-1 rounded-full border border-gray-200 px-4 text-sm font-bold text-primary-800 hover:border-primary-400"
-                  >
-                    {item.node.label}
-                    <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-                  </a>
-                ) : null
-              )}
-            </div>
-          </div>
-        )}
+        <CivicRelationshipLinks
+          label="National data context"
+          tone="neutral"
+          framed
+          className="mt-5"
+          items={economyContextLinks.flatMap(item =>
+            item.node
+              ? [
+                  {
+                    id: item.relationship.id,
+                    label: item.node.label,
+                    href: item.node.href,
+                    external: true,
+                  },
+                ]
+              : []
+          )}
+        />
       </Section>
 
       <Section id="city-systems" className="bg-[#fffdf8]">
