@@ -136,7 +136,7 @@ need(
   'inline-flex min-h-11 items-center gap-1 font-bold'
 );
 for (const marker of [
-  'group absolute grid h-12 w-12',
+  'group absolute grid h-14 w-14',
   'inline-flex min-h-11 items-center gap-1 font-bold',
   'tabIndex={-1}',
   'aria-hidden="true"',
