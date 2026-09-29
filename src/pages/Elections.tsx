@@ -58,6 +58,11 @@ const ElectionCandidateName = ({ name }: { name: string }) => {
     <span className="font-bold text-gray-950">{name}</span>
   );
 };
+
+const electionOfficialResultAnchorId = (name: string) => {
+  const officialSlug = findElection2025OfficialSlug(name);
+  return officialSlug ? 'official-result-' + officialSlug : undefined;
+};
 const percentage = (value: number) => value.toFixed(2) + '%';
 
 const election2025Csv = [
@@ -287,7 +292,8 @@ export default function Elections() {
             return (
               <article
                 key={race.key}
-                className="rounded-2xl border border-gray-200 bg-white overflow-hidden"
+                id={electionOfficialResultAnchorId(winner.name)}
+                className="scroll-mt-28 rounded-2xl border border-gray-200 bg-white overflow-hidden"
               >
                 <div className="border-b border-gray-100 bg-[#f5f8f2] p-5">
                   <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
@@ -388,7 +394,11 @@ export default function Elections() {
                   </thead>
                   <tbody>
                     {district.candidates.map(candidate => (
-                      <tr key={candidate.name} className="border-t">
+                      <tr
+                        key={candidate.name}
+                        id={electionOfficialResultAnchorId(candidate.name)}
+                        className="scroll-mt-28 border-t"
+                      >
                         <td className="px-4 py-3 font-bold">{candidate.rank}</td>
                         <td className="px-4 py-3">
                           <ElectionCandidateName name={candidate.name} />
