@@ -30,6 +30,27 @@ export interface ServiceGuideDetail {
 const checked = '2026-09-20';
 
 export const serviceGuideDetails: Record<string, ServiceGuideDetail> = {
+  'district-1-public-assistance-desk': {
+    verification: 'verified',
+    sourceLabel:
+      'District One Public Assistance Desk schedule — September 28 to October 9, 2026',
+    sourceUrl: 'https://www.facebook.com/share/p/19qKvhrw9E/',
+    lastVerified: '2026-09-29',
+    whoMayAvail:
+      'The source presents this as a Makati District One Public Assistance Desk. It specifically says residents of Barangays Valenzuela and Olympia may submit documents at the District Office on Wednesdays. The post does not publish a complete eligibility rule for every assistance category.',
+    requirements: [],
+    steps: [
+      'Check the scheduled barangay, date and venue before travelling.',
+      'Confirm the current documentary requirements with the district office before submitting personal records; the source post does not publish a complete checklist for each assistance type.',
+      'Use the listed Public Assistance Desk during its posted operating hours of 8:00 AM–3:00 PM on the scheduled date.',
+    ],
+    processingTime: 'Desk operating hours: 8:00 AM–3:00 PM on the listed dates.',
+    notes: [
+      'Assistance listed in the source: medical assistance for medicines, laboratories and mobility aid; unpaid hospital bills; burial assistance; college-level educational assistance; and Guarantee Letter referrals.',
+      'The listed rotating schedule runs September 28–October 9, 2026. BetterMakati moves each dated session out of current Calendar views after that session ends.',
+      'For Barangays Valenzuela and Olympia, the source separately says documents may be submitted every Wednesday at 9221 Pateros St., Barangay Valenzuela.',
+    ],
+  },
   'new-business-permit': {
     verification: 'verified',
     sourceLabel: 'Makati BPLO Business Permit Application Form (2025 update)',
