@@ -225,7 +225,7 @@
     "path": "/today",
     "label": "Today in Makati",
     "status": "reviewed",
-    "reviewedAt": "2026-09-29",
+    "reviewedAt": "2026-09-24",
     "checks": [
       "barangay-preference",
       "weather-freshness",
