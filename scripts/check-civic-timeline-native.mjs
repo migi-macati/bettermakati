@@ -11,6 +11,7 @@ const [
   reports,
   reportTypes,
   cityMonitor,
+  serviceAvailability,
   packageJson,
 ] = await Promise.all([
   readFile('src/data/civicTimelineNative.ts', 'utf8'),
@@ -23,6 +24,7 @@ const [
   readFile('src/data/reports.ts', 'utf8'),
   readFile('src/data/reportTypes.ts', 'utf8'),
   readFile('src/data/cityMonitor.ts', 'utf8'),
+  readFile('src/data/civicServiceAvailability.ts', 'utf8'),
   readFile('package.json', 'utf8'),
 ]);
 
@@ -35,6 +37,7 @@ for (const marker of [
   'export const nativeProcurementTimelineItems',
   'export const nativeElectionArchiveTimelineItems',
   'export const nativeCurrentElectionTimelineItems',
+  'export const nativeServiceAvailabilityTimelineItems',
   'export const nativeReportReleaseTimelineItems',
   'export const nativeCivicTimelineItems',
   'export const nativeCivicTimelineCoverage',
@@ -58,6 +61,7 @@ for (const marker of [
   "sourceFields: ['currentBskeSchedule.electionDate']",
   "sourceFields: ['supersededBske2026Milestones[].start']",
   "sourceFields: ['FeaturedReportV2.date']",
+  "'districtOnePublicAssistanceProgram.sessions[].date'",
 ]) {
   if (!native.includes(marker)) {
     problems.push('Native temporal-origin marker missing: ' + marker);
@@ -151,6 +155,9 @@ const electionBlock =
     ?.split('\n];')[0] ?? '';
 const electionCount = (electionBlock.match(/\n    year: /g) ?? []).length;
 const reportCount = (reports.match(/schemaVersion: 2,/g) ?? []).length;
+const serviceAvailabilityCount = (
+  serviceAvailability.match(/\n      date: '2026-/g) ?? []
+).length;
 const supersededElectionBlock =
   electionCivic
     .split('export const supersededBske2026Milestones = [')[1]
@@ -175,7 +182,8 @@ if (
   electionCount !== 10 ||
   reportCount !== 5 ||
   supersededElectionCount !== 4 ||
-  directCityMonitorCount !== 2
+  directCityMonitorCount !== 2 ||
+  serviceAvailabilityCount !== 9
 ) {
   problems.push(
     'W5-7R3 source baseline changed; re-audit native projection counts before continuing.'
@@ -193,6 +201,16 @@ if (!native.includes("id: 'election:bske-current:ra-12326-signed'")) {
 }
 if (!native.includes("status: 'superseded'")) {
   problems.push('Superseded 2026 election schedule is not preserved in the timeline.');
+}
+
+if (!native.includes("kind: 'service-availability'")) {
+  problems.push('Temporary service-availability projection kind is missing.');
+}
+if (!native.includes("actionability: 'service-available'")) {
+  problems.push('Temporary service availability must expose service-available actionability.');
+}
+if (!native.includes("owner: 'services'")) {
+  problems.push('Temporary service availability must retain Services as canonical owner.');
 }
 
 if (!native.includes("id: 'report:' + report.slug + ':release'")) {
@@ -234,6 +252,7 @@ console.log(
     procurementCount + ' Accountability procurement records',
     electionCount + ' historical mayoral election dates',
     '7 current/superseded BSKE schedule items',
+    serviceAvailabilityCount + ' temporary service-availability sessions',
     reportCount + ' BetterMakati report releases',
     'no new external fetching',
     'and maintenance/observation date protections retained.',
