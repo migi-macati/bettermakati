@@ -39,13 +39,13 @@ const Footer: React.FC = () => {
             <div className="mt-5 flex flex-col items-start gap-2 text-sm font-semibold">
               <Link
                 to="/contact"
-                className="inline-flex min-h-11 items-center text-primary-100 hover:text-white"
+                className="inline-flex min-h-11 items-center text-primary-100 hover:text-white focus-visible:outline-secondary-300"
               >
                 Contact BetterMakati
               </Link>
               <a
                 href="mailto:hello@bettermakati.org"
-                className="inline-flex min-h-11 items-center text-primary-100 hover:text-white"
+                className="inline-flex min-h-11 items-center text-primary-100 hover:text-white focus-visible:outline-secondary-300"
               >
                 hello@bettermakati.org
               </a>
@@ -54,7 +54,7 @@ const Footer: React.FC = () => {
                   href="https://www.facebook.com/bettermakati"
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex min-h-11 items-center text-primary-100 hover:text-white"
+                  className="inline-flex min-h-11 items-center text-primary-100 hover:text-white focus-visible:outline-secondary-300"
                 >
                   Facebook
                 </a>
@@ -62,7 +62,7 @@ const Footer: React.FC = () => {
                   href="https://www.instagram.com/bettermakati/"
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex min-h-11 items-center text-primary-100 hover:text-white"
+                  className="inline-flex min-h-11 items-center text-primary-100 hover:text-white focus-visible:outline-secondary-300"
                 >
                   Instagram
                 </a>
@@ -71,7 +71,7 @@ const Footer: React.FC = () => {
                 href="https://github.com/migi-macati/bettermakati"
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex min-h-11 items-center gap-2 text-primary-100 hover:text-white"
+                className="inline-flex min-h-11 items-center gap-2 text-primary-100 hover:text-white focus-visible:outline-secondary-300"
               >
                 <Github className="h-4 w-4" aria-hidden="true" /> Open-source on
                 GitHub
@@ -89,7 +89,7 @@ const Footer: React.FC = () => {
                   <li key={link.label}>
                     <Link
                       to={scopedHref(link.href)}
-                      className="inline-flex min-h-11 items-center text-sm text-primary-100 transition-colors hover:text-white"
+                      className="inline-flex min-h-11 items-center text-sm text-primary-100 transition-colors hover:text-white focus-visible:outline-secondary-300"
                     >
                       {link.label}
                     </Link>
@@ -111,7 +111,7 @@ const Footer: React.FC = () => {
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex min-h-11 items-center gap-1 text-sm text-primary-100 transition-colors hover:text-white"
+                className="inline-flex min-h-11 items-center gap-1 text-sm text-primary-100 transition-colors hover:text-white focus-visible:outline-secondary-300"
               >
                 {link.label}
                 <ExternalLink className="h-3 w-3 opacity-60" aria-hidden="true" />
@@ -133,17 +133,17 @@ const Footer: React.FC = () => {
             <div className="flex flex-wrap gap-5">
               <Link
                 to="/about#identity"
-                className="inline-flex min-h-11 items-center underline underline-offset-4"
+                className="inline-flex min-h-11 items-center underline underline-offset-4 focus-visible:outline-secondary-300"
               >
                 Our identity
               </Link>
-              <Link to="/privacy" className="inline-flex min-h-11 items-center underline underline-offset-4">
+              <Link to="/privacy" className="inline-flex min-h-11 items-center underline underline-offset-4 focus-visible:outline-secondary-300">
                 Privacy
               </Link>
-              <Link to="/terms" className="inline-flex min-h-11 items-center underline underline-offset-4">
+              <Link to="/terms" className="inline-flex min-h-11 items-center underline underline-offset-4 focus-visible:outline-secondary-300">
                 Terms
               </Link>
-              <Link to="/status" className="inline-flex min-h-11 items-center underline underline-offset-4">
+              <Link to="/status" className="inline-flex min-h-11 items-center underline underline-offset-4 focus-visible:outline-secondary-300">
                 Coverage &amp; limitations
               </Link>
             </div>
