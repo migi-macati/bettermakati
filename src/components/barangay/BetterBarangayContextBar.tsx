@@ -45,8 +45,8 @@ export default function BetterBarangayContextBar() {
       aria-label="BetterBarangay view"
     >
       <div className="container flex min-h-12 items-center justify-between gap-3 px-4 py-1.5">
-        <div className="relative min-w-0">
-          <div className="pointer-events-none flex min-h-10 min-w-0 items-center gap-1.5">
+        <div className="relative min-w-0 rounded-lg focus-within:outline focus-within:outline-3 focus-within:outline-offset-2 focus-within:outline-secondary-300">
+          <div className="pointer-events-none flex min-h-11 min-w-0 items-center gap-1.5">
             <span className="truncate text-base font-black tracking-tight sm:text-lg">
               <span className="text-secondary-300">Better</span>
               <span className="text-white">
@@ -73,10 +73,22 @@ export default function BetterBarangayContextBar() {
 
         <Link
           to={barangay ? '/barangays/' + barangay.slug : '/barangays'}
-          className="inline-flex min-h-10 shrink-0 items-center gap-1 rounded-lg px-2 text-sm font-bold text-white hover:bg-white/10 sm:px-3"
+          aria-label={
+            barangay
+              ? 'Open Barangay ' + barangay.name + ' homepage'
+              : 'Open barangay directory'
+          }
+          className="inline-flex min-h-11 shrink-0 items-center gap-1 rounded-lg px-2 text-sm font-bold text-white hover:bg-white/10 sm:px-3"
         >
           <span>
-            {barangay ? 'Barangay Homepage' : 'Barangays'}
+            {barangay ? (
+              <>
+                <span className="sm:hidden">Homepage</span>
+                <span className="hidden sm:inline">Barangay Homepage</span>
+              </>
+            ) : (
+              'Barangays'
+            )}
           </span>
           <ArrowRight className="h-4 w-4" aria-hidden="true" />
         </Link>
