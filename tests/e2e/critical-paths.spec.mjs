@@ -1087,7 +1087,7 @@ test('Accountability record cards expose provenance and the next evidence gap', 
 test('Accountability barangay slice uses only explicit local tags', async ({ page }) => {
   await page.goto(baseURL + '/accountability?barangay=poblacion');
   await expect(page.getByText(/explicitly tagged to Poblacion/i)).toBeVisible();
-  await expect(page.getByText('Events management services for Pride March 2024', { exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Events management services for Pride March 2024', exact: true })).toBeVisible();
   await expect(page.getByText('2026 city fiscal record', { exact: true })).toHaveCount(0);
 });
 
@@ -1575,7 +1575,7 @@ test('generic ratings are removed and structured observations cannot be submitte
   await expect(page.getByRole('button', { name: /Rate this place/ })).toHaveCount(0);
   await expect(page.getByText('Condition snapshot', { exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'Save observation', exact: true }).click();
-  await expect(page.getByRole('status')).toContainText('Record at least one condition you actually observed.');
+  await expect(page.getByRole('alert')).toContainText('Record at least one condition you actually observed.');
   expect(posts).toBe(0);
 });
 
@@ -1807,7 +1807,7 @@ test('barangay landing page uses the persistent BetterBarangay context bar', asy
   await expect(page.getByRole('heading', { level: 1 })).toContainText('Poblacion Better');
   await expect(page.getByRole('region', { name: 'BetterBarangay view' })).toBeVisible();
   await expect(page.getByLabel('Choose BetterBarangay view')).toHaveValue('poblacion');
-  await expect(page.getByRole('link', { name: 'Barangay Homepage', exact: true })).toHaveAttribute('href', '/barangays/poblacion');
+  await expect(page.getByRole('link', { name: 'Open Barangay Poblacion homepage', exact: true })).toHaveAttribute('href', '/barangays/poblacion');
   await expect(page.getByRole('heading', { name: /What brings you here/i })).toBeVisible();
   await expect(page.getByRole('heading', { name: /Follow what affects Poblacion/i })).toBeVisible();
 });
@@ -2446,7 +2446,7 @@ test('ecosystem fallbacks preserve the query and leave an internal recovery path
 test('projects and budget exposes related national evidence without replacing Makati records', async ({ page }) => {
   await page.goto(baseURL + '/projects-budget');
 
-  const nationalContext = page.getByText('Related national records', { exact: true }).locator('..');
+  const nationalContext = page.getByText('National context', { exact: true }).locator('..');
   await expect(nationalContext.getByRole('link', { name: /2026 national budget/i })).toHaveAttribute(
     'href',
     'https://2026-budget.bettergov.ph/'

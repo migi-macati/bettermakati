@@ -162,7 +162,7 @@ export default function CityComparison() {
             <div key={row.city} role="listitem">
               <div className="flex items-baseline justify-between gap-4">
                 <div className="flex items-center gap-2 text-sm font-semibold text-gray-800">
-                  <span className="w-5 text-right text-xs text-gray-400">
+                  <span className="w-5 text-right text-xs text-gray-600">
                     {cityComparisonRows.indexOf(row) + 1}
                   </span>
                   <span

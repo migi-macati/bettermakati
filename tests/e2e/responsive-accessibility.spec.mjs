@@ -25,19 +25,53 @@ const assertNoPageOverflow = async (page, route) => {
   await expect(page.locator('main#main-content')).toBeVisible();
   await expect(page.locator('main#main-content h1')).toHaveCount(1);
 
-  const metrics = await page.evaluate(() => ({
-    viewport: window.innerWidth,
-    documentWidth: document.documentElement.scrollWidth,
-    bodyWidth: document.body.scrollWidth,
-  }));
+  const metrics = await page.evaluate(() => {
+    const viewport = window.innerWidth;
+    const isClippedByAncestor = element => {
+      let parent = element.parentElement;
+      while (parent) {
+        const overflowX = getComputedStyle(parent).overflowX;
+        if (['auto', 'scroll', 'hidden', 'clip'].includes(overflowX)) return true;
+        parent = parent.parentElement;
+      }
+      return false;
+    };
+    const offenders = Array.from(document.querySelectorAll('body *'))
+      .flatMap(element => {
+        const rect = element.getBoundingClientRect();
+        if (
+          (rect.right <= viewport + 1 && rect.left >= -1) ||
+          isClippedByAncestor(element)
+        ) return [];
+        return [{
+          tag: element.tagName.toLowerCase(),
+          id: element.id || '',
+          className: typeof element.className === 'string' ? element.className.slice(0, 180) : '',
+          left: Math.round(rect.left),
+          right: Math.round(rect.right),
+          width: Math.round(rect.width),
+          text: (element.textContent || '').trim().replace(/\\s+/g, ' ').slice(0, 100),
+        }];
+      })
+      .slice(0, 8);
+    return {
+      viewport,
+      documentWidth: document.documentElement.scrollWidth,
+      bodyWidth: document.body.scrollWidth,
+      offenders,
+    };
+  });
 
+  const overflowContext = metrics.offenders.length
+    ? ' Offenders: ' + JSON.stringify(metrics.offenders)
+    : '';
   expect(
     metrics.documentWidth,
-    'Document overflow on ' + route + ' at ' + metrics.viewport + 'px'
+    'Document overflow on ' + route + ' at ' + metrics.viewport + 'px.' + overflowContext
   ).toBeLessThanOrEqual(metrics.viewport + 1);
   expect(
     metrics.bodyWidth,
-    'Body overflow on ' + route + ' at ' + metrics.viewport + 'px'
+    'Body overflow on ' + route + ' at ' + metrics.viewport + 'px.' + overflowContext
   ).toBeLessThanOrEqual(metrics.viewport + 1);
 };
 

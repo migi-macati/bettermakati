@@ -43,7 +43,7 @@ function SourceLink({
   className?: string;
 }) {
   const classes =
-    'font-bold text-primary-700 underline underline-offset-2 ' + className;
+    'inline-flex min-h-6 min-w-6 items-center justify-center font-bold text-primary-700 underline underline-offset-2 ' + className;
 
   if (source.sourceKind === 'canonical-internal') {
     return (
@@ -68,7 +68,7 @@ function SourceLink({
       {publicRecord && (
         <Link
           to={'/records/' + publicRecord.id}
-          className="whitespace-nowrap font-bold text-primary-700 underline underline-offset-2"
+          className="inline-flex min-h-6 items-center whitespace-nowrap font-bold text-primary-700 underline underline-offset-2"
         >
           Public record
         </Link>
@@ -91,7 +91,7 @@ function EvidenceLinks({
   }
 
   return (
-    <span className="ml-1 inline-flex flex-wrap items-baseline gap-x-1.5 gap-y-1 text-xs">
+    <span className="ml-1 inline-flex flex-wrap items-center gap-x-1.5 gap-y-2 text-xs">
       {sourceIds?.map(sourceId => {
         const source = sourceById.get(sourceId);
         return source ? (
@@ -112,7 +112,7 @@ function EvidenceLinks({
           <Link
             key={record.recordType + ':' + record.id}
             to={resolved?.href ?? record.href}
-            className="whitespace-nowrap font-bold text-primary-700 underline underline-offset-2"
+            className="inline-flex min-h-6 items-center whitespace-nowrap font-bold text-primary-700 underline underline-offset-2"
           >
             {recordTypeLabel[record.recordType]}
           </Link>

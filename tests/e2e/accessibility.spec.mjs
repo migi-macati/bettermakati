@@ -115,9 +115,10 @@ for (const route of routes) {
 
 test('skip link is the first keyboard stop and moves focus to main content', async ({ page }) => {
   await page.goto(baseURL + '/');
+  const skip = page.getByRole('link', { name: 'Skip to main content' });
+  await expect(skip).toBeVisible();
   await page.keyboard.press('Tab');
 
-  const skip = page.getByRole('link', { name: 'Skip to main content' });
   await expect(skip).toBeFocused();
 
   await page.keyboard.press('Enter');
@@ -128,7 +129,8 @@ test('desktop navigation menu closes with Escape and restores toggle focus', asy
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto(baseURL + '/');
 
-  const toggle = page.getByRole('button', { name: 'Open Services menu' });
+  const toggle = page.locator('#desktop-toggle-services');
+  await expect(toggle).toHaveAccessibleName('Open Services menu');
   await toggle.focus();
   await page.keyboard.press('Enter');
 
@@ -174,7 +176,7 @@ test('dense horizontal table region is keyboard focusable and named', async ({ p
 test('SPA pathname navigation moves focus to main content', async ({ page }) => {
   await page.goto(baseURL + '/');
 
-  const services = page.getByRole('link', { name: 'Get a service', exact: true });
+  const services = page.getByRole('link', { name: /^Get a service/ });
   await services.focus();
   await page.keyboard.press('Enter');
 

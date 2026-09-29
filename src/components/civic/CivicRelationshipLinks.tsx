@@ -48,17 +48,17 @@ export default function CivicRelationshipLinks({
     <div
       className={
         (framed
-          ? 'rounded-2xl border p-5 ' + frameClasses[tone] + ' '
+          ? 'min-w-0 rounded-2xl border p-5 ' + frameClasses[tone] + ' '
           : '') + className
       }
     >
       <div className="text-xs font-extrabold uppercase tracking-[0.08em] text-gray-600">
         {label}
       </div>
-      <div className="mt-2 flex flex-wrap gap-2">
+      <div className="mt-2 flex min-w-0 flex-wrap gap-2">
         {items.map(item => {
           const classes =
-            'inline-flex min-h-11 items-center gap-1.5 rounded-full border px-3.5 py-2 text-xs font-bold transition ' +
+            'inline-flex min-h-11 max-w-full min-w-0 items-center gap-1.5 rounded-full border px-3.5 py-2 text-left text-xs font-bold whitespace-normal transition ' +
             toneClasses[tone];
 
           if (item.external) {
@@ -72,7 +72,7 @@ export default function CivicRelationshipLinks({
               >
                 {item.icon}
                 {item.label}
-                <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
+                <ExternalLink className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
               </a>
             );
           }
@@ -81,7 +81,7 @@ export default function CivicRelationshipLinks({
             <Link key={item.id} to={item.href} className={classes}>
               {item.icon}
               {item.label}
-              <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+              <ArrowRight className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
             </Link>
           );
         })}

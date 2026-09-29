@@ -261,7 +261,7 @@ export default function CivicAreaContextMap() {
                     : undefined
                 }
                 vectorEffect="non-scaling-stroke"
-                aria-label={area.name + ' approximate boundary'}
+                aria-hidden="true"
               />
             ))}
 
@@ -279,7 +279,7 @@ export default function CivicAreaContextMap() {
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 vectorEffect="non-scaling-stroke"
-                aria-label={service.name + ' mapped reference alignment'}
+                aria-hidden="true"
               />
             ))}
         </svg>
