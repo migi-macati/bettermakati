@@ -1,0 +1,86 @@
+{
+  "wave": "W6-4d",
+  "status": "complete",
+  "reviewedOn": "2026-09-29",
+  "principles": [
+    "BetterGov resources are continuation or comparison context unless an exact source identity is separately verified.",
+    "BetterLGU is cross-LGU discovery, not evidence for a Makati fact.",
+    "A page should expose only ecosystem links that answer a plausible next civic question for that page.",
+    "Shared ecosystem destinations should be owned by the ecosystem resource registry rather than repeated as hardcoded URLs."
+  ],
+  "surfaces": [
+    {
+      "surface": "About",
+      "resources": [
+        "bettergov-home",
+        "betterlgu"
+      ],
+      "purpose": "wider civic ecosystem and cross-LGU discovery",
+      "evidenceRole": "context-only",
+      "status": "pass"
+    },
+    {
+      "surface": "Government",
+      "resources": [
+        "open-congress",
+        "national-government"
+      ],
+      "purpose": "national legislative and government-directory continuation",
+      "evidenceRole": "context-only",
+      "status": "pass"
+    },
+    {
+      "surface": "Statistics",
+      "resources": [
+        "open-data",
+        "data-research",
+        "price-guides"
+      ],
+      "purpose": "national data, visualization and benchmark context",
+      "evidenceRole": "context-only",
+      "status": "pass"
+    },
+    {
+      "surface": "Projects & Budget",
+      "resources": [
+        "national-budget",
+        "philgeps",
+        "transparency",
+        "flood-control"
+      ],
+      "purpose": "national budget, procurement and infrastructure research context",
+      "evidenceRole": "context-only",
+      "status": "pass"
+    },
+    {
+      "surface": "Integrity",
+      "resources": [
+        "philgeps"
+      ],
+      "purpose": "procurement discovery after a Makati-local Integrity record",
+      "evidenceRole": "context-only-unless-exact-reference-is-independently-verified",
+      "status": "pass"
+    }
+  ],
+  "betterLguDecision": {
+    "resource": "betterlgu",
+    "primarySurface": "About",
+    "reason": "Cross-LGU discovery is useful as ecosystem orientation, but adding the directory to domain pages such as Statistics, Accountability or Projects & Budget would be a generic link dump rather than a record-specific continuation."
+  },
+  "registry": {
+    "owner": "src/data/ecosystemResources.ts",
+    "requiredIds": [
+      "bettergov-home",
+      "betterlgu",
+      "data-research",
+      "open-data",
+      "price-guides",
+      "national-budget",
+      "transparency",
+      "philgeps",
+      "flood-control",
+      "open-congress",
+      "national-government"
+    ]
+  }
+}
