@@ -153,7 +153,12 @@ for (const marker of [
 }
 
 for (const marker of [
-  "withTags(['wcag2a', 'wcag2aa', 'wcag21aa'])",
+  "'wcag2a'",
+  "'wcag2aa'",
+  "'wcag21a'",
+  "'wcag21aa'",
+  "'wcag22aa'",
+  '.withTags(wcagTags)',
   "'/search'",
   "'/accountability'",
   "'/calendar'",
