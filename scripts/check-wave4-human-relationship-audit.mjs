@@ -138,7 +138,7 @@ for (const marker of [
   'min-h-11 appearance-none rounded-full',
   'inline-flex min-h-11 items-center text-primary-700',
   'aria-expanded={expanded}',
-  'Related records',
+  'Related civic records',
 ]) {
   if (!legislationPage.includes(marker)) {
     problems.push('Legislation journey/mobile marker missing: ' + marker);
@@ -154,7 +154,7 @@ for (const marker of [
   'min-w-[980px]',
   'Accountability record',
   'Public record',
-  'Analysis: {item.node.label}',
+  'Related analysis',
 ]) {
   if (!integrityPage.includes(marker)) {
     problems.push('Integrity journey/mobile marker missing: ' + marker);
@@ -165,7 +165,7 @@ for (const marker of [
   'reportCivicNodeResolver',
   'reportRecordRefToCivicRef(record)',
   'to={resolved?.href ?? record.href}',
-  'Related records',
+  'Related civic records',
   'overflow-x-auto',
   'min-w-[640px]',
 ]) {
@@ -177,7 +177,7 @@ for (const marker of [
 for (const marker of [
   'id={entry.id}',
   'Integrity evidence',
-  'Analysis: {item.node.label}',
+  'Related analysis',
 ]) {
   if (!accountabilityPage.includes(marker)) {
     problems.push('Accountability reverse-journey marker missing: ' + marker);
