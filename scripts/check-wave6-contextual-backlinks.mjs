@@ -73,7 +73,7 @@ need(
 need(
   'Official profile evidence rule',
   officialProfile,
-  'Only records with an explicit canonical relationship to this profile are shown here.'
+  'Only records directly linked to this profile by the underlying public data are shown here.'
 );
 
 for (const forbidden of [
