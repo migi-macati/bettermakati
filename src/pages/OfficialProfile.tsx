@@ -15,6 +15,7 @@ import {
   election2025Sources,
   findElection2025OfficialResult,
 } from '../data/election2025';
+import { electionRecordForOfficial } from '../data/officialCivicRelationships';
 
 const number = (value: number) => value.toLocaleString('en-PH');
 const percentage = (value: number) => value.toFixed(2) + '%';
@@ -23,6 +24,9 @@ export default function OfficialProfile() {
   const { slug } = useParams();
   const official = findOfficial(slug);
   const electionResult = findElection2025OfficialResult(slug);
+  const electionRecordLinks = official
+    ? electionRecordForOfficial(official.slug)
+    : [];
 
   if (!official) {
     return (
@@ -173,7 +177,18 @@ export default function OfficialProfile() {
             Open election, legislative and accountability records connected to this office. BetterMakati does not assign ratings.
           </p>
           <div className="mt-5 flex flex-wrap gap-3">
-            <Link to="/accountability" className="brand-btn-primary">
+            {electionRecordLinks.map(item =>
+              item.node ? (
+                <Link
+                  key={item.relationship.id}
+                  to={item.node.href}
+                  className="brand-btn-primary"
+                >
+                  2025 election result
+                </Link>
+              ) : null
+            )}
+            <Link to="/accountability" className={electionRecordLinks.length ? "brand-btn-secondary" : "brand-btn-primary"}>
               Accountability Ledger
             </Link>
             <Link to="/legislation" className="brand-btn-secondary">
