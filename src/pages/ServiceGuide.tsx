@@ -23,6 +23,7 @@ import NationalServiceHandoff from '../components/services/NationalServiceHandof
 import { useBarangayScope, withBarangayScope } from '../hooks/useBarangayScope';
 import { legislationForService } from '../data/legislationCivicRelationships';
 import { districtOnePublicAssistanceProgram } from '../data/civicServiceAvailability';
+import { manilaDateKey } from '../data/civicTimeline';
 
 const mapsUrl = (query: string) =>
   'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(query);
@@ -405,12 +406,7 @@ export default function ServiceGuide() {
     item.id === districtOnePublicAssistanceProgram.serviceId
       ? districtOnePublicAssistanceProgram
       : undefined;
-  const todayKey = new Intl.DateTimeFormat('en-CA', {
-    timeZone: 'Asia/Manila',
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  }).format(new Date());
+  const todayKey = manilaDateKey();
   const temporaryAvailabilityStatus = temporaryAvailability
     ? todayKey < temporaryAvailability.scheduleWindow.start
       ? 'Upcoming'
