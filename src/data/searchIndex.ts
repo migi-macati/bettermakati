@@ -112,6 +112,7 @@ const serviceItems: SearchItem[] = serviceDirectory.map(item => ({
     item.type,
   ].join(' '),
   featured: item.featured,
+  canonicalKey: 'civic-owner:services:service:' + item.id,
 }));
 
 const recurringVisitorItems: SearchItem[] = visitorExperiences.flatMap(
