@@ -124,7 +124,7 @@ export default function CivicTimelinePreview({
       <div className="container px-5 md:px-6 lg:px-8">
         <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <div>
-            <div className="section-eyebrow">Makati Calendar</div>
+            <div className="section-eyebrow">On the Makati Calendar</div>
             <h2 className="text-3xl font-extrabold tracking-tight text-gray-950 md:text-4xl">
               {heading}
             </h2>
@@ -163,7 +163,7 @@ export default function CivicTimelinePreview({
               </div>
             ) : (
               <div className="mt-4 rounded-2xl border border-gray-200 bg-white p-5 text-sm leading-relaxed text-gray-600">
-                No current or future canonical civic dates are available for this scope yet.
+                No current or future civic dates are available for this scope yet.
               </div>
             )}
           </div>
@@ -185,16 +185,14 @@ export default function CivicTimelinePreview({
               </div>
             ) : (
               <div className="mt-4 rounded-2xl border border-gray-200 bg-white p-5 text-sm leading-relaxed text-gray-600">
-                No canonical publication-release record falls within the Calendar’s recent window.
+                No recently published civic record falls within the Calendar’s recent window.
               </div>
             )}
           </div>
         </div>
 
         <p className="mt-5 text-xs leading-relaxed text-gray-500">
-          This preview uses the same canonical Civic Timeline selectors as the
-          Makati Calendar. Raw source-change signals and unresolved review
-          candidates are not shown.
+          This preview uses the same reviewed civic dates as the Makati Calendar. Unverified source leads are not shown.
         </p>
       </div>
     </section>
