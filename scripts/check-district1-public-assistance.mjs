@@ -200,6 +200,7 @@ for (const marker of [
   'View on Makati Calendar',
   'temporaryAvailabilityStatus',
   "'Past schedule'",
+  "temporaryAvailabilityStatus === 'Past schedule' ? 'archive' : 'now-next'",
 ]) {
   need('Service guide schedule', serviceGuide, marker);
 }
