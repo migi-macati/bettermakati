@@ -1575,7 +1575,11 @@ test('generic ratings are removed and structured observations cannot be submitte
   await expect(page.getByRole('button', { name: /Rate this place/ })).toHaveCount(0);
   await expect(page.getByText('Condition snapshot', { exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'Save observation', exact: true }).click();
-  await expect(page.getByRole('alert')).toContainText('Record at least one condition you actually observed.');
+  await expect(
+    page.getByRole('alert').filter({
+      hasText: 'Record at least one condition you actually observed.',
+    })
+  ).toBeVisible();
   expect(posts).toBe(0);
 });
 
