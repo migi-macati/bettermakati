@@ -115,11 +115,11 @@ export default function HeritageMap({
               key={place.id}
               to={'/civic-map/' + place.id}
               aria-label={'Open ' + place.name}
-              className="group absolute -translate-x-1/2 -translate-y-full"
+              className="group absolute grid h-11 min-w-11 -translate-x-1/2 -translate-y-full place-items-end"
               style={{ left: position.x + '%', top: position.y + '%' }}
             >
               <span className="grid h-8 min-w-8 place-items-center rounded-full border-2 border-white bg-primary-800 px-2 text-xs font-extrabold text-white shadow-md transition group-hover:bg-secondary-600">
-                {routeIndex >= 0 ? routeIndex + 1 : <MapPin className="h-4 w-4" />}
+                {routeIndex >= 0 ? routeIndex + 1 : <MapPin className="h-4 w-4" aria-hidden="true" />}
               </span>
               <span className="pointer-events-none absolute left-1/2 top-full mt-1 hidden max-w-44 -translate-x-1/2 whitespace-nowrap rounded-lg bg-gray-950/90 px-2 py-1 text-[11px] font-bold text-white shadow-sm group-hover:block group-focus:block">
                 {place.name}
@@ -138,7 +138,7 @@ export default function HeritageMap({
           href={openMap}
           target="_blank"
           rel="noreferrer"
-          className="inline-flex items-center gap-1 font-bold text-primary-700 underline underline-offset-2"
+          className="inline-flex min-h-11 items-center gap-1 font-bold text-primary-700 underline underline-offset-2"
         >
           Open full map <ExternalLink className="h-3.5 w-3.5" />
         </a>
