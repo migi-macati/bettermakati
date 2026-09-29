@@ -14,6 +14,7 @@ import SEO from '../components/SEO';
 import LastReviewed from '../components/ui/LastReviewed';
 import SharePage from '../components/ui/SharePage';
 import CivicDomainTimelinePreview from '../components/civic/CivicDomainTimelinePreview';
+import CivicRelationshipLinks from '../components/civic/CivicRelationshipLinks';
 import { openCongressMakatiRecords } from '../data/openCongressMakati';
 import {
   localLegislationById,
@@ -386,26 +387,21 @@ export default function Legislation() {
                         </div>
                       ) : null}
 
-                      {relatedRecords.length > 0 ? (
-                        <div className="mt-4">
-                          <div className="text-xs font-extrabold uppercase tracking-[0.08em] text-gray-500">
-                            Related records
-                          </div>
-                          <div className="mt-2 flex flex-wrap gap-2">
-                            {relatedRecords.map(item =>
-                              item.node ? (
-                                <Link
-                                  key={item.relationship.id}
-                                  to={item.node.href}
-                                  className="rounded-full border border-primary-200 bg-primary-50 px-3 py-2 text-xs font-bold text-primary-800 hover:border-primary-400"
-                                >
-                                  {item.node.label}
-                                </Link>
-                              ) : null
-                            )}
-                          </div>
-                        </div>
-                      ) : null}
+                      <CivicRelationshipLinks
+                        label="Related civic records"
+                        className="mt-4"
+                        items={relatedRecords.flatMap(item =>
+                          item.node
+                            ? [
+                                {
+                                  id: item.relationship.id,
+                                  label: item.node.label,
+                                  href: item.node.href,
+                                },
+                              ]
+                            : []
+                        )}
+                      />
                     </div>
                   ) : null}
                 </article>
