@@ -258,7 +258,7 @@ const Services: React.FC = () => {
         </section>
 
         <Section className="bg-[#fffdf8]">
-          <LastReviewed date="2026-09-25"
+          <LastReviewed date="2026-09-29"
             note="Requirements can change. Open the linked official source before acting."
             className="mt-0"
           />
