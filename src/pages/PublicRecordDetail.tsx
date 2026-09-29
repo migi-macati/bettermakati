@@ -69,7 +69,7 @@ export default function PublicRecordDetail() {
         </p>
 
         <div className="mt-5 max-w-4xl rounded-2xl border border-white/20 bg-white/10 p-5">
-          <div className="text-xs font-extrabold uppercase tracking-[0.08em] text-secondary-300">
+          <div className="text-xs font-extrabold uppercase tracking-[0.08em] text-secondary-100">
             BetterMakati catalog entry
           </div>
           <p className="mt-2 text-sm leading-relaxed text-primary-50">
