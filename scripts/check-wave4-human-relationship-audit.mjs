@@ -154,7 +154,7 @@ for (const marker of [
   'min-w-[980px]',
   'Accountability record',
   'Public record',
-  'Related analysis',
+  'Analysis: {item.node.label}',
 ]) {
   if (!integrityPage.includes(marker)) {
     problems.push('Integrity journey/mobile marker missing: ' + marker);
@@ -165,7 +165,7 @@ for (const marker of [
   'reportCivicNodeResolver',
   'reportRecordRefToCivicRef(record)',
   'to={resolved?.href ?? record.href}',
-  'Related civic records',
+  'Related records',
   'overflow-x-auto',
   'min-w-[640px]',
 ]) {
