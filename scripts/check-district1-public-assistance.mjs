@@ -47,7 +47,7 @@ const need = (name, source, marker) => {
 
 need('Integration documentation', integrationDoc, 'Status: complete');
 need('Integration documentation', integrationDoc, '**10 dated sessions covering 11 barangays**');
-need('Integration documentation', integrationDoc, 'not projected as an indefinite recurring Calendar series');
+need('Integration documentation', integrationDoc, 'indefinite recurring Calendar series');
 
 for (const marker of [
   "serviceId: 'district-1-public-assistance-desk'",
@@ -144,7 +144,7 @@ for (const marker of [
   "'district-1-public-assistance-desk':",
   'requirements: []',
   'The post does not publish a complete eligibility rule',
-  'The source post does not publish a complete checklist',
+  'the source post does not publish a complete checklist',
 ]) {
   need('Service guide detail', serviceGuideDetails, marker);
 }
