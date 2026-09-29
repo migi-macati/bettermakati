@@ -77,6 +77,20 @@ export default function Participate() {
         </div>
         <LastReviewed date={participationReviewed} />
 
+        {barangay && (
+          <div className="mt-5 rounded-2xl border border-primary-100 bg-white p-5">
+            <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+              BetterBarangay context
+            </div>
+            <div className="mt-1 text-lg font-extrabold text-gray-950">
+              Local actions for {barangay.name}, citywide opportunities where noted
+            </div>
+            <p className="mt-2 text-sm leading-relaxed text-gray-600">
+              Local problem reports, place improvements and source submissions below keep the {barangay.name} context. Official consultation listings and project-wide community input remain citywide unless they explicitly identify a barangay.
+            </p>
+          </div>
+        )}
+
         <div className="mt-7 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
           <a
             href="#official-opportunities"
