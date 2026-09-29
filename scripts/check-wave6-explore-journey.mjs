@@ -70,7 +70,7 @@ for (const marker of [
 
 for (const marker of [
   'to="/heritage"',
-  "href: '/civic-map/'",
+  'to={\`/civic-map/\${place.id}\`}',
 ]) {
   if (!history.includes(marker)) {
     problems.push('History context marker missing: ' + marker);
