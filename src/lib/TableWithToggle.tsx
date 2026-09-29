@@ -85,7 +85,13 @@ export const TableWithToggle = ({
   theme: TypographyTheme;
 } & HTMLAttributes<HTMLTableElement>) => {
   const [viewMode, setViewMode] = useState<'table' | 'list'>('table');
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(
+    () => typeof window !== 'undefined' && window.innerWidth < 640
+  );
+  const tableLabel =
+    typeof props['aria-label'] === 'string' && props['aria-label'].trim()
+      ? props['aria-label']
+      : 'Data table';
 
   // Set responsive default view
   useEffect(() => {
@@ -205,12 +211,18 @@ export const TableWithToggle = ({
   return (
     <div className="-mx-4 sm:mx-0 mb-6">
       {/* View Toggle Buttons */}
-      <div className="flex justify-end mb-4 gap-2 px-4 sm:px-0">
+      <div
+        className="mb-4 flex justify-end gap-2 px-4 sm:px-0"
+        role="group"
+        aria-label="Choose data view"
+      >
         <button
+          type="button"
           onClick={() => setViewMode('table')}
-          className={`px-3 py-2 text-sm font-medium rounded-md transition-colors flex items-center gap-2 ${
+          aria-pressed={viewMode === 'table'}
+          className={`inline-flex min-h-11 items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors ${
             viewMode === 'table'
-              ? 'bg-blue-600 text-white'
+              ? 'bg-primary-800 text-white'
               : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
           }`}
         >
@@ -218,8 +230,10 @@ export const TableWithToggle = ({
           Table
         </button>
         <button
+          type="button"
           onClick={() => setViewMode('list')}
-          className={`px-3 py-2 text-sm font-medium rounded-md transition-colors flex items-center gap-2 ${
+          aria-pressed={viewMode === 'list'}
+          className={`inline-flex min-h-11 items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors ${
             viewMode === 'list'
               ? 'bg-blue-600 text-white'
               : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -231,7 +245,12 @@ export const TableWithToggle = ({
       </div>
 
       {viewMode === 'table' ? (
-        <div className="overflow-x-auto">
+        <div
+          className="scroll-region overflow-x-auto"
+          role="region"
+          aria-label={tableLabel + ' — horizontally scrollable'}
+          tabIndex={0}
+        >
           <table
             className={`${theme.components.table} sticky-table`}
             style={
@@ -270,24 +289,11 @@ export const TableWithToggle = ({
               </div>
             ))
           ) : (
-            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mx-2 sm:mx-0">
-              <div className="text-yellow-800 text-sm">
-                <strong>Debug Info:</strong>
-                <br />
-                Headers: {JSON.stringify(tableData?.headers || [])}
-                <br />
-                Rows: {JSON.stringify(tableData?.rows || [])}
-                <br />
-                Children type: {typeof children}
-                <br />
-                Children is array: {Array.isArray(children) ? 'Yes' : 'No'}
-                <br />
-                Children length:{' '}
-                {Array.isArray(children) ? children.length : 'N/A'}
-                <br />
-                <br />
-                <strong>Check browser console for detailed parsing logs</strong>
-              </div>
+            <div
+              role="status"
+              className="mx-2 rounded-lg border border-gray-200 bg-gray-50 p-4 text-sm text-gray-700 sm:mx-0"
+            >
+              List view is unavailable for this table. Switch to Table to view the data.
             </div>
           )}
         </div>
