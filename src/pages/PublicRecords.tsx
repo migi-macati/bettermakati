@@ -328,6 +328,32 @@ export default function PublicRecords() {
           <SharePage title="Makati Public Records | BetterMakati" />
         </div>
 
+        <div className="mt-5 grid gap-4 lg:grid-cols-2">
+          <div className="rounded-2xl border border-primary-200 bg-primary-50 p-5">
+            <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+              BetterMakati evidence index
+            </div>
+            <h2 className="mt-2 text-lg font-extrabold text-gray-950">
+              Record pages describe and connect sources.
+            </h2>
+            <p className="mt-2 text-sm leading-relaxed text-gray-700">
+              A BetterMakati record page is a catalog entry: it identifies the publisher, period, format and the BetterMakati pages that use the source. It does not replace the publisher’s original record.
+            </p>
+          </div>
+
+          <div className="rounded-2xl border border-secondary-200 bg-secondary-50 p-5">
+            <div className="text-xs font-bold uppercase tracking-[0.08em] text-secondary-800">
+              Original evidence
+            </div>
+            <h2 className="mt-2 text-lg font-extrabold text-gray-950">
+              Open the publisher source when the original matters.
+            </h2>
+            <p className="mt-2 text-sm leading-relaxed text-gray-700">
+              Use the original public document, dataset, archive or portal for legal, transactional or citation-sensitive use. BetterMakati keeps the context and source link together so you can move between evidence and explanation.
+            </p>
+          </div>
+        </div>
+
         <div className="mt-5 rounded-2xl border border-primary-100 bg-white p-5">
           <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
             National record tools
