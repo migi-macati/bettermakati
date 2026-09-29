@@ -52,6 +52,7 @@ const kindLabels: Record<CivicTimelineItem['kind'], string> = {
   'barangay-assembly': 'Barangay assembly',
   consultation: 'Consultation',
   'service-change': 'Service change',
+  'service-availability': 'Service availability',
   'road-closure': 'Road closure',
   advisory: 'Advisory',
   'election-milestone': 'Election milestone',
@@ -77,6 +78,7 @@ const actionabilityLabels: Record<CivicTimelineActionability, string> = {
   'action-required': 'Action required',
   'participation-opportunity': 'Participation opportunity',
   'service-impact': 'Service impact',
+  'service-available': 'Service available',
   'information-only': 'Information only',
 };
 
