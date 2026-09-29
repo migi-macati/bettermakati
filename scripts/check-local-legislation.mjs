@@ -277,7 +277,7 @@ for (const marker of [
   "Search local records",
   "Indexed records",
   "View record",
-  "Related records",
+  "Related civic records",
   "visibleResultLimit = 60",
 ]) {
   if (!pageSource.includes(marker)) {
