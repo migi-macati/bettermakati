@@ -381,7 +381,12 @@ export default function Elections() {
                 </div>
               </div>
 
-              <div className="mt-3 overflow-x-auto rounded-2xl border border-gray-200 bg-white">
+                            <div
+                        className="scroll-region mt-3 overflow-x-auto rounded-2xl border border-gray-200 bg-white"
+                        role="region"
+                        aria-label="Council district results table — horizontally scrollable"
+                        tabIndex={0}
+                      >
                 <table className="w-full min-w-[760px] text-left">
                   <thead className="bg-gray-50 text-sm">
                     <tr>
@@ -515,7 +520,12 @@ export default function Elections() {
           }
         />
 
-        <div className="mt-6 overflow-x-auto rounded-2xl border border-gray-200 bg-white">
+                <div
+                  className="scroll-region mt-6 overflow-x-auto rounded-2xl border border-gray-200 bg-white"
+                  role="region"
+                  aria-label="2025 barangay mayoral results table — horizontally scrollable"
+                  tabIndex={0}
+                >
           <table className="w-full min-w-[760px] text-left">
             <thead className="bg-gray-50 text-sm">
               <tr>
@@ -574,7 +584,12 @@ export default function Elections() {
           </p>
         </div>
 
-        <div className="mt-6 overflow-x-auto rounded-2xl border border-gray-200 bg-white">
+                <div
+                  className="scroll-region mt-6 overflow-x-auto rounded-2xl border border-gray-200 bg-white"
+                  role="region"
+                  aria-label="Makati mayoral history table — horizontally scrollable"
+                  tabIndex={0}
+                >
           <table className="w-full min-w-[980px] text-left">
             <thead className="bg-gray-50 text-sm">
               <tr>
@@ -899,7 +914,12 @@ export default function Elections() {
           </div>
         </div>
 
-        <div className="mt-8 overflow-x-auto rounded-2xl border border-gray-200 bg-white">
+                <div
+                  className="scroll-region mt-8 overflow-x-auto rounded-2xl border border-gray-200 bg-white"
+                  role="region"
+                  aria-label="Election data sources table — horizontally scrollable"
+                  tabIndex={0}
+                >
           <table className="w-full min-w-[760px] text-left">
             <thead className="bg-gray-50">
               <tr>
