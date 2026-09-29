@@ -75,7 +75,7 @@ export default function PhotoCarousel({
                   href={image.sourceUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="mt-2 block text-sm font-bold text-primary-700 underline underline-offset-2"
+                  className="mt-2 inline-flex min-h-11 items-center text-sm font-bold text-primary-700 underline underline-offset-2"
                 >
                   View photo
                 </a>
@@ -142,7 +142,7 @@ export default function PhotoCarousel({
                 href={image.sourceUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="font-semibold text-primary-700 underline underline-offset-2"
+                className="inline-flex min-h-11 items-center font-semibold text-primary-700 underline underline-offset-2"
               >
                 {image.credit}
               </a>
@@ -152,7 +152,7 @@ export default function PhotoCarousel({
                   href={image.licenseUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="underline underline-offset-2"
+                  className="inline-flex min-h-11 items-center underline underline-offset-2"
                 >
                   {image.license}
                 </a>
@@ -173,7 +173,8 @@ export default function PhotoCarousel({
                     onClick={() => carousel.goTo(photoIndex)}
                     aria-label={'Show photo ' + (photoIndex + 1) + ' of ' + images.length}
                     aria-current={photoIndex === index ? 'true' : undefined}
-                    className="grid h-9 w-9 place-items-center rounded-full hover:bg-primary-50"
+                    aria-pressed={photoIndex === index}
+                    className="grid h-11 w-11 place-items-center rounded-full hover:bg-primary-50"
                   >
                     <span
                       className={
