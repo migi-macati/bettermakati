@@ -1,0 +1,89 @@
+{
+  "version": 1,
+  "reviewedOn": "2026-09-29",
+  "status": "complete-static-shell-live-browser-deferred",
+  "step": "W6-5b",
+  "title": "Global shell responsive & accessibility",
+  "scope": [
+    "Navbar utility bar and main navigation",
+    "BetterMakati brand/home target",
+    "BetterBarangay context bar",
+    "Footer navigation, contact, ecosystem and legal links",
+    "shell-level focus and transient navigation state"
+  ],
+  "resolvedFindings": [
+    {
+      "id": "shell-utility-targets",
+      "status": "resolved",
+      "change": "Emergency 911, City Hall, All hotlines and Official Makati site controls now expose a 44px minimum interaction height."
+    },
+    {
+      "id": "footer-targets",
+      "status": "resolved",
+      "change": "Footer contact, social, GitHub, section navigation, ecosystem and legal links now expose a 44px minimum interaction height."
+    },
+    {
+      "id": "barangay-context-targets",
+      "status": "resolved",
+      "change": "BetterBarangay selector and homepage action now expose a 44px minimum interaction height."
+    },
+    {
+      "id": "desktop-submenu-target",
+      "status": "resolved",
+      "change": "Desktop submenu chevron controls now have both 44px minimum height and width."
+    },
+    {
+      "id": "brand-home-target",
+      "status": "resolved",
+      "change": "BrandMark home link now keeps a 44px minimum interaction height even when the narrow-screen horizontal logo image is shorter."
+    },
+    {
+      "id": "hidden-select-focus",
+      "status": "resolved",
+      "change": "Navbar and BetterBarangay transparent select overlays now trigger a visible focus-within ring on the styled proxy surface."
+    },
+    {
+      "id": "dark-shell-focus",
+      "status": "resolved",
+      "change": "Dark utility, BetterBarangay, inverse-brand and Footer links explicitly use the gold secondary focus outline."
+    },
+    {
+      "id": "stale-navigation-state",
+      "status": "resolved",
+      "change": "Open mobile/desktop navigation state is cleared whenever pathname, search or hash changes."
+    },
+    {
+      "id": "narrow-context-action-label",
+      "status": "resolved",
+      "change": "BetterBarangay uses the shorter visible 'Homepage' label below the sm breakpoint while preserving a descriptive aria-label."
+    }
+  ],
+  "preservedStrengths": [
+    "Skip link and primary main landmark remain in App.",
+    "Desktop/mobile navigation split remains at xl.",
+    "Desktop and mobile submenu controls retain aria-expanded and aria-controls.",
+    "Escape still closes menus and returns focus to the relevant control.",
+    "Current-page navigation retains aria-current.",
+    "Mobile search, barangay and menu controls remain 44px square.",
+    "Footer remains an implicit contentinfo landmark."
+  ],
+  "staticChecks": {
+    "forbiddenShellTargetClasses": [
+      "min-h-9",
+      "min-h-10"
+    ],
+    "forbiddenDesktopSubmenuWidth": "min-w-9",
+    "requiredTouchClass": "min-h-11",
+    "requiredSquareSubmenuClass": "min-w-11",
+    "hiddenSelectFocusStrategy": "focus-within ring on visible proxy",
+    "routeStateReset": "[pathname, search, hash]"
+  },
+  "deferredToW65f": [
+    "actual 320px and 390px utility/header wrapping",
+    "computed contrast in all focus/hover states",
+    "sticky header behavior with browser zoom",
+    "real keyboard traversal order across full shell at each viewport",
+    "screen-reader announcement sampling"
+  ],
+  "next": "W6-5c — Controls, forms & search"
+}
