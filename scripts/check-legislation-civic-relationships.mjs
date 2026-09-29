@@ -57,7 +57,7 @@ for (const canonicalMarker of [
 
 for (const uiMarker of [
   "import { legislationRelatedRecords } from '../data/legislationCivicRelationships'",
-  'Related records',
+  'Related civic records',
   'legislationRelatedRecords(seed.id)',
 ]) {
   if (!legislationPage.includes(uiMarker)) {
