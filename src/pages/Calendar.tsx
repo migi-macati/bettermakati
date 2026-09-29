@@ -212,7 +212,7 @@ const TimelineCard = ({ item }: { item: CivicTimelineItem }) => {
           to={item.canonicalHref}
           className="inline-flex min-h-11 items-center gap-1 font-bold text-primary-700"
         >
-          Open canonical record <ArrowRight className="h-4 w-4" />
+          Open record <ArrowRight className="h-4 w-4" />
         </Link>
         <a
           href={primarySource.url}
@@ -224,7 +224,7 @@ const TimelineCard = ({ item }: { item: CivicTimelineItem }) => {
         </a>
       </div>
       <div className="mt-2 text-xs leading-relaxed text-gray-500">
-        Canonical owner: {item.canonicalLabel} · Source: {primarySource.publisher}
+        Record: {item.canonicalLabel} · Source: {primarySource.publisher}
       </div>
     </article>
   );
@@ -337,13 +337,13 @@ export default function Calendar() {
                 across Makati civic life.
               </p>
               <p className="mt-3 max-w-2xl text-sm leading-relaxed text-primary-100">
-                This is a cross-domain index of canonical BetterMakati records,
-                not an entertainment calendar. Source-monitor signals stay out
-                until they are reviewed and assigned to the correct civic owner.
+                This brings together public deadlines, meetings, project and
+                legislation milestones, elections, reports and other civic dates.
+                Unverified source leads are kept out until they are reviewed.
               </p>
               <LastReviewed
                 date={calendarReviewed}
-                note="Native canonical records only in this first public version; the internal source-discovery queue is not rendered here."
+                note="Reviewed civic dates only; unverified source leads are excluded."
                 className="mt-5 !text-primary-100 [&_strong]:!text-white [&_svg]:!text-secondary-400"
               />
             </div>
@@ -515,7 +515,7 @@ export default function Calendar() {
         ) : (
           <div className="mt-7 rounded-2xl border border-primary-100 bg-white p-6">
             <div className="font-extrabold text-gray-950">
-              No canonical items match this view yet.
+              No civic dates match this view yet.
             </div>
             <p className="mt-2 max-w-2xl text-sm leading-relaxed text-gray-600">
               BetterMakati does not fill gaps with entertainment listings,
@@ -538,15 +538,14 @@ export default function Calendar() {
             <div>
               <h2 className="font-extrabold text-gray-950">How the Makati Calendar works</h2>
               <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-700">
-                Each item is a dated projection of a canonical BetterMakati
-                record. Legislation stays legislation, procurement stays in the
-                Accountability Ledger, election history stays in Elections, and
-                reports stay in Reports &amp; Insights. The Calendar supplies a
-                shared time axis and links back to the owner and original source.
+                Each date links back to the BetterMakati record where the
+                underlying information belongs. Legislation stays in Legislation,
+                procurement stays in the Accountability Ledger, election history
+                stays in Elections, and reports stay in Reports &amp; Insights.
               </p>
               <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-700">
-                Internal source-discovery candidates are deliberately excluded
-                until item-level evidence and canonical ownership are resolved.
+                Unverified source leads are excluded until the date and its
+                relationship to a public record are supported by evidence.
               </p>
             </div>
           </div>
