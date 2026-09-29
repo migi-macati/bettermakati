@@ -22,6 +22,10 @@ import {
 import { placeRegistryById } from './placeRegistry';
 import { reports } from './reports';
 import {
+  districtOnePublicAssistanceProgram,
+  districtOnePublicAssistanceServiceHref,
+} from './civicServiceAvailability';
+import {
   manilaDateKey,
   projectCivicTimelineItem,
   type CivicTimelineCanonicalResolver,
@@ -35,7 +39,7 @@ import {
 } from './civicTimeline';
 
 export const nativeCivicTimelineReviewedAt =
-  '2026-09-28T10:44:00+08:00';
+  '2026-09-29T19:58:00+08:00';
 
 const cityMonitorById = new Map(
   cityMonitorRecords.map(record => [record.id, record] as const)
@@ -104,6 +108,17 @@ export const resolveNativeCivicTimelineCanonical: CivicTimelineCanonicalResolver
         ref,
         label: report.headline,
         href: '/reports/' + encodeURIComponent(report.slug),
+      };
+    }
+
+    if (ref.owner === 'services' && ref.type === 'service') {
+      if (ref.id !== districtOnePublicAssistanceProgram.serviceId) {
+        return undefined;
+      }
+      return {
+        ref,
+        label: districtOnePublicAssistanceProgram.title,
+        href: districtOnePublicAssistanceServiceHref,
       };
     }
 
@@ -1011,6 +1026,111 @@ const reportPublicationDateKey = (displayDate: string) => {
   return match[3] + '-' + month + '-' + match[1].padStart(2, '0');
 };
 
+const serviceSessionStatus = (
+  session: (typeof districtOnePublicAssistanceProgram.sessions)[number],
+  now = new Date()
+): CivicTimelineStatus => {
+  const start = Date.parse(
+    session.date + 'T' + session.startTime + ':00+08:00'
+  );
+  const end = Date.parse(
+    session.date + 'T' + session.endTime + ':00+08:00'
+  );
+  if (now.getTime() < start) return 'scheduled';
+  if (now.getTime() <= end) return 'active';
+  return 'completed';
+};
+
+const districtOnePublicAssistanceSource: CivicTimelineSourceRef = {
+  id: districtOnePublicAssistanceProgram.source.id,
+  label: districtOnePublicAssistanceProgram.source.label,
+  url: districtOnePublicAssistanceProgram.source.url,
+  publisher: districtOnePublicAssistanceProgram.source.publisher,
+  kind: districtOnePublicAssistanceProgram.source.kind,
+  checkedOn: districtOnePublicAssistanceProgram.source.checkedOn,
+};
+
+export const nativeServiceAvailabilityTimelineItems: CivicTimelineItem[] =
+  districtOnePublicAssistanceProgram.sessions.map(session => {
+    const sourceRefs: [CivicTimelineSourceRef] = [
+      districtOnePublicAssistanceSource,
+    ];
+    const startsAt =
+      session.date + 'T' + session.startTime + ':00+08:00';
+    const endsAt =
+      session.date + 'T' + session.endTime + ':00+08:00';
+
+    return projectCivicTimelineItem(
+      {
+        id:
+          'service:' +
+          districtOnePublicAssistanceProgram.serviceId +
+          ':' +
+          session.id,
+        kind: 'service-availability',
+        title:
+          districtOnePublicAssistanceProgram.title +
+          ' — ' +
+          session.barangayLabel,
+        summary:
+          districtOnePublicAssistanceProgram.operatingHours +
+          ' at ' +
+          session.venue +
+          '. Listed assistance includes medical assistance, unpaid hospital bills, burial assistance, college-level educational assistance and Guarantee Letter referrals.',
+        status: serviceSessionStatus(session),
+        actionability: 'service-available',
+        canonicalRef: {
+          owner: 'services',
+          type: 'service',
+          id: districtOnePublicAssistanceProgram.serviceId,
+        },
+        temporal: {
+          semantic: 'occurrence',
+          precision: 'datetime-range',
+          startsAt,
+          endsAt,
+          origin: {
+            role: 'occurrence-date',
+            sourceFields: [
+              'districtOnePublicAssistanceProgram.sessions[].date',
+              'districtOnePublicAssistanceProgram.sessions[].startTime',
+              'districtOnePublicAssistanceProgram.sessions[].endTime',
+            ],
+            sourceIds: [districtOnePublicAssistanceSource.id],
+          },
+        },
+        geography: scopedGeography({
+          barangaySlugs: [...session.barangaySlugs],
+        }),
+        sourceRefs,
+        primarySourceId: districtOnePublicAssistanceSource.id,
+        provenance: {
+          basis: 'source-stated',
+          lastVerifiedAt: nativeCivicTimelineReviewedAt,
+          note:
+            'Structured from the dated District One Public Assistance Desk schedule supplied in the source post. Venue text is preserved as published; no unlisted eligibility or documentary requirement is inferred.',
+        },
+        update: {
+          revision: 1,
+          changeType: 'new',
+        },
+        tags: [
+          'services',
+          'public assistance',
+          'District 1',
+          'medical assistance',
+          'hospital bill',
+          'burial assistance',
+          'educational assistance',
+          'guarantee letter',
+          session.barangayLabel,
+          session.venue,
+        ],
+      },
+      resolveNativeCivicTimelineCanonical
+    );
+  });
+
 export const nativeReportReleaseTimelineItems: CivicTimelineItem[] =
   reports.map(report => {
     const publishedAt = reportPublicationDateKey(report.date);
@@ -1092,6 +1212,7 @@ export const nativeCivicTimelineItems: CivicTimelineItem[] = [
   ...nativeProcurementTimelineItems,
   ...nativeElectionArchiveTimelineItems,
   ...nativeCurrentElectionTimelineItems,
+  ...nativeServiceAvailabilityTimelineItems,
   ...nativeReportReleaseTimelineItems,
 ].sort(
   (left, right) =>
@@ -1121,6 +1242,7 @@ export const nativeCivicTimelineCoverage = {
   procurement: nativeProcurementTimelineItems.length,
   electionArchive: nativeElectionArchiveTimelineItems.length,
   currentElection: nativeCurrentElectionTimelineItems.length,
+  serviceAvailability: nativeServiceAvailabilityTimelineItems.length,
   reportReleases: nativeReportReleaseTimelineItems.length,
   total: nativeCivicTimelineItems.length,
 } as const;
