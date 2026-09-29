@@ -91,7 +91,7 @@ export default function CapabilityCarousel() {
               <select
                 value={preferredBarangay?.slug ?? ''}
                 onChange={event => chooseBarangay(event.target.value)}
-                className="min-h-10 w-full rounded-lg border border-secondary-200 bg-white px-2.5 py-1.5 text-xs font-bold text-primary-900 outline-none focus:border-secondary-500 focus:ring-2 focus:ring-secondary-100"
+                className="min-h-11 w-full rounded-lg border border-secondary-200 bg-white px-2.5 py-1.5 text-xs font-bold text-primary-900 outline-none focus:border-secondary-500 focus:ring-2 focus:ring-secondary-100"
               >
                 <option value="">Choose a barangay</option>
                 {barangays.map(barangay => (
