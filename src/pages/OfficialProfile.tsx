@@ -10,6 +10,7 @@ import { Heading } from '../components/ui/Heading';
 import SEO from '../components/SEO';
 import SharePage from '../components/ui/SharePage';
 import Breadcrumbs from '../components/ui/Breadcrumbs';
+import CivicRelationshipLinks from '../components/civic/CivicRelationshipLinks';
 import { findOfficial } from '../data/electedOfficials';
 import {
   election2025Sources,
@@ -176,19 +177,22 @@ export default function OfficialProfile() {
           <p className="mt-3 max-w-4xl text-sm leading-relaxed text-gray-700">
             Only records with an explicit canonical relationship to this profile are shown here.
           </p>
-          <div className="mt-5 flex flex-wrap gap-3">
-            {electionRecordLinks.map(item =>
-              item.node ? (
-                <Link
-                  key={item.relationship.id}
-                  to={item.node.href}
-                  className="brand-btn-primary"
-                >
-                  2025 election result
-                </Link>
-              ) : null
+          <CivicRelationshipLinks
+            label="Election record"
+            className="mt-5"
+            items={electionRecordLinks.flatMap(item =>
+              item.node
+                ? [
+                    {
+                      id: item.relationship.id,
+                      label: item.node.label,
+                      href: item.node.href,
+                      icon: <Vote className="h-3.5 w-3.5" aria-hidden="true" />,
+                    },
+                  ]
+                : []
             )}
-          </div>
+          />
         </div>
       </Section>
 
