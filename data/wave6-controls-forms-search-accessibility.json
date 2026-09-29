@@ -1,0 +1,121 @@
+{
+  "version": 1,
+  "reviewedOn": "2026-09-29",
+  "status": "complete-static-controls-live-browser-deferred",
+  "step": "W6-5c",
+  "title": "Controls, forms & search",
+  "scope": [
+    "site/service search combobox",
+    "Contact actions",
+    "Get Involved submission form",
+    "Civic Nearby Report location/search flow",
+    "Civic Nearby Report form",
+    "Civic Contribution form",
+    "Civic Observation form",
+    "Government Offices search/filter controls",
+    "City Monitor search/filter controls",
+    "Public Records filters",
+    "Participation feed loading/error state",
+    "Services category loading/error state"
+  ],
+  "resolvedFindings": [
+    {
+      "id": "search-option-tab-order",
+      "status": "resolved",
+      "change": "Combobox listbox options now use tabIndex=-1 so keyboard focus remains on the combobox while aria-activedescendant controls the active option."
+    },
+    {
+      "id": "search-clear-focus",
+      "status": "resolved",
+      "change": "Clearing search returns focus to the search input after the clear button unmounts."
+    },
+    {
+      "id": "search-filter-state",
+      "status": "resolved",
+      "change": "Search category chips expose aria-pressed and result count changes are announced politely."
+    },
+    {
+      "id": "search-popover-anchor",
+      "status": "resolved",
+      "change": "Search results are positioned from the bottom of the search card with top-full instead of a fixed pixel offset, reducing narrow-width heading-wrap risk."
+    },
+    {
+      "id": "contact-targets",
+      "status": "resolved",
+      "change": "Contact, social, official-city and related action links use the 44px interaction-height baseline."
+    },
+    {
+      "id": "submission-state-semantics",
+      "status": "resolved",
+      "change": "Get Involved and civic report/contribution/observation forms expose aria-busy, announce submitting state, use alert semantics for errors, and keep status-result actions touch sized."
+    },
+    {
+      "id": "civic-location-feedback",
+      "status": "resolved",
+      "change": "Geolocation warnings and civic-registry search result counts are announced, and selectable place cards expose aria-pressed."
+    },
+    {
+      "id": "office-filter-state",
+      "status": "resolved",
+      "change": "Government Offices scope chips expose aria-pressed, 44px targets and a polite result-count status."
+    },
+    {
+      "id": "city-monitor-filter-state",
+      "status": "resolved",
+      "change": "City Monitor search/select controls use the 44px baseline, result counts are announced, and place-context links are touch sized."
+    },
+    {
+      "id": "public-record-filter-state",
+      "status": "resolved",
+      "change": "Public Records select/checkbox filters and clear action use the 44px baseline and matching-source count is announced."
+    },
+    {
+      "id": "participation-feed-failure",
+      "status": "resolved",
+      "change": "Participation now distinguishes loading, feed failure and a genuinely empty community-input feed."
+    },
+    {
+      "id": "service-category-failure",
+      "status": "resolved",
+      "change": "Services category loading now distinguishes a request failure from an empty category."
+    }
+  ],
+  "preservedStrengths": [
+    "ServiceSearch keeps combobox/listbox/option semantics and arrow-key navigation.",
+    "Shared .form-field inputs/selects/textareas remain at least 44px high.",
+    "Form fields continue to use explicit wrapping labels.",
+    "Native required/type/url/number validation remains intact.",
+    "Civic form honeypot fields remain removed from the Tab order.",
+    "Full-card selection controls remain large touch targets."
+  ],
+  "bounded": [
+    {
+      "id": "complex-table-toggle-controls",
+      "status": "deferred-to-W6-5d",
+      "reason": "Table/list toggles and dense table behavior belong to the complex-component pass."
+    },
+    {
+      "id": "carousel-controls",
+      "status": "deferred-to-W6-5d",
+      "reason": "Photo carousel dots, attribution and motion behavior belong to the complex-component pass."
+    },
+    {
+      "id": "computed-browser-behavior",
+      "status": "deferred-to-W6-5f",
+      "reason": "Popup clipping, virtual keyboard behavior, real zoom/reflow and computed contrast require a current browser build."
+    },
+    {
+      "id": "assistive-technology-sampling",
+      "status": "deferred-to-W6-5e/W6-5f",
+      "reason": "Source semantics do not replace manual screen-reader and keyboard sampling."
+    }
+  ],
+  "staticRules": {
+    "repeatedControlMinHeight": "44px / min-h-11",
+    "comboboxFocusModel": "input retains DOM focus; listbox options use aria-activedescendant and tabIndex=-1",
+    "selectionState": "toggle/filter buttons expose aria-pressed where they represent persistent selection",
+    "asyncState": "loading/submitting uses role=status or equivalent; actionable failures use role=alert",
+    "resultCounts": "dynamic filtered/search result counts use polite status announcements when helpful"
+  },
+  "next": "W6-5d — Complex components"
+}
