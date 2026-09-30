@@ -350,7 +350,7 @@ export default function ProjectsBudget() {
         <div className="mt-5 grid grid-cols-1 lg:grid-cols-2 gap-4">
         <Link
           to="/accountability#2025-medical-supplies-development-fund"
-          className="flex flex-col gap-3 rounded-2xl border border-primary-200 bg-primary-50 p-5 transition hover:border-primary-400 lg:flex-row lg:items-center lg:justify-between"
+          className="flex flex-col gap-3 rounded-2xl border border-primary-200 bg-primary-50 p-5 transition hover:border-primary-400 xl:flex-row xl:items-center xl:justify-between"
         >
           <div>
             <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
@@ -369,7 +369,7 @@ export default function ProjectsBudget() {
         </Link>
         <Link
           to="/city-monitor"
-          className="flex flex-col gap-3 rounded-2xl border border-primary-200 bg-white p-5 transition hover:border-primary-400 lg:flex-row lg:items-center lg:justify-between"
+          className="flex flex-col gap-3 rounded-2xl border border-primary-200 bg-white p-5 transition hover:border-primary-400 xl:flex-row xl:items-center xl:justify-between"
         >
           <div>
             <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
@@ -672,7 +672,7 @@ export default function ProjectsBudget() {
                 key={item.label}
                 className="rounded-2xl border border-gray-200 bg-white p-5"
               >
-                <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
                   <div>
                     <h3 className="font-extrabold text-gray-950">
                       {item.label}
@@ -681,7 +681,7 @@ export default function ProjectsBudget() {
                       {item.description}
                     </p>
                   </div>
-                  <div className="sm:text-right">
+                  <div className="lg:text-right">
                     <div className="font-extrabold text-primary-800">
                       {peso(item.amountM)}
                     </div>
@@ -790,7 +790,7 @@ export default function ProjectsBudget() {
                 key={item.label}
                 className="rounded-2xl border border-gray-200 p-5"
               >
-                <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
                   <div>
                     <h3 className="font-extrabold text-gray-950">
                       {item.label}
@@ -799,7 +799,7 @@ export default function ProjectsBudget() {
                       {item.description}
                     </p>
                   </div>
-                  <div className="sm:text-right">
+                  <div className="lg:text-right">
                     <div className="font-extrabold text-primary-800">
                       {peso(item.amountM)}
                     </div>
