@@ -294,7 +294,7 @@ test('civic map iframe accepts keyboard focus and keeps a text fallback', async 
 test('200 percent text resizing does not create page-level overflow on core journeys', async ({ page }) => {
   await page.setViewportSize({ width: 1024, height: 768 });
 
-  for (const route of ['/', '/search', '/services', '/calendar']) {
+  for (const route of ['/', '/search', '/services', '/reports', '/history', '/heritage', '/mobility', '/barangays/poblacion', '/projects-budget', '/statistics', '/calendar']) {
     await page.goto(baseURL + route);
     await page.evaluate(() => {
       document.documentElement.style.fontSize = '200%';

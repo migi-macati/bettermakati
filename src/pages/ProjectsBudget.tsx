@@ -350,7 +350,7 @@ export default function ProjectsBudget() {
         <div className="mt-5 grid grid-cols-1 lg:grid-cols-2 gap-4">
         <Link
           to="/accountability#2025-medical-supplies-development-fund"
-          className="flex flex-col gap-3 rounded-2xl border border-primary-200 bg-primary-50 p-5 transition hover:border-primary-400 sm:flex-row sm:items-center sm:justify-between"
+          className="flex flex-col gap-3 rounded-2xl border border-primary-200 bg-primary-50 p-5 transition hover:border-primary-400 xl:flex-row xl:items-center xl:justify-between"
         >
           <div>
             <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
@@ -369,7 +369,7 @@ export default function ProjectsBudget() {
         </Link>
         <Link
           to="/city-monitor"
-          className="flex flex-col gap-3 rounded-2xl border border-primary-200 bg-white p-5 transition hover:border-primary-400 sm:flex-row sm:items-center sm:justify-between"
+          className="flex flex-col gap-3 rounded-2xl border border-primary-200 bg-white p-5 transition hover:border-primary-400 xl:flex-row xl:items-center xl:justify-between"
         >
           <div>
             <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
@@ -672,7 +672,7 @@ export default function ProjectsBudget() {
                 key={item.label}
                 className="rounded-2xl border border-gray-200 bg-white p-5"
               >
-                <div className="flex items-start justify-between gap-4">
+                <div className="flex flex-col gap-3 xl:flex-row xl:items-start xl:justify-between">
                   <div>
                     <h3 className="font-extrabold text-gray-950">
                       {item.label}
@@ -681,7 +681,7 @@ export default function ProjectsBudget() {
                       {item.description}
                     </p>
                   </div>
-                  <div className="text-right">
+                  <div className="xl:text-right">
                     <div className="font-extrabold text-primary-800">
                       {peso(item.amountM)}
                     </div>
@@ -790,7 +790,7 @@ export default function ProjectsBudget() {
                 key={item.label}
                 className="rounded-2xl border border-gray-200 p-5"
               >
-                <div className="flex items-start justify-between gap-4">
+                <div className="flex flex-col gap-3 xl:flex-row xl:items-start xl:justify-between">
                   <div>
                     <h3 className="font-extrabold text-gray-950">
                       {item.label}
@@ -799,7 +799,7 @@ export default function ProjectsBudget() {
                       {item.description}
                     </p>
                   </div>
-                  <div className="text-right">
+                  <div className="xl:text-right">
                     <div className="font-extrabold text-primary-800">
                       {peso(item.amountM)}
                     </div>
@@ -918,7 +918,7 @@ export default function ProjectsBudget() {
                 {developmentFundProject.location}
               </p>
             </div>
-            <div className="lg:text-right">
+            <div className="xl:text-right">
               <div className="text-2xl font-extrabold text-primary-800">
                 {developmentFundProject.latestCompletion}%
               </div>
@@ -1089,7 +1089,7 @@ export default function ProjectsBudget() {
               value={officeQuery}
               onChange={event => setOfficeQuery(event.target.value)}
               placeholder="Search office or department"
-              className="min-h-11 w-full rounded-xl border border-gray-300 py-2.5 pl-9 pr-3 text-sm outline-none focus:border-primary-500 lg:w-72"
+              className="min-h-11 w-full rounded-xl border border-gray-300 py-2.5 pl-9 pr-3 text-sm outline-none focus:border-primary-500 xl:w-72"
             />
           </div>
         </div>
@@ -1180,7 +1180,7 @@ export default function ProjectsBudget() {
               </div>
             </div>
 
-            <div className="flex flex-col gap-2 sm:flex-row">
+            <div className="flex flex-col gap-2 xl:flex-row">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
                 <input
@@ -1470,7 +1470,7 @@ export default function ProjectsBudget() {
         <div className="mt-7 space-y-4">
           {auditFindingEntries.map(item => (
             <article key={item.id} className="rounded-2xl border border-gray-200 bg-[#fffdf8] p-6">
-              <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
+              <div className="flex flex-col gap-3 xl:flex-row xl:items-start xl:justify-between">
                 <div>
                   <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
                     {item.period}
