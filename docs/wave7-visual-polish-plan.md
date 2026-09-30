@@ -1,6 +1,6 @@
 # Wave 7 — Visual polish plan
 
-Status: active  
+Status: complete-verified  
 Formalized: 2026-09-30
 
 ## Purpose
@@ -32,35 +32,28 @@ Complete-guarded.
 ### W7-3a — Homepage visual storytelling
 Complete-verified. Moves the existing Around Makati photography directly below the hero so place and identity appear before deeper civic journeys, while retaining accessible carousel controls and the established homepage information architecture.
 
-## Remaining slices
+## Completed slices
 
 ### W7-3b — Homepage composition polish
-
-Polish the homepage as one composition after the W7-3a hierarchy change. Normalize section rhythm, heading hierarchy, card density, gold accents and desktop use of width across the existing homepage journeys. Do not add new homepage features or rewrite the information architecture.
+Complete-verified.
 
 ### W7-4 — Core page-family visual system
-
-Apply the Wave 7 visual vocabulary coherently to the major reusable civic page families: service/discovery surfaces, evidence/accountability surfaces, directories/registries and detail-page shells. Prefer shared primitives and existing components. This slice may be divided into bounded sub-slices by page family when implementation size requires it.
+Complete-verified across service/discovery, evidence/accountability and detail-shell sub-slices.
 
 ### W7-5 — BetterBarangay visual parity
-
-Bring BetterBarangay landing pages and shared barangay context surfaces to visual parity with the city experience. Preserve the persistent BetterBarangay context, barangay selection behavior and local information architecture. Barangay homepages should feel like local editions of BetterMakati rather than secondary database pages.
+Complete-verified.
 
 ### W7-6 — Editorial, history and report treatment
-
-Polish editorial surfaces such as Featured Reports & Insights, history/heritage and other evidence-rich long-form pages. Improve image use, captions, citations, reading rhythm and related-content handoffs using existing sourced material. Remove residual research-note or repository-like presentation where present; do not introduce unsupported civic claims.
+Complete-verified across reports, history and heritage sub-slices.
 
 ### W7-7 — Place and civic-asset integration polish
-
-Polish how parks, facilities, streets/routes, markers and other civic assets appear across relevant journeys. Assets should support orientation, services, reports, history and place discovery rather than become isolated rating features. Keep routes/segments conceptually distinct from buildings and parks.
+Complete-verified.
 
 ### W7-8 — Site-wide visual consistency and responsive QA
-
-Run a whole-site polish pass for spacing, typography, image behavior, card consistency, accidental whitespace, desktop composition, narrow-screen containment and interaction states. Resolve visual regressions without introducing new features. Extend automated guards/browser coverage where a regression class is repeatable.
+Complete-verified across shared surface/heading consistency, page-family responsive coverage and shared photography-frame consistency.
 
 ### W7-9 — Wave 7 closure
-
-Reconcile Wave 7 status records and guards, verify all bounded slices on CI, remove obsolete temporary Wave 7 notes if any, and formally close the visual-polish wave. Wave 8 may begin only after this closure passes.
+Complete-guarded. The closure guard verifies the Wave 7 plan, bounded-slice evidence and all Wave 7 guard scripts remain present and wired into both build and quality. Wave 8 may begin after this closure commit passes branch and post-merge CI.
 
 ## Execution rule
 
