@@ -112,6 +112,29 @@
   --brand-gold: #fbbf01;
   --brand-warm-white: #fffdf8;
   --brand-ink: #25211f;
+
+  /* Wave 7 semantic visual foundations. Keep brand colors stable while
+     giving shared surfaces, borders, spacing and elevation one vocabulary. */
+  --bm-surface-canvas: var(--brand-warm-white);
+  --bm-surface-paper: #ffffff;
+  --bm-surface-muted: #faf9f7;
+  --bm-surface-brand: #025f35;
+  --bm-surface-brand-strong: var(--brand-green-dark);
+  --bm-surface-accent: #fffaf0;
+  --bm-ink-strong: var(--brand-ink);
+  --bm-ink-muted: #655d55;
+  --bm-line-soft: #e8e4de;
+  --bm-line-strong: #d8d2c8;
+  --bm-radius-control: 0.75rem;
+  --bm-radius-card: 1rem;
+  --bm-radius-feature: 1.5rem;
+  --bm-shadow-rest: 0 1px 0 rgba(13, 56, 34, 0.03);
+  --bm-shadow-lift: 0 12px 28px rgba(13, 56, 34, 0.08);
+  --bm-page-max: 90rem;
+  --bm-reading-max: 72ch;
+  --bm-motion-fast: 160ms;
+  --bm-motion-base: 220ms;
+
   --font-brand: 'Figtree', 'Inter', system-ui, sans-serif;
   --font-ui: 'Inter', system-ui, sans-serif;
   --font-technical: 'Roboto Mono', ui-monospace, monospace;
@@ -143,8 +166,8 @@ html {
 }
 
 body {
-  background: var(--brand-warm-white);
-  color: var(--brand-ink);
+  background: var(--bm-surface-canvas);
+  color: var(--bm-ink-strong);
   font-family: var(--font-ui);
   font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
 }
@@ -153,7 +176,7 @@ body {
    snapping to Tailwind's narrower breakpoint plateaus. */
 .container {
   width: 100%;
-  max-width: 90rem;
+  max-width: var(--bm-page-max);
   margin-inline: auto;
 }
 
@@ -164,12 +187,12 @@ h4,
 h5,
 h6,
 main :is(.home-service-card, .category-card, .civic-card, .community-tool-card, .stat-card) {
-  box-shadow: 0 1px 0 rgba(13, 56, 34, 0.03);
+  box-shadow: var(--bm-shadow-rest);
 }
 
 main :is(.home-service-card, .category-card, .civic-card, .community-tool-card):hover {
   border-color: rgba(23, 98, 56, 0.42);
-  box-shadow: 0 12px 28px rgba(13, 56, 34, 0.08);
+  box-shadow: var(--bm-shadow-lift);
 }
 
 main a {
@@ -209,7 +232,7 @@ nav a[aria-current='page'] {
   min-height: 44px;
   padding: .65rem 1rem;
   border: 1px solid transparent;
-  border-radius: .75rem;
+  border-radius: var(--bm-radius-control);
   font-size: .875rem;
   font-weight: 700;
   line-height: 1.4;
@@ -224,18 +247,47 @@ button:disabled { cursor: not-allowed; opacity: .6; }
 .form-field { display: flex; flex-direction: column; gap: .5rem; min-width: 0; font-size: .875rem; font-weight: 600; }
 .form-field :is(input, select, textarea) {
   display: block; width: 100%; min-width: 0; min-height: 44px;
-  border: 1px solid #94a89c; border-radius: .6rem;
-  padding: .7rem .8rem; background: white; color: #25211f;
+  border: 1px solid #94a89c; border-radius: var(--bm-radius-control);
+  padding: .7rem .8rem; background: var(--bm-surface-paper); color: var(--bm-ink-strong);
   font-size: 1rem; font-weight: 400; line-height: 1.5;
 }
 .form-field textarea { resize: vertical; }
 .form-field :is(input, textarea)::placeholder { color: #647169; opacity: 1; }
-.section-eyebrow { margin-bottom: .65rem; color: var(--brand-green-dark); font-size: .75rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+.section-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  margin-bottom: .65rem;
+  color: var(--brand-green-dark);
+  font-size: .75rem;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.section-eyebrow::before {
+  content: '';
+  width: 1.25rem;
+  height: 3px;
+  flex: 0 0 auto;
+  border-radius: 999px;
+  background: var(--brand-gold);
+}
 .skip-link { position: fixed; top: .5rem; left: .5rem; z-index: 100; transform: translateY(-200%); padding: .75rem 1rem; background: white; color: var(--brand-green-dark); border: 2px solid currentColor; border-radius: .5rem; }
 .skip-link:focus { transform: translateY(0); }
 [id] { scroll-margin-top: 6rem; }
 .hero-principle { display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; }
 .form-field.hidden { display: none; }
+
+/* Reusable Wave 7 foundations for later page-family polish. */
+.bm-reading-measure { max-width: var(--bm-reading-max); }
+.bm-surface-paper {
+  background: var(--bm-surface-paper);
+  border: 1px solid var(--bm-line-soft);
+  border-radius: var(--bm-radius-card);
+  box-shadow: var(--bm-shadow-rest);
+}
+.bm-surface-muted { background: var(--bm-surface-muted); }
+.bm-feature-rule { border-top: 3px solid var(--brand-gold); }
 
 .scroll-region {
   max-width: 100%;

@@ -1,0 +1,67 @@
+{
+  "version": 1,
+  "reviewedOn": "2026-09-30",
+  "status": "complete-guarded",
+  "step": "W7-1",
+  "title": "Foundation tokens",
+  "goal": "Create a restrained, reusable visual system for Wave 7 without changing BetterMakati's identity or adding new product functionality.",
+  "doctrine": [
+    "Task-first and mobile-first.",
+    "Makati identity without turning pages into green wallpaper.",
+    "Gold is an accent, not a dominant surface color.",
+    "Prefer fewer, stronger shared visual patterns over one-off decoration.",
+    "Evidence and source context stay close to civic claims.",
+    "Photography must feel local and meaningful when W7-9 is reached; no false locality.",
+    "Accessibility and reduced-motion behavior remain non-negotiable."
+  ],
+  "tokens": {
+    "surfaces": [
+      "--bm-surface-canvas",
+      "--bm-surface-paper",
+      "--bm-surface-muted",
+      "--bm-surface-brand",
+      "--bm-surface-brand-strong",
+      "--bm-surface-accent"
+    ],
+    "inkAndLines": [
+      "--bm-ink-strong",
+      "--bm-ink-muted",
+      "--bm-line-soft",
+      "--bm-line-strong"
+    ],
+    "shape": [
+      "--bm-radius-control",
+      "--bm-radius-card",
+      "--bm-radius-feature"
+    ],
+    "elevation": [
+      "--bm-shadow-rest",
+      "--bm-shadow-lift"
+    ],
+    "layout": [
+      "--bm-page-max",
+      "--bm-reading-max"
+    ],
+    "motion": [
+      "--bm-motion-fast",
+      "--bm-motion-base"
+    ]
+  },
+  "sharedApplications": [
+    "Body canvas and ink now use semantic surface/ink tokens.",
+    "Global container maximum width is tokenized.",
+    "Existing shared card rest/hover elevations use semantic shadow tokens.",
+    "Shared button and form-control radii use the control-radius token.",
+    "Section eyebrow gains the restrained gold identity rule already anticipated by print styling.",
+    "Reusable reading-measure, paper-surface, muted-surface and feature-rule utilities are available for later Wave 7 page-family work."
+  ],
+  "preserved": [
+    "Authoritative BetterMakati green/gold palette.",
+    "Current typography stack.",
+    "44px control baseline.",
+    "Global focus-visible treatment.",
+    "Reduced-motion override.",
+    "Current responsive container behavior."
+  ],
+  "next": "W7-2 — Global shell"
+}
