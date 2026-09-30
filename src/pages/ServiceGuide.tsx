@@ -374,7 +374,7 @@ export default function ServiceGuide() {
 
   if (!item) {
     return (
-      <Section className="bg-[#fffdf8]">
+      <Section className="bm-service-guide-section bg-[#fffdf8]">
         <Breadcrumbs
           className="mb-6"
           items={[
@@ -424,7 +424,7 @@ export default function ServiceGuide() {
         description={`${item.description} BetterMakati guide with office, preparation and official source information.`}
       />
 
-      <Section className="bg-[#fffdf8]">
+      <Section className="bm-service-guide-section bg-[#fffdf8]">
         <Breadcrumbs
           className="mb-5"
           items={[
@@ -554,7 +554,7 @@ export default function ServiceGuide() {
       )}
 
       {!betterGovOwnsNationalGuide && (
-        <Section className="bg-white">
+        <Section className="bm-service-guide-section bg-white">
         {detail ? (
           <>
             <div>
@@ -860,7 +860,7 @@ export default function ServiceGuide() {
           integration={item.nationalIntegration}
         />
       ) : (
-        <Section className="bg-white">
+        <Section className="bm-service-guide-section bg-white">
           <div className="section-eyebrow">Official transaction</div>
           <Heading level={2}>Continue with the issuing agency</Heading>
           <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600">
