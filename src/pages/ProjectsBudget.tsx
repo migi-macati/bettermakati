@@ -260,7 +260,7 @@ export default function ProjectsBudget() {
         }}
       />
 
-      <Section id="budget" className="bg-[#fffdf8]">
+      <Section id="budget" className="bm-evidence-page bg-[#fffdf8]">
         <div className="section-eyebrow">
           2026 proposed budget · 2025 city estimate · DBM/BLGF 2025 statement
         </div>
