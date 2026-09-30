@@ -362,7 +362,7 @@ export default function Accountability() {
         description="Follow Makati public money, projects, audit findings, service standards and public commitments from source to follow-through."
       />
 
-      <Section className="bg-[#fffdf8]">
+      <Section className="bm-evidence-page bg-[#fffdf8]">
         <div className="section-eyebrow">Accountability Ledger</div>
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
@@ -375,7 +375,7 @@ export default function Accountability() {
         </div>
         <LastReviewed date={accountabilityReviewed} />
 
-        <div className="mt-5 rounded-2xl border border-primary-100 bg-white p-5">
+        <div className="bm-evidence-handoff mt-5 p-5">
           <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
             Related national records
           </div>
@@ -456,7 +456,7 @@ export default function Accountability() {
             <button
               type="button"
               onClick={() => chooseQuestion('fiscal')}
-              className="rounded-2xl border border-primary-100 bg-white p-5 text-left transition hover:border-primary-300 hover:shadow-sm"
+              className="bm-evidence-card p-5 text-left"
             >
               <ReceiptText className="h-5 w-5 text-primary-700" />
               <div className="mt-3 font-extrabold text-gray-950">
@@ -470,7 +470,7 @@ export default function Accountability() {
             <button
               type="button"
               onClick={() => chooseQuestion('project')}
-              className="rounded-2xl border border-primary-100 bg-white p-5 text-left transition hover:border-primary-300 hover:shadow-sm"
+              className="bm-evidence-card p-5 text-left"
             >
               <ClipboardList className="h-5 w-5 text-primary-700" />
               <div className="mt-3 font-extrabold text-gray-950">
@@ -484,7 +484,7 @@ export default function Accountability() {
             <button
               type="button"
               onClick={() => chooseQuestion('audit')}
-              className="rounded-2xl border border-secondary-200 bg-white p-5 text-left transition hover:border-secondary-400 hover:shadow-sm"
+              className="bm-evidence-card bm-evidence-card-accent p-5 text-left"
             >
               <Landmark className="h-5 w-5 text-secondary-800" />
               <div className="mt-3 font-extrabold text-gray-950">
@@ -498,7 +498,7 @@ export default function Accountability() {
             <button
               type="button"
               onClick={() => chooseQuestion('service')}
-              className="rounded-2xl border border-primary-100 bg-white p-5 text-left transition hover:border-primary-300 hover:shadow-sm"
+              className="bm-evidence-card p-5 text-left"
             >
               <ShieldCheck className="h-5 w-5 text-primary-700" />
               <div className="mt-3 font-extrabold text-gray-950">
@@ -512,7 +512,7 @@ export default function Accountability() {
             <button
               type="button"
               onClick={() => chooseQuestion('commitment')}
-              className="rounded-2xl border border-primary-100 bg-white p-5 text-left transition hover:border-primary-300 hover:shadow-sm"
+              className="bm-evidence-card p-5 text-left"
             >
               <Target className="h-5 w-5 text-primary-700" />
               <div className="mt-3 font-extrabold text-gray-950">
