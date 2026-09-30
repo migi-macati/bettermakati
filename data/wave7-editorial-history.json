@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "reviewedOn": "2026-09-30",
+  "status": "implementation-complete",
+  "step": "W7-6b",
+  "title": "History editorial treatment",
+  "surface": "/history",
+  "changes": [
+    "The History page now uses the Wave 7 editorial canvas with a restrained gold intro rule.",
+    "Heritage-collection context and search/filter controls use semantic paper/accent surfaces and shared focus treatment.",
+    "The timeline line, event markers and event cards form one coherent chronology rather than isolated database cards.",
+    "Evidence notes, interpretations, media cards, relationship chips and source disclosures have distinct but related treatments.",
+    "Reference and place/barangay relationship chips now meet the 44px interaction baseline.",
+    "Wide desktop spacing improves without changing the mobile chronology or filtering model."
+  ],
+  "preserved": [
+    "All historical event text and dates",
+    "Evidence status labels and evidence notes",
+    "Primary/secondary source metadata and citation notes",
+    "Media captions, rights and source links",
+    "Heritage collection filtering",
+    "Person, institution, barangay, place and related-event relationships",
+    "Search, era/topic/order filters, primary-source-only filter and JSON download"
+  ],
+  "next": "W7-6c — Heritage"
+}

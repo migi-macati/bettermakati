@@ -34,4 +34,4 @@ Polish heritage cards, collections, routes, captions/source links and the handof
 
 ## Current
 
-W7-6a is implemented in the same commit as this plan and hands off to CI before W7-6b begins.
+W7-6a is CI-verified. W7-6b is implementation-complete and hands off to CI before W7-6c begins.

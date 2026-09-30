@@ -82,7 +82,7 @@ const ReferenceChip = ({
   item: { label: string; href?: string };
 }) => {
   const classes =
-    'rounded-full border border-gray-200 px-3 py-1.5 text-xs font-semibold text-gray-700';
+    'inline-flex min-h-11 items-center rounded-full border border-gray-200 px-3 py-1.5 text-xs font-semibold text-gray-700';
 
   if (!item.href) return <span className={classes}>{item.label}</span>;
 
@@ -211,10 +211,10 @@ export default function History() {
         description="Explore Makati’s source-linked history from San Pedro Macati to the modern city, with archival maps, photographs, legal records and related places."
       />
 
-      <Section className="bg-[#fffdf8]">
+      <Section className="bm-history-page">
         <div className="section-eyebrow">History</div>
 
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+        <div className="bm-history-intro flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div className="max-w-4xl">
             <Heading>History of Makati</Heading>
             <p className="max-w-3xl text-lg leading-relaxed text-gray-700">
@@ -237,7 +237,7 @@ export default function History() {
         </div>
 
         {selectedHeritageCollection && (
-          <div className="mt-5 rounded-2xl border border-secondary-200 bg-secondary-50 p-5">
+          <div className="bm-history-collection mt-5 rounded-2xl border p-5">
             <div className="text-xs font-bold uppercase tracking-[0.08em] text-secondary-800">
               Heritage collection
             </div>
@@ -264,7 +264,7 @@ export default function History() {
         />
 
         <div
-          className="mt-8 flex gap-2 overflow-x-auto pb-2"
+          className="bm-history-periods mt-8 flex gap-2 overflow-x-auto pb-2"
           aria-label="History periods"
         >
           <button
@@ -303,7 +303,7 @@ export default function History() {
         </div>
 
         <div
-          className="mt-6 rounded-2xl border border-gray-200 bg-white p-5 sm:p-6"
+          className="bm-history-filters mt-6 rounded-2xl border p-5 sm:p-6"
           role="search"
           aria-label="Search history"
         >
@@ -319,7 +319,7 @@ export default function History() {
             value={query}
             onChange={event => setQuery(event.target.value)}
             placeholder="Try Guadalupe, Nielson, Roxas, 1896, cityhood…"
-            className="mt-3 w-full rounded-xl border border-gray-300 bg-[#fffdf8] p-3.5"
+            className="bm-history-control mt-3 w-full rounded-xl border p-3.5"
             type="search"
           />
 
@@ -329,7 +329,7 @@ export default function History() {
               <select
                 value={topic}
                 onChange={event => setTopic(event.target.value)}
-                className="mt-2 block w-full rounded-xl border border-gray-300 bg-white p-3"
+                className="bm-history-control mt-2 block w-full rounded-xl border p-3"
               >
                 <option value="">All topics</option>
                 {topics.map(item => (
@@ -345,7 +345,7 @@ export default function History() {
                 onChange={event =>
                   setNewestFirst(event.target.value === 'newest')
                 }
-                className="mt-2 block w-full rounded-xl border border-gray-300 bg-white p-3"
+                className="bm-history-control mt-2 block w-full rounded-xl border p-3"
               >
                 <option value="oldest">Oldest first</option>
                 <option value="newest">Newest first</option>
@@ -391,7 +391,7 @@ export default function History() {
           )}
         </div>
 
-        <ol className="space-y-6 border-l-2 border-primary-200 pl-5 sm:pl-8">
+        <ol className="bm-history-timeline space-y-7 border-l-2 pl-5 sm:pl-8">
           {events.map(event => {
             const showEvidenceStatus =
               event.evidenceStatus && event.evidenceStatus !== 'established';
@@ -415,11 +415,11 @@ export default function History() {
               >
                 <span
                   aria-hidden="true"
-                  className="absolute -left-[1.7rem] top-8 h-3 w-3 rounded-full border-2 border-[#fffdf8] bg-primary-700 sm:-left-[2.45rem]"
+                  className="bm-history-dot absolute -left-[1.7rem] top-8 h-3 w-3 rounded-full border-2 sm:-left-[2.45rem]"
                 />
 
-                <article className="overflow-hidden rounded-2xl border border-gray-200 bg-white">
-                  <div className="border-b border-gray-100 p-5 sm:p-7">
+                <article className="bm-history-event overflow-hidden rounded-2xl border">
+                  <div className="bm-history-event-header border-b p-5 sm:p-7">
                     <div className="flex flex-wrap items-center gap-2">
                       <p className="mr-auto font-extrabold text-primary-800">
                         {event.date}
@@ -452,18 +452,18 @@ export default function History() {
                     </p>
 
                     {event.evidenceNote && (
-                      <div className="mt-4 rounded-xl border-l-4 border-secondary-400 bg-secondary-50 px-4 py-3 text-sm leading-relaxed text-gray-700">
+                      <div className="bm-history-evidence-note mt-4 rounded-xl border-l-4 px-4 py-3 text-sm leading-relaxed text-gray-700">
                         {event.evidenceNote}
                       </div>
                     )}
                   </div>
 
                   {event.media && event.media.length > 0 && (
-                    <div className="grid gap-3 border-b border-gray-100 bg-gray-50/60 p-5 sm:grid-cols-2 sm:p-6">
+                    <div className="bm-history-media-band grid gap-3 border-b p-5 sm:grid-cols-2 sm:p-6">
                       {event.media.map(media => (
                         <div
                           key={media.id}
-                          className="rounded-xl border border-gray-200 bg-white p-4"
+                          className="bm-history-media-card rounded-xl border p-4"
                         >
                           <div className="flex items-start gap-3">
                             {media.kind === 'map' ? (
@@ -525,7 +525,7 @@ export default function History() {
                           {event.interpretations.map(interpretation => (
                             <div
                               key={interpretation.id}
-                              className="rounded-xl bg-primary-50 p-4"
+                              className="bm-history-interpretation rounded-xl p-4"
                             >
                               <p className="text-sm font-extrabold text-primary-950">
                                 {interpretation.label}
@@ -544,13 +544,13 @@ export default function History() {
                     event.relations?.people?.length ||
                     event.relations?.institutions?.length ||
                     relatedEvents?.length) && (
-                    <div className="border-b border-gray-100 px-5 py-4 sm:px-6">
+                    <div className="bm-history-relations border-b px-5 py-4 sm:px-6">
                       <div className="flex flex-wrap gap-2">
                         {relatedPlaces?.map(place => (
                           <Link
                             key={place.id}
                             to={`/civic-map/${place.id}`}
-                            className="inline-flex items-center gap-1.5 rounded-full border border-secondary-300 bg-secondary-50 px-3 py-1.5 text-xs font-bold text-secondary-900 hover:border-secondary-500"
+                            className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-secondary-300 bg-secondary-50 px-3 py-1.5 text-xs font-bold text-secondary-900 hover:border-secondary-500"
                           >
                             <MapPin className="h-3.5 w-3.5" aria-hidden="true" />
                             {place.name}
@@ -561,7 +561,7 @@ export default function History() {
                           <Link
                             key={barangay.slug}
                             to={`/barangays/${barangay.slug}`}
-                            className="rounded-full border border-primary-200 bg-primary-50 px-3 py-1.5 text-xs font-bold text-primary-800 hover:border-primary-400"
+                            className="inline-flex min-h-11 items-center rounded-full border border-primary-200 bg-primary-50 px-3 py-1.5 text-xs font-bold text-primary-800 hover:border-primary-400"
                           >
                             Barangay {barangay.name}
                           </Link>
@@ -597,7 +597,7 @@ export default function History() {
                     </div>
                   )}
 
-                  <div className="p-5 sm:p-6">
+                  <div className="bm-history-sources p-5 sm:p-6">
                     <details>
                       <summary className="flex min-h-11 cursor-pointer list-none items-center text-sm font-extrabold text-primary-800">
                         <span className="inline-flex items-center gap-2">
@@ -629,7 +629,7 @@ export default function History() {
         </ol>
 
         {events.length === 0 && (
-          <div className="rounded-xl border border-gray-200 bg-white p-8 text-center">
+          <div className="bm-history-empty rounded-xl border p-8 text-center">
             <p>No events match these filters.</p>
             <button
               type="button"

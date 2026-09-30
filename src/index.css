@@ -719,3 +719,113 @@ a.bm-barangay-card:hover {
     transform: none;
   }
 }
+
+
+/* W7-6b — Makati history editorial treatment. */
+.bm-history-page {
+  background:
+    linear-gradient(180deg, rgba(241, 248, 244, .62), transparent 25rem),
+    var(--bm-surface-canvas);
+}
+.bm-history-intro {
+  position: relative;
+}
+.bm-history-intro::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: -.75rem;
+  width: min(10rem, 32vw);
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--brand-gold), transparent);
+  pointer-events: none;
+}
+.bm-history-collection,
+.bm-history-filters,
+.bm-history-event,
+.bm-history-media-card,
+.bm-history-empty {
+  border-color: var(--bm-line-soft);
+  background: var(--bm-surface-paper);
+  box-shadow: var(--bm-shadow-rest);
+}
+.bm-history-collection {
+  border-left: 4px solid var(--brand-gold);
+  background: var(--bm-surface-accent);
+}
+.bm-history-periods {
+  overscroll-behavior-x: contain;
+  scrollbar-width: thin;
+}
+.bm-history-filters {
+  border-top: 3px solid color-mix(in srgb, var(--brand-green) 28%, var(--bm-line-soft));
+}
+.bm-history-control {
+  min-height: 44px;
+  border-color: var(--bm-line-strong);
+  background: var(--bm-surface-canvas);
+  color: var(--bm-ink-strong);
+}
+.bm-history-control:focus {
+  border-color: var(--brand-gold);
+  box-shadow: 0 0 0 3px rgba(251, 191, 1, .16);
+  outline: none;
+}
+.bm-history-timeline {
+  border-color: color-mix(in srgb, var(--brand-green) 36%, var(--bm-line-soft));
+}
+.bm-history-dot {
+  border-color: var(--bm-surface-canvas);
+  background: var(--brand-green);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand-gold) 32%, transparent);
+}
+.bm-history-event {
+  border-top: 3px solid color-mix(in srgb, var(--brand-gold) 50%, white);
+}
+.bm-history-event-header,
+.bm-history-media-band,
+.bm-history-relations {
+  border-color: var(--bm-line-soft);
+}
+.bm-history-event-header {
+  background: linear-gradient(180deg, rgba(255, 250, 240, .46), transparent);
+}
+.bm-history-event-header > p,
+.bm-history-event-header > h2 {
+  max-width: var(--bm-reading-max);
+}
+.bm-history-evidence-note {
+  border-color: var(--brand-gold);
+  background: var(--bm-surface-accent);
+}
+.bm-history-media-band {
+  background: color-mix(in srgb, var(--bm-surface-muted) 82%, white);
+}
+.bm-history-media-card {
+  border-radius: var(--bm-radius-control);
+}
+.bm-history-media-card img {
+  box-shadow: var(--bm-shadow-rest);
+}
+.bm-history-interpretation {
+  border: 1px solid color-mix(in srgb, var(--brand-green) 18%, var(--bm-line-soft));
+  background: color-mix(in srgb, var(--color-primary-50) 72%, white);
+}
+.bm-history-relations {
+  background: color-mix(in srgb, var(--bm-surface-canvas) 72%, white);
+}
+.bm-history-sources {
+  background: var(--bm-surface-paper);
+}
+.bm-history-sources details[open] summary {
+  color: var(--brand-green-dark);
+}
+@media (min-width: 1280px) {
+  .bm-history-page > .container {
+    padding-inline: 2.5rem;
+  }
+  .bm-history-timeline {
+    max-width: 76rem;
+  }
+}
