@@ -138,6 +138,19 @@ const Home: React.FC = () => {
 
       <Hero />
 
+      <section className="border-b border-primary-100 bg-[#fffdf8] py-5 md:py-7">
+        <div className="container px-5 md:px-6 lg:px-8">
+          <PhotoCarousel
+            images={homeImageSet}
+            title="Around Makati"
+            compact
+            priority
+            autoRotate
+            className="mx-auto max-w-6xl"
+          />
+        </div>
+      </section>
+
       <section className="bg-[#fffdf8] py-14">
         <div className="container px-5 md:px-6 lg:px-8">
           <div className="section-eyebrow">Services</div>
@@ -361,16 +374,6 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      <section className="border-b border-primary-100 bg-[#fffdf8] py-8 md:py-10">
-        <div className="container px-5 md:px-6 lg:px-8">
-          <PhotoCarousel
-            images={homeImageSet}
-            title="Around Makati"
-            compact
-            className="mx-auto max-w-6xl"
-          />
-        </div>
-      </section>
 
       
 

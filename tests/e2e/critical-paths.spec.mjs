@@ -407,13 +407,13 @@ test('homepage keeps priority journeys ahead of depth content', async ({ page })
 
   const sectionText = await page.locator('#main-content section').allTextContents();
   const markers = [
+    'Around Makati',
     'Common services',
     'Public action & evidence',
     'Take part in Makati',
     'Understand the city as you explore it',
     'Featured Reports & Insights',
     'Makati at a glance',
-    'Around Makati',
   ];
 
   const indices = markers.map(marker =>
