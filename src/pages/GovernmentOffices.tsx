@@ -64,7 +64,7 @@ export default function GovernmentOffices() {
             value={query}
             onChange={event => setQuery(event.target.value)}
             placeholder="Search SSS, Pag-IBIG, PhilHealth, DepEd, address..."
-            className="bm-service-search min-h-11 w-full py-3.5 pl-12 pr-4"
+            className="bm-service-search min-h-11 w-full rounded-2xl py-3.5 pl-12 pr-4"
           />
         </label>
 
