@@ -78,9 +78,9 @@ export default function Heritage() {
         title="Heritage & Culture"
         description="Historical and cultural sites, sourced context and self-guided heritage routes in Makati City."
       />
-      <Section className="bg-[#fffdf8]">
+      <Section className="bm-heritage-page">
         <div className="section-eyebrow">Heritage & Culture</div>
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+        <div className="bm-heritage-intro flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
             <Heading>Historical and cultural sites</Heading>
             <p className="max-w-3xl text-gray-600">
@@ -103,7 +103,7 @@ export default function Heritage() {
           </Link>
         </div>
 
-        <div className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-2">
+        <div className="bm-heritage-sites mt-8 grid grid-cols-1 gap-5 md:grid-cols-2">
           {heritageSites.map(site => {
             const place = placeRegistryById.get(site.placeId);
             if (!place) return null;
@@ -116,10 +116,10 @@ export default function Heritage() {
             return (
               <article
                 key={place.id}
-                className="overflow-hidden rounded-2xl border border-gray-200 bg-white"
+                className="bm-heritage-place-card overflow-hidden rounded-2xl border"
               >
                 {primaryMedia && (
-                  <figure className="border-b border-gray-100">
+                  <figure className="bm-heritage-media border-b">
                     <img
                       src={primaryMedia.src}
                       alt={primaryMedia.alt}
@@ -131,7 +131,7 @@ export default function Heritage() {
                       className="aspect-[16/9] w-full object-cover"
                       style={{ objectPosition: primaryMedia.objectPosition ?? '50% 50%' }}
                     />
-                    <figcaption className="flex flex-wrap gap-x-2 gap-y-1 px-4 py-2 text-[11px] leading-relaxed text-gray-500">
+                    <figcaption className="bm-heritage-caption flex flex-wrap gap-x-2 gap-y-1 px-4 py-2 text-[11px] leading-relaxed text-gray-500">
                       <span>{primaryMedia.date}</span>
                       <a
                         href={primaryMedia.sourceUrl}
@@ -186,14 +186,14 @@ export default function Heritage() {
                         href={mapsUrl(place.location.point.lat, place.location.point.lng)}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex items-center gap-1 font-bold text-primary-700"
+                        className="inline-flex min-h-11 items-center gap-1 font-bold text-primary-700"
                       >
                         <MapPin className="h-4 w-4" /> Map
                       </a>
                     )}
                     <Link
                       to={'/civic-map/' + place.id}
-                      className="inline-flex items-center gap-1 font-bold text-primary-700"
+                      className="inline-flex min-h-11 items-center gap-1 font-bold text-primary-700"
                     >
                       Place details <ArrowRight className="h-3.5 w-3.5" />
                     </Link>
@@ -202,7 +202,7 @@ export default function Heritage() {
                         href={primarySource.url}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex items-center gap-1 text-gray-500 underline underline-offset-2"
+                        className="inline-flex min-h-11 items-center gap-1 text-gray-500 underline underline-offset-2"
                       >
                         {primarySource.label}{' '}
                         <ExternalLink className="h-3.5 w-3.5" />
@@ -216,9 +216,9 @@ export default function Heritage() {
         </div>
       </Section>
 
-      <Section className="bg-[#f5f8f2]" id="heritage-map">
+      <Section className="bm-heritage-map-band" id="heritage-map">
         <div className="section-eyebrow">Heritage map</div>
-        <div className="grid gap-6 xl:grid-cols-[0.68fr_1.32fr] xl:items-start">
+        <div className="bm-heritage-map-layout grid gap-6 xl:grid-cols-[0.68fr_1.32fr] xl:items-start">
           <div>
             <Heading level={2}>See the places together</Heading>
             <p className="mt-2 max-w-xl text-sm leading-relaxed text-gray-600">
@@ -261,7 +261,7 @@ export default function Heritage() {
             </div>
 
             {selectedCollection && (
-              <div className="mt-5 rounded-xl border border-secondary-200 bg-secondary-50 p-4">
+              <div className="bm-heritage-map-context mt-5 rounded-xl border p-4">
                 <div className="text-xs font-bold uppercase tracking-[0.08em] text-secondary-800">
                   {selectedCollection.kind === 'walking-route'
                     ? 'Walking route'
@@ -276,13 +276,13 @@ export default function Heritage() {
                 <div className="mt-3 flex flex-wrap gap-3 text-sm font-bold">
                   <a
                     href={'#collection-' + selectedCollection.id}
-                    className="text-primary-700 underline underline-offset-2"
+                    className="inline-flex min-h-11 items-center text-primary-700 underline underline-offset-2"
                   >
                     View collection
                   </a>
                   <Link
                     to={'/history?collection=' + selectedCollection.id}
-                    className="text-primary-700 underline underline-offset-2"
+                    className="inline-flex min-h-11 items-center text-primary-700 underline underline-offset-2"
                   >
                     Related history
                   </Link>
@@ -303,7 +303,7 @@ export default function Heritage() {
         </div>
       </Section>
 
-      <Section className="bg-white">
+      <Section className="bm-heritage-collections">
         <div className="section-eyebrow">Collections</div>
         <Heading level={2}>Explore by theme</Heading>
 
@@ -318,7 +318,7 @@ export default function Heritage() {
               <article
                 key={collection.id}
                 id={'collection-' + collection.id}
-                className="scroll-mt-24 rounded-2xl border border-primary-100 bg-[#fffdf8] p-6"
+                className="bm-heritage-collection-card scroll-mt-24 rounded-2xl border p-6"
               >
                 <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
                   <Layers3 className="h-5 w-5" />
@@ -339,7 +339,7 @@ export default function Heritage() {
                     <Link
                       key={place.id}
                       to={'/civic-map/' + place.id}
-                      className="rounded-full border border-primary-200 bg-white px-3 py-1.5 text-xs font-bold text-primary-800 hover:border-primary-400"
+                      className="inline-flex min-h-11 items-center rounded-full border border-primary-200 bg-white px-3 py-1.5 text-xs font-bold text-primary-800 hover:border-primary-400"
                     >
                       {place.name}
                     </Link>
@@ -347,7 +347,7 @@ export default function Heritage() {
                 </div>
                 <Link
                   to={'/history?collection=' + collection.id}
-                  className="mt-5 inline-flex items-center gap-1 text-sm font-bold text-primary-700"
+                  className="mt-5 inline-flex min-h-11 items-center gap-1 text-sm font-bold text-primary-700"
                 >
                   Related history <ArrowRight className="h-3.5 w-3.5" />
                 </Link>
@@ -357,7 +357,7 @@ export default function Heritage() {
         </div>
       </Section>
 
-      <Section className="bg-[#f5f8f2]">
+      <Section className="bm-heritage-routes">
         <div className="section-eyebrow">Self-guided routes</div>
         <Heading level={2}>Walk through Makati&apos;s history</Heading>
         <p className="max-w-3xl text-sm leading-relaxed text-gray-600">
@@ -378,7 +378,7 @@ export default function Heritage() {
               <article
                 key={route.id}
                 id={'collection-' + route.id}
-                className="scroll-mt-24 rounded-2xl border border-primary-100 bg-white p-6"
+                className="bm-heritage-route-card scroll-mt-24 rounded-2xl border p-6"
               >
                 <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
                   <Footprints className="h-5 w-5" />
@@ -399,7 +399,7 @@ export default function Heritage() {
                       </span>
                       <Link
                         to={'/civic-map/' + stop.id}
-                        className="pt-1 font-semibold text-gray-800 hover:text-primary-700"
+                        className="inline-flex min-h-11 items-center font-semibold text-gray-800 hover:text-primary-700"
                       >
                         {stop.name}
                       </Link>
@@ -428,8 +428,8 @@ export default function Heritage() {
         </div>
       </Section>
 
-      <Section className="bg-white">
-        <div className="flex flex-col gap-5 rounded-2xl border border-primary-100 bg-[#fffdf8] p-6 md:flex-row md:items-center md:justify-between md:p-8">
+      <Section className="bm-heritage-handoff-band">
+        <div className="bm-heritage-handoff flex flex-col gap-5 rounded-2xl border p-6 md:flex-row md:items-center md:justify-between md:p-8">
           <div>
             <div className="section-eyebrow">Go deeper</div>
             <h2 className="text-2xl font-extrabold text-gray-950">

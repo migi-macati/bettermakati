@@ -34,4 +34,4 @@ Polish heritage cards, collections, routes, captions/source links and the handof
 
 ## Current
 
-W7-6a is CI-verified. W7-6b is implementation-complete and hands off to CI before W7-6c begins.
+W7-6a and W7-6b are CI-verified. W7-6c is implementation-complete and hands off to CI; once green, W7-6 is complete and W7-7 begins.

@@ -829,3 +829,122 @@ a.bm-barangay-card:hover {
     max-width: 76rem;
   }
 }
+
+
+/* W7-6c — heritage editorial and place treatment. */
+.bm-heritage-page {
+  background:
+    linear-gradient(180deg, rgba(241, 248, 244, .58), transparent 24rem),
+    var(--bm-surface-canvas);
+}
+.bm-heritage-intro {
+  position: relative;
+}
+.bm-heritage-intro::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: -.75rem;
+  width: min(10rem, 32vw);
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--brand-gold), transparent);
+  pointer-events: none;
+}
+.bm-heritage-place-card,
+.bm-heritage-collection-card,
+.bm-heritage-route-card,
+.bm-heritage-handoff {
+  border-color: var(--bm-line-soft);
+  background: var(--bm-surface-paper);
+  box-shadow: var(--bm-shadow-rest);
+}
+.bm-heritage-place-card {
+  border-top: 3px solid color-mix(in srgb, var(--brand-gold) 52%, white);
+  transition:
+    border-color var(--bm-motion-fast) ease,
+    box-shadow var(--bm-motion-base) ease,
+    transform var(--bm-motion-base) ease;
+}
+.bm-heritage-place-card:hover {
+  border-color: color-mix(in srgb, var(--brand-green) 34%, var(--bm-line-soft));
+  box-shadow: var(--bm-shadow-lift);
+  transform: translateY(-2px);
+}
+.bm-heritage-media {
+  border-color: var(--bm-line-soft);
+  background: var(--bm-surface-muted);
+}
+.bm-heritage-media img {
+  transition: transform var(--bm-motion-base) ease;
+}
+.bm-heritage-place-card:hover .bm-heritage-media img {
+  transform: scale(1.012);
+}
+.bm-heritage-caption {
+  border-top: 1px solid var(--bm-line-soft);
+  background: var(--bm-surface-paper);
+}
+.bm-heritage-map-band,
+.bm-heritage-routes {
+  background: color-mix(in srgb, var(--bm-surface-muted) 76%, var(--color-primary-50));
+}
+.bm-heritage-map-layout {
+  min-width: 0;
+}
+.bm-heritage-map-context {
+  border-color: color-mix(in srgb, var(--brand-gold) 52%, var(--bm-line-soft));
+  border-left: 4px solid var(--brand-gold);
+  background: var(--bm-surface-accent);
+  box-shadow: var(--bm-shadow-rest);
+}
+.bm-heritage-collections,
+.bm-heritage-handoff-band {
+  background: var(--bm-surface-paper);
+}
+.bm-heritage-collection-card {
+  border-top: 3px solid color-mix(in srgb, var(--brand-green) 24%, var(--bm-line-soft));
+}
+.bm-heritage-route-card {
+  border-top: 3px solid color-mix(in srgb, var(--brand-gold) 58%, white);
+}
+.bm-heritage-collection-card,
+.bm-heritage-route-card {
+  transition:
+    border-color var(--bm-motion-fast) ease,
+    box-shadow var(--bm-motion-base) ease;
+}
+.bm-heritage-collection-card:hover,
+.bm-heritage-route-card:hover {
+  border-color: color-mix(in srgb, var(--brand-green) 36%, var(--bm-line-soft));
+  box-shadow: var(--bm-shadow-lift);
+}
+.bm-heritage-handoff {
+  border-left: 4px solid var(--brand-gold);
+  background:
+    linear-gradient(90deg, rgba(255, 250, 240, .72), transparent),
+    var(--bm-surface-paper);
+}
+@media (min-width: 1280px) {
+  .bm-heritage-page > .container,
+  .bm-heritage-map-band > .container,
+  .bm-heritage-collections > .container,
+  .bm-heritage-routes > .container,
+  .bm-heritage-handoff-band > .container {
+    padding-inline: 2.5rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bm-heritage-place-card,
+  .bm-heritage-media img,
+  .bm-heritage-collection-card,
+  .bm-heritage-route-card {
+    transition: none;
+  }
+  .bm-heritage-place-card:hover {
+    transform: none;
+  }
+  .bm-heritage-place-card:hover .bm-heritage-media img {
+    transform: none;
+  }
+}

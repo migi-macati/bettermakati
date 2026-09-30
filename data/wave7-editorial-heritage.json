@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "reviewedOn": "2026-09-30",
+  "status": "implementation-complete",
+  "step": "W7-6c",
+  "title": "Heritage editorial and place treatment",
+  "surface": "/heritage",
+  "changes": [
+    "The heritage landing surface now shares the Wave 7 editorial canvas and restrained gold intro rule with History.",
+    "Heritage place cards, image captions and source actions now form a coherent place-first presentation while retaining original provenance.",
+    "The map band and selected-collection context use semantic muted/accent surfaces without changing map selection behavior.",
+    "Thematic collections and self-guided routes use distinct card treatments so routes remain conceptually separate from places.",
+    "Place, source, collection-history and route-stop links now meet the 44px interaction baseline.",
+    "The final handoff to History is visually integrated instead of reading as an isolated card.",
+    "Hover image/card motion respects reduced-motion preferences."
+  ],
+  "preserved": [
+    "Canonical Place Registry ownership and place IDs",
+    "Heritage map view controls and aria-pressed state",
+    "Map path behavior for walking routes",
+    "Primary media alt text, source URL, credit, license and license URL",
+    "Primary historical source links",
+    "Collection and walking-route IDs and anchors",
+    "History collection handoffs",
+    "External walking directions behavior",
+    "Responsive two-column place grid and map layout markers required by the Wave 5 heritage closure audit"
+  ],
+  "next": "W7-7 — Place and civic-asset integration polish"
+}
