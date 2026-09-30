@@ -28,7 +28,7 @@ export default function CityMonitorRecordPage() {
     return (
       <>
         <SEO title="City Monitor record not found" noIndex />
-        <Section className="bg-[#fffdf8]">
+        <Section className="bm-detail-page bg-[#fffdf8]">
           <Heading>City Monitor record not found</Heading>
           <p className="mt-3 text-gray-600">
             No validated City Monitor record found.
@@ -48,7 +48,7 @@ export default function CityMonitorRecordPage() {
         description={record.summary}
       />
 
-      <Section className="bg-[#fffdf8]">
+      <Section className="bm-detail-page bg-[#fffdf8]">
         <Link
           to="/city-monitor"
           className="inline-flex items-center gap-1 text-sm font-bold text-primary-700"
@@ -62,32 +62,32 @@ export default function CityMonitorRecordPage() {
         <p className="mt-3 max-w-4xl text-gray-700 leading-relaxed">{record.summary}</p>
 
         <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-          <div className="rounded-xl border border-primary-100 bg-white p-4">
+          <div className="bm-detail-meta-card p-4">
             <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">Date</div>
             <div className="mt-1 font-extrabold text-gray-950">{record.date}</div>
           </div>
-          <div className="rounded-xl border border-primary-100 bg-white p-4">
+          <div className="bm-detail-meta-card p-4">
             <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">Status</div>
             <div className="mt-1 font-extrabold text-gray-950">{record.status}</div>
           </div>
-          <div className="rounded-xl border border-primary-100 bg-white p-4">
+          <div className="bm-detail-meta-card p-4">
             <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">Source publisher</div>
             <div className="mt-1 font-extrabold text-gray-950">{record.sourcePublisher}</div>
           </div>
           {record.referenceNo && (
-            <div className="rounded-xl border border-primary-100 bg-white p-4">
+            <div className="bm-detail-meta-card p-4">
               <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">Reference</div>
               <div className="mt-1 font-extrabold text-gray-950">{record.referenceNo}</div>
             </div>
           )}
           {record.stage && (
-            <div className="rounded-xl border border-primary-100 bg-white p-4">
+            <div className="bm-detail-meta-card p-4">
               <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">Evidence stage</div>
               <div className="mt-1 font-extrabold text-gray-950">{record.stage}</div>
             </div>
           )}
           {record.amount !== undefined && (
-            <div className="rounded-xl border border-primary-100 bg-white p-4">
+            <div className="bm-detail-meta-card p-4">
               <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">Reported amount</div>
               <div className="mt-1 font-extrabold text-gray-950">
                 ₱{record.amount.toLocaleString('en-PH', { maximumFractionDigits: 2 })}
@@ -95,7 +95,7 @@ export default function CityMonitorRecordPage() {
             </div>
           )}
           {record.location && (
-            <div className="rounded-xl border border-primary-100 bg-white p-4">
+            <div className="bm-detail-meta-card p-4">
               <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">Location</div>
               <div className="mt-1 font-extrabold text-gray-950">{record.location}</div>
             </div>
@@ -175,7 +175,7 @@ export default function CityMonitorRecordPage() {
             href={record.sourceUrl}
             target="_blank"
             rel="noreferrer"
-            className="flex items-start gap-3 rounded-xl border border-primary-100 bg-white p-4"
+            className="bm-detail-related-card flex items-start gap-3 p-4"
           >
             <FileText className="mt-0.5 h-5 w-5 shrink-0 text-primary-700" />
             <span>
@@ -189,7 +189,7 @@ export default function CityMonitorRecordPage() {
               href={document.url}
               target="_blank"
               rel="noreferrer"
-              className="flex items-start gap-3 rounded-xl border border-primary-100 bg-white p-4"
+              className="bm-detail-related-card flex items-start gap-3 p-4"
             >
               <Link2 className="mt-0.5 h-5 w-5 shrink-0 text-primary-700" />
               <span>
@@ -231,12 +231,12 @@ export default function CityMonitorRecordPage() {
       )}
 
       {record.commitments?.length ? (
-        <Section className="bg-[#fffdf8]">
+        <Section className="bm-detail-page bg-[#fffdf8]">
           <div className="section-eyebrow">Commitments</div>
           <Heading level={2}>Forward-looking commitments</Heading>
           <div className="mt-5 space-y-3">
             {record.commitments.map(commitment => (
-              <div key={commitment.text} className="rounded-xl border border-primary-100 bg-white p-4">
+              <div key={commitment.text} className="bm-detail-meta-card p-4">
                 <Scale className="h-4 w-4 text-primary-700" />
                 <div className="mt-2 font-bold text-gray-950">{commitment.text}</div>
                 {commitment.target && <div className="mt-1 text-sm text-gray-600">Target: {commitment.target}</div>}
