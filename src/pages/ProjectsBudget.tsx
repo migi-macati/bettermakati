@@ -672,7 +672,7 @@ export default function ProjectsBudget() {
                 key={item.label}
                 className="rounded-2xl border border-gray-200 bg-white p-5"
               >
-                <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
+                <div className="flex flex-col gap-3 xl:flex-row xl:items-start xl:justify-between">
                   <div>
                     <h3 className="font-extrabold text-gray-950">
                       {item.label}
@@ -681,7 +681,7 @@ export default function ProjectsBudget() {
                       {item.description}
                     </p>
                   </div>
-                  <div className="lg:text-right">
+                  <div className="xl:text-right">
                     <div className="font-extrabold text-primary-800">
                       {peso(item.amountM)}
                     </div>
@@ -790,7 +790,7 @@ export default function ProjectsBudget() {
                 key={item.label}
                 className="rounded-2xl border border-gray-200 p-5"
               >
-                <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
+                <div className="flex flex-col gap-3 xl:flex-row xl:items-start xl:justify-between">
                   <div>
                     <h3 className="font-extrabold text-gray-950">
                       {item.label}
@@ -799,7 +799,7 @@ export default function ProjectsBudget() {
                       {item.description}
                     </p>
                   </div>
-                  <div className="lg:text-right">
+                  <div className="xl:text-right">
                     <div className="font-extrabold text-primary-800">
                       {peso(item.amountM)}
                     </div>
@@ -918,7 +918,7 @@ export default function ProjectsBudget() {
                 {developmentFundProject.location}
               </p>
             </div>
-            <div className="lg:text-right">
+            <div className="xl:text-right">
               <div className="text-2xl font-extrabold text-primary-800">
                 {developmentFundProject.latestCompletion}%
               </div>
@@ -1470,7 +1470,7 @@ export default function ProjectsBudget() {
         <div className="mt-7 space-y-4">
           {auditFindingEntries.map(item => (
             <article key={item.id} className="rounded-2xl border border-gray-200 bg-[#fffdf8] p-6">
-              <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
+              <div className="flex flex-col gap-3 xl:flex-row xl:items-start xl:justify-between">
                 <div>
                   <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
                     {item.period}
