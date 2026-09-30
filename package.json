@@ -134,7 +134,8 @@
     "check:wave6-semantic-keyboard-a11y": "node scripts/check-wave6-semantic-keyboard-a11y.mjs",
     "check:wave6-responsive-a11y-closure": "node scripts/check-wave6-responsive-a11y-closure.mjs",
     "check:wave7-foundation-tokens": "node scripts/check-wave7-foundation-tokens.mjs",
-    "check:wave7-shell-header": "node scripts/check-wave7-shell-header.mjs",\n    "check:wave7-shell-footer-breadcrumbs": "node scripts/check-wave7-shell-footer-breadcrumbs.mjs"
+    "check:wave7-shell-header": "node scripts/check-wave7-shell-header.mjs",
+    "check:wave7-shell-footer-breadcrumbs": "node scripts/check-wave7-shell-footer-breadcrumbs.mjs"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
