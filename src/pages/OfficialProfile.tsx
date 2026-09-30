@@ -31,7 +31,7 @@ export default function OfficialProfile() {
 
   if (!official) {
     return (
-      <Section className="bg-[#fffdf8]">
+      <Section className="bm-detail-page bg-[#fffdf8]">
         <Breadcrumbs
           className="mb-6"
           items={[
@@ -69,7 +69,7 @@ export default function OfficialProfile() {
         }}
       />
 
-      <Section className="bg-[#fffdf8]">
+      <Section className="bm-detail-page bg-[#fffdf8]">
         <Breadcrumbs
           className="mb-6"
           items={[
@@ -92,13 +92,13 @@ export default function OfficialProfile() {
             </p>
 
             <div className="mt-7 grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div className="rounded-xl border border-gray-200 bg-white p-4">
+              <div className="bm-detail-meta-card p-4">
                 <div className="text-xs uppercase tracking-[0.08em] text-gray-500 font-bold">
                   Full name
                 </div>
                 <div className="mt-1 font-bold text-gray-950">{official.name}</div>
               </div>
-              <div className="rounded-xl border border-gray-200 bg-white p-4">
+              <div className="bm-detail-meta-card p-4">
                 <div className="text-xs uppercase tracking-[0.08em] text-gray-500 font-bold">
                   Elected
                 </div>
@@ -106,7 +106,7 @@ export default function OfficialProfile() {
                   {official.electionYear} local election
                 </div>
               </div>
-              <div className="rounded-xl border border-gray-200 bg-white p-4">
+              <div className="bm-detail-meta-card p-4">
                 <div className="text-xs uppercase tracking-[0.08em] text-gray-500 font-bold">
                   Party on 2025 ballot
                 </div>
@@ -114,7 +114,7 @@ export default function OfficialProfile() {
                   {official.partyOn2025Ballot}
                 </div>
               </div>
-              <div className="rounded-xl border border-gray-200 bg-white p-4">
+              <div className="bm-detail-meta-card p-4">
                 <div className="text-xs uppercase tracking-[0.08em] text-gray-500 font-bold">
                   Level
                 </div>
@@ -127,7 +127,7 @@ export default function OfficialProfile() {
             </div>
           </div>
 
-          <aside className="rounded-2xl border border-primary-100 bg-white p-6">
+          <aside className="bm-detail-source-panel p-6">
             <Landmark className="h-6 w-6 text-primary-700" />
             <h2 className="mt-4 text-lg font-extrabold text-gray-950">Sources</h2>
             <p className="mt-2 text-sm leading-relaxed text-gray-600">

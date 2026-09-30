@@ -36,7 +36,7 @@ export default function PublicRecordDetail() {
         description={record.description}
       />
 
-      <Section className="border-b border-primary-800 bg-primary-900 text-white">
+      <Section className="bm-detail-hero border-b border-primary-800 bg-primary-900 text-white">
         <Breadcrumbs
           tone="dark"
           className="mb-6"
@@ -68,7 +68,7 @@ export default function PublicRecordDetail() {
           {record.description}
         </p>
 
-        <div className="mt-5 max-w-4xl rounded-2xl border border-white/20 bg-white/10 p-5">
+        <div className="bm-detail-source-panel mt-5 max-w-4xl p-5">
           <div className="text-xs font-extrabold uppercase tracking-[0.08em] text-secondary-100">
             BetterMakati catalog entry
           </div>
@@ -121,7 +121,7 @@ export default function PublicRecordDetail() {
               <Link
                 key={context.href + context.label}
                 to={context.href}
-                className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300"
+                className="bm-detail-related-card p-5"
               >
                 <div className="font-extrabold text-gray-950">
                   {context.label}
