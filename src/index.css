@@ -180,12 +180,6 @@ body {
   margin-inline: auto;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
 main :is(.home-service-card, .category-card, .civic-card, .community-tool-card, .stat-card) {
   box-shadow: var(--bm-shadow-rest);
 }
