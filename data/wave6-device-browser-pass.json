@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "reviewedOn": "2026-09-30",
+  "status": "complete-ci-browser-verified",
+  "step": "W6-5f",
+  "title": "Device & browser pass",
+  "proof": {
+    "workflow": "CI",
+    "runNumber": 2205,
+    "commit": "2b0fd57b4b9c70b1534490296b3fbd095b262ff1",
+    "result": "success",
+    "browser": "Chromium via Playwright 1.55.0 on ubuntu-latest",
+    "currentBuildPreview": "Vite preview on 127.0.0.1:4173"
+  },
+  "deviceMatrix": [
+    {
+      "id": "narrow-mobile",
+      "viewport": "320x568"
+    },
+    {
+      "id": "android-mobile",
+      "viewport": "390x844"
+    },
+    {
+      "id": "tablet-portrait",
+      "viewport": "768x1024"
+    },
+    {
+      "id": "compact-landscape",
+      "viewport": "1024x768"
+    },
+    {
+      "id": "desktop",
+      "viewport": "1440x900"
+    }
+  ],
+  "reflowRoutes": [
+    "/",
+    "/search",
+    "/barangays/poblacion",
+    "/projects-budget",
+    "/statistics",
+    "/calendar",
+    "/civic-map/poblacion-park",
+    "/heritage"
+  ],
+  "runtimeProof": [
+    "Representative journeys have no document/body horizontal overflow across all five target viewports.",
+    "320px and 390px mobile navigation and search popovers stay inside the viewport.",
+    "The Statistics dense table remains locally horizontally scrollable and keyboard-scrollable at 320px without widening the page.",
+    "Featured Reports respects prefers-reduced-motion by removing the autoplay control.",
+    "The civic-map iframe accepts keyboard focus and retains a text fallback.",
+    "200% text resizing does not create page-level overflow on the homepage, Search, Services or Calendar.",
+    "The accessibility suite covers 51 representative substantive routes with WCAG 2.0/2.1 A-AA and axe-core WCAG 2.2 AA tags and rejects serious/critical findings."
+  ],
+  "fixesVerified": [
+    "Homepage/footer text-zoom reflow",
+    "Heritage dense-marker 44px target separation",
+    "Projects & Budget narrow-card reflow",
+    "Statistics narrow-card reflow and scroll-region containment",
+    "Main shell min-width containment for locally scrollable content"
+  ],
+  "bounded": [
+    {
+      "id": "chromium-only-ci-browser",
+      "status": "bounded",
+      "reason": "CI browser proof is Chromium on Ubuntu; Firefox, WebKit/Safari and physical-device rendering are not claimed."
+    },
+    {
+      "id": "physical-device-screen-reader-sampling",
+      "status": "manual-follow-up",
+      "reason": "Automated browser and Axe coverage do not replace manual assistive-technology and physical-device sampling."
+    },
+    {
+      "id": "wcag-conformance-not-claimed",
+      "status": "bounded",
+      "reason": "Passing automated checks and the W6-5 matrix support the WCAG 2.2 AA target but do not constitute a formal conformance claim."
+    }
+  ],
+  "next": "W6-5g — Regression guard & closure"
+}

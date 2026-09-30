@@ -1,0 +1,120 @@
+{
+  "version": 1,
+  "reviewedOn": "2026-09-30",
+  "status": "complete-guarded",
+  "wave": "Wave 6",
+  "title": "Information architecture, journeys, relationships, responsive & accessibility closure",
+  "completedAreas": [
+    {
+      "id": "W6-1",
+      "title": "Navigation and route baseline",
+      "evidence": [
+        "docs/w6-0b-route-feature-inventory.md",
+        "docs/w6-0c-core-journey-matrix.md",
+        "docs/w6-1a-navigation-audit.md"
+      ]
+    },
+    {
+      "id": "W6-2",
+      "title": "Search discovery and journey QA",
+      "evidence": [
+        "check:wave6-search-index-coverage",
+        "check:wave6-search-relevance",
+        "check:wave6-search-filters",
+        "check:wave6-search-zero-recovery",
+        "check:wave6-search-entry-points",
+        "check:wave6-search-journey-qa"
+      ]
+    },
+    {
+      "id": "W6-3",
+      "title": "Core civic journeys",
+      "evidence": [
+        "check:wave6-homepage-priority-jobs",
+        "check:wave6-homepage-ia",
+        "check:wave6-services-journey",
+        "check:wave6-barangay-journey",
+        "check:wave6-civic-information-journey",
+        "check:wave6-explore-journey",
+        "check:wave6-participation-journey",
+        "check:wave6-evidence-journey"
+      ]
+    },
+    {
+      "id": "W6-4",
+      "title": "Civic relationships and crosslink closure",
+      "evidence": [
+        "check:wave6-orphan-dead-ends",
+        "check:wave6-civic-relationship-model",
+        "check:wave6-page-family-crosslinks",
+        "check:wave6-ecosystem-links",
+        "check:wave6-relationship-loops",
+        "check:wave6-contextual-backlinks",
+        "check:wave6-relationship-ux",
+        "check:wave6-relationship-journeys"
+      ]
+    },
+    {
+      "id": "W6-5",
+      "title": "Responsive & accessibility",
+      "evidence": [
+        "check:wave6-responsive-a11y-baseline",
+        "check:wave6-global-shell-a11y",
+        "check:wave6-controls-forms-search-a11y",
+        "check:wave6-complex-components-a11y",
+        "check:wave6-semantic-keyboard-a11y",
+        "data/wave6-device-browser-pass.json",
+        "check:wave6-responsive-a11y-closure"
+      ]
+    }
+  ],
+  "w65": [
+    {
+      "step": "W6-5a",
+      "status": "complete",
+      "title": "Responsive & accessibility baseline"
+    },
+    {
+      "step": "W6-5b",
+      "status": "complete",
+      "title": "Global shell responsive & accessibility"
+    },
+    {
+      "step": "W6-5c",
+      "status": "complete",
+      "title": "Controls, forms & search"
+    },
+    {
+      "step": "W6-5d",
+      "status": "complete",
+      "title": "Complex components"
+    },
+    {
+      "step": "W6-5e",
+      "status": "complete",
+      "title": "Semantic & keyboard pass"
+    },
+    {
+      "step": "W6-5f",
+      "status": "complete-ci-browser-verified",
+      "title": "Device & browser pass"
+    },
+    {
+      "step": "W6-5g",
+      "status": "complete-guarded",
+      "title": "Regression guard & closure"
+    }
+  ],
+  "browserProof": {
+    "runNumber": 2205,
+    "commit": "2b0fd57b4b9c70b1534490296b3fbd095b262ff1",
+    "result": "success"
+  },
+  "closureRule": "The Wave 6 closure guard is part of both npm run quality and npm run build; the CI run on the closure commit is the final repository gate.",
+  "bounded": [
+    "No formal WCAG 2.2 AA conformance claim.",
+    "CI browser proof is Chromium, not an all-browser certification.",
+    "Manual screen-reader and physical-device sampling remain desirable ongoing QA, not unresolved Wave 6 defects."
+  ],
+  "next": "Wave 7 — visual & polish phase"
+}
