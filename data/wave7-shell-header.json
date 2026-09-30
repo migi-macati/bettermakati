@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "reviewedOn": "2026-09-30",
+  "status": "complete-guarded",
+  "step": "W7-2a",
+  "title": "Header & navigation shell",
+  "scope": [
+    "Emergency/official utility bar",
+    "sticky BetterMakati header",
+    "desktop navigation and dropdown surfaces",
+    "desktop and mobile Search entry points",
+    "mobile menu",
+    "preferred-barangay controls",
+    "BetterBarangay context bar"
+  ],
+  "visualChanges": [
+    "Raw cream/border shell colors are replaced by the W7 semantic surface/line vocabulary.",
+    "The sticky header gains restrained depth and translucency rather than a heavy card treatment.",
+    "Desktop dropdowns use a paper surface with a gold top rule to reinforce hierarchy and Makati identity.",
+    "Search is the shell's clearest gold-accent action on both desktop and mobile.",
+    "Mobile utility controls gain explicit bordered surfaces so Search, barangay and Menu read as a coherent control cluster.",
+    "The BetterBarangay bar uses a restrained green gradient and a lightly surfaced homepage action while retaining the gold Better wordmark treatment."
+  ],
+  "preserved": [
+    "Existing navigation information architecture and labels",
+    "44px interaction baseline",
+    "desktop/mobile split at xl",
+    "aria-expanded and aria-controls menu semantics",
+    "Escape-to-close and focus return",
+    "current-page aria-current behavior",
+    "transparent native barangay selectors with visible focus proxies",
+    "route-change state reset",
+    "Wave 6 responsive/accessibility regression suite"
+  ],
+  "next": "W7-2b — Footer & breadcrumbs"
+}

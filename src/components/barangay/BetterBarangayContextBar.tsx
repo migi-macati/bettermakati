@@ -40,11 +40,11 @@ export default function BetterBarangayContextBar() {
 
   return (
     <div
-      className="border-t border-primary-800 bg-primary-900 text-white"
+      className="bm-barangay-context border-t border-primary-800 text-white"
       role="region"
       aria-label="BetterBarangay view"
     >
-      <div className="container flex min-h-12 items-center justify-between gap-3 px-4 py-1.5">
+      <div className="container flex min-h-12 items-center justify-between gap-3 px-5 py-1.5 md:px-6 lg:px-8">
         <div className="relative min-w-0 rounded-lg focus-within:ring-2 focus-within:ring-secondary-300 focus-within:ring-offset-2 focus-within:ring-offset-primary-900">
           <div className="pointer-events-none flex min-h-11 min-w-0 items-center gap-1.5">
             <span className="truncate text-base font-black tracking-tight sm:text-lg">
@@ -78,7 +78,7 @@ export default function BetterBarangayContextBar() {
               ? 'Open Barangay ' + barangay.name + ' homepage'
               : 'Open barangay directory'
           }
-          className="inline-flex min-h-11 shrink-0 items-center gap-1 rounded-lg px-2 text-sm font-bold text-white hover:bg-white/10 focus-visible:outline-secondary-300 sm:px-3"
+          className="inline-flex min-h-11 shrink-0 items-center gap-1 rounded-lg border border-white/10 bg-white/[0.04] px-2 text-sm font-bold text-white hover:bg-white/10 focus-visible:outline-secondary-300 sm:px-3"
         >
           <span>
             {barangay ? (
@@ -90,7 +90,7 @@ export default function BetterBarangayContextBar() {
               'Barangays'
             )}
           </span>
-          <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          <ArrowRight className="h-4 w-4 text-secondary-300" aria-hidden="true" />
         </Link>
       </div>
     </div>

@@ -124,7 +124,7 @@ export default function Navbar() {
 
   return (
     <>
-      <div className="bg-primary-900 text-white">
+      <div className="bm-utility-bar text-white">
         <div className="container flex min-h-11 items-center justify-between gap-4 px-5 text-xs md:px-6 lg:px-8">
           <div className="flex flex-wrap items-center gap-x-3">
             <a
@@ -161,7 +161,7 @@ export default function Navbar() {
       <nav
         ref={nav}
         aria-label="Main navigation"
-        className="bg-[#fffdf8]/95 backdrop-blur-md border-b border-[#eadfca] sticky top-0 z-50"
+        className="bm-shell-nav sticky top-0 z-50"
         onKeyDown={event => {
           if (event.key === 'Escape') {
             const control = isOpen
@@ -243,7 +243,7 @@ export default function Navbar() {
                       <div
                         id={`desktop-panel-${menuId(item.label)}`}
                         hidden={!expanded}
-                        className="absolute right-0 top-full mt-2 w-72 max-h-[70dvh] overflow-y-auto rounded-2xl shadow-xl bg-white border border-gray-200 p-2"
+                        className="bm-shell-panel absolute right-0 top-full mt-2 w-72 max-h-[70dvh] overflow-y-auto p-2"
                       >
                         {item.children.map(child => (
                           <Link
@@ -298,7 +298,7 @@ export default function Navbar() {
                 to={searchHref}
                 onClick={closeMenu}
                 aria-label="Search BetterMakati"
-                className="ml-2 inline-flex min-h-11 items-center gap-2 rounded-full border border-primary-200 bg-primary-50 px-3.5 text-sm font-bold text-primary-800 hover:bg-primary-100"
+                className="ml-2 inline-flex min-h-11 items-center gap-2 rounded-full border border-secondary-300 bg-secondary-100 px-3.5 text-sm font-bold text-primary-900 shadow-sm hover:bg-secondary-200"
               >
                 <Search className="h-5 w-5" aria-hidden="true" />
                 <span>Search</span>
@@ -313,7 +313,7 @@ export default function Navbar() {
                   aria-label={
                     'Open Better' + preferredBarangay.name.replace(/\s+/g, '')
                   }
-                  className="hidden h-11 w-11 items-center justify-center rounded-lg text-secondary-800 hover:bg-secondary-50 sm:flex"
+                  className="hidden h-11 w-11 items-center justify-center rounded-lg border border-secondary-200 bg-secondary-50 text-secondary-800 hover:bg-secondary-100 sm:flex"
                 >
                   <MapPin className="h-5 w-5" aria-hidden="true" />
                 </Link>
@@ -322,7 +322,7 @@ export default function Navbar() {
                 to={searchHref}
                 onClick={closeMenu}
                 aria-label="Search BetterMakati"
-                className="flex h-11 w-11 items-center justify-center rounded-lg text-primary-800 hover:bg-primary-50"
+                className="flex h-11 w-11 items-center justify-center rounded-lg border border-secondary-200 bg-secondary-50 text-primary-900 hover:bg-secondary-100"
               >
                 <Search className="h-5 w-5" aria-hidden="true" />
               </Link>
@@ -330,7 +330,7 @@ export default function Navbar() {
                 id="mobile-menu-toggle"
                 type="button"
                 onClick={toggleMobileMenu}
-                className="inline-flex h-11 w-11 items-center justify-center rounded-lg text-gray-700 hover:bg-primary-50"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-700 shadow-sm hover:bg-primary-50"
                 aria-expanded={isOpen}
                 aria-controls="mobile-navigation"
                 aria-label={isOpen ? 'Close main menu' : 'Open main menu'}
@@ -350,7 +350,7 @@ export default function Navbar() {
         <div
           id="mobile-navigation"
           hidden={!isOpen}
-          className="xl:hidden border-t border-[#eadfca] bg-[#fffdf8]"
+          className="bm-shell-mobile-menu xl:hidden border-t"
         >
           <div className="container px-3 py-3 space-y-1 max-h-[70dvh] overflow-y-auto overscroll-contain">
             <label className="mb-3 block rounded-xl border border-secondary-200 bg-secondary-50 p-3">
