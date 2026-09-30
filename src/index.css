@@ -441,3 +441,54 @@ button:disabled { cursor: not-allowed; opacity: .6; }
     padding-inline: 2.5rem;
   }
 }
+
+
+/* W7-4a — service and discovery page family. */
+.bm-service-hero {
+  background:
+    radial-gradient(circle at 88% 12%, rgba(251, 191, 1, .10), transparent 25rem),
+    var(--bm-surface-brand);
+}
+.bm-service-search {
+  min-height: 48px;
+  border: 1px solid var(--bm-line-strong);
+  border-radius: var(--bm-radius-control);
+  background: var(--bm-surface-paper);
+  color: var(--bm-ink-strong);
+  box-shadow: var(--bm-shadow-rest);
+  outline: none;
+}
+.bm-service-search::placeholder {
+  color: #756d64;
+}
+.bm-service-search:focus {
+  border-color: var(--brand-gold);
+  box-shadow: 0 0 0 3px rgba(251, 191, 1, .18);
+}
+.bm-service-directory {
+  border: 1px solid var(--bm-line-soft);
+  border-radius: var(--bm-radius-card);
+  background: var(--bm-surface-paper);
+  box-shadow: var(--bm-shadow-rest);
+}
+.bm-service-directory-row {
+  transition: background-color var(--bm-motion-fast) ease;
+}
+.bm-service-directory-row:hover {
+  background: var(--bm-surface-muted);
+}
+.bm-service-card {
+  height: 100%;
+  border: 1px solid var(--bm-line-soft);
+  border-top: 3px solid color-mix(in srgb, var(--brand-gold) 58%, white);
+  border-radius: var(--bm-radius-card);
+  background: var(--bm-surface-paper);
+  box-shadow: var(--bm-shadow-rest);
+}
+.bm-service-discovery,
+.bm-service-guide-section {
+  border-color: var(--bm-line-soft);
+}
+.bm-service-guide-section :is(.rounded-2xl, .rounded-xl) {
+  scroll-margin-top: 7rem;
+}
