@@ -151,7 +151,7 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      <section className="bg-[#fffdf8] py-14">
+      <section className="bm-home-section bg-[#fffdf8]">
         <div className="container px-5 md:px-6 lg:px-8">
           <div className="section-eyebrow">Services</div>
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-3 mb-7">
@@ -173,7 +173,7 @@ const Home: React.FC = () => {
                 <Link
                   key={item.label}
                   to={item.href}
-                  className="home-service-card"
+                  className="home-service-card bm-home-card"
                 >
                   <div className="home-service-card-icon">
                     <Icon className="h-5 w-5" />
@@ -192,7 +192,7 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      <section className="bg-primary-900 py-12 text-white border-b border-primary-900">
+      <section className="bm-home-section bm-home-band-dark text-white border-b border-primary-900">
         <div className="container px-5 md:px-6 lg:px-8">
           <div className="section-eyebrow !text-white/80">
             Public action & evidence
@@ -214,7 +214,7 @@ const Home: React.FC = () => {
                 <Link
                   key={item.label}
                   to={item.href}
-                  className="rounded-2xl border border-white/15 bg-white/5 p-5 transition hover:bg-white/10 hover:border-secondary-500"
+                  className="bm-home-dark-card"
                 >
                   <Icon className="h-6 w-6 text-secondary-500" />
                   <h3 className="mt-4 font-extrabold text-white">
@@ -233,7 +233,7 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      <section className="bg-white py-14 border-t border-gray-100">
+      <section className="bm-home-section bg-white border-t border-gray-100">
         <div className="container px-5 md:px-6 lg:px-8">
           <div className="flex flex-col gap-5 rounded-2xl border border-primary-100 bg-[#fffdf8] p-6 md:flex-row md:items-center md:justify-between md:p-8">
             <div>
@@ -260,7 +260,7 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      <section className="bg-white py-14 border-y border-gray-100">
+      <section className="bm-home-section bg-white border-y border-gray-100">
         <div className="container px-5 md:px-6 lg:px-8">
           <div className="section-eyebrow">Explore Makati</div>
           <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between mb-7">
@@ -288,7 +288,7 @@ const Home: React.FC = () => {
                 <Link
                   key={item.label}
                   to={item.href}
-                  className="civic-card !min-h-0"
+                  className="civic-card bm-home-card !min-h-0"
                 >
                   <Icon className="h-6 w-6 text-primary-700" />
                   <h3 className="font-bold text-gray-950 mt-4">{item.label}</h3>
@@ -323,7 +323,7 @@ const Home: React.FC = () => {
 
       <FeaturedInsightsCarousel />
 
-      <section className="bg-[#f5f8f2] py-14 border-y border-primary-100/70">
+      <section className="bm-home-section bm-home-band-muted border-y border-primary-100/70">
         <div className="container px-5 md:px-6 lg:px-8">
           <div className="section-eyebrow">Makati at a glance</div>
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:gap-5 xl:grid-cols-4">
@@ -333,7 +333,7 @@ const Home: React.FC = () => {
                 href={stat.href}
                 target="_blank"
                 rel="noreferrer"
-                className="stat-card hover:border-primary-300 transition"
+                className="stat-card bm-home-card hover:border-primary-300 transition"
               >
                 <div className="text-2xl md:text-3xl font-extrabold text-primary-800">
                   {stat.value}
@@ -373,21 +373,6 @@ const Home: React.FC = () => {
           </Link>
         </div>
       </section>
-
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
 
     </>
   );
