@@ -492,3 +492,50 @@ button:disabled { cursor: not-allowed; opacity: .6; }
 .bm-service-guide-section :is(.rounded-2xl, .rounded-xl) {
   scroll-margin-top: 7rem;
 }
+
+
+/* W7-4b — evidence and accountability page family. */
+.bm-evidence-page {
+  background:
+    linear-gradient(180deg, rgba(241, 248, 244, .62), transparent 18rem),
+    var(--bm-surface-canvas);
+}
+.bm-evidence-card,
+.bm-evidence-record,
+.bm-evidence-handoff {
+  border: 1px solid var(--bm-line-soft);
+  border-radius: var(--bm-radius-card);
+  background: var(--bm-surface-paper);
+  box-shadow: var(--bm-shadow-rest);
+}
+.bm-evidence-card {
+  border-top: 3px solid color-mix(in srgb, var(--brand-green) 34%, var(--bm-line-soft));
+  transition:
+    border-color var(--bm-motion-fast) ease,
+    box-shadow var(--bm-motion-base) ease;
+}
+button.bm-evidence-card:hover,
+a.bm-evidence-card:hover {
+  border-color: color-mix(in srgb, var(--brand-green) 45%, var(--bm-line-soft));
+  box-shadow: var(--bm-shadow-lift);
+}
+.bm-evidence-card-accent {
+  border-top-color: var(--brand-gold);
+}
+.bm-evidence-record {
+  border-radius: var(--bm-radius-control);
+}
+.bm-evidence-handoff {
+  border-left: 4px solid var(--brand-gold);
+}
+.bm-evidence-page :is(input, select) {
+  min-height: 44px;
+}
+.bm-evidence-page table {
+  font-variant-numeric: tabular-nums;
+}
+@media (prefers-reduced-motion: reduce) {
+  .bm-evidence-card {
+    transition: none;
+  }
+}
