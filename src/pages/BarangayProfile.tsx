@@ -264,7 +264,7 @@ export default function BarangayProfile() {
         }
       />
 
-      <section className="border-b border-primary-900 bg-primary-800 text-white">
+      <section className="bm-barangay-hero border-b border-primary-900 bg-primary-800 text-white">
         <div className="container px-5 py-12 md:px-6 md:py-14 lg:px-8 lg:py-16 xl:py-20">
           <Link
             to="/barangays"
@@ -371,7 +371,7 @@ export default function BarangayProfile() {
       </section>
 
       {barangayPhotos.length > 0 && (
-        <section className="border-b border-primary-100 bg-[#fffdf8] py-8 md:py-10">
+        <section className="bm-barangay-section border-b border-primary-100 bg-[#fffdf8] py-8 md:py-10">
           <div className="container px-5 md:px-6 lg:px-8">
             <PhotoCarousel
               images={barangayPhotos}
@@ -383,7 +383,7 @@ export default function BarangayProfile() {
         </section>
       )}
 
-      <section className="border-b border-primary-100 bg-[#f5f8f2] py-10 md:py-12">
+      <section className="bm-barangay-section bm-barangay-band-muted border-b border-primary-100 bg-[#f5f8f2] py-10 md:py-12">
         <div className="container px-5 md:px-6 lg:px-8">
           <div className="section-eyebrow">Better{compactEditionName(barangay.name)} at a glance</div>
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 md:gap-5">
@@ -426,7 +426,7 @@ export default function BarangayProfile() {
         className="bg-[#fffdf8]"
       />
 
-      <section id="services" className="bg-[#f5f8f2] py-14">
+      <section id="services" className="bm-barangay-section bm-barangay-band-muted bg-[#f5f8f2] py-14">
         <div className="container px-5 md:px-6 lg:px-8">
           <div className="section-eyebrow">Barangay services</div>
           <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
@@ -446,7 +446,7 @@ export default function BarangayProfile() {
               {barangay.publishedServices?.map(service => (
                 <article
                   key={service.title}
-                  className="rounded-2xl border border-primary-100 bg-white p-5"
+                  className="bm-barangay-card p-5"
                 >
                   <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
                     {service.type}
@@ -491,7 +491,7 @@ export default function BarangayProfile() {
                 <Link
                   key={service.id}
                   to={withBarangayScope('/services', barangay.slug)}
-                  className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300"
+                  className="bm-barangay-card p-5"
                 >
                   <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
                     {service.type}
@@ -505,7 +505,7 @@ export default function BarangayProfile() {
         </div>
       </section>
 
-      <section id="local-government" className="bg-white py-14">
+      <section id="local-government" className="bm-barangay-section bg-white py-14">
         <div className="container px-5 md:px-6 lg:px-8">
           <div className="section-eyebrow">Local government</div>
           <h2 className="text-3xl font-extrabold tracking-tight text-gray-950 md:text-4xl">
@@ -707,7 +707,7 @@ export default function BarangayProfile() {
               return (
                 <article
                   key={place.id}
-                  className="rounded-2xl border border-primary-100 bg-white p-5"
+                  className="bm-barangay-card p-5"
                 >
                   <div className="flex items-center justify-between gap-3">
                     <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
@@ -802,7 +802,7 @@ export default function BarangayProfile() {
             {facilityFallbacks.map(facility => (
               <article
                 key={'facility-' + facility.name}
-                className="rounded-2xl border border-primary-100 bg-white p-5"
+                className="bm-barangay-card p-5"
               >
                 <div className="flex items-center justify-between gap-3">
                   <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
@@ -1093,7 +1093,7 @@ export default function BarangayProfile() {
               {barangay.heritageMarkers?.map(marker => (
                 <article
                   key={marker.name + marker.agency}
-                  className="rounded-2xl border border-primary-100 bg-white p-5"
+                  className="bm-barangay-card p-5"
                 >
                   <Landmark className="h-5 w-5 text-primary-700" />
                   <div className="mt-3 text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
