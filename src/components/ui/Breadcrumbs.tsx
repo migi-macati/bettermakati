@@ -44,10 +44,10 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
   const isDark = tone === 'dark';
 
   return (
-    <nav className={className} aria-label="Breadcrumb">
+    <nav className={`bm-breadcrumbs ${className}`} aria-label="Breadcrumb">
       <ol
         className={
-          'flex flex-wrap items-center gap-x-1 gap-y-2 text-sm ' +
+          'bm-breadcrumb-list flex items-center gap-x-1 text-sm ' +
           (isDark ? 'text-primary-100' : 'text-gray-600')
         }
       >
@@ -55,7 +55,7 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
           const isCurrent = index === breadcrumbItems.length - 1;
 
           return (
-            <li key={item.href || item.label} className="flex items-center gap-1">
+            <li key={item.href || item.label} className="flex min-w-0 shrink-0 items-center gap-1">
               {index === 0 && (
                 <Home
                   className={'h-4 w-4 ' + (isDark ? 'text-primary-200' : 'text-gray-500')}
@@ -80,7 +80,7 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
                 </Link>
               ) : (
                 <span
-                  className={isDark ? 'font-semibold text-white' : 'font-medium text-gray-900'}
+                  className={'bm-breadcrumb-current max-w-[18rem] truncate sm:max-w-[28rem] ' + (isDark ? 'font-semibold text-white' : 'font-medium text-gray-900')}
                   aria-current={isCurrent ? 'page' : undefined}
                 >
                   {item.label}
