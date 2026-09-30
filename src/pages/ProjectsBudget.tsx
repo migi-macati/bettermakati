@@ -1089,7 +1089,7 @@ export default function ProjectsBudget() {
               value={officeQuery}
               onChange={event => setOfficeQuery(event.target.value)}
               placeholder="Search office or department"
-              className="min-h-11 w-full rounded-xl border border-gray-300 py-2.5 pl-9 pr-3 text-sm outline-none focus:border-primary-500 lg:w-72"
+              className="min-h-11 w-full rounded-xl border border-gray-300 py-2.5 pl-9 pr-3 text-sm outline-none focus:border-primary-500 xl:w-72"
             />
           </div>
         </div>
@@ -1180,7 +1180,7 @@ export default function ProjectsBudget() {
               </div>
             </div>
 
-            <div className="flex flex-col gap-2 sm:flex-row">
+            <div className="flex flex-col gap-2 xl:flex-row">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
                 <input
