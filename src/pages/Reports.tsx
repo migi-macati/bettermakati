@@ -16,7 +16,7 @@ export default function Reports() {
         description="BetterMakati reports and civic analysis built from Makati statistics, budgets and public records."
       />
 
-      <Section className="bm-editorial-hero border-b border-primary-800 text-white">
+      <Section className="bm-editorial-hero border-b border-primary-800 bg-primary-900 text-white">
         <div className="section-eyebrow !text-secondary-300">
           Civic analysis
         </div>
