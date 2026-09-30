@@ -942,3 +942,12 @@ a.bm-barangay-card:hover {
     transform: none;
   }
 }
+
+
+/* W7-8c — shared photography frame consistency. */
+.bm-photo-frame {
+  border: 1px solid var(--bm-line-soft);
+  border-radius: var(--bm-radius-card);
+  background: var(--bm-surface-paper);
+  box-shadow: var(--bm-shadow-rest);
+}

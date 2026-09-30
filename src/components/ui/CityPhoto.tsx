@@ -14,7 +14,7 @@ export default function CityPhoto({
 }) {
   const [unavailable, setUnavailable] = useState(false);
   return (
-    <figure className="overflow-hidden rounded-2xl border border-primary-100 bg-white shadow-sm">
+    <figure className="bm-photo-frame overflow-hidden">
       {unavailable ? (
         <div className="flex aspect-[2.4] items-center justify-center gap-3 bg-primary-50 text-primary-800">
           <Camera aria-hidden="true" className="h-6 w-6" />

@@ -50,7 +50,7 @@ export default function PhotoCarousel({
   return (
     <figure
       className={
-        'photo-frame overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm ' +
+        'photo-frame bm-photo-frame overflow-hidden ' +
         className
       }
       aria-label={title || 'Makati photographs'}
