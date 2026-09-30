@@ -588,3 +588,43 @@ a.bm-detail-related-card:hover {
 @media (prefers-reduced-motion: reduce) {
   .bm-detail-related-card { transition: none; }
 }
+
+
+/* W7-5 — BetterBarangay visual parity. */
+.bm-barangay-hero {
+  background:
+    radial-gradient(circle at 88% 8%, rgba(251, 191, 1, .11), transparent 25rem),
+    linear-gradient(135deg, var(--bm-surface-brand), var(--bm-surface-brand-strong));
+}
+.bm-barangay-section {
+  position: relative;
+}
+.bm-barangay-band-muted {
+  background: color-mix(in srgb, var(--bm-surface-muted) 76%, var(--primary-50, #f1f8f4));
+}
+.bm-barangay-card {
+  height: 100%;
+  border: 1px solid var(--bm-line-soft);
+  border-top: 3px solid color-mix(in srgb, var(--brand-gold) 55%, white);
+  border-radius: var(--bm-radius-card);
+  background: var(--bm-surface-paper);
+  box-shadow: var(--bm-shadow-rest);
+  transition:
+    border-color var(--bm-motion-fast) ease,
+    box-shadow var(--bm-motion-base) ease,
+    transform var(--bm-motion-base) ease;
+}
+a.bm-barangay-card:hover {
+  border-color: color-mix(in srgb, var(--brand-green) 42%, var(--bm-line-soft));
+  box-shadow: var(--bm-shadow-lift);
+  transform: translateY(-2px);
+}
+@media (min-width: 1280px) {
+  .bm-barangay-section > .container,
+  .bm-barangay-hero > .container {
+    padding-inline: 2.5rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  a.bm-barangay-card:hover { transform: none; }
+}
