@@ -311,7 +311,7 @@ export default function Statistics() {
 
           <div
             id="statistics-summary"
-            className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4"
+            className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4"
           >
             {heroStats.map(stat => (
               <div
@@ -371,7 +371,7 @@ export default function Statistics() {
               </a>
             </div>
 
-            <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
               <div className="rounded-xl bg-primary-50 p-4">
                 <div className="text-2xl font-extrabold text-primary-800 md:text-3xl">
                   {people(barangay.population2024)}
@@ -495,7 +495,7 @@ export default function Statistics() {
           boundary.
         </p>
 
-        <div className="mt-7 grid grid-cols-1 items-start gap-5 lg:grid-cols-[1fr_0.9fr]">
+        <div className="mt-7 grid grid-cols-1 items-start gap-5 xl:grid-cols-[1fr_0.9fr]">
           <HorizontalBarChart
             title="Population on the current city boundary"
             items={populationTrend.map(item => ({
@@ -727,7 +727,7 @@ export default function Statistics() {
           inventory is not relabeled as a 2026 count.
         </p>
 
-        <div className="mt-7 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-7 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
           {systems.map(item => {
             const Icon = item.icon;
             const source = indicatorSource(item.indicatorId);
@@ -803,7 +803,7 @@ export default function Statistics() {
       <Section id="statistics-data" className="bg-white">
         <div className="section-eyebrow">Go deeper</div>
         <Heading level={2}>Open the detailed official tables.</Heading>
-        <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
           {deeperTables.map(item => {
             const Icon = item.icon;
             const source = indicatorSource(item.indicatorId);
@@ -832,7 +832,7 @@ export default function Statistics() {
 
         <div className="mt-10">
           <div className="section-eyebrow">Related</div>
-          <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
             {[
               ['Barangays', '/barangays', 'Population and local profiles'],
               [
