@@ -379,7 +379,7 @@ export default function ProjectStatus() {
         description="Current BetterMakati coverage, source monitoring, community input and measurement gaps."
       />
 
-      <Section className="bg-[#fffdf8]">
+      <Section className="bm-detail-page bg-[#fffdf8]">
         <div className="section-eyebrow">Site status</div>
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
@@ -771,7 +771,7 @@ export default function ProjectStatus() {
         </div>
       </Section>
 
-      <Section className="bg-[#fffdf8]">
+      <Section className="bm-detail-page bg-[#fffdf8]">
         <div className="rounded-2xl border border-primary-100 bg-white p-6">
           <Database className="h-5 w-5 text-primary-700" />
           <h2 className="mt-3 text-xl font-extrabold text-gray-950">Audit & source code</h2>
