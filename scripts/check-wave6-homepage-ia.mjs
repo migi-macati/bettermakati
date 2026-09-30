@@ -88,13 +88,13 @@ requireAll(tests, 'W6-3b browser QA', [
 
 const homepageOrder = [
   '<Hero />',
+  'title="Around Makati"',
   'Common services',
   'Public action & evidence',
   'Take part in Makati',
   'Understand the city as you explore it',
   '<FeaturedInsightsCarousel />',
   'Makati at a glance',
-  'title="Around Makati"',
 ];
 
 let previousIndex = -1;
