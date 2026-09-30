@@ -311,7 +311,7 @@ export default function Statistics() {
 
           <div
             id="statistics-summary"
-            className="mt-8 grid grid-cols-2 gap-3 lg:grid-cols-4"
+            className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4"
           >
             {heroStats.map(stat => (
               <div
@@ -371,7 +371,7 @@ export default function Statistics() {
               </a>
             </div>
 
-            <div className="mt-5 grid grid-cols-2 gap-4 lg:grid-cols-4">
+            <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
               <div className="rounded-xl bg-primary-50 p-4">
                 <div className="text-2xl font-extrabold text-primary-800 md:text-3xl">
                   {people(barangay.population2024)}
@@ -608,7 +608,7 @@ export default function Statistics() {
           in Makati establishments.
         </p>
 
-        <div className="mt-7 grid grid-cols-2 gap-4 lg:grid-cols-3">
+        <div className="mt-7 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <div className="rounded-2xl border border-primary-200 bg-white p-5">
             <BarChart3 className="h-5 w-5 text-primary-700" aria-hidden="true" />
             <div className="mt-3 text-2xl font-extrabold text-gray-950 md:text-3xl">
