@@ -33,7 +33,7 @@ export default function GovernmentOffices() {
         title="Government Service Offices"
         description="Citizen-facing national government and GOCC service offices in Makati, plus selected regional offices that serve Makati residents."
       />
-      <Section className="bg-[#fffdf8]">
+      <Section className="bm-service-discovery bg-[#fffdf8]">
         <div className="section-eyebrow">Services</div>
         <Heading>Government offices for Makati</Heading>
         <p className="mt-2 max-w-3xl text-gray-700">
@@ -64,7 +64,7 @@ export default function GovernmentOffices() {
             value={query}
             onChange={event => setQuery(event.target.value)}
             placeholder="Search SSS, Pag-IBIG, PhilHealth, DepEd, address..."
-            className="min-h-11 w-full rounded-2xl border border-gray-300 bg-white py-3.5 pl-12 pr-4 outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+            className="bm-service-search min-h-11 w-full py-3.5 pl-12 pr-4"
           />
         </label>
 
@@ -96,7 +96,7 @@ export default function GovernmentOffices() {
             const place = office.placeId ? placeRegistryById.get(office.placeId) : undefined;
 
             return (
-            <article key={office.id} id={office.id} className="scroll-mt-28 rounded-2xl border border-gray-200 bg-white p-5">
+            <article key={office.id} id={office.id} className="bm-service-card scroll-mt-28 p-5">
               <div className="text-xs font-bold text-primary-700">{office.scope}</div>
               <h2 className="mt-2 text-lg font-extrabold text-gray-950">{office.name}</h2>
               <div className="mt-1 text-sm font-semibold text-gray-500">{office.agency}</div>
