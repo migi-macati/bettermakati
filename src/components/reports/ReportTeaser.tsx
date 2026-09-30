@@ -15,7 +15,7 @@ export default function ReportTeaser({
     return (
       <Link
         to={`/reports/${report.slug}`}
-        className="bm-report-lead group block overflow-hidden rounded-3xl border text-white transition hover:border-secondary-400"
+        className="bm-report-lead group block overflow-hidden rounded-3xl border bg-primary-900 text-white transition hover:border-secondary-400"
       >
         <article className="grid gap-8 p-6 md:p-8 lg:grid-cols-[minmax(0,1.45fr)_minmax(18rem,0.75fr)] lg:items-end lg:p-10">
           <div>
