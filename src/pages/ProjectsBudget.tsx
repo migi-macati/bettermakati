@@ -870,7 +870,7 @@ export default function ProjectsBudget() {
               {placeLinkedRecords.map(({ entry, place }) => (
                 <article
                   key={place.id + ':' + entry.id}
-                  className="rounded-2xl border border-primary-100 bg-white p-5"
+                  className="bm-evidence-card p-5"
                 >
                   <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
                     <Building2 className="h-4 w-4" />
