@@ -23,10 +23,10 @@ const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="bg-primary-900 text-white">
-      <div className="h-1.5 bg-secondary-500" />
+    <footer className="bm-site-footer text-white">
+      <div className="bm-site-footer-rule" aria-hidden="true" />
       <div className="container px-5 md:px-6 lg:px-8 pt-12 pb-8">
-        <div className="grid grid-cols-1 gap-9 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-4 xl:gap-10">
           <div>
             <div className="mb-4">
               <BrandMark compact inverse />
@@ -100,7 +100,7 @@ const Footer: React.FC = () => {
           ))}
         </div>
 
-        <div className="mt-10 border-t border-white/10 pt-6">
+        <div className="bm-site-footer-ecosystem mt-10 border-t border-white/10 pt-6">
           <div className="text-xs font-bold uppercase tracking-[0.12em] text-white/80">
             Official & broader ecosystem
           </div>
@@ -124,7 +124,7 @@ const Footer: React.FC = () => {
           </p>
         </div>
 
-        <div className="mt-6 border-t border-white/10 pt-6 text-xs text-primary-200">
+        <div className="bm-site-footer-legal mt-6 border-t border-white/10 pt-6 text-xs text-primary-200">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <p>
               © 2026 BetterMakati. Independent civic information platform for

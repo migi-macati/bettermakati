@@ -329,6 +329,47 @@ button:disabled { cursor: not-allowed; opacity: .6; }
     color var(--bm-motion-fast) ease;
 }
 
+/* W7-2b — footer and breadcrumb shell. */
+.bm-site-footer {
+  background:
+    radial-gradient(circle at 88% 0%, rgba(251, 191, 1, .07), transparent 26rem),
+    var(--bm-surface-brand-strong);
+  border-top: 1px solid rgba(255, 255, 255, .08);
+}
+.bm-site-footer-rule {
+  height: .25rem;
+  background: linear-gradient(90deg, var(--brand-gold), #edc85e 55%, transparent);
+}
+.bm-site-footer-ecosystem,
+.bm-site-footer-legal {
+  border-color: rgba(255, 255, 255, .12);
+}
+.bm-site-footer a {
+  transition: color var(--bm-motion-fast) ease;
+}
+.bm-breadcrumbs {
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: thin;
+}
+.bm-breadcrumb-list {
+  width: max-content;
+  min-width: 100%;
+  padding-block: .125rem;
+}
+.bm-breadcrumb-current {
+  display: inline-block;
+  vertical-align: middle;
+}
+@media (max-width: 639px) {
+  .bm-breadcrumbs {
+    margin-inline: -.25rem;
+    padding-inline: .25rem;
+  }
+}
+
 .scroll-region {
   max-width: 100%;
   min-width: 0;

@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "reviewedOn": "2026-09-30",
+  "status": "complete-guarded",
+  "step": "W7-2b",
+  "title": "Footer & breadcrumbs",
+  "scope": [
+    "global footer visual hierarchy",
+    "official and BetterGov/BetterLGU ecosystem handoffs",
+    "footer legal/identity links",
+    "shared breadcrumb responsive containment",
+    "breadcrumb current-page readability"
+  ],
+  "preserved": [
+    "Independent civic information platform positioning",
+    "existing footer information architecture",
+    "BetterGov/BetterLGU ecosystem links",
+    "44px footer link targets",
+    "breadcrumb nav landmark and aria-current semantics",
+    "light and dark breadcrumb tones",
+    "Wave 6 responsive/accessibility regression suite"
+  ],
+  "next": "W7-3"
+}
