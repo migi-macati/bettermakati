@@ -177,7 +177,7 @@ const Services: React.FC = () => {
           keywords="Makati services, permits, clearances, certificates, IDs, barangay, national government, health, business, civil registry"
         />
 
-        <section className="border-b border-primary-900 bg-primary-800 text-white">
+        <section className="bm-service-hero border-b border-primary-900 text-white">
           <div className="container px-5 py-12 md:px-6 md:py-16 lg:px-8">
             <div className="max-w-4xl">
               <div className="mb-3 text-xs font-extrabold uppercase tracking-[0.12em] text-secondary-200 md:text-sm">
@@ -201,7 +201,7 @@ const Services: React.FC = () => {
                   value={directoryQuery}
                   onChange={event => setDirectoryQuery(event.target.value)}
                   placeholder="Search permit, clearance, ID, test or service"
-                  className="w-full rounded-xl border border-white/30 bg-white py-3.5 pl-12 pr-4 text-base text-gray-950 shadow-sm outline-none placeholder:text-gray-500 focus:border-secondary-400 focus:ring-2 focus:ring-secondary-300/40"
+                  className="bm-service-search w-full py-3.5 pl-12 pr-4 text-base"
                 />
               </label>
 
@@ -383,12 +383,12 @@ const Services: React.FC = () => {
             </div>
           </div>
 
-          <div className="mt-6 divide-y divide-gray-200 overflow-hidden rounded-2xl border border-gray-200 bg-white">
+          <div className="bm-service-directory mt-6 divide-y divide-gray-200 overflow-hidden">
             {visibleDirectory.map(item => {
               return (
                 <article
                   key={item.id}
-                  className="grid gap-4 p-5 md:grid-cols-[1fr_auto] md:items-center"
+                  className="bm-service-directory-row grid gap-4 p-5 md:grid-cols-[1fr_auto] md:items-center"
                 >
                   <div className="min-w-0">
                     <div className="flex flex-wrap items-center gap-2 text-xs font-bold">
