@@ -318,7 +318,7 @@ export default function PublicRecords() {
         </div>
       </section>
 
-      <Section className="bg-[#fffdf8]">
+      <Section className="bm-evidence-page bg-[#fffdf8]">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <LastReviewed
             date={publicRecordsReviewed}
@@ -714,7 +714,7 @@ export default function PublicRecords() {
           ) : openReviewItems.length > 0 ? (
             <div className="mt-5 space-y-4">
               {openReviewItems.map(item => (
-                <article key={item.key} className="rounded-xl border border-gray-200 bg-white p-5">
+                <article key={item.key} className="bm-evidence-record rounded-xl p-5">
                   <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                     <div>
                       <div className="flex flex-wrap gap-2 text-xs font-bold">
@@ -767,9 +767,9 @@ export default function PublicRecords() {
         </div>
       </Section>
 
-      <Section className="bg-[#fffdf8]">
+      <Section className="bm-evidence-page bg-[#fffdf8]">
         <div className="grid gap-4 lg:grid-cols-3">
-          <Link to="/projects-budget" className="rounded-2xl border border-primary-100 bg-white p-6">
+          <Link to="/projects-budget" className="bm-evidence-card p-6">
             <FileText className="h-5 w-5 text-primary-700" />
             <h2 className="mt-3 text-lg font-extrabold text-gray-950">Projects & Budget</h2>
             <p className="mt-2 text-sm leading-relaxed text-gray-600">
@@ -780,7 +780,7 @@ export default function PublicRecords() {
             </span>
           </Link>
 
-          <Link to="/accountability" className="rounded-2xl border border-primary-100 bg-white p-6">
+          <Link to="/accountability" className="bm-evidence-card p-6">
             <SearchCheck className="h-5 w-5 text-primary-700" />
             <h2 className="mt-3 text-lg font-extrabold text-gray-950">Accountability Ledger</h2>
             <p className="mt-2 text-sm leading-relaxed text-gray-600">
@@ -791,7 +791,7 @@ export default function PublicRecords() {
             </span>
           </Link>
 
-          <Link to="/integrity" className="rounded-2xl border border-primary-100 bg-white p-6">
+          <Link to="/integrity" className="bm-evidence-card p-6">
             <ShieldCheck className="h-5 w-5 text-primary-700" />
             <h2 className="mt-3 text-lg font-extrabold text-gray-950">Integrity & Audit</h2>
             <p className="mt-2 text-sm leading-relaxed text-gray-600">
