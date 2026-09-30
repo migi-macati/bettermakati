@@ -15,7 +15,7 @@ export default function ReportTeaser({
     return (
       <Link
         to={`/reports/${report.slug}`}
-        className="group block overflow-hidden rounded-3xl border border-primary-700 bg-primary-900 text-white transition hover:border-secondary-400 hover:shadow-lg"
+        className="bm-report-lead group block overflow-hidden rounded-3xl border text-white transition hover:border-secondary-400"
       >
         <article className="grid gap-8 p-6 md:p-8 lg:grid-cols-[minmax(0,1.45fr)_minmax(18rem,0.75fr)] lg:items-end lg:p-10">
           <div>
@@ -46,7 +46,7 @@ export default function ReportTeaser({
 
   if (variant === 'carousel') {
     return (
-      <article className="rounded-2xl border border-primary-200 bg-[#fffdf8] p-5 md:p-7">
+      <article className="bm-report-carousel rounded-2xl p-5 md:p-7">
         <div className="text-xs font-bold uppercase tracking-[0.1em] text-primary-700">
           {report.date}
         </div>
@@ -73,7 +73,7 @@ export default function ReportTeaser({
   return (
     <Link
       to={`/reports/${report.slug}`}
-      className="group block h-full rounded-3xl border border-gray-200 bg-white p-6 transition hover:border-primary-400 hover:shadow-md md:p-7"
+      className="bm-report-card group block h-full rounded-3xl border p-6 transition hover:border-primary-400 md:p-7"
     >
       <article className="flex h-full flex-col">
         <div className="text-xs font-bold uppercase tracking-[0.1em] text-primary-700">

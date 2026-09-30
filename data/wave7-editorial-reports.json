@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "reviewedOn": "2026-09-30",
+  "status": "implementation-complete",
+  "step": "W7-6a",
+  "title": "Reports & Insights editorial treatment",
+  "surfaces": [
+    "/reports",
+    "/reports/:slug",
+    "ReportTeaser"
+  ],
+  "changes": [
+    "Reports landing hero and section bands now use the Wave 7 semantic editorial palette.",
+    "Lead, card and carousel report teasers share consistent paper/deep-green surfaces, gold accents and restrained elevation.",
+    "Report articles use the shared reading measure for long-form content while preserving wide local table behavior.",
+    "The report synthesis, analysis, stat, methodology, related-record and source treatments now form one evidence-forward editorial hierarchy.",
+    "Back navigation now preserves the 44px interaction baseline.",
+    "Hover lift respects reduced-motion preferences."
+  ],
+  "preserved": [
+    "Report data, headlines, synthesis and analysis text",
+    "Inline evidence identifiers and source links",
+    "Canonical/public-record handoffs",
+    "Methodology and limits",
+    "Tables, charts and civic relationship links",
+    "Report release timeline relationships"
+  ],
+  "next": "W7-6b — History"
+}

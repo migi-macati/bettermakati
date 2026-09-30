@@ -137,7 +137,7 @@ function ReportBlock({
       <div
         className={
           block.role === 'analysis'
-            ? 'rounded-2xl border-l-4 border-secondary-400 bg-secondary-50 px-5 py-4'
+            ? 'bm-editorial-analysis rounded-2xl border-l-4 px-5 py-4'
             : ''
         }
       >
@@ -160,7 +160,7 @@ function ReportBlock({
 
   if (block.kind === 'stat') {
     return (
-      <div className="rounded-2xl border border-primary-100 bg-primary-50 p-5">
+      <div className="bm-editorial-stat rounded-2xl border p-5">
         <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
           {block.label}
         </div>
@@ -338,10 +338,10 @@ export default function ReportArticle() {
     <>
       <SEO title={report.headline} description={report.subheadline} />
 
-      <Section className="bg-[#fffdf8]">
+      <Section className="bm-editorial-article-hero">
         <Link
           to="/reports"
-          className="inline-flex items-center gap-2 text-sm font-bold text-primary-700"
+          className="inline-flex min-h-11 items-center gap-2 text-sm font-bold text-primary-700"
         >
           <ArrowLeft className="h-4 w-4" aria-hidden="true" />
           Featured Reports & Insights
@@ -360,13 +360,13 @@ export default function ReportArticle() {
           {report.subheadline}
         </p>
 
-        <p className="mt-5 max-w-4xl border-l-4 border-primary-600 pl-4 text-base font-semibold leading-relaxed text-gray-900 md:text-lg">
+        <p className="bm-editorial-synthesis mt-5 max-w-4xl border-l-4 pl-4 text-base font-semibold leading-relaxed text-gray-900 md:text-lg">
           {report.synthesis}
         </p>
       </Section>
 
-      <Section className="bg-white">
-        <article className="mx-auto max-w-4xl space-y-10">
+      <Section className="bm-editorial-article-body">
+        <article className="bm-reading-measure mx-auto space-y-12">
           {report.sections.map(section => (
             <section key={section.id} id={section.id}>
               {section.heading && (
@@ -387,7 +387,7 @@ export default function ReportArticle() {
           ))}
 
           {report.methodology && (
-            <details className="rounded-2xl border border-gray-200 bg-gray-50 p-5">
+            <details className="bm-editorial-methodology rounded-2xl border p-5">
               <summary className="cursor-pointer font-black text-gray-950">
                 {report.methodology.title ?? 'Methodology & limits'}
               </summary>
@@ -405,7 +405,7 @@ export default function ReportArticle() {
       </Section>
 
       {timelineLinks.length > 0 && (
-        <Section className="border-y border-primary-100 bg-[#f5f8f2]">
+        <Section className="bm-editorial-section-muted border-y border-primary-100">
           <div className="mx-auto max-w-4xl">
             <div className="section-eyebrow">On the Makati Calendar</div>
             <Heading level={2}>Publication timeline</Heading>
@@ -431,7 +431,7 @@ export default function ReportArticle() {
       )}
 
       {underlyingRecords.length > 0 && (
-        <Section className="bg-[#fffdf8]">
+        <Section className="bm-editorial-section">
           <div className="mx-auto max-w-4xl">
             <div className="section-eyebrow">Records</div>
             <Heading level={2}>Related records</Heading>
@@ -444,7 +444,7 @@ export default function ReportArticle() {
                       href={item.node.href}
                       target="_blank"
                       rel="noreferrer"
-                      className="rounded-2xl border border-gray-200 bg-white p-5 hover:border-primary-300"
+                      className="bm-editorial-related-card rounded-2xl border p-5 hover:border-primary-300"
                     >
                       <div className="text-xs font-extrabold uppercase tracking-[0.08em] text-gray-500">
                         {civicRelationshipOwnerLabel(item.node.owner)}
@@ -461,7 +461,7 @@ export default function ReportArticle() {
                     <Link
                       key={item.relationship.id}
                       to={item.node.href}
-                      className="rounded-2xl border border-gray-200 bg-white p-5 hover:border-primary-300"
+                      className="bm-editorial-related-card rounded-2xl border p-5 hover:border-primary-300"
                     >
                       <div className="text-xs font-extrabold uppercase tracking-[0.08em] text-gray-500">
                         {civicRelationshipOwnerLabel(item.node.owner)}
@@ -481,12 +481,12 @@ export default function ReportArticle() {
         </Section>
       )}
 
-      <Section className="bg-[#f5f8f2]">
+      <Section className="bm-editorial-sources">
         <div className="mx-auto max-w-4xl">
           <div className="section-eyebrow">Sources</div>
           <ol className="mt-5 space-y-4 text-sm leading-relaxed text-gray-700">
             {report.sources.map(source => (
-              <li key={source.id} className="rounded-xl bg-white p-4">
+              <li key={source.id} className="bm-editorial-source-card rounded-xl p-4">
                 <div className="flex flex-wrap items-start gap-x-2 gap-y-1">
                   <SourceLink source={source}>
                     [{source.id}] {source.label}

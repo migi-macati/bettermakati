@@ -16,7 +16,7 @@ export default function Reports() {
         description="BetterMakati reports and civic analysis built from Makati statistics, budgets and public records."
       />
 
-      <Section className="border-b border-primary-800 bg-primary-900 text-white">
+      <Section className="bm-editorial-hero border-b border-primary-800 text-white">
         <div className="section-eyebrow !text-secondary-300">
           Civic analysis
         </div>
@@ -25,7 +25,7 @@ export default function Reports() {
         </Heading>
       </Section>
 
-      <Section className="bg-[#fffdf8]">
+      <Section className="bm-editorial-section">
         <div className="text-xs font-black uppercase tracking-[0.1em] text-primary-700">
           Latest
         </div>
@@ -39,11 +39,11 @@ export default function Reports() {
         calendarTopic="publications-data"
         heading="Report releases"
         description="BetterMakati report publication dates also appear in Recently Published, separate from the periods covered by their source data."
-        className="bg-white"
+        className="bm-editorial-timeline"
       />
 
       {moreReports.length > 0 && (
-        <Section className="border-t border-primary-100 bg-white">
+        <Section className="bm-editorial-section bm-editorial-section-muted border-t border-primary-100">
           <div className="flex items-end justify-between gap-4">
             <Heading level={2} className="!mb-0">
               More reports
