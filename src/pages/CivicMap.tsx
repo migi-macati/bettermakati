@@ -372,7 +372,13 @@ export default function CivicMap() {
               <Link
                 key={asset.id}
                 to={withBarangayScope('/civic-map/' + asset.id, barangay?.slug)}
-                className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
+                className={
+                  entityKind === 'place'
+                    ? 'rounded-2xl border border-primary-100 border-t-4 border-t-secondary-400 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm'
+                    : entityKind === 'segment'
+                      ? 'rounded-xl border border-primary-200 bg-primary-50/60 p-5 transition hover:border-primary-400 hover:bg-primary-50'
+                      : 'rounded-2xl border border-dashed border-secondary-300 bg-[#fffdf8] p-5 transition hover:border-secondary-500 hover:shadow-sm'
+                }
               >
                 <div className="flex flex-wrap items-center gap-2 text-xs font-bold">
                   <span className="rounded-full bg-primary-50 px-2.5 py-1 text-primary-800">
@@ -394,6 +400,13 @@ export default function CivicMap() {
                       Public access · privately managed
                     </span>
                   )}
+                </div>
+                <div className="mt-3 text-[11px] font-extrabold uppercase tracking-[0.08em] text-gray-500">
+                  {entityKind === 'place'
+                    ? 'Destination'
+                    : entityKind === 'segment'
+                      ? 'Bounded infrastructure'
+                      : 'Network / service route'}
                 </div>
                 <h3 className="mt-3 text-lg font-extrabold text-gray-950">{asset.title}</h3>
                 <p className="mt-1 text-sm text-gray-600">{asset.subtitle}</p>
