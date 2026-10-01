@@ -280,7 +280,7 @@ const Home: React.FC = () => {
                   className="civic-card bm-home-card !min-h-0"
                 >
                   <Icon className="h-6 w-6 text-primary-700" />
-                  <h3 className="font-bold text-gray-950 mt-4">{t(`home.page.quickServices.${item.key}.label`)}</h3>
+                  <h3 className="font-bold text-gray-950 mt-4">{t(`home.page.visit.${item.key}.label`)}</h3>
                   <p className="text-sm text-gray-600 mt-1">
                     {t(`home.page.visit.${item.key}.description`)}
                   </p>
