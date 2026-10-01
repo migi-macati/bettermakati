@@ -116,7 +116,7 @@ for (const marker of [
 }
 
 for (const marker of [
-  'aria-label="Main navigation"',
+  "aria-label={t('navbar.mainNavigation')}",
   'aria-expanded={expanded}',
   'aria-controls=',
   'desktop-panel-',

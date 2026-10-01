@@ -34,8 +34,7 @@ const Footer: React.FC = () => {
               <BrandMark compact inverse />
             </div>
             <p className="max-w-xs text-sm leading-relaxed text-primary-100">
-              Independent civic information, public records and participation
-              tools for understanding and using Makati.
+              {t('footer.description')}
             </p>
 
             <div className="mt-5 flex flex-col items-start gap-2 text-sm font-semibold">
@@ -43,7 +42,7 @@ const Footer: React.FC = () => {
                 to="/contact"
                 className="inline-flex min-h-11 items-center text-primary-100 hover:text-white focus-visible:outline-secondary-300"
               >
-                Contact BetterMakati
+                {t('footer.contact')}
               </Link>
               <a
                 href="mailto:hello@bettermakati.org"
@@ -75,8 +74,7 @@ const Footer: React.FC = () => {
                 rel="noreferrer"
                 className="inline-flex min-h-11 items-center gap-2 text-primary-100 hover:text-white focus-visible:outline-secondary-300"
               >
-                <Github className="h-4 w-4" aria-hidden="true" /> Open-source on
-                GitHub
+                <Github className="h-4 w-4" aria-hidden="true" /> {t('footer.openSource')}
               </a>
             </div>
           </div>
@@ -104,7 +102,7 @@ const Footer: React.FC = () => {
 
         <div className="bm-site-footer-ecosystem mt-10 border-t border-white/10 pt-6">
           <div className="text-xs font-bold uppercase tracking-[0.12em] text-white/80">
-            Official & broader ecosystem
+            {t('footer.ecosystemHeading')}
           </div>
           <div className="mt-3 flex flex-wrap gap-x-6 gap-y-2">
             {footerNavigation.ecosystemLinks.map(link => (
@@ -121,23 +119,21 @@ const Footer: React.FC = () => {
             ))}
           </div>
           <p className="mt-3 max-w-3xl text-xs leading-relaxed text-primary-200">
-            BetterMakati is independent and is not the official City Government
-            of Makati website.
+            {t('footer.independence')}
           </p>
         </div>
 
         <div className="bm-site-footer-legal mt-6 border-t border-white/10 pt-6 text-xs text-primary-200">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <p>
-              © 2026 BetterMakati. Independent civic information platform for
-              Makati.
+              {t('footer.copyright')}
             </p>
             <div className="flex flex-wrap gap-5">
               <Link
                 to="/about#identity"
                 className="inline-flex min-h-11 items-center underline underline-offset-4 focus-visible:outline-secondary-300"
               >
-                Our identity
+                {t('footer.identity')}
               </Link>
               <Link to="/privacy" className="inline-flex min-h-11 items-center underline underline-offset-4 focus-visible:outline-secondary-300">
                 Privacy
@@ -146,7 +142,7 @@ const Footer: React.FC = () => {
                 Terms
               </Link>
               <Link to="/status" className="inline-flex min-h-11 items-center underline underline-offset-4 focus-visible:outline-secondary-300">
-                Coverage &amp; limitations
+                {t('footer.coverage')}
               </Link>
             </div>
           </div>

@@ -26,8 +26,8 @@ for (const marker of [
   'bm-site-footer-rule',
   'bm-site-footer-ecosystem',
   'bm-site-footer-legal',
-  'Official & broader ecosystem',
-  'Independent civic information platform for',
+  "t('footer.ecosystemHeading')",
+  "t('footer.copyright')",
   'focus-visible:outline-secondary-300',
 ]) need('W7-2b Footer', footer, marker);
 

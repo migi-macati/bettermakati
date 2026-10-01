@@ -4,7 +4,8 @@
   "language": {
     "label": "Language",
     "english": "English",
-    "filipino": "Filipino"
+    "filipino": "Filipino",
+    "use": "Use {{language}}"
   },
   "hero": {
     "subtitle": "Public services and government information for Makati City."
@@ -21,7 +22,7 @@
     "description": "Makati City government information."
   },
   "footer": {
-    "copyright": "© 2026 BetterMakati. Independent BetterLGU civic information portal.",
+    "copyright": "© 2026 BetterMakati. Independent civic information platform for Makati.",
     "sections": {
       "tasks": "Get things done",
       "understand": "Understand Makati",
@@ -41,11 +42,33 @@
       "official": "Official Makati City Portal",
       "bettergov": "National services — BetterGov",
       "betterlgu": "Other LGUs — BetterLGU"
-    }
+    },
+    "description": "Independent civic information, public records and participation tools for understanding and using Makati.",
+    "contact": "Contact BetterMakati",
+    "openSource": "Open-source on GitHub",
+    "ecosystemHeading": "Official & broader ecosystem",
+    "independence": "BetterMakati is independent and is not the official City Government of Makati website.",
+    "identity": "Our identity",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "coverage": "Coverage & limitations"
   },
   "navbar": {
     "government": "Government",
-    "services": "Services"
+    "services": "Services",
+    "mainNavigation": "Main navigation",
+    "changeBarangay": "Open or change your barangay",
+    "allBarangays": "All barangays",
+    "searchBetterMakati": "Search BetterMakati",
+    "search": "Search",
+    "openMainMenu": "Open main menu",
+    "closeMainMenu": "Close main menu",
+    "yourBarangay": "Your barangay",
+    "chooseBarangay": "Choose a barangay",
+    "emergency911": "Emergency 911",
+    "cityHallPhone": "City Hall: 8870-1000",
+    "allHotlines": "All hotlines",
+    "officialMakatiSite": "Official Makati site"
   },
   "navigation": {
     "services": "Services",

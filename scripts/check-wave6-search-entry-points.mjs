@@ -34,7 +34,7 @@ requireAll(navbar, 'Header search entry', [
   'const searchHref = preferredBarangay',
   "withBarangayScope('/search', preferredBarangay.slug)",
   'to={searchHref}',
-  '<span>Search</span>',
+  "{t('navbar.search')}</span>",
 ]);
 
 requireAll(hero, 'Homepage search entry', [
