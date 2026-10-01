@@ -397,6 +397,25 @@
           "description": "Use the Makati Action Center route for service coordination."
         }
       }
+    },
+    "search": {
+      "seoTitle": "Search",
+      "seoDescription": "Search BetterMakati services, barangays, civic dates, areas, organizations, officials, records, places and civic tools.",
+      "eyebrow": "Search",
+      "title": "Search BetterMakati",
+      "description": "One search for services, barangays, civic dates, districts and estates, organizations, civic places, officials, records, visitor information and community tools.",
+      "searchTitle": "What are you looking for?",
+      "placeholder": "e.g., deadline, council session, Poblacion, budget"
+    },
+    "notFound": {
+      "seoTitle": "Page not found",
+      "seoDescription": "The BetterMakati page you requested could not be found.",
+      "title": "We couldn’t find that page",
+      "description": "The address may have changed, or the information may now live somewhere else in BetterMakati.",
+      "home": "Home",
+      "search": "Search BetterMakati",
+      "searchTitle": "Find the information instead",
+      "placeholder": "Try a service, barangay, official, place or topic"
     }
   }
 }
