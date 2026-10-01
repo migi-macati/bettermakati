@@ -27,7 +27,7 @@ const [
 const problems = [];
 
 for (const marker of [
-  'Take part in Makati',
+  "t('home.page.participationTitle')",
   'to="/participate"',
 ]) {
   if (!home.includes(marker)) {
