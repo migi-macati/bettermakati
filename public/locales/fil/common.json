@@ -73,6 +73,15 @@
   },
   "navbar": {
     "government": "Government",
-    "services": "Services"
+    "services": "Services",
+    "mainNavigation": "Main navigation",
+    "changeBarangay": "Buksan o palitan ang iyong barangay",
+    "allBarangays": "Lahat ng barangay",
+    "searchBetterMakati": "Search BetterMakati",
+    "search": "Search",
+    "openMainMenu": "Buksan ang main menu",
+    "closeMainMenu": "Isara ang main menu",
+    "yourBarangay": "Iyong barangay",
+    "chooseBarangay": "Pumili ng barangay"
   }
 }
