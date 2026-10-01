@@ -84,6 +84,12 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "chore: refresh City Monitor source state"
 
+          # Production verification regenerates derived files that are not part of this
+          # publication commit. Restore only those uncommitted side effects so rebase
+          # can safely replay the intended generated-state commit on a moving main.
+          git restore --worktree .
+
+
           for attempt in 1 2 3; do
             git fetch origin main
             if ! git rebase origin/main; then
