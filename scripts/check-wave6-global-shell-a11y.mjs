@@ -96,9 +96,9 @@ for (const marker of [
   'min-h-11 min-w-0',
   'className="absolute inset-0 h-full w-full cursor-pointer opacity-0"',
   'inline-flex min-h-11 shrink-0',
-  '<span className="sm:hidden">Homepage</span>',
+  "<span className=\"sm:hidden\">{t('barangayContext.homepage')}</span>",
   "aria-label={",
-  "'Open Barangay ' + barangay.name + ' homepage'",
+  "t('barangayContext.openHomepage', { barangay: barangay.name })",
   'focus-visible:outline-secondary-300',
 ]) {
   need('BetterBarangay shell', contextBar, marker);
