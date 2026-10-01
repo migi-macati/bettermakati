@@ -383,6 +383,25 @@
           "description": "Gamitin ang Makati Action Center para sa service coordination."
         }
       }
+    },
+    "search": {
+      "seoTitle": "Search",
+      "seoDescription": "Mag-search sa BetterMakati ng services, barangays, civic dates, areas, organizations, officials, records, places, at civic tools.",
+      "eyebrow": "Search",
+      "title": "Mag-search sa BetterMakati",
+      "description": "Isang search para sa services, barangays, civic dates, districts at estates, organizations, civic places, officials, records, visitor information, at community tools.",
+      "searchTitle": "Ano ang hinahanap mo?",
+      "placeholder": "hal. deadline, council session, Poblacion, budget"
+    },
+    "notFound": {
+      "seoTitle": "Hindi nahanap ang page",
+      "seoDescription": "Hindi nahanap ang BetterMakati page na hiniling mo.",
+      "title": "Hindi namin nahanap ang page na iyon",
+      "description": "Maaaring nagbago ang address o nasa ibang bahagi na ng BetterMakati ang impormasyon.",
+      "home": "Home",
+      "search": "Mag-search sa BetterMakati",
+      "searchTitle": "Hanapin na lang ang impormasyon",
+      "placeholder": "Subukan ang service, barangay, official, place, o topic"
     }
   }
 }
