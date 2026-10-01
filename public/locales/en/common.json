@@ -318,5 +318,25 @@
     "show": "Show photo {{current}} of {{total}}",
     "play": "Play photos",
     "pause": "Pause photos"
+  },
+  "discovery": {
+    "status": {
+      "Live": "Live",
+      "Researching": "Researching",
+      "Planned": "Planned"
+    },
+    "communityTools": {
+      "seoTitle": "Community Tools",
+      "seoDescription": "Community-built civic tools for Makati.",
+      "eyebrow": "Community Tools",
+      "title": "What can help you today?",
+      "description": "Practical tools for finding services, places, information and ways to participate in Makati.",
+      "statusLabel": "Tool status:",
+      "suggest": "Suggest a tool"
+    },
+    "tools": {
+      "open": "Open",
+      "suggestOrContribute": "Suggest or contribute"
+    }
   }
 }
