@@ -282,7 +282,6 @@ test('unknown deep links land on recoverable noindex 404', async ({ page }) => {
 
 test('canonical navigation families are direct links with separate menus', async ({ page }) => {
   await page.setViewportSize({ width: 1600, height: 900 });
-  await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto(baseURL + '/');
 
   const nav = page.getByRole('navigation', { name: 'Main navigation' });
@@ -1598,7 +1597,6 @@ test('failed civic feed does not imply zero reports', async ({ page }) => {
 
 test('W6-3d BetterBarangay preference persists without overstating local data', async ({ page }) => {
   await page.setViewportSize({ width: 1600, height: 900 });
-  await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto(baseURL + '/barangays/poblacion');
 
   const nav = page.getByRole('navigation', { name: 'Main navigation' });
@@ -1684,7 +1682,6 @@ test('W6-3e Today is the synthesis door for current civic information', async ({
 
 test('W6-3f Explore is the coherent place, mobility and heritage journey', async ({ page }) => {
   await page.setViewportSize({ width: 1600, height: 900 });
-  await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto(baseURL + '/visit');
 
   await expect(page.getByRole('heading', { level: 1, name: 'Understand the city as you explore it.' })).toBeVisible();
