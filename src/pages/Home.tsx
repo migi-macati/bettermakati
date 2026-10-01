@@ -1,4 +1,5 @@
 import { Link } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import {
   ArrowRight,
   Store,
@@ -21,26 +22,22 @@ import { homeImageSet } from '../data/cityImages';
 
 const quickServices = [
   {
-    label: 'Business permits',
-    description: 'New applications and renewals',
+    key: 'business',
     href: '/services/business',
     icon: Store,
   },
   {
-    label: 'Health services',
-    description: 'Yellow Card, clinics and care access',
+    key: 'health',
     href: '/services/health-services',
     icon: HeartPulse,
   },
   {
-    label: 'Education',
-    description: 'UMak admissions and scholarships',
+    key: 'education',
     href: '/services/education',
     icon: GraduationCap,
   },
   {
-    label: 'Property & land use',
-    description: 'Property tax, zoning and building permits',
+    key: 'property',
     href: '/services/housing-land-use',
     icon: HomeIcon,
   },
@@ -48,53 +45,45 @@ const quickServices = [
 
 const visitPaths = [
   {
-    label: 'Explore Makati',
-    description:
-      'Start with durable places, districts and city experiences, then follow their civic context.',
+    key: 'explore',
     href: '/visit',
     icon: Compass,
   },
   {
-    label: 'Getting around',
-    description: 'Public transport, transfers, routes and live directions.',
+    key: 'mobility',
     href: '/mobility',
     icon: Bus,
   },
   {
-    label: 'Areas & districts',
-    description: 'Understand Makati CBD, Ayala Center, Rockwell, Circuit and other city areas.',
+    key: 'districts',
     href: '/estates',
     icon: Compass,
   },
   {
-    label: 'Heritage & history',
-    description: 'Historic sites, self-guided routes and the Makati timeline.',
+    key: 'heritage',
     href: '/heritage',
     icon: Church,
   },
 ];
 
 const visitShortcuts = [
-  { label: 'Cinemas', href: '/cinemas', icon: Film },
-  { label: 'Live place discovery', href: '/visit#live-discovery', icon: Compass },
+  { key: 'cinemas', href: '/cinemas', icon: Film },
+  { key: 'liveDiscovery', href: '/visit#live-discovery', icon: Compass },
 ];
 
 const publicActionPaths = [
   {
-    label: 'Accountability',
-    description: 'Track projects, procurement, audit findings and public commitments.',
+    key: 'accountability',
     href: '/accountability',
     icon: ClipboardCheck,
   },
   {
-    label: 'Projects & budget',
-    description: 'See where city money comes from, where it goes and what is being built.',
+    key: 'projectsBudget',
     href: '/projects-budget',
     icon: BarChart3,
   },
   {
-    label: 'Public records',
-    description: 'Open the underlying documents, datasets and source records behind civic claims.',
+    key: 'records',
     href: '/records',
     icon: Landmark,
   },
@@ -103,37 +92,38 @@ const publicActionPaths = [
 const stats = [
   {
     value: '309,770',
-    label: 'Population',
+    key: 'population',
     source: '2024 POPCEN',
     href: 'https://psa.gov.ph/classification/psgc/barangays/1380300000',
   },
   {
     value: '23',
-    label: 'Barangays',
+    key: 'barangays',
     source: 'PSA PSGC',
     href: 'https://psa.gov.ph/classification/psgc/barangays/1380300000',
   },
   {
     value: '1st',
-    label: 'Income class',
+    key: 'incomeClass',
     source: 'PSA PSGC',
     href: 'https://psa.gov.ph/classification/psgc/barangays/1380300000',
   },
   {
     value: '55,572',
-    label: 'Pio Del Pilar',
-    source: 'Largest barangay by 2024 population',
+    key: 'pioDelPilar',
+    sourceKey: 'largestBarangaySource',
     href: 'https://psa.gov.ph/classification/psgc/barangays/1380300000',
   },
 ];
 
 const Home: React.FC = () => {
+  const { t } = useTranslation();
   return (
     <>
       <SEO
-        title="Home"
-        description="BetterMakati is an independent civic information and participation platform for Makati."
-        keywords="Makati, Makati City, public services, local government, civic information, civic participation, city exploration, heritage"
+        title={t('home.page.seoTitle')}
+        description={t('home.page.seoDescription')}
+        keywords={t('home.page.seoKeywords')}
       />
 
       <Hero />
@@ -142,7 +132,7 @@ const Home: React.FC = () => {
         <div className="container px-5 md:px-6 lg:px-8">
           <PhotoCarousel
             images={homeImageSet}
-            title="Around Makati"
+            title={t('home.page.aroundMakati')}
             compact
             priority
             autoRotate
@@ -153,16 +143,16 @@ const Home: React.FC = () => {
 
       <section className="bm-home-section bg-[#fffdf8]">
         <div className="container px-5 md:px-6 lg:px-8">
-          <div className="section-eyebrow">Services</div>
+          <div className="section-eyebrow">{t('home.page.servicesEyebrow')}</div>
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-3 mb-7">
             <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-950">
-              Common services
+              {t('home.page.commonServices')}
             </h2>
             <Link
               to="/services"
               className="inline-flex items-center gap-1.5 text-sm font-bold text-primary-700 hover:text-primary-900"
             >
-              View all services <ArrowRight className="h-4 w-4" />
+              {t('home.page.viewAllServices')} <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
 
@@ -171,7 +161,7 @@ const Home: React.FC = () => {
               const Icon = item.icon;
               return (
                 <Link
-                  key={item.label}
+                  key={item.key}
                   to={item.href}
                   className="home-service-card bm-home-card"
                 >
@@ -179,9 +169,9 @@ const Home: React.FC = () => {
                     <Icon className="h-5 w-5" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-gray-950">{item.label}</h3>
+                    <h3 className="font-bold text-gray-950">{t(`home.page.quickServices.${item.key}.label`)}</h3>
                     <p className="text-sm text-gray-600 mt-1">
-                      {item.description}
+                      {t(`home.page.quickServices.${item.key}.description`)}
                     </p>
                   </div>
                   <ArrowRight className="h-4 w-4 text-primary-600 ml-auto shrink-0" />
@@ -195,15 +185,15 @@ const Home: React.FC = () => {
       <section className="bm-home-section bm-home-band-dark text-white border-b border-primary-900">
         <div className="container px-5 md:px-6 lg:px-8">
           <div className="section-eyebrow !text-white/80">
-            Public action & evidence
+            {t('home.page.publicActionEyebrow')}
           </div>
           <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
             <div>
               <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight">
-                Follow decisions, money and the records behind them.
+                {t('home.page.publicActionTitle')}
               </h2>
               <p className="mt-2 max-w-3xl text-sm leading-relaxed text-primary-100 md:text-base">
-                Start with accountability, then move into budgets, projects and the original public records when you need the source.
+                {t('home.page.publicActionDescription')}
               </p>
             </div>
           </div>
@@ -212,19 +202,19 @@ const Home: React.FC = () => {
               const Icon = item.icon;
               return (
                 <Link
-                  key={item.label}
+                  key={item.key}
                   to={item.href}
                   className="bm-home-dark-card"
                 >
                   <Icon className="h-6 w-6 text-secondary-500" />
                   <h3 className="mt-4 font-extrabold text-white">
-                    {item.label}
+                    {t(`home.page.publicAction.${item.key}.label`)}
                   </h3>
                   <p className="mt-2 text-sm leading-relaxed text-primary-100">
-                    {item.description}
+                    {t(`home.page.publicAction.${item.key}.description`)}
                   </p>
                   <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-white">
-                    Open <ArrowRight className="h-4 w-4" />
+                    {t('home.page.open')} <ArrowRight className="h-4 w-4" />
                   </span>
                 </Link>
               );
@@ -237,24 +227,24 @@ const Home: React.FC = () => {
         <div className="container px-5 md:px-6 lg:px-8">
           <div className="flex flex-col gap-5 rounded-2xl border border-primary-100 bg-[#fffdf8] p-6 md:flex-row md:items-center md:justify-between md:p-8">
             <div>
-              <div className="section-eyebrow">Participation</div>
+              <div className="section-eyebrow">{t('home.page.participationEyebrow')}</div>
               <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight text-gray-950">
-                Take part in Makati
+                {t('home.page.participationTitle')}
               </h2>
               <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600 md:text-base">
-                Start here for non-emergency public-place reports, civic participation and the right route for a community concern.
+                {t('home.page.participationDescription')}
               </p>
               <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm font-bold">
                 <Link to="/get-involved" className="text-primary-700 hover:text-primary-900">
-                  Improve BetterMakati
+                  {t('home.page.improve')}
                 </Link>
                 <Link to="/community-tools" className="text-primary-700 hover:text-primary-900">
-                  More community tools
+                  {t('home.page.communityTools')}
                 </Link>
               </div>
             </div>
             <Link to="/participate" className="brand-btn-primary shrink-0">
-              Participate in Makati <ArrowRight className="h-4 w-4" />
+              {t('home.page.participate')} <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
         </div>
@@ -262,22 +252,21 @@ const Home: React.FC = () => {
 
       <section className="bm-home-section bg-white border-y border-gray-100">
         <div className="container px-5 md:px-6 lg:px-8">
-          <div className="section-eyebrow">Explore Makati</div>
+          <div className="section-eyebrow">{t('home.page.exploreEyebrow')}</div>
           <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between mb-7">
             <div>
               <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-950">
-                Understand the city as you explore it
+                {t('home.page.exploreTitle')}
               </h2>
               <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600 md:text-base">
-                Move from places and experiences into districts, barangays,
-                heritage, history, mobility and current activity.
+                {t('home.page.exploreDescription')}
               </p>
             </div>
             <Link
               to="/visit"
               className="inline-flex items-center gap-1.5 text-sm font-bold text-primary-700 hover:text-primary-900"
             >
-              Explore Makati <ArrowRight className="h-4 w-4" />
+              {t('home.page.explore')} <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
 
@@ -286,17 +275,17 @@ const Home: React.FC = () => {
               const Icon = item.icon;
               return (
                 <Link
-                  key={item.label}
+                  key={item.key}
                   to={item.href}
                   className="civic-card bm-home-card !min-h-0"
                 >
                   <Icon className="h-6 w-6 text-primary-700" />
-                  <h3 className="font-bold text-gray-950 mt-4">{item.label}</h3>
+                  <h3 className="font-bold text-gray-950 mt-4">{t(`home.page.visit.${item.key}.label`)}</h3>
                   <p className="text-sm text-gray-600 mt-1">
-                    {item.description}
+                    {t(`home.page.visit.${item.key}.description`)}
                   </p>
                   <span className="inline-flex items-center gap-1 text-sm font-bold text-primary-700 mt-4">
-                    Open <ArrowRight className="h-4 w-4" />
+                    {t('home.page.open')} <ArrowRight className="h-4 w-4" />
                   </span>
                 </Link>
               );
@@ -308,12 +297,12 @@ const Home: React.FC = () => {
               const Icon = item.icon;
               return (
                 <Link
-                  key={item.label}
+                  key={item.key}
                   to={item.href}
                   className="inline-flex min-h-11 items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-bold text-primary-800 hover:border-primary-300 hover:bg-primary-50"
                 >
                   <Icon className="h-4 w-4" aria-hidden="true" />
-                  {item.label}
+                  {t(`home.page.shortcuts.${item.key}`)}
                 </Link>
               );
             })}
@@ -325,11 +314,11 @@ const Home: React.FC = () => {
 
       <section className="bm-home-section bm-home-band-muted border-y border-primary-100/70">
         <div className="container px-5 md:px-6 lg:px-8">
-          <div className="section-eyebrow">Makati at a glance</div>
+          <div className="section-eyebrow">{t('home.page.glance')}</div>
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:gap-5 xl:grid-cols-4">
             {stats.map(stat => (
               <a
-                key={stat.label}
+                key={stat.key}
                 href={stat.href}
                 target="_blank"
                 rel="noreferrer"
@@ -339,9 +328,9 @@ const Home: React.FC = () => {
                   {stat.value}
                 </div>
                 <div className="font-semibold text-gray-900 mt-1">
-                  {stat.label}
+                  {stat.key === 'pioDelPilar' ? 'Pio Del Pilar' : t(`home.page.stats.${stat.key}`)}
                 </div>
-                <div className="text-xs text-gray-500 mt-1">{stat.source}</div>
+                <div className="text-xs text-gray-500 mt-1">{'sourceKey' in stat ? t(`home.page.stats.${stat.sourceKey}`) : stat.source}</div>
               </a>
             ))}
           </div>
@@ -356,19 +345,18 @@ const Home: React.FC = () => {
               </span>
               <div>
                 <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
-                  City comparison
+                  {t('home.page.cityComparisonEyebrow')}
                 </div>
                 <h2 className="mt-1 text-lg font-extrabold text-gray-950">
-                  Compare Makati with other Philippine cities
+                  {t('home.page.cityComparisonTitle')}
                 </h2>
                 <p className="mt-1 text-sm text-gray-600">
-                  Compare 2024 GDP per person using the same PSA definition and
-                  price basis.
+                  {t('home.page.cityComparisonDescription')}
                 </p>
               </div>
             </div>
             <span className="inline-flex items-center gap-1 text-sm font-bold text-primary-700">
-              Explore statistics <ArrowRight className="h-4 w-4" />
+              {t('home.page.exploreStatistics')} <ArrowRight className="h-4 w-4" />
             </span>
           </Link>
         </div>

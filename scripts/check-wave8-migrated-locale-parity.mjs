@@ -3,7 +3,7 @@ import fs from 'node:fs';
 const en = JSON.parse(fs.readFileSync('public/locales/en/common.json', 'utf8'));
 const fil = JSON.parse(fs.readFileSync('public/locales/fil/common.json', 'utf8'));
 
-const migratedRoots = ['language', 'navigation', 'shell', 'navbar', 'footer', 'app', 'breadcrumbs', 'brand', 'lastReviewed', 'pageBoundary', 'pageHelp', 'sharePage', 'barangayContext', 'seo'];
+const migratedRoots = ['language', 'navigation', 'shell', 'navbar', 'footer', 'app', 'breadcrumbs', 'brand', 'lastReviewed', 'pageBoundary', 'pageHelp', 'sharePage', 'barangayContext', 'seo', 'home', 'photoCarousel'];
 
 function paths(value, prefix = '') {
   if (!value || typeof value !== 'object' || Array.isArray(value)) return [prefix];

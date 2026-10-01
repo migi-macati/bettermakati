@@ -1,10 +1,12 @@
 import { ArrowLeft, ArrowRight, Pause, Play } from 'lucide-react';
 import { Link } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import useCarousel from '../../hooks/useCarousel';
 import { publicationReports } from '../../data/reports';
 import ReportTeaser from '../reports/ReportTeaser';
 
 export default function FeaturedInsightsCarousel() {
+  const { t } = useTranslation();
   const carousel = useCarousel(publicationReports.length, 7000);
   const report = publicationReports[carousel.index];
 
@@ -21,13 +23,13 @@ export default function FeaturedInsightsCarousel() {
             id="featured-reports-title"
             className="text-xl font-extrabold tracking-tight text-gray-950 md:text-2xl"
           >
-            Featured Reports & Insights
+            {t('home.featured.title')}
           </h2>
           <Link
             to="/reports"
             className="hidden min-h-11 items-center text-sm font-bold text-primary-700 hover:text-primary-900 sm:inline-flex"
           >
-            View all
+            {t('home.featured.viewAll')}
           </Link>
         </div>
 
@@ -40,7 +42,7 @@ export default function FeaturedInsightsCarousel() {
             className="text-sm text-gray-600"
             aria-live={carousel.rotating ? 'off' : 'polite'}
           >
-            {carousel.index + 1} of {publicationReports.length}
+            {t('home.featured.position', { current: carousel.index + 1, total: publicationReports.length })}
           </span>
           <div className="flex items-center gap-2">
             {!carousel.reducedMotion && (
@@ -54,14 +56,14 @@ export default function FeaturedInsightsCarousel() {
                 ) : (
                   <Pause className="h-4 w-4" aria-hidden="true" />
                 )}
-                {carousel.paused ? 'Resume' : 'Pause'}
+                {carousel.paused ? t('home.featured.resume') : t('home.featured.pause')}
               </button>
             )}
             <button
               type="button"
               onClick={() => carousel.move(-1)}
               className="grid h-11 w-11 place-items-center rounded-full border border-gray-200 text-primary-800 hover:bg-primary-50"
-              aria-label="Previous featured report"
+              aria-label={t('home.featured.previous')}
             >
               <ArrowLeft className="h-4 w-4" aria-hidden="true" />
             </button>
@@ -69,7 +71,7 @@ export default function FeaturedInsightsCarousel() {
               type="button"
               onClick={() => carousel.move(1)}
               className="grid h-11 w-11 place-items-center rounded-full border border-gray-200 text-primary-800 hover:bg-primary-50"
-              aria-label="Next featured report"
+              aria-label={t('home.featured.next')}
             >
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </button>
@@ -80,7 +82,7 @@ export default function FeaturedInsightsCarousel() {
           to="/reports"
           className="mt-4 inline-flex min-h-11 items-center text-sm font-bold text-primary-700 hover:text-primary-900 sm:hidden"
         >
-          View all
+          {t('home.featured.viewAll')}
         </Link>
       </div>
     </section>

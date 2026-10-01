@@ -26,8 +26,8 @@ for (const marker of [
   'useCarousel(publicationReports.length, 7000)',
   'const report = publicationReports[carousel.index]',
   '<ReportTeaser report={report} variant="carousel" />',
-  '{carousel.index + 1} of {publicationReports.length}',
-  'View all',
+  "t('home.featured.position', { current: carousel.index + 1, total: publicationReports.length })",
+  "t('home.featured.viewAll')",
 ]) {
   if (!carousel.includes(marker)) {
     problems.push('Homepage Featured Reports reuse marker missing: ' + marker);
