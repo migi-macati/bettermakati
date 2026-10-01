@@ -27,8 +27,8 @@ const problems = [];
 for (const marker of [
   "key: 'records'",
   "href: '/records'",
-  "label: t('home.page.publicAction.records.label')",
-  "description: t('home.page.publicAction.records.description')",
+  "t(`home.page.publicAction.${item.key}.label`)",
+  "t(`home.page.publicAction.${item.key}.description`)",
 ]) {
   if (!home.includes(marker)) {
     problems.push('Homepage evidence entry marker missing: ' + marker);
