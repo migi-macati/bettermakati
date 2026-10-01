@@ -82,18 +82,18 @@ for (let index = 1; index <= 11; index += 1) {
 }
 
 const canonicalDoors = [
-  ["label: 'Services'", "href: '/services'"],
-  ["label: 'Today'", "href: '/today'"],
-  ["label: 'City'", "href: '/government'"],
-  ["label: 'Barangays'", "href: '/barangays'"],
-  ["label: 'Accountability'", "href: '/accountability'"],
-  ["label: 'Participate'", "href: '/participate'"],
-  ["label: 'Explore Makati'", "href: '/visit'"],
+  ["id: 'services'", "labelKey: 'navigation.services'", "href: '/services'"],
+  ["id: 'today'", "labelKey: 'navigation.today'", "href: '/today'"],
+  ["id: 'city'", "labelKey: 'navigation.city'", "href: '/government'"],
+  ["id: 'barangays'", "labelKey: 'navigation.barangays'", "href: '/barangays'"],
+  ["id: 'accountability'", "labelKey: 'navigation.accountability'", "href: '/accountability'"],
+  ["id: 'participate'", "labelKey: 'navigation.participate'", "href: '/participate'"],
+  ["id: 'explore'", "labelKey: 'navigation.explore'", "href: '/visit'"],
 ];
 
-for (const [label, href] of canonicalDoors) {
-  if (!navigation.includes(label) || !navigation.includes(href)) {
-    problems.push('Canonical global door changed or disappeared: ' + label + ' → ' + href);
+for (const [id, labelKey, href] of canonicalDoors) {
+  if (!navigation.includes(id) || !navigation.includes(labelKey) || !navigation.includes(href)) {
+    problems.push('Canonical global door changed or disappeared: ' + id + ' / ' + labelKey + ' → ' + href);
   }
 }
 
