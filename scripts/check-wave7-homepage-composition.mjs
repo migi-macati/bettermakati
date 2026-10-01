@@ -9,13 +9,13 @@ const requiredHome = [
   'bm-home-band-muted',
   'bm-home-dark-card',
   'bm-home-card',
-  'title="Around Makati"',
-  'Common services',
-  'Public action & evidence',
-  'Take part in Makati',
-  'Understand the city as you explore it',
+  "title={t('home.page.aroundMakati')}",
+  "t('home.page.commonServices')",
+  "t('home.page.publicActionEyebrow')",
+  "t('home.page.participationTitle')",
+  "t('home.page.exploreTitle')",
   '<FeaturedInsightsCarousel />',
-  'Makati at a glance',
+  "t('home.page.glance')",
 ];
 
 const requiredCss = [
