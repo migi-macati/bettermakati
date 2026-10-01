@@ -126,7 +126,7 @@ test('skip link is the first keyboard stop and moves focus to main content', asy
 });
 
 test('desktop navigation menu closes with Escape and restores toggle focus', async ({ page }) => {
-  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.setViewportSize({ width: 1600, height: 900 });
   await page.goto(baseURL + '/');
 
   const toggle = page.locator('#desktop-toggle-services');
