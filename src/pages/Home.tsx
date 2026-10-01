@@ -22,26 +22,22 @@ import { homeImageSet } from '../data/cityImages';
 
 const quickServices = [
   {
-    label: 'Business permits',
-    description: 'New applications and renewals',
+    key: 'business',
     href: '/services/business',
     icon: Store,
   },
   {
-    label: 'Health services',
-    description: 'Yellow Card, clinics and care access',
+    key: 'health',
     href: '/services/health-services',
     icon: HeartPulse,
   },
   {
-    label: 'Education',
-    description: 'UMak admissions and scholarships',
+    key: 'education',
     href: '/services/education',
     icon: GraduationCap,
   },
   {
-    label: 'Property & land use',
-    description: 'Property tax, zoning and building permits',
+    key: 'property',
     href: '/services/housing-land-use',
     icon: HomeIcon,
   },
@@ -49,53 +45,45 @@ const quickServices = [
 
 const visitPaths = [
   {
-    label: 'Explore Makati',
-    description:
-      'Start with durable places, districts and city experiences, then follow their civic context.',
+    key: 'explore',
     href: '/visit',
     icon: Compass,
   },
   {
-    label: 'Getting around',
-    description: 'Public transport, transfers, routes and live directions.',
+    key: 'mobility',
     href: '/mobility',
     icon: Bus,
   },
   {
-    label: 'Areas & districts',
-    description: 'Understand Makati CBD, Ayala Center, Rockwell, Circuit and other city areas.',
+    key: 'districts',
     href: '/estates',
     icon: Compass,
   },
   {
-    label: 'Heritage & history',
-    description: 'Historic sites, self-guided routes and the Makati timeline.',
+    key: 'heritage',
     href: '/heritage',
     icon: Church,
   },
 ];
 
 const visitShortcuts = [
-  { label: 'Cinemas', href: '/cinemas', icon: Film },
-  { label: 'Live place discovery', href: '/visit#live-discovery', icon: Compass },
+  { key: 'cinemas', href: '/cinemas', icon: Film },
+  { key: 'liveDiscovery', href: '/visit#live-discovery', icon: Compass },
 ];
 
 const publicActionPaths = [
   {
-    label: 'Accountability',
-    description: 'Track projects, procurement, audit findings and public commitments.',
+    key: 'accountability',
     href: '/accountability',
     icon: ClipboardCheck,
   },
   {
-    label: 'Projects & budget',
-    description: 'See where city money comes from, where it goes and what is being built.',
+    key: 'projectsBudget',
     href: '/projects-budget',
     icon: BarChart3,
   },
   {
-    label: 'Public records',
-    description: 'Open the underlying documents, datasets and source records behind civic claims.',
+    key: 'records',
     href: '/records',
     icon: Landmark,
   },
@@ -173,7 +161,7 @@ const Home: React.FC = () => {
               const Icon = item.icon;
               return (
                 <Link
-                  key={t(`home.page.quickServices.${item.href === '/services/business' ? 'business' : item.href === '/services/health-services' ? 'health' : item.href === '/services/education' ? 'education' : 'property'}.label`)}
+                  key={item.key}
                   to={item.href}
                   className="home-service-card bm-home-card"
                 >
@@ -181,9 +169,9 @@ const Home: React.FC = () => {
                     <Icon className="h-5 w-5" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-gray-950">{item.label}</h3>
+                    <h3 className="font-bold text-gray-950">{t(`home.page.quickServices.${item.key}.label`)}</h3>
                     <p className="text-sm text-gray-600 mt-1">
-                      {t(`home.page.quickServices.${item.href === '/services/business' ? 'business' : item.href === '/services/health-services' ? 'health' : item.href === '/services/education' ? 'education' : 'property'}.description`)}
+                      {t(`home.page.quickServices.${item.key}.description`)}
                     </p>
                   </div>
                   <ArrowRight className="h-4 w-4 text-primary-600 ml-auto shrink-0" />
@@ -214,16 +202,16 @@ const Home: React.FC = () => {
               const Icon = item.icon;
               return (
                 <Link
-                  key={t(`home.page.publicAction.${item.href === '/accountability' ? 'accountability' : item.href === '/projects-budget' ? 'projectsBudget' : 'records'}.label`)}
+                  key={item.key}
                   to={item.href}
                   className="bm-home-dark-card"
                 >
                   <Icon className="h-6 w-6 text-secondary-500" />
                   <h3 className="mt-4 font-extrabold text-white">
-                    {item.label}
+                    {t(`home.page.publicAction.${item.key}.label`)}
                   </h3>
                   <p className="mt-2 text-sm leading-relaxed text-primary-100">
-                    {t(`home.page.publicAction.${item.href === '/accountability' ? 'accountability' : item.href === '/projects-budget' ? 'projectsBudget' : 'records'}.description`)}
+                    {t(`home.page.publicAction.${item.key}.description`)}
                   </p>
                   <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-white">
                     {t('home.page.open')} <ArrowRight className="h-4 w-4" />
@@ -287,14 +275,14 @@ const Home: React.FC = () => {
               const Icon = item.icon;
               return (
                 <Link
-                  key={t(`home.page.visit.${item.href === '/visit' ? 'explore' : item.href === '/mobility' ? 'mobility' : item.href === '/estates' ? 'districts' : 'heritage'}.label`)}
+                  key={item.key}
                   to={item.href}
                   className="civic-card bm-home-card !min-h-0"
                 >
                   <Icon className="h-6 w-6 text-primary-700" />
-                  <h3 className="font-bold text-gray-950 mt-4">{item.label}</h3>
+                  <h3 className="font-bold text-gray-950 mt-4">{t(`home.page.quickServices.${item.key}.label`)}</h3>
                   <p className="text-sm text-gray-600 mt-1">
-                    {t(`home.page.visit.${item.href === '/visit' ? 'explore' : item.href === '/mobility' ? 'mobility' : item.href === '/estates' ? 'districts' : 'heritage'}.description`)}
+                    {t(`home.page.visit.${item.key}.description`)}
                   </p>
                   <span className="inline-flex items-center gap-1 text-sm font-bold text-primary-700 mt-4">
                     {t('home.page.open')} <ArrowRight className="h-4 w-4" />
@@ -309,12 +297,12 @@ const Home: React.FC = () => {
               const Icon = item.icon;
               return (
                 <Link
-                  key={item.label}
+                  key={item.key}
                   to={item.href}
                   className="inline-flex min-h-11 items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-bold text-primary-800 hover:border-primary-300 hover:bg-primary-50"
                 >
                   <Icon className="h-4 w-4" aria-hidden="true" />
-                  {item.label}
+                  {t(`home.page.shortcuts.${item.key}`)}
                 </Link>
               );
             })}
