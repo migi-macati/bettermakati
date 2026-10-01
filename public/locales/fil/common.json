@@ -149,5 +149,72 @@
     "defaultDescription": "Independent civic information at participation platform para sa Makati.",
     "defaultKeywords": "Makati, Makati City, public services, local government, civic information",
     "imageAlt": "BetterMakati — independent civic information at participation para sa Makati"
+  },
+  "home": {
+    "hero": {
+      "eyebrow": "Makati City · Civic Guide",
+      "sloganPrefix": "Gawin nating",
+      "sloganBetter": "Better ang Makati!",
+      "description": "Hanapin ang services, tuklasin ang mga lugar at barangay, tingnan ang public records at projects, at makilahok sa buhay ng lungsod.",
+      "searchTitle": "Ano ang hinahanap mo?",
+      "searchPlaceholder": "Subukan: Yellow Card, Poblacion, business permit, budget...",
+      "startWith": "Magsimula sa:",
+      "popular": {
+        "businessPermit": "Business permit",
+        "yellowCard": "Yellow Card",
+        "cedula": "Cedula",
+        "barangay": "Hanapin ang iyong barangay"
+      }
+    },
+    "capability": {
+      "eyebrow": "Magsimula rito",
+      "title": "Ano ang kailangan mo?",
+      "yourBarangay": "Iyong barangay: {{barangay}}",
+      "goBarangay": "Pumunta sa iyong barangay",
+      "chooseBarangay": "Pumili ng barangay",
+      "entries": {
+        "urgent": {
+          "title": "Kailangan ng urgent help",
+          "description": "Emergency hotlines at official contacts para sa urgent situations."
+        },
+        "service": {
+          "title": "Kumuha ng service",
+          "description": "Permits, IDs, health, education, at iba pang government services."
+        },
+        "now": {
+          "title": "Tingnan ang mahalaga ngayon",
+          "description": "Magsimula sa Ngayon para sa advisories, civic activity, at current city information."
+        },
+        "evidence": {
+          "title": "Sundan ang public action at evidence",
+          "description": "Budgets, projects, procurement, audit findings, at source records."
+        },
+        "participate": {
+          "title": "Makilahok o magsumite ng concern",
+          "description": "Hanapin ang tamang non-emergency route para sa concerns, reports, o civic participation."
+        }
+      }
+    },
+    "featured": {
+      "title": "Featured Reports at Insights",
+      "viewAll": "Tingnan lahat",
+      "position": "{{current}} sa {{total}}",
+      "resume": "Ituloy",
+      "pause": "I-pause",
+      "previous": "Nakaraang featured report",
+      "next": "Susunod na featured report"
+    }
+  },
+  "photoCarousel": {
+    "defaultLabel": "Mga larawan ng Makati",
+    "viewPhoto": "Tingnan ang photo",
+    "unavailable": "Hindi available ang photo",
+    "previous": "Nakaraang photo",
+    "next": "Susunod na photo",
+    "cropped": "cropped",
+    "choose": "Pumili ng photo",
+    "show": "Ipakita ang photo {{current}} sa {{total}}",
+    "play": "I-play ang photos",
+    "pause": "I-pause ang photos"
   }
 }
