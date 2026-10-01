@@ -4,7 +4,8 @@
   "language": {
     "label": "Language",
     "english": "English",
-    "filipino": "Filipino"
+    "filipino": "Filipino",
+    "use": "Use {{language}}"
   },
   "hero": {
     "subtitle": "Public services and government information for Makati City."
