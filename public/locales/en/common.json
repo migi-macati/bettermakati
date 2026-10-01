@@ -1,6 +1,11 @@
 {
   "site_name": "BetterMakati",
   "site_description": "Independent civic information portal for Makati City",
+  "language": {
+    "label": "Language",
+    "english": "English",
+    "filipino": "Filipino"
+  },
   "hero": {
     "subtitle": "Public services and government information for Makati City."
   },

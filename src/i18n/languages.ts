@@ -1,24 +1,19 @@
-import type { LanguageType } from '../types';
+export type LanguageType = 'en' | 'fil';
 
 export interface LanguageInfo {
   code: LanguageType;
   name: string;
-  nativeName: string;
+  shortLabel: string;
+  htmlLang: string;
 }
 
 export const LANGUAGES: Record<LanguageType, LanguageInfo> = {
-  en: { code: 'en', name: 'English', nativeName: 'English' },
-  fil: { code: 'fil', name: 'Tagalog', nativeName: 'Filipino/Tagalog' },
-  ceb: { code: 'ceb', name: 'Cebuano', nativeName: 'Bisaya/Sinugboanon' },
-  ilo: { code: 'ilo', name: 'Ilocano', nativeName: 'Ilokano' },
-  hil: { code: 'hil', name: 'Hiligaynon', nativeName: 'Ilonggo' },
-  war: { code: 'war', name: 'Waray', nativeName: 'Waray-Waray' },
-  pam: { code: 'pam', name: 'Kapampangan', nativeName: 'Kapampangan' },
-  bcl: { code: 'bcl', name: 'Bikol', nativeName: 'Bikol Central' },
-  pag: { code: 'pag', name: 'Pangasinan', nativeName: 'Pangasinan' },
-  mag: { code: 'mag', name: 'Maguindanao', nativeName: 'Maguindanaon' },
-  tsg: { code: 'tsg', name: 'Tausug', nativeName: 'Bahasa Sūg' },
-  mdh: { code: 'mdh', name: 'Maranao', nativeName: 'Meranaw' },
+  en: { code: 'en', name: 'English', shortLabel: 'ENG', htmlLang: 'en' },
+  fil: { code: 'fil', name: 'Filipino', shortLabel: 'FIL', htmlLang: 'fil' },
 };
 
+export const SUPPORTED_LANGUAGES = Object.keys(LANGUAGES) as LanguageType[];
 export const DEFAULT_LANGUAGE: LanguageType = 'en';
+
+export const isSupportedLanguage = (value: string): value is LanguageType =>
+  SUPPORTED_LANGUAGES.includes(value as LanguageType);

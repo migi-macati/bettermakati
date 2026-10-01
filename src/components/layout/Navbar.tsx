@@ -11,6 +11,7 @@ import {
 import { mainNavigation } from '../../data/navigation';
 import { Link, useLocation, useNavigate } from 'react-router';
 import BrandMark from '../BrandMark';
+import LanguageSwitcher from '../LanguageSwitcher';
 import BetterBarangayContextBar from '../barangay/BetterBarangayContextBar';
 import { barangays } from '../../data/barangays';
 import {
@@ -294,6 +295,8 @@ export default function Navbar() {
                 </div>
               )}
 
+              <LanguageSwitcher />
+
               <Link
                 to={searchHref}
                 onClick={closeMenu}
@@ -306,6 +309,9 @@ export default function Navbar() {
             </div>
 
             <div className="ml-auto flex items-center gap-1 xl:hidden">
+              <div className="hidden sm:block">
+                <LanguageSwitcher />
+              </div>
               {preferredBarangay && (
                 <Link
                   to={'/barangays/' + preferredBarangay.slug}
@@ -353,6 +359,10 @@ export default function Navbar() {
           className="bm-shell-mobile-menu xl:hidden border-t"
         >
           <div className="container px-3 py-3 space-y-1 max-h-[70dvh] overflow-y-auto overscroll-contain">
+            <div className="flex sm:hidden items-center justify-between gap-3 rounded-xl border border-secondary-200 bg-secondary-50 p-3">
+              <span className="text-xs font-extrabold uppercase tracking-[0.08em] text-primary-800">Language</span>
+              <LanguageSwitcher />
+            </div>
             <label className="mb-3 block rounded-xl border border-secondary-200 bg-secondary-50 p-3">
               <span className="mb-1.5 block text-xs font-extrabold uppercase tracking-[0.08em] text-primary-800">
                 Your barangay
