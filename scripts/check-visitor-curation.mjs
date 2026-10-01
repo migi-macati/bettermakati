@@ -152,11 +152,11 @@ for (const forbidden of [
 }
 
 for (const marker of [
-  "label: 'Explore Makati'",
-  'Understand the city as you explore it',
-  "label: 'Areas & districts'",
+  "key: 'explore'",
+  "t('home.page.exploreTitle')",
+  "key: 'districts'",
   "href: '/estates'",
-  "{ label: 'Cinemas', href: '/cinemas'",
+  "{ key: 'cinemas', href: '/cinemas'",
 ]) {
   if (!home.includes(marker)) {
     problems.push('Homepage Explore Makati marker missing: ' + marker);
