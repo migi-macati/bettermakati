@@ -30,7 +30,7 @@ for (const marker of [
   'border-secondary-300 bg-secondary-100',
   'border border-secondary-200 bg-secondary-50 text-primary-900',
   'border border-gray-200 bg-white text-gray-700 shadow-sm',
-  'bm-shell-mobile-menu xl:hidden border-t',
+  'bm-shell-mobile-menu 2xl:hidden border-t',
 ]) {
   need('W7-2a Navbar', navbar, marker);
 }
