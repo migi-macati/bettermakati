@@ -337,6 +337,66 @@
     "tools": {
       "open": "Open",
       "suggestOrContribute": "Suggest or contribute"
+    },
+    "concernFinder": {
+      "seoTitle": "Where Should I Go?",
+      "seoDescription": "Describe what you need and find the Makati city, barangay or national government service that handles it.",
+      "seoKeywords": "Makati government service finder, where should I go Makati, Makati assistance, Makati permits, Makati IDs",
+      "eyebrow": "Service finder",
+      "title": "Where Should I Go?",
+      "intro": "Describe what you need. Matches can show the service, responsible office and a place to go.",
+      "emergencyTitle": "Emergency or immediate danger?",
+      "emergencyLink": "Open emergency hotlines",
+      "emergencySuffix": "instead of using the service finder.",
+      "searchTitle": "What do you need help with?",
+      "searchPlaceholder": "e.g., hospital bill, PWD ID, business permit, cedula",
+      "browseServices": "Browse all services",
+      "browseOffices": "Browse government offices",
+      "commonNeeds": "Common needs",
+      "taskFirst": "Start with the task, not the office",
+      "openGuide": "Open guide",
+      "unsure": "Still unsure",
+      "actionCenterTitle": "Makati Action Center",
+      "actionCenterDescription": "Use the city’s service-coordination channel when the concern crosses offices or you cannot identify the responsible department.",
+      "actionCenterCta": "Open Action Center guide",
+      "localConcern": "Local concern",
+      "barangayTitle": "Start with your barangay",
+      "barangayDescription": "Barangay pages show hall contacts, common barangay transactions and local service context.",
+      "barangayCta": "Choose a barangay",
+      "needs": {
+        "medical": {
+          "title": "I need medical or financial assistance",
+          "description": "Start with Makati Social Welfare Department requirements and assessment."
+        },
+        "pwd": {
+          "title": "I need a PWD ID",
+          "description": "Open the Makati PDAO / social welfare application guide."
+        },
+        "senior": {
+          "title": "I need a senior Blu Card",
+          "description": "See the city guide, requirements and current-source caveat."
+        },
+        "clearance": {
+          "title": "I need a barangay clearance",
+          "description": "Start with your barangay and the clearance guide."
+        },
+        "business": {
+          "title": "I need a business permit",
+          "description": "Open the new-business permit checklist and official city source."
+        },
+        "civilRegistry": {
+          "title": "I need a civil registry document",
+          "description": "Find Makati birth, marriage, death and certified-copy services."
+        },
+        "propertyTax": {
+          "title": "I need to pay real property tax",
+          "description": "See the city payment guide and source."
+        },
+        "cityAction": {
+          "title": "I need the city to act on a concern",
+          "description": "Use the Makati Action Center route for service coordination."
+        }
+      }
     }
   }
 }
