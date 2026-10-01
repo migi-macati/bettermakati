@@ -92,26 +92,26 @@ const publicActionPaths = [
 const stats = [
   {
     value: '309,770',
-    label: 'Population',
+    key: 'population',
     source: '2024 POPCEN',
     href: 'https://psa.gov.ph/classification/psgc/barangays/1380300000',
   },
   {
     value: '23',
-    label: 'Barangays',
+    key: 'barangays',
     source: 'PSA PSGC',
     href: 'https://psa.gov.ph/classification/psgc/barangays/1380300000',
   },
   {
     value: '1st',
-    label: 'Income class',
+    key: 'incomeClass',
     source: 'PSA PSGC',
     href: 'https://psa.gov.ph/classification/psgc/barangays/1380300000',
   },
   {
     value: '55,572',
-    label: 'Pio Del Pilar',
-    source: 'Largest barangay by 2024 population',
+    key: 'pioDelPilar',
+    sourceKey: 'largestBarangaySource',
     href: 'https://psa.gov.ph/classification/psgc/barangays/1380300000',
   },
 ];
@@ -318,7 +318,7 @@ const Home: React.FC = () => {
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:gap-5 xl:grid-cols-4">
             {stats.map(stat => (
               <a
-                key={stat.label}
+                key={stat.key}
                 href={stat.href}
                 target="_blank"
                 rel="noreferrer"
@@ -328,9 +328,9 @@ const Home: React.FC = () => {
                   {stat.value}
                 </div>
                 <div className="font-semibold text-gray-900 mt-1">
-                  {stat.label}
+                  {stat.key === 'pioDelPilar' ? 'Pio Del Pilar' : t(`home.page.stats.${stat.key}`)}
                 </div>
-                <div className="text-xs text-gray-500 mt-1">{stat.source}</div>
+                <div className="text-xs text-gray-500 mt-1">{'sourceKey' in stat ? t(`home.page.stats.${stat.sourceKey}`) : stat.source}</div>
               </a>
             ))}
           </div>
