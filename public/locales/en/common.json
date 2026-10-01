@@ -21,10 +21,71 @@
     "description": "Makati City government information."
   },
   "footer": {
-    "copyright": "© 2026 BetterMakati. Independent BetterLGU civic information portal."
+    "copyright": "© 2026 BetterMakati. Independent BetterLGU civic information portal.",
+    "sections": {
+      "tasks": "Get things done",
+      "understand": "Understand Makati",
+      "bettermakati": "BetterMakati"
+    },
+    "links": {
+      "today": "Today in Makati",
+      "search": "Search BetterMakati",
+      "government": "Government",
+      "getInvolved": "Get Involved",
+      "contact": "Contact",
+      "communityTools": "Community Tools",
+      "coverage": "Coverage & limitations",
+      "about": "About BetterMakati"
+    },
+    "ecosystem": {
+      "official": "Official Makati City Portal",
+      "bettergov": "National services — BetterGov",
+      "betterlgu": "Other LGUs — BetterLGU"
+    }
   },
   "navbar": {
     "government": "Government",
     "services": "Services"
+  },
+  "navigation": {
+    "services": "Services",
+    "whereToGo": "Where Should I Go?",
+    "governmentOffices": "Government Offices",
+    "today": "Today",
+    "cityMonitor": "City Monitor",
+    "civicBriefs": "Civic Briefs",
+    "liveMakati": "Live Makati",
+    "news": "Makati in the News",
+    "calendar": "Makati Calendar",
+    "hotlines": "Hotlines",
+    "city": "City",
+    "elections": "Elections & Voting",
+    "statistics": "Makati Statistics",
+    "reports": "Reports & Insights",
+    "legislation": "Legislation",
+    "history": "History of Makati",
+    "barangays": "Barangays",
+    "accountability": "Accountability",
+    "projectsBudget": "Projects & Budget",
+    "procurement": "Procurement Tracker",
+    "audit": "Audit & Follow-through",
+    "commitments": "Public Commitments",
+    "records": "Public Records",
+    "integrity": "Integrity & Public Interest",
+    "participate": "Participate",
+    "civicMap": "Civic Map",
+    "civicMapReports": "Civic Map Reports",
+    "propose": "Propose Something",
+    "shareSource": "Share a Public Source",
+    "correction": "Report a Correction",
+    "explore": "Explore Makati",
+    "areas": "Areas & Districts",
+    "mobility": "Getting Around",
+    "cinemas": "Cinemas",
+    "heritage": "Heritage & Culture"
+  },
+  "shell": {
+    "openMenu": "Open {{label}} menu",
+    "closeMenu": "Close {{label}} menu"
   }
 }
