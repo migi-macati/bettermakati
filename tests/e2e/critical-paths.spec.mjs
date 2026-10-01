@@ -1676,7 +1676,7 @@ test('W6-3e Today is the synthesis door for current civic information', async ({
 
   for (const route of ['/city-monitor', '/briefs', '/news', '/calendar', '/live']) {
     await page.goto(baseURL + route);
-    await expect(page.getByRole('link', { name: 'Today in Makati', exact: true })).toHaveAttribute('href', '/today');
+    await expect(page.locator('#main-content').getByRole('link', { name: 'Today in Makati', exact: true })).toHaveAttribute('href', '/today');
   }
 });
 
