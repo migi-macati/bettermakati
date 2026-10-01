@@ -16,7 +16,7 @@ const syncDocumentLanguage = (language: string) => {
     : LANGUAGES[DEFAULT_LANGUAGE].htmlLang;
 };
 
-i18n
+export const i18nReady = i18n
   .use(HttpBackend)
   .use(LanguageDetector)
   .use(initReactI18next)
