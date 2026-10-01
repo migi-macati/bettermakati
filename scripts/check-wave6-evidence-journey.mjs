@@ -25,9 +25,10 @@ const [
 const problems = [];
 
 for (const marker of [
-  "label: 'Public records'",
+  "key: 'records'",
   "href: '/records'",
-  'Open the underlying documents, datasets and source records behind civic claims.',
+  "label: t('home.page.publicAction.records.label')",
+  "description: t('home.page.publicAction.records.description')",
 ]) {
   if (!home.includes(marker)) {
     problems.push('Homepage evidence entry marker missing: ' + marker);
