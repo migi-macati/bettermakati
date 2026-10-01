@@ -162,7 +162,7 @@ export default function Navbar() {
       </div>
       <nav
         ref={nav}
-        aria-label="Main navigation"
+        aria-label={t('navbar.mainNavigation')}
         className="bm-shell-nav sticky top-0 z-50"
         onKeyDown={event => {
           if (event.key === 'Escape') {
@@ -283,10 +283,10 @@ export default function Navbar() {
                       rememberBarangay(slug);
                       navigate(slug ? '/barangays/' + slug : '/barangays');
                     }}
-                    aria-label="Open or change your barangay"
+                    aria-label={t('navbar.changeBarangay')}
                     className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
                   >
-                    <option value="">All barangays</option>
+                    <option value="">{t('navbar.allBarangays')}</option>
                     {barangays.map(item => (
                       <option key={item.slug} value={item.slug}>
                         Better{item.name.replace(/\s+/g, '')}
@@ -301,11 +301,11 @@ export default function Navbar() {
               <Link
                 to={searchHref}
                 onClick={closeMenu}
-                aria-label="Search BetterMakati"
+                aria-label={t('navbar.searchBetterMakati')}
                 className="ml-2 inline-flex min-h-11 items-center gap-2 rounded-full border border-secondary-300 bg-secondary-100 px-3.5 text-sm font-bold text-primary-900 shadow-sm hover:bg-secondary-200"
               >
                 <Search className="h-5 w-5" aria-hidden="true" />
-                <span>Search</span>
+                <span>{t('navbar.search')}</span>
               </Link>
             </div>
 
@@ -328,7 +328,7 @@ export default function Navbar() {
               <Link
                 to={searchHref}
                 onClick={closeMenu}
-                aria-label="Search BetterMakati"
+                aria-label={t('navbar.searchBetterMakati')}
                 className="flex h-11 w-11 items-center justify-center rounded-lg border border-secondary-200 bg-secondary-50 text-primary-900 hover:bg-secondary-100"
               >
                 <Search className="h-5 w-5" aria-hidden="true" />
@@ -340,7 +340,7 @@ export default function Navbar() {
                 className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-700 shadow-sm hover:bg-primary-50"
                 aria-expanded={isOpen}
                 aria-controls="mobile-navigation"
-                aria-label={isOpen ? 'Close main menu' : 'Open main menu'}
+                aria-label={t(isOpen ? 'navbar.closeMainMenu' : 'navbar.openMainMenu')}
               >
                 {isOpen ? (
                   <X className="h-6 w-6" aria-hidden="true" />
@@ -361,12 +361,12 @@ export default function Navbar() {
         >
           <div className="container px-3 py-3 space-y-1 max-h-[70dvh] overflow-y-auto overscroll-contain">
             <div className="flex sm:hidden items-center justify-between gap-3 rounded-xl border border-secondary-200 bg-secondary-50 p-3">
-              <span className="text-xs font-extrabold uppercase tracking-[0.08em] text-primary-800">Language</span>
+              <span className="text-xs font-extrabold uppercase tracking-[0.08em] text-primary-800">{t('language.label')}</span>
               <LanguageSwitcher />
             </div>
             <label className="mb-3 block rounded-xl border border-secondary-200 bg-secondary-50 p-3">
               <span className="mb-1.5 block text-xs font-extrabold uppercase tracking-[0.08em] text-primary-800">
-                Your barangay
+                {t('navbar.yourBarangay')}
               </span>
               <select
                 value={preferredBarangay?.slug ?? ''}
@@ -378,7 +378,7 @@ export default function Navbar() {
                 }}
                 className="min-h-11 w-full rounded-lg border border-secondary-200 bg-white px-3 text-sm font-bold text-primary-900"
               >
-                <option value="">Choose a barangay</option>
+                <option value="">{t('navbar.chooseBarangay')}</option>
                 {barangays.map(item => (
                   <option key={item.slug} value={item.slug}>
                     Better{item.name.replace(/\s+/g, '')}
@@ -419,7 +419,7 @@ export default function Navbar() {
                           }
                           aria-expanded={expanded}
                           aria-controls={`mobile-panel-${menuId(item.id)}`}
-                          aria-label={`${expanded ? 'Close' : 'Open'} ${t(item.labelKey)} menu`}
+                          aria-label={t(expanded ? 'shell.closeMenu' : 'shell.openMenu', { label: t(item.labelKey) })}
                           className={
                             'flex min-w-12 items-center justify-center rounded-r-lg hover:bg-primary-100 ' +
                             (current ? 'text-primary-800' : 'text-gray-700')
