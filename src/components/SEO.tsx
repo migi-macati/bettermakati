@@ -1,4 +1,5 @@
 import { Helmet } from 'react-helmet-async';
+import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
 
 interface SEOProps {
@@ -32,18 +33,17 @@ export default function SEO({
   jsonLd,
 }: SEOProps) {
   const location = useLocation();
+  const { t, i18n } = useTranslation();
   const configuredBase = import.meta.env.VITE_WEBSITE_URL || '';
   const canonicalBase = 'https://bettermakati.org';
   const baseUrl = (configuredBase || canonicalBase).replace(/\/$/, '');
+  const isFilipino = i18n.resolvedLanguage === 'fil';
 
-  const defaultTitle =
-    'BetterMakati | Civic information and participation for Makati';
+  const defaultTitle = t('seo.defaultTitle');
   const defaultDescription =
-    import.meta.env.VITE_SITE_DESCRIPTION ||
-    'Independent civic information and participation platform for Makati.';
+    import.meta.env.VITE_SITE_DESCRIPTION || t('seo.defaultDescription');
   const defaultKeywords =
-    import.meta.env.VITE_SITE_KEYWORDS ||
-    'Makati, Makati City, public services, local government, civic information';
+    import.meta.env.VITE_SITE_KEYWORDS || t('seo.defaultKeywords');
 
   const fullTitle = title ? `${title} | ${siteName}` : defaultTitle;
   const fullDescription = description || defaultDescription;
@@ -54,10 +54,7 @@ export default function SEO({
     : baseUrl
       ? `${baseUrl}${pathname === '/' ? '/' : pathname}`
       : '';
-  const fullImage = absoluteUrl(
-    baseUrl,
-    image || import.meta.env.VITE_OG_IMAGE_URL || '/og-image.png'
-  );
+  const fullImage = absoluteUrl(baseUrl, image || import.meta.env.VITE_OG_IMAGE_URL || '/og-image.png');
   const twitterHandle = import.meta.env.VITE_TWITTER_HANDLE || '';
 
   const websiteSchema = fullUrl
@@ -67,11 +64,7 @@ export default function SEO({
         name: fullTitle,
         description: fullDescription,
         url: fullUrl,
-        isPartOf: {
-          '@type': 'WebSite',
-          name: siteName,
-          url: baseUrl || fullUrl,
-        },
+        isPartOf: { '@type': 'WebSite', name: siteName, url: baseUrl || fullUrl },
       }
     : null;
   const schemas = [
@@ -85,27 +78,17 @@ export default function SEO({
       <meta name="description" content={fullDescription} />
       <meta name="keywords" content={fullKeywords} />
       <meta name="author" content={siteName} />
-      <meta
-        name="robots"
-        content={
-          noIndex
-            ? 'noindex, nofollow'
-            : 'index, follow, max-image-preview:large'
-        }
-      />
-      <meta name="language" content="English" />
+      <meta name="robots" content={noIndex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large'} />
+      <meta name="language" content={isFilipino ? 'Filipino' : 'English'} />
 
       <meta property="og:type" content={type} />
       {fullUrl && <meta property="og:url" content={fullUrl} />}
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={fullDescription} />
       {fullImage && <meta property="og:image" content={fullImage} />}
-      <meta
-        property="og:image:alt"
-        content="BetterMakati — independent civic information and participation for Makati"
-      />
+      <meta property="og:image:alt" content={t('seo.imageAlt')} />
       <meta property="og:site_name" content={siteName} />
-      <meta property="og:locale" content="en_PH" />
+      <meta property="og:locale" content={isFilipino ? 'fil_PH' : 'en_PH'} />
 
       <meta name="twitter:card" content="summary_large_image" />
       {fullUrl && <meta name="twitter:url" content={fullUrl} />}
@@ -116,9 +99,7 @@ export default function SEO({
 
       <meta name="theme-color" content="#036738" />
       {fullUrl && <link rel="canonical" href={fullUrl} />}
-      {schemas.length > 0 && (
-        <script type="application/ld+json">{JSON.stringify(schemas)}</script>
-      )}
+      {schemas.length > 0 && <script type="application/ld+json">{JSON.stringify(schemas)}</script>}
     </Helmet>
   );
 }
