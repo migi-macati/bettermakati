@@ -299,7 +299,7 @@ test('canonical navigation families are direct links with separate menus', async
 
   await nav.getByRole('button', { name: 'Open Services menu', exact: true }).click();
   const servicesPanel = page.locator('#desktop-panel-services');
-  await expect(servicesPanel.getByRole('link', { name: 'Saan Ako Lalapit?', exact: true })).toBeVisible();
+  await expect(servicesPanel.getByRole('link', { name: 'Where Should I Go?', exact: true })).toBeVisible();
   await expect(servicesPanel.getByRole('link', { name: 'Government Offices', exact: true })).toBeVisible();
 
   await nav.getByRole('button', { name: 'Open City menu', exact: true }).click();
@@ -314,7 +314,7 @@ test('canonical navigation families are direct links with separate menus', async
 
   await nav.getByRole('button', { name: 'Open Participate menu', exact: true }).click();
   const participatePanel = page.locator('#desktop-panel-participate');
-  await expect(participatePanel.getByRole('link', { name: 'Saan Ako Lalapit?', exact: true })).toHaveCount(0);
+  await expect(participatePanel.getByRole('link', { name: 'Where Should I Go?', exact: true })).toHaveCount(0);
   await expect(participatePanel.getByRole('link', { name: 'Community Tools', exact: true })).toHaveCount(0);
 
   await nav.getByRole('button', { name: 'Open Accountability menu', exact: true }).click();
@@ -706,7 +706,7 @@ test('true zero-result search recovers through BetterMakati before ecosystem exi
     await expect(recovery.getByRole('link', { name, exact: true })).toHaveAttribute('href', href);
   }
 
-  await expect(recovery.getByRole('link', { name: 'Saan Ako Lalapit?', exact: true })).toHaveCount(0);
+  await expect(recovery.getByRole('link', { name: 'Where Should I Go?', exact: true })).toHaveCount(0);
   await expect(recovery.getByRole('link', { name: 'Search national services on BetterGov', exact: true })).toBeVisible();
   await expect(recovery.getByRole('link', { name: 'Find another LGU on BetterLGU', exact: true })).toBeVisible();
   await expect(recovery.getByRole('button', { name: 'Report a missing result', exact: true })).toBeVisible();
@@ -2375,7 +2375,7 @@ test('footer prioritizes recovery, civic understanding and institutional trust',
     await expect(footer.getByRole('heading', { name: heading, exact: true })).toBeVisible();
   }
 
-  await expect(footer.getByRole('link', { name: 'Saan Ako Lalapit?', exact: true })).toBeVisible();
+  await expect(footer.getByRole('link', { name: 'Where Should I Go?', exact: true })).toBeVisible();
   await expect(footer.getByRole('link', { name: 'Government Offices', exact: true })).toBeVisible();
   await expect(footer.getByRole('link', { name: 'Contact', exact: true })).toHaveAttribute('href', '/contact');
   await expect(footer.getByRole('link', { name: 'Coverage & limitations', exact: true }).first()).toHaveAttribute('href', '/status');
