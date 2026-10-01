@@ -22,7 +22,7 @@
     "description": "Makati City government information."
   },
   "footer": {
-    "copyright": "© 2026 BetterMakati. Independent BetterLGU civic information portal.",
+    "copyright": "© 2026 BetterMakati. Independent civic information platform for Makati.",
     "sections": {
       "tasks": "Get things done",
       "understand": "Understand Makati",
@@ -42,7 +42,16 @@
       "official": "Official Makati City Portal",
       "bettergov": "National services — BetterGov",
       "betterlgu": "Other LGUs — BetterLGU"
-    }
+    },
+    "description": "Independent civic information, public records and participation tools for understanding and using Makati.",
+    "contact": "Contact BetterMakati",
+    "openSource": "Open-source on GitHub",
+    "ecosystemHeading": "Official & broader ecosystem",
+    "independence": "BetterMakati is independent and is not the official City Government of Makati website.",
+    "identity": "Our identity",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "coverage": "Coverage & limitations"
   },
   "navbar": {
     "government": "Government",
