@@ -1,6 +1,7 @@
 import { Link } from 'react-router';
 import * as LucideIcons from 'lucide-react';
 import { ArrowRight } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { communityTools } from '../../data/communityTools';
 
 const statusClass = {
@@ -14,6 +15,7 @@ export default function CommunityToolsGrid({
 }: {
   limit?: number;
 }) {
+  const { t } = useTranslation();
   const tools = limit ? communityTools.slice(0, limit) : communityTools;
 
   return (
@@ -33,14 +35,14 @@ export default function CommunityToolsGrid({
               <div className="community-tool-icon">
                 {Icon && <Icon className="h-5 w-5" />}
               </div>
-              <span className={statusClass[tool.status]}>{tool.status}</span>
+              <span className={statusClass[tool.status]}>{t(`discovery.status.${tool.status}`)}</span>
             </div>
             <div className="mt-5">
-              <h3 className="text-lg font-extrabold text-gray-950">{tool.name}</h3>
-              <p className="text-sm text-gray-600 mt-2 leading-relaxed">{tool.summary}</p>
+              <h3 className="text-lg font-extrabold text-gray-950">{t(`discovery.tools.${tool.id}.name`, { defaultValue: tool.name })}</h3>
+              <p className="text-sm text-gray-600 mt-2 leading-relaxed">{t(`discovery.tools.${tool.id}.summary`, { defaultValue: tool.summary })}</p>
             </div>
             <div className="mt-5 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
-              {tool.status === 'Planned' ? 'Suggest or contribute' : 'Open'}
+              {tool.status === 'Planned' ? t('discovery.tools.suggestOrContribute') : t('discovery.tools.open')}
               <ArrowRight className="h-4 w-4" />
             </div>
           </Link>
