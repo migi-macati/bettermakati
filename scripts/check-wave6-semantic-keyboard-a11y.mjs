@@ -127,7 +127,7 @@ for (const marker of [
 }
 
 for (const marker of [
-  'aria-label="Breadcrumb"',
+  "aria-label={t('breadcrumbs.label')}",
   "aria-current={isCurrent ? 'page' : undefined}",
   'inline-flex min-h-11 items-center transition-colors',
 ]) {
