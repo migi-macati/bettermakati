@@ -308,7 +308,7 @@ test('canonical navigation families are direct links with separate menus', async
   await expect(cityPanel.getByRole('link', { name: 'Areas & Districts', exact: true })).toHaveCount(0);
 
   await nav.getByRole('button', { name: 'Open Explore Makati menu', exact: true }).click();
-  const explorePanel = page.locator('#desktop-panel-explore-makati');
+  const explorePanel = page.locator('#desktop-panel-explore');
   await expect(explorePanel.getByRole('link', { name: 'Areas & Districts', exact: true })).toBeVisible();
   await expect(explorePanel.getByRole('link', { name: 'History of Makati', exact: true })).toHaveCount(0);
 
