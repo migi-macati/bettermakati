@@ -304,5 +304,25 @@
     "show": "Ipakita ang photo {{current}} sa {{total}}",
     "play": "I-play ang photos",
     "pause": "I-pause ang photos"
+  },
+  "discovery": {
+    "status": {
+      "Live": "Live",
+      "Researching": "Sinusuri",
+      "Planned": "Planned"
+    },
+    "communityTools": {
+      "seoTitle": "Community Tools",
+      "seoDescription": "Community-built civic tools para sa Makati.",
+      "eyebrow": "Community Tools",
+      "title": "Ano ang makakatulong sa iyo ngayon?",
+      "description": "Practical tools para makahanap ng services, places, impormasyon, at mga paraan para makilahok sa Makati.",
+      "statusLabel": "Status ng tool:",
+      "suggest": "Magmungkahi ng tool"
+    },
+    "tools": {
+      "open": "Buksan",
+      "suggestOrContribute": "Magmungkahi o tumulong"
+    }
   }
 }
