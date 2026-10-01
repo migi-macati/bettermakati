@@ -100,10 +100,10 @@ requireMarkers('News', news, [
 
 requireMarkers('Global ecosystem handoffs', navigation, [
   "id: 'bettergov'",
-  "labelKey: 'shell.footer.ecosystem.bettergov'",
+  "labelKey: 'footer.ecosystem.bettergov'",
   "href: 'https://bettergov.ph/services'",
   "id: 'betterlgu'",
-  "labelKey: 'shell.footer.ecosystem.betterlgu'",
+  "labelKey: 'footer.ecosystem.betterlgu'",
   "href: 'https://lgu.bettergov.ph/'",
 ]);
 
