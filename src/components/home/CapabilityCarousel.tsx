@@ -8,45 +8,22 @@ import {
   SunMedium,
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import { barangays } from '../../data/barangays';
 import { useBarangayScope } from '../../hooks/useBarangayScope';
 
 const compactEditionName = (name: string) => name.replace(/\s+/g, '');
 
 const entryPoints = [
-  {
-    title: 'Get urgent help',
-    description: 'Emergency hotlines and official contacts for urgent situations.',
-    href: '/hotlines',
-    icon: HeartPulse,
-  },
-  {
-    title: 'Get a service',
-    description: 'Permits, IDs, health, education and other government services.',
-    href: '/services',
-    icon: ClipboardList,
-  },
-  {
-    title: 'See what matters now',
-    description: 'Start with Today for advisories, civic activity and current city information.',
-    href: '/today',
-    icon: SunMedium,
-  },
-  {
-    title: 'Follow public action & evidence',
-    description: 'Budgets, projects, procurement, audit findings and source records.',
-    href: '/accountability',
-    icon: Landmark,
-  },
-  {
-    title: 'Participate or report',
-    description: 'Choose the right non-emergency route for concerns, reports or civic participation.',
-    href: '/participate',
-    icon: MessageSquareWarning,
-  },
+  { key: 'urgent', href: '/hotlines', icon: HeartPulse },
+  { key: 'service', href: '/services', icon: ClipboardList },
+  { key: 'now', href: '/today', icon: SunMedium },
+  { key: 'evidence', href: '/accountability', icon: Landmark },
+  { key: 'participate', href: '/participate', icon: MessageSquareWarning },
 ];
 
 export default function CapabilityCarousel() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { preferredBarangay, rememberBarangay } = useBarangayScope();
 
@@ -66,13 +43,13 @@ export default function CapabilityCarousel() {
       aria-labelledby="what-brings-you-here"
     >
       <div className="text-xs font-extrabold uppercase tracking-[0.12em] text-primary-700">
-        Start here
+        {t('home.capability.eyebrow')}
       </div>
       <h2
         id="what-brings-you-here"
         className="mt-1 text-2xl font-extrabold tracking-tight text-gray-950 md:text-3xl"
       >
-        What brings you here?
+        {t('home.capability.title')}
       </h2>
 
       <div className="mt-4 divide-y divide-gray-200">
@@ -83,17 +60,17 @@ export default function CapabilityCarousel() {
           <div className="min-w-0 flex-1">
             <div className="text-sm font-extrabold leading-snug text-gray-950">
               {preferredBarangay
-                ? 'Your barangay: Better' + compactEditionName(preferredBarangay.name)
-                : 'Go to your barangay'}
+                ? t('home.capability.yourBarangay', { barangay: 'Better' + compactEditionName(preferredBarangay.name) })
+                : t('home.capability.goBarangay')}
             </div>
             <label className="mt-1 block">
-              <span className="sr-only">Choose a barangay</span>
+              <span className="sr-only">{t('home.capability.chooseBarangay')}</span>
               <select
                 value={preferredBarangay?.slug ?? ''}
                 onChange={event => chooseBarangay(event.target.value)}
                 className="min-h-11 w-full rounded-lg border border-secondary-200 bg-white px-2.5 py-1.5 text-xs font-bold text-primary-900 outline-none focus:border-secondary-500 focus:ring-2 focus:ring-secondary-100"
               >
-                <option value="">Choose a barangay</option>
+                <option value="">{t('home.capability.chooseBarangay')}</option>
                 {barangays.map(barangay => (
                   <option key={barangay.slug} value={barangay.slug}>
                     Better{compactEditionName(barangay.name)}
@@ -109,7 +86,7 @@ export default function CapabilityCarousel() {
           const Icon = item.icon;
           return (
             <Link
-              key={item.title}
+              key={item.key}
               to={item.href}
               className="group flex min-h-[64px] items-center gap-3 py-2.5 last:pb-1"
             >
@@ -118,10 +95,10 @@ export default function CapabilityCarousel() {
               </span>
               <span className="min-w-0 flex-1">
                 <span className="block text-sm font-extrabold leading-snug text-gray-950">
-                  {item.title}
+                  {t(`home.capability.entries.${item.key}.title`)}
                 </span>
                 <span className="mt-0.5 block text-xs leading-relaxed text-gray-600">
-                  {item.description}
+                  {t(`home.capability.entries.${item.key}.description`)}
                 </span>
               </span>
               <ArrowRight
