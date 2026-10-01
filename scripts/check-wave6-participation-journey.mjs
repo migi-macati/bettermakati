@@ -103,13 +103,16 @@ if (!communityTools.includes('Document public-place conditions')) {
   problems.push('Civic Map participation promise no longer describes structured condition documentation.');
 }
 
-const participationNavigationIndex = navigation.indexOf("label: 'Participate'");
+const participationNavigationIndex = navigation.indexOf("id: 'participate'");
 const participationNavigationBlock =
   participationNavigationIndex >= 0
     ? navigation.slice(participationNavigationIndex, participationNavigationIndex + 900)
     : '';
 
-if (!participationNavigationBlock.includes("href: '/participate'")) {
+if (
+  !participationNavigationBlock.includes("labelKey: 'navigation.participate'") ||
+  !participationNavigationBlock.includes("href: '/participate'")
+) {
   problems.push('Global navigation no longer owns Participate as the canonical participation door.');
 }
 for (const href of [

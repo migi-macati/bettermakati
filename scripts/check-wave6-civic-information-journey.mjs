@@ -56,12 +56,15 @@ for (const [label, source] of [
   }
 }
 
-const todayNavigationIndex = navigation.indexOf("label: 'Today'");
+const todayNavigationIndex = navigation.indexOf("id: 'today'");
 const todayNavigationBlock =
   todayNavigationIndex >= 0
     ? navigation.slice(todayNavigationIndex, todayNavigationIndex + 500)
     : '';
-if (!todayNavigationBlock.includes("href: '/today'")) {
+if (
+  !todayNavigationBlock.includes("labelKey: 'navigation.today'") ||
+  !todayNavigationBlock.includes("href: '/today'")
+) {
   problems.push('Global navigation no longer owns Today as the canonical current-information door.');
 }
 

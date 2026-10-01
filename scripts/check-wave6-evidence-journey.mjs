@@ -99,12 +99,17 @@ for (const marker of [
   }
 }
 
-const accountabilityNavigationIndex = navigation.indexOf("label: 'Accountability'");
+const accountabilityNavigationIndex = navigation.indexOf("id: 'accountability'");
 const accountabilityNavigationBlock =
   accountabilityNavigationIndex >= 0
     ? navigation.slice(accountabilityNavigationIndex, accountabilityNavigationIndex + 1200)
     : '';
-if (!accountabilityNavigationBlock.includes("{ label: 'Public Records', href: '/records' }")) {
+if (
+  !accountabilityNavigationBlock.includes("labelKey: 'navigation.accountability'") ||
+  !accountabilityNavigationBlock.includes("id: 'records'") ||
+  !accountabilityNavigationBlock.includes("labelKey: 'navigation.records'") ||
+  !accountabilityNavigationBlock.includes("href: '/records'")
+) {
   problems.push('Global navigation no longer exposes Public Records from the Accountability family.');
 }
 

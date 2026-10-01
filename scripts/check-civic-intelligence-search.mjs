@@ -334,10 +334,9 @@ for (const forbidden of [
 }
 
 if (
-  ![
-    "label: 'Areas & Districts', href: '/estates'",
-    "label: 'Estates & Districts', href: '/estates'",
-  ].some(marker => navigation.includes(marker))
+  !navigation.includes("id: 'areas'") ||
+  !navigation.includes("labelKey: 'navigation.areas'") ||
+  !navigation.includes("href: '/estates'")
 ) {
   problems.push(
     'Area/Organization navigation must keep a discoverable /estates entry.'

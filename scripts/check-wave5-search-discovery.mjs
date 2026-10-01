@@ -122,11 +122,20 @@ if (governmentBlock.includes("item.group === 'Organization'")) {
 }
 
 for (const marker of [
-  "label: 'Explore Makati'",
-  "{ label: 'Areas & Districts', href: '/estates' }",
-  "{ label: 'Getting Around', href: '/mobility' }",
-  "{ label: 'Heritage & Culture', href: '/heritage' }",
-  "{ label: 'History of Makati', href: '/history' }",
+  "id: 'explore'",
+  "labelKey: 'navigation.explore'",
+  "id: 'areas'",
+  "labelKey: 'navigation.areas'",
+  "href: '/estates'",
+  "id: 'mobility'",
+  "labelKey: 'navigation.mobility'",
+  "href: '/mobility'",
+  "id: 'heritage'",
+  "labelKey: 'navigation.heritage'",
+  "href: '/heritage'",
+  "id: 'history'",
+  "labelKey: 'navigation.history'",
+  "href: '/history'",
 ]) {
   if (!navigation.includes(marker)) {
     problems.push('Explore navigation discovery marker missing: ' + marker);

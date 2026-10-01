@@ -44,7 +44,7 @@ requireAll(criticalPaths, 'Zero-result browser QA', [
   "true zero-result search recovers through BetterMakati before ecosystem exits",
   "No News matches",
   "Show all \\d+ matching results?",
-  "recovery.getByRole('link', { name: 'Saan Ako Lalapit?', exact: true })).toHaveCount(0)",
+  "recovery.getByRole('link', { name: 'Where Should I Go?', exact: true })).toHaveCount(0)",
   "tool=search&subject=Missing",
 ]);
 

@@ -238,7 +238,8 @@ for (const forbidden of [
 }
 
 for (const marker of [
-  "label: 'Explore Makati'",
+  "id: 'explore'",
+  "labelKey: 'navigation.explore'",
   "href: '/visit'",
 ]) {
   if (!navigation.includes(marker)) {

@@ -281,7 +281,7 @@ test('unknown deep links land on recoverable noindex 404', async ({ page }) => {
 });
 
 test('canonical navigation families are direct links with separate menus', async ({ page }) => {
-  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.setViewportSize({ width: 1600, height: 900 });
   await page.goto(baseURL + '/');
 
   const nav = page.getByRole('navigation', { name: 'Main navigation' });
@@ -299,7 +299,7 @@ test('canonical navigation families are direct links with separate menus', async
 
   await nav.getByRole('button', { name: 'Open Services menu', exact: true }).click();
   const servicesPanel = page.locator('#desktop-panel-services');
-  await expect(servicesPanel.getByRole('link', { name: 'Saan Ako Lalapit?', exact: true })).toBeVisible();
+  await expect(servicesPanel.getByRole('link', { name: 'Where Should I Go?', exact: true })).toBeVisible();
   await expect(servicesPanel.getByRole('link', { name: 'Government Offices', exact: true })).toBeVisible();
 
   await nav.getByRole('button', { name: 'Open City menu', exact: true }).click();
@@ -308,13 +308,13 @@ test('canonical navigation families are direct links with separate menus', async
   await expect(cityPanel.getByRole('link', { name: 'Areas & Districts', exact: true })).toHaveCount(0);
 
   await nav.getByRole('button', { name: 'Open Explore Makati menu', exact: true }).click();
-  const explorePanel = page.locator('#desktop-panel-explore-makati');
+  const explorePanel = page.locator('#desktop-panel-explore');
   await expect(explorePanel.getByRole('link', { name: 'Areas & Districts', exact: true })).toBeVisible();
   await expect(explorePanel.getByRole('link', { name: 'History of Makati', exact: true })).toHaveCount(0);
 
   await nav.getByRole('button', { name: 'Open Participate menu', exact: true }).click();
   const participatePanel = page.locator('#desktop-panel-participate');
-  await expect(participatePanel.getByRole('link', { name: 'Saan Ako Lalapit?', exact: true })).toHaveCount(0);
+  await expect(participatePanel.getByRole('link', { name: 'Where Should I Go?', exact: true })).toHaveCount(0);
   await expect(participatePanel.getByRole('link', { name: 'Community Tools', exact: true })).toHaveCount(0);
 
   await nav.getByRole('button', { name: 'Open Accountability menu', exact: true }).click();
@@ -508,7 +508,7 @@ test('header search preserves a chosen BetterBarangay into local-capable results
     name: 'Search BetterMakati',
     exact: true,
   });
-  await expect(headerSearch).toContainText('Search');
+  await expect(headerSearch).toHaveAttribute('href', '/search?barangay=poblacion');
   await headerSearch.click();
 
   await expect(page).toHaveURL(baseURL + '/search?barangay=poblacion');
@@ -706,7 +706,7 @@ test('true zero-result search recovers through BetterMakati before ecosystem exi
     await expect(recovery.getByRole('link', { name, exact: true })).toHaveAttribute('href', href);
   }
 
-  await expect(recovery.getByRole('link', { name: 'Saan Ako Lalapit?', exact: true })).toHaveCount(0);
+  await expect(recovery.getByRole('link', { name: 'Where Should I Go?', exact: true })).toHaveCount(0);
   await expect(recovery.getByRole('link', { name: 'Search national services on BetterGov', exact: true })).toBeVisible();
   await expect(recovery.getByRole('link', { name: 'Find another LGU on BetterLGU', exact: true })).toBeVisible();
   await expect(recovery.getByRole('button', { name: 'Report a missing result', exact: true })).toBeVisible();
@@ -1596,7 +1596,7 @@ test('failed civic feed does not imply zero reports', async ({ page }) => {
 
 
 test('W6-3d BetterBarangay preference persists without overstating local data', async ({ page }) => {
-  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.setViewportSize({ width: 1600, height: 900 });
   await page.goto(baseURL + '/barangays/poblacion');
 
   const nav = page.getByRole('navigation', { name: 'Main navigation' });
@@ -1681,7 +1681,7 @@ test('W6-3e Today is the synthesis door for current civic information', async ({
 });
 
 test('W6-3f Explore is the coherent place, mobility and heritage journey', async ({ page }) => {
-  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.setViewportSize({ width: 1600, height: 900 });
   await page.goto(baseURL + '/visit');
 
   await expect(page.getByRole('heading', { level: 1, name: 'Understand the city as you explore it.' })).toBeVisible();
@@ -2375,7 +2375,7 @@ test('footer prioritizes recovery, civic understanding and institutional trust',
     await expect(footer.getByRole('heading', { name: heading, exact: true })).toBeVisible();
   }
 
-  await expect(footer.getByRole('link', { name: 'Saan Ako Lalapit?', exact: true })).toBeVisible();
+  await expect(footer.getByRole('link', { name: 'Where Should I Go?', exact: true })).toBeVisible();
   await expect(footer.getByRole('link', { name: 'Government Offices', exact: true })).toBeVisible();
   await expect(footer.getByRole('link', { name: 'Contact', exact: true })).toHaveAttribute('href', '/contact');
   await expect(footer.getByRole('link', { name: 'Coverage & limitations', exact: true }).first()).toHaveAttribute('href', '/status');
