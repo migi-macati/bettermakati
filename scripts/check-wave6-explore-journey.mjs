@@ -77,12 +77,15 @@ for (const marker of [
   }
 }
 
-const exploreNavigationIndex = navigation.indexOf("label: 'Explore Makati'");
+const exploreNavigationIndex = navigation.indexOf("id: 'explore'");
 const exploreNavigationBlock =
   exploreNavigationIndex >= 0
     ? navigation.slice(exploreNavigationIndex, exploreNavigationIndex + 700)
     : '';
-if (!exploreNavigationBlock.includes("href: '/visit'")) {
+if (
+  !exploreNavigationBlock.includes("labelKey: 'navigation.explore'") ||
+  !exploreNavigationBlock.includes("href: '/visit'")
+) {
   problems.push('Global navigation no longer owns Explore Makati as the canonical place-discovery door.');
 }
 for (const href of ["'/estates'", "'/mobility'", "'/heritage'"]) {
