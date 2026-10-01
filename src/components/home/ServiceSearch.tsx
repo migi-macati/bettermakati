@@ -15,6 +15,7 @@ import {
   X,
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import { isBarangayContextPath, withBarangayScope } from '../../hooks/useBarangayScope';
 import { searchIndex, type SearchItem } from '../../data/searchIndex';
 import { serviceDirectory } from '../../data/serviceDirectory';
@@ -46,21 +47,7 @@ type SearchDomainId =
   | 'calendar'
   | 'news';
 
-const searchDomainOptions: Array<{ id: SearchDomainId; label: string }> = [
-  { id: 'all', label: 'All types' },
-  { id: 'services', label: 'Services' },
-  { id: 'barangays', label: 'Barangays' },
-  { id: 'officials', label: 'Officials' },
-  { id: 'statistics', label: 'Statistics' },
-  { id: 'reports', label: 'Reports & insights' },
-  { id: 'legislation', label: 'Legislation' },
-  { id: 'public-records', label: 'Public records' },
-  { id: 'places', label: 'Places & map' },
-  { id: 'heritage', label: 'Heritage' },
-  { id: 'mobility', label: 'Mobility' },
-  { id: 'calendar', label: 'Civic calendar' },
-  { id: 'news', label: 'News' },
-];
+const searchDomainOptions: SearchDomainId[] = ['all', 'services', 'barangays', 'officials', 'statistics', 'reports', 'legislation', 'public-records', 'places', 'heritage', 'mobility', 'calendar', 'news'];
 
 const siteTabs = [
   'All',
@@ -412,6 +399,7 @@ export default function ServiceSearch({
   goldAction?: boolean;
   barangaySlug?: string;
 }) {
+  const { t } = useTranslation();
   const tabs = scope === 'services' ? serviceTabs : siteTabs;
   const [query, setQuery] = useState(initialQuery);
   const [tab, setTab] = useState<string>('All');
@@ -550,12 +538,12 @@ export default function ServiceSearch({
   const hasBroaderMatches = visibleResults.length === 0 && allRankedResults.length > 0;
   const activeFilterLabel =
     domainFilter !== 'all'
-      ? searchDomainOptions.find(option => option.id === domainFilter)?.label ?? 'this type'
+      ? t(`serviceSearch.domains.${domainFilter}`, { defaultValue: t('serviceSearch.thisType') })
       : tab !== 'All'
         ? tab
         : scope === 'services'
-          ? 'this service category'
-          : 'this view';
+          ? t('serviceSearch.thisServiceCategory')
+          : t('serviceSearch.thisView');
 
   const showAllMatches = () => {
     setTab('All');
@@ -668,13 +656,13 @@ export default function ServiceSearch({
   const heading =
     title ||
     (scope === 'services'
-      ? 'Find a Government Service'
-      : 'Find a service or information');
+      ? t('serviceSearch.defaultServiceTitle')
+      : t('serviceSearch.defaultSiteTitle'));
   const inputPlaceholder =
     placeholder ||
     (scope === 'services'
-      ? 'Search services'
-      : 'e.g., Yellow Card, Poblacion, restaurants, budget');
+      ? t('serviceSearch.defaultServicePlaceholder')
+      : t('serviceSearch.defaultSitePlaceholder'));
 
   return (
     <div
@@ -733,7 +721,7 @@ export default function ServiceSearch({
                   requestAnimationFrame(() => inputRef.current?.focus());
                 }}
                 className="absolute right-0 top-1/2 grid min-h-11 min-w-11 -translate-y-1/2 place-items-center rounded-lg text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-                aria-label="Clear search"
+                aria-label={t('serviceSearch.clear')}
               >
                 <X className="h-4 w-4" />
               </button>
@@ -750,10 +738,10 @@ export default function ServiceSearch({
             }
             aria-label={
               visibleResults.length > 0
-                ? 'Open selected result'
+                ? t('serviceSearch.openSelected')
                 : hasBroaderMatches
-                  ? 'Show all matching results'
-                  : 'Search BetterMakati'
+                  ? t('serviceSearch.showAllMatching')
+                  : t('serviceSearch.searchBetterMakati')
             }
           >
             <ArrowRight className="h-5 w-5" />
@@ -785,7 +773,7 @@ export default function ServiceSearch({
                       : 'inline-flex min-h-11 items-center rounded-full border border-gray-200 bg-white px-4 py-1.5 text-sm font-medium text-gray-700 hover:border-primary-300 hover:bg-primary-50'
                   }
                 >
-                  {item}
+                  {t(`serviceSearch.tabs.${item}`, { defaultValue: item })}
                 </button>
               ))}
             </div>
@@ -797,7 +785,7 @@ export default function ServiceSearch({
                 htmlFor="site-search-domain"
                 className="text-xs font-bold uppercase tracking-wide text-gray-600"
               >
-                Filter by type
+                {t('serviceSearch.filterByType')}
               </label>
               <select
                 id="site-search-domain"
@@ -810,10 +798,10 @@ export default function ServiceSearch({
                 className="min-h-11 max-w-[68%] rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-semibold text-gray-800 outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-200"
               >
                 {searchDomainOptions.map(option => (
-                  <option key={option.id} value={option.id}>
-                    {option.label}
-                    {domainCounts.has(option.id)
-                      ? ' (' + (domainCounts.get(option.id) ?? 0) + ')'
+                  <option key={option} value={option}>
+                    {t(`serviceSearch.domains.${option}`)}
+                    {domainCounts.has(option)
+                      ? ' (' + (domainCounts.get(option) ?? 0) + ')'
                       : ''}
                   </option>
                 ))}
@@ -860,7 +848,7 @@ export default function ServiceSearch({
                   {showServicePlaces && item.serviceId && servicePlaceById.has(item.serviceId) && (
                     <div className="mt-3 rounded-lg bg-white/80 px-3 py-2 text-sm text-gray-700">
                       <div className="font-bold text-gray-900">
-                        Where to go: {servicePlaceById.get(item.serviceId)?.name}
+                        {t('serviceSearch.whereToGo')}: {servicePlaceById.get(item.serviceId)?.name}
                       </div>
                       <div className="mt-0.5 text-xs leading-relaxed text-gray-500">
                         {servicePlaceById.get(item.serviceId)?.address}
@@ -872,43 +860,36 @@ export default function ServiceSearch({
             ) : hasBroaderMatches ? (
               <div className="px-5 py-8 text-center">
                 <div className="font-semibold text-gray-900">
-                  No {activeFilterLabel} matches
+                  {t('serviceSearch.noFilteredMatches', { filter: activeFilterLabel })}
                 </div>
                 <p className="mx-auto mt-1 max-w-xl text-sm leading-relaxed text-gray-600">
                   {query.trim()
-                    ? 'BetterMakati has ' +
-                      allRankedResults.length +
-                      ' matching ' +
-                      (allRankedResults.length === 1 ? 'result' : 'results') +
-                      ' for “' +
-                      query.trim() +
-                      '” outside this filter.'
-                    : 'There are BetterMakati results outside this filter.'}
+                    ? t('serviceSearch.matchesOutsideFilter', { count: allRankedResults.length, query: query.trim() })
+                    : t('serviceSearch.resultsOutsideFilter')}
                 </p>
                 <button
                   type="button"
                   onClick={showAllMatches}
                   className="mt-4 inline-flex min-h-11 items-center rounded-lg bg-primary-800 px-4 py-2 text-sm font-bold text-white hover:bg-primary-900"
                 >
-                  Show all {allRankedResults.length} matching{' '}
-                  {allRankedResults.length === 1 ? 'result' : 'results'}
+                  {t('serviceSearch.showAllCount', { count: allRankedResults.length })}
                 </button>
               </div>
             ) : (
               <div className="px-5 py-8 text-center">
                 <div className="font-semibold text-gray-900">
                   {query.trim()
-                    ? 'No BetterMakati match for “' + query.trim() + '”'
-                    : 'No matching result'}
+                    ? t('serviceSearch.noQueryMatch', { query: query.trim() })
+                    : t('serviceSearch.noMatch')}
                 </div>
                 <p className="mx-auto mt-1 max-w-xl text-sm leading-relaxed text-gray-600">
-                  Try a broader keyword, or continue in the part of BetterMakati most likely to help.
+                  {t('serviceSearch.tryBroader')}
                 </p>
 
                 {scope === 'site' && (
                   <>
                     <div className="mt-5 text-xs font-bold uppercase tracking-wide text-gray-500">
-                      Browse BetterMakati
+                      {t('serviceSearch.browseBetterMakati')}
                     </div>
                     <div className="mt-2 flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
                       <Link
@@ -946,7 +927,7 @@ export default function ServiceSearch({
                 )}
 
                 <div className="mt-5 text-xs font-bold uppercase tracking-wide text-gray-500">
-                  Outside BetterMakati
+                  {t('serviceSearch.outside')}
                 </div>
                 <div className="mt-2 flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
                   <a
@@ -955,7 +936,7 @@ export default function ServiceSearch({
                     rel="noreferrer"
                     className="inline-flex min-h-11 items-center text-sm font-bold text-primary-700 underline underline-offset-2"
                   >
-                    Search national services on BetterGov
+                    {t('serviceSearch.betterGov')}
                   </a>
                   <a
                     href="https://lgu.bettergov.ph/"
@@ -963,7 +944,7 @@ export default function ServiceSearch({
                     rel="noreferrer"
                     className="inline-flex min-h-11 items-center text-sm font-bold text-primary-700 underline underline-offset-2"
                   >
-                    Find another LGU on BetterLGU
+                    {t('serviceSearch.betterLgu')}
                   </a>
                   <button
                     type="button"
@@ -976,7 +957,7 @@ export default function ServiceSearch({
                     }
                     className="inline-flex min-h-11 items-center text-sm font-bold text-primary-700 underline underline-offset-2"
                   >
-                    Report a missing result
+                    {t('serviceSearch.reportMissing')}
                   </button>
                 </div>
               </div>
@@ -985,7 +966,7 @@ export default function ServiceSearch({
 
           <div className="flex items-center justify-between gap-3 border-t border-gray-200 bg-gray-50 px-4 py-2.5 text-xs text-gray-500">
             <span role="status" aria-live="polite" aria-atomic="true">
-              {results.length} {results.length === 1 ? 'result' : 'results'}
+              {t('serviceSearch.resultCount', { count: results.length })}
             </span>
             <div className="hidden md:flex items-center gap-3">
               <span className="inline-flex items-center gap-1">
@@ -995,17 +976,17 @@ export default function ServiceSearch({
                 <kbd className="search-kbd">
                   <ArrowDown className="h-3 w-3" />
                 </kbd>
-                Navigate
+                {t('serviceSearch.navigate')}
               </span>
               <span className="inline-flex items-center gap-1">
                 <kbd className="search-kbd">
                   <CornerDownLeft className="h-3 w-3" />
                 </kbd>
-                Select
+                {t('serviceSearch.select')}
               </span>
               <span className="inline-flex items-center gap-1">
                 <kbd className="search-kbd">Esc</kbd>
-                Close
+                {t('serviceSearch.close')}
               </span>
             </div>
           </div>
