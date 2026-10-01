@@ -163,5 +163,72 @@
     "defaultDescription": "Independent civic information and participation platform for Makati.",
     "defaultKeywords": "Makati, Makati City, public services, local government, civic information",
     "imageAlt": "BetterMakati — independent civic information and participation for Makati"
+  },
+  "home": {
+    "hero": {
+      "eyebrow": "Makati City · Civic Guide",
+      "sloganPrefix": "Let's make Makati",
+      "sloganBetter": "Better!",
+      "description": "Find services, explore places and barangays, check public records and projects, and take part in city life.",
+      "searchTitle": "What can we help you find?",
+      "searchPlaceholder": "Try Yellow Card, Poblacion, business permit, budget...",
+      "startWith": "Start with:",
+      "popular": {
+        "businessPermit": "Business permit",
+        "yellowCard": "Yellow Card",
+        "cedula": "Cedula",
+        "barangay": "Find your barangay"
+      }
+    },
+    "capability": {
+      "eyebrow": "Start here",
+      "title": "What brings you here?",
+      "yourBarangay": "Your barangay: {{barangay}}",
+      "goBarangay": "Go to your barangay",
+      "chooseBarangay": "Choose a barangay",
+      "entries": {
+        "urgent": {
+          "title": "Get urgent help",
+          "description": "Emergency hotlines and official contacts for urgent situations."
+        },
+        "service": {
+          "title": "Get a service",
+          "description": "Permits, IDs, health, education and other government services."
+        },
+        "now": {
+          "title": "See what matters now",
+          "description": "Start with Today for advisories, civic activity and current city information."
+        },
+        "evidence": {
+          "title": "Follow public action & evidence",
+          "description": "Budgets, projects, procurement, audit findings and source records."
+        },
+        "participate": {
+          "title": "Participate or report",
+          "description": "Choose the right non-emergency route for concerns, reports or civic participation."
+        }
+      }
+    },
+    "featured": {
+      "title": "Featured Reports & Insights",
+      "viewAll": "View all",
+      "position": "{{current}} of {{total}}",
+      "resume": "Resume",
+      "pause": "Pause",
+      "previous": "Previous featured report",
+      "next": "Next featured report"
+    }
+  },
+  "photoCarousel": {
+    "defaultLabel": "Makati photographs",
+    "viewPhoto": "View photo",
+    "unavailable": "Photo unavailable",
+    "previous": "Previous photo",
+    "next": "Next photo",
+    "cropped": "cropped",
+    "choose": "Choose photo",
+    "show": "Show photo {{current}} of {{total}}",
+    "play": "Play photos",
+    "pause": "Pause photos"
   }
 }
