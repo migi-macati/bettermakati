@@ -281,6 +281,7 @@ test('unknown deep links land on recoverable noindex 404', async ({ page }) => {
 });
 
 test('canonical navigation families are direct links with separate menus', async ({ page }) => {
+  await page.setViewportSize({ width: 1600, height: 900 });
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto(baseURL + '/');
 
@@ -508,7 +509,7 @@ test('header search preserves a chosen BetterBarangay into local-capable results
     name: 'Search BetterMakati',
     exact: true,
   });
-  await expect(headerSearch).toContainText('Search');
+  await expect(headerSearch).toHaveAttribute('href', '/search?barangay=poblacion');
   await headerSearch.click();
 
   await expect(page).toHaveURL(baseURL + '/search?barangay=poblacion');
@@ -1596,6 +1597,7 @@ test('failed civic feed does not imply zero reports', async ({ page }) => {
 
 
 test('W6-3d BetterBarangay preference persists without overstating local data', async ({ page }) => {
+  await page.setViewportSize({ width: 1600, height: 900 });
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto(baseURL + '/barangays/poblacion');
 
@@ -1681,6 +1683,7 @@ test('W6-3e Today is the synthesis door for current civic information', async ({
 });
 
 test('W6-3f Explore is the coherent place, mobility and heritage journey', async ({ page }) => {
+  await page.setViewportSize({ width: 1600, height: 900 });
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto(baseURL + '/visit');
 
