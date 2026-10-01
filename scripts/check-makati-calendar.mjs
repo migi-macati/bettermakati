@@ -72,7 +72,11 @@ for (const marker of [
 }
 if (app.includes("import('./pages/WhatsOn')")) problems.push('Old WhatsOn import remains.');
 
-if (!navigation.includes("{ label: 'Makati Calendar', href: '/calendar' }")) problems.push('Calendar navigation missing.');
+if (
+  !navigation.includes("id: 'calendar'") ||
+  !navigation.includes("labelKey: 'navigation.calendar'") ||
+  !navigation.includes("href: '/calendar'")
+) problems.push('Calendar navigation missing.');
 if (navigation.includes("label: 'What’s On'") || navigation.includes("href: '/whats-on'")) problems.push('Old What’s On navigation remains.');
 
 if (!searchIndex.includes("title: 'Makati Calendar'") || !searchIndex.includes("canonicalKey: 'tool:makati-calendar'")) problems.push('Canonical Calendar Search record missing.');
