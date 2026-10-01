@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 
 export default function BrandMark({
@@ -9,14 +10,13 @@ export default function BrandMark({
   inverse?: boolean;
   stacked?: boolean;
 }) {
+  const { t } = useTranslation();
+
   return (
     <Link
       to="/"
-      className={
-        'inline-flex min-h-11 items-center rounded-sm ' +
-        (inverse ? 'focus-visible:outline-secondary-300' : '')
-      }
-      aria-label="BetterMakati home"
+      className={'inline-flex min-h-11 items-center rounded-sm ' + (inverse ? 'focus-visible:outline-secondary-300' : '')}
+      aria-label={t('brand.home')}
     >
       <img
         src={stacked
