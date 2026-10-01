@@ -4,7 +4,8 @@
   "language": {
     "label": "Language",
     "english": "English",
-    "filipino": "Filipino"
+    "filipino": "Filipino",
+    "use": "Gamitin ang {{language}}"
   },
   "navigation": {
     "services": "Services",
@@ -69,5 +70,9 @@
       "bettergov": "National services — BetterGov",
       "betterlgu": "Ibang LGU — BetterLGU"
     }
+  },
+  "navbar": {
+    "government": "Government",
+    "services": "Services"
   }
 }
