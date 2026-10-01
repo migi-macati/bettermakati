@@ -203,6 +203,84 @@
       "pause": "I-pause",
       "previous": "Nakaraang featured report",
       "next": "Susunod na featured report"
+    },
+    "page": {
+      "seoTitle": "Home",
+      "seoDescription": "Independent civic information at participation platform para sa Makati.",
+      "seoKeywords": "Makati, Makati City, public services, local government, civic information, civic participation, city exploration, heritage",
+      "aroundMakati": "Sa paligid ng Makati",
+      "servicesEyebrow": "Services",
+      "commonServices": "Karaniwang services",
+      "viewAllServices": "Tingnan lahat ng services",
+      "quickServices": {
+        "business": {
+          "label": "Business permits",
+          "description": "New applications at renewals"
+        },
+        "health": {
+          "label": "Health services",
+          "description": "Yellow Card, clinics, at access sa care"
+        },
+        "education": {
+          "label": "Education",
+          "description": "UMak admissions at scholarships"
+        },
+        "property": {
+          "label": "Property at land use",
+          "description": "Property tax, zoning, at building permits"
+        }
+      },
+      "publicActionEyebrow": "Public action at evidence",
+      "publicActionTitle": "Sundan ang mga desisyon, budget, at records sa likod ng mga ito.",
+      "publicActionDescription": "Magsimula sa accountability, saka tingnan ang budgets, projects, at original public records kapag kailangan mo ang source.",
+      "publicAction": {
+        "accountability": {
+          "label": "Accountability",
+          "description": "Sundan ang projects, procurement, audit findings, at public commitments."
+        },
+        "projectsBudget": {
+          "label": "Projects at budget",
+          "description": "Tingnan kung saan nanggagaling at napupunta ang city funds at kung ano ang itinatayo."
+        },
+        "records": {
+          "label": "Public records",
+          "description": "Buksan ang documents, datasets, at source records sa likod ng civic information."
+        }
+      },
+      "open": "Buksan",
+      "participationEyebrow": "Participation",
+      "participationTitle": "Makilahok sa Makati",
+      "participationDescription": "Magsimula rito para sa non-emergency public-place reports, civic participation, at tamang route para sa community concern.",
+      "improve": "Tumulong sa BetterMakati",
+      "communityTools": "Iba pang community tools",
+      "participate": "Makilahok sa Makati",
+      "exploreEyebrow": "Tuklasin ang Makati",
+      "exploreTitle": "Kilalanin ang lungsod habang tinutuklas ito",
+      "exploreDescription": "Mula sa mga lugar at experiences, alamin ang districts, barangays, heritage, history, mobility, at current activity.",
+      "explore": "Tuklasin ang Makati",
+      "visit": {
+        "explore": {
+          "label": "Tuklasin ang Makati",
+          "description": "Magsimula sa mga lugar, districts, at city experiences, saka alamin ang civic context ng mga ito."
+        },
+        "mobility": {
+          "label": "Paglibot sa Makati",
+          "description": "Public transport, transfers, routes, at live directions."
+        },
+        "districts": {
+          "label": "Areas at districts",
+          "description": "Kilalanin ang Makati CBD, Ayala Center, Rockwell, Circuit, at iba pang city areas."
+        },
+        "heritage": {
+          "label": "Heritage at history",
+          "description": "Historic sites, self-guided routes, at Makati timeline."
+        }
+      },
+      "glance": "Makati at a glance",
+      "cityComparisonEyebrow": "City comparison",
+      "cityComparisonTitle": "Ihambing ang Makati sa ibang Philippine cities",
+      "cityComparisonDescription": "Ihambing ang 2024 GDP per person gamit ang parehong PSA definition at price basis.",
+      "exploreStatistics": "Tingnan ang statistics"
     }
   },
   "photoCarousel": {
