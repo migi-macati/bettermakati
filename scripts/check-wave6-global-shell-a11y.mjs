@@ -116,7 +116,7 @@ for (const forbidden of ['min-h-9', 'min-h-10']) {
 for (const marker of [
   "'inline-flex min-h-11 items-center rounded-sm '",
   "inverse ? 'focus-visible:outline-secondary-300' : ''",
-  'aria-label="BetterMakati home"',
+  "aria-label={t('brand.home')}",
 ]) {
   need('BrandMark shell', brandMark, marker);
 }
