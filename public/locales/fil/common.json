@@ -5,5 +5,69 @@
     "label": "Language",
     "english": "English",
     "filipino": "Filipino"
+  },
+  "navigation": {
+    "services": "Services",
+    "whereToGo": "Saan Ako Lalapit?",
+    "governmentOffices": "Government Offices",
+    "today": "Ngayon",
+    "cityMonitor": "City Monitor",
+    "civicBriefs": "Civic Briefs",
+    "liveMakati": "Live Makati",
+    "news": "Makati sa Balita",
+    "calendar": "Makati Calendar",
+    "hotlines": "Hotlines",
+    "city": "Lungsod",
+    "elections": "Elections at Voting",
+    "statistics": "Makati Statistics",
+    "reports": "Reports at Insights",
+    "legislation": "Legislation",
+    "history": "Kasaysayan ng Makati",
+    "barangays": "Barangays",
+    "accountability": "Accountability",
+    "projectsBudget": "Projects at Budget",
+    "procurement": "Procurement Tracker",
+    "audit": "Audit at Follow-through",
+    "commitments": "Public Commitments",
+    "records": "Public Records",
+    "integrity": "Integrity at Public Interest",
+    "participate": "Makilahok",
+    "civicMap": "Civic Map",
+    "civicMapReports": "Civic Map Reports",
+    "propose": "Magmungkahi",
+    "shareSource": "Mag-share ng Public Source",
+    "correction": "Mag-report ng Correction",
+    "explore": "I-explore ang Makati",
+    "areas": "Areas at Districts",
+    "mobility": "Getting Around",
+    "cinemas": "Cinemas",
+    "heritage": "Heritage at Culture"
+  },
+  "shell": {
+    "openMenu": "Buksan ang {{label}} menu",
+    "closeMenu": "Isara ang {{label}} menu"
+  },
+  "footer": {
+    "copyright": "© 2026 BetterMakati. Independent BetterLGU civic information portal.",
+    "sections": {
+      "tasks": "Mga kailangan mong gawin",
+      "understand": "Kilalanin ang Makati",
+      "bettermakati": "BetterMakati"
+    },
+    "links": {
+      "today": "Makati Ngayon",
+      "search": "Search BetterMakati",
+      "government": "Government",
+      "getInvolved": "Makilahok",
+      "contact": "Contact",
+      "communityTools": "Community Tools",
+      "coverage": "Coverage at limitations",
+      "about": "About BetterMakati"
+    },
+    "ecosystem": {
+      "official": "Official Makati City Portal",
+      "bettergov": "National services — BetterGov",
+      "betterlgu": "Ibang LGU — BetterLGU"
+    }
   }
 }
