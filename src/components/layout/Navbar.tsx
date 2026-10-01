@@ -20,9 +20,9 @@ import {
   withBarangayScope,
 } from '../../hooks/useBarangayScope';
 import type { NavigationItem } from '../../types';
+import { useTranslation } from 'react-i18next';
 
-const menuId = (label: string | null) =>
-  label?.toLowerCase().replace(/\s+/g, '-') ?? '';
+const menuId = (id: string | null) => id ?? '';
 
 const hrefParts = (href: string) => {
   const [pathAndSearch, targetHash = ''] = href.split('#', 2);
@@ -46,6 +46,7 @@ const comparableSearch = (params: URLSearchParams) => {
 };
 
 export default function Navbar() {
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const nav = useRef<HTMLElement>(null);
@@ -84,8 +85,8 @@ export default function Navbar() {
     if (isSection(item.href)) return true;
     if (item.children?.some(child => isSection(child.href))) return true;
 
-    if (item.label === 'City' && pathname.startsWith('/officials/')) return true;
-    if (item.label === 'Participate' && pathname === '/get-involved') return true;
+    if (item.id === 'city' && pathname.startsWith('/officials/')) return true;
+    if (item.id === 'participate' && pathname === '/get-involved') return true;
 
     return false;
   };
@@ -104,7 +105,7 @@ export default function Navbar() {
     }
 
     setIsOpen(true);
-    setActiveMenu(currentFamily?.children ? currentFamily.label : null);
+    setActiveMenu(currentFamily?.children ? currentFamily.id : null);
   };
 
   useEffect(() => {
@@ -184,12 +185,12 @@ export default function Navbar() {
 
             <div className="ml-auto hidden xl:flex items-center gap-1">
               {mainNavigation.map(item => {
-                const expanded = activeMenu === item.label;
+                const expanded = activeMenu === item.id;
                 const current = familyOwnsPath(item);
                 const directCurrent = isCurrent(item.href);
 
                 return (
-                  <div key={item.label} className="relative">
+                  <div key={item.id} className="relative">
                     {item.children ? (
                       <div
                         className={
@@ -203,16 +204,16 @@ export default function Navbar() {
                           aria-current={directCurrent ? 'page' : undefined}
                           className="inline-flex min-h-11 items-center rounded-l-lg px-2.5 text-sm font-semibold whitespace-nowrap hover:bg-primary-50"
                         >
-                          {item.label}
+                          {t(item.labelKey)}
                         </Link>
                         <button
-                          id={`desktop-toggle-${menuId(item.label)}`}
+                          id={`desktop-toggle-${menuId(item.id)}`}
                           type="button"
                           aria-expanded={expanded}
-                          aria-controls={`desktop-panel-${menuId(item.label)}`}
-                          aria-label={`${expanded ? 'Close' : 'Open'} ${item.label} menu`}
+                          aria-controls={`desktop-panel-${menuId(item.id)}`}
+                          aria-label={t(expanded ? 'shell.closeMenu' : 'shell.openMenu', { label: t(item.labelKey) })}
                           onClick={() =>
-                            setActiveMenu(expanded ? null : item.label)
+                            setActiveMenu(expanded ? null : item.id)
                           }
                           className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-r-lg hover:bg-primary-100"
                         >
@@ -236,19 +237,19 @@ export default function Navbar() {
                             : 'text-gray-700')
                         }
                       >
-                        {item.label}
+                        {t(item.labelKey)}
                       </Link>
                     )}
 
                     {item.children && (
                       <div
-                        id={`desktop-panel-${menuId(item.label)}`}
+                        id={`desktop-panel-${menuId(item.id)}`}
                         hidden={!expanded}
                         className="bm-shell-panel absolute right-0 top-full mt-2 w-72 max-h-[70dvh] overflow-y-auto p-2"
                       >
                         {item.children.map(child => (
                           <Link
-                            key={child.label}
+                            key={child.id}
                             to={scopedHref(child.href)}
                             onClick={closeMenu}
                             aria-current={isCurrent(child.href) ? 'page' : undefined}
@@ -259,7 +260,7 @@ export default function Navbar() {
                                 : 'text-gray-700')
                             }
                           >
-                            {child.label}
+                            {t(child.labelKey)}
                           </Link>
                         ))}
                       </div>
@@ -388,10 +389,10 @@ export default function Navbar() {
 
             {mainNavigation.map(item => {
               const current = familyOwnsPath(item);
-              const expanded = activeMenu === item.label;
+              const expanded = activeMenu === item.id;
 
               return (
-                <div key={item.label}>
+                <div key={item.id}>
                   {item.children ? (
                     <>
                       <div
@@ -409,16 +410,16 @@ export default function Navbar() {
                             (current ? 'text-primary-800' : 'text-gray-800')
                           }
                         >
-                          {item.label}
+                          {t(item.labelKey)}
                         </Link>
                         <button
                           type="button"
                           onClick={() =>
-                            setActiveMenu(expanded ? null : item.label)
+                            setActiveMenu(expanded ? null : item.id)
                           }
                           aria-expanded={expanded}
-                          aria-controls={`mobile-panel-${menuId(item.label)}`}
-                          aria-label={`${expanded ? 'Close' : 'Open'} ${item.label} menu`}
+                          aria-controls={`mobile-panel-${menuId(item.id)}`}
+                          aria-label={`${expanded ? 'Close' : 'Open'} ${t(item.labelKey)} menu`}
                           className={
                             'flex min-w-12 items-center justify-center rounded-r-lg hover:bg-primary-100 ' +
                             (current ? 'text-primary-800' : 'text-gray-700')
@@ -434,13 +435,13 @@ export default function Navbar() {
                       </div>
 
                       <div
-                        id={`mobile-panel-${menuId(item.label)}`}
+                        id={`mobile-panel-${menuId(item.id)}`}
                         hidden={!expanded}
                         className="ml-3 border-l-2 border-primary-200 pl-2 py-1"
                       >
                         {item.children.map(child => (
                           <Link
-                            key={child.label}
+                            key={child.id}
                             to={scopedHref(child.href)}
                             onClick={closeMenu}
                             aria-current={isCurrent(child.href) ? 'page' : undefined}
@@ -451,7 +452,7 @@ export default function Navbar() {
                                 : 'text-gray-700')
                             }
                           >
-                            {child.label}
+                            {t(child.labelKey)}
                           </Link>
                         ))}
                       </div>
@@ -468,7 +469,7 @@ export default function Navbar() {
                           : 'text-gray-800')
                       }
                     >
-                      {item.label}
+                      {t(item.labelKey)}
                     </Link>
                   )}
                 </div>
