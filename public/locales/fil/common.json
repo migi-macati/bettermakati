@@ -116,5 +116,38 @@
     "description": "I-check ang connection at subukan ulit. Maaari ka ring bumalik sa homepage.",
     "tryAgain": "Subukan ulit",
     "home": "Bumalik sa homepage"
+  },
+  "pageHelp": {
+    "label": "Sources at corrections",
+    "title": "Tumulong panatilihing useful ang impormasyon tungkol sa Makati.",
+    "description": "I-check ang linked source at date nito. Ipaalam sa amin kung may kailangang itama sa page na ito.",
+    "correction": "Ipaalam ang kailangang itama",
+    "records": "Tingnan ang source records",
+    "coverage": "Coverage at limitations"
+  },
+  "sharePage": {
+    "copied": "Nakopya ang link",
+    "share": "Share",
+    "copy": "Copy link",
+    "copiedStatus": "Nakopya ang link sa clipboard",
+    "copyLabel": "Kopyahin ang link na ito"
+  },
+  "barangayContext": {
+    "label": "BetterBarangay view",
+    "view": "Barangay View",
+    "choose": "Pumili ng BetterBarangay view",
+    "allBarangays": "Lahat ng barangay",
+    "allMakati": "Buong Makati",
+    "openHomepage": "Buksan ang homepage ng Barangay {{barangay}}",
+    "openDirectory": "Buksan ang barangay directory",
+    "homepage": "Homepage",
+    "barangayHomepage": "Barangay Homepage",
+    "barangays": "Barangays"
+  },
+  "seo": {
+    "defaultTitle": "BetterMakati | Civic information at participation para sa Makati",
+    "defaultDescription": "Independent civic information at participation platform para sa Makati.",
+    "defaultKeywords": "Makati, Makati City, public services, local government, civic information",
+    "imageAlt": "BetterMakati — independent civic information at participation para sa Makati"
   }
 }

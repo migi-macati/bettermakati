@@ -91,8 +91,8 @@ if (!civicMap.includes('in Barangay') || !civicMap.includes('records in scope'))
 }
 
 for (const marker of [
-  'aria-label="BetterBarangay view"',
-  'aria-label="Choose BetterBarangay view"',
+  "aria-label={t('barangayContext.label')}",
+  "aria-label={t('barangayContext.choose')}",
   "to={barangay ? '/barangays/' + barangay.slug : '/barangays'}",
 ]) {
   if (!contextBar.includes(marker)) {

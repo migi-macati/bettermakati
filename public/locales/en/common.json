@@ -130,5 +130,38 @@
     "description": "Check your connection and try again. You can also return to the homepage.",
     "tryAgain": "Try again",
     "home": "Go to homepage"
+  },
+  "pageHelp": {
+    "label": "Sources and corrections",
+    "title": "Help keep Makati information useful.",
+    "description": "Check the linked source and its date. Tell us if something on this page needs correcting.",
+    "correction": "Suggest a correction",
+    "records": "Browse source records",
+    "coverage": "Coverage & limitations"
+  },
+  "sharePage": {
+    "copied": "Link copied",
+    "share": "Share",
+    "copy": "Copy link",
+    "copiedStatus": "Link copied to clipboard",
+    "copyLabel": "Copy this link"
+  },
+  "barangayContext": {
+    "label": "BetterBarangay view",
+    "view": "Barangay View",
+    "choose": "Choose BetterBarangay view",
+    "allBarangays": "All barangays",
+    "allMakati": "All Makati",
+    "openHomepage": "Open Barangay {{barangay}} homepage",
+    "openDirectory": "Open barangay directory",
+    "homepage": "Homepage",
+    "barangayHomepage": "Barangay Homepage",
+    "barangays": "Barangays"
+  },
+  "seo": {
+    "defaultTitle": "BetterMakati | Civic information and participation for Makati",
+    "defaultDescription": "Independent civic information and participation platform for Makati.",
+    "defaultKeywords": "Makati, Makati City, public services, local government, civic information",
+    "imageAlt": "BetterMakati — independent civic information and participation for Makati"
   }
 }

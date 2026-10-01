@@ -61,9 +61,9 @@ for (const marker of [
 }
 
 for (const marker of [
-  'Browse source records',
+  "t('pageHelp.records')",
   'to="/records"',
-  'Suggest a correction',
+  "t('pageHelp.correction')",
 ]) {
   if (!pageHelp.includes(marker)) {
     problems.push('Page Help evidence/correction handoff missing: ' + marker);
