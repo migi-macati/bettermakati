@@ -323,6 +323,66 @@
     "tools": {
       "open": "Buksan",
       "suggestOrContribute": "Magmungkahi o tumulong"
+    },
+    "concernFinder": {
+      "seoTitle": "Saan Ako Lalapit?",
+      "seoDescription": "Ilarawan ang kailangan mo at hanapin ang Makati city, barangay, o national government service na humahawak nito.",
+      "seoKeywords": "Makati government service finder, saan ako lalapit Makati, Makati assistance, Makati permits, Makati IDs",
+      "eyebrow": "Service finder",
+      "title": "Saan Ako Lalapit?",
+      "intro": "Ilarawan ang kailangan mo. Makikita sa matches ang service, responsible office, at kung saan puwedeng pumunta.",
+      "emergencyTitle": "Emergency o agarang panganib?",
+      "emergencyLink": "Buksan ang emergency hotlines",
+      "emergencySuffix": "sa halip na gamitin ang service finder.",
+      "searchTitle": "Ano ang kailangan mong tulong?",
+      "searchPlaceholder": "hal. hospital bill, PWD ID, business permit, cedula",
+      "browseServices": "Tingnan lahat ng services",
+      "browseOffices": "Tingnan ang government offices",
+      "commonNeeds": "Karaniwang kailangan",
+      "taskFirst": "Magsimula sa kailangan, hindi sa office",
+      "openGuide": "Buksan ang guide",
+      "unsure": "Hindi pa sigurado",
+      "actionCenterTitle": "Makati Action Center",
+      "actionCenterDescription": "Gamitin ang service-coordination channel ng lungsod kapag sakop ng concern ang higit sa isang office o hindi malinaw kung aling department ang responsable.",
+      "actionCenterCta": "Buksan ang Action Center guide",
+      "localConcern": "Local concern",
+      "barangayTitle": "Magsimula sa iyong barangay",
+      "barangayDescription": "Makikita sa barangay pages ang hall contacts, karaniwang barangay transactions, at local service context.",
+      "barangayCta": "Pumili ng barangay",
+      "needs": {
+        "medical": {
+          "title": "Kailangan ko ng medical o financial assistance",
+          "description": "Magsimula sa requirements at assessment ng Makati Social Welfare Department."
+        },
+        "pwd": {
+          "title": "Kailangan ko ng PWD ID",
+          "description": "Buksan ang Makati PDAO / social welfare application guide."
+        },
+        "senior": {
+          "title": "Kailangan ko ng senior Blu Card",
+          "description": "Tingnan ang city guide, requirements, at current-source caveat."
+        },
+        "clearance": {
+          "title": "Kailangan ko ng barangay clearance",
+          "description": "Magsimula sa iyong barangay at clearance guide."
+        },
+        "business": {
+          "title": "Kailangan ko ng business permit",
+          "description": "Buksan ang new-business permit checklist at official city source."
+        },
+        "civilRegistry": {
+          "title": "Kailangan ko ng civil registry document",
+          "description": "Hanapin ang Makati birth, marriage, death, at certified-copy services."
+        },
+        "propertyTax": {
+          "title": "Kailangan kong magbayad ng real property tax",
+          "description": "Tingnan ang city payment guide at source."
+        },
+        "cityAction": {
+          "title": "Kailangan kong ipaaksyon sa lungsod ang concern",
+          "description": "Gamitin ang Makati Action Center para sa service coordination."
+        }
+      }
     }
   }
 }
