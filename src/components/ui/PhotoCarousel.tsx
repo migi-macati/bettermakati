@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ArrowLeft, ArrowRight, Camera, Pause, Play } from 'lucide-react';
 import useCarousel from '../../hooks/useCarousel';
 import type { CityImage } from '../../data/cityImages';
@@ -18,6 +19,7 @@ export default function PhotoCarousel({
   priority?: boolean;
   autoRotate?: boolean;
 }) {
+  const { t } = useTranslation();
   const carousel = useCarousel(images.length, 6500, !autoRotate);
   const { index } = carousel;
   const [failed, setFailed] = useState<Record<string, boolean>>({});
@@ -53,7 +55,7 @@ export default function PhotoCarousel({
         'photo-frame bm-photo-frame overflow-hidden ' +
         className
       }
-      aria-label={title || 'Makati photographs'}
+      aria-label={title || t('photoCarousel.defaultLabel')}
       aria-roledescription="carousel"
       {...carousel.interactions}
     >
@@ -80,7 +82,7 @@ export default function PhotoCarousel({
                   View photo
                 </a>
               ) : (
-                <span className="mt-2 block text-sm font-semibold">Photo unavailable</span>
+                <span className="mt-2 block text-sm font-semibold">{t('photoCarousel.unavailable')}</span>
               )}
             </div>
           </div>
@@ -108,7 +110,7 @@ export default function PhotoCarousel({
             <button
               type="button"
               onClick={previous}
-              aria-label="Previous photo"
+              aria-label={t('photoCarousel.previous')}
               className="absolute left-3 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-black/55 text-white backdrop-blur-sm hover:bg-black/70"
             >
               <ArrowLeft className="h-4 w-4" />
@@ -116,7 +118,7 @@ export default function PhotoCarousel({
             <button
               type="button"
               onClick={next}
-              aria-label="Next photo"
+              aria-label={t('photoCarousel.next')}
               className="absolute right-3 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-black/55 text-white backdrop-blur-sm hover:bg-black/70"
             >
               <ArrowRight className="h-4 w-4" />
@@ -159,19 +161,19 @@ export default function PhotoCarousel({
               ) : (
                 image.license
               )}
-              {' · cropped'}
+              {' · ' + t('photoCarousel.cropped')}
             </span>
           )}
 
           {images.length > 1 && (
             <div className="flex min-w-0 flex-1 flex-wrap items-center justify-end gap-1">
-              <div className="flex items-center" aria-label="Choose photo">
+              <div className="flex items-center" aria-label={t('photoCarousel.choose')}>
                 {images.map((item, photoIndex) => (
                   <button
                     key={item.src}
                     type="button"
                     onClick={() => carousel.goTo(photoIndex)}
-                    aria-label={'Show photo ' + (photoIndex + 1) + ' of ' + images.length}
+                    aria-label={t('photoCarousel.show', { current: photoIndex + 1, total: images.length })}
                     aria-current={photoIndex === index ? 'true' : undefined}
                     aria-pressed={photoIndex === index}
                     className="grid h-11 w-11 place-items-center rounded-full hover:bg-primary-50"
@@ -204,7 +206,7 @@ export default function PhotoCarousel({
                   ) : (
                     <Pause className="h-4 w-4" aria-hidden="true" />
                   )}
-                  {carousel.paused ? 'Play photos' : 'Pause photos'}
+                  {carousel.paused ? t('photoCarousel.play') : t('photoCarousel.pause')}
                 </button>
               )}
             </div>
