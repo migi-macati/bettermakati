@@ -257,9 +257,9 @@ for (const forbidden of [
 }
 
 for (const marker of [
-  "label: 'Explore Makati'",
-  'Understand the city as you explore it',
-  "label: 'Areas & districts'",
+  "key: 'explore'",
+  "t('home.page.exploreTitle')",
+  "key: 'districts'",
   "href: '/estates'",
 ]) {
   if (!home.includes(marker)) {
