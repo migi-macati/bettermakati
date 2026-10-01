@@ -18,17 +18,12 @@ const requireAll = (source, label, markers) => {
 };
 
 requireAll(chooser, 'Priority chooser', [
-  "title: 'Get urgent help'",
-  "href: '/hotlines'",
-  "title: 'Get a service'",
-  "href: '/services'",
-  "title: 'See what matters now'",
-  "href: '/today'",
-  "title: 'Follow public action & evidence'",
-  "href: '/accountability'",
-  "title: 'Participate or report'",
-  "href: '/participate'",
-  'Go to your barangay',
+  "key: 'urgent',", "href: '/hotlines'",
+  "key: 'service',", "href: '/services'",
+  "key: 'now',", "href: '/today'",
+  "key: 'evidence',", "href: '/accountability'",
+  "key: 'participate',", "href: '/participate'",
+  "t('home.capability.goBarangay')",
 ]);
 
 for (const retired of [
@@ -43,20 +38,20 @@ for (const retired of [
 }
 
 requireAll(home, 'Homepage hierarchy', [
-  'Public action & evidence',
-  "label: 'Accountability'",
+  "t('home.page.publicActionEyebrow')",
+  "key: 'accountability'",
   "href: '/accountability'",
-  "label: 'Projects & budget'",
+  "key: 'projectsBudget'",
   "href: '/projects-budget'",
-  "label: 'Public records'",
+  "key: 'records'",
   "href: '/records'",
-  'Take part in Makati',
+  "t('home.page.participationTitle')",
   'to="/participate"',
-  'Improve BetterMakati',
+  "t('home.page.improve')",
   'to="/get-involved"',
-  'More community tools',
+  "t('home.page.communityTools')",
   'to="/community-tools"',
-  "label: 'Health services'",
+  "key: 'health'",
 ]);
 
 for (const retired of [
@@ -88,13 +83,13 @@ requireAll(tests, 'W6-3b browser QA', [
 
 const homepageOrder = [
   '<Hero />',
-  'title="Around Makati"',
-  'Common services',
-  'Public action & evidence',
-  'Take part in Makati',
-  'Understand the city as you explore it',
+  "title={t('home.page.aroundMakati')}",
+  "t('home.page.commonServices')",
+  "t('home.page.publicActionEyebrow')",
+  "t('home.page.participationTitle')",
+  "t('home.page.exploreTitle')",
   '<FeaturedInsightsCarousel />',
-  'Makati at a glance',
+  "t('home.page.glance')",
 ];
 
 let previousIndex = -1;
