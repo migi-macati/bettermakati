@@ -280,7 +280,17 @@
       "cityComparisonEyebrow": "City comparison",
       "cityComparisonTitle": "Ihambing ang Makati sa ibang Philippine cities",
       "cityComparisonDescription": "Ihambing ang 2024 GDP per person gamit ang parehong PSA definition at price basis.",
-      "exploreStatistics": "Tingnan ang statistics"
+      "exploreStatistics": "Tingnan ang statistics",
+      "shortcuts": {
+        "cinemas": "Cinemas",
+        "liveDiscovery": "Live place discovery"
+      },
+      "stats": {
+        "population": "Population",
+        "barangays": "Barangays",
+        "incomeClass": "Income class",
+        "largestBarangaySource": "Largest barangay ayon sa 2024 population"
+      }
     }
   },
   "photoCarousel": {
