@@ -55,7 +55,11 @@
     "openMainMenu": "Open main menu",
     "closeMainMenu": "Close main menu",
     "yourBarangay": "Your barangay",
-    "chooseBarangay": "Choose a barangay"
+    "chooseBarangay": "Choose a barangay",
+    "emergency911": "Emergency 911",
+    "cityHallPhone": "City Hall: 8870-1000",
+    "allHotlines": "All hotlines",
+    "officialMakatiSite": "Official Makati site"
   },
   "navigation": {
     "services": "Services",
