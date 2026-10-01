@@ -2,7 +2,7 @@ import Section from '../ui/Section';
 import * as LucideIcons from 'lucide-react';
 import { Heading } from '../ui/Heading';
 import { Text } from '../ui/Text';
-import { useTranslation } from '../../hooks/useTranslation';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import { ArrowRight } from 'lucide-react';
 import { serviceCategories } from '../../data/yamlLoader';

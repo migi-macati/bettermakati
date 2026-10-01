@@ -2,7 +2,7 @@ import Section from '../ui/Section';
 import * as LucideIcons from 'lucide-react';
 import { Heading } from '../ui/Heading';
 import { Text } from '../ui/Text';
-import { useTranslation } from '../../hooks/useTranslation';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent } from '@bettergov/kapwa/card';
 import { Link } from 'react-router';
 

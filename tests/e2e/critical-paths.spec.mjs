@@ -405,7 +405,6 @@ test('homepage supports evidence and participation without restoring feature-fam
 test('homepage keeps priority journeys ahead of depth content', async ({ page }) => {
   await page.goto(baseURL + '/');
 
-  const sectionText = await page.locator('#main-content section').allTextContents();
   const markers = [
     'Around Makati',
     'Common services',
@@ -416,6 +415,11 @@ test('homepage keeps priority journeys ahead of depth content', async ({ page })
     'Makati at a glance',
   ];
 
+  for (const marker of markers) {
+    await expect(page.locator('#main-content section').filter({ hasText: marker }).first()).toBeVisible();
+  }
+
+  const sectionText = await page.locator('#main-content section').allTextContents();
   const indices = markers.map(marker =>
     sectionText.findIndex(text => text.includes(marker))
   );

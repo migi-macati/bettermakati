@@ -1,46 +1,44 @@
 import { useTranslation } from 'react-i18next';
-import { Globe } from 'lucide-react';
-
-const languages = [
-  { code: 'en', name: 'English', flag: '🇺🇸' },
-  { code: 'fil', name: 'Filipino', flag: '🇵🇭' },
-];
+import {
+  DEFAULT_LANGUAGE,
+  LANGUAGES,
+  SUPPORTED_LANGUAGES,
+  isSupportedLanguage,
+} from '../i18n/languages';
 
 export default function LanguageSwitcher() {
   const { i18n } = useTranslation();
-
-  const changeLanguage = (languageCode: string) => {
-    i18n.changeLanguage(languageCode);
-  };
+  const resolved = (i18n.resolvedLanguage ?? i18n.language).split('-')[0];
+  const current = isSupportedLanguage(resolved) ? resolved : DEFAULT_LANGUAGE;
 
   return (
-    <div className="relative group">
-      <button className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors">
-        <Globe size={16} />
-        <span>{languages.find(lang => lang.code === i18n.language)?.flag}</span>
-        <span className="hidden sm:inline">
-          {languages.find(lang => lang.code === i18n.language)?.name}
-        </span>
-      </button>
+    <div
+      className="inline-flex min-h-11 items-center rounded-full border border-secondary-300 bg-secondary-50 p-1"
+      role="group"
+      aria-label="Language"
+    >
+      {SUPPORTED_LANGUAGES.map(code => {
+        const language = LANGUAGES[code];
+        const selected = current === code;
 
-      <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-        <div className="py-1">
-          {languages.map(language => (
-            <button
-              key={language.code}
-              onClick={() => changeLanguage(language.code)}
-              className={`w-full text-left px-4 py-2 text-sm flex items-center gap-3 hover:bg-gray-100 transition-colors ${
-                i18n.language === language.code
-                  ? 'bg-blue-50 text-blue-700'
-                  : 'text-gray-700'
-              }`}
-            >
-              <span>{language.flag}</span>
-              <span>{language.name}</span>
-            </button>
-          ))}
-        </div>
-      </div>
+        return (
+          <button
+            key={code}
+            type="button"
+            onClick={() => void i18n.changeLanguage(code)}
+            aria-pressed={selected}
+            aria-label={'Use ' + language.name}
+            className={
+              'inline-flex min-h-9 min-w-11 items-center justify-center rounded-full px-2.5 text-xs font-extrabold tracking-[0.08em] transition-colors ' +
+              (selected
+                ? 'bg-primary-800 text-white shadow-sm'
+                : 'text-primary-900 hover:bg-secondary-100')
+            }
+          >
+            {language.shortLabel}
+          </button>
+        );
+      })}
     </div>
   );
 }
