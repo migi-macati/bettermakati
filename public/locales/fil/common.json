@@ -96,5 +96,25 @@
     "cityHallPhone": "City Hall: 8870-1000",
     "allHotlines": "Lahat ng hotline",
     "officialMakatiSite": "Official Makati site"
+  },
+  "app": {
+    "skipToMain": "Pumunta sa main content",
+    "loadingPage": "Naglo-load ang page…"
+  },
+  "breadcrumbs": {
+    "label": "Breadcrumb",
+    "home": "Home"
+  },
+  "brand": {
+    "home": "BetterMakati home"
+  },
+  "lastReviewed": {
+    "label": "Huling review ng content"
+  },
+  "pageBoundary": {
+    "title": "Hindi ma-load ang page na ito",
+    "description": "I-check ang connection at subukan ulit. Maaari ka ring bumalik sa homepage.",
+    "tryAgain": "Subukan ulit",
+    "home": "Bumalik sa homepage"
   }
 }

@@ -1,5 +1,6 @@
 import PageHelp from './components/ui/PageHelp';
 import { lazy, Suspense } from 'react';
+import { useTranslation } from 'react-i18next';
 import { NuqsAdapter } from 'nuqs/adapters/react';
 import { HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter as Router, Routes, Route } from 'react-router';
@@ -58,18 +59,18 @@ const CivicAuditPilot = lazy(() => import('./pages/CivicAuditPilot'));
 const CivicAuditResults = lazy(() => import('./pages/CivicAuditResults'));
 const Reports = lazy(() => import('./pages/Reports'));
 const ReportArticle = lazy(() => import('./pages/ReportArticle'));
-const CityMonitorRecordPage = lazy(
-  () => import('./pages/CityMonitorRecordPage')
-);
+const CityMonitorRecordPage = lazy(() => import('./pages/CityMonitorRecordPage'));
 
 function App() {
+  const { t } = useTranslation();
+
   return (
     <HelmetProvider>
       <Router>
         <NuqsAdapter>
           <div className="min-h-screen flex flex-col">
             <a href="#main-content" className="skip-link">
-              Skip to main content
+              {t('app.skipToMain')}
             </a>
             <Navbar />
             <main id="main-content" tabIndex={-1} className="min-w-0 flex-grow">
@@ -79,7 +80,7 @@ function App() {
                   fallback={
                     <div className="container px-5 py-16" role="status">
                       <p className="text-primary-800 font-semibold">
-                        Loading page…
+                        {t('app.loadingPage')}
                       </p>
                     </div>
                   }
@@ -89,22 +90,11 @@ function App() {
                     <Route path="/about" element={<About />} />
                     <Route path="/privacy" element={<Privacy />} />
                     <Route path="/terms" element={<Terms />} />
-
                     <Route path="/services" element={<Services />} />
-                    <Route
-                      path="/services/guide/:id"
-                      element={<ServiceGuide />}
-                    />
-                    <Route
-                      path="/government-offices"
-                      element={<GovernmentOffices />}
-                    />
+                    <Route path="/services/guide/:id" element={<ServiceGuide />} />
+                    <Route path="/government-offices" element={<GovernmentOffices />} />
                     <Route path="/services/:category" element={<Services />} />
-                    <Route
-                      path="/services/:category/:documentSlug"
-                      element={<Document categoryType="service" />}
-                    />
-
+                    <Route path="/services/:category/:documentSlug" element={<Document categoryType="service" />} />
                     <Route path="/visit" element={<VisitMakati />} />
                     <Route path="/mobility" element={<Mobility />} />
                     <Route path="/cinemas" element={<Cinemas />} />
@@ -113,27 +103,17 @@ function App() {
                     <Route path="/whats-on" element={<CompatibilityRedirect to="/calendar" />} />
                     <Route path="/heritage" element={<Heritage />} />
                     <Route path="/history" element={<History />} />
-
                     <Route path="/government" element={<Government />} />
-                    <Route
-                      path="/accountability"
-                      element={<Accountability />}
-                    />
+                    <Route path="/accountability" element={<Accountability />} />
                     <Route path="/records" element={<PublicRecords />} />
                     <Route path="/records/:id" element={<PublicRecordDetail />} />
                     <Route path="/participate" element={<Participate />} />
                     <Route path="/today" element={<Today />} />
-                    <Route
-                      path="/open-government"
-                      element={<OpenGovernment />}
-                    />
+                    <Route path="/open-government" element={<OpenGovernment />} />
                     <Route path="/integrity" element={<Integrity />} />
                     <Route path="/status" element={<ProjectStatus />} />
                     <Route path="/city-monitor" element={<CityMonitor />} />
-                    <Route
-                      path="/city-monitor/:id"
-                      element={<CityMonitorRecordPage />}
-                    />
+                    <Route path="/city-monitor/:id" element={<CityMonitorRecordPage />} />
                     <Route path="/briefs" element={<CivicBriefs />} />
                     <Route path="/reports" element={<Reports />} />
                     <Route path="/reports/makati-overview" element={<CompatibilityRedirect to="/reports/2026-budget-operating-expenses" />} />
@@ -145,44 +125,22 @@ function App() {
                     <Route path="/civic-map/report" element={<CivicNearbyReport />} />
                     <Route path="/civic-map/:assetId" element={<CivicAsset />} />
                     <Route path="/barangays" element={<Barangays />} />
-                    <Route
-                      path="/barangays/:slug"
-                      element={<BarangayProfile />}
-                    />
+                    <Route path="/barangays/:slug" element={<BarangayProfile />} />
                     <Route path="/elections" element={<Elections />} />
-                    <Route
-                      path="/officials/:slug"
-                      element={<OfficialProfile />}
-                    />
+                    <Route path="/officials/:slug" element={<OfficialProfile />} />
                     <Route path="/estates" element={<Estates />} />
                     <Route path="/statistics" element={<Statistics />} />
                     <Route path="/legislation" element={<Legislation />} />
                     <Route path="/news" element={<News />} />
                     <Route path="/live" element={<LiveMakati />} />
-
-                    <Route
-                      path="/projects-budget"
-                      element={<ProjectsBudget />}
-                    />
-                    <Route
-                      path="/transparency"
-                      element={<CompatibilityRedirect to="/projects-budget" />}
-                    />
-
-                    <Route
-                      path="/community-tools"
-                      element={<CommunityTools />}
-                    />
-                    <Route
-                      path="/community-tools/saan-ako-lalapit"
-                      element={<ConcernFinder />}
-                    />
-
+                    <Route path="/projects-budget" element={<ProjectsBudget />} />
+                    <Route path="/transparency" element={<CompatibilityRedirect to="/projects-budget" />} />
+                    <Route path="/community-tools" element={<CommunityTools />} />
+                    <Route path="/community-tools/saan-ako-lalapit" element={<ConcernFinder />} />
                     <Route path="/search" element={<Search />} />
                     <Route path="/get-involved" element={<GetInvolved />} />
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/hotlines" element={<Hotlines />} />
-
                     <Route path="*" element={<NotFound />} />
                   </Routes>
                 </Suspense>

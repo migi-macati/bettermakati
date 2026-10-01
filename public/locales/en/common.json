@@ -110,5 +110,25 @@
   "shell": {
     "openMenu": "Open {{label}} menu",
     "closeMenu": "Close {{label}} menu"
+  },
+  "app": {
+    "skipToMain": "Skip to main content",
+    "loadingPage": "Loading page…"
+  },
+  "breadcrumbs": {
+    "label": "Breadcrumb",
+    "home": "Home"
+  },
+  "brand": {
+    "home": "BetterMakati home"
+  },
+  "lastReviewed": {
+    "label": "Content reviewed"
+  },
+  "pageBoundary": {
+    "title": "This page couldn’t load",
+    "description": "Check your connection and try again. You can also return to the homepage.",
+    "tryAgain": "Try again",
+    "home": "Go to homepage"
   }
 }

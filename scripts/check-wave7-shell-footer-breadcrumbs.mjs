@@ -32,7 +32,7 @@ for (const marker of [
 ]) need('W7-2b Footer', footer, marker);
 
 for (const marker of [
-  'aria-label="Breadcrumb"',
+  "aria-label={t('breadcrumbs.label')}",
   'bm-breadcrumbs',
   'bm-breadcrumb-list',
   'bm-breadcrumb-current',
