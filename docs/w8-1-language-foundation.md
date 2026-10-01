@@ -11,6 +11,16 @@ BetterMakati supports exactly two interface languages:
 
 English remains the default. A visitor's explicit language choice persists locally. Changing language must update the document `lang` attribute so assistive technology receives the correct language context.
 
+## English editorial policy
+
+ENG must be fully understandable to a visitor who does not know Filipino.
+
+- Translate Filipino interface labels, headings, instructions, descriptions and feature names into clear English.
+- Do not require Filipino knowledge to navigate the site or understand an action.
+- Keep proper nouns, official titles and legally meaningful names in their official form when translation would misidentify them; add clear English context where needed.
+- Stable URLs, civic-record identities and source titles do not change merely because the interface language changes.
+- A Filipino feature label is not exempt just because it is familiar locally. For example, ENG uses **Where Should I Go?** while FIL uses **Saan Ako Lalapit?**.
+
 ## Filipino editorial policy
 
 FIL means natural contemporary Filipino as used by modern Makati residents. It is not a requirement to translate every English word into a formal or respelled Tagalog equivalent.
