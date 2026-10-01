@@ -183,7 +183,7 @@ export default function Navbar() {
               <BrandMark />
             </div>
 
-            <div className="ml-auto hidden xl:flex items-center gap-1">
+            <div className="ml-auto hidden 2xl:flex items-center gap-1">
               {mainNavigation.map(item => {
                 const expanded = activeMenu === item.id;
                 const current = familyOwnsPath(item);
@@ -309,7 +309,7 @@ export default function Navbar() {
               </Link>
             </div>
 
-            <div className="ml-auto flex items-center gap-1 xl:hidden">
+            <div className="ml-auto flex items-center gap-1 2xl:hidden">
               <div className="hidden sm:block">
                 <LanguageSwitcher />
               </div>
@@ -357,7 +357,7 @@ export default function Navbar() {
         <div
           id="mobile-navigation"
           hidden={!isOpen}
-          className="bm-shell-mobile-menu xl:hidden border-t"
+          className="bm-shell-mobile-menu 2xl:hidden border-t"
         >
           <div className="container px-3 py-3 space-y-1 max-h-[70dvh] overflow-y-auto overscroll-contain">
             <div className="flex sm:hidden items-center justify-between gap-3 rounded-xl border border-secondary-200 bg-secondary-50 p-3">
