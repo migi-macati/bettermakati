@@ -83,8 +83,8 @@ if (!searchIndex.includes("title: 'Makati Calendar'") || !searchIndex.includes("
 if (searchIndex.includes("title: 'What’s On'") || searchIndex.includes("title: 'What’s On in Makati'") || searchIndex.includes("href: '/whats-on'")) problems.push('Old What’s On Search record remains.');
 
 if (
-  !capability.includes("title: 'See what matters now'") ||
-  !capability.includes("href: '/today'")
+  !capability.includes("{ key: 'now', href: '/today', icon: SunMedium }") ||
+  !capability.includes("home.capability.entries.")
 ) {
   problems.push('Homepage current-information entry must resolve through Today.');
 }
