@@ -2,6 +2,7 @@ import React from 'react';
 import { ExternalLink, Github } from 'lucide-react';
 import { Link } from 'react-router';
 import { footerNavigation } from '../../data/navigation';
+import { useTranslation } from 'react-i18next';
 import BrandMark from '../BrandMark';
 import {
   isBarangaySliceableHref,
@@ -11,6 +12,7 @@ import {
 
 
 const Footer: React.FC = () => {
+  const { t } = useTranslation();
   const { preferredBarangay } = useBarangayScope();
   const scopedHref = (href: string) => {
     if (href === '/search' && preferredBarangay) {
@@ -80,18 +82,18 @@ const Footer: React.FC = () => {
           </div>
 
           {footerNavigation.mainSections.map(section => (
-            <div key={section.title}>
+            <div key={section.id}>
               <h3 className="mb-4 text-sm font-bold uppercase tracking-[0.12em] text-white/80">
-                {section.title}
+                {t(section.titleKey)}
               </h3>
               <ul className="space-y-1">
                 {section.links.map(link => (
-                  <li key={link.label}>
+                  <li key={link.id}>
                     <Link
                       to={scopedHref(link.href)}
                       className="inline-flex min-h-11 items-center text-sm text-primary-100 transition-colors hover:text-white focus-visible:outline-secondary-300"
                     >
-                      {link.label}
+                      {t(link.labelKey)}
                     </Link>
                   </li>
                 ))}
@@ -107,13 +109,13 @@ const Footer: React.FC = () => {
           <div className="mt-3 flex flex-wrap gap-x-6 gap-y-2">
             {footerNavigation.ecosystemLinks.map(link => (
               <a
-                key={link.label}
+                key={link.id}
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex min-h-11 items-center gap-1 text-sm text-primary-100 transition-colors hover:text-white focus-visible:outline-secondary-300"
               >
-                {link.label}
+                {t(link.labelKey)}
                 <ExternalLink className="h-3 w-3 opacity-60" aria-hidden="true" />
               </a>
             ))}
