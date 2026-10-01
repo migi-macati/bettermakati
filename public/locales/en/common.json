@@ -46,7 +46,16 @@
   },
   "navbar": {
     "government": "Government",
-    "services": "Services"
+    "services": "Services",
+    "mainNavigation": "Main navigation",
+    "changeBarangay": "Open or change your barangay",
+    "allBarangays": "All barangays",
+    "searchBetterMakati": "Search BetterMakati",
+    "search": "Search",
+    "openMainMenu": "Open main menu",
+    "closeMainMenu": "Close main menu",
+    "yourBarangay": "Your barangay",
+    "chooseBarangay": "Choose a barangay"
   },
   "navigation": {
     "services": "Services",
