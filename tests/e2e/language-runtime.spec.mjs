@@ -30,7 +30,7 @@ test('explicit language choice persists without changing the current URL', async
   await expect(returnVisit.locator('html')).toHaveAttribute('lang', 'fil');
   await expect(returnVisit.getByRole('link', { name: 'Makilahok', exact: true }).first()).toBeVisible();
 
-  await visibleButton(returnVisit, 'Use English').click();
+  await visibleButton(returnVisit, 'Gamitin ang English').click();
   await expect(returnVisit.locator('html')).toHaveAttribute('lang', 'en');
   await expect(returnVisit.getByRole('link', { name: 'Participate', exact: true }).first()).toBeVisible();
   await expect.poll(() => returnVisit.evaluate(() => localStorage.getItem('i18nextLng'))).toBe('en');
