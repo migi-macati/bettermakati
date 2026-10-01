@@ -22,6 +22,8 @@ for (const staleCode of ['ceb', 'ilo', 'hil', 'war', 'pam', 'bcl', 'pag', 'mag',
 
 if (!i18n.includes('supportedLngs: SUPPORTED_LANGUAGES')) fail('i18next supported languages are not constrained');
 if (!i18n.includes("order: ['localStorage', 'navigator', 'htmlTag']")) fail('language preference detection/persistence contract changed');
+if (!i18n.includes("caches: ['localStorage']")) fail('language choice must persist across visits');
+if (!i18n.includes("lookupLocalStorage: 'i18nextLng'")) fail('persistent language storage key changed');
 if (!i18n.includes('document.documentElement.lang')) fail('document language is not synchronized');
 if (!switcher.includes('aria-pressed={selected}')) fail('language switcher must expose selected state');
 if (!switcher.includes('{language.shortLabel}')) fail('language switcher must use ENG/FIL short labels');
