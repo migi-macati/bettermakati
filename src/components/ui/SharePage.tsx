@@ -1,5 +1,6 @@
 import { Check, Link2, Share2 } from 'lucide-react';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export default function SharePage({
   title,
@@ -8,6 +9,7 @@ export default function SharePage({
   title?: string;
   className?: string;
 }) {
+  const { t } = useTranslation();
   const [copied, setCopied] = useState(false);
   const [copyUrl, setCopyUrl] = useState('');
   const canShare =
@@ -38,24 +40,24 @@ export default function SharePage({
       >
         {copied ? (
           <>
-            <Check className="h-4 w-4" aria-hidden="true" /> Link copied
+            <Check className="h-4 w-4" aria-hidden="true" /> {t('sharePage.copied')}
           </>
         ) : canShare ? (
           <>
-            <Share2 className="h-4 w-4" aria-hidden="true" /> Share
+            <Share2 className="h-4 w-4" aria-hidden="true" /> {t('sharePage.share')}
           </>
         ) : (
           <>
-            <Link2 className="h-4 w-4" aria-hidden="true" /> Copy link
+            <Link2 className="h-4 w-4" aria-hidden="true" /> {t('sharePage.copy')}
           </>
         )}
       </button>
       <span className="sr-only" role="status">
-        {copied ? 'Link copied to clipboard' : ''}
+        {copied ? t('sharePage.copiedStatus') : ''}
       </span>
       {copyUrl && (
         <label className="mt-2 block text-xs text-gray-600">
-          Copy this link
+          {t('sharePage.copyLabel')}
           <input
             readOnly
             value={copyUrl}
