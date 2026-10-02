@@ -504,6 +504,39 @@
       "cityMonitor": "City Monitor",
       "calendar": "Makati Calendar",
       "officialSource": "Official city source"
+    },
+    "record": {
+      "notFound": "Hindi nahanap ang City Monitor record",
+      "date": "Petsa",
+      "status": "Status",
+      "publisher": "Source publisher",
+      "reference": "Reference",
+      "evidenceStage": "Evidence stage",
+      "amount": "Reported amount",
+      "location": "Lokasyon",
+      "summary": "Buod",
+      "details": "Mahahalagang detalye",
+      "sources": "Sources",
+      "documents": "Documents",
+      "transcript": "Transcript",
+      "commitments": "Commitments",
+      "forwardCommitments": "Mga susunod na commitment"
+    },
+    "monitor": {
+      "title": "City Monitor",
+      "seoDescription": "Patuloy na mino-monitor na record ng Makati government activity: council, legislation, executive speeches, procurement, projects, publications, consultations at official notices.",
+      "officialActivity": "Official activity",
+      "dailyWatch": "Daily source watch",
+      "sourceChanges": "Mga pagbabago sa sources",
+      "editorialReview": "Editorial review",
+      "freshnessQueue": "Freshness review queue",
+      "validatedRecords": "Validated civic records",
+      "structuredRecords": "Structured records",
+      "search": "Mag-search sa City Monitor",
+      "searchRecords": "Mag-search ng records",
+      "filter": "Filter ng City Monitor stream",
+      "channels": "Monitored official channels",
+      "sourceDirectory": "Source directory"
     }
   }
 }
