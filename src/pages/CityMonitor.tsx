@@ -82,7 +82,7 @@ const streamOptions: Array<{ value: 'all' | CityMonitorType; label: string }> = 
 
 export default function CityMonitor() {
   const { t, i18n } = useTranslation();
-  const locale = i18n.resolvedLanguage === 'fil' ? 'fil-PH' : 'en-PH'; {
+  const locale = i18n.resolvedLanguage === 'fil' ? 'fil-PH' : 'en-PH';
   const [stream, setStream] = useState<'all' | CityMonitorType>('all');
   const [query, setQuery] = useState('');
   const [runs, setRuns] = useState<MonitorRun[]>([]);
@@ -166,19 +166,19 @@ export default function CityMonitor() {
         <div className="mt-7 grid grid-cols-2 gap-4 lg:grid-cols-4">
           <div className="rounded-2xl border border-primary-100 bg-white p-5">
             <div className="text-3xl font-extrabold text-gray-950">{cityMonitorValidatedRecordCount}</div>
-            <div className="mt-1 text-sm text-gray-600">validated permanent records</div>
+            <div className="mt-1 text-sm text-gray-600">{t('currentInfo.monitor.permanentRecords')}</div>
           </div>
           <div className="rounded-2xl border border-primary-100 bg-white p-5">
             <div className="text-3xl font-extrabold text-gray-950">{cityMonitorSourceCount}</div>
-            <div className="mt-1 text-sm text-gray-600">official source channels</div>
+            <div className="mt-1 text-sm text-gray-600">{t('currentInfo.monitor.sourceChannels')}</div>
           </div>
           <div className="rounded-2xl border border-primary-100 bg-white p-5">
             <div className="text-3xl font-extrabold text-gray-950">{cityMonitorHistoricalRecordCount}</div>
-            <div className="mt-1 text-sm text-gray-600">historical records already indexed</div>
+            <div className="mt-1 text-sm text-gray-600">{t('currentInfo.monitor.historicalRecords')}</div>
           </div>
           <div className="rounded-2xl border border-primary-100 bg-white p-5">
             <div className="text-3xl font-extrabold text-gray-950">{latestRun?.changed.length ?? 0}</div>
-            <div className="mt-1 text-sm text-gray-600">latest change signals</div>
+            <div className="mt-1 text-sm text-gray-600">{t('currentInfo.monitor.changeSignals')}</div>
           </div>
         </div>
 
@@ -218,19 +218,19 @@ export default function CityMonitor() {
             <div className="mt-4 grid grid-cols-2 lg:grid-cols-4 gap-3">
               <div className="rounded-xl border border-gray-200 bg-[#fffdf8] p-4">
                 <div className="text-2xl font-extrabold text-gray-950">{latestRun.checked ?? sourceState.sources.length}</div>
-                <div className="text-sm text-gray-600">automatic checks</div>
+                <div className="text-sm text-gray-600">{t('currentInfo.monitor.automaticChecks')}</div>
               </div>
               <div className="rounded-xl border border-gray-200 bg-[#fffdf8] p-4">
                 <div className="text-2xl font-extrabold text-gray-950">{latestRun.changed.length}</div>
-                <div className="text-sm text-gray-600">content changes</div>
+                <div className="text-sm text-gray-600">{t('currentInfo.monitor.contentChanges')}</div>
               </div>
               <div className="rounded-xl border border-gray-200 bg-[#fffdf8] p-4">
                 <div className="text-2xl font-extrabold text-gray-950">{latestRun.failed.length}</div>
-                <div className="text-sm text-gray-600">failed checks</div>
+                <div className="text-sm text-gray-600">{t('currentInfo.monitor.failedChecks')}</div>
               </div>
               <div className="rounded-xl border border-gray-200 bg-[#fffdf8] p-4">
                 <div className="text-2xl font-extrabold text-gray-950">{latestRun.manualReview?.length ?? cityMonitorSources.filter(source => source.monitoringMode === 'manual-review').length}</div>
-                <div className="text-sm text-gray-600">manual-review channels</div>
+                <div className="text-sm text-gray-600">{t('currentInfo.monitor.manualReviewChannels')}</div>
               </div>
             </div>
 
@@ -446,7 +446,7 @@ export default function CityMonitor() {
                 <h3 className="mt-2 font-extrabold text-gray-950">{source.label}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-gray-600">{source.monitoringNote}</p>
                 {!state && (
-                  <p className="mt-2 text-xs text-gray-500">Not yet present in the latest published source-state file.</p>
+                  <p className="mt-2 text-xs text-gray-500">{t('currentInfo.monitor.notPresent')}</p>
                 )}
                 <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
                   Open source <ExternalLink className="h-3.5 w-3.5" />
