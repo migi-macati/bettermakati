@@ -268,7 +268,7 @@ const Services: React.FC = () => {
           {barangay && (
             <div className="mt-5 rounded-2xl border border-primary-100 bg-white p-5">
               <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
-                Local starting point
+                {t('servicesGovernment.servicesPage.localStart')}
               </div>
               <div className="mt-1 text-lg font-extrabold text-gray-950">
                 Barangay {barangay.name} Hall
@@ -280,7 +280,7 @@ const Services: React.FC = () => {
               <div className="mt-4 flex flex-wrap gap-3">
                 {barangay.hallEmail && (
                   <a href={'mailto:' + barangay.hallEmail} className="brand-btn-primary">
-                    Email barangay hall
+                    {t('servicesGovernment.servicesPage.emailBarangay')}
                   </a>
                 )}
                 <a
@@ -289,10 +289,10 @@ const Services: React.FC = () => {
                   rel="noreferrer"
                   className="brand-btn-secondary"
                 >
-                  Official barangay page
+                  {t('servicesGovernment.servicesPage.officialBarangay')}
                 </a>
                 <Link to={'/barangays/' + barangay.slug} className="brand-btn-secondary">
-                  Barangay homepage
+                  {t('servicesGovernment.servicesPage.barangayHomepage')}
                 </Link>
               </div>
             </div>
@@ -347,27 +347,27 @@ const Services: React.FC = () => {
           <div className="mt-5 grid gap-3 rounded-2xl border border-primary-100 bg-white p-5 sm:grid-cols-[1fr_auto] sm:items-center">
             <div>
               <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
-                Not sure which office handles it?
+                {t('servicesGovernment.servicesPage.unsureOffice')}
               </div>
-              <div className="mt-1 text-lg font-extrabold text-gray-950">Saan Ako Lalapit?</div>
+              <div className="mt-1 text-lg font-extrabold text-gray-950">{t('servicesGovernment.servicesPage.concernFinder')}</div>
               <p className="mt-1 text-sm text-gray-600">
-                Describe the task or problem and start with the service that handles it.
+                {t('servicesGovernment.servicesPage.concernFinderHelp')}
               </p>
             </div>
             <Link to="/community-tools/saan-ako-lalapit" className="brand-btn-primary">
-              Find where to go
+              {t('servicesGovernment.servicesPage.findWhere')}
             </Link>
           </div>
 
           <div className="mt-4">
             <Link to="/government-offices" className="text-sm font-bold text-primary-700 underline underline-offset-2">
-              Government offices in and serving Makati
+              {t('servicesGovernment.servicesPage.governmentOffices')}
             </Link>
           </div>
 
           <PhotoCarousel
             images={servicesImageSet}
-            title="Public service in Makati"
+            title={t('servicesGovernment.servicesPage.photoTitle')}
             compact
             className="mt-7"
           />
@@ -436,13 +436,13 @@ const Services: React.FC = () => {
                     }}
                     className="brand-btn-secondary"
                   >
-                    Clear search and filters
+                    {t('servicesGovernment.servicesPage.clearFilters')}
                   </button>
                   <Link to="/community-tools/saan-ako-lalapit" className="brand-btn-primary">
-                    Use Saan Ako Lalapit?
+                    {t('servicesGovernment.servicesPage.useConcernFinder')}
                   </Link>
                   <Link to="/government-offices" className="brand-btn-secondary">
-                    Browse government offices
+                    {t('servicesGovernment.servicesPage.browseOffices')}
                   </Link>
                 </div>
               </div>
@@ -461,16 +461,16 @@ const Services: React.FC = () => {
               className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
             >
               <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
-                National government
+                {t('servicesGovernment.servicesPage.nationalGovernment')}
               </div>
               <h3 className="mt-2 text-lg font-extrabold text-gray-950">
-                Browse BetterGov services
+                {t('servicesGovernment.servicesPage.browseBetterGov')}
               </h3>
               <p className="mt-1 text-sm leading-relaxed text-gray-600">
-                Search national government services.
+                {t('servicesGovernment.servicesPage.searchNational')}
               </p>
               <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
-                Open BetterGov <ExternalLink className="h-4 w-4" />
+                {t('servicesGovernment.servicesPage.openBetterGov')} <ExternalLink className="h-4 w-4" />
               </span>
             </a>
             <a
@@ -480,16 +480,16 @@ const Services: React.FC = () => {
               className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
             >
               <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
-                Another city or municipality
+                {t('servicesGovernment.servicesPage.anotherLgu')}
               </div>
               <h3 className="mt-2 text-lg font-extrabold text-gray-950">
-                Find another LGU
+                {t('servicesGovernment.servicesPage.findAnotherLgu')}
               </h3>
               <p className="mt-1 text-sm leading-relaxed text-gray-600">
-                Not from Makati or need another LGU? Search the BetterLGU Directory.
+                {t('servicesGovernment.servicesPage.betterLguHelp')}
               </p>
               <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
-                Open BetterLGU <ExternalLink className="h-4 w-4" />
+                {t('servicesGovernment.servicesPage.openBetterLgu')} <ExternalLink className="h-4 w-4" />
               </span>
             </a>
           </div>
@@ -544,13 +544,13 @@ const Services: React.FC = () => {
           items={[
             { label: 'Home', href: '/' },
             { label: 'Services', href: scopedServiceHref('/services') },
-            { label: category || 'Category not found' },
+            { label: category || '{t('servicesGovernment.servicesPage.categoryNotFound')}' },
           ]}
         />
         <Banner
           type="error"
-          title="Category not found"
-          description="The category you are looking for does not exist."
+          title="{t('servicesGovernment.servicesPage.categoryNotFound')}"
+          description="{t('servicesGovernment.servicesPage.categoryMissing')}"
           icon
         />
       </Section>
