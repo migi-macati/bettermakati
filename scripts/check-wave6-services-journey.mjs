@@ -5,7 +5,7 @@ const [services, concernFinder, serviceGuide, offices, enLocale, packageJson] = 
   readFile('src/pages/ConcernFinder.tsx', 'utf8'),
   readFile('src/pages/ServiceGuide.tsx', 'utf8'),
   readFile('src/pages/GovernmentOffices.tsx', 'utf8'),
-  readFile('src/locales/en.json', 'utf8'),
+  readFile('public/locales/en/common.json', 'utf8'),
   readFile('package.json', 'utf8'),
 ]);
 
