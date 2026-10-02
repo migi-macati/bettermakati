@@ -105,24 +105,24 @@ export default function Government() {
 
         <CitizenSummary
           className="mt-6"
-          eyebrow="How city government fits together"
-          title="Different offices answer different civic questions"
+          eyebrow={t('servicesGovernment.government.summary.eyebrow')}
+          title={t('servicesGovernment.government.summary.title')}
           points={[
             {
-              label: 'Mayor · executive',
-              text: 'The City Mayor is Makati’s chief executive and leads the city administration, development planning and implementation of city programs under the charter.',
+              label: t('servicesGovernment.government.summary.mayorLabel'),
+              text: t('servicesGovernment.government.summary.mayorText'),
             },
             {
-              label: 'Vice Mayor · council',
-              text: 'The Vice Mayor presides over the Sangguniang Panlungsod and has succession and acting-mayor functions defined by law.',
+              label: t('servicesGovernment.government.summary.viceMayorLabel'),
+              text: t('servicesGovernment.government.summary.viceMayorText'),
             },
             {
-              label: 'City Council · legislation & budget',
-              text: 'The Sangguniang Panlungsod enacts local ordinances and approves annual and supplemental budgets and appropriations.',
+              label: t('servicesGovernment.government.summary.councilLabel'),
+              text: t('servicesGovernment.government.summary.councilText'),
             },
             {
-              label: 'Departments · service delivery',
-              text: 'City departments carry out specialized functions such as health, engineering, finance, social welfare, environment and public safety.',
+              label: t('servicesGovernment.government.summary.departmentsLabel'),
+              text: t('servicesGovernment.government.summary.departmentsText'),
             },
           ]}
           note={
@@ -134,14 +134,12 @@ export default function Government() {
                 rel="noreferrer"
                 className="font-bold text-primary-700 underline underline-offset-2"
               >
-                Makati City Charter
-              </a>
-              . For a transaction or concern, use Services or the government-office directory rather than starting with an elected-official profile.
+                {t('servicesGovernment.government.charter')}\n              </a>\n              {t('servicesGovernment.government.summary.noteAfterCharter')}
             </>
           }
           actions={
             <Link to="/services" className="text-sm font-bold text-primary-700 underline underline-offset-2">
-              Find a service <ArrowRight className="inline h-3.5 w-3.5" />
+              {t('servicesGovernment.government.findService')} <ArrowRight className="inline h-3.5 w-3.5" />
             </Link>
           }
         />
@@ -190,16 +188,14 @@ export default function Government() {
           <div className="section-eyebrow">{t('servicesGovernment.government.localLegislature')}</div>
           <Heading level={2}>{t('servicesGovernment.government.cityCouncil')}</Heading>
           <Text className="mt-2 max-w-3xl text-gray-700">
-            The Sangguniang Panlungsod is Makati&apos;s legislative body. Under the{' '}
+            {t('servicesGovernment.government.councilIntroBefore')}{' '}
             <a
               className="font-bold text-primary-700 underline underline-offset-2"
               href={charterUrl}
               target="_blank"
               rel="noreferrer"
             >
-              Makati City Charter
-            </a>
-            , the Vice Mayor serves as presiding officer.
+              {t('servicesGovernment.government.charter')}\n            </a>\n            {t('servicesGovernment.government.councilIntroAfter')}
           </Text>
 
           <div className="mt-7 grid grid-cols-1 xl:grid-cols-2 gap-6">
@@ -234,7 +230,7 @@ export default function Government() {
               target="_blank"
               rel="noreferrer"
             >
-              Makati City Charter <ExternalLink className="h-3.5 w-3.5" />
+              {t('servicesGovernment.government.charter')} <ExternalLink className="h-3.5 w-3.5" />
             </a>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2 mb-10">
