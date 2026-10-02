@@ -15,6 +15,7 @@ import {
   Users,
 } from 'lucide-react';
 import { Link } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import SEO from '../components/SEO';
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
@@ -131,6 +132,8 @@ interface CommunityInput {
 }
 
 export default function ProjectStatus() {
+  const { i18n } = useTranslation();
+  const numberLocale = i18n.resolvedLanguage?.startsWith('fil') ? 'fil-PH' : 'en-PH';
   const [sourceRuns, setSourceRuns] = useState<SourceWatchRun[]>([]);
   const [sourceState, setSourceState] = useState<SourceWatchState>({});
   const [communityInput, setCommunityInput] = useState<CommunityInput[]>([]);
@@ -261,7 +264,7 @@ export default function ProjectStatus() {
   const coverage = [
     {
       label: 'Government services',
-      value: serviceDirectory.length.toLocaleString('en-PH'),
+      value: serviceDirectory.length.toLocaleString(numberLocale),
       detail: 'City, barangay and major national services in the public-service directory',
       icon: Database,
     },
@@ -273,13 +276,13 @@ export default function ProjectStatus() {
     },
     {
       label: 'Verified transaction guides',
-      value: verifiedServiceGuideCount.toLocaleString('en-PH'),
+      value: verifiedServiceGuideCount.toLocaleString(numberLocale),
       detail: 'Structured guides checked field-by-field against the cited official source without unresolved source conflicts',
       icon: BadgeCheck,
     },
     {
       label: 'Government service offices',
-      value: governmentServiceOffices.length.toLocaleString('en-PH'),
+      value: governmentServiceOffices.length.toLocaleString(numberLocale),
       detail: 'Citizen-facing offices in Makati and selected offices outside the city that directly serve Makati',
       icon: Building2,
     },
@@ -321,43 +324,43 @@ export default function ProjectStatus() {
     },
     {
       label: 'Elected-official profiles',
-      value: electedOfficials.length.toLocaleString('en-PH'),
+      value: electedOfficials.length.toLocaleString(numberLocale),
       detail: 'Current city/congress profiles in the civic directory',
       icon: Eye,
     },
     {
       label: 'Searchable civic entries',
-      value: searchIndex.length.toLocaleString('en-PH'),
+      value: searchIndex.length.toLocaleString(numberLocale),
       detail: 'Items in BetterMakati’s local search index',
       icon: Search,
     },
     {
       label: 'Accountability records',
-      value: accountabilityEntries.length.toLocaleString('en-PH'),
+      value: accountabilityEntries.length.toLocaleString(numberLocale),
       detail: 'Structured records in the current Accountability Ledger',
       icon: FileSearch,
     },
     {
       label: 'Published accountability gaps',
-      value: accountabilityCoverageGaps.length.toLocaleString('en-PH'),
+      value: accountabilityCoverageGaps.length.toLocaleString(numberLocale),
       detail: 'Known gaps in the current Accountability Ledger',
       icon: AlertCircle,
     },
     {
       label: 'City Monitor source channels',
-      value: cityMonitorSources.length.toLocaleString('en-PH'),
+      value: cityMonitorSources.length.toLocaleString(numberLocale),
       detail: 'Official channels in the current City Monitor source directory',
       icon: RefreshCw,
     },
     {
       label: 'Validated City Monitor records',
-      value: cityMonitorRecords.length.toLocaleString('en-PH'),
+      value: cityMonitorRecords.length.toLocaleString(numberLocale),
       detail: 'Structured records currently in the validated monitor corpus',
       icon: Database,
     },
     {
       label: 'Methodology gaps',
-      value: knownDoctrineGaps.toLocaleString('en-PH'),
+      value: knownDoctrineGaps.toLocaleString(numberLocale),
       detail: 'Open items in the BetterMakati methodology audit',
       icon: Gauge,
     },
@@ -590,7 +593,7 @@ export default function ProjectStatus() {
               <>
                 <p className="mt-2 text-sm text-gray-600">
                   {sourceState.checkedAt
-                    ? <>Last published check: <strong>{new Date(sourceState.checkedAt).toLocaleString('en-PH')}</strong> · {sourceState.cadence || 'all'}.</>
+                    ? <>Last published check: <strong>{new Date(sourceState.checkedAt).toLocaleString(numberLocale)}</strong> · {sourceState.cadence || 'all'}.</>
                     : 'The cadence-aware monitor is configured; its first publishable state has not yet been released.'}
                 </p>
                 <div className="mt-4 grid grid-cols-2 gap-2 text-center">
@@ -633,7 +636,7 @@ export default function ProjectStatus() {
               <>
                 <p className="mt-2 text-sm text-gray-600">
                   Last published City Monitor update:{' '}
-                  <strong>{new Date(latestMonitorRun.checkedAt).toLocaleString('en-PH')}</strong>
+                  <strong>{new Date(latestMonitorRun.checkedAt).toLocaleString(numberLocale)}</strong>
                 </p>
                 <div className="mt-4 grid grid-cols-3 gap-2 text-center">
                   <div className="rounded-xl bg-[#fffdf8] p-3">
