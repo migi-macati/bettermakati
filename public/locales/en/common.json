@@ -517,6 +517,44 @@
       "noMatchesHelp": "Try the service directory if you know the task but not the agency, or clear the office search and try again.",
       "clear": "Clear office search",
       "findService": "Find a service by task"
+    },
+    "government": {
+      "seoTitle": "Government",
+      "seoDescription": "Makati City elected officials, representation and city offices.",
+      "eyebrow": "City government",
+      "title": "Makati City Government",
+      "reviewNote": "Current elected-official profiles are tied to the 2025 election records cited on each profile.",
+      "intro": "Current elected-official profiles are linked to the election records used to identify the officeholder. Party labels, where shown, refer to the 2025 ballot rather than an inferred current affiliation.",
+      "photoTitle": "City government",
+      "viewProfile": "View profile",
+      "representation": "Representation",
+      "house": "House of Representatives",
+      "localLegislature": "Local legislature",
+      "cityCouncil": "City Council",
+      "cityOffices": "City offices",
+      "cityHall": "Makati City Hall",
+      "trunkline": "Trunkline",
+      "email": "Email",
+      "officeHours": "Office hours",
+      "officeHoursValue": "Monday to Friday, 8:00 AM–5:00 PM",
+      "officialPortal": "Official Makati City Web Portal",
+      "charter": "Makati City Charter",
+      "findService": "Find a service",
+      "councilIntroBefore": "The Sangguniang Panlungsod is Makati's legislative body. Under the",
+      "councilIntroAfter": ", the Vice Mayor serves as presiding officer.",
+      "summary": {
+        "eyebrow": "How city government fits together",
+        "title": "Different offices answer different civic questions",
+        "mayorLabel": "Mayor · executive",
+        "mayorText": "The City Mayor is Makati’s chief executive and leads the city administration, development planning and implementation of city programs under the charter.",
+        "viceMayorLabel": "Vice Mayor · council",
+        "viceMayorText": "The Vice Mayor presides over the Sangguniang Panlungsod and has succession and acting-mayor functions defined by law.",
+        "councilLabel": "City Council · legislation & budget",
+        "councilText": "The Sangguniang Panlungsod enacts local ordinances and approves annual and supplemental budgets and appropriations.",
+        "departmentsLabel": "Departments · service delivery",
+        "departmentsText": "City departments carry out specialized functions such as health, engineering, finance, social welfare, environment and public safety.",
+        "noteAfterCharter": ". For a transaction or concern, use Services or the government-office directory rather than starting with an elected-official profile."
+      }
     }
   }
 }
