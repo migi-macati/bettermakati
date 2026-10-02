@@ -43,7 +43,7 @@ for (const marker of [
   'Browse all services',
   'Browse government offices',
 ]) {
-  if (!concernFinder.includes(marker) && !enLocale.includes(marker) {
+  if (!concernFinder.includes(marker) && !enLocale.includes(marker)) {
     problems.push('Saan Ako Lalapit recovery marker missing: ' + marker);
   }
 }
