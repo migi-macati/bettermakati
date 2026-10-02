@@ -7,6 +7,7 @@ import {
   Rss,
 } from 'lucide-react';
 import { Link } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
 import SEO from '../components/SEO';
@@ -26,7 +27,7 @@ const officialLinks = [
 const googleNewsSearch =
   'https://news.google.com/search?q=Makati&hl=en-PH&gl=PH&ceid=PH%3Aen';
 
-const formatDate = (value: string) => {
+const formatDate = (value: string, locale: string) => {
   const date = new Date(value);
   return Number.isNaN(date.getTime())
     ? value
@@ -156,7 +157,7 @@ export default function News() {
                     </span>
                   </div>
                   <time dateTime={item.pubDate}>
-                    {formatDate(item.pubDate)}
+                    {formatDate(item.pubDate, locale)}
                   </time>
                 </div>
                 <h2 className="mt-3 text-lg font-extrabold leading-snug text-gray-950">
