@@ -551,6 +551,42 @@
       "filter": "Filter City Monitor stream",
       "channels": "Monitored official channels",
       "sourceDirectory": "Source directory"
+    },
+    "calendar": {
+      "title": "Makati Calendar",
+      "description": "See source-backed Makati civic dates, deadlines, meetings, legislation milestones, publications and historical records in one civic timeline.",
+      "chooseView": "Choose a view",
+      "topic": "Topic",
+      "barangay": "Barangay",
+      "allBarangays": "All barangays + citywide",
+      "actionability": "Actionability",
+      "search": "Search",
+      "placeholder": "Title, source, topic…",
+      "from": "From",
+      "to": "To",
+      "today": "Today in Makati",
+      "howItWorks": "How the Makati Calendar works"
+    },
+    "briefs": {
+      "description": "Daily, weekly and monthly Makati civic briefs from City Monitor records.",
+      "follow": "Follow Makati",
+      "title": "Civic Briefs",
+      "filterBarangay": "Filter Civic Brief by barangay relevance",
+      "citywide": "Citywide view",
+      "glance": "At a glance",
+      "validated": "Validated activity",
+      "changed": "What changed in the civic record",
+      "noRecords": "No City Monitor records for this period",
+      "followThrough": "Follow-through",
+      "accountability": "Accountability-linked developments",
+      "editorial": "Editorial review",
+      "freshness": "Freshness review queue",
+      "archive": "Archive",
+      "permanentArchive": "Permanent brief archive",
+      "distribution": "Distribution",
+      "share": "Share the brief",
+      "shareReady": "Share-ready text",
+      "followBetterMakati": "Follow BetterMakati"
     }
   }
 }
