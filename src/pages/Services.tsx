@@ -201,7 +201,7 @@ const Services: React.FC = () => {
                   type="search"
                   value={directoryQuery}
                   onChange={event => setDirectoryQuery(event.target.value)}
-                  placeholder={t('servicesGovernment.servicesPage.searchPlaceholder')}"
+                  placeholder={t('servicesGovernment.servicesPage.searchPlaceholder')}
                   className="bm-service-search w-full py-3.5 pl-12 pr-4 text-base"
                 />
               </label>
