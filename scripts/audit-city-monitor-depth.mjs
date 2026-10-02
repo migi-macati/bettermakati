@@ -116,9 +116,9 @@ for (const type of [
 }
 
 for (const marker of [
-  'Freshness review queue',
+  "t('currentInfo.monitor.freshnessQueue')",
   '/records#freshness-review-queue',
-  'validated permanent records',
+  "t('currentInfo.monitor.permanentRecords')",
   'content-change detection',
   'reachability only',
   'manual review',
