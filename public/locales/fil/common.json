@@ -494,6 +494,16 @@
       "civicBrief": "Civic brief",
       "latestBrief": "Pinakabagong published brief",
       "newsEyebrow": "Makati sa balita"
+    },
+    "news": {
+      "seoTitle": "Makati sa Balita",
+      "seoDescription": "Current Makati news links at official city information sources.",
+      "eyebrow": "City Information",
+      "title": "Makati sa Balita",
+      "today": "Makati Ngayon",
+      "cityMonitor": "City Monitor",
+      "calendar": "Makati Calendar",
+      "officialSource": "Official city source"
     }
   }
 }
