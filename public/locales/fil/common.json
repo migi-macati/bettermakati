@@ -493,6 +493,38 @@
       "residentsPopcen": "residents · 2024 POPCEN",
       "punongBarangay": "Punong Barangay",
       "noMatches": "Walang barangay, official o indexed local place na tumutugma sa search."
+    },
+    "profile": {
+      "notFound": "Hindi makita ang barangay",
+      "chooseBarangay": "Pumili ng barangay",
+      "homepage": "Barangay homepage",
+      "makeBetterPrefix": "Gawin nating Better ang",
+      "intro": "Hanapin ang local services, officials, public places, projects, records at mga paraan para makilahok sa Barangay {{barangay}}.",
+      "searchTitle": "Ano ang hinahanap mo?",
+      "searchPlaceholder": "Subukan: barangay clearance, hall contacts, park, project...",
+      "startWith": "Magsimula sa:",
+      "hallContacts": "Hall contacts",
+      "localProjects": "Local projects",
+      "places": "Places",
+      "reviewNote": "Population: 2024 POPCEN · Council term: 2023–2026",
+      "startHere": "Magsimula rito",
+      "whatBrings": "Ano ang kailangan mo?",
+      "around": "Sa Barangay {{barangay}}",
+      "atGlance": "Sa isang tingin",
+      "population": "Population",
+      "ofMakati": "ng Makati",
+      "population2024": "2024 population",
+      "legislativeDistrict": "Legislative district",
+      "currentDistrict": "Kasalukuyang district",
+      "contextLabel": "Barangay {{barangay}}",
+      "civicDates": "Civic dates para sa {{barangay}}",
+      "barangayServices": "Barangay services",
+      "servicesIn": "Services sa {{barangay}}",
+      "allLocalServices": "Lahat ng local services",
+      "commonTransactions": "Common transactions",
+      "placesFacilities": "Places at facilities",
+      "inBarangay": "Sa {{barangay}}",
+      "openMap": "Buksan ang barangay map"
     }
   }
 }
