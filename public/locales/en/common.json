@@ -600,7 +600,13 @@
           "label": "Statistics",
           "description": "Start with this barangay’s population context, then compare citywide indicators."
         }
-      }
+      },
+      "currentTerm": "Current term",
+      "statusSource": "Status source",
+      "rosterSource": "Roster source",
+      "crossCheckSource": "Cross-check source",
+      "auditParks": "{{count}} pilot park in {{barangay}}. Record entrance access, step-free access, seating and toilets.",
+      "auditParks_other": "{{count}} pilot parks in {{barangay}}. Record entrance access, step-free access, seating and toilets."
     }
   }
 }
