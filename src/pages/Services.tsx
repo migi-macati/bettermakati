@@ -544,7 +544,7 @@ const Services: React.FC = () => {
           items={[
             { label: 'Home', href: '/' },
             { label: 'Services', href: scopedServiceHref('/services') },
-            { label: category || '{t('servicesGovernment.servicesPage.categoryNotFound')}' },
+            { label: category || t('servicesGovernment.servicesPage.categoryNotFound') },
           ]}
         />
         <Banner
