@@ -475,5 +475,24 @@
     "navigate": "Galawin",
     "select": "Piliin",
     "close": "Isara"
+  },
+  "betterBarangay": {
+    "directory": {
+      "seoTitle": "Mga Barangay",
+      "seoDescription": "Pumili sa 23 barangay ng Makati para buksan ang local BetterMakati homepage nito na may kasalukuyang officials, services, facilities, records at local civic context.",
+      "title": "Hanapin ang barangay mo.",
+      "intro": "Local services, officials, facilities, projects, records at places para sa bawat isa sa 23 barangay ng Makati.",
+      "searchLabel": "Maghanap ng barangay, official o local place",
+      "searchPlaceholder": "Barangay, official o local place",
+      "districtFilter": "I-filter ang mga barangay ayon sa district",
+      "allBarangays": "Lahat ng barangay",
+      "reviewNote": "Population: 2024 POPCEN · Council rosters: 2023–2026 term",
+      "count": "barangay",
+      "count_other": "barangay",
+      "clearFilters": "Alisin ang filters",
+      "residentsPopcen": "residents · 2024 POPCEN",
+      "punongBarangay": "Punong Barangay",
+      "noMatches": "Walang barangay, official o indexed local place na tumutugma sa search."
+    }
   }
 }
