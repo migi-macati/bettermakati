@@ -24,6 +24,7 @@ const areas = await readFile(
 );
 const navigation = await readFile('src/data/navigation.ts', 'utf8');
 const searchPage = await readFile('src/pages/Search.tsx', 'utf8');
+const enLocale = await readFile('src/locales/en.json', 'utf8');
 const mobilitySystems = await readFile(
   'src/data/mobilitySystems.ts',
   'utf8'
