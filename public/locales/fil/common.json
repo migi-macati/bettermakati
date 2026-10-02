@@ -586,7 +586,13 @@
           "label": "Statistics",
           "description": "Magsimula sa population context ng barangay, pagkatapos ay ikumpara sa citywide indicators."
         }
-      }
+      },
+      "currentTerm": "Kasalukuyang term",
+      "statusSource": "Status source",
+      "rosterSource": "Roster source",
+      "crossCheckSource": "Cross-check source",
+      "auditParks": "{{count}} pilot park sa {{barangay}}. Magbigay ng impormasyon tungkol sa entrance access, step-free access, seating at toilets.",
+      "auditParks_other": "{{count}} pilot parks sa {{barangay}}. Magbigay ng impormasyon tungkol sa entrance access, step-free access, seating at toilets."
     }
   }
 }
