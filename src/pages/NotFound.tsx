@@ -18,7 +18,7 @@ export default function NotFound() {
   return (
     <>
       <SEO
-        title={t('discovery.notFound.seoTitle')}"
+        title={t('discovery.notFound.seoTitle')}
         description={t('discovery.notFound.seoDescription')}
         noIndex
       />
