@@ -508,6 +508,16 @@
       "civicBrief": "Civic brief",
       "latestBrief": "Latest published brief",
       "newsEyebrow": "Makati in the news"
+    },
+    "news": {
+      "seoTitle": "Makati in the News",
+      "seoDescription": "Current Makati news links and official city information sources.",
+      "eyebrow": "City Information",
+      "title": "Makati in the News",
+      "today": "Today in Makati",
+      "cityMonitor": "City Monitor",
+      "calendar": "Makati Calendar",
+      "officialSource": "Official city source"
     }
   }
 }
