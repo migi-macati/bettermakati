@@ -503,6 +503,44 @@
       "noMatchesHelp": "Tingnan ang service directory kung alam mo ang kailangan pero hindi ang agency, o i-clear ang search at subukan ulit.",
       "clear": "I-clear ang office search",
       "findService": "Maghanap ng service ayon sa kailangan"
+    },
+    "government": {
+      "seoTitle": "Government",
+      "seoDescription": "Mga elected official, representation at city offices ng Makati.",
+      "eyebrow": "City government",
+      "title": "Makati City Government",
+      "reviewNote": "Ang current elected-official profiles ay naka-base sa 2025 election records na cited sa bawat profile.",
+      "intro": "Ang current elected-official profiles ay naka-link sa election records na ginamit para tukuyin ang officeholder. Ang party labels, kung mayroon, ay mula sa 2025 ballot at hindi hinuha tungkol sa kasalukuyang affiliation.",
+      "photoTitle": "City government",
+      "viewProfile": "Tingnan ang profile",
+      "representation": "Representation",
+      "house": "House of Representatives",
+      "localLegislature": "Local legislature",
+      "cityCouncil": "City Council",
+      "cityOffices": "City offices",
+      "cityHall": "Makati City Hall",
+      "trunkline": "Trunkline",
+      "email": "Email",
+      "officeHours": "Office hours",
+      "officeHoursValue": "Lunes hanggang Biyernes, 8:00 AM–5:00 PM",
+      "officialPortal": "Official Makati City Web Portal",
+      "charter": "Makati City Charter",
+      "findService": "Maghanap ng service",
+      "councilIntroBefore": "Ang Sangguniang Panlungsod ang legislative body ng Makati. Sa ilalim ng",
+      "councilIntroAfter": ", ang Vice Mayor ang presiding officer.",
+      "summary": {
+        "eyebrow": "Paano nakaayos ang city government",
+        "title": "Magkakaiba ang tungkulin ng bawat office",
+        "mayorLabel": "Mayor · executive",
+        "mayorText": "Ang City Mayor ang chief executive ng Makati at namumuno sa city administration, development planning at pagpapatupad ng city programs sa ilalim ng charter.",
+        "viceMayorLabel": "Vice Mayor · council",
+        "viceMayorText": "Ang Vice Mayor ang namumuno sa Sangguniang Panlungsod at may succession at acting-mayor functions na itinakda ng batas.",
+        "councilLabel": "City Council · legislation & budget",
+        "councilText": "Ang Sangguniang Panlungsod ang nagpapatibay ng local ordinances at nag-aapruba ng annual at supplemental budgets at appropriations.",
+        "departmentsLabel": "Departments · service delivery",
+        "departmentsText": "Ang city departments ang humahawak ng specialized functions gaya ng health, engineering, finance, social welfare, environment at public safety.",
+        "noteAfterCharter": ". Para sa transaction o concern, gamitin ang Services o government-office directory sa halip na magsimula sa profile ng elected official."
+      }
     }
   }
 }
