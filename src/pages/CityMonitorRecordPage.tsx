@@ -8,6 +8,7 @@ import {
   Scale,
 } from 'lucide-react';
 import { Link, useParams } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import SEO from '../components/SEO';
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
