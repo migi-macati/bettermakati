@@ -344,8 +344,9 @@ if (
 }
 
 if (
-  !searchPage.includes('districts and estates') ||
-  !searchPage.includes('organizations')
+  !searchPage.includes("t('discovery.search.description')") ||
+  !enLocale.includes('districts and estates') ||
+  !enLocale.includes('organizations')
 ) {
   problems.push(
     'Search page scope copy must explicitly include canonical areas and organizations.'
