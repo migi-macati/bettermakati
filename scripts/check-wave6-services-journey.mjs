@@ -41,9 +41,9 @@ if (concernFinder.includes('Describe what you need. Describe what you need.')) {
 for (const marker of [
   'Matches can show the service, responsible office and a place to go.',
   'Browse all services',
-  "t('servicesGovernment.servicesPage.browseOffices')",
+  'Browse government offices',
 ]) {
-  if (!concernFinder.includes(marker) && !enLocale.includes(marker)) {
+  if (!concernFinder.includes(marker) && !enLocale.includes(marker) {
     problems.push('Saan Ako Lalapit recovery marker missing: ' + marker);
   }
 }
