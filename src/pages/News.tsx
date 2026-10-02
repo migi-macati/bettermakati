@@ -30,13 +30,15 @@ const formatDate = (value: string) => {
   const date = new Date(value);
   return Number.isNaN(date.getTime())
     ? value
-    : new Intl.DateTimeFormat('en-PH', {
+    : new Intl.DateTimeFormat(locale, {
         dateStyle: 'medium',
         timeStyle: 'short',
       }).format(date);
 };
 
 export default function News() {
+  const { t, i18n } = useTranslation();
+  const locale = i18n.resolvedLanguage === 'fil' ? 'fil-PH' : 'en-PH';
   const [items, setItems] = useState<NewsItem[]>(newsSnapshot);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -70,17 +72,17 @@ export default function News() {
   return (
     <>
       <SEO
-        title="Makati in the News"
-        description="Current Makati news links and official city information sources."
+        title={t('currentInfo.news.seoTitle')}
+        description={t('currentInfo.news.seoDescription')}
       />
       <Section className="bg-[#fffdf8]">
-        <div className="section-eyebrow">City Information</div>
-        <Heading>Makati in the News</Heading>
+        <div className="section-eyebrow">{t('currentInfo.news.eyebrow')}</div>
+        <Heading>{t('currentInfo.news.title')}</Heading>
 
         <div className="mt-5 flex flex-wrap gap-3">
-          <Link to="/today" className="brand-btn-primary">Today in Makati</Link>
-          <Link to="/city-monitor" className="brand-btn-secondary">City Monitor</Link>
-          <Link to="/calendar" className="brand-btn-secondary">Makati Calendar</Link>
+          <Link to="/today" className="brand-btn-primary">{t('currentInfo.news.today')}</Link>
+          <Link to="/city-monitor" className="brand-btn-secondary">{t('currentInfo.news.cityMonitor')}</Link>
+          <Link to="/calendar" className="brand-btn-secondary">{t('currentInfo.news.calendar')}</Link>
         </div>
 
         <div className="mt-6 rounded-2xl border border-primary-100 bg-primary-50 p-5 md:p-6" aria-busy={loading}>
@@ -252,7 +254,7 @@ export default function News() {
         </div>
 
         <div className="mt-10 border-t border-gray-200 pt-8">
-          <div className="section-eyebrow">Official city source</div>
+          <div className="section-eyebrow">{t('currentInfo.news.officialSource')}</div>
           <div className="grid grid-cols-1 gap-4">
             {officialLinks.map(item => {
               const Icon = item.icon;
