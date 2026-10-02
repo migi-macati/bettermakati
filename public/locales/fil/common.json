@@ -475,5 +475,34 @@
     "navigate": "Galawin",
     "select": "Piliin",
     "close": "Isara"
+  },
+  "servicesGovernment": {
+    "services": "Services",
+    "offices": {
+      "services": "Services",
+      "seoTitle": "Government Service Offices",
+      "seoDescription": "National government at GOCC service offices para sa Makati, kasama ang piling regional offices na nagseserbisyo sa Makati residents.",
+      "title": "Government offices para sa Makati",
+      "intro": "National agencies at GOCC service offices sa Makati, kasama ang piling offices sa labas ng city na direktang nagseserbisyo sa Makati.",
+      "reviewNote": "Maaaring magbago ang office locations. Tingnan ang linked agency source bago bumiyahe.",
+      "startService": "Magsimula sa service",
+      "unsure": "Hindi sigurado kung aling office ang may hawak nito?",
+      "searchLabel": "Maghanap ng government offices",
+      "searchPlaceholder": "Hanapin ang SSS, Pag-IBIG, PhilHealth, DepEd, address...",
+      "scope": {
+        "all": "Lahat",
+        "inMakati": "Nasa Makati",
+        "servesMakati": "Nagseserbisyo sa Makati"
+      },
+      "shown": "{{count}} office ang ipinapakita",
+      "shown_other": "{{count}} offices ang ipinapakita",
+      "map": "Map",
+      "agencySource": "Agency source",
+      "placeDetails": "Place details",
+      "noMatches": "Walang office na tumutugma sa search na ito.",
+      "noMatchesHelp": "Tingnan ang service directory kung alam mo ang kailangan pero hindi ang agency, o i-clear ang search at subukan ulit.",
+      "clear": "I-clear ang office search",
+      "findService": "Maghanap ng service ayon sa kailangan"
+    }
   }
 }
