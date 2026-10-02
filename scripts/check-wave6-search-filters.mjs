@@ -15,18 +15,19 @@ const requireAll = (source, label, markers) => {
 
 requireAll(serviceSearch, 'Search domain model', [
   "type SearchDomainId =",
-  "{ id: 'services', label: 'Services' }",
-  "{ id: 'barangays', label: 'Barangays' }",
-  "{ id: 'officials', label: 'Officials' }",
-  "{ id: 'statistics', label: 'Statistics' }",
-  "{ id: 'reports', label: 'Reports & insights' }",
-  "{ id: 'legislation', label: 'Legislation' }",
-  "{ id: 'public-records', label: 'Public records' }",
-  "{ id: 'places', label: 'Places & map' }",
-  "{ id: 'heritage', label: 'Heritage' }",
-  "{ id: 'mobility', label: 'Mobility' }",
-  "{ id: 'calendar', label: 'Civic calendar' }",
-  "{ id: 'news', label: 'News' }",
+  "const searchDomainOptions: SearchDomainId[] =",
+  "'services'",
+  "'barangays'",
+  "'officials'",
+  "'statistics'",
+  "'reports'",
+  "'legislation'",
+  "'public-records'",
+  "'places'",
+  "'heritage'",
+  "'mobility'",
+  "'calendar'",
+  "'news'",
 ]);
 
 requireAll(serviceSearch, 'Search filter behavior', [
@@ -34,7 +35,7 @@ requireAll(serviceSearch, 'Search filter behavior', [
   "const [domainFilter, setDomainFilter] = useState<SearchDomainId>('all');",
   "const domainCounts = useMemo(() => {",
   "domainFilter === 'all'",
-  'Filter by type',
+  "t('serviceSearch.filterByType')",
   "setDomainFilter('all');",
   "setTab('All');",
 ]);
