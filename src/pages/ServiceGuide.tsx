@@ -382,7 +382,7 @@ export default function ServiceGuide() {
           items={[
             { label: 'Home', href: '/' },
             { label: 'Services', href: servicesHref },
-            { label: '{t('servicesGovernment.guide.notFound')}' },
+            { label: t('servicesGovernment.guide.notFound') },
           ]}
         />
         <Heading>{t('servicesGovernment.guide.notFound')}</Heading>
@@ -504,7 +504,7 @@ export default function ServiceGuide() {
 
           <div className="mt-6 grid gap-4 lg:grid-cols-2">
             <div className="rounded-2xl border border-primary-100 bg-white p-5">
-              <h3 className="font-extrabold text-gray-950">Requests/referrals listed</h3>
+              <h3 className="font-extrabold text-gray-950">{t('servicesGovernment.guide.requestsListed')}</h3>
               <ul className="mt-3 space-y-2 text-sm leading-relaxed text-gray-700">
                 {temporaryAvailability.assistanceCategories.map(item => (
                   <li key={item}>• {item}</li>
@@ -512,7 +512,7 @@ export default function ServiceGuide() {
               </ul>
               <details className="mt-5 border-t border-gray-100 pt-4">
                 <summary className="flex min-h-11 cursor-pointer items-center font-bold text-primary-800">
-                  Guarantee Letter facilities named in the post
+                  {t('servicesGovernment.guide.glFacilities')}
                 </summary>
                 <ul className="mt-2 space-y-1.5 text-sm leading-relaxed text-gray-700">
                   {temporaryAvailability.guaranteeLetterFacilities.map(facility => (
@@ -549,7 +549,7 @@ export default function ServiceGuide() {
               rel="noreferrer"
               className="brand-btn-secondary"
             >
-              Original Facebook post <ExternalLink className="h-4 w-4" />
+              {t('servicesGovernment.guide.originalPost')} <ExternalLink className="h-4 w-4" />
             </a>
           </div>
         </Section>
@@ -675,7 +675,7 @@ export default function ServiceGuide() {
             ) : null}
 
             <div className="mt-7 text-xs leading-relaxed text-gray-500">
-              Source:{' '}
+              {t('servicesGovernment.guide.source')}:{' '}
               <a
                 href={detail.sourceUrl}
                 target="_blank"
@@ -684,7 +684,7 @@ export default function ServiceGuide() {
               >
                 {detail.sourceLabel}
               </a>
-              {' '}· checked {detail.lastVerified}
+              {' '}· {t('servicesGovernment.guide.checked')} {detail.lastVerified}
             </div>
           </>
         ) : (
@@ -730,15 +730,15 @@ export default function ServiceGuide() {
       )}
 
       <Section className="bg-[#f5f8f2]">
-        <div className="section-eyebrow">Where to go</div>
+        <div className="section-eyebrow">{t('servicesGovernment.guide.whereToGo')}</div>
         <Heading level={2}>
-          {offices.length ? 'Offices that can help' : item.level === 'Barangay' ? 'Start with your barangay' : 'Office information'}
+          {offices.length ? t('servicesGovernment.guide.officesHelp') : item.level === 'Barangay' ? t('servicesGovernment.guide.startBarangay') : t('servicesGovernment.guide.officeInfo')}
         </Heading>
 
         {item.level === 'Barangay' ? (
           <div className="mt-5 rounded-2xl border border-primary-100 bg-white p-5">
             <p className="text-sm leading-relaxed text-gray-700">
-              Barangay services are handled by the barangay hall. Open your barangay profile for local office and contact information.
+              {t('servicesGovernment.guide.barangayHelp')}
             </p>
             <Link
               to={barangay ? '/barangays/' + barangay.slug : '/barangays'}
@@ -819,7 +819,7 @@ export default function ServiceGuide() {
         ) : (
           <div className="mt-5 rounded-2xl border border-gray-200 bg-white p-5">
             <p className="text-sm leading-relaxed text-gray-700">
-              A dedicated walk-in office is not listed for this service. Use the official service source below before travelling.
+              {t('servicesGovernment.guide.noWalkIn')}
             </p>
           </div>
         )}
@@ -880,12 +880,12 @@ export default function ServiceGuide() {
             )}
             {destinationIsExternal && officialSourceUrl !== item.href && (
               <a href={officialSourceUrl} target="_blank" rel="noreferrer" className="brand-btn-secondary">
-                Official source <FileText className="h-4 w-4" />
+                {t('servicesGovernment.guide.officialSource')} <FileText className="h-4 w-4" />
               </a>
             )}
             {relatedInternalPage && (
               <Link to={item.href} className="brand-btn-secondary">
-                Related BetterMakati page
+                {t('servicesGovernment.guide.relatedPage')}
               </Link>
             )}
           </div>
