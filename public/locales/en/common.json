@@ -489,5 +489,24 @@
     "navigate": "Navigate",
     "select": "Select",
     "close": "Close"
+  },
+  "betterBarangay": {
+    "directory": {
+      "seoTitle": "Barangays",
+      "seoDescription": "Choose one of Makati City's 23 barangays to open its BetterMakati local homepage with current officials, services, facilities, records and local civic context.",
+      "title": "Find your barangay.",
+      "intro": "Local services, officials, facilities, projects, records and places for each of Makati's 23 barangays.",
+      "searchLabel": "Search barangays, officials or local places",
+      "searchPlaceholder": "Search barangay, official or local place",
+      "districtFilter": "Filter barangays by district",
+      "allBarangays": "All barangays",
+      "reviewNote": "Population: 2024 POPCEN · Council rosters: 2023–2026 term",
+      "count": "barangay",
+      "count_other": "barangays",
+      "clearFilters": "Clear filters",
+      "residentsPopcen": "residents · 2024 POPCEN",
+      "punongBarangay": "Punong Barangay",
+      "noMatches": "No barangay, official or indexed local place matches that search."
+    }
   }
 }
