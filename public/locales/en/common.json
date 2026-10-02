@@ -550,7 +550,16 @@
       "searchRecords": "Search records",
       "filter": "Filter City Monitor stream",
       "channels": "Monitored official channels",
-      "sourceDirectory": "Source directory"
+      "sourceDirectory": "Source directory",
+      "permanentRecords": "validated permanent records",
+      "sourceChannels": "official source channels",
+      "historicalRecords": "historical records already indexed",
+      "changeSignals": "latest change signals",
+      "automaticChecks": "automatic checks",
+      "contentChanges": "content changes",
+      "failedChecks": "failed checks",
+      "manualReviewChannels": "manual-review channels",
+      "notPresent": "Not yet present in the latest published source-state file."
     },
     "calendar": {
       "title": "Makati Calendar",
