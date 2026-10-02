@@ -524,7 +524,69 @@
       "commonTransactions": "Common transactions",
       "placesFacilities": "Places at facilities",
       "inBarangay": "Sa {{barangay}}",
-      "openMap": "Buksan ang barangay map"
+      "openMap": "Buksan ang barangay map",
+      "localGovernment": "Local government",
+      "barangayHall": "Barangay hall",
+      "currentCouncil": "Kasalukuyang barangay council",
+      "kagawads": "Barangay Kagawads",
+      "skChair": "SK Chairperson",
+      "secretary": "Secretary",
+      "treasurer": "Treasurer",
+      "civicInformation": "Civic information",
+      "participateLocally": "Makilahok sa barangay",
+      "reportProblem": "Magsumite ng local concern",
+      "suggestImprovement": "Magmungkahi ng improvement sa lugar",
+      "recordAccessibility": "Magbigay ng park accessibility information",
+      "correctLocalInfo": "Magdagdag o magpa-correct ng local information",
+      "contactGovernment": "Contact barangay government",
+      "elections": "Elections",
+      "accountability": "Accountability",
+      "heritage": "Heritage",
+      "aroundBarangay": "Sa barangay",
+      "quick": {
+        "findService": {
+          "label": "Hanapin ang service",
+          "description": "Barangay clearances, certificates at iba pang public services."
+        },
+        "explore": {
+          "label": "Tuklasin ang local places",
+          "description": "Facilities, parks, streets at iba pang mapped places nearby."
+        },
+        "government": {
+          "label": "Barangay government",
+          "description": "Council members, hall contacts at official channels."
+        },
+        "projects": {
+          "label": "Projects at records",
+          "description": "City projects at budgets, kasama ang local evidence kapag may geographic tag."
+        },
+        "report": {
+          "label": "Magsumite ng local concern",
+          "description": "Magsimula ng non-emergency report para sa isang local place o location."
+        },
+        "participate": {
+          "label": "Makilahok",
+          "description": "Magmungkahi ng improvements, magbigay ng sources o local information."
+        }
+      },
+      "civic": {
+        "projects": {
+          "label": "Projects at budget",
+          "description": "Tingnan ang citywide budget at project records, kasama ang local evidence kapag malinaw ang geographic tag."
+        },
+        "accountability": {
+          "label": "Accountability",
+          "description": "Tingnan ang public records at accountability entries na konektado sa barangay na ito."
+        },
+        "map": {
+          "label": "Civic Map",
+          "description": "Tingnan ang mapped public places at infrastructure sa barangay na ito."
+        },
+        "statistics": {
+          "label": "Statistics",
+          "description": "Magsimula sa population context ng barangay, pagkatapos ay ikumpara sa citywide indicators."
+        }
+      }
     }
   }
 }
