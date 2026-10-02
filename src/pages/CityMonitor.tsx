@@ -1,4 +1,5 @@
 import type { ComponentType } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useEffect, useMemo, useState } from 'react';
 import {
   AlertCircle,
@@ -80,6 +81,8 @@ const streamOptions: Array<{ value: 'all' | CityMonitorType; label: string }> = 
 ];
 
 export default function CityMonitor() {
+  const { t, i18n } = useTranslation();
+  const locale = i18n.resolvedLanguage === 'fil' ? 'fil-PH' : 'en-PH';
   const [stream, setStream] = useState<'all' | CityMonitorType>('all');
   const [query, setQuery] = useState('');
   const [runs, setRuns] = useState<MonitorRun[]>([]);
@@ -139,15 +142,15 @@ export default function CityMonitor() {
   return (
     <>
       <SEO
-        title="City Monitor"
-        description="A continuously monitored record of Makati government activity: council, legislation, executive speeches, procurement, projects, publications, consultations and official notices."
+        title={t('currentInfo.monitor.title')}
+        description={t('currentInfo.monitor.seoDescription')}
       />
 
       <Section className="bg-[#fffdf8]">
-        <div className="section-eyebrow">Official activity</div>
+        <div className="section-eyebrow">{t('currentInfo.monitor.officialActivity')}</div>
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <Heading>City Monitor</Heading>
+            <Heading>{t('currentInfo.monitor.title')}</Heading>
             <p className="mt-2 max-w-4xl text-gray-700 leading-relaxed">
               Council, legislation, speeches, procurement, projects, publications, consultations and notices from monitored official sources.
             </p>
@@ -163,19 +166,19 @@ export default function CityMonitor() {
         <div className="mt-7 grid grid-cols-2 gap-4 lg:grid-cols-4">
           <div className="rounded-2xl border border-primary-100 bg-white p-5">
             <div className="text-3xl font-extrabold text-gray-950">{cityMonitorValidatedRecordCount}</div>
-            <div className="mt-1 text-sm text-gray-600">validated permanent records</div>
+            <div className="mt-1 text-sm text-gray-600">{t('currentInfo.monitor.permanentRecords')}</div>
           </div>
           <div className="rounded-2xl border border-primary-100 bg-white p-5">
             <div className="text-3xl font-extrabold text-gray-950">{cityMonitorSourceCount}</div>
-            <div className="mt-1 text-sm text-gray-600">official source channels</div>
+            <div className="mt-1 text-sm text-gray-600">{t('currentInfo.monitor.sourceChannels')}</div>
           </div>
           <div className="rounded-2xl border border-primary-100 bg-white p-5">
             <div className="text-3xl font-extrabold text-gray-950">{cityMonitorHistoricalRecordCount}</div>
-            <div className="mt-1 text-sm text-gray-600">historical records already indexed</div>
+            <div className="mt-1 text-sm text-gray-600">{t('currentInfo.monitor.historicalRecords')}</div>
           </div>
           <div className="rounded-2xl border border-primary-100 bg-white p-5">
             <div className="text-3xl font-extrabold text-gray-950">{latestRun?.changed.length ?? 0}</div>
-            <div className="mt-1 text-sm text-gray-600">latest change signals</div>
+            <div className="mt-1 text-sm text-gray-600">{t('currentInfo.monitor.changeSignals')}</div>
           </div>
         </div>
 
@@ -197,8 +200,8 @@ export default function CityMonitor() {
 
 
       <Section className="bg-[#f5f8f2]">
-        <div className="section-eyebrow">Daily source watch</div>
-        <Heading level={2}>Source changes</Heading>
+        <div className="section-eyebrow">{t('currentInfo.monitor.dailyWatch')}</div>
+        <Heading level={2}>{t('currentInfo.monitor.sourceChanges')}</Heading>
 
         {historyFailed ? (
           <div className="mt-6 rounded-2xl border border-secondary-200 bg-secondary-50 p-5 text-sm text-gray-700">
@@ -210,24 +213,24 @@ export default function CityMonitor() {
         ) : latestRun ? (
           <div className="mt-6 rounded-2xl border border-primary-100 bg-white p-6">
             <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
-              Latest published monitor update · {new Date(latestRun.checkedAt).toLocaleString('en-PH')}
+              Latest published monitor update · {new Date(latestRun.checkedAt).toLocaleString(locale)}
             </div>
             <div className="mt-4 grid grid-cols-2 lg:grid-cols-4 gap-3">
               <div className="rounded-xl border border-gray-200 bg-[#fffdf8] p-4">
                 <div className="text-2xl font-extrabold text-gray-950">{latestRun.checked ?? sourceState.sources.length}</div>
-                <div className="text-sm text-gray-600">automatic checks</div>
+                <div className="text-sm text-gray-600">{t('currentInfo.monitor.automaticChecks')}</div>
               </div>
               <div className="rounded-xl border border-gray-200 bg-[#fffdf8] p-4">
                 <div className="text-2xl font-extrabold text-gray-950">{latestRun.changed.length}</div>
-                <div className="text-sm text-gray-600">content changes</div>
+                <div className="text-sm text-gray-600">{t('currentInfo.monitor.contentChanges')}</div>
               </div>
               <div className="rounded-xl border border-gray-200 bg-[#fffdf8] p-4">
                 <div className="text-2xl font-extrabold text-gray-950">{latestRun.failed.length}</div>
-                <div className="text-sm text-gray-600">failed checks</div>
+                <div className="text-sm text-gray-600">{t('currentInfo.monitor.failedChecks')}</div>
               </div>
               <div className="rounded-xl border border-gray-200 bg-[#fffdf8] p-4">
                 <div className="text-2xl font-extrabold text-gray-950">{latestRun.manualReview?.length ?? cityMonitorSources.filter(source => source.monitoringMode === 'manual-review').length}</div>
-                <div className="text-sm text-gray-600">manual-review channels</div>
+                <div className="text-sm text-gray-600">{t('currentInfo.monitor.manualReviewChannels')}</div>
               </div>
             </div>
 
@@ -271,8 +274,8 @@ export default function CityMonitor() {
         )}
 
         <div className="mt-8 rounded-2xl border border-gray-200 bg-white p-6">
-          <div className="section-eyebrow">Editorial review</div>
-          <h3 className="mt-1 text-xl font-extrabold text-gray-950">Freshness review queue</h3>
+          <div className="section-eyebrow">{t('currentInfo.monitor.editorialReview')}</div>
+          <h3 className="mt-1 text-xl font-extrabold text-gray-950">{t('currentInfo.monitor.freshnessQueue')}</h3>
           <p className="mt-2 text-sm text-gray-600">
             Source-change, failed-check and manual-review items are handled in one queue.
           </p>
@@ -283,21 +286,21 @@ export default function CityMonitor() {
       </Section>
 
       <Section className="bg-white">
-        <div className="section-eyebrow">Validated civic records</div>
-        <Heading level={2}>Structured records</Heading>
+        <div className="section-eyebrow">{t('currentInfo.monitor.validatedRecords')}</div>
+        <Heading level={2}>{t('currentInfo.monitor.structuredRecords')}</Heading>
         <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-600">
           Search permanent City Monitor records by topic or stream.
         </p>
 
         <div className="mt-6 flex flex-col gap-3 md:flex-row">
           <label className="relative flex-1">
-            <span className="sr-only">Search City Monitor</span>
+            <span className="sr-only">{t('currentInfo.monitor.search')}</span>
             <Search className="absolute left-3 top-3.5 h-4 w-4 text-gray-400" />
             <input
               value={query}
               onChange={event => setQuery(event.target.value)}
               type="search"
-              placeholder="Search records"
+              placeholder={t('currentInfo.monitor.searchRecords')}
               className="min-h-11 w-full rounded-xl border border-gray-300 py-3 pl-10 pr-4"
             />
           </label>
@@ -305,7 +308,7 @@ export default function CityMonitor() {
             value={stream}
             onChange={event => setStream(event.target.value as 'all' | CityMonitorType)}
             className="min-h-11 rounded-xl border border-gray-300 bg-white px-4 py-3"
-            aria-label="Filter City Monitor stream"
+            aria-label={t('currentInfo.monitor.filter')}
           >
             {streamOptions.map(option => (
               <option key={option.value} value={option.value}>{option.label}</option>
@@ -390,8 +393,8 @@ export default function CityMonitor() {
 
 
       <Section className="bg-white">
-        <div className="section-eyebrow">Monitored official channels</div>
-        <Heading level={2}>Source directory</Heading>
+        <div className="section-eyebrow">{t('currentInfo.monitor.channels')}</div>
+        <Heading level={2}>{t('currentInfo.monitor.sourceDirectory')}</Heading>
         <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-600">
           Official channels used by City Monitor.
         </p>
@@ -443,7 +446,7 @@ export default function CityMonitor() {
                 <h3 className="mt-2 font-extrabold text-gray-950">{source.label}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-gray-600">{source.monitoringNote}</p>
                 {!state && (
-                  <p className="mt-2 text-xs text-gray-500">Not yet present in the latest published source-state file.</p>
+                  <p className="mt-2 text-xs text-gray-500">{t('currentInfo.monitor.notPresent')}</p>
                 )}
                 <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
                   Open source <ExternalLink className="h-3.5 w-3.5" />
