@@ -77,6 +77,7 @@ const fuzzyWordMatch = (word: string, tokens: string[]) => {
 };
 
 const Services: React.FC = () => {
+  const { t } = useTranslation();
   const { category } = useParams();
   const [categoryIndex, setCategoryIndex] = useState<CategoryIndex>({
     layout: 'list',
