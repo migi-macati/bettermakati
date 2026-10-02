@@ -489,5 +489,34 @@
     "navigate": "Navigate",
     "select": "Select",
     "close": "Close"
+  },
+  "servicesGovernment": {
+    "services": "Services",
+    "offices": {
+      "services": "Services",
+      "seoTitle": "Government Service Offices",
+      "seoDescription": "Citizen-facing national government and GOCC service offices in Makati, plus selected regional offices that serve Makati residents.",
+      "title": "Government offices for Makati",
+      "intro": "Citizen-facing national agencies and GOCC service offices in Makati, plus selected offices outside the city that directly serve Makati.",
+      "reviewNote": "Office locations can change. Check the linked agency source before travelling.",
+      "startService": "Start with a service",
+      "unsure": "Not sure which office handles it?",
+      "searchLabel": "Search government offices",
+      "searchPlaceholder": "Search SSS, Pag-IBIG, PhilHealth, DepEd, address...",
+      "scope": {
+        "all": "All",
+        "inMakati": "In Makati",
+        "servesMakati": "Serves Makati"
+      },
+      "shown": "{{count}} office shown",
+      "shown_other": "{{count}} offices shown",
+      "map": "Map",
+      "agencySource": "Agency source",
+      "placeDetails": "Place details",
+      "noMatches": "No office matches this search.",
+      "noMatchesHelp": "Try the service directory if you know the task but not the agency, or clear the office search and try again.",
+      "clear": "Clear office search",
+      "findService": "Find a service by task"
+    }
   }
 }
