@@ -1,6 +1,7 @@
 import { ArrowRight, Search, Users } from 'lucide-react';
 import { Link } from 'react-router';
 import { useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import LastReviewed from '../components/ui/LastReviewed';
 import SEO from '../components/SEO';
 import {
@@ -9,6 +10,8 @@ import {
 } from '../data/barangays';
 
 export default function Barangays() {
+  const { t, i18n } = useTranslation();
+  const numberLocale = i18n.resolvedLanguage === 'fil' ? 'fil-PH' : 'en-PH';
   const [query, setQuery] = useState('');
   const [district, setDistrict] = useState('All');
 
@@ -45,8 +48,8 @@ export default function Barangays() {
   return (
     <>
       <SEO
-        title="Barangays"
-        description="Choose one of Makati City's 23 barangays to open its BetterMakati local homepage with current officials, services, facilities, records and local civic context."
+        title={t('betterBarangay.directory.seoTitle')}
+        description={t('betterBarangay.directory.seoDescription')}
       />
 
       <section className="border-b border-primary-900 bg-primary-800 text-white">
@@ -56,15 +59,14 @@ export default function Barangays() {
               BetterBarangay
             </div>
             <h1 className="text-4xl font-extrabold tracking-tight text-white md:text-6xl">
-              Find your barangay.
+              {t('betterBarangay.directory.title')}
             </h1>
             <p className="mt-4 max-w-3xl text-lg leading-relaxed text-primary-50 md:text-xl">
-              Local services, officials, facilities, projects, records and places for
-              each of Makati&apos;s 23 barangays.
+              {t('betterBarangay.directory.intro')}
             </p>
 
             <label className="relative mt-7 block max-w-2xl">
-              <span className="sr-only">Search barangays, officials or local places</span>
+              <span className="sr-only">{t('betterBarangay.directory.searchLabel')}</span>
               <Search
                 className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-500"
                 aria-hidden="true"
@@ -73,12 +75,12 @@ export default function Barangays() {
                 type="search"
                 value={query}
                 onChange={event => setQuery(event.target.value)}
-                placeholder="Search barangay, official or local place"
+                placeholder={t('betterBarangay.directory.searchPlaceholder')}
                 className="w-full rounded-xl border border-white/30 bg-white py-3.5 pl-12 pr-4 text-base text-gray-950 shadow-sm outline-none placeholder:text-gray-500 focus:border-secondary-400 focus:ring-2 focus:ring-secondary-300/40"
               />
             </label>
 
-            <div className="mt-4 flex flex-wrap gap-2" aria-label="Filter barangays by district">
+            <div className="mt-4 flex flex-wrap gap-2" aria-label={t('betterBarangay.directory.districtFilter')}>
               {districts.map(item => (
                 <button
                   key={item}
@@ -90,14 +92,14 @@ export default function Barangays() {
                       : 'min-h-11 rounded-full border border-white/30 bg-white/10 px-4 py-2 text-sm font-semibold text-white transition hover:border-white/60 hover:bg-white/15'
                   }
                 >
-                  {item === 'All' ? 'All barangays' : item}
+                  {item === 'All' ? t('betterBarangay.directory.allBarangays') : item}
                 </button>
               ))}
             </div>
 
             <LastReviewed
               date={barangayProfilesReviewed}
-              note="Population: 2024 POPCEN · Council rosters: 2023–2026 term"
+              note={t('betterBarangay.directory.reviewNote')}
               className="mt-5 !text-primary-50 [&_strong]:!text-white [&_svg]:!text-secondary-300"
             />
           </div>
@@ -109,11 +111,11 @@ export default function Barangays() {
           <div className="flex flex-wrap items-end justify-between gap-3">
             <div>
               <div className="section-eyebrow">
-                {district === 'All' ? 'All barangays' : district}
+                {district === 'All' ? t('betterBarangay.directory.allBarangays') : district}
               </div>
               <h2 className="text-2xl font-extrabold tracking-tight text-gray-950 md:text-3xl">
                 {visibleBarangays.length}{' '}
-                {visibleBarangays.length === 1 ? 'barangay' : 'barangays'}
+                {t('betterBarangay.directory.count', { count: visibleBarangays.length })}
               </h2>
             </div>
             {(query || district !== 'All') && (
@@ -125,7 +127,7 @@ export default function Barangays() {
                 }}
                 className="min-h-11 text-sm font-bold text-primary-700 hover:text-primary-900"
               >
-                Clear filters
+                {t('betterBarangay.directory.clearFilters')}
               </button>
             )}
           </div>
@@ -145,13 +147,13 @@ export default function Barangays() {
                     {barangay.name}
                   </h3>
                   <p className="mt-2 text-sm text-gray-600">
-                    {barangay.population2024.toLocaleString('en-PH')} residents · 2024 POPCEN
+                    {barangay.population2024.toLocaleString(numberLocale)}{' '}{t('betterBarangay.directory.residentsPopcen')}
                   </p>
                   {barangay.officials?.punongBarangay && (
                     <div className="mt-3 flex items-start gap-2 text-sm leading-relaxed text-gray-700">
                       <Users className="mt-0.5 h-4 w-4 shrink-0 text-primary-700" aria-hidden="true" />
                       <span>
-                        <span className="font-semibold">Punong Barangay:</span>{' '}
+                        <span className="font-semibold">{t('betterBarangay.directory.punongBarangay')}:</span>{' '}
                         {barangay.officials.punongBarangay}
                       </span>
                     </div>
@@ -164,7 +166,7 @@ export default function Barangays() {
 
           {visibleBarangays.length === 0 && (
             <div className="mt-7 rounded-2xl border border-gray-200 bg-white p-6 text-sm text-gray-600">
-              No barangay, official or indexed local place matches that search.
+              {t('betterBarangay.directory.noMatches')}
             </div>
           )}
         </div>
