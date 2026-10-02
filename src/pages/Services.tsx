@@ -222,7 +222,7 @@ const Services: React.FC = () => {
                 </Link>
               </div>
 
-              <div className="mt-5 flex flex-wrap gap-2" aria-label={t('servicesGovernment.servicesPage.levelLabel')}">
+              <div className="mt-5 flex flex-wrap gap-2" aria-label={t('servicesGovernment.servicesPage.levelLabel')}>
                 {serviceDirectoryLevels.map(level => (
                   <button
                     key={level}
