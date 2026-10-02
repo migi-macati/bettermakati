@@ -18,6 +18,8 @@ import {
 import { placeRegistryById } from '../data/placeRegistry';
 
 export default function CityMonitorRecordPage() {
+  const { t, i18n } = useTranslation();
+  const locale = i18n.resolvedLanguage === 'fil' ? 'fil-PH' : 'en-PH';
   const { id } = useParams();
   const record = cityMonitorRecords.find(item => item.id === id);
   const linkedPlaces = (record?.placeIds ?? [])
@@ -27,9 +29,9 @@ export default function CityMonitorRecordPage() {
   if (!record) {
     return (
       <>
-        <SEO title="City Monitor record not found" noIndex />
+        <SEO title={t('currentInfo.record.notFound')} noIndex />
         <Section className="bm-detail-page bg-[#fffdf8]">
-          <Heading>City Monitor record not found</Heading>
+          <Heading>{t('currentInfo.record.notFound')}</Heading>
           <p className="mt-3 text-gray-600">
             No validated City Monitor record found.
           </p>
@@ -63,40 +65,40 @@ export default function CityMonitorRecordPage() {
 
         <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
           <div className="bm-detail-meta-card p-4">
-            <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">Date</div>
+            <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">{t('currentInfo.record.date')}</div>
             <div className="mt-1 font-extrabold text-gray-950">{record.date}</div>
           </div>
           <div className="bm-detail-meta-card p-4">
-            <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">Status</div>
+            <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">{t('currentInfo.record.status')}</div>
             <div className="mt-1 font-extrabold text-gray-950">{record.status}</div>
           </div>
           <div className="bm-detail-meta-card p-4">
-            <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">Source publisher</div>
+            <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">{t('currentInfo.record.publisher')}</div>
             <div className="mt-1 font-extrabold text-gray-950">{record.sourcePublisher}</div>
           </div>
           {record.referenceNo && (
             <div className="bm-detail-meta-card p-4">
-              <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">Reference</div>
+              <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">{t('currentInfo.record.reference')}</div>
               <div className="mt-1 font-extrabold text-gray-950">{record.referenceNo}</div>
             </div>
           )}
           {record.stage && (
             <div className="bm-detail-meta-card p-4">
-              <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">Evidence stage</div>
+              <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">{t('currentInfo.record.evidenceStage')}</div>
               <div className="mt-1 font-extrabold text-gray-950">{record.stage}</div>
             </div>
           )}
           {record.amount !== undefined && (
             <div className="bm-detail-meta-card p-4">
-              <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">Reported amount</div>
+              <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">{t('currentInfo.record.amount')}</div>
               <div className="mt-1 font-extrabold text-gray-950">
-                ₱{record.amount.toLocaleString('en-PH', { maximumFractionDigits: 2 })}
+                ₱{record.amount.toLocaleString(locale, { maximumFractionDigits: 2 })}
               </div>
             </div>
           )}
           {record.location && (
             <div className="bm-detail-meta-card p-4">
-              <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">Location</div>
+              <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">{t('currentInfo.record.location')}</div>
               <div className="mt-1 font-extrabold text-gray-950">{record.location}</div>
             </div>
           )}
@@ -141,8 +143,8 @@ export default function CityMonitorRecordPage() {
 
       {(record.summaryBullets?.length || record.measures?.length) && (
         <Section className="bg-white">
-          <div className="section-eyebrow">Summary</div>
-          <Heading level={2}>Key details</Heading>
+          <div className="section-eyebrow">{t('currentInfo.record.summary')}</div>
+          <Heading level={2}>{t('currentInfo.record.details')}</Heading>
           {record.summaryBullets && (
             <ul className="mt-5 space-y-2 text-sm text-gray-700">
               {record.summaryBullets.map(item => <li key={item}>• {item}</li>)}
@@ -168,8 +170,8 @@ export default function CityMonitorRecordPage() {
       )}
 
       <Section className="bg-[#f5f8f2]">
-        <div className="section-eyebrow">Sources</div>
-        <Heading level={2}>Documents</Heading>
+        <div className="section-eyebrow">{t('currentInfo.record.sources')}</div>
+        <Heading level={2}>{t('currentInfo.record.documents')}</Heading>
         <div className="mt-5 space-y-3">
           <a
             href={record.sourceUrl}
@@ -203,8 +205,8 @@ export default function CityMonitorRecordPage() {
 
       {(record.transcript || record.type === 'executive-speech') && (
         <Section className="bg-white">
-          <div className="section-eyebrow">Transcript</div>
-          <Heading level={2}>Transcript</Heading>
+          <div className="section-eyebrow">{t('currentInfo.record.transcript')}</div>
+          <Heading level={2}>{t('currentInfo.record.transcript')}</Heading>
           {record.transcript ? (
             <div className="mt-5 rounded-2xl border border-primary-100 bg-[#fffdf8] p-6">
               <Megaphone className="h-5 w-5 text-primary-700" />
@@ -232,8 +234,8 @@ export default function CityMonitorRecordPage() {
 
       {record.commitments?.length ? (
         <Section className="bm-detail-page bg-[#fffdf8]">
-          <div className="section-eyebrow">Commitments</div>
-          <Heading level={2}>Forward-looking commitments</Heading>
+          <div className="section-eyebrow">{t('currentInfo.record.commitments')}</div>
+          <Heading level={2}>{t('currentInfo.record.forwardCommitments')}</Heading>
           <div className="mt-5 space-y-3">
             {record.commitments.map(commitment => (
               <div key={commitment.text} className="bm-detail-meta-card p-4">
