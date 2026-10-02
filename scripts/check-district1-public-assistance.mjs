@@ -194,8 +194,8 @@ need(
 
 for (const marker of [
   'temporaryAvailability.sessions.map',
-  "t('servicesGovernment.guide.requestsReferralsListed')",
-  "t('servicesGovernment.guide.guaranteeLetterFacilities')",
+  "t('servicesGovernment.guide.requestsListed')",
+  "t('servicesGovernment.guide.glFacilities')",
   'Valenzuela &amp; Olympia',
   'View on Makati Calendar',
   'temporaryAvailabilityStatus',
