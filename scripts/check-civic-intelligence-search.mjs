@@ -250,8 +250,8 @@ for (const marker of [
   'if (seen.has(key)) return false',
   "item.group === 'Service' || item.group === 'Record'",
   'key={item.canonicalKey ?? item.href + item.title}',
-  'Search national services on BetterGov',
-  'Find another LGU on BetterLGU',
+  "t('serviceSearch.betterGov')",
+  "t('serviceSearch.betterLgu')",
 ]) {
   if (!search.includes(marker)) {
     problems.push('Global Search canonical/dedupe marker missing: ' + marker);
