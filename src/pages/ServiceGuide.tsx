@@ -10,6 +10,7 @@ import {
   WalletCards,
 } from 'lucide-react';
 import { Link, useParams } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import SEO from '../components/SEO';
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
@@ -367,6 +368,7 @@ const standardSteps = (item: ServiceDirectoryItem) => [
 ];
 
 export default function ServiceGuide() {
+  const { t } = useTranslation();
   const { id } = useParams();
   const { barangay } = useBarangayScope();
   const servicesHref = withBarangayScope('/services', barangay?.slug);
@@ -380,10 +382,10 @@ export default function ServiceGuide() {
           items={[
             { label: 'Home', href: '/' },
             { label: 'Services', href: servicesHref },
-            { label: 'Service guide not found' },
+            { label: '{t('servicesGovernment.guide.notFound')}' },
           ]}
         />
-        <Heading>Service guide not found</Heading>
+        <Heading>{t('servicesGovernment.guide.notFound')}</Heading>
       </Section>
     );
   }
@@ -457,7 +459,7 @@ export default function ServiceGuide() {
         <Section className="border-y border-primary-100 bg-[#f5f8f2]">
           <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
             <div>
-              <div className="section-eyebrow">Temporary service schedule</div>
+              <div className="section-eyebrow">{t('servicesGovernment.guide.temporarySchedule')}</div>
               <Heading level={2}>September 28–October 9, 2026</Heading>
               <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600">
                 Public Assistance Desk sessions run from {temporaryAvailability.operatingHours}
@@ -558,21 +560,21 @@ export default function ServiceGuide() {
         {detail ? (
           <>
             <div>
-              <div className="section-eyebrow">Transaction guide</div>
-              <Heading level={2}>What you need to complete this</Heading>
+              <div className="section-eyebrow">{t('servicesGovernment.guide.transactionGuide')}</div>
+              <Heading level={2}>{t('servicesGovernment.guide.whatYouNeed')}</Heading>
             </div>
 
             {(detail.classification || detail.transactionType || detail.processingTime) && (
               <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-3">
                 {detail.classification && (
                   <div className="rounded-xl border border-gray-200 bg-[#fffdf8] p-4">
-                    <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">Classification</div>
+                    <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">{t('servicesGovernment.guide.classification')}</div>
                     <div className="mt-1 font-extrabold text-gray-950">{detail.classification}</div>
                   </div>
                 )}
                 {detail.transactionType && (
                   <div className="rounded-xl border border-gray-200 bg-[#fffdf8] p-4">
-                    <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">Transaction</div>
+                    <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">{t('servicesGovernment.guide.transaction')}</div>
                     <div className="mt-1 font-extrabold text-gray-950">{detail.transactionType}</div>
                   </div>
                 )}
@@ -589,14 +591,14 @@ export default function ServiceGuide() {
 
             {detail.whoMayAvail && (
               <div className="mt-6 rounded-xl border border-primary-100 bg-primary-50 p-4">
-                <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">Who may avail</div>
+                <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">{t('servicesGovernment.guide.whoMayAvail')}</div>
                 <p className="mt-1 text-sm leading-relaxed text-gray-700">{detail.whoMayAvail}</p>
               </div>
             )}
 
             {detail.requirements.length > 0 && (
               <div className="mt-8">
-                <Heading level={3}>Requirements</Heading>
+                <Heading level={3}>{t('servicesGovernment.guide.requirements')}</Heading>
                 <div className="mt-4 overflow-hidden rounded-2xl border border-gray-200">
                   <div className="divide-y divide-gray-200">
                     {detail.requirements.map((requirement, index) => (
@@ -612,7 +614,7 @@ export default function ServiceGuide() {
                         </div>
                         {requirement.whereToSecure && (
                           <div className="text-sm text-gray-600">
-                            <span className="font-bold text-gray-700">Where to secure:</span>{' '}
+                            <span className="font-bold text-gray-700">{t('servicesGovernment.guide.whereToSecure')}:</span>{' '}
                             {requirement.whereToSecure}
                           </div>
                         )}
@@ -625,7 +627,7 @@ export default function ServiceGuide() {
 
             <div className="mt-8 grid grid-cols-1 gap-7 lg:grid-cols-[1.15fr_0.85fr]">
               <div>
-                <Heading level={3}>Steps</Heading>
+                <Heading level={3}>{t('servicesGovernment.guide.steps')}</Heading>
                 <ol className="mt-4 space-y-3">
                   {detail.steps.map((point, index) => (
                     <li key={point} className="flex gap-3 text-sm leading-relaxed text-gray-700">
@@ -639,7 +641,7 @@ export default function ServiceGuide() {
               </div>
 
               <div>
-                <Heading level={3}>Fees & payment</Heading>
+                <Heading level={3}>{t('servicesGovernment.guide.fees')}</Heading>
                 {detail.fees?.length ? (
                   <div className="mt-4 space-y-3">
                     {detail.fees.map(fee => (
@@ -665,7 +667,7 @@ export default function ServiceGuide() {
 
             {detail.notes?.length ? (
               <div className="mt-7 rounded-xl border border-warning-200 bg-warning-50 p-4">
-                <div className="font-bold text-warning-900">Important source notes</div>
+                <div className="font-bold text-warning-900">{t('servicesGovernment.guide.sourceNotes')}</div>
                 <ul className="mt-2 space-y-2 text-sm leading-relaxed text-warning-900">
                   {detail.notes.map(note => <li key={note}>{note}</li>)}
                 </ul>
@@ -689,8 +691,8 @@ export default function ServiceGuide() {
           <>
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
               <div>
-                <div className="section-eyebrow">Prepare</div>
-                <Heading level={2}>Before you start</Heading>
+                <div className="section-eyebrow">{t('servicesGovernment.guide.prepare')}</div>
+                <Heading level={2}>{t('servicesGovernment.guide.beforeStart')}</Heading>
                 <ul className="mt-5 space-y-3">
                   {prepare.map(point => (
                     <li key={point} className="flex gap-3 text-sm leading-relaxed text-gray-700">
@@ -702,8 +704,8 @@ export default function ServiceGuide() {
               </div>
 
               <div>
-                <div className="section-eyebrow">Process</div>
-                <Heading level={2}>How to start</Heading>
+                <div className="section-eyebrow">{t('servicesGovernment.guide.process')}</div>
+                <Heading level={2}>{t('servicesGovernment.guide.howToStart')}</Heading>
                 <ol className="mt-5 space-y-3">
                   {steps.map((point, index) => (
                     <li key={point} className="flex gap-3 text-sm leading-relaxed text-gray-700">
@@ -825,10 +827,10 @@ export default function ServiceGuide() {
 
       {relatedLegislation.length > 0 && (
         <Section className="border-y border-primary-100 bg-[#f5f8f2]">
-          <div className="section-eyebrow">Related local legislation</div>
-          <Heading level={2}>Historical measures connected to this service</Heading>
+          <div className="section-eyebrow">{t('servicesGovernment.guide.relatedLegislation')}</div>
+          <Heading level={2}>{t('servicesGovernment.guide.historicalMeasures')}</Heading>
           <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600">
-            These records identify measures that explicitly affected this service at the time stated. They do not establish the service’s current fee, rule or legal effect.
+            {t('servicesGovernment.guide.legislationCaveat')}
           </p>
           <div className="mt-5 space-y-3">
             {relatedLegislation.map(item =>
@@ -861,19 +863,19 @@ export default function ServiceGuide() {
         />
       ) : (
         <Section className="bm-service-guide-section bg-white">
-          <div className="section-eyebrow">Official transaction</div>
-          <Heading level={2}>Continue with the issuing agency</Heading>
+          <div className="section-eyebrow">{t('servicesGovernment.guide.officialTransaction')}</div>
+          <Heading level={2}>{t('servicesGovernment.guide.continueAgency')}</Heading>
           <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600">
-            BetterMakati helps you prepare and find the right office. Use the issuing agency’s official source for current eligibility, forms, fees, schedules and any appointment requirement.
+            {t('servicesGovernment.guide.officialSourceHelp')}
           </p>
           <div className="mt-5 flex flex-wrap gap-3">
             {destinationIsExternal ? (
               <a href={item.href} target="_blank" rel="noreferrer" className="brand-btn-primary">
-                Continue to official service <ExternalLink className="h-4 w-4" />
+                {t('servicesGovernment.guide.continueOfficial')} <ExternalLink className="h-4 w-4" />
               </a>
             ) : (
               <a href={officialSourceUrl} target="_blank" rel="noreferrer" className="brand-btn-primary">
-                Open official source <ExternalLink className="h-4 w-4" />
+                {t('servicesGovernment.guide.openOfficial')} <ExternalLink className="h-4 w-4" />
               </a>
             )}
             {destinationIsExternal && officialSourceUrl !== item.href && (
