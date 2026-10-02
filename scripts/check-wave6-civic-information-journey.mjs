@@ -16,18 +16,18 @@ const problems = [];
 
 for (const marker of [
   "'What’s next in Makati'",
-  'Live conditions & current sources',
+  "t('currentInfo.today.liveSources')",
   'to="/city-monitor"',
   'to="/news"',
   'to="/hotlines"',
-  'Open Civic Briefs',
-  'Browse all Makati news',
+  'to="/briefs"',
+  "t('currentInfo.today.newsEyebrow')",
 ]) {
   if (!today.includes(marker)) problems.push('Today synthesis marker missing: ' + marker);
 }
 
 const timelineIndex = today.indexOf('<CivicTimelinePreview');
-const currentSourcesIndex = today.indexOf('Live conditions & current sources');
+const currentSourcesIndex = today.indexOf("t('currentInfo.today.liveSources')");
 if (timelineIndex < 0 || currentSourcesIndex < 0 || timelineIndex > currentSourcesIndex) {
   problems.push('Today no longer places source-backed civic dates before specialist current-information surfaces.');
 }
