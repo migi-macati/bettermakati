@@ -14,6 +14,7 @@ import {
   WalletCards,
 } from 'lucide-react';
 import { Link, useSearchParams } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import SEO from '../components/SEO';
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
@@ -58,7 +59,7 @@ interface BriefArchive {
 const validCadence = (value: string | null): value is CivicBriefCadence =>
   value === 'daily' || value === 'weekly' || value === 'monthly';
 
-const peso = (value: number) =>
+const peso = (value: number, locale: string) =>
   new Intl.NumberFormat(locale, {
     style: 'currency',
     currency: 'PHP',
@@ -343,7 +344,7 @@ export default function CivicBriefs() {
                 Procurement represented in validated records
               </div>
               <div className="mt-1 text-3xl font-extrabold text-gray-950">
-                {peso(procurementTotal)}
+                {peso(procurementTotal, locale)}
               </div>
               <p className="mt-2 text-sm leading-relaxed text-gray-600">
                 Sum of reported winning-bid amounts among procurement records in this brief period. It is not total city spending or proof of payment.
