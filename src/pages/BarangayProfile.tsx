@@ -170,38 +170,38 @@ export default function BarangayProfile() {
 
   const quickActions = [
     {
-      label: 'Find a service',
-      description: 'Barangay clearances, certificates and other public services.',
+      label: t('betterBarangay.profile.quick.findService.label'),
+      description: t('betterBarangay.profile.quick.findService.description'),
       href: withBarangayScope('/services', barangay.slug),
       icon: Search,
     },
     {
-      label: 'Explore local places',
-      description: 'Facilities, parks, streets and other mapped places nearby.',
+      label: t('betterBarangay.profile.quick.explore.label'),
+      description: t('betterBarangay.profile.quick.explore.description'),
       href: withBarangayScope('/civic-map', barangay.slug),
       icon: MapPin,
     },
     {
-      label: 'Barangay government',
-      description: 'Council members, hall contacts and official channels.',
+      label: t('betterBarangay.profile.quick.government.label'),
+      description: t('betterBarangay.profile.quick.government.description'),
       href: '#local-government',
       icon: Building2,
     },
     {
-      label: 'Projects & records',
-      description: 'City projects and budgets, with locally tagged evidence where geography is available.',
+      label: t('betterBarangay.profile.quick.projects.label'),
+      description: t('betterBarangay.profile.quick.projects.description'),
       href: withBarangayScope('/projects-budget', barangay.slug),
       icon: ClipboardCheck,
     },
     {
-      label: 'Report a local issue',
-      description: 'Start a non-emergency report tied to a local place or location.',
+      label: t('betterBarangay.profile.quick.report.label'),
+      description: t('betterBarangay.profile.quick.report.description'),
       href: withBarangayScope('/civic-map/report', barangay.slug),
       icon: Wrench,
     },
     {
-      label: 'Take part locally',
-      description: 'Suggest improvements, share sources or contribute local information.',
+      label: t('betterBarangay.profile.quick.participate.label'),
+      description: t('betterBarangay.profile.quick.participate.description'),
       href: '#participate',
       icon: Users,
     },
@@ -209,26 +209,26 @@ export default function BarangayProfile() {
 
   const civicLinks = [
     {
-      label: 'Projects & money',
-      description: 'See citywide budget and project records, with local evidence where geography is explicitly tagged.',
+      label: t('betterBarangay.profile.civic.projects.label'),
+      description: t('betterBarangay.profile.civic.projects.description'),
       href: withBarangayScope('/projects-budget', barangay.slug),
       icon: ClipboardCheck,
     },
     {
-      label: 'Accountability',
-      description: 'Review public records and accountability entries connected to this barangay.',
+      label: t('betterBarangay.profile.civic.accountability.label'),
+      description: t('betterBarangay.profile.civic.accountability.description'),
       href: withBarangayScope('/accountability', barangay.slug),
       icon: FileCheck2,
     },
     {
-      label: 'Civic Map',
-      description: 'Browse mapped public places and infrastructure in this barangay.',
+      label: t('betterBarangay.profile.civic.map.label'),
+      description: t('betterBarangay.profile.civic.map.description'),
       href: withBarangayScope('/civic-map', barangay.slug),
       icon: MapPin,
     },
     {
-      label: 'Statistics',
-      description: 'Start with this barangay’s population context, then compare citywide indicators.',
+      label: t('betterBarangay.profile.civic.statistics.label'),
+      description: t('betterBarangay.profile.civic.statistics.description'),
       href: withBarangayScope('/statistics', barangay.slug),
       icon: BarChart3,
     },
@@ -509,7 +509,7 @@ export default function BarangayProfile() {
 
       <section id="local-government" className="bm-barangay-section bg-white py-14">
         <div className="container px-5 md:px-6 lg:px-8">
-          <div className="section-eyebrow">Local government</div>
+          <div className="section-eyebrow">{t('betterBarangay.profile.localGovernment')}</div>
           <h2 className="text-3xl font-extrabold tracking-tight text-gray-950 md:text-4xl">
             Barangay {barangay.name} government
           </h2>
@@ -517,7 +517,7 @@ export default function BarangayProfile() {
           <div className="mt-7 grid gap-5 xl:grid-cols-[0.85fr_1.15fr]">
             <div className="rounded-2xl border border-primary-100 bg-[#fffdf8] p-6">
               <Building2 className="h-6 w-6 text-primary-700" />
-              <h3 className="mt-4 text-xl font-extrabold text-gray-950">Barangay hall</h3>
+              <h3 className="mt-4 text-xl font-extrabold text-gray-950">{t('betterBarangay.profile.barangayHall')}</h3>
               <div className="mt-4 space-y-3 text-sm text-gray-700">
                 {barangay.hallAddress && (
                   <div className="flex gap-2">
@@ -585,7 +585,7 @@ export default function BarangayProfile() {
               <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
                 <div>
                   <Users className="h-6 w-6 text-primary-700" />
-                  <h3 className="mt-4 text-xl font-extrabold text-gray-950">Current barangay council</h3>
+                  <h3 className="mt-4 text-xl font-extrabold text-gray-950">{t('betterBarangay.profile.currentCouncil')}</h3>
                 </div>
                 <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">
                   {barangay.officials?.term ?? 'Current term'}
@@ -605,7 +605,7 @@ export default function BarangayProfile() {
 
                   {(barangay.officials.kagawads?.length ?? 0) > 0 && (
                     <div className="mt-5">
-                      <div className="text-sm font-extrabold text-gray-900">Barangay Kagawads</div>
+                      <div className="text-sm font-extrabold text-gray-900">{t('betterBarangay.profile.kagawads')}</div>
                       <div className="mt-3 grid gap-2 sm:grid-cols-2">
                         {barangay.officials.kagawads?.map(name => (
                           <div key={name} className="rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700">
@@ -619,19 +619,19 @@ export default function BarangayProfile() {
                   <div className="mt-5 grid gap-3 sm:grid-cols-3">
                     {barangay.officials.skChairperson && (
                       <div className="rounded-xl border border-gray-200 bg-white p-4">
-                        <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">SK Chairperson</div>
+                        <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">{t('betterBarangay.profile.skChair')}</div>
                         <div className="mt-1 text-sm font-bold text-gray-900">{barangay.officials.skChairperson}</div>
                       </div>
                     )}
                     {barangay.officials.secretary && (
                       <div className="rounded-xl border border-gray-200 bg-white p-4">
-                        <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">Secretary</div>
+                        <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">{t('betterBarangay.profile.secretary')}</div>
                         <div className="mt-1 text-sm font-bold text-gray-900">{barangay.officials.secretary}</div>
                       </div>
                     )}
                     {barangay.officials.treasurer && (
                       <div className="rounded-xl border border-gray-200 bg-white p-4">
-                        <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">Treasurer</div>
+                        <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">{t('betterBarangay.profile.treasurer')}</div>
                         <div className="mt-1 text-sm font-bold text-gray-900">{barangay.officials.treasurer}</div>
                       </div>
                     )}
@@ -859,7 +859,7 @@ export default function BarangayProfile() {
 
       <section className="border-b border-primary-900 bg-primary-900 py-12 text-white">
         <div className="container px-5 md:px-6 lg:px-8">
-          <div className="section-eyebrow !text-white/80">Civic information</div>
+          <div className="section-eyebrow !text-white/80">{t('betterBarangay.profile.civicInformation')}</div>
           <h2 className="text-3xl font-extrabold tracking-tight md:text-4xl">
             Follow what affects {barangay.name}.
           </h2>
@@ -887,7 +887,7 @@ export default function BarangayProfile() {
 
       <section id="participate" className="bg-[#fffdf8] py-14">
         <div className="container px-5 md:px-6 lg:px-8">
-          <div className="section-eyebrow">Participate locally</div>
+          <div className="section-eyebrow">{t('betterBarangay.profile.participateLocally')}</div>
           <h2 className="text-3xl font-extrabold tracking-tight text-gray-950 md:text-4xl">
             Take action in {barangay.name}
           </h2>
@@ -898,7 +898,7 @@ export default function BarangayProfile() {
               className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
             >
               <Wrench className="h-6 w-6 text-primary-700" />
-              <h3 className="mt-4 font-extrabold text-gray-950">Report a local problem</h3>
+              <h3 className="mt-4 font-extrabold text-gray-950">{t('betterBarangay.profile.reportProblem')}</h3>
               <p className="mt-2 text-sm leading-relaxed text-gray-600">
                 Start a non-emergency report and identify the affected place, segment or location.
               </p>
@@ -912,7 +912,7 @@ export default function BarangayProfile() {
               className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
             >
               <MapPin className="h-6 w-6 text-primary-700" />
-              <h3 className="mt-4 font-extrabold text-gray-950">Suggest a place improvement</h3>
+              <h3 className="mt-4 font-extrabold text-gray-950">{t('betterBarangay.profile.suggestImprovement')}</h3>
               <p className="mt-2 text-sm leading-relaxed text-gray-600">
                 Choose a local civic place, review its community records and propose a specific improvement.
               </p>
@@ -927,7 +927,7 @@ export default function BarangayProfile() {
                 className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
               >
                 <ClipboardCheck className="h-6 w-6 text-primary-700" />
-                <h3 className="mt-4 font-extrabold text-gray-950">Record park accessibility</h3>
+                <h3 className="mt-4 font-extrabold text-gray-950">{t('betterBarangay.profile.recordAccessibility')}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-gray-600">
                   {localAuditPlaces.length} pilot {localAuditPlaces.length === 1 ? 'park is' : 'parks are'} in {barangay.name}. Record entrance access, step-free access, seating and toilets.
                 </p>
@@ -941,7 +941,7 @@ export default function BarangayProfile() {
                 className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
               >
                 <FileCheck2 className="h-6 w-6 text-primary-700" />
-                <h3 className="mt-4 font-extrabold text-gray-950">Add or correct local information</h3>
+                <h3 className="mt-4 font-extrabold text-gray-950">{t('betterBarangay.profile.correctLocalInfo')}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-gray-600">
                   Share a public source or flag information about {barangay.name} that needs correction.
                 </p>
@@ -956,7 +956,7 @@ export default function BarangayProfile() {
               className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
             >
               <Building2 className="h-6 w-6 text-primary-700" />
-              <h3 className="mt-4 font-extrabold text-gray-950">Contact barangay government</h3>
+              <h3 className="mt-4 font-extrabold text-gray-950">{t('betterBarangay.profile.contactGovernment')}</h3>
               <p className="mt-2 text-sm leading-relaxed text-gray-600">
                 Go to the verified hall contact details and official channels on this page.
               </p>
@@ -973,7 +973,7 @@ export default function BarangayProfile() {
         <div className="container px-5 md:px-6 lg:px-8">
           <div className="grid gap-8 xl:grid-cols-2">
             <div>
-              <div className="section-eyebrow">Elections</div>
+              <div className="section-eyebrow">{t('betterBarangay.profile.elections')}</div>
               <h2 className="text-2xl font-extrabold tracking-tight text-gray-950">
                 2025 mayoral result
               </h2>
@@ -1019,7 +1019,7 @@ export default function BarangayProfile() {
             </div>
 
             <div>
-              <div className="section-eyebrow">Accountability</div>
+              <div className="section-eyebrow">{t('betterBarangay.profile.accountability')}</div>
               <h2 className="text-2xl font-extrabold tracking-tight text-gray-950">
                 Locally tagged public records
               </h2>
@@ -1087,7 +1087,7 @@ export default function BarangayProfile() {
       {(barangay.heritageMarkers?.length ?? 0) > 0 && (
         <section className="bg-[#f5f8f2] py-14">
           <div className="container px-5 md:px-6 lg:px-8">
-            <div className="section-eyebrow">Heritage</div>
+            <div className="section-eyebrow">{t('betterBarangay.profile.heritage')}</div>
             <h2 className="text-3xl font-extrabold tracking-tight text-gray-950">
               Registered markers and heritage records
             </h2>
@@ -1150,7 +1150,7 @@ export default function BarangayProfile() {
       {communityLinks.length > 0 && (
         <section className="bg-white py-14">
           <div className="container px-5 md:px-6 lg:px-8">
-            <div className="section-eyebrow">Around the barangay</div>
+            <div className="section-eyebrow">{t('betterBarangay.profile.aroundBarangay')}</div>
             <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
               <h2 className="text-3xl font-extrabold tracking-tight text-gray-950">
                 Places, managed areas and organizations
