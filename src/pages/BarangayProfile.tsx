@@ -588,7 +588,7 @@ export default function BarangayProfile() {
                   <h3 className="mt-4 text-xl font-extrabold text-gray-950">{t('betterBarangay.profile.currentCouncil')}</h3>
                 </div>
                 <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">
-                  {barangay.officials?.term ?? 'Current term'}
+                  {barangay.officials?.term ?? t('betterBarangay.profile.currentTerm')}
                 </div>
               </div>
 
@@ -647,7 +647,7 @@ export default function BarangayProfile() {
                           rel="noreferrer"
                           className="mt-2 inline-flex items-center gap-1 font-bold text-primary-700 underline underline-offset-2"
                         >
-                          {barangay.officials.statusSourceLabel ?? 'Status source'}
+                          {barangay.officials.statusSourceLabel ?? t('betterBarangay.profile.statusSource')}
                           <ExternalLink className="h-3.5 w-3.5" />
                         </a>
                       )}
@@ -661,7 +661,7 @@ export default function BarangayProfile() {
                       rel="noreferrer"
                       className="font-bold text-primary-700 underline underline-offset-2"
                     >
-                      {barangay.officials.sourceLabel ?? 'Roster source'} <ExternalLink className="inline h-3.5 w-3.5" />
+                      {barangay.officials.sourceLabel ?? t('betterBarangay.profile.rosterSource')} <ExternalLink className="inline h-3.5 w-3.5" />
                     </a>
                     {barangay.officials.secondarySource && (
                       <a
@@ -929,7 +929,7 @@ export default function BarangayProfile() {
                 <ClipboardCheck className="h-6 w-6 text-primary-700" />
                 <h3 className="mt-4 font-extrabold text-gray-950">{t('betterBarangay.profile.recordAccessibility')}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-gray-600">
-                  {localAuditPlaces.length} pilot {localAuditPlaces.length === 1 ? 'park is' : 'parks are'} in {barangay.name}. Record entrance access, step-free access, seating and toilets.
+                  {t('betterBarangay.profile.auditParks', { count: localAuditPlaces.length, barangay: barangay.name })}
                 </p>
                 <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
                   Join the audit <ArrowRight className="h-4 w-4" />
@@ -987,11 +987,11 @@ export default function BarangayProfile() {
                   {electionResult.exactVotesVerified && (
                     <div className="mt-4 grid grid-cols-2 gap-3">
                       <div className="rounded-xl border border-gray-200 bg-white p-4">
-                        <div className="text-xl font-extrabold text-gray-950">{electionResult.nancyVotes?.toLocaleString('en-PH')}</div>
+                        <div className="text-xl font-extrabold text-gray-950">{electionResult.nancyVotes?.toLocaleString(numberLocale)}</div>
                         <div className="mt-1 text-xs text-gray-600">Nancy Binay</div>
                       </div>
                       <div className="rounded-xl border border-gray-200 bg-white p-4">
-                        <div className="text-xl font-extrabold text-gray-950">{electionResult.camposVotes?.toLocaleString('en-PH')}</div>
+                        <div className="text-xl font-extrabold text-gray-950">{electionResult.camposVotes?.toLocaleString(numberLocale)}</div>
                         <div className="mt-1 text-xs text-gray-600">Luis Campos Jr.</div>
                       </div>
                     </div>
