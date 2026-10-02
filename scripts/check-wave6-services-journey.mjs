@@ -16,9 +16,9 @@ for (const marker of [
   "scopedServiceHref('/services/guide/yellow-card')",
   "scopedServiceHref('/services/guide/community-tax-certificate')",
   "scopedServiceHref('/services/guide/real-property-tax')",
-  'Clear search and filters',
-  'Use Saan Ako Lalapit?',
-  'Browse government offices',
+  "t('servicesGovernment.servicesPage.clearFilters')",
+  "t('servicesGovernment.servicesPage.useConcernFinder')",
+  "t('servicesGovernment.servicesPage.browseOffices')",
 ]) {
   if (!services.includes(marker)) {
     problems.push('Services journey marker missing: ' + marker);
@@ -41,7 +41,7 @@ if (concernFinder.includes('Describe what you need. Describe what you need.')) {
 for (const marker of [
   'Matches can show the service, responsible office and a place to go.',
   'Browse all services',
-  'Browse government offices',
+  "t('servicesGovernment.servicesPage.browseOffices')",
 ]) {
   if (!concernFinder.includes(marker) && !enLocale.includes(marker)) {
     problems.push('Saan Ako Lalapit recovery marker missing: ' + marker);
@@ -51,9 +51,9 @@ for (const marker of [
 for (const marker of [
   'const officialSourceUrl = detail?.sourceUrl || item.sourceUrl;',
   "item.href !== '/services/guide/' + item.id",
-  'BetterMakati helps you prepare and find the right office.',
-  'Open official source',
-  'Related BetterMakati page',
+  "t('servicesGovernment.guide.prepare')",
+  "t('servicesGovernment.guide.openOfficial')",
+  "t('servicesGovernment.guide.relatedPage')",
 ]) {
   if (!serviceGuide.includes(marker)) {
     problems.push('Service-guide handoff marker missing: ' + marker);
@@ -61,10 +61,10 @@ for (const marker of [
 }
 
 for (const marker of [
-  'Start with a service',
-  'Not sure which office handles it?',
-  'No office matches this search.',
-  'Find a service by task',
+  "t('servicesGovernment.offices.startService')",
+  "t('servicesGovernment.offices.unsure')",
+  "t('servicesGovernment.offices.noMatches')",
+  "t('servicesGovernment.offices.findService')",
 ]) {
   if (!offices.includes(marker)) {
     problems.push('Government-offices journey marker missing: ' + marker);
