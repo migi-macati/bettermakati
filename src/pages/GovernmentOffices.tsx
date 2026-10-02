@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import { ExternalLink, Mail, MapPin, Phone, Search } from 'lucide-react';
 import SEO from '../components/SEO';
 import Section from '../components/ui/Section';
@@ -12,6 +13,7 @@ const mapsUrl = (query: string) =>
   'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(query);
 
 export default function GovernmentOffices() {
+  const { t } = useTranslation();
   const [query, setQuery] = useState('');
   const [scope, setScope] = useState<'All' | 'In Makati' | 'Serves Makati'>('All');
 
@@ -30,40 +32,40 @@ export default function GovernmentOffices() {
   return (
     <>
       <SEO
-        title="Government Service Offices"
-        description="Citizen-facing national government and GOCC service offices in Makati, plus selected regional offices that serve Makati residents."
+        title={t('servicesGovernment.offices.seoTitle')}
+        description={t('servicesGovernment.offices.seoDescription')}
       />
       <Section className="bm-service-discovery bg-[#fffdf8]">
-        <div className="section-eyebrow">Services</div>
-        <Heading>Government offices for Makati</Heading>
+        <div className="section-eyebrow">{t('servicesGovernment.services')}</div>
+        <Heading>{t('servicesGovernment.offices.title')}</Heading>
         <p className="mt-2 max-w-3xl text-gray-700">
-          Citizen-facing national agencies and GOCC service offices in Makati, plus selected offices outside the city that directly serve Makati.
+          {t('servicesGovernment.offices.intro')}
         </p>
         <LastReviewed date="2026-09-20"
-          note="Office locations can change. Check the linked agency source before travelling."
+          note={t('servicesGovernment.offices.reviewNote')}
           className="mt-4"
         />
 
         <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-sm font-bold">
           <Link to="/services" className="inline-flex min-h-11 items-center text-primary-700 underline underline-offset-2">
-            Start with a service
+            {t('servicesGovernment.offices.startService')}
           </Link>
           <Link
             to="/community-tools/saan-ako-lalapit"
             className="inline-flex min-h-11 items-center text-primary-700 underline underline-offset-2"
           >
-            Not sure which office handles it?
+            {t('servicesGovernment.offices.unsure')}
           </Link>
         </div>
 
         <label className="relative mt-7 block max-w-3xl">
-          <span className="sr-only">Search government offices</span>
+          <span className="sr-only">{t('servicesGovernment.offices.searchLabel')}</span>
           <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-500" />
           <input
             type="search"
             value={query}
             onChange={event => setQuery(event.target.value)}
-            placeholder="Search SSS, Pag-IBIG, PhilHealth, DepEd, address..."
+            placeholder={t('servicesGovernment.offices.searchPlaceholder')}
             className="bm-service-search min-h-11 w-full rounded-2xl py-3.5 pl-12 pr-4"
           />
         </label>
@@ -81,12 +83,12 @@ export default function GovernmentOffices() {
                   : 'min-h-11 rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-semibold text-gray-700'
               }
             >
-              {item}
+              {t(`servicesGovernment.offices.scope.${item === 'All' ? 'all' : item === 'In Makati' ? 'inMakati' : 'servesMakati'}`)}
             </button>
           ))}
         </div>
         <p className="mt-4 text-sm text-gray-600" role="status" aria-live="polite" aria-atomic="true">
-          {visible.length} {visible.length === 1 ? 'office' : 'offices'} shown
+          {t('servicesGovernment.offices.shown', { count: visible.length })}
         </p>
       </Section>
 
@@ -119,17 +121,17 @@ export default function GovernmentOffices() {
               {office.note && <p className="mt-3 text-xs leading-relaxed text-gray-500">{office.note}</p>}
               <div className="mt-4 flex flex-wrap gap-3 text-sm">
                 <a href={mapsUrl(office.mapsQuery)} target="_blank" rel="noreferrer" className="inline-flex min-h-11 items-center font-bold text-primary-700 underline underline-offset-2">
-                  Map
+                  {t('servicesGovernment.offices.map')}
                 </a>
                 <a href={office.sourceUrl} target="_blank" rel="noreferrer" className="inline-flex min-h-11 items-center gap-1 font-bold text-primary-700 underline underline-offset-2">
-                  Agency source <ExternalLink className="h-3.5 w-3.5" />
+                  {t('servicesGovernment.offices.agencySource')} <ExternalLink className="h-3.5 w-3.5" />
                 </a>
                 {place && (
                   <Link
                     to={'/civic-map/' + place.id}
                     className="inline-flex min-h-11 items-center font-bold text-primary-700 underline underline-offset-2"
                   >
-                    Place details
+                    {t('servicesGovernment.offices.placeDetails')}
                   </Link>
                 )}
               </div>
@@ -140,9 +142,9 @@ export default function GovernmentOffices() {
 
         {visible.length === 0 && (
           <div className="mt-5 rounded-2xl border border-gray-200 bg-[#fffdf8] p-6 text-center">
-            <div className="font-extrabold text-gray-950">No office matches this search.</div>
+            <div className="font-extrabold text-gray-950">{t('servicesGovernment.offices.noMatches')}</div>
             <p className="mx-auto mt-2 max-w-xl text-sm leading-relaxed text-gray-600">
-              Try the service directory if you know the task but not the agency, or clear the office search and try again.
+              {t('servicesGovernment.offices.noMatchesHelp')}
             </p>
             <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
               <button
@@ -153,10 +155,10 @@ export default function GovernmentOffices() {
                 }}
                 className="brand-btn-secondary"
               >
-                Clear office search
+                {t('servicesGovernment.offices.clear')}
               </button>
               <Link to="/services" className="brand-btn-primary">
-                Find a service by task
+                {t('servicesGovernment.offices.findService')}
               </Link>
             </div>
           </div>
