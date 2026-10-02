@@ -59,7 +59,7 @@ const validCadence = (value: string | null): value is CivicBriefCadence =>
   value === 'daily' || value === 'weekly' || value === 'monthly';
 
 const peso = (value: number) =>
-  new Intl.NumberFormat('en-PH', {
+  new Intl.NumberFormat(locale, {
     style: 'currency',
     currency: 'PHP',
     notation: value >= 1_000_000 ? 'compact' : 'standard',
@@ -72,6 +72,8 @@ const recordBarangay = (record: CityMonitorRecord) =>
     : undefined;
 
 export default function CivicBriefs() {
+  const { t, i18n } = useTranslation();
+  const locale = i18n.resolvedLanguage === 'fil' ? 'fil-PH' : 'en-PH';
   const [params, setParams] = useSearchParams();
   const [archive, setArchive] = useState<CivicBriefArchiveEntry[]>([]);
   const [runs, setRuns] = useState<MonitorRun[]>([]);
@@ -219,14 +221,14 @@ export default function CivicBriefs() {
     <>
       <SEO
         title={briefMeta.label}
-        description="Daily, weekly and monthly Makati civic briefs from City Monitor records."
+        description={t('currentInfo.briefs.description')}
       />
 
       <Section className="bg-[#fffdf8]">
-        <div className="section-eyebrow">Follow Makati</div>
+        <div className="section-eyebrow">{t('currentInfo.briefs.follow')}</div>
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <Heading>Civic Briefs</Heading>
+            <Heading>{t('currentInfo.briefs.title')}</Heading>
             <p className="mt-2 max-w-3xl text-gray-700">
               Daily, weekly and monthly updates from City Monitor.
             </p>
@@ -276,7 +278,7 @@ export default function CivicBriefs() {
             </p>
             {selectedBrief && (
               <p className="mt-3 text-xs text-gray-500">
-                Published {new Date(selectedBrief.publishedAt).toLocaleString('en-PH', { timeZone: 'Asia/Manila' })}
+                Published {new Date(selectedBrief.publishedAt).toLocaleString(locale, { timeZone: 'Asia/Manila' })}
               </p>
             )}
           </div>
@@ -290,9 +292,9 @@ export default function CivicBriefs() {
               value={barangaySlug}
               onChange={event => setBarangay(event.target.value)}
               className="mt-4 w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm"
-              aria-label="Filter Civic Brief by barangay relevance"
+              aria-label={t('currentInfo.briefs.filterBarangay')}
             >
-              <option value="">Citywide view</option>
+              <option value="">{t('currentInfo.briefs.citywide')}</option>
               {barangays.map(barangay => (
                 <option key={barangay.slug} value={barangay.slug}>{barangay.name}</option>
               ))}
@@ -307,7 +309,7 @@ export default function CivicBriefs() {
       </Section>
 
       <Section className="bg-white">
-        <div className="section-eyebrow">At a glance</div>
+        <div className="section-eyebrow">{t('currentInfo.briefs.glance')}</div>
         <Heading level={2}>{briefMeta.label}</Heading>
 
         <div className="mt-6 grid grid-cols-2 gap-3 lg:grid-cols-5">
@@ -366,13 +368,13 @@ export default function CivicBriefs() {
       </Section>
 
       <Section className="bg-[#f5f8f2]">
-        <div className="section-eyebrow">Validated activity</div>
-        <Heading level={2}>What changed in the civic record</Heading>
+        <div className="section-eyebrow">{t('currentInfo.briefs.validated')}</div>
+        <Heading level={2}>{t('currentInfo.briefs.changed')}</Heading>
 
         {records.length === 0 ? (
           <div className="mt-6 rounded-2xl border border-gray-200 bg-white p-6">
             <ShieldCheck className="h-5 w-5 text-primary-700" />
-            <h3 className="mt-3 font-extrabold text-gray-950">No City Monitor records for this period</h3>
+            <h3 className="mt-3 font-extrabold text-gray-950">{t('currentInfo.briefs.noRecords')}</h3>
           </div>
         ) : (
           <div className="mt-6 space-y-8">
@@ -444,8 +446,8 @@ export default function CivicBriefs() {
 
       {accountabilityRecords.length > 0 && (
         <Section className="bg-white">
-          <div className="section-eyebrow">Follow-through</div>
-          <Heading level={2}>Accountability-linked developments</Heading>
+          <div className="section-eyebrow">{t('currentInfo.briefs.followThrough')}</div>
+          <Heading level={2}>{t('currentInfo.briefs.accountability')}</Heading>
           <div className="mt-6 space-y-3">
             {accountabilityRecords.slice(0, 10).map(record => (
               <div key={record.id} className="rounded-xl border border-primary-100 bg-[#fffdf8] p-4">
@@ -467,8 +469,8 @@ export default function CivicBriefs() {
       )}
 
       <Section className="bg-white">
-        <div className="section-eyebrow">Editorial review</div>
-        <Heading level={2}>Freshness review queue</Heading>
+        <div className="section-eyebrow">{t('currentInfo.briefs.editorial')}</div>
+        <Heading level={2}>{t('currentInfo.briefs.freshness')}</Heading>
         <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600">
           This brief keeps period-specific signal counts above. Review actions are managed in the consolidated queue.
         </p>
@@ -478,10 +480,10 @@ export default function CivicBriefs() {
       </Section>
 
       <Section className="bg-[#fffdf8]">
-        <div className="section-eyebrow">Archive</div>
+        <div className="section-eyebrow">{t('currentInfo.briefs.archive')}</div>
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <Heading level={2}>Permanent brief archive</Heading>
+            <Heading level={2}>{t('currentInfo.briefs.permanentArchive')}</Heading>
             <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600">
               Daily, weekly and monthly snapshots stay linkable after publication.
             </p>
@@ -542,12 +544,12 @@ export default function CivicBriefs() {
       </Section>
 
       <Section className="bg-white">
-        <div className="section-eyebrow">Distribution</div>
-        <Heading level={2}>Share the brief</Heading>
+        <div className="section-eyebrow">{t('currentInfo.briefs.distribution')}</div>
+        <Heading level={2}>{t('currentInfo.briefs.share')}</Heading>
         <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-2">
           <div className="rounded-2xl border border-primary-100 bg-[#fffdf8] p-6">
             <Copy className="h-5 w-5 text-primary-700" />
-            <h3 className="mt-3 font-extrabold text-gray-950">Share-ready text</h3>
+            <h3 className="mt-3 font-extrabold text-gray-950">{t('currentInfo.briefs.shareReady')}</h3>
             <p className="mt-2 text-sm leading-relaxed text-gray-600">
               Copies the brief title, period, headline summary and permalink.
             </p>
@@ -559,7 +561,7 @@ export default function CivicBriefs() {
 
           <div className="rounded-2xl border border-primary-100 bg-[#fffdf8] p-6">
             <Bell className="h-5 w-5 text-primary-700" />
-            <h3 className="mt-3 font-extrabold text-gray-950">Follow BetterMakati</h3>
+            <h3 className="mt-3 font-extrabold text-gray-950">{t('currentInfo.briefs.followBetterMakati')}</h3>
             <p className="mt-2 text-sm leading-relaxed text-gray-600">
               The website remains the source of truth. Facebook and the RSS feed can distribute links back to permanent briefs and records.
             </p>
