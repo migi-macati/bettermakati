@@ -10,6 +10,7 @@ const [
   navigation,
   app,
   packageJson,
+  enLocaleRaw,
 ] = await Promise.all([
   readFile('data/wave5-search-discovery-audit.json', 'utf8'),
   readFile('src/data/searchIndex.ts', 'utf8'),
@@ -20,7 +21,10 @@ const [
   readFile('src/data/navigation.ts', 'utf8'),
   readFile('src/App.tsx', 'utf8'),
   readFile('package.json', 'utf8'),
+  readFile('public/locales/en/common.json', 'utf8'),
 ]);
+
+const enLocale = JSON.parse(enLocaleRaw);
 
 const audit = JSON.parse(auditRaw);
 const problems = [];
@@ -45,15 +49,19 @@ if (navbarSearchLinks < 2) {
   );
 }
 
+for (const marker of ['<ServiceSearch', 'scope="site"']) {
+  if (!searchPage.includes(marker)) {
+    problems.push('Dedicated Search page marker missing: ' + marker);
+  }
+}
+
 for (const marker of [
-  '<ServiceSearch',
-  'scope="site"',
   'Search BetterMakati',
   'districts and estates',
   'organizations',
 ]) {
-  if (!searchPage.includes(marker)) {
-    problems.push('Dedicated Search page marker missing: ' + marker);
+  if (!JSON.stringify(enLocale.discovery?.search ?? {}).includes(marker)) {
+    problems.push('Dedicated Search locale marker missing: ' + marker);
   }
 }
 
@@ -162,15 +170,22 @@ for (const redirect of [
 }
 
 for (const marker of [
-  'Search national services on BetterGov',
   'https://bettergov.ph/services?search=',
-  'Find another LGU on BetterLGU',
   'https://lgu.bettergov.ph/',
-  'No matching result',
-  'Report a missing result',
 ]) {
   if (!search.includes(marker)) {
     problems.push('No-result discovery/handoff marker missing: ' + marker);
+  }
+}
+
+for (const marker of [
+  'Search national services on BetterGov',
+  'Find another LGU on BetterLGU',
+  'No matching result',
+  'Report a missing result',
+]) {
+  if (!JSON.stringify(enLocale.serviceSearch ?? {}).includes(marker)) {
+    problems.push('No-result locale marker missing: ' + marker);
   }
 }
 
