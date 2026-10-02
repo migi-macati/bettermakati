@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams, Link } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import {
   Bell,
   CloudRain,
@@ -52,14 +53,16 @@ const weatherLabel = (code?: number) => {
   return 'Weather';
 };
 
-const formatTimestamp = (value: string) =>
-  new Intl.DateTimeFormat('en-PH', {
+const formatTimestamp = (value: string, locale: string) =>
+  new Intl.DateTimeFormat(locale, {
     dateStyle: 'medium',
     timeStyle: 'short',
     timeZone: 'Asia/Manila',
   }).format(new Date(value));
 
 export default function Today() {
+  const { t, i18n } = useTranslation();
+  const locale = i18n.resolvedLanguage === 'fil' ? 'fil-PH' : 'en-PH';
   const [params, setParams] = useSearchParams();
   const requested = params.get('barangay');
   const [barangaySlug, setBarangaySlug] = useState(() => {
@@ -151,7 +154,7 @@ export default function Today() {
     void load();
   }, []);
 
-  const dateLabel = new Intl.DateTimeFormat('en-PH', {
+  const dateLabel = new Intl.DateTimeFormat(locale, {
     weekday: 'long',
     month: 'long',
     day: 'numeric',
@@ -177,21 +180,21 @@ export default function Today() {
     ? formatTimestamp(
         weather.observedAt +
           (/[zZ]|[+-]\d\d:\d\d$/.test(weather.observedAt) ? '' : '+08:00')
-      )
+      , locale)
     : '';
 
   return (
     <>
       <SEO
-        title="Today in Makati"
-        description="A daily Makati dashboard for weather, civic dates, official activity, news, advisories and emergency links."
+        title={t('currentInfo.today.seoTitle')}
+        description={t('currentInfo.today.seoDescription')}
       />
 
       <section className="border-b border-primary-900 bg-primary-800 text-white">
         <div className="container px-5 py-10 md:px-6 md:py-12 lg:px-8">
           <div className="max-w-4xl">
             <div className="mb-2 text-xs font-extrabold uppercase tracking-[0.12em] text-secondary-200 md:text-sm">
-              Your Makati
+              {t('currentInfo.today.eyebrow')}
             </div>
             <h1 className="text-4xl font-extrabold tracking-tight text-white md:text-6xl">
               Today in Makati
@@ -202,15 +205,15 @@ export default function Today() {
               <label className="block">
                 <span className="mb-2 flex items-center gap-2 text-sm font-bold text-white">
                   <Settings2 className="h-4 w-4 text-secondary-400" aria-hidden="true" />
-                  My barangay
+                  {t('currentInfo.today.myBarangay')}
                 </span>
                 <select
                   value={barangaySlug}
                   onChange={event => chooseBarangay(event.target.value)}
                   className="w-full rounded-xl border border-white/30 bg-white px-4 py-3 text-gray-950 shadow-sm"
-                  aria-label="Choose my barangay"
+                  aria-label={t('currentInfo.today.chooseBarangay')}
                 >
-                  <option value="">Choose a barangay</option>
+                  <option value="">{t('currentInfo.today.chooseBarangay')}</option>
                   {barangays.map(item => (
                     <option key={item.slug} value={item.slug}>{item.name}</option>
                   ))}
@@ -221,7 +224,7 @@ export default function Today() {
             {barangay && (
               <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm">
                 <span className="font-semibold text-primary-100">
-                  Barangay {barangay.name} · {barangay.population2024.toLocaleString('en-PH')} residents · {barangay.legislativeDistrict}
+                  Barangay {barangay.name} · {barangay.population2024.toLocaleString(locale)} residents · {barangay.legislativeDistrict}
                 </span>
                 <Link
                   to={'/barangays/' + barangay.slug}
@@ -263,8 +266,8 @@ export default function Today() {
       />
 
       <Section className="bg-[#f5f8f2]">
-        <div className="section-eyebrow">Current Makati</div>
-        <Heading level={2}>Live conditions & current sources</Heading>
+        <div className="section-eyebrow">{t('currentInfo.today.currentMakati')}</div>
+        <Heading level={2}>{t('currentInfo.today.liveSources')}</Heading>
         <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600">
           Today brings the main current-information streams together. Open the specialist page only when you need more detail.
         </p>
@@ -285,7 +288,7 @@ export default function Today() {
 
           <Link to="/city-monitor" className="rounded-2xl border border-primary-100 bg-white p-5">
             <Bell className="h-5 w-5 text-primary-700" />
-            <h3 className="mt-3 font-extrabold text-gray-950">Official activity</h3>
+            <h3 className="mt-3 font-extrabold text-gray-950">{t('currentInfo.today.officialActivity')}</h3>
             <p className="mt-2 text-sm text-gray-600">
               Validated council, legislation, procurement, project, publication and notice records.
             </p>
@@ -293,7 +296,7 @@ export default function Today() {
 
           <Link to="/news" className="rounded-2xl border border-primary-100 bg-white p-5">
             <Newspaper className="h-5 w-5 text-primary-700" />
-            <h3 className="mt-3 font-extrabold text-gray-950">Recent coverage</h3>
+            <h3 className="mt-3 font-extrabold text-gray-950">{t('currentInfo.today.recentCoverage')}</h3>
             <p className="mt-2 text-sm text-gray-600">
               Current Makati reporting from publishers, linked to related BetterMakati context where available.
             </p>
@@ -301,7 +304,7 @@ export default function Today() {
 
           <Link to="/hotlines" className="rounded-2xl border border-primary-100 bg-white p-5">
             <PhoneCall className="h-5 w-5 text-primary-700" />
-            <h3 className="mt-3 font-extrabold text-gray-950">Emergency & city contacts</h3>
+            <h3 className="mt-3 font-extrabold text-gray-950">{t('currentInfo.today.emergencyContacts')}</h3>
             <p className="mt-2 text-sm text-gray-600">
               911, city response, police, fire, health and other useful numbers.
             </p>
@@ -310,8 +313,8 @@ export default function Today() {
       </Section>
 
       <Section className="bg-white">
-        <div className="section-eyebrow">Civic brief</div>
-        <Heading level={2}>Latest published brief</Heading>
+        <div className="section-eyebrow">{t('currentInfo.today.civicBrief')}</div>
+        <Heading level={2}>{t('currentInfo.today.latestBrief')}</Heading>
 
         {latestBrief ? (
           <div className="mt-6 rounded-2xl border border-primary-100 bg-[#fffdf8] p-6">
@@ -330,7 +333,7 @@ export default function Today() {
                 </p>
               </div>
               <div className="shrink-0 text-xs text-gray-500">
-                Published {formatTimestamp(latestBrief.publishedAt)}
+                Published {formatTimestamp(latestBrief.publishedAt, locale)}
               </div>
             </div>
             <div className="mt-5 flex flex-wrap gap-3">
@@ -352,7 +355,7 @@ export default function Today() {
       </Section>
 
       <Section className="bg-white">
-        <div className="section-eyebrow">Makati in the news</div>
+        <div className="section-eyebrow">{t('currentInfo.today.newsEyebrow')}</div>
         <Heading level={2}>Recent coverage</Heading>
         <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-3">
           {news.length > 0 ? news.map(item => (
