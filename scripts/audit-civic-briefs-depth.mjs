@@ -30,13 +30,13 @@ for (const marker of [
 }
 
 for (const marker of [
-  'Accountability-linked developments',
-  'Freshness review queue',
+  "t('currentInfo.briefs.accountability')",
+  "t('currentInfo.briefs.freshness')",
   '/records#freshness-review-queue',
-  'Permanent brief archive',
-  'Share-ready text',
+  "t('currentInfo.briefs.permanentArchive')",
+  "t('currentInfo.briefs.shareReady')",
   'Barangay relevance',
-  'No City Monitor records for this period',
+  "t('currentInfo.briefs.noRecords')",
 ]) {
   if (!page.includes(marker)) {
     problems.push('Civic Briefs page is missing required feature: ' + marker);
