@@ -18,16 +18,14 @@ const [page, views, app, navigation, searchIndex, home, capability, explore, gen
 const problems = [];
 
 for (const marker of [
-  'title="Makati Calendar"',
-  'What&apos;s coming up, what changed, and what was just published',
-  'Choose a view',
-  'Filter the civic timeline',
+  "t('currentInfo.calendar.title')",
+  "t('currentInfo.calendar.chooseView')",
+  "t('currentInfo.calendar.howItWorks')",
   'nativeCivicTimelineItems',
   'civicCalendarViewItems',
-  'Original source',
-  'Open record',
-  'How the Makati Calendar works',
-  'Unverified source leads are excluded until the date and its',
+  'TimelineCard',
+  'primarySource',
+  'visible.map',
 ]) {
   if (!page.includes(marker)) problems.push('Calendar page marker missing: ' + marker);
 }
