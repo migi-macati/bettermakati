@@ -19,7 +19,7 @@ import { placeRegistryById } from '../data/placeRegistry';
 
 export default function CityMonitorRecordPage() {
   const { t, i18n } = useTranslation();
-  const locale = i18n.resolvedLanguage === 'fil' ? 'fil-PH' : 'en-PH'; {
+  const locale = i18n.resolvedLanguage === 'fil' ? 'fil-PH' : 'en-PH';
   const { id } = useParams();
   const record = cityMonitorRecords.find(item => item.id === id);
   const linkedPlaces = (record?.placeIds ?? [])
