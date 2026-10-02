@@ -537,6 +537,42 @@
       "filter": "Filter ng City Monitor stream",
       "channels": "Monitored official channels",
       "sourceDirectory": "Source directory"
+    },
+    "calendar": {
+      "title": "Makati Calendar",
+      "description": "Tingnan sa iisang civic timeline ang source-backed Makati dates, deadlines, meetings, legislation milestones, publications at historical records.",
+      "chooseView": "Pumili ng view",
+      "topic": "Topic",
+      "barangay": "Barangay",
+      "allBarangays": "Lahat ng barangay + citywide",
+      "actionability": "Actionability",
+      "search": "Search",
+      "placeholder": "Title, source, topic…",
+      "from": "Mula",
+      "to": "Hanggang",
+      "today": "Makati Ngayon",
+      "howItWorks": "Paano gumagana ang Makati Calendar"
+    },
+    "briefs": {
+      "description": "Daily, weekly at monthly Makati civic briefs mula sa City Monitor records.",
+      "follow": "Subaybayan ang Makati",
+      "title": "Civic Briefs",
+      "filterBarangay": "Filter ng Civic Brief ayon sa barangay relevance",
+      "citywide": "Citywide view",
+      "glance": "Sa isang tingin",
+      "validated": "Validated activity",
+      "changed": "Ano ang nagbago sa civic record",
+      "noRecords": "Walang City Monitor records para sa period na ito",
+      "followThrough": "Follow-through",
+      "accountability": "Accountability-linked developments",
+      "editorial": "Editorial review",
+      "freshness": "Freshness review queue",
+      "archive": "Archive",
+      "permanentArchive": "Permanent brief archive",
+      "distribution": "Distribution",
+      "share": "Ibahagi ang brief",
+      "shareReady": "Share-ready text",
+      "followBetterMakati": "Follow BetterMakati"
     }
   }
 }
