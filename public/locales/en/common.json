@@ -489,5 +489,25 @@
     "navigate": "Navigate",
     "select": "Select",
     "close": "Close"
+  },
+  "currentInfo": {
+    "today": {
+      "seoTitle": "Today in Makati",
+      "seoDescription": "A daily Makati dashboard for weather, civic dates, official activity, news, advisories and emergency links.",
+      "eyebrow": "Your Makati",
+      "title": "Today in Makati",
+      "myBarangay": "My barangay",
+      "chooseBarangay": "Choose a barangay",
+      "barangayHomepage": "Barangay homepage",
+      "participate": "Participate locally",
+      "currentMakati": "Current Makati",
+      "liveSources": "Live conditions & current sources",
+      "officialActivity": "Official activity",
+      "recentCoverage": "Recent coverage",
+      "emergencyContacts": "Emergency & city contacts",
+      "civicBrief": "Civic brief",
+      "latestBrief": "Latest published brief",
+      "newsEyebrow": "Makati in the news"
+    }
   }
 }
