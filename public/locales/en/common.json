@@ -518,6 +518,39 @@
       "cityMonitor": "City Monitor",
       "calendar": "Makati Calendar",
       "officialSource": "Official city source"
+    },
+    "record": {
+      "notFound": "City Monitor record not found",
+      "date": "Date",
+      "status": "Status",
+      "publisher": "Source publisher",
+      "reference": "Reference",
+      "evidenceStage": "Evidence stage",
+      "amount": "Reported amount",
+      "location": "Location",
+      "summary": "Summary",
+      "details": "Key details",
+      "sources": "Sources",
+      "documents": "Documents",
+      "transcript": "Transcript",
+      "commitments": "Commitments",
+      "forwardCommitments": "Forward-looking commitments"
+    },
+    "monitor": {
+      "title": "City Monitor",
+      "seoDescription": "A continuously monitored record of Makati government activity: council, legislation, executive speeches, procurement, projects, publications, consultations and official notices.",
+      "officialActivity": "Official activity",
+      "dailyWatch": "Daily source watch",
+      "sourceChanges": "Source changes",
+      "editorialReview": "Editorial review",
+      "freshnessQueue": "Freshness review queue",
+      "validatedRecords": "Validated civic records",
+      "structuredRecords": "Structured records",
+      "search": "Search City Monitor",
+      "searchRecords": "Search records",
+      "filter": "Filter City Monitor stream",
+      "channels": "Monitored official channels",
+      "sourceDirectory": "Source directory"
     }
   }
 }
