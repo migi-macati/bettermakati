@@ -17,6 +17,7 @@ import {
   Wrench,
 } from 'lucide-react';
 import { Link, useParams } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import SEO from '../components/SEO';
 import LastReviewed from '../components/ui/LastReviewed';
 import PhotoCarousel from '../components/ui/PhotoCarousel';
@@ -82,6 +83,8 @@ const communityOrganizationLabel = (kind: CivicOrganizationKind) => {
 };
 
 export default function BarangayProfile() {
+  const { t, i18n } = useTranslation();
+  const numberLocale = i18n.resolvedLanguage === 'fil' ? 'fil-PH' : 'en-PH';
   const { slug } = useParams();
   const barangay = findBarangay(slug);
 
@@ -89,9 +92,9 @@ export default function BarangayProfile() {
     return (
       <section className="bg-[#fffdf8] py-16">
         <div className="container px-5 md:px-6 lg:px-8">
-          <h1 className="text-3xl font-extrabold text-gray-950">Barangay not found</h1>
+          <h1 className="text-3xl font-extrabold text-gray-950">{t('betterBarangay.profile.notFound')}</h1>
           <Link to="/barangays" className="brand-btn-secondary mt-6">
-            <ArrowLeft className="h-4 w-4" /> Choose a barangay
+            <ArrowLeft className="h-4 w-4" /> {t('betterBarangay.profile.chooseBarangay')}
           </Link>
         </div>
       </section>
@@ -270,43 +273,42 @@ export default function BarangayProfile() {
             to="/barangays"
             className="inline-flex min-h-11 items-center gap-1 text-sm font-bold text-primary-50 transition hover:text-secondary-300"
           >
-            <ArrowLeft className="h-4 w-4" /> All barangays
+            <ArrowLeft className="h-4 w-4" /> {t('betterBarangay.directory.allBarangays')}
           </Link>
 
           <div className="mt-5 grid gap-8 md:grid-cols-[minmax(0,1.04fr)_minmax(320px,0.96fr)] md:items-center md:gap-7 lg:gap-10">
             <div className="min-w-0">
               <div className="mb-3 text-xs font-extrabold uppercase tracking-[0.12em] text-secondary-300 md:text-sm">
-                Better{compactEditionName(barangay.name)} · Barangay homepage
+                Better{compactEditionName(barangay.name)} · {t('betterBarangay.profile.homepage')}
               </div>
               <h1 className="max-w-4xl text-5xl font-extrabold leading-[0.98] tracking-tight text-white md:text-5xl lg:text-6xl xl:text-7xl">
-                Let&apos;s make {barangay.name}{' '}
+                {t('betterBarangay.profile.makeBetterPrefix')} {barangay.name}{' '}
                 <span className="text-secondary-500">Better!</span>
               </h1>
               <p className="mt-5 max-w-3xl text-lg leading-relaxed text-primary-50 md:text-xl">
-                Find local services, officials, public places, projects, records and
-                ways to take part in Barangay {barangay.name}.
+                {t('betterBarangay.profile.intro', { barangay: barangay.name })}
               </p>
 
               <div className="mt-7 max-w-3xl">
                 <ServiceSearch
                   scope="site"
-                  title="What can we help you find?"
-                  placeholder="Try barangay clearance, hall contacts, park, project..."
+                  title={t('betterBarangay.profile.searchTitle')}
+                  placeholder={t('betterBarangay.profile.searchPlaceholder')}
                   goldAction
                   barangaySlug={barangay.slug}
                 />
               </div>
 
               <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-primary-50">
-                <span className="font-medium text-primary-100">Start with:</span>
+                <span className="font-medium text-primary-100">{t('betterBarangay.profile.startWith')}</span>
                 <a href="#local-government" className="min-h-11 content-center font-semibold underline decoration-white/40 underline-offset-4 hover:text-secondary-300">
-                  Hall contacts
+                  {t('betterBarangay.profile.hallContacts')}
                 </a>
                 <Link
                   to={withBarangayScope('/projects-budget', barangay.slug)}
                   className="min-h-11 content-center font-semibold underline decoration-white/40 underline-offset-4 hover:text-secondary-300"
                 >
-                  Local projects
+                  {t('betterBarangay.profile.localProjects')}
                 </Link>
                 <Link
                   to={withBarangayScope('/civic-map', barangay.slug)}
@@ -318,7 +320,7 @@ export default function BarangayProfile() {
 
               <LastReviewed
                 date={barangayProfilesReviewed}
-                note="Population: 2024 POPCEN · Council term: 2023–2026"
+                note={t('betterBarangay.profile.reviewNote')}
                 className="mt-4 rounded-xl bg-white/10 px-3 py-2 !text-primary-50 [&_strong]:!text-white [&_svg]:!text-secondary-400"
               />
             </div>
@@ -328,13 +330,13 @@ export default function BarangayProfile() {
               aria-labelledby="barangay-what-brings-you-here"
             >
               <div className="text-xs font-extrabold uppercase tracking-[0.12em] text-primary-700">
-                Start here
+                {t('betterBarangay.profile.startHere')}
               </div>
               <h2
                 id="barangay-what-brings-you-here"
                 className="mt-1 text-2xl font-extrabold tracking-tight text-gray-950 md:text-3xl"
               >
-                What brings you here?
+                {t('betterBarangay.profile.whatBrings')}
               </h2>
 
               <div className="mt-4 divide-y divide-gray-200">
@@ -375,7 +377,7 @@ export default function BarangayProfile() {
           <div className="container px-5 md:px-6 lg:px-8">
             <PhotoCarousel
               images={barangayPhotos}
-              title={'Around ' + barangay.name}
+              title={t('betterBarangay.profile.around', { barangay: barangay.name })}
               compact
               className="mx-auto max-w-6xl"
             />
@@ -385,7 +387,7 @@ export default function BarangayProfile() {
 
       <section className="bm-barangay-section bm-barangay-band-muted border-b border-primary-100 bg-[#f5f8f2] py-10 md:py-12">
         <div className="container px-5 md:px-6 lg:px-8">
-          <div className="section-eyebrow">Better{compactEditionName(barangay.name)} at a glance</div>
+          <div className="section-eyebrow">Better{compactEditionName(barangay.name)} · {t('betterBarangay.profile.atGlance')}</div>
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 md:gap-5">
             <a
               href={psaBarangaySource}
@@ -394,26 +396,26 @@ export default function BarangayProfile() {
               className="stat-card hover:border-primary-300 transition"
             >
               <div className="text-2xl font-extrabold text-primary-800 md:text-3xl">
-                {barangay.population2024.toLocaleString('en-PH')}
+                {barangay.population2024.toLocaleString(numberLocale)}
               </div>
-              <div className="mt-1 font-semibold text-gray-900">Population</div>
+              <div className="mt-1 font-semibold text-gray-900">{t('betterBarangay.profile.population')}</div>
               <div className="mt-1 text-xs text-gray-500">2024 POPCEN</div>
             </a>
             <div className="stat-card">
               <div className="text-2xl font-extrabold text-primary-800 md:text-3xl">
                 {populationShare.toFixed(1)}%
               </div>
-              <div className="mt-1 font-semibold text-gray-900">of Makati</div>
-              <div className="mt-1 text-xs text-gray-500">2024 population</div>
+              <div className="mt-1 font-semibold text-gray-900">{t('betterBarangay.profile.ofMakati')}</div>
+              <div className="mt-1 text-xs text-gray-500">{t('betterBarangay.profile.population2024')}</div>
             </div>
             <div className="stat-card">
               <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
-                Legislative district
+                {t('betterBarangay.profile.legislativeDistrict')}
               </div>
               <div className="mt-2 text-xl font-extrabold text-gray-950">
                 {barangay.legislativeDistrict}
               </div>
-              <div className="mt-1 text-xs text-gray-500">Current district</div>
+              <div className="mt-1 text-xs text-gray-500">{t('betterBarangay.profile.currentDistrict')}</div>
             </div>
           </div>
         </div>
@@ -421,23 +423,23 @@ export default function BarangayProfile() {
 
       <CivicTimelinePreview
         barangaySlug={barangay.slug}
-        contextLabel={'Barangay ' + barangay.name}
-        heading={'Civic dates for ' + barangay.name}
+        contextLabel={t('betterBarangay.profile.contextLabel', { barangay: barangay.name })}
+        heading={t('betterBarangay.profile.civicDates', { barangay: barangay.name })}
         className="bg-[#fffdf8]"
       />
 
       <section id="services" className="bm-barangay-section bm-barangay-band-muted bg-[#f5f8f2] py-14">
         <div className="container px-5 md:px-6 lg:px-8">
-          <div className="section-eyebrow">Barangay services</div>
+          <div className="section-eyebrow">{t('betterBarangay.profile.barangayServices')}</div>
           <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
             <h2 className="text-3xl font-extrabold tracking-tight text-gray-950">
-              Services in {barangay.name}
+              {t('betterBarangay.profile.servicesIn', { barangay: barangay.name })}
             </h2>
             <Link
               to={withBarangayScope('/services', barangay.slug)}
               className="inline-flex items-center gap-1 text-sm font-bold text-primary-700"
             >
-              All local services <ArrowRight className="h-4 w-4" />
+              {t('betterBarangay.profile.allLocalServices')} <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
 
@@ -485,7 +487,7 @@ export default function BarangayProfile() {
           )}
 
           <div className={(barangay.publishedServices?.length ?? 0) > 0 ? 'mt-10' : 'mt-6'}>
-            <h3 className="text-lg font-extrabold text-gray-950">Common transactions</h3>
+            <h3 className="text-lg font-extrabold text-gray-950">{t('betterBarangay.profile.commonTransactions')}</h3>
             <div className="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
               {services.map(service => (
                 <Link
@@ -685,16 +687,16 @@ export default function BarangayProfile() {
 
       <section className="bg-[#f5f8f2] py-14">
         <div className="container px-5 md:px-6 lg:px-8">
-          <div className="section-eyebrow">Places & facilities</div>
+          <div className="section-eyebrow">{t('betterBarangay.profile.placesFacilities')}</div>
           <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
             <h2 className="text-3xl font-extrabold tracking-tight text-gray-950">
-              In {barangay.name}
+              {t('betterBarangay.profile.inBarangay', { barangay: barangay.name })}
             </h2>
             <Link
               to={withBarangayScope('/civic-map', barangay.slug)}
               className="inline-flex items-center gap-1 text-sm font-bold text-primary-700"
             >
-              Open barangay map <ArrowRight className="h-4 w-4" />
+              {t('betterBarangay.profile.openMap')} <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
 
