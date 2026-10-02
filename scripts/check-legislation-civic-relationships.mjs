@@ -68,9 +68,9 @@ for (const uiMarker of [
 for (const uiMarker of [
   "import { legislationForService } from '../data/legislationCivicRelationships'",
   'const relatedLegislation = legislationForService(item.id)',
-  'Related local legislation',
-  'Historical measures connected to this service',
-  'They do not establish the service’s current fee, rule or legal effect.',
+  "t('servicesGovernment.guide.relatedLegislation')",
+  "t('servicesGovernment.guide.historicalMeasures')",
+  "t('servicesGovernment.guide.legislationCaveat')",
 ]) {
   if (!serviceGuide.includes(uiMarker)) {
     problems.push('Service legislation backlink marker missing: ' + uiMarker);

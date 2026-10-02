@@ -1,5 +1,6 @@
 import Section from '../components/ui/Section';
 import { useParams, Link } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import { Heading } from '../components/ui/Heading';
 import { Text } from '../components/ui/Text';
 import {
@@ -76,6 +77,7 @@ const fuzzyWordMatch = (word: string, tokens: string[]) => {
 };
 
 const Services: React.FC = () => {
+  const { t } = useTranslation();
   const { category } = useParams();
   const [categoryIndex, setCategoryIndex] = useState<CategoryIndex>({
     layout: 'list',
@@ -172,8 +174,8 @@ const Services: React.FC = () => {
     return (
       <>
         <SEO
-          title="Services"
-          description="Search Makati city, barangay and major national government services, permits, clearances, certificates, IDs and assistance."
+          title={t('servicesGovernment.servicesPage.seoTitle')}
+          description={t('servicesGovernment.servicesPage.seoDescription')}
           keywords="Makati services, permits, clearances, certificates, IDs, barangay, national government, health, business, civil registry"
         />
 
@@ -184,14 +186,14 @@ const Services: React.FC = () => {
                 Services
               </div>
               <h1 className="text-4xl font-extrabold tracking-tight text-white md:text-6xl">
-                What do you need to get done?
+                {t('servicesGovernment.servicesPage.title')}
               </h1>
               <p className="mt-4 max-w-3xl text-lg leading-relaxed text-primary-50 md:text-xl">
-                Find city, barangay and major national services used by people and businesses in Makati.
+                {t('servicesGovernment.servicesPage.intro')}
               </p>
 
               <label className="relative mt-7 block max-w-3xl">
-                <span className="sr-only">Search government services</span>
+                <span className="sr-only">{t('servicesGovernment.servicesPage.searchLabel')}</span>
                 <Search
                   className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-500"
                   aria-hidden="true"
@@ -200,13 +202,13 @@ const Services: React.FC = () => {
                   type="search"
                   value={directoryQuery}
                   onChange={event => setDirectoryQuery(event.target.value)}
-                  placeholder="Search permit, clearance, ID, test or service"
+                  placeholder={t('servicesGovernment.servicesPage.searchPlaceholder')}
                   className="bm-service-search w-full py-3.5 pl-12 pr-4 text-base"
                 />
               </label>
 
               <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-primary-50">
-                <span className="font-medium text-primary-100">Start with:</span>
+                <span className="font-medium text-primary-100">{t('servicesGovernment.servicesPage.startWith')}</span>
                 <Link to={scopedServiceHref('/services/guide/new-business-permit')} className="min-h-11 content-center font-semibold underline decoration-white/40 underline-offset-4 hover:text-secondary-300">
                   Business permit
                 </Link>
@@ -221,7 +223,7 @@ const Services: React.FC = () => {
                 </Link>
               </div>
 
-              <div className="mt-5 flex flex-wrap gap-2" aria-label="Government level">
+              <div className="mt-5 flex flex-wrap gap-2" aria-label={t('servicesGovernment.servicesPage.levelLabel')}>
                 {serviceDirectoryLevels.map(level => (
                   <button
                     key={level}
@@ -240,13 +242,13 @@ const Services: React.FC = () => {
               </div>
 
               <label className="mt-4 block max-w-sm">
-                <span className="sr-only">Service category</span>
+                <span className="sr-only">{t('servicesGovernment.servicesPage.categoryLabel')}</span>
                 <select
                   value={directoryCategory}
                   onChange={event => setDirectoryCategory(event.target.value)}
                   className="w-full rounded-xl border border-white/30 bg-white px-4 py-3 text-sm font-semibold text-gray-900"
                 >
-                  <option value="All">All categories</option>
+                  <option value="All">{t('servicesGovernment.servicesPage.allCategories')}</option>
                   {serviceDirectoryCategories.map(item => (
                     <option key={item} value={item}>
                       {item}
@@ -260,14 +262,14 @@ const Services: React.FC = () => {
 
         <Section className="bg-[#fffdf8]">
           <LastReviewed date="2026-09-29"
-            note="Requirements can change. Open the linked official source before acting."
+            note={t('servicesGovernment.servicesPage.reviewNote')}
             className="mt-0"
           />
 
           {barangay && (
             <div className="mt-5 rounded-2xl border border-primary-100 bg-white p-5">
               <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
-                Local starting point
+                {t('servicesGovernment.servicesPage.localStart')}
               </div>
               <div className="mt-1 text-lg font-extrabold text-gray-950">
                 Barangay {barangay.name} Hall
@@ -279,7 +281,7 @@ const Services: React.FC = () => {
               <div className="mt-4 flex flex-wrap gap-3">
                 {barangay.hallEmail && (
                   <a href={'mailto:' + barangay.hallEmail} className="brand-btn-primary">
-                    Email barangay hall
+                    {t('servicesGovernment.servicesPage.emailBarangay')}
                   </a>
                 )}
                 <a
@@ -288,10 +290,10 @@ const Services: React.FC = () => {
                   rel="noreferrer"
                   className="brand-btn-secondary"
                 >
-                  Official barangay page
+                  {t('servicesGovernment.servicesPage.officialBarangay')}
                 </a>
                 <Link to={'/barangays/' + barangay.slug} className="brand-btn-secondary">
-                  Barangay homepage
+                  {t('servicesGovernment.servicesPage.barangayHomepage')}
                 </Link>
               </div>
             </div>
@@ -346,27 +348,27 @@ const Services: React.FC = () => {
           <div className="mt-5 grid gap-3 rounded-2xl border border-primary-100 bg-white p-5 sm:grid-cols-[1fr_auto] sm:items-center">
             <div>
               <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
-                Not sure which office handles it?
+                {t('servicesGovernment.servicesPage.unsureOffice')}
               </div>
-              <div className="mt-1 text-lg font-extrabold text-gray-950">Saan Ako Lalapit?</div>
+              <div className="mt-1 text-lg font-extrabold text-gray-950">{t('servicesGovernment.servicesPage.concernFinder')}</div>
               <p className="mt-1 text-sm text-gray-600">
-                Describe the task or problem and start with the service that handles it.
+                {t('servicesGovernment.servicesPage.concernFinderHelp')}
               </p>
             </div>
             <Link to="/community-tools/saan-ako-lalapit" className="brand-btn-primary">
-              Find where to go
+              {t('servicesGovernment.servicesPage.findWhere')}
             </Link>
           </div>
 
           <div className="mt-4">
             <Link to="/government-offices" className="text-sm font-bold text-primary-700 underline underline-offset-2">
-              Government offices in and serving Makati
+              {t('servicesGovernment.servicesPage.governmentOffices')}
             </Link>
           </div>
 
           <PhotoCarousel
             images={servicesImageSet}
-            title="Public service in Makati"
+            title={t('servicesGovernment.servicesPage.photoTitle')}
             compact
             className="mt-7"
           />
@@ -375,11 +377,11 @@ const Services: React.FC = () => {
         <Section className="bg-white">
           <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <div className="section-eyebrow">Directory</div>
-              <Heading level={2}>Government services</Heading>
+              <div className="section-eyebrow">{t('servicesGovernment.servicesPage.directory')}</div>
+              <Heading level={2}>{t('servicesGovernment.servicesPage.governmentServices')}</Heading>
             </div>
             <div className="text-sm text-gray-500">
-              {visibleDirectory.length} results
+              {t('servicesGovernment.servicesPage.results', { count: visibleDirectory.length })}
             </div>
           </div>
 
@@ -435,13 +437,13 @@ const Services: React.FC = () => {
                     }}
                     className="brand-btn-secondary"
                   >
-                    Clear search and filters
+                    {t('servicesGovernment.servicesPage.clearFilters')}
                   </button>
                   <Link to="/community-tools/saan-ako-lalapit" className="brand-btn-primary">
-                    Use Saan Ako Lalapit?
+                    {t('servicesGovernment.servicesPage.useConcernFinder')}
                   </Link>
                   <Link to="/government-offices" className="brand-btn-secondary">
-                    Browse government offices
+                    {t('servicesGovernment.servicesPage.browseOffices')}
                   </Link>
                 </div>
               </div>
@@ -450,8 +452,8 @@ const Services: React.FC = () => {
         </Section>
 
         <Section className="bg-[#fffdf8]">
-          <div className="section-eyebrow">Beyond Makati</div>
-          <Heading level={2}>Need somewhere else?</Heading>
+          <div className="section-eyebrow">{t('servicesGovernment.servicesPage.beyondMakati')}</div>
+          <Heading level={2}>{t('servicesGovernment.servicesPage.needElsewhere')}</Heading>
           <div className="mt-6 grid gap-4 md:grid-cols-2">
             <a
               href="https://bettergov.ph/services"
@@ -460,16 +462,16 @@ const Services: React.FC = () => {
               className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
             >
               <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
-                National government
+                {t('servicesGovernment.servicesPage.nationalGovernment')}
               </div>
               <h3 className="mt-2 text-lg font-extrabold text-gray-950">
-                Browse BetterGov services
+                {t('servicesGovernment.servicesPage.browseBetterGov')}
               </h3>
               <p className="mt-1 text-sm leading-relaxed text-gray-600">
-                Search national government services.
+                {t('servicesGovernment.servicesPage.searchNational')}
               </p>
               <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
-                Open BetterGov <ExternalLink className="h-4 w-4" />
+                {t('servicesGovernment.servicesPage.openBetterGov')} <ExternalLink className="h-4 w-4" />
               </span>
             </a>
             <a
@@ -479,23 +481,23 @@ const Services: React.FC = () => {
               className="rounded-2xl border border-primary-100 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
             >
               <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
-                Another city or municipality
+                {t('servicesGovernment.servicesPage.anotherLgu')}
               </div>
               <h3 className="mt-2 text-lg font-extrabold text-gray-950">
-                Find another LGU
+                {t('servicesGovernment.servicesPage.findAnotherLgu')}
               </h3>
               <p className="mt-1 text-sm leading-relaxed text-gray-600">
-                Not from Makati or need another LGU? Search the BetterLGU Directory.
+                {t('servicesGovernment.servicesPage.betterLguHelp')}
               </p>
               <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
-                Open BetterLGU <ExternalLink className="h-4 w-4" />
+                {t('servicesGovernment.servicesPage.openBetterLgu')} <ExternalLink className="h-4 w-4" />
               </span>
             </a>
           </div>
         </Section>
 
         <Section id="digital" className="bg-[#f5f8f2]">
-          <div className="section-eyebrow">Official digital channels</div>
+          <div className="section-eyebrow">{t('servicesGovernment.servicesPage.digitalChannels')}</div>
           <div className="flex flex-wrap gap-3">
             <a
               href="https://www.makati.gov.ph/"
@@ -543,13 +545,13 @@ const Services: React.FC = () => {
           items={[
             { label: 'Home', href: '/' },
             { label: 'Services', href: scopedServiceHref('/services') },
-            { label: category || 'Category not found' },
+            { label: category || t('servicesGovernment.servicesPage.categoryNotFound') },
           ]}
         />
         <Banner
           type="error"
-          title="Category not found"
-          description="The category you are looking for does not exist."
+          title={t('servicesGovernment.servicesPage.categoryNotFound')}
+          description={t('servicesGovernment.servicesPage.categoryMissing')}
           icon
         />
       </Section>
@@ -576,26 +578,26 @@ const Services: React.FC = () => {
         <Heading>{categoryData.category}</Heading>
         <Text className="text-gray-600 mb-3">{categoryData.description}</Text>
         <LastReviewed date="2026-09-25"
-          note="Time-sensitive service requirements may change."
+          note={t('servicesGovernment.servicesPage.categoryReviewNote')}
           className="mb-6"
         />
 
         {loading ? (
           <div className="flex items-center justify-center p-8" role="status">
-            <Text>Loading services...</Text>
+            <Text>{t('servicesGovernment.servicesPage.loading')}</Text>
           </div>
         ) : loadFailed ? (
           <div
             role="alert"
             className="rounded-xl border border-warning-200 bg-warning-50 p-5 text-sm text-warning-950"
           >
-            This service category could not be loaded. Return to the full service directory or try again later.
+            {t('servicesGovernment.servicesPage.loadFailed')}
           </div>
         ) : subcategories.length === 0 ? (
           <Banner
             type="info"
-            title="No services listed"
-            description="Choose another service category."
+            title={t('servicesGovernment.servicesPage.noneListed')}
+            description={t('servicesGovernment.servicesPage.chooseAnother')}
           />
         ) : (
           <div className={

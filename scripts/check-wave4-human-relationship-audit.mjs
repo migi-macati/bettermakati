@@ -186,7 +186,7 @@ for (const marker of [
 
 for (const marker of [
   'legislationForService(item.id)',
-  'They do not establish the service’s current fee, rule or legal effect.',
+  "t('servicesGovernment.guide.legislationCaveat')",
 ]) {
   if (!serviceGuide.includes(marker)) {
     problems.push('Service/legislation reverse journey marker missing: ' + marker);

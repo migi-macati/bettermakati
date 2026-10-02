@@ -201,7 +201,7 @@ test('W6-3c service journey stays task-first and recovers from dead ends', async
     .fill(guaranteedMissingQuery);
   await expect(page.getByText('No indexed service matches this search yet.')).toBeVisible();
   await expect(
-    page.getByRole('link', { name: 'Use Saan Ako Lalapit?', exact: true })
+    page.getByRole('link', { name: 'Use Where Should I Go?', exact: true })
   ).toHaveAttribute('href', '/community-tools/saan-ako-lalapit');
   await expect(
     page.getByRole('link', { name: 'Browse government offices', exact: true })

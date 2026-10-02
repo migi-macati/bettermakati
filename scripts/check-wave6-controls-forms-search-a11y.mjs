@@ -188,7 +188,7 @@ for (const marker of [
   'setLoadFailed(true)',
   'role="status"',
   'role="alert"',
-  'This service category could not be loaded.',
+  "t('servicesGovernment.servicesPage.loadFailed')",
 ]) {
   need('Services async state', services, marker);
 }

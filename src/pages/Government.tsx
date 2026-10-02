@@ -1,5 +1,6 @@
 import { ArrowRight, ExternalLink } from 'lucide-react';
 import { Link } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
 import { Text } from '../components/ui/Text';
@@ -48,7 +49,9 @@ const OfficialCard = ({
   official,
 }: {
   official: (typeof cityExecutiveOfficials)[number];
-}) => (
+}) => {
+  const { t } = useTranslation();
+  return (
   <Link
     to={'/officials/' + official.slug}
     className="group rounded-2xl border border-gray-200 bg-white p-5 transition hover:border-primary-300 hover:shadow-sm"
@@ -61,12 +64,14 @@ const OfficialCard = ({
       {official.displayName}
     </h3>
     <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
-      View profile <ArrowRight className="h-4 w-4" />
+      {t('servicesGovernment.government.viewProfile')} <ArrowRight className="h-4 w-4" />
     </span>
   </Link>
-);
+  );
+};
 
 export default function Government() {
+  const { t } = useTranslation();
   const firstDistrict = councilOfficials.filter(
     official => official.district === '1st District'
   );
@@ -77,49 +82,47 @@ export default function Government() {
   return (
     <>
       <SEO
-        title="Government"
-        description="Makati City elected officials, representation and city offices."
+        title={t('servicesGovernment.government.seoTitle')}
+        description={t('servicesGovernment.government.seoDescription')}
       />
 
       <Section className="bg-[#fffdf8]">
-        <div className="section-eyebrow">City government</div>
+        <div className="section-eyebrow">{t('servicesGovernment.government.eyebrow')}</div>
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-          <Heading>Makati City Government</Heading>
+          <Heading>{t('servicesGovernment.government.title')}</Heading>
           <SharePage title="Makati City Government | BetterMakati" />
         </div>
-        <LastReviewed date="2026-09-20" note="Current elected-official profiles are tied to the 2025 election records cited on each profile." />
+        <LastReviewed date="2026-09-20" note={t('servicesGovernment.government.reviewNote')} />
         <Text className="mt-3 max-w-3xl text-gray-700">
-          Current elected-official profiles are linked to the election records
-          used to identify the officeholder. Party labels, where shown, refer to
-          the 2025 ballot rather than an inferred current affiliation.
+          {t('servicesGovernment.government.intro')}
         </Text>
         <PhotoCarousel
           images={governmentImageSet}
-          title="City government"
+          title={t('servicesGovernment.government.photoTitle')}
           compact
           className="mt-8"
         />
 
         <CitizenSummary
           className="mt-6"
-          eyebrow="How city government fits together"
-          title="Different offices answer different civic questions"
+          eyebrow={t('servicesGovernment.government.summary.eyebrow')}
+          title={t('servicesGovernment.government.summary.title')}
           points={[
             {
-              label: 'Mayor · executive',
-              text: 'The City Mayor is Makati’s chief executive and leads the city administration, development planning and implementation of city programs under the charter.',
+              label: t('servicesGovernment.government.summary.mayorLabel'),
+              text: t('servicesGovernment.government.summary.mayorText'),
             },
             {
-              label: 'Vice Mayor · council',
-              text: 'The Vice Mayor presides over the Sangguniang Panlungsod and has succession and acting-mayor functions defined by law.',
+              label: t('servicesGovernment.government.summary.viceMayorLabel'),
+              text: t('servicesGovernment.government.summary.viceMayorText'),
             },
             {
-              label: 'City Council · legislation & budget',
-              text: 'The Sangguniang Panlungsod enacts local ordinances and approves annual and supplemental budgets and appropriations.',
+              label: t('servicesGovernment.government.summary.councilLabel'),
+              text: t('servicesGovernment.government.summary.councilText'),
             },
             {
-              label: 'Departments · service delivery',
-              text: 'City departments carry out specialized functions such as health, engineering, finance, social welfare, environment and public safety.',
+              label: t('servicesGovernment.government.summary.departmentsLabel'),
+              text: t('servicesGovernment.government.summary.departmentsText'),
             },
           ]}
           note={
@@ -131,14 +134,12 @@ export default function Government() {
                 rel="noreferrer"
                 className="font-bold text-primary-700 underline underline-offset-2"
               >
-                Makati City Charter
-              </a>
-              . For a transaction or concern, use Services or the government-office directory rather than starting with an elected-official profile.
+                {t('servicesGovernment.government.charter')}\n              </a>\n              {t('servicesGovernment.government.summary.noteAfterCharter')}
             </>
           }
           actions={
             <Link to="/services" className="text-sm font-bold text-primary-700 underline underline-offset-2">
-              Find a service <ArrowRight className="inline h-3.5 w-3.5" />
+              {t('servicesGovernment.government.findService')} <ArrowRight className="inline h-3.5 w-3.5" />
             </Link>
           }
         />
@@ -154,8 +155,8 @@ export default function Government() {
       </Section>
 
       <Section className="bg-white">
-        <div className="section-eyebrow">Representation</div>
-        <Heading level={2}>House of Representatives</Heading>
+        <div className="section-eyebrow">{t('servicesGovernment.government.representation')}</div>
+        <Heading level={2}>{t('servicesGovernment.government.house')}</Heading>
         <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
           {congressionalOfficials.map(official => (
             <OfficialCard key={official.slug} official={official} />
@@ -184,19 +185,17 @@ export default function Government() {
 
       <Section className="bg-[#f5f8f2]">
         <div id="council" className="scroll-mt-28">
-          <div className="section-eyebrow">Local legislature</div>
-          <Heading level={2}>City Council</Heading>
+          <div className="section-eyebrow">{t('servicesGovernment.government.localLegislature')}</div>
+          <Heading level={2}>{t('servicesGovernment.government.cityCouncil')}</Heading>
           <Text className="mt-2 max-w-3xl text-gray-700">
-            The Sangguniang Panlungsod is Makati&apos;s legislative body. Under the{' '}
+            {t('servicesGovernment.government.councilIntroBefore')}{' '}
             <a
               className="font-bold text-primary-700 underline underline-offset-2"
               href={charterUrl}
               target="_blank"
               rel="noreferrer"
             >
-              Makati City Charter
-            </a>
-            , the Vice Mayor serves as presiding officer.
+              {t('servicesGovernment.government.charter')}\n            </a>\n            {t('servicesGovernment.government.councilIntroAfter')}
           </Text>
 
           <div className="mt-7 grid grid-cols-1 xl:grid-cols-2 gap-6">
@@ -224,14 +223,14 @@ export default function Government() {
       <Section className="bg-white">
         <div id="offices" className="scroll-mt-28">
           <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2 mb-4">
-            <Heading level={2}>City offices</Heading>
+            <Heading level={2}>{t('servicesGovernment.government.cityOffices')}</Heading>
             <a
               className="inline-flex items-center gap-1 text-sm font-bold text-primary-700 underline underline-offset-2"
               href={charterUrl}
               target="_blank"
               rel="noreferrer"
             >
-              Makati City Charter <ExternalLink className="h-3.5 w-3.5" />
+              {t('servicesGovernment.government.charter')} <ExternalLink className="h-3.5 w-3.5" />
             </a>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2 mb-10">
@@ -244,16 +243,16 @@ export default function Government() {
         </div>
 
         <div id="city-hall" className="scroll-mt-28">
-          <Heading level={2}>Makati City Hall</Heading>
+          <Heading level={2}>{t('servicesGovernment.government.cityHall')}</Heading>
           <div className="mt-4 rounded-2xl border border-gray-200 bg-[#fffdf8] p-5">
             <p>
-              <strong>Trunkline:</strong>{' '}
+              <strong>{t('servicesGovernment.government.trunkline')}:</strong>{' '}
               <a className="text-primary-700 underline" href="tel:+63288701000">
                 +63 2 8870-1000
               </a>
             </p>
             <p>
-              <strong>Email:</strong>{' '}
+              <strong>{t('servicesGovernment.government.email')}:</strong>{' '}
               <a
                 className="text-primary-700 underline"
                 href="mailto:makati@makati.gov.ph"
@@ -262,7 +261,7 @@ export default function Government() {
               </a>
             </p>
             <p>
-              <strong>Office hours:</strong> Monday to Friday, 8:00 AM–5:00 PM
+              <strong>{t('servicesGovernment.government.officeHours')}:</strong> {t('servicesGovernment.government.officeHoursValue')}
             </p>
             <a
               className="mt-3 inline-flex items-center gap-1 text-sm font-bold text-primary-700 underline underline-offset-2"
@@ -270,7 +269,7 @@ export default function Government() {
               target="_blank"
               rel="noreferrer"
             >
-              Official Makati City Web Portal{' '}
+              {t('servicesGovernment.government.officialPortal')}{' '}
               <ExternalLink className="h-3.5 w-3.5" />
             </a>
           </div>
