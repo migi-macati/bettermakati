@@ -549,8 +549,8 @@ const Services: React.FC = () => {
         />
         <Banner
           type="error"
-          title="{t('servicesGovernment.servicesPage.categoryNotFound')}"
-          description="{t('servicesGovernment.servicesPage.categoryMissing')}"
+          title={t('servicesGovernment.servicesPage.categoryNotFound')}
+          description={t('servicesGovernment.servicesPage.categoryMissing')}
           icon
         />
       </Section>
