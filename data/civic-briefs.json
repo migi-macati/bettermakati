@@ -2,6 +2,17 @@
   "version": 1,
   "briefs": [
     {
+      "id": "daily-2026-10-01",
+      "cadence": "daily",
+      "title": "Daily Civic Brief",
+      "periodStart": "2026-10-01",
+      "periodEnd": "2026-10-01",
+      "publishedAt": "2026-10-02T06:55:50.286Z",
+      "recordIds": [],
+      "reviewSignals": [],
+      "failedChecks": []
+    },
+    {
       "id": "daily-2026-09-24",
       "cadence": "daily",
       "title": "Daily Civic Brief",
