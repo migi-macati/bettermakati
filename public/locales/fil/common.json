@@ -304,5 +304,176 @@
     "show": "Ipakita ang photo {{current}} sa {{total}}",
     "play": "I-play ang photos",
     "pause": "I-pause ang photos"
+  },
+  "discovery": {
+    "status": {
+      "Live": "Live",
+      "Researching": "Sinusuri",
+      "Planned": "Planned"
+    },
+    "communityTools": {
+      "seoTitle": "Community Tools",
+      "seoDescription": "Community-built civic tools para sa Makati.",
+      "eyebrow": "Community Tools",
+      "title": "Ano ang makakatulong sa iyo ngayon?",
+      "description": "Practical tools para makahanap ng services, places, impormasyon, at mga paraan para makilahok sa Makati.",
+      "statusLabel": "Status ng tool:",
+      "suggest": "Magmungkahi ng tool"
+    },
+    "tools": {
+      "open": "Buksan",
+      "suggestOrContribute": "Magmungkahi o tumulong"
+    },
+    "concernFinder": {
+      "seoTitle": "Saan Ako Lalapit?",
+      "seoDescription": "Ilarawan ang kailangan mo at hanapin ang Makati city, barangay, o national government service na humahawak nito.",
+      "seoKeywords": "Makati government service finder, saan ako lalapit Makati, Makati assistance, Makati permits, Makati IDs",
+      "eyebrow": "Service finder",
+      "title": "Saan Ako Lalapit?",
+      "intro": "Ilarawan ang kailangan mo. Makikita sa matches ang service, responsible office, at kung saan puwedeng pumunta.",
+      "emergencyTitle": "Emergency o agarang panganib?",
+      "emergencyLink": "Buksan ang emergency hotlines",
+      "emergencySuffix": "sa halip na gamitin ang service finder.",
+      "searchTitle": "Ano ang kailangan mong tulong?",
+      "searchPlaceholder": "hal. hospital bill, PWD ID, business permit, cedula",
+      "browseServices": "Tingnan lahat ng services",
+      "browseOffices": "Tingnan ang government offices",
+      "commonNeeds": "Karaniwang kailangan",
+      "taskFirst": "Magsimula sa kailangan, hindi sa office",
+      "openGuide": "Buksan ang guide",
+      "unsure": "Hindi pa sigurado",
+      "actionCenterTitle": "Makati Action Center",
+      "actionCenterDescription": "Gamitin ang service-coordination channel ng lungsod kapag sakop ng concern ang higit sa isang office o hindi malinaw kung aling department ang responsable.",
+      "actionCenterCta": "Buksan ang Action Center guide",
+      "localConcern": "Local concern",
+      "barangayTitle": "Magsimula sa iyong barangay",
+      "barangayDescription": "Makikita sa barangay pages ang hall contacts, karaniwang barangay transactions, at local service context.",
+      "barangayCta": "Pumili ng barangay",
+      "needs": {
+        "medical": {
+          "title": "Kailangan ko ng medical o financial assistance",
+          "description": "Magsimula sa requirements at assessment ng Makati Social Welfare Department."
+        },
+        "pwd": {
+          "title": "Kailangan ko ng PWD ID",
+          "description": "Buksan ang Makati PDAO / social welfare application guide."
+        },
+        "senior": {
+          "title": "Kailangan ko ng senior Blu Card",
+          "description": "Tingnan ang city guide, requirements, at current-source caveat."
+        },
+        "clearance": {
+          "title": "Kailangan ko ng barangay clearance",
+          "description": "Magsimula sa iyong barangay at clearance guide."
+        },
+        "business": {
+          "title": "Kailangan ko ng business permit",
+          "description": "Buksan ang new-business permit checklist at official city source."
+        },
+        "civilRegistry": {
+          "title": "Kailangan ko ng civil registry document",
+          "description": "Hanapin ang Makati birth, marriage, death, at certified-copy services."
+        },
+        "propertyTax": {
+          "title": "Kailangan kong magbayad ng real property tax",
+          "description": "Tingnan ang city payment guide at source."
+        },
+        "cityAction": {
+          "title": "Kailangan kong ipaaksyon sa lungsod ang concern",
+          "description": "Gamitin ang Makati Action Center para sa service coordination."
+        }
+      }
+    },
+    "search": {
+      "seoTitle": "Search",
+      "seoDescription": "Mag-search sa BetterMakati ng services, barangays, civic dates, areas, organizations, officials, records, places, at civic tools.",
+      "eyebrow": "Search",
+      "title": "Mag-search sa BetterMakati",
+      "description": "Isang search para sa services, barangays, civic dates, districts at estates, organizations, civic places, officials, records, visitor information, at community tools.",
+      "searchTitle": "Ano ang hinahanap mo?",
+      "placeholder": "hal. deadline, council session, Poblacion, budget"
+    },
+    "notFound": {
+      "seoTitle": "Hindi nahanap ang page",
+      "seoDescription": "Hindi nahanap ang BetterMakati page na hiniling mo.",
+      "title": "Hindi namin nahanap ang page na iyon",
+      "description": "Maaaring nagbago ang address o nasa ibang bahagi na ng BetterMakati ang impormasyon.",
+      "home": "Home",
+      "search": "Mag-search sa BetterMakati",
+      "searchTitle": "Hanapin na lang ang impormasyon",
+      "placeholder": "Subukan ang service, barangay, official, place, o topic"
+    }
+  },
+  "serviceSearch": {
+    "domains": {
+      "all": "Lahat ng type",
+      "services": "Services",
+      "barangays": "Barangays",
+      "officials": "Officials",
+      "statistics": "Statistics",
+      "reports": "Reports & insights",
+      "legislation": "Legislation",
+      "public-records": "Public records",
+      "places": "Places & map",
+      "heritage": "Heritage",
+      "mobility": "Mobility",
+      "calendar": "Civic calendar",
+      "news": "News"
+    },
+    "tabs": {
+      "All": "Lahat",
+      "Services": "Services",
+      "Visit": "Pasyalan",
+      "Government": "Government",
+      "Organizations": "Organizations",
+      "Barangays": "Barangays",
+      "Places": "Places",
+      "Records": "Records",
+      "Tools": "Tools",
+      "Business": "Business",
+      "Health": "Health",
+      "Education": "Education",
+      "Social": "Social",
+      "Property": "Property"
+    },
+    "thisType": "type na ito",
+    "thisServiceCategory": "service category na ito",
+    "thisView": "view na ito",
+    "defaultServiceTitle": "Maghanap ng Government Service",
+    "defaultSiteTitle": "Maghanap ng service o impormasyon",
+    "defaultServicePlaceholder": "Mag-search ng services",
+    "defaultSitePlaceholder": "hal. Yellow Card, Poblacion, restaurants, budget",
+    "clear": "I-clear ang search",
+    "openSelected": "Buksan ang napiling result",
+    "showAllMatching": "Ipakita lahat ng matching results",
+    "searchBetterMakati": "Mag-search sa BetterMakati",
+    "filterByType": "Filter ayon sa type",
+    "whereToGo": "Saan pupunta",
+    "noFilteredMatches": "Walang match sa {{filter}}",
+    "matchesOutsideFilter": "May {{count}} matching result ang BetterMakati para sa “{{query}}” sa labas ng filter na ito.",
+    "matchesOutsideFilter_other": "May {{count}} matching results ang BetterMakati para sa “{{query}}” sa labas ng filter na ito.",
+    "resultsOutsideFilter": "May BetterMakati results sa labas ng filter na ito.",
+    "showAllCount": "Ipakita ang {{count}} matching result",
+    "showAllCount_other": "Ipakita ang lahat ng {{count}} matching results",
+    "noQueryMatch": "Walang BetterMakati match para sa “{{query}}”",
+    "noMatch": "Walang matching result",
+    "tryBroader": "Subukan ang mas malawak na keyword, o pumunta sa bahagi ng BetterMakati na malamang makatulong.",
+    "browseBetterMakati": "Tingnan sa BetterMakati",
+    "browse": {
+      "services": "Services",
+      "barangays": "Barangays",
+      "records": "Public records",
+      "reports": "Reports & insights",
+      "places": "Places & map"
+    },
+    "outside": "Sa labas ng BetterMakati",
+    "betterGov": "Mag-search ng national services sa BetterGov",
+    "betterLgu": "Maghanap ng ibang LGU sa BetterLGU",
+    "reportMissing": "Ipaalam ang nawawalang result",
+    "resultCount": "{{count}} result",
+    "resultCount_other": "{{count}} results",
+    "navigate": "Galawin",
+    "select": "Piliin",
+    "close": "Isara"
   }
 }

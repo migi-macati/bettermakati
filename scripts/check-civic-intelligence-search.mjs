@@ -24,6 +24,7 @@ const areas = await readFile(
 );
 const navigation = await readFile('src/data/navigation.ts', 'utf8');
 const searchPage = await readFile('src/pages/Search.tsx', 'utf8');
+const enLocale = await readFile('public/locales/en/common.json', 'utf8');
 const mobilitySystems = await readFile(
   'src/data/mobilitySystems.ts',
   'utf8'
@@ -250,8 +251,8 @@ for (const marker of [
   'if (seen.has(key)) return false',
   "item.group === 'Service' || item.group === 'Record'",
   'key={item.canonicalKey ?? item.href + item.title}',
-  'Search national services on BetterGov',
-  'Find another LGU on BetterLGU',
+  "t('serviceSearch.betterGov')",
+  "t('serviceSearch.betterLgu')",
 ]) {
   if (!search.includes(marker)) {
     problems.push('Global Search canonical/dedupe marker missing: ' + marker);
@@ -344,8 +345,9 @@ if (
 }
 
 if (
-  !searchPage.includes('districts and estates') ||
-  !searchPage.includes('organizations')
+  !searchPage.includes("t('discovery.search.description')") ||
+  !enLocale.includes('districts and estates') ||
+  !enLocale.includes('organizations')
 ) {
   problems.push(
     'Search page scope copy must explicitly include canonical areas and organizations.'

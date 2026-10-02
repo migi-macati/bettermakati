@@ -1,10 +1,11 @@
 import { readFile } from 'node:fs/promises';
 
-const [services, concernFinder, serviceGuide, offices, packageJson] = await Promise.all([
+const [services, concernFinder, serviceGuide, offices, enLocale, packageJson] = await Promise.all([
   readFile('src/pages/Services.tsx', 'utf8'),
   readFile('src/pages/ConcernFinder.tsx', 'utf8'),
   readFile('src/pages/ServiceGuide.tsx', 'utf8'),
   readFile('src/pages/GovernmentOffices.tsx', 'utf8'),
+  readFile('public/locales/en/common.json', 'utf8'),
   readFile('package.json', 'utf8'),
 ]);
 
@@ -42,7 +43,7 @@ for (const marker of [
   'Browse all services',
   'Browse government offices',
 ]) {
-  if (!concernFinder.includes(marker)) {
+  if (!concernFinder.includes(marker) && !enLocale.includes(marker)) {
     problems.push('Saan Ako Lalapit recovery marker missing: ' + marker);
   }
 }

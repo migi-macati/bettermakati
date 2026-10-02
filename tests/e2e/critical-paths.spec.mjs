@@ -80,7 +80,7 @@ const w6SearchJourneyMatrix = [
 const criticalRoutes = [
   ['/', /Let’s make Makati Better|Let's make Makati Better/i],
   ['/services', /What do you need to get done/i],
-  ['/community-tools/saan-ako-lalapit', /Saan Ako Lalapit/i],
+  ['/community-tools/saan-ako-lalapit', /Where Should I Go\?/i],
   ['/government-offices', /Government offices for Makati/i],
   ['/government', /Makati City Government/i],
   ['/barangays', /Find your barangay/i],
@@ -208,7 +208,7 @@ test('W6-3c service journey stays task-first and recovers from dead ends', async
   ).toHaveAttribute('href', '/government-offices');
 
   await page.goto(baseURL + '/community-tools/saan-ako-lalapit');
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Saan Ako Lalapit?');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Where Should I Go?');
   await expect(
     page.getByText(
       'Describe what you need. Matches can show the service, responsible office and a place to go.',
@@ -893,7 +893,7 @@ test('remaining Makati city and barangay service guides are complete', async ({ 
 
 test('Saan Ako Lalapit is task-first and service-only', async ({ page }) => {
   await page.goto(baseURL + '/community-tools/saan-ako-lalapit');
-  await expect(page.getByRole('heading', { level: 1 })).toContainText('Saan Ako Lalapit?');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Where Should I Go?');
   await expect(page.getByRole('link', { name: /Open emergency hotlines/i })).toBeVisible();
   const search = page.getByPlaceholder(/hospital bill, PWD ID, business permit, cedula/i);
   await search.fill('hospital bill');

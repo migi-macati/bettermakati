@@ -176,7 +176,7 @@ for (const marker of [
   'showServicePlaces = false',
   'officesForAgency(service.agency).find(item => item.placeId)',
   'placeRegistryById.get(office.placeId)',
-  'Where to go: {servicePlaceById.get(item.serviceId)?.name}',
+  "{t('serviceSearch.whereToGo')}: {servicePlaceById.get(item.serviceId)?.name}",
 ]) {
   if (!serviceSearchSource.includes(marker)) {
     problems.push('Saan Ako Lalapit place-result integration is missing: ' + marker);

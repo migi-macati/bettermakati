@@ -11,6 +11,7 @@ const [
   elections,
   searchIndex,
   searchPage,
+  enLocale,
   packageJson,
 ] = await Promise.all([
   readFile('src/components/civic/CivicTimelinePreview.tsx', 'utf8'),
@@ -23,6 +24,7 @@ const [
   readFile('src/pages/Elections.tsx', 'utf8'),
   readFile('src/data/searchIndex.ts', 'utf8'),
   readFile('src/pages/Search.tsx', 'utf8'),
+  readFile('public/locales/en/common.json', 'utf8'),
   readFile('package.json', 'utf8'),
 ]);
 
@@ -135,8 +137,10 @@ for (const marker of [
 }
 
 if (
-  !searchPage.includes('services, barangays, civic dates') ||
-  !searchPage.includes('deadline, council session')
+  !searchPage.includes("t('discovery.search.description')") ||
+  !searchPage.includes("t('discovery.search.placeholder')") ||
+  !enLocale.includes('services, barangays, civic dates') ||
+  !enLocale.includes('deadline, council session')
 ) {
   problems.push('Search page does not advertise civic-date discovery.');
 }

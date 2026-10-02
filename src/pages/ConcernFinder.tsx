@@ -1,5 +1,6 @@
 import { AlertTriangle, ArrowRight, Building2, FileBadge2, HeartPulse, Landmark, ReceiptText, Users } from 'lucide-react';
 import { Link } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import ServiceSearch from '../components/home/ServiceSearch';
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
@@ -7,106 +8,99 @@ import SEO from '../components/SEO';
 
 const commonNeeds = [
   {
-    title: 'I need medical or financial assistance',
-    description: 'Start with Makati Social Welfare Department requirements and assessment.',
+    key: 'medical',
     href: '/services/guide/medical-financial-assistance',
     icon: HeartPulse,
   },
   {
-    title: 'I need a PWD ID',
-    description: 'Open the Makati PDAO / social welfare application guide.',
+    key: 'pwd',
     href: '/services/guide/pwd-id',
     icon: FileBadge2,
   },
   {
-    title: 'I need a senior Blu Card',
-    description: 'See the city guide, requirements and current-source caveat.',
+    key: 'senior',
     href: '/services/guide/senior-blu-card',
     icon: Users,
   },
   {
-    title: 'I need a barangay clearance',
-    description: 'Start with your barangay and the clearance guide.',
+    key: 'clearance',
     href: '/services/guide/barangay-clearance',
     icon: Building2,
   },
   {
-    title: 'I need a business permit',
-    description: 'Open the new-business permit checklist and official city source.',
+    key: 'business',
     href: '/services/guide/new-business-permit',
     icon: Landmark,
   },
   {
-    title: 'I need a civil registry document',
-    description: 'Find Makati birth, marriage, death and certified-copy services.',
+    key: 'civilRegistry',
     href: '/services/guide/local-civil-registry-copy',
     icon: FileBadge2,
   },
   {
-    title: 'I need to pay real property tax',
-    description: 'See the city payment guide and source.',
+    key: 'propertyTax',
     href: '/services/guide/real-property-tax',
     icon: ReceiptText,
   },
   {
-    title: 'I need the city to act on a concern',
-    description: 'Use the Makati Action Center route for service coordination.',
+    key: 'cityAction',
     href: '/services/guide/makati-action-center',
     icon: ArrowRight,
   },
 ];
 
 export default function ConcernFinder() {
+  const { t } = useTranslation();
   return (
     <>
       <SEO
-        title="Saan Ako Lalapit?"
-        description="Describe what you need and find the Makati city, barangay or national government service that handles it."
-        keywords="Makati government service finder, saan ako lalapit Makati, Makati assistance, Makati permits, Makati IDs"
+        title={t('discovery.concernFinder.seoTitle')}
+        description={t('discovery.concernFinder.seoDescription')}
+        keywords={t('discovery.concernFinder.seoKeywords')}
       />
 
       <Section className="bg-[#fffdf8]">
         <div className="mx-auto max-w-4xl">
-          <div className="section-eyebrow">Service finder</div>
-          <Heading>Saan Ako Lalapit?</Heading>
+          <div className="section-eyebrow">{t('discovery.concernFinder.eyebrow')}</div>
+          <Heading>{t('discovery.concernFinder.title')}</Heading>
           <p className="mt-2 max-w-3xl text-base leading-relaxed text-gray-700">
-            Describe what you need. Matches can show the service, responsible office and a place to go.
+            {t('discovery.concernFinder.intro')}
           </p>
 
           <div className="mt-5 flex items-start gap-3 rounded-2xl border border-warning-200 bg-warning-50 p-4 text-sm text-warning-950">
             <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0" aria-hidden="true" />
             <div>
-              <strong>Emergency or immediate danger?</strong>{' '}
+              <strong>{t('discovery.concernFinder.emergencyTitle')}</strong>{' '}
               <Link to="/hotlines" className="font-bold underline underline-offset-2">
-                Open emergency hotlines
+                {t('discovery.concernFinder.emergencyLink')}
               </Link>{' '}
-              instead of using the service finder.
+              {t('discovery.concernFinder.emergencySuffix')}
             </div>
           </div>
 
           <div className="mt-7">
             <ServiceSearch
               scope="services"
-              title="What do you need help with?"
-              placeholder="e.g., hospital bill, PWD ID, business permit, cedula"
+              title={t('discovery.concernFinder.searchTitle')}
+              placeholder={t('discovery.concernFinder.searchPlaceholder')}
               showServicePlaces
             />
           </div>
 
           <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm font-bold">
             <Link to="/services" className="text-primary-700 underline underline-offset-2">
-              Browse all services
+              {t('discovery.concernFinder.browseServices')}
             </Link>
             <Link to="/government-offices" className="text-primary-700 underline underline-offset-2">
-              Browse government offices
+              {t('discovery.concernFinder.browseOffices')}
             </Link>
           </div>
         </div>
       </Section>
 
       <Section className="bg-white">
-        <div className="section-eyebrow">Common needs</div>
-        <Heading level={2}>Start with the task, not the office</Heading>
+        <div className="section-eyebrow">{t('discovery.concernFinder.commonNeeds')}</div>
+        <Heading level={2}>{t('discovery.concernFinder.taskFirst')}</Heading>
         <div className="mt-6 grid gap-3 md:grid-cols-2">
           {commonNeeds.map(item => {
             const Icon = item.icon;
@@ -122,11 +116,11 @@ export default function ConcernFinder() {
                   </div>
                   <div>
                     <h3 className="font-extrabold text-gray-950 group-hover:text-primary-900">
-                      {item.title}
+                      {t(`discovery.concernFinder.needs.${item.key}.title`)}
                     </h3>
-                    <p className="mt-1 text-sm leading-relaxed text-gray-600">{item.description}</p>
+                    <p className="mt-1 text-sm leading-relaxed text-gray-600">{t(`discovery.concernFinder.needs.${item.key}.description`)}</p>
                     <span className="mt-3 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
-                      Open guide <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                      {t('discovery.concernFinder.openGuide')} <ArrowRight className="h-4 w-4" aria-hidden="true" />
                     </span>
                   </div>
                 </div>
@@ -139,24 +133,24 @@ export default function ConcernFinder() {
       <Section className="bg-[#f5f8f2]">
         <div className="grid gap-4 lg:grid-cols-2">
           <div className="rounded-2xl border border-primary-100 bg-white p-6">
-            <div className="section-eyebrow">Still unsure</div>
-            <Heading level={2}>Makati Action Center</Heading>
+            <div className="section-eyebrow">{t('discovery.concernFinder.unsure')}</div>
+            <Heading level={2}>{t('discovery.concernFinder.actionCenterTitle')}</Heading>
             <p className="mt-2 text-sm leading-relaxed text-gray-700">
-              Use the city’s service-coordination channel when the concern crosses offices or you cannot identify the responsible department.
+              {t('discovery.concernFinder.actionCenterDescription')}
             </p>
             <Link to="/services/guide/makati-action-center" className="brand-btn-primary mt-5">
-              Open Action Center guide
+              {t('discovery.concernFinder.actionCenterCta')}
             </Link>
           </div>
 
           <div className="rounded-2xl border border-primary-100 bg-white p-6">
-            <div className="section-eyebrow">Local concern</div>
-            <Heading level={2}>Start with your barangay</Heading>
+            <div className="section-eyebrow">{t('discovery.concernFinder.localConcern')}</div>
+            <Heading level={2}>{t('discovery.concernFinder.barangayTitle')}</Heading>
             <p className="mt-2 text-sm leading-relaxed text-gray-700">
-              Barangay pages show hall contacts, common barangay transactions and local service context.
+              {t('discovery.concernFinder.barangayDescription')}
             </p>
             <Link to="/barangays" className="brand-btn-secondary mt-5">
-              Choose a barangay
+              {t('discovery.concernFinder.barangayCta')}
             </Link>
           </div>
         </div>
