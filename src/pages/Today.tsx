@@ -180,7 +180,9 @@ export default function Today() {
     ? formatTimestamp(
         weather.observedAt +
           (/[zZ]|[+-]\d\d:\d\d$/.test(weather.observedAt) ? '' : '+08:00')
-      , locale)
+        ,
+        locale
+      )
     : '';
 
   return (
