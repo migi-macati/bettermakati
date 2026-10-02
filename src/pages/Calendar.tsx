@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link, useSearchParams } from 'react-router';
 import {
   Archive,
@@ -92,7 +93,7 @@ const statusLabels: Record<CivicTimelineItem['status'], string> = {
   superseded: 'Superseded',
 };
 
-const formatDateValue = (value: string, includeTime: boolean) => {
+const formatDateValue = (value: string, includeTime: boolean, locale: string) => {
   const options: Intl.DateTimeFormatOptions = {
     month: 'short',
     day: 'numeric',
@@ -103,17 +104,17 @@ const formatDateValue = (value: string, includeTime: boolean) => {
     options.hour = 'numeric';
     options.minute = '2-digit';
   }
-  return new Intl.DateTimeFormat('en-PH', options).format(
+  return new Intl.DateTimeFormat(locale, options).format(
     new Date(value.includes('T') ? value : value + 'T00:00:00+08:00')
   );
 };
 
-const timelineDateLabel = (item: CivicTimelineItem) => {
+const timelineDateLabel = (item: CivicTimelineItem, locale: string) => {
   const primary = civicTimelinePrimaryValue(item);
   const end = civicTimelineEndValue(item);
   const includeTime = item.temporal.precision.startsWith('datetime');
-  const first = formatDateValue(primary, includeTime);
-  return end ? first + ' – ' + formatDateValue(end, includeTime) : first;
+  const first = formatDateValue(primary, includeTime, locale);
+  return end ? first + ' – ' + formatDateValue(end, includeTime, locale) : first;
 };
 
 const geographyLinks = (item: CivicTimelineItem) => {
@@ -153,7 +154,7 @@ const geographyLinks = (item: CivicTimelineItem) => {
   return links;
 };
 
-const TimelineCard = ({ item }: { item: CivicTimelineItem }) => {
+const TimelineCard = ({ item, locale }: { item: CivicTimelineItem; locale: string }) => {
   const primarySource =
     item.sourceRefs.find(source => source.id === item.primarySourceId) ??
     item.sourceRefs[0];
@@ -178,7 +179,7 @@ const TimelineCard = ({ item }: { item: CivicTimelineItem }) => {
 
       <div className="mt-4 text-sm font-extrabold text-primary-800">
         <time dateTime={civicTimelinePrimaryValue(item)}>
-          {timelineDateLabel(item)}
+          {timelineDateLabel(item, locale)}
         </time>
       </div>
       <h2 className="mt-2 text-xl font-extrabold leading-snug text-gray-950">
@@ -253,6 +254,8 @@ const validActionability = (
     : 'all';
 
 export default function Calendar() {
+  const { t, i18n } = useTranslation();
+  const locale = i18n.resolvedLanguage === 'fil' ? 'fil-PH' : 'en-PH';
   const [params, setParams] = useSearchParams();
   const now = useMemo(() => new Date(), []);
 
@@ -322,8 +325,8 @@ export default function Calendar() {
   return (
     <>
       <SEO
-        title="Makati Calendar"
-        description="See source-backed Makati civic dates, deadlines, meetings, legislation milestones, publications and historical records in one civic timeline."
+        title={t('currentInfo.calendar.title')}
+        description={t('currentInfo.calendar.description')}
         keywords="Makati calendar, civic calendar, deadlines, public hearings, council sessions, legislation, procurement, elections, reports"
       />
 
@@ -358,7 +361,7 @@ export default function Calendar() {
       </section>
 
       <Section className="bg-[#fffdf8]">
-        <div className="section-eyebrow">Choose a view</div>
+        <div className="section-eyebrow">{t('currentInfo.calendar.chooseView')}</div>
         <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
           {civicCalendarViewOptions.map(option => {
             const Icon =
@@ -409,7 +412,7 @@ export default function Calendar() {
           </div>
           <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
             <label className="block">
-              <span className="mb-1.5 block text-xs font-bold text-gray-600">Topic</span>
+              <span className="mb-1.5 block text-xs font-bold text-gray-600">{t('currentInfo.calendar.topic')}</span>
               <select
                 value={topic}
                 onChange={event => setParam('topic', event.target.value, 'all')}
@@ -421,20 +424,20 @@ export default function Calendar() {
               </select>
             </label>
             <label className="block">
-              <span className="mb-1.5 block text-xs font-bold text-gray-600">Barangay</span>
+              <span className="mb-1.5 block text-xs font-bold text-gray-600">{t('currentInfo.calendar.barangay')}</span>
               <select
                 value={barangaySlug}
                 onChange={event => setParam('barangay', event.target.value)}
                 className="min-h-11 w-full rounded-xl border border-gray-300 bg-white px-3 py-2.5 text-sm text-gray-950"
               >
-                <option value="">All barangays + citywide</option>
+                <option value="">{t('currentInfo.calendar.allBarangays')}</option>
                 {barangays.map(barangay => (
                   <option key={barangay.slug} value={barangay.slug}>{barangay.name}</option>
                 ))}
               </select>
             </label>
             <label className="block">
-              <span className="mb-1.5 block text-xs font-bold text-gray-600">Actionability</span>
+              <span className="mb-1.5 block text-xs font-bold text-gray-600">{t('currentInfo.calendar.actionability')}</span>
               <select
                 value={actionability}
                 onChange={event => setParam('action', event.target.value, 'all')}
@@ -446,20 +449,20 @@ export default function Calendar() {
               </select>
             </label>
             <label className="block">
-              <span className="mb-1.5 block text-xs font-bold text-gray-600">Search</span>
+              <span className="mb-1.5 block text-xs font-bold text-gray-600">{t('currentInfo.calendar.search')}</span>
               <span className="relative block">
                 <Search className="pointer-events-none absolute left-3 top-3 h-4 w-4 text-gray-400" aria-hidden="true" />
                 <input
                   type="search"
                   value={query}
                   onChange={event => setParam('q', event.target.value)}
-                  placeholder="Title, source, topic…"
+                  placeholder={t('currentInfo.calendar.placeholder')}
                   className="min-h-11 w-full rounded-xl border border-gray-300 bg-white py-2.5 pl-9 pr-3 text-sm text-gray-950"
                 />
               </span>
             </label>
             <label className="block">
-              <span className="mb-1.5 block text-xs font-bold text-gray-600">From</span>
+              <span className="mb-1.5 block text-xs font-bold text-gray-600">{t('currentInfo.calendar.from')}</span>
               <input
                 type="date"
                 value={from}
@@ -468,7 +471,7 @@ export default function Calendar() {
               />
             </label>
             <label className="block">
-              <span className="mb-1.5 block text-xs font-bold text-gray-600">To</span>
+              <span className="mb-1.5 block text-xs font-bold text-gray-600">{t('currentInfo.calendar.to')}</span>
               <input
                 type="date"
                 value={to}
@@ -508,7 +511,7 @@ export default function Calendar() {
           </div>
           <div className="text-xs text-gray-500">
             Native timeline verified{' '}
-            {new Intl.DateTimeFormat('en-PH', {
+            {new Intl.DateTimeFormat(locale, {
               dateStyle: 'medium',
               timeStyle: 'short',
               timeZone: 'Asia/Manila',
@@ -518,7 +521,7 @@ export default function Calendar() {
 
         {visible.length > 0 ? (
           <div className="mt-7 grid grid-cols-1 gap-4 xl:grid-cols-2">
-            {visible.map(item => <TimelineCard key={item.id} item={item} />)}
+            {visible.map(item => <TimelineCard key={item.id} item={item} locale={locale} />)}
           </div>
         ) : (
           <div className="mt-7 rounded-2xl border border-primary-100 bg-white p-6">
@@ -533,7 +536,7 @@ export default function Calendar() {
             </p>
             <div className="mt-4 flex flex-wrap gap-3">
               <Link to="/city-monitor" className="brand-btn-secondary">City Monitor</Link>
-              <Link to="/today" className="brand-btn-secondary">Today in Makati</Link>
+              <Link to="/today" className="brand-btn-secondary">{t('currentInfo.calendar.today')}</Link>
             </div>
           </div>
         )}
@@ -544,7 +547,7 @@ export default function Calendar() {
           <div className="flex items-start gap-3">
             <Info className="mt-0.5 h-5 w-5 shrink-0 text-secondary-800" aria-hidden="true" />
             <div>
-              <h2 className="font-extrabold text-gray-950">How the Makati Calendar works</h2>
+              <h2 className="font-extrabold text-gray-950">{t('currentInfo.calendar.howItWorks')}</h2>
               <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-700">
                 Each date links back to the BetterMakati record where the
                 underlying information belongs. Legislation stays in Legislation,
