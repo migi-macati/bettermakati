@@ -2,6 +2,38 @@
   "version": 2,
   "runs": [
     {
+      "checkedAt": "2026-10-02T05:59:32.868Z",
+      "checked": 8,
+      "unchanged": 7,
+      "changed": [
+        {
+          "id": "philgeps",
+          "label": "PhilGEPS",
+          "url": "https://notices.philgeps.gov.ph/",
+          "stream": "procurement",
+          "monitoringMode": "content-hash",
+          "affectedPages": [
+            "/projects-budget",
+            "/accountability",
+            "/city-monitor",
+            "/briefs"
+          ]
+        }
+      ],
+      "failed": [],
+      "newBaselines": [],
+      "manualReview": [
+        {
+          "id": "mymakati-broadcasts",
+          "label": "MyMakati official social broadcasts",
+          "url": "https://www.facebook.com/mymakativerified",
+          "stream": "council-session",
+          "monitoringMode": "manual-review",
+          "affectedPages": ["/city-monitor", "/briefs"]
+        }
+      ]
+    },
+    {
       "checkedAt": "2026-09-27T00:45:23.835Z",
       "checked": 8,
       "unchanged": 6,

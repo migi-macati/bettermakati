@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "checkedAt": "2026-09-27T00:45:23.835Z",
+  "checkedAt": "2026-10-02T05:59:32.868Z",
   "publishRequired": true,
   "sources": [
     {
@@ -18,8 +18,8 @@
       "sha256": "8dc808b586137d72b032d81a25324d9e596e8bf4b87b2d4ee2704831f6d6e5ff",
       "lastSuccessfulHash": "8dc808b586137d72b032d81a25324d9e596e8bf4b87b2d4ee2704831f6d6e5ff",
       "change": "reachable",
-      "lastCheckedAt": "2026-09-27T00:45:23.835Z",
-      "lastSuccessfulAt": "2026-09-27T00:45:23.835Z"
+      "lastCheckedAt": "2026-10-02T05:59:32.868Z",
+      "lastSuccessfulAt": "2026-10-02T05:59:32.868Z"
     },
     {
       "id": "makati-mayor-speeches",
@@ -36,8 +36,8 @@
       "sha256": "8dc808b586137d72b032d81a25324d9e596e8bf4b87b2d4ee2704831f6d6e5ff",
       "lastSuccessfulHash": "8dc808b586137d72b032d81a25324d9e596e8bf4b87b2d4ee2704831f6d6e5ff",
       "change": "reachable",
-      "lastCheckedAt": "2026-09-27T00:45:23.835Z",
-      "lastSuccessfulAt": "2026-09-27T00:45:23.835Z"
+      "lastCheckedAt": "2026-10-02T05:59:32.868Z",
+      "lastSuccessfulAt": "2026-10-02T05:59:32.868Z"
     },
     {
       "id": "makati-council-videos",
@@ -53,9 +53,9 @@
       "contentLength": 14019,
       "sha256": "8dc808b586137d72b032d81a25324d9e596e8bf4b87b2d4ee2704831f6d6e5ff",
       "lastSuccessfulHash": "8dc808b586137d72b032d81a25324d9e596e8bf4b87b2d4ee2704831f6d6e5ff",
-      "change": "new-baseline",
-      "lastCheckedAt": "2026-09-27T00:45:23.835Z",
-      "lastSuccessfulAt": "2026-09-27T00:45:23.835Z"
+      "change": "reachable",
+      "lastCheckedAt": "2026-10-02T05:59:32.868Z",
+      "lastSuccessfulAt": "2026-10-02T05:59:32.868Z"
     },
     {
       "id": "mymakati-broadcasts",
@@ -72,7 +72,7 @@
       "sha256": "",
       "lastSuccessfulHash": "",
       "change": "manual-review",
-      "lastCheckedAt": "2026-09-27T00:45:23.835Z",
+      "lastCheckedAt": "2026-10-02T05:59:32.868Z",
       "lastSuccessfulAt": null
     },
     {
@@ -90,8 +90,8 @@
       "sha256": "8dc808b586137d72b032d81a25324d9e596e8bf4b87b2d4ee2704831f6d6e5ff",
       "lastSuccessfulHash": "8dc808b586137d72b032d81a25324d9e596e8bf4b87b2d4ee2704831f6d6e5ff",
       "change": "reachable",
-      "lastCheckedAt": "2026-09-27T00:45:23.835Z",
-      "lastSuccessfulAt": "2026-09-27T00:45:23.835Z"
+      "lastCheckedAt": "2026-10-02T05:59:32.868Z",
+      "lastSuccessfulAt": "2026-10-02T05:59:32.868Z"
     },
     {
       "id": "makati-news",
@@ -108,8 +108,8 @@
       "sha256": "8dc808b586137d72b032d81a25324d9e596e8bf4b87b2d4ee2704831f6d6e5ff",
       "lastSuccessfulHash": "8dc808b586137d72b032d81a25324d9e596e8bf4b87b2d4ee2704831f6d6e5ff",
       "change": "reachable",
-      "lastCheckedAt": "2026-09-27T00:45:23.835Z",
-      "lastSuccessfulAt": "2026-09-27T00:45:23.835Z"
+      "lastCheckedAt": "2026-10-02T05:59:32.868Z",
+      "lastSuccessfulAt": "2026-10-02T05:59:32.868Z"
     },
     {
       "id": "makati-full-disclosure",
@@ -126,8 +126,8 @@
       "sha256": "8dc808b586137d72b032d81a25324d9e596e8bf4b87b2d4ee2704831f6d6e5ff",
       "lastSuccessfulHash": "8dc808b586137d72b032d81a25324d9e596e8bf4b87b2d4ee2704831f6d6e5ff",
       "change": "reachable",
-      "lastCheckedAt": "2026-09-27T00:45:23.835Z",
-      "lastSuccessfulAt": "2026-09-27T00:45:23.835Z"
+      "lastCheckedAt": "2026-10-02T05:59:32.868Z",
+      "lastSuccessfulAt": "2026-10-02T05:59:32.868Z"
     },
     {
       "id": "philgeps",
@@ -145,12 +145,12 @@
       "status": "ok",
       "statusCode": 200,
       "contentType": "text/html",
-      "contentLength": 61154,
-      "sha256": "16bbf3f2bf739401d56e988fd78de4f5b58e2ec237e0bee30db2eac92b7831a8",
-      "lastSuccessfulHash": "16bbf3f2bf739401d56e988fd78de4f5b58e2ec237e0bee30db2eac92b7831a8",
+      "contentLength": 60955,
+      "sha256": "c13c9126548b7e9182bb5993b062ddc5b7ca9a46c90bc1892a68fd12af785508",
+      "lastSuccessfulHash": "c13c9126548b7e9182bb5993b062ddc5b7ca9a46c90bc1892a68fd12af785508",
       "change": "content-changed",
-      "lastCheckedAt": "2026-09-27T00:45:23.835Z",
-      "lastSuccessfulAt": "2026-09-27T00:45:23.835Z"
+      "lastCheckedAt": "2026-10-02T05:59:32.868Z",
+      "lastSuccessfulAt": "2026-10-02T05:59:32.868Z"
     },
     {
       "id": "makati-publications",
@@ -167,8 +167,8 @@
       "sha256": "8dc808b586137d72b032d81a25324d9e596e8bf4b87b2d4ee2704831f6d6e5ff",
       "lastSuccessfulHash": "8dc808b586137d72b032d81a25324d9e596e8bf4b87b2d4ee2704831f6d6e5ff",
       "change": "reachable",
-      "lastCheckedAt": "2026-09-27T00:45:23.835Z",
-      "lastSuccessfulAt": "2026-09-27T00:45:23.835Z"
+      "lastCheckedAt": "2026-10-02T05:59:32.868Z",
+      "lastSuccessfulAt": "2026-10-02T05:59:32.868Z"
     }
   ]
 }

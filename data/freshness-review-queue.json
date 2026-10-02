@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-09-27T00:45:23.835Z",
+  "generatedAt": "2026-10-02T05:59:32.868Z",
   "summary": {
     "open": 4,
     "contentChanged": 1,
@@ -25,10 +25,10 @@
         "/briefs"
       ],
       "firstDetectedAt": "2026-09-25T00:43:52.454Z",
-      "latestDetectedAt": "2026-09-27T00:45:23.835Z",
-      "detections": 2,
-      "lastCheckedAt": "2026-09-27T00:45:23.835Z",
-      "lastSuccessfulAt": "2026-09-27T00:45:23.835Z",
+      "latestDetectedAt": "2026-10-02T05:59:32.868Z",
+      "detections": 3,
+      "lastCheckedAt": "2026-10-02T05:59:32.868Z",
+      "lastSuccessfulAt": "2026-10-02T05:59:32.868Z",
       "action": "Compare the changed source with each affected page, verify the underlying fact, then update only claims the source actually changes."
     },
     {
@@ -42,9 +42,9 @@
       "url": "https://www.facebook.com/mymakativerified",
       "affectedPages": ["/city-monitor", "/briefs"],
       "firstDetectedAt": "2026-09-25T00:43:52.454Z",
-      "latestDetectedAt": "2026-09-27T00:45:23.835Z",
+      "latestDetectedAt": "2026-10-02T05:59:32.868Z",
       "detections": 1,
-      "lastCheckedAt": "2026-09-27T00:45:23.835Z",
+      "lastCheckedAt": "2026-10-02T05:59:32.868Z",
       "lastSuccessfulAt": null,
       "action": "Open the source manually and review new official content relevant to the affected pages before publishing a civic record."
     },

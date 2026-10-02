@@ -1,8 +1,8 @@
 # BetterMakati City Monitor daily source check
 
-Checked: 2026-09-27T00:45:23.835Z
+Checked: 2026-10-02T05:59:32.868Z
 
-Automatic checks: 8. Unchanged/reachable: 6. Changed: 1. Failed: 0. Manual-review channels: 1.
+Automatic checks: 8. Unchanged/reachable: 7. Changed: 1. Failed: 0. Manual-review channels: 1.
 
 ## Changed sources requiring editorial review
 
