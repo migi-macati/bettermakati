@@ -752,5 +752,124 @@
       "shareReady": "Share-ready text",
       "followBetterMakati": "Follow BetterMakati"
     }
+  },
+  "betterBarangay": {
+    "directory": {
+      "seoTitle": "Barangays",
+      "seoDescription": "Choose one of Makati City's 23 barangays to open its BetterMakati local homepage with current officials, services, facilities, records and local civic context.",
+      "title": "Find your barangay.",
+      "intro": "Local services, officials, facilities, projects, records and places for each of Makati's 23 barangays.",
+      "searchLabel": "Search barangays, officials or local places",
+      "searchPlaceholder": "Search barangay, official or local place",
+      "districtFilter": "Filter barangays by district",
+      "allBarangays": "All barangays",
+      "reviewNote": "Population: 2024 POPCEN · Council rosters: 2023–2026 term",
+      "count": "barangay",
+      "count_other": "barangays",
+      "clearFilters": "Clear filters",
+      "residentsPopcen": "residents · 2024 POPCEN",
+      "punongBarangay": "Punong Barangay",
+      "noMatches": "No barangay, official or indexed local place matches that search."
+    },
+    "profile": {
+      "notFound": "Barangay not found",
+      "chooseBarangay": "Choose a barangay",
+      "homepage": "Barangay homepage",
+      "makeBetterPrefix": "Let's make",
+      "intro": "Find local services, officials, public places, projects, records and ways to take part in Barangay {{barangay}}.",
+      "searchTitle": "What can we help you find?",
+      "searchPlaceholder": "Try barangay clearance, hall contacts, park, project...",
+      "startWith": "Start with:",
+      "hallContacts": "Hall contacts",
+      "localProjects": "Local projects",
+      "places": "Places",
+      "reviewNote": "Population: 2024 POPCEN · Council term: 2023–2026",
+      "startHere": "Start here",
+      "whatBrings": "What brings you here?",
+      "around": "Around {{barangay}}",
+      "atGlance": "At a glance",
+      "population": "Population",
+      "ofMakati": "of Makati",
+      "population2024": "2024 population",
+      "legislativeDistrict": "Legislative district",
+      "currentDistrict": "Current district",
+      "contextLabel": "Barangay {{barangay}}",
+      "civicDates": "Civic dates for {{barangay}}",
+      "barangayServices": "Barangay services",
+      "servicesIn": "Services in {{barangay}}",
+      "allLocalServices": "All local services",
+      "commonTransactions": "Common transactions",
+      "placesFacilities": "Places & facilities",
+      "inBarangay": "In {{barangay}}",
+      "openMap": "Open barangay map",
+      "localGovernment": "Local government",
+      "barangayHall": "Barangay hall",
+      "currentCouncil": "Current barangay council",
+      "kagawads": "Barangay Kagawads",
+      "skChair": "SK Chairperson",
+      "secretary": "Secretary",
+      "treasurer": "Treasurer",
+      "civicInformation": "Civic information",
+      "participateLocally": "Participate locally",
+      "reportProblem": "Report a local problem",
+      "suggestImprovement": "Suggest a place improvement",
+      "recordAccessibility": "Record park accessibility",
+      "correctLocalInfo": "Add or correct local information",
+      "contactGovernment": "Contact barangay government",
+      "elections": "Elections",
+      "accountability": "Accountability",
+      "heritage": "Heritage",
+      "aroundBarangay": "Around the barangay",
+      "quick": {
+        "findService": {
+          "label": "Find a service",
+          "description": "Barangay clearances, certificates and other public services."
+        },
+        "explore": {
+          "label": "Explore local places",
+          "description": "Facilities, parks, streets and other mapped places nearby."
+        },
+        "government": {
+          "label": "Barangay government",
+          "description": "Council members, hall contacts and official channels."
+        },
+        "projects": {
+          "label": "Projects & records",
+          "description": "City projects and budgets, with locally tagged evidence where geography is available."
+        },
+        "report": {
+          "label": "Report a local issue",
+          "description": "Start a non-emergency report tied to a local place or location."
+        },
+        "participate": {
+          "label": "Take part locally",
+          "description": "Suggest improvements, share sources or contribute local information."
+        }
+      },
+      "civic": {
+        "projects": {
+          "label": "Projects & money",
+          "description": "See citywide budget and project records, with local evidence where geography is explicitly tagged."
+        },
+        "accountability": {
+          "label": "Accountability",
+          "description": "Review public records and accountability entries connected to this barangay."
+        },
+        "map": {
+          "label": "Civic Map",
+          "description": "Browse mapped public places and infrastructure in this barangay."
+        },
+        "statistics": {
+          "label": "Statistics",
+          "description": "Start with this barangay’s population context, then compare citywide indicators."
+        }
+      },
+      "currentTerm": "Current term",
+      "statusSource": "Status source",
+      "rosterSource": "Roster source",
+      "crossCheckSource": "Cross-check source",
+      "auditParks": "{{count}} pilot park in {{barangay}}. Record entrance access, step-free access, seating and toilets.",
+      "auditParks_other": "{{count}} pilot parks in {{barangay}}. Record entrance access, step-free access, seating and toilets."
+    }
   }
 }
