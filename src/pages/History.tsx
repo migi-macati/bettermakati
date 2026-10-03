@@ -125,7 +125,7 @@ const SourceLink = ({
         className="mt-0.5 h-3.5 w-3.5 shrink-0"
         aria-hidden="true"
       />
-      <span className="sr-only"> (opens in a new tab)</span>
+      <span className="sr-only"> {t('corePages.history.opensTab')}</span>
     </a>
     {!compact && sourceTypeLabel(source) && (
       <p className="mt-1 text-xs leading-relaxed text-gray-500">
@@ -141,6 +141,7 @@ const SourceLink = ({
 );
 
 export default function History() {
+  const { t } = useTranslation();
   const [searchParams, setSearchParams] = useSearchParams();
   const [query, setQuery] = useState(searchParams.get('query') || '');
   const [era, setEra] = useState('');
@@ -207,65 +208,64 @@ export default function History() {
   return (
     <>
       <SEO
-        title="History of Makati"
-        description="Explore Makati’s source-linked history from San Pedro Macati to the modern city, with archival maps, photographs, legal records and related places."
+        title={t('corePages.history.seoTitle')}
+        description={t('corePages.history.seoDescription')}
       />
 
       <Section className="bm-history-page">
-        <div className="section-eyebrow">History</div>
+        <div className="section-eyebrow">{t('corePages.history.eyebrow')}</div>
 
         <div className="bm-history-intro flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div className="max-w-4xl">
-            <Heading>History of Makati</Heading>
+            <Heading>{t('corePages.history.title')}</Heading>
             <p className="max-w-3xl text-lg leading-relaxed text-gray-700">
-              Follow the people, places, institutions and decisions that changed
-              San Pedro Macati into the city we know today.
+              {t('corePages.history.intro')}
             </p>
           </div>
-          <SharePage title="History of Makati | BetterMakati" />
+          <SharePage title={t('corePages.history.share')} />
         </div>
 
-        <LastReviewed label="Timeline review" date={historyReviewed} />
+        <LastReviewed label={t('corePages.history.review')} date={historyReviewed} />
 
         <div className="mt-5 flex flex-wrap gap-3">
           <Link to="/heritage" className="brand-btn-secondary">
-            Heritage places
+            {t('corePages.history.heritage')}
           </Link>
           <Link to="/visit" className="brand-btn-secondary">
-            Explore Makati
+            {t('corePages.history.explore')}
           </Link>
         </div>
 
         {selectedHeritageCollection && (
           <div className="bm-history-collection mt-5 rounded-2xl border p-5">
             <div className="text-xs font-bold uppercase tracking-[0.08em] text-secondary-800">
-              Heritage collection
+              {t('corePages.history.collection')}
             </div>
             <div className="mt-1 text-lg font-extrabold text-gray-950">
               {selectedHeritageCollection.name}
             </div>
             <p className="mt-1 max-w-3xl text-sm leading-relaxed text-gray-700">
-              Showing timeline entries linked to places in this collection.
+              {t('corePages.history.collectionNote')}
             </p>
             <Link
               to={'/heritage#collection-' + selectedHeritageCollection.id}
               className="mt-3 inline-flex text-sm font-bold text-primary-700 underline underline-offset-2"
             >
-              Back to this heritage collection
+              {t('corePages.history.backCollection')}
             </Link>
           </div>
         )}
 
         <PhotoCarousel
           images={historyImageSet}
-          title="Places that carry Makati’s history"
+          title={t('corePages.history.carousel')}
           compact
           className="mt-8"
         />
 
         <div
           className="bm-history-periods mt-8 flex gap-2 overflow-x-auto pb-2"
-          aria-label="History periods"
+          aria-label={t('corePages.history.periods')}
         >
           <button
             type="button"
@@ -277,7 +277,7 @@ export default function History() {
                 : 'border-gray-300 bg-white text-gray-700 hover:border-primary-500'
             }`}
           >
-            All periods
+            {t('corePages.history.allPeriods')}
           </button>
           {historyEras.map(item => {
             const count = makatiHistory.filter(
@@ -305,12 +305,12 @@ export default function History() {
         <div
           className="bm-history-filters mt-6 rounded-2xl border p-5 sm:p-6"
           role="search"
-          aria-label="Search history"
+          aria-label={t('corePages.history.search')}
         >
           <div className="flex items-center gap-2 text-sm font-bold text-gray-900">
             <Search className="h-4 w-4 text-primary-700" aria-hidden="true" />
             <label htmlFor="history-query">
-              Find a person, place, year, institution or event
+              {t('corePages.history.find')}
             </label>
           </div>
 
@@ -318,20 +318,20 @@ export default function History() {
             id="history-query"
             value={query}
             onChange={event => setQuery(event.target.value)}
-            placeholder="Try Guadalupe, Nielson, Roxas, 1896, cityhood…"
+            placeholder={t('corePages.history.placeholder')}
             className="bm-history-control mt-3 w-full rounded-xl border p-3.5"
             type="search"
           />
 
           <div className="mt-4 grid gap-4 sm:grid-cols-2">
             <label className="text-sm font-semibold text-gray-800">
-              Topic
+              {t('corePages.history.topic')}
               <select
                 value={topic}
                 onChange={event => setTopic(event.target.value)}
                 className="bm-history-control mt-2 block w-full rounded-xl border p-3"
               >
-                <option value="">All topics</option>
+                <option value="">{t('corePages.history.allTopics')}</option>
                 {topics.map(item => (
                   <option key={item}>{item}</option>
                 ))}
@@ -339,7 +339,7 @@ export default function History() {
             </label>
 
             <label className="text-sm font-semibold text-gray-800">
-              Order
+              {t('corePages.history.order')}
               <select
                 value={newestFirst ? 'newest' : 'oldest'}
                 onChange={event =>
@@ -347,8 +347,8 @@ export default function History() {
                 }
                 className="bm-history-control mt-2 block w-full rounded-xl border p-3"
               >
-                <option value="oldest">Oldest first</option>
-                <option value="newest">Newest first</option>
+                <option value="oldest">{t('corePages.history.oldest')}</option>
+                <option value="newest">{t('corePages.history.newest')}</option>
               </select>
             </label>
           </div>
@@ -360,7 +360,7 @@ export default function History() {
                 checked={primaryOnly}
                 onChange={event => setPrimaryOnly(event.target.checked)}
               />
-              Primary-source evidence only
+              {t('corePages.history.primary')}
             </label>
 
             <button
@@ -368,7 +368,7 @@ export default function History() {
               onClick={reset}
               className="min-h-11 font-bold text-primary-700 underline"
             >
-              Clear filters
+              {t('corePages.history.clear')}
             </button>
 
             <button
@@ -377,14 +377,14 @@ export default function History() {
               className="inline-flex min-h-11 items-center gap-2 font-bold text-primary-700"
             >
               <Download className="h-4 w-4" aria-hidden="true" />
-              Download results
+              {t('corePages.history.download')}
             </button>
           </div>
         </div>
 
         <div className="my-6 flex flex-wrap items-center justify-between gap-3">
           <p className="text-sm font-semibold text-gray-600" role="status">
-            {events.length} {events.length === 1 ? 'event' : 'events'}
+            {events.length} {events.length === 1 ? t('corePages.history.event') : t('corePages.history.events')}
           </p>
           {era && (
             <p className="text-sm font-semibold text-primary-800">{era}</p>
@@ -429,7 +429,7 @@ export default function History() {
                       </span>
                       {showEvidenceStatus && event.evidenceStatus && (
                         <span className="rounded-full bg-secondary-100 px-3 py-1 text-xs font-bold text-secondary-900">
-                          {evidenceLabels[event.evidenceStatus]}
+                          {t('corePages.history.' + evidenceLabelKey[event.evidenceStatus])}
                         </span>
                       )}
                     </div>
@@ -441,7 +441,7 @@ export default function History() {
                       >
                         <span>{event.title}</span>
                         <LinkIcon
-                          aria-label="Link to this event"
+                          aria-label={t('corePages.history.eventLink')}
                           className="mt-1 h-4 w-4 shrink-0 text-gray-400 group-hover:text-primary-700"
                         />
                       </a>
@@ -579,7 +579,7 @@ export default function History() {
                       {relatedEvents && relatedEvents.length > 0 && (
                         <div className="mt-4">
                           <p className="text-xs font-bold uppercase tracking-wide text-gray-500">
-                            Related events
+                            {t('corePages.history.related')}
                           </p>
                           <div className="mt-2 flex flex-wrap gap-x-4 gap-y-2">
                             {relatedEvents.map(related => (
@@ -606,8 +606,8 @@ export default function History() {
                             aria-hidden="true"
                           />
                           {event.sources.length === 1
-                            ? 'Source'
-                            : `${event.sources.length} sources`}
+                            ? t('corePages.history.source')
+                            : `${event.sources.length} ${t('corePages.history.sources')}`}
                         </span>
                       </summary>
                       <div className="mt-4 space-y-4">
@@ -630,13 +630,13 @@ export default function History() {
 
         {events.length === 0 && (
           <div className="bm-history-empty rounded-xl border p-8 text-center">
-            <p>No events match these filters.</p>
+            <p>{t('corePages.history.empty')}</p>
             <button
               type="button"
               onClick={reset}
               className="mt-3 min-h-11 font-bold text-primary-700 underline"
             >
-              Show all events
+              {t('corePages.history.showAll')}
             </button>
           </div>
         )}
