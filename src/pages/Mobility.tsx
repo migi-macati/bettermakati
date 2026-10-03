@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import {
   ArrowRightLeft,
   Bike,
@@ -327,6 +328,7 @@ const mapsDirections = (
 };
 
 export default function Mobility() {
+  const { t } = useTranslation();
   const [destination, setDestination] = useState('Ayala Triangle Gardens');
   const [mode, setMode] = useState('transit');
   const [routeView, setRouteView] = useState<MobilityRouteView>('bus');
@@ -369,21 +371,21 @@ export default function Mobility() {
   return (
     <>
       <SEO
-        title="Getting Around Makati"
-        description="Public transport, common trips, route planning and ride-hailing options in Makati City."
+        title={t('corePages.mobility.seoTitle')}
+        description={t('corePages.mobility.seoDescription')}
       />
 
       <Section className="bg-[#fffdf8]">
         <div className="section-eyebrow">Explore Makati</div>
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <Heading>Getting around</Heading>
+            <Heading>{t('corePages.mobility.title')}</Heading>
             <p className="max-w-3xl text-gray-600">
               Plan a trip, find major transport anchors and jump to current
               operator or mapping information.
             </p>
           </div>
-          <SharePage title="Getting Around Makati | BetterMakati" />
+          <SharePage title={`${t('corePages.mobility.share')} | BetterMakati`} />
         </div>
         <LastReviewed
           date="2026-09-28"
@@ -399,14 +401,14 @@ export default function Mobility() {
         </div>
         <PhotoCarousel
           images={mobilityImageSet}
-          title="Street-level Makati"
+          title={t('corePages.mobility.street')}
           compact
           className="mt-7"
         />
 
         <nav
           className="-mx-5 mt-6 flex gap-2 overflow-x-auto px-5 pb-2 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0"
-          aria-label="Getting around sections"
+          aria-label={t('corePages.mobility.sections')}
         >
           <a
             href="#transport-anchors"
@@ -449,7 +451,7 @@ export default function Mobility() {
             </div>
 
             <label className="form-field mt-5">
-              <span>Destination in Makati</span>
+              <span>{t('corePages.mobility.destination')}</span>
               <input
                 value={destination}
                 onChange={event => setDestination(event.target.value)}
@@ -460,7 +462,7 @@ export default function Mobility() {
             <div
               className="mt-4 flex flex-wrap gap-2"
               role="group"
-              aria-label="Travel mode"
+              aria-label={t('corePages.mobility.mode')}
             >
               {[
                 ['transit', 'Public transport'],
@@ -668,7 +670,7 @@ export default function Mobility() {
         <div className="section-eyebrow">Transport anchors</div>
         <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <div>
-            <Heading level={2}>Stations and terminals in Makati</Heading>
+            <Heading level={2}>{t('corePages.mobility.stations')}</Heading>
             <p className="max-w-3xl text-sm text-gray-600">
               Verified MRT-3, EDSA Busway, Pasig River Ferry and intermodal locations.
             </p>
@@ -734,7 +736,7 @@ export default function Mobility() {
         <div className="section-eyebrow">Interchanges</div>
         <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <Heading level={2}>Verified transfers and hub connections</Heading>
+            <Heading level={2}>{t('corePages.mobility.transfers')}</Heading>
             <p className="max-w-3xl text-sm leading-relaxed text-gray-600">
               These connections come from the canonical mobility network. They
               are documented relationships, not transfers inferred from nearby
@@ -883,7 +885,7 @@ export default function Mobility() {
         <div className="section-eyebrow">Route registry</div>
         <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <Heading level={2}>Routes and corridors</Heading>
+            <Heading level={2}>{t('corePages.mobility.routes')}</Heading>
             <p className="max-w-3xl text-sm leading-relaxed text-gray-600">
               Browse current One Ayala bus and UV services alongside reconciled
               Makati jeepney corridors. Route records without sourced geometry
@@ -908,7 +910,7 @@ export default function Mobility() {
         <div
           className="-mx-5 mt-6 flex gap-2 overflow-x-auto px-5 pb-2 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0"
           role="group"
-          aria-label="Route registry view"
+          aria-label={t('corePages.mobility.registry')}
         >
           {routeViews.map(view => (
             <button
@@ -1171,7 +1173,7 @@ export default function Mobility() {
 
       <Section className="bg-white">
         <div className="section-eyebrow">Common trips</div>
-        <Heading level={2}>Start with a frequent destination pair</Heading>
+        <Heading level={2}>{t('corePages.mobility.pairs')}</Heading>
         <p className="max-w-3xl text-sm text-gray-600">
           These links open live directions rather than prescribing a fixed route,
           so current traffic and available modes can be considered.
@@ -1205,7 +1207,7 @@ export default function Mobility() {
 
       <Section className="bg-[#f5f8f2]">
         <div className="section-eyebrow">Ride-hailing</div>
-        <Heading level={2}>Book a ride</Heading>
+        <Heading level={2}>{t('corePages.mobility.ride')}</Heading>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-7">
           {mobilityExternalResources.map(resource => (
             <a
