@@ -215,12 +215,12 @@ if (expectedConcernServicePlaceIds.length !== 12) {
 for (const marker of [
   "placeRegistryById.get(asset.id)?.verification.status === 'verified'",
   "placesByBarangay(barangay.name)",
-  'Find a place, street or route.',
-  'Browse results',
-  'Find a place',
-  'Report something near me',
-  'Suggest an improvement',
-  'Help document Makati',
+  "t('corePages.civicMap.title')",
+  "t('corePages.civicMap.browse')",
+  "t('corePages.civicMap.title')",
+  "t('corePages.civicMap.reportNear')",
+  "t('corePages.civicMap.suggest')",
+  "t('corePages.civicMap.help')",
 ]) {
   if (!civicMapPage.includes(marker)) {
     problems.push('Civic Map place-first entry is missing: ' + marker);
