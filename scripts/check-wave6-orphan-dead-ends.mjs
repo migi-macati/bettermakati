@@ -60,7 +60,7 @@ if (!cinemaFix) {
 }
 for (const marker of [
   "import { Link } from 'react-router';",
-  'After choosing a cinema',
+  "t('corePages.cinemas.after')",
   'to="/mobility"',
   'Getting around Makati',
   'to="/visit"',
