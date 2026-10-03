@@ -662,7 +662,11 @@
       "emergencyContacts": "Emergency & city contacts",
       "civicBrief": "Civic brief",
       "latestBrief": "Latest published brief",
-      "newsEyebrow": "Makati in the news"
+      "newsEyebrow": "Makati in the news",
+      "briefRecords": "{{count}} validated City Monitor record in this published snapshot.",
+      "briefRecords_plural": "{{count}} validated City Monitor records in this published snapshot.",
+      "briefNone": "No City Monitor record was published in this snapshot.",
+      "openNews": "Open Makati in the News"
     },
     "news": {
       "seoTitle": "Makati in the News",
@@ -714,7 +718,14 @@
       "contentChanges": "content changes",
       "failedChecks": "failed checks",
       "manualReviewChannels": "manual-review channels",
-      "notPresent": "Not yet present in the latest published source-state file."
+      "notPresent": "Not yet present in the latest published source-state file.",
+      "queueDescription": "Source-change, failed-check and manual-review items are handled in one queue.",
+      "recordsDescription": "Search permanent City Monitor records by topic or stream.",
+      "showing": "Showing {{visible}} of {{total}} validated records",
+      "directoryDescription": "Official channels used by City Monitor.",
+      "lastCheckOk": "last check OK",
+      "manualChannel": "manual channel",
+      "checkIssue": "check issue"
     },
     "calendar": {
       "title": "Makati Calendar",
@@ -729,7 +740,9 @@
       "from": "From",
       "to": "To",
       "today": "Today in Makati",
-      "howItWorks": "How the Makati Calendar works"
+      "howItWorks": "How the Makati Calendar works",
+      "coming": "What's coming up, what changed, and what was just published",
+      "cityMonitor": "City Monitor"
     },
     "briefs": {
       "description": "Daily, weekly and monthly Makati civic briefs from City Monitor records.",
@@ -750,7 +763,18 @@
       "distribution": "Distribution",
       "share": "Share the brief",
       "shareReady": "Share-ready text",
-      "followBetterMakati": "Follow BetterMakati"
+      "followBetterMakati": "Follow BetterMakati",
+      "validatedRecords": "validated records",
+      "accountabilityLinked": "accountability-linked",
+      "barangayTagged": "barangay-tagged",
+      "sourceChangesReview": "source changes awaiting review",
+      "failedSourceChecks": "failed source checks",
+      "readingList": "This brief keeps the reading list short.",
+      "openMonitor": "Open City Monitor",
+      "allRecords": "for all {{count}} validated records in the period.",
+      "currentDaily": "Current daily view",
+      "currentWeekly": "Current weekly view",
+      "currentMonthly": "Current monthly view"
     }
   },
   "betterBarangay": {
@@ -900,7 +924,32 @@
       "pageAudit": "Page audit",
       "pageAuditHeading": "Major-page completeness & freshness",
       "measurementGaps": "Measurement gaps",
-      "notMeasured": "Not measured yet"
+      "notMeasured": "Not measured yet",
+      "active": "BetterMakati is active at bettermakati.org and remains under continuous maintenance.",
+      "launched": "Launched September 21, 2026",
+      "indexedServices": "indexed services",
+      "structuredGuides": "structured guides",
+      "verified": "field-by-field verified",
+      "caveat": "structured with caveat",
+      "openReview": "open review items",
+      "pagesReview": "pages need review",
+      "pagesCurrent": "pages current",
+      "freshnessAutomation": "Source freshness automation",
+      "configured": "configured",
+      "lastCheckOk": "last check OK",
+      "reviewChanges": "review changes",
+      "checkFailures": "check failures",
+      "cityMonitor": "City Monitor",
+      "changed": "changed",
+      "failed": "failed",
+      "baselines": "baselines",
+      "communityInput": "Public community input",
+      "majorReviewed": "major pages reviewed",
+      "reviewedNoGaps": "reviewed without listed gaps",
+      "dependencyCurrent": "dependency-current",
+      "needReview": "need source review",
+      "needsReview": "Needs source review",
+      "auditCode": "Audit & source code"
     },
     "accountability": {
       "seoTitle": "Accountability Ledger",
