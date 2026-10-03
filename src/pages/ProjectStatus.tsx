@@ -402,10 +402,10 @@ export default function ProjectStatus() {
               Publicly launched
             </div>
             <p className="mt-1 text-sm leading-relaxed text-success-900">
-              BetterMakati is active at <strong>bettermakati.org</strong> and remains under continuous maintenance.
+              {t('evidence.status.active')}
             </p>
           </div>
-          <div className="text-xs font-bold text-success-800">Launched September 21, 2026</div>
+          <div className="text-xs font-bold text-success-800">{t('evidence.status.launched')}</div>
         </div>
 
         <div className="mt-7 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
@@ -430,19 +430,19 @@ export default function ProjectStatus() {
         <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           <div className="rounded-2xl border border-gray-200 bg-[#fffdf8] p-5">
             <div className="text-3xl font-extrabold text-gray-950">{serviceDirectory.length}</div>
-            <div className="mt-1 text-sm font-bold text-gray-700">indexed services</div>
+            <div className="mt-1 text-sm font-bold text-gray-700">{t('evidence.status.indexedServices')}</div>
           </div>
           <div className="rounded-2xl border border-gray-200 bg-[#fffdf8] p-5">
             <div className="text-3xl font-extrabold text-gray-950">{detailedServiceGuideCount}</div>
-            <div className="mt-1 text-sm font-bold text-gray-700">structured guides</div>
+            <div className="mt-1 text-sm font-bold text-gray-700">{t('evidence.status.structuredGuides')}</div>
           </div>
           <div className="rounded-2xl border border-gray-200 bg-[#fffdf8] p-5">
             <div className="text-3xl font-extrabold text-gray-950">{verifiedServiceGuideCount}</div>
-            <div className="mt-1 text-sm font-bold text-gray-700">field-by-field verified</div>
+            <div className="mt-1 text-sm font-bold text-gray-700">{t('evidence.status.verified')}</div>
           </div>
           <div className="rounded-2xl border border-gray-200 bg-[#fffdf8] p-5">
             <div className="text-3xl font-extrabold text-gray-950">{partialServiceGuideCount}</div>
-            <div className="mt-1 text-sm font-bold text-gray-700">structured with caveat</div>
+            <div className="mt-1 text-sm font-bold text-gray-700">{t('evidence.status.caveat')}</div>
           </div>
         </div>
 
@@ -560,15 +560,15 @@ export default function ProjectStatus() {
           <div className="flex flex-wrap gap-x-6 gap-y-3">
             <div>
               <div className="text-2xl font-extrabold text-gray-950">{freshnessReview.summary.open}</div>
-              <div className="text-xs font-bold text-gray-600">open review items</div>
+              <div className="text-xs font-bold text-gray-600">{t('evidence.status.openReview')}</div>
             </div>
             <div>
               <div className="text-2xl font-extrabold text-gray-950">{pageFreshness.summary.needsReview}</div>
-              <div className="text-xs font-bold text-gray-600">pages need review</div>
+              <div className="text-xs font-bold text-gray-600">{t('evidence.status.pagesReview')}</div>
             </div>
             <div>
               <div className="text-2xl font-extrabold text-gray-950">{pageFreshness.summary.current}</div>
-              <div className="text-xs font-bold text-gray-600">pages current</div>
+              <div className="text-xs font-bold text-gray-600">{t('evidence.status.pagesCurrent')}</div>
             </div>
           </div>
           <div className="flex flex-wrap gap-3">
@@ -584,7 +584,7 @@ export default function ProjectStatus() {
         <div className="mt-4 grid grid-cols-1 xl:grid-cols-3 gap-4">
           <div className="rounded-2xl border border-primary-100 bg-white p-6">
             <RefreshCw className="h-5 w-5 text-primary-700" />
-            <h3 className="mt-3 font-extrabold text-gray-950">Source freshness automation</h3>
+            <h3 className="mt-3 font-extrabold text-gray-950">{t('evidence.status.freshnessAutomation')}</h3>
             {sourceFeedFailed ? (
               <p className="mt-2 text-sm text-gray-600">
                 The published source-watch history could not be read from this deployment.
@@ -599,23 +599,23 @@ export default function ProjectStatus() {
                 <div className="mt-4 grid grid-cols-2 gap-2 text-center">
                   <div className="rounded-xl bg-[#fffdf8] p-3">
                     <div className="text-xl font-extrabold">{sourceState.sources?.length ?? '—'}</div>
-                    <div className="text-xs text-gray-500">configured</div>
+                    <div className="text-xs text-gray-500">{t('evidence.status.configured')}</div>
                   </div>
                   <div className="rounded-xl bg-[#fffdf8] p-3">
                     <div className="text-xl font-extrabold">
                       {sourceState.sources?.filter(source => source.status === 'ok').length ?? '—'}
                     </div>
-                    <div className="text-xs text-gray-500">last check OK</div>
+                    <div className="text-xs text-gray-500">{t('evidence.status.lastCheckOk')}</div>
                   </div>
                   <div className="rounded-xl bg-[#fffdf8] p-3">
                     <div className="text-xl font-extrabold">{latestSourceRun?.changed.length ?? 0}</div>
-                    <div className="text-xs text-gray-500">review changes</div>
+                    <div className="text-xs text-gray-500">{t('evidence.status.reviewChanges')}</div>
                   </div>
                   <div className="rounded-xl bg-[#fffdf8] p-3">
                     <div className="text-xl font-extrabold">
                       {sourceState.sources?.filter(source => source.status === 'http-error' || source.status === 'unreachable').length ?? 0}
                     </div>
-                    <div className="text-xs text-gray-500">check failures</div>
+                    <div className="text-xs text-gray-500">{t('evidence.status.checkFailures')}</div>
                   </div>
                 </div>
               </>
@@ -627,7 +627,7 @@ export default function ProjectStatus() {
 
           <div className="rounded-2xl border border-primary-100 bg-white p-6">
             <RefreshCw className="h-5 w-5 text-primary-700" />
-            <h3 className="mt-3 font-extrabold text-gray-950">City Monitor</h3>
+            <h3 className="mt-3 font-extrabold text-gray-950">{t('evidence.status.cityMonitor')}</h3>
             {monitorFeedFailed ? (
               <p className="mt-2 text-sm text-gray-600">
                 The published City Monitor history could not be read from this deployment.
@@ -641,15 +641,15 @@ export default function ProjectStatus() {
                 <div className="mt-4 grid grid-cols-3 gap-2 text-center">
                   <div className="rounded-xl bg-[#fffdf8] p-3">
                     <div className="text-xl font-extrabold">{latestMonitorRun.changed.length}</div>
-                    <div className="text-xs text-gray-500">changed</div>
+                    <div className="text-xs text-gray-500">{t('evidence.status.changed')}</div>
                   </div>
                   <div className="rounded-xl bg-[#fffdf8] p-3">
                     <div className="text-xl font-extrabold">{latestMonitorRun.failed.length}</div>
-                    <div className="text-xs text-gray-500">failed</div>
+                    <div className="text-xs text-gray-500">{t('evidence.status.failed')}</div>
                   </div>
                   <div className="rounded-xl bg-[#fffdf8] p-3">
                     <div className="text-xl font-extrabold">{latestMonitorRun.newBaselines.length}</div>
-                    <div className="text-xs text-gray-500">baselines</div>
+                    <div className="text-xs text-gray-500">{t('evidence.status.baselines')}</div>
                   </div>
                 </div>
               </>
@@ -665,7 +665,7 @@ export default function ProjectStatus() {
 
           <div className="rounded-2xl border border-primary-100 bg-white p-6">
             <MessagesSquare className="h-5 w-5 text-primary-700" />
-            <h3 className="mt-3 font-extrabold text-gray-950">Public community input</h3>
+            <h3 className="mt-3 font-extrabold text-gray-950">{t('evidence.status.communityInput')}</h3>
             {inputFeedFailed ? (
               <p className="mt-2 text-sm text-gray-600">
                 The public BetterMakati community-input feed is unavailable right now.
@@ -703,21 +703,21 @@ export default function ProjectStatus() {
             <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
               <div className="rounded-xl border border-gray-200 bg-[#fffdf8] p-4">
                 <div className="text-2xl font-extrabold text-gray-950">{pageAudit.length}</div>
-                <div className="text-sm font-bold text-gray-700">major pages reviewed</div>
+                <div className="text-sm font-bold text-gray-700">{t('evidence.status.majorReviewed')}</div>
               </div>
               <div className="rounded-xl border border-gray-200 bg-[#fffdf8] p-4">
                 <div className="text-2xl font-extrabold text-gray-950">
                   {pageAudit.filter(item => item.status === 'reviewed').length}
                 </div>
-                <div className="text-sm font-bold text-gray-700">reviewed without listed gaps</div>
+                <div className="text-sm font-bold text-gray-700">{t('evidence.status.reviewedNoGaps')}</div>
               </div>
               <div className="rounded-xl border border-gray-200 bg-[#fffdf8] p-4">
                 <div className="text-2xl font-extrabold text-gray-950">{pageFreshness.summary.current}</div>
-                <div className="text-sm font-bold text-gray-700">dependency-current</div>
+                <div className="text-sm font-bold text-gray-700">{t('evidence.status.dependencyCurrent')}</div>
               </div>
               <div className="rounded-xl border border-secondary-200 bg-secondary-50 p-4">
                 <div className="text-2xl font-extrabold text-gray-950">{pageFreshness.summary.needsReview}</div>
-                <div className="text-sm font-bold text-gray-700">need source review</div>
+                <div className="text-sm font-bold text-gray-700">{t('evidence.status.needReview')}</div>
               </div>
             </div>
 
@@ -729,7 +729,7 @@ export default function ProjectStatus() {
                       <Link to={item.path} className="font-extrabold text-primary-800 hover:underline">
                         {item.label}
                       </Link>
-                      <span className="text-xs font-semibold text-secondary-900">Needs source review</span>
+                      <span className="text-xs font-semibold text-secondary-900">{t('evidence.status.needsReview')}</span>
                     </div>
                     <div className="mt-1 text-xs text-gray-600">
                       Reviewed {item.reviewedAt} · {item.dependencySignals.map(signal => signal.label).join(', ')}
@@ -777,7 +777,7 @@ export default function ProjectStatus() {
       <Section className="bm-detail-page bg-[#fffdf8]">
         <div className="rounded-2xl border border-primary-100 bg-white p-6">
           <Database className="h-5 w-5 text-primary-700" />
-          <h2 className="mt-3 text-xl font-extrabold text-gray-950">Audit & source code</h2>
+          <h2 className="mt-3 text-xl font-extrabold text-gray-950">{t('evidence.status.auditCode')}</h2>
           <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-600">
             Methodology, source code and correction workflow.
           </p>
