@@ -1358,7 +1358,7 @@ test('Today in Makati combines current and validated layers', async ({ page }) =
   await expect(page.getByRole('heading', { name: 'Live conditions & current sources' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Latest published brief' })).toBeVisible();
   await expect(page.getByRole('link', { name: /^Official activity/ })).toHaveAttribute('href', '/city-monitor');
-  await expect(page.getByLabel('Choose a barangay')).toBeVisible();
+  await expect(page.getByLabel('Choose a barangay', { exact: true })).toBeVisible();
 });
 
 test('Live Makati labels source authority and check status', async ({ page }) => {
