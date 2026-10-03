@@ -266,7 +266,7 @@ for (const marker of [
 for (const marker of [
   "fetch('/source-watch-state.json'",
   "t('evidence.status.freshnessAutomation')",
-  'Open source freshness',
+  "t('evidence.status.openSourceFreshness')",
   "fetch('/page-freshness-state.json'",
   "fetch('/freshness-review-queue.json'",
   '/freshness-history.json',
