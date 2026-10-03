@@ -871,5 +871,17 @@
       "auditParks": "{{count}} pilot park in {{barangay}}. Record entrance access, step-free access, seating and toilets.",
       "auditParks_other": "{{count}} pilot parks in {{barangay}}. Record entrance access, step-free access, seating and toilets."
     }
+  },
+  "evidence": {
+    "reports": {
+      "seoTitle": "Featured Reports & Insights",
+      "seoDescription": "BetterMakati reports and civic analysis built from Makati statistics, budgets and public records.",
+      "eyebrow": "Civic analysis",
+      "title": "Featured Reports & Insights",
+      "latest": "Latest",
+      "releases": "Report releases",
+      "timelineDescription": "BetterMakati report publication dates also appear in Recently Published, separate from the periods covered by their source data.",
+      "more": "More reports"
+    }
   }
 }
