@@ -455,7 +455,7 @@ export default function Mobility() {
               <input
                 value={destination}
                 onChange={event => setDestination(event.target.value)}
-                placeholder={t('corePages.mobility.destinationPlaceholder')}"
+                placeholder={t('corePages.mobility.destinationPlaceholder')}
               />
             </label>
 
@@ -951,7 +951,7 @@ export default function Mobility() {
                 setRouteQuery(event.target.value);
                 setShowAllRoutes(false);
               }}
-              placeholder={t('corePages.mobility.routePlaceholder')}"
+              placeholder={t('corePages.mobility.routePlaceholder')}
               className="min-h-11 w-full rounded-xl border border-gray-300 bg-white py-2.5 pl-10 pr-20 text-sm text-gray-950"
             />
             {routeQuery && (
