@@ -2,6 +2,25 @@
   "version": 1,
   "briefs": [
     {
+      "id": "daily-2026-10-02",
+      "cadence": "daily",
+      "title": "Daily Civic Brief",
+      "periodStart": "2026-10-02",
+      "periodEnd": "2026-10-02",
+      "publishedAt": "2026-10-03T06:21:17.507Z",
+      "recordIds": [],
+      "reviewSignals": [
+        {
+          "id": "philgeps",
+          "label": "PhilGEPS",
+          "url": "https://notices.philgeps.gov.ph/",
+          "stream": "procurement",
+          "checkedAt": "2026-10-02T05:59:32.868Z"
+        }
+      ],
+      "failedChecks": []
+    },
+    {
       "id": "daily-2026-10-01",
       "cadence": "daily",
       "title": "Daily Civic Brief",
