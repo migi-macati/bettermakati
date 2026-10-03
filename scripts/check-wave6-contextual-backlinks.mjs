@@ -73,7 +73,7 @@ need(
 need(
   'Official profile evidence rule',
   officialProfile,
-  'Only records directly linked to this profile by the underlying public data are shown here.'
+  "t('corePages.official.relatedNote')"
 );
 
 for (const forbidden of [
