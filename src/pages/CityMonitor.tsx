@@ -277,7 +277,7 @@ export default function CityMonitor() {
           <div className="section-eyebrow">{t('currentInfo.monitor.editorialReview')}</div>
           <h3 className="mt-1 text-xl font-extrabold text-gray-950">{t('currentInfo.monitor.freshnessQueue')}</h3>
           <p className="mt-2 text-sm text-gray-600">
-            Source-change, failed-check and manual-review items are handled in one queue.
+            {t('currentInfo.monitor.queueDescription')}
           </p>
           <Link to="/records#freshness-review-queue" className="brand-btn-primary mt-5">
             Open review queue <ArrowRight className="h-4 w-4" />
@@ -289,7 +289,7 @@ export default function CityMonitor() {
         <div className="section-eyebrow">{t('currentInfo.monitor.validatedRecords')}</div>
         <Heading level={2}>{t('currentInfo.monitor.structuredRecords')}</Heading>
         <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-600">
-          Search permanent City Monitor records by topic or stream.
+          {t('currentInfo.monitor.recordsDescription')}
         </p>
 
         <div className="mt-6 flex flex-col gap-3 md:flex-row">
@@ -317,7 +317,7 @@ export default function CityMonitor() {
         </div>
 
         <div className="mt-4 text-sm text-gray-500" role="status" aria-live="polite" aria-atomic="true">
-          Showing <strong className="text-gray-900">{visibleRecords.length}</strong> of {cityMonitorRecords.length} validated records
+          {t('currentInfo.monitor.showing', { visible: visibleRecords.length, total: cityMonitorRecords.length })}
         </div>
 
         <div className="mt-6 space-y-4">
@@ -396,7 +396,7 @@ export default function CityMonitor() {
         <div className="section-eyebrow">{t('currentInfo.monitor.channels')}</div>
         <Heading level={2}>{t('currentInfo.monitor.sourceDirectory')}</Heading>
         <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-600">
-          Official channels used by City Monitor.
+          {t('currentInfo.monitor.directoryDescription')}
         </p>
         <div className="mt-5 flex flex-wrap gap-3">
           <a href="/city-monitor-source-state.json" className="brand-btn-secondary">
@@ -439,7 +439,7 @@ export default function CityMonitor() {
                           ? 'bg-secondary-50 text-secondary-900'
                           : 'bg-error-50 text-error-800')
                     }>
-                      {state.status === 'ok' ? 'last check OK' : state.status === 'manual-review' ? 'manual channel' : 'check issue'}
+                      {state.status === 'ok' ? t('currentInfo.monitor.lastCheckOk') : state.status === 'manual-review' ? t('currentInfo.monitor.manualChannel') : t('currentInfo.monitor.checkIssue')}
                     </span>
                   )}
                 </div>
