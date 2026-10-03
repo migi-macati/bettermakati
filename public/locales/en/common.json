@@ -949,7 +949,8 @@
       "dependencyCurrent": "dependency-current",
       "needReview": "need source review",
       "needsReview": "Needs source review",
-      "auditCode": "Audit & source code"
+      "auditCode": "Audit & source code",
+      "lastPublishedCheck": "Last published check:"
     },
     "accountability": {
       "seoTitle": "Accountability Ledger",
