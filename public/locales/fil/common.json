@@ -648,7 +648,11 @@
       "emergencyContacts": "Emergency at city contacts",
       "civicBrief": "Civic brief",
       "latestBrief": "Pinakabagong published brief",
-      "newsEyebrow": "Makati sa balita"
+      "newsEyebrow": "Makati sa balita",
+      "briefRecords": "{{count}} validated City Monitor record sa published snapshot na ito.",
+      "briefRecords_plural": "{{count}} validated City Monitor records sa published snapshot na ito.",
+      "briefNone": "Walang City Monitor record na na-publish sa snapshot na ito.",
+      "openNews": "Buksan ang Makati sa Balita"
     },
     "news": {
       "seoTitle": "Makati sa Balita",
@@ -700,7 +704,14 @@
       "contentChanges": "content changes",
       "failedChecks": "failed checks",
       "manualReviewChannels": "manual-review channels",
-      "notPresent": "Wala pa sa pinakabagong published source-state file."
+      "notPresent": "Wala pa sa pinakabagong published source-state file.",
+      "queueDescription": "Nasa iisang queue ang source-change, failed-check at manual-review items.",
+      "recordsDescription": "Mag-search ng permanent City Monitor records ayon sa topic o stream.",
+      "showing": "Ipinapakita ang {{visible}} sa {{total}} validated records",
+      "directoryDescription": "Official channels na ginagamit ng City Monitor.",
+      "lastCheckOk": "last check OK",
+      "manualChannel": "manual channel",
+      "checkIssue": "check issue"
     },
     "calendar": {
       "title": "Makati Calendar",
@@ -715,7 +726,9 @@
       "from": "Mula",
       "to": "Hanggang",
       "today": "Makati Ngayon",
-      "howItWorks": "Paano gumagana ang Makati Calendar"
+      "howItWorks": "Paano gumagana ang Makati Calendar",
+      "coming": "Ano ang paparating, ano ang nagbago, at ano ang bagong published",
+      "cityMonitor": "City Monitor"
     },
     "briefs": {
       "description": "Daily, weekly at monthly Makati civic briefs mula sa City Monitor records.",
@@ -736,7 +749,18 @@
       "distribution": "Distribution",
       "share": "Ibahagi ang brief",
       "shareReady": "Share-ready text",
-      "followBetterMakati": "Follow BetterMakati"
+      "followBetterMakati": "Follow BetterMakati",
+      "validatedRecords": "validated records",
+      "accountabilityLinked": "accountability-linked",
+      "barangayTagged": "barangay-tagged",
+      "sourceChangesReview": "source changes awaiting review",
+      "failedSourceChecks": "failed source checks",
+      "readingList": "Maikli ang reading list ng brief na ito.",
+      "openMonitor": "Buksan ang City Monitor",
+      "allRecords": "para sa lahat ng {{count}} validated records sa period.",
+      "currentDaily": "Current daily view",
+      "currentWeekly": "Current weekly view",
+      "currentMonthly": "Current monthly view"
     }
   },
   "betterBarangay": {
@@ -886,7 +910,32 @@
       "pageAudit": "Page audit",
       "pageAuditHeading": "Major-page completeness at freshness",
       "measurementGaps": "Measurement gaps",
-      "notMeasured": "Hindi pa measured"
+      "notMeasured": "Hindi pa measured",
+      "active": "Active ang BetterMakati sa bettermakati.org at patuloy ang maintenance.",
+      "launched": "Launched September 21, 2026",
+      "indexedServices": "indexed services",
+      "structuredGuides": "structured guides",
+      "verified": "field-by-field verified",
+      "caveat": "structured with caveat",
+      "openReview": "open review items",
+      "pagesReview": "pages na kailangang i-review",
+      "pagesCurrent": "current pages",
+      "freshnessAutomation": "Source freshness automation",
+      "configured": "configured",
+      "lastCheckOk": "last check OK",
+      "reviewChanges": "changes for review",
+      "checkFailures": "failed checks",
+      "cityMonitor": "City Monitor",
+      "changed": "changed",
+      "failed": "failed",
+      "baselines": "baselines",
+      "communityInput": "Public community input",
+      "majorReviewed": "major pages reviewed",
+      "reviewedNoGaps": "reviewed na walang listed gaps",
+      "dependencyCurrent": "dependency-current",
+      "needReview": "kailangan ng source review",
+      "needsReview": "Kailangan ng source review",
+      "auditCode": "Audit & source code"
     },
     "accountability": {
       "seoTitle": "Accountability Ledger",
