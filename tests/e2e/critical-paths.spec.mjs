@@ -1590,7 +1590,7 @@ test('generic ratings are removed and structured observations cannot be submitte
 test('failed civic feed does not imply zero reports', async ({ page }) => {
   await page.route('**/api/civic', route => route.fulfill({ status: 503, contentType: 'application/json', body: '{}' }));
   await page.goto(baseURL + '/civic-map');
-  await expect(page.getByText('Community counts are unavailable.', { exact: false })).toBeVisible();
+  await expect(page.getByText('Records loading or unavailable', { exact: true })).toBeVisible();
   await expect(page.getByText('0 community records', { exact: true })).toHaveCount(0);
 });
 
