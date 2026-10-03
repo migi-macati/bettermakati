@@ -54,7 +54,7 @@ for (const marker of [
   'They are not automatically sent to the Makati City Government.',
   'to="/participate"',
   'to="/hotlines#makati-action-center"',
-  'Send something to BetterMakati',
+  "t('corePages.getInvolved.send')",
 ]) {
   if (!getInvolved.includes(marker)) {
     problems.push('Get Involved scope marker missing: ' + marker);
