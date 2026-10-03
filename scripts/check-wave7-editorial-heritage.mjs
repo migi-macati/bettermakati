@@ -28,7 +28,7 @@ for(const marker of [
   'placeRegistryById',
   'HeritageMap',
   'role="group"',
-  'aria-label="Heritage map view"',
+  "aria-label={t('corePages.heritage.mapView')}",
   'aria-pressed={mapSelection ===',
   "id={'collection-' + collection.id}",
   "id={'collection-' + route.id}",
