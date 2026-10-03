@@ -1182,6 +1182,26 @@
       "emergency": "Emergency use",
       "community": "Civic Map community content",
       "openSource": "Open-source project"
+    },
+    "about": {
+      "seoTitle": "About",
+      "seoDescription": "Tungkol sa BetterMakati, sources, independence, at correction process nito.",
+      "eyebrow": "About",
+      "sources": "Sources",
+      "corrections": "Corrections",
+      "identity": "Our identity",
+      "rooted": "Rooted in Makati",
+      "colours": "Colour system",
+      "palette": "Green, sun gold, at warm white.",
+      "typography": "Typography",
+      "wordmark": "Official wordmark artwork",
+      "wordmarkDetail": "Artwork ang BetterMakati wordmark at hindi ito nire-recreate gamit ang live text; Figtree pa rin ang display-heading family.",
+      "interDetail": "Navigation, body copy, forms, tables, at civic interfaces.",
+      "monoDetail": "Technical labels, code, at machine-readable/data contexts.",
+      "sourcePolicy": "Source policy",
+      "handling": "Paano hinahandle ang information",
+      "projectLinks": "Project links",
+      "verify": "Mag-verify, mag-review, o mag-contribute"
     }
   }
 }
