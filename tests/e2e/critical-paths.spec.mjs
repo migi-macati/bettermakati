@@ -1358,7 +1358,7 @@ test('Today in Makati combines current and validated layers', async ({ page }) =
   await expect(page.getByRole('heading', { name: 'Live conditions & current sources' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Latest published brief' })).toBeVisible();
   await expect(page.getByRole('link', { name: /^Official activity/ })).toHaveAttribute('href', '/city-monitor');
-  await expect(page.getByLabel('Choose my barangay')).toBeVisible();
+  await expect(page.getByLabel('Choose a barangay')).toBeVisible();
 });
 
 test('Live Makati labels source authority and check status', async ({ page }) => {
@@ -1590,7 +1590,7 @@ test('generic ratings are removed and structured observations cannot be submitte
 test('failed civic feed does not imply zero reports', async ({ page }) => {
   await page.route('**/api/civic', route => route.fulfill({ status: 503, contentType: 'application/json', body: '{}' }));
   await page.goto(baseURL + '/civic-map');
-  await expect(page.getByText('Records loading or unavailable', { exact: true })).toBeVisible();
+  await expect(page.getByText('Records loading or unavailable', { exact: true }).first()).toBeVisible();
   await expect(page.getByText('0 community records', { exact: true })).toHaveCount(0);
 });
 
