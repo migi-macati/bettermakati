@@ -355,7 +355,7 @@ export default function Calendar() {
                 className="mt-5 !text-primary-100 [&_strong]:!text-white [&_svg]:!text-secondary-400"
               />
             </div>
-            <SharePage title="Makati Calendar | BetterMakati" />
+            <SharePage title={`${t('currentInfo.calendar.title')} | BetterMakati`} />
           </div>
         </div>
       </section>
