@@ -378,7 +378,7 @@ for (const route of [
 
 for (const marker of [
   'role="group"',
-  'aria-label="Heritage map view"',
+  "aria-label={t('corePages.heritage.mapView')}",
   'aria-pressed={mapSelection ===',
   'grid grid-cols-1 gap-5 md:grid-cols-2',
   'xl:grid-cols-[0.68fr_1.32fr]',
