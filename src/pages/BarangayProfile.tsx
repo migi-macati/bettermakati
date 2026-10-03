@@ -52,8 +52,6 @@ import {
   civicAreaById,
   civicAreaRelationships,
   civicOrganizationById,
-  type CivicAreaKind,
-  type CivicOrganizationKind,
 } from '../data/areaOrganizationRegistry';
 
 const compactEditionName = (name: string) => name.replace(/\s+/g, '');
