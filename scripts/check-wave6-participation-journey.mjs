@@ -39,7 +39,7 @@ for (const marker of [
   'Need government action?',
   'to="/hotlines#makati-action-center"',
   'to="/community-tools/saan-ako-lalapit"',
-  'Report a local problem to BetterMakati',
+  "t('corePages.civicMap.report')",
   "withBarangayScope('/civic-map/report', barangay?.slug)",
   'BetterMakati records are public civic evidence',
   'href="tel:911"',
@@ -63,8 +63,8 @@ for (const marker of [
 
 for (const marker of [
   'Report a local problem to BetterMakati',
-  'Report something near me to BetterMakati',
-  'Emergency? Call 911.',
+  "t('corePages.civicMap.reportNear')",
+  "t('corePages.civicMap.emergency')",
 ]) {
   if (!civicMap.includes(marker)) {
     problems.push('Civic Map participation marker missing: ' + marker);
