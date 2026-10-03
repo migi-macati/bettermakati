@@ -935,7 +935,8 @@
       "dependencyCurrent": "dependency-current",
       "needReview": "kailangan ng source review",
       "needsReview": "Kailangan ng source review",
-      "auditCode": "Audit & source code"
+      "auditCode": "Audit & source code",
+      "lastPublishedCheck": "Huling published check:"
     },
     "accountability": {
       "seoTitle": "Accountability Ledger",
