@@ -1125,5 +1125,40 @@
       "shareSource": "Share a source",
       "reportCorrection": "Report a correction"
     }
+  },
+  "corePages": {
+    "contact": {
+      "seoTitle": "Contact",
+      "seoDescription": "Makipag-contact sa BetterMakati o hanapin ang official Makati City contact channels.",
+      "eyebrow": "Contact",
+      "title": "Makipag-ugnayan",
+      "project": "BetterMakati",
+      "city": "City Government of Makati",
+      "hotlines": "Hotlines"
+    },
+    "hotlines": {
+      "seoTitle": "Hotlines",
+      "seoDescription": "Emergency at essential contact information para sa Makati City.",
+      "eyebrow": "Essential contacts",
+      "title": "Hotlines & Emergency Information"
+    },
+    "cinemas": {
+      "seoTitle": "Cinemas in Makati",
+      "seoDescription": "Cinema locations at current movie schedules sa Makati City.",
+      "eyebrow": "Visit Makati",
+      "title": "Cinemas",
+      "after": "Pagkatapos pumili ng cinema",
+      "nearby": "Paano pumunta o mag-explore nearby"
+    },
+    "official": {
+      "notFound": "Hindi nahanap ang official",
+      "eyebrow": "Elected official",
+      "sources": "Sources",
+      "connected": "Connected records",
+      "related": "Related records",
+      "election": "2025 election result",
+      "votes": "votes received",
+      "validVotes": "of valid votes"
+    }
   }
 }
