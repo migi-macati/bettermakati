@@ -248,7 +248,7 @@ for (const marker of [
 
 for (const marker of [
   "fetch('/source-watch-state.json'",
-  'Source freshness monitor',
+  "t('evidence.records.freshnessMonitor')",
   'stable-document content check',
   'reachability check only',
   'Current source state',
