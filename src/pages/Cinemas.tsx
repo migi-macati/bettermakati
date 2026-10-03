@@ -1,5 +1,6 @@
 import { ExternalLink, Film, MapPin } from 'lucide-react';
 import { Link } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
 import SEO from '../components/SEO';
@@ -50,17 +51,18 @@ const mapsUrl = (name: string) =>
   'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(name + ' Makati');
 
 export default function Cinemas() {
+  const { t } = useTranslation();
   return (
     <>
       <SEO
-        title="Cinemas in Makati"
-        description="Cinema locations and current movie schedules in Makati City."
+        title={t('corePages.cinemas.seoTitle')}
+        description={t('corePages.cinemas.seoDescription')}
       />
       <Section className="bg-[#fffdf8]">
-        <div className="section-eyebrow">Visit Makati</div>
+        <div className="section-eyebrow">{t('corePages.cinemas.eyebrow')}</div>
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-          <Heading>Cinemas</Heading>
-          <SharePage title="Cinemas in Makati | BetterMakati" />
+          <Heading>{t('corePages.cinemas.title')}</Heading>
+          <SharePage title={`${t('corePages.cinemas.seoTitle')} | BetterMakati`} />
         </div>
         <LastReviewed date="2026-09-20" note="Showtimes change daily; use the linked cinema or schedule source for current sessions." />
 
@@ -107,8 +109,8 @@ export default function Cinemas() {
       <Section className="border-t border-primary-100 bg-white">
         <div className="grid gap-5 lg:grid-cols-[1fr_auto] lg:items-center">
           <div>
-            <div className="section-eyebrow">After choosing a cinema</div>
-            <Heading level={2}>Get there or explore nearby</Heading>
+            <div className="section-eyebrow">{t('corePages.cinemas.after')}</div>
+            <Heading level={2}>{t('corePages.cinemas.nearby')}</Heading>
             <p className="mt-2 max-w-2xl text-sm leading-relaxed text-gray-600">
               Use the cinema links above for live showtimes. For the rest of the trip, check routes and explore the surrounding city.
             </p>
