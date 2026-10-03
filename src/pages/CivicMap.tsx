@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   AlertTriangle,
   ArrowRight,
@@ -73,6 +74,7 @@ const typeOptionsByEntityKind: Record<
 };
 
 export default function CivicMap() {
+  const { t } = useTranslation();
   const [query, setQuery] = useState('');
   const [entityKind, setEntityKind] = useState<CivicEntityKind>('place');
   const [type, setType] = useState<'all' | CivicAssetType>('all');
@@ -157,8 +159,8 @@ export default function CivicMap() {
   return (
     <>
       <SEO
-        title="Civic Map"
-        description="Browse sourced civic places, infrastructure segments and transport routes in Makati, then open a record to report a problem or suggest an improvement."
+        title={t('corePages.civicMap.seoTitle')}
+        description={t('corePages.civicMap.seoDescription')}
         keywords="Makati civic map, public places, health center, public office, park, transport stop, report pothole, sidewalk, citizen report, improvement proposal"
       />
 
@@ -166,17 +168,17 @@ export default function CivicMap() {
         <div className="container px-5 py-12 md:px-6 md:py-16 lg:px-8">
           <div className="max-w-4xl">
             <div className="mb-3 text-xs font-extrabold uppercase tracking-[0.12em] text-secondary-200 md:text-sm">
-              Civic Map
+              {t('corePages.civicMap.eyebrow')}
             </div>
             <h1 className="text-4xl font-extrabold tracking-tight text-white md:text-6xl">
-              Find a place, street or route.
+              {t('corePages.civicMap.title')}
             </h1>
             <p className="mt-4 max-w-3xl text-lg leading-relaxed text-primary-50 md:text-xl">
-              Search Makati&apos;s civic places and infrastructure, then open a record to see details, report a problem or suggest an improvement.
+              {t('corePages.civicMap.intro')}
             </p>
 
             <label className="relative mt-7 block max-w-3xl">
-              <span className="sr-only">Search civic registry</span>
+              <span className="sr-only">{t('corePages.civicMap.search')}</span>
               <Search
                 className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-500"
                 aria-hidden="true"
@@ -185,12 +187,12 @@ export default function CivicMap() {
                 type="search"
                 value={query}
                 onChange={event => setQuery(event.target.value)}
-                placeholder="Search park, street, health center, route..."
+                placeholder={t('corePages.civicMap.placeholder')}
                 className="w-full rounded-xl border border-white/30 bg-white py-3.5 pl-12 pr-4 text-base text-gray-950 shadow-sm outline-none placeholder:text-gray-500 focus:border-secondary-400 focus:ring-2 focus:ring-secondary-300/40"
               />
             </label>
 
-            <div className="mt-5 flex flex-wrap gap-2" role="group" aria-label="Registry record type">
+            <div className="mt-5 flex flex-wrap gap-2" role="group" aria-label={t('corePages.civicMap.recordType')}>
               {(['place', 'segment', 'route'] as CivicEntityKind[]).map(kind => (
                 <button
                   key={kind}
@@ -206,7 +208,7 @@ export default function CivicMap() {
                   }
                   aria-pressed={entityKind === kind}
                 >
-                  {kind === 'place' ? 'Places' : kind === 'segment' ? 'Segments' : 'Routes'}
+                  {kind === 'place' ? t('corePages.civicMap.places') : kind === 'segment' ? t('corePages.civicMap.segments') : t('corePages.civicMap.routes')}
                 </button>
               ))}
             </div>
@@ -216,13 +218,13 @@ export default function CivicMap() {
                 to={withBarangayScope('/civic-map/report', barangay?.slug)}
                 className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-white px-4 py-2.5 text-sm font-bold text-primary-800 transition hover:bg-primary-50"
               >
-                Report a local problem to BetterMakati <ArrowRight className="h-4 w-4" />
+                {t('corePages.civicMap.report')} <ArrowRight className="h-4 w-4" />
               </Link>
               <a
                 href="#places"
                 className="inline-flex min-h-11 items-center justify-center rounded-xl border border-white/60 px-4 py-2.5 text-sm font-bold text-white transition hover:border-secondary-400 hover:text-secondary-300"
               >
-                Browse results
+                {t('corePages.civicMap.browse')}
               </a>
             </div>
           </div>
@@ -233,21 +235,21 @@ export default function CivicMap() {
         <div className="flex flex-wrap items-center justify-between gap-3">
           <LastReviewed
             date={civicMethodologyReviewed}
-            note="Civic registry and source review."
+            note={t('corePages.civicMap.review')}
             className="mt-0"
           />
           <div className="flex flex-wrap items-center gap-2">
             <Link to="/civic-map/reports" className="brand-btn-secondary">
-              {barangay ? 'Citywide reports' : 'Weekly & monthly reports'}
+              {barangay ? t('corePages.civicMap.citywide') : t('corePages.civicMap.reports')}
             </Link>
-            <SharePage title="BetterMakati Civic Map" />
+            <SharePage title={t('corePages.civicMap.share')} />
           </div>
         </div>
 
         <NearMePlaces
           className="mt-5"
-          title="What civic places are near me?"
-          description="See verified parks, public facilities, offices and transport places around your current location."
+          title={t('corePages.civicMap.nearTitle')}
+          description={t('corePages.civicMap.nearDescription')}
           linkForPlace={placeId =>
             withBarangayScope('/civic-map/' + placeId, barangay?.slug)
           }
@@ -299,12 +301,12 @@ export default function CivicMap() {
           <div className="flex gap-3">
             <AlertTriangle className="mt-0.5 h-6 w-6 shrink-0 text-error-700" />
             <div>
-              <h2 className="font-extrabold text-error-950">Emergency? Call 911.</h2>
+              <h2 className="font-extrabold text-error-950">{t('corePages.civicMap.emergency')}</h2>
               <p className="mt-1 text-sm leading-relaxed text-error-900">
-                Use the Civic Map for non-emergency local issues. Fire, crime or violence in progress, medical emergencies and immediate danger should go directly to Unified 911.
+                {t('corePages.civicMap.emergencyText')}
               </p>
               <a href="tel:911" className="mt-3 inline-flex min-h-11 items-center rounded-xl bg-error-700 px-4 py-2 font-extrabold text-white">
-                Call 911
+                {t('corePages.civicMap.call')}
               </a>
             </div>
           </div>
@@ -325,12 +327,12 @@ export default function CivicMap() {
           </div>
         </div>
         {feedState !== 'ready' && <p role="status" className="mt-3 text-sm text-gray-600">
-          {feedState === 'loading' ? 'Loading community counts…' : 'Community counts are unavailable. You can still browse places and open their reporting forms.'}
+          {feedState === 'loading' ? t('corePages.civicMap.loading') : t('corePages.civicMap.unavailable')}
         </p>}
       </Section>
 
       <Section className="bg-[#f5f8f2]" id="places">
-        <div className="section-eyebrow">Civic registry</div>
+        <div className="section-eyebrow">{t('corePages.civicMap.registry')}</div>
         <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <Heading level={2}>Browse {civicEntityKindLabels[entityKind].toLowerCase()} records</Heading>
@@ -343,12 +345,12 @@ export default function CivicMap() {
             </p>
           </div>
           <div className="text-sm text-gray-500">
-            {barangay ? `${visible.length} in Barangay ${barangay.name}` : `${visible.length} shown`}
+            {barangay ? `${visible.length} in Barangay ${barangay.name}` : `${visible.length} ${t('corePages.civicMap.shown')}`}
           </div>
         </div>
 
         <div className="mt-5 max-w-sm">
-          <label className="sr-only" htmlFor="civic-asset-type">Record subtype</label>
+          <label className="sr-only" htmlFor="civic-asset-type">{t('corePages.civicMap.subtype')}</label>
           <select
             id="civic-asset-type"
             value={type}
@@ -390,10 +392,10 @@ export default function CivicMap() {
                       : 'text-secondary-800'
                   }>
                     {placeRegistryById.get(asset.id)?.verification.status === 'verified'
-                      ? 'Verified'
+                      ? t('corePages.civicMap.verified')
                       : entityKind === 'segment'
-                        ? 'Draft segment'
-                        : 'Provisional'}
+                        ? t('corePages.civicMap.draft')
+                        : t('corePages.civicMap.provisional')}
                   </span>
                   {entityKind === 'place' && asset.accessClass === 'public-access-private-managed' && (
                     <span className="rounded-full bg-secondary-50 px-2.5 py-1 text-secondary-900">
@@ -403,10 +405,10 @@ export default function CivicMap() {
                 </div>
                 <div className="mt-3 text-[11px] font-extrabold uppercase tracking-[0.08em] text-gray-500">
                   {entityKind === 'place'
-                    ? 'Destination'
+                    ? t('corePages.civicMap.destination')
                     : entityKind === 'segment'
-                      ? 'Bounded infrastructure'
-                      : 'Network / service route'}
+                      ? t('corePages.civicMap.bounded')
+                      : t('corePages.civicMap.network')}
                 </div>
                 <h3 className="mt-3 text-lg font-extrabold text-gray-950">{asset.title}</h3>
                 <p className="mt-1 text-sm text-gray-600">{asset.subtitle}</p>
@@ -424,7 +426,7 @@ export default function CivicMap() {
                 <div className="mt-4 flex items-center justify-between gap-3 text-xs">
                   <span className="text-gray-500">{feedState === 'ready' ? `${records.length} community record${records.length === 1 ? '' : 's'}` : 'Records loading or unavailable'}</span>
                   <span className="inline-flex items-center gap-1 font-bold text-primary-700">
-                    Open <ArrowRight className="h-4 w-4" />
+                    {t('corePages.civicMap.open')} <ArrowRight className="h-4 w-4" />
                   </span>
                 </div>
               </Link>
@@ -435,10 +437,10 @@ export default function CivicMap() {
         {visible.length === 0 && (
           <div className="mt-6 rounded-2xl border border-gray-200 bg-white p-6 text-sm text-gray-600">
             <p>No {entityKind} record matches these filters.</p>
-            <button type="button" onClick={() => { setQuery(''); setType('all'); }} className="brand-btn-secondary mt-3">Clear filters</button>
+            <button type="button" onClick={() => { setQuery(''); setType('all'); }} className="brand-btn-secondary mt-3">{t('corePages.civicMap.clear')}</button>
           </div>
         )}
-        <p className="mt-6 text-sm text-gray-600">Record missing? <Link to="/get-involved?type=proposal&subject=Add%20a%20civic%20record%20to%20Civic%20Map#submission" className="font-bold text-primary-700 underline">Help document it</Link>.</p>
+        <p className="mt-6 text-sm text-gray-600">{t('corePages.civicMap.missing')} <Link to="/get-involved?type=proposal&subject=Add%20a%20civic%20record%20to%20Civic%20Map#submission" className="font-bold text-primary-700 underline">{t('corePages.civicMap.document')}</Link>.</p>
       </Section>
 
       <Section className="bg-white" id="what-you-can-do">
@@ -446,8 +448,8 @@ export default function CivicMap() {
           <CivicAreaContextMap />
 
           <div>
-            <div className="section-eyebrow">From the civic registry</div>
-            <Heading level={2}>What you can do</Heading>
+            <div className="section-eyebrow">{t('corePages.civicMap.fromRegistry')}</div>
+            <Heading level={2}>{t('corePages.civicMap.canDo')}</Heading>
             <div className="mt-5 space-y-3">
               <a
                 href="#places"
@@ -455,9 +457,9 @@ export default function CivicMap() {
               >
                 <Search className="mt-0.5 h-5 w-5 shrink-0 text-primary-700" />
                 <div>
-                  <div className="font-extrabold text-gray-950">Find a civic record</div>
+                  <div className="font-extrabold text-gray-950">{t('corePages.civicMap.find')}</div>
                   <p className="mt-1 text-sm leading-relaxed text-gray-600">
-                    Look up a place, bounded infrastructure segment or transport route.
+                    {t('corePages.civicMap.findText')}
                   </p>
                 </div>
               </a>
@@ -468,9 +470,9 @@ export default function CivicMap() {
               >
                 <Wrench className="mt-0.5 h-5 w-5 shrink-0 text-primary-700" />
                 <div>
-                  <div className="font-extrabold text-gray-950">Report something near me to BetterMakati</div>
+                  <div className="font-extrabold text-gray-950">{t('corePages.civicMap.reportNear')}</div>
                   <p className="mt-1 text-sm leading-relaxed text-gray-600">
-                    Use your location or search for the affected place, then create a public BetterMakati case.
+                    {t('corePages.civicMap.reportNearText')}
                   </p>
                 </div>
               </Link>
@@ -481,9 +483,9 @@ export default function CivicMap() {
               >
                 <Trees className="mt-0.5 h-5 w-5 shrink-0 text-primary-700" />
                 <div>
-                  <div className="font-extrabold text-gray-950">Suggest an improvement</div>
+                  <div className="font-extrabold text-gray-950">{t('corePages.civicMap.suggest')}</div>
                   <p className="mt-1 text-sm leading-relaxed text-gray-600">
-                    Choose the relevant place or segment first, then propose a specific change.
+                    {t('corePages.civicMap.suggestText')}
                   </p>
                 </div>
               </a>
@@ -494,9 +496,9 @@ export default function CivicMap() {
               >
                 <MapPinned className="mt-0.5 h-5 w-5 shrink-0 text-primary-700" />
                 <div>
-                  <div className="font-extrabold text-gray-950">Help document Makati</div>
+                  <div className="font-extrabold text-gray-950">{t('corePages.civicMap.help')}</div>
                   <p className="mt-1 text-sm leading-relaxed text-gray-600">
-                    Send a missing place, segment, route, correction or source that should be added to the registry.
+                    {t('corePages.civicMap.helpText')}
                   </p>
                 </div>
               </Link>

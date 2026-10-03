@@ -30,14 +30,14 @@ for(const marker of [
   'makatiHistory',
   'historyEras',
   'historyReviewed',
-  'evidenceLabels',
+  'evidenceLabelKey',
   'sourceTypeLabel',
   'eventSearchText',
   'historyImageSet',
   'heritageCollectionById',
   'primaryOnly',
   'newestFirst',
-  'Download results',
+  "t('corePages.history.download')",
   'SourceLink'
 ]) {
   if(!page.includes(marker)) throw new Error('W7-6b preserved History behavior/evidence marker missing: '+marker);
