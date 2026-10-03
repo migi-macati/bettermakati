@@ -1235,6 +1235,29 @@
       "handling": "How information is handled",
       "projectLinks": "Project links",
       "verify": "Verify, review or contribute"
+    },
+    "getInvolved": {
+      "seoTitle": "Get Involved",
+      "seoDescription": "Contribute to BetterMakati through corrections, sources, proposals, ideas, volunteering and live civic audits.",
+      "eyebrow": "Get Involved",
+      "title": "How do you want to help?",
+      "submission": "Submission",
+      "send": "Send something to BetterMakati",
+      "type": "Submission type",
+      "proposal": "Civic proposal",
+      "idea": "BetterMakati idea",
+      "source": "Source / data",
+      "correction": "Correction",
+      "volunteer": "Volunteer",
+      "contact": "Contact",
+      "tool": "Community tool",
+      "general": "General / not specific",
+      "subject": "Subject",
+      "shortTitle": "Short title",
+      "details": "Details",
+      "sourceUrl": "Source / URL",
+      "area": "Barangay / area",
+      "optional": "Optional"
     }
   }
 }
