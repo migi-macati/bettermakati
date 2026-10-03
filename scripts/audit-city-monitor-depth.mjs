@@ -122,7 +122,7 @@ for (const marker of [
   'content-change detection',
   'reachability only',
   'manual review',
-  'Showing <strong className="text-gray-900">{visibleRecords.length}</strong>',
+  "t('currentInfo.monitor.showing', { visible: visibleRecords.length, total: cityMonitorRecords.length })",
 ]) {
   if (!page.includes(marker)) {
     problems.push('City Monitor page is missing required feature: ' + marker);
