@@ -13,12 +13,12 @@ for (const marker of [
   "fetch('/civic-briefs.json'",
   "fetch('/api/news')",
   '<CivicTimelinePreview',
-  'Live conditions & current sources',
+  "t('currentInfo.today.liveSources')",
   'to="/city-monitor"',
   'to="/live"',
   'to="/hotlines"',
-  'Latest published brief',
-  'Choose my barangay',
+  "t('currentInfo.today.latestBrief')",
+  "t('currentInfo.today.chooseBarangay')",
 ]) {
   if (!today.includes(marker)) {
     problems.push('Today in Makati lost required Wave 2.3 feature: ' + marker);
