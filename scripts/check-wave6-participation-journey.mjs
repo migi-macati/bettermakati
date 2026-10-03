@@ -39,7 +39,7 @@ for (const marker of [
   'Need government action?',
   'to="/hotlines#makati-action-center"',
   'to="/community-tools/saan-ako-lalapit"',
-  "t('corePages.civicMap.report')",
+  'Report a local problem to BetterMakati',
   "withBarangayScope('/civic-map/report', barangay?.slug)",
   'BetterMakati records are public civic evidence',
   'href="tel:911"',
@@ -62,7 +62,7 @@ for (const marker of [
 }
 
 for (const marker of [
-  'Report a local problem to BetterMakati',
+  "t('corePages.civicMap.report')",
   "t('corePages.civicMap.reportNear')",
   "t('corePages.civicMap.emergency')",
 ]) {
