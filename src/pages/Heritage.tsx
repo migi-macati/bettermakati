@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   ArrowRight,
   ExternalLink,
@@ -61,6 +62,7 @@ const directionsUrl = (placeIds: string[]) => {
 
 
 export default function Heritage() {
+  const { t } = useTranslation();
   const [mapSelection, setMapSelection] = useState('all');
   const selectedCollection = heritageCollections.find(
     collection => collection.id === mapSelection
@@ -75,31 +77,30 @@ export default function Heritage() {
   return (
     <>
       <SEO
-        title="Heritage & Culture"
-        description="Historical and cultural sites, sourced context and self-guided heritage routes in Makati City."
+        title={t('corePages.heritage.seoTitle')}
+        description={t('corePages.heritage.seoDescription')}
       />
       <Section className="bm-heritage-page">
-        <div className="section-eyebrow">Heritage & Culture</div>
+        <div className="section-eyebrow">{t('corePages.heritage.eyebrow')}</div>
         <div className="bm-heritage-intro flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <Heading>Historical and cultural sites</Heading>
+            <Heading>{t('corePages.heritage.title')}</Heading>
             <p className="max-w-3xl text-gray-600">
-              Explore Makati&apos;s churches, markers, museums and surviving
-              traces of the city before the modern skyline.
+              {t('corePages.heritage.intro')}
             </p>
           </div>
-          <SharePage title="Heritage & Culture in Makati | BetterMakati" />
+          <SharePage title={t('corePages.heritage.shareTitle')} />
         </div>
         <LastReviewed
           date="2026-09-27"
-          note="Place identity and location come from the canonical BetterMakati place registry; historical context links to the underlying official sources."
+          note={t('corePages.heritage.reviewNote')}
         />
         <div className="mt-5 flex flex-wrap gap-3">
           <Link to="/visit" className="brand-btn-primary">
-            Explore Makati
+            {t('corePages.heritage.explore')}
           </Link>
           <Link to="/mobility" className="brand-btn-secondary">
-            Getting around
+            {t('corePages.heritage.mobility')}
           </Link>
         </div>
 
@@ -173,7 +174,7 @@ export default function Heritage() {
                   )}
                   {(place.aliases?.length ?? 0) > 0 && (
                     <p className="mt-2 text-xs leading-relaxed text-gray-500">
-                      Also listed as: {place.aliases?.map(alias => alias.name).join(' · ')}
+                      {t('corePages.heritage.alsoListed')}: {place.aliases?.map(alias => alias.name).join(' · ')}
                     </p>
                   )}
                   <p className="mt-4 text-sm leading-relaxed text-gray-700">
@@ -188,14 +189,14 @@ export default function Heritage() {
                         rel="noreferrer"
                         className="inline-flex min-h-11 items-center gap-1 font-bold text-primary-700"
                       >
-                        <MapPin className="h-4 w-4" /> Map
+                        <MapPin className="h-4 w-4" /> {t('corePages.heritage.map')}
                       </a>
                     )}
                     <Link
                       to={'/civic-map/' + place.id}
                       className="inline-flex min-h-11 items-center gap-1 font-bold text-primary-700"
                     >
-                      Place details <ArrowRight className="h-3.5 w-3.5" />
+                      {t('corePages.heritage.placeDetails')} <ArrowRight className="h-3.5 w-3.5" />
                     </Link>
                     {primarySource && (
                       <a
@@ -217,19 +218,18 @@ export default function Heritage() {
       </Section>
 
       <Section className="bm-heritage-map-band" id="heritage-map">
-        <div className="section-eyebrow">Heritage map</div>
+        <div className="section-eyebrow">{t('corePages.heritage.mapEyebrow')}</div>
         <div className="bm-heritage-map-layout grid gap-6 xl:grid-cols-[0.68fr_1.32fr] xl:items-start">
           <div>
-            <Heading level={2}>See the places together</Heading>
+            <Heading level={2}>{t('corePages.heritage.mapTitle')}</Heading>
             <p className="mt-2 max-w-xl text-sm leading-relaxed text-gray-600">
-              Switch between the full heritage set, walking routes and thematic
-              collections. Every pin comes from the canonical Place Registry.
+              {t('corePages.heritage.mapIntro')}
             </p>
 
             <div
               className="mt-5 flex max-h-[360px] flex-wrap gap-2 overflow-y-auto"
               role="group"
-              aria-label="Heritage map view"
+              aria-label={t('corePages.heritage.mapView')}
             >
               <button
                 type="button"
@@ -241,7 +241,7 @@ export default function Heritage() {
                     : 'min-h-11 rounded-full border border-primary-200 bg-white px-3 py-2 text-xs font-bold text-primary-800 hover:border-primary-400'
                 }
               >
-                All heritage places
+                {t('corePages.heritage.allPlaces')}
               </button>
               {heritageCollections.map(collection => (
                 <button
@@ -264,8 +264,8 @@ export default function Heritage() {
               <div className="bm-heritage-map-context mt-5 rounded-xl border p-4">
                 <div className="text-xs font-bold uppercase tracking-[0.08em] text-secondary-800">
                   {selectedCollection.kind === 'walking-route'
-                    ? 'Walking route'
-                    : 'Thematic collection'}
+                    ? t('corePages.heritage.walkingRoute')
+                    : t('corePages.heritage.thematicCollection')}
                 </div>
                 <div className="mt-1 font-extrabold text-gray-950">
                   {selectedCollection.name}
@@ -278,13 +278,13 @@ export default function Heritage() {
                     href={'#collection-' + selectedCollection.id}
                     className="inline-flex min-h-11 items-center text-primary-700 underline underline-offset-2"
                   >
-                    View collection
+                    {t('corePages.heritage.viewCollection')}
                   </a>
                   <Link
                     to={'/history?collection=' + selectedCollection.id}
                     className="inline-flex min-h-11 items-center text-primary-700 underline underline-offset-2"
                   >
-                    Related history
+                    {t('corePages.heritage.relatedHistory')}
                   </Link>
                 </div>
               </div>
@@ -297,15 +297,15 @@ export default function Heritage() {
             title={
               selectedCollection
                 ? selectedCollection.name + ' heritage map'
-                : 'Makati heritage map'
+                : t('corePages.heritage.makatiMap')
             }
           />
         </div>
       </Section>
 
       <Section className="bm-heritage-collections">
-        <div className="section-eyebrow">Collections</div>
-        <Heading level={2}>Explore by theme</Heading>
+        <div className="section-eyebrow">{t('corePages.heritage.collections')}</div>
+        <Heading level={2}>{t('corePages.heritage.byTheme')}</Heading>
 
         <div className="mt-6 grid grid-cols-1 gap-5 lg:grid-cols-2">
           {heritagePlaceCollections.map(collection => {
@@ -322,7 +322,7 @@ export default function Heritage() {
               >
                 <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
                   <Layers3 className="h-5 w-5" />
-                  Thematic collection
+                  {t('corePages.heritage.thematicCollection')}
                 </div>
                 <h3 className="mt-4 text-xl font-extrabold text-gray-950">
                   {collection.name}
@@ -349,7 +349,7 @@ export default function Heritage() {
                   to={'/history?collection=' + collection.id}
                   className="mt-5 inline-flex min-h-11 items-center gap-1 text-sm font-bold text-primary-700"
                 >
-                  Related history <ArrowRight className="h-3.5 w-3.5" />
+                  {t('corePages.heritage.relatedHistory')} <ArrowRight className="h-3.5 w-3.5" />
                 </Link>
               </article>
             );
@@ -358,13 +358,10 @@ export default function Heritage() {
       </Section>
 
       <Section className="bm-heritage-routes">
-        <div className="section-eyebrow">Self-guided routes</div>
-        <Heading level={2}>Walk through Makati&apos;s history</Heading>
+        <div className="section-eyebrow">{t('corePages.heritage.routes')}</div>
+        <Heading level={2}>{t('corePages.heritage.routesTitle')}</Heading>
         <p className="max-w-3xl text-sm leading-relaxed text-gray-600">
-          These routes connect sourced heritage sites already listed above.
-          They are orientation guides, not official walking tours. Check
-          crossings, weather, opening hours and accessibility before setting
-          out.
+          {t('corePages.heritage.routesIntro')}
         </p>
 
         <div className="mt-6 grid grid-cols-1 gap-5 lg:grid-cols-2">
@@ -382,7 +379,7 @@ export default function Heritage() {
               >
                 <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
                   <Footprints className="h-5 w-5" />
-                  Walking route
+                  {t('corePages.heritage.walkingRoute')}
                 </div>
                 <h3 className="mt-4 text-xl font-extrabold text-gray-950">
                   {route.name}
@@ -413,13 +410,13 @@ export default function Heritage() {
                     rel="noreferrer"
                     className="brand-btn-primary"
                   >
-                    <Route className="h-4 w-4" /> Open walking route
+                    <Route className="h-4 w-4" /> {t('corePages.heritage.openRoute')}
                   </a>
                   <Link
                     to={'/history?collection=' + route.id}
                     className="brand-btn-secondary"
                   >
-                    Related history <ArrowRight className="h-4 w-4" />
+                    {t('corePages.heritage.relatedHistory')} <ArrowRight className="h-4 w-4" />
                   </Link>
                 </div>
               </article>
@@ -431,17 +428,16 @@ export default function Heritage() {
       <Section className="bm-heritage-handoff-band">
         <div className="bm-heritage-handoff flex flex-col gap-5 rounded-2xl border p-6 md:flex-row md:items-center md:justify-between md:p-8">
           <div>
-            <div className="section-eyebrow">Go deeper</div>
+            <div className="section-eyebrow">{t('corePages.heritage.deeper')}</div>
             <h2 className="text-2xl font-extrabold text-gray-950">
-              Put these places in historical context
+              {t('corePages.heritage.deeperTitle')}
             </h2>
             <p className="mt-2 max-w-2xl text-sm text-gray-600">
-              The BetterMakati timeline connects places to legal records,
-              institutions and events across the city&apos;s history.
+              {t('corePages.heritage.deeperIntro')}
             </p>
           </div>
           <Link to="/history" className="brand-btn-secondary shrink-0">
-            Open Makati history <ArrowRight className="h-4 w-4" />
+            {t('corePages.heritage.openHistory')} <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
       </Section>
