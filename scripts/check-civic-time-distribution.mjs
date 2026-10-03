@@ -112,7 +112,7 @@ for (const forbidden of [
 for (const [label, page, markers] of [
   ['Legislation', legislation, ['owner="legislation"', 'calendarTopic="legislation"', 'Dated legislative milestones']],
   ['Accountability', accountability, ['owner="accountability"', 'calendarTopic="projects-procurement"', 'Procurement and project dates']],
-  ['Reports', reports, ['owner="reports"', 'calendarTopic="publications-data"', 'Report releases']],
+  ['Reports', reports, ['owner="reports"', 'calendarTopic="publications-data"', "heading={t('evidence.reports.releases')}"]],
   ['Elections', elections, ['owner="elections"', 'calendarTopic="elections"', 'Election dates and schedule changes']],
 ]) {
   for (const marker of markers) {
