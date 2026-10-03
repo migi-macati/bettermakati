@@ -27,8 +27,8 @@ for (const marker of [
 
 for (const marker of [
   "fetch('/city-monitor-source-state.json'",
-  'Source checks',
-  'Source directory',
+  "t('corePages.live.checks')",
+  "t('corePages.live.directory')",
   'Open-Meteo',
   'PAGASA NCR',
   'sourceStatusLabel',
