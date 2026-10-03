@@ -64,24 +64,6 @@ const primaryPlaceSource = (place: PlaceRegistryRecord) =>
   place.provenance.sources.find(source => source.kind !== 'reference-map') ??
   place.provenance.sources[0];
 
-const communityAreaLabel = (kind: CivicAreaKind) => {
-  if (kind === 'business-district') return 'Business district';
-  if (kind === 'commercial-estate') return 'Commercial estate';
-  if (kind === 'mixed-use-estate') return 'Mixed-use estate';
-  if (kind === 'named-subdistrict') return 'District';
-  if (kind === 'residential-village') return 'Residential village';
-  return 'Managed area';
-};
-
-const communityOrganizationLabel = (kind: CivicOrganizationKind) => {
-  if (kind === 'estate-association') return 'Estate association';
-  if (kind === 'homeowners-association') return 'Homeowners association';
-  if (kind === 'developer') return 'Developer';
-  if (kind === 'property-manager') return 'Property manager';
-  if (kind === 'government') return 'Government organization';
-  return 'Organization';
-};
-
 export default function BarangayProfile() {
   const { t, i18n } = useTranslation();
   const numberLocale = i18n.resolvedLanguage === 'fil' ? 'fil-PH' : 'en-PH';
@@ -239,12 +221,12 @@ export default function BarangayProfile() {
       [
         ...relatedAreas.map(area => ({
           label: area.name,
-          description: communityAreaLabel(area.kind),
+          description: t(`betterBarangay.profile.areaKinds.${area.kind}`),
           href: '/estates#area-' + area.id,
         })),
         ...relatedOrganizations.map(organization => ({
           label: organization.name,
-          description: communityOrganizationLabel(organization.kind),
+          description: t(`betterBarangay.profile.organizationKinds.${organization.kind}`),
           href: '/estates#organization-' + organization.id,
         })),
         ...(barangay.notablePlaces ?? []).map(place => ({
@@ -545,8 +527,7 @@ export default function BarangayProfile() {
               </div>
               {!barangay.hallAddress && !barangay.hallPhone && !barangay.hallEmail && (
                 <p className="mt-4 text-sm leading-relaxed text-gray-600">
-                  BetterMakati has not yet verified a direct hall contact for this barangay.
-                  Use the official Makati barangay page for the latest contact information.
+                  {t('betterBarangay.profile.noVerifiedHallContact')}
                 </p>
               )}
               <div className="mt-5 flex flex-wrap gap-3">
@@ -556,7 +537,7 @@ export default function BarangayProfile() {
                   rel="noreferrer"
                   className="brand-btn-secondary"
                 >
-                  Makati barangay page <ExternalLink className="h-4 w-4" />
+                  {t('betterBarangay.profile.makatiBarangayPage')} <ExternalLink className="h-4 w-4" />
                 </a>
                 {barangay.websiteUrl && (
                   <a
@@ -565,7 +546,7 @@ export default function BarangayProfile() {
                     rel="noreferrer"
                     className="brand-btn-secondary"
                   >
-                    Barangay website <ExternalLink className="h-4 w-4" />
+                    {t('betterBarangay.profile.barangayWebsite')} <ExternalLink className="h-4 w-4" />
                   </a>
                 )}
                 {barangay.facebookUrl && (
@@ -575,7 +556,7 @@ export default function BarangayProfile() {
                     rel="noreferrer"
                     className="brand-btn-secondary"
                   >
-                    Official social channel <ExternalLink className="h-4 w-4" />
+                    {t('betterBarangay.profile.officialSocial')} <ExternalLink className="h-4 w-4" />
                   </a>
                 )}
               </div>
@@ -670,14 +651,14 @@ export default function BarangayProfile() {
                         rel="noreferrer"
                         className="font-bold text-primary-700 underline underline-offset-2"
                       >
-                        Cross-check source <ExternalLink className="inline h-3.5 w-3.5" />
+                        {t('betterBarangay.profile.crossCheckSource')} <ExternalLink className="inline h-3.5 w-3.5" />
                       </a>
                     )}
                   </div>
                 </>
               ) : (
                 <p className="mt-5 text-sm text-gray-600">
-                  A current council roster has not yet been verified.
+                  {t('betterBarangay.profile.noVerifiedCouncil')}
                 </p>
               )}
             </div>
@@ -759,19 +740,19 @@ export default function BarangayProfile() {
                       to={withBarangayScope('/civic-map/' + place.id, barangay.slug)}
                       className="text-sm font-bold text-primary-700 underline underline-offset-2"
                     >
-                      Place details <ArrowRight className="inline h-3.5 w-3.5" />
+                      {t('betterBarangay.profile.placeDetails')} <ArrowRight className="inline h-3.5 w-3.5" />
                     </Link>
                     <Link
                       to={withBarangayScope('/civic-map/' + place.id, barangay.slug) + '#community-records'}
                       className="text-sm font-bold text-primary-700 underline underline-offset-2"
                     >
-                      Community cases
+                      {t('betterBarangay.profile.communityCases')}
                     </Link>
                     <Link
                       to={withBarangayScope('/civic-map/' + place.id, barangay.slug) + '#contribute'}
                       className="text-sm font-bold text-primary-700 underline underline-offset-2"
                     >
-                      Report or suggest
+                      {t('betterBarangay.profile.reportOrSuggest')}
                     </Link>
                     {(civicAuditPilot.targetEntityIds as readonly string[]).includes(place.id) && (
                       <Link
@@ -783,7 +764,7 @@ export default function BarangayProfile() {
                         }
                         className="text-sm font-bold text-primary-700 underline underline-offset-2"
                       >
-                        Accessibility check
+                        {t('betterBarangay.profile.accessibilityCheck')}
                       </Link>
                     )}
                     {source && (
@@ -793,7 +774,7 @@ export default function BarangayProfile() {
                         rel="noreferrer"
                         className="text-sm font-bold text-primary-700 underline underline-offset-2"
                       >
-                        Source <ExternalLink className="inline h-3.5 w-3.5" />
+                        {t('betterBarangay.profile.source')} <ExternalLink className="inline h-3.5 w-3.5" />
                       </a>
                     )}
                   </div>
@@ -847,7 +828,7 @@ export default function BarangayProfile() {
                       rel="noreferrer"
                       className="text-sm font-bold text-primary-700 underline underline-offset-2"
                     >
-                      Source <ExternalLink className="inline h-3.5 w-3.5" />
+                      {t('betterBarangay.profile.source')} <ExternalLink className="inline h-3.5 w-3.5" />
                     </a>
                   )}
                 </div>
@@ -861,7 +842,7 @@ export default function BarangayProfile() {
         <div className="container px-5 md:px-6 lg:px-8">
           <div className="section-eyebrow !text-white/80">{t('betterBarangay.profile.civicInformation')}</div>
           <h2 className="text-3xl font-extrabold tracking-tight md:text-4xl">
-            Follow what affects {barangay.name}.
+            {t('betterBarangay.profile.followAffects', { barangay: barangay.name })}
           </h2>
           <div className="mt-7 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
             {civicLinks.map(item => {
@@ -876,7 +857,7 @@ export default function BarangayProfile() {
                   <h3 className="mt-4 font-extrabold text-white">{item.label}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-primary-100">{item.description}</p>
                   <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-white">
-                    Open <ArrowRight className="h-4 w-4" />
+                    {t('betterBarangay.profile.open')} <ArrowRight className="h-4 w-4" />
                   </span>
                 </Link>
               );
@@ -889,7 +870,7 @@ export default function BarangayProfile() {
         <div className="container px-5 md:px-6 lg:px-8">
           <div className="section-eyebrow">{t('betterBarangay.profile.participateLocally')}</div>
           <h2 className="text-3xl font-extrabold tracking-tight text-gray-950 md:text-4xl">
-            Take action in {barangay.name}
+            {t('betterBarangay.profile.takeAction', { barangay: barangay.name })}
           </h2>
 
           <div className="mt-7 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
@@ -900,10 +881,10 @@ export default function BarangayProfile() {
               <Wrench className="h-6 w-6 text-primary-700" />
               <h3 className="mt-4 font-extrabold text-gray-950">{t('betterBarangay.profile.reportProblem')}</h3>
               <p className="mt-2 text-sm leading-relaxed text-gray-600">
-                Start a non-emergency report and identify the affected place, segment or location.
+                {t('betterBarangay.profile.reportDescription')}
               </p>
               <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
-                Start report <ArrowRight className="h-4 w-4" />
+                {t('betterBarangay.profile.startReport')} <ArrowRight className="h-4 w-4" />
               </span>
             </Link>
 
@@ -914,10 +895,10 @@ export default function BarangayProfile() {
               <MapPin className="h-6 w-6 text-primary-700" />
               <h3 className="mt-4 font-extrabold text-gray-950">{t('betterBarangay.profile.suggestImprovement')}</h3>
               <p className="mt-2 text-sm leading-relaxed text-gray-600">
-                Choose a local civic place, review its community records and propose a specific improvement.
+                {t('betterBarangay.profile.improvementDescription')}
               </p>
               <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
-                Browse local places <ArrowRight className="h-4 w-4" />
+                {t('betterBarangay.profile.browsePlaces')} <ArrowRight className="h-4 w-4" />
               </span>
             </Link>
 
@@ -932,7 +913,7 @@ export default function BarangayProfile() {
                   {t('betterBarangay.profile.auditParks', { count: localAuditPlaces.length, barangay: barangay.name })}
                 </p>
                 <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
-                  Join the audit <ArrowRight className="h-4 w-4" />
+                  {t('betterBarangay.profile.joinAudit')} <ArrowRight className="h-4 w-4" />
                 </span>
               </Link>
             ) : (
@@ -943,10 +924,10 @@ export default function BarangayProfile() {
                 <FileCheck2 className="h-6 w-6 text-primary-700" />
                 <h3 className="mt-4 font-extrabold text-gray-950">{t('betterBarangay.profile.correctLocalInfo')}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-gray-600">
-                  Share a public source or flag information about {barangay.name} that needs correction.
+                  {t('betterBarangay.profile.correctInfoDescription', { barangay: barangay.name })}
                 </p>
                 <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
-                  Contribute information <ArrowRight className="h-4 w-4" />
+                  {t('betterBarangay.profile.contributeInfo')} <ArrowRight className="h-4 w-4" />
                 </span>
               </Link>
             )}
@@ -958,10 +939,10 @@ export default function BarangayProfile() {
               <Building2 className="h-6 w-6 text-primary-700" />
               <h3 className="mt-4 font-extrabold text-gray-950">{t('betterBarangay.profile.contactGovernment')}</h3>
               <p className="mt-2 text-sm leading-relaxed text-gray-600">
-                Go to the verified hall contact details and official channels on this page.
+                {t('betterBarangay.profile.contactsDescription')}
               </p>
               <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
-                Barangay contacts <ArrowRight className="h-4 w-4" />
+                {t('betterBarangay.profile.barangayContacts')} <ArrowRight className="h-4 w-4" />
               </span>
             </a>
           </div>
@@ -998,12 +979,12 @@ export default function BarangayProfile() {
                   )}
                   {!electionResult.exactVotesVerified && (
                     <p className="mt-3 text-xs leading-relaxed text-gray-500">
-                      The current source establishes which candidate carried the barangay but does not expose an exact local vote total in BetterMakati’s indexed text.
+                      {t('betterBarangay.profile.electionVoteCaveat')}
                     </p>
                   )}
                   <div className="mt-5 flex flex-wrap gap-3">
                     <Link to="/elections#barangay-results-2025" className="brand-btn-secondary">
-                      All barangay results
+                      {t('betterBarangay.profile.allBarangayResults')}
                     </Link>
                     <a
                       href={barangayResultSource2025.url}
@@ -1011,7 +992,7 @@ export default function BarangayProfile() {
                       rel="noreferrer"
                       className="brand-btn-secondary"
                     >
-                      Result source <ExternalLink className="h-4 w-4" />
+                      {t('betterBarangay.profile.resultSource')} <ExternalLink className="h-4 w-4" />
                     </a>
                   </div>
                 </div>
@@ -1021,7 +1002,7 @@ export default function BarangayProfile() {
             <div>
               <div className="section-eyebrow">{t('betterBarangay.profile.accountability')}</div>
               <h2 className="text-2xl font-extrabold tracking-tight text-gray-950">
-                Locally tagged public records
+                {t('betterBarangay.profile.localRecords')}
               </h2>
               {localAccountability.length > 0 ? (
                 <div className="mt-5 space-y-3">
@@ -1040,7 +1021,7 @@ export default function BarangayProfile() {
                           to={withBarangayScope('/accountability', barangay.slug) + '#' + entry.id}
                           className="text-sm font-bold text-primary-700 underline underline-offset-2"
                         >
-                          Open record
+                          {t('betterBarangay.profile.openRecord')}
                         </Link>
                         {entry.sources.slice(0, 2).map(source => (
                           <a
@@ -1060,21 +1041,20 @@ export default function BarangayProfile() {
               ) : (
                 <div className="mt-5 rounded-2xl border border-secondary-200 bg-secondary-50 p-6">
                   <p className="text-sm leading-relaxed text-gray-700">
-                    No Accountability Ledger record is currently tagged specifically to Barangay {barangay.name}.
-                    Citywide records remain available, while missing barangay budgets, projects and procurement should stay visible as a coverage gap rather than be inferred.
+                    {t('betterBarangay.profile.noLocalAccountability', { barangay: barangay.name })}
                   </p>
                   <div className="mt-4 flex flex-wrap gap-3">
                     <Link
                       to={withBarangayScope('/accountability', barangay.slug)}
                       className="brand-btn-secondary"
                     >
-                      Open Accountability
+                      {t('betterBarangay.profile.openAccountability')}
                     </Link>
                     <Link
                       to={'/get-involved?type=source&barangay=' + encodeURIComponent(barangay.slug) + '#submission'}
                       className="brand-btn-secondary"
                     >
-                      Share a local public record
+                      {t('betterBarangay.profile.shareLocalRecord')}
                     </Link>
                   </div>
                 </div>
@@ -1089,7 +1069,7 @@ export default function BarangayProfile() {
           <div className="container px-5 md:px-6 lg:px-8">
             <div className="section-eyebrow">{t('betterBarangay.profile.heritage')}</div>
             <h2 className="text-3xl font-extrabold tracking-tight text-gray-950">
-              Registered markers and heritage records
+              {t('betterBarangay.profile.heritageRecords')}
             </h2>
             <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
               {barangay.heritageMarkers?.map(marker => (
@@ -1128,7 +1108,7 @@ export default function BarangayProfile() {
                         to={withBarangayScope('/civic-map/' + marker.placeId, barangay.slug)}
                         className="font-bold text-primary-700"
                       >
-                        Place details
+                        {t('betterBarangay.profile.placeDetails')}
                       </Link>
                     )}
                     <a
@@ -1137,7 +1117,7 @@ export default function BarangayProfile() {
                       rel="noreferrer"
                       className="inline-flex items-center gap-1 text-gray-600 underline underline-offset-2"
                     >
-                      {marker.agency} record <ExternalLink className="h-3 w-3" />
+                      {marker.agency} {t('betterBarangay.profile.record')} <ExternalLink className="h-3 w-3" />
                     </a>
                   </div>
                 </article>
@@ -1153,13 +1133,13 @@ export default function BarangayProfile() {
             <div className="section-eyebrow">{t('betterBarangay.profile.aroundBarangay')}</div>
             <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
               <h2 className="text-3xl font-extrabold tracking-tight text-gray-950">
-                Places, managed areas and organizations
+                {t('betterBarangay.profile.placesAreasOrganizations')}
               </h2>
               <Link
                 to={'/history?query=' + encodeURIComponent(barangay.name)}
                 className="inline-flex items-center gap-1 text-sm font-bold text-primary-700"
               >
-                Search Makati history <ArrowRight className="h-4 w-4" />
+                {t('betterBarangay.profile.searchHistory')} <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
             <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
