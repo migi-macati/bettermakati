@@ -1309,7 +1309,24 @@
       "inspect": "Inspect source health",
       "advisories": "Advisories & utilities",
       "directory": "Source directory",
-      "open": "Open source"
+      "open": "Open source",
+      "weather": "Weather",
+      "clear": "Clear",
+      "partly": "Partly cloudy",
+      "fog": "Fog",
+      "drizzle": "Drizzle",
+      "rain": "Rain",
+      "thunder": "Thunderstorm",
+      "air": "Air quality",
+      "good": "Good",
+      "moderate": "Moderate",
+      "sensitive": "Unhealthy for sensitive groups",
+      "unhealthy": "Unhealthy",
+      "veryUnhealthy": "Very unhealthy",
+      "hazardous": "Hazardous",
+      "linked": "Linked source",
+      "reachableLast": "Reachable at last check",
+      "checkIssue": "Check issue at last run"
     }
   }
 }
