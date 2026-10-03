@@ -40,7 +40,7 @@ for (const marker of [
   "t('corePages.mobility.routes')",
   "One Ayala terminal",
   "Historical association labels are retained as",
-  "t('corePages.mobility.unresolved')",
+  'Current status unresolved',
   "not presented",
   "mobilityNetworkRelationships",
   "mobilityNetworkSources",
