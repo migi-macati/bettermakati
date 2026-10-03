@@ -1451,7 +1451,13 @@
       "hazardous": "Hazardous",
       "linked": "Linked source",
       "reachableLast": "Reachable at last check",
-      "checkIssue": "Check issue at last run"
+      "checkIssue": "Check issue at last run",
+      "reviewNote": "Third-party observations are labeled separately. Official warnings and provider advisories remain controlling sources.",
+      "weatherFail": "Third-party weather and air-quality observations could not be loaded. Use PAGASA NCR below for current official warnings and forecasts.",
+      "feels": "Feels like",
+      "dataTime": "data time",
+      "warnings": "For warnings, use",
+      "monitorFail": "The published City Monitor source-health file is unavailable. Linked official and provider sources below remain available for direct checking."
     },
     "mobility": {
       "seoTitle": "Getting Around Makati",
@@ -1467,7 +1473,25 @@
       "routes": "Routes and corridors",
       "registry": "Route registry view",
       "pairs": "Start with a frequent destination pair",
-      "ride": "Book a ride"
+      "ride": "Book a ride",
+      "explore": "Explore Makati",
+      "destinationPlaceholder": "e.g., Power Plant Mall",
+      "publicTransport": "Public transport",
+      "anchors": "Transport anchors",
+      "interchanges": "Interchanges",
+      "corroborated": "Corroborated",
+      "routeRegistry": "Route registry",
+      "routePlaceholder": "e.g., Bicutan, Guadalupe, PRC",
+      "showAll": "Show all {{count}} records",
+      "commonTrips": "Common trips",
+      "rideHailing": "Ride-hailing",
+      "cycling": "Cycling",
+      "cyclingText": "Find bike parking and cycling destinations.",
+      "areas": "Areas & districts",
+      "areasText": "Put transport connections in the context of Makati's districts, estates and villages.",
+      "terminals": "Transport terminals",
+      "terminalsText": "Browse verified stations and terminals already indexed by BetterMakati.",
+      "unresolved": "Current status unresolved"
     }
   }
 }
