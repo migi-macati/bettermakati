@@ -1159,6 +1159,29 @@
       "election": "2025 election result",
       "votes": "votes received",
       "validVotes": "of valid votes"
+    },
+    "privacy": {
+      "seoTitle": "Privacy",
+      "seoDescription": "Privacy information ng BetterMakati.",
+      "title": "Privacy",
+      "logs": "Browsing at technical logs",
+      "thirdParty": "Search at third-party services",
+      "contributions": "Contributions",
+      "civicMap": "Civic Map pilot",
+      "storage": "Cookies at local storage",
+      "submissions": "Public project submissions",
+      "changes": "Changes"
+    },
+    "terms": {
+      "seoTitle": "Terms",
+      "seoDescription": "Terms of use ng BetterMakati.",
+      "title": "Terms of Use",
+      "official": "Official information controls",
+      "accuracy": "Accuracy at freshness",
+      "external": "External services",
+      "emergency": "Emergency use",
+      "community": "Civic Map community content",
+      "openSource": "Open-source project"
     }
   }
 }
