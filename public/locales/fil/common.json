@@ -1221,6 +1221,29 @@
       "handling": "Paano hinahandle ang information",
       "projectLinks": "Project links",
       "verify": "Mag-verify, mag-review, o mag-contribute"
+    },
+    "getInvolved": {
+      "seoTitle": "Get Involved",
+      "seoDescription": "Mag-contribute sa BetterMakati sa pamamagitan ng corrections, sources, proposals, ideas, volunteering, at live civic audits.",
+      "eyebrow": "Get Involved",
+      "title": "Paano mo gustong tumulong?",
+      "submission": "Submission",
+      "send": "Magpadala sa BetterMakati",
+      "type": "Submission type",
+      "proposal": "Civic proposal",
+      "idea": "BetterMakati idea",
+      "source": "Source / data",
+      "correction": "Correction",
+      "volunteer": "Volunteer",
+      "contact": "Contact",
+      "tool": "Community tool",
+      "general": "General / hindi specific",
+      "subject": "Subject",
+      "shortTitle": "Maikling title",
+      "details": "Details",
+      "sourceUrl": "Source / URL",
+      "area": "Barangay / area",
+      "optional": "Optional"
     }
   }
 }
