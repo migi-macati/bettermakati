@@ -1437,7 +1437,13 @@
       "hazardous": "Hazardous",
       "linked": "Linked source",
       "reachableLast": "Reachable sa last check",
-      "checkIssue": "May issue sa last check"
+      "checkIssue": "May issue sa last check",
+      "reviewNote": "Hiwalay ang labels ng third-party observations. Official warnings at provider advisories pa rin ang controlling sources.",
+      "weatherFail": "Hindi ma-load ang third-party weather at air-quality observations. Gamitin ang PAGASA NCR sa ibaba para sa current official warnings at forecasts.",
+      "feels": "Feels like",
+      "dataTime": "data time",
+      "warnings": "Para sa warnings, gamitin ang",
+      "monitorFail": "Unavailable ang published City Monitor source-health file. Available pa rin sa ibaba ang linked official at provider sources para sa direct checking."
     },
     "mobility": {
       "seoTitle": "Getting Around Makati",
@@ -1453,7 +1459,25 @@
       "routes": "Routes at corridors",
       "registry": "Route registry view",
       "pairs": "Magsimula sa madalas na destination pair",
-      "ride": "Mag-book ng ride"
+      "ride": "Mag-book ng ride",
+      "explore": "Tuklasin ang Makati",
+      "destinationPlaceholder": "hal., Power Plant Mall",
+      "publicTransport": "Public transport",
+      "anchors": "Transport anchors",
+      "interchanges": "Interchanges",
+      "corroborated": "Corroborated",
+      "routeRegistry": "Route registry",
+      "routePlaceholder": "hal., Bicutan, Guadalupe, PRC",
+      "showAll": "Ipakita lahat ng {{count}} records",
+      "commonTrips": "Common trips",
+      "rideHailing": "Ride-hailing",
+      "cycling": "Cycling",
+      "cyclingText": "Maghanap ng bike parking at cycling destinations.",
+      "areas": "Areas at districts",
+      "areasText": "Tingnan ang transport connections sa context ng Makati districts, estates, at villages.",
+      "terminals": "Transport terminals",
+      "terminalsText": "Tingnan ang verified stations at terminals na naka-index na sa BetterMakati.",
+      "unresolved": "Unresolved ang current status"
     }
   }
 }
