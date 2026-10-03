@@ -316,23 +316,23 @@ export default function CivicBriefs() {
         <div className="mt-6 grid grid-cols-2 gap-3 lg:grid-cols-5">
           <div className="rounded-xl border border-primary-100 bg-[#fffdf8] p-4">
             <div className="text-2xl font-extrabold text-gray-950">{records.length}</div>
-            <div className="text-sm text-gray-600">validated records</div>
+            <div className="text-sm text-gray-600">{t('currentInfo.briefs.validatedRecords')}</div>
           </div>
           <div className="rounded-xl border border-primary-100 bg-[#fffdf8] p-4">
             <div className="text-2xl font-extrabold text-gray-950">{accountabilityRecords.length}</div>
-            <div className="text-sm text-gray-600">accountability-linked</div>
+            <div className="text-sm text-gray-600">{t('currentInfo.briefs.accountabilityLinked')}</div>
           </div>
           <div className="rounded-xl border border-primary-100 bg-[#fffdf8] p-4">
             <div className="text-2xl font-extrabold text-gray-950">{barangayTaggedCount}</div>
-            <div className="text-sm text-gray-600">barangay-tagged</div>
+            <div className="text-sm text-gray-600">{t('currentInfo.briefs.barangayTagged')}</div>
           </div>
           <div className="rounded-xl border border-secondary-200 bg-secondary-50 p-4">
             <div className="text-2xl font-extrabold text-gray-950">{reviewSignals.length}</div>
-            <div className="text-sm text-gray-600">source changes awaiting review</div>
+            <div className="text-sm text-gray-600">{t('currentInfo.briefs.sourceChangesReview')}</div>
           </div>
           <div className="rounded-xl border border-gray-200 bg-gray-50 p-4">
             <div className="text-2xl font-extrabold text-gray-950">{failedChecks.length}</div>
-            <div className="text-sm text-gray-600">failed source checks</div>
+            <div className="text-sm text-gray-600">{t('currentInfo.briefs.failedSourceChecks')}</div>
           </div>
         </div>
 
@@ -440,7 +440,7 @@ export default function CivicBriefs() {
 
         {records.length > displayedRecords.length && (
           <div className="mt-6 rounded-xl border border-gray-200 bg-white p-4 text-sm text-gray-600">
-            This brief keeps the reading list short. <Link to="/city-monitor" className="font-bold text-primary-700 underline underline-offset-2">Open City Monitor</Link> for all {records.length} validated records in the period.
+            {t('currentInfo.briefs.readingList')} <Link to="/city-monitor" className="font-bold text-primary-700 underline underline-offset-2">{t('currentInfo.briefs.openMonitor')}</Link> {t('currentInfo.briefs.allRecords', { count: records.length })}
           </div>
         )}
       </Section>
@@ -538,9 +538,9 @@ export default function CivicBriefs() {
         )}
 
         <div className="mt-7 flex flex-wrap gap-3">
-          <Link to={briefLiveHref('daily', barangaySlug)} className="brand-btn-secondary">Current daily view</Link>
-          <Link to={briefLiveHref('weekly', barangaySlug)} className="brand-btn-secondary">Current weekly view</Link>
-          <Link to={briefLiveHref('monthly', barangaySlug)} className="brand-btn-secondary">Current monthly view</Link>
+          <Link to={briefLiveHref('daily', barangaySlug)} className="brand-btn-secondary">{t('currentInfo.briefs.currentDaily')}</Link>
+          <Link to={briefLiveHref('weekly', barangaySlug)} className="brand-btn-secondary">{t('currentInfo.briefs.currentWeekly')}</Link>
+          <Link to={briefLiveHref('monthly', barangaySlug)} className="brand-btn-secondary">{t('currentInfo.briefs.currentMonthly')}</Link>
         </div>
       </Section>
 
