@@ -868,6 +868,25 @@
       "releases": "Report releases",
       "timelineDescription": "Makikita rin sa Recently Published ang publication dates ng BetterMakati reports, hiwalay sa periods na sakop ng source data.",
       "more": "More reports"
+    },
+    "status": {
+      "seoTitle": "BetterMakati Status",
+      "seoDescription": "Current BetterMakati coverage, source monitoring, community input at measurement gaps.",
+      "eyebrow": "Site status",
+      "title": "BetterMakati Status",
+      "intro": "Current coverage, freshness, community input at measurement gaps.",
+      "serviceCoverage": "Service coverage",
+      "serviceHeading": "Gaano ka-complete ang service guides?",
+      "barangayCoverage": "BetterBarangay coverage",
+      "barangayHeading": "Ano pa ang kulang per barangay",
+      "methodology": "Methodology",
+      "methodologyHeading": "Open-government audit",
+      "freshness": "Freshness",
+      "liveSignals": "Live signals",
+      "pageAudit": "Page audit",
+      "pageAuditHeading": "Major-page completeness at freshness",
+      "measurementGaps": "Measurement gaps",
+      "notMeasured": "Hindi pa measured"
     }
   }
 }
