@@ -80,7 +80,7 @@ for (const marker of [
   "import CivicTimelinePreview from '../components/civic/CivicTimelinePreview'",
   '<CivicTimelinePreview',
   'barangaySlug={barangay.slug}',
-  "heading={'Civic dates for ' + barangay.name}",
+  "heading={t('betterBarangay.profile.civicDates', { barangay: barangay.name })}",
 ]) {
   if (!barangay.includes(marker)) {
     problems.push('BetterBarangay Civic Timeline marker missing: ' + marker);
