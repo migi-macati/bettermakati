@@ -144,17 +144,17 @@ if (
 }
 
 for (const marker of [
-  'title="Explore Makati"',
+  "title={t('corePages.visit.seoTitle')}",
   'Understand the city as you explore it.',
-  'aria-label="Explore Makati sections"',
+  "aria-label={t('corePages.visit.sections')}",
   'Start with Makati itself.',
-  'Recurring experiences',
+  "t('corePages.visit.recurring')",
   'Weekend markets',
   'id="city-context"',
-  'Explore Makati by layer.',
+  "t('corePages.visit.layers')",
   'id="live-discovery"',
   'Restaurants, cafés, shops and nightlife change quickly.',
-  'External resources',
+  "t('corePages.visit.external')",
   "id={'explore-' + experience.id}",
   'overflow-x-auto',
   'grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4',
