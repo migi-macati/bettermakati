@@ -95,7 +95,7 @@ if (watchlist.length < 92) {
 }
 
 for (const marker of [
-  'Search the public record catalog',
+  "t('evidence.records.search')",
   'Official only',
   'Download catalog CSV',
   'source-watch-index.json',
