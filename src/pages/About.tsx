@@ -5,6 +5,7 @@ import {
   Scale,
   ShieldCheck,
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
 import { Text } from '../components/ui/Text';
@@ -16,15 +17,16 @@ const betterGovHome = requireCivicEcosystemResource('bettergov-home');
 const betterLguDirectory = requireCivicEcosystemResource('betterlgu');
 
 export default function About() {
+  const { t } = useTranslation();
   return (
     <>
       <SEO
-        title="About"
-        description="About BetterMakati, its sources, independence and correction process."
+        title={t('corePages.about.seoTitle')}
+        description={t('corePages.about.seoDescription')}
       />
 
       <Section className="bg-[#fffdf8]">
-        <div className="section-eyebrow">About</div>
+        <div className="section-eyebrow">{t('corePages.about.eyebrow')}</div>
         <Heading>BetterMakati</Heading>
         <Text className="mb-3 max-w-4xl">
           BetterMakati is an independent, open-source civic information and
@@ -42,7 +44,7 @@ export default function About() {
         <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="rounded-2xl border border-primary-100 bg-white p-5">
             <ShieldCheck className="h-5 w-5 text-primary-700" />
-            <h2 className="mt-3 font-extrabold text-gray-950">Sources</h2>
+            <h2 className="mt-3 font-extrabold text-gray-950">{t('corePages.about.sources')}</h2>
             <p className="mt-2 text-sm leading-relaxed text-gray-600">
               Figures and records link to the public source used.
             </p>
@@ -59,7 +61,7 @@ export default function About() {
           </div>
           <div className="rounded-2xl border border-primary-100 bg-white p-5">
             <RefreshCw className="h-5 w-5 text-primary-700" />
-            <h2 className="mt-3 font-extrabold text-gray-950">Corrections</h2>
+            <h2 className="mt-3 font-extrabold text-gray-950">{t('corePages.about.corrections')}</h2>
             <p className="mt-2 text-sm leading-relaxed text-gray-600">
               Uncertain or missing information stays labeled until a defensible
               source is available.
@@ -69,8 +71,8 @@ export default function About() {
       </Section>
 
       <Section id="identity" className="bg-primary-50">
-        <div className="section-eyebrow">Our identity</div>
-        <Heading level={2}>Rooted in Makati</Heading>
+        <div className="section-eyebrow">{t('corePages.about.identity')}</div>
+        <Heading level={2}>{t('corePages.about.rooted')}</Heading>
         <p className="max-w-3xl leading-relaxed text-gray-700">
           The BetterMakati mark brings together a Baybayin-inspired Ma form, two
           flowing hills and a rising sun. The hill-and-sun composition draws on
@@ -127,8 +129,8 @@ export default function About() {
 
         <div className="mt-9 grid gap-4 lg:grid-cols-2">
           <div className="rounded-2xl border border-primary-100 bg-white p-6">
-            <div className="section-eyebrow">Colour system</div>
-            <h3 className="text-xl font-extrabold text-gray-950">Green, sun gold and warm white.</h3>
+            <div className="section-eyebrow">{t('corePages.about.colours')}</div>
+            <h3 className="text-xl font-extrabold text-gray-950">{t('corePages.about.palette')}</h3>
             <div className="mt-5 grid grid-cols-3 gap-3">
               {[
                 ['#036738', 'Deep green', 'bg-[#036738] text-white'],
@@ -149,19 +151,19 @@ export default function About() {
           </div>
 
           <div className="rounded-2xl border border-primary-100 bg-white p-6">
-            <div className="section-eyebrow">Typography</div>
+            <div className="section-eyebrow">{t('corePages.about.typography')}</div>
             <div className="space-y-5">
               <div>
-                <div className="text-3xl font-extrabold text-gray-950">Official wordmark artwork</div>
-                <p className="mt-1 text-sm text-gray-600">The BetterMakati wordmark is artwork and is never recreated with live text; Figtree remains the display-heading family.</p>
+                <div className="text-3xl font-extrabold text-gray-950">{t('corePages.about.wordmark')}</div>
+                <p className="mt-1 text-sm text-gray-600">{t('corePages.about.wordmarkDetail')}</p>
               </div>
               <div>
                 <div className="text-2xl font-bold text-gray-950">Inter</div>
-                <p className="mt-1 text-sm text-gray-600">Navigation, body copy, forms, tables and civic interfaces.</p>
+                <p className="mt-1 text-sm text-gray-600">{t('corePages.about.interDetail')}</p>
               </div>
               <div>
                 <div className="font-mono text-xl font-semibold text-gray-950">Roboto Mono 2026</div>
-                <p className="mt-1 text-sm text-gray-600">Technical labels, code and machine-readable/data contexts.</p>
+                <p className="mt-1 text-sm text-gray-600">{t('corePages.about.monoDetail')}</p>
               </div>
             </div>
           </div>
@@ -169,8 +171,8 @@ export default function About() {
       </Section>
 
       <Section className="bg-white">
-        <div className="section-eyebrow">Source policy</div>
-        <Heading level={2}>How information is handled</Heading>
+        <div className="section-eyebrow">{t('corePages.about.sourcePolicy')}</div>
+        <Heading level={2}>{t('corePages.about.handling')}</Heading>
         <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
           {[
             [
@@ -204,8 +206,8 @@ export default function About() {
       </Section>
 
       <Section className="bg-[#f5f8f2]">
-        <div className="section-eyebrow">Project links</div>
-        <Heading level={2}>Verify, review or contribute</Heading>
+        <div className="section-eyebrow">{t('corePages.about.projectLinks')}</div>
+        <Heading level={2}>{t('corePages.about.verify')}</Heading>
         <div className="mt-6 flex flex-wrap gap-3">
           <a
             href="https://www.makati.gov.ph/"
