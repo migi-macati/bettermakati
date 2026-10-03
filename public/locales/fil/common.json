@@ -1244,6 +1244,29 @@
       "sourceUrl": "Source / URL",
       "area": "Barangay / area",
       "optional": "Optional"
+    },
+    "visit": {
+      "seoTitle": "Explore Makati",
+      "seoDescription": "I-explore ang Makati sa pamamagitan ng places, districts, barangays, heritage, history, mobility, markets, at current activity.",
+      "eyebrow": "Explore Makati",
+      "sections": "Explore Makati sections",
+      "starting": "City starting points",
+      "recurring": "Recurring experiences",
+      "layers": "I-explore ang Makati by layer.",
+      "live": "Live discovery",
+      "external": "External resources"
+    },
+    "estates": {
+      "seoTitle": "Estates, Districts & Associations",
+      "seoDescription": "Makati business districts, mixed-use estates, residential villages, at mga organization na connected sa kanila.",
+      "city": "City",
+      "title": "Estates, Districts & Associations",
+      "commercial": "Business districts & estates",
+      "managed": "Managed commercial areas",
+      "villages": "Residential villages",
+      "villageAreas": "Village areas at associations",
+      "organizations": "Associations & organizations",
+      "official": "Official channels"
     }
   }
 }
