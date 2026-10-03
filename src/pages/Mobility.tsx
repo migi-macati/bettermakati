@@ -154,7 +154,7 @@ const jeepneyDispositionLabel = (
     ? 'Successor corridor'
     : route.disposition === 'current-corridor'
       ? 'Current corridor'
-      : 'Current status unresolved';
+      : t('corePages.mobility.unresolved');
 
 const routeEvidenceSources = (
   route: MobilityCurrentServiceRouteRecord | MobilityHistoricalRouteRecord
@@ -376,7 +376,7 @@ export default function Mobility() {
       />
 
       <Section className="bg-[#fffdf8]">
-        <div className="section-eyebrow">Explore Makati</div>
+        <div className="section-eyebrow">{t('corePages.mobility.explore')}</div>
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
             <Heading>{t('corePages.mobility.title')}</Heading>
@@ -455,7 +455,7 @@ export default function Mobility() {
               <input
                 value={destination}
                 onChange={event => setDestination(event.target.value)}
-                placeholder="e.g., Power Plant Mall"
+                placeholder={t('corePages.mobility.destinationPlaceholder')}"
               />
             </label>
 
@@ -497,7 +497,7 @@ export default function Mobility() {
           </div>
 
           <div>
-            <div className="section-eyebrow">Public transport</div>
+            <div className="section-eyebrow">{t('corePages.mobility.publicTransport')}</div>
             <div className="mt-3 grid grid-cols-1 gap-4 sm:grid-cols-2">
               {publicMobilityServices.map(service => {
                 const Icon = mobilityServiceIcon(service);
@@ -667,7 +667,7 @@ export default function Mobility() {
       </Section>
 
       <Section id="transport-anchors" className="bg-white">
-        <div className="section-eyebrow">Transport anchors</div>
+        <div className="section-eyebrow">{t('corePages.mobility.anchors')}</div>
         <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <div>
             <Heading level={2}>{t('corePages.mobility.stations')}</Heading>
@@ -733,7 +733,7 @@ export default function Mobility() {
       </Section>
 
       <Section id="interchanges" className="bg-[#fffdf8]">
-        <div className="section-eyebrow">Interchanges</div>
+        <div className="section-eyebrow">{t('corePages.mobility.interchanges')}</div>
         <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <Heading level={2}>{t('corePages.mobility.transfers')}</Heading>
@@ -768,7 +768,7 @@ export default function Mobility() {
                     <div className="text-xs font-extrabold uppercase tracking-[0.08em] text-primary-700">
                       {relationship.evidenceStrength === 'direct'
                         ? 'Directly documented'
-                        : 'Corroborated'}
+                        : t('corePages.mobility.corroborated')}
                     </div>
                     <ArrowRightLeft
                       className="h-5 w-5 shrink-0 text-primary-700"
@@ -882,7 +882,7 @@ export default function Mobility() {
       </Section>
 
       <Section id="routes" className="bg-[#f5f8f2]">
-        <div className="section-eyebrow">Route registry</div>
+        <div className="section-eyebrow">{t('corePages.mobility.routeRegistry')}</div>
         <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <Heading level={2}>{t('corePages.mobility.routes')}</Heading>
@@ -951,7 +951,7 @@ export default function Mobility() {
                 setRouteQuery(event.target.value);
                 setShowAllRoutes(false);
               }}
-              placeholder="e.g., Bicutan, Guadalupe, PRC"
+              placeholder={t('corePages.mobility.routePlaceholder')}"
               className="min-h-11 w-full rounded-xl border border-gray-300 bg-white py-2.5 pl-10 pr-20 text-sm text-gray-950"
             />
             {routeQuery && (
@@ -1161,7 +1161,7 @@ export default function Mobility() {
             >
               {showAllRoutes
                 ? 'Show fewer'
-                : 'Show all ' + activeRouteCount + ' records'}
+                : t('corePages.mobility.showAll', { count: activeRouteCount })}
             </button>
             <span className="text-sm text-gray-500">
               Showing {showAllRoutes ? activeRouteCount : routeDisplayLimit} of{' '}
@@ -1172,7 +1172,7 @@ export default function Mobility() {
       </Section>
 
       <Section className="bg-white">
-        <div className="section-eyebrow">Common trips</div>
+        <div className="section-eyebrow">{t('corePages.mobility.commonTrips')}</div>
         <Heading level={2}>{t('corePages.mobility.pairs')}</Heading>
         <p className="max-w-3xl text-sm text-gray-600">
           These links open live directions rather than prescribing a fixed route,
@@ -1206,7 +1206,7 @@ export default function Mobility() {
       </Section>
 
       <Section className="bg-[#f5f8f2]">
-        <div className="section-eyebrow">Ride-hailing</div>
+        <div className="section-eyebrow">{t('corePages.mobility.rideHailing')}</div>
         <Heading level={2}>{t('corePages.mobility.ride')}</Heading>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-7">
           {mobilityExternalResources.map(resource => (
@@ -1241,17 +1241,17 @@ export default function Mobility() {
             className="rounded-2xl border border-gray-200 bg-white p-6 hover:border-primary-300 transition"
           >
             <Bike className="h-6 w-6 text-primary-700" />
-            <h2 className="font-extrabold text-lg mt-4">Cycling</h2>
-            <p className="text-sm text-gray-600 mt-1">Find bike parking and cycling destinations.</p>
+            <h2 className="font-extrabold text-lg mt-4">{t('corePages.mobility.cycling')}</h2>
+            <p className="text-sm text-gray-600 mt-1">{t('corePages.mobility.cyclingText')}</p>
           </a>
           <Link
             to="/estates"
             className="rounded-2xl border border-gray-200 bg-white p-6 hover:border-primary-300 transition"
           >
             <Building2 className="h-6 w-6 text-primary-700" />
-            <h2 className="font-extrabold text-lg mt-4">Areas &amp; districts</h2>
+            <h2 className="font-extrabold text-lg mt-4">{t('corePages.mobility.areas')}</h2>
             <p className="text-sm text-gray-600 mt-1">
-              Put transport connections in the context of Makati&apos;s districts, estates and villages.
+              {t('corePages.mobility.areasText')}
             </p>
           </Link>
           <a
@@ -1259,8 +1259,8 @@ export default function Mobility() {
             className="rounded-2xl border border-gray-200 bg-white p-6 hover:border-primary-300 transition"
           >
             <MapPin className="h-6 w-6 text-primary-700" />
-            <h2 className="font-extrabold text-lg mt-4">Transport terminals</h2>
-            <p className="text-sm text-gray-600 mt-1">Browse verified stations and terminals already indexed by BetterMakati.</p>
+            <h2 className="font-extrabold text-lg mt-4">{t('corePages.mobility.terminals')}</h2>
+            <p className="text-sm text-gray-600 mt-1">{t('corePages.mobility.terminalsText')}</p>
           </a>
         </div>
       </Section>
