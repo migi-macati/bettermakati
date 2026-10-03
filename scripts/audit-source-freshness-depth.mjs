@@ -265,12 +265,12 @@ for (const marker of [
 
 for (const marker of [
   "fetch('/source-watch-state.json'",
-  'Source freshness automation',
+  "t('evidence.status.freshnessAutomation')",
   'Open source freshness',
   "fetch('/page-freshness-state.json'",
   "fetch('/freshness-review-queue.json'",
   '/freshness-history.json',
-  'pages need review',
+  "t('evidence.status.pagesReview')",
 ]) {
   if (!status.includes(marker)) problems.push('BetterMakati Status lost source freshness state: ' + marker);
 }
