@@ -6,6 +6,7 @@ import {
   PhoneCall,
   ShieldAlert,
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
 import SEO from '../components/SEO';
@@ -55,15 +56,16 @@ const phoneFromLine = (line: string) => {
 };
 
 export default function Hotlines() {
+  const { t } = useTranslation();
   return (
     <>
       <SEO
-        title="Hotlines"
-        description="Emergency and essential contact information for Makati City."
+        title={t('corePages.hotlines.seoTitle')}
+        description={t('corePages.hotlines.seoDescription')}
       />
       <Section className="p-3 mb-12">
-        <div className="section-eyebrow">Essential contacts</div>
-        <Heading>Hotlines & Emergency Information</Heading>
+        <div className="section-eyebrow">{t('corePages.hotlines.eyebrow')}</div>
+        <Heading>{t('corePages.hotlines.title')}</Heading>
         <LastReviewed date="2026-09-20" note="Confirm urgent contact details with the linked official source when possible." />
 
         <div className="rounded-2xl border border-red-200 bg-gradient-to-br from-red-50 to-white p-6 md:p-8 mb-8 flex flex-col md:flex-row md:items-center gap-5">
