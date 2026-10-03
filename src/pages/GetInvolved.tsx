@@ -1,5 +1,6 @@
 import { FormEvent, useState } from 'react';
 import { Link, useSearchParams } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import {
   Bug,
   ClipboardCheck,
@@ -60,6 +61,7 @@ const actionCards = [
 type SubmitState = 'idle' | 'submitting' | 'success' | 'duplicate' | 'fallback' | 'error';
 
 export default function GetInvolved() {
+  const { t } = useTranslation();
   const [searchParams, setSearchParams] = useSearchParams();
   const initialType = searchParams.get('type') || 'idea';
   const initialTool = searchParams.get('tool') || '';
@@ -158,12 +160,12 @@ export default function GetInvolved() {
   return (
     <>
       <SEO
-        title="Get Involved"
-        description="Contribute to BetterMakati through corrections, sources, proposals, ideas, volunteering and live civic audits."
+        title={t('corePages.getInvolved.seoTitle')}
+        description={t('corePages.getInvolved.seoDescription')}
       />
       <Section className="bg-[#fffdf8]">
-        <div className="section-eyebrow">Get Involved</div>
-        <Heading>How do you want to help?</Heading>
+        <div className="section-eyebrow">{t('corePages.getInvolved.eyebrow')}</div>
+        <Heading>{t('corePages.getInvolved.title')}</Heading>
         <p className="mt-2 max-w-3xl text-gray-600">
           Choose what you want to send or do.
         </p>
@@ -280,8 +282,8 @@ export default function GetInvolved() {
 
       <Section id="submission" className="bg-[#f5f8f2]">
         <div className="max-w-3xl mx-auto">
-          <div className="section-eyebrow">Submission</div>
-          <Heading level={2}>Send something to BetterMakati</Heading>
+          <div className="section-eyebrow">{t('corePages.getInvolved.submission')}</div>
+          <Heading level={2}>{t('corePages.getInvolved.send')}</Heading>
           <p className="mt-2 text-sm leading-relaxed text-gray-600">
             Successful submissions return a public BetterMakati tracking link when
             the native workflow is available. This is not a City Government case
@@ -296,21 +298,21 @@ export default function GetInvolved() {
           >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <label className="form-field">
-                <span>Submission type</span>
+                <span>{t('corePages.getInvolved.type')}</span>
                 <select value={type} onChange={event => setType(event.target.value)}>
-                  <option value="proposal">Civic proposal</option>
-                  <option value="idea">BetterMakati idea</option>
-                  <option value="source">Source / data</option>
-                  <option value="correction">Correction</option>
-                  <option value="volunteer">Volunteer</option>
-                  <option value="contact">Contact</option>
+                  <option value="proposal">{t('corePages.getInvolved.proposal')}</option>
+                  <option value="idea">{t('corePages.getInvolved.idea')}</option>
+                  <option value="source">{t('corePages.getInvolved.source')}</option>
+                  <option value="correction">{t('corePages.getInvolved.correction')}</option>
+                  <option value="volunteer">{t('corePages.getInvolved.volunteer')}</option>
+                  <option value="contact">{t('corePages.getInvolved.contact')}</option>
                 </select>
               </label>
 
               <label className="form-field">
-                <span>Community tool</span>
+                <span>{t('corePages.getInvolved.tool')}</span>
                 <select value={tool} onChange={event => setTool(event.target.value)}>
-                  <option value="">General / not specific</option>
+                  <option value="">{t('corePages.getInvolved.general')}</option>
                   {communityTools.map(item => (
                     <option key={item.id} value={item.id}>
                       {item.name}
@@ -320,17 +322,17 @@ export default function GetInvolved() {
               </label>
 
               <label className="form-field md:col-span-2">
-                <span>Subject</span>
+                <span>{t('corePages.getInvolved.subject')}</span>
                 <input
                   required
                   value={subject}
                   onChange={event => setSubject(event.target.value)}
-                  placeholder="Short title"
+                  placeholder={t('corePages.getInvolved.shortTitle')}
                 />
               </label>
 
               <label className="form-field md:col-span-2">
-                <span>Details</span>
+                <span>{t('corePages.getInvolved.details')}</span>
                 <textarea
                   required
                   rows={7}
@@ -343,7 +345,7 @@ export default function GetInvolved() {
               </label>
 
               <label className="form-field">
-                <span>Source / URL</span>
+                <span>{t('corePages.getInvolved.sourceUrl')}</span>
                 <input
                   type="url"
                   value={sourceUrl}
@@ -353,11 +355,11 @@ export default function GetInvolved() {
               </label>
 
               <label className="form-field">
-                <span>Barangay / area</span>
+                <span>{t('corePages.getInvolved.area')}</span>
                 <input
                   value={barangay}
                   onChange={event => setBarangay(event.target.value)}
-                  placeholder="Optional"
+                  placeholder={t('corePages.getInvolved.optional')}
                 />
               </label>
 
