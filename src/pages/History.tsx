@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   BookOpen,
   Camera,
@@ -30,15 +31,15 @@ import { heritageCollectionById } from '../data/heritageCollections';
 
 const topics = [...new Set(makatiHistory.map(event => event.topic))];
 
-const evidenceLabels: Record<
+const evidenceLabelKey: Record<
   NonNullable<HistoryEvent['evidenceStatus']>,
   string
 > = {
-  established: 'Established',
-  probable: 'Probable',
-  contested: 'Contested',
-  uncertain: 'Uncertain',
-  tradition: 'Tradition',
+  established: 'established',
+  probable: 'probable',
+  contested: 'contested',
+  uncertain: 'uncertain',
+  tradition: 'tradition',
 };
 
 const sourceTypeLabel = (source: HistorySource) =>
@@ -109,9 +110,11 @@ const ReferenceChip = ({
 const SourceLink = ({
   source,
   compact = false,
+  opensInNewTab,
 }: {
   source: HistorySource;
   compact?: boolean;
+  opensInNewTab: string;
 }) => (
   <div>
     <a
@@ -125,7 +128,7 @@ const SourceLink = ({
         className="mt-0.5 h-3.5 w-3.5 shrink-0"
         aria-hidden="true"
       />
-      <span className="sr-only"> {t('corePages.history.opensTab')}</span>
+      <span className="sr-only"> {opensInNewTab}</span>
     </a>
     {!compact && sourceTypeLabel(source) && (
       <p className="mt-1 text-xs leading-relaxed text-gray-500">
@@ -505,7 +508,7 @@ export default function History() {
                           )}
 
                           <div className="mt-3 text-xs">
-                            <SourceLink source={media.source} compact />
+                            <SourceLink source={media.source} compact opensInNewTab={t('corePages.history.opensTab')} />
                           </div>
 
                           {media.rights && (
@@ -616,7 +619,7 @@ export default function History() {
                             key={source.id ?? `${event.id}-source-${index}`}
                             className="border-l-2 border-gray-200 pl-4 text-sm"
                           >
-                            <SourceLink source={source} />
+                            <SourceLink source={source} opensInNewTab={t('corePages.history.opensTab')} />
                           </div>
                         ))}
                       </div>
