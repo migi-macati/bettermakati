@@ -46,7 +46,7 @@ for (const [name, source, marker] of [
   ['Statistics', statistics, 'See how Makati is changing.'],
   ['Legislation', legislation, '>Legislation<'],
   ['Integrity', integrity, '>Integrity records<'],
-  ['Reports', reports, 'Featured Reports & Insights'],
+  ['Reports', reports, "t('evidence.reports.title')"],
   ['Public Record detail', publicRecordDetail, 'Open original source'],
 ]) {
   if (!source.includes(marker)) {
@@ -130,8 +130,9 @@ for (const marker of [
 }
 
 for (const marker of [
-  '<div className="section-eyebrow !text-secondary-300">\n          Civic analysis',
-  'Featured Reports & Insights',
+  '<div className="section-eyebrow !text-secondary-300">',
+  "t('evidence.reports.eyebrow')",
+  "t('evidence.reports.title')",
 ]) {
   if (!reports.includes(marker)) {
     problems.push('Reports design-consistency marker missing: ' + marker);
