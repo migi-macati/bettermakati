@@ -214,7 +214,7 @@ export default function LiveMakati() {
         <LastReviewed
           date={liveMakatiReviewed}
           label={t('corePages.live.reviewed')}
-          note="Third-party observations are labeled separately. Official warnings and provider advisories remain controlling sources."
+          note={t('corePages.live.reviewNote')}
         />
 
         <div className="mt-6 flex flex-wrap gap-3">
@@ -261,8 +261,7 @@ export default function LiveMakati() {
 
         {weatherFailed && (
           <div className="mt-6 rounded-xl border border-secondary-200 bg-secondary-50 p-4 text-sm text-secondary-900" role="status">
-            Third-party weather and air-quality observations could not be loaded. Use
-            PAGASA NCR below for current official warnings and forecasts.
+            {t('corePages.live.weatherFail')}
           </div>
         )}
 
@@ -274,7 +273,7 @@ export default function LiveMakati() {
             </div>
             <div className="mt-1 font-bold text-gray-800">{weatherLabel(weather.weatherCode, t)}</div>
             {weather.apparent !== undefined && (
-              <div className="mt-1 text-sm text-gray-500">Feels like {Math.round(weather.apparent)}°C</div>
+              <div className="mt-1 text-sm text-gray-500">{t('corePages.live.feels')} {Math.round(weather.apparent)}°C</div>
             )}
           </div>
 
@@ -309,7 +308,7 @@ export default function LiveMakati() {
         <div className="mt-4 rounded-xl border border-gray-200 bg-gray-50 p-4 text-xs leading-relaxed text-gray-600">
           <strong className="text-gray-800">{t('corePages.live.observation')}</strong>{' '}
           <a href="https://open-meteo.com/" target="_blank" rel="noreferrer" className="underline">Open-Meteo</a>
-          {observedTime ? ' · data time ' + observedTime : ''}. For warnings, use{' '}
+          {observedTime ? ' · ' + t('corePages.live.dataTime') + ' ' + observedTime : ''}. {t('corePages.live.warnings')}{' '}
           <a
             href="https://www.pagasa.dost.gov.ph/regional-forecast/ncrprsd"
             target="_blank"
@@ -356,7 +355,7 @@ export default function LiveMakati() {
 
         {monitorStateFailed && (
           <div className="mt-4 rounded-xl border border-secondary-200 bg-secondary-50 p-4 text-sm text-gray-700" role="status">
-            The published City Monitor source-health file is unavailable. Linked official and provider sources below remain available for direct checking.
+            {t('corePages.live.monitorFail')}
           </div>
         )}
       </Section>
