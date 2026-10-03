@@ -154,7 +154,7 @@ const jeepneyDispositionLabel = (
     ? 'Successor corridor'
     : route.disposition === 'current-corridor'
       ? 'Current corridor'
-      : t('corePages.mobility.unresolved');
+      : 'Current status unresolved';
 
 const routeEvidenceSources = (
   route: MobilityCurrentServiceRouteRecord | MobilityHistoricalRouteRecord
