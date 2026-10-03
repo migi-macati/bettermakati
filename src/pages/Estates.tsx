@@ -6,6 +6,7 @@ import {
   Network,
 } from 'lucide-react';
 import { Link } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
 import SEO from '../components/SEO';
@@ -322,24 +323,25 @@ const connectedAreasForOrganization = (
   });
 
 export default function Estates() {
+  const { t } = useTranslation();
   return (
     <>
       <SEO
-        title="Estates, Districts & Associations"
-        description="Makati business districts, mixed-use estates, residential villages and the organizations connected to them."
+        title={t('corePages.estates.seoTitle')}
+        description={t('corePages.estates.seoDescription')}
       />
 
       <Section className="bg-[#fffdf8]">
-        <div className="section-eyebrow">City</div>
+        <div className="section-eyebrow">{t('corePages.estates.city')}</div>
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <Heading>Estates, Districts & Associations</Heading>
+            <Heading>{t('corePages.estates.title')}</Heading>
             <p className="max-w-3xl text-gray-600">
               Business districts, mixed-use estates and residential villages,
               linked to the organizations that manage, operate or develop them.
             </p>
           </div>
-          <SharePage title="Makati Estates, Districts & Associations | BetterMakati" />
+          <SharePage title={`${t('corePages.estates.title')} | BetterMakati`} />
         </div>
         <LastReviewed date="2026-09-27" />
 
@@ -369,8 +371,8 @@ export default function Estates() {
       </Section>
 
       <Section id="business-areas" className="bg-[#f5f8f2]">
-        <div className="section-eyebrow">Business districts & estates</div>
-        <Heading level={2}>Managed commercial areas</Heading>
+        <div className="section-eyebrow">{t('corePages.estates.commercial')}</div>
+        <Heading level={2}>{t('corePages.estates.managed')}</Heading>
         <div className="mt-7 grid grid-cols-1 gap-5 lg:grid-cols-2">
           {businessAreas.map(area => (
             <AreaCard key={area.id} area={area} />
@@ -379,8 +381,8 @@ export default function Estates() {
       </Section>
 
       <Section id="residential-villages" className="bg-white">
-        <div className="section-eyebrow">Residential villages</div>
-        <Heading level={2}>Village areas and associations</Heading>
+        <div className="section-eyebrow">{t('corePages.estates.villages')}</div>
+        <Heading level={2}>{t('corePages.estates.villageAreas')}</Heading>
         <div className="mt-7 grid grid-cols-1 gap-5 lg:grid-cols-2">
           {residentialAreas.map(area => (
             <AreaCard key={area.id} area={area} />
@@ -389,8 +391,8 @@ export default function Estates() {
       </Section>
 
       <Section id="organizations" className="bg-[#fffdf8]">
-        <div className="section-eyebrow">Associations & organizations</div>
-        <Heading level={2}>Official channels</Heading>
+        <div className="section-eyebrow">{t('corePages.estates.organizations')}</div>
+        <Heading level={2}>{t('corePages.estates.official')}</Heading>
 
         <div className="mt-7 grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
           {civicOrganizations.map(organization => {
