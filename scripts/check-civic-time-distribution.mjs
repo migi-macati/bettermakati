@@ -61,7 +61,7 @@ for (const marker of [
   'barangaySlug={barangaySlug || undefined}',
   "heading={",
   "'What’s next in Makati'",
-  'Live conditions & current sources',
+  "t('currentInfo.today.liveSources')",
 ]) {
   if (!today.includes(marker)) {
     problems.push('Today Civic Timeline distribution marker missing: ' + marker);
