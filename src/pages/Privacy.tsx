@@ -1,13 +1,15 @@
+import { useTranslation } from 'react-i18next';
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
 import SEO from '../components/SEO';
 
 export default function Privacy() {
+  const { t } = useTranslation();
   return (
     <>
-      <SEO title="Privacy" description="BetterMakati privacy information." />
+      <SEO title={t('corePages.privacy.seoTitle')} description={t('corePages.privacy.seoDescription')} />
       <Section className="bg-[#fffdf8]">
-        <Heading>Privacy</Heading>
+        <Heading>{t('corePages.privacy.title')}</Heading>
         <div className="prose max-w-3xl mt-6">
           <p>
             BetterMakati does not require an account for ordinary browsing and
@@ -15,7 +17,7 @@ export default function Privacy() {
             pages.
           </p>
 
-          <h2>Browsing and technical logs</h2>
+          <h2>{t('corePages.privacy.logs')}</h2>
           <p>
             The hosting platform and serverless functions may process ordinary
             technical request information such as IP address, browser details,
@@ -23,7 +25,7 @@ export default function Privacy() {
             retain technical logs under their own policies.
           </p>
 
-          <h2>Search and third-party services</h2>
+          <h2>{t('corePages.privacy.thirdParty')}</h2>
           <p>
             Site-wide BetterMakati search runs against the site&apos;s own
             search index. Visitor place search may call Google Maps Platform
@@ -44,7 +46,7 @@ export default function Privacy() {
             .
           </p>
 
-          <h2>Contributions</h2>
+          <h2>{t('corePages.privacy.contributions')}</h2>
           <p>
             The BetterMakati contribution form asks only for the content needed
             to understand the submission. Do not submit passwords, government
@@ -53,7 +55,7 @@ export default function Privacy() {
             transparent follow-up.
           </p>
 
-          <h2>Civic Map pilot</h2>
+          <h2>{t('corePages.privacy.civicMap')}</h2>
           <p>
             Civic Map does not require a BetterMakati account during the pilot.
             Reports, proposals, reviews, confirmations and replies are intended
@@ -70,7 +72,7 @@ export default function Privacy() {
             does not need to publish the contributor&apos;s personal location.
           </p>
 
-          <h2>Cookies and local storage</h2>
+          <h2>{t('corePages.privacy.storage')}</h2>
           <p>
             BetterMakati currently does not require advertising cookies or a
             user account. The “My Makati” feature can store a selected barangay
@@ -83,7 +85,7 @@ export default function Privacy() {
             or storage according to their policies.
           </p>
 
-          <h2>Public project submissions</h2>
+          <h2>{t('corePages.privacy.submissions')}</h2>
           <p>
             Proposals, corrections, sources and other project submissions may be
             recorded as public GitHub issues so the BetterMakati response can be
@@ -92,7 +94,7 @@ export default function Privacy() {
             workflow, not an official City Government case status.
           </p>
 
-          <h2>Changes</h2>
+          <h2>{t('corePages.privacy.changes')}</h2>
           <p>
             This notice should be updated before BetterMakati introduces a new
             analytics, account, social integration or data-collection feature
