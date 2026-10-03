@@ -1,19 +1,21 @@
 import { ExternalLink, Mail, MessageCircle, PhoneCall } from 'lucide-react';
 import { Link } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
 import SEO from '../components/SEO';
 
 export default function Contact() {
+  const { t } = useTranslation();
   return (
     <>
       <SEO
-        title="Contact"
-        description="Contact BetterMakati or find official Makati City contact channels."
+        title={t('corePages.contact.seoTitle')}
+        description={t('corePages.contact.seoDescription')}
       />
       <Section className="bg-[#fffdf8]">
-        <div className="section-eyebrow">Contact</div>
-        <Heading>Get in touch</Heading>
+        <div className="section-eyebrow">{t('corePages.contact.eyebrow')}</div>
+        <Heading>{t('corePages.contact.title')}</Heading>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
           <div className="rounded-2xl border border-gray-200 bg-white p-6">
@@ -65,7 +67,7 @@ export default function Contact() {
 
           <div className="rounded-2xl border border-gray-200 bg-white p-6">
             <PhoneCall className="h-6 w-6 text-primary-700" />
-            <h2 className="font-bold text-lg mt-4">City Government of Makati</h2>
+            <h2 className="font-bold text-lg mt-4">{t('corePages.contact.city')}</h2>
             <div className="mt-4 space-y-2 text-sm">
               <p><a className="inline-flex min-h-11 items-center text-primary-700 underline" href="tel:+63288701000">8870-1000</a></p>
               <p><a className="inline-flex min-h-11 items-center text-primary-700 underline" href="mailto:makati@makati.gov.ph">makati@makati.gov.ph</a></p>
@@ -79,7 +81,7 @@ export default function Contact() {
                   Official Makati City Web Portal
                 </a>
               </p>
-              <p><Link className="inline-flex min-h-11 items-center text-primary-700 underline" to="/hotlines">Hotlines</Link></p>
+              <p><Link className="inline-flex min-h-11 items-center text-primary-700 underline" to="/hotlines">{t('corePages.contact.hotlines')}</Link></p>
             </div>
           </div>
         </div>
