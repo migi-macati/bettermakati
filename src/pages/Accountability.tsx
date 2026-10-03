@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   ArrowRight,
   ChevronDown,
@@ -221,6 +222,7 @@ type EvidenceFilter = 'All' | 'gaps' | 'later-evidence' | 'complete';
 type SortMode = 'newest' | 'oldest' | 'amount-desc' | 'title';
 
 export default function Accountability() {
+  const { t } = useTranslation();
   const [params] = useSearchParams();
   const { barangay } = useBarangayScope();
   const requestedType = params.get('type');
@@ -358,15 +360,15 @@ export default function Accountability() {
   return (
     <>
       <SEO
-        title="Accountability Ledger"
-        description="Follow Makati public money, projects, audit findings, service standards and public commitments from source to follow-through."
+        title={t('evidence.accountability.seoTitle')}
+        description={t('evidence.accountability.seoDescription')}
       />
 
       <Section className="bm-evidence-page bg-[#fffdf8]">
-        <div className="section-eyebrow">Accountability Ledger</div>
+        <div className="section-eyebrow">{t('evidence.accountability.eyebrow')}</div>
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <Heading>Follow public money, projects and promises</Heading>
+            <Heading>{t('evidence.accountability.title')}</Heading>
             <p className="mt-2 max-w-3xl text-gray-700 leading-relaxed">
               Browse budgets, procurement, audit findings, service standards and public commitments in one ledger.
             </p>
@@ -625,13 +627,13 @@ export default function Accountability() {
         owner="accountability"
         calendarTopic="projects-procurement"
         heading="Procurement and project dates"
-        description="Exact source-backed procurement milestones are indexed here without turning broad reporting periods or verification dates into civic events."
+        description={t('evidence.accountability.timelineDescription')}
         className="bg-[#f5f8f2]"
       />
 
       <Section id="ledger-records" className="scroll-mt-24 bg-white">
-        <div className="section-eyebrow">Explore the evidence</div>
-        <Heading level={2}>Find a record</Heading>
+        <div className="section-eyebrow">{t('evidence.accountability.explore')}</div>
+        <Heading level={2}>{t('evidence.accountability.findRecord')}</Heading>
         <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600">
           Search in plain language or filter by record type, year and follow-up status.
         </p>
@@ -644,7 +646,7 @@ export default function Accountability() {
               type="search"
               value={query}
               onChange={event => setQuery(event.target.value)}
-              placeholder="Search project, supplier, office, reference number…"
+              placeholder={t('evidence.accountability.search')}
               className="w-full rounded-xl border border-gray-300 py-3 pl-10 pr-4 outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
             />
           </label>
@@ -653,7 +655,7 @@ export default function Accountability() {
             value={type}
             onChange={event => setType(event.target.value)}
             className="rounded-xl border border-gray-300 bg-white px-3 py-3 text-sm"
-            aria-label="Filter by record type"
+            aria-label={t('evidence.accountability.filterType')}
           >
             <option value="All">All topics</option>
             <option value="project">Projects / procurement</option>
@@ -667,7 +669,7 @@ export default function Accountability() {
             value={year}
             onChange={event => setYear(event.target.value)}
             className="rounded-xl border border-gray-300 bg-white px-3 py-3 text-sm"
-            aria-label="Filter by year"
+            aria-label={t('evidence.accountability.filterYear')}
           >
             <option value="All">All years</option>
             {years.map(item => (
@@ -683,7 +685,7 @@ export default function Accountability() {
               setEvidence(event.target.value as EvidenceFilter)
             }
             className="rounded-xl border border-gray-300 bg-white px-3 py-3 text-sm"
-            aria-label="Filter by evidence status"
+            aria-label={t('evidence.accountability.filterEvidence')}
           >
             <option value="All">All evidence states</option>
             <option value="gaps">Missing next evidence</option>
@@ -695,7 +697,7 @@ export default function Accountability() {
             value={sort}
             onChange={event => setSort(event.target.value as SortMode)}
             className="rounded-xl border border-gray-300 bg-white px-3 py-3 text-sm"
-            aria-label="Sort accountability records"
+            aria-label={t('evidence.accountability.sort')}
           >
             <option value="newest">Newest first</option>
             <option value="oldest">Oldest first</option>
@@ -879,7 +881,7 @@ export default function Accountability() {
                       </div>
                     </div>
 
-                    <div className="mt-3 grid grid-cols-4 gap-2" aria-label="Procurement evidence progress">
+                    <div className="mt-3 grid grid-cols-4 gap-2" aria-label={t('evidence.accountability.procurementProgress')}>
                       {entry.procurement.stages.map(stage => (
                         <div
                           key={stage.label}
