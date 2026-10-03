@@ -40,7 +40,7 @@ for (const [label, source] of [
 }
 
 for (const marker of [
-  't('corePages.mobility.explore')',
+  "t('corePages.mobility.explore')",
   'to="/estates"',
   'to="/civic-map"',
 ]) {
