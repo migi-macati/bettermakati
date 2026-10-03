@@ -341,7 +341,7 @@ export default function Calendar() {
                 Makati Calendar
               </h1>
               <p className="mt-4 text-lg leading-relaxed text-primary-100">
-                What&apos;s coming up, what changed, and what was just published
+                {t('currentInfo.calendar.coming')}
                 across Makati civic life.
               </p>
               <p className="mt-3 max-w-2xl text-sm leading-relaxed text-primary-100">
@@ -535,7 +535,7 @@ export default function Calendar() {
               source-monitoring layer.
             </p>
             <div className="mt-4 flex flex-wrap gap-3">
-              <Link to="/city-monitor" className="brand-btn-secondary">City Monitor</Link>
+              <Link to="/city-monitor" className="brand-btn-secondary">{t('currentInfo.calendar.cityMonitor')}</Link>
               <Link to="/today" className="brand-btn-secondary">{t('currentInfo.calendar.today')}</Link>
             </div>
           </div>
