@@ -64,11 +64,11 @@ for (const marker of [
 }
 
 need('Legislation', legislation, 'label="Related civic records"');
-need('Official profile', officialProfile, 'label="Election record"');
+need('Official profile', officialProfile, "label={t('corePages.official.electionRecord')}");
 need(
   'Official profile',
   officialProfile,
-  'Only records directly linked to this profile by the underlying public data are shown here.'
+  "t('corePages.official.relatedNote')"
 );
 need(
   'Civic Asset',
