@@ -155,7 +155,7 @@ export default function CityMonitor() {
               Council, legislation, speeches, procurement, projects, publications, consultations and notices from monitored official sources.
             </p>
           </div>
-          <SharePage title="Makati City Monitor | BetterMakati" />
+          <SharePage title={`${t('currentInfo.monitor.title')} | BetterMakati`} />
         </div>
 
         <LastReviewed
