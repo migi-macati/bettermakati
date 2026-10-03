@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import {
   ArrowUpRight,
@@ -149,6 +150,7 @@ function Metric({
 }
 
 export default function ProjectsBudget() {
+  const { t } = useTranslation();
   const { barangay } = useBarangayScope();
   const [officeQuery, setOfficeQuery] = useState('');
   const [lineFilter, setLineFilter] = useState('All');
@@ -247,8 +249,8 @@ export default function ProjectsBudget() {
   return (
     <>
       <SEO
-        title="Projects & Budget"
-        description="Makati City budget plans, reported revenue and spending, development funds, procurement records and audit follow-through."
+        title={t('evidence.budget.seoTitle')}
+        description={t('evidence.budget.seoDescription')}
         jsonLd={{
           '@context': 'https://schema.org',
           '@type': 'Dataset',
@@ -265,7 +267,7 @@ export default function ProjectsBudget() {
           2026 proposed budget · 2025 city estimate · DBM/BLGF 2025 statement
         </div>
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-          <Heading>Where Makati’s money comes from and goes</Heading>
+          <Heading>{t('evidence.budget.title')}</Heading>
           <SharePage title="Makati Projects & Budget | BetterMakati" />
         </div>
         <LastReviewed date="2026-09-25" />
@@ -616,7 +618,7 @@ export default function ProjectsBudget() {
         </div>
 
         <div className="mt-10 rounded-2xl border border-gray-200 bg-white p-5 md:p-6">
-          <div className="section-eyebrow">Official documents</div>
+          <div className="section-eyebrow">{t('evidence.budget.officialDocuments')}</div>
           <h2 className="text-xl font-extrabold text-gray-950">
             Annual budget archive, 2014–2026
           </h2>
@@ -641,8 +643,8 @@ export default function ProjectsBudget() {
       </Section>
 
       <Section className="bg-white">
-        <div className="section-eyebrow">Budget Plan</div>
-        <Heading level={2}>How the ₱21.0B 2026 budget is allocated</Heading>
+        <div className="section-eyebrow">{t('evidence.budget.budgetPlan')}</div>
+        <Heading level={2}>{t('evidence.budget.allocation')}</Heading>
         <p className="mt-2 text-xs text-gray-500">
           Source:{' '}
           <a
@@ -657,7 +659,7 @@ export default function ProjectsBudget() {
 
         <div className="grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-5 mt-7">
           <DonutChart
-            title="Budget composition"
+            title={t('evidence.budget.budgetComposition')}
             center="₱21.0B"
             items={budgetByType2026.map(item => ({
               label: item.label,
@@ -698,8 +700,8 @@ export default function ProjectsBudget() {
       </Section>
 
       <Section className="bg-[#f5f8f2]">
-        <div className="section-eyebrow">DBM / BLGF 2025 Revenue</div>
-        <Heading level={2}>Where city receipts came from</Heading>
+        <div className="section-eyebrow">{t('evidence.budget.revenueEyebrow')}</div>
+        <Heading level={2}>{t('evidence.budget.revenueTitle')}</Heading>
         <p className="mt-2 text-xs text-gray-500">
           Source:{' '}
           <a
@@ -714,7 +716,7 @@ export default function ProjectsBudget() {
 
         <div className="grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-5 mt-7">
           <DonutChart
-            title="Revenue mix"
+            title={t('evidence.budget.revenueMix')}
             center={peso(budgetSummary.actualReceiptsM)}
             items={revenueSources.map(item => ({
               label: item.label,
@@ -724,7 +726,7 @@ export default function ProjectsBudget() {
           />
 
           <HorizontalBarChart
-            title="Largest local revenue sources"
+            title={t('evidence.budget.largestRevenue')}
             items={localRevenueBreakdown
               .slice(0, 6)
               .map(item => ({ label: item.label, value: item.amountM }))}
@@ -735,7 +737,7 @@ export default function ProjectsBudget() {
                 <div
                     className="scroll-region mt-8 overflow-x-auto rounded-2xl border border-gray-200 bg-white"
                     role="region"
-                    aria-label="Local revenue source table — horizontally scrollable"
+                    aria-label={t('evidence.budget.revenueTable')}
                     tabIndex={0}
                   >
           <table className="w-full min-w-[620px] text-left">
@@ -760,8 +762,8 @@ export default function ProjectsBudget() {
       </Section>
 
       <Section className="bg-white">
-        <div className="section-eyebrow">DBM / BLGF 2025 Spending</div>
-        <Heading level={2}>Where reported expenditures went</Heading>
+        <div className="section-eyebrow">{t('evidence.budget.spendingEyebrow')}</div>
+        <Heading level={2}>{t('evidence.budget.spendingTitle')}</Heading>
         <p className="mt-2 text-xs text-gray-500">
           Source:{' '}
           <a
@@ -776,7 +778,7 @@ export default function ProjectsBudget() {
 
         <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-5 mt-7">
           <HorizontalBarChart
-            title="Reported spending by function"
+            title={t('evidence.budget.spendingFunction')}
             items={actualSpendingByFunction.map(item => ({
               label: item.label,
               value: item.amountM,
@@ -825,8 +827,8 @@ export default function ProjectsBudget() {
       </Section>
 
       <Section id="projects" className="bg-[#f5f8f2]">
-        <div className="section-eyebrow">Projects & Dedicated Funds</div>
-        <Heading level={2}>Development and capital spending</Heading>
+        <div className="section-eyebrow">{t('evidence.budget.projectsFunds')}</div>
+        <Heading level={2}>{t('evidence.budget.development')}</Heading>
         <p className="mt-2 text-xs text-gray-500">
           Dedicated fund cards use the current 2026 budget report.
           Capital-outlay lines are from the{' '}
@@ -865,7 +867,7 @@ export default function ProjectsBudget() {
 
         {placeLinkedRecords.length > 0 && (
           <div className="mt-8">
-            <div className="section-eyebrow">Place-linked follow-through</div>
+            <div className="section-eyebrow">{t('evidence.budget.placeFollowThrough')}</div>
             <div className="grid gap-4 md:grid-cols-2">
               {placeLinkedRecords.map(({ entry, place }) => (
                 <article
@@ -960,7 +962,7 @@ export default function ProjectsBudget() {
                     <div
                       className="scroll-region mt-6 overflow-x-auto rounded-xl border border-gray-200"
                       role="region"
-                      aria-label="Development Fund project reports — horizontally scrollable"
+                      aria-label={t('evidence.budget.developmentTable')}
                       tabIndex={0}
                     >
             <table className="w-full min-w-[680px] text-left">
@@ -1008,7 +1010,7 @@ export default function ProjectsBudget() {
 
         {sefRecord && (
           <div className="mt-8 rounded-2xl border border-secondary-100 bg-[#fff8e6] p-6">
-            <div className="section-eyebrow">Special Education Fund</div>
+            <div className="section-eyebrow">{t('evidence.budget.sef')}</div>
             <h3 className="mt-1 text-xl font-extrabold text-gray-950">{sefRecord.title}</h3>
             <p className="mt-2 text-sm leading-relaxed text-gray-700">{sefRecord.summary}</p>
             <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-3">
@@ -1061,10 +1063,10 @@ export default function ProjectsBudget() {
       </Section>
 
       <Section className="bg-white">
-        <div className="section-eyebrow">Budget Explorer</div>
+        <div className="section-eyebrow">{t('evidence.budget.explorer')}</div>
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <Heading level={2}>2026 appropriations by office</Heading>
+            <Heading level={2}>{t('evidence.budget.appropriations')}</Heading>
             <p className="mt-1 max-w-3xl text-gray-600">
               Proposed appropriations from all {officeBudgetTotals2026.length} office and department forms in the 2026 Annual Budget Report.
             </p>
@@ -1088,7 +1090,7 @@ export default function ProjectsBudget() {
             <input
               value={officeQuery}
               onChange={event => setOfficeQuery(event.target.value)}
-              placeholder="Search office or department"
+              placeholder={t('evidence.budget.searchOffice')}
               className="min-h-11 w-full rounded-xl border border-gray-300 py-2.5 pl-9 pr-3 text-sm outline-none focus:border-primary-500 xl:w-72"
             />
           </div>
@@ -1101,7 +1103,7 @@ export default function ProjectsBudget() {
                 <div
                     className="scroll-region mt-3 overflow-x-auto rounded-2xl border border-gray-200"
                     role="region"
-                    aria-label="2026 office budget totals — horizontally scrollable"
+                    aria-label={t('evidence.budget.officeTable')}
                     tabIndex={0}
                   >
           <table className="w-full min-w-[760px] text-left">
@@ -1186,7 +1188,7 @@ export default function ProjectsBudget() {
                 <input
                   value={lineQuery}
                   onChange={event => setLineQuery(event.target.value)}
-                  placeholder="Search line or account code"
+                  placeholder={t('evidence.budget.searchLine')}
                   className="min-h-11 rounded-xl border border-gray-300 py-2.5 pl-9 pr-3 text-sm outline-none focus:border-primary-500"
                 />
               </div>
@@ -1194,7 +1196,7 @@ export default function ProjectsBudget() {
                 value={lineFilter}
                 onChange={event => setLineFilter(event.target.value)}
                 className="min-h-11 rounded-xl border border-gray-300 bg-white px-3 py-2.5 text-sm"
-                aria-label="Filter budget line category"
+                aria-label={t('evidence.budget.filterLine')}
               >
                 <option>All</option>
                 <option>Personal Services</option>
@@ -1213,7 +1215,7 @@ export default function ProjectsBudget() {
                     <div
                       className="scroll-region mt-3 overflow-x-auto rounded-2xl border border-gray-200"
                       role="region"
-                      aria-label="Selected 2026 budget lines — horizontally scrollable"
+                      aria-label={t('evidence.budget.lineTable')}
                       tabIndex={0}
                     >
             <table className="w-full min-w-[820px] text-left">
@@ -1260,10 +1262,10 @@ export default function ProjectsBudget() {
       </Section>
 
       <Section id="procurement" className="bg-[#fffdf8]">
-        <div className="section-eyebrow">Structured procurement</div>
+        <div className="section-eyebrow">{t('evidence.budget.procurement')}</div>
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <Heading level={2}>Bid results and award records</Heading>
+            <Heading level={2}>{t('evidence.budget.bidResults')}</Heading>
             <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-700">
               Published city bid-result disclosures by period, reference number, ABC,
               winning bid, supplier and linked evidence.
@@ -1318,7 +1320,7 @@ export default function ProjectsBudget() {
               type="search"
               value={procurementQuery}
               onChange={event => setProcurementQuery(event.target.value)}
-              placeholder="Search project, supplier or reference"
+              placeholder={t('evidence.budget.searchProcurement')}
               className="min-h-11 w-full rounded-xl border border-gray-300 py-2.5 pl-9 pr-3 text-sm outline-none focus:border-primary-500"
             />
           </div>
@@ -1326,7 +1328,7 @@ export default function ProjectsBudget() {
             value={procurementPeriod}
             onChange={event => setProcurementPeriod(event.target.value)}
             className="min-h-11 rounded-xl border border-gray-300 bg-white px-3 py-2.5 text-sm"
-            aria-label="Filter procurement period"
+            aria-label={t('evidence.budget.filterPeriod')}
           >
             <option>All</option>
             {procurementPeriods.map(period => (
@@ -1337,7 +1339,7 @@ export default function ProjectsBudget() {
             value={procurementEvidence}
             onChange={event => setProcurementEvidence(event.target.value)}
             className="min-h-11 rounded-xl border border-gray-300 bg-white px-3 py-2.5 text-sm"
-            aria-label="Filter procurement evidence"
+            aria-label={t('evidence.budget.filterEvidence')}
           >
             <option>All</option>
             <option>Follow-up evidence</option>
@@ -1352,7 +1354,7 @@ export default function ProjectsBudget() {
                 <div
                     className="scroll-region mt-3 overflow-x-auto rounded-2xl border border-gray-200 bg-white"
                     role="region"
-                    aria-label="Structured procurement records — horizontally scrollable"
+                    aria-label={t('evidence.budget.procurementTable')}
                     tabIndex={0}
                   >
           <table className="w-full min-w-[1120px] text-left">
@@ -1443,10 +1445,10 @@ export default function ProjectsBudget() {
       </Section>
 
       <Section id="audit" className="bg-white">
-        <div className="section-eyebrow">Audit & follow-through</div>
+        <div className="section-eyebrow">{t('evidence.budget.audit')}</div>
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <Heading level={2}>Structured COA findings</Heading>
+            <Heading level={2}>{t('evidence.budget.coa')}</Heading>
             <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-700">
               COA findings with the recommendation, management response and later
               follow-up where available.
