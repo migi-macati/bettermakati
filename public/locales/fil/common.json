@@ -1313,6 +1313,22 @@
       "linked": "Linked source",
       "reachableLast": "Reachable sa last check",
       "checkIssue": "May issue sa last check"
+    },
+    "mobility": {
+      "seoTitle": "Getting Around Makati",
+      "seoDescription": "Public transport, common trips, route planning, at ride-hailing options sa Makati City.",
+      "title": "Getting around",
+      "share": "Getting Around Makati",
+      "street": "Street-level Makati",
+      "sections": "Getting around sections",
+      "destination": "Destination sa Makati",
+      "mode": "Travel mode",
+      "stations": "Stations at terminals sa Makati",
+      "transfers": "Verified transfers at hub connections",
+      "routes": "Routes at corridors",
+      "registry": "Route registry view",
+      "pairs": "Magsimula sa madalas na destination pair",
+      "ride": "Mag-book ng ride"
     }
   }
 }
