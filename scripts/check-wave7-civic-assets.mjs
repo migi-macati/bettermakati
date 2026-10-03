@@ -5,9 +5,9 @@ const required = [
   "border-t-4 border-t-secondary-400",
   "rounded-xl border border-primary-200 bg-primary-50/60",
   "border-dashed border-secondary-300 bg-[#fffdf8]",
-  "'Destination'",
-  "'Bounded infrastructure'",
-  "'Network / service route'",
+  "t('corePages.civicMap.destination')",
+  "t('corePages.civicMap.bounded')",
+  "t('corePages.civicMap.network')",
 ];
 for (const marker of required) {
   if (!source.includes(marker)) {
