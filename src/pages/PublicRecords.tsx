@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   ArrowRight,
   Database,
@@ -132,6 +133,7 @@ const catalogCsv = [
 ].join('\n');
 
 export default function PublicRecords() {
+  const { t } = useTranslation();
   const [watchedSources, setWatchedSources] = useState<WatchedSource[]>([]);
   const [watchState, setWatchState] = useState<SourceWatchState>({});
   const [reviewQueue, setReviewQueue] = useState<FreshnessReviewQueue>({
@@ -267,8 +269,8 @@ export default function PublicRecords() {
   return (
     <>
       <SEO
-        title="Public Records"
-        description="Search the source documents, datasets, public portals and evidence used across BetterMakati."
+        title={t('evidence.records.seoTitle')}
+        description={t('evidence.records.seoDescription')}
       />
 
       <section className="border-b border-primary-900 bg-primary-800 text-white">
@@ -294,7 +296,7 @@ export default function PublicRecords() {
                 type="search"
                 value={query}
                 onChange={event => setQuery(event.target.value)}
-                placeholder="Search budget, ordinance, COA, COMELEC, Citizen’s Charter…"
+                placeholder={t('evidence.records.search')}
                 className="w-full rounded-xl border border-white/30 bg-white py-3.5 pl-12 pr-4 text-base text-gray-950 shadow-sm outline-none placeholder:text-gray-500 focus:border-secondary-400 focus:ring-2 focus:ring-secondary-300/40"
               />
             </label>
@@ -415,10 +417,10 @@ export default function PublicRecords() {
       </Section>
 
       <Section className="bg-[#f5f8f2]">
-        <div className="section-eyebrow">Evidence index</div>
+        <div className="section-eyebrow">{t('evidence.records.evidenceIndex')}</div>
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <Heading level={2}>Search the public record catalog</Heading>
+            <Heading level={2}>{t('evidence.records.catalog')}</Heading>
             <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-600">
               Search by document, publisher, topic, period or the BetterMakati page that uses the source.
             </p>
@@ -437,7 +439,7 @@ export default function PublicRecords() {
             value={category}
             onChange={event => setCategory(event.target.value)}
             className="min-h-11 rounded-xl border border-gray-300 bg-white px-3 py-3 text-sm"
-            aria-label="Filter records by category"
+            aria-label={t('evidence.records.filterCategory')}
           >
             <option value="All">All record areas</option>
             {publicRecordCategories.map(item => (
@@ -451,7 +453,7 @@ export default function PublicRecords() {
               setSourceClass(event.target.value as 'All' | PublicRecordSourceClass)
             }
             className="min-h-11 rounded-xl border border-gray-300 bg-white px-3 py-3 text-sm"
-            aria-label="Filter records by source class"
+            aria-label={t('evidence.records.filterSource')}
           >
             {sourceClassOptions.map(item => (
               <option key={item}>{item}</option>
@@ -621,8 +623,8 @@ export default function PublicRecords() {
       </Section>
 
       <Section className="bg-white">
-        <div className="section-eyebrow">Freshness</div>
-        <Heading level={2}>Source freshness monitor</Heading>
+        <div className="section-eyebrow">{t('evidence.records.freshness')}</div>
+        <Heading level={2}>{t('evidence.records.freshnessMonitor')}</Heading>
         <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-600">
           BetterMakati checks public sources on daily, weekly or monthly cadences. Stable documents can be content-hashed; dynamic portals are normally checked only for reachability so changing page shells are not mistaken for substantive updates.
         </p>
@@ -809,8 +811,8 @@ export default function PublicRecords() {
             Send the source itself, or report a correction to an indexed title, publisher, period or BetterMakati linkage.
           </p>
           <div className="mt-5 flex flex-wrap gap-3">
-            <Link to="/get-involved?type=source#submission" className="brand-btn-primary">Share a source</Link>
-            <Link to="/get-involved?type=correction#submission" className="brand-btn-secondary">Report a correction</Link>
+            <Link to="/get-involved?type=source#submission" className="brand-btn-primary">{t('evidence.records.shareSource')}</Link>
+            <Link to="/get-involved?type=correction#submission" className="brand-btn-secondary">{t('evidence.records.reportCorrection')}</Link>
           </div>
         </div>
       </Section>
