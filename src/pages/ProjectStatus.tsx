@@ -263,116 +263,116 @@ export default function ProjectStatus() {
 
   const coverage = [
     {
-      label: 'Government services',
+      label: t('evidence.status.coverageGovernmentServices'),
       value: serviceDirectory.length.toLocaleString(locale),
-      detail: 'City, barangay and major national services in the public-service directory',
+      detail: t('evidence.status.coverageGovernmentServicesDetail'),
       icon: Database,
     },
     {
-      label: 'Structured transaction guides',
+      label: t('evidence.status.coverageStructuredGuides'),
       value: `${detailedServiceGuideCount}/${serviceDirectory.length}`,
-      detail: 'Indexed services with explicit requirements, steps, fees/time where supported, and a verification state',
+      detail: t('evidence.status.coverageStructuredGuidesDetail'),
       icon: FileSearch,
     },
     {
-      label: 'Verified transaction guides',
+      label: t('evidence.status.coverageVerifiedGuides'),
       value: verifiedServiceGuideCount.toLocaleString(locale),
-      detail: 'Structured guides checked field-by-field against the cited official source without unresolved source conflicts',
+      detail: t('evidence.status.coverageVerifiedGuidesDetail'),
       icon: BadgeCheck,
     },
     {
-      label: 'Government service offices',
+      label: t('evidence.status.coverageOffices'),
       value: governmentServiceOffices.length.toLocaleString(locale),
-      detail: 'Citizen-facing offices in Makati and selected offices outside the city that directly serve Makati',
+      detail: t('evidence.status.coverageOfficesDetail'),
       icon: Building2,
     },
     {
-      label: 'Barangay profiles',
+      label: t('evidence.status.coverageBarangayProfiles'),
       value: `${barangayCoverageSummary.profiles}/23`,
-      detail: 'Current Makati barangays represented in BetterMakati',
+      detail: t('evidence.status.coverageBarangayProfilesDetail'),
       icon: Users,
     },
     {
-      label: 'Barangay council rosters',
+      label: t('evidence.status.coverageCouncilRosters'),
       value: `${barangayCoverageSummary.councilRosters}/23`,
-      detail: `Current 2023–2026 council rosters indexed; last reviewed ${barangayProfilesReviewed}`,
+      detail: t('evidence.status.coverageCouncilRostersDetail', { date: barangayProfilesReviewed }),
       icon: BadgeCheck,
     },
     {
-      label: 'Barangay hall contacts',
+      label: t('evidence.status.coverageHallContacts'),
       value: `${barangayCoverageSummary.hallContacts}/23`,
-      detail: 'Profiles with at least one verified hall address, phone or email',
+      detail: t('evidence.status.coverageHallContactsDetail'),
       icon: Building2,
     },
     {
-      label: 'Barangays with verified YAKAP clinics',
+      label: t('evidence.status.coverageYakap'),
       value: `${barangayCoverageSummary.verifiedHealthFacilityBarangays}/23`,
-      detail: 'Barangays with a PhilHealth YAKAP-accredited government health center in the current local facility index',
+      detail: t('evidence.status.coverageYakapDetail'),
       icon: ShieldCheck,
     },
     {
-      label: 'Specific Makati barangay pages',
+      label: t('evidence.status.coverageSpecificPages'),
       value: `${barangayCoverageSummary.specificOfficialPages}/23`,
-      detail: 'Profiles linked to a barangay-specific Makati Web Portal page rather than the citywide barangay directory',
+      detail: t('evidence.status.coverageSpecificPagesDetail'),
       icon: Building2,
     },
     {
-      label: 'Verified official social channels',
+      label: t('evidence.status.coverageSocial'),
       value: `${barangayCoverageSummary.verifiedSocialChannels}/23`,
-      detail: 'Barangay social accounts BetterMakati could verify without guessing from similarly named or unofficial pages',
+      detail: t('evidence.status.coverageSocialDetail'),
       icon: MessagesSquare,
     },
     {
-      label: 'Elected-official profiles',
+      label: t('evidence.status.coverageOfficials'),
       value: electedOfficials.length.toLocaleString(locale),
-      detail: 'Current city/congress profiles in the civic directory',
+      detail: t('evidence.status.coverageOfficialsDetail'),
       icon: Eye,
     },
     {
-      label: 'Searchable civic entries',
+      label: t('evidence.status.coverageSearch'),
       value: searchIndex.length.toLocaleString(locale),
-      detail: 'Items in BetterMakati’s local search index',
+      detail: t('evidence.status.coverageSearchDetail'),
       icon: Search,
     },
     {
-      label: 'Accountability records',
+      label: t('evidence.status.coverageAccountability'),
       value: accountabilityEntries.length.toLocaleString(locale),
-      detail: 'Structured records in the current Accountability Ledger',
+      detail: t('evidence.status.coverageAccountabilityDetail'),
       icon: FileSearch,
     },
     {
-      label: 'Published accountability gaps',
+      label: t('evidence.status.coverageGaps'),
       value: accountabilityCoverageGaps.length.toLocaleString(locale),
-      detail: 'Known gaps in the current Accountability Ledger',
+      detail: t('evidence.status.coverageGapsDetail'),
       icon: AlertCircle,
     },
     {
-      label: 'City Monitor source channels',
+      label: t('evidence.status.coverageMonitor'),
       value: cityMonitorSources.length.toLocaleString(locale),
-      detail: 'Official channels in the current City Monitor source directory',
+      detail: t('evidence.status.coverageMonitorDetail'),
       icon: RefreshCw,
     },
     {
-      label: 'Validated City Monitor records',
+      label: t('evidence.status.coverageValidated'),
       value: cityMonitorRecords.length.toLocaleString(locale),
-      detail: 'Structured records currently in the validated monitor corpus',
+      detail: t('evidence.status.coverageValidatedDetail'),
       icon: Database,
     },
     {
-      label: 'Methodology gaps',
+      label: t('evidence.status.coverageMethodology'),
       value: knownDoctrineGaps.toLocaleString(locale),
-      detail: 'Open items in the BetterMakati methodology audit',
+      detail: t('evidence.status.coverageMethodologyDetail'),
       icon: Gauge,
     },
   ];
 
   const notMeasured = [
-    'Search success rate and no-result rate over time',
-    'Median time from correction submission to BetterMakati resolution',
-    'Participation conversion: viewed opportunity → submitted input → documented response',
-    'Coverage completeness against a definitive citywide records inventory',
-    'A recurring full WCAG conformance score beyond the current browser accessibility smoke tests',
-    'Usability outcomes for seniors, disabled users, low-bandwidth users and Filipino-first users',
+    t('evidence.status.notMeasuredSearch'),
+    t('evidence.status.notMeasuredCorrection'),
+    t('evidence.status.notMeasuredParticipation'),
+    t('evidence.status.notMeasuredCoverage'),
+    t('evidence.status.notMeasuredWcag'),
+    t('evidence.status.notMeasuredUsability'),
   ];
 
   return (
@@ -399,7 +399,7 @@ export default function ProjectStatus() {
           <div>
             <div className="flex items-center gap-2 font-extrabold text-success-900">
               <BadgeCheck className="h-5 w-5" />
-              Publicly launched
+              {t('evidence.status.publicLaunched')}
             </div>
             <p className="mt-1 text-sm leading-relaxed text-success-900">
               {t('evidence.status.active')}
@@ -455,18 +455,18 @@ export default function ProjectStatus() {
               <div>
                 <div className="font-extrabold text-gray-950">{item.category}</div>
                 <div className="mt-1 text-xs text-gray-500">
-                  {item.indexed - item.structured} indexed service{item.indexed - item.structured === 1 ? '' : 's'} without a structured guide.
+                  {t('evidence.status.serviceWithoutGuide', { count: item.indexed - item.structured })}
                 </div>
               </div>
               <div className="flex flex-wrap gap-2 text-xs font-bold">
                 <span className="rounded-full bg-gray-100 px-3 py-1.5 text-gray-700">
-                  {item.indexed} indexed
+                  {item.indexed} {t('evidence.status.indexed')}
                 </span>
                 <span className="rounded-full bg-primary-50 px-3 py-1.5 text-primary-800">
-                  {item.structured} structured
+                  {item.structured} {t('evidence.status.structured')}
                 </span>
                 <span className="rounded-full bg-success-50 px-3 py-1.5 text-success-800">
-                  {item.verified} verified
+                  {item.verified} {t('evidence.status.verifiedShort')}
                 </span>
               </div>
             </div>
@@ -475,7 +475,7 @@ export default function ProjectStatus() {
 
         <div className="mt-5 flex flex-wrap gap-3">
           <Link to="/services" className="brand-btn-primary">
-            Open service directory
+            {t('evidence.status.openServiceDirectory')}
           </Link>
           <Link to="/community-tools/saan-ako-lalapit" className="brand-btn-secondary">
             Saan Ako Lalapit?
@@ -487,7 +487,7 @@ export default function ProjectStatus() {
         <div className="section-eyebrow">{t('evidence.status.barangayCoverage')}</div>
         <Heading level={2}>{t('evidence.status.barangayHeading')}</Heading>
         <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-700">
-          Open profile fields that still need a current public source.
+          {t('evidence.status.barangayGapIntro')}
         </p>
 
         <div className="mt-6 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
@@ -500,8 +500,8 @@ export default function ProjectStatus() {
                 {item.name}
                 <span className="ml-2 text-xs font-bold text-gray-500">
                   {item.missing.length === 0
-                    ? 'No tracked profile gap'
-                    : item.missing.length + ' open'}
+                    ? t('evidence.status.noTrackedGap')
+                    : t('evidence.status.openCount', { count: item.missing.length })}
                 </span>
               </summary>
               {item.missing.length > 0 ? (
@@ -515,14 +515,14 @@ export default function ProjectStatus() {
                 </ul>
               ) : (
                 <p className="mt-4 text-sm text-gray-600">
-                  No gap is currently flagged against the BetterBarangay minimum profile fields.
+                  {t('evidence.status.noMinimumGap')}
                 </p>
               )}
               <Link
                 to={'/barangays/' + item.slug}
                 className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700"
               >
-                Open BetterBarangay <ExternalLink className="h-3.5 w-3.5" />
+                {t('evidence.status.openBetterBarangay')} <ExternalLink className="h-3.5 w-3.5" />
               </Link>
             </details>
           ))}
@@ -545,7 +545,7 @@ export default function ProjectStatus() {
                 {doctrineStatusLabel[item.status]}
               </div>
               <p className="mt-2 text-xs leading-relaxed text-gray-500">
-                {item.gaps.length} published gap{item.gaps.length === 1 ? '' : 's'}
+                {t('evidence.status.publishedGap', { count: item.gaps.length })}
               </p>
             </Link>
           ))}
@@ -573,10 +573,10 @@ export default function ProjectStatus() {
           </div>
           <div className="flex flex-wrap gap-3">
             <Link to="/records#freshness-review-queue" className="brand-btn-primary">
-              Review queue
+              {t('evidence.status.reviewQueue')}
             </Link>
             <a href="/freshness-history.json" className="brand-btn-secondary">
-              Freshness history
+              {t('evidence.status.freshnessHistory')}
             </a>
           </div>
         </div>
@@ -587,14 +587,14 @@ export default function ProjectStatus() {
             <h3 className="mt-3 font-extrabold text-gray-950">{t('evidence.status.freshnessAutomation')}</h3>
             {sourceFeedFailed ? (
               <p className="mt-2 text-sm text-gray-600">
-                The published source-watch history could not be read from this deployment.
+                {t('evidence.status.sourceHistoryUnavailable')}
               </p>
             ) : (
               <>
                 <p className="mt-2 text-sm text-gray-600">
                   {sourceState.checkedAt
                     ? <>{t('evidence.status.lastPublishedCheck')} <strong>{new Date(sourceState.checkedAt).toLocaleString(locale)}</strong> · {sourceState.cadence || 'all'}.</>
-                    : 'The cadence-aware monitor is configured; its first publishable state has not yet been released.'}
+                    : t('evidence.status.monitorConfiguredPending')}
                 </p>
                 <div className="mt-4 grid grid-cols-2 gap-2 text-center">
                   <div className="rounded-xl bg-[#fffdf8] p-3">
@@ -621,7 +621,7 @@ export default function ProjectStatus() {
               </>
             )}
             <Link to="/records" className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
-              Open source freshness
+              {t('evidence.status.openSourceFreshness')}
             </Link>
           </div>
 
@@ -630,12 +630,12 @@ export default function ProjectStatus() {
             <h3 className="mt-3 font-extrabold text-gray-950">{t('evidence.status.cityMonitor')}</h3>
             {monitorFeedFailed ? (
               <p className="mt-2 text-sm text-gray-600">
-                The published City Monitor history could not be read from this deployment.
+                {t('evidence.status.monitorHistoryUnavailable')}
               </p>
             ) : latestMonitorRun ? (
               <>
                 <p className="mt-2 text-sm text-gray-600">
-                  Last published City Monitor update:{' '}
+                  {t('evidence.status.lastMonitorUpdate')}{' '}
                   <strong>{new Date(latestMonitorRun.checkedAt).toLocaleString(locale)}</strong>
                 </p>
                 <div className="mt-4 grid grid-cols-3 gap-2 text-center">
@@ -655,11 +655,11 @@ export default function ProjectStatus() {
               </>
             ) : (
               <p className="mt-2 text-sm text-gray-600">
-                No actionable City Monitor source update has been published yet.
+                {t('evidence.status.noMonitorUpdate')}
               </p>
             )}
             <Link to="/city-monitor" className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
-              Open City Monitor
+              {t('evidence.status.openCityMonitor')}
             </Link>
           </div>
 
@@ -668,7 +668,7 @@ export default function ProjectStatus() {
             <h3 className="mt-3 font-extrabold text-gray-950">{t('evidence.status.communityInput')}</h3>
             {inputFeedFailed ? (
               <p className="mt-2 text-sm text-gray-600">
-                The public BetterMakati community-input feed is unavailable right now.
+                {t('evidence.status.communityUnavailable')}
               </p>
             ) : (
               <>
@@ -676,12 +676,12 @@ export default function ProjectStatus() {
                   {communityInput.length}
                 </div>
                 <p className="text-sm text-gray-600">
-                  public tracked item{communityInput.length === 1 ? '' : 's'} · {openCommunityInput} open
+                  {t('evidence.status.trackedItems', { count: communityInput.length, open: openCommunityInput })}
                 </p>
               </>
             )}
             <Link to="/participate" className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary-700">
-              Open participation feed
+              {t('evidence.status.openParticipation')}
             </Link>
           </div>
         </div>
@@ -691,12 +691,12 @@ export default function ProjectStatus() {
         <div className="section-eyebrow">{t('evidence.status.pageAudit')}</div>
         <Heading level={2}>{t('evidence.status.pageAuditHeading')}</Heading>
         <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600">
-          Review status and open gaps for major citizen journeys.
+          {t('evidence.status.pageAuditIntro')}
         </p>
 
         {pageAuditFailed ? (
           <div className="mt-6 rounded-xl border border-warning-200 bg-warning-50 p-4 text-sm text-warning-900">
-            The published page-audit file could not be read from this deployment.
+            {t('evidence.status.pageAuditUnavailable')}
           </div>
         ) : (
           <>
@@ -732,7 +732,7 @@ export default function ProjectStatus() {
                       <span className="text-xs font-semibold text-secondary-900">{t('evidence.status.needsReview')}</span>
                     </div>
                     <div className="mt-1 text-xs text-gray-600">
-                      Reviewed {item.reviewedAt} · {item.dependencySignals.map(signal => signal.label).join(', ')}
+                      {t('evidence.status.reviewedLine', { date: item.reviewedAt })} · {item.dependencySignals.map(signal => signal.label).join(', ')}
                     </div>
                   </div>
                 ))}
@@ -747,7 +747,7 @@ export default function ProjectStatus() {
                       <Link to={item.path} className="font-extrabold text-primary-800 hover:underline">
                         {item.label}
                       </Link>
-                      <span className="text-xs font-semibold text-gray-500">Reviewed {item.reviewedAt}</span>
+                      <span className="text-xs font-semibold text-gray-500">{t('evidence.status.reviewedLine', { date: item.reviewedAt })}</span>
                     </div>
                     <ul className="mt-2 space-y-1 text-sm leading-relaxed text-gray-600">
                       {item.gaps.map(gap => <li key={gap}>{gap}</li>)}
@@ -779,14 +779,14 @@ export default function ProjectStatus() {
           <Database className="h-5 w-5 text-primary-700" />
           <h2 className="mt-3 text-xl font-extrabold text-gray-950">{t('evidence.status.auditCode')}</h2>
           <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-600">
-            Methodology, source code and correction workflow.
+            {t('evidence.status.auditCodeDetail')}
           </p>
           <div className="mt-5 flex flex-wrap gap-3">
             <Link to="/open-government" className="brand-btn-primary">
-              Open doctrine & audit
+              {t('evidence.status.openDoctrine')}
             </Link>
             <Link to="/get-involved?type=correction#submission" className="brand-btn-secondary">
-              Submit a correction
+              {t('evidence.status.submitCorrection')}
             </Link>
             <a
               href="https://github.com/migi-macati/bettermakati"
@@ -794,7 +794,7 @@ export default function ProjectStatus() {
               rel="noreferrer"
               className="brand-btn-secondary"
             >
-              Source code <ExternalLink className="h-4 w-4" />
+              {t('evidence.status.sourceCode')} <ExternalLink className="h-4 w-4" />
             </a>
           </div>
         </div>
