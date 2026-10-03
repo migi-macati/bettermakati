@@ -593,7 +593,7 @@ export default function ProjectStatus() {
               <>
                 <p className="mt-2 text-sm text-gray-600">
                   {sourceState.checkedAt
-                    ? <>Last published check: <strong>{new Date(sourceState.checkedAt).toLocaleString(locale)}</strong> · {sourceState.cadence || 'all'}.</>
+                    ? <>{t('evidence.status.lastPublishedCheck')} <strong>{new Date(sourceState.checkedAt).toLocaleString(locale)}</strong> · {sourceState.cadence || 'all'}.</>
                     : 'The cadence-aware monitor is configured; its first publishable state has not yet been released.'}
                 </p>
                 <div className="mt-4 grid grid-cols-2 gap-2 text-center">
