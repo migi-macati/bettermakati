@@ -857,5 +857,17 @@
       "auditParks": "{{count}} pilot park sa {{barangay}}. Magbigay ng impormasyon tungkol sa entrance access, step-free access, seating at toilets.",
       "auditParks_other": "{{count}} pilot parks sa {{barangay}}. Magbigay ng impormasyon tungkol sa entrance access, step-free access, seating at toilets."
     }
+  },
+  "evidence": {
+    "reports": {
+      "seoTitle": "Featured Reports & Insights",
+      "seoDescription": "BetterMakati reports at civic analysis na binuo mula sa Makati statistics, budget at public records.",
+      "eyebrow": "Civic analysis",
+      "title": "Featured Reports & Insights",
+      "latest": "Latest",
+      "releases": "Report releases",
+      "timelineDescription": "Makikita rin sa Recently Published ang publication dates ng BetterMakati reports, hiwalay sa periods na sakop ng source data.",
+      "more": "More reports"
+    }
   }
 }
