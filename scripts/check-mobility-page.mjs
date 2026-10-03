@@ -36,7 +36,7 @@ for (const marker of [
   "currentOrSuccessorJeepneyCorridors",
   "unresolvedJeepneyRows",
   "routeViews",
-  "<div className=\"section-eyebrow\">Route registry</div>",
+  "t('corePages.mobility.routeRegistry')",
   "t('corePages.mobility.routes')",
   "One Ayala terminal",
   "Historical association labels are retained as",
