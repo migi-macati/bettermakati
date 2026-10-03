@@ -882,6 +882,25 @@
       "releases": "Report releases",
       "timelineDescription": "BetterMakati report publication dates also appear in Recently Published, separate from the periods covered by their source data.",
       "more": "More reports"
+    },
+    "status": {
+      "seoTitle": "BetterMakati Status",
+      "seoDescription": "Current BetterMakati coverage, source monitoring, community input and measurement gaps.",
+      "eyebrow": "Site status",
+      "title": "BetterMakati Status",
+      "intro": "Current coverage, freshness, community input and measurement gaps.",
+      "serviceCoverage": "Service coverage",
+      "serviceHeading": "How complete are the service guides?",
+      "barangayCoverage": "BetterBarangay coverage",
+      "barangayHeading": "What is still missing by barangay",
+      "methodology": "Methodology",
+      "methodologyHeading": "Open-government audit",
+      "freshness": "Freshness",
+      "liveSignals": "Live signals",
+      "pageAudit": "Page audit",
+      "pageAuditHeading": "Major-page completeness & freshness",
+      "measurementGaps": "Measurement gaps",
+      "notMeasured": "Not measured yet"
     }
   }
 }
