@@ -330,8 +330,8 @@ export default function Today() {
                 </h3>
                 <p className="mt-3 max-w-3xl text-sm leading-relaxed text-gray-600">
                   {latestBrief.recordIds.length
-                    ? latestBrief.recordIds.length + ' validated City Monitor record' + (latestBrief.recordIds.length === 1 ? '' : 's') + ' in this published snapshot.'
-                    : 'No City Monitor record was published in this snapshot.'}
+                    ? t('currentInfo.today.briefRecords', { count: latestBrief.recordIds.length })
+                    : t('currentInfo.today.briefNone')}
                 </p>
               </div>
               <div className="shrink-0 text-xs text-gray-500">
@@ -358,7 +358,7 @@ export default function Today() {
 
       <Section className="bg-white">
         <div className="section-eyebrow">{t('currentInfo.today.newsEyebrow')}</div>
-        <Heading level={2}>Recent coverage</Heading>
+        <Heading level={2}>{t('currentInfo.today.recentCoverage')}</Heading>
         <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-3">
           {news.length > 0 ? news.map(item => (
             <a
@@ -385,7 +385,7 @@ export default function Today() {
           )) : (
             <div className="rounded-2xl border border-gray-200 p-5 text-sm text-gray-600 lg:col-span-3">
               {newsFailed ? 'The live news feed is unavailable. ' : 'No headline from the last 7 days met the Today freshness and direct-Makati relevance rules. '}
-              <Link to="/news" className="font-bold text-primary-700">Open Makati in the News</Link>.
+              <Link to="/news" className="font-bold text-primary-700">{t('currentInfo.today.openNews')}</Link>.
             </div>
           )}
         </div>
