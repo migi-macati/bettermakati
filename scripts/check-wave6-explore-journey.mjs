@@ -40,7 +40,7 @@ for (const [label, source] of [
 }
 
 for (const marker of [
-  "t('corePages.visit.eyebrow')",
+  '<div className="section-eyebrow">Explore Makati</div>',
   'to="/estates"',
   'to="/civic-map"',
 ]) {
