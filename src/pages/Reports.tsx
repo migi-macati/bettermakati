@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import SEO from '../components/SEO';
 import ReportTeaser from '../components/reports/ReportTeaser';
 import Section from '../components/ui/Section';
@@ -6,28 +7,29 @@ import { publicationReports } from '../data/reports';
 import CivicDomainTimelinePreview from '../components/civic/CivicDomainTimelinePreview';
 
 export default function Reports() {
+  const { t } = useTranslation();
   const leadReport = publicationReports[0];
   const moreReports = publicationReports.slice(1);
 
   return (
     <>
       <SEO
-        title="Featured Reports & Insights"
-        description="BetterMakati reports and civic analysis built from Makati statistics, budgets and public records."
+        title={t('evidence.reports.seoTitle')}
+        description={t('evidence.reports.seoDescription')}
       />
 
       <Section className="bm-editorial-hero border-b border-primary-800 bg-primary-900 text-white">
         <div className="section-eyebrow !text-secondary-300">
-          Civic analysis
+          {t('evidence.reports.eyebrow')}
         </div>
         <Heading className="!mb-0 !text-white">
-          Featured Reports & Insights
+          {t('evidence.reports.title')}
         </Heading>
       </Section>
 
       <Section className="bm-editorial-section">
         <div className="text-xs font-black uppercase tracking-[0.1em] text-primary-700">
-          Latest
+          {t('evidence.reports.latest')}
         </div>
         <div className="mt-4">
           <ReportTeaser report={leadReport} variant="lead" />
@@ -37,8 +39,8 @@ export default function Reports() {
       <CivicDomainTimelinePreview
         owner="reports"
         calendarTopic="publications-data"
-        heading="Report releases"
-        description="BetterMakati report publication dates also appear in Recently Published, separate from the periods covered by their source data."
+        heading={t('evidence.reports.releases')}
+        description={t('evidence.reports.timelineDescription')}
         className="bm-editorial-timeline"
       />
 
@@ -46,7 +48,7 @@ export default function Reports() {
         <Section className="bm-editorial-section bm-editorial-section-muted border-t border-primary-100">
           <div className="flex items-end justify-between gap-4">
             <Heading level={2} className="!mb-0">
-              More reports
+              {t('evidence.reports.more')}
             </Heading>
           </div>
 
