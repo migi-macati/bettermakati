@@ -1267,6 +1267,35 @@
       "villageAreas": "Village areas at associations",
       "organizations": "Associations & organizations",
       "official": "Official channels"
+    },
+    "live": {
+      "seoTitle": "Live Makati",
+      "seoDescription": "Current Makati conditions, source health, official advisories, utility links, at emergency information na may malinaw na freshness at source labels.",
+      "eyebrow": "Live Makati",
+      "title": "Ano ang nangyayari ngayon",
+      "intro": "Current conditions at pinakamabilis na routes papunta sa authoritative city, weather, utility, at hazard sources.",
+      "reviewed": "Live-source setup reviewed",
+      "today": "Today in Makati",
+      "monitor": "City Monitor",
+      "briefs": "Civic Briefs",
+      "emergency": "Emergency",
+      "call911": "Tumawag sa 911",
+      "hotlines": "Lahat ng hotlines",
+      "observed": "Observed conditions",
+      "weatherAir": "Weather & air quality",
+      "precip": "Current precipitation",
+      "wind": "Wind speed",
+      "observation": "Observation source:",
+      "freshness": "Freshness",
+      "checks": "Source checks",
+      "reachable": "City Monitor sources reachable",
+      "liveReachable": "Live-directory city sources reachable",
+      "noCheck": "Walang published check time",
+      "lastCheck": "Last City Monitor check",
+      "inspect": "I-check ang source health",
+      "advisories": "Advisories & utilities",
+      "directory": "Source directory",
+      "open": "Buksan ang source"
     }
   }
 }
