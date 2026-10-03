@@ -42,8 +42,8 @@ for (const [label, source] of [
 
 for (const marker of [
   'entry => entry.barangaySlug === barangay.slug',
-  "description: 'City projects and budgets, with locally tagged evidence where geography is available.'",
-  "description: 'See citywide budget and project records, with local evidence where geography is explicitly tagged.'",
+  "description: t('betterBarangay.profile.quick.projects.description')",
+  "description: t('betterBarangay.profile.civic.projects.description')",
 ]) {
   if (!profile.includes(marker)) {
     problems.push('Barangay profile scope marker missing: ' + marker);
