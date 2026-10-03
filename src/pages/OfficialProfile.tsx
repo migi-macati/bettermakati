@@ -5,6 +5,7 @@ import {
   Scale,
 } from 'lucide-react';
 import { useParams } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
 import SEO from '../components/SEO';
@@ -22,6 +23,7 @@ const number = (value: number) => value.toLocaleString('en-PH');
 const percentage = (value: number) => value.toFixed(2) + '%';
 
 export default function OfficialProfile() {
+  const { t } = useTranslation();
   const { slug } = useParams();
   const official = findOfficial(slug);
   const electionResult = findElection2025OfficialResult(slug);
@@ -35,12 +37,12 @@ export default function OfficialProfile() {
         <Breadcrumbs
           className="mb-6"
           items={[
-            { label: 'Home', href: '/' },
-            { label: 'Government', href: '/government' },
-            { label: 'Official not found' },
+            { label: t('corePages.official.home'), href: '/' },
+            { label: t('corePages.official.government'), href: '/government' },
+            { label: t('corePages.official.notFound') },
           ]}
         />
-        <Heading>Official not found</Heading>
+        <Heading>{t('corePages.official.notFound')}</Heading>
       </Section>
     );
   }
@@ -73,15 +75,15 @@ export default function OfficialProfile() {
         <Breadcrumbs
           className="mb-6"
           items={[
-            { label: 'Home', href: '/' },
-            { label: 'Government', href: '/government' },
+            { label: t('corePages.official.home'), href: '/' },
+            { label: t('corePages.official.government'), href: '/government' },
             { label: official.displayName },
           ]}
         />
 
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_0.72fr]">
           <div>
-            <div className="section-eyebrow">Elected official</div>
+            <div className="section-eyebrow">{t('corePages.official.eyebrow')}</div>
             <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
               <Heading>{official.displayName}</Heading>
               <SharePage title={official.displayName + ' | BetterMakati'} />
@@ -94,21 +96,21 @@ export default function OfficialProfile() {
             <div className="mt-7 grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="bm-detail-meta-card p-4">
                 <div className="text-xs uppercase tracking-[0.08em] text-gray-500 font-bold">
-                  Full name
+                  {t('corePages.official.fullName')}
                 </div>
                 <div className="mt-1 font-bold text-gray-950">{official.name}</div>
               </div>
               <div className="bm-detail-meta-card p-4">
                 <div className="text-xs uppercase tracking-[0.08em] text-gray-500 font-bold">
-                  Elected
+                  {t('corePages.official.elected')}
                 </div>
                 <div className="mt-1 font-bold text-gray-950">
-                  {official.electionYear} local election
+                  {official.electionYear} {t('corePages.official.localElection')}
                 </div>
               </div>
               <div className="bm-detail-meta-card p-4">
                 <div className="text-xs uppercase tracking-[0.08em] text-gray-500 font-bold">
-                  Party on 2025 ballot
+                  {t('corePages.official.party')}
                 </div>
                 <div className="mt-1 font-bold text-gray-950">
                   {official.partyOn2025Ballot}
@@ -116,12 +118,12 @@ export default function OfficialProfile() {
               </div>
               <div className="bm-detail-meta-card p-4">
                 <div className="text-xs uppercase tracking-[0.08em] text-gray-500 font-bold">
-                  Level
+                  {t('corePages.official.level')}
                 </div>
                 <div className="mt-1 font-bold text-gray-950">
                   {official.level === 'congress'
-                    ? 'National legislature'
-                    : 'City government'}
+                    ? t('corePages.official.national')
+                    : t('corePages.official.city')}
                 </div>
               </div>
             </div>
@@ -129,11 +131,9 @@ export default function OfficialProfile() {
 
           <aside className="bm-detail-source-panel p-6">
             <Landmark className="h-6 w-6 text-primary-700" />
-            <h2 className="mt-4 text-lg font-extrabold text-gray-950">Sources</h2>
+            <h2 className="mt-4 text-lg font-extrabold text-gray-950">{t('corePages.official.sources')}</h2>
             <p className="mt-2 text-sm leading-relaxed text-gray-600">
-              Party is shown as it appeared on the 2025 ballot. Election
-              results use COMELEC Media Server counts shown at 100% precincts
-              reporting, with the official COMELEC results portal linked below.
+              {t('corePages.official.sourceNote')}
             </p>
 
             <div className="mt-5 space-y-3 text-sm">
@@ -143,7 +143,7 @@ export default function OfficialProfile() {
                 rel="noreferrer"
                 className="flex items-start justify-between gap-3 rounded-xl border border-gray-200 p-3 font-bold text-primary-700"
               >
-                COMELEC 2025 results portal
+                {t('corePages.official.comelec')}
                 <ExternalLink className="h-4 w-4 shrink-0" />
               </a>
               <a
@@ -170,15 +170,15 @@ export default function OfficialProfile() {
       </Section>
 
       <Section className="bg-white">
-        <div className="section-eyebrow">Connected records</div>
-        <Heading level={2}>Related records</Heading>
+        <div className="section-eyebrow">{t('corePages.official.connected')}</div>
+        <Heading level={2}>{t('corePages.official.related')}</Heading>
         <div className="mt-5 rounded-2xl border border-primary-100 bg-[#fffdf8] p-6">
           <Scale className="h-5 w-5 text-primary-700" />
           <p className="mt-3 max-w-4xl text-sm leading-relaxed text-gray-700">
-            Only records directly linked to this profile by the underlying public data are shown here.
+            {t('corePages.official.relatedNote')}
           </p>
           <CivicRelationshipLinks
-            label="Election record"
+            label={t('corePages.official.electionRecord')}
             className="mt-5"
             items={electionRecordLinks.flatMap(item =>
               item.node
@@ -198,7 +198,7 @@ export default function OfficialProfile() {
 
       {electionResult && (
         <Section className="bg-[#f5f8f2]">
-          <div className="section-eyebrow">2025 election result</div>
+          <div className="section-eyebrow">{t('corePages.official.election')}</div>
           <Heading level={2}>{electionResult.raceLabel}</Heading>
 
           <div className="mt-6 grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -207,7 +207,7 @@ export default function OfficialProfile() {
               <div className="mt-3 text-2xl font-extrabold text-gray-950">
                 {number(electionResult.votes)}
               </div>
-              <div className="text-sm text-gray-600">votes received</div>
+              <div className="text-sm text-gray-600">{t('corePages.official.votes')}</div>
             </div>
 
             {electionResult.validVoteShare !== undefined ? (
@@ -215,7 +215,7 @@ export default function OfficialProfile() {
                 <div className="text-2xl font-extrabold text-gray-950">
                   {percentage(electionResult.validVoteShare)}
                 </div>
-                <div className="text-sm text-gray-600">of valid votes</div>
+                <div className="text-sm text-gray-600">{t('corePages.official.validVotes')}</div>
               </div>
             ) : (
               <div className="rounded-2xl border border-primary-100 bg-white p-5">
@@ -223,7 +223,7 @@ export default function OfficialProfile() {
                   #{electionResult.rank}
                 </div>
                 <div className="text-sm text-gray-600">
-                  rank for {electionResult.seatsAvailable} elected seats
+                  {t('corePages.official.rank', { count: electionResult.seatsAvailable })}
                 </div>
               </div>
             )}
@@ -233,7 +233,7 @@ export default function OfficialProfile() {
                 {percentage(electionResult.voterShare)}
               </div>
               <div className="text-sm text-gray-600">
-                of voters who cast a ballot
+                {t('corePages.official.voters')}
               </div>
             </div>
 
@@ -242,7 +242,7 @@ export default function OfficialProfile() {
                 {percentage(electionResult.populationShare)}
               </div>
               <div className="text-sm text-gray-600">
-                of 2024 population in the jurisdiction
+                {t('corePages.official.populationShare')}
               </div>
             </div>
           </div>
@@ -251,7 +251,7 @@ export default function OfficialProfile() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
               <div>
                 <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">
-                  Jurisdiction
+                  {t('corePages.official.jurisdiction')}
                 </div>
                 <div className="mt-1 font-bold text-gray-950">
                   {electionResult.jurisdictionLabel}
@@ -259,7 +259,7 @@ export default function OfficialProfile() {
               </div>
               <div>
                 <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">
-                  Turnout
+                  {t('corePages.official.turnout')}
                 </div>
                 <div className="mt-1 font-bold text-gray-950">
                   {number(electionResult.ballotsCast)} of{' '}
@@ -269,7 +269,7 @@ export default function OfficialProfile() {
               </div>
               <div>
                 <div className="text-xs font-bold uppercase tracking-[0.08em] text-gray-500">
-                  2024 population
+                  {t('corePages.official.population')}
                 </div>
                 <div className="mt-1 font-bold text-gray-950">
                   {number(electionResult.population2024)}
