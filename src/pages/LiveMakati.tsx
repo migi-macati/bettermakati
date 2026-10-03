@@ -52,7 +52,7 @@ interface MonitorState {
   sources?: MonitorSourceState[];
 }
 
-const weatherLabel = (code?: number) => {
+const weatherLabel = (code: number | undefined, t: (key: string) => string) => {
   if (code === undefined) return t('corePages.live.weather');
   if (code === 0) return t('corePages.live.clear');
   if ([1, 2, 3].includes(code)) return t('corePages.live.partly');
@@ -63,7 +63,7 @@ const weatherLabel = (code?: number) => {
   return t('corePages.live.weather');
 };
 
-const aqiLabel = (aqi?: number) => {
+const aqiLabel = (aqi: number | undefined, t: (key: string) => string) => {
   if (aqi === undefined) return t('corePages.live.air');
   if (aqi <= 50) return t('corePages.live.good');
   if (aqi <= 100) return t('corePages.live.moderate');
@@ -81,7 +81,7 @@ const sourceIcon = (category: LiveSourceCategory) => {
   return ShieldAlert;
 };
 
-const sourceStatusLabel = (source?: MonitorSourceState) => {
+const sourceStatusLabel = (source: MonitorSourceState | undefined, t: (key: string) => string) => {
   if (!source) return t('corePages.live.linked');
   if (source.status === 'ok') return t('corePages.live.reachableLast');
   return t('corePages.live.checkIssue');
