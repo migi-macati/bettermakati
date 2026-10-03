@@ -15,6 +15,7 @@ import {
   Users,
 } from 'lucide-react';
 import { Link } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import SEO from '../components/SEO';
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
@@ -131,6 +132,8 @@ interface CommunityInput {
 }
 
 export default function ProjectStatus() {
+  const { t, i18n } = useTranslation();
+  const locale = i18n.resolvedLanguage === 'fil' ? 'fil-PH' : 'en-PH';
   const [sourceRuns, setSourceRuns] = useState<SourceWatchRun[]>([]);
   const [sourceState, setSourceState] = useState<SourceWatchState>({});
   const [communityInput, setCommunityInput] = useState<CommunityInput[]>([]);
@@ -261,7 +264,7 @@ export default function ProjectStatus() {
   const coverage = [
     {
       label: 'Government services',
-      value: serviceDirectory.length.toLocaleString('en-PH'),
+      value: serviceDirectory.length.toLocaleString(locale),
       detail: 'City, barangay and major national services in the public-service directory',
       icon: Database,
     },
@@ -273,13 +276,13 @@ export default function ProjectStatus() {
     },
     {
       label: 'Verified transaction guides',
-      value: verifiedServiceGuideCount.toLocaleString('en-PH'),
+      value: verifiedServiceGuideCount.toLocaleString(locale),
       detail: 'Structured guides checked field-by-field against the cited official source without unresolved source conflicts',
       icon: BadgeCheck,
     },
     {
       label: 'Government service offices',
-      value: governmentServiceOffices.length.toLocaleString('en-PH'),
+      value: governmentServiceOffices.length.toLocaleString(locale),
       detail: 'Citizen-facing offices in Makati and selected offices outside the city that directly serve Makati',
       icon: Building2,
     },
@@ -321,43 +324,43 @@ export default function ProjectStatus() {
     },
     {
       label: 'Elected-official profiles',
-      value: electedOfficials.length.toLocaleString('en-PH'),
+      value: electedOfficials.length.toLocaleString(locale),
       detail: 'Current city/congress profiles in the civic directory',
       icon: Eye,
     },
     {
       label: 'Searchable civic entries',
-      value: searchIndex.length.toLocaleString('en-PH'),
+      value: searchIndex.length.toLocaleString(locale),
       detail: 'Items in BetterMakati’s local search index',
       icon: Search,
     },
     {
       label: 'Accountability records',
-      value: accountabilityEntries.length.toLocaleString('en-PH'),
+      value: accountabilityEntries.length.toLocaleString(locale),
       detail: 'Structured records in the current Accountability Ledger',
       icon: FileSearch,
     },
     {
       label: 'Published accountability gaps',
-      value: accountabilityCoverageGaps.length.toLocaleString('en-PH'),
+      value: accountabilityCoverageGaps.length.toLocaleString(locale),
       detail: 'Known gaps in the current Accountability Ledger',
       icon: AlertCircle,
     },
     {
       label: 'City Monitor source channels',
-      value: cityMonitorSources.length.toLocaleString('en-PH'),
+      value: cityMonitorSources.length.toLocaleString(locale),
       detail: 'Official channels in the current City Monitor source directory',
       icon: RefreshCw,
     },
     {
       label: 'Validated City Monitor records',
-      value: cityMonitorRecords.length.toLocaleString('en-PH'),
+      value: cityMonitorRecords.length.toLocaleString(locale),
       detail: 'Structured records currently in the validated monitor corpus',
       icon: Database,
     },
     {
       label: 'Methodology gaps',
-      value: knownDoctrineGaps.toLocaleString('en-PH'),
+      value: knownDoctrineGaps.toLocaleString(locale),
       detail: 'Open items in the BetterMakati methodology audit',
       icon: Gauge,
     },
@@ -375,20 +378,20 @@ export default function ProjectStatus() {
   return (
     <>
       <SEO
-        title="BetterMakati Status"
-        description="Current BetterMakati coverage, source monitoring, community input and measurement gaps."
+        title={t('evidence.status.seoTitle')}
+        description={t('evidence.status.seoDescription')}
       />
 
       <Section className="bm-detail-page bg-[#fffdf8]">
-        <div className="section-eyebrow">Site status</div>
+        <div className="section-eyebrow">{t('evidence.status.eyebrow')}</div>
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <Heading>BetterMakati Status</Heading>
+            <Heading>{t('evidence.status.title')}</Heading>
             <p className="mt-2 max-w-4xl text-gray-700 leading-relaxed">
-              Current coverage, freshness, community input and measurement gaps.
+              {t('evidence.status.intro')}
             </p>
           </div>
-          <SharePage title="BetterMakati Status" />
+          <SharePage title={t('evidence.status.title')} />
         </div>
         <LastReviewed date={doctrineReviewed} />
 
@@ -421,8 +424,8 @@ export default function ProjectStatus() {
       </Section>
 
       <Section className="bg-white">
-        <div className="section-eyebrow">Service coverage</div>
-        <Heading level={2}>How complete are the service guides?</Heading>
+        <div className="section-eyebrow">{t('evidence.status.serviceCoverage')}</div>
+        <Heading level={2}>{t('evidence.status.serviceHeading')}</Heading>
 
         <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           <div className="rounded-2xl border border-gray-200 bg-[#fffdf8] p-5">
@@ -481,8 +484,8 @@ export default function ProjectStatus() {
       </Section>
 
       <Section className="bg-[#f5f8f2]">
-        <div className="section-eyebrow">BetterBarangay coverage</div>
-        <Heading level={2}>What is still missing by barangay</Heading>
+        <div className="section-eyebrow">{t('evidence.status.barangayCoverage')}</div>
+        <Heading level={2}>{t('evidence.status.barangayHeading')}</Heading>
         <p className="mt-2 max-w-4xl text-sm leading-relaxed text-gray-700">
           Open profile fields that still need a current public source.
         </p>
@@ -527,8 +530,8 @@ export default function ProjectStatus() {
       </Section>
 
       <Section className="bg-white">
-        <div className="section-eyebrow">Methodology</div>
-        <Heading level={2}>Open-government audit</Heading>
+        <div className="section-eyebrow">{t('evidence.status.methodology')}</div>
+        <Heading level={2}>{t('evidence.status.methodologyHeading')}</Heading>
         <div className="mt-6 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-4">
           {doctrinePrinciples.map(item => (
             <Link
@@ -550,8 +553,8 @@ export default function ProjectStatus() {
       </Section>
 
       <Section className="bg-[#f5f8f2]">
-        <div className="section-eyebrow">Freshness</div>
-        <Heading level={2}>Live signals</Heading>
+        <div className="section-eyebrow">{t('evidence.status.freshness')}</div>
+        <Heading level={2}>{t('evidence.status.liveSignals')}</Heading>
 
         <div className="mt-6 flex flex-col gap-4 rounded-2xl border border-primary-100 bg-white p-5 lg:flex-row lg:items-center lg:justify-between">
           <div className="flex flex-wrap gap-x-6 gap-y-3">
@@ -590,7 +593,7 @@ export default function ProjectStatus() {
               <>
                 <p className="mt-2 text-sm text-gray-600">
                   {sourceState.checkedAt
-                    ? <>Last published check: <strong>{new Date(sourceState.checkedAt).toLocaleString('en-PH')}</strong> · {sourceState.cadence || 'all'}.</>
+                    ? <>Last published check: <strong>{new Date(sourceState.checkedAt).toLocaleString(locale)}</strong> · {sourceState.cadence || 'all'}.</>
                     : 'The cadence-aware monitor is configured; its first publishable state has not yet been released.'}
                 </p>
                 <div className="mt-4 grid grid-cols-2 gap-2 text-center">
@@ -633,7 +636,7 @@ export default function ProjectStatus() {
               <>
                 <p className="mt-2 text-sm text-gray-600">
                   Last published City Monitor update:{' '}
-                  <strong>{new Date(latestMonitorRun.checkedAt).toLocaleString('en-PH')}</strong>
+                  <strong>{new Date(latestMonitorRun.checkedAt).toLocaleString(locale)}</strong>
                 </p>
                 <div className="mt-4 grid grid-cols-3 gap-2 text-center">
                   <div className="rounded-xl bg-[#fffdf8] p-3">
@@ -685,8 +688,8 @@ export default function ProjectStatus() {
       </Section>
 
       <Section className="bg-white">
-        <div className="section-eyebrow">Page audit</div>
-        <Heading level={2}>Major-page completeness & freshness</Heading>
+        <div className="section-eyebrow">{t('evidence.status.pageAudit')}</div>
+        <Heading level={2}>{t('evidence.status.pageAuditHeading')}</Heading>
         <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600">
           Review status and open gaps for major citizen journeys.
         </p>
@@ -758,8 +761,8 @@ export default function ProjectStatus() {
       </Section>
 
       <Section className="bg-white">
-        <div className="section-eyebrow">Measurement gaps</div>
-        <Heading level={2}>Not measured yet</Heading>
+        <div className="section-eyebrow">{t('evidence.status.measurementGaps')}</div>
+        <Heading level={2}>{t('evidence.status.notMeasured')}</Heading>
 
         <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-3">
           {notMeasured.map(item => (
