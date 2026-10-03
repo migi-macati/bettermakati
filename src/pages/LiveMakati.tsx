@@ -53,24 +53,24 @@ interface MonitorState {
 }
 
 const weatherLabel = (code?: number) => {
-  if (code === undefined) return 'Weather';
-  if (code === 0) return 'Clear';
-  if ([1, 2, 3].includes(code)) return 'Partly cloudy';
-  if ([45, 48].includes(code)) return 'Fog';
-  if ([51, 53, 55, 56, 57].includes(code)) return 'Drizzle';
-  if ([61, 63, 65, 66, 67, 80, 81, 82].includes(code)) return 'Rain';
-  if ([95, 96, 99].includes(code)) return 'Thunderstorm';
-  return 'Weather';
+  if (code === undefined) return t('corePages.live.weather');
+  if (code === 0) return t('corePages.live.clear');
+  if ([1, 2, 3].includes(code)) return t('corePages.live.partly');
+  if ([45, 48].includes(code)) return t('corePages.live.fog');
+  if ([51, 53, 55, 56, 57].includes(code)) return t('corePages.live.drizzle');
+  if ([61, 63, 65, 66, 67, 80, 81, 82].includes(code)) return t('corePages.live.rain');
+  if ([95, 96, 99].includes(code)) return t('corePages.live.thunder');
+  return t('corePages.live.weather');
 };
 
 const aqiLabel = (aqi?: number) => {
-  if (aqi === undefined) return 'Air quality';
-  if (aqi <= 50) return 'Good';
-  if (aqi <= 100) return 'Moderate';
-  if (aqi <= 150) return 'Unhealthy for sensitive groups';
-  if (aqi <= 200) return 'Unhealthy';
-  if (aqi <= 300) return 'Very unhealthy';
-  return 'Hazardous';
+  if (aqi === undefined) return t('corePages.live.air');
+  if (aqi <= 50) return t('corePages.live.good');
+  if (aqi <= 100) return t('corePages.live.moderate');
+  if (aqi <= 150) return t('corePages.live.sensitive');
+  if (aqi <= 200) return t('corePages.live.unhealthy');
+  if (aqi <= 300) return t('corePages.live.veryUnhealthy');
+  return t('corePages.live.hazardous');
 };
 
 const sourceIcon = (category: LiveSourceCategory) => {
@@ -82,9 +82,9 @@ const sourceIcon = (category: LiveSourceCategory) => {
 };
 
 const sourceStatusLabel = (source?: MonitorSourceState) => {
-  if (!source) return 'Linked source';
-  if (source.status === 'ok') return 'Reachable at last check';
-  return 'Check issue at last run';
+  if (!source) return t('corePages.live.linked');
+  if (source.status === 'ok') return t('corePages.live.reachableLast');
+  return t('corePages.live.checkIssue');
 };
 
 export default function LiveMakati() {
@@ -209,7 +209,7 @@ export default function LiveMakati() {
               {t('corePages.live.intro')}
             </p>
           </div>
-          <SharePage title="Live Makati | BetterMakati" />
+          <SharePage title={`${t('corePages.live.seoTitle')} | BetterMakati`} />
         </div>
         <LastReviewed
           date={liveMakatiReviewed}
