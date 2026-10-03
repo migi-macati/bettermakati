@@ -272,7 +272,7 @@ export default function LiveMakati() {
             <div className="mt-4 text-3xl font-extrabold text-gray-950">
               {loading || weather.temperature === undefined ? '—' : Math.round(weather.temperature) + '°C'}
             </div>
-            <div className="mt-1 font-bold text-gray-800">{weatherLabel(weather.weatherCode)}</div>
+            <div className="mt-1 font-bold text-gray-800">{weatherLabel(weather.weatherCode, t)}</div>
             {weather.apparent !== undefined && (
               <div className="mt-1 text-sm text-gray-500">Feels like {Math.round(weather.apparent)}°C</div>
             )}
@@ -283,7 +283,7 @@ export default function LiveMakati() {
             <div className="mt-4 text-3xl font-extrabold text-gray-950">
               {loading || weather.aqi === undefined ? '—' : weather.aqi}
             </div>
-            <div className="mt-1 font-bold text-gray-800">{aqiLabel(weather.aqi)}</div>
+            <div className="mt-1 font-bold text-gray-800">{aqiLabel(weather.aqi, t)}</div>
             {weather.pm25 !== undefined && (
               <div className="mt-1 text-sm text-gray-500">PM2.5 {Math.round(weather.pm25)} μg/m³</div>
             )}
@@ -391,7 +391,7 @@ export default function LiveMakati() {
                           {liveSourceAuthorityLabel[source.authority]}
                         </span>
                         <span className="rounded-full bg-gray-100 px-2.5 py-1 text-gray-700">
-                          {sourceStatusLabel(checkedSource)}
+                          {sourceStatusLabel(checkedSource, t)}
                         </span>
                       </div>
                       <h4 className="mt-3 text-lg font-extrabold text-gray-950">{source.title}</h4>
