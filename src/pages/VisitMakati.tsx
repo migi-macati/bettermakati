@@ -8,6 +8,7 @@ import {
   Map,
 } from 'lucide-react';
 import { Link } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import Section from '../components/ui/Section';
 import PlacesExplorer from '../components/visit/PlacesExplorer';
 import {
@@ -230,6 +231,7 @@ const VisitorExperienceCard = ({
 };
 
 export default function VisitMakati() {
+  const { t } = useTranslation();
   const canonicalStarts = visitorExperiences.filter(
     experience => experience.kind === 'canonical-destination'
   );
@@ -240,15 +242,15 @@ export default function VisitMakati() {
   return (
     <>
       <SEO
-        title="Explore Makati"
-        description="Explore Makati through durable places, districts, barangays, heritage, history, mobility, markets and current activity."
+        title={t('corePages.visit.seoTitle')}
+        description={t('corePages.visit.seoDescription')}
       />
 
       <section className="border-b border-primary-100 bg-[#fffdf8]">
         <div className="container px-5 py-12 md:px-6 md:py-16 lg:px-8">
           <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
             <div>
-              <div className="section-eyebrow">Explore Makati</div>
+              <div className="section-eyebrow">{t('corePages.visit.eyebrow')}</div>
               <h1 className="max-w-3xl text-4xl font-extrabold tracking-tight text-gray-950 md:text-6xl">
                 Understand the city as you explore it.
               </h1>
@@ -260,7 +262,7 @@ export default function VisitMakati() {
 
               <nav
                 className="-mx-5 mt-7 flex gap-2 overflow-x-auto px-5 pb-2 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0"
-                aria-label="Explore Makati sections"
+                aria-label={t('corePages.visit.sections')}
               >
                 {exploreStarts.map(item => {
                   const Icon = item.icon;
@@ -278,7 +280,7 @@ export default function VisitMakati() {
               </nav>
 
               <div className="mt-6 flex flex-wrap items-center gap-3">
-                <SharePage title="Explore Makati | BetterMakati" />
+                <SharePage title={`${t('corePages.visit.seoTitle')} | BetterMakati`} />
                 <LastReviewed
                   date="2026-09-28"
                   note="Curated starting points reuse canonical BetterMakati identities where possible; volatile schedules and commercial details remain with current external sources."
@@ -286,13 +288,13 @@ export default function VisitMakati() {
               </div>
             </div>
 
-            <PhotoCarousel images={visitImageSet} title="Explore Makati" />
+            <PhotoCarousel images={visitImageSet} title={t('corePages.visit.seoTitle')} />
           </div>
         </div>
       </section>
 
       <Section id="places-to-start" className="bg-white">
-        <div className="section-eyebrow">City starting points</div>
+        <div className="section-eyebrow">{t('corePages.visit.starting')}</div>
         <div className="max-w-3xl">
           <h2 className="text-3xl font-extrabold tracking-tight text-gray-950 md:text-4xl">
             Start with Makati itself.
@@ -315,7 +317,7 @@ export default function VisitMakati() {
         <div className="mt-10 border-t border-gray-200 pt-8">
           <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <div className="section-eyebrow">Recurring experiences</div>
+              <div className="section-eyebrow">{t('corePages.visit.recurring')}</div>
               <h3 className="text-2xl font-extrabold text-gray-950">
                 Weekend markets
               </h3>
@@ -343,7 +345,7 @@ export default function VisitMakati() {
         </div>
         <div className="max-w-3xl">
           <h2 className="text-3xl font-extrabold tracking-tight md:text-4xl">
-            Explore Makati by layer.
+            {t('corePages.visit.layers')}
           </h2>
           <p className="mt-3 leading-relaxed text-primary-100">
             A destination makes more sense when you can see the district,
@@ -380,7 +382,7 @@ export default function VisitMakati() {
       <Section id="live-discovery" className="bg-[#f5f8f2]">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
           <div>
-            <div className="section-eyebrow">Live discovery</div>
+            <div className="section-eyebrow">{t('corePages.visit.live')}</div>
             <h2 className="text-3xl font-extrabold tracking-tight text-gray-950 md:text-4xl">
               Looking for something specific?
             </h2>
@@ -421,7 +423,7 @@ export default function VisitMakati() {
       </Section>
 
       <Section id="resources" className="bg-[#fffdf8]">
-        <div className="section-eyebrow">External resources</div>
+        <div className="section-eyebrow">{t('corePages.visit.external')}</div>
         <div className="max-w-3xl">
           <h2 className="text-2xl font-extrabold text-gray-950">
             Go to the source for current visitor information.
