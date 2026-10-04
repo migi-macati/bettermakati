@@ -1,6 +1,8 @@
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import type { FeaturedReportV2 } from '../../data/reportTypes';
+import { localizedReportCopy } from '../../data/reportTranslations';
 
 export type ReportTeaserVariant = 'lead' | 'card' | 'carousel';
 
@@ -11,6 +13,11 @@ export default function ReportTeaser({
   report: FeaturedReportV2;
   variant?: ReportTeaserVariant;
 }) {
+  const { i18n } = useTranslation();
+  const copy = localizedReportCopy(report, i18n.resolvedLanguage);
+  const headline = copy.headline ?? report.headline;
+  const subheadline = copy.subheadline ?? report.subheadline;
+
   if (variant === 'lead') {
     return (
       <Link
@@ -23,13 +30,13 @@ export default function ReportTeaser({
               {report.date}
             </div>
             <h2 className="mt-3 max-w-4xl text-3xl font-black leading-tight tracking-tight text-white md:text-4xl lg:text-5xl">
-              {report.headline}
+              {headline}
             </h2>
           </div>
 
           <div>
             <p className="text-base leading-relaxed text-primary-50 md:text-lg">
-              {report.subheadline}
+              {subheadline}
             </p>
             <span className="mt-6 inline-flex items-center gap-2 text-sm font-black text-secondary-300">
               Read more
@@ -51,10 +58,10 @@ export default function ReportTeaser({
           {report.date}
         </div>
         <h3 className="mt-2 max-w-5xl text-2xl font-black leading-tight tracking-tight text-gray-950 md:text-3xl">
-          {report.headline}
+          {headline}
         </h3>
         <p className="mt-3 max-w-4xl text-sm leading-relaxed text-gray-600 md:text-base">
-          {report.subheadline}
+          {subheadline}
         </p>
         <Link
           to={`/reports/${report.slug}`}
@@ -80,10 +87,10 @@ export default function ReportTeaser({
           {report.date}
         </div>
         <h2 className="mt-3 text-2xl font-black leading-tight tracking-tight text-gray-950 md:text-3xl">
-          {report.headline}
+          {headline}
         </h2>
         <p className="mt-4 text-sm leading-relaxed text-gray-600 md:text-base">
-          {report.subheadline}
+          {subheadline}
         </p>
         <span className="mt-auto inline-flex items-center gap-2 pt-6 text-sm font-black text-primary-700">
           Read more

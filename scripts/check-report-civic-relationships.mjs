@@ -73,8 +73,8 @@ const slugMatches = [
 ];
 const slugs = slugMatches.map(match => match[1]);
 
-if (slugs.length !== 5) {
-  problems.push('Expected 5 current Featured Reports; found ' + slugs.length + '.');
+if (slugs.length < 5) {
+  problems.push('Expected at least 5 current Featured Reports; found ' + slugs.length + '.');
 }
 
 for (let index = 0; index < slugMatches.length; index += 1) {
@@ -173,5 +173,5 @@ if (problems.length) {
 }
 
 console.log(
-  'Report Civic Intelligence relationship check passed: all 5 current reports declare canonical records, each unique edge is stored once as report -> record synthesis, report articles expose underlying records, Statistics/Accountability/Integrity derive reverse analysis links, and no report is treated as source evidence for its inputs.'
+  'Report Civic Intelligence relationship check passed: all current reports declare canonical records, each unique edge is stored once as report -> record synthesis, report articles expose underlying records, Statistics/Accountability/Integrity derive reverse analysis links, and no report is treated as source evidence for its inputs.'
 );

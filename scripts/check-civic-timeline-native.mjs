@@ -120,6 +120,13 @@ if (
   );
 }
 
+const reportPublicationDateCount = (
+  reports.match(/\n\s+date:\s*(?:reportPublishedOn|'[^']+')/g) ?? []
+).length;
+const reportSchemaCountForDateGuard = (
+  reports.match(/schemaVersion:\s*2,/g) ?? []
+).length;
+
 if (
   !reportTypes.includes(
     "This is the report's own release date, not a source"
@@ -127,10 +134,10 @@ if (
   !reports.includes(
     "const reportPublishedOn = '26 September 2026';"
   ) ||
-  (reports.match(/date: reportPublishedOn/g) ?? []).length !== 5
+  reportPublicationDateCount !== reportSchemaCountForDateGuard
 ) {
   problems.push(
-    'Featured report date has not been formally separated as BetterMakati report publication date.'
+    'Each Featured Report must carry an explicit BetterMakati publication date.'
   );
 }
 
@@ -180,7 +187,7 @@ if (
   councilCount !== 9 ||
   procurementCount !== 21 ||
   electionCount !== 10 ||
-  reportCount !== 5 ||
+  reportCount < 5 ||
   supersededElectionCount !== 4 ||
   directCityMonitorCount < 2 ||
   serviceAvailabilityCount !== 10

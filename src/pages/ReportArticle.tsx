@@ -1,5 +1,6 @@
 import { ArrowLeft, ExternalLink } from 'lucide-react';
 import { Link, Navigate, useParams } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import SEO from '../components/SEO';
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
@@ -16,6 +17,7 @@ import {
 } from '../data/reportCivicRelationships';
 import { timelineForCivicRecord } from '../data/timelineCivicRelationships';
 import { publicRecordByUrl } from '../data/publicRecords';
+import { localizedReportCopy } from '../data/reportTranslations';
 import type {
   ReportCanonicalRecordRef,
   ReportContentBlock,
@@ -314,6 +316,7 @@ function ReportBlock({
 }
 
 export default function ReportArticle() {
+  const { i18n } = useTranslation();
   const { slug } = useParams();
   const canonicalSlug = resolveReportSlug(slug);
 
@@ -327,6 +330,7 @@ export default function ReportArticle() {
     return <Navigate to="/reports" replace />;
   }
 
+  const copy = localizedReportCopy(report, i18n.resolvedLanguage);
   const sourceById = new Map(report.sources.map(source => [source.id, source]));
   const underlyingRecords = reportRelatedRecords(report.slug);
   const timelineLinks = timelineForCivicRecord({
@@ -336,7 +340,7 @@ export default function ReportArticle() {
 
   return (
     <>
-      <SEO title={report.headline} description={report.subheadline} />
+      <SEO title={copy.headline} description={copy.subheadline} />
 
       <Section className="bm-editorial-article-hero">
         <Link
@@ -352,22 +356,22 @@ export default function ReportArticle() {
         </div>
 
         <div className="mt-3 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-          <Heading>{report.headline}</Heading>
-          <SharePage title={report.headline + ' | BetterMakati'} />
+          <Heading>{copy.headline}</Heading>
+          <SharePage title={copy.headline + ' | BetterMakati'} />
         </div>
 
         <p className="mt-4 max-w-4xl text-lg leading-relaxed text-gray-700 md:text-xl">
-          {report.subheadline}
+          {copy.subheadline}
         </p>
 
         <p className="bm-editorial-synthesis mt-5 max-w-4xl border-l-4 pl-4 text-base font-semibold leading-relaxed text-gray-900 md:text-lg">
-          {report.synthesis}
+          {copy.synthesis}
         </p>
       </Section>
 
       <Section className="bm-editorial-article-body">
         <article className="bm-reading-measure mx-auto space-y-12">
-          {report.sections.map(section => (
+          {copy.sections.map(section => (
             <section key={section.id} id={section.id}>
               {section.heading && (
                 <h2 className="mb-5 text-2xl font-black tracking-tight text-gray-950 md:text-3xl">
@@ -386,16 +390,16 @@ export default function ReportArticle() {
             </section>
           ))}
 
-          {report.methodology && (
+          {copy.methodology && (
             <details className="bm-editorial-methodology rounded-2xl border p-5">
               <summary className="cursor-pointer font-black text-gray-950">
-                {report.methodology.title ?? 'Methodology & limits'}
+                {copy.methodology.title ?? 'Methodology & limits'}
               </summary>
               <p className="mt-3 text-sm leading-relaxed text-gray-700">
-                {report.methodology.text}
+                {copy.methodology.text}
                 <EvidenceLinks
-                  sourceIds={report.methodology.evidence?.sourceIds}
-                  records={report.methodology.evidence?.records}
+                  sourceIds={copy.methodology.evidence?.sourceIds}
+                  records={copy.methodology.evidence?.records}
                   sourceById={sourceById}
                 />
               </p>

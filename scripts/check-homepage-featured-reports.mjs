@@ -37,8 +37,8 @@ for (const marker of [
 for (const forbidden of [
   "import { reports } from '../../data/reports'",
   'report.date',
-  'report.headline',
-  'report.subheadline',
+  'copy.headline',
+  'copy.subheadline',
   'report.slug',
 ]) {
   if (carousel.includes(forbidden)) {

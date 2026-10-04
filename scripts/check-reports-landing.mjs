@@ -27,8 +27,8 @@ for (const marker of [
 
 for (const marker of [
   'report.date',
-  'report.headline',
-  'report.subheadline',
+  'copy.headline',
+  'copy.subheadline',
   'Read more',
   "variant === 'lead'",
   "variant === 'carousel'",
