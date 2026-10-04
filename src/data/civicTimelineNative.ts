@@ -540,6 +540,19 @@ const directCityMonitorTemporal = (
   record: CityMonitorRecord,
   sourceId: string
 ): CivicTimelineTemporal => {
+  if (record.type === 'procurement' && record.deadlineAt) {
+    return {
+      semantic: 'deadline',
+      precision: 'datetime',
+      dueAt: record.deadlineAt,
+      origin: {
+        role: 'deadline-date',
+        sourceFields: ['CityMonitorRecord.deadlineAt'],
+        sourceIds: [sourceId],
+      },
+    };
+  }
+
   if (record.type === 'publication' || record.type === 'official-notice') {
     return {
       semantic: 'publication-release',
@@ -600,7 +613,9 @@ export const nativeDirectCityMonitorTimelineItems: CivicTimelineItem[] =
         temporal.semantic === 'publication-release' &&
         record.date <= manilaDateKey()
           ? 'published'
-          : timelineDateStatus(record.date),
+          : timelineDateStatus(
+              temporal.semantic === 'deadline' ? temporal.dueAt : record.date
+            ),
       actionability:
         record.type === 'consultation' && record.date > manilaDateKey()
           ? 'participation-opportunity'
