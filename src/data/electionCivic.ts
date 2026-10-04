@@ -267,6 +267,11 @@ export const electionDataSources = [
     kind: 'Official candidate record',
   },
   {
+    label: 'PSA 2024 population by legislative district',
+    href: election2025Sources.legislativeDistrictPopulation,
+    kind: 'Official population source · reference date July 1, 2024',
+  },
+  {
     label: 'Republic Act No. 12326 — current BSKE schedule update',
     href: electionCivicSources.currentLawUpdate,
     kind: 'Official government communication',
