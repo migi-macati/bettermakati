@@ -19,6 +19,19 @@ export interface GovernmentServiceOffice {
 
 export const governmentServiceOffices: GovernmentServiceOffice[] = [
   {
+    id: 'makati-health-plus-office',
+    name: 'Makati Health Plus Program Office',
+    agency: 'Makati Health Department / Action Center',
+    scope: 'In Makati',
+    address: 'Ground Floor, New Building, Makati City Hall, J.P. Rizal Street, Poblacion, Makati City',
+    barangay: 'Poblacion',
+    phone: '(02) 8870-1658 / (02) 8870-1659',
+    email: 'mhpdepartment@gmail.com',
+    sourceUrl: 'https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1715048169416.pdf',
+    mapsQuery: 'Makati Health Plus Program Office Makati City Hall JP Rizal Poblacion Makati',
+    note: 'The official Yellow Card guide lists this office and these inquiry/follow-up numbers.',
+  },
+  {
     id: 'makati-district-1-public-assistance',
     name: 'Makati District 1 Office — Public Assistance',
     agency: 'Office of the Representative, Makati 1st District',
