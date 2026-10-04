@@ -156,7 +156,7 @@
   {
     "id": "comelec-2025-results",
     "label": "COMELEC 2025 election results portal",
-    "url": "https://2025electionresults.comelec.gov.ph/",
+    "url": "https://2025electionresults.comelec.gov.ph/coc-result",
     "kind": "election-results",
     "cadence": "daily",
     "monitoringMode": "reachability",
