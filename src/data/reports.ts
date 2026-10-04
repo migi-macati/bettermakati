@@ -1264,7 +1264,7 @@ export const reports: FeaturedReportV2[] = [
       },
     },
 
-  },,
+  },
 
   {
     schemaVersion: 2,
