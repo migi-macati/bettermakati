@@ -68,7 +68,7 @@ for (const marker of [
 
 for (const marker of [
   "'2026-09-28'",
-  "'2026-09-28'\n  ),",
+  "publishedDate?: string;",
   'https://www.facebook.com/MyMakatiVerified/videos/1062955702870515/',
 ]) {
   if (!sessions.includes(marker)) {
