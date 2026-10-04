@@ -1832,6 +1832,253 @@ export const reports: FeaturedReportV2[] = [
     },
   },
 
+  {
+    schemaVersion: 2,
+    slug: 'makati-subway-from-promise-to-stalled-project',
+    date: '5 October 2026',
+    headline:
+      'The Makati Subway: From a 10-Station Promise to a Stalled Project',
+    subheadline:
+      'The proposed US$3.5-billion, 10-station intra-city railway reached a joint venture, engineering contracts and limited site works. The EMBO boundary ruling then changed the route economics, the original private partner exited, and no construction restart has been publicly confirmed.',
+    synthesis:
+      'The Makati Subway was more than a drawing: it had a signed joint venture, a notice to proceed, contractors, land arrangements and limited works around Station 3. It is also not an active railway build today. The planned depot and two eastern stations are now in Taguig, Infradev declared the original project infeasible, and the joint venture moved into arbitration and settlement. Assets and studies may support a future project, but that is different from evidence of a funded, approved and active replacement subway.',
+    sections: [
+      {
+        id: 'promise-and-contract',
+        heading:
+          'The project reached contracts and preparatory works, but not rail construction',
+        blocks: [
+          {
+            kind: 'paragraph',
+            role: 'fact',
+            text: 'In 2018, Makati selected a consortium led by IRC Properties, later renamed Philippine Infradev Holdings. The city and Infradev signed their joint venture on 30 July 2019. The proponent received a notice to proceed on 18 February 2020 for a project estimated at US$3.5 billion with a five-year completion period.',
+            evidence: { sourceIds: ['1', '2'] },
+          },
+          {
+            kind: 'table',
+            title: 'Documented milestones of the original project',
+            columns: [
+              { key: 'date', label: 'Date' },
+              { key: 'milestone', label: 'Milestone' },
+              { key: 'whatItProves', label: 'What it establishes' },
+            ],
+            rows: [
+              {
+                date: '23 Oct 2018',
+                milestone: 'Notice of Award',
+                whatItProves: 'Infradev-led consortium selected',
+              },
+              {
+                date: '30 Jul 2019',
+                milestone: 'Joint venture signed',
+                whatItProves: 'Binding city–private partner project',
+              },
+              {
+                date: '18 Feb 2020',
+                milestone: 'Notice to proceed',
+                whatItProves: 'Implementation stage authorized',
+              },
+              {
+                date: '8 Sep 2020',
+                milestone: 'US$1.21B EPC contracts',
+                whatItProves: 'Civil and systems contractors engaged',
+              },
+              {
+                date: 'By Apr 2025 filing',
+                milestone: 'Station 3 early works recorded',
+                whatItProves:
+                  'Excavation, shoring and mat foundations; not an operating railway',
+              },
+              {
+                date: '2 May 2025',
+                milestone: 'Infradev declared project infeasible',
+                whatItProves:
+                  'Original continuation path ended and arbitration began',
+              },
+            ],
+            evidence: { sourceIds: ['2', '3'] },
+          },
+        ],
+      },
+      {
+        id: 'route-and-embo',
+        heading:
+          'The eastern end of the route was directly affected by the EMBO transfer',
+        blocks: [
+          {
+            kind: 'paragraph',
+            role: 'fact',
+            text: 'The public project description was for 10 underground stations over roughly 10–11 kilometres, running from Ayala–EDSA toward eastern Makati and the EMBO area. Reported key locations included Ayala Triangle, Makati City Hall, the University of Makati and Ospital ng Makati. The company filing places Station 3 around Gil Puyat–Dela Rosa–Urban and Station 5 along J.P. Rizal at the old City Hall.',
+            evidence: {
+              sourceIds: ['2', '4', '5'],
+              records: [
+                {
+                  recordType: 'place',
+                  id: 'makati-city-hall',
+                  href: '/civic-map/makati-city-hall',
+                },
+              ],
+            },
+          },
+          {
+            kind: 'paragraph',
+            role: 'fact',
+            text: 'After the Makati–Taguig boundary judgment became final, the planned depot and two station sites were in Taguig. Public reporting identified the affected stations as the University of Makati in West Rembo and Ospital ng Makati in Pembo. For an intra-city line whose economics depended on the full alignment and associated development, that was a material change in jurisdiction and project viability.',
+            evidence: { sourceIds: ['3', '6', '7'] },
+          },
+          {
+            kind: 'paragraph',
+            role: 'analysis',
+            text: 'The boundary ruling did not make a railway across Makati and Taguig technically impossible. It did mean the original Makati-only joint venture could not continue unchanged. Any cross-boundary replacement would need a new intergovernmental, contractual, route and financing arrangement.',
+            evidence: { sourceIds: ['6', '7'] },
+          },
+        ],
+      },
+      {
+        id: 'exit-arbitration-settlement',
+        heading:
+          'The original partner exited; settlement followed, not a construction restart',
+        blocks: [
+          {
+            kind: 'paragraph',
+            role: 'fact',
+            text: 'On 2 May 2025, Infradev told the Philippine Stock Exchange that its board had found continuation under the 2019 joint venture no longer economically and operationally feasible and had commenced arbitration at the Singapore International Arbitration Centre. This is the clearest primary-source break in the original implementation path.',
+            evidence: { sourceIds: ['3'] },
+          },
+          {
+            kind: 'paragraph',
+            role: 'fact',
+            text: 'In January 2026, the Makati City Council authorized and ratified a new settlement framework through Resolutions 2026-008 and 2026-011. The reported exchange would transfer the project company and related assets to the city. On 18 February 2026, however, Infradev said the SIAC case remained pending and that the proceedings and negotiations were confidential; it did not publicly confirm the detailed commercial terms.',
+            evidence: { sourceIds: ['8', '9'] },
+          },
+          {
+            kind: 'paragraph',
+            role: 'analysis',
+            text: 'Three matters therefore need to be separated: settlement of the former joint venture, ownership of the company and assets, and actual revival of the railway. A settlement may preserve land, studies or the corporate vehicle, but it is not a substitute for a new feasibility case, appropriation or financing, route approval, permits, contractors and construction timetable.',
+            evidence: { sourceIds: ['8', '9'] },
+          },
+        ],
+      },
+      {
+        id: 'current-status',
+        heading:
+          'At the 5 October 2026 cutoff, the railway is stalled and no replacement build is confirmed',
+        blocks: [
+          {
+            kind: 'paragraph',
+            role: 'fact',
+            text: 'The PPP Center still lists the Makati City Subway System Project in its database as pre-construction, while Infradev’s 2025 disclosure says continuation of the original joint venture was no longer feasible. Those different labels do not establish that work restarted; the safer reading is that the administrative registry has not been fully reconciled with the later arbitration and settlement record.',
+            evidence: { sourceIds: ['3', '10'] },
+          },
+          {
+            kind: 'paragraph',
+            role: 'analysis',
+            text: 'A credible restart would require a new public record: the implementing entity and operator, the revised alignment and station list, the arrangement for Taguig jurisdiction, updated cost and financing, approvals, procurement and a construction timetable. Until those exist, the Makati Subway is best described as a stalled former PPP with retained assets and an unresolved revival path—not as operating, under active construction, or an idea proven incapable of returning.',
+            evidence: { sourceIds: ['3', '8', '9', '10'] },
+          },
+        ],
+      },
+    ],
+    sources: [
+      {
+        id: '1',
+        label: 'Makati LGU and Infradev sign subway joint venture',
+        href: 'https://ppp.gov.ph/in_the_news/makati-lgu-ph-infradev-holdings-ink-joint-venture-for-citys-subway-project/',
+        sourceKind: 'official-external',
+        publisher: 'PPP Center',
+        publishedOrPeriod: '31 July 2019',
+        checkedOn: '5 October 2026',
+      },
+      {
+        id: '2',
+        label: 'Philippine Infradev 2025 definitive information statement',
+        href: 'https://www.infra.com.ph/wp-content/uploads/2025/08/Philippine-Infradev-Holdings-Inc.-Definitive-Information-Statement-2025.pdf',
+        sourceKind: 'official-external',
+        publisher: 'Philippine Infradev Holdings / PSE filing',
+        publishedOrPeriod: '2025 filing; project events through April 2025',
+        checkedOn: '5 October 2026',
+      },
+      {
+        id: '3',
+        label:
+          'Arbitration proceedings relating to the Makati City Subway Project',
+        href: 'https://edge.pse.com.ph/downloadHtml.do?file_id=1757337',
+        sourceKind: 'official-external',
+        publisher: 'Philippine Stock Exchange EDGE / Philippine Infradev',
+        publishedOrPeriod: '2 May 2025',
+        checkedOn: '5 October 2026',
+      },
+      {
+        id: '4',
+        label: 'Makati signs US$3.5-billion, 10-station subway joint venture',
+        href: 'https://www.pna.gov.ph/articles/1076520',
+        sourceKind: 'official-external',
+        publisher: 'Philippine News Agency',
+        publishedOrPeriod: '30 July 2019',
+        checkedOn: '5 October 2026',
+      },
+      {
+        id: '5',
+        label: 'Original route and key-station description',
+        href: 'https://www.gmanetwork.com/news/topstories/metro/944779/abby-binay-makati-in-talks-with-new-domestic-partner-for-intra-city-railway-project/story/',
+        sourceKind: 'secondary',
+        publisher: 'GMA Integrated News',
+        publishedOrPeriod: '2 May 2025',
+        checkedOn: '5 October 2026',
+      },
+      {
+        id: '6',
+        label: 'Makati–Taguig boundary decision and EMBO transition report',
+        href: '/reports/embo-makati-taguig-transition',
+        sourceKind: 'canonical-internal',
+        publisher: 'BetterMakati',
+        publishedOrPeriod:
+          'Boundary and transition record through 3 October 2026',
+        checkedOn: '5 October 2026',
+      },
+      {
+        id: '7',
+        label: 'The case of the Makati Intra-city Subway project',
+        href: 'https://pidswebs.pids.gov.ph/CDN/document/pidsdps2443.pdf',
+        sourceKind: 'secondary',
+        publisher: 'Philippine Institute for Development Studies',
+        publishedOrPeriod: 'December 2024 discussion paper',
+        checkedOn: '5 October 2026',
+      },
+      {
+        id: '8',
+        label: 'Makati–Infradev settlement and council resolutions',
+        href: 'https://www.philippine-resources.com/articles/2026/6/makati-gains-control-of-subway-project-following-infradev-settlement',
+        sourceKind: 'secondary',
+        publisher: 'Philippine Resources Journal',
+        publishedOrPeriod: '4 June 2026',
+        checkedOn: '5 October 2026',
+      },
+      {
+        id: '9',
+        label: 'Infradev declines to disclose settlement details',
+        href: 'https://context.ph/2026/02/19/infradev-declines-to-disclose-subway-settlement-details/',
+        sourceKind: 'secondary',
+        publisher: 'Context.ph',
+        publishedOrPeriod: '19 February 2026',
+        checkedOn: '5 October 2026',
+      },
+      {
+        id: '10',
+        label: 'Makati City Subway System Project database record',
+        href: 'https://ppp.gov.ph/project-database/?project_sector=1768&search=true',
+        sourceKind: 'official-external',
+        publisher: 'PPP Center',
+        checkedOn: '5 October 2026',
+      },
+    ],
+    methodology: {
+      title: 'Status and uncertainty note',
+      text: 'Company disclosures, government PPP records and the official boundary record take priority. Strong secondary reporting is used for station names and January 2026 settlement events whose complete official text is not accessible on the city portal. A settlement, asset transfer or database label is not treated as proof of a construction restart.',
+      evidence: { sourceIds: ['2', '3', '6', '8', '9', '10'] },
+    },
+  },
+
 ];
 
 export const publicationReports = [...reports].reverse();
