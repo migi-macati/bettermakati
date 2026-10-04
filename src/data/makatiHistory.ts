@@ -2562,6 +2562,27 @@ const rows: Row[] = [
     },
   ],
   [
+    'embo-schools-transition-2024',
+    2024,
+    '1 January 2024',
+    'Taguig-Pateros schools division takes over operations of 14 EMBO public schools',
+    health,
+    'Under the Makati–Taguig–DepEd agreement implemented through DepEd Order No. 001, s. 2024, the Schools Division of Taguig City and Pateros assumed management and operation of 14 affected public schools beginning 1 January 2024.',
+    depedEmboSchools2024,
+    'This milestone records operational responsibility for the schools. It does not determine ownership of the school land, buildings, facilities or equipment.',
+    {
+      evidenceStatus: 'established',
+      relations: {
+        institutions: [
+          { label: 'Department of Education' },
+          { label: 'City of Makati' },
+          { label: 'City of Taguig' },
+        ],
+        eventIds: ['boundary-transition-2023', 'embo-electoral-districts-2024', 'embo-facilities-injunction-2025'],
+      },
+    },
+  ],
+  [
     'embo-electoral-districts-2024',
     2024,
     '2024 COMELEC resolution',
