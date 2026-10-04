@@ -1321,7 +1321,16 @@ export const reports: FeaturedReportV2[] = [
             role: 'analysis',
             text:
               'The transfer creates a statistical break. PSA counts 309,770 residents in Makati’s remaining 23 barangays in 2024. Comparing that figure directly with Makati’s old citywide 2020 total as though the geography were unchanged would misstate demographic change; current-boundary and former-boundary series must be distinguished.',
-            evidence: { sourceIds: ['4', '5'] },
+            evidence: {
+              sourceIds: ['4', '5'],
+              records: [
+                {
+                  recordType: 'statistics-indicator',
+                  id: 'population-total',
+                  href: '/statistics',
+                },
+              ],
+            },
           },
         ],
       },
