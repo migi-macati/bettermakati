@@ -21,6 +21,7 @@ export type CouncilTranscriptStatus =
 export interface CouncilSessionSeed {
   id: string;
   date: string;
+  publishedDate?: string;
   sessionType: CouncilSessionType;
   titleAsPublished: string;
   sourceId: 'makati-council-videos';
@@ -47,7 +48,8 @@ export interface CouncilSessionSeed {
   };
 }
 
-export const officialCouncilVideoDiscoveryUrl = 'https://www.makati.gov.ph/';
+export const officialCouncilVideoDiscoveryUrl =
+  'https://www.makati.gov.ph/content/makati-videos';
 
 export const councilSessionTranscriptPolicy = {
   canonicalSessionKey:
@@ -73,31 +75,45 @@ export const councilSessionTranscriptPolicy = {
 const regularSession = (
   date: string,
   titleAsPublished: string,
-  note?: string
+  note?: string,
+  url?: string,
+  publishedDate?: string
 ): CouncilSessionSeed => ({
   id: 'council-session-' + date,
   date,
+  publishedDate,
   sessionType: 'regular-session',
   titleAsPublished,
   sourceId: 'makati-council-videos',
   discoveryUrl: officialCouncilVideoDiscoveryUrl,
   recording: {
     discoveryStatus: 'listed-on-official-portal',
-    stableUrlStatus: 'pending-resolution',
+    stableUrlStatus: url ? 'resolved' : 'pending-resolution',
+    url,
     note:
       note ??
-      'The official Makati portal lists this session video. Preserve the item-specific official recording URL before transcription.',
+      (url
+        ? 'The official Makati portal lists this session and the item-specific MyMakatiVerified recording URL is preserved.'
+        : 'The official Makati portal lists this session video. Preserve the item-specific official recording URL before transcription.'),
   },
   transcript: {
     kind: 'bettermakati-automated',
     status: 'planned',
-    sourceRecordingStatus: 'awaiting-stable-video-url',
-    note:
-      'Backfill queue entry. Transcription starts only after the stable official recording URL is preserved; generated text must remain labeled non-official until reviewed.',
+    sourceRecordingStatus: url ? 'ready' : 'awaiting-stable-video-url',
+    note: url
+      ? 'Stable official recording preserved. Any generated transcript must remain labeled non-official until reviewed.'
+      : 'Backfill queue entry. Transcription starts only after the stable official recording URL is preserved; generated text must remain labeled non-official until reviewed.',
   },
 });
 
 export const currentCouncilSessionSeeds: CouncilSessionSeed[] = [
+  regularSession(
+    '2026-09-28',
+    'Makati City Regular Council Session (September 28, 2026)',
+    undefined,
+    'https://www.facebook.com/MyMakatiVerified/videos/1062955702870515/',
+    '2026-09-28'
+  ),
   regularSession(
     '2026-09-21',
     'Makati City Regular Council Session (September 21, 2026)'
@@ -144,7 +160,7 @@ export const councilSessionBackfillQueue = currentCouncilSessionSeeds.filter(
 export const councilSessionBackfillCount = councilSessionBackfillQueue.length;
 
 export const councilSessionIngestionState = {
-  reviewedAt: '2026-09-26',
+  reviewedAt: '2026-10-04',
   discoverySource: 'makati-council-videos',
   discoveredCurrentSessions: currentCouncilSessionSeeds.length,
   transcriptsAvailable: currentCouncilSessionSeeds.filter(

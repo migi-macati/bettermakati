@@ -11,6 +11,7 @@ const config = JSON.parse(sourceConfig);
 const problems = [];
 
 const expectedDates = [
+  '2026-09-28',
   '2026-09-21',
   '2026-09-14',
   '2026-09-07',
@@ -50,10 +51,10 @@ if (regularSessionCalls !== expectedDates.length) {
 
 for (const marker of [
   "sourceId: 'makati-council-videos'",
-  "stableUrlStatus: 'pending-resolution'",
+  "stableUrlStatus: url ? 'resolved' : 'pending-resolution'",
   "kind: 'bettermakati-automated'",
   "status: 'planned'",
-  "sourceRecordingStatus: 'awaiting-stable-video-url'",
+  "sourceRecordingStatus: url ? 'ready' : 'awaiting-stable-video-url'",
   'timestamped segments',
   'never official',
   'Do not attach a councilor/person identity',
@@ -62,6 +63,16 @@ for (const marker of [
 ]) {
   if (!sessions.includes(marker)) {
     problems.push('Transcript/session policy marker missing: ' + marker);
+  }
+}
+
+for (const marker of [
+  "'2026-09-28'",
+  "publishedDate?: string;",
+  'https://www.facebook.com/MyMakatiVerified/videos/1062955702870515/',
+]) {
+  if (!sessions.includes(marker)) {
+    problems.push('September 28 session provenance marker missing: ' + marker);
   }
 }
 
@@ -130,6 +141,6 @@ if (problems.length) {
 }
 
 console.log(
-  'Council session audit passed: 9 current official-session discoveries normalized; ' +
+  'Council session audit passed: 10 current official-session discoveries normalized; ' +
     'transcript backfill queued with non-official provenance; 20 bounded local measures retain 0 inferred session links.'
 );
