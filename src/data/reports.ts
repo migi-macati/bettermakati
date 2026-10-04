@@ -27,11 +27,7 @@ import {
   integrityAuditSourceOnlyRecords,
   integrityAuditSources,
 } from './integrityAuditTrails';
-import type {
-  FeaturedReportV2,
-  ReportContentBlock,
-  ReportSourceV2,
-} from './reportTypes';
+import type { FeaturedReportV2, ReportContentBlock, ReportSourceV2 } from './reportTypes';
 
 const reportPublishedOn = '26 September 2026';
 const reviewedOn = reportPublishedOn;
@@ -49,7 +45,8 @@ const moneyM = (millions: number) =>
 
 const percent = (value: number) => value.toFixed(1) + '%';
 
-const pctChange = (from: number, to: number) => ((to - from) / from) * 100;
+const pctChange = (from: number, to: number) =>
+  ((to - from) / from) * 100;
 
 const adoptedMooe =
   budgetByType.find(item =>
@@ -109,8 +106,9 @@ const budgetComponentRows = [
   {
     component: 'Special Purpose Appropriations',
     adopted2025:
-      budgetByType.find(item => item.label === 'Special Purpose Appropriations')
-        ?.amountM ?? 0,
+      budgetByType.find(
+        item => item.label === 'Special Purpose Appropriations'
+      )?.amountM ?? 0,
     currentEstimate2025:
       budgetByTypeCurrentEstimate2025.find(
         item => item.label === 'Special Purpose Appropriations'
@@ -144,9 +142,10 @@ const topThreeLocalRevenueM =
   (businessTax?.amountM ?? 0) +
   (basicRPT?.amountM ?? 0) +
   (sefTax?.amountM ?? 0);
-const topThreeLocalRevenueShare = localReceipts?.amountM
-  ? (topThreeLocalRevenueM / localReceipts.amountM) * 100
-  : 0;
+const topThreeLocalRevenueShare =
+  localReceipts?.amountM
+    ? (topThreeLocalRevenueM / localReceipts.amountM) * 100
+    : 0;
 const socialServices = actualSpendingByFunction.find(
   item => item.label === 'Social Services'
 );
@@ -171,17 +170,15 @@ const barangaysUnder6000 = sortedBarangays.filter(
   barangay => barangay.population2024 < 6000
 );
 
+
 const populationIndicator = cityIndicatorById.get('population-total');
-const populationGrowthIndicator = cityIndicatorById.get(
-  'population-growth-rate'
-);
+const populationGrowthIndicator = cityIndicatorById.get('population-growth-rate');
 const populationTrend = cityIndicatorObservations('population-total');
-const populationGrowthTrend = cityIndicatorObservations(
-  'population-growth-rate'
-);
+const populationGrowthTrend = cityIndicatorObservations('population-growth-rate');
 const populationGrowthSource =
   cityIndicatorSources['psa-openstat-population-growth-2024'];
-const currentBoundarySource = cityIndicatorSources['psa-psgc-makati-current'];
+const currentBoundarySource =
+  cityIndicatorSources['psa-psgc-makati-current'];
 
 if (
   !populationIndicator ||
@@ -189,9 +186,7 @@ if (
   !populationGrowthSource ||
   !currentBoundarySource
 ) {
-  throw new Error(
-    'Population flagship report requires canonical Wave 4 indicator metadata.'
-  );
+  throw new Error('Population flagship report requires canonical Wave 4 indicator metadata.');
 }
 
 const numericObservation = (
@@ -199,29 +194,15 @@ const numericObservation = (
   label: string
 ) => {
   if (typeof value !== 'number') {
-    throw new Error(
-      'Population flagship report requires numeric ' + label + '.'
-    );
+    throw new Error('Population flagship report requires numeric ' + label + '.');
   }
   return value;
 };
 
-const population2010 = numericObservation(
-  populationTrend[0]?.value,
-  '2010 population'
-);
-const population2015 = numericObservation(
-  populationTrend[1]?.value,
-  '2015 population'
-);
-const population2020 = numericObservation(
-  populationTrend[2]?.value,
-  '2020 population'
-);
-const population2024 = numericObservation(
-  populationTrend[3]?.value,
-  '2024 population'
-);
+const population2010 = numericObservation(populationTrend[0]?.value, '2010 population');
+const population2015 = numericObservation(populationTrend[1]?.value, '2015 population');
+const population2020 = numericObservation(populationTrend[2]?.value, '2020 population');
+const population2024 = numericObservation(populationTrend[3]?.value, '2024 population');
 const growth2010to2015 = numericObservation(
   populationGrowthTrend[0]?.value,
   '2010–2015 growth rate'
@@ -236,6 +217,7 @@ const growth2020to2024 = numericObservation(
 );
 const populationAdded2020to2024 = population2024 - population2020;
 const growthAccelerationPp = growth2020to2024 - growth2015to2020;
+
 
 const auditSourceById = new Map(
   integrityAuditSources.map(source => [source.id, source] as const)
@@ -263,9 +245,7 @@ const auditFindingsWithTrails = integrityAuditFindings.map(finding => {
     candidate => candidate.findingId === finding.id
   );
   if (!trail) {
-    throw new Error(
-      'Records flagship requires an audit trail for ' + finding.id
-    );
+    throw new Error('Records flagship requires an audit trail for ' + finding.id);
   }
   const actions = integrityAuditActions.filter(
     action => action.findingId === finding.id
@@ -322,6 +302,7 @@ const auditFindingSourceIds = (findingId: string) => {
   return auditReportSourceIds(finding.sourceIds);
 };
 
+
 const recordsFlagshipSources: [ReportSourceV2, ...ReportSourceV2[]] = [
   {
     id: '1',
@@ -338,7 +319,8 @@ const recordsFlagshipSources: [ReportSourceV2, ...ReportSourceV2[]] = [
     href: '/accountability?type=audit',
     sourceKind: 'canonical-internal',
     publisher: 'BetterMakati',
-    note: 'Underlying canonical Accountability entries from which finding-level records are derived.',
+    note:
+      'Underlying canonical Accountability entries from which finding-level records are derived.',
     checkedOn: reviewedOn,
   },
   ...[
@@ -359,12 +341,14 @@ export const reports: FeaturedReportV2[] = [
     date: reportPublishedOn,
     headline:
       'Makati’s 2026 budget proposal is above the adopted 2025 plan but below the city’s later 2025 estimate',
-    subheadline: `${moneyB(budgetSummary2026.totalBudgetM)} proposed for 2026 is ${percent(
-      pctChange(budgetSummary.totalBudgetM, budgetSummary2026.totalBudgetM)
-    )} above the original 2025 budget, while remaining ${percent(
-      Math.abs(proposedVsCurrentEstimate)
-    )} below the 2025 current-year estimate shown in the same budget cycle.`,
-    synthesis: `The 2026 proposal grows mainly through operating expenditure when compared with the original 2025 adopted plan, but the direction reverses when it is compared with the city’s higher 2025 current-year estimate.`,
+    subheadline:
+      `${moneyB(budgetSummary2026.totalBudgetM)} proposed for 2026 is ${percent(
+        pctChange(budgetSummary.totalBudgetM, budgetSummary2026.totalBudgetM)
+      )} above the original 2025 budget, while remaining ${percent(
+        Math.abs(proposedVsCurrentEstimate)
+      )} below the 2025 current-year estimate shown in the same budget cycle.`,
+    synthesis:
+      `The 2026 proposal grows mainly through operating expenditure when compared with the original 2025 adopted plan, but the direction reverses when it is compared with the city’s higher 2025 current-year estimate.`,
     sections: [
       {
         id: 'two-baselines',
@@ -373,23 +357,24 @@ export const reports: FeaturedReportV2[] = [
           {
             kind: 'paragraph',
             role: 'fact',
-            text: `Makati’s proposed 2026 appropriation is ${moneyB(
-              budgetSummary2026.totalBudgetM
-            )}. Against the original ${moneyB(
-              budgetSummary.totalBudgetM
-            )} adopted 2025 plan, that is an increase of ${moneyB(
-              adoptedIncreaseM
-            )}, or ${percent(
-              pctChange(
-                budgetSummary.totalBudgetM,
+            text:
+              `Makati’s proposed 2026 appropriation is ${moneyB(
                 budgetSummary2026.totalBudgetM
-              )
-            )}. The 2026 Annual Budget Report also shows a later 2025 current-year estimate of ${moneyB(
-              budgetCurrentEstimate2025.totalAppropriationM
-            )}; against that estimate, the 2026 proposal is ${moneyB(
-              budgetCurrentEstimate2025.totalAppropriationM -
-                budgetSummary2026.totalBudgetM
-            )} lower.`,
+              )}. Against the original ${moneyB(
+                budgetSummary.totalBudgetM
+              )} adopted 2025 plan, that is an increase of ${moneyB(
+                adoptedIncreaseM
+              )}, or ${percent(
+                pctChange(
+                  budgetSummary.totalBudgetM,
+                  budgetSummary2026.totalBudgetM
+                )
+              )}. The 2026 Annual Budget Report also shows a later 2025 current-year estimate of ${moneyB(
+                budgetCurrentEstimate2025.totalAppropriationM
+              )}; against that estimate, the 2026 proposal is ${moneyB(
+                budgetCurrentEstimate2025.totalAppropriationM -
+                  budgetSummary2026.totalBudgetM
+              )} lower.`,
             evidence: {
               sourceIds: ['1', '2', '3'],
               records: [
@@ -439,10 +424,10 @@ export const reports: FeaturedReportV2[] = [
         blocks: [
           {
             kind: 'stat',
-            label:
-              'Share of the ₱2.0B adopted-plan increase attributable to MOOE',
+            label: 'Share of the ₱2.0B adopted-plan increase attributable to MOOE',
             value: percent(mooeShareOfIncrease),
-            detail: `MOOE rises by ${moneyB(mooeIncreaseM)} from the adopted 2025 plan to the proposed 2026 budget.`,
+            detail:
+              `MOOE rises by ${moneyB(mooeIncreaseM)} from the adopted 2025 plan to the proposed 2026 budget.`,
             evidence: {
               sourceIds: ['1', '2', '3'],
             },
@@ -474,11 +459,12 @@ export const reports: FeaturedReportV2[] = [
           {
             kind: 'paragraph',
             role: 'analysis',
-            text: `The phrase “budget increase” therefore needs a baseline. Relative to the original 2025 plan, MOOE explains ${percent(
-              mooeShareOfIncrease
-            )} of the increase. Relative to the later 2025 estimate, however, proposed 2026 MOOE is ${percent(
-              Math.abs(pctChange(currentEstimateMooe, proposedMooe))
-            )} lower. The public record supports a composition finding, not a conclusion about whether operating spending is excessive or efficient.`,
+            text:
+              `The phrase “budget increase” therefore needs a baseline. Relative to the original 2025 plan, MOOE explains ${percent(
+                mooeShareOfIncrease
+              )} of the increase. Relative to the later 2025 estimate, however, proposed 2026 MOOE is ${percent(
+                Math.abs(pctChange(currentEstimateMooe, proposedMooe))
+              )} lower. The public record supports a composition finding, not a conclusion about whether operating spending is excessive or efficient.`,
             evidence: {
               sourceIds: ['1', '2', '3'],
             },
@@ -493,7 +479,8 @@ export const reports: FeaturedReportV2[] = [
         href: '/projects-budget#budget',
         sourceKind: 'canonical-internal',
         publisher: 'BetterMakati',
-        note: 'Canonical comparison of the 2025 adopted plan, 2025 current-year estimate and 2026 proposal.',
+        note:
+          'Canonical comparison of the 2025 adopted plan, 2025 current-year estimate and 2026 proposal.',
         checkedOn: reviewedOn,
       },
       {
@@ -516,7 +503,8 @@ export const reports: FeaturedReportV2[] = [
       },
     ],
     methodology: {
-      text: 'The 2025 adopted budget and the 2025 current-year estimate are different fiscal baselines. Percentage changes are computed separately against each; neither series is treated as interchangeable with reported full-year actual expenditure.',
+      text:
+        'The 2025 adopted budget and the 2025 current-year estimate are different fiscal baselines. Percentage changes are computed separately against each; neither series is treated as interchangeable with reported full-year actual expenditure.',
       evidence: {
         sourceIds: ['1', '2', '3'],
       },
@@ -528,11 +516,12 @@ export const reports: FeaturedReportV2[] = [
     date: reportPublishedOn,
     headline:
       'Makati’s 2025 receipts were overwhelmingly local while social services led reported spending',
-    subheadline: `Local sources supplied ${percent(
-      localReceipts?.share ?? 0
-    )} of reported receipts, while Social Services accounted for ${percent(
-      socialServices?.share ?? 0
-    )} of reported expenditure.`,
+    subheadline:
+      `Local sources supplied ${percent(
+        localReceipts?.share ?? 0
+      )} of reported receipts, while Social Services accounted for ${percent(
+        socialServices?.share ?? 0
+      )} of reported expenditure.`,
     synthesis:
       'Makati’s reported 2025 fiscal profile combined a highly local revenue base with a spending mix dominated by Social Services, while the public fiscal tables do not trace particular taxes to particular programs.',
     sections: [
@@ -543,17 +532,18 @@ export const reports: FeaturedReportV2[] = [
           {
             kind: 'paragraph',
             role: 'fact',
-            text: `Makati reported ${moneyB(
-              budgetSummary.actualReceiptsM
-            )} in 2025 receipts. Local sources accounted for ${moneyB(
-              localReceipts?.amountM ?? 0
-            )}, or ${percent(
-              localReceipts?.share ?? 0
-            )}. External sources contributed ${moneyB(
-              externalReceipts?.amountM ?? 0
-            )}, while non-income receipts accounted for ${moneyB(
-              nonIncomeReceipts?.amountM ?? 0
-            )}.`,
+            text:
+              `Makati reported ${moneyB(
+                budgetSummary.actualReceiptsM
+              )} in 2025 receipts. Local sources accounted for ${moneyB(
+                localReceipts?.amountM ?? 0
+              )}, or ${percent(
+                localReceipts?.share ?? 0
+              )}. External sources contributed ${moneyB(
+                externalReceipts?.amountM ?? 0
+              )}, while non-income receipts accounted for ${moneyB(
+                nonIncomeReceipts?.amountM ?? 0
+              )}.`,
             evidence: {
               sourceIds: ['1', '2'],
               records: [
@@ -569,9 +559,10 @@ export const reports: FeaturedReportV2[] = [
             kind: 'stat',
             label: 'Local-source receipts',
             value: percent(localReceipts?.share ?? 0),
-            detail: `${moneyB(localReceipts?.amountM ?? 0)} of ${moneyB(
-              budgetSummary.actualReceiptsM
-            )} in reported receipts.`,
+            detail:
+              `${moneyB(localReceipts?.amountM ?? 0)} of ${moneyB(
+                budgetSummary.actualReceiptsM
+              )} in reported receipts.`,
             evidence: {
               sourceIds: ['1', '2'],
             },
@@ -579,11 +570,12 @@ export const reports: FeaturedReportV2[] = [
           {
             kind: 'paragraph',
             role: 'fact',
-            text: `Within local revenue, Business Tax, Basic Real Property Tax and Special Education Fund Tax together produced ${moneyB(
-              topThreeLocalRevenueM
-            )}, or ${percent(
-              topThreeLocalRevenueShare
-            )} of local-source receipts.`,
+            text:
+              `Within local revenue, Business Tax, Basic Real Property Tax and Special Education Fund Tax together produced ${moneyB(
+                topThreeLocalRevenueM
+              )}, or ${percent(
+                topThreeLocalRevenueShare
+              )} of local-source receipts.`,
             evidence: {
               sourceIds: ['1', '2'],
             },
@@ -618,15 +610,17 @@ export const reports: FeaturedReportV2[] = [
           {
             kind: 'paragraph',
             role: 'fact',
-            text: `Reported 2025 expenditure totaled ${moneyB(
-              budgetSummary.actualExpendituresM
-            )}. Social Services accounted for ${moneyB(
-              socialServices?.amountM ?? 0
-            )}, or ${percent(
-              socialServices?.share ?? 0
-            )}, exceeding the combined ${moneyB(
-              budgetSummary.actualExpendituresM - (socialServices?.amountM ?? 0)
-            )} reported under all other functional categories.`,
+            text:
+              `Reported 2025 expenditure totaled ${moneyB(
+                budgetSummary.actualExpendituresM
+              )}. Social Services accounted for ${moneyB(
+                socialServices?.amountM ?? 0
+              )}, or ${percent(
+                socialServices?.share ?? 0
+              )}, exceeding the combined ${moneyB(
+                budgetSummary.actualExpendituresM -
+                  (socialServices?.amountM ?? 0)
+              )} reported under all other functional categories.`,
             evidence: {
               sourceIds: ['1', '2'],
               records: [
@@ -662,7 +656,8 @@ export const reports: FeaturedReportV2[] = [
           {
             kind: 'paragraph',
             role: 'analysis',
-            text: 'These two distributions answer different questions. The receipt table describes where city revenue was recorded as coming from; the functional expenditure table describes how spending was classified. They do not establish that a specific tax funded a specific service, nor do expenditure shares by themselves measure program outcomes.',
+            text:
+              'These two distributions answer different questions. The receipt table describes where city revenue was recorded as coming from; the functional expenditure table describes how spending was classified. They do not establish that a specific tax funded a specific service, nor do expenditure shares by themselves measure program outcomes.',
             evidence: {
               sourceIds: ['1', '2'],
             },
@@ -677,7 +672,8 @@ export const reports: FeaturedReportV2[] = [
         href: '/projects-budget#budget',
         sourceKind: 'canonical-internal',
         publisher: 'BetterMakati',
-        note: 'Canonical 2025 receipts, local-revenue breakdown and expenditure-by-function tables.',
+        note:
+          'Canonical 2025 receipts, local-revenue breakdown and expenditure-by-function tables.',
         checkedOn: reviewedOn,
       },
       {
@@ -697,37 +693,39 @@ export const reports: FeaturedReportV2[] = [
     date: reportPublishedOn,
     headline:
       'Makati’s largest barangay has more than eighteen times the resident population of its smallest',
-    subheadline: `${largestBarangay?.name ?? 'Pio Del Pilar'} has ${(
-      largestBarangay?.population2024 ?? 0
-    ).toLocaleString()} residents, while ${smallestBarangay?.name ?? 'Carmona'} has ${(
-      smallestBarangay?.population2024 ?? 0
-    ).toLocaleString()}; the three largest barangays contain ${percent(
-      topThreePopulationShare
-    )} of the city’s 2024 population.`,
-    synthesis: `Makati’s 23 barangays operate at sharply different resident-population scales: the largest is ${largestToSmallestRatio.toFixed(
-      1
-    )} times the smallest, while the top three account for ${percent(
-      topThreePopulationShare
-    )} of all residents on the current city boundary.`,
+    subheadline:
+      `${largestBarangay?.name ?? 'Pio Del Pilar'} has ${(
+        largestBarangay?.population2024 ?? 0
+      ).toLocaleString()} residents, while ${smallestBarangay?.name ?? 'Carmona'} has ${(
+        smallestBarangay?.population2024 ?? 0
+      ).toLocaleString()}; the three largest barangays contain ${percent(
+        topThreePopulationShare
+      )} of the city’s 2024 population.`,
+    synthesis:
+      `Makati’s 23 barangays operate at sharply different resident-population scales: the largest is ${largestToSmallestRatio.toFixed(
+        1
+      )} times the smallest, while the top three account for ${percent(
+        topThreePopulationShare
+      )} of all residents on the current city boundary.`,
     sections: [
       {
         id: 'concentration',
-        heading:
-          'A large share of residents is concentrated in three barangays',
+        heading: 'A large share of residents is concentrated in three barangays',
         blocks: [
           {
             kind: 'paragraph',
             role: 'fact',
-            text: `Makati’s 2024 resident population is ${currentMakatiPopulation2024.toLocaleString()}. ${topThreeBarangays
-              .map(
-                barangay =>
-                  `${barangay.name} (${barangay.population2024.toLocaleString()})`
-              )
-              .join(
-                ', '
-              )} together contain ${topThreePopulation.toLocaleString()} residents, or ${percent(
-              topThreePopulationShare
-            )} of the city total.`,
+            text:
+              `Makati’s 2024 resident population is ${currentMakatiPopulation2024.toLocaleString()}. ${topThreeBarangays
+                .map(
+                  barangay =>
+                    `${barangay.name} (${barangay.population2024.toLocaleString()})`
+                )
+                .join(
+                  ', '
+                )} together contain ${topThreePopulation.toLocaleString()} residents, or ${percent(
+                topThreePopulationShare
+              )} of the city total.`,
             evidence: {
               sourceIds: ['1', '2', '3', '4'],
               records: [
@@ -743,7 +741,8 @@ export const reports: FeaturedReportV2[] = [
             kind: 'stat',
             label: 'Largest-to-smallest population ratio',
             value: largestToSmallestRatio.toFixed(1) + '×',
-            detail: `${largestBarangay?.name} compared with ${smallestBarangay?.name} in the 2024 resident-population count.`,
+            detail:
+              `${largestBarangay?.name} compared with ${smallestBarangay?.name} in the 2024 resident-population count.`,
             evidence: {
               sourceIds: ['2', '4'],
             },
@@ -778,9 +777,10 @@ export const reports: FeaturedReportV2[] = [
           {
             kind: 'paragraph',
             role: 'fact',
-            text: `${barangaysUnder6000.length} of Makati’s 23 barangays have fewer than 6,000 residents in the 2024 count: ${barangaysUnder6000
-              .map(barangay => barangay.name)
-              .join(', ')}.`,
+            text:
+              `${barangaysUnder6000.length} of Makati’s 23 barangays have fewer than 6,000 residents in the 2024 count: ${barangaysUnder6000
+                .map(barangay => barangay.name)
+                .join(', ')}.`,
             evidence: {
               sourceIds: ['2', '4'],
             },
@@ -788,7 +788,8 @@ export const reports: FeaturedReportV2[] = [
           {
             kind: 'paragraph',
             role: 'analysis',
-            text: 'Citywide averages therefore hide substantial differences in resident scale. This report stops at population distribution: it does not infer service demand, daytime population, land-use intensity or need for facilities from resident counts alone.',
+            text:
+              'Citywide averages therefore hide substantial differences in resident scale. This report stops at population distribution: it does not infer service demand, daytime population, land-use intensity or need for facilities from resident counts alone.',
             evidence: {
               sourceIds: ['1', '2', '3', '4'],
             },
@@ -803,7 +804,8 @@ export const reports: FeaturedReportV2[] = [
         href: '/statistics',
         sourceKind: 'canonical-internal',
         publisher: 'BetterMakati',
-        note: 'Canonical population-total indicator for the current 23-barangay boundary.',
+        note:
+          'Canonical population-total indicator for the current 23-barangay boundary.',
         checkedOn: reviewedOn,
       },
       {
@@ -835,7 +837,8 @@ export const reports: FeaturedReportV2[] = [
       },
     ],
     methodology: {
-      text: 'All population statements use the current 23-barangay Makati boundary and resident population. Counts are not proxies for daytime population, service utilization, land area or population density.',
+      text:
+        'All population statements use the current 23-barangay Makati boundary and resident population. Counts are not proxies for daytime population, service utilization, land area or population density.',
       evidence: {
         sourceIds: ['1', '2', '3', '4'],
         records: [
@@ -854,16 +857,18 @@ export const reports: FeaturedReportV2[] = [
     date: reportPublishedOn,
     headline:
       'Makati’s population growth accelerated to 1.37% a year in 2020–2024',
-    subheadline: `The PSA comparable series shows average annual growth rising from ${growth2015to2020.toFixed(
-      2
-    )}% in 2015–2020 to ${growth2020to2024.toFixed(
-      2
-    )}% in 2020–2024, with resident population reaching ${population2024.toLocaleString()}.`,
-    synthesis: `After slowing between 2010 and 2020, Makati’s resident population growth accelerated in 2020–2024: the PSA-reported average annual rate rose by ${growthAccelerationPp.toFixed(
-      2
-    )} percentage points to ${growth2020to2024.toFixed(
-      2
-    )}%, while the city added ${populationAdded2020to2024.toLocaleString()} residents on the current 23-barangay boundary.`,
+    subheadline:
+      `The PSA comparable series shows average annual growth rising from ${growth2015to2020.toFixed(
+        2
+      )}% in 2015–2020 to ${growth2020to2024.toFixed(
+        2
+      )}% in 2020–2024, with resident population reaching ${population2024.toLocaleString()}.`,
+    synthesis:
+      `After slowing between 2010 and 2020, Makati’s resident population growth accelerated in 2020–2024: the PSA-reported average annual rate rose by ${growthAccelerationPp.toFixed(
+        2
+      )} percentage points to ${growth2020to2024.toFixed(
+        2
+      )}%, while the city added ${populationAdded2020to2024.toLocaleString()} residents on the current 23-barangay boundary.`,
     sections: [
       {
         id: 'growth-accelerated',
@@ -872,13 +877,14 @@ export const reports: FeaturedReportV2[] = [
           {
             kind: 'paragraph',
             role: 'fact',
-            text: `PSA reports Makati’s average annual population growth at ${growth2010to2015.toFixed(
-              2
-            )}% for 2010–2015, ${growth2015to2020.toFixed(
-              2
-            )}% for 2015–2020 and ${growth2020to2024.toFixed(
-              2
-            )}% for 2020–2024. The latest interval is therefore the fastest of the three comparable intervals in the current series.`,
+            text:
+              `PSA reports Makati’s average annual population growth at ${growth2010to2015.toFixed(
+                2
+              )}% for 2010–2015, ${growth2015to2020.toFixed(
+                2
+              )}% for 2015–2020 and ${growth2020to2024.toFixed(
+                2
+              )}% for 2020–2024. The latest interval is therefore the fastest of the three comparable intervals in the current series.`,
             evidence: {
               sourceIds: ['1', '2'],
               records: [
@@ -894,9 +900,10 @@ export const reports: FeaturedReportV2[] = [
             kind: 'stat',
             label: 'Average annual population growth, 2020–2024',
             value: growth2020to2024.toFixed(2) + '%',
-            detail: `Up ${growthAccelerationPp.toFixed(
-              2
-            )} percentage points from the 2015–2020 interval.`,
+            detail:
+              `Up ${growthAccelerationPp.toFixed(
+                2
+              )} percentage points from the 2015–2020 interval.`,
             evidence: {
               sourceIds: ['1', '2'],
               records: [
@@ -948,7 +955,8 @@ export const reports: FeaturedReportV2[] = [
           {
             kind: 'paragraph',
             role: 'fact',
-            text: `On the same current-city series, resident population rose from ${population2010.toLocaleString()} in 2010 to ${population2015.toLocaleString()} in 2015, ${population2020.toLocaleString()} in 2020 and ${population2024.toLocaleString()} in 2024. The 2020–2024 increase was ${populationAdded2020to2024.toLocaleString()} residents.`,
+            text:
+              `On the same current-city series, resident population rose from ${population2010.toLocaleString()} in 2010 to ${population2015.toLocaleString()} in 2015, ${population2020.toLocaleString()} in 2020 and ${population2024.toLocaleString()} in 2024. The 2020–2024 increase was ${populationAdded2020to2024.toLocaleString()} residents.`,
             evidence: {
               sourceIds: ['1', '2', '3'],
               records: [
@@ -994,7 +1002,8 @@ export const reports: FeaturedReportV2[] = [
           {
             kind: 'paragraph',
             role: 'analysis',
-            text: 'The series establishes a change in resident-population growth, not its cause. It does not by itself identify whether migration, household formation, births, deaths, housing supply or other factors explain the acceleration, and it should not be read as a measure of Makati’s daytime population.',
+            text:
+              'The series establishes a change in resident-population growth, not its cause. It does not by itself identify whether migration, household formation, births, deaths, housing supply or other factors explain the acceleration, and it should not be read as a measure of Makati’s daytime population.',
             evidence: {
               sourceIds: ['1', '2', '3'],
               records: [
@@ -1021,7 +1030,8 @@ export const reports: FeaturedReportV2[] = [
         href: '/statistics',
         sourceKind: 'canonical-internal',
         publisher: 'BetterMakati',
-        note: 'Canonical Wave 4 population-total and population-growth-rate indicators on the current 23-barangay boundary.',
+        note:
+          'Canonical Wave 4 population-total and population-growth-rate indicators on the current 23-barangay boundary.',
         checkedOn: reviewedOn,
       },
       {
@@ -1044,7 +1054,8 @@ export const reports: FeaturedReportV2[] = [
       },
     ],
     methodology: {
-      text: 'The report uses the PSA-published average annual growth rates rather than recomputing a simple calendar-year CAGR. All population levels use the comparable current Makati 23-barangay boundary; the canonical indicator notes that the PSA series excludes the 10 barangays transferred to Taguig.',
+      text:
+        'The report uses the PSA-published average annual growth rates rather than recomputing a simple calendar-year CAGR. All population levels use the comparable current Makati 23-barangay boundary; the canonical indicator notes that the PSA series excludes the 10 barangays transferred to Taguig.',
       evidence: {
         sourceIds: ['1', '2', '3'],
         records: [
@@ -1061,6 +1072,8 @@ export const reports: FeaturedReportV2[] = [
         ],
       },
     },
+
+
   },
   {
     schemaVersion: 2,
@@ -1068,7 +1081,8 @@ export const reports: FeaturedReportV2[] = [
     date: reportPublishedOn,
     headline:
       'Three older Makati audit findings have follow-up records but no item-level closure in the indexed trail',
-    subheadline: `BetterMakati’s finding-level audit layer contains ${auditFindingsWithTrails.length} historical findings and ${integrityAuditActions.length} later response or implementation-evidence records; none of the three trails currently establishes a finding-specific closure status.`,
+    subheadline:
+      `BetterMakati’s finding-level audit layer contains ${auditFindingsWithTrails.length} historical findings and ${integrityAuditActions.length} later response or implementation-evidence records; none of the three trails currently establishes a finding-specific closure status.`,
     synthesis:
       'The public record indexed by BetterMakati shows later responses, controls or reporting for each of three historical audit findings, but the available follow-up does not map those later records back to the original recommendation closely enough to establish item-level closure.',
     sections: [
@@ -1079,7 +1093,8 @@ export const reports: FeaturedReportV2[] = [
           {
             kind: 'paragraph',
             role: 'fact',
-            text: `The Integrity layer currently contains ${integrityAuditFindings.length} finding-level historical audit records. They concern 2017 Development Fund loan payments, 2018 DepEd-Makati cash advances and 2018 Special Education Fund eligibility. Across those findings, BetterMakati has indexed ${integrityAuditActions.length} later response or implementation-evidence records.`,
+            text:
+              `The Integrity layer currently contains ${integrityAuditFindings.length} finding-level historical audit records. They concern 2017 Development Fund loan payments, 2018 DepEd-Makati cash advances and 2018 Special Education Fund eligibility. Across those findings, BetterMakati has indexed ${integrityAuditActions.length} later response or implementation-evidence records.`,
             evidence: {
               sourceIds: ['1', '2', '3'],
               records: auditFindingsWithTrails.flatMap(({ finding }) => [
@@ -1098,12 +1113,8 @@ export const reports: FeaturedReportV2[] = [
           },
           {
             kind: 'stat',
-            label:
-              'Finding-level trails without item-specific closure in the indexed record',
-            value:
-              integrityAuditResolutionTrails.length +
-              ' of ' +
-              integrityAuditFindings.length,
+            label: 'Finding-level trails without item-specific closure in the indexed record',
+            value: integrityAuditResolutionTrails.length + ' of ' + integrityAuditFindings.length,
             detail:
               '“Without item-specific closure” means the later record does not explicitly identify the original finding or recommendation with a resolved implementation status.',
             evidence: {
@@ -1129,13 +1140,27 @@ export const reports: FeaturedReportV2[] = [
               period: finding.auditPeriod,
               finding: finding.title,
               amount:
-                finding.amountM === undefined ? '—' : moneyM(finding.amountM),
+                finding.amountM === undefined
+                  ? '—'
+                  : moneyM(finding.amountM),
               laterEvidence:
-                actions.length + ' record' + (actions.length === 1 ? '' : 's'),
+                actions.length +
+                ' record' +
+                (actions.length === 1 ? '' : 's'),
               documentaryStatus: 'Item-level closure not established',
             })),
             evidence: {
-              sourceIds: ['1', '2', '3', '4', '5', '6', '7', '8', '9'],
+              sourceIds: [
+                '1',
+                '2',
+                '3',
+                '4',
+                '5',
+                '6',
+                '7',
+                '8',
+                '9',
+              ],
               records: integrityAuditFindings.map(finding => ({
                 recordType: 'integrity-audit-finding' as const,
                 id: finding.id,
@@ -1148,52 +1173,52 @@ export const reports: FeaturedReportV2[] = [
       {
         id: 'what-follow-up-means',
         heading: 'The follow-up is real, but the continuity differs by finding',
-        blocks: auditFindingsWithTrails.flatMap(
-          ({ finding, trail, actions }) => [
-            {
-              kind: 'paragraph' as const,
-              role: 'fact' as const,
-              text: `${finding.title}: ${finding.findingAsStated} Later evidence in the indexed trail: ${actions
+        blocks: auditFindingsWithTrails.flatMap(({ finding, trail, actions }) => [
+          {
+            kind: 'paragraph' as const,
+            role: 'fact' as const,
+            text:
+              `${finding.title}: ${finding.findingAsStated} Later evidence in the indexed trail: ${actions
                 .map(action => action.statementAsStated)
                 .join(' ')}`,
-              evidence: {
-                sourceIds: [
-                  ...new Set([
-                    ...auditFindingSourceIds(finding.id),
-                    ...auditFollowUpSourceIds(finding.id),
-                  ]),
-                ] as [string, ...string[]],
-                records: [
-                  {
-                    recordType: 'integrity-audit-finding' as const,
-                    id: finding.id,
-                    href: '/integrity#audits',
-                  },
-                  {
-                    recordType: 'accountability-entry' as const,
-                    id: finding.accountabilityEntryId,
-                    href: '/accountability?type=audit',
-                  },
-                ],
-              },
+            evidence: {
+              sourceIds: [
+                ...new Set([
+                  ...auditFindingSourceIds(finding.id),
+                  ...auditFollowUpSourceIds(finding.id),
+                ]),
+              ] as [string, ...string[]],
+              records: [
+                {
+                  recordType: 'integrity-audit-finding' as const,
+                  id: finding.id,
+                  href: '/integrity#audits',
+                },
+                {
+                  recordType: 'accountability-entry' as const,
+                  id: finding.accountabilityEntryId,
+                  href: '/accountability?type=audit',
+                },
+              ],
             },
-            {
-              kind: 'paragraph' as const,
-              role: 'analysis' as const,
-              text: `Documentary reading: ${trail.resolution.status === 'unresolved' ? trail.resolution.reason : trail.resolution.statementAsStated} This is a statement about the continuity of the indexed public record, not a conclusion that the underlying condition continued after the audit period.`,
-              evidence: {
-                sourceIds: auditFollowUpSourceIds(finding.id),
-                records: [
-                  {
-                    recordType: 'integrity-audit-finding' as const,
-                    id: finding.id,
-                    href: '/integrity#audits',
-                  },
-                ],
-              },
+          },
+          {
+            kind: 'paragraph' as const,
+            role: 'analysis' as const,
+            text:
+              `Documentary reading: ${trail.resolution.status === 'unresolved' ? trail.resolution.reason : trail.resolution.statementAsStated} This is a statement about the continuity of the indexed public record, not a conclusion that the underlying condition continued after the audit period.`,
+            evidence: {
+              sourceIds: auditFollowUpSourceIds(finding.id),
+              records: [
+                {
+                  recordType: 'integrity-audit-finding' as const,
+                  id: finding.id,
+                  href: '/integrity#audits',
+                },
+              ],
             },
-          ]
-        ) as [ReportContentBlock, ...ReportContentBlock[]],
+          },
+        ]) as [ReportContentBlock, ...ReportContentBlock[]],
       },
       {
         id: 'scope',
@@ -1202,7 +1227,8 @@ export const reports: FeaturedReportV2[] = [
           {
             kind: 'paragraph',
             role: 'fact',
-            text: `The Integrity layer also carries ${integrityAuditSourceOnlyRecords.length} source-only audit record: ${integrityAuditSourceOnlyRecords[0]?.title ?? 'the 2024 Makati Special Education Fund compliance audit'}. It is not counted among the three findings because the currently retrievable source path does not expose the finding-level text needed to create a canonical finding record.`,
+            text:
+              `The Integrity layer also carries ${integrityAuditSourceOnlyRecords.length} source-only audit record: ${integrityAuditSourceOnlyRecords[0]?.title ?? 'the 2024 Makati Special Education Fund compliance audit'}. It is not counted among the three findings because the currently retrievable source path does not expose the finding-level text needed to create a canonical finding record.`,
             evidence: {
               sourceIds: ['1', '2', '9'],
               records: integrityAuditSourceOnlyRecords.map(record => ({
@@ -1215,7 +1241,8 @@ export const reports: FeaturedReportV2[] = [
           {
             kind: 'paragraph',
             role: 'analysis',
-            text: 'The report therefore does not claim that all Makati audit findings remain open, nor that later corrective work did not occur. It identifies a narrower records problem: the public evidence currently indexed does not provide a finding-specific chain from recommendation to an explicit implementation or closure status for these three historical records.',
+            text:
+              'The report therefore does not claim that all Makati audit findings remain open, nor that later corrective work did not occur. It identifies a narrower records problem: the public evidence currently indexed does not provide a finding-specific chain from recommendation to an explicit implementation or closure status for these three historical records.',
             evidence: {
               sourceIds: ['1', '2', '3', '6', '7', '8', '9'],
             },
@@ -1225,7 +1252,8 @@ export const reports: FeaturedReportV2[] = [
     ],
     sources: recordsFlagshipSources,
     methodology: {
-      text: '“Closure” is used only when a later source explicitly maps back to the same finding or recommendation and states an implementation status. Aggregate audit implementation counts, related control activity and later reporting are retained as follow-up evidence but are not promoted to finding-specific closure without that continuity.',
+      text:
+        '“Closure” is used only when a later source explicitly maps back to the same finding or recommendation and states an implementation status. Aggregate audit implementation counts, related control activity and later reporting are retained as follow-up evidence but are not promoted to finding-specific closure without that continuity.',
       evidence: {
         sourceIds: ['1', '2', '3', '6', '7', '8', '9'],
         records: integrityAuditFindings.map(finding => ({
@@ -1235,14 +1263,14 @@ export const reports: FeaturedReportV2[] = [
         })),
       },
     },
+
   },
 
   {
     schemaVersion: 2,
     slug: 'embo-makati-taguig-transition',
     date: '3 October 2026',
-    headline:
-      'The EMBO Shift: How Makati Lost 10 Barangays, and What Changed After',
+    headline: 'The EMBO Shift: How Makati Lost 10 Barangays, and What Changed After',
     subheadline:
       'A Supreme Court boundary ruling moved 10 barangays from Makati to Taguig. The legal case ended first; the transition in schools, elections, budgets and public services unfolded afterward.',
     synthesis:
@@ -1255,13 +1283,15 @@ export const reports: FeaturedReportV2[] = [
           {
             kind: 'paragraph',
             role: 'fact',
-            text: 'In its 1 December 2021 decision in G.R. No. 235316, the Supreme Court reinstated with modification the trial-court ruling confirming Parcels 3 and 4 of the Fort Bonifacio Military Reservation as part of Taguig. Makati’s motion for reconsideration was denied with finality on 28 September 2022. In June 2023, the Court also denied Makati leave to file a second motion for reconsideration.',
+            text:
+              'In its 1 December 2021 decision in G.R. No. 235316, the Supreme Court reinstated with modification the trial-court ruling confirming Parcels 3 and 4 of the Fort Bonifacio Military Reservation as part of Taguig. Makati’s motion for reconsideration was denied with finality on 28 September 2022. In June 2023, the Court also denied Makati leave to file a second motion for reconsideration.',
             evidence: { sourceIds: ['1', '2'] },
           },
           {
             kind: 'paragraph',
             role: 'fact',
-            text: 'The Philippine Statistics Authority then transferred Cembo, Comembo, East Rembo, Pembo, Pitogo, Post Proper Northside, Post Proper Southside, Rizal, South Cembo and West Rembo from Makati to Taguig in the third-quarter 2023 Philippine Standard Geographic Code update.',
+            text:
+              'The Philippine Statistics Authority then transferred Cembo, Comembo, East Rembo, Pembo, Pitogo, Post Proper Northside, Post Proper Southside, Rizal, South Cembo and West Rembo from Makati to Taguig in the third-quarter 2023 Philippine Standard Geographic Code update.',
             evidence: { sourceIds: ['3'] },
           },
           {
@@ -1289,7 +1319,8 @@ export const reports: FeaturedReportV2[] = [
           {
             kind: 'paragraph',
             role: 'analysis',
-            text: 'The transfer creates a statistical break. PSA counts 309,770 residents in Makati’s remaining 23 barangays in 2024. Comparing that figure directly with Makati’s old citywide 2020 total as though the geography were unchanged would misstate demographic change; current-boundary and former-boundary series must be distinguished.',
+            text:
+              'The transfer creates a statistical break. PSA counts 309,770 residents in Makati’s remaining 23 barangays in 2024. Comparing that figure directly with Makati’s old citywide 2020 total as though the geography were unchanged would misstate demographic change; current-boundary and former-boundary series must be distinguished.',
             evidence: {
               sourceIds: ['4', '5'],
               records: [
@@ -1310,13 +1341,15 @@ export const reports: FeaturedReportV2[] = [
           {
             kind: 'paragraph',
             role: 'fact',
-            text: 'DepEd initially placed 14 affected public schools under direct supervision of the Office of the Secretary. Under the later Makati–Taguig–DepEd agreement implemented through DepEd Order No. 001, s. 2024, the Schools Division of Taguig City and Pateros assumed management and operation effective 1 January 2024. The agreement preserved the cities’ conflicting positions on ownership of school land, buildings, facilities and equipment for determination by the proper authorities.',
+            text:
+              'DepEd initially placed 14 affected public schools under direct supervision of the Office of the Secretary. Under the later Makati–Taguig–DepEd agreement implemented through DepEd Order No. 001, s. 2024, the Schools Division of Taguig City and Pateros assumed management and operation effective 1 January 2024. The agreement preserved the cities’ conflicting positions on ownership of school land, buildings, facilities and equipment for determination by the proper authorities.',
             evidence: { sourceIds: ['6'] },
           },
           {
             kind: 'paragraph',
             role: 'fact',
-            text: 'Taguig’s current health directory lists barangay health centers in nine of the ten transferred barangays: Cembo, Comembo, East Rembo, Pembo, Pitogo, Post Proper Southside, Rizal, South Cembo and West Rembo. East Rembo also has one of Taguig’s four 24/7 Super Health Centers. The directory checked for this report does not list a Post Proper Northside barangay health center; that is a limitation of the directory, not proof that residents have no health-service access.',
+            text:
+              'Taguig’s current health directory lists barangay health centers in nine of the ten transferred barangays: Cembo, Comembo, East Rembo, Pembo, Pitogo, Post Proper Southside, Rizal, South Cembo and West Rembo. East Rembo also has one of Taguig’s four 24/7 Super Health Centers. The directory checked for this report does not list a Post Proper Northside barangay health center; that is a limitation of the directory, not proof that residents have no health-service access.',
             evidence: { sourceIds: ['7'] },
           },
         ],
@@ -1328,69 +1361,76 @@ export const reports: FeaturedReportV2[] = [
           {
             kind: 'paragraph',
             role: 'fact',
-            text: 'For the 2025 elections, COMELEC Resolution No. 11069 placed Comembo, Pembo and Rizal in Taguig’s first legislative and councilor district, and Cembo, East Rembo, Pitogo, Post Proper Northside, Post Proper Southside, South Cembo and West Rembo in the second. It also provided for 12 councilor seats in each district.',
+            text:
+              'For the 2025 elections, COMELEC Resolution No. 11069 placed Comembo, Pembo and Rizal in Taguig’s first legislative and councilor district, and Cembo, East Rembo, Pitogo, Post Proper Northside, Post Proper Southside, South Cembo and West Rembo in the second. It also provided for 12 councilor seats in each district.',
             evidence: { sourceIds: ['8'] },
           },
           {
             kind: 'paragraph',
             role: 'analysis',
-            text: 'BetterMakati therefore keeps pre-transfer EMBO election results in Makati’s historical record but does not add post-transfer EMBO results to current Makati barangay totals.',
+            text:
+              'BetterMakati therefore keeps pre-transfer EMBO election results in Makati’s historical record but does not add post-transfer EMBO results to current Makati barangay totals.',
             evidence: { sourceIds: ['3', '8'] },
           },
         ],
       },
       {
         id: 'fiscal',
-        heading:
-          'The fiscal effect was real, but it was not a simple transfer of money',
+        heading: 'The fiscal effect was real, but it was not a simple transfer of money',
         blocks: [
           {
             kind: 'paragraph',
             role: 'fact',
-            text: 'DBM directed national agencies to take the final Makati–Taguig decision into account in budget matters involving the transferred barangays, and its final FY2024 National Tax Allotment process incorporated boundary changes. DBM’s 2024 city receipts table records Makati NTA receipts of ₱1.006 billion and Taguig NTA receipts of ₱3.149 billion.',
+            text:
+              'DBM directed national agencies to take the final Makati–Taguig decision into account in budget matters involving the transferred barangays, and its final FY2024 National Tax Allotment process incorporated boundary changes. DBM’s 2024 city receipts table records Makati NTA receipts of ₱1.006 billion and Taguig NTA receipts of ₱3.149 billion.',
             evidence: { sourceIds: ['9', '10', '11'] },
           },
           {
             kind: 'paragraph',
             role: 'fact',
-            text: 'Taguig’s recorded NTA receipts rose from ₱2.487 billion in 2023 to ₱3.149 billion in 2024, an increase of about ₱662 million or 26.6%. The same 2024 table records local-source receipts of ₱18.903 billion for Makati and ₱16.146 billion for Taguig.',
+            text:
+              'Taguig’s recorded NTA receipts rose from ₱2.487 billion in 2023 to ₱3.149 billion in 2024, an increase of about ₱662 million or 26.6%. The same 2024 table records local-source receipts of ₱18.903 billion for Makati and ₱16.146 billion for Taguig.',
             evidence: { sourceIds: ['11', '12'] },
           },
           {
             kind: 'paragraph',
             role: 'analysis',
-            text: 'Those figures should not be presented as a peso-for-peso transfer from Makati to Taguig. National allotments changed across LGUs and are only one part of each city’s finances. The defensible conclusion is that the boundary adjustment changed the allocation basis while Taguig’s recorded NTA receipts rose substantially in the first full fiscal year after the transfer.',
+            text:
+              'Those figures should not be presented as a peso-for-peso transfer from Makati to Taguig. National allotments changed across LGUs and are only one part of each city’s finances. The defensible conclusion is that the boundary adjustment changed the allocation basis while Taguig’s recorded NTA receipts rose substantially in the first full fiscal year after the transfer.',
             evidence: { sourceIds: ['9', '10', '11', '12'] },
           },
         ],
       },
       {
         id: 'facilities',
-        heading:
-          'Jurisdiction, operation and ownership are different questions',
+        heading: 'Jurisdiction, operation and ownership are different questions',
         blocks: [
           {
             kind: 'paragraph',
             role: 'fact',
-            text: 'The boundary ruling settled which city the 10 barangays belong to. It did not by itself decide ownership of every school, health center, park or other facility Makati had built or operated there. In January 2024, the West Rembo Fire Station reopened under a transition arrangement that allowed Bureau of Fire Protection personnel to use it while other issues remained under discussion.',
+            text:
+              'The boundary ruling settled which city the 10 barangays belong to. It did not by itself decide ownership of every school, health center, park or other facility Makati had built or operated there. In January 2024, the West Rembo Fire Station reopened under a transition arrangement that allowed Bureau of Fire Protection personnel to use it while other issues remained under discussion.',
             evidence: { sourceIds: ['1', '13'] },
           },
           {
             kind: 'paragraph',
             role: 'fact',
-            text: 'On 22 May 2025, Taguig RTC Branch 153 granted Taguig a writ of preliminary injunction covering health centers, covered courts, day care centers and other essential facilities. The writ allowed Taguig continued access and control while trial proceeded on the better right of possession. It was a provisional remedy, not a final judgment on ownership.',
+            text:
+              'On 22 May 2025, Taguig RTC Branch 153 granted Taguig a writ of preliminary injunction covering health centers, covered courts, day care centers and other essential facilities. The writ allowed Taguig continued access and control while trial proceeded on the better right of possession. It was a provisional remedy, not a final judgment on ownership.',
             evidence: { sourceIds: ['14'] },
           },
           {
             kind: 'paragraph',
             role: 'fact',
-            text: 'The former Makati Park and Garden is now operated by Taguig as TLC People’s Park in West Rembo and is listed by the city as a public recreational facility. That establishes present administration and use, not a final judicial determination of title.',
+            text:
+              'The former Makati Park and Garden is now operated by Taguig as TLC People’s Park in West Rembo and is listed by the city as a public recreational facility. That establishes present administration and use, not a final judicial determination of title.',
             evidence: { sourceIds: ['15'] },
           },
           {
             kind: 'paragraph',
             role: 'analysis',
-            text: 'As of this report’s 3 October 2026 research cutoff, no later publicly verifiable final merits decision resolving the broader facility-possession or ownership case was located. The current record therefore supports three separate statements: Taguig jurisdiction is settled; Taguig has court-backed operational control over facilities covered by the preliminary injunction; final ownership or better right of possession remains unresolved in the public record located for this report.',
+            text:
+              'As of this report’s 3 October 2026 research cutoff, no later publicly verifiable final merits decision resolving the broader facility-possession or ownership case was located. The current record therefore supports three separate statements: Taguig jurisdiction is settled; Taguig has court-backed operational control over facilities covered by the preliminary injunction; final ownership or better right of possession remains unresolved in the public record located for this report.',
             evidence: { sourceIds: ['14'] },
           },
         ],
@@ -1408,8 +1448,7 @@ export const reports: FeaturedReportV2[] = [
       },
       {
         id: '2',
-        label:
-          'SC Denies Makati’s Motion for Leave to Admit Second Motion for Reconsideration',
+        label: 'SC Denies Makati’s Motion for Leave to Admit Second Motion for Reconsideration',
         href: 'https://sc.judiciary.gov.ph/sc-denies-makatis-motion-for-leave-to-admit-second-motion-for-reconsideration-in-makati-taguig-territorial-dispute/',
         sourceKind: 'official-external',
         publisher: 'Supreme Court of the Philippines',
@@ -1489,8 +1528,7 @@ export const reports: FeaturedReportV2[] = [
       },
       {
         id: '11',
-        label:
-          'BESF 2026 Table F.13 — Statement of Receipts and Expenditures by Cities, 2024',
+        label: 'BESF 2026 Table F.13 — Statement of Receipts and Expenditures by Cities, 2024',
         href: 'https://www.dbm.gov.ph/wp-content/uploads/BESF/BESF2026/F13.pdf',
         sourceKind: 'official-external',
         publisher: 'Department of Budget and Management',
@@ -1499,8 +1537,7 @@ export const reports: FeaturedReportV2[] = [
       },
       {
         id: '12',
-        label:
-          'BESF 2025 Table F.13 — Statement of Receipts and Expenditures by Cities, 2023',
+        label: 'BESF 2025 Table F.13 — Statement of Receipts and Expenditures by Cities, 2023',
         href: 'https://www.dbm.gov.ph/wp-content/uploads/BESF/BESF2025/F13.pdf',
         sourceKind: 'official-external',
         publisher: 'Department of Budget and Management',
@@ -1518,8 +1555,7 @@ export const reports: FeaturedReportV2[] = [
       },
       {
         id: '14',
-        label:
-          'Court extends Taguig control over government facilities in EMBOs',
+        label: 'Court extends Taguig control over government facilities in EMBOs',
         href: 'https://www.pna.gov.ph/articles/1250718',
         sourceKind: 'secondary',
         publisher: 'Philippine News Agency',
@@ -1537,7 +1573,8 @@ export const reports: FeaturedReportV2[] = [
     ],
     methodology: {
       title: 'Boundary and legal-status note',
-      text: 'Population comparisons use the current official 23-barangay Makati geography and the 2024 POPCEN for the transferred barangays. Legal status is stated only to the level established by the cited judgments or interim orders. A preliminary injunction over facility access and possession is not treated as a final ruling on title.',
+      text:
+        'Population comparisons use the current official 23-barangay Makati geography and the 2024 POPCEN for the transferred barangays. Legal status is stated only to the level established by the cited judgments or interim orders. A preliminary injunction over facility access and possession is not treated as a final ruling on title.',
       evidence: { sourceIds: ['1', '3', '4', '5', '14'] },
     },
   },
@@ -1546,8 +1583,7 @@ export const reports: FeaturedReportV2[] = [
     schemaVersion: 2,
     slug: 'makati-political-dynasties-election-record',
     date: '5 October 2026',
-    headline:
-      'Makati’s Political Dynasty: What the Election Record Actually Shows',
+    headline: 'Makati’s Political Dynasty: What the Election Record Actually Shows',
     subheadline:
       'Five members of the Binay family have won Makati’s mayoralty since 1988. The record shows both succession across terms and relatives holding local or national office at the same time—but it does not, by itself, prove why voters chose them or what caused particular policy outcomes.',
     synthesis:
@@ -1555,19 +1591,20 @@ export const reports: FeaturedReportV2[] = [
     sections: [
       {
         id: 'definition-and-law',
-        heading:
-          '“Political dynasty” is a constitutional category still awaiting a statutory definition',
+        heading: '“Political dynasty” is a constitutional category still awaiting a statutory definition',
         blocks: [
           {
             kind: 'paragraph',
             role: 'fact',
-            text: 'Article II, Section 26 of the 1987 Constitution directs the State to guarantee equal access to public service and prohibit political dynasties “as may be defined by law.” On 26 August 2026, the Supreme Court held that Congress has a mandatory constitutional duty to enact that law. The Court did not itself define which relatives, offices or succession patterns are prohibited, and it declined to direct COMELEC to disqualify candidates without legislation supplying those rules.',
+            text:
+              'Article II, Section 26 of the 1987 Constitution directs the State to guarantee equal access to public service and prohibit political dynasties “as may be defined by law.” On 26 August 2026, the Supreme Court held that Congress has a mandatory constitutional duty to enact that law. The Court did not itself define which relatives, offices or succession patterns are prohibited, and it declined to direct COMELEC to disqualify candidates without legislation supplying those rules.',
             evidence: { sourceIds: ['1', '2'] },
           },
           {
             kind: 'paragraph',
             role: 'context',
-            text: 'This report therefore uses “dynasty” descriptively, not as a present ground for disqualification. It records two observable patterns used in research: relatives serving in elected office during the same period, and relatives succeeding one another across election terms.',
+            text:
+              'This report therefore uses “dynasty” descriptively, not as a present ground for disqualification. It records two observable patterns used in research: relatives serving in elected office during the same period, and relatives succeeding one another across election terms.',
             evidence: { sourceIds: ['2', '8'] },
           },
         ],
@@ -1589,10 +1626,8 @@ export const reports: FeaturedReportV2[] = [
             rows: [
               {
                 person: 'Jejomar C. Binay',
-                relationship:
-                  'Spouse of Elenita; father of Nancy, Abby and Junjun',
-                offices:
-                  'Makati mayor, 1988–1998 and 2001–2010; Vice President, 2010–2016',
+                relationship: 'Spouse of Elenita; father of Nancy, Abby and Junjun',
+                offices: 'Makati mayor, 1988–1998 and 2001–2010; Vice President, 2010–2016',
               },
               {
                 person: 'Elenita S. Binay',
@@ -1606,10 +1641,8 @@ export const reports: FeaturedReportV2[] = [
               },
               {
                 person: 'Mar-len Abigail “Abby” S. Binay-Campos',
-                relationship:
-                  'Daughter of Jejomar and Elenita; spouse of Luis Campos Jr.',
-                offices:
-                  'Makati 2nd District representative, 2007–2016; Makati mayor, 2016–2025',
+                relationship: 'Daughter of Jejomar and Elenita; spouse of Luis Campos Jr.',
+                offices: 'Makati 2nd District representative, 2007–2016; Makati mayor, 2016–2025',
               },
               {
                 person: 'Maria Lourdes Nancy S. Binay',
@@ -1627,15 +1660,15 @@ export const reports: FeaturedReportV2[] = [
           {
             kind: 'paragraph',
             role: 'analysis',
-            text: 'The sequence is both vertical and horizontal. Vertical continuity appears when one relative follows another across terms: Jejomar to Elenita in 1998, Elenita back to Jejomar in 2001, Jejomar to Junjun in 2010, and Abby to Nancy in 2025. Horizontal overlap appears when relatives hold different offices during the same period, including the 2007–2010 overlap of Jejomar as mayor, Abby as representative and Junjun as councilor, and later overlaps among local, House and Senate positions.',
+            text:
+              'The sequence is both vertical and horizontal. Vertical continuity appears when one relative follows another across terms: Jejomar to Elenita in 1998, Elenita back to Jejomar in 2001, Jejomar to Junjun in 2010, and Abby to Nancy in 2025. Horizontal overlap appears when relatives hold different offices during the same period, including the 2007–2010 overlap of Jejomar as mayor, Abby as representative and Junjun as councilor, and later overlaps among local, House and Senate positions.',
             evidence: { sourceIds: ['3', '6', '8'] },
           },
         ],
       },
       {
         id: 'mayoral-election-record',
-        heading:
-          'The regular mayoral election record is continuous, but not politically uniform',
+        heading: 'The regular mayoral election record is continuous, but not politically uniform',
         blocks: [
           {
             kind: 'stat',
@@ -1657,66 +1690,16 @@ export const reports: FeaturedReportV2[] = [
               { key: 'margin', label: 'Vote margin', align: 'right' },
             ],
             rows: [
-              {
-                year: '1998',
-                winner: 'Elenita Binay',
-                runnerUp: 'Toro Yabut',
-                margin: '54,918',
-              },
-              {
-                year: '2001',
-                winner: 'Jejomar Binay',
-                runnerUp: 'Edu Manzano',
-                margin: '65,963',
-              },
-              {
-                year: '2004',
-                winner: 'Jejomar Binay',
-                runnerUp: 'Oscar Ibay',
-                margin: '136,137',
-              },
-              {
-                year: '2007',
-                winner: 'Jejomar Binay',
-                runnerUp: 'Lito Lapid',
-                margin: '176,353',
-              },
-              {
-                year: '2010',
-                winner: 'Junjun Binay',
-                runnerUp: 'Ernesto Mercado',
-                margin: '45,513',
-              },
-              {
-                year: '2013',
-                winner: 'Junjun Binay',
-                runnerUp: 'Rene Bondal',
-                margin: '182,957',
-              },
-              {
-                year: '2016',
-                winner: 'Abby Binay',
-                runnerUp: 'Kid Peña',
-                margin: '18,063',
-              },
-              {
-                year: '2019',
-                winner: 'Abby Binay',
-                runnerUp: 'Junjun Binay',
-                margin: '80,869',
-              },
-              {
-                year: '2022',
-                winner: 'Abby Binay',
-                runnerUp: 'Joel Hernandez',
-                margin: '322,179',
-              },
-              {
-                year: '2025',
-                winner: 'Nancy Binay',
-                runnerUp: 'Luis Campos Jr.',
-                margin: '29,234',
-              },
+              { year: '1998', winner: 'Elenita Binay', runnerUp: 'Toro Yabut', margin: '54,918' },
+              { year: '2001', winner: 'Jejomar Binay', runnerUp: 'Edu Manzano', margin: '65,963' },
+              { year: '2004', winner: 'Jejomar Binay', runnerUp: 'Oscar Ibay', margin: '136,137' },
+              { year: '2007', winner: 'Jejomar Binay', runnerUp: 'Lito Lapid', margin: '176,353' },
+              { year: '2010', winner: 'Junjun Binay', runnerUp: 'Ernesto Mercado', margin: '45,513' },
+              { year: '2013', winner: 'Junjun Binay', runnerUp: 'Rene Bondal', margin: '182,957' },
+              { year: '2016', winner: 'Abby Binay', runnerUp: 'Kid Peña', margin: '18,063' },
+              { year: '2019', winner: 'Abby Binay', runnerUp: 'Junjun Binay', margin: '80,869' },
+              { year: '2022', winner: 'Abby Binay', runnerUp: 'Joel Hernandez', margin: '322,179' },
+              { year: '2025', winner: 'Nancy Binay', runnerUp: 'Luis Campos Jr.', margin: '29,234' },
             ],
             evidence: {
               sourceIds: ['4'],
@@ -1732,7 +1715,8 @@ export const reports: FeaturedReportV2[] = [
           {
             kind: 'paragraph',
             role: 'fact',
-            text: 'Family continuity did not eliminate competition within the family. Abby Binay defeated her brother Junjun in the 2019 mayoral election. In 2025, Nancy Binay defeated her brother-in-law Luis Campos Jr. The same family network therefore appeared on opposing sides of two recent mayoral contests.',
+            text:
+              'Family continuity did not eliminate competition within the family. Abby Binay defeated her brother Junjun in the 2019 mayoral election. In 2025, Nancy Binay defeated her brother-in-law Luis Campos Jr. The same family network therefore appeared on opposing sides of two recent mayoral contests.',
             evidence: { sourceIds: ['4', '9'] },
           },
         ],
@@ -1744,13 +1728,15 @@ export const reports: FeaturedReportV2[] = [
           {
             kind: 'paragraph',
             role: 'analysis',
-            text: 'The evidence supports a narrow conclusion: Makati has experienced unusually durable family continuity in its mayoralty, reinforced at different times by relatives in the council, House, Senate and vice presidency. A University of the Philippines study of Metro Manila elections from 1988 to 2013 separately identified both simultaneous and inter-term Binay linkages, while cautioning that a dynasty index is a measure of family connections in office, not a finding about policy performance.',
+            text:
+              'The evidence supports a narrow conclusion: Makati has experienced unusually durable family continuity in its mayoralty, reinforced at different times by relatives in the council, House, Senate and vice presidency. A University of the Philippines study of Metro Manila elections from 1988 to 2013 separately identified both simultaneous and inter-term Binay linkages, while cautioning that a dynasty index is a measure of family connections in office, not a finding about policy performance.',
             evidence: { sourceIds: ['8'] },
           },
           {
             kind: 'paragraph',
             role: 'analysis',
-            text: 'Election results alone cannot establish why individual voters chose a candidate, whether family continuity caused a specific public-service outcome, or whether any candidate should be legally barred. Those questions require voter research, policy evaluation or a statutory rule that did not exist at this report’s 5 October 2026 cutoff. The report therefore does not score candidates, infer motives or treat shared family membership as proof of misconduct.',
+            text:
+              'Election results alone cannot establish why individual voters chose a candidate, whether family continuity caused a specific public-service outcome, or whether any candidate should be legally barred. Those questions require voter research, policy evaluation or a statutory rule that did not exist at this report’s 5 October 2026 cutoff. The report therefore does not score candidates, infer motives or treat shared family membership as proof of misconduct.',
             evidence: { sourceIds: ['2', '4', '8'] },
           },
         ],
@@ -1824,8 +1810,7 @@ export const reports: FeaturedReportV2[] = [
         label: 'Measuring political dynasties in Metro Manila',
         href: 'https://pre.econ.upd.edu.ph/index.php/pre/article/download/952/853',
         sourceKind: 'secondary',
-        publisher:
-          'The Philippine Review of Economics, University of the Philippines',
+        publisher: 'The Philippine Review of Economics, University of the Philippines',
         publishedOrPeriod: 'June 2017',
         checkedOn: '5 October 2026',
       },
@@ -1841,10 +1826,12 @@ export const reports: FeaturedReportV2[] = [
     ],
     methodology: {
       title: 'Scope and definition',
-      text: 'The family network is limited to relationships supported by the cited biographies and profiles. Election counts use BetterMakati’s existing candidate-level mayoral series. “Dynasty” describes simultaneous or successive elected service by relatives; it is not used here as a legal disqualification, a performance rating or evidence of wrongdoing.',
+      text:
+        'The family network is limited to relationships supported by the cited biographies and profiles. Election counts use BetterMakati’s existing candidate-level mayoral series. “Dynasty” describes simultaneous or successive elected service by relatives; it is not used here as a legal disqualification, a performance rating or evidence of wrongdoing.',
       evidence: { sourceIds: ['2', '4', '6', '7', '8'] },
     },
   },
+
 ];
 
 export const publicationReports = [...reports].reverse();
@@ -1855,7 +1842,7 @@ export const reportSlugAliases: Record<string, string> = {
 };
 
 export const resolveReportSlug = (slug?: string) =>
-  slug ? (reportSlugAliases[slug] ?? slug) : undefined;
+  slug ? reportSlugAliases[slug] ?? slug : undefined;
 
 export const findReport = (slug?: string) => {
   const canonicalSlug = resolveReportSlug(slug);
