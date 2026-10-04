@@ -232,8 +232,14 @@ const procurementEntries: AccountabilityEntry[] = cityMonitorRecords
     summary: record.summary,
     responsibleBodies: [record.sourcePublisher],
     period: record.date.slice(0, 4),
+    plannedAmountM:
+      record.stage === 'Bid submission deadline' && record.amount !== undefined
+        ? record.amount / 1_000_000
+        : undefined,
     reportedAmountM:
-      record.amount !== undefined ? record.amount / 1_000_000 : undefined,
+      record.stage !== 'Bid submission deadline' && record.amount !== undefined
+        ? record.amount / 1_000_000
+        : undefined,
     relatedHref: record.relatedHref,
     lastVerified: accountabilityReviewed,
     sources: [
