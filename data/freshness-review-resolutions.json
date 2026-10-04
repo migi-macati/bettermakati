@@ -1,4 +1,12 @@
 {
   "version": 1,
-  "resolutions": []
+  "resolutions": [
+    {
+      "key": "general-source-freshness:comelec-2025-results:check-failed",
+      "resolvedAt": "2026-10-04T21:10:00.000Z",
+      "reason": "Replaced the failing portal root with COMELEC's working 2025 NLE results application route.",
+      "sourceUrl": "https://2025electionresults.comelec.gov.ph/coc-result",
+      "verifiedOn": "2026-10-05"
+    }
+  ]
 }
