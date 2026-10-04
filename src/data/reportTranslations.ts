@@ -174,6 +174,173 @@ const filipinoReportCopy: Record<string, LocalizedReportCopy> = {
       evidence: { sourceIds: ['1', '3', '4', '5', '14'] },
     },
   },
+  'makati-political-dynasties-election-record': {
+    headline: 'Ang Political Dynasty sa Makati: Ano Talaga ang Ipinapakita ng Election Record',
+    subheadline:
+      'Limang miyembro ng Binay family ang nanalo bilang mayor ng Makati mula 1988. Makikita sa record ang succession across terms at mga panahong sabay na nasa local o national office ang magkakamag-anak—pero hindi nito awtomatikong pinapatunayan kung bakit sila pinili ng voters o kung ano ang sanhi ng isang policy outcome.',
+    synthesis:
+      'Dokumentadong family continuity ang modern mayoral history ng Makati: nanalo ang isang miyembro ng Binay family sa bawat regular mayoral election na nasa city record mula 1988 hanggang 2025. Kasama rito ang direct succession, pagbalik matapos ang term limit, sabay na paghawak ng magkakaibang offices at dalawang recent contests sa pagitan ng relatives. Nasusukat ang political relationships na ito; hiwalay na ebidensya ang kailangan para humusga sa performance, voter motives o legal disqualification.',
+    sections: [
+      {
+        id: 'definition-and-law',
+        heading: 'Constitutional category ang “political dynasty,” pero wala pang statutory definition',
+        blocks: [
+          {
+            kind: 'paragraph',
+            role: 'fact',
+            text:
+              'Inaatasan ng Article II, Section 26 ng 1987 Constitution ang State na tiyakin ang equal access sa public service at ipagbawal ang political dynasties “as may be defined by law.” Noong 26 August 2026, sinabi ng Supreme Court na mandatory constitutional duty ng Congress na ipasa ang batas na iyon. Hindi mismong Court ang nagtakda kung aling relatives, offices o succession patterns ang bawal, at hindi nito inatasan ang COMELEC na mag-disqualify ng candidates nang walang batas na naglalatag ng rules.',
+            evidence: { sourceIds: ['1', '2'] },
+          },
+          {
+            kind: 'paragraph',
+            role: 'context',
+            text:
+              'Kaya descriptive ang gamit ng report sa “dynasty,” hindi current ground for disqualification. Dalawang observable pattern ang nire-record nito: relatives na nasa elected office sa parehong period, at relatives na nagsusunod sa magkakaibang election terms.',
+            evidence: { sourceIds: ['2', '8'] },
+          },
+        ],
+      },
+      {
+        id: 'family-and-offices',
+        heading: 'Limang miyembro ng pamilya ang nagsilbing mayor ng Makati',
+        blocks: [
+          {
+            kind: 'table',
+            title: 'Dokumentadong offices sa Binay family network',
+            caption:
+              'Ang years ay para sa offices na relevant sa political succession ng Makati. Hindi nito sinasabing tuloy-tuloy ang service kung may acting mayor o legal interruption.',
+            columns: [
+              { key: 'person', label: 'Tao' },
+              { key: 'relationship', label: 'Relasyon sa pamilya' },
+              { key: 'offices', label: 'Selected elected offices' },
+            ],
+            rows: [
+              {
+                person: 'Jejomar C. Binay',
+                relationship: 'Asawa ni Elenita; ama nina Nancy, Abby at Junjun',
+                offices: 'Makati mayor, 1988–1998 at 2001–2010; Vice President, 2010–2016',
+              },
+              {
+                person: 'Elenita S. Binay',
+                relationship: 'Asawa ni Jejomar',
+                offices: 'Makati mayor, 1998–2001',
+              },
+              {
+                person: 'Jejomar Erwin “Junjun” S. Binay Jr.',
+                relationship: 'Anak nina Jejomar at Elenita',
+                offices: 'Makati mayor, 2010–2015; dating city councilor',
+              },
+              {
+                person: 'Mar-len Abigail “Abby” S. Binay-Campos',
+                relationship: 'Anak nina Jejomar at Elenita; asawa ni Luis Campos Jr.',
+                offices: 'Makati 2nd District representative, 2007–2016; Makati mayor, 2016–2025',
+              },
+              {
+                person: 'Maria Lourdes Nancy S. Binay',
+                relationship: 'Anak nina Jejomar at Elenita',
+                offices: 'Senator, 2013–2025; Makati mayor, 2025–present',
+              },
+              {
+                person: 'Luis Campos Jr.',
+                relationship: 'Asawa ni Abby Binay',
+                offices: 'Makati 2nd District representative, 2016–2025',
+              },
+            ],
+            evidence: { sourceIds: ['3', '5', '6', '7', '8', '9'] },
+          },
+          {
+            kind: 'paragraph',
+            role: 'analysis',
+            text:
+              'Parehong vertical at horizontal ang sequence. Makikita ang vertical continuity kapag kamag-anak ang sumunod sa susunod na term: Jejomar kay Elenita noong 1998, Elenita pabalik kay Jejomar noong 2001, Jejomar kay Junjun noong 2010, at Abby kay Nancy noong 2025. Makikita naman ang horizontal overlap kapag sabay na may hawak na magkakaibang offices ang relatives, kabilang ang 2007–2010 na mayor si Jejomar, representative si Abby at councilor si Junjun, at ang mga sumunod na overlap sa local, House at Senate posts.',
+            evidence: { sourceIds: ['3', '6', '8'] },
+          },
+        ],
+      },
+      {
+        id: 'mayoral-election-record',
+        heading: 'Continuous ang regular mayoral record, pero hindi uniform ang competition',
+        blocks: [
+          {
+            kind: 'stat',
+            label: 'Regular mayoral elections na napanalunan ng Binay family member',
+            value: '10 sa 10',
+            detail:
+              'Sakop ng candidate-level series ng BetterMakati ang bawat regular Makati mayoral election mula 1998 hanggang 2025. Tinutukoy rin ng city historical record si Jejomar Binay bilang winner noong 1988, na sinundan ng reelections noong 1992 at 1995.',
+            evidence: { sourceIds: ['3', '4'] },
+          },
+          {
+            kind: 'table',
+            title: 'Makati mayoral winners, 1998–2025',
+            caption:
+              'Current 23-barangay Makati geography ang sakop ng 2025 result; kasama pa sa earlier results ang 10 barangays na kalaunang nailipat sa Taguig.',
+            columns: [
+              { key: 'year', label: 'Election' },
+              { key: 'winner', label: 'Winner' },
+              { key: 'runnerUp', label: 'Second place' },
+              { key: 'margin', label: 'Vote margin', align: 'right' },
+            ],
+            rows: [
+              { year: '1998', winner: 'Elenita Binay', runnerUp: 'Toro Yabut', margin: '54,918' },
+              { year: '2001', winner: 'Jejomar Binay', runnerUp: 'Edu Manzano', margin: '65,963' },
+              { year: '2004', winner: 'Jejomar Binay', runnerUp: 'Oscar Ibay', margin: '136,137' },
+              { year: '2007', winner: 'Jejomar Binay', runnerUp: 'Lito Lapid', margin: '176,353' },
+              { year: '2010', winner: 'Junjun Binay', runnerUp: 'Ernesto Mercado', margin: '45,513' },
+              { year: '2013', winner: 'Junjun Binay', runnerUp: 'Rene Bondal', margin: '182,957' },
+              { year: '2016', winner: 'Abby Binay', runnerUp: 'Kid Peña', margin: '18,063' },
+              { year: '2019', winner: 'Abby Binay', runnerUp: 'Junjun Binay', margin: '80,869' },
+              { year: '2022', winner: 'Abby Binay', runnerUp: 'Joel Hernandez', margin: '322,179' },
+              { year: '2025', winner: 'Nancy Binay', runnerUp: 'Luis Campos Jr.', margin: '29,234' },
+            ],
+            evidence: {
+              sourceIds: ['4'],
+              records: [
+                {
+                  recordType: 'statistics-indicator',
+                  id: 'population-total',
+                  href: '/statistics',
+                },
+              ],
+            },
+          },
+          {
+            kind: 'paragraph',
+            role: 'fact',
+            text:
+              'Hindi nawala ang competition sa loob mismo ng family. Tinalo ni Abby Binay ang kapatid niyang si Junjun sa 2019 mayoral election. Noong 2025, tinalo ni Nancy Binay ang brother-in-law niyang si Luis Campos Jr. Kaya magkalaban ang members ng parehong family network sa dalawang recent mayoral contests.',
+            evidence: { sourceIds: ['4', '9'] },
+          },
+        ],
+      },
+      {
+        id: 'what-the-record-can-show',
+        heading: 'Ano ang pinapatunayan ng record—at ano ang hindi',
+        blocks: [
+          {
+            kind: 'paragraph',
+            role: 'analysis',
+            text:
+              'Isang narrow conclusion ang suportado ng evidence: unusually durable ang family continuity sa Makati mayoralty, at sa iba’t ibang panahon ay sinabayan ito ng relatives sa council, House, Senate at vice presidency. Hiwalay na tinukoy ng isang University of the Philippines study sa Metro Manila elections mula 1988 hanggang 2013 ang simultaneous at inter-term Binay linkages, habang nilinaw na measure ng family connections in office ang dynasty index, hindi finding tungkol sa policy performance.',
+            evidence: { sourceIds: ['8'] },
+          },
+          {
+            kind: 'paragraph',
+            role: 'analysis',
+            text:
+              'Hindi kayang patunayan ng election results lang kung bakit pinili ng bawat voter ang isang candidate, kung family continuity ang sanhi ng isang public-service outcome, o kung dapat legal na ma-bar ang sinumang candidate. Kailangan ng voter research, policy evaluation o statutory rule para sa mga tanong na iyon—at wala pang ganitong national rule sa 5 October 2026 cutoff ng report. Kaya hindi nagso-score ng candidates, nag-i-infer ng motives o tumatrato sa family membership bilang proof of misconduct ang report.',
+            evidence: { sourceIds: ['2', '4', '8'] },
+          },
+        ],
+      },
+    ],
+    methodology: {
+      title: 'Scope at definition',
+      text:
+        'Limitado ang family network sa relationships na suportado ng cited biographies at profiles. Galing sa existing candidate-level mayoral series ng BetterMakati ang election counts. Descriptive ang “dynasty” para sa simultaneous o successive elected service ng relatives; hindi ito ginagamit bilang legal disqualification, performance rating o evidence of wrongdoing.',
+      evidence: { sourceIds: ['2', '4', '6', '7', '8'] },
+    },
+  },
 };
 
 export const localizedReportCopy = (
