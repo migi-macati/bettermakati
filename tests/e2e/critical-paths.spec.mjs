@@ -447,27 +447,2206 @@ test('homepage exposes and opens barangay editions', async ({ page }) => {
 test('homepage featured reports carousel shows one report article per card', async ({ page }) => {
   await page.goto(baseURL + '/');
   await expect(page.getByRole('heading', { name: 'Featured Reports & Insights', exact: true })).toBeVisible();
+
+  const carousel = page.locator('section[aria-roledescription="carousel"]');
+  const reportLink = carousel.getByRole('link', { name: 'Read more', exact: true });
+  await expect(reportLink).toHaveCount(1);
+
+  const href = await reportLink.getAttribute('href');
+  expect(href).toMatch(/^\/reports\/[a-z0-9-]+$/);
+
+  await reportLink.click();
+  await expect(page).toHaveURL(new RegExp(href + '
+
+test('reports page lists standalone articles and never shows Makati Overview', async ({ page }) => {
+  await page.goto(baseURL + '/reports');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Featured Reports & Insights');
+  await expect(page.getByText('Makati Overview', { exact: true })).toHaveCount(0);
+
+  for (const slug of [
+    'audit-follow-up-closure-trails',
+    '2024-population-growth-acceleration',
+    '2024-barangay-population',
+    '2025-fiscal-profile',
+    '2026-budget-operating-expenses',
+  ]) {
+    await expect(page.locator(`a[href="/reports/${slug}"]`).first()).toBeVisible();
+  }
+});
+
+test('featured report article is a single narrative synthesis with internal citations', async ({ page }) => {
+  await page.goto(baseURL + '/reports/2025-fiscal-profile');
+  await expect(page.locator('article p').first()).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1 })).toContainText(/Makati’s 2025 receipts were overwhelmingly local/i);
+  await expect(page.getByText('Sources', { exact: true })).toBeVisible();
+  await expect(page.getByText('Key findings', { exact: true })).toHaveCount(0);
+});
+
+test('homepage universal search tolerates a simple typo', async ({ page }) => {
+  await page.goto(baseURL + '/');
+  const search = page.getByPlaceholder(/Try Yellow Card, Poblacion, business permit, budget/i);
+  await search.fill('cedla');
+  await expect(page.getByText(/Community Tax Certificate|Cedula/i).first()).toBeVisible();
+});
+
+test('header search preserves a chosen BetterBarangay into local-capable results', async ({ page }) => {
+  await page.goto(baseURL + '/barangays/poblacion');
+
+  const headerSearch = page.locator('nav').getByRole('link', {
+    name: 'Search BetterMakati',
+    exact: true,
+  });
+  await expect(headerSearch).toHaveAttribute('href', '/search?barangay=poblacion');
+  await headerSearch.click();
+
+  await expect(page).toHaveURL(baseURL + '/search?barangay=poblacion');
+
+  const search = page.locator('#site-search');
+  await search.fill('cedula');
+  const result = page
+    .getByRole('listbox', { name: /matches/i })
+    .getByRole('option')
+    .filter({ hasText: /Community Tax Certificate|Cedula/i })
+    .first();
+  await expect(result).toBeVisible();
+  await result.click();
+
+  await expect(page).toHaveURL(
+    baseURL + '/services/guide/community-tax-certificate?barangay=poblacion'
+  );
+});
+
+test('homepage true miss enters canonical search recovery instead of Saan Ako Lalapit', async ({ page }) => {
+  await page.goto(baseURL + '/');
+  const search = page.getByPlaceholder(/Try Yellow Card, Poblacion, business permit, budget/i);
+  await search.fill(guaranteedMissingQuery);
+  await search.press('Enter');
+
+  await expect(page).toHaveURL(
+    baseURL + '/search?q=' + guaranteedMissingQuery
+  );
   await expect(
-    page.getByRole('heading', {
-      name: /Three older Makati audit findings have follow-up records/i,
+    page.getByText('No BetterMakati match for “' + guaranteedMissingQuery + '”', {
+      exact: true,
     })
   ).toBeVisible();
+  await expect(page).not.toHaveURL(/saan-ako-lalapit/);
+});
 
-  await page.getByRole('link', { name: 'Read more', exact: true }).click();
-  await expect(page).toHaveURL(/\/reports\/audit-follow-up-closure-trails$/);
-  await expect(page.getByRole('heading', { level: 1 })).toContainText(
-    /Three older Makati audit findings have follow-up records/i
+test('site search ranks civic aliases and synonyms ahead of incidental matches', async ({ page }) => {
+  await page.goto(baseURL + '/search');
+  const search = page.locator('#site-search');
+
+  const cases = [
+    ['brgy poblacion', 'Barangay Poblacion'],
+    ['city hall', 'City offices'],
+    ['city stats', 'Makati statistics'],
+    ['bids', 'Procurement'],
+    ['commute', 'Getting around Makati'],
+    ['laws', 'Legislation'],
+    ['historical sites', 'Heritage & Culture'],
+  ];
+
+  for (const [query, expectedTitle] of cases) {
+    await search.fill(query);
+    const firstResult = page.getByRole('listbox', { name: /matches/i }).getByRole('option').first();
+    await expect(firstResult).toBeVisible();
+    await expect(firstResult).toContainText(expectedTitle);
+  }
+});
+
+test('W6-2f search journeys reach useful canonical destinations across civic domains', async ({ page }) => {
+  for (const journey of w6SearchJourneyMatrix) {
+    await page.goto(baseURL + '/search');
+    const search = page.locator('#site-search');
+    await search.fill(journey.query);
+
+    const firstResult = page
+      .getByRole('listbox', { name: /matches/i })
+      .getByRole('option')
+      .first();
+
+    await expect(
+      firstResult,
+      journey.id + ' should expose a first ranked result for ' + journey.intent
+    ).toBeVisible();
+    await expect(
+      firstResult,
+      journey.id + ' should rank the intended canonical result first'
+    ).toContainText(journey.expectedTitle);
+
+    await firstResult.click();
+
+    await expect(
+      page,
+      journey.id + ' should reach the canonical destination'
+    ).toHaveURL(baseURL + journey.expectedHref);
+    await expect(page.locator('main#main-content')).toBeVisible();
+  }
+});
+
+test('positive search deep link restores the query and supports keyboard completion', async ({ page }) => {
+  await page.goto(baseURL + '/search?q=commute');
+
+  const search = page.locator('#site-search');
+  await expect(search).toHaveValue('commute');
+
+  const firstResult = page
+    .getByRole('listbox', { name: /matches/i })
+    .getByRole('option')
+    .first();
+  await expect(firstResult).toContainText('Getting around Makati');
+
+  await search.press('Enter');
+  await expect(page).toHaveURL(baseURL + '/mobility');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText(/Getting around/i);
+});
+
+test('site search keeps canonical titles above alias-only matches', async ({ page }) => {
+  await page.goto(baseURL + '/search');
+  const search = page.locator('#site-search');
+
+  await search.fill('Public Records');
+  await expect(page.getByRole('listbox', { name: /matches/i }).getByRole('option').first()).toContainText('Public Records');
+
+  await search.fill('Barangays');
+  await expect(page.getByRole('listbox', { name: /matches/i }).getByRole('option').first()).toContainText('Barangays');
+});
+
+test('site search filters by frozen civic result domains', async ({ page }) => {
+  await page.goto(baseURL + '/search');
+  const search = page.locator('#site-search');
+  const typeFilter = page.getByLabel('Filter by type');
+  const results = page.getByRole('listbox', { name: /matches/i });
+
+  await search.fill('Poblacion');
+  await typeFilter.selectOption('barangays');
+  await expect(typeFilter).toHaveValue('barangays');
+  await expect(results.getByRole('option').first()).toContainText('Barangay Poblacion');
+
+  await typeFilter.selectOption('places');
+  await expect(typeFilter).toHaveValue('places');
+  await expect(results.getByRole('option').first()).toContainText(/Poblacion/i);
+
+  await search.fill('budget');
+  await typeFilter.selectOption('reports');
+  await expect(results.getByRole('option').first()).toContainText(/budget|fiscal|receipts|operating/i);
+
+  await typeFilter.selectOption('public-records');
+  await expect(results.getByRole('option').first()).toContainText(/budget|record|appropriation/i);
+});
+
+test('broad search tabs and specific type filters do not create hidden intersections', async ({ page }) => {
+  await page.goto(baseURL + '/search');
+  const search = page.locator('#site-search');
+  const typeFilter = page.getByLabel('Filter by type');
+
+  await search.fill('Makati');
+  await page.getByRole('button', { name: 'Records', exact: true }).click();
+  await expect(typeFilter).toHaveValue('all');
+
+  await typeFilter.selectOption('mobility');
+  await expect(typeFilter).toHaveValue('mobility');
+  await expect(page.getByRole('button', { name: 'All', exact: true })).toHaveClass(/bg-primary-800/);
+  await expect(
+    page.getByRole('listbox', { name: /matches/i }).getByRole('option').first()
+  ).toBeVisible();
+});
+
+test('empty search filters recover to broader BetterMakati matches', async ({ page }) => {
+  await page.goto(baseURL + '/search');
+  const search = page.locator('#site-search');
+  const typeFilter = page.getByLabel('Filter by type');
+
+  await search.fill('cedula');
+  await typeFilter.selectOption('news');
+
+  await expect(page.getByText('No News matches', { exact: true })).toBeVisible();
+  const showAll = page.getByRole('button', { name: /Show all \d+ matching results?/i });
+  await expect(showAll).toBeVisible();
+  await expect(page.getByText(/outside this filter/i)).toContainText('cedula');
+
+  await showAll.click();
+  await expect(typeFilter).toHaveValue('all');
+  await expect(
+    page.getByRole('listbox', { name: /matches/i }).getByRole('option').first()
+  ).toContainText(/Community Tax Certificate|Cedula/i);
+});
+
+test('true zero-result search recovers through BetterMakati before ecosystem exits', async ({ page }) => {
+  await page.goto(baseURL + '/search');
+  const search = page.locator('#site-search');
+  const recovery = page.getByRole('listbox', { name: /matches/i });
+  await search.fill(guaranteedMissingQuery);
+
+  await expect(
+    recovery.getByText('No BetterMakati match for “' + guaranteedMissingQuery + '”', { exact: true })
+  ).toBeVisible();
+  await expect(recovery.getByText('Browse BetterMakati', { exact: true })).toBeVisible();
+
+  for (const [name, href] of [
+    ['Services', '/services'],
+    ['Barangays', '/barangays'],
+    ['Public records', '/records'],
+    ['Reports & insights', '/reports'],
+    ['Places & map', '/civic-map'],
+  ]) {
+    await expect(recovery.getByRole('link', { name, exact: true })).toHaveAttribute('href', href);
+  }
+
+  await expect(recovery.getByRole('link', { name: 'Where Should I Go?', exact: true })).toHaveCount(0);
+  await expect(recovery.getByRole('link', { name: 'Search national services on BetterGov', exact: true })).toBeVisible();
+  await expect(recovery.getByRole('link', { name: 'Find another LGU on BetterLGU', exact: true })).toBeVisible();
+  await expect(recovery.getByRole('button', { name: 'Report a missing result', exact: true })).toBeVisible();
+});
+
+test('service directory tolerates a common typo', async ({ page }) => {
+  await page.goto(baseURL + '/services');
+  const search = page.getByPlaceholder(/Search permit, clearance, ID, test or service/i);
+  await search.fill('cedla');
+  await expect(page.getByText(/Community Tax Certificate \/ Cedula/i).first()).toBeVisible();
+});
+
+test('service directory opens BetterMakati guide before external handoff', async ({ page }) => {
+  await page.goto(baseURL + '/services');
+  const search = page.getByPlaceholder(/Search permit, clearance, ID, test or service/i);
+  await search.fill('cedula');
+  await page.getByRole('link', { name: /Open guide/i }).first().click();
+  await expect(page).toHaveURL(/\/services\/guide\/community-tax-certificate/);
+  await expect(page.getByText('Structured details verified')).toHaveCount(0);
+  await expect(page.getByRole('heading', { name: 'Requirements' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Fees & payment' })).toBeVisible();
+});
+
+test('services directory omits completeness scorekeeping', async ({ page }) => {
+  await page.goto(baseURL + '/services');
+  await expect(page.getByText(/structured · .*verified/i)).toHaveCount(0);
+  await expect(page.getByText('Detailed guide', { exact: true })).toHaveCount(0);
+  await expect(page.getByText('Detail checked with caveat', { exact: true })).toHaveCount(0);
+  await expect(page.getByText(/results$/).first()).toBeVisible();
+});
+
+test('expanded Makati city service guides expose transaction details', async ({ page }) => {
+  await page.goto(baseURL + '/services/guide/locational-clearance-business');
+  await expect(page.getByRole('heading', { name: 'Requirements' })).toBeVisible();
+  await expect(page.getByText(/Occupancy Permit or Occupancy Clearance/i)).toBeVisible();
+  await expect(page.getByText(/3–4 days when site verification is required/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/special-event-permit');
+  await expect(page.getByText(/Letter of request addressed to the Mayor\/City Administrator/i)).toBeVisible();
+  await expect(page.getByText(/admission tickets for stamping/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/city-laboratory-services');
+  await expect(page.getByText(/Physician referral slip or walk-in laboratory request/i)).toBeVisible();
+  await expect(page.getByText(/morning specimens are generally released in the afternoon/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/supplier-registration');
+  await expect(page.getByText(/Letter of intent to the Bids and Awards Committee/i)).toBeVisible();
+  await expect(page.getByText(/No fee stated in the cited guide/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/weighing-scale-registration');
+  await expect(page.getByText(/10 minutes in the cited guide/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/gasoline-pump-calibration');
+  await expect(page.getByText(/₱45 per instrument/i)).toBeVisible();
+});
+
+test('property civil registry and social service guides expose official transaction details', async ({ page }) => {
+  await page.goto(baseURL + '/services/guide/tax-declaration');
+  await expect(page.getByText(/₱200 per Tax Declaration/i)).toBeVisible();
+  await expect(page.getByText(/3 days for land\/improvement\/machinery/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/notice-of-assessment');
+  await expect(page.getByText(/15 minutes in the cited Citizen’s Charter/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/local-civil-registry-copy');
+  await expect(page.getByText(/rush processing of 1 hour/i)).toBeVisible();
+  await expect(page.getByText(/Government-issued ID of the requesting party/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/civil-registry-correction');
+  await expect(page.getByText(/₱3,000 in the cited guide/i).first()).toBeVisible();
+  await expect(page.getByText(/at least two public or private documents/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/pwd-mobility-device');
+  await expect(page.getByText(/Whole-body picture/i)).toBeVisible();
+  await expect(page.getByText(/one day for applicant validation/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/pwd-car-tag');
+  await expect(page.getByText(/Vehicle Official Receipt and Certificate of Registration/i)).toBeVisible();
+  await expect(page.getByText(/₱50 in the cited charter/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/disaster-financial-assistance');
+  await expect(page.getByText(/Barangay Fire Incident Report/i)).toBeVisible();
+  await expect(page.getByText(/actual\/current Makati residents/i)).toBeVisible();
+});
+
+test('ancillary building and veterinary guides expose transaction details', async ({ page }) => {
+  await page.goto(baseURL + '/services/guide/mechanical-permit');
+  await expect(page.getByText('Mechanical Permit Form', { exact: true })).toBeVisible();
+  await expect(page.getByText(/Equipment and technical specifications for air-conditioning/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/electronics-permit');
+  await expect(page.getByText(/Electronics \/ Auxiliary plans/i)).toBeVisible();
+  await expect(page.getByText(/DOH Radiation Evaluation \/ Clearance/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/sanitary-plumbing-permit');
+  await expect(page.getByText('Design analysis', { exact: true })).toBeVisible();
+  await expect(page.getByText(/1 day for preliminary evaluation\/ocular inspection/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/anti-rabies-vaccination');
+  await expect(page.getByText(/Pet registration\/vaccination card/i).first()).toBeVisible();
+  await expect(page.getByText(/5 minutes for assessment\/vaccination/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/pet-registration-microchip');
+  await expect(page.getByText(/Proof of Makati City residency/i)).toBeVisible();
+  await expect(page.getByText(/pet passport/i).first()).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/pet-consultation-neutering');
+  await expect(page.getByText(/at least two weeks before surgery/i)).toBeVisible();
+  await expect(page.getByText(/at least 8 months old/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/veterinary-inspection-certificate');
+  await expect(page.getByText(/₱500 for large-scale \/ ₱300 for small-scale/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/veterinary-clearance');
+  await expect(page.getByText(/Animal-holding facility: Animal Welfare Accreditation/i)).toBeVisible();
+});
+
+test('city and barangay long-tail guides expose current transaction details', async ({ page }) => {
+  await page.goto(baseURL + '/services/guide/business-permit-transfer');
+  await expect(page.getByText(/Transfer – Ownership/i)).toBeVisible();
+  await expect(page.getByText(/Locational Clearance for a transfer to a new Makati location/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/temporary-sanitary-permit');
+  await expect(page.getByText(/valid for three months from issuance/i)).toBeVisible();
+  await expect(page.getByText(/EHS Form No. 110/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/senior-national-id');
+  await expect(page.getByText(/2–3 days for home validation/i)).toBeVisible();
+  await expect(page.getByText(/White Card application form/i).first()).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/peso-job-referral');
+  await expect(page.getByText(/Two updated resumes \/ bio-data/i)).toBeVisible();
+  await expect(page.getByText(/referral or recommendation letter/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/cooperative-services');
+  await expect(page.getByText(/Letter of Request/i).first()).toBeVisible();
+  await expect(page.getByText(/4–8 hours for the actual seminar\/training/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/barangay-first-time-jobseeker');
+  await expect(page.getByText(/Fees waived once under RA 11261/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/barangay-mediation');
+  await expect(page.getByText(/Pangkat ng Tagapagkasundo/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/senior-birthday-cake');
+  await expect(page.getByText('Blu Card ID', { exact: true })).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/senior-pwd-medicine-distribution');
+  await expect(page.getByText(/Registration with the Health Emergency & Management System/i)).toBeVisible();
+});
+
+test('remaining Makati city and barangay service guides are complete', async ({ page }) => {
+  await page.goto(baseURL + '/services/guide/delivery-vehicle-permit');
+  await expect(page.getByText(/Delivery van\/truck tax and permit fee/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/demolition-permit');
+  await expect(page.getByText(/Duly accomplished demolition-permit application form/i)).toBeVisible();
+  await expect(page.getByText(/Certified true copy of TCT/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/occupancy-permit');
+  await expect(page.getByText(/Unified Application Form for the occupancy application/i)).toBeVisible();
+  await expect(page.getByText(/Valid Barangay Clearance/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/official-address');
+  await expect(page.getByText(/Address Map Viewer/i)).toBeVisible();
+  await expect(page.getByText(/GeoAddress Cleanser/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/barangay-business-clearance');
+  await expect(page.getByText(/Proof of business address/i)).toBeVisible();
+  await expect(page.getByText(/Varies by barangay/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/barangay-indigency');
+  await expect(page.getByText(/social-welfare, medical, educational/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/barangay-solo-parent');
+  await expect(page.getByText(/Latest Barangay Certificate, original/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/barangay-residency');
+  await expect(page.getByText(/Proof of residency when the ID does not show the barangay address/i)).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/barangay-id');
+  await expect(page.getByText(/3–5 working-day processing time/i)).toBeVisible();
+});
+
+test('Saan Ako Lalapit is task-first and service-only', async ({ page }) => {
+  await page.goto(baseURL + '/community-tools/saan-ako-lalapit');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Where Should I Go?');
+  await expect(page.getByRole('link', { name: /Open emergency hotlines/i })).toBeVisible();
+  const search = page.getByPlaceholder(/hospital bill, PWD ID, business permit, cedula/i);
+  await search.fill('hospital bill');
+  await expect(page.getByText('Medical / financial assistance', { exact: true }).first()).toBeVisible();
+  const resultList = page.getByRole('listbox', { name: /What do you need help with\? matches/i });
+  await expect(resultList.getByRole('option').filter({ hasText: 'Visit Makati' })).toHaveCount(0);
+});
+
+test('Saan Ako Lalapit common need reaches the structured PWD guide', async ({ page }) => {
+  await page.goto(baseURL + '/community-tools/saan-ako-lalapit');
+  await page.getByRole('link', { name: /I need a PWD ID/i }).click();
+  await expect(page).toHaveURL(/\/services\/guide\/pwd-id$/);
+  await expect(page.getByText('Partially verified')).toHaveCount(0);
+  await expect(page.getByRole('heading', { name: 'Requirements' })).toBeVisible();
+  await expect(page.getByText('Six 1x1 ID pictures', { exact: true })).toBeVisible();
+});
+
+test('ecosystem handoffs are mobile-safe with usable touch targets', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+
+  const routes = [
+    '/services',
+    '/search?q=' + guaranteedMissingQuery,
+    '/services/guide/national-id',
+    '/participate',
+    '/get-involved',
+    '/hotlines',
+    '/about',
+    '/projects-budget',
+    '/accountability',
+    '/records',
+    '/legislation',
+  ];
+
+  for (const route of routes) {
+    await page.goto(baseURL + route);
+    const overflow = await page.evaluate(
+      () => document.documentElement.scrollWidth - document.documentElement.clientWidth
+    );
+    expect(overflow, `Horizontal overflow on ecosystem route ${route}`).toBeLessThanOrEqual(2);
+  }
+
+  await page.goto(baseURL + '/services/guide/national-id');
+  const official = page.getByRole('link', { name: /Open official service/i });
+  const betterGov = page.getByRole('link', { name: 'BetterGov.ph', exact: true });
+  const officialBox = await official.boundingBox();
+  const betterGovBox = await betterGov.boundingBox();
+  expect(officialBox?.height ?? 0, 'Official-service target should be at least 44px tall').toBeGreaterThanOrEqual(44);
+  expect(betterGovBox?.height ?? 0, 'BetterGov directory target should be at least 32px tall').toBeGreaterThanOrEqual(32);
+
+  await page.goto(baseURL + '/search');
+  const search = page.locator('#site-search');
+  await search.fill(guaranteedMissingQuery);
+  for (const name of ['Search national services on BetterGov', 'Find another LGU on BetterLGU']) {
+    const link = page.getByRole('link', { name, exact: true });
+    const box = await link.boundingBox();
+    expect(box?.height ?? 0, `${name} target should be at least 44px tall`).toBeGreaterThanOrEqual(44);
+  }
+});
+
+test('mobile homepage and services have no material horizontal overflow', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  for (const route of ['/', '/services', '/community-tools/saan-ako-lalapit', '/projects-budget', '/accountability', '/accountability?barangay=bel-air', '/records', '/elections', '/city-monitor', '/briefs', '/today', '/live', '/status', '/barangays', '/barangays/poblacion', '/reports', '/reports/2026-budget-operating-expenses', '/reports/2025-local-revenue', '/civic-map', '/civic-map/poblacion-park', '/civic-map/reports', '/history', '/heritage', '/estates', '/visit', '/mobility', '/calendar', '/news', '/search']) {
+    await page.goto(baseURL + route);
+    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+    expect(overflow, `Horizontal overflow on ${route}`).toBeLessThanOrEqual(2);
+  }
+});
+
+
+test('official logo artwork is used in the header, not a reconstructed wordmark', async ({ page }) => {
+  await page.goto(baseURL + '/');
+  const logo = page.locator('nav img[alt="BetterMakati"]').first();
+  await expect(logo).toBeVisible();
+  await expect(logo).toHaveAttribute('src', /bettermakati-logo-horizontal\.svg$/);
+  await expect(page.locator('nav .brand-wordmark')).toHaveCount(0);
+});
+
+test('owner task: SSS benefit journey reaches Makati-facing service locations', async ({ page }) => {
+  await page.goto(baseURL + '/services');
+  const search = page.getByPlaceholder(/Search permit, clearance, ID, test or service/i);
+  await search.fill('sss sickness');
+  await page.getByRole('link', { name: /Open guide/i }).first().click();
+  await expect(page).toHaveURL(/\/services\/guide\/sss-sickness-benefit/);
+  await expect(page.getByText(/Makati|office|branch/i).first()).toBeVisible();
+});
+
+test('Projects & Budget separates adopted plan, current estimate and 2026 proposal', async ({ page }) => {
+  await page.goto(baseURL + '/projects-budget');
+  await expect(page.getByText('2025 adopted budget plan', { exact: true })).toBeVisible();
+  await expect(page.getByText('2025 current-year estimate', { exact: true })).toBeVisible();
+  await expect(page.getByText('2026 proposed city budget', { exact: true })).toBeVisible();
+  await expect(page.getByText('2025 adopted', { exact: true }).first()).toBeVisible();
+  await expect(page.getByText('2025 current estimate', { exact: true }).first()).toBeVisible();
+  await expect(page.getByText('2026 proposed', { exact: true }).first()).toBeVisible();
+});
+
+test('Budget Explorer exposes the complete reconciled 2026 citywide summary', async ({ page }) => {
+  await page.goto(baseURL + '/projects-budget');
+  await expect(page.getByText('103 lines indexed', { exact: true })).toBeVisible();
+  await expect(page.getByText('Line items reconcile to ₱21.0B', { exact: true })).toBeVisible();
+  const search = page.getByPlaceholder('Search line or account code');
+  await search.fill('1-07-04-990');
+  await expect(page.getByRole('cell', { name: 'Other Structures', exact: true })).toBeVisible();
+  await expect(page.getByRole('cell', { name: '₱55,265,000', exact: true })).toBeVisible();
+});
+
+test('Budget Explorer exposes reconciled 2026 office appropriations', async ({ page }) => {
+  await page.goto(baseURL + '/projects-budget');
+  await expect(page.getByText('36 office totals indexed', { exact: true })).toBeVisible();
+  await expect(page.getByText('Office totals reconcile to ₱21.0B', { exact: true })).toBeVisible();
+  const search = page.getByPlaceholder('Search office or department');
+  await search.fill('Ospital ng Makati');
+  await expect(page.getByRole('cell', { name: 'Ospital ng Makati', exact: true })).toBeVisible();
+  await expect(page.getByRole('cell', { name: '₱3,530,707,000', exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: /pp\. 65–66/i })).toBeVisible();
+});
+
+test('Budget Explorer exposes reconciled office line-item drill-down', async ({ page }) => {
+  await page.goto(baseURL + '/projects-budget');
+  await expect(page.getByRole('heading', { name: 'Object-of-expenditure detail' })).toBeVisible();
+  await expect(page.getByText('36 of 36 offices with line-item detail', { exact: true })).toBeVisible();
+  await expect(page.getByText('Matches published office total', { exact: true })).toBeVisible();
+  const office = page.getByRole('combobox', { name: 'Select office budget detail' });
+  await office.selectOption("City Administrator's Office");
+  await expect(page.getByRole('cell', { name: 'Training Expenses', exact: true }).first()).toBeVisible();
+  await expect(page.getByRole('cell', { name: '₱131,699,000', exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'p. 14', exact: true }).first()).toBeVisible();
+
+  await office.selectOption('Youth and Sports Development Department');
+  await expect(page.getByRole('cell', { name: 'Sports Equipment', exact: true }).first()).toBeVisible();
+  await expect(page.getByRole('cell', { name: '₱1,838,000', exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'p. 82', exact: true }).first()).toBeVisible();
+});
+
+test('Projects & Budget displays and filters procurement evidence', async ({ page }) => {
+  await page.goto(baseURL + '/projects-budget');
+  await expect(page.getByRole('heading', { name: 'Bid results and award records' })).toBeVisible();
+  await expect(page.getByText('21', { exact: true }).first()).toBeVisible();
+
+  const evidence = page.getByRole('combobox', { name: 'Filter procurement evidence' });
+  await evidence.selectOption('Follow-up evidence');
+  await expect(page.getByText('Event management services for Rosas ng Sampiro Festival 2025', { exact: true })).toBeVisible();
+  await expect(page.getByText('Desktop/laptop computers and printers for various city offices', { exact: true })).toHaveCount(0);
+
+  await evidence.selectOption('Bid result only');
+  await expect(page.getByText('Desktop/laptop computers and printers for various city offices', { exact: true })).toBeVisible();
+  await expect(page.getByText('Event management services for Rosas ng Sampiro Festival 2025', { exact: true })).toHaveCount(0);
+
+  await evidence.selectOption('All');
+  const search = page.getByPlaceholder('Search project, supplier or reference');
+  await search.fill('BS25-04-0419');
+  await expect(page.getByText('Instructional materials for Makati public elementary and secondary schools', { exact: true })).toBeVisible();
+  await expect(page.getByText('Epigraphy Inc.', { exact: true })).toBeVisible();
+  await expect(page.getByText('Checked 25 September 2026', { exact: true })).toBeVisible();
+});
+
+test('Projects & Budget displays structured audit follow-through', async ({ page }) => {
+  await page.goto(baseURL + '/projects-budget');
+  await expect(page.getByRole('heading', { name: 'Structured COA findings' })).toBeVisible();
+  await expect(page.getByText('COA finding', { exact: true }).first()).toBeVisible();
+  await expect(page.getByText('Recommendation', { exact: true }).first()).toBeVisible();
+  await expect(page.getByText('Follow-up', { exact: true }).first()).toBeVisible();
+  await expect(page.getByRole('heading', { name: /development-fund use for loan and interest payments/i })).toBeVisible();
+  await expect(page.getByText('Last checked 25 September 2026', { exact: true }).first()).toBeVisible();
+  await expect(page.getByRole('link', { name: /Makati status report of unliquidated cash advances/i })).toBeVisible();
+  await expect(page.getByRole('link', { name: /Makati Special Education Fund Utilization/i }).first()).toBeVisible();
+});
+
+test('Accountability Ledger publishes its actual coverage and known limits', async ({ page }) => {
+  await page.goto(baseURL + '/accountability');
+  await expect(page.getByRole('heading', { name: 'Follow public money, projects and promises' })).toBeVisible();
+  await expect(page.getByText('structured records in this view', { exact: true })).toBeVisible();
+  await expect(page.getByText('records with a follow-up evidence gap', { exact: true })).toBeVisible();
+  await expect(page.getByText('projects / procurements tracked', { exact: true })).toBeVisible();
+  await expect(page.getByText('structured audit observations', { exact: true })).toBeVisible();
+  await expect(page.getByText('published service standards', { exact: true })).toBeVisible();
+  await expect(page.getByText('public commitments indexed', { exact: true })).toBeVisible();
+  await expect(page.getByText('Follow-up gaps', { exact: true })).toBeVisible();
+});
+
+test('Accountability record cards expose provenance and the next evidence gap', async ({ page }) => {
+  await page.goto(baseURL + '/accountability?type=project');
+  const search = page.getByPlaceholder(/Search project, supplier, office, reference number/i);
+  await search.fill('BS25-04-0419');
+  const card = page.locator('article').filter({
+    has: page.getByText('Instructional materials for Makati public elementary and secondary schools', { exact: true }),
+  });
+  await expect(card).toBeVisible();
+  await expect(card.getByText(/source linked|sources linked/i)).toBeVisible();
+  await expect(card.getByText(/Last verified:/i)).toBeVisible();
+  await expect(card.getByText('Next evidence missing', { exact: true })).toBeVisible();
+});
+
+test('Accountability barangay slice uses only explicit local tags', async ({ page }) => {
+  await page.goto(baseURL + '/accountability?barangay=poblacion');
+  await expect(page.getByText(/explicitly tagged to Poblacion/i)).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Events management services for Pride March 2024', exact: true })).toBeVisible();
+  await expect(page.getByText('2026 city fiscal record', { exact: true })).toHaveCount(0);
+});
+
+test('Accountability Bel-Air slice keeps local Makati Life commitments together', async ({ page }) => {
+  await page.goto(baseURL + '/accountability?barangay=bel-air');
+  await expect(page.getByText(/explicitly tagged to Bel-Air/i)).toBeVisible();
+  await expect(page.getByText('Bring Makati Life Medical Center into full operation', { exact: true })).toBeVisible();
+  await expect(page.getByText('Provide free digital PET/CT scans to Yellow Card holders', { exact: true })).toBeVisible();
+  await expect(page.getByText('2026 city fiscal record', { exact: true })).toHaveCount(0);
+});
+
+test('Accountability never falls back to citywide records for an empty barangay slice', async ({ page }) => {
+  await page.goto(baseURL + '/accountability?barangay=bangkal');
+  await expect(page.getByText(/No Accountability Ledger record is currently tagged to Bangkal/i)).toBeVisible();
+  await expect(page.getByText('No matching record yet', { exact: true })).toBeVisible();
+  await expect(page.getByText('2026 city fiscal record', { exact: true })).toHaveCount(0);
+});
+
+test('Public Records exposes a normalized searchable source catalog', async ({ page }) => {
+  await page.goto(baseURL + '/records');
+  await expect(page.getByRole('heading', { level: 1, name: 'Find the source.' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Search the public record catalog' })).toBeVisible();
+  await expect(page.getByRole('option', { name: 'Budget & fiscal', exact: true })).toHaveCount(1);
+  await expect(page.getByRole('option', { name: 'Services & directories', exact: true })).toHaveCount(1);
+  await expect(page.getByText('unique source URLs indexed', { exact: true })).toBeVisible();
+});
+
+test('Public Records search reaches an older original annual budget', async ({ page }) => {
+  await page.goto(baseURL + '/records');
+  const search = page.getByPlaceholder(/Search budget, ordinance, COA, COMELEC/i);
+  await search.fill('Makati Annual Budget 2014');
+  const card = page.locator('article').filter({
+    has: page.getByRole('heading', { name: 'Makati Annual Budget 2014', exact: true }),
+  });
+  await expect(card).toBeVisible();
+  await expect(card.getByText('City government', { exact: true })).toBeVisible();
+  await expect(card.getByText('PDF', { exact: true })).toBeVisible();
+  await expect(card.getByRole('link', { name: /Open source/i })).toHaveAttribute(
+    'href',
+    /executive_budget_2014\.pdf/
   );
+});
+
+test('Public Records distinguishes official and contextual evidence', async ({ page }) => {
+  await page.goto(baseURL + '/records');
+  await page.getByLabel('Filter records by source class').selectOption('Media / secondary');
+  await expect(
+    page.locator('article').filter({ hasText: 'Media / secondary' }).first()
+  ).toBeVisible();
+  await page.getByLabel('Filter records by source class').selectOption('All');
+  await page.getByRole('checkbox').check();
+  await expect(
+    page.locator('article').filter({ hasText: 'Media / secondary' })
+  ).toHaveCount(0);
+});
+
+test('Public Records publishes machine-readable catalog and source-watch downloads', async ({ page }) => {
+  await page.goto(baseURL + '/records');
+  await expect(page.getByRole('link', { name: /Download catalog CSV/i })).toHaveAttribute(
+    'download',
+    'bettermakati-public-records.csv'
+  );
+  await expect(page.getByRole('link', { name: /Monitored-source index/i })).toHaveAttribute(
+    'href',
+    '/source-watch-index.json'
+  );
+  const response = await page.request.get(baseURL + '/source-watch-index.json');
+  expect(response.ok()).toBeTruthy();
+  const body = await response.json();
+  expect(Array.isArray(body)).toBeTruthy();
+  expect(body.length).toBeGreaterThanOrEqual(92);
+});
+
+test('Public Records exposes current source freshness state', async ({ page }) => {
+  await page.goto(baseURL + '/records');
+  await expect(page.getByRole('heading', { name: 'Source freshness monitor' })).toBeVisible();
+  await expect(page.getByText('sources configured', { exact: true })).toBeVisible();
+  await expect(page.getByText(/dynamic portals are normally checked only for reachability/i)).toBeVisible();
+  await expect(page.getByRole('link', { name: /Current source state/i })).toHaveAttribute(
+    'href',
+    '/source-watch-state.json'
+  );
+  await expect(page.getByRole('link', { name: /Freshness history/i })).toHaveAttribute(
+    'href',
+    '/freshness-history.json'
+  );
+  await expect(page.getByRole('link', { name: /Page freshness/i })).toHaveAttribute(
+    'href',
+    '/page-freshness-state.json'
+  );
+
+  const state = await page.request.get(baseURL + '/source-watch-state.json');
+  expect(state.ok()).toBeTruthy();
+  const body = await state.json();
+  expect(body.version).toBe(2);
+  expect(Array.isArray(body.sources)).toBeTruthy();
+  expect(body.sources.length).toBeGreaterThanOrEqual(90);
+  expect(new Set(body.sources.map(item => item.cadence))).toEqual(
+    new Set(['daily', 'weekly', 'monthly'])
+  );
+  expect(new Set(body.sources.map(item => item.monitoringMode))).toEqual(
+    new Set(['content-hash', 'reachability'])
+  );
+
+  const index = await page.request.get(baseURL + '/source-watch-index.json');
+  expect(index.ok()).toBeTruthy();
+  const catalog = await index.json();
+  const delegated = catalog.filter(item => item.owner === 'city-monitor');
+  expect(new Set(delegated.map(item => item.id))).toEqual(
+    new Set(['makati-news', 'makati-events', 'makati-legislation', 'philgeps'])
+  );
+  expect(delegated.every(item => item.delegated === true)).toBeTruthy();
+  expect(catalog.find(item => item.id === 'philgeps')?.monitoringMode).toBe('content-hash');
+  expect(catalog.find(item => item.id === 'comelec-2026-bske-calendar')?.affectedPages).toContain('/elections');
+  expect(catalog.find(item => item.id === 'makati-budget-2026')?.affectedPages).toEqual(
+    expect.arrayContaining(['/projects-budget', '/accountability'])
+  );
+  expect(catalog.find(item => item.id === 'philgeps')?.affectedPages).toEqual(
+    expect.arrayContaining(['/projects-budget', '/accountability', '/city-monitor'])
+  );
+
+  await expect(page.getByRole('heading', { name: 'Freshness review queue' })).toBeVisible();
+  await expect(page.getByRole('link', { name: /Download review queue/i })).toHaveAttribute(
+    'href',
+    '/freshness-review-queue.json'
+  );
+  const queueResponse = await page.request.get(baseURL + '/freshness-review-queue.json');
+  expect(queueResponse.ok()).toBeTruthy();
+  const queue = await queueResponse.json();
+  expect(queue.version).toBe(1);
+
+  const historyResponse = await page.request.get(baseURL + '/freshness-history.json');
+  expect(historyResponse.ok()).toBeTruthy();
+  const freshnessHistory = await historyResponse.json();
+  expect(freshnessHistory.version).toBe(1);
+  expect(Array.isArray(freshnessHistory.events)).toBeTruthy();
+  expect(freshnessHistory.events.length).toBeGreaterThanOrEqual(1);
+  expect(
+    freshnessHistory.events.every(item =>
+      ['general-source-freshness', 'city-monitor'].includes(item.system)
+    )
+  ).toBeTruthy();
+
+  expect(queue.summary.open).toBeGreaterThanOrEqual(1);
+  expect(Array.isArray(queue.items)).toBeTruthy();
+  const openItems = queue.items.filter(item => item.status === 'open');
+  expect(openItems.every(item => Array.isArray(item.affectedPages) && item.affectedPages.length > 0)).toBeTruthy();
+  expect(openItems.every(item => typeof item.action === 'string' && item.action.length > 0)).toBeTruthy();
+  expect(openItems.some(item => item.lastSuccessfulAt !== undefined)).toBeTruthy();
+});
+
+test('Page freshness state tracks open source dependencies without changing review dates', async ({ page }) => {
+  const [pageStateResponse, pageAuditResponse, queueResponse] = await Promise.all([
+    page.request.get(baseURL + '/page-freshness-state.json'),
+    page.request.get(baseURL + '/page-audit.json'),
+    page.request.get(baseURL + '/freshness-review-queue.json'),
+  ]);
+  expect(pageStateResponse.ok()).toBeTruthy();
+  expect(pageAuditResponse.ok()).toBeTruthy();
+  expect(queueResponse.ok()).toBeTruthy();
+
+  const pageState = await pageStateResponse.json();
+  const pageAudit = await pageAuditResponse.json();
+  const queue = await queueResponse.json();
+
+  expect(pageState.version).toBe(1);
+  expect(pageState.pages.length).toBe(pageAudit.length);
+  expect(Array.isArray(pageState.untrackedAffectedPages)).toBeTruthy();
+  expect(pageState.summary.needsReview).toBeGreaterThanOrEqual(1);
+  expect(pageState.summary.untrackedAffectedPages).toBe(pageState.untrackedAffectedPages.length);
+
+  const auditByPath = new Map(pageAudit.map(item => [item.path, item]));
+  for (const item of pageState.pages) {
+    expect(item.reviewedAt).toBe(auditByPath.get(item.path)?.reviewedAt);
+  }
+
+  const affectedPages = new Set(
+    queue.items
+      .filter(item => item.status === 'open')
+      .flatMap(item => item.affectedPages)
+  );
+  expect(
+    new Set(pageState.pages.filter(item => item.needsReview).map(item => item.path))
+  ).toEqual(affectedPages);
+
+  const projects = pageState.pages.find(item => item.path === '/projects-budget');
+  expect(projects?.needsReview).toBeTruthy();
+  expect(projects?.reviewedAt).toBe('2026-09-25');
+  expect(projects?.dependencySignals.some(item => item.sourceId === 'philgeps')).toBeTruthy();
+});
+
+test('BetterMakati Status exposes consolidated freshness health', async ({ page }) => {
+  await page.goto(baseURL + '/status');
+  await expect(page.getByRole('heading', { name: 'Source freshness automation' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Open source freshness' })).toHaveAttribute(
+    'href',
+    '/records'
+  );
+  await expect(page.getByRole('link', { name: 'Review queue', exact: true })).toHaveAttribute(
+    'href',
+    '/records#freshness-review-queue'
+  );
+  await expect(page.getByRole('link', { name: 'Freshness history', exact: true })).toHaveAttribute(
+    'href',
+    '/freshness-history.json'
+  );
+  await expect(page.getByText('open review items', { exact: true })).toBeVisible();
+  await expect(page.getByText('pages need review', { exact: true })).toBeVisible();
+  await expect(page.getByText('pages current', { exact: true })).toBeVisible();
+  await expect(page.getByText('Needs source review', { exact: true }).first()).toBeVisible();
+});
+
+test('Elections publishes structured results and current BSKE information', async ({ page }) => {
+  await page.goto(baseURL + '/elections');
+  await expect(page.getByRole('heading', { name: '2025 Makati election results' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'How the 23 current barangays voted' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Makati mayoral history, 1998–2025' })).toBeVisible();
+});
+
+test('Elections exposes the full 2025 council candidate fields', async ({ page }) => {
+  await page.goto(baseURL + '/elections#council-results');
+  await expect(page.getByRole('heading', { name: 'Full 2025 council candidate results' })).toBeVisible();
+  await expect(page.getByText('Rene Andrei Saguisag', { exact: true })).toBeVisible();
+  await expect(page.getByText('Bodik Baniqued', { exact: true })).toBeVisible();
+  await expect(page.getByText('Herman Marco “Tito Kanin” Garcia', { exact: true })).toBeVisible();
+  await expect(page.getByText('Reynante Saludo', { exact: true })).toBeVisible();
+});
+
+test('Elections publishes the current 2028 BSKE framework and preserves the superseded 2026 schedule', async ({ page }) => {
+  await page.goto(baseURL + '/elections#bske-schedule');
+  await expect(page.getByRole('heading', { name: '2028 schedule & legal framework' })).toBeVisible();
+  await expect(page.getByText('Five-year term', { exact: true })).toBeVisible();
+  await expect(page.getByText('Next regular election', { exact: true })).toBeVisible();
+  await expect(page.getByText('2026 schedule superseded', { exact: true })).toBeVisible();
+  await expect(page.getByText('November 13, 2028', { exact: true })).toBeVisible();
+
+  const supersededSchedule = page.getByText('Superseded 2026 schedule', { exact: true });
+  await expect(supersededSchedule).toBeVisible();
+
+  await expect(page.getByRole('heading', { name: 'Candidate directory status' })).toBeVisible();
+  await expect(page.getByText(/No operative 2026 COC filing period remains/i)).toBeVisible();
+});
+
+test('Elections provides downloadable local, barangay and historical datasets', async ({ page }) => {
+  await page.goto(baseURL + '/elections#election-data');
+  await expect(page.getByRole('link', { name: /2025 local results CSV/i })).toHaveAttribute(
+    'download',
+    'bettermakati-election-2025-local-results.csv'
+  );
+  await expect(page.getByRole('link', { name: /2025 barangay mayor CSV/i })).toHaveAttribute(
+    'download',
+    'bettermakati-election-2025-barangay-mayor.csv'
+  );
+  await expect(page.getByRole('link', { name: /Mayoral history CSV/i })).toHaveAttribute(
+    'download',
+    'bettermakati-mayoral-history-1998-2025.csv'
+  );
+});
+
+test('Today in Makati combines current and validated layers', async ({ page }) => {
+  await page.goto(baseURL + '/today');
+  await expect(page.getByRole('heading', { level: 1, name: 'Today in Makati' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'What’s next in Makati' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Live conditions & current sources' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Latest published brief' })).toBeVisible();
+  await expect(page.getByRole('link', { name: /^Official activity/ })).toHaveAttribute('href', '/city-monitor');
+  await expect(page.getByLabel('Choose a barangay', { exact: true })).toBeVisible();
+});
+
+test('Live Makati labels source authority and check status', async ({ page }) => {
+  await page.goto(baseURL + '/live');
+  await expect(page.getByRole('heading', { level: 1, name: 'What’s happening now' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Source checks' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Source directory' })).toBeVisible();
+  await expect(page.getByText('Official government', { exact: true }).first()).toBeVisible();
+  await expect(page.locator('#main-content').getByRole('link', { name: 'Today in Makati', exact: true })).toBeVisible();
+
+  const state = await page.request.get(baseURL + '/city-monitor-source-state.json');
+  expect(state.ok()).toBeTruthy();
+});
+
+test('City Monitor publishes permanent records and source status', async ({ page }) => {
+  await page.goto(baseURL + '/city-monitor');
+  await expect(page.getByRole('heading', { name: 'Structured records' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Source directory' })).toBeVisible();
+  await expect(page.getByLabel('Filter City Monitor stream')).toBeVisible();
+});
+
+test('City Monitor routes editorial review to the unified queue and exposes monitoring modes', async ({ page }) => {
+  await page.goto(baseURL + '/city-monitor');
+  await expect(page.getByRole('heading', { name: 'Freshness review queue' })).toBeVisible();
+  await expect(page.getByRole('link', { name: /Open review queue/i })).toHaveAttribute(
+    'href',
+    '/records#freshness-review-queue'
+  );
+  await expect(page.getByText('content-change detection', { exact: true })).toBeVisible();
+  await expect(page.getByText('reachability only', { exact: true }).first()).toBeVisible();
+  await expect(page.getByText('manual review', { exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Source changes awaiting review' })).toHaveCount(0);
+
+  const stateResponse = await page.request.get(baseURL + '/city-monitor-source-state.json');
+  expect(stateResponse.ok()).toBeTruthy();
+  const state = await stateResponse.json();
+  const philgeps = state.sources.find(item => item.id === 'philgeps');
+  expect(philgeps?.affectedPages).toEqual(
+    expect.arrayContaining(['/projects-budget', '/accountability', '/city-monitor'])
+  );
+
+  const historyResponse = await page.request.get(baseURL + '/city-monitor-source-history.json');
+  expect(historyResponse.ok()).toBeTruthy();
+  const history = await historyResponse.json();
+  const latestPhilgepsSignal = history.runs
+    .flatMap(run => [...(run.changed || []), ...(run.failed || [])])
+    .find(item => item.id === 'philgeps');
+  if (latestPhilgepsSignal) {
+    expect(latestPhilgepsSignal.affectedPages).toContain('/projects-budget');
+  }
+});
+
+test('City Monitor indexes structured procurement as permanent records', async ({ page }) => {
+  await page.goto(baseURL + '/city-monitor');
+  const search = page.getByPlaceholder('Search records');
+  await search.fill('BS25-04-0419');
+  await expect(page.getByText('Instructional materials for Makati public elementary and secondary schools', { exact: true })).toBeVisible();
+  await expect(page.getByText(/Epigraphy Inc\./)).toBeVisible();
+  await expect(page.getByText(/Reference:/)).toBeVisible();
+});
+
+test('City Monitor procurement record has a permanent detail page and evidence link', async ({ page }) => {
+  await page.goto(baseURL + '/city-monitor/monitor-procurement-2025-q2-bs25-04-0419');
+  await expect(page.getByRole('heading', { level: 1, name: 'Instructional materials for Makati public elementary and secondary schools' })).toBeVisible();
+  await expect(page.getByText('BS25-04-0419', { exact: false })).toBeVisible();
+  await expect(page.getByRole('link', { name: /Original source/i })).toBeVisible();
+});
+
+test('City Monitor publishes machine-readable source health and history', async ({ page }) => {
+  await page.goto(baseURL + '/city-monitor');
+  await expect(page.getByRole('link', { name: 'Source health JSON' })).toHaveAttribute(
+    'href',
+    '/city-monitor-source-state.json'
+  );
+  await expect(page.getByRole('link', { name: 'Check history JSON' })).toHaveAttribute(
+    'href',
+    '/city-monitor-source-history.json'
+  );
+  await expect(page.getByRole('link', { name: 'Source-change RSS' })).toHaveAttribute(
+    'href',
+    '/city-monitor.rss.xml'
+  );
+
+  const state = await page.request.get(baseURL + '/city-monitor-source-state.json');
+  expect(state.ok()).toBeTruthy();
+  const stateBody = await state.json();
+  expect(Array.isArray(stateBody.sources)).toBeTruthy();
+
+  const history = await page.request.get(baseURL + '/city-monitor-source-history.json');
+  expect(history.ok()).toBeTruthy();
+  const historyBody = await history.json();
+  expect(Array.isArray(historyBody.runs)).toBeTruthy();
+
+  const sitemap = await page.request.get(baseURL + '/sitemap.xml');
+  expect(sitemap.ok()).toBeTruthy();
+  expect(await sitemap.text()).toContain(
+    '/city-monitor/monitor-procurement-2025-q2-bs25-04-0419'
+  );
+});
+
+test('Civic Briefs exposes daily weekly and monthly publication modes', async ({ page }) => {
+  await page.goto(baseURL + '/briefs');
+  await expect(page.getByRole('heading', { level: 1, name: 'Civic Briefs' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Daily', exact: true })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Weekly', exact: true })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Monthly', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'What changed in the civic record' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Freshness review queue' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Permanent brief archive' })).toBeVisible();
+});
+
+test('Civic Briefs archive has permanent seeded snapshots without backdating', async ({ page }) => {
+  await page.goto(baseURL + '/briefs?brief=daily-2026-09-24');
+  await expect(page.getByText('Published brief', { exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 2, name: 'Daily Civic Brief', exact: true }).first()).toBeVisible();
+
+  const response = await page.request.get(baseURL + '/civic-briefs.json');
+  expect(response.ok()).toBeTruthy();
+  const archive = await response.json();
+  expect(Array.isArray(archive.briefs)).toBeTruthy();
+  expect(archive.briefs.length).toBeGreaterThanOrEqual(3);
+  expect(new Set(archive.briefs.map(item => item.cadence))).toEqual(
+    new Set(['daily', 'weekly', 'monthly'])
+  );
+  for (const id of [
+    'daily-2026-09-24',
+    'weekly-2026-09-18--2026-09-24',
+    'monthly-2026-09',
+  ]) {
+    const seed = archive.briefs.find(item => item.id === id);
+    expect(seed).toBeTruthy();
+    expect(String(seed.publishedAt)).toMatch(/^2026-09-24/);
+  }
+});
+
+test('Civic Briefs routes review actions to the unified freshness queue', async ({ page }) => {
+  await page.goto(baseURL + '/briefs');
+  await expect(page.getByRole('heading', { name: 'Freshness review queue' })).toBeVisible();
+  await expect(page.getByRole('link', { name: /Open review queue/i })).toHaveAttribute(
+    'href',
+    '/records#freshness-review-queue'
+  );
+  await expect(page.getByText(/consolidated queue/i)).toBeVisible();
+});
+
+test('Civic Briefs exposes barangay relevance without hiding citywide records', async ({ page }) => {
+  await page.goto(baseURL + '/briefs');
+  const selector = page.getByLabel('Filter Civic Brief by barangay relevance');
+  await expect(selector).toBeVisible();
+  await selector.selectOption('poblacion');
+  await expect(page).toHaveURL(/barangay=poblacion/);
+  await expect(
+    page.getByText(/Shows citywide records plus records explicitly tagged to Barangay Poblacion/i)
+  ).toBeVisible();
+});
+
+test('Civic Briefs monthly view exposes neutral activity and procurement summaries', async ({ page }) => {
+  await page.goto(baseURL + '/briefs?period=monthly');
+  await expect(page.getByRole('heading', { level: 2, name: 'State of Makati', exact: true }).first()).toBeVisible();
+  await expect(page.getByText('Procurement represented in validated records', { exact: true })).toBeVisible();
+  await expect(page.getByText('Validated activity by stream', { exact: true })).toBeVisible();
+  await expect(page.getByText(/It is not total city spending or proof of payment/i)).toBeVisible();
+});
+
+test('Civic Briefs publishes archive and RSS distribution feeds', async ({ page }) => {
+  await page.goto(baseURL + '/briefs');
+  await expect(page.getByRole('link', { name: /Civic Briefs RSS/i })).toHaveAttribute(
+    'href',
+    '/civic-briefs.rss.xml'
+  );
+  await expect(page.getByRole('button', { name: /Copy brief text/i })).toBeVisible();
+  const distribution = page.locator('section').filter({
+    has: page.getByRole('heading', { name: 'Share the brief' }),
+  });
+  await expect(distribution.getByRole('link', { name: 'Facebook', exact: true })).toHaveAttribute(
+    'href',
+    'https://www.facebook.com/bettermakati'
+  );
+
+  const rss = await page.request.get(baseURL + '/civic-briefs.rss.xml');
+  expect(rss.ok()).toBeTruthy();
+  expect(await rss.text()).toContain('BetterMakati Civic Briefs');
+});
+
+test('owner task: project spending is reachable from homepage capability examples', async ({ page }) => {
+  await page.goto(baseURL + '/');
+  const projectLink = page.getByRole('link', { name: /What is the city spending on this project/i });
+  if (await projectLink.count()) {
+    await projectLink.first().click();
+    await expect(page).toHaveURL(/\/projects-budget/);
+  } else {
+    await page.goto(baseURL + '/projects-budget');
+  }
+  await expect(page.getByRole('heading', { level: 1 })).toContainText(/Where Makati’s money comes from and goes/i);
+});
+
+test('owner task: history search surface loads without a dead end', async ({ page }) => {
+  await page.goto(baseURL + '/history');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText(/History of Makati/i);
+  await expect(page.locator('input[type="search"]').first()).toBeVisible();
+});
+
+test('owner task: civic map exposes consolidated reports, not only submissions', async ({ page }) => {
+  await page.goto(baseURL + '/civic-map');
+  await expect(page.getByRole('link', { name: /Weekly & monthly reports/i })).toBeVisible();
+  await page.getByRole('link', { name: /Weekly & monthly reports/i }).click();
+  await expect(page).toHaveURL(/\/civic-map\/reports/);
+  await expect(page.getByRole('heading', { level: 1 })).toContainText(/Civic case outcomes/i);
+});
+
+test('generic ratings are removed and structured observations cannot be submitted empty', async ({ page }) => {
+  let posts = 0;
+  await page.route('**/api/civic-observation', route => {
+    if (route.request().method() === 'POST') posts++;
+    return route.fulfill({ status: 200, contentType: 'application/json', body: '{}' });
+  });
+  await page.goto(baseURL + '/civic-map/poblacion-park');
+  await expect(page.getByRole('button', { name: /Rate this place/ })).toHaveCount(0);
+  await expect(page.getByText('Condition snapshot', { exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Save observation', exact: true }).click();
+  await expect(
+    page.getByRole('alert').filter({
+      hasText: 'Record at least one condition you actually observed.',
+    })
+  ).toBeVisible();
+  expect(posts).toBe(0);
+});
+
+test('failed civic feed does not imply zero reports', async ({ page }) => {
+  await page.route('**/api/civic', route => route.fulfill({ status: 503, contentType: 'application/json', body: '{}' }));
+  await page.goto(baseURL + '/civic-map');
+  await expect(page.getByText('Records loading or unavailable', { exact: true }).first()).toBeVisible();
+  await expect(page.getByText('0 community records', { exact: true })).toHaveCount(0);
+});
+
+
+test('W6-3d BetterBarangay preference persists without overstating local data', async ({ page }) => {
+  await page.setViewportSize({ width: 1600, height: 900 });
+  await page.goto(baseURL + '/barangays/poblacion');
+
+  const nav = page.getByRole('navigation', { name: 'Main navigation' });
+  await expect(nav.getByRole('link', { name: 'Services', exact: true })).toHaveAttribute(
+    'href',
+    '/services?barangay=poblacion'
+  );
+  await expect(
+    nav.getByRole('link', { name: 'Accountability', exact: true })
+  ).toHaveAttribute('href', '/accountability?barangay=poblacion');
+  await expect(
+    page.locator('footer').getByRole('link', { name: 'Projects & Budget', exact: true })
+  ).toHaveAttribute('href', '/projects-budget?barangay=poblacion');
+
+  await nav.getByRole('link', { name: 'Services', exact: true }).click();
+  await expect(page).toHaveURL(/\/services\?barangay=poblacion/);
+  await expect(page.getByRole('heading', { level: 1 })).toContainText(
+    'What do you need to get done?'
+  );
+
+  const servicesBar = page.getByRole('region', { name: 'BetterBarangay view' });
+  await expect(servicesBar).toBeVisible();
+  const scopeSelect = servicesBar.getByLabel('Choose BetterBarangay view');
+  await expect(scopeSelect).toHaveValue('poblacion');
+
+  await scopeSelect.selectOption('bel-air');
+  await expect(page).toHaveURL(/\/services\?barangay=bel-air/);
+  await expect(scopeSelect).toHaveValue('bel-air');
+  await expect(page.getByText('Barangay Bel-Air Hall', { exact: true })).toBeVisible();
+
+  await scopeSelect.selectOption('');
+  await expect(page).toHaveURL(baseURL + '/services');
+  await expect(scopeSelect).toHaveValue('');
+  await expect(
+    page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'Services', exact: true })
+  ).toHaveAttribute('href', '/services');
+
+  await page.goto(baseURL + '/projects-budget?barangay=poblacion');
+  await expect(
+    page.getByText('Citywide budget, local evidence for Poblacion', { exact: true })
+  ).toBeVisible();
+  await expect(
+    page.getByText(/remain citywide unless a record explicitly identifies Poblacion/i)
+  ).toBeVisible();
+
+  await page.goto(baseURL + '/participate?barangay=poblacion');
+  await expect(
+    page.getByText('Local actions for Poblacion, citywide opportunities where noted', { exact: true })
+  ).toBeVisible();
+  await expect(
+    page.getByText(/Official consultation listings and project-wide community input remain citywide/i)
+  ).toBeVisible();
+});
+
+test('W6-3e Today is the synthesis door for current civic information', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto(baseURL + '/today');
+
+  const timelineHeading = page.getByRole('heading', { level: 2, name: 'What’s next in Makati' });
+  const currentSourcesHeading = page.getByRole('heading', { level: 2, name: 'Live conditions & current sources' });
+  await expect(timelineHeading).toBeVisible();
+  await expect(currentSourcesHeading).toBeVisible();
+
+  const timelineTop = await timelineHeading.evaluate(element => element.getBoundingClientRect().top + window.scrollY);
+  const currentSourcesTop = await currentSourcesHeading.evaluate(element => element.getBoundingClientRect().top + window.scrollY);
+  expect(timelineTop).toBeLessThan(currentSourcesTop);
+
+  await expect(page.getByText('monitored sources reachable', { exact: false })).toHaveCount(0);
+  await expect(page.getByText('failed checks in the latest monitor run', { exact: false })).toHaveCount(0);
+
+  await expect(page.getByRole('link', { name: 'Open full calendar', exact: true })).toHaveAttribute('href', '/calendar');
+  await expect(page.getByRole('link', { name: /^Official activity/ })).toHaveAttribute('href', '/city-monitor');
+  await expect(page.getByRole('link', { name: /^Recent coverage/ })).toHaveAttribute('href', '/news');
+  await expect(page.getByRole('link', { name: /^Emergency & city contacts/ })).toHaveAttribute('href', '/hotlines');
+  await expect(page.getByRole('link', { name: 'Open Civic Briefs', exact: true })).toHaveAttribute('href', '/briefs');
+  await expect(page.getByRole('link', { name: 'Browse all Makati news', exact: true })).toHaveAttribute('href', '/news');
+
+  for (const route of ['/city-monitor', '/briefs', '/news', '/calendar', '/live']) {
+    await page.goto(baseURL + route);
+    await expect(page.getByRole('link', { name: 'Today in Makati', exact: true }).first()).toHaveAttribute('href', '/today');
+  }
+});
+
+test('W6-3f Explore is the coherent place, mobility and heritage journey', async ({ page }) => {
+  await page.setViewportSize({ width: 1600, height: 900 });
+  await page.goto(baseURL + '/visit');
+
+  await expect(page.getByRole('heading', { level: 1, name: 'Understand the city as you explore it.' })).toBeVisible();
+
+  const layerSection = page.locator('#city-context');
+  for (const [name, href] of [
+    ['Areas & districts', '/estates'],
+    ['Barangays', '/barangays'],
+    ['Heritage', '/heritage'],
+    ['History', '/history'],
+    ['Getting around', '/mobility'],
+  ]) {
+    await expect(layerSection.getByRole('link', { name: new RegExp('^' + name) })).toHaveAttribute('href', href);
+  }
+
+  await expect(page.getByRole('link', { name: 'Explore context', exact: true }).first()).toBeVisible();
+
+  for (const route of ['/mobility', '/heritage', '/estates', '/history']) {
+    await page.goto(baseURL + route);
+    await expect(page.getByRole('link', { name: 'Explore Makati', exact: true }).first()).toHaveAttribute('href', '/visit');
+  }
+
+  await page.goto(baseURL + '/mobility');
+  await expect(page.getByText('Explore Makati', { exact: true }).first()).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Areas & districts', exact: true }).first()).toHaveAttribute('href', '/estates');
+
+  await page.goto(baseURL + '/heritage');
+  await expect(page.getByRole('link', { name: 'Getting around', exact: true }).first()).toHaveAttribute('href', '/mobility');
+  await expect(page.getByRole('link', { name: 'Open Makati history', exact: false })).toHaveAttribute('href', '/history');
+});
+
+test('W6-3g Participation distinguishes government action from BetterMakati contributions', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+
+  await page.goto(baseURL + '/');
+  await expect(page.getByRole('link', { name: /^Participate in Makati/ })).toHaveAttribute('href', '/participate');
+
+  await page.goto(baseURL + '/participate?barangay=poblacion');
+  await expect(page.getByRole('heading', { level: 1, name: 'What do you want to do?' })).toBeVisible();
+  await expect(page.getByText('Need government action?', { exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Makati Action Center contacts', exact: true })).toHaveAttribute(
+    'href',
+    '/hotlines#makati-action-center'
+  );
+  await expect(page.getByRole('link', { name: 'Find the right service or office', exact: true })).toHaveAttribute(
+    'href',
+    '/community-tools/saan-ako-lalapit'
+  );
+  await expect(page.getByRole('link', { name: /^Report a local problem to BetterMakati/ })).toHaveAttribute(
+    'href',
+    '/civic-map/report?barangay=poblacion'
+  );
+  await expect(page.getByRole('link', { name: 'Call 911', exact: true }).first()).toHaveAttribute('href', 'tel:911');
+  await expect(page.getByText(/not a city-government case unless a separate referral is recorded/i)).toBeVisible();
+
+  await page.goto(baseURL + '/get-involved?type=correction#submission');
+  await expect(page.getByText('These forms are for BetterMakati contributions.', { exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Back to participation choices', exact: true })).toHaveAttribute(
+    'href',
+    '/participate'
+  );
+  await expect(page.getByRole('link', { name: 'Need government action?', exact: true })).toHaveAttribute(
+    'href',
+    '/hotlines#makati-action-center'
+  );
+
+  await page.goto(baseURL + '/civic-map/report');
+  await expect(page.getByText('This creates a public BetterMakati case.', { exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Makati Action Center contacts', exact: true })).toHaveAttribute(
+    'href',
+    '/hotlines#makati-action-center'
+  );
+  await expect(page.getByRole('link', { name: 'Call 911', exact: true })).toHaveAttribute('href', 'tel:911');
+
+  await page.goto(baseURL + '/hotlines#makati-action-center');
+  await expect(page.locator('#makati-action-center')).toBeVisible();
+  await expect(page.locator('#makati-action-center')).toContainText('Makati Action Center');
+  await expect(page.locator('#makati-action-center')).toContainText('8870-1000');
+});
+
+test('W6-3h Evidence journey separates BetterMakati context from original sources', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+
+  await page.goto(baseURL + '/');
+  await expect(page.getByRole('link', { name: /^Public records/ })).toHaveAttribute('href', '/records');
+
+  await page.goto(baseURL + '/statistics');
+  await expect(page.getByRole('link', { name: 'Browse source records', exact: true })).toHaveAttribute('href', '/records');
+
+  await page.goto(baseURL + '/records');
+  await expect(page.getByRole('heading', { level: 1, name: 'Find the source.' })).toBeVisible();
+  await expect(page.getByText('BetterMakati evidence index', { exact: true })).toBeVisible();
+  await expect(page.getByText('Original evidence', { exact: true })).toBeVisible();
+
+  const firstRecord = page.getByRole('link', { name: 'View record', exact: true }).first();
+  await expect(firstRecord).toHaveAttribute('href', /\/records\/.+/);
+  const recordHref = await firstRecord.getAttribute('href');
+  expect(recordHref).toBeTruthy();
+
+  await page.goto(baseURL + recordHref);
+  await expect(page.getByText('BetterMakati catalog entry', { exact: true })).toBeVisible();
+
+  const originalSource = page.getByRole('link', { name: /^Open original source/ });
+  await expect(originalSource).toHaveAttribute('href', /^https?:\/\//);
+
+  await expect(
+    page.getByRole('heading', { level: 2, name: 'Where BetterMakati uses this source' })
+  ).toBeVisible();
+  const contextLink = page.getByRole('link', { name: /Open BetterMakati context/ }).first();
+  await expect(contextLink).toHaveAttribute('href', /^\//);
+
+  await expect(page.getByRole('link', { name: 'Browse the evidence index', exact: true })).toHaveAttribute(
+    'href',
+    '/records'
+  );
+});
+
+test('barangays page is a focused selection gateway', async ({ page }) => {
+  await page.goto(baseURL + '/barangays');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Find your barangay');
+  await expect(page.getByRole('heading', { name: 'Poblacion', exact: true })).toBeVisible();
+  await expect(page.getByText(/How population is distributed/i)).toHaveCount(0);
+  await expect(page.getByText('barangay profiles', { exact: true })).toHaveCount(0);
+  await expect(page.getByText('current council rosters', { exact: true })).toHaveCount(0);
+  await expect(page.getByText('hall contacts', { exact: true })).toHaveCount(0);
+  await expect(page.getByText('verified YAKAP clinic coverage', { exact: true })).toHaveCount(0);
+});
+
+test('barangay landing page uses the persistent BetterBarangay context bar', async ({ page }) => {
+  await page.goto(baseURL + '/barangays/poblacion');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Poblacion Better');
+  await expect(page.getByRole('region', { name: 'BetterBarangay view' })).toBeVisible();
+  await expect(page.getByLabel('Choose BetterBarangay view')).toHaveValue('poblacion');
+  await expect(page.getByRole('link', { name: 'Open Barangay Poblacion homepage', exact: true })).toHaveAttribute('href', '/barangays/poblacion');
+  await expect(page.getByRole('heading', { name: /What brings you here/i })).toBeVisible();
+  await expect(page.getByRole('heading', { name: /Follow what affects Poblacion/i })).toBeVisible();
+});
+
+test('sliceable city pages always expose the persistent BetterBarangay bar', async ({ page }) => {
+  await page.goto(baseURL + '/services');
+  const bar = page.getByRole('region', { name: 'BetterBarangay view' });
+  await expect(bar).toBeVisible();
+  await expect(bar).toContainText('BetterBarangay View');
+  await expect(bar.getByLabel('Choose BetterBarangay view')).toBeVisible();
+  await expect(page.getByLabel('Choose BetterBarangay view')).toHaveValue('');
+  await page.getByLabel('Choose BetterBarangay view').selectOption('poblacion');
+  await expect(page).toHaveURL(/\/services\?barangay=poblacion/);
+  await expect(page.getByLabel('Choose BetterBarangay view')).toHaveValue('poblacion');
+});
+
+test('scoped city pages show the selected BetterBarangay in the persistent bar', async ({ page }) => {
+  await page.goto(baseURL + '/services?barangay=carmona');
+  await expect(page.getByRole('region', { name: 'BetterBarangay view' })).toBeVisible();
+  await expect(page.getByRole('region', { name: 'BetterBarangay view' }).locator('span').filter({ hasText: 'BetterCarmona' }).first()).toBeVisible();
+  await expect(page.getByLabel('Choose BetterBarangay view')).toHaveValue('carmona');
+  await expect(page.getByText('Deep dive into a BetterBarangay', { exact: true })).toHaveCount(0);
+});
+
+test('BetterBarangay scope survives service and civic detail drilldowns', async ({ page }) => {
+  await page.goto(baseURL + '/services?barangay=poblacion');
+  await page.getByRole('link', { name: 'Cedula', exact: true }).click();
+  await expect(page).toHaveURL(/\/services\/guide\/community-tax-certificate\?barangay=poblacion/);
+  await expect(page.getByLabel('Choose BetterBarangay view')).toHaveValue('poblacion');
+  await expect(
+    page.getByRole('navigation', { name: 'Breadcrumb' }).getByRole('link', { name: 'Services', exact: true })
+  ).toHaveAttribute('href', '/services?barangay=poblacion');
+
+  await page.goto(baseURL + '/services?barangay=poblacion');
+  await page.getByRole('link', { name: 'Business permit', exact: true }).click();
+  await expect(page).toHaveURL(/\/services\/guide\/new-business-permit\?barangay=poblacion/);
+  await expect(page.getByLabel('Choose BetterBarangay view')).toHaveValue('poblacion');
+  await expect(
+    page.getByRole('navigation', { name: 'Breadcrumb' }).getByRole('link', { name: 'Services', exact: true })
+  ).toHaveAttribute('href', '/services?barangay=poblacion');
+
+  await page.goto(baseURL + '/civic-map?barangay=poblacion');
+  await page.locator('a[href="/civic-map/poblacion-park?barangay=poblacion"]').click();
+  await expect(page).toHaveURL(/\/civic-map\/[^?]+\?barangay=poblacion/);
+  await expect(page.getByLabel('Choose BetterBarangay view')).toHaveValue('poblacion');
+});
+
+test('barangay homepage exposes council services election and local accountability', async ({ page }) => {
+  await page.goto(baseURL + '/barangays/poblacion');
+  await expect(page.getByRole('heading', { name: /Common transactions/i })).toBeVisible();
+  await expect(page.getByRole('heading', { name: /Current barangay council/i })).toBeVisible();
+  await expect(page.getByText(/Jose Mikhail Ranillo Villena/i)).toBeVisible();
+  await expect(page.getByRole('heading', { name: /2025 mayoral result/i })).toBeVisible();
+  await expect(page.getByRole('heading', { name: /Locally tagged public records/i })).toBeVisible();
+});
+
+test('first BetterBarangay contact batch exposes verified hall details', async ({ page }) => {
+  await page.goto(baseURL + '/barangays/bangkal');
+  await expect(page.getByText('3440 Gen. Lim Street, Bangkal, Makati City', { exact: true })).toBeVisible();
+  await expect(page.locator('#local-government').getByText('7751-0787', { exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: /Official social channel/i })).toBeVisible();
+
+  await page.goto(baseURL + '/barangays/carmona');
+  await expect(page.locator('#local-government').getByText('A.P. Reyes Avenue, Barangay Carmona, Makati City', { exact: true })).toBeVisible();
+  await expect(page.locator('#local-government').getByRole('link', { name: 'barangaycarmona2013@gmail.com', exact: true })).toBeVisible();
+
+  await page.goto(baseURL + '/barangays/forbes-park');
+  await expect(page.locator('#local-government').getByText('Kalayaan Road corner Pandan Street, Forbes Park, Makati City', { exact: true })).toBeVisible();
+});
+
+test('expanded BetterBarangay hall contact batch renders current locations', async ({ page }) => {
+  const checks = [
+    ['/barangays/guadalupe-nuevo', 'Orense Street, Guadalupe Nuevo, Makati City'],
+    ['/barangays/kasilawan', '2094 E. Pascua Street, Kasilawan, Makati City'],
+    ['/barangays/pio-del-pilar', '6845 Washington Street, Pio Del Pilar, Makati City'],
+    ['/barangays/san-isidro', '2701 Guatemala Street, San Isidro, Makati City'],
+    ['/barangays/singkamas', '3816 F. Nazario Street, Singkamas, Makati City'],
+    ['/barangays/valenzuela', 'Hormiga Street corner Pililia Street, Valenzuela, Makati City'],
+  ];
+
+  for (const [route, address] of checks) {
+    await page.goto(baseURL + route);
+    await expect(page.locator('#local-government').getByText(address, { exact: true })).toBeVisible();
+  }
+});
+
+test('BetterBarangay official channels and emails are exposed across the larger batch', async ({ page }) => {
+  const emailChecks = [
+    ['/barangays/bel-air', 'belair_admin@barangaybelair.ph'],
+    ['/barangays/pio-del-pilar', 'bpiodelpilarsecoffice2020@gmail.com'],
+    ['/barangays/san-antonio', 'makatisanantonio@yahoo.com'],
+    ['/barangays/san-isidro', 'sanisidromkt@gmail.com'],
+    ['/barangays/tejeros', 'barangay_tejeros@yahoo.com.ph'],
+  ];
+
+  for (const [route, email] of emailChecks) {
+    await page.goto(baseURL + route);
+    await expect(page.locator('#local-government').getByRole('link', { name: email, exact: true })).toBeVisible();
+  }
+
+  await page.goto(baseURL + '/barangays/poblacion');
+  await expect(page.locator('#local-government').getByText('J.P. Rizal cor. D.M. Rivera Street, Makati City', { exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: /Barangay website/i })).toHaveAttribute('href', 'https://epoblacion.net/');
+
+  await page.goto(baseURL + '/barangays/san-lorenzo');
+  await expect(page.getByRole('link', { name: /Barangay website/i })).toHaveAttribute('href', 'https://sanloph.com/');
+  await expect(page.getByRole('link', { name: /Official social channel/i })).toHaveAttribute('href', 'https://www.facebook.com/Barangaysanlorenzo');
+});
+
+test('barangay homepages show locally published service details without replacing common transactions', async ({ page }) => {
+  await page.goto(baseURL + '/barangays/bel-air');
+  await expect(page.getByRole('heading', { name: 'Services in Bel-Air', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Individual barangay clearance', exact: true })).toBeVisible();
+  await expect(page.getByText(/Building-administrator certification for Salcedo Village/i)).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Common transactions', exact: true })).toBeVisible();
+
+  await page.goto(baseURL + '/barangays/olympia');
+  await expect(page.getByRole('heading', { name: 'CCTV record request', exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: /Barangay Olympia online services/i }).first()).toBeVisible();
+
+  await page.goto(baseURL + '/barangays/san-lorenzo');
+  await expect(page.getByRole('heading', { name: 'Barangay One Stop Service', exact: true })).toBeVisible();
+  await expect(page.getByText(/1 October 2026 · 9:00 AM–3:00 PM/i)).toBeVisible();
+
+  await page.goto(baseURL + '/barangays/poblacion');
+  await expect(page.getByRole('heading', { name: 'Business clearance', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Birth and death reporting', exact: true })).toBeVisible();
+
+  await page.goto(baseURL + '/barangays/pio-del-pilar');
+  await expect(page.getByRole('heading', { name: 'Barangay services portal', exact: true })).toBeVisible();
+});
+
+test('barangay health services expand local service coverage', async ({ page }) => {
+  await page.goto(baseURL + '/barangays/bangkal');
+  await expect(page.getByRole('heading', { name: /Bangkal Health Center — PhilHealth YAKAP clinic/i })).toBeVisible();
+
+  await page.goto(baseURL + '/barangays/san-antonio');
+  await expect(page.getByRole('heading', { name: /San Antonio Health Center — PhilHealth YAKAP clinic/i })).toBeVisible();
+
+  await page.goto(baseURL + '/barangays/palanan');
+  await expect(page.getByRole('heading', { name: 'Animal Bite Treatment Center', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'TB-DOTS services', exact: true })).toBeVisible();
+
+  await page.goto(baseURL + '/barangays/tejeros');
+  await expect(page.getByRole('heading', { name: 'Tejeros Health Center primary care', exact: true })).toBeVisible();
+  await expect(page.getByText('Monday–Friday · 8:00 AM–5:00 PM', { exact: true })).toBeVisible();
+  await expect(page.getByText(/family planning, vaccination, dental care/i)).toBeVisible();
+});
+
+test('barangay gateway search finds a barangay through an official name', async ({ page }) => {
+  await page.goto(baseURL + '/barangays');
+  await page.getByPlaceholder(/Search barangay, official or local place/i).fill('Jose Mikhail');
+  await expect(page.getByRole('heading', { name: 'Poblacion', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Bangkal', exact: true })).toHaveCount(0);
+});
+
+test('site search indexes barangay officials', async ({ page }) => {
+  await page.goto(baseURL + '/');
+  const search = page.getByPlaceholder(/Try Yellow Card, Poblacion, business permit, budget/i);
+  await search.fill('Jose Mikhail Villena');
+  await expect(page.getByText('Barangay Poblacion', { exact: true }).first()).toBeVisible();
+});
+
+test('Get Involved distinguishes an existing duplicate from a new submission', async ({ page }) => {
+  await page.route('**/api/feedback', route =>
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        ok: true,
+        duplicate: true,
+        reference: 321,
+        url: 'https://github.com/migi-macati/bettermakati/issues/321',
+      }),
+    })
+  );
+
+  await page.goto(baseURL + '/get-involved?type=correction#submission');
+  await page.getByLabel('Subject').fill('Incorrect City Hall telephone number');
+  await page.getByLabel('Details').fill('The listed number appears to be outdated.');
+  await page.getByRole('button', { name: 'Send to BetterMakati' }).click();
+
+  await expect(page.getByRole('status')).toContainText(
+    'A matching open BetterMakati item already exists as #321. No new item was created.'
+  );
+  await expect(page.getByRole('link', { name: 'Open existing item' })).toHaveAttribute(
+    'href',
+    'https://github.com/migi-macati/bettermakati/issues/321'
+  );
+  await expect(page.getByLabel('Subject')).toHaveValue('Incorrect City Hall telephone number');
+  await expect(page.getByLabel('Details')).toHaveValue('The listed number appears to be outdated.');
+});
+
+test('barangay-scoped Participation prefills Get Involved barangay context', async ({ page }) => {
+  await page.goto(baseURL + '/participate?barangay=bel-air');
+  await page.getByRole('link', { name: /Share a public source/i }).click();
+  await expect(page).toHaveURL(/\/get-involved\?type=source&barangay=bel-air#submission/);
+  await expect(page.getByLabel('Barangay / area')).toHaveValue('Bel-Air');
+  await expect(page.getByLabel('Submission type')).toHaveValue('source');
+});
+
+test('barangay homepage launches scoped Civic Map', async ({ page }) => {
+  await page.goto(baseURL + '/barangays/poblacion');
+  await page.getByRole('link', { name: 'Explore local places' }).first().click();
+  await expect(page).toHaveURL(/\/civic-map\?barangay=poblacion/);
+  await expect(page.getByLabel('Choose BetterBarangay view')).toHaveValue('poblacion');
+  await expect(page.getByText(/in Barangay Poblacion/i).first()).toBeVisible();
+  await expect(page.getByText('Makati Poblacion Park', { exact: true })).toBeVisible();
+  await expect(page.getByText(/Ayala Avenue — Paseo de Roxas to V\.A\. Rufino/i)).toHaveCount(0);
+});
+
+test('barangay homepage launches services with barangay slice', async ({ page }) => {
+  await page.goto(baseURL + '/barangays/poblacion');
+  await page.getByRole('link', { name: /Find a service/i }).first().click();
+  await expect(page).toHaveURL(/\/services\?barangay=poblacion/);
+  await expect(page.getByLabel('Choose BetterBarangay view')).toHaveValue('poblacion');
+  await expect(page.getByRole('button', { name: 'Barangay', exact: true })).toHaveAttribute('aria-pressed', 'true');
+});
+
+test('barangay statistics show local population context through slicer', async ({ page }) => {
+  await page.goto(baseURL + '/statistics?barangay=poblacion');
+  await expect(page.getByLabel('Choose BetterBarangay view')).toHaveValue('poblacion');
+  await expect(page.getByText('17,088', { exact: true })).toBeVisible();
+  await expect(page.getByText('residents', { exact: true })).toBeVisible();
+});
+
+test('barangay context does not follow users to unrelated or unscoped citywide pages', async ({ page }) => {
+  await page.goto(baseURL + '/services?barangay=poblacion');
+  await expect(page.getByLabel('Choose BetterBarangay view')).toHaveValue('poblacion');
+  await page.goto(baseURL + '/history');
+  await expect(page.getByLabel('Choose BetterBarangay view')).toHaveCount(0);
+  await page.goto(baseURL + '/services/guide/national-id');
+  await expect(page.getByLabel('Choose BetterBarangay view')).toHaveCount(0);
+  await page.goto(baseURL + '/services');
+  await expect(page.getByLabel('Choose BetterBarangay view')).toHaveValue('');
+});
+
+test('national service handoff prioritizes official agencies and references BetterGov', async ({ page }) => {
+  await page.goto(baseURL + '/services/guide/national-id');
+  await expect(
+    page.getByRole('heading', { name: 'Continue with Philippine Statistics Authority', exact: true })
+  ).toBeVisible();
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://philsys.gov.ph/'
+  );
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toHaveAttribute(
+    'href',
+    /bettergov\.ph\/services\?search=National%20ID/
+  );
+
+  await page.goto(baseURL + '/services/guide/passport');
+  await expect(
+    page.getByRole('heading', { name: 'Continue with Department of Foreign Affairs', exact: true })
+  ).toBeVisible();
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://passport.gov.ph/'
+  );
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toHaveAttribute(
+    'href',
+    /bettergov\.ph\/services\?search=Passport%20Application%20Appointment/
+  );
+
+  await page.goto(baseURL + '/services/guide/drivers-license');
+  await expect(
+    page.getByRole('heading', { name: 'Continue with Land Transportation Office', exact: true })
+  ).toBeVisible();
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://portal.lto.gov.ph/'
+  );
+  await expect(page.getByText(/LTO Makati District Office is on Pililia Street/i)).toBeVisible();
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toHaveAttribute(
+    'href',
+    /bettergov\.ph\/services\?search=Driver%27s%20License/
+  );
+});
+
+test('fully covered national services hand off cleanly while partial coverage keeps local guidance', async ({ page }) => {
+  await page.goto(baseURL + '/services/guide/national-id');
+  await expect(page.getByRole('heading', { name: 'Before you start', exact: true })).toHaveCount(0);
+  await expect(page.getByRole('heading', { name: 'How to start', exact: true })).toHaveCount(0);
+  await expect(page.getByRole('heading', { name: /Continue with Philippine Statistics Authority/i })).toBeVisible();
+
+  const official = page.getByRole('link', { name: /Open official service/i });
+  const directory = page.getByRole('link', { name: 'BetterGov.ph', exact: true });
+  await expect(official).toHaveAttribute('target', '_blank');
+  await expect(directory).toHaveAttribute('target', '_blank');
+
+  await page.goto(baseURL + '/services/guide/sec-company-registration');
+  await expect(page.getByRole('heading', { name: 'Before you start', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'How to start', exact: true })).toBeVisible();
+});
+
+
+test('national service handoff batch A covers PSA, LTO registration and PRC renewal', async ({ page }) => {
+  await page.goto(baseURL + '/services/guide/psa-marriage-certificate');
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://www.psaserbilis.com.ph/MarriageCertificate'
+  );
+  await expect(page.getByText(/PSA Makati City CRS Outlet is at 5\/F Ayala Malls Circuit/i)).toBeVisible();
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/psa-death-certificate');
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://www.psaserbilis.com.ph/DeathCertificate'
+  );
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/psa-cenomar');
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://www.psaserbilis.com.ph/CENOMARCertificate'
+  );
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/vehicle-registration');
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://portal.lto.gov.ph/'
+  );
+  await expect(page.getByText(/LTO Makati District Office is on Pililia Street/i)).toBeVisible();
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toHaveCount(0);
+
+  await page.goto(baseURL + '/services/guide/prc-id');
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://online.prc.gov.ph/'
+  );
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toHaveCount(0);
+});
+
+test('national service handoff batch B1 covers SSS, PhilHealth and Pag-IBIG', async ({ page }) => {
+  await page.goto(baseURL + '/services/guide/sss-salary-loan');
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://www.sss.gov.ph/salary-loan/'
+  );
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toBeVisible();
+  await expect(page.getByText('SSS Makati – Gil Puyat', { exact: true })).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/sss-death-benefit');
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://www.sss.gov.ph/death-benefit/'
+  );
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toHaveCount(0);
+
+  await page.goto(baseURL + '/services/guide/philhealth-services');
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://www.philhealth.gov.ph/'
+  );
+  await expect(page.getByText('PhilHealth Makati Local Health Insurance Office', { exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toHaveCount(0);
+
+  await page.goto(baseURL + '/services/guide/pagibig-services');
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://www.pagibigfundservices.com/virtualpagibig/Membership.aspx'
+  );
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toBeVisible();
+  await expect(page.getByText('Pag-IBIG Makati CBD – Paseo de Roxas', { exact: true })).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/pagibig-calamity-loan');
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toHaveCount(0);
+});
+
+test('national service handoff batch B2 covers GSIS benefits and loans', async ({ page }) => {
+  await page.goto(baseURL + '/services/guide/gsis-benefits');
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://www.gsis.gov.ph/active-members/benefits/'
+  );
+  await expect(page.getByText('GSIS Head Office', { exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toHaveCount(0);
+
+  await page.goto(baseURL + '/services/guide/gsis-loans');
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://www.gsis.gov.ph/ginhawa-for-all/online-filing-of-loans/'
+  );
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toHaveCount(0);
+});
+
+test('national service handoff batch C1 covers BIR, DTI and SEC', async ({ page }) => {
+  await page.goto(baseURL + '/services/guide/bir-tin-registration');
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://orus.bir.gov.ph/home'
+  );
+  await expect(page.getByText(/Makati taxpayers are divided among several BIR Revenue District Offices/i)).toBeVisible();
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/dti-business-name');
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://bnrs.dti.gov.ph/'
+  );
+  await expect(page.getByText('DTI Negosyo Center – Makati', { exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/sec-company-registration');
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://esparc.sec.gov.ph/application'
+  );
+  await expect(page.getByText('Securities and Exchange Commission Headquarters', { exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toHaveCount(0);
+
+  await page.goto(baseURL + '/services/guide/dti-consumer-complaint');
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/sec-company-filings');
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/sec-company-records');
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toBeVisible();
+});
+
+test('national service handoff batch C2 covers DOLE and DOH NCR', async ({ page }) => {
+  await page.goto(baseURL + '/services/guide/dole-labor-assistance');
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://clients.ncr.dole.gov.ph/'
+  );
+  await expect(page.getByText('DOLE NCR Makati–Pasay Field Office', { exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toHaveCount(0);
+
+  await page.goto(baseURL + '/services/guide/dole-cshp');
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://ncr.dole.gov.ph/'
+  );
+
+  await page.goto(baseURL + '/services/guide/doh-licensed-facility-check');
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://ncroffice.doh.gov.ph/RLED'
+  );
+  await expect(page.getByText('DOH Metro Manila Center for Health Development', { exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toHaveCount(0);
+
+  await page.goto(baseURL + '/services/guide/doh-health-facility-licensing');
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://ncroffice.doh.gov.ph/CitizensCharter'
+  );
+});
+
+test('national service handoff batch D1 covers BFP, ECC and DepEd Makati', async ({ page }) => {
+  await page.goto(baseURL + '/services/guide/bfp-fsic-occupancy');
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://bfp.gov.ph/'
+  );
+  await expect(page.getByText('BFP Makati City Fire Station', { exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toHaveCount(0);
+
+  await page.goto(baseURL + '/services/guide/ecc-medical-reimbursement');
+  await expect(page.getByText('Employees’ Compensation Commission – Head Office / Public Assistance Center', { exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toHaveCount(0);
+
+  await page.goto(baseURL + '/services/guide/ecc-rehabilitation');
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://ecc.gov.ph/downloads/'
+  );
+
+  await page.goto(baseURL + '/services/guide/ecc-death-funeral');
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://ecc.gov.ph/frequently-asked-questions/'
+  );
+
+  await page.goto(baseURL + '/services/guide/deped-makati-cav');
+  await expect(page.getByText('DepEd Schools Division Office – Makati City', { exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://depedmakati.ph/index.php/records/'
+  );
+
+  await page.goto(baseURL + '/services/guide/deped-makati-record-correction');
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://depedmakati.ph/index.php/records/'
+  );
+});
+
+test('national service handoff batch D2 covers OWWA, TESDA, PHLPost, DPWH and COMELEC', async ({ page }) => {
+  await page.goto(baseURL + '/services/guide/owwa-scholarships');
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://scholarship.owwa.gov.ph/'
+  );
+  await expect(page.getByText('OWWA Regional Welfare Office – NCR', { exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/owwa-welfare-assistance');
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toHaveCount(0);
+
+  await page.goto(baseURL + '/services/guide/tesda-scholarship');
+  await expect(page.getByText('TESDA District Office – PASMAK (Pasay/Makati)', { exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toHaveCount(0);
+
+  await page.goto(baseURL + '/services/guide/phlpost-services');
+  await expect(page.getByText('PHLPost – Makati City Hall', { exact: true })).toBeVisible();
+  await expect(page.getByText('Makati Central Post Office', { exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toHaveCount(0);
+
+  await page.goto(baseURL + '/services/guide/dpwh-infrastructure-concern');
+  await expect(page.getByText('DPWH Metro Manila 2nd District Engineering Office', { exact: true })).toBeVisible();
+
+  await page.goto(baseURL + '/services/guide/comelec-voter-services');
+  await expect(page.getByRole('link', { name: /Open official service/i })).toHaveAttribute(
+    'href',
+    'https://www.comelec.gov.ph/'
+  );
+  await expect(page.getByRole('link', { name: 'BetterGov.ph', exact: true })).toHaveCount(0);
+});
+
+test('detail pages expose canonical breadcrumb parents without self-linking the current page', async ({ page }) => {
+  await page.goto(baseURL + '/services/guide/national-id');
+  let trail = page.getByRole('navigation', { name: 'Breadcrumb' });
+  await expect(trail.getByRole('link', { name: 'Home', exact: true })).toHaveAttribute('href', '/');
+  await expect(trail.getByRole('link', { name: 'Services', exact: true })).toHaveAttribute('href', '/services');
+  await expect(trail.locator('[aria-current="page"]')).toHaveCount(1);
+  await expect(trail.locator('a[aria-current="page"]')).toHaveCount(0);
+
+  await page.goto(baseURL + '/government');
+  const officialHref = await page.locator('a[href^="/officials/"]').first().getAttribute('href');
+  expect(officialHref).toBeTruthy();
+  await page.goto(baseURL + officialHref);
+  trail = page.getByRole('navigation', { name: 'Breadcrumb' });
+  await expect(trail.getByRole('link', { name: 'Government', exact: true })).toHaveAttribute('href', '/government');
+  await expect(trail.locator('[aria-current="page"]')).toHaveCount(1);
+  await expect(trail.locator('a[aria-current="page"]')).toHaveCount(0);
+
+  await page.goto(baseURL + '/records');
+  const recordHref = await page.locator('a[href^="/records/"]').first().getAttribute('href');
+  expect(recordHref).toBeTruthy();
+  await page.goto(baseURL + recordHref);
+  trail = page.getByRole('navigation', { name: 'Breadcrumb' });
+  await expect(trail.getByRole('link', { name: 'Public Records', exact: true })).toHaveAttribute('href', '/records');
+  await expect(trail.locator('[aria-current="page"]')).toHaveCount(1);
+  await expect(trail.locator('a[aria-current="page"]')).toHaveCount(0);
+});
+
+test('footer prioritizes recovery, civic understanding and institutional trust', async ({ page }) => {
+  await page.goto(baseURL + '/');
+  const footer = page.locator('footer');
+
+  for (const heading of ['Get things done', 'Understand Makati', 'BetterMakati']) {
+    await expect(footer.getByRole('heading', { name: heading, exact: true })).toBeVisible();
+  }
+
+  await expect(footer.getByRole('link', { name: 'Where Should I Go?', exact: true })).toBeVisible();
+  await expect(footer.getByRole('link', { name: 'Government Offices', exact: true })).toBeVisible();
+  await expect(footer.getByRole('link', { name: 'Contact', exact: true })).toHaveAttribute('href', '/contact');
+  await expect(footer.getByRole('link', { name: 'Coverage & limitations', exact: true }).first()).toHaveAttribute('href', '/status');
+  await expect(footer.getByRole('link', { name: 'About BetterMakati', exact: true })).toHaveAttribute('href', '/about');
+
+  await expect(footer.getByRole('link', { name: 'City Monitor', exact: true })).toHaveCount(0);
+  await expect(footer.getByRole('link', { name: 'Civic Briefs', exact: true })).toHaveCount(0);
+
+  await expect(footer.getByText('Official & broader ecosystem', { exact: true })).toBeVisible();
+  const official = footer.getByRole('link', { name: 'Official Makati City Portal', exact: true });
+  await expect(official).toHaveAttribute('href', 'https://www.makati.gov.ph/');
+  await expect(official).toHaveAttribute('target', '_blank');
+});
+
+test('ecosystem navigation exposes national and cross-LGU exits without replacing Makati services', async ({ page }) => {
+  await page.goto(baseURL + '/services');
+  await expect(page.getByRole('heading', { name: 'Need somewhere else?', exact: true })).toBeVisible();
+
+  const betterGov = page.getByRole('link', { name: /Browse BetterGov services/i });
+  await expect(betterGov).toHaveAttribute('href', 'https://bettergov.ph/services');
+  await expect(betterGov).toHaveAttribute('target', '_blank');
+
+  const betterLgu = page.getByRole('link', { name: /Find another LGU/i });
+  await expect(betterLgu).toHaveAttribute('href', 'https://lgu.bettergov.ph/');
+  await expect(betterLgu).toHaveAttribute('target', '_blank');
+
+  await expect(page.getByRole('link', { name: /Open guide/i }).first()).toBeVisible();
+
+  const footer = page.locator('footer');
+  const footerBetterGov = footer.getByRole('link', { name: 'National services — BetterGov', exact: true });
+  const footerBetterLgu = footer.getByRole('link', { name: 'Other LGUs — BetterLGU', exact: true });
+  await expect(footerBetterGov).toHaveAttribute('href', 'https://bettergov.ph/services');
+  await expect(footerBetterGov).toHaveAttribute('target', '_blank');
+  await expect(footerBetterLgu).toHaveAttribute('href', 'https://lgu.bettergov.ph/');
+  await expect(footerBetterLgu).toHaveAttribute('target', '_blank');
+
+  await page.goto(baseURL + '/about');
+  for (const name of [/BetterGov/i, /BetterLGU/i, /OpenBayan/i]) {
+    await expect(page.getByRole('link', { name }).first()).toHaveAttribute('target', '_blank');
+  }
+});
+
+test('ecosystem fallbacks preserve the query and leave an internal recovery path', async ({ page }) => {
+  await page.goto(baseURL + '/search');
+  const search = page.locator('#site-search');
+  const missingQuery = guaranteedMissingQuery;
+  await search.fill(missingQuery);
+
+  const betterGov = page.getByRole('link', { name: 'Search national services on BetterGov', exact: true });
+  await expect(betterGov).toHaveAttribute(
+    'href',
+    'https://bettergov.ph/services?search=' + encodeURIComponent(missingQuery)
+  );
+  await expect(betterGov).toHaveAttribute('target', '_blank');
+
+  const betterLgu = page.getByRole('link', { name: 'Find another LGU on BetterLGU', exact: true });
+  await expect(betterLgu).toHaveAttribute('href', 'https://lgu.bettergov.ph/');
+  await expect(betterLgu).toHaveAttribute('target', '_blank');
+
+  await page.getByRole('button', { name: 'Report a missing result', exact: true }).click();
+  await expect(page).toHaveURL(/\/get-involved\?type=idea&tool=search&subject=Missing(?:%20|\+)search(?:%20|\+)result/);
+  await expect(page.getByRole('heading', { level: 1, name: 'How do you want to help?' })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 2, name: 'Send something to BetterMakati' })).toBeVisible();
+
+  await page.goto(baseURL + '/participate');
+  for (const name of [/Open BetterLGU/i, /Open Petitions\.ph/i, /Open OpenBayan/i]) {
+    await expect(page.getByRole('link', { name })).toHaveAttribute('target', '_blank');
+  }
+
+  await page.goto(baseURL + '/hotlines');
+  const nationwide = page.getByRole('link', { name: /Browse nationwide hotlines/i });
+  await expect(nationwide).toHaveAttribute('href', 'https://hotlines.bettergov.ph/');
+  await expect(nationwide).toHaveAttribute('target', '_blank');
+});
+
+test('projects and budget exposes related national evidence without replacing Makati records', async ({ page }) => {
+  await page.goto(baseURL + '/projects-budget');
+
+  const nationalContext = page.getByText('National context', { exact: true }).locator('..');
+  await expect(nationalContext.getByRole('link', { name: /2026 national budget/i })).toHaveAttribute(
+    'href',
+    'https://2026-budget.bettergov.ph/'
+  );
+  await expect(nationalContext.getByRole('link', { name: /Procurement browser/i })).toHaveAttribute(
+    'href',
+    'https://transparency.bettergov.ph/procurement'
+  );
+  await expect(nationalContext.getByRole('link', { name: /Transparency records/i })).toHaveAttribute(
+    'href',
+    'https://transparency.bettergov.ph/'
+  );
+  await expect(nationalContext.getByRole('link', { name: /Flood-control projects/i })).toHaveAttribute(
+    'href',
+    'https://bettergov.ph/flood-control-projects'
+  );
+
+  await expect(page.getByRole('link', { name: /2026 Annual Budget Report/i }).first()).toBeVisible();
+  await expect(page.getByRole('heading', { name: /Bid results and award records/i })).toBeVisible();
+});
+
+test('accountability and public records expose national evidence tools without replacing local sources', async ({ page }) => {
+  await page.goto(baseURL + '/accountability');
+  const accountabilityEvidence = page.getByText('Related national records', { exact: true }).locator('..');
+  await expect(accountabilityEvidence.getByRole('link', { name: /Transparency records/i })).toHaveAttribute(
+    'href',
+    'https://transparency.bettergov.ph/'
+  );
+  await expect(accountabilityEvidence.getByRole('link', { name: /Procurement records/i })).toHaveAttribute(
+    'href',
+    'https://transparency.bettergov.ph/procurement'
+  );
+  await expect(accountabilityEvidence.getByRole('link', { name: /SALN records/i })).toHaveAttribute(
+    'href',
+    'https://saln.bettergov.ph/'
+  );
+  await expect(accountabilityEvidence.getByRole('link', { name: /Laws & jurisprudence/i })).toHaveAttribute(
+    'href',
+    'https://juris.ph/'
+  );
+  await expect(page.getByRole('heading', { name: /Follow public money, projects and promises/i })).toBeVisible();
+
+  await page.goto(baseURL + '/records');
+  const nationalTools = page.getByText('National record tools', { exact: true }).locator('..');
+  await expect(nationalTools.getByRole('link', { name: /Transparency Portal/i })).toBeVisible();
+  const procurementBrowser = nationalTools.getByRole('link', { name: /PhilGEPS Browser/i });
+  await expect(procurementBrowser).toHaveAttribute(
+    'href',
+    'https://transparency.bettergov.ph/procurement'
+  );
+  await expect(procurementBrowser).toHaveAttribute('target', '_blank');
+  await expect(nationalTools.getByRole('link', { name: /SALN Tracker/i })).toBeVisible();
+  await expect(nationalTools.getByRole('link', { name: /^Juris$/i })).toBeVisible();
+  await expect(page.getByRole('heading', { name: /Search the public record catalog/i })).toBeVisible();
+});
+
+test('government and legislation expose national legislative references without replacing Makati records', async ({ page }) => {
+  await page.goto(baseURL + '/government');
+  await expect(page.getByRole('link', { name: /National legislative records/i })).toHaveAttribute(
+    'href',
+    'https://open-congress-api.bettergov.ph/'
+  );
+  await expect(page.getByRole('link', { name: /National government directory/i })).toHaveAttribute(
+    'href',
+    'https://bettergov.ph/government'
+  );
+  await expect(page.getByRole('heading', { name: 'House of Representatives', exact: true })).toBeVisible();
+
+  await page.goto(baseURL + '/legislation');
+  await expect(page.getByRole('heading', { name: 'National bills that directly name Makati', exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Open Congress data', exact: true }).first()).toHaveAttribute(
+    'href',
+    /github\.com\/bettergovph\/open-congress-data\//
+  );
+  await expect(page.getByRole('link', { name: /Official archive/i }).first()).toBeVisible();
+});
+
+test('elections exposes related national records without replacing COMELEC sources', async ({ page }) => {
+  await page.goto(baseURL + '/elections#election-data');
+
+  const related = page.getByText('Related national records', { exact: true }).locator('..');
+  await expect(related.getByRole('link', { name: 'Open Data Portal', exact: true })).toHaveAttribute(
+    'href',
+    'https://data.bettergov.ph/'
+  );
+  await expect(related.getByRole('link', { name: 'Political Dynasty Tracker', exact: true })).toHaveAttribute(
+    'href',
+    'https://visualizations.bettergov.ph/dynasty'
+  );
+  await expect(related.getByRole('link', { name: 'SALN Tracker', exact: true })).toHaveAttribute(
+    'href',
+    'https://saln.bettergov.ph/'
+  );
+  await expect(page.getByRole('link', { name: /COMELEC/i }).first()).toBeVisible();
+  await expect(page.getByRole('heading', { name: /Download the structured election data/i })).toBeVisible();
+});
+
+test('civic map exposes national infrastructure references without redirecting local reports', async ({ page }) => {
+  await page.goto(baseURL + '/civic-map');
+
+  const nationalInfrastructure = page.getByText('National infrastructure', { exact: true }).locator('..');
+  await expect(nationalInfrastructure.getByRole('link', { name: /Bisto\.ph infrastructure reports/i })).toHaveAttribute(
+    'href',
+    'https://bisto.ph/'
+  );
+  await expect(nationalInfrastructure.getByRole('link', { name: /Flood-control project browser/i })).toHaveAttribute(
+    'href',
+    'https://bettergov.ph/flood-control-projects'
+  );
+
+  await expect(page.getByRole('link', { name: /Browse results/i })).toHaveAttribute('href', '#places');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText(/Find a place, street or route/i);
+});
+
+test('statistics and reports expose national context without replacing Makati sources', async ({ page }) => {
+  await page.goto(baseURL + '/statistics');
+
+  await expect(page.getByRole('link', { name: 'Open national data', exact: true })).toHaveAttribute(
+    'href',
+    'https://data.bettergov.ph/'
+  );
+  await expect(page.getByRole('link', { name: 'Visualizations', exact: true })).toHaveAttribute(
+    'href',
+    'https://visualizations.bettergov.ph/'
+  );
+  await expect(page.getByRole('link', { name: 'Price guides', exact: true })).toHaveAttribute(
+    'href',
+    'https://price-guides.bettergov.ph/'
+  );
+  await expect(page.getByText(/2024 POPCEN/i).first()).toBeVisible();
+
+  await page.goto(baseURL + '/reports');
+  await expect(page.getByRole('heading', { level: 1, name: 'Featured Reports & Insights' })).toBeVisible();
+  await expect(page.getByText('National context', { exact: true })).toHaveCount(0);
+  await expect(page.locator('a[href="/reports/audit-follow-up-closure-trails"]').first()).toBeVisible();
+});
+
+test('2022 Makati mayoral history uses the cached OpenHalalan extract with BetterGov provenance', async ({ page }) => {
+  await page.goto(baseURL + '/elections#mayoral-history');
+
+  const row2022 = page.locator('tbody tr').filter({ hasText: '2022' }).filter({ hasText: 'Abby Binay' }).first();
+  await expect(row2022).toContainText('338,819');
+  await expect(row2022.getByRole('link', { name: /OpenHalalan via BetterGov/i })).toHaveAttribute(
+    'href',
+    'https://data.bettergov.ph/datasets/25'
+  );
+});
+
+
+test('Wave 5 interactive controls keep mobile touch targets', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+
+  await page.goto(baseURL + '/history');
+  const period = page.getByRole('button', { name: /All periods/i });
+  expect((await period.boundingBox())?.height ?? 0).toBeGreaterThanOrEqual(44);
+
+  await page.goto(baseURL + '/heritage');
+  const allHeritage = page.getByRole('button', { name: /All heritage places/i });
+  expect((await allHeritage.boundingBox())?.height ?? 0).toBeGreaterThanOrEqual(44);
+
+  await page.goto(baseURL + '/calendar');
+  const topic = page.getByLabel('Topic');
+  expect((await topic.boundingBox())?.height ?? 0).toBeGreaterThanOrEqual(44);
+
+  await page.goto(baseURL + '/news');
+  const refresh = page.getByRole('button', { name: /Refresh|Checking/i });
+  expect((await refresh.boundingBox())?.height ?? 0).toBeGreaterThanOrEqual(44);
+
+  await page.goto(baseURL + '/search');
+  const siteSearch = page.locator('#site-search');
+  await siteSearch.focus();
+  const allTab = page.getByRole('button', { name: 'All', exact: true });
+  expect((await allTab.boundingBox())?.height ?? 0).toBeGreaterThanOrEqual(44);
+});
+
+
+test('W6-4a low-link surfaces keep a useful continuation', async ({ page }) => {
+  await page.goto(baseURL + '/cinemas');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Cinemas');
+  await expect(
+    page.getByRole('link', { name: 'Getting around Makati', exact: true })
+  ).toHaveAttribute('href', '/mobility');
+  await expect(
+    page.locator('#main-content').getByRole('link', { name: 'Explore Makati', exact: true })
+  ).toHaveAttribute('href', '/visit');
+
+  await page.goto(baseURL + '/hotlines');
+  await expect(
+    page.getByRole('link', { name: 'Browse nationwide hotlines', exact: false })
+  ).toHaveAttribute('href', /^https:\/\//);
+});
+));
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
 });
 
 test('homepage featured reports carousel advances to a different report page', async ({ page }) => {
   await page.goto(baseURL + '/');
+
+  const carousel = page.locator('section[aria-roledescription="carousel"]');
+  const reportLink = carousel.getByRole('link', { name: 'Read more', exact: true });
+  const firstHref = await reportLink.getAttribute('href');
+
   await page.getByRole('button', { name: 'Next featured report' }).click();
-  await expect(
-    page.getByRole('heading', {
-      name: /Makati’s population growth accelerated to 1\.37% a year in 2020–2024/i,
-    })
-  ).toBeVisible();
+  await expect(reportLink).not.toHaveAttribute('href', firstHref);
 });
 
 test('reports page lists standalone articles and never shows Makati Overview', async ({ page }) => {
