@@ -19,6 +19,24 @@ export interface GovernmentServiceOffice {
 
 export const governmentServiceOffices: GovernmentServiceOffice[] = [
   {
+    id: 'makati-health-clearance-support',
+    name: 'Makati Health Clearance Certificate System support',
+    agency: 'Makati Health Department – Environmental Health and Sanitation',
+    scope: 'In Makati',
+    address:
+      '7/F New Makati City Hall Building 1, J.P. Rizal Street, Poblacion, Makati City',
+    barangay: 'Poblacion',
+    phone:
+      '0917 688 5911 / (02) 8870-1609 / (02) 8870-1083 / (02) 8870-1443',
+    email:
+      'makaticitysupport@healthcert.ph / mhdsanitation@makati.gov.ph',
+    sourceUrl: 'https://makati.healthcert.ph/',
+    mapsQuery:
+      'Makati Health Department Makati City Hall Building 1 JP Rizal Poblacion',
+    note:
+      'Apply through the online Health Clearance Certificate System. The mobile number and first email are listed for technical support; the city health email and landlines are the portal’s Makati Health Department contacts.',
+  },
+  {
     id: 'makati-health-plus-office',
     name: 'Makati Health Plus Program Office',
     agency: 'Makati Health Department / Action Center',
