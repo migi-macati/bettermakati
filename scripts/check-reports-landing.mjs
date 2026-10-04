@@ -71,7 +71,7 @@ for (const duplicateMarkup of [
 if (
   !teaser.includes('bg-primary-900 text-white') ||
   !teaser.includes(
-    'lg:grid-cols-[minmax(0,1.45fr)_minmax(18rem,0.75fr)]'
+    'xl:grid-cols-[minmax(0,1.45fr)_minmax(18rem,0.75fr)]'
   )
 ) {
   problems.push(
@@ -80,7 +80,7 @@ if (
 }
 
 if (
-  !page.includes('grid grid-cols-1 gap-5 lg:grid-cols-2') ||
+  !page.includes('grid grid-cols-1 gap-5 xl:grid-cols-2') ||
   !teaser.includes('group block h-full rounded-3xl')
 ) {
   problems.push(

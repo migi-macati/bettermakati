@@ -52,7 +52,7 @@ export default function Reports() {
             </Heading>
           </div>
 
-          <div className="mt-7 grid grid-cols-1 gap-5 lg:grid-cols-2">
+          <div className="mt-7 grid grid-cols-1 gap-5 xl:grid-cols-2">
             {moreReports.map(report => (
               <ReportTeaser key={report.slug} report={report} variant="card" />
             ))}

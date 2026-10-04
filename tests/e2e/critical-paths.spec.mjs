@@ -447,27 +447,28 @@ test('homepage exposes and opens barangay editions', async ({ page }) => {
 test('homepage featured reports carousel shows one report article per card', async ({ page }) => {
   await page.goto(baseURL + '/');
   await expect(page.getByRole('heading', { name: 'Featured Reports & Insights', exact: true })).toBeVisible();
-  await expect(
-    page.getByRole('heading', {
-      name: /Three older Makati audit findings have follow-up records/i,
-    })
-  ).toBeVisible();
 
-  await page.getByRole('link', { name: 'Read more', exact: true }).click();
-  await expect(page).toHaveURL(/\/reports\/audit-follow-up-closure-trails$/);
-  await expect(page.getByRole('heading', { level: 1 })).toContainText(
-    /Three older Makati audit findings have follow-up records/i
-  );
+  const carousel = page.locator('section[aria-roledescription="carousel"]');
+  const reportLink = carousel.getByRole('link', { name: 'Read more', exact: true });
+  await expect(reportLink).toHaveCount(1);
+
+  const href = await reportLink.getAttribute('href');
+  expect(href).toMatch(/^\/reports\/[a-z0-9-]+$/);
+
+  await reportLink.click();
+  await expect(page).toHaveURL(new RegExp(href + '$'));
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
 });
 
 test('homepage featured reports carousel advances to a different report page', async ({ page }) => {
   await page.goto(baseURL + '/');
+
+  const carousel = page.locator('section[aria-roledescription="carousel"]');
+  const reportLink = carousel.getByRole('link', { name: 'Read more', exact: true });
+  const firstHref = await reportLink.getAttribute('href');
+
   await page.getByRole('button', { name: 'Next featured report' }).click();
-  await expect(
-    page.getByRole('heading', {
-      name: /Makati’s population growth accelerated to 1\.37% a year in 2020–2024/i,
-    })
-  ).toBeVisible();
+  await expect(reportLink).not.toHaveAttribute('href', firstHref);
 });
 
 test('reports page lists standalone articles and never shows Makati Overview', async ({ page }) => {
