@@ -929,6 +929,30 @@ const scTransition2023: HistorySource = {
   citationNote:
     'Set court and prosecution transition rules for cases and offenses in the areas declared part of Taguig, including an operational cutoff on 1 January 2024.',
 };
+const depedEmboSchools2024: HistorySource = {
+  id: 'deped-embo-schools-transition-2024',
+  label: 'Department of Education · DepEd Order No. 001, s. 2024',
+  url: 'https://www.deped.gov.ph/wp-content/uploads/DO_s2024_001.pdf',
+  kind: 'Legal record',
+  evidenceLevel: 'Primary',
+  format: 'institutional record',
+  repository: 'Department of Education',
+  date: '15 January 2024',
+  citationNote:
+    'Records the official turnover of management and operation of 14 affected public schools to the Schools Division of Taguig City and Pateros beginning 1 January 2024. The order leaves specific issues and appeals to the proper authorities and does not resolve property ownership.',
+};
+const pnaEmboFacilities2025: HistorySource = {
+  id: 'pna-embo-facilities-injunction-2025',
+  label: 'Philippine News Agency · preliminary injunction over EMBO public facilities',
+  url: 'https://www.pna.gov.ph/articles/1250718',
+  kind: 'Institutional history',
+  evidenceLevel: 'Secondary',
+  format: 'newspaper',
+  repository: 'Philippine News Agency',
+  date: '23 May 2025',
+  citationNote:
+    'Reports the Taguig RTC Branch 153 order dated 22 May 2025 granting a preliminary injunction over specified public facilities while litigation on the better right of possession continued. The order is provisional, not a final ownership or title judgment.',
+};
 const comelecEmbo2024: HistorySource = {
   id: 'comelec-embo-districts-2024',
   label: 'COMELEC Resolution No. 11069 · Taguig legislative and councilor districts',
@@ -966,7 +990,7 @@ const makatiCulturalPlan: HistorySource = {
   citationNote:
     'The plan records the 2019 barangay heritage listing and the city declaration of significant built and cultural heritage sites in Poblacion.',
 };
-export const historyReviewed = '27 September 2026';
+export const historyReviewed = '4 October 2026';
 export const historyEras = [
   { label: 'Early & Spanish colonial', from: 0, to: 1895 },
   { label: 'Revolution & American period', from: 1896, to: 1934 },
@@ -2533,7 +2557,28 @@ const rows: Row[] = [
           { label: 'City of Taguig' },
           { label: 'Supreme Court of the Philippines' },
         ],
-        eventIds: ['sc-boundary-finality-2022', 'embo-electoral-districts-2024'],
+        eventIds: ['sc-boundary-finality-2022', 'embo-schools-transition-2024', 'embo-electoral-districts-2024'],
+      },
+    },
+  ],
+  [
+    'embo-schools-transition-2024',
+    2024,
+    '1 January 2024',
+    'Taguig-Pateros schools division takes over operations of 14 EMBO public schools',
+    health,
+    'Under the Makati–Taguig–DepEd agreement implemented through DepEd Order No. 001, s. 2024, the Schools Division of Taguig City and Pateros assumed management and operation of 14 affected public schools beginning 1 January 2024.',
+    depedEmboSchools2024,
+    'This milestone records operational responsibility for the schools. It does not determine ownership of the school land, buildings, facilities or equipment.',
+    {
+      evidenceStatus: 'established',
+      relations: {
+        institutions: [
+          { label: 'Department of Education' },
+          { label: 'City of Makati' },
+          { label: 'City of Taguig' },
+        ],
+        eventIds: ['boundary-transition-2023', 'embo-electoral-districts-2024', 'embo-facilities-injunction-2025'],
       },
     },
   ],
@@ -2550,6 +2595,27 @@ const rows: Row[] = [
       evidenceStatus: 'established',
       relations: {
         eventIds: ['boundary-transition-2023'],
+      },
+    },
+  ],
+  [
+    'embo-facilities-injunction-2025',
+    2025,
+    '22 May 2025',
+    'Court grants Taguig a preliminary injunction over disputed EMBO public facilities',
+    government,
+    'Taguig RTC Branch 153 granted a preliminary injunction allowing Taguig continued access and operational control over specified health centers, covered courts, daycare centers and other essential facilities while trial continued on the better right of possession.',
+    pnaEmboFacilities2025,
+    'This was a provisional remedy during continuing litigation. It was not a final judgment on ownership or title to the facilities.',
+    {
+      evidenceStatus: 'established',
+      relations: {
+        institutions: [
+          { label: 'City of Makati' },
+          { label: 'City of Taguig' },
+          { label: 'Regional Trial Court of Taguig City, Branch 153' },
+        ],
+        eventIds: ['boundary-transition-2023', 'embo-schools-transition-2024', 'embo-electoral-districts-2024'],
       },
     },
   ],
