@@ -779,6 +779,18 @@
     ]
   },
   {
+    "id": "makati-health-clearance-system",
+    "label": "Makati Health Clearance Certificate System",
+    "url": "https://makati.healthcert.ph/",
+    "kind": "service-detail",
+    "cadence": "weekly",
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
+  },
+  {
     "id": "sss-sickness-benefit",
     "label": "SSS sickness benefit",
     "url": "https://www.sss.gov.ph/sickness-benefit/",
