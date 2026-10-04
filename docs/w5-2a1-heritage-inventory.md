@@ -1,6 +1,6 @@
 # W5-2a1 — Makati heritage inventory and source reconciliation
 
-Reviewed: 2026-09-27
+Reviewed: 2026-10-05
 
 ## Purpose
 
@@ -10,7 +10,7 @@ This audit is the evidence pass before BetterMakati creates or rewires canonical
 
 ### Heritage page
 
-`src/data/visitMakati.ts` currently lists six heritage/culture entries:
+`src/data/visitMakati.ts` now lists seven heritage/culture entries, each linked to a canonical Place record:
 
 1. Nuestra Señora de Gracia Church
 2. Sts. Peter and Paul Parish Church
@@ -18,18 +18,15 @@ This audit is the evidence pass before BetterMakati creates or rewires canonical
 4. Dambana ng Banal na Krus
 5. Museo ng Makati
 6. Ayala Museum
-
-Only **Museo ng Makati** currently has a `placeId`.
+7. Plaza Cristo Rey
 
 ### Canonical place registry
 
-`src/data/placeRegistry.ts` currently has only one record whose primary category is `heritage-site`: `museo-ng-makati`.
-
-That record is still a legacy Civic Map seed converted into the canonical registry. It does not yet carry the source detail, aliases, lifecycle, historical relationships or richer heritage metadata needed by the History and Heritage surfaces.
+`src/data/placeRegistry.ts` now carries the seven public-facing Heritage & Culture places above with sourced identity, location and heritage metadata. The 5 October 2026 pass also adds a provisional registry-only record for the La Campana Fabrica de Tabacos Administration Building. Its city-registry identity and Olympia address are sourced, while its exact building footprint, access and current lifecycle remain flagged for verification.
 
 ### History timeline
 
-`src/data/makatiHistory.ts` is already much richer than the Heritage page. It contains source-linked material for San Pedro Macati, Guadalupe, the hacienda buildings, Nielson Airport, Ayala/FHL and related institutions. The present gap is therefore mostly **entity reconciliation**: several historically important places exist in prose and event relations but do not yet exist as canonical Place records.
+`src/data/makatiHistory.ts` remains richer than the public Heritage page. It contains source-linked material for San Pedro Macati, Guadalupe, the hacienda buildings, Nielson Airport, Ayala/FHL and related institutions. The remaining work is selective entity reconciliation: preserve unresolved historical entities as such, add wider cultural-property records without presenting private or former-Makati sites as visitor attractions, and link them only when the evidence supports the relationship.
 
 ---
 
@@ -115,31 +112,31 @@ Therefore:
 
 ### La Campana Fabrica de Tabacos Administration Building — Olympia
 
-**Status:** add to wider heritage registry.
+**Status:** canonicalized provisionally in the wider heritage registry on 5 October 2026.
 
-NCCA Talapamana lists it as a **Registered Property, City of Makati**. Makati city material places it at/around Sultana Street, Olympia.
+Makati’s Local Registry of Cultural Properties identifies the administration building at 9110, 39 Sultana Street, Olympia and says the present property was established in 1951. The canonical record uses the stable ID `la-campana-fabrica-de-tabacos-administration-building`.
 
-Proposed ID: `la-campana-fabrica-de-tabacos-administration-building`.
-
-This is especially relevant to the Olympia industrial/estate history layer and should be cross-linked to future Casa Hacienda research only where evidence establishes a relationship.
+The map point is a representative point on La Campana Street, not a verified building footprint. Current ownership, access and lifecycle remain unresolved. Cross-link this record to future Casa Hacienda research only if separate evidence establishes the relationship.
 
 ### Malapad na Bato Adobe Formations
 
-**Status:** add to wider heritage registry.
+**Status:** former-Makati heritage; do not add to the current-Makati Place registry.
 
-NCCA Talapamana lists the formations as a **Registered Property, City of Makati**.
+Makati’s local cultural-property registry locates the formations in East Rembo and West Rembo. Those barangays are outside present Makati after the 2023 jurisdictional transfer, so the site belongs in the historical-territory layer rather than the current civic/place layer.
 
-This should be modeled as a natural/landscape cultural property rather than forced into the same type as a church or museum.
+If BetterMakati later adds former-boundary places, model this as a natural/landscape cultural property with an explicit temporal jurisdiction note.
 
-Proposed ID: `malapad-na-bato-adobe-formations`.
+Working ID: `malapad-na-bato-adobe-formations`.
 
-### Andres Bonifacio Monument — Makati
+### Andres Bonifacio Monument — former Makati Park and Garden site
 
-**Status:** add to wider heritage registry after exact site reconciliation.
+**Status:** former-Makati heritage; do not add to the current-Makati Place registry.
 
-Talapamana identifies a Makati Andres Bonifacio monument as a marked structure. Before creating the record, confirm the exact present-day monument, marker identity, address and current coordinates against NHCP.
+Makati’s local cultural-property registry locates the monument at Makati Park and Garden on J.P. Rizal Street, West Rembo. Because that site is outside present Makati after the 2023 jurisdictional transfer, preserve it in the historical-territory layer rather than presenting it as a current Makati place.
 
-Proposed ID after verification: `andres-bonifacio-monument-makati`.
+Before creating a former-boundary record, confirm the exact present-day monument, marker identity and current coordinates.
+
+Working ID: `andres-bonifacio-monument-makati`.
 
 ---
 
@@ -309,22 +306,29 @@ Recommended relationships:
 
 ## I. W5-2a1 result
 
-### Safe to canonicalize immediately
+### Canonicalized for the public Heritage & Culture layer
 
 - Nuestra Señora de Gracia Church
 - Sts. Peter and Paul Parish Church
 - Nielson Tower
 - Dambana ng Banal na Krus
-- Museo ng Makati (enrich existing)
+- Museo ng Makati
 - Ayala Museum
 - Plaza Cristo Rey
 
+### Canonicalized provisionally for the wider registry
+
+- La Campana Fabrica de Tabacos Administration Building — official identity and address sourced; exact footprint, access and lifecycle still need verification
+
 ### Add after exact present-site verification
 
-- La Campana Fabrica de Tabacos Administration Building
+- selected National Artist works and other current-Makati cultural properties
+
+### Keep in the former-Makati historical-territory layer
+
 - Malapad na Bato Adobe Formations
-- Andres Bonifacio Monument (Makati)
-- selected National Artist works
+- Andres Bonifacio Monument at the former Makati Park and Garden site
+- Ermita de San Nicolas de Tolentino
 
 ### Keep unresolved / historical-only for now
 
@@ -361,4 +365,4 @@ Recommended relationships:
 
 ## Next micro-step
 
-**W5-2a2:** create/enrich the seven safe canonical Place records above, without yet changing heritage routes or adding unresolved Casa entities. Then run the place-registry integrity checks before touching `Heritage.tsx`.
+Verify the La Campana building footprint and present lifecycle, then choose the next current-Makati cultural-property batch from the National Artist works. Keep former-EMBO heritage in the historical-territory model and leave the Casa entities unresolved until the location/continuity evidence is complete.
