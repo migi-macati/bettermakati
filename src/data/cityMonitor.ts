@@ -47,6 +47,9 @@ export interface CityMonitorRecord {
   title: string;
   summary: string;
   date: string;
+  publishedDate?: string;
+  deadlineAt?: string;
+  openingAt?: string;
   status: CityMonitorStatus;
   sourceLabel: string;
   sourceUrl: string;
@@ -203,6 +206,41 @@ export const cityMonitorSources: CityMonitorSource[] = [
 ];
 
 const baseCityMonitorRecords: CityMonitorRecord[] = [
+  {
+    id: '2026-philgeps-passenger-utility-vans-13256997',
+    type: 'procurement',
+    title: 'Supply and Delivery of Brand-New Passenger Utility Vans',
+    summary:
+      'PhilGEPS Invitation to Bid reference 13256997 lists a ₱8,331,000 approved budget for contract under solicitation BS26-06-0627-1. The notice was published 24 September 2026; bid submission closes 13 October 2026 at 9:30 AM and bid opening is scheduled for 10:00 AM the same day.',
+    date: '2026-09-24',
+    publishedDate: '2026-09-24',
+    deadlineAt: '2026-10-13T09:30:00+08:00',
+    openingAt: '2026-10-13T10:00:00+08:00',
+    status: 'published',
+    stage: 'Bid submission deadline',
+    referenceNo: 'BS26-06-0627-1 / PhilGEPS 13256997',
+    amount: 8331000,
+    sourceLabel: 'PhilGEPS Bid Notice Abstract — Reference 13256997',
+    sourceUrl:
+      'https://notices.philgeps.gov.ph/GEPSNONPILOT/Tender/SplashBidNoticeAbstractUI.aspx?highlight=true&menuIndex=3&refID=13256997',
+    sourcePublisher: 'Philippine Government Electronic Procurement System',
+    relatedHref: '/projects-budget#procurement',
+    summaryBullets: [
+      'Approved budget for contract: ₱8,331,000.00.',
+      'Date published: 24 September 2026.',
+      'Pre-bid conference: 1 October 2026, 10:00 AM, Executive Lounge, 22nd Floor, Makati City Hall Building I.',
+      'Bid submission deadline: 13 October 2026, 9:30 AM.',
+      'Bid opening: 13 October 2026, 10:00 AM.',
+      'PhilGEPS displays “0 Day/s” for delivery period; BetterMakati does not treat that portal value as a meaningful delivery commitment.',
+    ],
+    documents: [
+      {
+        label: 'PhilGEPS Bid Notice Abstract — Reference 13256997',
+        url: 'https://notices.philgeps.gov.ph/GEPSNONPILOT/Tender/SplashBidNoticeAbstractUI.aspx?highlight=true&menuIndex=3&refID=13256997',
+        kind: 'procurement',
+      },
+    ],
+  },
   {
     id: '2026-q2-makati-city-hall-building-ii-hvac',
     type: 'procurement',
