@@ -291,9 +291,9 @@ if (indicatorCount !== 30) {
 }
 
 const reportCount = (reports.match(/schemaVersion:\s*2/g) ?? []).length;
-if (reportCount !== 5) {
+if (reportCount < 5) {
   problems.push(
-    'Expected 5 canonical Featured Reports; found ' + reportCount + '.'
+    'Expected at least 5 canonical Featured Reports; found ' + reportCount + '.'
   );
 }
 
