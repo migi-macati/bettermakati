@@ -8,9 +8,11 @@ export const election2025Sources = {
     'https://www.comelec.gov.ph/php-tpls-attachments/2025NLE/COC_2025NLE/CLC2025_NCR/CITY_OF_MAKATI.pdf',
   population:
     'https://psa.gov.ph/classification/psgc/barangays/1380300000',
+  legislativeDistrictPopulation:
+    'https://psa.gov.ph/content/highlights-population-legislative-districts-philippines-based-2024-census-population-2024',
 };
 
-const population2024 = {
+const barangayPopulation2024 = {
   city: barangays.reduce((sum, barangay) => sum + barangay.population2024, 0),
   district1: barangays
     .filter(barangay => barangay.legislativeDistrict === '1st District')
@@ -18,6 +20,29 @@ const population2024 = {
   district2: barangays
     .filter(barangay => barangay.legislativeDistrict === '2nd District')
     .reduce((sum, barangay) => sum + barangay.population2024, 0),
+};
+
+export const legislativeDistrictPopulation2024 = {
+  referenceDate: '2024-07-01',
+  district1: 269326,
+  district2: 40444,
+  sourceUrl: election2025Sources.legislativeDistrictPopulation,
+  sourceLabel: 'PSA 2024 POPCEN legislative-district table · released September 12, 2025',
+} as const;
+
+if (
+  barangayPopulation2024.district1 !== legislativeDistrictPopulation2024.district1 ||
+  barangayPopulation2024.district2 !== legislativeDistrictPopulation2024.district2
+) {
+  throw new Error(
+    'Canonical barangay populations do not match the PSA 2024 legislative-district totals.'
+  );
+}
+
+const population2024 = {
+  city: barangayPopulation2024.city,
+  district1: legislativeDistrictPopulation2024.district1,
+  district2: legislativeDistrictPopulation2024.district2,
 };
 
 export const election2025Electorate = {
