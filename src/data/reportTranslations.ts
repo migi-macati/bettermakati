@@ -364,39 +364,39 @@ const filipinoReportCopy: Record<string, LocalizedReportCopy> = {
             kind: 'table',
             title: 'Mga documented milestone ng original project',
             columns: [
-              { key: 'date', label: 'Petsa' },
+              { key: 'milestoneDate', label: 'Petsa' },
               { key: 'milestone', label: 'Milestone' },
               { key: 'whatItProves', label: 'Ano ang pinapatunayan' },
             ],
             rows: [
               {
-                date: '23 Oct 2018',
+                milestoneDate: '23 Oct 2018',
                 milestone: 'Notice of Award',
                 whatItProves: 'Napili ang Infradev-led consortium',
               },
               {
-                date: '30 Jul 2019',
+                milestoneDate: '30 Jul 2019',
                 milestone: 'Joint venture signed',
                 whatItProves: 'Naging binding city–private partner project',
               },
               {
-                date: '18 Feb 2020',
+                milestoneDate: '18 Feb 2020',
                 milestone: 'Notice to proceed',
                 whatItProves: 'Pinayagan ang implementation stage',
               },
               {
-                date: '8 Sep 2020',
+                milestoneDate: '8 Sep 2020',
                 milestone: 'US$1.21B EPC contracts',
                 whatItProves: 'May civil at systems contractors',
               },
               {
-                date: 'By Apr 2025 filing',
+                milestoneDate: 'By Apr 2025 filing',
                 milestone: 'Station 3 early works recorded',
                 whatItProves:
                   'May excavation, shoring at mat foundations; hindi pa operating railway',
               },
               {
-                date: '2 May 2025',
+                milestoneDate: '2 May 2025',
                 milestone: 'Infradev declared project infeasible',
                 whatItProves:
                   'Tinapos ng original partner ang continuation path at nagsimula ng arbitration',
