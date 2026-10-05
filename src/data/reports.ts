@@ -1858,39 +1858,39 @@ export const reports: FeaturedReportV2[] = [
             kind: 'table',
             title: 'Documented milestones of the original project',
             columns: [
-              { key: 'date', label: 'Date' },
+              { key: 'milestoneDate', label: 'Date' },
               { key: 'milestone', label: 'Milestone' },
               { key: 'whatItProves', label: 'What it establishes' },
             ],
             rows: [
               {
-                date: '23 Oct 2018',
+                milestoneDate: '23 Oct 2018',
                 milestone: 'Notice of Award',
                 whatItProves: 'Infradev-led consortium selected',
               },
               {
-                date: '30 Jul 2019',
+                milestoneDate: '30 Jul 2019',
                 milestone: 'Joint venture signed',
                 whatItProves: 'Binding city–private partner project',
               },
               {
-                date: '18 Feb 2020',
+                milestoneDate: '18 Feb 2020',
                 milestone: 'Notice to proceed',
                 whatItProves: 'Implementation stage authorized',
               },
               {
-                date: '8 Sep 2020',
+                milestoneDate: '8 Sep 2020',
                 milestone: 'US$1.21B EPC contracts',
                 whatItProves: 'Civil and systems contractors engaged',
               },
               {
-                date: 'By Apr 2025 filing',
+                milestoneDate: 'By Apr 2025 filing',
                 milestone: 'Station 3 early works recorded',
                 whatItProves:
                   'Excavation, shoring and mat foundations; not an operating railway',
               },
               {
-                date: '2 May 2025',
+                milestoneDate: '2 May 2025',
                 milestone: 'Infradev declared project infeasible',
                 whatItProves:
                   'Original continuation path ended and arbitration began',
