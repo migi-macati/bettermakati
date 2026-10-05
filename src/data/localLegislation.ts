@@ -185,6 +185,16 @@ export interface LocalLegislationRecord {
 }
 
 export const localLegislationSources: Record<string, LocalLegislationSource> = {
+  'makati-roms-archive-2026-09-27': {
+    id: 'makati-roms-archive-2026-09-27',
+    label: 'Makati resolutions and ordinances archive',
+    publisher: 'City Government of Makati',
+    url: 'https://www.makati.gov.ph/content/resolutions-and-ordinances/author',
+    sourceClass: 'city-legislation-archive',
+    role: 'identity',
+    note:
+      'The official archive index supplies the measure type, reference and title. Its enumerated rows do not expose measure-specific document URLs for these records.',
+  },
   'makati-covid-recovery-plan-2020': {
     id: 'makati-covid-recovery-plan-2020',
     label: 'Makati City COVID-19 Recovery Plan — Annex A: City Policies and Legislation',
@@ -196,6 +206,66 @@ export const localLegislationSources: Record<string, LocalLegislationSource> = {
       'Annex A lists the measure reference, title and date of approval. It is an official source for the bounded ordinance/resolution batches but is not treated as the full official text of each measure.',
   },
 };
+
+const archiveSource = localLegislationSources['makati-roms-archive-2026-09-27'];
+
+const measureFromArchive = (
+  measureType: LocalMeasureType,
+  officialNumber: string,
+  title: string,
+  topics: string[]
+): LocalLegislationRecord => {
+  const sequence = officialNumber.split('-').slice(1).join('-');
+  const id = measureType + '-' + officialNumber.toLowerCase();
+  return {
+    id,
+    measureType,
+    reference: {
+      officialNumber,
+      seriesYear: Number(officialNumber.slice(0, 4)),
+      sequence,
+      display: (measureType === 'ordinance' ? 'City Ordinance No. ' : 'City Resolution No. ') + officialNumber,
+      sourceIds: [archiveSource.id],
+    },
+    title,
+    jurisdiction: {
+      level: 'city',
+      name: 'Makati City',
+      legislativeBody: 'Sangguniang Panlungsod ng Makati',
+    },
+    documents: [{
+      id: 'archive-' + id,
+      kind: 'archive-record',
+      label: archiveSource.label,
+      url: archiveSource.url,
+      publisher: archiveSource.publisher,
+      sourceIds: [archiveSource.id],
+      note: 'Official archive index entry; the enumerated row does not expose a measure-specific document URL.',
+    }],
+    provenance: {
+      sourceIds: [archiveSource.id],
+      note: 'Measure identity and title are normalized from the official city archive. Full text, vote, lifecycle dates and legal effect remain unset unless separately evidenced.',
+    },
+    lifecycle: [],
+    sessionEvidence: [],
+    measureRelationships: [],
+    topics,
+    relationships: [],
+    revision: {
+      schemaVersion: 1,
+      lastReviewed: '2026-10-05',
+      recordStatus: 'provisional',
+      changeNote: 'Added as a canonical record for the Makati Subway report. The official archive verifies identity and title, not the full legislative lifecycle.',
+    },
+  };
+};
+
+export const subwayLegislationRecords: LocalLegislationRecord[] = [
+  measureFromArchive('ordinance', '2019-A-020', 'AN ORDINANCE APPROVING THE TERMS AND CONDITIONS OF THE JOINT VENTURE AGREEMENT WITH PHILIPPINE INFRADEV HOLDINGS INC. AND THE CONSORTIUM WHICH IT REPRESENTS, REGARDING THE PROJECT FOR THE CONSTRUCTION, ESTABLISHMENT, MANAGEMENT AND OPERATION OF A SUBWAY SYSTEM WITHIN THE CITY OF MAKATI (\u201cPROJECT\u201d), AND FURTHER AUTHORIZING THE HONORABLE MAYOR MAR-LEN ABIGAIL S. BINAY TO ENTER INTO AND SIGN SUCH JOINT VENTURE AGREEMENT AND ALL OTHER CONTRACTS, AGREEMENTS, INSTRUMENTS AND DOCUMENTS NECESSARY TO IMPLEMENT THE PROJECT AND/OR RELEVANT OR PURSUANT TO THE JOINT VENTURE AGREEMENT, SUBJECT TO EXISTING LAWS, RULES AND REGULATIONS.', ['Makati Subway', 'joint venture', 'transport']),
+  measureFromArchive('resolution', '2026-008', 'A RESOLUTION AUTHORIZING HON. MAYOR MARIA LOURDES NANCY S. BINAY, OR HER DULY AUTHORIZED REPRESENTATIVE, TO NEGOTIATE, ENTER INTO, AND SIGN, FOR AND ON BEHALF OF THE CITY GOVERNMENT OF MAKATI, A SETTLEMENT AGREEMENT, TOGETHER WITH ALL OTHER PERTINENT OR RELATED DOCUMENTS, INCLUDING DEEDS OF ASSIGNMENT, DEEDS OF DONATION, AND OTHER TRANSFER OR CONVEYANCE INSTRUMENTS, WITH PHILIPPINE INFRADEV HOLDINGS, INC., FOR THE PURPOSE OF FULLY, FINALLY, AND DEFINITIVELY SETTLING, RESOLVING, AND TERMINATING ALL CLAIMS, DISPUTES, AND CONTROVERSIES ARISING FROM, RELATING TO, OR IN CONNECTION WITH THE JOINT VENTURE AGREEMENT DATED 30 JULY 2019, SUBJECT TO EXISTING LAWS, RULES, AND REGULATIONS.', ['Makati Subway', 'settlement', 'joint venture']),
+  measureFromArchive('resolution', '2026-011', 'A RESOLUTION RATIFYING THE SETTLEMENT AGREEMENT DATED 20 JANUARY 2026 ENTERED INTO BETWEEN THE CITY GOVERNMENT OF MAKATI AND PHILIPPINE INFRADEV HOLDINGS, INC., AS AUTHORIZED UNDER CITY RESOLUTION NO. 2026-007, SUBJECT TO EXISTING LAWS, RULES, AND REGULATIONS.', ['Makati Subway', 'settlement', 'joint venture']),
+  measureFromArchive('ordinance', '2026-015', 'AN ORDINANCE EXEMPTING FROM PAYMENT OF LOCAL TRANSFER TAXES ALL TRANSACTIONS EXECUTED PURSUANT TO THE SETTLEMENT AGREEMENT DATED 20 JANUARY 2026, ENTERED INTO BETWEEN THE CITY GOVERNMENT OF MAKATI AND PHILIPPINE INFRADEV HOLDINGS, INC., AS AUTHORIZED UNDER CITY RESOLUTION NO. 2026-008 AND RATIFIED UNDER CITY RESOLUTION NO. 2026-011, SUBJECT TO EXISTING LAWS, RULES, AND REGULATIONS.', ['Makati Subway', 'settlement', 'local transfer tax']),
+];
 
 export const ordinanceBatch2020CovidResponse = {
   id: 'ordinance-batch-2020-covid-response',
@@ -523,6 +593,7 @@ export const localResolutionRecords: LocalLegislationRecord[] = [
 export const localLegislationRecords: LocalLegislationRecord[] = [
   ...localOrdinanceRecords,
   ...localResolutionRecords,
+  ...subwayLegislationRecords,
 ];
 
 export const localLegislationById = new Map(

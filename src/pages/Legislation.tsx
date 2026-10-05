@@ -22,6 +22,7 @@ import {
   type LocalMeasureType,
 } from '../data/localLegislation';
 import { legislationRelatedRecords } from '../data/legislationCivicRelationships';
+import { reportsForCivicRecord } from '../data/reportCivicRelationships';
 import { publicRecordByUrl } from '../data/publicRecords';
 import {
   legislationRecordDisplay,
@@ -289,7 +290,7 @@ export default function Legislation() {
             {resultSet.visible.map(record => {
               const seed = localLegislationById.get(legislationRecordId(record));
               const relatedRecords = seed
-                ? legislationRelatedRecords(seed.id)
+                ? [...legislationRelatedRecords(seed.id), ...reportsForCivicRecord({ type: 'legislation-record', id: seed.id })]
                 : [];
               const expanded = expandedRecordId === legislationRecordId(record);
               const sourceUrl =

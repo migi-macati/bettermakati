@@ -358,7 +358,7 @@ const filipinoReportCopy: Record<string, LocalizedReportCopy> = {
             kind: 'paragraph',
             role: 'fact',
             text: 'Noong 2018, pinili ng Makati ang consortium na pinangungunahan ng IRC Properties, na kalaunan ay naging Philippine Infradev Holdings. Nilagdaan ng city at Infradev ang joint venture noong 30 July 2019. Natanggap ng proponent ang notice to proceed noong 18 February 2020 para sa project na tinatayang US$3.5 billion at limang taon ang completion period.',
-            evidence: { sourceIds: ['1', '2'] },
+            evidence: { sourceIds: ['1', '2'], records: [{ recordType: 'legislation', id: 'ordinance-2019-a-020', href: '/legislation?record=ordinance-2019-a-020' }] },
           },
           {
             kind: 'table',
@@ -445,8 +445,12 @@ const filipinoReportCopy: Record<string, LocalizedReportCopy> = {
           {
             kind: 'paragraph',
             role: 'fact',
-            text: 'Noong January 2026, nag-authorize at nag-ratify ang Makati City Council ng bagong settlement framework sa pamamagitan ng Resolutions 2026-008 at 2026-011. Iniulat na kapalit ng settlement ang transfer ng project company at related assets sa city. Pero noong 18 February 2026, sinabi ng Infradev na pending pa sa SIAC ang case at confidential ang proceedings at negotiations; hindi nito kinumpirma sa publiko ang detailed commercial terms.',
-            evidence: { sourceIds: ['8', '9'] },
+            text: 'Noong January 2026, nag-authorize at nag-ratify ang Makati City Council ng bagong settlement framework sa pamamagitan ng Resolutions 2026-008 at 2026-011. Iniulat na kapalit ng settlement ang transfer ng project company at related assets sa city. Sa title ng Resolution 2026-011 sa city archive, Resolution 2026-007 ang nakalagay na authorization; pero Resolutions 2026-008 at 2026-011 ang cross-reference ng Ordinance 2026-015. Pinapanatili ng BetterMakati ang unresolved discrepancy na ito sa halip na pumili nang walang sapat na record. Pero noong 18 February 2026, sinabi ng Infradev na pending pa sa SIAC ang case at confidential ang proceedings at negotiations; hindi nito kinumpirma sa publiko ang detailed commercial terms.',
+            evidence: { sourceIds: ['8', '9'], records: [
+              { recordType: 'legislation', id: 'resolution-2026-008', href: '/legislation?record=resolution-2026-008' },
+              { recordType: 'legislation', id: 'resolution-2026-011', href: '/legislation?record=resolution-2026-011' },
+              { recordType: 'legislation', id: 'ordinance-2026-015', href: '/legislation?record=ordinance-2026-015' },
+            ] },
           },
           {
             kind: 'paragraph',
