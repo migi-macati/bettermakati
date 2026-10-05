@@ -12,6 +12,7 @@ const accountabilityPage = await readFile(
   'utf8'
 );
 const integrityPage = await readFile('src/pages/Integrity.tsx', 'utf8');
+const legislationPage = await readFile('src/pages/Legislation.tsx', 'utf8');
 const statisticsRelationships = await readFile(
   'src/data/statisticsCivicRelationships.ts',
   'utf8'
@@ -51,6 +52,18 @@ if (relationships.includes("kind: 'evidence-for'")) {
   problems.push(
     'A report must not be stored as evidence-for an underlying canonical record.'
   );
+}
+
+for (const marker of [
+  "import { reportsForCivicRecord } from '../data/reportCivicRelationships'",
+  "type: 'legislation-record'",
+  '...reportsForCivicRecord',
+]) {
+  if (!legislationPage.includes(marker)) problems.push('Legislation report-backlink marker missing: ' + marker);
+}
+
+for (const marker of ["id: 'ordinance-2019-a-020'", "id: 'resolution-2026-008'", "id: 'resolution-2026-011'", "id: 'ordinance-2026-015'"]) {
+  if (!reportsSource.includes(marker)) problems.push('Subway report legislation reference missing: ' + marker);
 }
 
 for (const forbidden of [
