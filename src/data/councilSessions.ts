@@ -108,6 +108,11 @@ const regularSession = (
 
 export const currentCouncilSessionSeeds: CouncilSessionSeed[] = [
   regularSession(
+    '2026-10-05',
+    'Makati City Regular Council Session (October 05, 2026)',
+    'The official MyMakatiVerified account listed this regular session on 5 October 2026. Preserve the item-specific official recording URL before transcription; no agenda item, measure, vote or outcome is inferred from the session title.'
+  ),
+  regularSession(
     '2026-09-28',
     'Makati City Regular Council Session (September 28, 2026)',
     undefined,
@@ -160,7 +165,7 @@ export const councilSessionBackfillQueue = currentCouncilSessionSeeds.filter(
 export const councilSessionBackfillCount = councilSessionBackfillQueue.length;
 
 export const councilSessionIngestionState = {
-  reviewedAt: '2026-10-04',
+  reviewedAt: '2026-10-05',
   discoverySource: 'makati-council-videos',
   discoveredCurrentSessions: currentCouncilSessionSeeds.length,
   transcriptsAvailable: currentCouncilSessionSeeds.filter(

@@ -184,7 +184,7 @@ const directCityMonitorCount = (
 if (
   ordinanceCount !== 15 ||
   resolutionCount !== 5 ||
-  councilCount !== 10 ||
+  councilCount !== 11 ||
   procurementCount !== 21 ||
   electionCount !== 10 ||
   reportCount < 5 ||
