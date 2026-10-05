@@ -850,6 +850,8 @@ export const reports: FeaturedReportV2[] = [
         ],
       },
     },
+
+
   },
   {
     schemaVersion: 2,
@@ -1072,8 +1074,6 @@ export const reports: FeaturedReportV2[] = [
         ],
       },
     },
-
-
   },
   {
     schemaVersion: 2,
@@ -1852,7 +1852,7 @@ export const reports: FeaturedReportV2[] = [
             kind: 'paragraph',
             role: 'fact',
             text: 'In 2018, Makati selected a consortium led by IRC Properties, later renamed Philippine Infradev Holdings. The city and Infradev signed their joint venture on 30 July 2019. The proponent received a notice to proceed on 18 February 2020 for a project estimated at US$3.5 billion with a five-year completion period.',
-            evidence: { sourceIds: ['1', '2'] },
+            evidence: { sourceIds: ['1', '2'], records: [{ recordType: 'legislation', id: 'ordinance-2019-a-020', href: '/legislation?record=ordinance-2019-a-020' }] },
           },
           {
             kind: 'table',
@@ -1948,8 +1948,12 @@ export const reports: FeaturedReportV2[] = [
           {
             kind: 'paragraph',
             role: 'fact',
-            text: 'In January 2026, the Makati City Council authorized and ratified a new settlement framework through Resolutions 2026-008 and 2026-011. The reported exchange would transfer the project company and related assets to the city. On 18 February 2026, however, Infradev said the SIAC case remained pending and that the proceedings and negotiations were confidential; it did not publicly confirm the detailed commercial terms.',
-            evidence: { sourceIds: ['8', '9'] },
+            text: 'In January 2026, the Makati City Council authorized and ratified a new settlement framework through Resolutions 2026-008 and 2026-011. The reported exchange would transfer the project company and related assets to the city. The city archive title for Resolution 2026-011 refers to authorization under Resolution 2026-007, while Ordinance 2026-015 cross-references Resolutions 2026-008 and 2026-011; BetterMakati preserves that unresolved discrepancy rather than silently choosing one reference. On 18 February 2026, Infradev said the SIAC case remained pending and that the proceedings and negotiations were confidential; it did not publicly confirm the detailed commercial terms.',
+            evidence: { sourceIds: ['8', '9'], records: [
+              { recordType: 'legislation', id: 'resolution-2026-008', href: '/legislation?record=resolution-2026-008' },
+              { recordType: 'legislation', id: 'resolution-2026-011', href: '/legislation?record=resolution-2026-011' },
+              { recordType: 'legislation', id: 'ordinance-2026-015', href: '/legislation?record=ordinance-2026-015' },
+            ] },
           },
           {
             kind: 'paragraph',
