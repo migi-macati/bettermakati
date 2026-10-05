@@ -11,6 +11,7 @@ const config = JSON.parse(sourceConfig);
 const problems = [];
 
 const expectedDates = [
+  '2026-10-05',
   '2026-09-28',
   '2026-09-21',
   '2026-09-14',
@@ -141,6 +142,6 @@ if (problems.length) {
 }
 
 console.log(
-  'Council session audit passed: 10 current official-session discoveries normalized; ' +
+  'Council session audit passed: 11 current official-session discoveries normalized; ' +
     'transcript backfill queued with non-official provenance; 20 bounded local measures retain 0 inferred session links.'
 );
