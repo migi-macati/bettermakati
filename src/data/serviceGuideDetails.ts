@@ -99,28 +99,61 @@ export const serviceGuideDetails: Record<string, ServiceGuideDetail> = {
     fees: [{ label: 'Business taxes and regulatory fees', amount: 'Varies', note: 'Based on city assessment and declared gross sales/receipts.' }],
   },
   'food-handler-health-certificate': {
-    verification: 'partial',
-    sourceLabel: 'Makati Citizen’s Charter / Permits and Clearances guide',
-    sourceUrl: 'https://www.makati.gov.ph/assets/uploads/downloads/2/481/pdf/Makati%20Citizen%27s%20Charter%20-%20FOR%20PRINT.pdf',
-    lastVerified: checked,
+    verification: 'verified',
+    sourceLabel:
+      'City Government of Makati · online Health Clearance Certificate rollout',
+    sourceUrl: 'https://www.makati.gov.ph/content/news/82570',
+    lastVerified: '2026-10-05',
     classification: 'Simple',
     transactionType: 'G2C',
-    whoMayAvail: 'Food handlers working in food establishments.',
+    whoMayAvail:
+      'Food-service and food-handling workers who need a Makati health clearance certificate.',
     requirements: [
-      { item: 'Chest X-ray findings', whereToSecure: 'City-owned X-ray or private facility', note: 'Makati source documents differ on the stated validity period; confirm the current EHSD rule before applying.' },
-      { item: 'Fecalysis / stool examination', whereToSecure: 'Makati Health Department or private laboratory', note: 'The city charter lists one-month validity.' },
-      { item: 'Basic Food Safety and Environmental Health/Sanitation orientation or seminar', whereToSecure: 'Environmental Health Sanitation Division' },
-      { item: 'Official receipt for the health certificate and Mayor’s Permit', whereToSecure: 'City payment counter / official payment channel' },
-      { item: 'ID photo', whereToSecure: 'Applicant' },
+      {
+        item: 'Online Health Clearance Certificate application',
+        whereToSecure: 'https://makati.healthcert.ph/',
+      },
+      {
+        item: 'Chest X-ray and stool examination',
+        whereToSecure:
+          'A diagnostic clinic or laboratory accredited by the Makati Health Department',
+        note:
+          'The accredited facility submits the examination records to the city system for approval.',
+      },
+      {
+        item: 'Online sanitation and occupational-health seminar',
+        whereToSecure: 'Health Clearance Certificate System',
+        note: 'The seminar becomes available after the city approves the laboratory submission.',
+      },
     ],
     steps: [
-      'Complete the required medical tests.',
-      'Attend the required food-safety / environmental-health orientation.',
-      'Pay the assessed city fees through the official channel.',
-      'Submit the complete requirements to the Environmental Health Sanitation Division.',
-      'Receive the health certificate after validation.',
+      'Go to https://makati.healthcert.ph/ and choose Health Certificate Application.',
+      'Complete the required chest X-ray and stool examination at an accredited diagnostic clinic or laboratory.',
+      'Wait for the diagnostic facility to submit the records and for the Makati Health Department to approve them.',
+      'Complete the online sanitation and occupational-health seminar.',
+      'Pay through the official online GCash or Maya channel, or use the authorized cash-payment option at Makati City Hall Building 2.',
+      'Receive the health clearance certificate through the email address registered in the system.',
     ],
-    notes: ['BetterMakati flags the conflicting chest-X-ray validity stated in different Makati source documents instead of choosing one without confirmation.'],
+    fees: [
+      {
+        label: 'Food-related worker health clearance',
+        amount: '₱100',
+        note:
+          'Published by the city on 16 February 2023 under City Ordinance 2019-A-102.',
+      },
+      {
+        label: 'Document processing and seminar',
+        amount: '₱50',
+        note:
+          'Published by the city on 16 February 2023; use the assessment shown by the current official system.',
+      },
+    ],
+    processingTime:
+      'The city announcement gives no fixed end-to-end turnaround. The certificate is valid through the end of the calendar year and must be renewed every January.',
+    notes: [
+      'The current portal lists technical support at makaticitysupport@healthcert.ph and 0917 688 5911, and Makati Health Department support at mhdsanitation@makati.gov.ph, (02) 8870-1609, (02) 8870-1083 and (02) 8870-1443.',
+      'The fee schedule comes from the city’s 16 February 2023 implementation announcement. The active portal does not publicly display the final assessment before sign-in; pay only through the official system or authorized city channel.',
+    ],
   },
   'locational-clearance-business': {
     verification: 'partial',
@@ -173,30 +206,60 @@ export const serviceGuideDetails: Record<string, ServiceGuideDetail> = {
     notes: ['The city-hosted guide is an older process source; current occupational categories, fees and routing should be confirmed with BPLO.'],
   },
   'non-food-health-certificate': {
-    verification: 'partial',
-    sourceLabel: 'Makati Permits and Clearances guide — non-food handlers',
-    sourceUrl: 'https://www.makati.gov.ph/assets/uploads/downloads/402/243/pdf/40207032015120611.pdf',
-    lastVerified: '2026-09-25',
-    whoMayAvail: 'Covered non-food workers such as sales clerks, security guards, factory/construction workers, beauty workers and similar occupations.',
+    verification: 'verified',
+    sourceLabel:
+      'City Government of Makati · online Health Clearance Certificate rollout',
+    sourceUrl: 'https://www.makati.gov.ph/content/news/82570',
+    lastVerified: '2026-10-05',
+    whoMayAvail:
+      'Workers in covered non-food occupations who need a Makati health clearance certificate.',
     requirements: [
-      { item: 'Chest X-ray findings', whereToSecure: 'Authorized X-ray facility', note: 'The cited guide states the result should be no more than six months old.' },
-      { item: 'Community Tax Certificate (Cedula)', whereToSecure: 'Authorized issuing office' },
-      { item: 'One ID photo', whereToSecure: 'Applicant' },
-      { item: 'NBI or Police Clearance', whereToSecure: 'NBI / PNP' },
-      { item: 'Official receipt for the Health Certificate and Mayor’s Permit', whereToSecure: 'Official city payment channel' },
+      {
+        item: 'Online Health Clearance Certificate application',
+        whereToSecure: 'https://makati.healthcert.ph/',
+      },
+      {
+        item: 'Chest X-ray and stool examination',
+        whereToSecure:
+          'A diagnostic clinic or laboratory accredited by the Makati Health Department',
+        note:
+          'The city’s online-process announcement presents these as the screening steps for applicants; the system and accredited facility control the job-specific requirements.',
+      },
+      {
+        item: 'Online sanitation and occupational-health seminar',
+        whereToSecure: 'Health Clearance Certificate System',
+        note: 'The seminar becomes available after the city approves the laboratory submission.',
+      },
     ],
     steps: [
-      'Prepare the medical, identification and clearance requirements.',
-      'Obtain the payment slip and pay the assessed city fees.',
-      'Present the official receipt and complete the health-certificate card.',
-      'Submit the requirements for screening and recording.',
-      'Receive the signed health certificate if findings are cleared, then proceed with the occupational-permit step if required.',
+      'Go to https://makati.healthcert.ph/ and choose Health Certificate Application.',
+      'Complete the screening required by the system at an accredited diagnostic clinic or laboratory.',
+      'Wait for the diagnostic facility to submit the records and for the Makati Health Department to approve them.',
+      'Complete the online sanitation and occupational-health seminar.',
+      'Pay through the official online GCash or Maya channel, or use the authorized cash-payment option at Makati City Hall Building 2.',
+      'Receive the health clearance certificate through the email address registered in the system.',
     ],
     fees: [
-      { label: 'Health Certificate', amount: '₱70 in the cited guide', note: 'Confirm the current fee.' },
-      { label: 'Mayor’s Permit', amount: '₱50 in the cited guide', note: 'Confirm the current fee.' },
+      {
+        label: 'Non-food worker health clearance',
+        amount: '₱80',
+        note:
+          'Published by the city on 16 February 2023 under City Ordinance 2019-A-102.',
+      },
+      {
+        label: 'Document processing and seminar',
+        amount: '₱50',
+        note:
+          'Published by the city on 16 February 2023; use the assessment shown by the current official system.',
+      },
     ],
-    notes: ['The city-hosted guide contains legacy fees and office routing; the current Makati Health Department process controls.'],
+    processingTime:
+      'The city announcement gives no fixed end-to-end turnaround. The certificate is valid through the end of the calendar year and must be renewed every January.',
+    notes: [
+      'The current portal lists technical support at makaticitysupport@healthcert.ph and 0917 688 5911, and Makati Health Department support at mhdsanitation@makati.gov.ph, (02) 8870-1609, (02) 8870-1083 and (02) 8870-1443.',
+      'The official announcement does not break down the screening by every non-food occupation. Follow the job-specific requirements shown by the system and accredited facility.',
+      'The fee schedule comes from the city’s 16 February 2023 implementation announcement. The active portal does not publicly display the final assessment before sign-in; pay only through the official system or authorized city channel.',
+    ],
   },
   'entertainment-worker-health-certificate': {
     verification: 'partial',

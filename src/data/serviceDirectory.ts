@@ -60,6 +60,9 @@ const makatiPermits =
   'https://www.makati.gov.ph/assets/uploads/downloads/402/243/pdf/40207032015120611.pdf';
 const makatiCharter =
   'https://www.makati.gov.ph/assets/uploads/downloads/2/481/pdf/Makati%20Citizen%27s%20Charter%20-%20FOR%20PRINT.pdf';
+const makatiHealthClearance = 'https://makati.healthcert.ph/';
+const makatiHealthClearanceSource =
+  'https://www.makati.gov.ph/content/news/82570';
 const makatiActionCenter =
   'https://www.makati.gov.ph/assets/uploads/downloads/2/481/pdf/Makati%20Action%20Center.pdf';
 const makatiFinance =
@@ -235,10 +238,12 @@ export const serviceDirectory: ServiceDirectoryItem[] = [
     level: 'City',
     type: 'Certificate',
     agency: 'Makati Health Department',
-    description: 'Health certificate for food-service and food-handling workers.',
-    href: makatiPermits,
-    sourceUrl: makatiCharter,
-    keywords: 'food handler health certificate sanitary restaurant waiter kitchen crew barista cook vendor food safety seminar',
+    description:
+      'Apply online for the Makati health clearance required of food-service and food-handling workers.',
+    href: makatiHealthClearance,
+    sourceUrl: makatiHealthClearanceSource,
+    keywords:
+      'food handler health certificate online application sanitary restaurant waiter kitchen crew barista cook vendor food safety seminar',
     featured: true,
   },
   {
@@ -248,10 +253,12 @@ export const serviceDirectory: ServiceDirectoryItem[] = [
     level: 'City',
     type: 'Certificate',
     agency: 'Makati Health Department',
-    description: 'Health certificate for covered non-food occupations.',
-    href: makatiPermits,
-    sourceUrl: makatiPermits,
-    keywords: 'health certificate non food worker security guard construction beautician pharmacist employee',
+    description:
+      'Apply online for the Makati health clearance required of covered non-food occupations.',
+    href: makatiHealthClearance,
+    sourceUrl: makatiHealthClearanceSource,
+    keywords:
+      'health certificate online application non food worker security guard construction beautician pharmacist employee',
   },
   {
     id: 'entertainment-worker-health-certificate',
