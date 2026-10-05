@@ -2664,6 +2664,52 @@
       "lastSuccessfulAt": null,
       "lastChangedAt": null,
       "delegated": false
+    },
+    {
+      "id": "makati-health-clearance-rollout",
+      "label": "Makati online health-clearance rollout",
+      "url": "https://www.makati.gov.ph/content/news/82570",
+      "kind": "service-detail",
+      "cadence": "monthly",
+      "monitoringMode": "reachability",
+      "owner": "general-source-freshness",
+      "affectedPages": [
+        "/services"
+      ],
+      "status": "not-checked",
+      "statusCode": null,
+      "contentType": "",
+      "contentLength": 0,
+      "sha256": "",
+      "lastSuccessfulHash": "",
+      "change": "not-checked",
+      "lastCheckedAt": null,
+      "lastSuccessfulAt": null,
+      "lastChangedAt": null,
+      "delegated": false
+    },
+    {
+      "id": "makati-health-clearance-system",
+      "label": "Makati Health Clearance Certificate System",
+      "url": "https://makati.healthcert.ph/",
+      "kind": "service-detail",
+      "cadence": "weekly",
+      "monitoringMode": "reachability",
+      "owner": "general-source-freshness",
+      "affectedPages": [
+        "/services"
+      ],
+      "status": "not-checked",
+      "statusCode": null,
+      "contentType": "",
+      "contentLength": 0,
+      "sha256": "",
+      "lastSuccessfulHash": "",
+      "change": "not-checked",
+      "lastCheckedAt": null,
+      "lastSuccessfulAt": null,
+      "lastChangedAt": null,
+      "delegated": false
     }
   ]
 }
