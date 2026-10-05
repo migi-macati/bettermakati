@@ -779,6 +779,18 @@
     ]
   },
   {
+    "id": "makati-health-clearance-rollout",
+    "label": "Makati online health-clearance rollout",
+    "url": "https://www.makati.gov.ph/content/news/82570",
+    "kind": "service-detail",
+    "cadence": "monthly",
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
+  },
+  {
     "id": "makati-health-clearance-system",
     "label": "Makati Health Clearance Certificate System",
     "url": "https://makati.healthcert.ph/",
