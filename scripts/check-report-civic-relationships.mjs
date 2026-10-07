@@ -61,8 +61,7 @@ for (const marker of [
   "type: 'legislation-record'",
   '...reportsForCivicRecord',
 ]) {
-  if (!legislationPage.includes(marker))
-    problems.push('Legislation report-backlink marker missing: ' + marker);
+  if (!legislationPage.includes(marker)) problems.push('Legislation report-backlink marker missing: ' + marker);
 }
 
 for (const marker of [
@@ -71,19 +70,11 @@ for (const marker of [
   'localizedReportCopy(report, i18n.language).headline',
   'label="Related analysis"',
 ]) {
-  if (!civicAssetPage.includes(marker)) {
-    problems.push('Civic Map place report-backlink marker missing: ' + marker);
-  }
+  if (!civicAssetPage.includes(marker)) problems.push('Civic Map place report-backlink marker missing: ' + marker);
 }
 
-for (const marker of [
-  "id: 'ordinance-2019-a-020'",
-  "id: 'resolution-2026-008'",
-  "id: 'resolution-2026-011'",
-  "id: 'ordinance-2026-015'",
-]) {
-  if (!reportsSource.includes(marker))
-    problems.push('Subway report legislation reference missing: ' + marker);
+for (const marker of ["id: 'ordinance-2019-a-020'", "id: 'resolution-2026-008'", "id: 'resolution-2026-011'", "id: 'ordinance-2026-015'"]) {
+  if (!reportsSource.includes(marker)) problems.push('Subway report legislation reference missing: ' + marker);
 }
 
 for (const forbidden of [
