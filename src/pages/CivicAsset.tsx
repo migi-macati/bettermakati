@@ -25,7 +25,10 @@ import CivicObservationSummary from '../components/civic/CivicObservationSummary
 import CivicDiscussion from '../components/civic/CivicDiscussion';
 import CivicRelationshipLinks from '../components/civic/CivicRelationshipLinks';
 import { useBarangayScope, withBarangayScope } from '../hooks/useBarangayScope';
-import { civicAssets, civicAssetTypeLabels } from '../data/civicMap';
+import {
+  civicAssets,
+  civicAssetTypeLabels,
+} from '../data/civicMap';
 import {
   civicEntityKindLabels,
   placeRegistryById,
@@ -82,10 +85,7 @@ export default function CivicAsset() {
   if (!asset || !place) {
     return (
       <Section className="bg-[#fffdf8]">
-        <Link
-          to={mapHref}
-          className="inline-flex items-center gap-1 text-sm font-bold text-primary-700"
-        >
+        <Link to={mapHref} className="inline-flex items-center gap-1 text-sm font-bold text-primary-700">
           <ArrowLeft className="h-4 w-4" /> Back to Civic Map
         </Link>
         <Heading className="mt-5">Civic record not found</Heading>
@@ -116,12 +116,8 @@ export default function CivicAsset() {
     (civicAuditPilot.targetEntityIds as readonly string[]).includes(place.id);
 
   const placeSources = place.provenance.sources;
-  const primarySources = placeSources.filter(
-    source => source.kind !== 'reference-map'
-  );
-  const mapSources = placeSources.filter(
-    source => source.kind === 'reference-map'
-  );
+  const primarySources = placeSources.filter(source => source.kind !== 'reference-map');
+  const mapSources = placeSources.filter(source => source.kind === 'reference-map');
   const heritageDesignations = place.heritage?.designations ?? [];
   const heritageFacts = place.heritage?.facts ?? [];
   const heritageSourceIds = new Set([
@@ -153,13 +149,11 @@ export default function CivicAsset() {
     if (!item.node || item.related.type !== 'report') return [];
     const report = findReport(item.related.id);
     if (!report) return [];
-    return [
-      {
-        id: item.relationship.id,
-        label: localizedReportCopy(report, i18n.language).headline,
-        href: item.node.href,
-      },
-    ];
+    return [{
+      id: item.relationship.id,
+      label: localizedReportCopy(report, i18n.language).headline,
+      href: item.node.href,
+    }];
   });
   const relatedBarangays = place.location.barangays.flatMap(name => {
     const barangay = barangays.find(item => item.name === name);
@@ -171,12 +165,7 @@ export default function CivicAsset() {
     <>
       <SEO
         title={place.name + ' | Civic Map'}
-        description={
-          entityLabel +
-          ' information, community cases and improvement actions for ' +
-          place.name +
-          ' in BetterMakati.'
-        }
+        description={entityLabel + ' information, community cases and improvement actions for ' + place.name + ' in BetterMakati.'}
       />
 
       <Section className="bg-[#fffdf8]">
@@ -213,31 +202,27 @@ export default function CivicAsset() {
 
             <Heading className="mt-3">{place.name}</Heading>
             {place.summary && (
-              <p className="mt-2 text-lg leading-relaxed text-gray-700">
-                {place.summary}
-              </p>
+              <p className="mt-2 text-lg leading-relaxed text-gray-700">{place.summary}</p>
             )}
 
             {(place.aliases?.length ?? 0) > 0 && (
               <p className="mt-2 text-sm text-gray-500">
-                Also listed as:{' '}
-                {place.aliases?.map(alias => alias.name).join(' · ')}
+                Also listed as: {place.aliases?.map(alias => alias.name).join(' · ')}
               </p>
             )}
 
-            {entityKind === 'place' &&
-              (place.servicesAtLocation?.length ?? 0) > 0 && (
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {place.servicesAtLocation?.map(service => (
-                    <span
-                      key={service.serviceId ?? service.label}
-                      className="rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-primary-800"
-                    >
-                      {service.label}
-                    </span>
-                  ))}
-                </div>
-              )}
+            {entityKind === 'place' && (place.servicesAtLocation?.length ?? 0) > 0 && (
+              <div className="mt-4 flex flex-wrap gap-2">
+                {place.servicesAtLocation?.map(service => (
+                  <span
+                    key={service.serviceId ?? service.label}
+                    className="rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-primary-800"
+                  >
+                    {service.label}
+                  </span>
+                ))}
+              </div>
+            )}
 
             <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-sm text-gray-600">
               {place.location.barangays.length > 0 && (
@@ -278,32 +263,17 @@ export default function CivicAsset() {
           </Link>
         </div>
 
-        <nav
-          aria-label={'On this ' + entityKind + ' page'}
-          className="mt-6 flex flex-wrap gap-3"
-        >
-          <a href="#place-information" className="brand-btn-secondary">
-            {informationLabel}
-          </a>
+        <nav aria-label={'On this ' + entityKind + ' page'} className="mt-6 flex flex-wrap gap-3">
+          <a href="#place-information" className="brand-btn-secondary">{informationLabel}</a>
           {(heritageDesignations.length > 0 || heritageFacts.length > 0) && (
-            <a href="#heritage-record" className="brand-btn-secondary">
-              Heritage record
-            </a>
+            <a href="#heritage-record" className="brand-btn-secondary">Heritage record</a>
           )}
           {relatedHeritageCollections.length > 0 && (
-            <a href="#heritage-connections" className="brand-btn-secondary">
-              Heritage connections
-            </a>
+            <a href="#heritage-connections" className="brand-btn-secondary">Heritage connections</a>
           )}
-          <a href="#observe" className="brand-btn-secondary">
-            Observe conditions
-          </a>
-          <a href="#community-records" className="brand-btn-secondary">
-            Community cases
-          </a>
-          <a href="#contribute" className="brand-btn-primary">
-            Report or suggest
-          </a>
+          <a href="#observe" className="brand-btn-secondary">Observe conditions</a>
+          <a href="#community-records" className="brand-btn-secondary">Community cases</a>
+          <a href="#contribute" className="brand-btn-primary">Report or suggest</a>
         </nav>
 
         <CivicRelationshipLinks
@@ -330,9 +300,7 @@ export default function CivicAsset() {
                     decoding="async"
                     referrerPolicy="no-referrer"
                     className="aspect-[16/9] w-full object-cover"
-                    style={{
-                      objectPosition: primaryMedia.objectPosition ?? '50% 50%',
-                    }}
+                    style={{ objectPosition: primaryMedia.objectPosition ?? '50% 50%' }}
                   />
                   <figcaption className="space-y-2 px-4 py-3">
                     <div>
@@ -379,31 +347,20 @@ export default function CivicAsset() {
             <div className="rounded-2xl border border-primary-100 bg-white p-6">
               <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
                 <Route className="h-4 w-4" />
-                {entityKind === 'segment'
-                  ? 'Bounded infrastructure segment'
-                  : 'Transport network / service route'}
+                {entityKind === 'segment' ? 'Bounded infrastructure segment' : 'Transport network / service route'}
               </div>
-              <div className="mt-4 text-xl font-extrabold text-gray-950">
-                {place.name}
-              </div>
+              <div className="mt-4 text-xl font-extrabold text-gray-950">{place.name}</div>
               {entityKind === 'segment' && place.location.geometry?.street && (
-                <div className="mt-3 text-sm text-gray-700">
-                  {place.location.geometry.street}
+                <div className="mt-3 text-sm text-gray-700">{place.location.geometry.street}</div>
+              )}
+              {entityKind === 'segment' && place.location.geometry?.from && place.location.geometry?.to && (
+                <div className="mt-2 rounded-xl bg-[#fffdf8] p-4 text-sm font-bold text-gray-800">
+                  {place.location.geometry.from} ↔ {place.location.geometry.to}
                 </div>
               )}
-              {entityKind === 'segment' &&
-                place.location.geometry?.from &&
-                place.location.geometry?.to && (
-                  <div className="mt-2 rounded-xl bg-[#fffdf8] p-4 text-sm font-bold text-gray-800">
-                    {place.location.geometry.from} ↔{' '}
-                    {place.location.geometry.to}
-                  </div>
-                )}
               {place.location.point && (
                 <div className="mt-4 text-xs text-gray-500">
-                  Representative map point:{' '}
-                  {place.location.point.lat.toFixed(5)},{' '}
-                  {place.location.point.lng.toFixed(5)}
+                  Representative map point: {place.location.point.lat.toFixed(5)}, {place.location.point.lng.toFixed(5)}
                 </div>
               )}
             </div>
@@ -417,38 +374,27 @@ export default function CivicAsset() {
               {entityKind === 'place' && place.location.address && (
                 <div>
                   <dt className="font-bold text-gray-950">Address</dt>
-                  <dd className="mt-1 leading-relaxed text-gray-600">
-                    {place.location.address}
-                  </dd>
+                  <dd className="mt-1 leading-relaxed text-gray-600">{place.location.address}</dd>
                 </div>
               )}
               {entityKind === 'segment' && place.location.geometry?.street && (
                 <div>
                   <dt className="font-bold text-gray-950">Street / corridor</dt>
+                  <dd className="mt-1 leading-relaxed text-gray-600">{place.location.geometry.street}</dd>
+                </div>
+              )}
+              {entityKind === 'segment' && place.location.geometry?.from && place.location.geometry?.to && (
+                <div>
+                  <dt className="font-bold text-gray-950">Segment boundary</dt>
                   <dd className="mt-1 leading-relaxed text-gray-600">
-                    {place.location.geometry.street}
+                    {place.location.geometry.from} ↔ {place.location.geometry.to}
                   </dd>
                 </div>
               )}
-              {entityKind === 'segment' &&
-                place.location.geometry?.from &&
-                place.location.geometry?.to && (
-                  <div>
-                    <dt className="font-bold text-gray-950">
-                      Segment boundary
-                    </dt>
-                    <dd className="mt-1 leading-relaxed text-gray-600">
-                      {place.location.geometry.from} ↔{' '}
-                      {place.location.geometry.to}
-                    </dd>
-                  </div>
-                )}
               {entityKind === 'route' && (
                 <div>
                   <dt className="font-bold text-gray-950">Record form</dt>
-                  <dd className="mt-1 text-gray-600">
-                    Transport network / service route
-                  </dd>
+                  <dd className="mt-1 text-gray-600">Transport network / service route</dd>
                 </div>
               )}
               {place.location.barangays.length > 0 && (
@@ -471,9 +417,7 @@ export default function CivicAsset() {
               )}
               {place.management.responsibilityText && (
                 <div>
-                  <dt className="font-bold text-gray-950">
-                    Responsible / managing body
-                  </dt>
+                  <dt className="font-bold text-gray-950">Responsible / managing body</dt>
                   <dd className="mt-1 leading-relaxed text-gray-600">
                     {place.management.responsibilityText}
                   </dd>
@@ -482,9 +426,7 @@ export default function CivicAsset() {
               {entityKind === 'place' && (
                 <div>
                   <dt className="font-bold text-gray-950">Access</dt>
-                  <dd className="mt-1 text-gray-600">
-                    {accessLabel[place.access.class]}
-                  </dd>
+                  <dd className="mt-1 text-gray-600">{accessLabel[place.access.class]}</dd>
                 </div>
               )}
             </dl>
@@ -595,7 +537,8 @@ export default function CivicAsset() {
                           rel="noreferrer"
                           className="inline-flex items-center gap-1 text-xs font-semibold text-primary-700 underline underline-offset-2"
                         >
-                          {source.label} <ExternalLink className="h-3 w-3" />
+                          {source.label}{' '}
+                          <ExternalLink className="h-3 w-3" />
                         </a>
                       ))}
                     </div>
@@ -728,8 +671,7 @@ export default function CivicAsset() {
                         {entry.title}
                       </div>
                       <div className="mt-1 text-xs font-semibold text-gray-500">
-                        {entry.period} ·{' '}
-                        {accountabilityStatusLabel[entry.status]}
+                        {entry.period} · {accountabilityStatusLabel[entry.status]}
                       </div>
                       {relationship.note && (
                         <p className="mt-2 text-xs leading-relaxed text-gray-600">
@@ -787,9 +729,7 @@ export default function CivicAsset() {
             <CivicObservationForm
               entity={place}
               questionIds={
-                isParkAccessibilityPilot
-                  ? civicAuditPilot.questionIds
-                  : undefined
+                isParkAccessibilityPilot ? civicAuditPilot.questionIds : undefined
               }
               onSubmitted={() => setObservationRevision(value => value + 1)}
             />
@@ -810,9 +750,7 @@ export default function CivicAsset() {
               <div className="flex gap-3 rounded-xl border border-gray-200 bg-white p-4">
                 <Wrench className="mt-0.5 h-5 w-5 shrink-0 text-primary-700" />
                 <div>
-                  <div className="font-extrabold text-gray-950">
-                    Report a problem
-                  </div>
+                  <div className="font-extrabold text-gray-950">Report a problem</div>
                   <p className="mt-1 text-sm leading-relaxed text-gray-600">
                     Broken, blocked, unsafe or not working.
                   </p>
@@ -821,9 +759,7 @@ export default function CivicAsset() {
               <div className="flex gap-3 rounded-xl border border-gray-200 bg-white p-4">
                 <Trees className="mt-0.5 h-5 w-5 shrink-0 text-primary-700" />
                 <div>
-                  <div className="font-extrabold text-gray-950">
-                    Suggest an improvement
-                  </div>
+                  <div className="font-extrabold text-gray-950">Suggest an improvement</div>
                   <p className="mt-1 text-sm leading-relaxed text-gray-600">
                     Propose a specific physical or service change.
                   </p>
@@ -835,11 +771,7 @@ export default function CivicAsset() {
               <div className="flex gap-2">
                 <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0" />
                 <div>
-                  <strong>Emergency?</strong> Call{' '}
-                  <a href="tel:911" className="font-bold underline">
-                    911
-                  </a>
-                  .
+                  <strong>Emergency?</strong> Call <a href="tel:911" className="font-bold underline">911</a>.
                 </div>
               </div>
             </div>
