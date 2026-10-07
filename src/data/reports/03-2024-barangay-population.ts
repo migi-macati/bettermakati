@@ -2,19 +2,19 @@ import * as shared from '../reportSharedData';
 import type { FeaturedReportModule } from '../reportTypes';
 
 const {
-  currentMakatiPopulation2024,
-  psaBarangaySource,
   reportPublishedOn,
-  reviewedOn,
+  largestBarangay,
+  smallestBarangay,
   percent,
-  sortedBarangays,
+  topThreePopulationShare,
+  largestToSmallestRatio,
+  currentMakatiPopulation2024,
   topThreeBarangays,
   topThreePopulation,
-  topThreePopulationShare,
-  smallestBarangay,
-  largestBarangay,
-  largestToSmallestRatio,
+  sortedBarangays,
   barangaysUnder6000,
+  reviewedOn,
+  psaBarangaySource,
 } = shared;
 
 const reportModule: FeaturedReportModule = {

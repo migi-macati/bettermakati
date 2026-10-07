@@ -366,6 +366,12 @@ export const civicEntityIndex = [
     "entityKind": "place"
   },
   {
+    "id": "la-campana-fabrica-de-tabacos-administration-building",
+    "name": "La Campana Fabrica de Tabacos Administration Building",
+    "category": "heritage-site",
+    "entityKind": "place"
+  },
+  {
     "id": "ayala-museum",
     "name": "Ayala Museum",
     "category": "heritage-site",

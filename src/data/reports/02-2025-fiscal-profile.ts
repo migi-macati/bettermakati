@@ -2,20 +2,20 @@ import * as shared from '../reportSharedData';
 import type { FeaturedReportModule } from '../reportTypes';
 
 const {
-  actualSpendingByFunction,
-  budgetSources,
-  budgetSummary,
-  revenueSources,
   reportPublishedOn,
-  reviewedOn,
-  moneyB,
   percent,
   localReceipts,
+  socialServices,
+  moneyB,
+  budgetSummary,
   externalReceipts,
   nonIncomeReceipts,
   topThreeLocalRevenueM,
   topThreeLocalRevenueShare,
-  socialServices,
+  revenueSources,
+  actualSpendingByFunction,
+  reviewedOn,
+  budgetSources,
 } = shared;
 
 const reportModule: FeaturedReportModule = {

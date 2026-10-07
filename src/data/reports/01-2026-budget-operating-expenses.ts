@@ -2,22 +2,22 @@ import * as shared from '../reportSharedData';
 import type { FeaturedReportModule } from '../reportTypes';
 
 const {
-  budgetCurrentEstimate2025,
-  budgetSources,
-  budgetSummary,
-  budgetSummary2026,
   reportPublishedOn,
-  reviewedOn,
   moneyB,
+  budgetSummary2026,
   percent,
   pctChange,
-  proposedMooe,
-  currentEstimateMooe,
-  adoptedIncreaseM,
-  mooeIncreaseM,
-  mooeShareOfIncrease,
+  budgetSummary,
   proposedVsCurrentEstimate,
+  adoptedIncreaseM,
+  budgetCurrentEstimate2025,
+  mooeShareOfIncrease,
+  mooeIncreaseM,
   budgetComponentRows,
+  currentEstimateMooe,
+  proposedMooe,
+  reviewedOn,
+  budgetSources,
 } = shared;
 
 const reportModule: FeaturedReportModule = {

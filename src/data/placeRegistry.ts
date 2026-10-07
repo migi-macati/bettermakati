@@ -1741,6 +1741,71 @@ export const civicAssets: CivicAsset[] = [
     tags: ['heritage', 'church', 'shrine', 'historical marker', 'Tejeros'],
   },
   {
+    id: 'la-campana-fabrica-de-tabacos-administration-building',
+    title: 'La Campana Fabrica de Tabacos Administration Building',
+    type: 'heritage-site',
+    subtitle:
+      'Locally registered industrial-heritage building in Olympia; exact building footprint and current lifecycle need verification',
+    barangay: 'Olympia',
+    lat: 14.5745455,
+    lng: 121.0236312,
+    address: '9110, 39 Sultana Street, Barangay Olympia, Makati City',
+    aliases: ['La Campana Administration Building'],
+    aliasKinds: {
+      'La Campana Administration Building': 'current-alternate',
+    },
+    secondaryCategories: [
+      'registered-cultural-property',
+      'industrial-heritage',
+      'private-property',
+    ],
+    sourceKind: 'official-secondary',
+    heritage: {
+      designations: [
+        {
+          authority: 'City Government of Makati',
+          classification: 'Local Registry of Cultural Properties',
+          officialName:
+            'La Campana Fabrica de Tabacos Administration Building',
+          sourceIds: [
+            'la-campana-fabrica-de-tabacos-administration-building:identity',
+          ],
+        },
+      ],
+      facts: [
+        {
+          label: 'Present property',
+          value:
+            'Makati’s local cultural-property registry says the present property was established in 1951.',
+          dateOrPeriod: '1951',
+          sourceIds: [
+            'la-campana-fabrica-de-tabacos-administration-building:identity',
+          ],
+          note:
+            'This is the city registry’s statement about the present property, not a claim that every surviving element dates to 1951.',
+        },
+      ],
+    },
+    accessClass: 'private-community-controlled',
+    sourceUrl:
+      'https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1601521942280.pdf',
+    sourceLabel:
+      'City Government of Makati · Local Registry of Cultural Properties',
+    coordinateSourceUrl: 'https://www.openstreetmap.org/way/226829306',
+    coordinateSourceLabel:
+      'OpenStreetMap · La Campana Street representative point; building footprint unverified',
+    status: 'needs-verification',
+    tags: [
+      'heritage',
+      'industrial heritage',
+      'tobacco',
+      'local cultural-property registry',
+      'private property',
+      'Olympia',
+      'location needs verification',
+    ],
+  },
+  {
     id: 'ayala-museum',
     title: 'Ayala Museum',
     type: 'heritage-site',

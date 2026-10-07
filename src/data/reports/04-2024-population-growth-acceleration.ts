@@ -3,21 +3,21 @@ import type { FeaturedReportModule } from '../reportTypes';
 
 const {
   reportPublishedOn,
-  reviewedOn,
-  populationTrend,
+  growth2015to2020,
+  growth2020to2024,
+  population2024,
+  growthAccelerationPp,
+  populationAdded2020to2024,
+  growth2010to2015,
   populationGrowthTrend,
-  populationGrowthSource,
-  currentBoundarySource,
   numericObservation,
   population2010,
   population2015,
   population2020,
-  population2024,
-  growth2010to2015,
-  growth2015to2020,
-  growth2020to2024,
-  populationAdded2020to2024,
-  growthAccelerationPp,
+  populationTrend,
+  reviewedOn,
+  populationGrowthSource,
+  currentBoundarySource,
 } = shared;
 
 const reportModule: FeaturedReportModule = {

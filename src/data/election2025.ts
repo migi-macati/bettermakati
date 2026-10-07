@@ -1,7 +1,7 @@
 import { barangays } from './barangays';
 
 export const election2025Sources = {
-  officialResults: 'https://2025electionresults.comelec.gov.ph/',
+  officialResults: 'https://2025electionresults.comelec.gov.ph/coc-result',
   localResults:
     'https://ph.rappler.com/elections/2025/local-race/ncr-makati-city',
   candidateList:

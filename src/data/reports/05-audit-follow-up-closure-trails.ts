@@ -2,15 +2,15 @@ import * as shared from '../reportSharedData';
 import type { FeaturedReportModule, ReportContentBlock } from '../reportTypes';
 
 const {
+  reportPublishedOn,
+  auditFindingsWithTrails,
   integrityAuditActions,
   integrityAuditFindings,
   integrityAuditResolutionTrails,
-  integrityAuditSourceOnlyRecords,
-  reportPublishedOn,
   moneyM,
-  auditFindingsWithTrails,
-  auditFollowUpSourceIds,
   auditFindingSourceIds,
+  auditFollowUpSourceIds,
+  integrityAuditSourceOnlyRecords,
   recordsFlagshipSources,
 } = shared;
 
