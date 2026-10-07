@@ -60,8 +60,8 @@ const assetBlock = text.split('export const civicAssets')[1]?.split('const geome
 const assetIds = [...assetBlock.matchAll(/^    id:\s*'([^']+)'/gm)].map(
   match => match[1]
 );
-if (assetIds.length !== 94) {
-  problems.push('Expected 94 canonical Civic Map / Place Registry assets but found ' + assetIds.length + '.');
+if (assetIds.length !== 98) {
+  problems.push('Expected 98 canonical Civic Map / Place Registry assets but found ' + assetIds.length + '.');
 }
 const duplicateIds = assetIds.filter((id, index) => assetIds.indexOf(id) !== index);
 if (duplicateIds.length) {

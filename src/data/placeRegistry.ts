@@ -1806,6 +1806,248 @@ export const civicAssets: CivicAsset[] = [
     ],
   },
   {
+    id: 'saint-alphonsus-mary-de-liguori-parish',
+    title: 'Saint Alphonsus Mary de Liguori Parish',
+    type: 'heritage-site',
+    subtitle: 'Magallanes Church, listed by NCCA as work of National Artists Leandro V. Locsin and Ildefonso P. Santos',
+    barangay: 'Magallanes',
+    lat: 14.53059,
+    lng: 121.0217,
+    authority: 'Archdiocese of Manila / Saint Alphonsus Mary de Liguori Parish',
+    address: 'Humabon Place, Magallanes Village, 1232 Makati City',
+    aliases: ['Magallanes Church', 'Chapel of Saint Alphonsus Liguori'],
+    aliasKinds: {
+      'Magallanes Church': 'local-name',
+      'Chapel of Saint Alphonsus Liguori': 'current-alternate',
+    },
+    secondaryCategories: ['religious-heritage', 'national-artist-work'],
+    sourceKind: 'official-primary',
+    additionalSources: [
+      {
+        idSuffix: 'current-directory',
+        label: 'Roman Catholic Archdiocese of Manila · clergy and parish directory',
+        url: 'https://rcam.veritasph.net/clergy-of-manila/',
+        publisher: 'Roman Catholic Archdiocese of Manila',
+        checkedOn: '2026-10-07',
+        kind: 'official-secondary',
+      },
+    ],
+    heritage: {
+      designations: [
+        {
+          authority: 'National Commission for Culture and the Arts',
+          classification:
+            'Work of National Artist for Architecture Leandro V. Locsin; Work of National Artist for Landscape Architecture Ildefonso P. Santos',
+          officialName:
+            'Parish Church of Saint Alphonsus Mary de Liguori of Makati',
+          sourceIds: ['saint-alphonsus-mary-de-liguori-parish:identity'],
+          note:
+            'The NCCA listing establishes the recorded National Artist attribution; this record does not infer that all present fabric is original.',
+        },
+      ],
+    },
+    accessClass: 'public-access-private-managed',
+    sourceUrl: 'https://talapamana.ncca.gov.ph/index.php/component/content/article/talapamana-metro-manila?Itemid=101&catid=12',
+    sourceLabel: 'NCCA Talapamana · Metro Manila cultural-property inventory',
+    coordinateSourceUrl: 'https://www.openstreetmap.org/way/83977623',
+    coordinateSourceLabel: 'OpenStreetMap · Magallanes Church building footprint',
+    status: 'mapped',
+    tags: [
+      'heritage',
+      'church',
+      'National Artist',
+      'Leandro V. Locsin',
+      'Ildefonso P. Santos',
+      'Magallanes',
+    ],
+  },
+  {
+    id: 'saint-andrew-the-apostle-parish',
+    title: 'Saint Andrew the Apostle Parish',
+    type: 'heritage-site',
+    subtitle: 'Bel-Air parish church listed by NCCA as a work of National Artist Leandro V. Locsin',
+    barangay: 'Bel-Air',
+    lat: 14.56606,
+    lng: 121.02372,
+    authority: 'Archdiocese of Manila / Saint Andrew the Apostle Parish',
+    address: '62 Constellation Street, Bel-Air II, Makati City',
+    aliases: ['Bel-Air Church', 'Simbahan ng Bel-Air'],
+    aliasKinds: {
+      'Bel-Air Church': 'local-name',
+      'Simbahan ng Bel-Air': 'local-name',
+    },
+    secondaryCategories: ['religious-heritage', 'national-artist-work'],
+    sourceKind: 'official-primary',
+    additionalSources: [
+      {
+        idSuffix: 'current-directory',
+        label: 'Roman Catholic Archdiocese of Manila · clergy and parish directory',
+        url: 'https://rcam.veritasph.net/clergy-of-manila/',
+        publisher: 'Roman Catholic Archdiocese of Manila',
+        checkedOn: '2026-10-07',
+        kind: 'official-secondary',
+      },
+    ],
+    heritage: {
+      designations: [
+        {
+          authority: 'National Commission for Culture and the Arts',
+          classification:
+            'Work of National Artist for Architecture Leandro V. Locsin',
+          officialName:
+            'Parish Church of Saint Andrew the Apostle of Bel-Air',
+          sourceIds: ['saint-andrew-the-apostle-parish:identity'],
+        },
+      ],
+    },
+    accessClass: 'public-access-private-managed',
+    sourceUrl: 'https://talapamana.ncca.gov.ph/index.php/component/content/article/talapamana-metro-manila?Itemid=101&catid=12',
+    sourceLabel: 'NCCA Talapamana · Metro Manila cultural-property inventory',
+    coordinateSourceUrl: 'https://www.openstreetmap.org/way/208167746',
+    coordinateSourceLabel: 'OpenStreetMap · Saint Andrew the Apostle Church footprint',
+    status: 'mapped',
+    tags: [
+      'heritage',
+      'church',
+      'National Artist',
+      'Leandro V. Locsin',
+      'Bel-Air',
+    ],
+  },
+  {
+    id: 'saint-john-bosco-parish',
+    title: 'Saint John Bosco Parish Church',
+    type: 'heritage-site',
+    subtitle: 'Don Bosco church listed by NCCA as a work of National Artist Jose Maria V. Zaragoza',
+    barangay: 'Pio del Pilar',
+    lat: 14.55042,
+    lng: 121.0149,
+    authority: 'Salesians of Don Bosco / Saint John Bosco Parish',
+    address:
+      'Antonio Arnaiz Avenue corner Amorsolo Street, Barangay Pio del Pilar, 1230 Makati City',
+    aliases: ['Don Bosco Church', 'Parish Church of Saint John Bosco of Makati'],
+    aliasKinds: {
+      'Don Bosco Church': 'local-name',
+      'Parish Church of Saint John Bosco of Makati': 'current-alternate',
+    },
+    secondaryCategories: ['religious-heritage', 'national-artist-work'],
+    sourceKind: 'official-primary',
+    additionalSources: [
+      {
+        idSuffix: 'parish-contact',
+        label: 'Saint John Bosco Parish · official site and contact information',
+        url: 'https://www.sjbmakati.com/',
+        publisher: 'Saint John Bosco Parish',
+        checkedOn: '2026-10-07',
+        kind: 'official-secondary',
+      },
+    ],
+    heritage: {
+      designations: [
+        {
+          authority: 'National Commission for Culture and the Arts',
+          classification:
+            'Work of National Artist for Architecture Jose Maria V. Zaragoza',
+          officialName: 'Parish Church of Saint John Bosco of Makati',
+          sourceIds: ['saint-john-bosco-parish:identity'],
+        },
+      ],
+    },
+    accessClass: 'public-access-private-managed',
+    sourceUrl: 'https://talapamana.ncca.gov.ph/index.php/component/content/article/talapamana-metro-manila?Itemid=101&catid=12',
+    sourceLabel: 'NCCA Talapamana · Metro Manila cultural-property inventory',
+    coordinateSourceUrl: 'https://www.openstreetmap.org/way/28044791',
+    coordinateSourceLabel: 'OpenStreetMap · Saint John Bosco Parish Church footprint',
+    status: 'mapped',
+    tags: [
+      'heritage',
+      'church',
+      'National Artist',
+      'Jose Maria V. Zaragoza',
+      'Pio del Pilar',
+    ],
+  },
+  {
+    id: 'san-carlos-seminary',
+    title: 'San Carlos Seminary',
+    type: 'heritage-site',
+    subtitle: 'Seminary complex listed by NCCA as a work of National Artist Juan F. Nakpil',
+    barangay: 'Guadalupe Viejo',
+    lat: 14.56609,
+    lng: 121.0439,
+    authority: 'Roman Catholic Archdiocese of Manila / San Carlos Seminary',
+    address:
+      'San Carlos Pastoral Formation Complex, EDSA, Barangay Guadalupe Viejo, 1200 Makati City',
+    secondaryCategories: [
+      'religious-heritage',
+      'national-artist-work',
+      'local-cultural-property',
+    ],
+    sourceKind: 'official-secondary',
+    additionalSources: [
+      {
+        idSuffix: 'ncca-talapamana',
+        label: 'NCCA Talapamana · Metro Manila cultural-property inventory',
+        url: 'https://talapamana.ncca.gov.ph/index.php/component/content/article/talapamana-metro-manila?Itemid=101&catid=12',
+        publisher: 'National Commission for Culture and the Arts',
+        checkedOn: '2026-10-07',
+        kind: 'official-primary',
+      },
+      {
+        idSuffix: 'current-directory',
+        label: 'Roman Catholic Archdiocese of Manila · clergy and seminary directory',
+        url: 'https://rcam.veritasph.net/clergy-of-manila/',
+        publisher: 'Roman Catholic Archdiocese of Manila',
+        checkedOn: '2026-10-07',
+        kind: 'official-secondary',
+      },
+    ],
+    heritage: {
+      designations: [
+        {
+          authority: 'City Government of Makati',
+          classification: 'Local Registry of Cultural Properties',
+          officialName: 'San Carlos Seminary',
+          sourceIds: ['san-carlos-seminary:identity'],
+        },
+        {
+          authority: 'National Commission for Culture and the Arts',
+          classification:
+            'Work of National Artist for Architecture Juan F. Nakpil',
+          officialName: 'San Carlos Seminary',
+          sourceIds: ['san-carlos-seminary:ncca-talapamana'],
+        },
+      ],
+      facts: [
+        {
+          label: 'Construction',
+          value:
+            'Makati’s local cultural-property registry says construction of the present seminary complex began in 1951.',
+          dateOrPeriod: '1951',
+          sourceIds: ['san-carlos-seminary:identity'],
+          note:
+            'This is the construction start recorded for the present Makati complex, not the founding date of the seminary institution.',
+        },
+      ],
+    },
+    accessClass: 'private-community-controlled',
+    sourceUrl:
+      'https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1601521942280.pdf',
+    sourceLabel:
+      'City Government of Makati · Local Registry of Cultural Properties',
+    coordinateSourceUrl: 'https://www.openstreetmap.org/node/4717688490',
+    coordinateSourceLabel: 'OpenStreetMap · San Carlos Seminary mapped point',
+    status: 'mapped',
+    tags: [
+      'heritage',
+      'seminary',
+      'National Artist',
+      'Juan F. Nakpil',
+      'local cultural-property registry',
+      'Guadalupe Viejo',
+    ],
+  },
+  {
     id: 'ayala-museum',
     title: 'Ayala Museum',
     type: 'heritage-site',
