@@ -1,5 +1,6 @@
 import {
   ExternalLink,
+  FileText,
   Landmark,
   Vote,
   Scale,
@@ -193,6 +194,21 @@ export default function OfficialProfile() {
                 : []
             )}
           />
+          {official.slug === 'nancy-binay' && (
+            <CivicRelationshipLinks
+              label={t('corePages.official.relatedAnalysis')}
+              className="mt-5"
+              tone="secondary"
+              items={[
+                {
+                  id: 'makati-political-dynasties-election-record',
+                  label: t('corePages.official.dynastyReport'),
+                  href: '/reports/makati-political-dynasties-election-record',
+                  icon: <FileText className="h-3.5 w-3.5" aria-hidden="true" />,
+                },
+              ]}
+            />
+          )}
         </div>
       </Section>
 
