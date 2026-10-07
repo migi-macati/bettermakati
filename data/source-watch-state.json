@@ -750,29 +750,6 @@
       "delegated": false
     },
     {
-      "id": "pnp-clearance",
-      "label": "PNP National Police Clearance",
-      "url": "https://www.pnpclearance.ph/",
-      "kind": "national-services",
-      "cadence": "weekly",
-      "monitoringMode": "reachability",
-      "owner": "general-source-freshness",
-      "affectedPages": [
-        "/services"
-      ],
-      "status": "not-checked",
-      "statusCode": null,
-      "contentType": "",
-      "contentLength": 0,
-      "sha256": "",
-      "lastSuccessfulHash": "",
-      "change": "not-checked",
-      "lastCheckedAt": null,
-      "lastSuccessfulAt": null,
-      "lastChangedAt": null,
-      "delegated": false
-    },
-    {
       "id": "nbi-clearance",
       "label": "NBI clearance guidance",
       "url": "https://nbi.gov.ph/how-to-apply-nbi-clearance/",
