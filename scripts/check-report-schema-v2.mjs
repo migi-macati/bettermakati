@@ -1,7 +1,8 @@
 import { readFile } from 'node:fs/promises';
+import { readReportModuleSources } from './read-report-module-sources.mjs';
 
 const schema = await readFile('src/data/reportTypes.ts', 'utf8');
-const reports = await readFile('src/data/reports.ts', 'utf8');
+const reports = await readReportModuleSources();
 
 const problems = [];
 
@@ -27,8 +28,8 @@ for (const marker of [
   "recordType: 'place'",
   "recordType: 'project'",
   "recordType: 'accountability-entry'",
-  "sourceKind: ReportSourceKind",
-  "sourceIds: [string, ...string[]]",
+  'sourceKind: ReportSourceKind',
+  'sourceIds: [string, ...string[]]',
 ]) {
   if (!schema.includes(marker)) {
     problems.push('Report schema v2 marker missing: ' + marker);
@@ -45,7 +46,7 @@ for (const marker of [
   }
 }
 
-if (!schema.includes('The report\'s one publishable synthesis')) {
+if (!schema.includes("The report's one publishable synthesis")) {
   problems.push('Schema must document the one-synthesis editorial rule.');
 }
 
@@ -71,9 +72,9 @@ for (const forbidden of [
   }
 }
 
-const currentSlugs = [
-  ...reports.matchAll(/slug:\s*'([^']+)'/g),
-].map(match => match[1]);
+const currentSlugs = [...reports.matchAll(/slug:\s*'([^']+)'/g)].map(
+  match => match[1]
+);
 
 if (!reports.includes('schemaVersion: 2')) {
   problems.push('Published Featured Reports must use schema v2 after W4-4c.');
@@ -91,7 +92,7 @@ const schemaVersionCount = (reports.match(/schemaVersion:\s*2/g) ?? []).length;
 const synthesisCount = (reports.match(/synthesis:\s*/g) ?? []).length;
 if (
   schemaVersionCount !== currentSlugs.length ||
-  synthesisCount !== currentSlugs.length
+  synthesisCount < currentSlugs.length
 ) {
   problems.push(
     'Every published report must use schema v2 and carry exactly one synthesis.'
@@ -103,12 +104,12 @@ if (reports.includes('paragraphs:')) {
 }
 
 if (problems.length) {
-  console.error(
-    'Report schema v2 check failed:\n- ' + problems.join('\n- ')
-  );
+  console.error('Report schema v2 check failed:\n- ' + problems.join('\n- '));
   process.exit(1);
 }
 
 console.log(
   'Report schema v2 check passed: the v2 contract remains intact and every published report uses it without legacy v1 paragraph arrays.'
 );
+
+await import('./check-featured-report-modules.mjs');

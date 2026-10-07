@@ -1,4 +1,5 @@
 import { readFile } from 'node:fs/promises';
+import { readReportModuleSources } from './read-report-module-sources.mjs';
 
 const home = await readFile('src/pages/Home.tsx', 'utf8');
 const carousel = await readFile(
@@ -10,7 +11,7 @@ const teaser = await readFile(
   'src/components/reports/ReportTeaser.tsx',
   'utf8'
 );
-const reportsData = await readFile('src/data/reports.ts', 'utf8');
+const reportsData = await readReportModuleSources();
 
 const problems = [];
 
@@ -63,9 +64,7 @@ if (
   !reportsPage.includes(
     "import ReportTeaser from '../components/reports/ReportTeaser'"
   ) ||
-  !reportsPage.includes(
-    "import { publicationReports } from '../data/reports'"
-  )
+  !reportsPage.includes("import { publicationReports } from '../data/reports'")
 ) {
   problems.push(
     '/reports must use the same ReportTeaser and publicationReports as the homepage.'
@@ -87,8 +86,7 @@ for (const marker of [
 
 if (problems.length) {
   console.error(
-    'Homepage Featured Reports reuse check failed:\n- ' +
-      problems.join('\n- ')
+    'Homepage Featured Reports reuse check failed:\n- ' + problems.join('\n- ')
   );
   process.exit(1);
 }

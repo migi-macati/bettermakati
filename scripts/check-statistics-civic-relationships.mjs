@@ -1,20 +1,18 @@
 import { readFile } from 'node:fs/promises';
+import { readReportModuleSources } from './read-report-module-sources.mjs';
 
 const relationships = await readFile(
   'src/data/statisticsCivicRelationships.ts',
   'utf8'
 );
-const ecosystem = await readFile(
-  'src/data/ecosystemResources.ts',
-  'utf8'
-);
+const ecosystem = await readFile('src/data/ecosystemResources.ts', 'utf8');
 const reportRelationships = await readFile(
   'src/data/reportCivicRelationships.ts',
   'utf8'
 );
 const statisticsPage = await readFile('src/pages/Statistics.tsx', 'utf8');
 const barangayPage = await readFile('src/pages/BarangayProfile.tsx', 'utf8');
-const reports = await readFile('src/data/reports.ts', 'utf8');
+const reports = await readReportModuleSources();
 
 const problems = [];
 
@@ -96,9 +94,7 @@ for (const forbidden of [
 }
 
 if (
-  relationships.includes(
-    "type: 'ecosystem-resource',\n      id: 'betterlgu'"
-  )
+  relationships.includes("type: 'ecosystem-resource',\n      id: 'betterlgu'")
 ) {
   problems.push(
     'BetterLGU must not be attached to an indicator as statistical evidence/context in W4-5b.'
@@ -145,7 +141,8 @@ for (const forbidden of [
 ]) {
   if (relationships.includes(forbidden)) {
     problems.push(
-      'Statistics must not duplicate report-owned relationship edges: ' + forbidden
+      'Statistics must not duplicate report-owned relationship edges: ' +
+        forbidden
     );
   }
 }

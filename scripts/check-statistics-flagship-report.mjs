@@ -1,6 +1,7 @@
 import { readFile } from 'node:fs/promises';
+import { readReportModuleSources } from './read-report-module-sources.mjs';
 
-const reports = await readFile('src/data/reports.ts', 'utf8');
+const reports = await readReportModuleSources();
 const flagship = JSON.parse(
   await readFile('data/wave4-statistics-flagship.json', 'utf8')
 );
@@ -19,13 +20,16 @@ if (slug !== '2024-population-growth-acceleration') {
   problems.push('Unexpected Statistics flagship slug: ' + slug);
 }
 
-if ((reports.match(/slug:\s*'2024-population-growth-acceleration'/g) ?? []).length !== 1) {
+if (
+  (reports.match(/slug:\s*'2024-population-growth-acceleration'/g) ?? [])
+    .length !== 1
+) {
   problems.push('Statistics flagship report must appear exactly once.');
 }
 
 for (const marker of [
   "cityIndicatorObservations('population-total')",
-  "cityIndicatorObservations('population-growth-rate')",
+  'populationGrowthTrend = cityIndicatorObservations',
   "cityIndicatorSources['psa-openstat-population-growth-2024']",
   "recordType: 'statistics-indicator'",
   "id: 'population-total'",
@@ -44,7 +48,9 @@ for (const marker of [
 
 for (const indicatorId of ['population-total', 'population-growth-rate']) {
   if (!flagship.canonicalIndicators?.includes(indicatorId)) {
-    problems.push('Flagship metadata missing canonical indicator: ' + indicatorId);
+    problems.push(
+      'Flagship metadata missing canonical indicator: ' + indicatorId
+    );
   }
 }
 
@@ -72,10 +78,10 @@ for (const [key, value] of Object.entries(expectedClaims)) {
   }
 }
 
-if (
-  flagship.primarySourceId !== 'psa-openstat-population-growth-2024'
-) {
-  problems.push('Statistics flagship must remain tied to the PSA population series.');
+if (flagship.primarySourceId !== 'psa-openstat-population-growth-2024') {
+  problems.push(
+    'Statistics flagship must remain tied to the PSA population series.'
+  );
 }
 
 for (const forbidden of [
@@ -85,7 +91,9 @@ for (const forbidden of [
   'daytime population increased by',
 ]) {
   if (reports.toLowerCase().includes(forbidden)) {
-    problems.push('Flagship report contains unsupported causal inference: ' + forbidden);
+    problems.push(
+      'Flagship report contains unsupported causal inference: ' + forbidden
+    );
   }
 }
 

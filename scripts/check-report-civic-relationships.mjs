@@ -1,10 +1,11 @@
 import { readFile } from 'node:fs/promises';
+import { readReportModuleSources } from './read-report-module-sources.mjs';
 
 const relationships = await readFile(
   'src/data/reportCivicRelationships.ts',
   'utf8'
 );
-const reportsSource = await readFile('src/data/reports.ts', 'utf8');
+const reportsSource = await readReportModuleSources();
 const reportArticle = await readFile('src/pages/ReportArticle.tsx', 'utf8');
 const statisticsPage = await readFile('src/pages/Statistics.tsx', 'utf8');
 const accountabilityPage = await readFile(
@@ -81,20 +82,20 @@ for (const forbidden of [
   }
 }
 
-const slugMatches = [
-  ...reportsSource.matchAll(/slug:\s*'([^']+)'/g),
-];
+const slugMatches = [...reportsSource.matchAll(/slug:\s*'([^']+)'/g)];
 const slugs = slugMatches.map(match => match[1]);
 
 if (slugs.length < 5) {
-  problems.push('Expected at least 5 current Featured Reports; found ' + slugs.length + '.');
+  problems.push(
+    'Expected at least 5 current Featured Reports; found ' + slugs.length + '.'
+  );
 }
 
 for (let index = 0; index < slugMatches.length; index += 1) {
   const start = slugMatches[index].index ?? 0;
   const end =
     index + 1 < slugMatches.length
-      ? slugMatches[index + 1].index ?? reportsSource.length
+      ? (slugMatches[index + 1].index ?? reportsSource.length)
       : reportsSource.indexOf('export const publicationReports');
   const block = reportsSource.slice(
     start,
