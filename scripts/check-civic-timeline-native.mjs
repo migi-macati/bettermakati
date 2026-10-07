@@ -1,4 +1,5 @@
 import { readFile } from 'node:fs/promises';
+import { readReportModuleSources } from './read-report-module-sources.mjs';
 
 const [
   native,
@@ -21,7 +22,7 @@ const [
   readFile('src/data/accountabilitySupplement.ts', 'utf8'),
   readFile('src/data/electionHistory.ts', 'utf8'),
   readFile('src/data/electionCivic.ts', 'utf8'),
-  readFile('src/data/reports.ts', 'utf8'),
+  readReportModuleSources(),
   readFile('src/data/reportTypes.ts', 'utf8'),
   readFile('src/data/cityMonitor.ts', 'utf8'),
   readFile('src/data/civicServiceAvailability.ts', 'utf8'),
@@ -113,7 +114,7 @@ if (!native.includes("!record.id.startsWith('monitor-')")) {
 
 if (
   !native.includes("record.type === 'council-session'") &&
-  !native.includes("directCityMonitorKinds")
+  !native.includes('directCityMonitorKinds')
 ) {
   problems.push(
     'Council sessions must be projected through their dedicated canonical path, not duplicated blindly from City Monitor.'
@@ -131,9 +132,7 @@ if (
   !reportTypes.includes(
     "This is the report's own release date, not a source"
   ) ||
-  !reports.includes(
-    "const reportPublishedOn = '26 September 2026';"
-  ) ||
+  !reports.includes("const reportPublishedOn = '26 September 2026';") ||
   reportPublicationDateCount !== reportSchemaCountForDateGuard
 ) {
   problems.push(
@@ -143,18 +142,15 @@ if (
 
 const ordinanceCount = (legislation.match(/\n  ordinanceFromAnnex\(/g) ?? [])
   .length;
-const resolutionCount = (
-  legislation.match(/\n  resolutionFromAnnex\(/g) ?? []
-).length;
+const resolutionCount = (legislation.match(/\n  resolutionFromAnnex\(/g) ?? [])
+  .length;
 const councilCount = (council.match(/\n  regularSession\(/g) ?? []).length;
 
 const procurementBlock =
   accountabilitySupplement
     .split('const procurementSeeds: ProcurementSeed[] = [')[1]
     ?.split('];\n\nexport const procurementProjectEntries')[0] ?? '';
-const procurementCount = (
-  procurementBlock.match(/\n    id: '/g) ?? []
-).length;
+const procurementCount = (procurementBlock.match(/\n    id: '/g) ?? []).length;
 
 const electionBlock =
   elections
@@ -198,7 +194,9 @@ if (
 }
 
 if (!native.includes("id: 'election:bske-current:update-published'")) {
-  problems.push('Current BSKE official-publication projection identity is missing.');
+  problems.push(
+    'Current BSKE official-publication projection identity is missing.'
+  );
 }
 if (!native.includes("id: 'election:bske-current:next-election'")) {
   problems.push('Current BSKE election projection identity is missing.');
@@ -207,17 +205,23 @@ if (!native.includes("id: 'election:bske-current:ra-12326-signed'")) {
   problems.push('Current BSKE law-change projection identity is missing.');
 }
 if (!native.includes("status: 'superseded'")) {
-  problems.push('Superseded 2026 election schedule is not preserved in the timeline.');
+  problems.push(
+    'Superseded 2026 election schedule is not preserved in the timeline.'
+  );
 }
 
 if (!native.includes("kind: 'service-availability'")) {
   problems.push('Temporary service-availability projection kind is missing.');
 }
 if (!native.includes("actionability: 'service-available'")) {
-  problems.push('Temporary service availability must expose service-available actionability.');
+  problems.push(
+    'Temporary service availability must expose service-available actionability.'
+  );
 }
 if (!native.includes("owner: 'services'")) {
-  problems.push('Temporary service availability must retain Services as canonical owner.');
+  problems.push(
+    'Temporary service availability must retain Services as canonical owner.'
+  );
 }
 
 if (!native.includes("id: 'report:' + report.slug + ':release'")) {
@@ -228,15 +232,15 @@ if (!native.includes("id: 'accountability:' + entry.id + ':bid-result'")) {
   problems.push('Accountability procurement projection identity is missing.');
 }
 
-if (
-  !timeline.includes('cannot project maintenance/observation field')
-) {
+if (!timeline.includes('cannot project maintenance/observation field')) {
   problems.push(
     'Native projections depend on the R2 maintenance/observation-field rejection invariant.'
   );
 }
 
-if ((packageJson.match(/npm run check:civic-timeline-native/g) ?? []).length < 2) {
+if (
+  (packageJson.match(/npm run check:civic-timeline-native/g) ?? []).length < 2
+) {
   problems.push(
     'Native Civic Timeline guard is not present in both build and quality.'
   );
@@ -244,8 +248,7 @@ if ((packageJson.match(/npm run check:civic-timeline-native/g) ?? []).length < 2
 
 if (problems.length) {
   console.error(
-    'W5-7R3 native Civic Timeline check failed:\n- ' +
-      problems.join('\n- ')
+    'W5-7R3 native Civic Timeline check failed:\n- ' + problems.join('\n- ')
   );
   process.exit(1);
 }

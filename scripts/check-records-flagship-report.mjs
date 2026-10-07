@@ -1,10 +1,8 @@
 import { readFile } from 'node:fs/promises';
+import { readReportModuleSources } from './read-report-module-sources.mjs';
 
-const reports = await readFile('src/data/reports.ts', 'utf8');
-const auditTrails = await readFile(
-  'src/data/integrityAuditTrails.ts',
-  'utf8'
-);
+const reports = await readReportModuleSources();
+const auditTrails = await readFile('src/data/integrityAuditTrails.ts', 'utf8');
 const flagship = JSON.parse(
   await readFile('data/wave4-records-flagship.json', 'utf8')
 );
@@ -24,8 +22,8 @@ if (slug !== 'audit-follow-up-closure-trails') {
 }
 
 if (
-  (reports.match(/slug:\s*'audit-follow-up-closure-trails'/g) ?? [])
-    .length !== 1
+  (reports.match(/slug:\s*'audit-follow-up-closure-trails'/g) ?? []).length !==
+  1
 ) {
   problems.push('Records flagship report must appear exactly once.');
 }
@@ -52,8 +50,7 @@ const findingIds = (
   auditTrails.match(/findingId\('audit-[^']+'/g) ?? []
 ).filter((value, index, values) => values.indexOf(value) === index);
 const actionIds = auditTrails.match(/id: 'action-/g) ?? [];
-const unresolvedTrails =
-  auditTrails.match(/status: 'unresolved'/g) ?? [];
+const unresolvedTrails = auditTrails.match(/status: 'unresolved'/g) ?? [];
 
 if (findingIds.length !== 3) {
   problems.push(
@@ -114,9 +111,7 @@ for (const forbidden of [
 }
 
 if (
-  !reports.includes(
-    "source.sourceClass === 'secondary-reporting'"
-  ) ||
+  !reports.includes("source.sourceClass === 'secondary-reporting'") ||
   !reports.includes("'secondary' as const")
 ) {
   problems.push(
