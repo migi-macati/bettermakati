@@ -372,6 +372,30 @@ export const civicEntityIndex = [
     "entityKind": "place"
   },
   {
+    "id": "saint-alphonsus-mary-de-liguori-parish",
+    "name": "Saint Alphonsus Mary de Liguori Parish",
+    "category": "heritage-site",
+    "entityKind": "place"
+  },
+  {
+    "id": "saint-andrew-the-apostle-parish",
+    "name": "Saint Andrew the Apostle Parish",
+    "category": "heritage-site",
+    "entityKind": "place"
+  },
+  {
+    "id": "saint-john-bosco-parish",
+    "name": "Saint John Bosco Parish Church",
+    "category": "heritage-site",
+    "entityKind": "place"
+  },
+  {
+    "id": "san-carlos-seminary",
+    "name": "San Carlos Seminary",
+    "category": "heritage-site",
+    "entityKind": "place"
+  },
+  {
     "id": "ayala-museum",
     "name": "Ayala Museum",
     "category": "heritage-site",
