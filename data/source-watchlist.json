@@ -405,18 +405,6 @@
     ]
   },
   {
-    "id": "pnp-clearance",
-    "label": "PNP National Police Clearance",
-    "url": "https://www.pnpclearance.ph/",
-    "kind": "national-services",
-    "cadence": "weekly",
-    "monitoringMode": "reachability",
-    "owner": "general-source-freshness",
-    "affectedPages": [
-      "/services"
-    ]
-  },
-  {
     "id": "nbi-clearance",
     "label": "NBI clearance guidance",
     "url": "https://nbi.gov.ph/how-to-apply-nbi-clearance/",
