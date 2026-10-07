@@ -1,6 +1,6 @@
 # W5-2a1 — Makati heritage inventory and source reconciliation
 
-Reviewed: 2026-10-05
+Reviewed: 2026-10-07
 
 ## Purpose
 
@@ -22,7 +22,7 @@ This audit is the evidence pass before BetterMakati creates or rewires canonical
 
 ### Canonical place registry
 
-`src/data/placeRegistry.ts` now carries the seven public-facing Heritage & Culture places above with sourced identity, location and heritage metadata. The 5 October 2026 pass also adds a provisional registry-only record for the La Campana Fabrica de Tabacos Administration Building. Its city-registry identity and Olympia address are sourced, while its exact building footprint, access and current lifecycle remain flagged for verification.
+`src/data/placeRegistry.ts` now carries the seven public-facing Heritage & Culture places above with sourced identity, location and heritage metadata. The 5 October 2026 pass also adds a provisional registry-only record for the La Campana Fabrica de Tabacos Administration Building. The 7 October 2026 pass adds four registry-only National Artist works: Saint Alphonsus Mary de Liguori Parish, Saint Andrew the Apostle Parish, Saint John Bosco Parish Church and San Carlos Seminary. Their current place identity and coordinates are sourced, while public presentation remains separate from visitor-access assumptions. La Campana’s city-registry identity and Olympia address are sourced, while its exact building footprint, access and current lifecycle remain flagged for verification.
 
 ### History timeline
 
@@ -144,13 +144,14 @@ Working ID: `andres-bonifacio-monument-makati`.
 
 NCCA Talapamana contains many Makati properties because they are works of National Artists for Architecture or Landscape Architecture. These should not all be dumped into the public Heritage page at once.
 
-High-value, publicly legible candidates for the next inventory layer include:
+The 7 October 2026 registry pass canonicalizes four current-Makati properties without promoting them to the visitor-oriented Heritage page:
 
-- Parish Church of Saint Alphonsus Mary de Liguori / Magallanes Church — Leandro V. Locsin; landscape association with Ildefonso P. Santos
+- Parish Church of Saint Alphonsus Mary de Liguori / Magallanes Church — Leandro V. Locsin; landscape association with Ildefonso P. Santos. The NCCA attribution is preserved without inferring that all present fabric is original.
 - Parish Church of Saint Andrew the Apostle / Bel-Air Church — Leandro V. Locsin
 - Saint John Bosco Parish Church — Jose Maria V. Zaragoza
-- San Carlos Seminary / pastoral complex — city cultural material identifies Juan Nakpil design significance
-- Plaza Cristo Rey — Francisco T. Mañosa
+- San Carlos Seminary / pastoral complex — NCCA identifies Juan F. Nakpil; the Makati local registry supplies the present-complex context
+
+Plaza Cristo Rey — Francisco T. Mañosa — is already canonicalized for the public Heritage & Culture layer.
 
 Talapamana also includes many private offices, residences, commercial buildings and landscapes in Makati. Those belong in the **complete cultural-property registry**, but public display should distinguish:
 
@@ -316,13 +317,18 @@ Recommended relationships:
 - Ayala Museum
 - Plaza Cristo Rey
 
+### Canonicalized for the wider registry
+
+- Saint Alphonsus Mary de Liguori Parish / Magallanes Church
+- Saint Andrew the Apostle Parish / Bel-Air Church
+- Saint John Bosco Parish Church / Don Bosco Church
+- San Carlos Seminary
+
+These remain registry-only until visitor access and the appropriate public presentation are assessed. The Magallanes record also keeps an explicit present-fabric uncertainty.
+
 ### Canonicalized provisionally for the wider registry
 
 - La Campana Fabrica de Tabacos Administration Building — official identity and address sourced; exact footprint, access and lifecycle still need verification
-
-### Add after exact present-site verification
-
-- selected National Artist works and other current-Makati cultural properties
 
 ### Keep in the former-Makati historical-territory layer
 
@@ -365,4 +371,4 @@ Recommended relationships:
 
 ## Next micro-step
 
-Verify the La Campana building footprint and present lifecycle, then choose the next current-Makati cultural-property batch from the National Artist works. Keep former-EMBO heritage in the historical-territory model and leave the Casa entities unresolved until the location/continuity evidence is complete.
+Verify the La Campana building footprint and present lifecycle, then assess the next current-Makati National Artist works only where current-site identity and lifecycle can be established. Keep former-EMBO heritage in the historical-territory model and leave the Casa entities unresolved until the location/continuity evidence is complete.
