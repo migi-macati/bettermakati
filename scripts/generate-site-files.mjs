@@ -18,6 +18,7 @@ const staticRoutes = [
   '/heritage',
   '/history',
   '/government',
+  '/government-offices',
   '/accountability',
   '/records',
   '/participate',
@@ -27,6 +28,7 @@ const staticRoutes = [
   '/status',
   '/city-monitor',
   '/briefs',
+  '/reports',
   '/barangays',
   '/elections',
   '/estates',
@@ -53,6 +55,12 @@ const extractSlugs = async file => {
 
 const barangaySlugs = await extractSlugs('src/data/barangays.ts');
 const officialSlugs = await extractSlugs('src/data/electedOfficials.ts');
+const reportSlugs = [];
+for (const file of await readdir('src/data/reports')) {
+  if (!file.endsWith('.ts')) continue;
+  const slugs = await extractSlugs(path.join('src/data/reports', file));
+  if (slugs[0]) reportSlugs.push(slugs[0]);
+}
 const placeRegistryText = await readFile('src/data/placeRegistry.ts', 'utf8');
 const civicAssetBlock =
   placeRegistryText.split('export const civicAssets')[1]?.split('const geometryTypeFor')[0] ?? '';
@@ -114,6 +122,7 @@ const routes = [
   ...staticRoutes,
   ...barangaySlugs.map(slug => '/barangays/' + slug),
   ...officialSlugs.map(slug => '/officials/' + slug),
+  ...reportSlugs.map(slug => '/reports/' + slug),
   ...civicAssetIds.map(id => '/civic-map/' + id),
   ...serviceIds.map(id => '/services/guide/' + id),
   ...cityMonitorRecordIds.map(id => '/city-monitor/' + id),
@@ -121,17 +130,13 @@ const routes = [
 ];
 
 const uniqueRoutes = [...new Set(routes)].sort();
-const today = new Date().toISOString().slice(0, 10);
 const xml = [
   '<?xml version="1.0" encoding="UTF-8"?>',
   '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
-  ...uniqueRoutes.map(route =>
-    '  <url><loc>' +
-    base +
-    (route === '/' ? '/' : route) +
-    '</loc><lastmod>' +
-    today +
-    '</lastmod></url>'
+  // Omit lastmod until BetterMakati can provide a truthful per-route modification date.
+  // A deploy timestamp would falsely tell crawlers that every page changed on every build.
+  ...uniqueRoutes.map(
+    route => '  <url><loc>' + base + (route === '/' ? '/' : route) + '</loc></url>'
   ),
   '</urlset>',
   '',
