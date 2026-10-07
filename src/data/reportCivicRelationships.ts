@@ -11,6 +11,7 @@ import {
 import { integrityEntityById } from './integrityData';
 import { integrityDisclosureRecords } from './integrityDisclosures';
 import { integrityAuditFindings } from './integrityAuditTrails';
+import { electionCoverageAreas } from './electionCivic';
 import { localLegislationById } from './localLegislation';
 import { placeRegistryById } from './placeRegistry';
 import { reports } from './reports';
@@ -72,6 +73,8 @@ export const reportRecordRefToCivicRef = (
       return { type: 'project', id: record.id };
     case 'accountability-entry':
       return { type: 'accountability-record', id: record.id };
+    case 'election-record':
+      return { type: 'election-record', id: record.id };
   }
 };
 
@@ -222,6 +225,17 @@ export const reportCivicNodeResolver: CivicIntelligenceNodeResolver =
         label: project.title,
         href: '/accountability?type=project#' + project.id,
         owner: 'accountability',
+      };
+    }
+
+    if (ref.type === 'election-record') {
+      const record = electionCoverageAreas.find(item => item.id === ref.id);
+      if (!record) return undefined;
+      return {
+        ref,
+        label: record.label,
+        href: '/elections#' + record.id,
+        owner: 'elections',
       };
     }
 

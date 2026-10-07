@@ -42,6 +42,7 @@ import {
   electionsReviewed,
   getBskePhase,
 } from '../data/electionCivic';
+import { reportsForCivicRecord } from '../data/reportCivicRelationships';
 
 const number = (value: number) => value.toLocaleString('en-PH');
 
@@ -149,6 +150,10 @@ const mayoralHistoryCsv = [
 
 export default function Elections() {
   const bskePhase = getBskePhase();
+  const mayoralHistoryAnalysis = reportsForCivicRecord({
+    type: 'election-record',
+    id: 'mayoral-history',
+  });
   const councilDistricts = [
     {
       label: '1st District',
@@ -576,6 +581,23 @@ export default function Elections() {
         <p className="mt-3 max-w-4xl text-sm leading-relaxed text-gray-600">
           This series keeps the candidate vote counts for ten regular Makati city elections in one place. The percentage below is calculated from the candidate votes listed for each race so the denominator is consistent within this table.
         </p>
+
+        {mayoralHistoryAnalysis.length > 0 && (
+          <div className="mt-5 rounded-2xl border border-primary-100 bg-primary-50 p-5">
+            <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+              Related analysis
+            </div>
+            {mayoralHistoryAnalysis.map(item => (
+              <Link
+                key={item.relationship.id}
+                to={item.node!.href}
+                className="mt-2 inline-flex min-h-11 items-center font-extrabold text-primary-800 underline decoration-primary-300 underline-offset-2 hover:decoration-primary-700"
+              >
+                {item.node!.label}
+              </Link>
+            ))}
+          </div>
+        )}
 
         <div className="mt-6 rounded-2xl border border-secondary-200 bg-secondary-50 p-5">
           <div className="font-extrabold text-gray-950">Boundary break before 2025</div>

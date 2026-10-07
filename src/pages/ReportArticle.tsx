@@ -33,6 +33,7 @@ const recordTypeLabel: Record<ReportCanonicalRecordRef['recordType'], string> = 
   place: 'Place',
   project: 'Project',
   'accountability-entry': 'Accountability record',
+  'election-record': 'Election record',
 };
 
 function SourceLink({

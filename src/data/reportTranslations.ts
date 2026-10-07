@@ -297,6 +297,11 @@ const filipinoReportCopy: Record<string, LocalizedReportCopy> = {
               sourceIds: ['4'],
               records: [
                 {
+                  recordType: 'election-record',
+                  id: 'mayoral-history',
+                  href: '/elections#mayoral-history',
+                },
+                {
                   recordType: 'statistics-indicator',
                   id: 'population-total',
                   href: '/statistics',

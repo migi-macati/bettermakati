@@ -31,6 +31,11 @@ export type ReportCanonicalRecordRef =
       recordType: 'accountability-entry';
       id: string;
       href: string;
+    }
+  | {
+      recordType: 'election-record';
+      id: string;
+      href: string;
     };
 
 export type ReportSourceKind =
@@ -174,6 +179,7 @@ export const reportCanonicalRecordTypes = [
   'place',
   'project',
   'accountability-entry',
+  'election-record',
 ] as const;
 
 export const reportContentBlockKinds = [
