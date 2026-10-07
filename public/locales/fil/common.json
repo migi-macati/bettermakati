@@ -1207,6 +1207,7 @@
       "events": "events",
       "eventLink": "Link sa event na ito",
       "related": "Related events",
+      "relatedAnalysis": "Related analysis",
       "source": "Source",
       "sources": "sources",
       "empty": "Walang event na tugma sa filters.",

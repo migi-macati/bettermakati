@@ -1,11 +1,17 @@
 import fs from 'node:fs';
 
-const page=fs.readFileSync('src/pages/History.tsx','utf8');
-const css=fs.readFileSync('src/index.css','utf8');
-const audit=JSON.parse(fs.readFileSync('data/wave7-editorial-history.json','utf8'));
-const pkg=JSON.parse(fs.readFileSync('package.json','utf8'));
+const page = fs.readFileSync('src/pages/History.tsx', 'utf8');
+const css = fs.readFileSync('src/index.css', 'utf8');
+const audit = JSON.parse(
+  fs.readFileSync('data/wave7-editorial-history.json', 'utf8')
+);
+const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+const reportHistoryConnections = fs.readFileSync(
+  'src/data/reportHistoryConnections.ts',
+  'utf8'
+);
 
-for(const marker of [
+for (const marker of [
   'bm-history-page',
   'bm-history-intro',
   'bm-history-collection',
@@ -20,13 +26,15 @@ for(const marker of [
   'bm-history-media-card',
   'bm-history-interpretation',
   'bm-history-relations',
+  'bm-history-report-links',
   'bm-history-sources',
-  'bm-history-empty'
+  'bm-history-empty',
 ]) {
-  if(!page.includes(marker)) throw new Error('W7-6b History marker missing: '+marker);
+  if (!page.includes(marker))
+    throw new Error('W7-6b History marker missing: ' + marker);
 }
 
-for(const marker of [
+for (const marker of [
   'makatiHistory',
   'historyEras',
   'historyReviewed',
@@ -38,20 +46,48 @@ for(const marker of [
   'primaryOnly',
   'newestFirst',
   "t('corePages.history.download')",
-  'SourceLink'
+  'SourceLink',
 ]) {
-  if(!page.includes(marker)) throw new Error('W7-6b preserved History behavior/evidence marker missing: '+marker);
+  if (!page.includes(marker))
+    throw new Error(
+      'W7-6b preserved History behavior/evidence marker missing: ' + marker
+    );
 }
 
-for(const marker of [
+for (const marker of [
+  "import { reportsForHistoryEvent } from '../data/reportHistoryConnections'",
+  'CivicRelationshipLinks',
+  "t('corePages.history.relatedAnalysis')",
+  'relatedReports.map',
+]) {
+  if (!page.includes(marker))
+    throw new Error('History report-backlink marker missing: ' + marker);
+}
+
+for (const marker of [
+  "import emboReportModule from './reports/06-embo-makati-taguig-transition'",
+  "'sc-boundary-decision'",
+  "'sc-boundary-finality-2022'",
+  "'boundary-transition-2023'",
+  "'embo-schools-transition-2024'",
+  "'embo-electoral-districts-2024'",
+  "'embo-facilities-injunction-2025'",
+  "href: '/reports/' + connection.reportSlug",
+]) {
+  if (!reportHistoryConnections.includes(marker))
+    throw new Error('EMBO History connection marker missing: ' + marker);
+}
+
+for (const marker of [
   'inline-flex min-h-11 items-center rounded-full border border-gray-200',
   'inline-flex min-h-11 items-center gap-1.5 rounded-full border border-secondary-300',
-  'inline-flex min-h-11 items-center rounded-full border border-primary-200'
+  'inline-flex min-h-11 items-center rounded-full border border-primary-200',
 ]) {
-  if(!page.includes(marker)) throw new Error('W7-6b 44px relationship target marker missing: '+marker);
+  if (!page.includes(marker))
+    throw new Error('W7-6b 44px relationship target marker missing: ' + marker);
 }
 
-for(const marker of [
+for (const marker of [
   '/* W7-6b — Makati history editorial treatment. */',
   '.bm-history-page',
   '.bm-history-filters',
@@ -61,21 +97,32 @@ for(const marker of [
   '.bm-history-evidence-note',
   '.bm-history-media-card',
   '.bm-history-interpretation',
-  '.bm-history-sources'
+  '.bm-history-sources',
 ]) {
-  if(!css.includes(marker)) throw new Error('W7-6b CSS marker missing: '+marker);
+  if (!css.includes(marker))
+    throw new Error('W7-6b CSS marker missing: ' + marker);
 }
 
-if(audit.status!=='implementation-complete' || audit.step!=='W7-6b' || audit.next!=='W7-6c — Heritage') {
+if (
+  audit.status !== 'implementation-complete' ||
+  audit.step !== 'W7-6b' ||
+  audit.next !== 'W7-6c — Heritage'
+) {
   throw new Error('W7-6b audit status or next pointer changed.');
 }
-if(pkg.scripts?.['check:wave7-editorial-history']!=='node scripts/check-wave7-editorial-history.mjs') {
+if (
+  pkg.scripts?.['check:wave7-editorial-history'] !==
+  'node scripts/check-wave7-editorial-history.mjs'
+) {
   throw new Error('W7-6b guard registration missing.');
 }
-for(const pipeline of ['build','quality']) {
-  for(const guardName of ['check:wave7-editorial-reports','check:wave7-editorial-history']) {
-    if(!pkg.scripts?.[pipeline]?.includes('npm run '+guardName)) {
-      throw new Error(guardName+' missing from '+pipeline+'.');
+for (const pipeline of ['build', 'quality']) {
+  for (const guardName of [
+    'check:wave7-editorial-reports',
+    'check:wave7-editorial-history',
+  ]) {
+    if (!pkg.scripts?.[pipeline]?.includes('npm run ' + guardName)) {
+      throw new Error(guardName + ' missing from ' + pipeline + '.');
     }
   }
 }
