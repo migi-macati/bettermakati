@@ -17,6 +17,7 @@ const staticMeta = {
   '/heritage': ['Heritage & Culture in Makati', 'Historical sites, museums and self-guided heritage routes in Makati.'],
   '/history': ['History of Makati', 'A searchable, source-linked chronology of Makati history.'],
   '/government': ['Makati City Government', 'Current elected officials, city representation, offices and contacts.'],
+  '/government-offices': ['Makati Government Offices', 'Find Makati City government offices, responsibilities and official contact channels.'],
   '/accountability': ['Makati Accountability Ledger', 'Track sourced public plans, responsible bodies, later evidence and known information gaps in Makati.'],
   '/records': ['Makati Public Records', 'A citizen-facing index of Makati public records, structured datasets and original sources.'],
   '/participate': ['Participate in Makati', 'Find public participation opportunities and follow BetterMakati community input.'],
@@ -30,6 +31,7 @@ const staticMeta = {
   '/civic-map/audits/park-accessibility-2026': ['Makati Public Park Accessibility Check', 'Record structured accessibility observations across 13 verified government/public parks in Makati.'],
   '/civic-map/audits/park-accessibility-2026/results': ['Public Park Accessibility Check — Live Output', 'Live coverage, sample counts and structured observation distributions for BetterMakati’s 13-park accessibility pilot.'],
   '/briefs': ['BetterMakati Civic Briefs', 'Daily, weekly and monthly civic digests from City Monitor.'],
+  '/reports': ['Featured Reports & Insights', 'Source-backed BetterMakati reports explaining major civic, fiscal, demographic and governance issues.'],
   '/barangays': ['Makati Barangays', 'Profiles and population data for the 23 barangays of Makati City.'],
   '/elections': ['Makati Elections & Voting', 'Election results, voter information and COMELEC sources for Makati.'],
   '/estates': ['Makati Estates & Associations', 'Estate associations and district resources across Makati City.'],
@@ -57,6 +59,10 @@ const humanize = value =>
 
 const metaFor = pathname => {
   if (staticMeta[pathname]) return staticMeta[pathname];
+  if (pathname.startsWith('/reports/')) {
+    const name = humanize(pathname.split('/').at(-1));
+    return [name, 'Source-backed BetterMakati Featured Report and analysis for Makati.'];
+  }
   if (pathname.startsWith('/civic-map/')) {
     const name = humanize(pathname.split('/').at(-1));
     return [name + ' | Civic Map', 'Public asset information, source records and community observations for ' + name + ', Makati.'];
