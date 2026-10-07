@@ -14,6 +14,7 @@ const accountabilityPage = await readFile(
 );
 const integrityPage = await readFile('src/pages/Integrity.tsx', 'utf8');
 const legislationPage = await readFile('src/pages/Legislation.tsx', 'utf8');
+const civicAssetPage = await readFile('src/pages/CivicAsset.tsx', 'utf8');
 const statisticsRelationships = await readFile(
   'src/data/statisticsCivicRelationships.ts',
   'utf8'
@@ -61,6 +62,15 @@ for (const marker of [
   '...reportsForCivicRecord',
 ]) {
   if (!legislationPage.includes(marker)) problems.push('Legislation report-backlink marker missing: ' + marker);
+}
+
+for (const marker of [
+  "import { reportsForCivicRecord } from '../data/reportCivicRelationships'",
+  "type: 'place'",
+  'localizedReportCopy(report, i18n.language).headline',
+  'label="Related analysis"',
+]) {
+  if (!civicAssetPage.includes(marker)) problems.push('Civic Map place report-backlink marker missing: ' + marker);
 }
 
 for (const marker of ["id: 'ordinance-2019-a-020'", "id: 'resolution-2026-008'", "id: 'resolution-2026-011'", "id: 'ordinance-2026-015'"]) {
