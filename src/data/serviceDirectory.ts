@@ -752,8 +752,8 @@ export const serviceDirectory: ServiceDirectoryItem[] = [
     type: 'Assistance',
     agency: 'Public Employment Service Office',
     description: 'Job referral and placement assistance for qualified Makati jobseekers.',
-    href: makatiCharter,
-    sourceUrl: makatiCharter,
+    href: 'https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1581041779505.pdf',
+    sourceUrl: 'https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1581041779505.pdf',
     keywords: 'peso job employment referral placement jobseeker work vacancy hiring',
   },
   {
