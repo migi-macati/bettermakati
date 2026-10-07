@@ -1221,6 +1221,7 @@
       "events": "events",
       "eventLink": "Link to this event",
       "related": "Related events",
+      "relatedAnalysis": "Related analysis",
       "source": "Source",
       "sources": "sources",
       "empty": "No events match these filters.",
