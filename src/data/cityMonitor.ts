@@ -47,6 +47,10 @@ export interface CityMonitorRecord {
   title: string;
   summary: string;
   date: string;
+  /** Source-stated start of an occurrence window, with timezone when known. */
+  effectiveFrom?: string;
+  /** Source-stated end of an occurrence window, with timezone when known. */
+  effectiveUntil?: string;
   publishedDate?: string;
   deadlineAt?: string;
   openingAt?: string;
@@ -101,7 +105,7 @@ export interface CityMonitorRecord {
   }>;
 }
 
-export const cityMonitorReviewed = '26 September 2026';
+export const cityMonitorReviewed = '8 October 2026';
 
 export const cityMonitorSources: CityMonitorSource[] = [
   {
@@ -203,9 +207,92 @@ export const cityMonitorSources: CityMonitorSource[] = [
     monitoringNote:
       'Monitor the city portal for annual reports, plans, newsletters, Ulat sa Bayan and other official publications.',
   },
+  {
+    id: 'barangay-poblacion-facebook',
+    label: 'Barangay Poblacion official notices',
+    stream: 'official-notice',
+    url: 'https://www.facebook.com/SampiroMacati',
+    publisher: 'Barangay Poblacion, Makati City',
+    cadence: 'event-driven',
+    monitoringMode: 'manual-review',
+    monitoringNote:
+      'Review the official barangay page for source-stated service interruptions and other time-sensitive notices. Preserve occurrence windows separately from publication dates.',
+  },
+  {
+    id: 'barangay-kasilawan-facebook',
+    label: 'Barangay Kasilawan official notices',
+    stream: 'official-notice',
+    url: 'https://www.facebook.com/kasilaONE',
+    publisher: 'Barangay Kasilawan, Makati City',
+    cadence: 'event-driven',
+    monitoringMode: 'manual-review',
+    monitoringNote:
+      'Review the official barangay page for source-stated service schedules and other time-sensitive notices. Preserve occurrence windows separately from publication dates.',
+  },
 ];
 
 const baseCityMonitorRecords: CityMonitorRecord[] = [
+  {
+    id: '2026-10-08-poblacion-dm-rivera-power-interruption',
+    type: 'official-notice',
+    title: 'Power interruption on D.M. Rivera Street',
+    summary:
+      'Barangay Poblacion announced a scheduled power interruption affecting D.M. Rivera Street on 8 October 2026 from 9:00 AM to 2:00 PM.',
+    date: '2026-10-08',
+    effectiveFrom: '2026-10-08T09:00:00+08:00',
+    effectiveUntil: '2026-10-08T14:00:00+08:00',
+    status: 'published',
+    stage: 'Scheduled service interruption',
+    sourceLabel: 'Sampiro Macati — Barangay Poblacion official notice',
+    sourceUrl:
+      'https://www.facebook.com/SampiroMacati/posts/122263841642157355',
+    sourcePublisher: 'Barangay Poblacion, Makati City',
+    barangaySlug: 'poblacion',
+    location: 'D.M. Rivera Street, Barangay Poblacion',
+    summaryBullets: [
+      'Occurrence window: 8 October 2026, 9:00 AM–2:00 PM.',
+      'The source names D.M. Rivera Street; BetterMakati does not infer a wider affected area.',
+      'The Facebook post exposes a relative age label, not an exact publication timestamp, so no publishedDate is recorded.',
+    ],
+    documents: [
+      {
+        label: 'Official Barangay Poblacion notice',
+        url: 'https://www.facebook.com/SampiroMacati/posts/122263841642157355',
+        kind: 'official-text',
+      },
+    ],
+  },
+  {
+    id: '2026-10-08-kasilawan-rpt-payment',
+    type: 'official-notice',
+    title: 'Fourth-quarter real property tax payment at Kasilawan Barangay Hall',
+    summary:
+      'Barangay Kasilawan announced a one-day real property tax payment schedule for the fourth quarter at Kasilawan Barangay Hall on 8 October 2026 from 9:00 AM to 4:00 PM.',
+    date: '2026-10-08',
+    effectiveFrom: '2026-10-08T09:00:00+08:00',
+    effectiveUntil: '2026-10-08T16:00:00+08:00',
+    status: 'published',
+    stage: 'Barangay tax collection schedule',
+    sourceLabel: 'KasilaONE — Barangay Kasilawan official notice',
+    sourceUrl:
+      'https://www.facebook.com/kasilaONE/posts/122117512083454651',
+    sourcePublisher: 'Barangay Kasilawan, Makati City',
+    barangaySlug: 'kasilawan',
+    location: 'Barangay Hall Kasilawan',
+    summaryBullets: [
+      'Service window: 8 October 2026, 9:00 AM–4:00 PM.',
+      'The source identifies the venue as Kasilawan Barangay Hall.',
+      'BetterMakati does not infer that this one-day service schedule changes the underlying city tax deadline.',
+      'The Facebook post exposes a relative age label, not an exact publication timestamp, so no publishedDate is recorded.',
+    ],
+    documents: [
+      {
+        label: 'Official Barangay Kasilawan notice',
+        url: 'https://www.facebook.com/kasilaONE/posts/122117512083454651',
+        kind: 'official-text',
+      },
+    ],
+  },
   {
     id: '2026-philgeps-passenger-utility-vans-13256997',
     type: 'procurement',
@@ -490,9 +577,9 @@ const coverageSeed: Array<
     label: 'Official notices',
     coverage: 'partial',
     included:
-      'The official Makati News channel is monitored separately from independent news coverage.',
+      'The official Makati News channel and reviewed official barangay notice pages are monitored separately from independent news coverage.',
     limit:
-      'The portal is dynamically rendered; automated checks can establish availability but review is still needed to identify and validate a substantive new notice.',
+      'City and barangay notice channels require source review, and social-platform age labels may not expose an exact publication timestamp. BetterMakati records source-stated occurrence windows without inventing publication dates.',
   },
 ];
 
