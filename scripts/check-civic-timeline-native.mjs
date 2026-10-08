@@ -212,6 +212,24 @@ for (const marker of [
   }
 }
 
+for (const marker of [
+  "id: '2026-philgeps-makati-traffic-master-plan-13266370'",
+  "referenceNo: 'BS26-07-0674 / PhilGEPS 13266370'",
+  'amount: 50000000',
+  "deadlineAt: '2026-10-08T08:30:00+08:00'",
+  "id: '2026-philgeps-ospital-ng-makati-soil-investigation-13268269'",
+  "referenceNo: 'BS26-07-0677 / PhilGEPS 13268269'",
+  'amount: 245000',
+  "id: '2026-philgeps-eboss-queue-maintenance-13268347'",
+  "referenceNo: 'BS26-09-0881 / PhilGEPS 13268347'",
+  'amount: 833333.34',
+  "deadlineAt: '2026-10-08T09:30:00+08:00'",
+]) {
+  if (!cityMonitor.includes(marker)) {
+    problems.push('Verified 8 October procurement marker missing: ' + marker);
+  }
+}
+
 if (
   !native.includes(
     "record.type === 'official-notice' && record.effectiveFrom"
