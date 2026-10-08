@@ -105,7 +105,7 @@ export interface CityMonitorRecord {
   }>;
 }
 
-export const cityMonitorReviewed = '8 October 2026';
+export const cityMonitorReviewed = '26 September 2026';
 
 export const cityMonitorSources: CityMonitorSource[] = [
   {
