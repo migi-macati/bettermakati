@@ -55,6 +55,9 @@ for (const marker of [
   "sourceFields: ['sessionEvidence[].sessionDate']",
   "sourceFields: ['CouncilSessionSeed.date']",
   "sourceFields: ['CityMonitorRecord.date']",
+  "'CityMonitorRecord.effectiveFrom'",
+  "'CityMonitorRecord.effectiveUntil'",
+  "precision: 'datetime-range'",
   "sourceFields: ['procurement.bidDate']",
   "sourceFields: ['HistoricalMayoralRace.electionDate']",
   "sourceFields: ['currentBskeSchedule.lawSignedOn']",
@@ -176,6 +179,9 @@ const baseCityMonitorBlock =
 const directCityMonitorCount = (
   baseCityMonitorBlock.match(/\n    type: 'procurement'/g) ?? []
 ).length;
+const directCityMonitorNoticeCount = (
+  baseCityMonitorBlock.match(/\n    type: 'official-notice'/g) ?? []
+).length;
 
 if (
   ordinanceCount !== 15 ||
@@ -186,10 +192,33 @@ if (
   reportCount < 5 ||
   supersededElectionCount !== 4 ||
   directCityMonitorCount < 2 ||
+  directCityMonitorNoticeCount !== 2 ||
   serviceAvailabilityCount !== 10
 ) {
   problems.push(
     'W5-7R3 fixed source baseline shrank or changed unexpectedly; re-audit native projection counts before continuing.'
+  );
+}
+
+for (const marker of [
+  "id: '2026-10-08-poblacion-dm-rivera-power-interruption'",
+  "effectiveFrom: '2026-10-08T09:00:00+08:00'",
+  "effectiveUntil: '2026-10-08T14:00:00+08:00'",
+  "id: '2026-10-08-kasilawan-rpt-payment'",
+  "effectiveUntil: '2026-10-08T16:00:00+08:00'",
+]) {
+  if (!cityMonitor.includes(marker)) {
+    problems.push('Verified barangay notice marker missing: ' + marker);
+  }
+}
+
+if (
+  !native.includes(
+    "record.type === 'official-notice' && record.effectiveFrom"
+  )
+) {
+  problems.push(
+    'Official-notice occurrence windows are not projected from canonical effective fields.'
   );
 }
 
@@ -259,6 +288,7 @@ console.log(
     ordinanceCount + resolutionCount + ' dated legislation seed records',
     councilCount + ' council sessions',
     directCityMonitorCount + ' direct City Monitor procurement records',
+    directCityMonitorNoticeCount + ' direct City Monitor official notices',
     procurementCount + ' Accountability procurement records',
     electionCount + ' historical mayoral election dates',
     '7 current/superseded BSKE schedule items',
