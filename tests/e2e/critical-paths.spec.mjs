@@ -1390,7 +1390,7 @@ test('City Monitor routes editorial review to the unified queue and exposes moni
   );
   await expect(page.getByText('content-change detection', { exact: true })).toBeVisible();
   await expect(page.getByText('reachability only', { exact: true }).first()).toBeVisible();
-  await expect(page.getByText('manual review', { exact: true })).toBeVisible();
+  await expect(page.getByText('manual review', { exact: true }).first()).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Source changes awaiting review' })).toHaveCount(0);
 
   const stateResponse = await page.request.get(baseURL + '/city-monitor-source-state.json');
