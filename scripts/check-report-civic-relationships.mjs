@@ -144,6 +144,26 @@ for (const marker of [
 }
 
 for (const marker of [
+  "import { useTranslation } from 'react-i18next'",
+  "import { findReport } from '../data/reports'",
+  "import { localizedReportCopy } from '../data/reportTranslations'",
+  'const economyAnalysisLinks = [',
+  "'real-gdp-level'",
+  "'real-gdp-growth'",
+  "'gdp-national-share'",
+  "'gdp-ncr-share'",
+  "'industry-gva'",
+  "'gdp-per-capita'",
+  'localizedReportCopy(report, i18n.language).headline',
+]) {
+  if (!statisticsPage.includes(marker)) {
+    problems.push(
+      'Statistics economy-report backlink marker missing: ' + marker
+    );
+  }
+}
+
+for (const marker of [
   "import { reportsForCivicRecord } from '../data/reportCivicRelationships'",
   "type: 'accountability-record'",
   'const analysisLinks = reportsForCivicRecord',
