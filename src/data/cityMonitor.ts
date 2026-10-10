@@ -47,6 +47,10 @@ export interface CityMonitorRecord {
   title: string;
   summary: string;
   date: string;
+  /** Source-stated start of an occurrence window, with timezone when known. */
+  effectiveFrom?: string;
+  /** Source-stated end of an occurrence window, with timezone when known. */
+  effectiveUntil?: string;
   publishedDate?: string;
   deadlineAt?: string;
   openingAt?: string;
@@ -203,9 +207,198 @@ export const cityMonitorSources: CityMonitorSource[] = [
     monitoringNote:
       'Monitor the city portal for annual reports, plans, newsletters, Ulat sa Bayan and other official publications.',
   },
+  {
+    id: 'barangay-poblacion-facebook',
+    label: 'Barangay Poblacion official notices',
+    stream: 'official-notice',
+    url: 'https://www.facebook.com/SampiroMacati',
+    publisher: 'Barangay Poblacion, Makati City',
+    cadence: 'event-driven',
+    monitoringMode: 'manual-review',
+    monitoringNote:
+      'Review the official barangay page for source-stated service interruptions and other time-sensitive notices. Preserve occurrence windows separately from publication dates.',
+  },
+  {
+    id: 'barangay-kasilawan-facebook',
+    label: 'Barangay Kasilawan official notices',
+    stream: 'official-notice',
+    url: 'https://www.facebook.com/kasilaONE',
+    publisher: 'Barangay Kasilawan, Makati City',
+    cadence: 'event-driven',
+    monitoringMode: 'manual-review',
+    monitoringNote:
+      'Review the official barangay page for source-stated service schedules and other time-sensitive notices. Preserve occurrence windows separately from publication dates.',
+  },
 ];
 
 const baseCityMonitorRecords: CityMonitorRecord[] = [
+  {
+    id: '2026-10-08-poblacion-dm-rivera-power-interruption',
+    type: 'official-notice',
+    title: 'Power interruption on D.M. Rivera Street',
+    summary:
+      'Barangay Poblacion announced a scheduled power interruption affecting D.M. Rivera Street on 8 October 2026 from 9:00 AM to 2:00 PM.',
+    date: '2026-10-08',
+    effectiveFrom: '2026-10-08T09:00:00+08:00',
+    effectiveUntil: '2026-10-08T14:00:00+08:00',
+    status: 'published',
+    stage: 'Scheduled service interruption',
+    sourceLabel: 'Sampiro Macati — Barangay Poblacion official notice',
+    sourceUrl:
+      'https://www.facebook.com/SampiroMacati/posts/122263841642157355',
+    sourcePublisher: 'Barangay Poblacion, Makati City',
+    barangaySlug: 'poblacion',
+    location: 'D.M. Rivera Street, Barangay Poblacion',
+    summaryBullets: [
+      'Occurrence window: 8 October 2026, 9:00 AM–2:00 PM.',
+      'The source names D.M. Rivera Street; BetterMakati does not infer a wider affected area.',
+      'The Facebook post exposes a relative age label, not an exact publication timestamp, so no publishedDate is recorded.',
+    ],
+    documents: [
+      {
+        label: 'Official Barangay Poblacion notice',
+        url: 'https://www.facebook.com/SampiroMacati/posts/122263841642157355',
+        kind: 'official-text',
+      },
+    ],
+  },
+  {
+    id: '2026-10-08-kasilawan-rpt-payment',
+    type: 'official-notice',
+    title: 'Fourth-quarter real property tax payment at Kasilawan Barangay Hall',
+    summary:
+      'Barangay Kasilawan announced a one-day real property tax payment schedule for the fourth quarter at Kasilawan Barangay Hall on 8 October 2026 from 9:00 AM to 4:00 PM.',
+    date: '2026-10-08',
+    effectiveFrom: '2026-10-08T09:00:00+08:00',
+    effectiveUntil: '2026-10-08T16:00:00+08:00',
+    status: 'published',
+    stage: 'Barangay tax collection schedule',
+    sourceLabel: 'KasilaONE — Barangay Kasilawan official notice',
+    sourceUrl:
+      'https://www.facebook.com/kasilaONE/posts/122117512083454651',
+    sourcePublisher: 'Barangay Kasilawan, Makati City',
+    barangaySlug: 'kasilawan',
+    location: 'Barangay Hall Kasilawan',
+    summaryBullets: [
+      'Service window: 8 October 2026, 9:00 AM–4:00 PM.',
+      'The source identifies the venue as Kasilawan Barangay Hall.',
+      'BetterMakati does not infer that this one-day service schedule changes the underlying city tax deadline.',
+      'The Facebook post exposes a relative age label, not an exact publication timestamp, so no publishedDate is recorded.',
+    ],
+    documents: [
+      {
+        label: 'Official Barangay Kasilawan notice',
+        url: 'https://www.facebook.com/kasilaONE/posts/122117512083454651',
+        kind: 'official-text',
+      },
+    ],
+  },
+  {
+    id: '2026-philgeps-makati-traffic-master-plan-13266370',
+    type: 'procurement',
+    title:
+      'Consulting Services for the Makati Traffic and Transportation Master Plan 2026–2040',
+    summary:
+      'PhilGEPS Invitation to Bid reference 13266370 lists a ₱50,000,000 approved budget for consulting services for the Makati Traffic and Transportation Master Plan 2026–2040 under solicitation BS26-07-0674. The notice was published 1 October 2026; short-listing documents were due 8 October 2026 at 8:30 AM, with opening scheduled for 9:00 AM.',
+    date: '2026-10-01',
+    publishedDate: '2026-10-01',
+    deadlineAt: '2026-10-08T08:30:00+08:00',
+    openingAt: '2026-10-08T09:00:00+08:00',
+    status: 'published',
+    stage: 'Published procurement notice',
+    referenceNo: 'BS26-07-0674 / PhilGEPS 13266370',
+    amount: 50000000,
+    sourceLabel: 'PhilGEPS Bid Notice Abstract — Reference 13266370',
+    sourceUrl:
+      'https://notices.philgeps.gov.ph/GEPSNONPILOT/Tender/SplashBidNoticeAbstractUI.aspx?highlight=true&menuIndex=3&refID=13266370',
+    sourcePublisher: 'Philippine Government Electronic Procurement System',
+    relatedHref: '/projects-budget#procurement',
+    summaryBullets: [
+      'Approved budget for contract: ₱50,000,000.00.',
+      'Date published: 1 October 2026.',
+      'Short-listing submission deadline: 8 October 2026, 8:30 AM.',
+      'Opening of short-listing documents was scheduled for 8 October 2026, 9:00 AM.',
+      'The notice identifies a 2026–2040 planning horizon but displays “0 Day/s” for contract duration; BetterMakati does not infer a delivery schedule.',
+      'The notice does not establish the short-listing result, contract award or start of planning work.',
+    ],
+    documents: [
+      {
+        label: 'PhilGEPS Bid Notice Abstract — Reference 13266370',
+        url: 'https://notices.philgeps.gov.ph/GEPSNONPILOT/Tender/SplashBidNoticeAbstractUI.aspx?highlight=true&menuIndex=3&refID=13266370',
+        kind: 'procurement',
+      },
+    ],
+  },
+  {
+    id: '2026-philgeps-ospital-ng-makati-soil-investigation-13268269',
+    type: 'procurement',
+    title: 'Proposed soil investigation and exploration in Ospital ng Makati',
+    summary:
+      'PhilGEPS Request for Quotation reference 13268269 lists a ₱245,000 approved budget for proposed soil investigation and exploration in Ospital ng Makati under solicitation BS26-07-0677. The notice was published 2 October 2026; quotations were due 8 October 2026 at 9:30 AM, with opening scheduled for 11:00 AM.',
+    date: '2026-10-02',
+    publishedDate: '2026-10-02',
+    deadlineAt: '2026-10-08T09:30:00+08:00',
+    openingAt: '2026-10-08T11:00:00+08:00',
+    status: 'published',
+    stage: 'Published procurement notice',
+    referenceNo: 'BS26-07-0677 / PhilGEPS 13268269',
+    amount: 245000,
+    sourceLabel: 'PhilGEPS Bid Notice Abstract — Reference 13268269',
+    sourceUrl:
+      'https://notices.philgeps.gov.ph/GEPSNONPILOT/Tender/SplashBidNoticeAbstractUI.aspx?highlight=true&menuIndex=3&refID=13268269',
+    sourcePublisher: 'Philippine Government Electronic Procurement System',
+    relatedHref: '/projects-budget#procurement',
+    location: 'Ospital ng Makati',
+    summaryBullets: [
+      'Approved budget for contract: ₱245,000.00.',
+      'Date published: 2 October 2026.',
+      'Quotation submission deadline: 8 October 2026, 9:30 AM.',
+      'Opening was scheduled for 8 October 2026, 11:00 AM.',
+      'The notice does not establish a quotation result, award, notice to proceed or investigation findings.',
+    ],
+    documents: [
+      {
+        label: 'PhilGEPS Bid Notice Abstract — Reference 13268269',
+        url: 'https://notices.philgeps.gov.ph/GEPSNONPILOT/Tender/SplashBidNoticeAbstractUI.aspx?highlight=true&menuIndex=3&refID=13268269',
+        kind: 'procurement',
+      },
+    ],
+  },
+  {
+    id: '2026-philgeps-eboss-queue-maintenance-13268347',
+    type: 'procurement',
+    title: 'Online integrated queuing system maintenance for two months',
+    summary:
+      'PhilGEPS Request for Quotation reference 13268347 lists a ₱833,333.34 approved budget for two months of maintenance for the online integrated queuing system (eBOSS) under solicitation BS26-09-0881. The notice was published 2 October 2026; quotations were due 8 October 2026 at 9:30 AM, with opening scheduled for 11:00 AM.',
+    date: '2026-10-02',
+    publishedDate: '2026-10-02',
+    deadlineAt: '2026-10-08T09:30:00+08:00',
+    openingAt: '2026-10-08T11:00:00+08:00',
+    status: 'published',
+    stage: 'Published procurement notice',
+    referenceNo: 'BS26-09-0881 / PhilGEPS 13268347',
+    amount: 833333.34,
+    sourceLabel: 'PhilGEPS Bid Notice Abstract — Reference 13268347',
+    sourceUrl:
+      'https://notices.philgeps.gov.ph/GEPSNONPILOT/Tender/SplashBidNoticeAbstractUI.aspx?Result=3&menuIndex=3&refID=13268347',
+    sourcePublisher: 'Philippine Government Electronic Procurement System',
+    relatedHref: '/projects-budget#procurement',
+    summaryBullets: [
+      'Approved budget for contract: ₱833,333.34.',
+      'Date published: 2 October 2026.',
+      'Quotation submission deadline: 8 October 2026, 9:30 AM.',
+      'Opening was scheduled for 8 October 2026, 11:00 AM.',
+      'The two-month service scope is source-stated; the notice displays “0 Day/s” for delivery period, so BetterMakati does not infer a separate delivery duration.',
+      'The notice does not establish a quotation result, award or completed maintenance period.',
+    ],
+    documents: [
+      {
+        label: 'PhilGEPS Bid Notice Abstract — Reference 13268347',
+        url: 'https://notices.philgeps.gov.ph/GEPSNONPILOT/Tender/SplashBidNoticeAbstractUI.aspx?Result=3&menuIndex=3&refID=13268347',
+        kind: 'procurement',
+      },
+    ],
+  },
   {
     id: '2026-philgeps-passenger-utility-vans-13256997',
     type: 'procurement',
@@ -490,9 +683,9 @@ const coverageSeed: Array<
     label: 'Official notices',
     coverage: 'partial',
     included:
-      'The official Makati News channel is monitored separately from independent news coverage.',
+      'The official Makati News channel and reviewed official barangay notice pages are monitored separately from independent news coverage.',
     limit:
-      'The portal is dynamically rendered; automated checks can establish availability but review is still needed to identify and validate a substantive new notice.',
+      'City and barangay notice channels require source review, and social-platform age labels may not expose an exact publication timestamp. BetterMakati records source-stated occurrence windows without inventing publication dates.',
   },
 ];
 

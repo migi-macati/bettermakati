@@ -42,7 +42,6 @@ import {
   electionsReviewed,
   getBskePhase,
 } from '../data/electionCivic';
-import { reportsForCivicRecord } from '../data/reportCivicRelationships';
 
 const number = (value: number) => value.toLocaleString('en-PH');
 
@@ -150,10 +149,6 @@ const mayoralHistoryCsv = [
 
 export default function Elections() {
   const bskePhase = getBskePhase();
-  const mayoralHistoryAnalysis = reportsForCivicRecord({
-    type: 'election-record',
-    id: 'mayoral-history',
-  });
   const councilDistricts = [
     {
       label: '1st District',
@@ -582,22 +577,13 @@ export default function Elections() {
           This series keeps the candidate vote counts for ten regular Makati city elections in one place. The percentage below is calculated from the candidate votes listed for each race so the denominator is consistent within this table.
         </p>
 
-        {mayoralHistoryAnalysis.length > 0 && (
-          <div className="mt-5 rounded-2xl border border-primary-100 bg-primary-50 p-5">
-            <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
-              Related analysis
-            </div>
-            {mayoralHistoryAnalysis.map(item => (
-              <Link
-                key={item.relationship.id}
-                to={item.node!.href}
-                className="mt-2 inline-flex min-h-11 items-center font-extrabold text-primary-800 underline decoration-primary-300 underline-offset-2 hover:decoration-primary-700"
-              >
-                {item.node!.label}
-              </Link>
-            ))}
-          </div>
-        )}
+        <Link
+          to="/reports/makati-political-dynasties-election-record"
+          className="mt-5 inline-flex min-h-11 max-w-3xl items-center gap-2 rounded-2xl border border-primary-200 bg-primary-50 px-4 py-3 text-sm font-bold text-primary-800 transition hover:border-primary-400"
+        >
+          <FileText className="h-4 w-4 shrink-0" aria-hidden="true" />
+          Read the related analysis of family succession and the mayoral election record
+        </Link>
 
         <div className="mt-6 rounded-2xl border border-secondary-200 bg-secondary-50 p-5">
           <div className="font-extrabold text-gray-950">Boundary break before 2025</div>

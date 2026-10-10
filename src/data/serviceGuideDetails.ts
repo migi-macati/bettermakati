@@ -1198,7 +1198,7 @@ export const serviceGuideDetails: Record<string, ServiceGuideDetail> = {
     verification: 'verified',
     sourceLabel: 'Makati PESO — Job Referral / Placement Program',
     sourceUrl: 'https://www.makati.gov.ph/assets/uploads/staticmenu/docs/1581041779505.pdf',
-    lastVerified: '2026-09-25',
+    lastVerified: '2026-10-08',
     whoMayAvail: 'Makati and non-Makati residents seeking local employment referral through Makati PESO.',
     requirements: [
       { item: 'Two updated resumes / bio-data', whereToSecure: 'Applicant' },

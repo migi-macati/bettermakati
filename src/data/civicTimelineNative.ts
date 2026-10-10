@@ -39,7 +39,7 @@ import {
 } from './civicTimeline';
 
 export const nativeCivicTimelineReviewedAt =
-  '2026-09-29T19:58:00+08:00';
+  '2026-10-08T10:04:00+08:00';
 
 const cityMonitorById = new Map(
   cityMonitorRecords.map(record => [record.id, record] as const)
@@ -143,6 +143,7 @@ const sourceKindForPublishedSource = (
   if (
     normalized.includes('.gov.ph') ||
     normalized.includes('city government of makati') ||
+    normalized.includes('barangay ') ||
     normalized.includes('commission on elections') ||
     normalized.includes('comelec')
   ) {
@@ -553,6 +554,36 @@ const directCityMonitorTemporal = (
     };
   }
 
+  if (record.type === 'official-notice' && record.effectiveFrom) {
+    if (record.effectiveUntil) {
+      return {
+        semantic: 'occurrence',
+        precision: 'datetime-range',
+        startsAt: record.effectiveFrom,
+        endsAt: record.effectiveUntil,
+        origin: {
+          role: 'occurrence-date',
+          sourceFields: [
+            'CityMonitorRecord.effectiveFrom',
+            'CityMonitorRecord.effectiveUntil',
+          ],
+          sourceIds: [sourceId],
+        },
+      };
+    }
+
+    return {
+      semantic: 'occurrence',
+      precision: 'datetime',
+      startsAt: record.effectiveFrom,
+      origin: {
+        role: 'occurrence-date',
+        sourceFields: ['CityMonitorRecord.effectiveFrom'],
+        sourceIds: [sourceId],
+      },
+    };
+  }
+
   if (record.type === 'publication' || record.type === 'official-notice') {
     return {
       semantic: 'publication-release',
@@ -576,6 +607,35 @@ const directCityMonitorTemporal = (
       sourceIds: [sourceId],
     },
   };
+};
+
+const directCityMonitorStatus = (
+  record: CityMonitorRecord,
+  temporal: CivicTimelineTemporal
+): CivicTimelineStatus => {
+  if (
+    temporal.semantic === 'publication-release' &&
+    record.date <= manilaDateKey()
+  ) {
+    return 'published';
+  }
+
+  if (temporal.semantic === 'occurrence') {
+    const today = manilaDateKey();
+    const startDate = temporal.startsAt.slice(0, 10);
+    const endDate =
+      temporal.precision === 'datetime-range'
+        ? temporal.endsAt.slice(0, 10)
+        : startDate;
+
+    if (startDate > today) return 'scheduled';
+    if (endDate < today) return 'completed';
+    return 'active';
+  }
+
+  return timelineDateStatus(
+    temporal.semantic === 'deadline' ? temporal.dueAt : record.date
+  );
 };
 
 const directCityMonitorKind = (
@@ -609,13 +669,7 @@ export const nativeDirectCityMonitorTimelineItems: CivicTimelineItem[] =
       kind: directCityMonitorKind(record),
       title: record.title,
       summary: record.summary,
-      status:
-        temporal.semantic === 'publication-release' &&
-        record.date <= manilaDateKey()
-          ? 'published'
-          : timelineDateStatus(
-              temporal.semantic === 'deadline' ? temporal.dueAt : record.date
-            ),
+      status: directCityMonitorStatus(record, temporal),
       actionability:
         record.type === 'consultation' && record.date > manilaDateKey()
           ? 'participation-opportunity'

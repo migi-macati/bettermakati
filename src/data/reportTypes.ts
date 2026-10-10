@@ -11,9 +11,7 @@ export type ReportCanonicalRecordRef =
     }
   | {
       recordType:
-        | 'integrity-entity'
-        | 'integrity-disclosure'
-        | 'integrity-audit-finding';
+        'integrity-entity' | 'integrity-disclosure' | 'integrity-audit-finding';
       id: string;
       href: string;
     }
@@ -39,9 +37,7 @@ export type ReportCanonicalRecordRef =
     };
 
 export type ReportSourceKind =
-  | 'canonical-internal'
-  | 'official-external'
-  | 'secondary';
+  'canonical-internal' | 'official-external' | 'secondary';
 
 export interface ReportSourceV2 {
   id: string;
@@ -124,10 +120,7 @@ export interface ReportChartBlock {
 }
 
 export type ReportContentBlock =
-  | ReportParagraphBlock
-  | ReportStatBlock
-  | ReportTableBlock
-  | ReportChartBlock;
+  ReportParagraphBlock | ReportStatBlock | ReportTableBlock | ReportChartBlock;
 
 export interface ReportSectionV2 {
   id: string;
@@ -168,6 +161,21 @@ export interface FeaturedReportV2 {
    * materially affects how the evidence should be interpreted.
    */
   methodology?: ReportMethodologyNote;
+}
+
+export interface LocalizedReportCopy {
+  headline: string;
+  subheadline: string;
+  synthesis: string;
+  sections: [ReportSectionV2, ...ReportSectionV2[]];
+  methodology?: ReportMethodologyNote;
+}
+
+/** One independently publishable article and its current Filipino rendering. */
+export interface FeaturedReportModule {
+  report: FeaturedReportV2;
+  /** Null preserves the existing English fallback until a Filipino edition exists. */
+  fil: LocalizedReportCopy | null;
 }
 
 export const reportCanonicalRecordTypes = [

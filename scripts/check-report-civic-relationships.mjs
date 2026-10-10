@@ -1,10 +1,11 @@
 import { readFile } from 'node:fs/promises';
+import { readReportModuleSources } from './read-report-module-sources.mjs';
 
 const relationships = await readFile(
   'src/data/reportCivicRelationships.ts',
   'utf8'
 );
-const reportsSource = await readFile('src/data/reports.ts', 'utf8');
+const reportsSource = await readReportModuleSources();
 const reportArticle = await readFile('src/pages/ReportArticle.tsx', 'utf8');
 const statisticsPage = await readFile('src/pages/Statistics.tsx', 'utf8');
 const accountabilityPage = await readFile(
@@ -13,6 +14,7 @@ const accountabilityPage = await readFile(
 );
 const integrityPage = await readFile('src/pages/Integrity.tsx', 'utf8');
 const legislationPage = await readFile('src/pages/Legislation.tsx', 'utf8');
+const civicAssetPage = await readFile('src/pages/CivicAsset.tsx', 'utf8');
 const electionPage = await readFile('src/pages/Elections.tsx', 'utf8');
 const statisticsRelationships = await readFile(
   'src/data/statisticsCivicRelationships.ts',
@@ -66,14 +68,18 @@ for (const marker of [
 
 for (const marker of [
   "import { reportsForCivicRecord } from '../data/reportCivicRelationships'",
-  "type: 'election-record'",
-  "id: 'mayoral-history'",
-  'mayoralHistoryAnalysis',
-  'Related analysis',
+  "type: 'place'",
+  'localizedReportCopy(report, i18n.language).headline',
+  'label="Related analysis"',
 ]) {
-  if (!reportsSource.includes(marker) && !relationships.includes(marker) && !electionPage.includes(marker)) {
-    problems.push('Election report-backlink marker missing: ' + marker);
-  }
+  if (!civicAssetPage.includes(marker)) problems.push('Civic Map place report-backlink marker missing: ' + marker);
+}
+
+if (!reportsSource.includes("recordType: 'election-record'") || !reportsSource.includes("id: 'mayoral-history'")) {
+  problems.push('Dynasty report canonical mayoral election reference missing.');
+}
+if (electionPage.split('to="/reports/makati-political-dynasties-election-record"').length !== 2) {
+  problems.push('Elections mayoral history must have exactly one dynasty report backlink.');
 }
 
 for (const marker of ["id: 'ordinance-2019-a-020'", "id: 'resolution-2026-008'", "id: 'resolution-2026-011'", "id: 'ordinance-2026-015'"]) {
@@ -95,20 +101,20 @@ for (const forbidden of [
   }
 }
 
-const slugMatches = [
-  ...reportsSource.matchAll(/slug:\s*'([^']+)'/g),
-];
+const slugMatches = [...reportsSource.matchAll(/slug:\s*'([^']+)'/g)];
 const slugs = slugMatches.map(match => match[1]);
 
 if (slugs.length < 5) {
-  problems.push('Expected at least 5 current Featured Reports; found ' + slugs.length + '.');
+  problems.push(
+    'Expected at least 5 current Featured Reports; found ' + slugs.length + '.'
+  );
 }
 
 for (let index = 0; index < slugMatches.length; index += 1) {
   const start = slugMatches[index].index ?? 0;
   const end =
     index + 1 < slugMatches.length
-      ? slugMatches[index + 1].index ?? reportsSource.length
+      ? (slugMatches[index + 1].index ?? reportsSource.length)
       : reportsSource.indexOf('export const publicationReports');
   const block = reportsSource.slice(
     start,
@@ -143,6 +149,26 @@ for (const marker of [
 ]) {
   if (!statisticsPage.includes(marker)) {
     problems.push('Statistics report-backlink marker missing: ' + marker);
+  }
+}
+
+for (const marker of [
+  "import { useTranslation } from 'react-i18next'",
+  "import { findReport } from '../data/reports'",
+  "import { localizedReportCopy } from '../data/reportTranslations'",
+  'const economyAnalysisLinks = [',
+  "'real-gdp-level'",
+  "'real-gdp-growth'",
+  "'gdp-national-share'",
+  "'gdp-ncr-share'",
+  "'industry-gva'",
+  "'gdp-per-capita'",
+  'localizedReportCopy(report, i18n.language).headline',
+]) {
+  if (!statisticsPage.includes(marker)) {
+    problems.push(
+      'Statistics economy-report backlink marker missing: ' + marker
+    );
   }
 }
 

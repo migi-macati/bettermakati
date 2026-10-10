@@ -1,42 +1,22 @@
 import { readFile } from 'node:fs/promises';
+import { readReportModuleSources } from './read-report-module-sources.mjs';
 
 const index = await readFile('src/data/searchIndex.ts', 'utf8');
-const search = await readFile(
-  'src/components/home/ServiceSearch.tsx',
-  'utf8'
-);
+const search = await readFile('src/components/home/ServiceSearch.tsx', 'utf8');
 const legislation = await readFile(
   'src/data/legislationBrowserIndex.ts',
   'utf8'
 );
-const indicators = await readFile(
-  'src/data/cityIndicators.ts',
-  'utf8'
-);
-const integrity = await readFile(
-  'src/data/integrityData.ts',
-  'utf8'
-);
-const reports = await readFile('src/data/reports.ts', 'utf8');
-const areas = await readFile(
-  'src/data/areaOrganizationRegistry.ts',
-  'utf8'
-);
+const indicators = await readFile('src/data/cityIndicators.ts', 'utf8');
+const integrity = await readFile('src/data/integrityData.ts', 'utf8');
+const reports = await readReportModuleSources();
+const areas = await readFile('src/data/areaOrganizationRegistry.ts', 'utf8');
 const navigation = await readFile('src/data/navigation.ts', 'utf8');
 const searchPage = await readFile('src/pages/Search.tsx', 'utf8');
 const enLocale = await readFile('public/locales/en/common.json', 'utf8');
-const mobilitySystems = await readFile(
-  'src/data/mobilitySystems.ts',
-  'utf8'
-);
-const mobilityRoutes = await readFile(
-  'src/data/mobilityRoutes.ts',
-  'utf8'
-);
-const mobilityNetwork = await readFile(
-  'src/data/mobilityNetwork.ts',
-  'utf8'
-);
+const mobilitySystems = await readFile('src/data/mobilitySystems.ts', 'utf8');
+const mobilityRoutes = await readFile('src/data/mobilityRoutes.ts', 'utf8');
+const mobilityNetwork = await readFile('src/data/mobilityNetwork.ts', 'utf8');
 
 const problems = [];
 
@@ -44,8 +24,8 @@ for (const marker of [
   "import { cityIndicators } from './cityIndicators'",
   "import { integrityProcurementEntities } from './integrityData'",
   "import { reports } from './reports'",
-  "civicAreas,",
-  "civicOrganizations,",
+  'civicAreas,',
+  'civicOrganizations,',
   'canonicalKey?: string',
   'const civicIntelligenceItems: SearchItem[] = [',
   '...cityIndicators',
@@ -87,9 +67,9 @@ for (const marker of [
   "import { mobilityRouteCorridors } from './mobilityRoutes'",
   "import { mobilityNetworkRelationships } from './mobilityNetwork'",
   'const mobilitySearchItems: SearchItem[] = [',
-  "...mobilityServices.map",
-  "...mobilityRouteCorridors.map",
-  "...mobilityNetworkRelationships",
+  '...mobilityServices.map',
+  '...mobilityRouteCorridors.map',
+  '...mobilityNetworkRelationships',
   "canonicalKey: 'mobility-service:' + service.id",
   "canonicalKey: 'mobility-route:' + route.id",
   "canonicalKey: 'mobility-network:' + relationship.id",
@@ -112,18 +92,14 @@ const mobilityRouteBlock =
     .split(
       'export const mobilityRouteCorridors: MobilityRouteCorridorRecord[] = ['
     )[1]
-    ?.split(
-      '\n];\n\nexport const validateMobilityRouteCorridors'
-    )[0] ?? '';
+    ?.split('\n];\n\nexport const validateMobilityRouteCorridors')[0] ?? '';
 
 const mobilityExplicitNetworkBlock =
   mobilityNetwork
     .split(
       'const explicitNetworkRelationships: MobilityNetworkRelationship[] = ['
     )[1]
-    ?.split(
-      '\n];\n\nexport const mobilityNetworkRelationships'
-    )[0] ?? '';
+    ?.split('\n];\n\nexport const mobilityNetworkRelationships')[0] ?? '';
 
 const mobilityServiceCount = (
   mobilityServiceBlock.match(/^    id: '[^']+',$/gm) ?? []
@@ -168,9 +144,7 @@ const organizationBlock =
     .split('export const civicOrganizations: CivicOrganizationRecord[] = [')[1]
     ?.split('\n];\n\nexport const civicAreaRelationships')[0] ?? '';
 
-const areaCount = (
-  areaBlock.match(/^    id: '[^']+',$/gm) ?? []
-).length;
+const areaCount = (areaBlock.match(/^    id: '[^']+',$/gm) ?? []).length;
 const organizationCount = (
   organizationBlock.match(/^    id: '[^']+',$/gm) ?? []
 ).length;
@@ -242,7 +216,7 @@ for (const marker of [
   "item.group === 'Area'",
   'legislationRecordId',
   "canonicalKey: 'legislation-record:' + legislationRecordId(record)",
-  "query.trim().length >= 3",
+  'query.trim().length >= 3',
   "tab === 'All' || tab === 'Records'",
   'loadLegislationBrowserIndex()',
   'matchLegislationRecords',

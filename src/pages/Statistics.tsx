@@ -13,6 +13,7 @@ import {
   Users,
   Waypoints,
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
@@ -39,6 +40,8 @@ import {
 } from '../data/cityIndicators';
 import { statisticsRelatedRecords } from '../data/statisticsCivicRelationships';
 import { reportsForCivicRecord } from '../data/reportCivicRelationships';
+import { findReport } from '../data/reports';
+import { localizedReportCopy } from '../data/reportTranslations';
 import { requireCivicEcosystemResource } from '../data/ecosystemResources';
 import {
   populationTrendDownload,
@@ -88,6 +91,7 @@ const ordinal = (value: number) => {
 };
 
 export default function Statistics() {
+  const { i18n } = useTranslation();
   const { barangay } = useBarangayScope();
 
   const populationTrend = cityIndicatorObservations('population-total').map(
@@ -161,6 +165,23 @@ export default function Statistics() {
       items.findIndex(candidate => candidate.node?.href === item.node?.href) ===
       index
   );
+
+  const economyAnalysisLinks = [
+    'real-gdp-level',
+    'real-gdp-growth',
+    'gdp-national-share',
+    'gdp-ncr-share',
+    'industry-gva',
+    'gdp-per-capita',
+  ]
+    .flatMap(indicatorId =>
+      reportsForCivicRecord({ type: 'indicator', id: indicatorId })
+    )
+    .filter(
+      (item, index, items) =>
+        items.findIndex(candidate => candidate.node?.href === item.node?.href) ===
+        index
+    );
 
   const economyContextLinks = [
     ...statisticsRelatedRecords('real-gdp-level'),
@@ -698,6 +719,24 @@ export default function Statistics() {
             PSA labor-force data <ArrowUpRight className="h-4 w-4" />
           </a>
         </div>
+
+        <CivicRelationshipLinks
+          label="Related analysis"
+          framed
+          className="mt-5"
+          items={economyAnalysisLinks.flatMap(item => {
+            if (!item.node || item.related.type !== 'report') return [];
+            const report = findReport(item.related.id);
+            if (!report) return [];
+            return [
+              {
+                id: item.relationship.id,
+                label: localizedReportCopy(report, i18n.language).headline,
+                href: item.node.href,
+              },
+            ];
+          })}
+        />
 
         <CivicRelationshipLinks
           label="National data context"

@@ -5,6 +5,7 @@ import {
   Camera,
   Download,
   ExternalLink,
+  FileText,
   Link as LinkIcon,
   Map as MapIcon,
   MapPin,
@@ -28,6 +29,8 @@ import { historyImageSet } from '../data/cityImages';
 import { placeRegistryById } from '../data/placeRegistry';
 import { findBarangay } from '../data/barangays';
 import { heritageCollectionById } from '../data/heritageCollections';
+import { reportsForHistoryEvent } from '../data/reportHistoryConnections';
+import CivicRelationshipLinks from '../components/civic/CivicRelationshipLinks';
 
 const topics = [...new Set(makatiHistory.map(event => event.topic))];
 
@@ -67,10 +70,11 @@ const eventSearchText = (event: HistoryEvent) =>
     ...(event.relations?.placeIds?.flatMap(id => {
       const place = placeRegistryById.get(id);
       return place
-        ? [place.name, ...((place.aliases ?? []).map(alias => alias.name))]
+        ? [place.name, ...(place.aliases ?? []).map(alias => alias.name)]
         : [id];
     }) ?? []),
-    ...(event.interpretations?.flatMap(item => [item.label, item.summary]) ?? []),
+    ...(event.interpretations?.flatMap(item => [item.label, item.summary]) ??
+      []),
     ...(event.media?.flatMap(item => [item.title, item.caption]) ?? []),
   ]
     .filter(Boolean)
@@ -89,7 +93,10 @@ const ReferenceChip = ({
 
   if (item.href.startsWith('/')) {
     return (
-      <Link to={item.href} className={`${classes} hover:border-primary-400 hover:text-primary-800`}>
+      <Link
+        to={item.href}
+        className={`${classes} hover:border-primary-400 hover:text-primary-800`}
+      >
         {item.label}
       </Link>
     );
@@ -144,7 +151,7 @@ const SourceLink = ({
 );
 
 export default function History() {
-  const { t } = useTranslation();
+  const { i18n, t } = useTranslation();
   const [searchParams, setSearchParams] = useSearchParams();
   const [query, setQuery] = useState(searchParams.get('query') || '');
   const [era, setEra] = useState('');
@@ -228,7 +235,10 @@ export default function History() {
           <SharePage title={t('corePages.history.share')} />
         </div>
 
-        <LastReviewed label={t('corePages.history.review')} date={historyReviewed} />
+        <LastReviewed
+          label={t('corePages.history.review')}
+          date={historyReviewed}
+        />
 
         <div className="mt-5 flex flex-wrap gap-3">
           <Link to="/heritage" className="brand-btn-secondary">
@@ -312,9 +322,7 @@ export default function History() {
         >
           <div className="flex items-center gap-2 text-sm font-bold text-gray-900">
             <Search className="h-4 w-4 text-primary-700" aria-hidden="true" />
-            <label htmlFor="history-query">
-              {t('corePages.history.find')}
-            </label>
+            <label htmlFor="history-query">{t('corePages.history.find')}</label>
           </div>
 
           <input
@@ -387,7 +395,10 @@ export default function History() {
 
         <div className="my-6 flex flex-wrap items-center justify-between gap-3">
           <p className="text-sm font-semibold text-gray-600" role="status">
-            {events.length} {events.length === 1 ? t('corePages.history.event') : t('corePages.history.events')}
+            {events.length}{' '}
+            {events.length === 1
+              ? t('corePages.history.event')
+              : t('corePages.history.events')}
           </p>
           {era && (
             <p className="text-sm font-semibold text-primary-800">{era}</p>
@@ -405,10 +416,16 @@ export default function History() {
               const place = placeRegistryById.get(id);
               return place ? [place] : [];
             });
-            const relatedBarangays = event.relations?.barangaySlugs?.map(slug => ({
-              slug,
-              name: findBarangay(slug)?.name ?? slug.replaceAll('-', ' '),
-            }));
+            const relatedBarangays = event.relations?.barangaySlugs?.map(
+              slug => ({
+                slug,
+                name: findBarangay(slug)?.name ?? slug.replaceAll('-', ' '),
+              })
+            );
+            const relatedReports = reportsForHistoryEvent(
+              event.id,
+              i18n.resolvedLanguage
+            );
 
             return (
               <li
@@ -432,7 +449,10 @@ export default function History() {
                       </span>
                       {showEvidenceStatus && event.evidenceStatus && (
                         <span className="rounded-full bg-secondary-100 px-3 py-1 text-xs font-bold text-secondary-900">
-                          {t('corePages.history.' + evidenceLabelKey[event.evidenceStatus])}
+                          {t(
+                            'corePages.history.' +
+                              evidenceLabelKey[event.evidenceStatus]
+                          )}
                         </span>
                       )}
                     </div>
@@ -508,7 +528,11 @@ export default function History() {
                           )}
 
                           <div className="mt-3 text-xs">
-                            <SourceLink source={media.source} compact opensInNewTab={t('corePages.history.opensTab')} />
+                            <SourceLink
+                              source={media.source}
+                              compact
+                              opensInNewTab={t('corePages.history.opensTab')}
+                            />
                           </div>
 
                           {media.rights && (
@@ -555,7 +579,10 @@ export default function History() {
                             to={`/civic-map/${place.id}`}
                             className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-secondary-300 bg-secondary-50 px-3 py-1.5 text-xs font-bold text-secondary-900 hover:border-secondary-500"
                           >
-                            <MapPin className="h-3.5 w-3.5" aria-hidden="true" />
+                            <MapPin
+                              className="h-3.5 w-3.5"
+                              aria-hidden="true"
+                            />
                             {place.name}
                           </Link>
                         ))}
@@ -575,7 +602,10 @@ export default function History() {
                         ))}
 
                         {event.relations?.institutions?.map(institution => (
-                          <ReferenceChip key={institution.label} item={institution} />
+                          <ReferenceChip
+                            key={institution.label}
+                            item={institution}
+                          />
                         ))}
                       </div>
 
@@ -600,14 +630,29 @@ export default function History() {
                     </div>
                   )}
 
+                  {relatedReports.length > 0 && (
+                    <div className="bm-history-report-links border-b px-5 py-4 sm:px-6">
+                      <CivicRelationshipLinks
+                        label={t('corePages.history.relatedAnalysis')}
+                        items={relatedReports.map(report => ({
+                          ...report,
+                          icon: (
+                            <FileText
+                              className="h-3.5 w-3.5 shrink-0"
+                              aria-hidden="true"
+                            />
+                          ),
+                        }))}
+                        tone="secondary"
+                      />
+                    </div>
+                  )}
+
                   <div className="bm-history-sources p-5 sm:p-6">
                     <details>
                       <summary className="flex min-h-11 cursor-pointer list-none items-center text-sm font-extrabold text-primary-800">
                         <span className="inline-flex items-center gap-2">
-                          <BookOpen
-                            className="h-4 w-4"
-                            aria-hidden="true"
-                          />
+                          <BookOpen className="h-4 w-4" aria-hidden="true" />
                           {event.sources.length === 1
                             ? t('corePages.history.source')
                             : `${event.sources.length} ${t('corePages.history.sources')}`}
@@ -619,7 +664,10 @@ export default function History() {
                             key={source.id ?? `${event.id}-source-${index}`}
                             className="border-l-2 border-gray-200 pl-4 text-sm"
                           >
-                            <SourceLink source={source} opensInNewTab={t('corePages.history.opensTab')} />
+                            <SourceLink
+                              source={source}
+                              opensInNewTab={t('corePages.history.opensTab')}
+                            />
                           </div>
                         ))}
                       </div>
@@ -643,7 +691,6 @@ export default function History() {
             </button>
           </div>
         )}
-
       </Section>
     </>
   );

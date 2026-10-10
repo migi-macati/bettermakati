@@ -106,26 +106,8 @@ const reportRecordRelationships: CivicIntelligenceRelationship[] =
     }));
   });
 
-const reportElectionRelationships: CivicIntelligenceRelationship[] = [
-  {
-    id: 'report-makati-political-dynasties-synthesizes-mayoral-history',
-    kind: 'synthesizes',
-    from: {
-      type: 'report',
-      id: 'makati-political-dynasties-election-record',
-    },
-    to: { type: 'election-record', id: 'mayoral-history' },
-    evidence: {
-      basis: 'declared-analysis-input',
-      note:
-        'The report cites and reproduces the canonical 1998–2025 Makati mayoral election series. The report is analysis of the record, not source evidence for it.',
-    },
-  },
-];
-
 export const reportCivicRelationships: CivicIntelligenceRelationship[] = [
   ...reportRecordRelationships,
-  ...reportElectionRelationships,
 ];
 
 export const reportCivicRelationshipIndex =
@@ -294,7 +276,7 @@ export const reportsForCivicRecord = (
 
 export const reportCivicRelationshipCoverage = {
   reports: reports.length,
-  relationships: reportCivicRelationships.length,
+  relationships: reportRecordRelationships.length,
   ecosystemRelationships: 0,
   ecosystemBoundary:
     'Current reports contain no BetterGov/BetterLGU evidence or comparison reference that directly deepens their synthesis, so W4-5e adds no generic ecosystem edge.',

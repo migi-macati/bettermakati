@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link, useParams, useSearchParams } from 'react-router';
 import {
   AlertTriangle,
@@ -22,6 +23,7 @@ import CivicContributionForm from '../components/civic/CivicContributionForm';
 import CivicObservationForm from '../components/civic/CivicObservationForm';
 import CivicObservationSummary from '../components/civic/CivicObservationSummary';
 import CivicDiscussion from '../components/civic/CivicDiscussion';
+import CivicRelationshipLinks from '../components/civic/CivicRelationshipLinks';
 import { useBarangayScope, withBarangayScope } from '../hooks/useBarangayScope';
 import {
   civicAssets,
@@ -39,6 +41,9 @@ import {
 import { makatiHistory } from '../data/makatiHistory';
 import { barangays } from '../data/barangays';
 import { heritageCollectionsForPlace } from '../data/heritageCollections';
+import { reportsForCivicRecord } from '../data/reportCivicRelationships';
+import { findReport } from '../data/reports';
+import { localizedReportCopy } from '../data/reportTranslations';
 
 const verificationLabel = {
   verified: 'Verified',
@@ -64,6 +69,7 @@ const mediaReuseLabel = {
 } as const;
 
 export default function CivicAsset() {
+  const { i18n } = useTranslation();
   const { assetId } = useParams();
   const [searchParams] = useSearchParams();
   const [revision, setRevision] = useState(0);
@@ -136,6 +142,19 @@ export default function CivicAsset() {
     event.relations?.placeIds?.includes(place.id)
   );
   const relatedHeritageCollections = heritageCollectionsForPlace(place.id);
+  const relatedAnalysis = reportsForCivicRecord({
+    type: 'place',
+    id: place.id,
+  }).flatMap(item => {
+    if (!item.node || item.related.type !== 'report') return [];
+    const report = findReport(item.related.id);
+    if (!report) return [];
+    return [{
+      id: item.relationship.id,
+      label: localizedReportCopy(report, i18n.language).headline,
+      href: item.node.href,
+    }];
+  });
   const relatedBarangays = place.location.barangays.flatMap(name => {
     const barangay = barangays.find(item => item.name === name);
     return barangay ? [barangay] : [];
@@ -256,6 +275,14 @@ export default function CivicAsset() {
           <a href="#community-records" className="brand-btn-secondary">Community cases</a>
           <a href="#contribute" className="brand-btn-primary">Report or suggest</a>
         </nav>
+
+        <CivicRelationshipLinks
+          label="Related analysis"
+          items={relatedAnalysis}
+          tone="secondary"
+          framed
+          className="mt-6"
+        />
       </Section>
 
       <Section className="bg-[#f5f8f2]" id="place-information">
