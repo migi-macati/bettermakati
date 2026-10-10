@@ -552,6 +552,113 @@ const reportModule: FeaturedReportModule = {
           },
         ],
       },
+      {
+              id: 'policy-accountability',
+              heading: 'Who should act on the risks in Makati\'s 2025 economy?',
+              blocks: [
+                {
+                  kind: 'paragraph',
+                  role: 'context',
+                  text: 'These are BetterMakati recommendations informed by published economic structure, not adopted policies or official forecasts. PSA GDP data do not directly measure jobs, household welfare, office vacancy or service quality; those outcomes need separate evidence.',
+                  evidence: {
+                    sourceIds: [
+                      '3',
+                      '5',
+                      '6',
+                    ],
+                    records: [
+                      {
+                        recordType: 'statistics-indicator',
+                        id: 'industry-gva',
+                        href: '/statistics#indicator-industry-gva',
+                      },
+                      {
+                        recordType: 'statistics-indicator',
+                        id: 'gdp-per-capita',
+                        href: '/statistics#indicator-gdp-per-capita',
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: 'table',
+                  title: 'Suggested responsibilities and public measures',
+                  columns: [
+                    {
+                      key: 'actor',
+                      label: 'Responsible actor',
+                    },
+                    {
+                      key: 'action',
+                      label: 'Suggested action',
+                    },
+                    {
+                      key: 'measure',
+                      label: 'Public measure',
+                    },
+                  ],
+                  rows: [
+                    {
+                      actor: 'Mayor; city planning and economic-development offices',
+                      action: 'Publish business-location and sector-diversification plans with baselines, targets and annual review.',
+                      measure: 'Sector GVA shares, business openings/closures and employment trends with sources.',
+                    },
+                    {
+                      actor: 'City council; budget and procurement offices',
+                      action: 'Disclose costs, alternatives, funding and later evaluation for development projects and incentives.',
+                      measure: 'Project costs, funding, procurement milestones, completion and outcomes.',
+                    },
+                    {
+                      actor: 'DOTr, DPWH and MMDA; Makati traffic offices',
+                      action: 'Coordinate commuter and pedestrian access across boundaries; distinguish national and city powers.',
+                      measure: 'Route reliability, accessible sidewalks, crash/flood disruption, project milestones.',
+                    },
+                    {
+                      actor: 'DOLE, TESDA, schools, employers and business associations',
+                      action: 'Align training and placements to professional, digital and health-related demand, including lower-income residents.',
+                      measure: 'Completion, placement, retention and wages, with privacy-safe breakdowns when possible.',
+                    },
+                    {
+                      actor: 'BSP and national financial regulators; industry',
+                      action: 'Monitor financial-sector risks under national mandates; city hall can coordinate resilience but does not supervise banks.',
+                      measure: 'Regulator-published stability indicators and separately sourced local exposure measures.',
+                    },
+                  ],
+                  evidence: {
+                    sourceIds: [
+                      '3',
+                      '5',
+                      '6',
+                    ],
+                    records: [
+                      {
+                        recordType: 'statistics-indicator',
+                        id: 'industry-gva',
+                        href: '/statistics#indicator-industry-gva',
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: 'paragraph',
+                  role: 'analysis',
+                  text: 'Assess any local economic platform against a published baseline, responsible office, funding route, delivery date and outcome measure. A high GDP per resident does not establish high household incomes; finance-led growth alone does not show broadly shared benefits.',
+                  evidence: {
+                    sourceIds: [
+                      '5',
+                      '6',
+                    ],
+                    records: [
+                      {
+                        recordType: 'statistics-indicator',
+                        id: 'gdp-per-capita',
+                        href: '/statistics#indicator-gdp-per-capita',
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
     ],
     sources: [
       {
@@ -884,6 +991,113 @@ const reportModule: FeaturedReportModule = {
           },
         ],
       },
+      {
+              id: 'policy-accountability',
+              heading: 'Sino ang dapat kumilos sa mga risk ng 2025 economy?',
+              blocks: [
+                {
+                  kind: 'paragraph',
+                  role: 'context',
+                  text: 'Mga rekomendasyon ito ng BetterMakati batay sa published economic structure, hindi adopted city policies o official forecasts. Hindi direktang sinusukat ng PSA GDP ang jobs, household welfare, office vacancy o service quality; kailangan ng hiwalay na ebidensiya.',
+                  evidence: {
+                    sourceIds: [
+                      '3',
+                      '5',
+                      '6',
+                    ],
+                    records: [
+                      {
+                        recordType: 'statistics-indicator',
+                        id: 'industry-gva',
+                        href: '/statistics#indicator-industry-gva',
+                      },
+                      {
+                        recordType: 'statistics-indicator',
+                        id: 'gdp-per-capita',
+                        href: '/statistics#indicator-gdp-per-capita',
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: 'table',
+                  title: 'Mga mungkahing responsibilidad at public measures',
+                  columns: [
+                    {
+                      key: 'actor',
+                      label: 'Responsableng actor',
+                    },
+                    {
+                      key: 'action',
+                      label: 'Mungkahing aksyon',
+                    },
+                    {
+                      key: 'measure',
+                      label: 'Dapat sukatin o i-publish',
+                    },
+                  ],
+                  rows: [
+                    {
+                      actor: 'Mayor; city planning at economic-development offices',
+                      action: 'Mag-publish ng business-location at sector-diversification plans na may baseline, targets at annual review.',
+                      measure: 'Sector GVA shares, bagong at nagsarang negosyo, employment trends at sources.',
+                    },
+                    {
+                      actor: 'City council; budget at procurement offices',
+                      action: 'Ilahad ang costs, alternatives, funding at later evaluation ng development projects at incentives.',
+                      measure: 'Project costs, funding, procurement milestones, completion at outcomes.',
+                    },
+                    {
+                      actor: 'DOTr, DPWH at MMDA; Makati traffic offices',
+                      action: 'I-coordinate ang commuter at pedestrian access across boundaries; linawin ang national at city powers.',
+                      measure: 'Route reliability, accessible sidewalks, crash o flood disruptions at project milestones.',
+                    },
+                    {
+                      actor: 'DOLE, TESDA, schools, employers at business associations',
+                      action: 'Iayon ang training at placements sa professional, digital at health-related demand, kasama ang lower-income residents.',
+                      measure: 'Completion, placement, retention at wages, na may privacy-safe breakdowns kung available.',
+                    },
+                    {
+                      actor: 'BSP at national financial regulators; industry',
+                      action: 'Subaybayan ang financial-sector risks sa national mandates; puwedeng makipag-coordinate ang city hall pero hindi ito bank supervisor.',
+                      measure: 'Regulator-published stability indicators at hiwalay na sourced local exposure measures.',
+                    },
+                  ],
+                  evidence: {
+                    sourceIds: [
+                      '3',
+                      '5',
+                      '6',
+                    ],
+                    records: [
+                      {
+                        recordType: 'statistics-indicator',
+                        id: 'industry-gva',
+                        href: '/statistics#indicator-industry-gva',
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: 'paragraph',
+                  role: 'analysis',
+                  text: 'Suriin ang local economic platform gamit ang published baseline, responsableng opisina, funding source, delivery date at outcome measure. Hindi patunay ng mataas na household income ang mataas na GDP per resident; hindi rin automatic na broadly shared ang gains ng finance-led growth.',
+                  evidence: {
+                    sourceIds: [
+                      '5',
+                      '6',
+                    ],
+                    records: [
+                      {
+                        recordType: 'statistics-indicator',
+                        id: 'gdp-per-capita',
+                        href: '/statistics#indicator-gdp-per-capita',
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
     ],
     methodology: {
       title: 'Method at limitations',
