@@ -15,6 +15,7 @@ const accountabilityPage = await readFile(
 const integrityPage = await readFile('src/pages/Integrity.tsx', 'utf8');
 const legislationPage = await readFile('src/pages/Legislation.tsx', 'utf8');
 const civicAssetPage = await readFile('src/pages/CivicAsset.tsx', 'utf8');
+const electionPage = await readFile('src/pages/Elections.tsx', 'utf8');
 const statisticsRelationships = await readFile(
   'src/data/statisticsCivicRelationships.ts',
   'utf8'
@@ -33,6 +34,7 @@ for (const marker of [
   "case 'place'",
   "case 'project'",
   "case 'accountability-entry'",
+  "case 'election-record'",
   'reportRecordRelationships',
   "kind: 'synthesizes' as const",
   "from: { type: 'report' as const, id: report.slug }",
@@ -71,6 +73,13 @@ for (const marker of [
   'label="Related analysis"',
 ]) {
   if (!civicAssetPage.includes(marker)) problems.push('Civic Map place report-backlink marker missing: ' + marker);
+}
+
+if (!reportsSource.includes("recordType: 'election-record'") || !reportsSource.includes("id: 'mayoral-history'")) {
+  problems.push('Dynasty report canonical mayoral election reference missing.');
+}
+if (electionPage.split('to="/reports/makati-political-dynasties-election-record"').length !== 2) {
+  problems.push('Elections mayoral history must have exactly one dynasty report backlink.');
 }
 
 for (const marker of ["id: 'ordinance-2019-a-020'", "id: 'resolution-2026-008'", "id: 'resolution-2026-011'", "id: 'ordinance-2026-015'"]) {

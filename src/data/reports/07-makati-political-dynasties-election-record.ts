@@ -185,6 +185,11 @@ const reportModule: FeaturedReportModule = {
                   id: 'population-total',
                   href: '/statistics',
                 },
+                {
+                  recordType: 'election-record',
+                  id: 'mayoral-history',
+                  href: '/elections#mayoral-history',
+                },
               ],
             },
           },
@@ -485,6 +490,11 @@ const reportModule: FeaturedReportModule = {
                   recordType: 'statistics-indicator',
                   id: 'population-total',
                   href: '/statistics',
+                },
+                {
+                  recordType: 'election-record',
+                  id: 'mayoral-history',
+                  href: '/elections#mayoral-history',
                 },
               ],
             },
