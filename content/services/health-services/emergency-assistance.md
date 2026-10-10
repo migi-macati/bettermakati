@@ -12,3 +12,14 @@ The [Makati Citizen's Charter](https://www.makati.gov.ph/assets/uploads/download
 - other details requested by the call taker.
 
 [Makati DRRMO](https://resilient.makati.gov.ph/)
+
+## Makati local emergency contacts
+
+For an emergency, **call 911 first**. The city also publishes these local numbers:
+
+- **Makati C3 (emergency rescue operations):** 168 or 8236-5790.
+- **Makati Police Department (police assistance):** 8887-1798.
+- **Bureau of Fire Protection (fire response and prevention):** 8818-5150.
+- **Makati Public Safety Department (traffic advisories and rerouting):** 8819-3270.
+
+Source: [Makati City Government — Makati Hotlines](https://www.makati.gov.ph/content/makati-hotlines), checked 10 October 2026. Contact listings may change; check the source if a local number cannot be reached.
