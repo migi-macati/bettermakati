@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "generatedAt": "2026-09-28T13:07:00+08:00",
+  "generatedAt": "2026-10-10T06:29:25.749Z",
   "sourceSnapshotVersion": 1,
   "resolutionPolicyVersion": "2026-09-28.w5-8e",
   "doctrine": {
@@ -11,70 +11,14 @@
     "recurrence": "Resolved stories stay out of the active queue unless materially new official/canonical evidence appears. Resolution history lives in the append-only resolution ledger."
   },
   "summary": {
-    "total": 1,
-    "ownerReviewNeeded": 1,
+    "total": 0,
+    "ownerReviewNeeded": 0,
     "canonicalMatchFound": 0,
     "materialUpdateReview": 0,
     "suppressedResolved": 0,
     "resolutionCount": 0,
-    "byOwner": {
-      "city-monitor": 1,
-      "services": 1
-    }
+    "byOwner": {}
   },
-  "candidates": [
-    {
-      "id": "news-review:story:2026-09-19:city-hall-adopts-day-onsite-workweek-extends-service-hours",
-      "reviewStatus": "owner-review-needed",
-      "publicEligible": false,
-      "storyClusterId": "story:2026-09-19:city-hall-adopts-day-onsite-workweek-extends-service-hours",
-      "clusterKey": "makati city hall adopts 4 day onsite workweek extends service hours 7 pm",
-      "title": "Makati City Hall adopts 4-day onsite workweek; extends service hours to 7 PM",
-      "description": "Official Makati City announcement dated 19 September 2026. Check the notice for the covered offices, schedule and service-hour details.",
-      "publisher": "Makati Web Portal",
-      "sourceClass": "government-primary",
-      "sourceUrl": "https://www.makati.gov.ph/content/news/135398",
-      "coverageSources": [
-        {
-          "url": "https://www.makati.gov.ph/content/news/135398",
-          "publisher": "Makati Web Portal",
-          "sourceClass": "government-primary",
-          "publishedAt": "2026-09-19T00:00:00+08:00"
-        }
-      ],
-      "publishedAt": "2026-09-19T00:00:00+08:00",
-      "retrievedAt": "2026-09-28T13:07:00+08:00",
-      "freshness": "current",
-      "clusterSize": 1,
-      "primaryOwner": "services",
-      "suggestedOwners": [
-        "services",
-        "city-monitor"
-      ],
-      "routes": [
-        {
-          "topic": "services",
-          "owner": "services",
-          "action": "Verify the service owner, affected service and effective date before changing a service guide.",
-          "existingCanonicalMatch": false
-        },
-        {
-          "topic": "official-notice",
-          "owner": "city-monitor",
-          "action": "Review the item as a City Monitor discovery signal and route to a stronger canonical owner when one exists.",
-          "existingCanonicalMatch": false
-        }
-      ],
-      "existingMatches": [],
-      "entityContext": [],
-      "nextAction": "Review the original article, locate the strongest owner-specific primary/official evidence, then update or create a canonical record only if that evidence satisfies the destination domain.",
-      "note": "This is an internal discovery/review candidate. News reporting is not itself a canonical BetterMakati record.",
-      "materialEvidenceKeys": [
-        "official-source:https://www.makati.gov.ph/content/news/135398",
-        "route:city-monitor:official-notice",
-        "route:services:services"
-      ]
-    }
-  ],
+  "candidates": [],
   "suppressedResolved": []
 }
