@@ -1,5 +1,10 @@
 import * as shared from '../reportSharedData';
-import type { FeaturedReportModule } from '../reportTypes';
+import type {
+  FeaturedReportModule,
+  ReportChartBlock,
+  ReportParagraphBlock,
+  ReportStatBlock,
+} from '../reportTypes';
 
 const {
   reportPublishedOn,
@@ -213,6 +218,68 @@ const reportModule: FeaturedReportModule = {
     ],
   },
   fil: null,
+};
+
+// Keep the Filipino article paired with its English evidence and numeric series.
+const revenue = reportModule.report.sections[0];
+const spending = reportModule.report.sections[1];
+const revenueChart = revenue.blocks[3] as ReportChartBlock;
+const spendingChart = spending.blocks[1] as ReportChartBlock;
+
+reportModule.fil = {
+  headline: 'Halos lahat ng 2025 receipts ng Makati ay mula sa local sources; Social Services ang nanguna sa spending',
+  subheadline: `Mula sa local sources ang ${percent(localReceipts?.share ?? 0)} ng iniulat na receipts, habang ${percent(socialServices?.share ?? 0)} ng expenditure ang nasa Social Services.`,
+  synthesis:
+    'Ipinapakita ng 2025 fiscal records ng Makati ang malaking pag-asa sa local revenue at spending na pinakamalaki sa Social Services. Hindi naman ipinapakita ng public fiscal tables kung aling partikular na buwis ang napunta sa aling programa.',
+  sections: [
+    {
+      ...revenue,
+      heading: 'Halos lahat ng iniulat na receipts ay mula sa local sources',
+      blocks: [
+        {
+          ...(revenue.blocks[0] as ReportParagraphBlock),
+          text: `Nag-ulat ang Makati ng ${moneyB(budgetSummary.actualReceiptsM)} na receipts noong 2025. Mula sa local sources ang ${moneyB(localReceipts?.amountM ?? 0)}, o ${percent(localReceipts?.share ?? 0)}. Nag-ambag ang external sources ng ${moneyB(externalReceipts?.amountM ?? 0)}, habang ${moneyB(nonIncomeReceipts?.amountM ?? 0)} ang non-income receipts.`,
+        },
+        {
+          ...(revenue.blocks[1] as ReportStatBlock),
+          label: 'Receipts mula sa local sources',
+          detail: `${moneyB(localReceipts?.amountM ?? 0)} sa kabuuang ${moneyB(budgetSummary.actualReceiptsM)} na iniulat na receipts.`,
+        },
+        {
+          ...(revenue.blocks[2] as ReportParagraphBlock),
+          text: `Sa local revenue, ang Business Tax, Basic Real Property Tax at Special Education Fund Tax ay nagdala ng pinagsamang ${moneyB(topThreeLocalRevenueM)}, o ${percent(topThreeLocalRevenueShare)} ng receipts mula sa local sources.`,
+        },
+        {
+          ...revenueChart,
+          title: 'Bahagi ng iniulat na receipts noong 2025',
+          series: [{ ...revenueChart.series[0], label: 'Pinagmulan ng receipts' }],
+        },
+      ],
+    },
+    {
+      ...spending,
+      heading: 'Social Services ang pinakamalaking bahagi ng spending',
+      blocks: [
+        {
+          ...(spending.blocks[0] as ReportParagraphBlock),
+          text: `Umabot sa ${moneyB(budgetSummary.actualExpendituresM)} ang iniulat na expenditure noong 2025. Nasa Social Services ang ${moneyB(socialServices?.amountM ?? 0)}, o ${percent(socialServices?.share ?? 0)}. Mas malaki ito kaysa sa pinagsamang ${moneyB(budgetSummary.actualExpendituresM - (socialServices?.amountM ?? 0))} na iniulat sa lahat ng iba pang spending functions.`,
+        },
+        {
+          ...spendingChart,
+          title: 'Bahagi ng iniulat na expenditure noong 2025',
+          series: [{ ...spendingChart.series[0], label: 'Function ng spending' }],
+        },
+        {
+          ...(spending.blocks[2] as ReportParagraphBlock),
+          text: 'Magkaiba ang tanong na sinasagot ng dalawang distribution. Ipinapakita ng receipts table kung saan nanggaling ang naitalang kita ng city government; ipinapakita naman ng functional expenditure table kung paano ikinategorya ang spending. Hindi nito pinatutunayan na isang partikular na buwis ang direktang nagbayad para sa isang partikular na serbisyo. Hindi rin sapat ang spending shares para sukatin ang resulta ng mga programa.',
+        },
+        {
+          ...(spending.blocks[3] as ReportParagraphBlock),
+          text: 'Hiwalay na tinataya ng PSA ang real GDP ng Makati noong 2025 sa humigit-kumulang ₱1.27 trillion. Production sa loob ng lungsod ang sinusukat ng GDP; receipts at expenditure ng city government naman ang nasa fiscal tables. Magkaiba rin ang price basis: constant 2018 prices ang real GDP, habang iniulat na peso flows ang fiscal figures. Hindi revenue o budget ng city government ang GDP.',
+        },
+      ],
+    },
+  ],
 };
 
 export default reportModule;
