@@ -164,6 +164,21 @@ const reportModule: FeaturedReportModule = {
               sourceIds: ['1', '2'],
             },
           },
+          {
+            kind: 'paragraph',
+            role: 'context',
+            text: 'PSA separately estimates Makati’s 2025 real GDP at about ₱1.27 trillion. GDP measures production in the city, while these fiscal tables measure city-government receipts and expenditure. They differ in scope and price basis: the real GDP figure uses constant 2018 prices, whereas the fiscal figures are reported peso flows. GDP is not the city’s revenue or budget.',
+            evidence: {
+              sourceIds: ['2', '3'],
+              records: [
+                {
+                  recordType: 'statistics-indicator',
+                  id: 'real-gdp-level',
+                  href: '/statistics#indicator-real-gdp-level',
+                },
+              ],
+            },
+          },
         ],
       },
     ],
@@ -185,6 +200,15 @@ const reportModule: FeaturedReportModule = {
         publisher: 'Department of Budget and Management / BLGF',
         publishedOrPeriod: '2025 reported year',
         checkedOn: reviewedOn,
+      },
+      {
+        id: '3',
+        label: 'City of Makati’s Economy Grows by 5.0 Percent in 2025',
+        href: 'https://rssoncr.psa.gov.ph/statistics/ppa/node/1684059166',
+        sourceKind: 'official-external',
+        publisher: 'Philippine Statistics Authority — NCR',
+        publishedOrPeriod: '6 October 2026',
+        checkedOn: '10 October 2026',
       },
     ],
   },
