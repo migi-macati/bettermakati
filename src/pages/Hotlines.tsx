@@ -24,6 +24,34 @@ const contactCards = [
     lines: ['8870-1000', 'makati@makati.gov.ph', 'Mon–Fri, 8:00 AM–5:00 PM'],
   },
   {
+    id: 'makati-c3',
+    title: 'Makati Command Control and Communication Center (C3)',
+    icon: PhoneCall,
+    href: 'https://www.makati.gov.ph/content/makati-hotlines',
+    lines: ['Emergency rescue operations', '168', '8236-5790'],
+  },
+  {
+    id: 'makati-police',
+    title: 'Makati Police Department',
+    icon: ShieldAlert,
+    href: 'https://www.makati.gov.ph/content/makati-hotlines',
+    lines: ['Police assistance', '8887-1798'],
+  },
+  {
+    id: 'makati-fire',
+    title: 'Bureau of Fire Protection — Makati',
+    icon: AlertTriangle,
+    href: 'https://www.makati.gov.ph/content/makati-hotlines',
+    lines: ['Firefighting and prevention', '8818-5150'],
+  },
+  {
+    id: 'makati-public-safety',
+    title: 'Makati Public Safety Department',
+    icon: ShieldAlert,
+    href: 'https://www.makati.gov.ph/content/makati-hotlines',
+    lines: ['Traffic advisories and rerouting', '8819-3270'],
+  },
+  {
     id: 'makati-action-center',
     title: 'Makati Action Center',
     icon: PhoneCall,
@@ -51,6 +79,7 @@ const contactCards = [
 ];
 
 const phoneFromLine = (line: string) => {
+  if (line.trim() === '168') return 'tel:168';
   const match = line.match(/(\d{3,4}-\d{3,4})$/);
   return match ? `tel:+632${match[1].replace('-', '')}` : null;
 };
@@ -66,7 +95,7 @@ export default function Hotlines() {
       <Section className="p-3 mb-12">
         <div className="section-eyebrow">{t('corePages.hotlines.eyebrow')}</div>
         <Heading>{t('corePages.hotlines.title')}</Heading>
-        <LastReviewed date="2026-09-20" note="Confirm urgent contact details with the linked official source when possible." />
+        <LastReviewed date="2026-10-10" note="Confirm urgent contact details with the linked official source when possible." />
 
         <div className="rounded-2xl border border-red-200 bg-gradient-to-br from-red-50 to-white p-6 md:p-8 mb-8 flex flex-col md:flex-row md:items-center gap-5">
           <div className="h-14 w-14 rounded-2xl bg-red-100 text-red-700 flex items-center justify-center shrink-0">
