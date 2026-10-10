@@ -35,14 +35,14 @@ const contactCards = [
     title: 'Makati Police Department',
     icon: ShieldAlert,
     href: 'https://www.makati.gov.ph/content/makati-hotlines',
-    lines: ['Police assistance', '8887-1798'],
+    lines: ['Police assistance', '8887-1798', 'Mobile: 0929-7936525'],
   },
   {
     id: 'makati-fire',
     title: 'Bureau of Fire Protection — Makati',
     icon: AlertTriangle,
     href: 'https://www.makati.gov.ph/content/makati-hotlines',
-    lines: ['Firefighting and prevention', '8818-5150'],
+    lines: ['Firefighting and prevention', '8818-5150', 'Alternative: 8816-2553'],
   },
   {
     id: 'makati-public-safety',
@@ -55,11 +55,13 @@ const contactCards = [
     id: 'makati-action-center',
     title: 'Makati Action Center',
     icon: PhoneCall,
-    href: actionCenterSource,
+    href: 'https://www.makati.gov.ph/content/makati-hotlines',
     lines: [
       'General concerns: 8870-1000',
       'District I: 8870-1432',
-      'District II: 8870-1401',
+      'District II (Action Center PDF): 8870-1401',
+      'City hotline directory: 8870-1436',
+      'City hotline directory: 8896-3443',
     ],
   },
   {
@@ -80,6 +82,8 @@ const contactCards = [
 
 const phoneFromLine = (line: string) => {
   if (line.trim() === '168') return 'tel:168';
+  const mobile = line.match(/(09\d{2}-\d{7})$/);
+  if (mobile) return `tel:+63${mobile[1].replace('-', '').slice(1)}`;
   const match = line.match(/(\d{3,4}-\d{3,4})$/);
   return match ? `tel:+632${match[1].replace('-', '')}` : null;
 };
