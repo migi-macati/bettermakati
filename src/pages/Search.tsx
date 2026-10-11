@@ -1,4 +1,4 @@
-import { Link, useSearchParams } from 'react-router';
+import { Link, useLocation, useSearchParams } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { ArrowRight, Lightbulb } from 'lucide-react';
 import SEO from '../components/SEO';
@@ -16,7 +16,9 @@ export default function Search() {
   const { t, i18n } = useTranslation();
   const fil = i18n.resolvedLanguage?.startsWith('fil') ?? false;
   const [params] = useSearchParams();
-  const initialQuery = (params.get('q') || '').slice(0, 500);
+  const location = useLocation();
+  const stateQuery = (location.state as { unifiedQuery?: string } | null)?.unifiedQuery ?? '';
+  const initialQuery = (stateQuery || params.get('q') || '').slice(0, 500);
   const { barangaySlug } = useBarangayScope();
   const showGuide = Boolean(initialQuery && (
     isImmediateDanger(initialQuery) || findCitizenGuides(initialQuery).length > 0
