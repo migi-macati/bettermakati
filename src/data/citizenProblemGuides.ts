@@ -29,7 +29,7 @@ const makatiOffices = 'https://www.makati.gov.ph/city';
 export const citizenGuides: CitizenGuide[] = [
   {
     id: 'neighborhood-noise',
-    title: citizenText('Excessive neighborhood noise', 'Sobrang ingay sa neighborhood'),
+    title: citizenText('Noisy neighbor', 'Maingay na kapitbahay'),
     intro: citizenText(
       'For recurring karaoke, loud music and similar disturbance near homes.',
       'Para sa paulit-ulit na karaoke, malakas na music, o ibang ingay sa mga bahay.'
