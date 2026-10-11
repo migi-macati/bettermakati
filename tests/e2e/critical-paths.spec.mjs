@@ -419,20 +419,24 @@ test('homepage keeps priority journeys ahead of depth content', async ({ page })
   expect(indices).toEqual([...indices].sort((a, b) => a - b));
 });
 
-test('homepage exposes and opens barangay editions', async ({ page }) => {
+test('homepage reaches a barangay edition through persistent navigation without a second hero chooser', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
   await page.goto(baseURL + '/');
-  const barangayPicker = page
-    .locator('select:visible')
-    .filter({ has: page.locator('option[value="poblacion"]') })
-    .first();
+
+  await page.getByRole('button', { name: 'Open main menu', exact: true }).click();
+  const barangayPicker = page.locator('#mobile-navigation select').filter({
+    has: page.locator('option[value="poblacion"]'),
+  }).first();
   await expect(barangayPicker).toBeVisible();
   await barangayPicker.selectOption('poblacion');
   await expect(page).toHaveURL(/\/barangays\/poblacion$/);
   await expect(page.getByRole('heading', { level: 1 })).toContainText(/Poblacion Better/i);
 
   await page.goto(baseURL + '/');
-  await expect(page.locator('select:visible').filter({ has: page.locator('option[value="poblacion"]') }).first()).toHaveValue('poblacion');
-  await expect(page.getByLabel('Open or change your barangay')).toHaveValue('poblacion');
+  await page.getByRole('button', { name: 'Open main menu', exact: true }).click();
+  await expect(page.locator('#mobile-navigation select').filter({
+    has: page.locator('option[value="poblacion"]'),
+  }).first()).toHaveValue('poblacion');
 });
 
 
