@@ -75,7 +75,7 @@ export const citizenGuides: CitizenGuide[] = [
       { name: 'Makati Public Safety Department', href: 'tel:+63288193270', source: officialHotlines,
         detail: citizenText('Traffic concerns · (02) 8819-3270', 'Traffic concerns · (02) 8819-3270') },
     ],
-    expressions: [/parked car|parked vehicle|illegal park|parking|nakapark|naka park|nagpapark|nagpa park|naka-park|double parked|no parking/i,
+    expressions: [/\b(?:parked (?:car|vehicle)|illegal park(?:ing)?|nakapark|naka park|nagpapark|nagpa park|naka-park|double parked|no parking)\b/i,
       /cars? blocking|vehicles? blocking|sasakyang nakaharang|nakaharang.*sasakyan|blocked sidewalk|blocked driveway|sidewalk.*car|bangketa.*kotse|cars?.*sidewalk/i],
     placeRelated: true,
   },
