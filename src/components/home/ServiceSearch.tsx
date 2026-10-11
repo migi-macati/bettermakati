@@ -610,7 +610,13 @@ export default function ServiceSearch({
     // One homepage entry: Enter always goes through the same result journey.
     // Clickable autocomplete suggestions remain optional direct shortcuts.
     if (unifiedHome) {
-      if (query.trim()) navigate(searchResultsHref());
+      // Keep free-form descriptions out of URLs, referrers and server logs.
+      // Explicit shareable /search?q= links remain available for public queries.
+      if (query.trim()) {
+        navigate(scopedInternalHref('/search'), {
+          state: { unifiedQuery: query.trim().slice(0, 500) },
+        });
+      }
       return;
     }
     if (visibleResults.length > 0) {
