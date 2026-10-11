@@ -78,7 +78,7 @@ const w6SearchJourneyMatrix = [
 ];
 
 const criticalRoutes = [
-  ['/', /Let’s make Makati Better|Let's make Makati Better/i],
+  ['/', /How can we make Makati better\?/i],
   ['/services', /What do you need to get done/i],
   ['/community-tools/saan-ako-lalapit', /Where Should I Go\?/i],
   ['/government-offices', /Government offices for Makati/i],
@@ -337,28 +337,14 @@ test('mobile navigation opens the current family and keeps parent links usable',
   await expect(nav.getByRole('link', { name: 'Accountability', exact: true })).toHaveAttribute('href', /\/accountability(?:\?barangay=[^&]+)?$/);
 });
 
-test('homepage priority chooser exposes Tier A and Tier B citizen jobs', async ({ page }) => {
+test('homepage universal entry accepts any citizen intent without a category chooser', async ({ page }) => {
   await page.goto(baseURL + '/');
-
-  const chooser = page.locator('aside[aria-labelledby="what-brings-you-here"]');
-  await expect(chooser).toBeVisible();
-
-  for (const [name, href] of [
-    ['Get urgent help', '/hotlines'],
-    ['Get a service', '/services'],
-    ['See what matters now', '/today'],
-    ['Follow public action & evidence', '/accountability'],
-    ['Participate or report', '/participate'],
-  ]) {
-    await expect(chooser.getByRole('link', { name: new RegExp('^' + name) })).toHaveAttribute(
-      'href',
-      href
-    );
-  }
-
-  await expect(chooser.getByRole('combobox')).toBeVisible();
-  await expect(chooser.getByText('Find a place', { exact: true })).toHaveCount(0);
-  await expect(chooser.getByText('Visit or get around Makati', { exact: true })).toHaveCount(0);
+  const hero = page.locator('main section').first();
+  await expect(hero.getByRole('heading', { level: 1 })).toContainText('How can we make Makati better?');
+  await expect(hero.locator('#site-search')).toHaveCount(1);
+  await expect(hero.getByText("What's on your mind about Makati?")).toBeVisible();
+  await expect(hero.locator('aside[aria-labelledby="what-brings-you-here"]')).toHaveCount(0);
+  await expect(hero.getByRole('link', { name: /Emergency\? Call 911 or see hotlines/ })).toHaveAttribute('href', '/hotlines');
 });
 
 test('homepage supports evidence and participation without restoring feature-family clutter', async ({ page }) => {
@@ -497,7 +483,7 @@ test('featured report article is a single narrative synthesis with internal cita
 
 test('homepage universal search tolerates a simple typo', async ({ page }) => {
   await page.goto(baseURL + '/');
-  const search = page.getByPlaceholder(/Try Yellow Card, Poblacion, business permit, budget/i);
+  const search = page.getByPlaceholder(/Ask a question, describe a problem, or share an idea/i);
   await search.fill('cedla');
   await expect(page.getByText(/Community Tax Certificate|Cedula/i).first()).toBeVisible();
 });
@@ -529,15 +515,58 @@ test('header search preserves a chosen BetterBarangay into local-capable results
   );
 });
 
+test('one homepage prompt handles a problem without public case submission', async ({ page }) => {
+  await page.goto(baseURL + '/');
+  const prompt = page.getByPlaceholder(/Ask a question, describe a problem, or share an idea/i);
+  await expect(prompt).toHaveCount(1);
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('How can we make Makati better?');
+  await prompt.fill('Our neighbor sings karaoke every night');
+  await prompt.press('Enter');
+  await expect(page).toHaveURL(baseURL + '/search');
+  await expect(page.getByText('Noisy neighbor', { exact: true })).toBeVisible();
+  await expect(page.getByText('If it feels safe, ask the neighbor or building administrator to lower the noise.', { exact: true }).first()).toBeVisible();
+  await expect(page.getByText(/No complaint has been submitted to an agency/i)).toBeVisible();
+  await expect(page.getByText(/Section 159 of Makati Ordinance/)).toBeHidden();
+  await expect(page.getByPlaceholder(/What are you looking for/i)).toHaveCount(0);
+
+  await page.getByRole('button', { name: "I've already done that" }).click();
+  await expect(page.getByText(/Note the dates, times and type of disturbance/).first()).toBeVisible();
+  await page.getByRole('button', { name: "I've already done that" }).click();
+  await expect(page.getByRole('link', { name: /Call Makati Health Department/i })).toBeVisible();
+  await page.getByRole('button', { name: "I've already contacted them" }).click();
+  await expect(page.getByText(/Keep the date, office, name or reference number/)).toBeVisible();
+
+  await page.getByText('More steps, rules and official sources', { exact: true }).click();
+  await expect(page.getByText(/Section 159 of Makati Ordinance/)).toBeVisible();
+});
+
+test('one homepage prompt sends a city improvement idea to participation options', async ({ page }) => {
+  await page.goto(baseURL + '/');
+  const prompt = page.getByPlaceholder(/Ask a question, describe a problem, or share an idea/i);
+  await prompt.fill('I think we should add more pedestrian crossings');
+  await prompt.press('Enter');
+  await expect(page).toHaveURL(baseURL + '/search');
+  await expect(page.getByRole('heading', { name: 'Have an idea for Makati?' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Share this idea' })).toHaveAttribute('href', /\/get-involved\?type=idea/);
+});
+
+test('one homepage prompt preserves city information and service discovery', async ({ page }) => {
+  await page.goto(baseURL + '/');
+  const prompt = page.getByPlaceholder(/Ask a question, describe a problem, or share an idea/i);
+  await prompt.fill('cedula');
+  await prompt.press('Enter');
+  await expect(page).toHaveURL(baseURL + '/search');
+  await expect(page.locator('#site-search')).toHaveValue('cedula');
+  await expect(page.getByRole('listbox', { name: /matches/i }).getByRole('option').first()).toContainText(/Cedula|Community Tax Certificate/i);
+});
+
 test('homepage true miss enters canonical search recovery instead of Saan Ako Lalapit', async ({ page }) => {
   await page.goto(baseURL + '/');
-  const search = page.getByPlaceholder(/Try Yellow Card, Poblacion, business permit, budget/i);
+  const search = page.getByPlaceholder(/Ask a question, describe a problem, or share an idea/i);
   await search.fill(guaranteedMissingQuery);
   await search.press('Enter');
 
-  await expect(page).toHaveURL(
-    baseURL + '/search?q=' + guaranteedMissingQuery
-  );
+  await expect(page).toHaveURL(baseURL + '/search');
   await expect(
     page.getByText('No BetterMakati match for “' + guaranteedMissingQuery + '”', {
       exact: true,
@@ -1975,7 +2004,7 @@ test('barangay gateway search finds a barangay through an official name', async 
 
 test('site search indexes barangay officials', async ({ page }) => {
   await page.goto(baseURL + '/');
-  const search = page.getByPlaceholder(/Try Yellow Card, Poblacion, business permit, budget/i);
+  const search = page.getByPlaceholder(/Ask a question, describe a problem, or share an idea/i);
   await search.fill('Jose Mikhail Villena');
   await expect(page.getByText('Barangay Poblacion', { exact: true }).first()).toBeVisible();
 });
