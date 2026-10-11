@@ -174,12 +174,16 @@ test('dense horizontal table region is keyboard focusable and named', async ({ p
 });
 
 test('SPA pathname navigation moves focus to main content', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
   await page.goto(baseURL + '/');
 
+  // At ordinary mobile/tablet widths the desktop navigation is intentionally
+  // hidden. Keyboard navigation must use the actual visible mobile menu.
+  await page.getByRole('button', { name: 'Open main menu', exact: true }).click();
   const services = page
-    .getByRole('navigation', { name: 'Main navigation' })
-    .getByRole('link', { name: 'Services', exact: true })
-    .first();
+    .locator('#mobile-navigation')
+    .getByRole('link', { name: 'Services', exact: true });
+  await expect(services).toBeVisible();
   await services.focus();
   await page.keyboard.press('Enter');
 
