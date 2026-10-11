@@ -193,7 +193,7 @@ export const citizenGuides: CitizenGuide[] = [
       { name: 'Makati C3 emergency response', href: 'tel:168', source: officialHotlines,
         detail: citizenText('Local emergency response · 168', 'Local emergency response · 168') },
     ],
-    expressions: [/baha|binabaha|flood|flooding|clogged drain|blocked drain|drainage|kanal.*barado|baradong kanal|umaapaw.*kanal/i],
+    expressions: [/\b(?:baha|nagbabaha|binabaha|flood(?:ing|water)?|clogged drain|blocked drain|drainage|kanal.*barado|baradong kanal|umaapaw.*kanal)\b/i],
     placeRelated: true,
   },
 ];
