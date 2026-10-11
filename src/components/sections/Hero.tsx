@@ -1,5 +1,4 @@
 import { Link } from 'react-router';
-import { ArrowRight, MessageCircleQuestion } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import ServiceSearch from '../home/ServiceSearch';
 import CapabilityCarousel from '../home/CapabilityCarousel';
@@ -13,8 +12,7 @@ const popularStarts = [
 ];
 
 export default function Hero() {
-  const { t, i18n } = useTranslation();
-  const fil = i18n.resolvedLanguage?.startsWith('fil') ?? false;
+  const { t } = useTranslation();
   const { preferredBarangay } = useBarangayScope();
 
   return (
@@ -27,8 +25,8 @@ export default function Hero() {
             </div>
 
             <h1 className="max-w-4xl text-5xl font-extrabold leading-[0.98] tracking-tight text-white md:text-5xl lg:text-6xl xl:text-7xl">
-              {t('home.hero.sloganPrefix')}{' '}
-              <span className="text-secondary-500">{t('home.hero.sloganBetter')}</span>
+              {t('home.hero.unifiedQuestionLead')}{' '}
+              <span className="text-secondary-500">{t('home.hero.unifiedQuestionBetter')}</span>
             </h1>
 
             <p className="mt-5 max-w-3xl text-lg leading-relaxed text-primary-50 md:text-xl">
@@ -36,30 +34,17 @@ export default function Hero() {
             </p>
 
             <div className="mt-8 max-w-3xl">
-              <Link
-                to="/community-tools/saan-ako-lalapit"
-                className="group flex min-h-20 items-center gap-3 rounded-2xl border border-secondary-400 bg-[#fffdf8] p-4 text-primary-950 shadow-sm transition hover:border-secondary-600 hover:bg-secondary-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary-400 md:p-5"
-              >
-                <MessageCircleQuestion className="h-7 w-7 shrink-0 text-primary-800" aria-hidden="true" />
-                <span className="flex-1">
-                  <span className="block text-lg font-extrabold">
-                    {fil ? 'May problema sa Makati?' : 'Have a problem in Makati?'}
-                  </span>
-                  <span className="mt-1 block text-sm leading-relaxed text-gray-700">
-                    {fil ? 'Ikuwento ang concern mo. Hanapin ang susunod na puwedeng gawin.' : 'Describe your concern and find a practical next step.'}
-                  </span>
-                </span>
-                <ArrowRight className="h-5 w-5 shrink-0 text-primary-800 transition group-hover:translate-x-1" aria-hidden="true" />
-              </Link>
-              <div className="mt-5">
               <ServiceSearch
                 scope="site"
-                title={t('home.hero.searchTitle')}
-                placeholder={t('home.hero.searchPlaceholder')}
+                title={t('home.hero.unifiedPromptLabel')}
+                placeholder={t('home.hero.unifiedPromptPlaceholder')}
                 goldAction
+                unifiedHome
                 barangaySlug={preferredBarangay?.slug ?? ''}
               />
-              </div>
+              <p className="mt-3 text-sm leading-relaxed text-primary-100">
+                {t('home.hero.unifiedHint')}
+              </p>
             </div>
 
             <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-primary-50">
