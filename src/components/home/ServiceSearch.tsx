@@ -389,6 +389,7 @@ export default function ServiceSearch({
   initialQuery = '',
   showServicePlaces = false,
   goldAction = false,
+  unifiedHome = false,
   barangaySlug = '',
 }: {
   scope?: SearchScope;
@@ -397,6 +398,7 @@ export default function ServiceSearch({
   initialQuery?: string;
   showServicePlaces?: boolean;
   goldAction?: boolean;
+  unifiedHome?: boolean;
   barangaySlug?: string;
 }) {
   const { t } = useTranslation();
@@ -603,6 +605,12 @@ export default function ServiceSearch({
 
   const submit = (event: FormEvent) => {
     event.preventDefault();
+    // One homepage entry: Enter always goes through the same result journey.
+    // Clickable autocomplete suggestions remain optional direct shortcuts.
+    if (unifiedHome) {
+      if (query.trim()) navigate(searchResultsHref());
+      return;
+    }
     if (visibleResults.length > 0) {
       selectResult(
         visibleResults[Math.min(activeIndex, visibleResults.length - 1)].href
@@ -645,7 +653,7 @@ export default function ServiceSearch({
       return;
     }
 
-    if (event.key === 'Enter' && open && visibleResults.length > 0) {
+    if (event.key === 'Enter' && open && visibleResults.length > 0 && !unifiedHome) {
       event.preventDefault();
       selectResult(
         visibleResults[Math.min(activeIndex, visibleResults.length - 1)].href
@@ -737,8 +745,10 @@ export default function ServiceSearch({
                 : 'bg-primary-800 text-white hover:bg-primary-900')
             }
             aria-label={
-              visibleResults.length > 0
-                ? t('serviceSearch.openSelected')
+              unifiedHome
+                ? t('home.hero.unifiedGo')
+                : visibleResults.length > 0
+                  ? t('serviceSearch.openSelected')
                 : hasBroaderMatches
                   ? t('serviceSearch.showAllMatching')
                   : t('serviceSearch.searchBetterMakati')
