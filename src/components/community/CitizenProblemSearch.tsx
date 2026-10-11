@@ -79,7 +79,7 @@ export default function CitizenProblemSearch({
         <h2 className="text-xl font-extrabold md:text-2xl">
           {textFor(labels.title, fil)}
         </h2>
-      </div>
+      </div>}
       {!resultOnly && <p className="mt-2 max-w-2xl text-sm leading-relaxed text-gray-700 md:text-base">
         {textFor(labels.intro, fil)}
       </p>}
