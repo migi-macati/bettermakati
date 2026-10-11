@@ -390,6 +390,7 @@ export default function ServiceSearch({
   showServicePlaces = false,
   goldAction = false,
   unifiedHome = false,
+  showInitially = true,
   barangaySlug = '',
 }: {
   scope?: SearchScope;
@@ -399,6 +400,7 @@ export default function ServiceSearch({
   showServicePlaces?: boolean;
   goldAction?: boolean;
   unifiedHome?: boolean;
+  showInitially?: boolean;
   barangaySlug?: string;
 }) {
   const { t } = useTranslation();
@@ -406,7 +408,7 @@ export default function ServiceSearch({
   const [query, setQuery] = useState(initialQuery);
   const [tab, setTab] = useState<string>('All');
   const [domainFilter, setDomainFilter] = useState<SearchDomainId>('all');
-  const [open, setOpen] = useState(Boolean(initialQuery.trim()));
+  const [open, setOpen] = useState(Boolean(initialQuery.trim()) && showInitially);
   const [activeIndex, setActiveIndex] = useState(0);
   const [legislationIndex, setLegislationIndex] =
     useState<BrowserLegislationIndex | null>(null);
