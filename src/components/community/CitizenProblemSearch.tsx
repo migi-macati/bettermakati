@@ -19,7 +19,6 @@ const copy = {
   next: citizenText('Your next step', 'Susunod na hakbang'),
   tried: citizenText("I've already done that", 'Nagawa ko na iyan'),
   officialNow: citizenText('Get official help', 'Humingi ng official assistance'),
-  contact: citizenText('Contact the responsible office', 'Kontakin ang tamang office'),
   reported: citizenText("I've already contacted them", 'Na-contact ko na sila'),
   retry: citizenText('Start over', 'Simulan ulit'),
   followup: citizenText(
@@ -116,9 +115,12 @@ function GuideFlow({ guide, fil }: { guide: CitizenGuide; fil: boolean }) {
                 href={mainChannel.href}
                 target={mainChannel.href.startsWith('https:') ? '_blank' : undefined}
                 rel={mainChannel.href.startsWith('https:') ? 'noopener noreferrer' : undefined}
-                className="brand-btn-primary w-fit"
+                className="brand-btn-primary flex max-w-full flex-wrap justify-center text-center sm:w-fit"
               >
-                {localized(copy.contact, fil)}: {mainChannel.name}
+                {mainChannel.href.startsWith('tel:')
+                  ? (fil ? 'Tawagan ang ' : 'Call ')
+                  : (fil ? 'Buksan ang ' : 'Open ')}
+                {mainChannel.name}
                 {mainChannel.href.startsWith('tel:') ? <PhoneCall className="h-4 w-4" aria-hidden="true" /> : <ExternalLink className="h-4 w-4" aria-hidden="true" />}
               </a>
             )}
