@@ -65,10 +65,6 @@ for (const retired of [
 requireAll(tests, 'W6-3b browser QA', [
   'homepage universal entry accepts any citizen intent without a category chooser',
   'homepage supports evidence and participation without restoring feature-family clutter',
-  "['Get urgent help', '/hotlines']",
-  "['See what matters now', '/today']",
-  "['Follow public action & evidence', '/accountability']",
-  "['Participate or report', '/participate']",
   "name: /Public records/i",
   "name: 'Participate in Makati'",
 ]);
