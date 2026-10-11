@@ -176,7 +176,10 @@ test('dense horizontal table region is keyboard focusable and named', async ({ p
 test('SPA pathname navigation moves focus to main content', async ({ page }) => {
   await page.goto(baseURL + '/');
 
-  const services = page.getByRole('link', { name: /^Get a service/ });
+  const services = page
+    .getByRole('navigation', { name: 'Main navigation' })
+    .getByRole('link', { name: 'Services', exact: true })
+    .first();
   await services.focus();
   await page.keyboard.press('Enter');
 
