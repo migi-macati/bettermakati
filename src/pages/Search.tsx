@@ -84,7 +84,8 @@ export default function Search() {
               </p>
               <div className="mt-4 flex flex-wrap gap-3">
                 <Link
-                  to={'/get-involved?type=idea&subject=' + encodeURIComponent(initialQuery.slice(0, 120))}
+                  to="/get-involved?type=idea"
+                  state={{ civicIdea: initialQuery.slice(0, 120) }}
                   className="brand-btn-primary"
                 >
                   {fil ? 'I-share ang idea' : 'Share this idea'}
