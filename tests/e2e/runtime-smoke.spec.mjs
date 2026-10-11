@@ -33,6 +33,6 @@ test('application bootstrap renders and reports no runtime errors', async ({ pag
 
   await expect(page.locator('main#main-content')).toHaveCount(1);
   await expect(page.getByRole('heading', { level: 1 })).toContainText(
-    /Let’s make Makati Better|Let's make Makati Better/i
+    /How can we make Makati better\?/i
   );
 });

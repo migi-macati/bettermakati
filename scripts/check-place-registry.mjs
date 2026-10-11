@@ -6,6 +6,7 @@ const servicesPage = await readFile('src/pages/Services.tsx', 'utf8');
 const governmentOfficesPage = await readFile('src/pages/GovernmentOffices.tsx', 'utf8');
 const serviceGuidePage = await readFile('src/pages/ServiceGuide.tsx', 'utf8');
 const concernFinderPage = await readFile('src/pages/ConcernFinder.tsx', 'utf8');
+const citizenProblemSearch = await readFile('src/components/community/CitizenProblemSearch.tsx', 'utf8');
 const civicMapPage = await readFile('src/pages/CivicMap.tsx', 'utf8');
 const civicAssetPage = await readFile('src/pages/CivicAsset.tsx', 'utf8');
 const civicNearbyReportPage = await readFile('src/pages/CivicNearbyReport.tsx', 'utf8');
@@ -183,8 +184,31 @@ for (const marker of [
   }
 }
 
-if (!concernFinderPage.includes('showServicePlaces')) {
-  problems.push('Saan Ako Lalapit must enable service place results.');
+// The canonical concern finder is now one natural-language problem input.
+ // The service-place crosswalk remains independently required by ServiceSearch,
+ // while the concern finder must retain working service and office handoffs.
+if (concernFinderPage.includes('<CitizenProblemSearch')) {
+  for (const marker of [
+    'findCitizenGuides(submitted)',
+    'isImmediateDanger(submitted)',
+    'channel.source',
+    'to="/hotlines"',
+  ]) {
+    if (!citizenProblemSearch.includes(marker)) {
+      problems.push('Citizen problem solver integration is missing: ' + marker);
+    }
+  }
+  for (const marker of [
+    '<CitizenProblemSearch',
+    'to="/services"',
+    'to="/government-offices"',
+  ]) {
+    if (!concernFinderPage.includes(marker)) {
+      problems.push('Concern-finder recovery is missing: ' + marker);
+    }
+  }
+} else if (!concernFinderPage.includes('showServicePlaces')) {
+  problems.push('Saan Ako Lalapit must expose the citizen solver or service-place results.');
 }
 
 const expectedConcernServicePlaceIds = [
@@ -449,5 +473,5 @@ if (problems.length) {
 
 console.log(
   'Place Registry selectors passed static integrity checks: ' +
-  requiredExports.length + ' selector exports, ' + assetIds.length + ' preserved place IDs, ' + verifiedTransportRows.length + ' verified Mobility transport anchors, and ' + governmentOfficePlaceIds.length + ' explicit government-office place links, and ' + expectedConcernServicePlaceIds.length + ' service results with exact where-to-go coverage.'
+  requiredExports.length + ' selector exports, ' + assetIds.length + ' preserved place IDs, ' + verifiedTransportRows.length + ' verified Mobility transport anchors, and ' + governmentOfficePlaceIds.length + ' explicit government-office place links, and ' + expectedConcernServicePlaceIds.length + ' canonical place-linked services retained for service search.'
 );

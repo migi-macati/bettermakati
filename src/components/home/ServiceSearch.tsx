@@ -389,6 +389,8 @@ export default function ServiceSearch({
   initialQuery = '',
   showServicePlaces = false,
   goldAction = false,
+  unifiedHome = false,
+  showInitially = true,
   barangaySlug = '',
 }: {
   scope?: SearchScope;
@@ -397,6 +399,8 @@ export default function ServiceSearch({
   initialQuery?: string;
   showServicePlaces?: boolean;
   goldAction?: boolean;
+  unifiedHome?: boolean;
+  showInitially?: boolean;
   barangaySlug?: string;
 }) {
   const { t } = useTranslation();
@@ -404,7 +408,7 @@ export default function ServiceSearch({
   const [query, setQuery] = useState(initialQuery);
   const [tab, setTab] = useState<string>('All');
   const [domainFilter, setDomainFilter] = useState<SearchDomainId>('all');
-  const [open, setOpen] = useState(Boolean(initialQuery.trim()));
+  const [open, setOpen] = useState(Boolean(initialQuery.trim()) && showInitially);
   const [activeIndex, setActiveIndex] = useState(0);
   const [legislationIndex, setLegislationIndex] =
     useState<BrowserLegislationIndex | null>(null);
@@ -603,6 +607,18 @@ export default function ServiceSearch({
 
   const submit = (event: FormEvent) => {
     event.preventDefault();
+    // One homepage entry: Enter always goes through the same result journey.
+    // Clickable autocomplete suggestions remain optional direct shortcuts.
+    if (unifiedHome) {
+      // Keep free-form descriptions out of URLs, referrers and server logs.
+      // Explicit shareable /search?q= links remain available for public queries.
+      if (query.trim()) {
+        navigate(scopedInternalHref('/search'), {
+          state: { unifiedQuery: query.trim().slice(0, 500) },
+        });
+      }
+      return;
+    }
     if (visibleResults.length > 0) {
       selectResult(
         visibleResults[Math.min(activeIndex, visibleResults.length - 1)].href
@@ -645,7 +661,7 @@ export default function ServiceSearch({
       return;
     }
 
-    if (event.key === 'Enter' && open && visibleResults.length > 0) {
+    if (event.key === 'Enter' && open && visibleResults.length > 0 && !unifiedHome) {
       event.preventDefault();
       selectResult(
         visibleResults[Math.min(activeIndex, visibleResults.length - 1)].href
@@ -737,8 +753,10 @@ export default function ServiceSearch({
                 : 'bg-primary-800 text-white hover:bg-primary-900')
             }
             aria-label={
-              visibleResults.length > 0
-                ? t('serviceSearch.openSelected')
+              unifiedHome
+                ? t('home.hero.unifiedGo')
+                : visibleResults.length > 0
+                  ? t('serviceSearch.openSelected')
                 : hasBroaderMatches
                   ? t('serviceSearch.showAllMatching')
                   : t('serviceSearch.searchBetterMakati')
