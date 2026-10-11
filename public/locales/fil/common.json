@@ -155,7 +155,7 @@
       "eyebrow": "Makati City · Civic Guide",
       "sloganPrefix": "Gawin nating",
       "sloganBetter": "Better ang Makati!",
-      "description": "Hanapin ang services, tuklasin ang mga lugar at barangay, tingnan ang public records at projects, at makilahok sa buhay ng lungsod.",
+      "description": "Humanap ng sagot at services, alamin ang tungkol sa Makati, at mag-share ng ideas para sa lungsod.",
       "searchTitle": "Ano ang hinahanap mo?",
       "searchPlaceholder": "Subukan: Yellow Card, Poblacion, business permit, budget...",
       "startWith": "Magsimula sa:",
@@ -164,7 +164,13 @@
         "yellowCard": "Yellow Card",
         "cedula": "Cedula",
         "barangay": "Hanapin ang iyong barangay"
-      }
+      },
+      "unifiedQuestionLead": "Paano natin gagawing",
+      "unifiedQuestionBetter": "better ang Makati?",
+      "unifiedPromptLabel": "Ano'ng nasa isip mo tungkol sa Makati?",
+      "unifiedPromptPlaceholder": "Magtanong, ikuwento ang concern, o mag-share ng idea...",
+      "unifiedGo": "Hanapin ang sagot o next step",
+      "unifiedHint": "Isang simula para sa impormasyon, services, concerns, at suggestions."
     },
     "capability": {
       "eyebrow": "Magsimula rito",
