@@ -78,7 +78,7 @@ const w6SearchJourneyMatrix = [
 ];
 
 const criticalRoutes = [
-  ['/', /Let’s make Makati Better|Let's make Makati Better/i],
+  ['/', /How can we make Makati better\?/i],
   ['/services', /What do you need to get done/i],
   ['/community-tools/saan-ako-lalapit', /Where Should I Go\?/i],
   ['/government-offices', /Government offices for Makati/i],
@@ -497,7 +497,7 @@ test('featured report article is a single narrative synthesis with internal cita
 
 test('homepage universal search tolerates a simple typo', async ({ page }) => {
   await page.goto(baseURL + '/');
-  const search = page.getByPlaceholder(/Try Yellow Card, Poblacion, business permit, budget/i);
+  const search = page.getByPlaceholder(/Ask a question, describe a problem, or share an idea/i);
   await search.fill('cedla');
   await expect(page.getByText(/Community Tax Certificate|Cedula/i).first()).toBeVisible();
 });
@@ -529,9 +529,41 @@ test('header search preserves a chosen BetterBarangay into local-capable results
   );
 });
 
+test('one homepage prompt handles a problem without public case submission', async ({ page }) => {
+  await page.goto(baseURL + '/');
+  const prompt = page.getByPlaceholder(/Ask a question, describe a problem, or share an idea/i);
+  await expect(prompt).toHaveCount(1);
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('How can we make Makati better?');
+  await prompt.fill('Our neighbor sings karaoke every night');
+  await prompt.press('Enter');
+  await expect(page).toHaveURL(/\/search\?q=Our\+neighbor\+sings\+karaoke\+every\+night/);
+  await expect(page.getByText('Excessive neighborhood noise', { exact: true })).toBeVisible();
+  await expect(page.getByText(/Searching does not file a complaint/i)).toBeVisible();
+});
+
+test('one homepage prompt sends a city improvement idea to participation options', async ({ page }) => {
+  await page.goto(baseURL + '/');
+  const prompt = page.getByPlaceholder(/Ask a question, describe a problem, or share an idea/i);
+  await prompt.fill('I think we should add more pedestrian crossings');
+  await prompt.press('Enter');
+  await expect(page).toHaveURL(/\/search\?q=/);
+  await expect(page.getByRole('heading', { name: 'Have an idea for Makati?' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Share this idea' })).toHaveAttribute('href', /\/get-involved\?type=idea/);
+});
+
+test('one homepage prompt preserves city information and service discovery', async ({ page }) => {
+  await page.goto(baseURL + '/');
+  const prompt = page.getByPlaceholder(/Ask a question, describe a problem, or share an idea/i);
+  await prompt.fill('cedula');
+  await prompt.press('Enter');
+  await expect(page).toHaveURL(baseURL + '/search?q=cedula');
+  await expect(page.locator('#site-search')).toHaveValue('cedula');
+  await expect(page.getByRole('listbox', { name: /matches/i }).getByRole('option').first()).toContainText(/Cedula|Community Tax Certificate/i);
+});
+
 test('homepage true miss enters canonical search recovery instead of Saan Ako Lalapit', async ({ page }) => {
   await page.goto(baseURL + '/');
-  const search = page.getByPlaceholder(/Try Yellow Card, Poblacion, business permit, budget/i);
+  const search = page.getByPlaceholder(/Ask a question, describe a problem, or share an idea/i);
   await search.fill(guaranteedMissingQuery);
   await search.press('Enter');
 
@@ -1975,7 +2007,7 @@ test('barangay gateway search finds a barangay through an official name', async 
 
 test('site search indexes barangay officials', async ({ page }) => {
   await page.goto(baseURL + '/');
-  const search = page.getByPlaceholder(/Try Yellow Card, Poblacion, business permit, budget/i);
+  const search = page.getByPlaceholder(/Ask a question, describe a problem, or share an idea/i);
   await search.fill('Jose Mikhail Villena');
   await expect(page.getByText('Barangay Poblacion', { exact: true }).first()).toBeVisible();
 });
