@@ -18,7 +18,7 @@ const copy = {
   first: citizenText('Start here', 'Simulan dito'),
   next: citizenText('Your next step', 'Susunod na hakbang'),
   tried: citizenText("I've already done that", 'Nagawa ko na iyan'),
-  cannot: citizenText("That isn't safe or possible", 'Hindi safe o posible iyon'),
+  officialNow: citizenText('Get official help', 'Humingi ng official assistance'),
   contact: citizenText('Contact the responsible office', 'Kontakin ang tamang office'),
   reported: citizenText("I've already contacted them", 'Na-contact ko na sila'),
   retry: citizenText('Start over', 'Simulan ulit'),
@@ -95,18 +95,18 @@ function GuideFlow({ guide, fil }: { guide: CitizenGuide; fil: boolean }) {
           <div className="mt-5 flex flex-wrap gap-3">
             <button
               type="button"
-              onClick={() => setStep(value => Math.min(value + 1, guide.steps.length - 1))}
               className="brand-btn-primary"
+              onClick={() => setStep(guide.steps.length - 1)}
             >
-              {localized(copy.tried, fil)}
+              {localized(copy.officialNow, fil)}
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </button>
             <button
               type="button"
+              onClick={() => setStep(value => Math.min(value + 1, guide.steps.length - 1))}
               className="brand-btn-secondary"
-              onClick={() => setStep(guide.steps.length - 1)}
             >
-              {localized(copy.cannot, fil)}
+              {localized(copy.tried, fil)}
             </button>
           </div>
         ) : (
