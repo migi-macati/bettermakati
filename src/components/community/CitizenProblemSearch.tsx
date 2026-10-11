@@ -49,11 +49,18 @@ const labels = {
 
 const textFor = (item: CitizenText, fil: boolean) => fil ? item.fil : item.en;
 
-export default function CitizenProblemSearch() {
+export default function CitizenProblemSearch({
+  initialProblem = '',
+  resultOnly = false,
+}: {
+  initialProblem?: string;
+  resultOnly?: boolean;
+}) {
   const { i18n } = useTranslation();
   const fil = i18n.resolvedLanguage?.startsWith('fil') ?? false;
   const location = useLocation();
-  const transferred = (location.state as { citizenProblem?: string } | null)?.citizenProblem ?? '';
+  const transferred = initialProblem ||
+    (location.state as { citizenProblem?: string } | null)?.citizenProblem || '';
   const [query, setQuery] = useState(transferred.slice(0, 500));
   const [submitted, setSubmitted] = useState(transferred.trim().slice(0, 500));
   const guides = useMemo(() => findCitizenGuides(submitted), [submitted]);
@@ -67,16 +74,16 @@ export default function CitizenProblemSearch() {
 
   return (
     <div className="rounded-2xl border border-primary-200 bg-white p-5 shadow-sm md:p-7">
-      <div className="flex items-center gap-2 text-primary-900">
+      {!resultOnly && <div className="flex items-center gap-2 text-primary-900">
         <LifeBuoy className="h-5 w-5" aria-hidden="true" />
         <h2 className="text-xl font-extrabold md:text-2xl">
           {textFor(labels.title, fil)}
         </h2>
       </div>
-      <p className="mt-2 max-w-2xl text-sm leading-relaxed text-gray-700 md:text-base">
+      {!resultOnly && <p className="mt-2 max-w-2xl text-sm leading-relaxed text-gray-700 md:text-base">
         {textFor(labels.intro, fil)}
-      </p>
-      <form className="mt-5" onSubmit={submit} role="search">
+      </p>}
+      {!resultOnly && <form className="mt-5" onSubmit={submit} role="search">
         <label htmlFor="citizen-problem" className="sr-only">
           {textFor(labels.title, fil)}
         </label>
@@ -105,9 +112,9 @@ export default function CitizenProblemSearch() {
             {textFor(labels.button, fil)}
           </button>
         </div>
-      </form>
+      </form>}
       {submitted && (
-        <div className="mt-6 border-t border-gray-200 pt-6" role="status" aria-live="polite">
+        <div className={resultOnly ? '' : 'mt-6 border-t border-gray-200 pt-6'} role="status" aria-live="polite">
           {danger ? (
             <div className="rounded-xl border-2 border-error-300 bg-error-50 p-5">
               <h3 className="text-lg font-bold text-error-950">
