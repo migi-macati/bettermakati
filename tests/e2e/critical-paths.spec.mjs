@@ -536,7 +536,7 @@ test('one homepage prompt handles a problem without public case submission', asy
   await expect(page.getByRole('heading', { level: 1 })).toContainText('How can we make Makati better?');
   await prompt.fill('Our neighbor sings karaoke every night');
   await prompt.press('Enter');
-  await expect(page).toHaveURL(/\/search\?q=Our\+neighbor\+sings\+karaoke\+every\+night/);
+  await expect(page).toHaveURL(baseURL + '/search');
   await expect(page.getByText('Excessive neighborhood noise', { exact: true })).toBeVisible();
   await expect(page.getByText(/Searching does not file a complaint/i)).toBeVisible();
 });
@@ -546,7 +546,7 @@ test('one homepage prompt sends a city improvement idea to participation options
   const prompt = page.getByPlaceholder(/Ask a question, describe a problem, or share an idea/i);
   await prompt.fill('I think we should add more pedestrian crossings');
   await prompt.press('Enter');
-  await expect(page).toHaveURL(/\/search\?q=/);
+  await expect(page).toHaveURL(baseURL + '/search');
   await expect(page.getByRole('heading', { name: 'Have an idea for Makati?' })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Share this idea' })).toHaveAttribute('href', /\/get-involved\?type=idea/);
 });
@@ -556,7 +556,7 @@ test('one homepage prompt preserves city information and service discovery', asy
   const prompt = page.getByPlaceholder(/Ask a question, describe a problem, or share an idea/i);
   await prompt.fill('cedula');
   await prompt.press('Enter');
-  await expect(page).toHaveURL(baseURL + '/search?q=cedula');
+  await expect(page).toHaveURL(baseURL + '/search');
   await expect(page.locator('#site-search')).toHaveValue('cedula');
   await expect(page.getByRole('listbox', { name: /matches/i }).getByRole('option').first()).toContainText(/Cedula|Community Tax Certificate/i);
 });
@@ -567,9 +567,7 @@ test('homepage true miss enters canonical search recovery instead of Saan Ako La
   await search.fill(guaranteedMissingQuery);
   await search.press('Enter');
 
-  await expect(page).toHaveURL(
-    baseURL + '/search?q=' + guaranteedMissingQuery
-  );
+  await expect(page).toHaveURL(baseURL + '/search');
   await expect(
     page.getByText('No BetterMakati match for “' + guaranteedMissingQuery + '”', {
       exact: true,
