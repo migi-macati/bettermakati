@@ -7,3 +7,5 @@ The **Makati Action Center (MAC)** receives citizen concerns, feedback and compl
 - District II monitoring: **8870-1401**
 - Community and Patient Relations Unit: **8899-8948**
 - Office: 8/F, Makati City Hall Building II
+
+The city's published Action Center directory also lists **8870-1436** and **8896-3443**. These are additional published contact numbers; confirm the appropriate desk when calling. The Citizen's Charter numbers above remain the reference for the named service units.
