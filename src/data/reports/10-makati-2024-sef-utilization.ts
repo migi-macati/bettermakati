@@ -18,7 +18,16 @@ const reportModule: FeaturedReportModule = {
             label: '2024 SEF cash disbursements',
             value: '₱2.872 billion',
             detail: '69.75% of ₱4.118 billion in available resources',
-            evidence: { sourceIds: ['sef2024'] },
+            evidence: {
+              sourceIds: ['sef2024'],
+              records: [
+                {
+                  recordType: 'accountability-entry',
+                  id: '2024-special-education-fund-utilization',
+                  href: '/accountability#2024-special-education-fund-utilization',
+                },
+              ],
+            },
           },
           {
             kind: 'table',
