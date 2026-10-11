@@ -337,28 +337,14 @@ test('mobile navigation opens the current family and keeps parent links usable',
   await expect(nav.getByRole('link', { name: 'Accountability', exact: true })).toHaveAttribute('href', /\/accountability(?:\?barangay=[^&]+)?$/);
 });
 
-test('homepage priority chooser exposes Tier A and Tier B citizen jobs', async ({ page }) => {
+test('homepage universal entry accepts any citizen intent without a category chooser', async ({ page }) => {
   await page.goto(baseURL + '/');
-
-  const chooser = page.locator('aside[aria-labelledby="what-brings-you-here"]');
-  await expect(chooser).toBeVisible();
-
-  for (const [name, href] of [
-    ['Get urgent help', '/hotlines'],
-    ['Get a service', '/services'],
-    ['See what matters now', '/today'],
-    ['Follow public action & evidence', '/accountability'],
-    ['Participate or report', '/participate'],
-  ]) {
-    await expect(chooser.getByRole('link', { name: new RegExp('^' + name) })).toHaveAttribute(
-      'href',
-      href
-    );
-  }
-
-  await expect(chooser.getByRole('combobox')).toBeVisible();
-  await expect(chooser.getByText('Find a place', { exact: true })).toHaveCount(0);
-  await expect(chooser.getByText('Visit or get around Makati', { exact: true })).toHaveCount(0);
+  const hero = page.locator('main section').first();
+  await expect(hero.getByRole('heading', { level: 1 })).toContainText('How can we make Makati better?');
+  await expect(hero.locator('#site-search')).toHaveCount(1);
+  await expect(hero.getByText("What's on your mind about Makati?")).toBeVisible();
+  await expect(hero.locator('aside[aria-labelledby="what-brings-you-here"]')).toHaveCount(0);
+  await expect(hero.getByRole('link', { name: /Emergency\? Call 911 or see hotlines/ })).toHaveAttribute('href', '/hotlines');
 });
 
 test('homepage supports evidence and participation without restoring feature-family clutter', async ({ page }) => {
