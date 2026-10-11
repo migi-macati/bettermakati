@@ -1,8 +1,8 @@
 import { readFile } from 'node:fs/promises';
 
-const [home, chooser, tests, packageJson] = await Promise.all([
+const [home, hero, tests, packageJson] = await Promise.all([
   readFile('src/pages/Home.tsx', 'utf8'),
-  readFile('src/components/home/CapabilityCarousel.tsx', 'utf8'),
+  readFile('src/components/sections/Hero.tsx', 'utf8'),
   readFile('tests/e2e/critical-paths.spec.mjs', 'utf8'),
   readFile('package.json', 'utf8'),
 ]);
@@ -17,24 +17,18 @@ const requireAll = (source, label, markers) => {
   }
 };
 
-requireAll(chooser, 'Priority chooser', [
-  "key: 'urgent',", "href: '/hotlines'",
-  "key: 'service',", "href: '/services'",
-  "key: 'now',", "href: '/today'",
-  "key: 'evidence',", "href: '/accountability'",
-  "key: 'participate',", "href: '/participate'",
-  "t('home.capability.goBarangay')",
+requireAll(hero, 'Single homepage entry', [
+  "t('home.hero.unifiedQuestionLead')",
+  "t('home.hero.unifiedQuestionBetter')",
+  "t('home.hero.unifiedPromptLabel')",
+  "t('home.hero.unifiedPromptPlaceholder')",
+  'unifiedHome',
+  '<ServiceSearch',
+  'to="/hotlines"',
 ]);
 
-for (const retired of [
-  "title: 'Find a place'",
-  "title: 'Check government & public records'",
-  "title: 'Report a local issue'",
-  "title: 'Visit or get around Makati'",
-]) {
-  if (chooser.includes(retired)) {
-    problems.push('Priority chooser still exposes feature-family item: ' + retired);
-  }
+if (hero.includes('CapabilityCarousel') || (hero.match(/<ServiceSearch/g) ?? []).length !== 1) {
+  problems.push('The hero must expose one universal entry rather than multiple competing starts.');
 }
 
 requireAll(home, 'Homepage hierarchy', [
@@ -69,7 +63,7 @@ for (const retired of [
 }
 
 requireAll(tests, 'W6-3b browser QA', [
-  'homepage priority chooser exposes Tier A and Tier B citizen jobs',
+  'homepage universal entry accepts any citizen intent without a category chooser',
   'homepage supports evidence and participation without restoring feature-family clutter',
   "['Get urgent help', '/hotlines']",
   "['See what matters now', '/today']",
@@ -126,5 +120,5 @@ if (problems.length) {
 }
 
 console.log(
-  'W6-3b homepage IA passed: the hero chooser owns Tier A/B jobs, Today is the current-information synthesis door, evidence and participation are explicit, and duplicate feature-family sections remain demoted.'
+  'W6-3b homepage IA passed: one unified hero entry serves citizen intents, with browse navigation and downstream civic depth retained.'
 );
