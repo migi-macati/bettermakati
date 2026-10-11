@@ -184,7 +184,8 @@
       "unifiedPromptLabel": "What's on your mind about Makati?",
       "unifiedPromptPlaceholder": "Ask a question, describe a problem, or share an idea...",
       "unifiedGo": "Find guidance or information",
-      "unifiedHint": "One starting point for information, services, concerns and suggestions."
+      "unifiedHint": "One starting point for information, services, concerns and suggestions.",
+      "emergencyShortcut": "Emergency? Call 911 or see hotlines"
     },
     "capability": {
       "eyebrow": "Start here",
