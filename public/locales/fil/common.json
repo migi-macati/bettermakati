@@ -170,7 +170,8 @@
       "unifiedPromptLabel": "Ano'ng nasa isip mo tungkol sa Makati?",
       "unifiedPromptPlaceholder": "Magtanong, ikuwento ang concern, o mag-share ng idea...",
       "unifiedGo": "Hanapin ang sagot o next step",
-      "unifiedHint": "Isang simula para sa impormasyon, services, concerns, at suggestions."
+      "unifiedHint": "Isang simula para sa impormasyon, services, concerns, at suggestions.",
+      "emergencyShortcut": "Emergency? Tumawag sa 911 o tingnan ang hotlines"
     },
     "capability": {
       "eyebrow": "Magsimula rito",
