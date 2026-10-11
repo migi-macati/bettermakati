@@ -532,7 +532,7 @@ test('one homepage prompt handles a problem without public case submission', asy
   await page.getByRole('button', { name: "I've already done that" }).click();
   await expect(page.getByText(/Note the dates, times and type of disturbance/)).toBeVisible();
   await page.getByRole('button', { name: "I've already done that" }).click();
-  await expect(page.getByRole('link', { name: /Contact the responsible office: Makati Health Department/i })).toBeVisible();
+  await expect(page.getByRole('link', { name: /Call Makati Health Department/i })).toBeVisible();
   await page.getByRole('button', { name: "I've already contacted them" }).click();
   await expect(page.getByText(/Keep the date, office, name or reference number/)).toBeVisible();
 
