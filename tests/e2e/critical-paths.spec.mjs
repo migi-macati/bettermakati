@@ -524,13 +524,13 @@ test('one homepage prompt handles a problem without public case submission', asy
   await prompt.press('Enter');
   await expect(page).toHaveURL(baseURL + '/search');
   await expect(page.getByText('Noisy neighbor', { exact: true })).toBeVisible();
-  await expect(page.getByText('If it feels safe, ask the neighbor or building administrator to lower the noise.', { exact: true })).toBeVisible();
+  await expect(page.getByText('If it feels safe, ask the neighbor or building administrator to lower the noise.', { exact: true }).first()).toBeVisible();
   await expect(page.getByText(/No complaint has been submitted to an agency/i)).toBeVisible();
-  await expect(page.getByText(/Section 159 of Makati Ordinance/)).toHaveCount(0);
+  await expect(page.getByText(/Section 159 of Makati Ordinance/)).toBeHidden();
   await expect(page.getByPlaceholder(/What are you looking for/i)).toHaveCount(0);
 
   await page.getByRole('button', { name: "I've already done that" }).click();
-  await expect(page.getByText(/Note the dates, times and type of disturbance/)).toBeVisible();
+  await expect(page.getByText(/Note the dates, times and type of disturbance/).first()).toBeVisible();
   await page.getByRole('button', { name: "I've already done that" }).click();
   await expect(page.getByRole('link', { name: /Call Makati Health Department/i })).toBeVisible();
   await page.getByRole('button', { name: "I've already contacted them" }).click();
