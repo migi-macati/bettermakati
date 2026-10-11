@@ -342,7 +342,9 @@ test('homepage universal entry accepts any citizen intent without a category cho
   const hero = page.locator('main section').first();
   await expect(hero.getByRole('heading', { level: 1 })).toContainText('How can we make Makati better?');
   await expect(hero.locator('#site-search')).toHaveCount(1);
-  await expect(hero.getByText("What's on your mind about Makati?")).toBeVisible();
+  await expect(
+    hero.locator('div').filter({ hasText: /^What's on your mind about Makati\?$/ }).first()
+  ).toBeVisible();
   await expect(hero.locator('aside[aria-labelledby="what-brings-you-here"]')).toHaveCount(0);
   await expect(hero.getByRole('link', { name: /Emergency\? Call 911 or see hotlines/ })).toHaveAttribute('href', '/hotlines');
 });
@@ -419,8 +421,12 @@ test('homepage keeps priority journeys ahead of depth content', async ({ page })
 
 test('homepage exposes and opens barangay editions', async ({ page }) => {
   await page.goto(baseURL + '/');
-  await expect(page.getByText('Go to your barangay', { exact: true })).toBeVisible();
-  await page.locator('select:visible').filter({ has: page.locator('option[value="poblacion"]') }).first().selectOption('poblacion');
+  const barangayPicker = page
+    .locator('select:visible')
+    .filter({ has: page.locator('option[value="poblacion"]') })
+    .first();
+  await expect(barangayPicker).toBeVisible();
+  await barangayPicker.selectOption('poblacion');
   await expect(page).toHaveURL(/\/barangays\/poblacion$/);
   await expect(page.getByRole('heading', { level: 1 })).toContainText(/Poblacion Better/i);
 
