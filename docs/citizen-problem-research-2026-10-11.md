@@ -458,8 +458,18 @@ For emergency situations call **911** or appropriate Makati emergency hotline an
 - **[MERA]** Meralco outages, streetlights, safety issues: https://www.meralco.com.ph/residential/help-support/frequently-asked-questions/outages-and-brownouts
 - **[MWSS]** MWSS RO customer complaint escalation: https://ro.mwss.gov.ph/wp-content/uploads/2024/03/MWSS-RO_CC_20241st-Edition.pdf
 - **[ERC]** ERC 2025 Citizens Charter electricity consumer complaints: https://www.erc.gov.ph/Content-Singular/84562
+- **[MKT-CHARTER]** Makati official Citizen's Charter (DES-PCRD Noise Cluster section; large PDF): https://www.makati.gov.ph/assets/uploads/downloads/2/481/pdf/Makati%20Citizen%27s%20Charter%20-%20FOR%20PRINT.pdf
+- **[MKT-PARK]** Makati official 2017-026 one-way loop parking enforcement notice: https://www.makati.gov.ph/content/news/1723
+- **[MKT-ORD]** Makati official resolutions and ordinances catalogue: https://www.makati.gov.ph/content/resolutions-and-ordinances/category
+- **[MKT-BARANGAY]** Makati official account of 23 barangays after EMBO transfer: https://www.makati.gov.ph/content/news/102105
 - **[LGC-KP]** Katarungang Pambarangay: LGC §408 exceptions per Supreme Court: https://lawphil.net/judjuris/juri1994/sep1994/gr_111416_1994.html
 - **[HSAC]** HSAC 2025 adjudication rules: https://hsac.gov.ph/wp-content/uploads/EB-Reso-78-s.-2025-Promulgating-the-Revised-Rules-of-Procedure-of-the-HSAC.pdf
+
+## Additional Makati-specific findings requiring careful interpretation
+- **Commercial noise has a distinct DES channel.** The Makati published Citizen's Charter describes a Department of Environmental Services, Pollution Control and Regulation Division **Noise Cluster** procedure for business soundproofing compliance, citing City Ordinance **2018-090** as an Anti-Noise Pollution Code. Another Makati ordinance (2019-A-102) cites **2017-180** as the Anti-Noise Pollution Code. These ordinance references must be reconciled using signed enactments, amendment history and effective dates, rather than assuming they are identical or one supersedes the other. Do not apply business soundproofing limits to every private home. [MKT-CHARTER], [MKT-SAN].
+- **Parking enforcement is street- and rule-specific.** Makati's 21 June 2017 official notice on Ordinance **2017-026** addresses identified streets in the South Avenue–Zapote one-way loop and one-way-zone parking controls. It expressly warns that absent no-parking signs do not necessarily imply parking permission in affected one-way zones; do not generalize this particular rule to every Makati street without checking the governing traffic code and updated designation. [MKT-PARK].
+- **Local ordinance corpus.** Makati publishes an official searchable Resolutions and Ordinances interface with categories for parking, pedestrian lanes, public order, zoning, towing, waste management and more. Each higher-volume concern needs a source-backed ordinance/current-effective version search there. [MKT-ORD].
+- **Barangay jurisdiction.** Makati City documents refer to 23 current barangays after the transfer of the 10 EMBO barangays. Guide routing must follow current jurisdiction, not old city histories. [MKT-BARANGAY].
 
 ## Verification and publication pipeline
 A citizen guide goes through `discovered -> agency_candidate -> law_reviewed -> route_verified -> locally_validated -> guide_ready -> published -> monitored`. Keep this editorial/route-verification state distinct from the repository publication state `draft -> ready -> branch_written -> pr_open -> ci_pending -> auto_merge_enabled -> merged -> deployed -> live_verified`.
