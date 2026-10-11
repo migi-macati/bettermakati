@@ -34,15 +34,23 @@ export default function Search() {
       />
       <Section className="bg-[#fffdf8]">
         <div className="mx-auto max-w-3xl">
-          <div className="section-eyebrow">{t('discovery.search.eyebrow')}</div>
-          <Heading>{t('discovery.search.title')}</Heading>
-          <p className="mb-6 text-gray-600">
-            {showGuide || showIdea
-              ? fil
-                ? 'Ito ang mga puwedeng susunod na gawin. Official sources ang batayan; walang complaint na naipapadala sa pag-search.'
-                : 'Start with a practical next step. Searching does not file a complaint or contact an agency.'
-              : t('discovery.search.description')}
-          </p>
+          <div className="section-eyebrow">
+            {showGuide
+              ? (fil ? 'ANG CONCERN MO' : 'YOUR CONCERN')
+              : t('discovery.search.eyebrow')}
+          </div>
+          <Heading>
+            {showGuide
+              ? (fil ? 'Ano ang puwede nating gawin?' : 'What can we do about this?')
+              : t('discovery.search.title')}
+          </Heading>
+          {!showGuide && (
+            <p className="mb-6 text-gray-600">
+              {showIdea
+                ? (fil ? 'Puwede nating tingnan ang options para sa idea mo.' : 'Find a way to put your idea into action.')
+                : t('discovery.search.description')}
+            </p>
+          )}
 
           {showGuide && (
             <>
@@ -51,21 +59,13 @@ export default function Search() {
                 initialProblem={initialQuery}
                 resultOnly
               />
-              <details className="mt-6 rounded-xl border border-gray-200 bg-white p-4">
-                <summary className="cursor-pointer font-bold text-primary-900">
-                  {fil ? 'Maghanap pa ng related pages' : 'Explore related pages and records'}
-                </summary>
-                <div className="mt-4">
-                  <ServiceSearch
-                    scope="site"
-                    title={t('discovery.search.searchTitle')}
-                    placeholder={t('discovery.search.placeholder')}
-                    initialQuery={initialQuery}
-                    barangaySlug={barangaySlug}
-                    showInitially={false}
-                  />
-                </div>
-              </details>
+              <Link
+                to="/"
+                className="mt-5 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-primary-800 underline underline-offset-2"
+              >
+                {fil ? 'May iba kang gustong itanong?' : 'Have another question?'}
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
             </>
           )}
 
