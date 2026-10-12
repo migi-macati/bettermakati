@@ -186,6 +186,43 @@ const reportModule: FeaturedReportModule = {
           },
         ],
       },
+      {
+        id: 'cbd-tax-service',
+        heading: 'What do business districts receive for the taxes they pay?',
+        blocks: [
+          {
+            kind: 'paragraph', role: 'fact',
+            text: 'The published 2025 citywide receipts and spending tables do not allocate tax collections or expenditure to Ayala, Salcedo, Legazpi, Rockwell, Century City or other business districts. They cannot establish each district’s share of local taxes, the amount spent there or a district-level return on taxes paid.',
+            evidence: { sourceIds: ['1', '2'] },
+          },
+          {
+            kind: 'paragraph', role: 'analysis',
+            text: 'Businesses, workers, customers and commuters may benefit from streets, drainage, traffic operations, emergency response, waste collection, public safety and predictable permits. These are possible channels of value, not measured benefits to particular taxpayers. A citywide spending function does not identify where a service was delivered or whether it worked.',
+            evidence: { sourceIds: ['1', '2'] },
+          },
+          {
+            kind: 'table',
+            title: 'Evidence needed to evaluate CBD tax-and-service value',
+            columns: [
+              { key: 'holder', label: 'Record-holder or service unit' },
+              { key: 'publish', label: 'Data to publish' },
+              { key: 'measure', label: 'Question answered' },
+            ],
+            rows: [
+              { holder: 'Treasury and assessment offices', publish: 'Annual aggregated, non-identifying local taxes by area and tax type, where lawful', measure: 'Where city taxes are collected' },
+              { holder: 'Budget, engineering and public works', publish: 'Geocoded projects, maintenance costs, completion and drainage performance', measure: 'Where spending goes and what improves' },
+              { holder: 'Traffic, safety and sanitation units', publish: 'Travel delays, response times, cleanliness and service coverage', measure: 'Whether everyday services improve' },
+              { holder: 'Business permits and licensing', publish: 'Median processing times, rejection reasons and service standards', measure: 'Whether transactions become faster and more predictable' },
+            ],
+            evidence: { sourceIds: ['1', '2'] },
+          },
+          {
+            kind: 'paragraph', role: 'analysis',
+            text: 'National taxes must be separated from local-government collections, and GDP from tax receipts. PSA real GDP is measured in constant 2018 prices, while fiscal receipts are nominal peso flows; an unadjusted ratio is not a reliable tax-effort measure. More national education or health funding creates local fiscal room only where it demonstrably replaces an existing city cost. Without matched obligations and annual spending, this is a scenario, not verified savings.',
+            evidence: { sourceIds: ['2', '3'] },
+          },
+        ],
+      },
     ],
     sources: [
       {
@@ -276,6 +313,43 @@ reportModule.fil = {
         {
           ...(spending.blocks[3] as ReportParagraphBlock),
           text: 'Hiwalay na tinataya ng PSA ang real GDP ng Makati noong 2025 sa humigit-kumulang ₱1.27 trillion. Production sa loob ng lungsod ang sinusukat ng GDP; receipts at expenditure ng city government naman ang nasa fiscal tables. Magkaiba rin ang price basis: constant 2018 prices ang real GDP, habang iniulat na peso flows ang fiscal figures. Hindi revenue o budget ng city government ang GDP.',
+        },
+      ],
+    },
+    {
+      id: 'cbd-tax-service',
+      heading: 'Ano ang nakukuha ng business districts sa binabayaran nilang buwis?',
+      blocks: [
+        {
+          kind: 'paragraph', role: 'fact',
+          text: 'Citywide ang published 2025 receipts at spending tables. Walang breakdown sa mga table kung magkano ang tax collections at expenditure sa Ayala, Salcedo, Legazpi, Rockwell, Century City o iba pang business districts. Kaya hindi pa makukuwenta ang tax share, city spending o return on taxes paid ng bawat distrito.',
+          evidence: { sourceIds: ['1', '2'] },
+        },
+        {
+          kind: 'paragraph', role: 'analysis',
+          text: 'Posibleng makinabang ang mga negosyo, empleyado, customer at commuter sa kalsada, drainage, traffic operations, emergency response, waste collection, public safety at maayos na permits. Posibleng benefits ito, hindi pa sukat na resulta para sa partikular na taxpayer. Hindi rin ipinapakita ng citywide spending category kung saan na-deliver ang serbisyo o kung epektibo ito.',
+          evidence: { sourceIds: ['1', '2'] },
+        },
+        {
+          kind: 'table',
+          title: 'Mga datos na kailangan para masukat ang CBD tax-and-service value',
+          columns: [
+            { key: 'holder', label: 'May hawak ng records o serbisyo' },
+            { key: 'publish', label: 'Dapat ilabas' },
+            { key: 'measure', label: 'Ano ang masusukat' },
+          ],
+          rows: [
+            { holder: 'Treasury at assessment offices', publish: 'Annual aggregated at non-identifying local taxes per area at tax type, kung legal', measure: 'Saan nanggagaling ang city taxes' },
+            { holder: 'Budget, engineering at public works', publish: 'Lokasyon at gastos ng projects at maintenance, completion at drainage performance', measure: 'Saan napupunta ang spending at ano ang bumubuti' },
+            { holder: 'Traffic, safety at sanitation units', publish: 'Travel delays, response times, kalinisan at service coverage', measure: 'Kung bumubuti ang araw-araw na serbisyo' },
+            { holder: 'Business permits and licensing', publish: 'Median processing times, rejection reasons at service standards', measure: 'Kung mas mabilis at predictable ang transactions' },
+          ],
+          evidence: { sourceIds: ['1', '2'] },
+        },
+        {
+          kind: 'paragraph', role: 'analysis',
+          text: 'Ihiwalay ang national taxes sa local-government collections at ang GDP sa tax receipts. Constant 2018 prices ang PSA real GDP; nominal peso flows naman ang fiscal receipts. Hindi reliable tax-effort measure ang direktang ratio. Posibleng lumuwag ang city budget dahil sa dagdag na national funding sa edukasyon o healthcare kung napatunayang napalitan nito ang dating gastos ng lungsod. Kung walang matched obligations at annual spending, scenario pa lang ito, hindi verified savings.',
+          evidence: { sourceIds: ['2', '3'] },
         },
       ],
     },
