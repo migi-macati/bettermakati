@@ -588,14 +588,6 @@ export default function ServiceSearch({
     return withBarangayScope(href, barangaySlug);
   };
 
-  const searchResultsHref = () => {
-    const params = new URLSearchParams();
-    if (query.trim()) params.set('q', query.trim());
-    if (barangaySlug) params.set('barangay', barangaySlug);
-    const search = params.toString();
-    return '/search' + (search ? '?' + search : '');
-  };
-
   const selectResult = (href: string) => {
     setOpen(false);
     if (href.startsWith('http://') || href.startsWith('https://')) {
@@ -631,7 +623,13 @@ export default function ServiceSearch({
       return;
     }
 
-    navigate(scope === 'services' ? scopedInternalHref('/services') : searchResultsHref());
+    if (scope === 'services') {
+      navigate(scopedInternalHref('/services'));
+    } else {
+      navigate(scopedInternalHref('/search'), {
+        state: { unifiedQuery: query.trim().slice(0, 500) },
+      });
+    }
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
