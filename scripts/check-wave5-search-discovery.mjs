@@ -170,12 +170,16 @@ for (const redirect of [
 }
 
 for (const marker of [
-  'https://bettergov.ph/services?search=',
+  'https://bettergov.ph/services',
   'https://lgu.bettergov.ph/',
 ]) {
   if (!search.includes(marker)) {
     problems.push('No-result discovery/handoff marker missing: ' + marker);
   }
+}
+
+if (search.includes('https://bettergov.ph/services?search=')) {
+  problems.push('Resident search descriptions must not be sent to BetterGov in URL parameters.');
 }
 
 for (const marker of [
