@@ -1,4 +1,9 @@
 {
+  "accountabilityReview": {
+    "pageLabel": "Huling review ng ledger overview",
+    "recordLabel": "Petsa ng source review",
+    "unknown": "Walang nakatalang petsa"
+  },
   "site_name": "BetterMakati",
   "site_description": "Independent civic information portal para sa Makati City",
   "language": {

@@ -241,7 +241,7 @@ const procurementEntries: AccountabilityEntry[] = cityMonitorRecords
         ? record.amount / 1_000_000
         : undefined,
     relatedHref: record.relatedHref,
-    lastVerified: accountabilityReviewed,
+    lastVerified: record.sourceReviewedOn ?? null,
     sources: [
       {
         label: record.sourceLabel,
@@ -315,7 +315,7 @@ const cityMonitorCommitmentEntries: AccountabilityEntry[] = cityMonitorRecords.f
       period: record.date.slice(0, 4),
       targetDate: commitment.target,
       relatedHref: record.relatedHref,
-      lastVerified: accountabilityReviewed,
+      lastVerified: record.sourceReviewedOn ?? null,
       sources: [
         {
           label: record.sourceLabel,

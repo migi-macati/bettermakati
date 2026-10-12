@@ -211,7 +211,7 @@ const ledgerCsv = [
       entry.audit?.followUpStatus ?? '',
       entry.sources.length,
       entry.sources.map(source => source.url).join(' | '),
-      entry.lastVerified,
+      entry.lastVerified ?? 'Unknown',
     ]
       .map(value => '"' + String(value).replaceAll('"', '""') + '"')
       .join(',')
@@ -375,7 +375,7 @@ export default function Accountability() {
           </div>
           <SharePage title="Makati Accountability Ledger | BetterMakati" />
         </div>
-        <LastReviewed date={accountabilityReviewed} />
+        <LastReviewed date={accountabilityReviewed} label={t('accountabilityReview.pageLabel')} />
 
         <div className="bm-evidence-handoff mt-5 p-5">
           <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
@@ -780,7 +780,9 @@ export default function Accountability() {
                     <span>
                       {entry.sources.length} source{entry.sources.length === 1 ? '' : 's'} linked
                     </span>
-                    <span>Last verified: {entry.lastVerified}</span>
+                    <span data-record-review>
+                      {t('accountabilityReview.recordLabel')}: {entry.lastVerified ?? t('accountabilityReview.unknown')}
+                    </span>
                     {entry.barangaySlug && <span>Local tag: {entry.barangaySlug}</span>}
                   </div>
                   <CivicRelationshipLinks
