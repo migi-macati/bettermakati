@@ -27,7 +27,7 @@ const cases = [
 let failures = 0;
 for (const [utterance, expected] of cases) {
   const variants = queryVariants(utterance);
-  const first = utterance.toLowerCase().replace(/[’']/g, '').replace(/[^a-z0-9\\s]/g, ' ').replace(/\\s+/g, ' ').trim();
+  const first = utterance.toLowerCase().replace(/[’']/g, '').replace(/[^a-z0-9\s]/g, ' ').replace(/\s+/g, ' ').trim();
   if (variants[0] !== first || !variants.some(v => v.includes(expected)) || variants.length > 24) {
     failures++;
     console.error(JSON.stringify({ utterance, expected, variants }));
@@ -36,7 +36,7 @@ for (const [utterance, expected] of cases) {
 // Do not create a spurious parking or flooding token from unrelated words.
 for (const [utterance, excluded] of [['A sparking wire', 'parking'], ['Nasa bahay ako', 'baha']]) {
   const variants = queryVariants(utterance);
-  if (variants.some(v => v.split(/\\s+/).includes(excluded))) {
+  if (variants.some(v => v.split(/\s+/).includes(excluded))) {
     failures++;
     console.error(JSON.stringify({ utterance, excluded, variants }));
   }
