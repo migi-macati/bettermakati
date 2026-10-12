@@ -588,14 +588,6 @@ export default function ServiceSearch({
     return withBarangayScope(href, barangaySlug);
   };
 
-  const searchResultsHref = () => {
-    const params = new URLSearchParams();
-    if (query.trim()) params.set('q', query.trim());
-    if (barangaySlug) params.set('barangay', barangaySlug);
-    const search = params.toString();
-    return '/search' + (search ? '?' + search : '');
-  };
-
   const selectResult = (href: string) => {
     setOpen(false);
     if (href.startsWith('http://') || href.startsWith('https://')) {
@@ -631,7 +623,13 @@ export default function ServiceSearch({
       return;
     }
 
-    navigate(scope === 'services' ? scopedInternalHref('/services') : searchResultsHref());
+    if (scope === 'services') {
+      navigate(scopedInternalHref('/services'));
+    } else {
+      navigate(scopedInternalHref('/search'), {
+        state: { unifiedQuery: query.trim().slice(0, 500) },
+      });
+    }
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -949,7 +947,7 @@ export default function ServiceSearch({
                 </div>
                 <div className="mt-2 flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
                   <a
-                    href={'https://bettergov.ph/services?search=' + encodeURIComponent(query)}
+                    href="https://bettergov.ph/services"
                     target="_blank"
                     rel="noreferrer"
                     className="inline-flex min-h-11 items-center text-sm font-bold text-primary-700 underline underline-offset-2"
@@ -967,11 +965,9 @@ export default function ServiceSearch({
                   <button
                     type="button"
                     onClick={() =>
-                      navigate(
-                        '/get-involved?type=idea&tool=search&subject=' +
-                          encodeURIComponent('Missing search result: ' + query) +
-                          '#submission'
-                      )
+                      navigate('/get-involved?type=idea&tool=search#submission', {
+                        state: { civicIdea: ('Missing search result: ' + query).slice(0, 120) },
+                      })
                     }
                     className="inline-flex min-h-11 items-center text-sm font-bold text-primary-700 underline underline-offset-2"
                   >

@@ -233,7 +233,7 @@ for (const marker of [
   }
 }
 
-if (!search.includes('https://bettergov.ph/services?search=')) {
+if (!search.includes('href="https://bettergov.ph/services"')) {
   problems.push(
     'BetterGov must remain an explicit external handoff when local Search has no result.'
   );

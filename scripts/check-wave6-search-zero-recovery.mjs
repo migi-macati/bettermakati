@@ -24,7 +24,7 @@ requireAll(serviceSearch, 'Zero-result recovery model', [
   "t('serviceSearch.outside')",
   "t('serviceSearch.betterGov')",
   "t('serviceSearch.betterLgu')",
-  "tool=search&subject=",
+  "tool=search#submission",
 ]);
 
 requireAll(serviceSearch, 'Internal recovery paths', [
@@ -45,7 +45,7 @@ requireAll(criticalPaths, 'Zero-result browser QA', [
   "No News matches",
   "Show all \\d+ matching results?",
   "recovery.getByRole('link', { name: 'Where Should I Go?', exact: true })).toHaveCount(0)",
-  "tool=search&subject=Missing",
+  "Report a missing result",
 ]);
 
 if (problems.length > 0) {

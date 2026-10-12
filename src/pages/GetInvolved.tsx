@@ -1,5 +1,5 @@
 import { FormEvent, useState } from 'react';
-import { Link, useSearchParams } from 'react-router';
+import { Link, useLocation, useSearchParams } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import {
   Bug,
@@ -63,9 +63,11 @@ type SubmitState = 'idle' | 'submitting' | 'success' | 'duplicate' | 'fallback' 
 export default function GetInvolved() {
   const { t } = useTranslation();
   const [searchParams, setSearchParams] = useSearchParams();
+  const location = useLocation();
+  const privateIdea = (location.state as { civicIdea?: string } | null)?.civicIdea ?? '';
   const initialType = searchParams.get('type') || 'idea';
   const initialTool = searchParams.get('tool') || '';
-  const initialSubject = searchParams.get('subject') || '';
+  const initialSubject = privateIdea.slice(0, 120);
   const initialBarangay =
     findBarangay(searchParams.get('barangay') || undefined)?.name || '';
 
@@ -152,6 +154,7 @@ export default function GetInvolved() {
     setStatus('idle');
     const next = new URLSearchParams(searchParams);
     next.set('type', value);
+    next.delete('subject');
     if (tool) next.set('tool', tool);
     setSearchParams(next);
     document.getElementById('submission')?.scrollIntoView({ behavior: 'smooth' });

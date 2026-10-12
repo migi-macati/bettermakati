@@ -2458,7 +2458,7 @@ test('ecosystem navigation exposes national and cross-LGU exits without replacin
   }
 });
 
-test('ecosystem fallbacks preserve the query and leave an internal recovery path', async ({ page }) => {
+test('ecosystem fallbacks keep resident queries private and preserve internal recovery', async ({ page }) => {
   await page.goto(baseURL + '/search');
   const search = page.locator('#site-search');
   const missingQuery = guaranteedMissingQuery;
@@ -2467,7 +2467,7 @@ test('ecosystem fallbacks preserve the query and leave an internal recovery path
   const betterGov = page.getByRole('link', { name: 'Search national services on BetterGov', exact: true });
   await expect(betterGov).toHaveAttribute(
     'href',
-    'https://bettergov.ph/services?search=' + encodeURIComponent(missingQuery)
+    'https://bettergov.ph/services'
   );
   await expect(betterGov).toHaveAttribute('target', '_blank');
 
@@ -2476,7 +2476,9 @@ test('ecosystem fallbacks preserve the query and leave an internal recovery path
   await expect(betterLgu).toHaveAttribute('target', '_blank');
 
   await page.getByRole('button', { name: 'Report a missing result', exact: true }).click();
-  await expect(page).toHaveURL(/\/get-involved\?type=idea&tool=search&subject=Missing(?:%20|\+)search(?:%20|\+)result/);
+  await expect(page).toHaveURL(/\/get-involved\?type=idea&tool=search#submission$/);
+  expect(new URL(page.url()).searchParams.has('subject')).toBe(false);
+  await expect(page.locator('form input[required]').first()).toHaveValue('Missing search result: ' + missingQuery);
   await expect(page.getByRole('heading', { level: 1, name: 'How do you want to help?' })).toBeVisible();
   await expect(page.getByRole('heading', { level: 2, name: 'Send something to BetterMakati' })).toBeVisible();
 
