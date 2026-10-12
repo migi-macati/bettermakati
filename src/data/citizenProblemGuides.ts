@@ -75,7 +75,7 @@ export const citizenGuides: CitizenGuide[] = [
       { name: 'Makati Public Safety Department', href: 'tel:+63288193270', source: officialHotlines,
         detail: citizenText('Traffic concerns · (02) 8819-3270', 'Traffic concerns · (02) 8819-3270') },
     ],
-    expressions: [/parked car|parked vehicle|illegal park|parking|nakapark|naka park|nagpapark|nagpa park|naka-park|double parked|no parking/i,
+    expressions: [/\b(?:parked (?:car|vehicle)|illegal park(?:ing)?|nakapark|naka park|nagpapark|nagpa park|naka-park|double parked|no parking)\b/i,
       /cars? blocking|vehicles? blocking|sasakyang nakaharang|nakaharang.*sasakyan|blocked sidewalk|blocked driveway|sidewalk.*car|bangketa.*kotse|cars?.*sidewalk/i],
     placeRelated: true,
   },
@@ -193,7 +193,7 @@ export const citizenGuides: CitizenGuide[] = [
       { name: 'Makati C3 emergency response', href: 'tel:168', source: officialHotlines,
         detail: citizenText('Local emergency response · 168', 'Local emergency response · 168') },
     ],
-    expressions: [/baha|binabaha|flood|flooding|clogged drain|blocked drain|drainage|kanal.*barado|baradong kanal|umaapaw.*kanal/i],
+    expressions: [/\b(?:baha|nagbabaha|binabaha|flood(?:ing|water)?|clogged drain|blocked drain|drainage|kanal.*barado|baradong kanal|umaapaw.*kanal)\b/i],
     placeRelated: true,
   },
 ];
@@ -217,4 +217,4 @@ export const findCitizenGuides = (query: string): CitizenGuide[] => {
 
 /** Emergency intent is deliberately narrow; all paths separately show 911. */
 export const isImmediateDanger = (query: string): boolean =>
-  /(?:\b(?:fire in progress|house is on fire|being attacked|being assaulted|trying to kill|gunshot|someone is bleeding heavily|electrocuted|trapped in floodwater)\b)|(?:\b(?:may sunog|nasusunog|may baril|sinusuntok ako|sinasaksak|may nasaksak|may binabaril|nilulunod)\b)/i.test(query);
+  /(?:\b(?:fire in progress|house is on fire|being attacked|being assaulted|trying to kill|gunshot|someone is bleeding heavily|electrocuted|trapped in floodwater|downed live wire|live wire|sparking wire|sparking pole|electrical fire)\b)|(?:\b(?:may sunog|nasusunog|may baril|sinusuntok ako|sinasaksak|may nasaksak|may binabaril|nilulunod)\b)|(?:\b(?:child|kid|minor)\b.{0,35}\b(?:being abused|being assaulted|being beaten)\b.{0,25}\b(?:right now|now)\b)/i.test(query);
