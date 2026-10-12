@@ -19,12 +19,14 @@ const requireAll = (source, label, markers) => {
 requireAll(serviceSearch, 'Canonical search entry behavior', [
   "import { isBarangayContextPath, withBarangayScope }",
   "pathname !== '/search' && !isBarangayContextPath(pathname)",
-  'const searchResultsHref = () => {',
-  "params.set('q', query.trim())",
-  "params.set('barangay', barangaySlug)",
   'if (hasBroaderMatches) {',
-  "navigate(scope === 'services' ? scopedInternalHref('/services') : searchResultsHref());",
+  "navigate(scopedInternalHref('/search'), {",
+  'state: { unifiedQuery: query.trim().slice(0, 500) },',
 ]);
+
+if (serviceSearch.includes("params.set('q', query.trim())") || serviceSearch.includes('searchResultsHref()')) {
+  problems.push('Resident descriptions must not be encoded in canonical search URL fallbacks.');
+}
 
 if (serviceSearch.includes("scope === 'services' ? '/services' : '/community-tools/saan-ako-lalapit'")) {
   problems.push('Site search Enter fallback still routes true misses through Saan Ako Lalapit');
