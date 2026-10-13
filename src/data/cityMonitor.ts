@@ -365,6 +365,39 @@ const baseCityMonitorRecords: CityMonitorRecord[] = [
     ],
   },
   {
+    id: '2026-philgeps-makati-furniture-13214803',
+    type: 'procurement',
+    title: 'Supply and delivery of office and facility furniture and fixtures',
+    summary:
+      'PhilGEPS Invitation to Bid 13214803 for furniture and fixtures for various Makati City Government offices is marked Awarded in its 13 October 2026 update. The approved budget is ₱1,487,910, not a verified contract price. The accessible notice does not identify the winning supplier, signed contract value, delivery or completion.',
+    date: '2026-08-27',
+    publishedDate: '2026-08-27',
+    sourceReviewedOn: '2026-10-14',
+    deadlineAt: '2026-09-15T08:30:00+08:00',
+    status: 'awarded',
+    stage: 'PhilGEPS notice status: Awarded (updated 13 October 2026)',
+    referenceNo: 'BS26-08-FF04 / PhilGEPS 13214803',
+    amount: 1487910,
+    sourceLabel: 'PhilGEPS Bid Notice Abstract — Reference 13214803',
+    sourceUrl:
+      'https://notices.philgeps.gov.ph/GEPS/Tender/PrintableBidNoticeAbstractUI.aspx?refid=13214803',
+    sourcePublisher: 'Philippine Government Electronic Procurement System',
+    relatedHref: '/projects-budget#procurement',
+    summaryBullets: [
+      'Approved budget for contract: ₱1,487,910.00 (not the award amount).',
+      'Published 27 August 2026; PhilGEPS status Awarded, last updated 13 October 2026.',
+      'Bids closed on 15 September 2026 at 8:30 AM.',
+      'The notice does not establish the supplier, actual contract price, award date, delivery or completion.',
+    ],
+    documents: [
+      {
+        label: 'PhilGEPS Bid Notice Abstract — Reference 13214803',
+        url: 'https://notices.philgeps.gov.ph/GEPS/Tender/PrintableBidNoticeAbstractUI.aspx?refid=13214803',
+        kind: 'procurement',
+      },
+    ],
+  },
+  {
     id: '2026-philgeps-makati-creative-software-13203651',
     type: 'procurement',
     title: 'Three-year licensed creative editing and design software subscriptions',
