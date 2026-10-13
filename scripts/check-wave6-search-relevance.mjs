@@ -69,3 +69,6 @@ if (problems.length > 0) {
 console.log(
   'W6-2b search relevance passed: first-class aliases, civic synonym normalization, canonical-first ranking and representative browser cases are guarded.'
 );
+
+// Run the held-out lexical query cases in both required quality and build checks.
+await import('./check-search-query-variants.mjs');
