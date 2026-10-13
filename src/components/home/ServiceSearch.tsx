@@ -18,6 +18,7 @@ import { Link, useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { isBarangayContextPath, withBarangayScope } from '../../hooks/useBarangayScope';
 import { searchIndex, type SearchItem } from '../../data/searchIndex';
+import { queryVariants } from '../../data/searchQueryVariants';
 import { serviceDirectory } from '../../data/serviceDirectory';
 import { officesForAgency } from '../../data/governmentServiceOffices';
 import { placeRegistryById } from '../../data/placeRegistry';
@@ -76,46 +77,6 @@ const normalize = (value: string) =>
     .replace(/[^a-z0-9\s]/g, ' ')
     .replace(/\s+/g, ' ')
     .trim();
-
-const searchTermSynonyms: Record<string, string[]> = {
-  brgy: ['barangay'],
-  bgy: ['barangay'],
-  govt: ['government'],
-  gov: ['government'],
-  stats: ['statistics'],
-  doc: ['document', 'record'],
-  docs: ['documents', 'records'],
-  bid: ['bidding', 'procurement'],
-  bids: ['bidding', 'procurement'],
-  commute: ['mobility', 'transport'],
-  transportation: ['mobility', 'transport'],
-  law: ['legislation'],
-  laws: ['legislation'],
-  ordinance: ['legislation'],
-  ordinances: ['legislation'],
-  resolution: ['legislation'],
-  resolutions: ['legislation'],
-  hotline: ['hotlines'],
-  hotlines: ['emergency'],
-};
-
-const queryVariants = (query: string) => {
-  const needle = normalize(query);
-  if (!needle) return [];
-
-  const variants = new Set([needle]);
-  const tokens = needle.split(' ').filter(Boolean);
-
-  tokens.forEach((token, index) => {
-    for (const synonym of searchTermSynonyms[token] ?? []) {
-      const next = [...tokens];
-      next[index] = synonym;
-      variants.add(next.join(' '));
-    }
-  });
-
-  return [...variants];
-};
 
 const editDistance = (a: string, b: string) => {
   if (a === b) return 0;

@@ -2,6 +2,7 @@ import { readFile } from 'node:fs/promises';
 
 const searchIndex = await readFile('src/data/searchIndex.ts', 'utf8');
 const serviceSearch = await readFile('src/components/home/ServiceSearch.tsx', 'utf8');
+const queryHelper = await readFile('src/data/searchQueryVariants.ts', 'utf8');
 const criticalPaths = await readFile('tests/e2e/critical-paths.spec.mjs', 'utf8');
 
 const problems = [];
@@ -24,15 +25,19 @@ requireAll(searchIndex, 'First-class aliases', [
   "'Brgy ' + barangay.name",
 ]);
 
-requireAll(serviceSearch, 'Search synonym normalization', [
-  'const searchTermSynonyms: Record<string, string[]> = {',
+requireAll(queryHelper, 'Search synonym normalization', [
+  'const termSynonyms: Record<string, string[]> = {',
   "brgy: ['barangay']",
   "govt: ['government']",
   "stats: ['statistics']",
   "bids: ['bidding', 'procurement']",
   "commute: ['mobility', 'transport']",
   "laws: ['legislation']",
-  'const queryVariants = (query: string) => {',
+  'export const queryVariants = (query: string): string[] => {',
+]);
+
+requireAll(serviceSearch, 'Shared query helper integration', [
+  "import { queryVariants } from '../../data/searchQueryVariants';",
 ]);
 
 requireAll(serviceSearch, 'Ranking order', [
@@ -64,3 +69,6 @@ if (problems.length > 0) {
 console.log(
   'W6-2b search relevance passed: first-class aliases, civic synonym normalization, canonical-first ranking and representative browser cases are guarded.'
 );
+
+// Run the held-out lexical query cases in both required quality and build checks.
+await import('./check-search-query-variants.mjs');
