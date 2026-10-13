@@ -1124,7 +1124,7 @@ test('Accountability record cards expose provenance and the next evidence gap', 
   });
   await expect(card).toBeVisible();
   await expect(card.getByText(/source linked|sources linked/i)).toBeVisible();
-  await expect(card.getByText(/Last verified:/i)).toBeVisible();
+  await expect(card.locator('[data-record-review]')).toHaveText('Source review date: 25 September 2026');
   await expect(card.getByText('Next evidence missing', { exact: true })).toBeVisible();
 });
 
