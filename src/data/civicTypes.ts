@@ -70,7 +70,8 @@ export interface AccountabilityEntry {
   actualAmountM?: number;
   completionPct?: number;
   relatedHref?: string;
-  lastVerified: string;
+  /** Null means the record-specific source review date is not recorded. */
+  lastVerified: string | null;
   sources: CivicSource[];
   notes?: string[];
   procurement?: ProcurementTrace;

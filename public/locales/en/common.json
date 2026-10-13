@@ -1,4 +1,9 @@
 {
+  "accountabilityReview": {
+    "pageLabel": "Ledger overview reviewed",
+    "recordLabel": "Source review date",
+    "unknown": "Not recorded"
+  },
   "site_name": "BetterMakati",
   "site_description": "Independent civic information portal for Makati City",
   "language": {

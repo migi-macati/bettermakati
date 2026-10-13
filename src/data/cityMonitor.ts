@@ -52,6 +52,8 @@ export interface CityMonitorRecord {
   /** Source-stated end of an occurrence window, with timezone when known. */
   effectiveUntil?: string;
   publishedDate?: string;
+  /** Actual source review date; never infer from publication, deadline or page review. */
+  sourceReviewedOn?: string;
   deadlineAt?: string;
   openingAt?: string;
   status: CityMonitorStatus;
@@ -619,6 +621,7 @@ const procurementMonitorRecords: CityMonitorRecord[] =
         }) +
         '. Later contract, notice-to-proceed, implementation and completion stages require separate evidence.',
       date: procurement.bidDate || entry.period,
+      sourceReviewedOn: entry.lastVerified ?? undefined,
       status: 'awarded',
       historical: true,
       stage: 'Bid result disclosed',

@@ -1124,7 +1124,7 @@ test('Accountability record cards expose provenance and the next evidence gap', 
   });
   await expect(card).toBeVisible();
   await expect(card.getByText(/source linked|sources linked/i)).toBeVisible();
-  await expect(card.getByText(/Last verified:/i)).toBeVisible();
+  await expect(card.locator('[data-record-review]')).toHaveText('Source review date: 25 September 2026');
   await expect(card.getByText('Next evidence missing', { exact: true })).toBeVisible();
 });
 
@@ -2688,3 +2688,25 @@ test('W6-4a low-link surfaces keep a useful continuation', async ({ page }) => {
     page.getByRole('link', { name: 'Browse nationwide hotlines', exact: false })
   ).toHaveAttribute('href', /^https:\/\//);
 });
+
+for (const language of ['en', 'fil']) {
+  test(`BM-ORD-001 record review dates remain distinct from source dates (${language})`, async ({ page }) => {
+    await page.setViewportSize(language === 'en' ? { width: 1440, height: 900 } : { width: 390, height: 844 });
+    await page.addInitScript(lang => localStorage.setItem('i18nextLng', lang), language);
+    await page.goto(baseURL + '/accountability?type=project');
+    const unknown = language === 'en' ? 'Source review date: Not recorded' : 'Petsa ng source review: Walang nakatalang petsa';
+    for (const id of [
+      '2026-philgeps-ospital-ng-makati-soil-investigation-13268269',
+      '2026-philgeps-eboss-queue-maintenance-13268347',
+      '2026-philgeps-makati-teachers-kits-13224300',
+      '2026-philgeps-makati-creative-software-13203651',
+    ]) {
+      const card = page.locator(`[id="procurement-${id}"]`);
+      await expect(card.locator('[data-record-review]')).toHaveText(unknown);
+      await expect(card).not.toContainText('Last verified: 24 September 2026');
+    }
+    // An independently recorded source review survives the derived monitor card.
+    await expect(page.locator('[id="procurement-monitor-procurement-2025-q2-bs25-03-oe07"] [data-record-review]')).toContainText('25 September 2026');
+    await expect(page.getByText(language === 'en' ? 'Ledger overview reviewed:' : 'Huling review ng ledger overview:', { exact: true })).toBeVisible();
+  });
+}
