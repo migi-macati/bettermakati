@@ -1,6 +1,45 @@
 import { test, expect } from '@playwright/test';
+import { readdirSync, readFileSync } from 'node:fs';
 
 const baseURL = process.env.BASE_URL || 'http://127.0.0.1:4173';
+const reportIndexHrefs = readdirSync('src/data/reports')
+  .filter(name => name.endsWith('.ts'))
+  .sort((a, b) => a.localeCompare(b))
+  .reverse()
+  .map(name => {
+    const source = readFileSync(`src/data/reports/${name}`, 'utf8');
+    const slug = source.match(/\bslug:\s*['"]([^'"]+)['"]/);
+    if (!slug) throw new Error(`Missing report slug in ${name}`);
+    return '/reports/' + slug[1];
+  });
+
+for (const language of ['en', 'fil']) {
+  for (const width of [390, 1440]) {
+    test(`BM-ORD-002 unique report index and secondary calendar (${language}, ${width})`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await page.addInitScript(lang => localStorage.setItem('i18nextLng', lang), language);
+      await page.goto(baseURL + '/reports');
+      const links = page.locator('main a[href^="/reports/"]');
+      await expect(links).toHaveCount(reportIndexHrefs.length);
+      expect(await links.evaluateAll(nodes => nodes.map(node => node.getAttribute('href')))).toEqual(reportIndexHrefs);
+      const firstTitle = await links.first().locator('h2').textContent();
+      await links.first().click();
+      await expect(page.getByRole('heading', { level: 1 })).toHaveText(firstTitle);
+      await page.goBack();
+      const calendar = page.getByRole('link', { name: language === 'en'
+        ? 'View publication dates on the calendar'
+        : 'Tingnan sa calendar kung kailan inilathala ang mga report', exact: true });
+      await calendar.focus();
+      await expect(calendar).toBeFocused();
+      await page.keyboard.press('Enter');
+      await expect(page).toHaveURL(baseURL + '/calendar?topic=publications-data&view=published');
+      await expect(page.locator('main')).toContainText(language === 'en' ? 'Recently Published' : /Published|Inilathala/);
+      await page.goBack();
+      await expect(calendar).toBeVisible();
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBeTruthy();
+    });
+  }
+}
 // Single improbable token: avoids accidental substring or fuzzy-search matches.
 const guaranteedMissingQuery = 'zzqxvptk92817';
 

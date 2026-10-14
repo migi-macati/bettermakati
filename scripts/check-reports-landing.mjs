@@ -19,6 +19,8 @@ for (const marker of [
   '<ReportTeaser report={leadReport} variant="lead" />',
   'moreReports.map',
   'variant="card"',
+  '/calendar?topic=publications-data&view=published',
+  "t('evidence.reports.calendarLink')",
 ]) {
   if (!page.includes(marker)) {
     problems.push('Reports landing marker missing: ' + marker);
@@ -45,6 +47,7 @@ for (const forbidden of [
   'National data research',
   '2026 national budget',
   'ExternalLink',
+  'CivicDomainTimelinePreview',
 ]) {
   if (page.includes(forbidden)) {
     problems.push(
