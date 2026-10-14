@@ -52,6 +52,24 @@ export default function Search() {
             </p>
           )}
 
+          <div className="mb-5 flex flex-wrap items-center gap-3 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-950">
+            <span className="font-semibold">
+              {fil ? 'May emergency ngayon?' : 'Emergency happening now?'}
+            </span>
+            <a
+              href="tel:911"
+              className="inline-flex min-h-11 items-center font-bold underline underline-offset-2"
+            >
+              {fil ? 'Tumawag sa 911' : 'Call 911'}
+            </a>
+            <Link
+              to="/hotlines"
+              className="inline-flex min-h-11 items-center font-semibold underline underline-offset-2"
+            >
+              {fil ? 'Ibang emergency hotlines' : 'Other emergency hotlines'}
+            </Link>
+          </div>
+
           {showGuide && (
             <>
               <CitizenProblemSearch
