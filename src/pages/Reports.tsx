@@ -1,10 +1,10 @@
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router';
 import SEO from '../components/SEO';
 import ReportTeaser from '../components/reports/ReportTeaser';
 import Section from '../components/ui/Section';
 import { Heading } from '../components/ui/Heading';
 import { publicationReports } from '../data/reports';
-import CivicDomainTimelinePreview from '../components/civic/CivicDomainTimelinePreview';
 
 export default function Reports() {
   const { t } = useTranslation();
@@ -36,14 +36,6 @@ export default function Reports() {
         </div>
       </Section>
 
-      <CivicDomainTimelinePreview
-        owner="reports"
-        calendarTopic="publications-data"
-        heading={t('evidence.reports.releases')}
-        description={t('evidence.reports.timelineDescription')}
-        className="bm-editorial-timeline"
-      />
-
       {moreReports.length > 0 && (
         <Section className="bm-editorial-section bm-editorial-section-muted border-t border-primary-100">
           <div className="flex items-end justify-between gap-4">
@@ -59,6 +51,14 @@ export default function Reports() {
           </div>
         </Section>
       )}
+      <Section className="bm-editorial-timeline border-t border-primary-100">
+        <Link
+          to="/calendar?topic=publications-data&view=published"
+          className="inline-flex min-h-11 items-center text-sm font-bold text-primary-700 underline underline-offset-4"
+        >
+          {t('evidence.reports.calendarLink')}
+        </Link>
+      </Section>
     </>
   );
 }

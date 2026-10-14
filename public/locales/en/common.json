@@ -964,6 +964,7 @@
       "title": "Featured Reports & Insights",
       "latest": "Latest",
       "releases": "Report releases",
+      "calendarLink": "View publication dates on the calendar",
       "timelineDescription": "BetterMakati report publication dates also appear in Recently Published, separate from the periods covered by their source data.",
       "more": "More reports"
     },
