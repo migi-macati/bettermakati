@@ -354,7 +354,8 @@ const baseCityMonitorRecords: CityMonitorRecord[] = [
       'Approved budget for contract: ₱12,075,000.00 (not the award amount).',
       'Published: 3 September 2026; PhilGEPS status Awarded, last updated 8 October 2026.',
       'Bids closed on 22 September 2026 at 9:30 AM; opening was scheduled for 10:00 AM.',
-      'The notice does not establish the supplier, award value, award date, delivery or completion.',
+      'The Makati Abstract of Bids index also lists ₱12,075,000 under Contract Price, but the available index does not identify the supplier or independently verify a signed award amount.',
+      'The PhilGEPS notice does not establish the supplier, award value, award date, delivery or completion.',
     ],
     documents: [
       {
