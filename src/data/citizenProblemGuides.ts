@@ -217,4 +217,5 @@ export const findCitizenGuides = (query: string): CitizenGuide[] => {
 
 /** Emergency intent is deliberately narrow; all paths separately show 911. */
 export const isImmediateDanger = (query: string): boolean =>
-  /(?:\b(?:fire in progress|house is on fire|being attacked|being assaulted|trying to kill|gunshot|someone is bleeding heavily|electrocuted|trapped in floodwater|downed live wire|live wire|sparking wire|sparking pole|electrical fire)\b)|(?:\b(?:may sunog|nasusunog|may baril|sinusuntok ako|sinasaksak|may nasaksak|may binabaril|nilulunod)\b)|(?:\b(?:child|kid|minor)\b.{0,35}\b(?:being abused|being assaulted|being beaten)\b.{0,25}\b(?:right now|now)\b)/i.test(query);
+  /(?:\b(?:fire in progress|house is on fire|being attacked|being assaulted|trying to kill|gunshot|someone is bleeding heavily|electrocuted|trapped in floodwater|downed live wire|live wire|sparking wire|sparking pole|electrical fire)\b)|(?:\b(?:may sunog|nasusunog|may baril|sinusuntok ako|sinasaksak|may nasaksak|may binabaril|nilulunod)\b)|(?:\b(?:child|kid|minor)\b.{0,35}\b(?:being abused|being assaulted|being beaten)\b.{0,25}\b(?:right now|now)\b)/i.test(query) ||
+  /\b(?:someone is bleeding badly|bleeding profusely|may saksakan|may taong binabaril|nagsasaksakan)\b/i.test(query);
