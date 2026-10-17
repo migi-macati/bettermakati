@@ -11,7 +11,7 @@ export const budgetSources = {
     'https://www.makati.gov.ph/assets/uploads/staticmenu/docs/online_forms/pdf/Q1%2020%20NTAU.pdf',
   developmentFundQ3:
     'https://www.makati.gov.ph/assets/uploads/staticmenu/docs/online_forms/pdf/Q3%2020%20NTAU.pdf',
-  actuals: 'https://www.dbm.gov.ph/wp-content/uploads/BESF/BESF2026/F14.pdf',
+  actuals: 'https://www.dbm.gov.ph/wp-content/uploads/BESF/BESF2027/F13.pdf',
   developmentFund:
     'https://www.makati.gov.ph/assets/uploads/staticmenu/docs/online_forms/pdf/Q4%2020%20NTAU.pdf',
   procurement: 'https://notices.philgeps.gov.ph/',
@@ -111,8 +111,8 @@ export const actualFiscalHistory = [
   },
   {
     year: 2025,
-    receiptsM: 24655.31,
-    expendituresM: 22314.9,
+    receiptsM: 20854.41,
+    expendituresM: 19935.63,
     href: budgetSources.actuals,
   },
 ];
@@ -4422,64 +4422,64 @@ export const budgetByType = [
 export const revenueSources = [
   {
     label: 'Local sources',
-    amountM: 23049.84,
-    share: 93.5,
+    amountM: 19237.56,
+    share: 92.2,
     description: 'Taxes, fees, charges and local non-tax revenue',
   },
   {
     label: 'External sources',
-    amountM: 1599.21,
-    share: 6.5,
+    amountM: 1616.84,
+    share: 7.8,
     description: 'NTA and other national-government shares',
   },
   {
     label: 'Non-income receipts',
-    amountM: 6.26,
-    share: 0.03,
+    amountM: 0,
+    share: 0,
     description: 'Capital and other non-income receipts',
   },
 ];
 
 export const localRevenueBreakdown = [
-  { label: 'Business tax', amountM: 12143.75 },
-  { label: 'Basic real property tax', amountM: 4444.31 },
-  { label: 'Special Education Fund tax', amountM: 3627.15 },
-  { label: 'Other local taxes', amountM: 903.03 },
-  { label: 'Regulatory fees', amountM: 547.72 },
-  { label: 'Receipts from economic enterprises', amountM: 408.57 },
-  { label: 'Service / user charges', amountM: 356.35 },
-  { label: 'Other receipts', amountM: 618.96 },
+  { label: 'Business tax', amountM: 11683.51 },
+  { label: 'Basic real property tax', amountM: 2786.7 },
+  { label: 'Special Education Fund tax', amountM: 2197.84 },
+  { label: 'Other local taxes', amountM: 666.13 },
+  { label: 'Regulatory fees', amountM: 498.04 },
+  { label: 'Receipts from economic enterprises', amountM: 399.12 },
+  { label: 'Service / user charges', amountM: 302.82 },
+  { label: 'Other receipts', amountM: 703.41 },
 ];
 
 export const actualSpendingByFunction = [
   {
-    label: 'Social Services',
-    amountM: 12309.25,
-    share: 55.2,
-    description: 'Health, education, welfare and related services',
+    label: 'Social services incl. SEF',
+    amountM: 12281.59,
+    share: 61.61,
+    description: 'Social services ₱9,100.10M plus separately reported Special Education Fund ₱3,181.49M; combined only for this chart',
   },
   {
     label: 'General Services',
-    amountM: 6650.47,
-    share: 29.8,
+    amountM: 5127.19,
+    share: 25.72,
     description: 'General government and administration',
   },
   {
     label: 'Economic Services',
-    amountM: 1907.44,
-    share: 8.5,
+    amountM: 1322.82,
+    share: 6.64,
     description: 'Economic and development services',
   },
   {
     label: 'Capital Investment',
-    amountM: 1438.1,
-    share: 6.4,
+    amountM: 1204.04,
+    share: 6.04,
     description: 'Property, plant and equipment / capital investment',
   },
   {
     label: 'Debt Services',
-    amountM: 9.64,
-    share: 0.04,
+    amountM: 0,
+    share: 0,
     description: 'Reported debt-service expenditure',
   },
 ];
