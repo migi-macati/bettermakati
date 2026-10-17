@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "generatedAt": "2026-09-28T13:07:00+08:00",
+  "generatedAt": "2026-10-17T05:08:14.320Z",
   "sourceSnapshotVersion": 1,
   "resolutionPolicyVersion": "2026-09-28.w5-8e",
   "doctrine": {
@@ -11,57 +11,47 @@
     "recurrence": "Resolved stories stay out of the active queue unless materially new official/canonical evidence appears. Resolution history lives in the append-only resolution ledger."
   },
   "summary": {
-    "total": 1,
-    "ownerReviewNeeded": 1,
+    "total": 2,
+    "ownerReviewNeeded": 2,
     "canonicalMatchFound": 0,
     "materialUpdateReview": 0,
     "suppressedResolved": 0,
     "resolutionCount": 0,
     "byOwner": {
-      "city-monitor": 1,
-      "services": 1
+      "mobility": 2
     }
   },
   "candidates": [
     {
-      "id": "news-review:story:2026-09-19:city-hall-adopts-day-onsite-workweek-extends-service-hours",
+      "id": "news-review:story:2026-10-10:new-baguio-bus-route-launches-oct",
       "reviewStatus": "owner-review-needed",
       "publicEligible": false,
-      "storyClusterId": "story:2026-09-19:city-hall-adopts-day-onsite-workweek-extends-service-hours",
-      "clusterKey": "makati city hall adopts 4 day onsite workweek extends service hours 7 pm",
-      "title": "Makati City Hall adopts 4-day onsite workweek; extends service hours to 7 PM",
-      "description": "Official Makati City announcement dated 19 September 2026. Check the notice for the covered offices, schedule and service-hour details.",
-      "publisher": "Makati Web Portal",
-      "sourceClass": "government-primary",
-      "sourceUrl": "https://www.makati.gov.ph/content/news/135398",
+      "storyClusterId": "story:2026-10-10:new-baguio-bus-route-launches-oct",
+      "clusterKey": "new makati baguio bus route launches oct 15",
+      "title": "New Makati to Baguio bus route launches Oct. 15",
+      "description": "New Makati to Baguio bus route launches Oct. 15 &nbsp;&nbsp; Philstar Life",
+      "publisher": "Philstar Life",
+      "sourceClass": "news-media",
+      "sourceUrl": "https://news.google.com/rss/articles/CBMihgFBVV95cUxPRGxtSTNJNm8yWTRkQkRmZmpoOGs4Tnh6NklEanN2LTIwZUg0UF8yTlhkQnYxbjNfcjR6eEJJbmZLS0Fad0kzRE5qZnM3SVVLRXVQUm5aVHVUOS1qeDJ4UTM2ZlQ4V0JJNjRZQ052ZnVSaUlvWk03anVidHNYdFdUSGFiTVFmdw?oc=5",
       "coverageSources": [
         {
-          "url": "https://www.makati.gov.ph/content/news/135398",
-          "publisher": "Makati Web Portal",
-          "sourceClass": "government-primary",
-          "publishedAt": "2026-09-19T00:00:00+08:00"
+          "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxPRGxtSTNJNm8yWTRkQkRmZmpoOGs4Tnh6NklEanN2LTIwZUg0UF8yTlhkQnYxbjNfcjR6eEJJbmZLS0Fad0kzRE5qZnM3SVVLRXVQUm5aVHVUOS1qeDJ4UTM2ZlQ4V0JJNjRZQ052ZnVSaUlvWk03anVidHNYdFdUSGFiTVFmdw?oc=5",
+          "publisher": "Philstar Life",
+          "sourceClass": "news-media",
+          "publishedAt": "Sat, 10 Oct 2026 19:46:11 GMT"
         }
       ],
-      "publishedAt": "2026-09-19T00:00:00+08:00",
-      "retrievedAt": "2026-09-28T13:07:00+08:00",
+      "publishedAt": "Sat, 10 Oct 2026 19:46:11 GMT",
+      "retrievedAt": "2026-10-17T05:08:14.320Z",
       "freshness": "current",
       "clusterSize": 1,
-      "primaryOwner": "services",
-      "suggestedOwners": [
-        "services",
-        "city-monitor"
-      ],
+      "primaryOwner": "mobility",
+      "suggestedOwners": ["mobility"],
       "routes": [
         {
-          "topic": "services",
-          "owner": "services",
-          "action": "Verify the service owner, affected service and effective date before changing a service guide.",
-          "existingCanonicalMatch": false
-        },
-        {
-          "topic": "official-notice",
-          "owner": "city-monitor",
-          "action": "Review the item as a City Monitor discovery signal and route to a stronger canonical owner when one exists.",
+          "topic": "mobility",
+          "owner": "mobility",
+          "action": "Verify the exact affected road, route, station or system and effective period against the Mobility owner/source before changing canonical service status.",
           "existingCanonicalMatch": false
         }
       ],
@@ -69,11 +59,46 @@
       "entityContext": [],
       "nextAction": "Review the original article, locate the strongest owner-specific primary/official evidence, then update or create a canonical record only if that evidence satisfies the destination domain.",
       "note": "This is an internal discovery/review candidate. News reporting is not itself a canonical BetterMakati record.",
-      "materialEvidenceKeys": [
-        "official-source:https://www.makati.gov.ph/content/news/135398",
-        "route:city-monitor:official-notice",
-        "route:services:services"
-      ]
+      "materialEvidenceKeys": ["route:mobility:mobility"]
+    },
+    {
+      "id": "news-review:story:2026-10-12:may-chance-biglaan-new-baguio-bus-route-excites",
+      "reviewStatus": "owner-review-needed",
+      "publicEligible": false,
+      "storyClusterId": "story:2026-10-12:may-chance-biglaan-new-baguio-bus-route-excites",
+      "clusterKey": "may chance na ng biglaan new makati baguio bus route excites pinoys",
+      "title": "‘May chance na ng biglaan’: New Makati-Baguio bus route excites Pinoys",
+      "description": "‘May chance na ng biglaan’: New Makati-Baguio bus route excites Pinoys &nbsp;&nbsp; Interaksyon",
+      "publisher": "Interaksyon",
+      "sourceClass": "news-media",
+      "sourceUrl": "https://news.google.com/rss/articles/CBMipwFBVV95cUxQelUxcmFvNVpHZGFsdmFzaGE4akozRHRNU0RxdGlrMnB3b25Bd3lRRUs5dWhYWDB0UkVldm1LOTVVS1FTXzc4SUw5d1BSdUl6VWZhbFRsU3haREpvTnJKVlA3VUxyTTZWc0tfZjFnZk5LUmozamdHTkkwQTZFZ01ua0VCSXVEX0toZUttRzl5TlBUQ2xadjg2aGFWSWVUZTNPSjA1MlFDRQ?oc=5",
+      "coverageSources": [
+        {
+          "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxQelUxcmFvNVpHZGFsdmFzaGE4akozRHRNU0RxdGlrMnB3b25Bd3lRRUs5dWhYWDB0UkVldm1LOTVVS1FTXzc4SUw5d1BSdUl6VWZhbFRsU3haREpvTnJKVlA3VUxyTTZWc0tfZjFnZk5LUmozamdHTkkwQTZFZ01ua0VCSXVEX0toZUttRzl5TlBUQ2xadjg2aGFWSWVUZTNPSjA1MlFDRQ?oc=5",
+          "publisher": "Interaksyon",
+          "sourceClass": "news-media",
+          "publishedAt": "Mon, 12 Oct 2026 08:46:48 GMT"
+        }
+      ],
+      "publishedAt": "Mon, 12 Oct 2026 08:46:48 GMT",
+      "retrievedAt": "2026-10-17T05:08:14.320Z",
+      "freshness": "current",
+      "clusterSize": 1,
+      "primaryOwner": "mobility",
+      "suggestedOwners": ["mobility"],
+      "routes": [
+        {
+          "topic": "mobility",
+          "owner": "mobility",
+          "action": "Verify the exact affected road, route, station or system and effective period against the Mobility owner/source before changing canonical service status.",
+          "existingCanonicalMatch": false
+        }
+      ],
+      "existingMatches": [],
+      "entityContext": [],
+      "nextAction": "Review the original article, locate the strongest owner-specific primary/official evidence, then update or create a canonical record only if that evidence satisfies the destination domain.",
+      "note": "This is an internal discovery/review candidate. News reporting is not itself a canonical BetterMakati record.",
+      "materialEvidenceKeys": ["route:mobility:mobility"]
     }
   ],
   "suppressedResolved": []
