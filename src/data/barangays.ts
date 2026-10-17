@@ -784,6 +784,14 @@ const barangayBaseProfiles: BarangayProfile[] = [
   { slug: 'san-isidro', name: 'San Isidro', population2024: 6260, legislativeDistrict: '1st District', officialPageUrl: makatiBarangayDirectory },
   { slug: 'san-lorenzo', name: 'San Lorenzo', population2024: 14793, legislativeDistrict: '1st District', officialPageUrl: 'https://www.makati.gov.ph/barangay/san-lorenzo/37', websiteUrl: 'https://sanloph.com/', facebookUrl: 'https://www.facebook.com/Barangaysanlorenzo', publishedServices: [
     {
+      title: 'Sangguniang Kabataan temporary office — Legazpi Village',
+      type: 'Other',
+      availability: 'Temporary relocation announced by Barangay San Lorenzo; verified 17 October 2026',
+      summary: 'The Barangay San Lorenzo Sangguniang Kabataan (SK) posted that its office has temporarily moved during barangay renovations to 2nd Floor, 153 Legazpi Street, Legazpi Village, Makati City 1229. For SK concerns, the notice directs residents to its Viber or Facebook pages. This notice is specific to the SK; it does not establish relocation of the entire barangay hall.',
+      sourceUrl: 'https://sanloph.com/index.php/component/content/article/we-have-moved?catid=8',
+      sourceLabel: 'Barangay San Lorenzo · SK temporary relocation notice',
+    },
+    {
       title: 'Barangay clearance and permits',
       type: 'Clearance',
       summary: 'Personal and business barangay clearances are handled by Barangay San Lorenzo, including through its Legazpi satellite office.',
