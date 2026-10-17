@@ -48,6 +48,21 @@ const termSynonyms: Record<string, string[]> = {
   eskwela: ['school'],
   ospital: ['hospital'],
   birthcert: ['birth certificate'],
+  // Common resident descriptions; all are bounded lexical expansions.
+  bangketa: ['sidewalk', 'footpath'],
+  nakaharang: ['blocked', 'obstruction'],
+  kanal: ['drainage', 'clogged drain'],
+  barado: ['blocked', 'clogged'],
+  ilaw: ['street lighting', 'streetlight'],
+  poste: ['utility pole', 'streetlight'],
+  tubig: ['water supply', 'water service'],
+  nawalan: ['outage', 'interruption'],
+  nasira: ['broken', 'repair'],
+  sirang: ['broken', 'repair'],
+  botante: ['voter registration', 'elections'],
+  botohan: ['elections'],
+  rehistro: ['registration'],
+  bakuna: ['vaccination', 'immunization'],
 };
 
 const questionFillers = new Set([
@@ -58,6 +73,8 @@ const questionFillers = new Set([
   'ako', 'ko', 'po', 'ba', 'ang', 'ng', 'sa', 'mga', 'na',
   'saan', 'paano', 'pwede', 'puwede', 'pwedeng', 'puwedeng',
   'gusto', 'kailangan', 'kumuha', 'makakuha', 'mag', 'magpa',
+  'may', 'meron', 'mayroon', 'kami', 'namin', 'dito', 'diyan',
+  'magbayad', 'bayaran', 'magparehistro', 'nagpaparehistro',
 ]);
 
 /** Primary exact-name query remains untouched; no network or user-data storage. */
