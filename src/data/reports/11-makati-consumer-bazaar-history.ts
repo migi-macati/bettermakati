@@ -29,7 +29,7 @@ const reportModule: FeaturedReportModule = {
               { dates: '16–17 October 2025', evidence: 'City events listing for Consumer Bazaar.' },
               { dates: '14–15 October 2026', evidence: 'First announced edition featuring partner-LGU products.' },
             ],
-            evidence: { sourceIds: ['pia2022', 'pia2023may', 'pia2023oct', 'pia2024', 'city2025', 'city2026', 'report2026'] },
+            evidence: { sourceIds: ['pia2022', 'pia2023may', 'pia2023oct', 'pia2024', 'city2025', 'city2026', 'report2026'], records: [{ recordType: 'place', id: 'makati-city-hall', href: '/civic-map/makati-city-hall' }] },
           },
           {
             kind: 'paragraph',
@@ -130,7 +130,7 @@ const reportModule: FeaturedReportModule = {
               { dates: '16–17 October 2025', evidence: 'Consumer Bazaar sa official city events listing.' },
               { dates: '14–15 October 2026', evidence: 'Unang inanunsyong edisyon na may mga produkto ng partner LGUs.' },
             ],
-            evidence: { sourceIds: ['pia2022', 'pia2023may', 'pia2023oct', 'pia2024', 'city2025', 'city2026', 'report2026'] },
+            evidence: { sourceIds: ['pia2022', 'pia2023may', 'pia2023oct', 'pia2024', 'city2025', 'city2026', 'report2026'], records: [{ recordType: 'place', id: 'makati-city-hall', href: '/civic-map/makati-city-hall' }] },
           },
           {
             kind: 'paragraph',
