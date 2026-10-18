@@ -1,0 +1,102 @@
+{
+  "packet": "BM-B043",
+  "purpose": "Independent failure cases against local deterministic controller v4, 19 October 2026. Expected labels require human review; not evidence of semantic AI. Do not expose raw resident text in URLs or telemetry.",
+  "cases": [
+    {
+      "utterance": "Nireport ko na sa barangay",
+      "expected": "contacted",
+      "reason": "Taglish completed official report",
+      "contextGuideId": "neighborhood-noise",
+      "contextStep": 0,
+      "immediateDanger": false
+    },
+    {
+      "utterance": "Nag-message na ako sa barangay hall",
+      "expected": "contacted",
+      "reason": "Taglish completed official message",
+      "contextGuideId": "neighborhood-noise",
+      "contextStep": 0,
+      "immediateDanger": false
+    },
+    {
+      "utterance": "I spoke to the barangay office yesterday",
+      "expected": "contacted",
+      "reason": "Completed official contact",
+      "contextGuideId": "neighborhood-noise",
+      "contextStep": 0,
+      "immediateDanger": false
+    },
+    {
+      "utterance": "Nagfile na ako ng complaint sa barangay",
+      "expected": "contacted",
+      "reason": "Taglish completed complaint",
+      "contextGuideId": "neighborhood-noise",
+      "contextStep": 0,
+      "immediateDanger": false
+    },
+    {
+      "utterance": "I filed a complaint with my landlord",
+      "expected": "clarify",
+      "reason": "Private actor must not count as government contact",
+      "contextGuideId": "neighborhood-noise",
+      "contextStep": 0,
+      "immediateDanger": false
+    },
+    {
+      "utterance": "I reported the incident to our HOA",
+      "expected": "clarify",
+      "reason": "HOA is not government contact",
+      "contextGuideId": "neighborhood-noise",
+      "contextStep": 0,
+      "immediateDanger": false
+    },
+    {
+      "utterance": "Nag-report ako sa Facebook group namin",
+      "expected": "clarify",
+      "reason": "Social post is not official filing",
+      "contextGuideId": "neighborhood-noise",
+      "contextStep": 0,
+      "immediateDanger": false
+    },
+    {
+      "utterance": "I submitted a note to the building administrator",
+      "expected": "clarify",
+      "reason": "Building administrator is not government",
+      "contextGuideId": "neighborhood-noise",
+      "contextStep": 0,
+      "immediateDanger": false
+    },
+    {
+      "utterance": "Can you check the complaint I submitted?",
+      "expected": "clarify",
+      "reason": "No case lookup or fabricated status",
+      "contextGuideId": "neighborhood-noise",
+      "contextStep": 0,
+      "immediateDanger": false
+    },
+    {
+      "utterance": "What do I do if the noise continues?",
+      "expected": "advance",
+      "reason": "Continued same concern",
+      "contextGuideId": "neighborhood-noise",
+      "contextStep": 0,
+      "immediateDanger": false
+    },
+    {
+      "utterance": "My street is flooding now",
+      "expected": "new-topic",
+      "reason": "Topic change from noise to flooding",
+      "contextGuideId": "neighborhood-noise",
+      "contextStep": 0,
+      "immediateDanger": false
+    },
+    {
+      "utterance": "Where is the nearest health center?",
+      "expected": "new-topic",
+      "reason": "Topic change from noise to health service",
+      "contextGuideId": "neighborhood-noise",
+      "contextStep": 0,
+      "immediateDanger": false
+    }
+  ]
+}
