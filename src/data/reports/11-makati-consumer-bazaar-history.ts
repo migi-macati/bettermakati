@@ -37,6 +37,13 @@ const reportModule: FeaturedReportModule = {
             text: 'Two separately announced editions in 2023 show that the event was not necessarily annual. The earliest documented edition in this review is November 2022, which does not establish the original start date.',
             evidence: { sourceIds: ['pia2022', 'pia2023may', 'pia2023oct'] },
           },
+          {
+            kind: 'paragraph',
+            role: 'fact',
+            text: 'An earlier planning record exists: Makati’s CY2020 Annual Procurement Plan lists “Consumer Bazaar – Tianggiian sa Makati” under its Economic Enterprise Management Office. A procurement plan does not establish that the bazaar was actually held in 2020.',
+            evidence: { sourceIds: ['city2020app'] },
+            evidence: { sourceIds: ['pia2022', 'pia2023may', 'pia2023oct'] },
+          },
         ],
       },
       {
@@ -91,6 +98,7 @@ const reportModule: FeaturedReportModule = {
       },
     ],
     sources: [
+      { id: 'city2020app', label: 'Makati CY2020 EEMO Annual Procurement Plan: Consumer Bazaar – Tianggiian sa Makati', href: 'https://www.makati.gov.ph/assets/uploads/staticmenu/docs/online_forms/pdf/APP%202020%20by%20dept1.pdf', sourceKind: 'official-external', publisher: 'City Government of Makati', publishedOrPeriod: 'CY2020 procurement plan', checkedOn: '19 October 2026', note: 'Lists a planned activity, not proof of an event held or of actual spending.' },
       { id: 'pia2022', label: 'PIA: Consumer Bazaar, 17–18 November 2022', href: 'https://mirror.pia.gov.ph/news/2022/11/15/de-kalidad-murang-produkto-mabibili-sa-consumer-bazaar-sa-makati', sourceKind: 'official-external', publisher: 'Philippine Information Agency', publishedOrPeriod: '15 November 2022', checkedOn: '16 October 2026' },
       { id: 'pia2023may', label: 'PIA: Consumer Bazaar, 18–19 May 2023', href: 'https://mirror.pia.gov.ph/news/2023/05/16/publiko-inaanyayahan-sa-isasagawang-consumer-bazaar-sa-makati', sourceKind: 'official-external', publisher: 'Philippine Information Agency', publishedOrPeriod: '16 May 2023', checkedOn: '16 October 2026' },
       { id: 'pia2023oct', label: 'PIA: Consumer Bazaar, 18–19 October 2023', href: 'https://pia.gov.ph/news/consumer-bazaar-isasagawa-sa-makati-city-hall-quadrangle/', sourceKind: 'official-external', publisher: 'Philippine Information Agency', publishedOrPeriod: '17 October 2023', checkedOn: '16 October 2026' },
@@ -101,7 +109,7 @@ const reportModule: FeaturedReportModule = {
     ],
     methodology: {
       title: 'Scope of the comparison',
-      text: 'The chronology counts individually dated Consumer Bazaar announcements from the Makati City Government and Philippine Information Agency. It is a documented minimum, not an exhaustive history. Related Kadiwa and Diskwento Caravan events are excluded. Sales, public cost and consumer savings have not been independently verified.',
+      text: 'The chronology counts individually dated Consumer Bazaar announcements from the Makati City Government and Philippine Information Agency. It is a documented minimum, not an exhaustive history. The 2020 procurement-plan entry is classified separately as planning evidence, not a confirmed edition. Related Kadiwa and Diskwento Caravan events are excluded. Sales, public cost and consumer savings have not been independently verified.',
       evidence: { sourceIds: ['pia2022', 'pia2023may', 'pia2023oct', 'pia2024', 'city2025', 'city2026', 'report2026'] },
     },
   },
@@ -136,6 +144,13 @@ const reportModule: FeaturedReportModule = {
             kind: 'paragraph',
             role: 'analysis',
             text: 'Dahil may dalawang magkaibang edisyon noong 2023, hindi kailangang taun-taon lang ang event. November 2022 ang pinakamaagang edisyong nahanap sa review na ito; hindi ibig sabihin na doon nagsimula ang Consumer Bazaar.',
+            evidence: { sourceIds: ['pia2022', 'pia2023may', 'pia2023oct'] },
+          },
+          {
+            kind: 'paragraph',
+            role: 'fact',
+            text: 'May mas naunang planning record: nakalista sa CY2020 Annual Procurement Plan ng Makati ang “Consumer Bazaar – Tianggiian sa Makati” sa ilalim ng Economic Enterprise Management Office. Hindi patunay ang procurement plan na natuloy ang bazaar noong 2020.',
+            evidence: { sourceIds: ['city2020app'] },
             evidence: { sourceIds: ['pia2022', 'pia2023may', 'pia2023oct'] },
           },
         ],
@@ -193,7 +208,7 @@ const reportModule: FeaturedReportModule = {
     ],
     methodology: {
       title: 'Saklaw ng comparison',
-      text: 'Binilang ang magkakahiwalay na Consumer Bazaar announcements na may petsa mula sa Makati City Government at Philippine Information Agency. Minimum na dokumentadong history ito, hindi exhaustive list. Hindi kasama ang hiwalay na Kadiwa at Diskwento Caravan events. Hindi pa independently verified ang sales, public costs at consumer savings.',
+      text: 'Binilang ang magkakahiwalay na Consumer Bazaar announcements na may petsa mula sa Makati City Government at Philippine Information Agency. Minimum na dokumentadong history ito, hindi exhaustive list. Hiwalay ang 2020 procurement-plan entry bilang planning evidence, hindi kumpirmadong edisyon. Hindi kasama ang hiwalay na Kadiwa at Diskwento Caravan events. Hindi pa independently verified ang sales, public costs at consumer savings.',
       evidence: { sourceIds: ['pia2022', 'pia2023may', 'pia2023oct', 'pia2024', 'city2025', 'city2026', 'report2026'] },
     },
   },
