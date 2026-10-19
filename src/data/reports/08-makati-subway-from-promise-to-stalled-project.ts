@@ -8,9 +8,9 @@ const reportModule: FeaturedReportModule = {
     headline:
       'The Makati Subway: From a 10-Station Promise to a Stalled Project',
     subheadline:
-      'The proposed US$3.5-billion, 10-station intra-city railway reached a joint venture, engineering contracts and limited site works. The EMBO boundary ruling then changed the route economics, the original private partner exited, and no construction restart has been publicly confirmed.',
+      'The proposed US$3.5-billion, 10-station intra-city railway reached a joint venture, engineering contracts and limited site works. The EMBO boundary ruling then changed the route economics, the original private partner exited, and the sources reviewed through 5 October 2026 did not confirm a construction restart.',
     synthesis:
-      'The Makati Subway was more than a drawing: it had a signed joint venture, a notice to proceed, contractors, land arrangements and limited works around Station 3. It is also not an active railway build today. The planned depot and two eastern stations are now in Taguig, Infradev declared the original project infeasible, and the joint venture moved into arbitration and settlement. Assets and studies may support a future project, but that is different from evidence of a funded, approved and active replacement subway.',
+      'The Makati Subway was more than a drawing: it had a signed joint venture, a notice to proceed, contractors, land arrangements and limited works around Station 3. At this report’s 5 October 2026 cutoff, the cited records did not establish an active railway build. The planned depot and two eastern stations are now in Taguig, Infradev declared the original project infeasible, and the joint venture moved into arbitration and settlement. Assets and studies may support a future project, but that is different from evidence of a funded, approved and active replacement subway.',
     sections: [
       {
         id: 'promise-and-contract',
@@ -172,6 +172,17 @@ const reportModule: FeaturedReportModule = {
             role: 'analysis',
             text: 'A credible restart would require a new public record: the implementing entity and operator, the revised alignment and station list, the arrangement for Taguig jurisdiction, updated cost and financing, approvals, procurement and a construction timetable. Until those exist, the Makati Subway is best described as a stalled former PPP with retained assets and an unresolved revival path—not as operating, under active construction, or an idea proven incapable of returning.',
             evidence: { sourceIds: ['3', '8', '9', '10'] },
+          },
+        ],
+      },
+      {
+        id: 'reader-implications',
+        heading: 'Judge a revival by its commitments',
+        blocks: [
+          {
+            kind: 'paragraph',
+            role: 'analysis',
+            text: 'Before residents rely on another opening date, the city should disclose what it would own and owe after settlement, the transport problem a revised project would solve, and the cost of alternatives. Any revival proposal should identify its funding commitments, approval milestones and who bears delays or revenue shortfalls. Those disclosures would let residents distinguish a proposal worth evaluating from a construction commitment they can plan around.',
           },
         ],
       },
@@ -434,6 +445,17 @@ const reportModule: FeaturedReportModule = {
             role: 'analysis',
             text: 'Ang credible restart ay mangangailangan ng bagong public record: sino ang implementing entity at operator, ano ang revised alignment at station list, paano tatawirin ang Taguig jurisdiction, magkano ang updated cost, saan manggagaling ang pondo, at ano ang procurement at construction timetable. Hangga’t wala ang mga iyon, dapat ilarawan ang Makati Subway bilang stalled former PPP with retained assets and an unresolved revival path—not as an operating, under-construction or fully cancelled idea that can never return.',
             evidence: { sourceIds: ['3', '8', '9', '10'] },
+          },
+        ],
+      },
+      {
+        id: 'reader-implications',
+        heading: 'Suriin ang commitments bago umasa sa opening date',
+        blocks: [
+          {
+            kind: 'paragraph',
+            role: 'analysis',
+            text: 'Bago umasa ang residents sa panibagong opening date, dapat ilabas ng city kung ano ang magiging assets at obligations nito pagkatapos ng settlement, anong transport problem ang lulutasin ng revised project at magkano ang alternatives. Dapat malinaw ang funding commitments, approvals at kung sino ang sasagot sa delays o kulang na revenue. Doon masusuri kung proposal pa lang o may construction commitment nang puwedeng asahan.',
           },
         ],
       },

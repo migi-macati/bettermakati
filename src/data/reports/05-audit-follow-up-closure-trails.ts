@@ -20,19 +20,19 @@ const reportModule: FeaturedReportModule = {
     slug: 'audit-follow-up-closure-trails',
     date: reportPublishedOn,
     headline:
-      'Three older Makati audit findings have follow-up records but no item-level closure in the indexed trail',
-    subheadline: `BetterMakati’s finding-level audit layer contains ${auditFindingsWithTrails.length} historical findings and ${integrityAuditActions.length} later response or implementation-evidence records; none of the three trails currently establishes a finding-specific closure status.`,
+      'Were three historical Makati audit findings resolved? The records do not yet connect',
+    subheadline: `Three findings concern development-fund loan payments, school cash advances and education-fund eligibility. Later records show responses, but do not establish closure of each original finding.`,
     synthesis:
       'The public record indexed by BetterMakati shows later responses, controls or reporting for each of three historical audit findings, but the available follow-up does not map those later records back to the original recommendation closely enough to establish item-level closure.',
     sections: [
       {
         id: 'three-trails',
-        heading: 'Later evidence exists in all three trails',
+        heading: 'What was flagged and what happened afterward',
         blocks: [
           {
             kind: 'paragraph',
             role: 'fact',
-            text: `The Integrity layer currently contains ${integrityAuditFindings.length} finding-level historical audit records. They concern 2017 Development Fund loan payments, 2018 DepEd-Makati cash advances and 2018 Special Education Fund eligibility. Across those findings, BetterMakati has indexed ${integrityAuditActions.length} later response or implementation-evidence records.`,
+            text: `This review covers ${integrityAuditFindings.length} historical audit findings. They concern 2017 Development Fund loan payments, 2018 DepEd-Makati cash advances and 2018 Special Education Fund eligibility. Across those findings, BetterMakati has indexed ${integrityAuditActions.length} later response or implementation-evidence records.`,
             evidence: {
               sourceIds: ['1', '2', '3'],
               records: auditFindingsWithTrails.flatMap(({ finding }) => [
@@ -150,7 +150,7 @@ const reportModule: FeaturedReportModule = {
       },
       {
         id: 'scope',
-        heading: 'What is outside this count',
+        heading: 'This is a review of three findings, not all city audits',
         blocks: [
           {
             kind: 'paragraph',
@@ -172,6 +172,17 @@ const reportModule: FeaturedReportModule = {
             evidence: {
               sourceIds: ['1', '2', '3', '6', '7', '8', '9'],
             },
+          },
+        ],
+      },
+      {
+        id: 'reader-implications',
+        heading: 'What would settle the question?',
+        blocks: [
+          {
+            kind: 'paragraph',
+            role: 'analysis',
+            text: 'The relevant city office should publish a response against each original recommendation, identifying the action taken, completion date and supporting documents. The corresponding COA assessment would show whether the action satisfied the recommendation. A later report about a related program cannot substitute for that link. Readers can use the three findings above to ask for specific records without treating a gap in this review as proof that corrective work never occurred.',
           },
         ],
       },

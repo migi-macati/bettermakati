@@ -5,9 +5,12 @@ const reportModule: FeaturedReportModule = {
     schemaVersion: 2,
     slug: 'makati-2024-special-education-fund-spending',
     date: '11 October 2026',
-    headline: 'Where Makati’s 2024 Education Fund Went',
-    subheadline: 'Makati reported ₱2.872 billion in Special Education Fund disbursements and a ₱1.245-billion closing balance. Supplies, services and ICT equipment dominated.',
-    synthesis: 'The signed 2024 Special Education Fund (SEF) utilization report records ₱2.872 billion in cash disbursements from ₱4.118 billion in available resources. Nearly half of disbursements were recorded as supplies and materials. The year-end balance was ₱1.245 billion. These figures establish spending categories and cash movement, not which schools received goods, whether prices were competitive or whether learning improved. Those questions require contracts, delivery records, school-level data and audit findings.',
+    headline:
+      'Makati’s 2024 education fund: nearly half of spending went to supplies',
+    subheadline:
+      'Makati reported ₱2.872 billion in Special Education Fund disbursements and a ₱1.245-billion closing balance. Supplies, services and ICT equipment dominated.',
+    synthesis:
+      'Nearly half of Makati’s ₱2.872-billion Special Education Fund disbursements in 2024 went to supplies and materials. The fund closed with ₱1.245 billion. The next accountability question is what reached each school: the spending statement identifies categories, while contracts, prices and delivery records are needed to assess the purchases.',
     sections: [
       {
         id: 'fund-flow',
@@ -37,9 +40,18 @@ const reportModule: FeaturedReportModule = {
               { key: 'amount', label: 'Amount', align: 'right' },
             ],
             rows: [
-              { line: 'Current-year operating receipts', amount: '₱2,890,680,429.00' },
-              { line: 'Prior-year and continuing resources', amount: '₱1,226,873,854.39' },
-              { line: 'Total available resources', amount: '₱4,117,554,283.39' },
+              {
+                line: 'Current-year operating receipts',
+                amount: '₱2,890,680,429.00',
+              },
+              {
+                line: 'Prior-year and continuing resources',
+                amount: '₱1,226,873,854.39',
+              },
+              {
+                line: 'Total available resources',
+                amount: '₱4,117,554,283.39',
+              },
               { line: 'Total cash disbursements', amount: '₱2,872,115,996.45' },
               { line: 'Year-end balance', amount: '₱1,245,438,286.94' },
             ],
@@ -60,21 +72,58 @@ const reportModule: FeaturedReportModule = {
           {
             kind: 'table',
             title: 'Selected disbursement lines and parent categories',
-            caption: 'Indented lines belong within MOOE or capital outlay. Do not add them again to their parent totals.',
+            caption:
+              'Indented lines belong within MOOE or capital outlay. Do not add them again to their parent totals.',
             columns: [
               { key: 'category', label: 'Category' },
               { key: 'amount', label: 'Disbursed', align: 'right' },
-              { key: 'share', label: 'Share of all disbursements', align: 'right' },
+              {
+                key: 'share',
+                label: 'Share of all disbursements',
+                align: 'right',
+              },
             ],
             rows: [
-              { category: 'Personnel services', amount: '₱29.35M', share: '1.02%' },
-              { category: 'Maintenance and other operating expenses (MOOE)', amount: '₱2,526.92M', share: '87.98%' },
-              { category: '↳ Supplies and materials', amount: '₱1,377.95M', share: '47.98%' },
-              { category: '↳ General services', amount: '₱523.62M', share: '18.23%' },
-              { category: '↳ Professional services', amount: '₱410.50M', share: '14.29%' },
-              { category: 'Capital outlay', amount: '₱315.84M', share: '11.00%' },
-              { category: '↳ ICT equipment', amount: '₱311.75M', share: '10.85%' },
-              { category: 'Financial expense / bank charges', amount: '₱3,000', share: '<0.01%' },
+              {
+                category: 'Personnel services',
+                amount: '₱29.35M',
+                share: '1.02%',
+              },
+              {
+                category: 'Maintenance and other operating expenses (MOOE)',
+                amount: '₱2,526.92M',
+                share: '87.98%',
+              },
+              {
+                category: '↳ Supplies and materials',
+                amount: '₱1,377.95M',
+                share: '47.98%',
+              },
+              {
+                category: '↳ General services',
+                amount: '₱523.62M',
+                share: '18.23%',
+              },
+              {
+                category: '↳ Professional services',
+                amount: '₱410.50M',
+                share: '14.29%',
+              },
+              {
+                category: 'Capital outlay',
+                amount: '₱315.84M',
+                share: '11.00%',
+              },
+              {
+                category: '↳ ICT equipment',
+                amount: '₱311.75M',
+                share: '10.85%',
+              },
+              {
+                category: 'Financial expense / bank charges',
+                amount: '₱3,000',
+                share: '<0.01%',
+              },
             ],
             evidence: { sourceIds: ['sef2024'] },
           },
@@ -110,17 +159,37 @@ const reportModule: FeaturedReportModule = {
         blocks: [
           {
             kind: 'table',
-            title: 'Missing evidence and responsible record-holders',
+            title: 'Recommended disclosures and responsible record-holders',
             columns: [
               { key: 'actor', label: 'Record-holder' },
               { key: 'record', label: 'Record to publish or reconcile' },
               { key: 'question', label: 'Question it would answer' },
             ],
             rows: [
-              { actor: 'City budget and treasury offices; Local School Board', record: 'Original/supplemental SEF appropriations, obligations and year-end balances', question: 'Why did available resources and disbursements differ from the announced budget?' },
-              { actor: 'City procurement and schools offices', record: 'Contracts, unit prices, acceptance and delivery by school', question: 'What was bought, for how much, and who received it?' },
-              { actor: 'DepEd Makati and schools', record: 'Enrollment, inventories and comparable outcome indicators', question: 'Which students benefited and what changed?' },
-              { actor: 'Commission on Audit', record: 'Full 2024 SEF compliance-audit letter and responses', question: 'What did independent auditors find?' },
+              {
+                actor: 'City budget and treasury offices; Local School Board',
+                record:
+                  'Original/supplemental SEF appropriations, obligations and year-end balances',
+                question:
+                  'Why did available resources and disbursements differ from the announced budget?',
+              },
+              {
+                actor: 'City procurement and schools offices',
+                record:
+                  'Contracts, unit prices, acceptance and delivery by school',
+                question: 'What was bought, for how much, and who received it?',
+              },
+              {
+                actor: 'DepEd Makati and schools',
+                record:
+                  'Enrollment, inventories and comparable outcome indicators',
+                question: 'Which students benefited and what changed?',
+              },
+              {
+                actor: 'Commission on Audit',
+                record: 'Full 2024 SEF compliance-audit letter and responses',
+                question: 'What did independent auditors find?',
+              },
             ],
             evidence: { sourceIds: ['sef2024', 'coa2024'] },
           },
@@ -136,7 +205,8 @@ const reportModule: FeaturedReportModule = {
     sources: [
       {
         id: 'sef2024',
-        label: 'Signed Makati SEF Utilization Report, fourth quarter 2024 (pp. 3–4)',
+        label:
+          'Signed Makati SEF Utilization Report, fourth quarter 2024 (pp. 3–4)',
         href: 'https://www.depedncr.com.ph/wp-content/uploads/2025/05/SEF-MAKATI-CITY-4th-Quarter-2024.pdf',
         sourceKind: 'official-external',
         publisher: 'DepEd NCR / City of Makati',
@@ -163,7 +233,8 @@ const reportModule: FeaturedReportModule = {
       },
       {
         id: 'coa2024',
-        label: 'Makati 2024 SEF compliance-audit management letter (catalog record only)',
+        label:
+          'Makati 2024 SEF compliance-audit management letter (catalog record only)',
         href: 'https://www.coa.gov.ph/wpfd_file/makati-city-compliance-audit-report-2024/',
         sourceKind: 'official-external',
         publisher: 'Commission on Audit',

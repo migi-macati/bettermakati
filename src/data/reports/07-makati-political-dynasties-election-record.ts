@@ -219,6 +219,17 @@ const reportModule: FeaturedReportModule = {
           },
         ],
       },
+      {
+        id: 'reader-implications',
+        heading: 'What voters can assess from this record',
+        blocks: [
+          {
+            kind: 'paragraph',
+            role: 'analysis',
+            text: 'The family timeline helps voters identify continuity and overlap in public office. To judge the consequences, compare the decisions and results of each administration: service coverage, spending, procurement, responsiveness and the council’s scrutiny of the executive. Candidates should explain how their proposed appointments and oversight arrangements would handle family connections. Those are questions for evaluating accountability; the surname and election margin alone do not supply the answers.',
+          },
+        ],
+      },
     ],
     sources: [
       {
@@ -522,6 +533,17 @@ const reportModule: FeaturedReportModule = {
             role: 'analysis',
             text: 'Hindi kayang patunayan ng election results lang kung bakit pinili ng bawat voter ang isang candidate, kung family continuity ang sanhi ng isang public-service outcome, o kung dapat legal na ma-bar ang sinumang candidate. Kailangan ng voter research, policy evaluation o statutory rule para sa mga tanong na iyon—at wala pang ganitong national rule sa 5 October 2026 cutoff ng report. Kaya hindi nagso-score ng candidates, nag-i-infer ng motives o tumatrato sa family membership bilang proof of misconduct ang report.',
             evidence: { sourceIds: ['2', '4', '8'] },
+          },
+        ],
+      },
+      {
+        id: 'reader-implications',
+        heading: 'Ano ang puwedeng suriin ng voters',
+        blocks: [
+          {
+            kind: 'paragraph',
+            role: 'analysis',
+            text: 'Ipinapakita ng family timeline ang succession at sabayang paghawak ng public office. Para masuri ang epekto, ikumpara ang decisions at results ng bawat administration: service coverage, spending, procurement, responsiveness at pagsusuri ng council sa executive. Dapat ipaliwanag ng candidates kung paano haharapin ng kanilang appointments at oversight arrangements ang family connections. Hindi sapat ang apelyido o election margin para sagutin iyon.',
           },
         ],
       },

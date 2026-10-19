@@ -40,5 +40,12 @@
       "*": false,
       "main": true
     }
-  }
+  },
+  "redirects": [
+    {
+      "source": "/reports/makati-consumer-bazaar-history-2026",
+      "destination": "/reports",
+      "permanent": true
+    }
+  ]
 }

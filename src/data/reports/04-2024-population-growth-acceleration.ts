@@ -186,6 +186,18 @@ const reportModule: FeaturedReportModule = {
           },
         ],
       },
+      {
+        id: 'reader-implications',
+        heading:
+          'Plan for the added residents without turning a past rate into a forecast',
+        blocks: [
+          {
+            kind: 'paragraph',
+            role: 'analysis',
+            text: 'The additional 17,027 residents provide a starting point for reviewing housing and service capacity. City planning, health and education offices should identify where growth occurred, which age groups increased and whether facility use changed. The 1.37% annual rate describes a past interval; extending it indefinitely would hide changes in migration, births and housing supply. A planning scenario should state those assumptions and be revised when new counts become available.',
+          },
+        ],
+      },
     ],
     sources: [
       {

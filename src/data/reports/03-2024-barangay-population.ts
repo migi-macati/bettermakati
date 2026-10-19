@@ -122,6 +122,18 @@ const reportModule: FeaturedReportModule = {
           },
         ],
       },
+      {
+        id: 'reader-implications',
+        heading:
+          'Use population to compare coverage, not to allocate everything equally',
+        blocks: [
+          {
+            kind: 'paragraph',
+            role: 'analysis',
+            text: 'For services intended for residents, a useful next comparison is capacity per resident: clinic slots, social-worker caseloads or access to nearby facilities. City planning and barangay offices should pair those measures with age, need and actual use. Equal facility counts across barangays would not necessarily mean equal access. Business districts also serve commuters and visitors, so resident population alone would understate some demands. This is a proposed way to assess coverage, not a finding that any named barangay is underserved.',
+          },
+        ],
+      },
     ],
     sources: [
       {

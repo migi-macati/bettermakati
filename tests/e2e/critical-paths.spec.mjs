@@ -139,9 +139,9 @@ const criticalRoutes = [
   ['/city-monitor', /City Monitor/i],
   ['/records', /Find the source/i],
   ['/reports', /Featured Reports & Insights/i],
-  ['/reports/2026-budget-operating-expenses', /Makati’s 2026 budget proposal is above the adopted 2025 plan/i],
-  ['/reports/2025-local-revenue', /Makati’s 2025 receipts were overwhelmingly local/i],
-  ['/reports/2025-social-services', /Makati’s 2025 receipts were overwhelmingly local/i],
+  ['/reports/2026-budget-operating-expenses', /Makati’s 2026 budget proposal: bigger than which 2025 budget/i],
+  ['/reports/2025-local-revenue', /Makati’s 2025 finances: local revenue/i],
+  ['/reports/2025-social-services', /Makati’s 2025 finances: local revenue/i],
   ['/reports/2024-barangay-population', /Makati’s largest barangay has more than eighteen times/i],
   ['/participate', /What do you want to do/i],
   ['/hotlines', /Hotlines|Emergency/i],
@@ -197,7 +197,7 @@ test('compatibility redirects preserve query and hash context', async ({ page })
   }
 
   await expect(page.getByRole('heading', { level: 1 })).toContainText(
-    /Makati’s 2026 budget proposal is above the adopted 2025 plan/i
+    /Makati’s 2026 budget proposal: bigger than which 2025 budget/i
   );
 });
 
@@ -525,7 +525,7 @@ test('reports page lists standalone articles and never shows Makati Overview', a
 test('featured report article is a single narrative synthesis with internal citations', async ({ page }) => {
   await page.goto(baseURL + '/reports/2025-fiscal-profile');
   await expect(page.locator('article p').first()).toBeVisible();
-  await expect(page.getByRole('heading', { level: 1 })).toContainText(/Makati’s 2025 receipts were overwhelmingly local/i);
+  await expect(page.getByRole('heading', { level: 1 })).toContainText(/Makati’s 2025 finances: local revenue/i);
   await expect(page.getByText('Sources', { exact: true })).toBeVisible();
   await expect(page.getByText('Key findings', { exact: true })).toHaveCount(0);
 });
