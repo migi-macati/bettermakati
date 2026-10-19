@@ -18,7 +18,7 @@ import { Link, useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { isBarangayContextPath, withBarangayScope } from '../../hooks/useBarangayScope';
 import { searchIndex, type SearchItem } from '../../data/searchIndex';
-import { queryVariants } from '../../data/searchQueryVariants';
+import { scoreItem } from '../../data/searchRanking';
 import { serviceDirectory } from '../../data/serviceDirectory';
 import { officesForAgency } from '../../data/governmentServiceOffices';
 import { placeRegistryById } from '../../data/placeRegistry';
@@ -77,153 +77,6 @@ const normalize = (value: string) =>
     .replace(/[^a-z0-9\s]/g, ' ')
     .replace(/\s+/g, ' ')
     .trim();
-
-const editDistance = (a: string, b: string) => {
-  if (a === b) return 0;
-  if (!a.length) return b.length;
-  if (!b.length) return a.length;
-
-  const previous = Array.from({ length: b.length + 1 }, (_, index) => index);
-  const current = new Array<number>(b.length + 1);
-
-  for (let i = 1; i <= a.length; i += 1) {
-    current[0] = i;
-    for (let j = 1; j <= b.length; j += 1) {
-      current[j] = Math.min(
-        current[j - 1] + 1,
-        previous[j] + 1,
-        previous[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1)
-      );
-    }
-    for (let j = 0; j <= b.length; j += 1) previous[j] = current[j];
-  }
-
-  return previous[b.length];
-};
-
-const fuzzyMatch = (word: string, tokens: string[]) => {
-  if (word.length < 4) return false;
-  const tolerance = word.length >= 8 ? 2 : 1;
-  return tokens.some(
-    token =>
-      Math.abs(token.length - word.length) <= tolerance &&
-      editDistance(word, token) <= tolerance
-  );
-};
-
-const scoreVariant = (
-  item: SearchItem,
-  variant: string,
-  {
-    primary,
-    allowFuzzy,
-  }: {
-    primary: boolean;
-    allowFuzzy: boolean;
-  }
-) => {
-  const title = normalize(item.title);
-  const description = normalize(item.description);
-  const keywords = normalize(item.keywords);
-  const category = normalize(item.category);
-  const group = normalize(item.group);
-  const aliases = (item.aliases ?? []).map(normalize).filter(Boolean);
-  const words = variant.split(' ').filter(Boolean);
-  const titleTokens = title.split(' ').filter(Boolean);
-  const aliasTokens = aliases.flatMap(alias => alias.split(' ').filter(Boolean));
-  const keywordTokens = keywords.split(' ').filter(Boolean);
-  const descriptionTokens = description.split(' ').filter(Boolean);
-  const allTokens = [
-    ...titleTokens,
-    ...aliasTokens,
-    ...keywordTokens,
-    ...descriptionTokens,
-  ];
-
-  const weight = primary ? 1 : 0.72;
-  let score = 0;
-
-  // Canonical title remains strongest. Exact aliases come next, then phrase matches.
-  if (title === variant) score = Math.max(score, 100 * weight);
-  if (aliases.some(alias => alias === variant)) {
-    score = Math.max(score, 88 * weight);
-  }
-  if (title.startsWith(variant)) score = Math.max(score, 72 * weight);
-  if (aliases.some(alias => alias.startsWith(variant))) {
-    score = Math.max(score, 62 * weight);
-  }
-  if (title.includes(variant)) score = Math.max(score, 54 * weight);
-  if (aliases.some(alias => alias.includes(variant))) {
-    score = Math.max(score, 48 * weight);
-  }
-  if (category === variant || group === variant) {
-    score = Math.max(score, 38 * weight);
-  }
-  if (keywords.includes(variant)) score = Math.max(score, 30 * weight);
-  if (description.includes(variant)) score = Math.max(score, 16 * weight);
-
-  let wordScore = 0;
-  let matchedWords = 0;
-  for (const word of words) {
-    let matched = false;
-    if (titleTokens.some(token => token === word)) {
-      wordScore += 11;
-      matched = true;
-    } else if (titleTokens.some(token => token.startsWith(word))) {
-      wordScore += 9;
-      matched = true;
-    } else if (title.includes(word)) {
-      wordScore += 7;
-      matched = true;
-    }
-
-    if (aliases.some(alias => alias.includes(word))) {
-      wordScore += 7;
-      matched = true;
-    }
-    if (keywords.includes(word)) {
-      wordScore += 4;
-      matched = true;
-    }
-    if (description.includes(word)) {
-      wordScore += 1;
-      matched = true;
-    }
-
-    if (
-      allowFuzzy &&
-      !matched &&
-      fuzzyMatch(word, allTokens)
-    ) {
-      wordScore += 4;
-      matched = true;
-    }
-
-    if (matched) matchedWords += 1;
-  }
-
-  if (words.length > 1 && matchedWords === words.length) {
-    wordScore += title.includes(variant) || aliases.some(alias => alias.includes(variant))
-      ? 14
-      : 8;
-  }
-
-  return Math.max(score, wordScore * weight);
-};
-
-const scoreItem = (item: SearchItem, query: string) => {
-  const variants = queryVariants(query);
-  if (variants.length === 0) return item.featured ? 5 : 1;
-
-  const scores = variants.map((variant, index) =>
-    scoreVariant(item, variant, {
-      primary: index === 0,
-      allowFuzzy: index === 0,
-    })
-  );
-
-  return Math.max(...scores);
-};
 
 const searchDomainForItem = (item: SearchItem): Exclude<SearchDomainId, 'all'> | null => {
   if (item.group === 'Service') return 'services';
@@ -497,8 +350,8 @@ export default function ServiceSearch({
         scope === 'site' ? 8 : 12
       );
     }
-    return results.slice(0, 12);
-  }, [query, results, scope]);
+    return results.slice(0, unifiedHome ? 5 : 12);
+  }, [query, results, scope, unifiedHome]);
 
   const hasBroaderMatches = visibleResults.length === 0 && allRankedResults.length > 0;
   const activeFilterLabel =
@@ -732,7 +585,7 @@ export default function ServiceSearch({
           aria-label={heading + ' results'}
           className="absolute left-5 right-5 top-full z-40 mt-2 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-[0_24px_55px_rgba(26,43,32,0.22)] md:left-6 md:right-6"
         >
-          <div className="overflow-x-auto border-b border-gray-200 px-3 py-3">
+          {!unifiedHome && <div className="overflow-x-auto border-b border-gray-200 px-3 py-3">
             <div className="flex min-w-max gap-2">
               {tabs.map(item => (
                 <button
@@ -754,9 +607,9 @@ export default function ServiceSearch({
                 </button>
               ))}
             </div>
-          </div>
+          </div>}
 
-          {scope === 'site' && (
+          {scope === 'site' && !unifiedHome && (
             <div className="flex items-center justify-between gap-3 border-b border-gray-200 bg-gray-50 px-4 py-3">
               <label
                 htmlFor="site-search-domain"
@@ -820,7 +673,7 @@ export default function ServiceSearch({
                     </span>
                   </div>
                   <p className="mt-2 text-sm leading-relaxed text-gray-700">
-                    {item.description}
+                    {item.description.length > 180 ? item.description.slice(0, 177) + '…' : item.description}
                   </p>
                   {showServicePlaces && item.serviceId && servicePlaceById.has(item.serviceId) && (
                     <div className="mt-3 rounded-lg bg-white/80 px-3 py-2 text-sm text-gray-700">
