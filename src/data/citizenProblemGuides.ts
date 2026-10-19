@@ -50,7 +50,7 @@ export const citizenGuides: CitizenGuide[] = [
         detail: citizenText('Read Section 159–160 of the city code', 'Basahin ang Sections 159–160 ng city code') },
     ],
     expressions: [/karaoke|videoke|nagkakaraoke|kantahan|kumakanta|singing/i,
-      /loud music|loud neighbor|loud neighbour|noisy neighbo|maingay na kapitbahay|ingay ng kapitbahay|sobrang ingay|sound system/i],
+      /loud music|loud neighbor|loud neighbour|noisy neighbo|maingay\s+(?:(?:ang|na|yung|si|aming|naming)\s+)*kapitbahay|ingay ng kapitbahay|neighbor.{0,25}blasting music|sobrang ingay|sound system/i],
     placeRelated: false,
   },
   {
