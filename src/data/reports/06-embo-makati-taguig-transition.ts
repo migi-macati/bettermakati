@@ -159,6 +159,17 @@ const reportModule: FeaturedReportModule = {
           },
         ],
       },
+      {
+        id: 'reader-implications',
+        heading: 'Follow the service, not just the old city label',
+        blocks: [
+          {
+            kind: 'paragraph',
+            role: 'analysis',
+            text: 'For residents, the useful distinction is who operates the service now, who owns the facility and which authority is deciding any remaining dispute. Schools, health care and access to a public facility can therefore require different answers. Makati and Taguig should publish a joint, dated directory showing the operating office, eligibility, contact channel and escalation route for each transferred service. That would make the transition easier to navigate without asking residents to resolve the ownership dispute themselves.',
+          },
+        ],
+      },
     ],
     sources: [
       {
@@ -447,6 +458,17 @@ const reportModule: FeaturedReportModule = {
             role: 'analysis',
             text: 'Sa 3 October 2026 research cutoff ng report, walang nahanap na mas bagong publicly verifiable final merits decision na nagresolba sa broader facility-possession o ownership case. Kaya tatlong hiwalay na statements ang suportado ng current record: settled na ang Taguig jurisdiction; may court-backed operational control ang Taguig sa facilities na sakop ng preliminary injunction; at unresolved pa sa public record na nahanap para sa report ang final ownership o better right of possession.',
             evidence: { sourceIds: ['14'] },
+          },
+        ],
+      },
+      {
+        id: 'reader-implications',
+        heading: 'Sundan kung sino ang nagpapatakbo ng serbisyo',
+        blocks: [
+          {
+            kind: 'paragraph',
+            role: 'analysis',
+            text: 'Para sa residents, magkakaibang tanong kung sino ang nagpapatakbo ng serbisyo ngayon, sino ang may-ari ng facility at sino ang magpapasya sa natitirang dispute. Dapat maglabas ang Makati at Taguig ng iisang directory na may petsa, operating office, eligibility, contact channel at escalation route para sa bawat transferred service. Recommendation ito para mas madaling makakuha ng serbisyo habang may magkahiwalay pang usapin sa ownership.',
           },
         ],
       },

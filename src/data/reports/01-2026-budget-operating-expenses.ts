@@ -25,8 +25,7 @@ const reportModule: FeaturedReportModule = {
     schemaVersion: 2,
     slug: '2026-budget-operating-expenses',
     date: reportPublishedOn,
-    headline:
-      'Makati’s 2026 budget proposal is above the adopted 2025 plan but below the city’s later 2025 estimate',
+    headline: 'Makati’s 2026 budget proposal: bigger than which 2025 budget?',
     subheadline: `${moneyB(budgetSummary2026.totalBudgetM)} proposed for 2026 is ${percent(
       pctChange(budgetSummary.totalBudgetM, budgetSummary2026.totalBudgetM)
     )} above the original 2025 budget, while remaining ${percent(
@@ -103,7 +102,7 @@ const reportModule: FeaturedReportModule = {
       },
       {
         id: 'composition',
-        heading: 'Most of the adopted-plan increase is MOOE',
+        heading: 'Operating expenses account for most of the increase',
         blocks: [
           {
             kind: 'stat',
@@ -150,6 +149,17 @@ const reportModule: FeaturedReportModule = {
             evidence: {
               sourceIds: ['1', '2', '3'],
             },
+          },
+        ],
+      },
+      {
+        id: 'reader-implications',
+        heading: 'What should the budget comparison tell residents?',
+        blocks: [
+          {
+            kind: 'paragraph',
+            role: 'analysis',
+            text: 'The practical question is what the additional operating money buys. The city budget office should reconcile the original plan, the later estimate and actual expenditure in one table. Departments should then explain the largest changes through quantities, unit costs and service targets: more people served, longer opening hours, maintenance backlogs reduced or higher costs for the same output. The city council can use those comparisons to scrutinize the proposal. A larger operating allocation alone cannot answer whether services will improve.',
           },
         ],
       },
