@@ -228,7 +228,7 @@ const projectionRows = [
     scenario: 'Low',
     assumption: '2.0% yearly',
     y2030: '₱1.398T',
-    y2035: '₱1.544T',
+    y2035: '₱1.543T',
     y2040: '₱1.704T',
     nationalShare: '4.11%',
   },
@@ -236,16 +236,16 @@ const projectionRows = [
     scenario: 'Middle',
     assumption: '4.5% yearly',
     y2030: '₱1.578T',
-    y2035: '₱1.967T',
-    y2040: '₱2.451T',
+    y2035: '₱1.966T',
+    y2040: '₱2.450T',
     nationalShare: '5.91%',
   },
   {
     scenario: 'High',
     assumption: '6.5% yearly',
     y2030: '₱1.735T',
-    y2035: '₱2.377T',
-    y2040: '₱3.257T',
+    y2035: '₱2.376T',
+    y2040: '₱3.256T',
     nationalShare: '7.85%',
   },
 ];
@@ -479,7 +479,7 @@ const reportModule: FeaturedReportModule = {
                 points: [
                   { label: '2025', value: 1.266 },
                   { label: '2030', value: 1.398 },
-                  { label: '2035', value: 1.544 },
+                  { label: '2035', value: 1.543 },
                   { label: '2040', value: 1.704 },
                 ],
               },
@@ -488,8 +488,8 @@ const reportModule: FeaturedReportModule = {
                 points: [
                   { label: '2025', value: 1.266 },
                   { label: '2030', value: 1.578 },
-                  { label: '2035', value: 1.967 },
-                  { label: '2040', value: 2.451 },
+                  { label: '2035', value: 1.966 },
+                  { label: '2040', value: 2.450 },
                 ],
               },
               {
@@ -497,8 +497,8 @@ const reportModule: FeaturedReportModule = {
                 points: [
                   { label: '2025', value: 1.266 },
                   { label: '2030', value: 1.735 },
-                  { label: '2035', value: 2.377 },
-                  { label: '2040', value: 3.257 },
+                  { label: '2035', value: 2.376 },
+                  { label: '2040', value: 3.256 },
                 ],
               },
             ],
@@ -926,7 +926,7 @@ const reportModule: FeaturedReportModule = {
                 points: [
                   { label: '2025', value: 1.266 },
                   { label: '2030', value: 1.398 },
-                  { label: '2035', value: 1.544 },
+                  { label: '2035', value: 1.543 },
                   { label: '2040', value: 1.704 },
                 ],
               },
@@ -935,8 +935,8 @@ const reportModule: FeaturedReportModule = {
                 points: [
                   { label: '2025', value: 1.266 },
                   { label: '2030', value: 1.578 },
-                  { label: '2035', value: 1.967 },
-                  { label: '2040', value: 2.451 },
+                  { label: '2035', value: 1.966 },
+                  { label: '2040', value: 2.450 },
                 ],
               },
               {
@@ -944,8 +944,8 @@ const reportModule: FeaturedReportModule = {
                 points: [
                   { label: '2025', value: 1.266 },
                   { label: '2030', value: 1.735 },
-                  { label: '2035', value: 2.377 },
-                  { label: '2040', value: 3.257 },
+                  { label: '2035', value: 2.376 },
+                  { label: '2040', value: 3.256 },
                 ],
               },
             ],
