@@ -35,3 +35,29 @@
 2. Re-run quality/build and required GitHub build/browser-smoke on the **exact PR head**. CI is a technical gate, not editorial verification.
 3. Open a scoped PR without bypassing protections; record any rejected operation verbatim. Only after merge and matching READY production SHA claim **deployed**. Rendered-page confirmation is a separate `live_verified` milestone.
 4. Schedule separate bounded re-extraction for unresolved OpenSTAT historical/sector data; do not block this narrower, source-supported correction if the text makes no stronger claim than its cited evidence.
+
+
+## Supplemental PSA Figure 2 check — 21 October 2026
+
+**Primary document:** Philippine Statistics Authority NCR PSO III, *City of Makati's Economy Grows by 5.0 Percent in 2025*, 6 October 2026, reference 2026-032, **page 2, Figure 2**, https://rssoncr.psa.gov.ph/system/files/attachment-dir/CityMakati_PR_MFU_NMTB_EAGR_NHD_fin.pdf (checked 21 October 2026).
+
+The signed PSA press-release chart reports **2024–2025 industry growth rates** for all 14 non-suppressed industries. This expands independent corroboration beyond the six rates in the release narrative. The chart values, compared with the article's more precise displayed growth rates, are:
+
+| Industry | PSA Figure 2 | Article | Verdict |
+| --- | ---: | ---: | --- |
+| Human health and social work | 11.0% | 11.03% | Consistent at PSA chart precision |
+| Transport and storage | 10.7% | 10.69% | Consistent |
+| Public administration | 6.5% | 6.51% | Consistent |
+| Professional and business services | 6.3% | 6.35% | Approximate agreement; underlying precision needed to explain rounding |
+| Accommodation and food | 6.05% | 6.05% | Matches |
+| Financial and insurance | 5.97% | 5.97% | Matches |
+| Wholesale and retail trade | 5.7% | 5.71% | Consistent |
+| Education | 4.7% | 4.66% | Consistent |
+| Other services | 4.1% | 4.10% | Consistent |
+| Information and communication | 4.0% | 3.97% | Consistent |
+| Manufacturing | 3.1% | 3.08% | Consistent |
+| Real estate and dwellings | -2.1% | -2.06% | Consistent |
+| Utilities and waste | -2.6% | -2.63% | Consistent |
+| Construction | -13.5% | -13.51% | Consistent |
+
+**Limits:** This chart confirms the **direction and approximate growth rate of all 14 published sectors**, not the article's exact two-decimal growth-rate precision, real-GVA pesos, GDP shares, or sector contributions to net growth. The PSA Excel attachment at https://psa.gov.ph/system/files/sead/PUB_NCR_Ind_2018PSNA_2018-2025_s.xlsx remains inaccessible for source-cell extraction in this environment. Do not mark those exact cells verified or merge the PR on this check alone. No new interviews, personal data, or serious adverse allegations. Editorial disposition remains **UPDATE / HOLD MERGE** until the unresolved primary-cell checks and visible dated correction notice are complete.
