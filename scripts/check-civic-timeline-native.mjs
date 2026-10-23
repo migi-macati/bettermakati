@@ -192,7 +192,7 @@ if (
   reportCount < 5 ||
   supersededElectionCount !== 4 ||
   directCityMonitorCount < 2 ||
-  directCityMonitorNoticeCount !== 2 ||
+  directCityMonitorNoticeCount !== 3 ||
   serviceAvailabilityCount !== 10
 ) {
   problems.push(
@@ -233,6 +233,21 @@ for (const marker of [
   if (!cityMonitor.includes(marker)) {
     problems.push('Verified 8 October procurement marker missing: ' + marker);
   }
+}
+
+const mmdaRecord = cityMonitor
+  .split("id: '2026-10-24-mmda-asean-event-permit-suspension'")[1]
+  ?.split("\n  },")[0] ?? '';
+if (
+  !mmdaRecord.includes("publishedDate: '2026-10-21'") ||
+  !mmdaRecord.includes("sourceReviewedOn: '2026-10-23'") ||
+  !mmdaRecord.includes('GMA News corroboration') ||
+  mmdaRecord.includes('effectiveFrom:') ||
+  mmdaRecord.includes('effectiveUntil:')
+) {
+  problems.push(
+    'MMDA advisory must preserve verified calendar dates, corroboration and no invented clock times.'
+  );
 }
 
 if (
