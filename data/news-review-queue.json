@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "generatedAt": "2026-09-28T13:07:00+08:00",
+  "generatedAt": "2026-10-24T05:09:49.767Z",
   "sourceSnapshotVersion": 1,
   "resolutionPolicyVersion": "2026-09-28.w5-8e",
   "doctrine": {
@@ -18,50 +18,40 @@
     "suppressedResolved": 0,
     "resolutionCount": 0,
     "byOwner": {
-      "city-monitor": 1,
       "services": 1
     }
   },
   "candidates": [
     {
-      "id": "news-review:story:2026-09-19:city-hall-adopts-day-onsite-workweek-extends-service-hours",
+      "id": "news-review:story:2026-10-17:lto-suspends-license-driver-blocking-pedestrian-lane",
       "reviewStatus": "owner-review-needed",
       "publicEligible": false,
-      "storyClusterId": "story:2026-09-19:city-hall-adopts-day-onsite-workweek-extends-service-hours",
-      "clusterKey": "makati city hall adopts 4 day onsite workweek extends service hours 7 pm",
-      "title": "Makati City Hall adopts 4-day onsite workweek; extends service hours to 7 PM",
-      "description": "Official Makati City announcement dated 19 September 2026. Check the notice for the covered offices, schedule and service-hour details.",
-      "publisher": "Makati Web Portal",
-      "sourceClass": "government-primary",
-      "sourceUrl": "https://www.makati.gov.ph/content/news/135398",
+      "storyClusterId": "story:2026-10-17:lto-suspends-license-driver-blocking-pedestrian-lane",
+      "clusterKey": "lto suspends license makati driver blocking pedestrian lane",
+      "title": "LTO suspends license of Makati driver for blocking a pedestrian lane",
+      "description": "LTO suspends license of Makati driver for blocking a pedestrian lane &nbsp;&nbsp; Inquirer.net",
+      "publisher": "Inquirer.net",
+      "sourceClass": "news-media",
+      "sourceUrl": "https://news.google.com/rss/articles/CBMipwFBVV95cUxQY2dPeldsbUNrcmx6Vk5OUF9lYndGUk81V2pKbVNfeDlYRVFzWk14UVhMNnhMRkQyYUxERTBwNkRkbi1hTzJvVXB5LUo3aE5jdXFNZzMycDg4OXFsNUk0UEpsdzJmZGJDeElfd2xDVVZJbE1BaXlQTlBzRFZRcUhwSjB4aEthVjBtTVFqV043aDFkcElVd0wyR2h3NjBVTW1HdkFkVWt5UdIBrAFBVV95cUxNRzlzMVFocnBhUDdZbkpjVTdxSG9GOG5WekVFT25GajBWb3ltT3FiTWxOY1hqWjhGSTBfOTdVSWtYMVcxSF9JekFUU2lSR2Y5US1RdlJtS2Znc2U2Z3pKRmhNNHlyQk0zaktheHdmZG5vYmdxZEl0ck01ekN2MS00X0dRWENPZnhNM0xXcWJmR2Y4RldhdWRGMkJ2b1Z4UHVsRWJQNVBXdDNkVkwx?oc=5",
       "coverageSources": [
         {
-          "url": "https://www.makati.gov.ph/content/news/135398",
-          "publisher": "Makati Web Portal",
-          "sourceClass": "government-primary",
-          "publishedAt": "2026-09-19T00:00:00+08:00"
+          "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxQY2dPeldsbUNrcmx6Vk5OUF9lYndGUk81V2pKbVNfeDlYRVFzWk14UVhMNnhMRkQyYUxERTBwNkRkbi1hTzJvVXB5LUo3aE5jdXFNZzMycDg4OXFsNUk0UEpsdzJmZGJDeElfd2xDVVZJbE1BaXlQTlBzRFZRcUhwSjB4aEthVjBtTVFqV043aDFkcElVd0wyR2h3NjBVTW1HdkFkVWt5UdIBrAFBVV95cUxNRzlzMVFocnBhUDdZbkpjVTdxSG9GOG5WekVFT25GajBWb3ltT3FiTWxOY1hqWjhGSTBfOTdVSWtYMVcxSF9JekFUU2lSR2Y5US1RdlJtS2Znc2U2Z3pKRmhNNHlyQk0zaktheHdmZG5vYmdxZEl0ck01ekN2MS00X0dRWENPZnhNM0xXcWJmR2Y4RldhdWRGMkJ2b1Z4UHVsRWJQNVBXdDNkVkwx?oc=5",
+          "publisher": "Inquirer.net",
+          "sourceClass": "news-media",
+          "publishedAt": "Sat, 17 Oct 2026 03:36:00 GMT"
         }
       ],
-      "publishedAt": "2026-09-19T00:00:00+08:00",
-      "retrievedAt": "2026-09-28T13:07:00+08:00",
+      "publishedAt": "Sat, 17 Oct 2026 03:36:00 GMT",
+      "retrievedAt": "2026-10-24T05:09:49.767Z",
       "freshness": "current",
       "clusterSize": 1,
       "primaryOwner": "services",
-      "suggestedOwners": [
-        "services",
-        "city-monitor"
-      ],
+      "suggestedOwners": ["services"],
       "routes": [
         {
           "topic": "services",
           "owner": "services",
           "action": "Verify the service owner, affected service and effective date before changing a service guide.",
-          "existingCanonicalMatch": false
-        },
-        {
-          "topic": "official-notice",
-          "owner": "city-monitor",
-          "action": "Review the item as a City Monitor discovery signal and route to a stronger canonical owner when one exists.",
           "existingCanonicalMatch": false
         }
       ],
@@ -69,11 +59,7 @@
       "entityContext": [],
       "nextAction": "Review the original article, locate the strongest owner-specific primary/official evidence, then update or create a canonical record only if that evidence satisfies the destination domain.",
       "note": "This is an internal discovery/review candidate. News reporting is not itself a canonical BetterMakati record.",
-      "materialEvidenceKeys": [
-        "official-source:https://www.makati.gov.ph/content/news/135398",
-        "route:city-monitor:official-notice",
-        "route:services:services"
-      ]
+      "materialEvidenceKeys": ["route:services:services"]
     }
   ],
   "suppressedResolved": []
