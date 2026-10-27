@@ -1060,14 +1060,18 @@ test('owner task: SSS benefit journey reaches Makati-facing service locations', 
   await expect(page.getByText(/Makati|office|branch/i).first()).toBeVisible();
 });
 
-test('Projects & Budget separates adopted plan, current estimate and 2026 proposal', async ({ page }) => {
+test('Projects & Budget distinguishes 2026 report figures from adopted and estimated series', async ({ page }) => {
   await page.goto(baseURL + '/projects-budget');
   await expect(page.getByText('2025 adopted budget plan', { exact: true })).toBeVisible();
   await expect(page.getByText('2025 current-year estimate', { exact: true })).toBeVisible();
-  await expect(page.getByText('2026 proposed city budget', { exact: true })).toBeVisible();
+  await expect(page.getByText('2026 budget report total', { exact: true })).toBeVisible();
   await expect(page.getByText('2025 adopted', { exact: true }).first()).toBeVisible();
   await expect(page.getByText('2025 current estimate', { exact: true }).first()).toBeVisible();
-  await expect(page.getByText('2026 proposed', { exact: true }).first()).toBeVisible();
+  await expect(page.getByText('2026 report figure', { exact: true }).first()).toBeVisible();
+  const correction = page.getByRole('complementary', { name: '2026 budget status correction' });
+  await expect(correction.getByText('Correction · 27 October 2026', { exact: true })).toBeVisible();
+  await expect(correction.getByText(/original signed appropriation ordinance has not been inspected/i)).toBeVisible();
+  await expect(correction.locator('[lang="fil"]')).toBeVisible();
 });
 
 test('Budget Explorer exposes the complete reconciled 2026 citywide summary', async ({ page }) => {
