@@ -264,13 +264,34 @@ export default function ProjectsBudget() {
 
       <Section id="budget" className="bm-evidence-page bg-[#fffdf8]">
         <div className="section-eyebrow">
-          2026 proposed budget · 2025 city estimate · DBM/BLGF 2025 statement
+          2026 annual budget report · 2025 city estimate · DBM/BLGF 2025 statement
         </div>
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <Heading>{t('evidence.budget.title')}</Heading>
           <SharePage title="Makati Projects & Budget | BetterMakati" />
         </div>
         <LastReviewed date="2026-09-25" />
+        <aside className="mt-4 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm leading-relaxed text-gray-800" aria-label="2026 budget status correction">
+          <p className="font-bold">Correction · 27 October 2026</p>
+          <p className="mt-2">
+            This page previously described Makati’s ₱21-billion 2026 budget as a pending proposal.
+            <a href="https://mb.com.ph/2025/11/24/mayor-nancy-inks-p21-b-makati-city-budget-for-2026" target="_blank" rel="noreferrer" className="ml-1 underline underline-offset-2">
+              Manila Bulletin reported on 24 November 2025
+            </a>{' '}
+            that Mayor Nancy Binay had signed the budget, citing Makati PIO. The original signed
+            appropriation ordinance has not been inspected. Detailed 2026 allocations on this
+            page still come from the earlier Annual Budget Report and should not be treated as
+            independently verified final enacted line items.
+          </p>
+          <p className="mt-2" lang="fil">
+            Paglilinaw: Hindi na dapat ilarawan bilang nakabinbing proposal ang ₱21-bilyong
+            budget ng Makati para sa 2026. Ayon sa ulat ng Manila Bulletin noong
+            24 Nobyembre 2025, napirmahan na ito ng alkalde. Hindi pa nasusuri ang mismong
+            pinirmahang appropriation ordinance. Ang detalye ng mga alokasyon sa pahinang ito
+            ay mula pa rin sa naunang Annual Budget Report, kaya hindi pa kumpirmadong
+            kapareho ng mga pinal na alokasyon.
+          </p>
+        </aside>
 
         {barangay && (
           <div className="mt-4 rounded-2xl border border-primary-100 bg-white p-5">
@@ -392,7 +413,7 @@ export default function ProjectsBudget() {
 
         <div className="mt-8 grid grid-cols-2 lg:grid-cols-3 gap-4">
           <Metric
-            label="2026 proposed city budget"
+            label="2026 budget report total"
             value={peso(budgetSummary2026.totalBudgetM)}
             detail={
               'About ' +
@@ -436,8 +457,8 @@ export default function ProjectsBudget() {
         <CitizenSummary
           className="mt-6"
           eyebrow="2026 budget in brief"
-          title="The 2026 proposal is above the 2025 adopted plan, but below the city’s latest 2025 estimate"
-          summary="Makati’s 2026 proposed appropriation is ₱21.0B. That is ₱2.0B (+10.5%) above the ₱19.0B adopted 2025 plan, while it is ₱3.37B (-13.8%) below the ₱24.37B Current Year (Estimate) shown in the same 2026 Annual Budget Report."
+          title="The 2026 budget report total is above the 2025 adopted plan, but below the city’s latest 2025 estimate"
+          summary="The 2026 Annual Budget Report lists ₱21.0B, or ₱2.0B (+10.5%) above the ₱19.0B adopted 2025 plan and ₱3.37B (-13.8%) below the ₱24.37B 2025 Current Year (Estimate). Mayor Nancy Binay was subsequently reported to have signed a ₱21B 2026 budget; these detailed report figures have not been reconciled to the signed ordinance."
           points={[
             {
               label: 'Operating',
@@ -497,7 +518,7 @@ export default function ProjectsBudget() {
                 <th className="px-4 py-3 font-bold">Budget component</th>
                 <th className="px-4 py-3 font-bold text-right">2025 adopted</th>
                 <th className="px-4 py-3 font-bold text-right">2025 current estimate</th>
-                <th className="px-4 py-3 font-bold text-right">2026 proposed</th>
+                <th className="px-4 py-3 font-bold text-right">2026 report figure</th>
                 <th className="px-4 py-3 font-bold text-right">vs adopted</th>
                 <th className="px-4 py-3 font-bold text-right">vs estimate</th>
               </tr>
@@ -1068,7 +1089,7 @@ export default function ProjectsBudget() {
           <div>
             <Heading level={2}>{t('evidence.budget.appropriations')}</Heading>
             <p className="mt-1 max-w-3xl text-gray-600">
-              Proposed appropriations from all {officeBudgetTotals2026.length} office and department forms in the 2026 Annual Budget Report.
+              Appropriations listed in all {officeBudgetTotals2026.length} office and department forms in the 2026 Annual Budget Report.
             </p>
             <div className="mt-3 flex flex-wrap gap-2 text-xs font-bold">
               <span className="rounded-full bg-primary-50 px-3 py-1.5 text-primary-800">
@@ -1110,7 +1131,7 @@ export default function ProjectsBudget() {
             <thead className="bg-gray-50">
               <tr>
                 <th className="px-4 py-3 font-bold">Office / department</th>
-                <th className="px-4 py-3 font-bold text-right">2026 proposed</th>
+                <th className="px-4 py-3 font-bold text-right">2026 report figure</th>
                 <th className="px-4 py-3 font-bold text-right">Share of ₱21.0B</th>
                 <th className="px-4 py-3 font-bold">Source pages</th>
               </tr>
@@ -1224,7 +1245,7 @@ export default function ProjectsBudget() {
                   <th className="px-4 py-3 font-bold">Category</th>
                   <th className="px-4 py-3 font-bold">Account code</th>
                   <th className="px-4 py-3 font-bold">Budget line</th>
-                  <th className="px-4 py-3 font-bold text-right">2026 proposed</th>
+                  <th className="px-4 py-3 font-bold text-right">2026 report figure</th>
                 </tr>
               </thead>
               <tbody>
