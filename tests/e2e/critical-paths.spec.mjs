@@ -2753,3 +2753,29 @@ for (const language of ['en', 'fil']) {
     await expect(page.getByText(language === 'en' ? 'Ledger overview reviewed:' : 'Huling review ng ledger overview:', { exact: true })).toBeVisible();
   });
 }
+
+for (const language of ['en', 'fil']) {
+  test(`universal search audited resident journeys (${language})`, async ({ page }) => {
+    await page.setViewportSize({ width: language === 'fil' ? 390 : 1440, height: 900 });
+    await page.addInitScript(lang => localStorage.setItem('i18nextLng', lang), language);
+    await page.goto(baseURL + '/');
+    const search = page.locator('#site-search');
+    await search.fill('yellow card');
+    await expect(page.getByRole('listbox').getByRole('option').first()).toContainText('Makati Health Plus / Yellow Card');
+    await expect(page.getByRole('listbox').getByRole('option')).toHaveCount(5);
+    await search.fill('maingay ang kapitbahay');
+    await search.press('Enter');
+    await expect(page.getByRole('heading', {name: language === 'fil' ? 'Maingay na kapitbahay' : 'Noisy neighbor', exact: true})).toBeVisible();
+    expect(new URL(page.url()).search).toBe('');
+    await page.goto(baseURL + '/');
+    await search.fill('gusto ko magmungkahi ng bike lane');
+    await search.press('Enter');
+    await expect(page.getByRole('heading', {name: language === 'fil' ? 'May idea ka para sa Makati?' : 'Have an idea for Makati?'})).toBeVisible();
+    await page.goto(baseURL + '/');
+    await search.fill('business permit');
+    await search.press('Enter');
+    await expect(page.getByRole('heading', {name: language === 'fil' ? 'Bagong application o renewal?' : 'New application or renewal?'})).toBeVisible();
+    await expect(page.getByRole('link', {name: language === 'fil' ? 'I-renew ang permit' : 'Renew a permit', exact:true})).toHaveAttribute('href', '/services/guide/renew-business-permit');
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBeTruthy();
+  });
+}
