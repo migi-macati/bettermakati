@@ -691,7 +691,7 @@ export const serviceDirectory: ServiceDirectoryItem[] = [
     description: 'Assessment and assistance for qualified residents facing medical or financial need.',
     href: makatiCharter,
     sourceUrl: 'https://www.makati.gov.ph/assets/uploads/staticmenu/docs/securing_social_services_%28citizens_charter%2920190104113800.pdf',
-    keywords: 'medical financial assistance medicine hospital social welfare mswd indigency aics ayuda prescription clinical abstract',
+    keywords: 'medical financial assistance medicine hospital bill billing hospital bills bayarin sa ospital ospital bill hospital bill sa makati social welfare mswd indigency aics ayuda prescription clinical abstract',
     featured: true,
   },
   {
