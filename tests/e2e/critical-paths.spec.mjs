@@ -7,19 +7,30 @@ for (const language of ['en', 'fil']) {
     test(`BM-ORD-003 Today relevance (${language}, ${width})`, async ({ page }) => {
       await page.setViewportSize({ width, height: 900 });
       await page.clock.setFixedTime(new Date('2026-10-16T09:00:00Z'));
-      await page.addInitScript(lang => localStorage.setItem('i18nextLng', lang), language);
       const brief = { id: 'daily-2026-09-24', cadence: 'daily', title: 'Substantive September brief', periodStart: '2026-09-24', periodEnd: '2026-09-24', publishedAt: '2026-09-25T00:00:00Z', recordIds: ['test-record'], reviewSignals: [], failedChecks: [] };
-      let briefFixtureServed = false;
-      await page.route(/\/civic-briefs\.json(?:\?.*)?$/, route => {
-        briefFixtureServed = true;
-        return route.fulfill({ json: { briefs: [
-          { ...brief, id: 'empty', title: 'Empty October brief', publishedAt: '2026-10-02T00:00:00Z', recordIds: [] }, brief,
-        ] } });
-      });
-      await page.route(/^https:\/\/api\.open-meteo\.com\/v1\/forecast(?:\?.*)?$/, route => route.fulfill({ json: { current: {} } }));
-      await page.route(/\/api\/news(?:\?.*)?$/, route => route.fulfill({ json: { items: [] } }));
+      await page.addInitScript(({ lang, fixture }) => {
+        localStorage.setItem('i18nextLng', lang);
+        const nativeFetch = window.fetch.bind(window);
+        window.fetch = async (input, init) => {
+          const rawUrl = typeof input === 'string' ? input : input.url;
+          const url = new URL(rawUrl, location.origin);
+          if (url.pathname === '/civic-briefs.json') {
+            window.__briefFixtureServed = true;
+            return new Response(JSON.stringify({ briefs: [
+              { ...fixture, id: 'empty', title: 'Empty October brief', publishedAt: '2026-10-02T00:00:00Z', recordIds: [] }, fixture,
+            ] }), { status: 200, headers: { 'Content-Type': 'application/json' } });
+          }
+          if (url.origin === 'https://api.open-meteo.com' && url.pathname === '/v1/forecast') {
+            return new Response(JSON.stringify({ current: {} }), { status: 200, headers: { 'Content-Type': 'application/json' } });
+          }
+          if (url.pathname === '/api/news') {
+            return new Response(JSON.stringify({ items: [] }), { status: 200, headers: { 'Content-Type': 'application/json' } });
+          }
+          return nativeFetch(input, init);
+        };
+      }, { lang: language, fixture: brief });
       await page.goto(baseURL + '/today');
-      await expect.poll(() => briefFixtureServed).toBe(true);
+      await expect.poll(() => page.evaluate(() => window.__briefFixtureServed === true)).toBe(true);
       await expect(page.getByText('Substantive September brief', { exact: true })).toBeVisible();
       await expect(page.getByText('Empty October brief', { exact: true })).toHaveCount(0);
       await expect(page.getByText(language === 'en'
