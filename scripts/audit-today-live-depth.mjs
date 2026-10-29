@@ -1,4 +1,5 @@
 import { readFile } from 'node:fs/promises';
+import './check-today-relevance.mjs';
 
 const today = await readFile('src/pages/Today.tsx', 'utf8');
 const live = await readFile('src/pages/LiveMakati.tsx', 'utf8');

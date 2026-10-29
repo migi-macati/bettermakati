@@ -2,6 +2,58 @@ import { test, expect } from '@playwright/test';
 import { readdirSync, readFileSync } from 'node:fs';
 
 const baseURL = process.env.BASE_URL || 'http://127.0.0.1:4173';
+for (const language of ['en', 'fil']) {
+  for (const width of [390, 1440]) {
+    test(`BM-ORD-003 Today relevance (${language}, ${width})`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await page.clock.setFixedTime(new Date('2026-10-16T09:00:00Z'));
+      const brief = { id: 'daily-2026-09-24', cadence: 'daily', title: 'Substantive September brief', periodStart: '2026-09-24', periodEnd: '2026-09-24', publishedAt: '2026-09-25T00:00:00Z', recordIds: ['test-record'], reviewSignals: [], failedChecks: [] };
+      await page.addInitScript(({ lang, fixture }) => {
+        localStorage.setItem('i18nextLng', lang);
+        const nativeFetch = window.fetch.bind(window);
+        window.fetch = async (input, init) => {
+          const rawUrl = typeof input === 'string' ? input : input.url;
+          const url = new URL(rawUrl, location.origin);
+          if (url.pathname === '/civic-briefs.json') {
+            window.__briefFixtureServed = true;
+            return new Response(JSON.stringify({ briefs: [
+              { ...fixture, id: 'empty', title: 'Empty October brief', publishedAt: '2026-10-02T00:00:00Z', recordIds: [] }, fixture,
+            ] }), { status: 200, headers: { 'Content-Type': 'application/json' } });
+          }
+          if (url.origin === 'https://api.open-meteo.com' && url.pathname === '/v1/forecast') {
+            return new Response(JSON.stringify({ current: {} }), { status: 200, headers: { 'Content-Type': 'application/json' } });
+          }
+          if (url.pathname === '/api/news') {
+            return new Response(JSON.stringify({ items: [] }), { status: 200, headers: { 'Content-Type': 'application/json' } });
+          }
+          return nativeFetch(input, init);
+        };
+      }, { lang: language, fixture: brief });
+      await page.goto(baseURL + '/today');
+      await expect.poll(() => page.evaluate(() => window.__briefFixtureServed === true)).toBe(true);
+      await expect(page.getByText('Substantive September brief', { exact: true })).toBeVisible();
+      await expect(page.getByText('Empty October brief', { exact: true })).toHaveCount(0);
+      await expect(page.getByText(language === 'en'
+        ? 'Latest brief containing records. Check its coverage dates; this is not a live update for today.'
+        : 'Pinakahuling brief na may mga record. Tingnan ang sakop na petsa; hindi ito live update ngayong araw.')).toBeVisible();
+      const upcoming = page.getByRole('heading', { name: 'Now & Next', exact: true }).locator('../..');
+      await expect(upcoming).toContainText('30');
+      await expect(upcoming).not.toContainText('2028');
+      await expect(page.getByRole('link', { name: language === 'en' ? 'Read this brief' : 'Basahin ang brief', exact:true })).toHaveAttribute('href', '/briefs?brief=daily-2026-09-24');
+      await expect(page.getByRole('heading', { name: 'Recently Published', exact: true })).toBeVisible();
+      const calendar = page.getByRole('link', { name: 'Open full calendar' });
+      await calendar.focus();
+      await expect(calendar).toBeFocused();
+      await page.keyboard.press('Enter');
+      await expect(page).toHaveURL(baseURL + '/calendar');
+      await expect(page.locator('main')).toContainText('2028');
+      await page.goBack();
+      await expect(calendar).toBeVisible();
+      expect(await page.evaluate(() => localStorage.getItem('i18nextLng'))).toBe(language);
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy();
+    });
+  }
+}
 const reportIndexHrefs = readdirSync('src/data/reports')
   .filter(name => name.endsWith('.ts'))
   .sort((a, b) => a.localeCompare(b))
