@@ -101,7 +101,10 @@ const Services: React.FC = () => {
         : 'All';
   const requestedCategory = directoryParams.get('category');
   const directoryCategory =
-    requestedCategory && serviceDirectoryCategories.includes(requestedCategory)
+    requestedCategory &&
+    serviceDirectoryCategories.includes(
+      requestedCategory as (typeof serviceDirectoryCategories)[number]
+    )
       ? requestedCategory
       : 'All';
   const requestedShown = Number(directoryParams.get('shown'));
