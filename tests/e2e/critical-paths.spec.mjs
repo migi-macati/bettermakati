@@ -866,7 +866,66 @@ test('services directory omits completeness scorekeeping', async ({ page }) => {
   await expect(page.getByText(/structured · .*verified/i)).toHaveCount(0);
   await expect(page.getByText('Detailed guide', { exact: true })).toHaveCount(0);
   await expect(page.getByText('Detail checked with caveat', { exact: true })).toHaveCount(0);
-  await expect(page.getByText(/results$/).first()).toBeVisible();
+  await expect(page.locator('[data-service-results-status]')).toBeVisible();
+});
+
+test('BM-ORD-004 services directory bounds results and restores URL state', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.addInitScript(() => localStorage.setItem('i18nextLng', 'en'));
+  await page.goto(baseURL + '/services');
+
+  const results = page.locator('[data-service-result]');
+  const status = page.locator('[data-service-results-status]');
+  await expect(results).toHaveCount(20);
+  await expect(status).toContainText('Showing 20 of 151 services');
+
+  const loadMore = page.getByRole('button', { name: 'Load 20 more', exact: true });
+  await loadMore.focus();
+  await expect(loadMore).toBeFocused();
+  await page.keyboard.press('Enter');
+  await expect(results).toHaveCount(40);
+  await expect(page).toHaveURL(/shown=40/);
+
+  const search = page.locator('#service-directory-search');
+  await search.fill('Zoning certificate');
+  await expect(page.getByRole('heading', {
+    name: 'Zoning certificate / certificate of non-conformance',
+    exact: true,
+  })).toBeVisible();
+  await expect(status).toContainText('Showing 1 of 1 services');
+
+  await search.fill('');
+  await page.getByRole('button', { name: 'Load 20 more', exact: true }).click();
+  await expect(results).toHaveCount(40);
+  await results.first().getByRole('link', { name: 'Open guide', exact: true }).click();
+  await page.goBack();
+
+  await expect(page).toHaveURL(/shown=40/);
+  await expect(results).toHaveCount(40);
+  await expect(status).toContainText('Showing 40 of 151 services');
+});
+
+test('BM-ORD-004 services directory remains usable in Filipino on mobile', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.addInitScript(() => localStorage.setItem('i18nextLng', 'fil'));
+  await page.goto(baseURL + '/services');
+
+  const results = page.locator('[data-service-result]');
+  await expect(results).toHaveCount(20);
+  await expect(page.locator('[data-service-results-status]')).toContainText(
+    'Ipinapakita ang 20 sa 151 services'
+  );
+
+  const loadMore = page.getByRole('button', {
+    name: 'Magpakita pa ng 20',
+    exact: true,
+  });
+  await loadMore.focus();
+  await expect(loadMore).toBeFocused();
+  await page.keyboard.press('Enter');
+  await expect(results).toHaveCount(40);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy();
+  expect(await page.evaluate(() => localStorage.getItem('i18nextLng'))).toBe('fil');
 });
 
 test('expanded Makati city service guides expose transaction details', async ({ page }) => {
