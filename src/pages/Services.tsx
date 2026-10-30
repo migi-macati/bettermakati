@@ -1,5 +1,5 @@
 import Section from '../components/ui/Section';
-import { useParams, Link } from 'react-router';
+import { useParams, Link, useSearchParams } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { Heading } from '../components/ui/Heading';
 import { Text } from '../components/ui/Text';
@@ -76,19 +76,64 @@ const fuzzyWordMatch = (word: string, tokens: string[]) => {
   );
 };
 
+const directoryPageSize = 20;
+
 const Services: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const fil = i18n.resolvedLanguage === 'fil';
   const { category } = useParams();
+  const [directoryParams, setDirectoryParams] = useSearchParams();
   const [categoryIndex, setCategoryIndex] = useState<CategoryIndex>({
     layout: 'list',
     pages: [],
   });
   const [loading, setLoading] = useState(false);
   const [loadFailed, setLoadFailed] = useState(false);
-  const [directoryQuery, setDirectoryQuery] = useState('');
-  const [directoryLevel, setDirectoryLevel] = useState<'All' | ServiceLevel>('All');
-  const [directoryCategory, setDirectoryCategory] = useState('All');
   const { barangay } = useBarangayScope();
+  const directoryQuery = directoryParams.get('q') ?? '';
+  const requestedLevel = directoryParams.get('level');
+  const directoryLevel: 'All' | ServiceLevel =
+    requestedLevel === 'All' ||
+    serviceDirectoryLevels.includes(requestedLevel as ServiceLevel)
+      ? (requestedLevel as 'All' | ServiceLevel)
+      : barangay
+        ? 'Barangay'
+        : 'All';
+  const requestedCategory = directoryParams.get('category');
+  const directoryCategory =
+    requestedCategory && serviceDirectoryCategories.includes(requestedCategory)
+      ? requestedCategory
+      : 'All';
+  const requestedShown = Number(directoryParams.get('shown'));
+  const directoryShown =
+    Number.isInteger(requestedShown) && requestedShown > directoryPageSize
+      ? requestedShown
+      : directoryPageSize;
+
+  const updateDirectoryParams = (
+    updates: Record<string, string | null>,
+    replace = true
+  ) => {
+    const next = new URLSearchParams(directoryParams);
+    Object.entries(updates).forEach(([key, value]) => {
+      if (value) next.set(key, value);
+      else next.delete(key);
+    });
+    setDirectoryParams(next, { replace });
+  };
+
+  const setDirectoryQuery = (value: string) =>
+    updateDirectoryParams({ q: value || null, shown: null });
+  const setDirectoryLevel = (value: 'All' | ServiceLevel) =>
+    updateDirectoryParams({
+      level: value === 'All' && !barangay ? null : value,
+      shown: null,
+    });
+  const setDirectoryCategory = (value: string) =>
+    updateDirectoryParams({
+      category: value === 'All' ? null : value,
+      shown: null,
+    });
   const scopedServiceHref = (href: string) => withBarangayScope(href, barangay?.slug);
   const localServicePlaces = barangay
     ? placesByBarangay(barangay.name).filter(
@@ -112,12 +157,6 @@ const Services: React.FC = () => {
     House,
   };
   const Icon = categoryData?.icon ? iconMap[categoryData.icon] : undefined;
-
-  useEffect(() => {
-    if (!category && barangay) {
-      setDirectoryLevel('Barangay');
-    }
-  }, [barangay, category]);
 
   useEffect(() => {
     if (category && categoryData) {
@@ -170,6 +209,11 @@ const Services: React.FC = () => {
       });
   }, [directoryCategory, directoryLevel, directoryQuery, todayKey]);
 
+  const displayedDirectory = visibleDirectory.slice(0, directoryShown);
+  const displayedCount = displayedDirectory.length;
+  const remainingCount = Math.max(visibleDirectory.length - displayedCount, 0);
+  const nextBatchCount = Math.min(directoryPageSize, remainingCount);
+
   if (!category) {
     return (
       <>
@@ -192,21 +236,6 @@ const Services: React.FC = () => {
                 {t('servicesGovernment.servicesPage.intro')}
               </p>
 
-              <label className="relative mt-7 block max-w-3xl">
-                <span className="sr-only">{t('servicesGovernment.servicesPage.searchLabel')}</span>
-                <Search
-                  className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-500"
-                  aria-hidden="true"
-                />
-                <input
-                  type="search"
-                  value={directoryQuery}
-                  onChange={event => setDirectoryQuery(event.target.value)}
-                  placeholder={t('servicesGovernment.servicesPage.searchPlaceholder')}
-                  className="bm-service-search w-full py-3.5 pl-12 pr-4 text-base"
-                />
-              </label>
-
               <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-primary-50">
                 <span className="font-medium text-primary-100">{t('servicesGovernment.servicesPage.startWith')}</span>
                 <Link to={scopedServiceHref('/services/guide/new-business-permit')} className="min-h-11 content-center font-semibold underline decoration-white/40 underline-offset-4 hover:text-secondary-300">
@@ -223,39 +252,6 @@ const Services: React.FC = () => {
                 </Link>
               </div>
 
-              <div className="mt-5 flex flex-wrap gap-2" aria-label={t('servicesGovernment.servicesPage.levelLabel')}>
-                {serviceDirectoryLevels.map(level => (
-                  <button
-                    key={level}
-                    type="button"
-                    onClick={() => setDirectoryLevel(level)}
-                    aria-pressed={directoryLevel === level}
-                    className={
-                      directoryLevel === level
-                        ? 'min-h-11 rounded-full bg-secondary-500 px-4 py-2 text-sm font-bold text-primary-900'
-                        : 'min-h-11 rounded-full border border-white/30 bg-white/10 px-4 py-2 text-sm font-semibold text-white hover:border-white/60 hover:bg-white/15'
-                    }
-                  >
-                    {level}
-                  </button>
-                ))}
-              </div>
-
-              <label className="mt-4 block max-w-sm">
-                <span className="sr-only">{t('servicesGovernment.servicesPage.categoryLabel')}</span>
-                <select
-                  value={directoryCategory}
-                  onChange={event => setDirectoryCategory(event.target.value)}
-                  className="w-full rounded-xl border border-white/30 bg-white px-4 py-3 text-sm font-semibold text-gray-900"
-                >
-                  <option value="All">{t('servicesGovernment.servicesPage.allCategories')}</option>
-                  {serviceDirectoryCategories.map(item => (
-                    <option key={item} value={item}>
-                      {item}
-                    </option>
-                  ))}
-                </select>
-              </label>
             </div>
           </div>
         </section>
@@ -375,21 +371,117 @@ const Services: React.FC = () => {
         </Section>
 
         <Section className="bg-white">
-          <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-            <div>
-              <div className="section-eyebrow">{t('servicesGovernment.servicesPage.directory')}</div>
-              <Heading level={2}>{t('servicesGovernment.servicesPage.governmentServices')}</Heading>
-            </div>
-            <div className="text-sm text-gray-500">
-              {t('servicesGovernment.servicesPage.results', { count: visibleDirectory.length })}
-            </div>
-          </div>
+          <div id="service-directory">
+            <div className="section-eyebrow">{t('servicesGovernment.servicesPage.directory')}</div>
+            <Heading level={2}>{t('servicesGovernment.servicesPage.governmentServices')}</Heading>
 
-          <div className="bm-service-directory mt-6 divide-y divide-gray-200 overflow-hidden">
-            {visibleDirectory.map(item => {
-              return (
+            <div className="mt-6 rounded-2xl border border-primary-100 bg-[#fffdf8] p-5">
+              <label
+                htmlFor="service-directory-search"
+                className="text-sm font-bold text-gray-900"
+              >
+                {t('servicesGovernment.servicesPage.searchLabel')}
+              </label>
+              <div className="relative mt-2 max-w-3xl">
+                <Search
+                  className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-500"
+                  aria-hidden="true"
+                />
+                <input
+                  id="service-directory-search"
+                  type="search"
+                  value={directoryQuery}
+                  onChange={event => setDirectoryQuery(event.target.value)}
+                  placeholder={t('servicesGovernment.servicesPage.searchPlaceholder')}
+                  className="bm-service-search w-full py-3.5 pl-12 pr-4 text-base"
+                />
+              </div>
+
+              <div className="mt-5 text-sm font-bold text-gray-900">
+                {t('servicesGovernment.servicesPage.levelLabel')}
+              </div>
+              <div
+                className="mt-2 flex flex-wrap gap-2"
+                aria-label={t('servicesGovernment.servicesPage.levelLabel')}
+              >
+                {serviceDirectoryLevels.map(level => (
+                  <button
+                    key={level}
+                    type="button"
+                    onClick={() => setDirectoryLevel(level)}
+                    aria-pressed={directoryLevel === level}
+                    className={
+                      directoryLevel === level
+                        ? 'min-h-11 rounded-full bg-primary-800 px-4 py-2 text-sm font-bold text-white'
+                        : 'min-h-11 rounded-full border border-primary-200 bg-white px-4 py-2 text-sm font-semibold text-primary-900 hover:border-primary-400'
+                    }
+                  >
+                    {level}
+                  </button>
+                ))}
+              </div>
+
+              <label className="mt-4 block max-w-sm">
+                <span className="mb-2 block text-sm font-bold text-gray-900">
+                  {t('servicesGovernment.servicesPage.categoryLabel')}
+                </span>
+                <select
+                  value={directoryCategory}
+                  onChange={event => setDirectoryCategory(event.target.value)}
+                  className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm font-semibold text-gray-900"
+                >
+                  <option value="All">{t('servicesGovernment.servicesPage.allCategories')}</option>
+                  {serviceDirectoryCategories.map(item => (
+                    <option key={item} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              </label>
+
+              {(directoryQuery || directoryLevel !== 'All' || directoryCategory !== 'All') && (
+                <button
+                  type="button"
+                  onClick={() =>
+                    updateDirectoryParams({
+                      q: null,
+                      level: barangay ? 'All' : null,
+                      category: null,
+                      shown: null,
+                    })
+                  }
+                  className="brand-btn-secondary mt-4"
+                >
+                  {t('servicesGovernment.servicesPage.clearFilters')}
+                </button>
+              )}
+            </div>
+
+            <div
+              className="mt-5 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between"
+              role="status"
+              aria-live="polite"
+              data-service-results-status
+            >
+              <div className="font-bold text-gray-900">
+                {fil
+                  ? `Ipinapakita ang ${displayedCount} sa ${visibleDirectory.length} services`
+                  : `Showing ${displayedCount} of ${visibleDirectory.length} services`}
+              </div>
+              {remainingCount > 0 && (
+                <div className="text-sm text-gray-500">
+                  {fil
+                    ? `${remainingCount} pa ang makikita`
+                    : `${remainingCount} more available`}
+                </div>
+              )}
+            </div>
+
+            <div className="bm-service-directory mt-4 divide-y divide-gray-200 overflow-hidden">
+              {displayedDirectory.map(item => (
                 <article
                   key={item.id}
+                  data-service-result
                   className="bm-service-directory-row grid gap-4 p-5 md:grid-cols-[1fr_auto] md:items-center"
                 >
                   <div className="min-w-0">
@@ -414,38 +506,60 @@ const Services: React.FC = () => {
                     to={scopedServiceHref(`/services/guide/${item.id}`)}
                     className="inline-flex min-h-11 items-center justify-center rounded-xl bg-primary-800 px-4 py-2 text-sm font-bold text-white hover:bg-primary-900"
                   >
-                    Open guide
+                    {fil ? 'Buksan ang guide' : 'Open guide'}
                   </Link>
                 </article>
-              );
-            })}
-            {visibleDirectory.length === 0 && (
-              <div className="p-8 text-center">
-                <div className="font-extrabold text-gray-950">
-                  No indexed service matches this search yet.
+              ))}
+              {visibleDirectory.length === 0 && (
+                <div className="p-8 text-center">
+                  <div className="font-extrabold text-gray-950">
+                    No indexed service matches this search yet.
+                  </div>
+                  <p className="mx-auto mt-2 max-w-xl text-sm leading-relaxed text-gray-600">
+                    Clear the filters and try a broader task, or use the service-help routes below if you are unsure what the service is called.
+                  </p>
+                  <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
+                    <button
+                      type="button"
+                      onClick={() =>
+                        updateDirectoryParams({
+                          q: null,
+                          level: barangay ? 'All' : null,
+                          category: null,
+                          shown: null,
+                        })
+                      }
+                      className="brand-btn-secondary"
+                    >
+                      {t('servicesGovernment.servicesPage.clearFilters')}
+                    </button>
+                    <Link to="/community-tools/saan-ako-lalapit" className="brand-btn-primary">
+                      {t('servicesGovernment.servicesPage.useConcernFinder')}
+                    </Link>
+                    <Link to="/government-offices" className="brand-btn-secondary">
+                      {t('servicesGovernment.servicesPage.browseOffices')}
+                    </Link>
+                  </div>
                 </div>
-                <p className="mx-auto mt-2 max-w-xl text-sm leading-relaxed text-gray-600">
-                  Clear the filters and try a broader task, or use the service-help routes below if you are unsure what the service is called.
-                </p>
-                <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setDirectoryQuery('');
-                      setDirectoryLevel('All');
-                      setDirectoryCategory('All');
-                    }}
-                    className="brand-btn-secondary"
-                  >
-                    {t('servicesGovernment.servicesPage.clearFilters')}
-                  </button>
-                  <Link to="/community-tools/saan-ako-lalapit" className="brand-btn-primary">
-                    {t('servicesGovernment.servicesPage.useConcernFinder')}
-                  </Link>
-                  <Link to="/government-offices" className="brand-btn-secondary">
-                    {t('servicesGovernment.servicesPage.browseOffices')}
-                  </Link>
-                </div>
+              )}
+            </div>
+
+            {remainingCount > 0 && (
+              <div className="mt-6 flex justify-center">
+                <button
+                  type="button"
+                  onClick={() =>
+                    updateDirectoryParams(
+                      { shown: String(directoryShown + directoryPageSize) },
+                      false
+                    )
+                  }
+                  className="brand-btn-secondary min-w-48"
+                >
+                  {fil
+                    ? `Magpakita pa ng ${nextBatchCount}`
+                    : `Load ${nextBatchCount} more`}
+                </button>
               </div>
             )}
           </div>
