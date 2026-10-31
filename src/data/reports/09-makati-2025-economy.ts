@@ -444,6 +444,12 @@ const reportModule: FeaturedReportModule = {
             evidence: { sourceIds: ['1', '3'] },
           },
           {
+            kind: 'paragraph',
+            role: 'context',
+            text: 'Correction, 31 October 2026: Five previously displayed 2035–2040 scenario values were each overstated by ₱0.001 trillion (₱1 billion) because of rounding. The Low 2035, Middle 2035 and 2040, and High 2035 and 2040 table and chart values now use the disclosed ₱1.266-trillion base and annual compounding assumptions. The scenarios remain illustrative, not official forecasts. The original publication date is unchanged.',
+            evidence: { sourceIds: ['1', '3'], records: [records.level] },
+          },
+          {
             kind: 'table',
             title: 'Mechanical real-GDP scenarios',
             caption:
@@ -889,6 +895,12 @@ const reportModule: FeaturedReportModule = {
             role: 'context',
             text: 'Kinompound ng BetterMakati ang 2025 real-GDP base na ₱1.266 trillion gamit ang fixed annual rates: 2.0% low, 4.5% middle at 6.5% high. Sensitivity illustrations ito, hindi PSA, city o market forecasts. Para sa national-share illustration, 4.0% yearly ang assumed Philippine real growth at 5.5% ang starting Makati share.',
             evidence: { sourceIds: ['1', '3'] },
+          },
+          {
+            kind: 'paragraph',
+            role: 'context',
+            text: 'Correction, 31 October 2026: May limang dating scenario values para sa 2035–2040 na sobra ng ₱0.001 trillion (₱1 billion) bawat isa dahil sa rounding. Naayos na sa table at chart ang Low 2035, Middle 2035 at 2040, at High 2035 at 2040 gamit ang nakasaad na ₱1.266-trillion base at annual compounding assumptions. Illustrations pa rin ang scenarios, hindi official forecasts. Hindi binago ang original publication date.',
+            evidence: { sourceIds: ['1', '3'], records: [records.level] },
           },
           {
             kind: 'table',
