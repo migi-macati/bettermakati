@@ -2687,6 +2687,29 @@
       "lastSuccessfulAt": null,
       "lastChangedAt": null,
       "delegated": false
+    },
+    {
+      "id": "makati-eboss-registration-support-20260929",
+      "label": "Makati eBOSS registration support notice (29 September 2026)",
+      "url": "https://makati-eboss.ph/announcements/13",
+      "kind": "business-permits",
+      "cadence": "monthly",
+      "monitoringMode": "reachability",
+      "owner": "general-source-freshness",
+      "affectedPages": [
+        "/services"
+      ],
+      "status": "not-checked",
+      "statusCode": null,
+      "contentType": "",
+      "contentLength": 0,
+      "sha256": "",
+      "lastSuccessfulHash": "",
+      "change": "not-checked",
+      "lastCheckedAt": null,
+      "lastSuccessfulAt": null,
+      "lastChangedAt": null,
+      "delegated": false
     }
   ]
 }

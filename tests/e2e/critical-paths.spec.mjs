@@ -877,7 +877,7 @@ test('BM-ORD-004 services directory bounds results and restores URL state', asyn
   const results = page.locator('[data-service-result]');
   const status = page.locator('[data-service-results-status]');
   await expect(results).toHaveCount(20);
-  await expect(status).toContainText('Showing 20 of 151 services');
+  await expect(status).toContainText('Showing 20 of 152 services');
 
   const loadMore = page.getByRole('button', { name: 'Load 20 more', exact: true });
   await loadMore.focus();
@@ -902,7 +902,7 @@ test('BM-ORD-004 services directory bounds results and restores URL state', asyn
 
   await expect(page).toHaveURL(/shown=40/);
   await expect(results).toHaveCount(40);
-  await expect(status).toContainText('Showing 40 of 151 services');
+  await expect(status).toContainText('Showing 40 of 152 services');
 });
 
 test('BM-ORD-004 services directory remains usable in Filipino on mobile', async ({ page }) => {
@@ -913,7 +913,7 @@ test('BM-ORD-004 services directory remains usable in Filipino on mobile', async
   const results = page.locator('[data-service-result]');
   await expect(results).toHaveCount(20);
   await expect(page.locator('[data-service-results-status]')).toContainText(
-    'Ipinapakita ang 20 sa 151 services'
+    'Ipinapakita ang 20 sa 152 services'
   );
 
   const loadMore = page.getByRole('button', {
@@ -927,6 +927,55 @@ test('BM-ORD-004 services directory remains usable in Filipino on mobile', async
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy();
   expect(await page.evaluate(() => localStorage.getItem('i18nextLng'))).toBe('fil');
 });
+
+for (const language of ['en', 'fil']) {
+  test(`BM-C052 eBOSS registration support remains sourced and discoverable (${language})`, async ({ page }) => {
+    await page.addInitScript(lang => localStorage.setItem('i18nextLng', lang), language);
+    await page.goto(baseURL + '/services');
+
+    const search = page.locator('#service-directory-search');
+    await search.fill('hindi makapag register');
+    const result = page.locator('[data-service-result]').filter({
+      hasText: 'Makati eBOSS registration support',
+    });
+    await expect(result).toHaveCount(1);
+    await result
+      .getByRole('link', {
+        name: language === 'en' ? 'Open guide' : 'Buksan ang guide',
+        exact: true,
+      })
+      .click();
+
+    await expect(page).toHaveURL(
+      baseURL + '/services/guide/eboss-registration-support'
+    );
+    await expect(
+      page.getByRole('heading', {
+        name: 'Makati eBOSS registration support',
+        exact: true,
+      })
+    ).toBeVisible();
+    await expect(
+      page.getByText(
+        /The September notice does not establish that a registration problem is still occurring\./
+      )
+    ).toBeVisible();
+    const sourceLinks = page.locator(
+      'a[href="https://makati-eboss.ph/announcements/13"]'
+    );
+    await expect(sourceLinks.first()).toBeVisible();
+    await expect(sourceLinks.first()).toHaveAttribute('target', '_blank');
+
+    await page.goto(baseURL + '/services');
+    await page.locator('#service-directory-search').fill('new business permit');
+    await expect(
+      page.getByRole('heading', { name: 'New business permit', exact: true })
+    ).toBeVisible();
+    expect(await page.evaluate(() => localStorage.getItem('i18nextLng'))).toBe(
+      language
+    );
+  });
+}
 
 test('expanded Makati city service guides expose transaction details', async ({ page }) => {
   await page.goto(baseURL + '/services/guide/locational-clearance-business');

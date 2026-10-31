@@ -74,6 +74,20 @@ const makatiSocialWelfare =
 
 export const serviceDirectory: ServiceDirectoryItem[] = [
   {
+    id: 'eboss-registration-support',
+    title: 'Makati eBOSS registration support',
+    category: 'Business & work',
+    level: 'City',
+    type: 'Other',
+    agency: 'Business Permit Office',
+    description:
+      'Having trouble registering an eBOSS account? A city notice dated 29 September 2026 directs users to onlineservices@makati.gov.ph. This does not confirm an ongoing outage.',
+    href: 'https://makati-eboss.ph/announcements/13',
+    sourceUrl: 'https://makati-eboss.ph/announcements/13',
+    keywords:
+      'makati eboss e boss online business permit registration account sign up signup login email verification issue problem hindi maka register ayaw mag register hindi makapag register onlineservices@makati.gov.ph 8870-1362 8870-1359',
+  },
+  {
     id: 'new-business-permit',
     title: 'New business permit',
     category: 'Business & work',
