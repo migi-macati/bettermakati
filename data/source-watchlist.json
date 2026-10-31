@@ -1435,8 +1435,7 @@
     "monitoringMode": "reachability",
     "owner": "general-source-freshness",
     "affectedPages": [
-      "/services",
-      "/services/eboss-registration-support"
+      "/services"
     ]
   }
 ]
