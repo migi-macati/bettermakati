@@ -5,8 +5,8 @@
   "step": "W6-5e",
   "title": "Semantic & keyboard pass",
   "coverage": {
-    "substantiveRoutePatterns": 51,
-    "representativeAxeRoutes": 51,
+    "substantiveRoutePatterns": 52,
+    "representativeAxeRoutes": 52,
     "uncoveredPatterns": 0,
     "wcagTags": [
       "wcag2a",
@@ -88,5 +88,6 @@
     "Focus visibility, clipping and virtual-keyboard behavior still require device/browser QA.",
     "The browser suite can only execute when CI/current build infrastructure is available."
   ],
-  "next": "W6-5f — Device & browser pass"
+  "next": "W6-5f \u2014 Device & browser pass",
+  "budget2027Extension": "1 November 2026: /budget-2027 added to the Axe route suite. Loaded-data ENG/FIL mobile/desktop checks live in critical-paths.spec.mjs; release acceptance tracked in BM-B27 checkpoint."
 }

@@ -138,3 +138,7 @@ Those belong to W6-5f.
 ## Next
 
 **W6-5f — Device & browser pass.**
+
+
+## BM-B27 coverage extension — 1 November 2026
+The suite now contains **52 representative URLs covering all 52 substantive route patterns**, including /budget-2027. This extends test registration; it does not retroactively expand the historical audit or certify accessibility. Loaded-data ENG/FIL checks at 390px and 1440px and exact-head CI are tracked in the BM-B27 checkpoint.

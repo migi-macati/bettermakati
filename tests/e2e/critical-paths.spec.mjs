@@ -1,3 +1,4 @@
+import AxeBuilder from '@axe-core/playwright';
 import { test, expect } from '@playwright/test';
 import { readdirSync, readFileSync } from 'node:fs';
 
@@ -2939,3 +2940,66 @@ for (const language of ['en', 'fil']) {
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBeTruthy();
   });
 }
+
+// BM-B27: recorded API responses are test fixtures only, never public fallback facts.
+for (const language of ['en', 'fil']) {
+  for (const width of [390, 1440]) {
+    test(`BM-B27 budget comparison (${language}, ${width})`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await page.addInitScript(lang => localStorage.setItem('i18nextLng', lang), language);
+      await page.route('https://budget.bettergov.ph/api/v1/**', async route => {
+        const url = new URL(route.request().url());
+        const program = url.pathname.match(/datasets\/(\w+)\/projects/)?.[1];
+        const file = program === 'dpwh' ? 'makati-dpwh-title' : program || 'national';
+        await route.fulfill({ json: JSON.parse(readFileSync(`data/budget2027/2026-11-01-${file}-response.json`, 'utf8')) });
+      });
+      await page.goto(baseURL + '/budget-2027');
+      await expect(page.getByRole('heading', { level: 1 })).toContainText('Budget 2027');
+      await expect(page.locator('main')).toContainText('₱7,200,186,000,000');
+      await expect(page.getByRole('status').filter({ hasText: '12 / 12' })).toBeVisible();
+      const scan = await new AxeBuilder({ page }).include('#main-content').withTags(['wcag2a', 'wcag2aa']).analyze();
+      expect(scan.violations.filter(v => ['serious', 'critical'].includes(v.impact))).toEqual([]);
+      await expect(page.locator('main')).toContainText(language === 'en' ? 'Not recorded in this version' : 'Walang nakatalang halaga sa bersyong ito');
+      const filter = page.getByLabel(language === 'en' ? 'Filter title or office' : 'Salain ayon sa pamagat o opisina');
+      await filter.fill('Filmore');
+      await expect(page).toHaveURL(/q=Filmore/);
+      await expect(page.getByRole('status').filter({ hasText: '1 / 12' })).toBeVisible();
+      await expect(page.locator('#projects')).toContainText('₱25,000,000');
+      await expect(page.locator('#projects a[href*="hb10858-3r"]')).toHaveAttribute('href', /#page=322$/);
+      const download = page.waitForEvent('download');
+      await page.getByRole('button', { name: language === 'en' ? 'Export filtered CSV' : 'I-export ang naka-filter na CSV' }).click();
+      const saved = await download;
+      const csv = readFileSync(await saved.path(), 'utf8');
+      expect(csv).toContain('source_commit'); expect(csv).toContain('Filmore'); expect(csv).not.toContain('Vito Cruz');
+      const localBudget = page.getByRole('link', { name: language === 'en' ? 'Makati city budget' : 'Budget ng lungsod ng Makati', exact: true });
+      await localBudget.focus(); await expect(localBudget).toBeFocused(); await page.keyboard.press('Enter');
+      await expect(page).toHaveURL(baseURL + '/projects-budget'); await page.goBack();
+      await expect(filter).toHaveValue('Filmore');
+      expect(await page.evaluate(() => localStorage.getItem('i18nextLng'))).toBe(language);
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy();
+      await page.reload(); await expect(filter).toHaveValue('Filmore');
+      await filter.fill('no-such-project');
+      await expect(page.getByRole('status').filter({ hasText: '0 / 12' })).toBeVisible();
+      await expect(page.getByRole('button', { name: /CSV/ })).toBeDisabled();
+    });
+  }
+}
+test('BM-B27 failures stay unknown; partial results and retry work', async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem('i18nextLng', 'en'));
+  let failed = true;
+  await page.route('https://budget.bettergov.ph/api/v1/**', async route => {
+    const url = new URL(route.request().url());
+    const program = url.pathname.match(/datasets\/(\w+)\/projects/)?.[1];
+    if (failed && (!program || program === 'dpwh')) return route.fulfill({ status: 503, body: '{}' });
+    const file = program === 'dpwh' ? 'makati-dpwh-title' : program || 'national';
+    await route.fulfill({ json: JSON.parse(readFileSync(`data/budget2027/2026-11-01-${file}-response.json`, 'utf8')) });
+  });
+  await page.goto(baseURL + '/budget-2027');
+  await expect(page.getByRole('alert').filter({ hasText: 'National figures' })).toBeVisible();
+  await expect(page.locator('#projects')).toContainText('unavailable; not zero');
+  await expect(page.getByRole('alert').filter({ hasText: 'partial' })).toBeVisible();
+  failed = false;
+  await page.getByRole('button', { name: 'Retry data' }).click();
+  await expect(page.getByRole('status').filter({ hasText: '12 / 12' })).toBeVisible();
+  await expect(page.getByRole('alert')).toHaveCount(0);
+});

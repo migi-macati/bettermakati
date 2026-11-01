@@ -1,0 +1,517 @@
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Link, useSearchParams } from 'react-router';
+import SEO from '../components/SEO';
+import {
+  loadCityProjects,
+  loadNationalOverview,
+  PROGRAMS,
+} from '../lib/budget2027/client';
+import type { NationalResult, Project } from '../lib/budget2027/client';
+
+type CityResult = Awaited<ReturnType<typeof loadCityProjects>>;
+const pesos = (value: number) =>
+  new Intl.NumberFormat('en-PH', {
+    style: 'currency',
+    currency: 'PHP',
+    maximumFractionDigits: 0,
+  }).format(value);
+const cell = (value: unknown) =>
+  '"' +
+  String(value ?? '')
+    .replace(/^[=+@-]/, "'$&")
+    .replaceAll('"', '""') +
+  '"';
+const linkStyle = 'font-semibold text-primary-800 underline underline-offset-4';
+
+export default function Budget2027() {
+  const { i18n } = useTranslation();
+  const fil = i18n.resolvedLanguage === 'fil';
+  const t = (en: string, tl: string) => (fil ? tl : en);
+  const [params, setParams] = useSearchParams();
+  const query = params.get('q') || '';
+  const program = PROGRAMS.find(p => p === params.get('program')) || '';
+  const [city, setCity] = useState<CityResult>();
+  const [national, setNational] = useState<NationalResult>();
+  const [nationalError, setNationalError] = useState(false);
+  const [attempt, setAttempt] = useState(0);
+  useEffect(() => {
+    const controller = new AbortController();
+    loadCityProjects('Makati', { signal: controller.signal })
+      .then(value => {
+        if (!controller.signal.aborted) setCity(value);
+      })
+      .catch(() => {});
+    loadNationalOverview({ signal: controller.signal })
+      .then(value => {
+        if (!controller.signal.aborted) setNational(value);
+      })
+      .catch(() => {
+        if (!controller.signal.aborted) setNationalError(true);
+      });
+    return () => controller.abort();
+  }, [attempt]);
+  const available =
+    city?.programs.flatMap(p => (p.status === 'available' ? [p.result] : [])) ||
+    [];
+  const all = available.flatMap(p => p.rows);
+  const rows = all.filter(
+    row =>
+      (!program || row.dataset === program) &&
+      `${row.title} ${row.office || ''}`
+        .toLowerCase()
+        .includes(query.toLowerCase())
+  );
+  const update = (key: string, value: string) => {
+    const next = new URLSearchParams(params);
+    if (value) next.set(key, value);
+    else next.delete(key);
+    setParams(next, { replace: true });
+  };
+  const missing = t(
+    'Not recorded in this version',
+    'Walang nakatalang halaga sa bersyong ito'
+  );
+  const money = (value: number | null) =>
+    value === null ? missing : pesos(value);
+  const exportCsv = () => {
+    const header = [
+      'id',
+      'program',
+      'official_title',
+      'office',
+      'nep_php',
+      'house_second_php',
+      'house_third_php',
+      'nep_pdf',
+      'house_second_pdf',
+      'house_third_pdf',
+      'source_commit',
+      'built_at',
+      'retrieved_at',
+      'coverage',
+    ];
+    const values = rows.map(row => {
+      const source = available.find(p =>
+        p.rows.some(r => r.id === row.id && r.dataset === row.dataset)
+      )!;
+      return [
+        row.id,
+        row.dataset,
+        row.title,
+        row.office,
+        row.nep_php,
+        row.hgab2_php,
+        row.hgab3_php,
+        row.pdf_url.nep,
+        row.pdf_url.hgab2,
+        row.pdf_url.hgab3,
+        source.meta.source_commit,
+        source.meta.built_at,
+        source.retrievedAt,
+        'Makati title matches; not a citywide allocation; blank amount means missing',
+      ];
+    });
+    const url = URL.createObjectURL(
+      new Blob(
+        [
+          '\uFEFF' +
+            [header, ...values].map(r => r.map(cell).join(',')).join('\r\n'),
+        ],
+        { type: 'text/csv;charset=utf-8' }
+      )
+    );
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'makati-budget-2027-title-matches.csv';
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  };
+  const versions: {
+    key: keyof Pick<Project, 'nep_php' | 'hgab2_php' | 'hgab3_php'>;
+    pdf: string;
+    label: string;
+  }[] = [
+    { key: 'nep_php', pdf: 'nep', label: 'NEP 2027' },
+    {
+      key: 'hgab2_php',
+      pdf: 'hgab2',
+      label: t('House · second reading', 'House · ikalawang pagbasa'),
+    },
+    {
+      key: 'hgab3_php',
+      pdf: 'hgab3',
+      label: t('House · third reading', 'House · ikatlong pagbasa'),
+    },
+  ];
+  return (
+    <div className="mx-auto max-w-6xl space-y-8 px-4 py-8 sm:px-6">
+      <SEO
+        title={t('Budget 2027 and Makati', 'Budget 2027 at Makati')}
+        description={t(
+          'National budget proposals and source-linked Makati project matches.',
+          'Mga panukala sa pambansang budget at mga proyektong may Makati sa pamagat, kasama ang sources.'
+        )}
+      />
+      <header className="max-w-3xl space-y-3">
+        <p className="text-sm font-semibold text-primary-700">
+          {t(
+            'National government · FY 2027',
+            'Pambansang pamahalaan · FY 2027'
+          )}
+        </p>
+        <h1 className="text-3xl font-bold text-gray-950">
+          {t(
+            'Budget 2027: What does it mean for Makati?',
+            'Budget 2027: Ano ang ibig sabihin nito para sa Makati?'
+          )}
+        </h1>
+        <p>
+          {t(
+            'Compare the executive proposal with the available House project records. These figures describe proposed appropriations, not contracts, spending or completed work.',
+            'Ihambing ang panukala ng ehekutibo sa available na House project records. Panukalang alokasyon ang mga halagang ito, hindi kontrata, aktuwal na gastos o natapos na proyekto.'
+          )}
+        </p>
+        <p className="rounded-lg bg-amber-50 p-3 text-sm">
+          {t(
+            'Versions shown: NEP and House second/third readings. Senate, bicameral and enacted versions are not included here. Their absence does not establish the current legislative stage. Consult the dated source documents.',
+            'Mga bersyong ipinapakita: NEP at ikalawa/ikatlong pagbasa sa House. Hindi kasama rito ang Senate, bicameral at enacted versions. Hindi ibig sabihin nito na ito pa rin ang kasalukuyang yugto ng panukala. Tingnan ang mga dokumento at petsa ng sources.'
+          )}
+        </p>
+        <nav
+          aria-label={t('On this page', 'Sa pahinang ito')}
+          className="flex flex-wrap gap-4"
+        >
+          <a href="#national" className={linkStyle}>
+            {t('National overview', 'Pambansang kabuuan')}
+          </a>
+          <a href="#projects" className={linkStyle}>
+            {t('Makati projects', 'Mga proyekto sa Makati')}
+          </a>
+          <a href="#method" className={linkStyle}>
+            {t('Sources and limits', 'Sources at limitasyon')}
+          </a>
+        </nav>
+      </header>
+      <section
+        id="national"
+        className="space-y-3"
+        aria-labelledby="national-heading"
+      >
+        <h2 id="national-heading" className="text-2xl font-bold">
+          {t('The national proposal', 'Ang pambansang panukala')}
+        </h2>
+        {!national && !nationalError && (
+          <p role="status">
+            {t('Loading national figures…', 'Kinukuha ang pambansang datos…')}
+          </p>
+        )}
+        {nationalError && (
+          <p role="alert">
+            {t(
+              'National figures could not be validated. No total is shown.',
+              'Hindi ma-validate ang pambansang datos. Walang kabuuang halagang ipinapakita.'
+            )}
+          </p>
+        )}
+        {national && (
+          <>
+            <dl className="grid gap-4 sm:grid-cols-2">
+              <div className="rounded-xl border p-4">
+                <dt>NEP 2027</dt>
+                <dd className="text-2xl font-bold break-words">
+                  {pesos(national.national.amount)}
+                </dd>
+              </div>
+              <div className="rounded-xl border p-4">
+                <dt>
+                  {t(
+                    '2026 GAA baseline in this dataset',
+                    '2026 GAA baseline sa dataset na ito'
+                  )}
+                </dt>
+                <dd className="text-2xl font-bold break-words">
+                  {pesos(national.national.base_amount)}
+                </dd>
+              </div>
+            </dl>
+            <p className="max-w-3xl">
+              {t(
+                'This compares different years and budget stages: the 2027 proposal and the API’s 2026 enacted-budget baseline. It is not a national NEP-versus-House comparison. National programs may benefit Makati residents without a project titled “Makati”; no local share is estimated here.',
+                'Magkaibang taon at yugto ng budget ang paghahambing na ito: panukala para sa 2027 at ang 2026 enacted-budget baseline ng API. Hindi ito pambansang NEP-versus-House comparison. Maaaring makinabang ang mga taga-Makati sa pambansang programa kahit walang “Makati” sa pamagat; walang tinatayang lokal na bahagi rito.'
+              )}
+            </p>
+            <details className="rounded-lg border p-4">
+              <summary className="cursor-pointer font-semibold">
+                {t(
+                  'Department and fund categories',
+                  'Mga kategorya ng departamento at pondo'
+                )}{' '}
+                ({national.departments.length})
+              </summary>
+              <ul className="mt-3 divide-y">
+                {national.departments.map(d => (
+                  <li
+                    key={d.id}
+                    className="flex flex-wrap justify-between gap-2 py-2"
+                  >
+                    <span>{d.description}</span>
+                    <span>{pesos(d.amount)}</span>
+                  </li>
+                ))}
+              </ul>
+            </details>
+            <p className="text-sm text-gray-600">
+              {t('Dataset generated', 'Ginawa ang dataset')}:{' '}
+              {String(national.meta.generated_at || '—')} ·{' '}
+              <a className={linkStyle} href={national.sourceUrl}>
+                {t('National data source', 'Source ng pambansang datos')}
+              </a>
+            </p>
+          </>
+        )}
+      </section>
+      <section
+        id="projects"
+        className="space-y-4"
+        aria-labelledby="projects-heading"
+      >
+        <h2 id="projects-heading" className="text-2xl font-bold">
+          {t(
+            'Projects with Makati in the title',
+            'Mga proyektong may Makati sa pamagat'
+          )}
+        </h2>
+        <p className="max-w-3xl">
+          {t(
+            'This is a place-name search across four project datasets, not the complete national allocation for Makati. Cross-boundary projects and shared engineering offices need separate attribution. Do not add different budget versions together or treat a missing amount as zero.',
+            'Place-name search ito sa apat na project dataset, hindi ang buong pambansang alokasyon para sa Makati. Kailangang hiwalay na suriin ang proyektong tumatawid sa lungsod at shared engineering offices. Huwag pagsamahin ang mga bersyon ng budget o ituring na zero ang nawawalang halaga.'
+          )}
+        </p>
+        {!city && (
+          <p role="status">
+            {t(
+              'Loading and checking project records…',
+              'Kinukuha at sinusuri ang project records…'
+            )}
+          </p>
+        )}
+        {city && (
+          <>
+            <ul
+              className="flex flex-wrap gap-3 text-sm"
+              aria-label={t('Dataset coverage', 'Sakop ng mga dataset')}
+            >
+              {city.programs.map(p => (
+                <li key={p.dataset}>
+                  <strong>{p.dataset.toUpperCase()}</strong>:{' '}
+                  {p.status === 'available'
+                    ? `${p.result.total} ${t('title matches', 'tugma sa pamagat')}`
+                    : t('unavailable; not zero', 'hindi available; hindi zero')}
+                </li>
+              ))}
+            </ul>
+            {!city.completeQueries && (
+              <p role="alert">
+                {t(
+                  'Some datasets failed validation or could not be loaded. Results below are partial.',
+                  'May dataset na hindi ma-validate o makuha. Bahagi lamang ng resulta ang nasa ibaba.'
+                )}
+              </p>
+            )}
+            <div className="flex flex-wrap items-end gap-3">
+              <label className="flex flex-col gap-1">
+                {t(
+                  'Filter title or office',
+                  'Salain ayon sa pamagat o opisina'
+                )}
+                <input
+                  className="rounded border border-gray-400 p-2"
+                  value={query}
+                  onChange={e => update('q', e.target.value)}
+                />
+              </label>
+              <label className="flex flex-col gap-1">
+                {t('Program dataset', 'Dataset ng programa')}
+                <select
+                  className="rounded border border-gray-400 p-2"
+                  value={program}
+                  onChange={e => update('program', e.target.value)}
+                >
+                  <option value="">
+                    {t(
+                      'All available datasets',
+                      'Lahat ng available na dataset'
+                    )}
+                  </option>
+                  {PROGRAMS.map(p => (
+                    <option key={p}>{p}</option>
+                  ))}
+                </select>
+              </label>
+              <button
+                type="button"
+                className="rounded border px-3 py-2"
+                onClick={() => {
+                  const p = new URLSearchParams(params);
+                  p.delete('q');
+                  p.delete('program');
+                  setParams(p);
+                }}
+              >
+                {t('Reset filters', 'I-reset ang filters')}
+              </button>
+              <button
+                type="button"
+                disabled={!rows.length}
+                className="rounded bg-primary-800 px-3 py-2 text-white disabled:opacity-50"
+                onClick={exportCsv}
+              >
+                {t('Export filtered CSV', 'I-export ang naka-filter na CSV')}
+              </button>
+            </div>
+            <p role="status">
+              {rows.length} / {all.length}{' '}
+              {t('available title matches', 'available na tugma sa pamagat')}
+            </p>
+            {!rows.length && (
+              <p>
+                {t(
+                  'No matching records in the available data. This does not mean there is no funding.',
+                  'Walang tugmang record sa available na datos. Hindi ibig sabihin nito na walang pondo.'
+                )}
+              </p>
+            )}
+            <ul className="space-y-4">
+              {rows.map(row => (
+                <li
+                  key={`${row.dataset}:${row.id}`}
+                  className="rounded-xl border border-gray-200 bg-white p-4 sm:p-5"
+                >
+                  <h3 className="font-bold text-lg break-words">{row.title}</h3>
+                  <p className="mt-1 text-sm text-gray-600">
+                    {row.dataset.toUpperCase()} ·{' '}
+                    {row.office ||
+                      t('Office not recorded', 'Walang nakatalang opisina')}
+                  </p>
+                  {row.held && (
+                    <p className="mt-2 text-amber-900">
+                      {t(
+                        'Unconfirmed match across versions',
+                        'Hindi pa kumpirmado ang pagtutugma sa mga bersyon'
+                      )}
+                    </p>
+                  )}
+                  <dl className="mt-3 grid gap-4 md:grid-cols-3">
+                    {versions.map(v => (
+                      <div key={v.key}>
+                        <dt className="text-sm text-gray-600">{v.label}</dt>
+                        <dd className="font-semibold">{money(row[v.key])}</dd>
+                        <dd>
+                        {row.pdf_url[v.pdf] && (
+                          <a
+                            className={`${linkStyle} text-sm`}
+                            href={row.pdf_url[v.pdf]!}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            {t(
+                              'Open source PDF page',
+                              'Buksan ang pahina sa source PDF'
+                            )}{' '}
+                            · {v.label}
+                          </a>
+                        )}
+                        </dd>
+                      </div>
+                    ))}
+                  </dl>
+                </li>
+              ))}
+            </ul>
+            <p className="text-sm">
+              {available.reduce((n, r) => n + r.coordinates.valid, 0)} /{' '}
+              {all.length}{' '}
+              {t(
+                'records have valid coordinates. Missing coordinates remain in this list; no locations are inferred from office addresses.',
+                'record ang may valid coordinates. Nananatili sa listahan ang walang coordinates; hindi ginagamit ang address ng opisina bilang lokasyon ng proyekto.'
+              )}
+            </p>
+          </>
+        )}
+        {(nationalError ||
+          city?.programs.some(p => p.status === 'unavailable')) && (
+          <button
+            className="rounded border px-4 py-2"
+            onClick={() => {
+              setCity(undefined);
+              setNational(undefined);
+              setNationalError(false);
+              setAttempt(n => n + 1);
+            }}
+          >
+            {t('Retry data', 'Subukang kunin muli ang datos')}
+          </button>
+        )}
+      </section>
+      <section
+        id="method"
+        className="max-w-3xl space-y-3"
+        aria-labelledby="method-heading"
+      >
+        <h2 id="method-heading" className="text-2xl font-bold">
+          {t('Sources, dates and limits', 'Sources, petsa at limitasyon')}
+        </h2>
+        <p>
+          {t(
+            'Data: BetterGov.PH Budget API, an independent, unofficial reading of budget documents. Project pairings are comparison candidates; a line missing from a snapshot does not prove an insertion, deletion or wrongdoing. Original project titles and agency names are retained in their source language in both views.',
+            'Datos: BetterGov.PH Budget API, isang independent at unofficial na pagbasa ng budget documents. Kandidato pa lamang sa paghahambing ang pagtutugma ng proyekto; ang wala sa snapshot ay hindi patunay ng insertion, deletion o iregularidad. Pinananatili sa parehong wika ang orihinal na project titles at pangalan ng ahensya mula sa source.'
+          )}
+        </p>
+        <p>
+          {t(
+            'BetterMakati checked three House PDF entries on 1 November 2026: Filmore/Calatagan (₱25 million), Faraday/Gil Puyat (₱28.5 million) and Casino/Zobel Roxas (₱42 million). This is a sample, not verification of every row, national total or NEP match. PDF page numbers may differ from printed page numbers.',
+            'Sinuri ng BetterMakati ang tatlong House PDF entry noong 1 November 2026: Filmore/Calatagan (₱25 million), Faraday/Gil Puyat (₱28.5 million) at Casino/Zobel Roxas (₱42 million). Sample ito, hindi verification ng bawat row, pambansang kabuuan o NEP match. Maaaring magkaiba ang PDF page number at naka-print na page number.'
+          )}
+        </p>
+        <ul className="space-y-2 text-sm break-words">
+          {available.map(r => (
+            <li key={String(r.meta.dataset_key)}>
+              <a className={linkStyle} href={r.sourceUrl}>
+                {String(r.meta.dataset_key).toUpperCase()} API
+              </a>{' '}
+              · {t('Built', 'Ginawa')}: {String(r.meta.built_at)} ·{' '}
+              {t('Retrieved', 'Nakuha')}: {r.retrievedAt}
+              <br />
+              {t('Source commit', 'Source commit')}:{' '}
+              {String(r.meta.source_commit)}
+            </li>
+          ))}
+        </ul>
+        <div className="flex flex-wrap gap-4">
+          <a
+            className={linkStyle}
+            href="https://budget.bettergov.ph/hgab/2027/methodology"
+          >
+            {t('BetterGov methodology', 'Pamamaraan ng BetterGov')}
+          </a>
+          <a className={linkStyle} href="https://budget.bettergov.ph/docs">
+            {t('API documentation', 'Dokumentasyon ng API')}
+          </a>
+          <Link className={linkStyle} to="/projects-budget">
+            {t('Makati city budget', 'Budget ng lungsod ng Makati')}
+          </Link>
+          <Link className={linkStyle} to="/accountability">
+            {t('Procurement and accountability', 'Procurement at pananagutan')}
+          </Link>
+        </div>
+        <p>
+          {t(
+            'City budgets, national appropriations and procurement records are different measures. This page does not combine them, estimate Makati’s share of national programs or infer savings for the city.',
+            'Magkaibang sukatan ang city budget, pambansang alokasyon at procurement records. Hindi pinagsasama ang mga ito rito, tinatantya ang bahagi ng Makati sa pambansang programa o ipinapalagay ang matitipid ng lungsod.'
+          )}
+        </p>
+      </section>
+    </div>
+  );
+}
