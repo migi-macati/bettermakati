@@ -21,6 +21,7 @@ import SectionNav from '../components/ui/SectionNav';
 import CitizenSummary from '../components/ui/CitizenSummary';
 import CivicRelationshipLinks from '../components/civic/CivicRelationshipLinks';
 import OfficeBudgetDetail from '../components/budget/OfficeBudgetDetail';
+import NationalBudgetContext from '../components/budget/NationalBudgetContext';
 import {
   DonutChart,
   FiscalTrendChart,
@@ -337,6 +338,8 @@ export default function ProjectsBudget() {
           { label: 'Procurement', href: '#procurement' },
           { label: 'Audit', href: '#audit' },
         ]} />
+
+        <NationalBudgetContext />
 
         <CivicRelationshipLinks
           label="National context"
