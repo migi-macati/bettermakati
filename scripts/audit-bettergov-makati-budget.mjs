@@ -5,7 +5,7 @@
  * This is discovery, not a certified city project ledger. Requires public API access.
  */
 const BASE = 'https://budget.bettergov.ph/api/v1/hgab/2027';
-const PROGRAMS = ['dpwh', 'fmr', 'hfh', 'nia'];
+const PROGRAMS = ['dpwh', 'fmr', 'hfep', 'nia'];
 const LIMIT = 200;
 const MAX = 4000;
 const TIMEOUT_MS = 15000;
