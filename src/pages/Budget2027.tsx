@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useSearchParams } from 'react-router';
 import SEO from '../components/SEO';
+import { makatiScope } from '../lib/budget2027/scope';
 import {
   loadCityProjects,
   loadNationalOverview,
@@ -54,7 +55,9 @@ export default function Budget2027() {
   const available =
     city?.programs.flatMap(p => (p.status === 'available' ? [p.result] : [])) ||
     [];
-  const all = available.flatMap(p => p.rows);
+  const rawRows = available.flatMap(p => p.rows);
+  const all = rawRows.filter(row => makatiScope(row) !== 'excluded');
+  const excludedCount = rawRows.length - all.length;
   const rows = all.filter(
     row =>
       (!program || row.dataset === program) &&
@@ -90,6 +93,7 @@ export default function Budget2027() {
       'built_at',
       'retrieved_at',
       'coverage',
+      'location_scope',
     ];
     const values = rows.map(row => {
       const source = available.find(p =>
@@ -109,7 +113,8 @@ export default function Budget2027() {
         source.meta.source_commit,
         source.meta.built_at,
         source.retrievedAt,
-        'Makati title matches; not a citywide allocation; blank amount means missing',
+        'Whole-word Makati title candidates; not a citywide allocation; blank amount means missing',
+        makatiScope(row),
       ];
     });
     const url = URL.createObjectURL(
@@ -174,9 +179,29 @@ export default function Budget2027() {
         </p>
         <p className="rounded-lg bg-amber-50 p-3 text-sm">
           {t(
-            'Versions shown: NEP and House second/third readings. Senate, bicameral and enacted versions are not included here. Their absence does not establish the current legislative stage. Consult the dated source documents.',
-            'Mga bersyong ipinapakita: NEP at ikalawa/ikatlong pagbasa sa House. Hindi kasama rito ang Senate, bicameral at enacted versions. Hindi ibig sabihin nito na ito pa rin ang kasalukuyang yugto ng panukala. Tingnan ang mga dokumento at petsa ng sources.'
+            'Checked 2 November 2026: the House reports third-reading approval of HB 10858 on 12 October. The Senate calendar lists interpellations for 23 November–1 December and third reading for 7 December. These are scheduled dates, not completed votes. This page compares NEP and House versions, not an enacted 2027 budget.',
+            'Sinuri noong 2 November 2026: ayon sa House, naaprubahan sa ikatlong pagbasa ang HB 10858 noong 12 October. Sa Senate calendar, nakatakda ang interpellations sa 23 November–1 December at ikatlong pagbasa sa 7 December. Iskedyul pa lamang ang mga ito, hindi mga natapos na botohan. NEP at House versions ang inihahambing dito, hindi ang naisabatas na 2027 budget.'
           )}
+        </p>
+        <p className="flex flex-wrap gap-4 text-sm">
+          <a
+            className={linkStyle}
+            href="https://www.congress.gov.ph/media/press-releases/10320"
+          >
+            {t(
+              'House approval · 12 October',
+              'Pag-apruba ng House · 12 October'
+            )}
+          </a>
+          <a
+            className={linkStyle}
+            href="https://budget-transparency-portal.senate.gov.ph/schedules/gaa-2027"
+          >
+            {t(
+              'Senate timetable · subject to change',
+              'Iskedyul ng Senate · maaaring magbago'
+            )}
+          </a>
         </p>
         <nav
           aria-label={t('On this page', 'Sa pahinang ito')}
@@ -284,8 +309,8 @@ export default function Budget2027() {
         </h2>
         <p className="max-w-3xl">
           {t(
-            'This is a place-name search across four project datasets, not the complete national allocation for Makati. Cross-boundary projects and shared engineering offices need separate attribution. Do not add different budget versions together or treat a missing amount as zero.',
-            'Place-name search ito sa apat na project dataset, hindi ang buong pambansang alokasyon para sa Makati. Kailangang hiwalay na suriin ang proyektong tumatawid sa lungsod at shared engineering offices. Huwag pagsamahin ang mga bersyon ng budget o ituring na zero ang nawawalang halaga.'
+            'This list retains whole-word Makati title matches across four datasets. It excludes partial-word matches such as Lamakati in South Cotabato. Titles alone do not establish current city boundaries or the complete national allocation for Makati. Shared projects are labeled; their full amounts are not Makati-only allocations. Do not add different budget versions together or treat a missing amount as zero.',
+            'Kasama rito ang mga pamagat na may hiwalay na salitang Makati sa apat na dataset. Hindi kasama ang bahagyang tugma gaya ng Lamakati sa South Cotabato. Hindi sapat ang pamagat para matiyak ang kasalukuyang hangganan ng lungsod o ang buong pambansang alokasyon nito. May label ang shared projects; hindi para sa Makati lamang ang buong halaga ng mga ito. Huwag pagsamahin ang mga bersyon ng budget o ituring na zero ang nawawalang halaga.'
           )}
         </p>
         {!city && (
@@ -306,7 +331,7 @@ export default function Budget2027() {
                 <li key={p.dataset}>
                   <strong>{p.dataset.toUpperCase()}</strong>:{' '}
                   {p.status === 'available'
-                    ? `${p.result.total} ${t('title matches', 'tugma sa pamagat')}`
+                    ? `${p.result.total} ${t('matches before location review', 'tugma bago suriin ang lokasyon')}`
                     : t('unavailable; not zero', 'hindi available; hindi zero')}
                 </li>
               ))}
@@ -370,9 +395,19 @@ export default function Budget2027() {
                 {t('Export filtered CSV', 'I-export ang naka-filter na CSV')}
               </button>
             </div>
+            <p className="text-sm">
+              {excludedCount}{' '}
+              {t(
+                'partial-word matches excluded from this list and CSV.',
+                'partial-word matches ang hindi isinama sa listahan at CSV.'
+              )}
+            </p>
             <p role="status">
               {rows.length} / {all.length}{' '}
-              {t('available title matches', 'available na tugma sa pamagat')}
+              {t(
+                'Makati title candidates',
+                'kandidatong may Makati sa pamagat'
+              )}
             </p>
             {!rows.length && (
               <p>
@@ -394,6 +429,14 @@ export default function Budget2027() {
                     {row.office ||
                       t('Office not recorded', 'Walang nakatalang opisina')}
                   </p>
+                  {makatiScope(row) === 'shared' && (
+                    <p className="mt-2 text-sm font-semibold">
+                      {t(
+                        'Shared Makati–Mandaluyong project. The amount covers the project, not Makati’s share.',
+                        'Shared project ng Makati–Mandaluyong. Para sa proyekto ang halaga, hindi bahagi ng Makati lamang.'
+                      )}
+                    </p>
+                  )}
                   {row.held && (
                     <p className="mt-2 text-amber-900">
                       {t(
@@ -408,20 +451,20 @@ export default function Budget2027() {
                         <dt className="text-sm text-gray-600">{v.label}</dt>
                         <dd className="font-semibold">{money(row[v.key])}</dd>
                         <dd>
-                        {row.pdf_url[v.pdf] && (
-                          <a
-                            className={`${linkStyle} text-sm`}
-                            href={row.pdf_url[v.pdf]!}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            {t(
-                              'Open source PDF page',
-                              'Buksan ang pahina sa source PDF'
-                            )}{' '}
-                            · {v.label}
-                          </a>
-                        )}
+                          {row.pdf_url[v.pdf] && (
+                            <a
+                              className={`${linkStyle} text-sm`}
+                              href={row.pdf_url[v.pdf]!}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              {t(
+                                'Open source PDF page',
+                                'Buksan ang pahina sa source PDF'
+                              )}{' '}
+                              · {v.label}
+                            </a>
+                          )}
                         </dd>
                       </div>
                     ))}
@@ -430,8 +473,17 @@ export default function Budget2027() {
               ))}
             </ul>
             <p className="text-sm">
-              {available.reduce((n, r) => n + r.coordinates.valid, 0)} /{' '}
-              {all.length}{' '}
+              {
+                all.filter(
+                  r =>
+                    r.lat !== null &&
+                    r.lon !== null &&
+                    Math.abs(r.lat) <= 90 &&
+                    Math.abs(r.lon) <= 180 &&
+                    (r.lat !== 0 || r.lon !== 0)
+                ).length
+              }{' '}
+              / {all.length}{' '}
               {t(
                 'records have valid coordinates. Missing coordinates remain in this list; no locations are inferred from office addresses.',
                 'record ang may valid coordinates. Nananatili sa listahan ang walang coordinates; hindi ginagamit ang address ng opisina bilang lokasyon ng proyekto.'

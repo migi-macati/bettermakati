@@ -2956,14 +2956,25 @@ for (const language of ['en', 'fil']) {
       await page.goto(baseURL + '/budget-2027');
       await expect(page.getByRole('heading', { level: 1 })).toContainText('Budget 2027');
       await expect(page.locator('main')).toContainText('₱7,200,186,000,000');
-      await expect(page.getByRole('status').filter({ hasText: '12 / 12' })).toBeVisible();
+      await expect(page.getByRole('status').filter({ hasText: '11 / 11' })).toBeVisible();
+      await expect(page.locator('#projects h3').filter({ hasText: 'Lamakati' })).toHaveCount(0);
+      await expect(page.locator('#projects')).toContainText(language === 'en' ? 'Shared Makati–Mandaluyong project' : 'Shared project ng Makati–Mandaluyong');
+      // Export the complete visible scope before filtering: excluded projects must not leak.
+      const allDownload = page.waitForEvent('download');
+      await page.getByRole('button', { name: /CSV/ }).click();
+      const allCsv = readFileSync(await (await allDownload).path(), 'utf8');
+      expect(allCsv).not.toContain('Lamakati');
+      expect(allCsv).toContain('location_scope');
+      expect(allCsv).toContain('"shared"');
+      expect(allCsv).toContain('Makati-Mandaluyong');
+      await expect(page.locator('main')).toContainText(language === 'en' ? 'scheduled dates, not completed votes' : 'hindi mga natapos na botohan');
       const scan = await new AxeBuilder({ page }).include('#main-content').withTags(['wcag2a', 'wcag2aa']).analyze();
       expect(scan.violations.filter(v => ['serious', 'critical'].includes(v.impact))).toEqual([]);
       await expect(page.locator('main')).toContainText(language === 'en' ? 'Not recorded in this version' : 'Walang nakatalang halaga sa bersyong ito');
       const filter = page.getByLabel(language === 'en' ? 'Filter title or office' : 'Salain ayon sa pamagat o opisina');
       await filter.fill('Filmore');
       await expect(page).toHaveURL(/q=Filmore/);
-      await expect(page.getByRole('status').filter({ hasText: '1 / 12' })).toBeVisible();
+      await expect(page.getByRole('status').filter({ hasText: '1 / 11' })).toBeVisible();
       await expect(page.locator('#projects')).toContainText('₱25,000,000');
       await expect(page.locator('#projects a[href*="hb10858-3r"]')).toHaveAttribute('href', /#page=322$/);
       const download = page.waitForEvent('download');
@@ -2979,7 +2990,7 @@ for (const language of ['en', 'fil']) {
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy();
       await page.reload(); await expect(filter).toHaveValue('Filmore');
       await filter.fill('no-such-project');
-      await expect(page.getByRole('status').filter({ hasText: '0 / 12' })).toBeVisible();
+      await expect(page.getByRole('status').filter({ hasText: '0 / 11' })).toBeVisible();
       await expect(page.getByRole('button', { name: /CSV/ })).toBeDisabled();
     });
   }
@@ -3000,6 +3011,6 @@ test('BM-B27 failures stay unknown; partial results and retry work', async ({ pa
   await expect(page.getByRole('alert').filter({ hasText: 'partial' })).toBeVisible();
   failed = false;
   await page.getByRole('button', { name: 'Retry data' }).click();
-  await expect(page.getByRole('status').filter({ hasText: '12 / 12' })).toBeVisible();
+  await expect(page.getByRole('status').filter({ hasText: '11 / 11' })).toBeVisible();
   await expect(page.getByRole('alert')).toHaveCount(0);
 });

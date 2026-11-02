@@ -45,3 +45,12 @@ await assert.rejects(loadNationalOverview(options(national)), /reconcile/);
 const controller = new AbortController(); controller.abort();
 await assert.rejects(loadCityProjects('Makati', { signal: controller.signal, fetcher: async (_url, init) => { init.signal.throwIfAborted(); } }));
 console.log('Budget 2027 adapter: pagination, sums, missing data, partial failures, source drift, comparison labels and cancellation passed.');
+
+const { makatiScope } = await import('../src/lib/budget2027/scope.ts');
+assert.equal(makatiScope({ title: 'Sitio Kao - Lamakati Road, South Cotabato' }), 'excluded');
+assert.equal(makatiScope({ title: 'Drainage in Makati City' }), 'candidate');
+assert.equal(makatiScope({ title: 'Makati-Mandaluyong Br.' }), 'shared');
+assert.equal(makatiScope({ title: 'Mandaluyong–Makati bridge' }), 'shared');
+assert.equal(makatiScope({ title: 'Makati Div. Channel Br.' }), 'candidate');
+assert.equal(makatiScope({ title: 'Makatiño test' }), 'excluded');
+console.log('Makati title scope: 6 assertions passed');
