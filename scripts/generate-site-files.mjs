@@ -37,6 +37,7 @@ const staticRoutes = [
   '/news',
   '/live',
   '/projects-budget',
+  '/budget-2027',
   '/community-tools',
   '/civic-map',
   '/civic-map/reports',

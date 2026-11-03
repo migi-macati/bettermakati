@@ -2953,7 +2953,14 @@ for (const language of ['en', 'fil']) {
         const file = program === 'dpwh' ? 'makati-dpwh-title' : program || 'national';
         await route.fulfill({ json: JSON.parse(readFileSync(`data/budget2027/2026-11-01-${file}-response.json`, 'utf8')) });
       });
-      await page.goto(baseURL + '/budget-2027');
+      await page.goto(baseURL + '/');
+      const budgetFeature = page.getByRole('link', { name: /Budget 2027:/ });
+      await expect(budgetFeature).toHaveCount(1);
+      await budgetFeature.focus(); await expect(budgetFeature).toBeFocused();
+      await page.keyboard.press('Enter');
+      await expect(page).toHaveURL(baseURL + '/budget-2027');
+      await expect(page.locator('a[href*="Introduction.pdf#page=1"]')).toBeVisible();
+      await expect(page.locator('main')).toContainText('5.99%');
       await expect(page.getByRole('heading', { level: 1 })).toContainText('Budget 2027');
       await expect(page.locator('main')).toContainText('₱7,200,186,000,000');
       await expect(page.getByRole('status').filter({ hasText: '11 / 11' })).toBeVisible();
@@ -3014,3 +3021,14 @@ test('BM-B27 failures stay unknown; partial results and retry work', async ({ pa
   await expect(page.getByRole('status').filter({ hasText: '11 / 11' })).toBeVisible();
   await expect(page.getByRole('alert')).toHaveCount(0);
 });
+
+for (const query of ['budget 2027', 'pambansang budget 2027']) {
+  test(`BM-B27 search opens canonical route: ${query}`, async ({ page }) => {
+    await page.goto(baseURL + '/search?q=' + encodeURIComponent(query));
+    const result = page.getByRole('option', { name: /^Budget 2027/ });
+    await expect(result).toHaveCount(1);
+    await result.click();
+    await expect(page).toHaveURL(baseURL + '/budget-2027');
+    await expect(page.getByRole('heading', { level: 1 })).toContainText('Budget 2027');
+  });
+}

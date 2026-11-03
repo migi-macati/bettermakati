@@ -226,6 +226,27 @@ export default function Budget2027() {
         <h2 id="national-heading" className="text-2xl font-bold">
           {t('The national proposal', 'Ang pambansang panukala')}
         </h2>
+        <p className="max-w-3xl">
+          {t(
+            'DBM’s proposal prioritizes education, healthcare, social protection, food security and infrastructure. These national programs can matter to Makati residents even when their budgets have no city-specific project line. The figures below do not establish individual eligibility, local delivery or savings for the city.',
+            'Kabilang sa mga prayoridad ng panukala ng DBM ang edukasyon, healthcare, social protection, food security at infrastructure. Mahalaga rin sa mga taga-Makati ang mga pambansang programang walang hiwalay na project line para sa lungsod. Hindi pinatutunayan ng mga halaga rito ang eligibility ng isang tao, lokal na serbisyo o matitipid ng lungsod.'
+          )}
+        </p>
+        <p className="max-w-3xl text-sm">
+          {t(
+            'Original-table check, 3 November 2026: DBM’s Table I reports ₱7,200.19 billion for 2027 and ₱6,793.16 billion for 2026, a 5.99% increase. The API totals below agree at that published precision; their extra digits come from the API, not this rounded table.',
+            'Pagsuri sa orihinal na table, 3 November 2026: ₱7,200.19 billion para sa 2027 at ₱6,793.16 billion para sa 2026 ang nasa Table I ng DBM, o 5.99% na pagtaas. Tugma rito ang API totals kapag ni-round sa parehong precision; mula sa API ang dagdag na digits, hindi sa rounded table na ito.'
+          )}{' '}
+          <a
+            className={linkStyle}
+            href="https://www.dbm.gov.ph/wp-content/uploads/NEP2027/Introduction.pdf#page=1"
+          >
+            {t(
+              'DBM original Table I (PDF page 1)',
+              'Orihinal na Table I ng DBM (PDF page 1)'
+            )}
+          </a>
+        </p>
         {!national && !nationalError && (
           <p role="status">
             {t('Loading national figures…', 'Kinukuha ang pambansang datos…')}
@@ -234,8 +255,8 @@ export default function Budget2027() {
         {nationalError && (
           <p role="alert">
             {t(
-              'National figures could not be validated. No total is shown.',
-              'Hindi ma-validate ang pambansang datos. Walang kabuuang halagang ipinapakita.'
+              'National figures from the API could not be validated. The dated DBM table check above remains available.',
+              'Hindi ma-validate ang pambansang datos mula sa API. Available pa rin sa itaas ang may petsang pagsuri sa DBM table.'
             )}
           </p>
         )}
@@ -274,6 +295,12 @@ export default function Budget2027() {
                 )}{' '}
                 ({national.departments.length})
               </summary>
+              <p className="mt-3 text-sm">
+                {t(
+                  'These are the API’s mutually exclusive categories, not the appropriation-source groups in DBM Table I. The API’s Automatic Appropriations amount differs from Table I; the category-by-category correspondence has not been independently reconciled. Do not compare these category amounts directly with Table I or add the two breakdowns together.',
+                  'Mga hiwa-hiwalay na kategorya ito ng API, hindi ang mga grupo ayon sa pinagmulan ng appropriation sa Table I ng DBM. Magkaiba ang Automatic Appropriations amount ng API at Table I; hindi pa independiyenteng na-reconcile ang pagtutugma ng bawat kategorya. Huwag direktang ihambing ang mga halagang ito sa Table I o pagsamahin ang dalawang breakdown.'
+                )}
+              </p>
               <ul className="mt-3 divide-y">
                 {national.departments.map(d => (
                   <li
@@ -522,8 +549,8 @@ export default function Budget2027() {
         </p>
         <p>
           {t(
-            'BetterMakati checked three House PDF entries on 1 November 2026: Filmore/Calatagan (₱25 million), Faraday/Gil Puyat (₱28.5 million) and Casino/Zobel Roxas (₱42 million). This is a sample, not verification of every row, national total or NEP match. PDF page numbers may differ from printed page numbers.',
-            'Sinuri ng BetterMakati ang tatlong House PDF entry noong 1 November 2026: Filmore/Calatagan (₱25 million), Faraday/Gil Puyat (₱28.5 million) at Casino/Zobel Roxas (₱42 million). Sample ito, hindi verification ng bawat row, pambansang kabuuan o NEP match. Maaaring magkaiba ang PDF page number at naka-print na page number.'
+            'On 3 November 2026, BetterMakati checked all 32 recorded version amounts for the 11 retained candidates against their linked source PDF pages: 11 House second-reading, 11 House third-reading and 10 NEP amounts. Filmore’s missing NEP match remains unknown, not proof that the project was absent. This does not verify city boundaries or later data revisions. PDF page numbers may differ from printed page numbers.',
+            'Noong 3 November 2026, sinuri ng BetterMakati ang lahat ng 32 nakatalang halaga para sa 11 kandidatong proyekto sa mga naka-link na source PDF page: 11 sa House second reading, 11 sa House third reading at 10 sa NEP. Hindi pa tiyak ang nawawalang NEP match ng Filmore; hindi ito patunay na wala ang proyekto. Hindi nito vine-verify ang hangganan ng lungsod o susunod na pagbabago sa datos. Maaaring magkaiba ang PDF page number at naka-print na page number.'
           )}
         </p>
         <ul className="space-y-2 text-sm break-words">

@@ -117,7 +117,7 @@ const stats = [
 ];
 
 const Home: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   return (
     <>
       <SEO
@@ -127,6 +127,18 @@ const Home: React.FC = () => {
       />
 
       <Hero />
+
+      <section aria-labelledby="budget-2027-feature" className="border-b border-primary-100 bg-[#fffdf8] py-4">
+        <div className="container px-5 md:px-6 lg:px-8">
+          <Link to="/budget-2027" className="mx-auto flex max-w-6xl items-center justify-between gap-4 rounded-lg border border-primary-200 px-4 py-3 text-primary-900 hover:bg-primary-50 focus-visible:outline-2 focus-visible:outline-offset-4">
+            <div>
+              <h2 id="budget-2027-feature" className="font-bold">{i18n.resolvedLanguage === 'fil' ? 'Budget 2027: Ano ang ibig sabihin nito para sa Makati?' : 'Budget 2027: What does it mean for Makati?'}</h2>
+              <p className="mt-1 text-sm">{i18n.resolvedLanguage === 'fil' ? 'Pambansang panukala, mga proyektong may Makati sa pamagat, at orihinal na sources.' : 'The national proposal, projects naming Makati, and original sources.'}</p>
+            </div>
+            <ArrowRight className="h-5 w-5 shrink-0" aria-hidden="true" />
+          </Link>
+        </div>
+      </section>
 
       <section className="border-b border-primary-100 bg-[#fffdf8] py-5 md:py-7">
         <div className="container px-5 md:px-6 lg:px-8">

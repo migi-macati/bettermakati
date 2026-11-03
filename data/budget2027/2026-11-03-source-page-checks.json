@@ -1,0 +1,251 @@
+{
+  "checked": "2026-11-03",
+  "scope": "32 recorded amounts on exact linked pages in source PDFs mirrored by BetterGov; not city-boundary verification or proof of absent NEP line",
+  "checks": [
+    {
+      "version": "House2",
+      "id": "house-reading:3575",
+      "pdf_page": 299,
+      "amount_php": 100000000,
+      "matched": true
+    },
+    {
+      "version": "House2",
+      "id": "house-reading:3566",
+      "pdf_page": 299,
+      "amount_php": 99000000,
+      "matched": true
+    },
+    {
+      "version": "House2",
+      "id": "house-reading:3562",
+      "pdf_page": 299,
+      "amount_php": 85000000,
+      "matched": true
+    },
+    {
+      "version": "House2",
+      "id": "house-reading:3596",
+      "pdf_page": 300,
+      "amount_php": 63000000,
+      "matched": true
+    },
+    {
+      "version": "House2",
+      "id": "house-reading:6121",
+      "pdf_page": 413,
+      "amount_php": 60000000,
+      "matched": true
+    },
+    {
+      "version": "House2",
+      "id": "house-reading:2954",
+      "pdf_page": 273,
+      "amount_php": 42200000,
+      "matched": true
+    },
+    {
+      "version": "House2",
+      "id": "house-reading:3659",
+      "pdf_page": 322,
+      "amount_php": 42000000,
+      "matched": true
+    },
+    {
+      "version": "House2",
+      "id": "house-reading:3667",
+      "pdf_page": 322,
+      "amount_php": 34000000,
+      "matched": true
+    },
+    {
+      "version": "House2",
+      "id": "house-reading:3654",
+      "pdf_page": 322,
+      "amount_php": 28500000,
+      "matched": true
+    },
+    {
+      "version": "House2",
+      "id": "house-reading:3648",
+      "pdf_page": 322,
+      "amount_php": 25000000,
+      "matched": true
+    },
+    {
+      "version": "House2",
+      "id": "house-reading:2843",
+      "pdf_page": 267,
+      "amount_php": 16560000,
+      "matched": true
+    },
+    {
+      "version": "House3",
+      "id": "house-reading:3575",
+      "pdf_page": 299,
+      "amount_php": 100000000,
+      "matched": true
+    },
+    {
+      "version": "House3",
+      "id": "house-reading:3566",
+      "pdf_page": 299,
+      "amount_php": 99000000,
+      "matched": true
+    },
+    {
+      "version": "House3",
+      "id": "house-reading:3562",
+      "pdf_page": 299,
+      "amount_php": 85000000,
+      "matched": true
+    },
+    {
+      "version": "House3",
+      "id": "house-reading:3596",
+      "pdf_page": 300,
+      "amount_php": 63000000,
+      "matched": true
+    },
+    {
+      "version": "House3",
+      "id": "house-reading:6121",
+      "pdf_page": 413,
+      "amount_php": 60000000,
+      "matched": true
+    },
+    {
+      "version": "House3",
+      "id": "house-reading:2954",
+      "pdf_page": 273,
+      "amount_php": 42200000,
+      "matched": true
+    },
+    {
+      "version": "House3",
+      "id": "house-reading:3659",
+      "pdf_page": 322,
+      "amount_php": 42000000,
+      "matched": true
+    },
+    {
+      "version": "House3",
+      "id": "house-reading:3667",
+      "pdf_page": 322,
+      "amount_php": 34000000,
+      "matched": true
+    },
+    {
+      "version": "House3",
+      "id": "house-reading:3654",
+      "pdf_page": 322,
+      "amount_php": 28500000,
+      "matched": true
+    },
+    {
+      "version": "House3",
+      "id": "house-reading:3648",
+      "pdf_page": 322,
+      "amount_php": 25000000,
+      "matched": true
+    },
+    {
+      "version": "House3",
+      "id": "house-reading:2843",
+      "pdf_page": 267,
+      "amount_php": 16560000,
+      "matched": true
+    },
+    {
+      "version": "NEP",
+      "id": "house-reading:3575",
+      "pdf_page": 349,
+      "amount_php": 100000000,
+      "matched": true
+    },
+    {
+      "version": "NEP",
+      "id": "house-reading:3566",
+      "pdf_page": 348,
+      "amount_php": 99000000,
+      "matched": true
+    },
+    {
+      "version": "NEP",
+      "id": "house-reading:3562",
+      "pdf_page": 348,
+      "amount_php": 85000000,
+      "matched": true
+    },
+    {
+      "version": "NEP",
+      "id": "house-reading:3596",
+      "pdf_page": 349,
+      "amount_php": 63000000,
+      "matched": true
+    },
+    {
+      "version": "NEP",
+      "id": "house-reading:6121",
+      "pdf_page": 434,
+      "amount_php": 60000000,
+      "matched": true
+    },
+    {
+      "version": "NEP",
+      "id": "house-reading:2954",
+      "pdf_page": 326,
+      "amount_php": 42200000,
+      "matched": true
+    },
+    {
+      "version": "NEP",
+      "id": "house-reading:3659",
+      "pdf_page": 366,
+      "amount_php": 42000000,
+      "matched": true
+    },
+    {
+      "version": "NEP",
+      "id": "house-reading:3667",
+      "pdf_page": 366,
+      "amount_php": 34000000,
+      "matched": true
+    },
+    {
+      "version": "NEP",
+      "id": "house-reading:3654",
+      "pdf_page": 366,
+      "amount_php": 28500000,
+      "matched": true
+    },
+    {
+      "version": "NEP",
+      "id": "house-reading:2843",
+      "pdf_page": 321,
+      "amount_php": 16560000,
+      "matched": true
+    }
+  ],
+  "documents": [
+    {
+      "url": "https://budget-assets.bettergov.ph/hgab/2027/pdf/hb10858-2r-vol-ic.pdf",
+      "sha256": "0b790d6018db59abab648486c5068108a42ff20a33facc8e21ace0bbedf2d15f"
+    },
+    {
+      "url": "https://budget-assets.bettergov.ph/hgab/2027/pdf/hb10858-3r-vol-ic.pdf",
+      "sha256": "48cb7a11e391bd4da89d4f47cf39a2eba8fe9bfe636dba101c8284b224ac1b1b"
+    },
+    {
+      "url": "https://budget-assets.bettergov.ph/hgab/2027/pdf/nep2027-vol-iib.pdf",
+      "sha256": "bfc8282de8e3603f347f82aa2be34c25a38147e30aa34c12b11413766b7e7523"
+    }
+  ],
+  "national_table": {
+    "url": "https://www.dbm.gov.ph/wp-content/uploads/NEP2027/Introduction.pdf#page=1",
+    "verified_precision": "PHP billion, two decimal places",
+    "2027": 7200.19,
+    "2026": 6793.16,
+    "change_percent": 5.99
+  }
+}
