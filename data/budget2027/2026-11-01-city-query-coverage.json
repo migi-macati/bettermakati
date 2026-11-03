@@ -1,0 +1,192 @@
+{
+  "checked_date": "2026-11-01",
+  "method": "DPWH title search only; not city attribution",
+  "results": [
+    {
+      "query": "Taguig",
+      "declared_matches": 4,
+      "fetched_rows": 4,
+      "valid_coordinate_pairs_in_fetched_rows": 4,
+      "complete_query": true,
+      "city_coverage_verified": false,
+      "meta": {
+        "dataset": "hgab",
+        "fiscal_year": 2027,
+        "currency": "PHP",
+        "scale": "pesos",
+        "source_repo": "https://github.com/csiiiv/DPWH-NEP-HB-2027-ANALYSIS",
+        "source_commit": "a0caa778442cdae5583f5a006ea7401dab00e5ac",
+        "built_at": "2026-10-26T08:46:14.383Z",
+        "notice": "Independent and unofficial. This comparison is our own reading of the published documents, not an official record of the budget department, the agencies or the House. Figures are the amounts published in the documents, not spending. No allegations. An insertion, deletion, or amount-change candidate describes a provisional comparison between identified sources. That classification alone does not establish irregularity or wrongdoing by any office or official and should not be represented as such. Absence from an API snapshot likewise does not establish absence from the published NEP or concealment. Read the full notice: https://budget.bettergov.ph/hgab/2027/methodology#disclaimer.",
+        "dataset_key": "dpwh",
+        "house_stage": "hgab3",
+        "filters": {
+          "q": "taguig",
+          "held": "all"
+        },
+        "sort": "house",
+        "order": "desc",
+        "limit": 200,
+        "offset": 0,
+        "returned": 4,
+        "total": 4,
+        "note": "One row per comparison record. status_label is the plain status; trace is the raw code. Pairings are candidates, not confirmed changes; held = true marks an unconfirmed match. sums are per version over every matched row (not just this page). The NEP and the House bill are two versions of one budget: compare them, never add them."
+      }
+    },
+    {
+      "query": "Pasig",
+      "declared_matches": 22,
+      "fetched_rows": 22,
+      "valid_coordinate_pairs_in_fetched_rows": 3,
+      "complete_query": true,
+      "city_coverage_verified": false,
+      "meta": {
+        "dataset": "hgab",
+        "fiscal_year": 2027,
+        "currency": "PHP",
+        "scale": "pesos",
+        "source_repo": "https://github.com/csiiiv/DPWH-NEP-HB-2027-ANALYSIS",
+        "source_commit": "a0caa778442cdae5583f5a006ea7401dab00e5ac",
+        "built_at": "2026-10-26T08:46:14.383Z",
+        "notice": "Independent and unofficial. This comparison is our own reading of the published documents, not an official record of the budget department, the agencies or the House. Figures are the amounts published in the documents, not spending. No allegations. An insertion, deletion, or amount-change candidate describes a provisional comparison between identified sources. That classification alone does not establish irregularity or wrongdoing by any office or official and should not be represented as such. Absence from an API snapshot likewise does not establish absence from the published NEP or concealment. Read the full notice: https://budget.bettergov.ph/hgab/2027/methodology#disclaimer.",
+        "dataset_key": "dpwh",
+        "house_stage": "hgab3",
+        "filters": {
+          "q": "pasig",
+          "held": "all"
+        },
+        "sort": "house",
+        "order": "desc",
+        "limit": 200,
+        "offset": 0,
+        "returned": 22,
+        "total": 22,
+        "note": "One row per comparison record. status_label is the plain status; trace is the raw code. Pairings are candidates, not confirmed changes; held = true marks an unconfirmed match. sums are per version over every matched row (not just this page). The NEP and the House bill are two versions of one budget: compare them, never add them."
+      }
+    },
+    {
+      "query": "Mandaluyong",
+      "declared_matches": 29,
+      "fetched_rows": 29,
+      "valid_coordinate_pairs_in_fetched_rows": 22,
+      "complete_query": true,
+      "city_coverage_verified": false,
+      "meta": {
+        "dataset": "hgab",
+        "fiscal_year": 2027,
+        "currency": "PHP",
+        "scale": "pesos",
+        "source_repo": "https://github.com/csiiiv/DPWH-NEP-HB-2027-ANALYSIS",
+        "source_commit": "a0caa778442cdae5583f5a006ea7401dab00e5ac",
+        "built_at": "2026-10-26T08:46:14.383Z",
+        "notice": "Independent and unofficial. This comparison is our own reading of the published documents, not an official record of the budget department, the agencies or the House. Figures are the amounts published in the documents, not spending. No allegations. An insertion, deletion, or amount-change candidate describes a provisional comparison between identified sources. That classification alone does not establish irregularity or wrongdoing by any office or official and should not be represented as such. Absence from an API snapshot likewise does not establish absence from the published NEP or concealment. Read the full notice: https://budget.bettergov.ph/hgab/2027/methodology#disclaimer.",
+        "dataset_key": "dpwh",
+        "house_stage": "hgab3",
+        "filters": {
+          "q": "mandaluyong",
+          "held": "all"
+        },
+        "sort": "house",
+        "order": "desc",
+        "limit": 200,
+        "offset": 0,
+        "returned": 29,
+        "total": 29,
+        "note": "One row per comparison record. status_label is the plain status; trace is the raw code. Pairings are candidates, not confirmed changes; held = true marks an unconfirmed match. sums are per version over every matched row (not just this page). The NEP and the House bill are two versions of one budget: compare them, never add them."
+      }
+    },
+    {
+      "query": "Manila",
+      "declared_matches": 629,
+      "fetched_rows": 200,
+      "valid_coordinate_pairs_in_fetched_rows": 44,
+      "complete_query": false,
+      "city_coverage_verified": false,
+      "meta": {
+        "dataset": "hgab",
+        "fiscal_year": 2027,
+        "currency": "PHP",
+        "scale": "pesos",
+        "source_repo": "https://github.com/csiiiv/DPWH-NEP-HB-2027-ANALYSIS",
+        "source_commit": "a0caa778442cdae5583f5a006ea7401dab00e5ac",
+        "built_at": "2026-10-26T08:46:14.383Z",
+        "notice": "Independent and unofficial. This comparison is our own reading of the published documents, not an official record of the budget department, the agencies or the House. Figures are the amounts published in the documents, not spending. No allegations. An insertion, deletion, or amount-change candidate describes a provisional comparison between identified sources. That classification alone does not establish irregularity or wrongdoing by any office or official and should not be represented as such. Absence from an API snapshot likewise does not establish absence from the published NEP or concealment. Read the full notice: https://budget.bettergov.ph/hgab/2027/methodology#disclaimer.",
+        "dataset_key": "dpwh",
+        "house_stage": "hgab3",
+        "filters": {
+          "q": "manila",
+          "held": "all"
+        },
+        "sort": "house",
+        "order": "desc",
+        "limit": 200,
+        "offset": 0,
+        "returned": 200,
+        "total": 629,
+        "note": "One row per comparison record. status_label is the plain status; trace is the raw code. Pairings are candidates, not confirmed changes; held = true marks an unconfirmed match. sums are per version over every matched row (not just this page). The NEP and the House bill are two versions of one budget: compare them, never add them."
+      }
+    },
+    {
+      "query": "Quezon City",
+      "declared_matches": 200,
+      "fetched_rows": 200,
+      "valid_coordinate_pairs_in_fetched_rows": 38,
+      "complete_query": true,
+      "city_coverage_verified": false,
+      "meta": {
+        "dataset": "hgab",
+        "fiscal_year": 2027,
+        "currency": "PHP",
+        "scale": "pesos",
+        "source_repo": "https://github.com/csiiiv/DPWH-NEP-HB-2027-ANALYSIS",
+        "source_commit": "a0caa778442cdae5583f5a006ea7401dab00e5ac",
+        "built_at": "2026-10-26T08:46:14.383Z",
+        "notice": "Independent and unofficial. This comparison is our own reading of the published documents, not an official record of the budget department, the agencies or the House. Figures are the amounts published in the documents, not spending. No allegations. An insertion, deletion, or amount-change candidate describes a provisional comparison between identified sources. That classification alone does not establish irregularity or wrongdoing by any office or official and should not be represented as such. Absence from an API snapshot likewise does not establish absence from the published NEP or concealment. Read the full notice: https://budget.bettergov.ph/hgab/2027/methodology#disclaimer.",
+        "dataset_key": "dpwh",
+        "house_stage": "hgab3",
+        "filters": {
+          "q": "quezon city",
+          "held": "all"
+        },
+        "sort": "house",
+        "order": "desc",
+        "limit": 200,
+        "offset": 0,
+        "returned": 200,
+        "total": 200,
+        "note": "One row per comparison record. status_label is the plain status; trace is the raw code. Pairings are candidates, not confirmed changes; held = true marks an unconfirmed match. sums are per version over every matched row (not just this page). The NEP and the House bill are two versions of one budget: compare them, never add them."
+      }
+    },
+    {
+      "query": "Marikina",
+      "declared_matches": 81,
+      "fetched_rows": 81,
+      "valid_coordinate_pairs_in_fetched_rows": 16,
+      "complete_query": true,
+      "city_coverage_verified": false,
+      "meta": {
+        "dataset": "hgab",
+        "fiscal_year": 2027,
+        "currency": "PHP",
+        "scale": "pesos",
+        "source_repo": "https://github.com/csiiiv/DPWH-NEP-HB-2027-ANALYSIS",
+        "source_commit": "a0caa778442cdae5583f5a006ea7401dab00e5ac",
+        "built_at": "2026-10-26T08:46:14.383Z",
+        "notice": "Independent and unofficial. This comparison is our own reading of the published documents, not an official record of the budget department, the agencies or the House. Figures are the amounts published in the documents, not spending. No allegations. An insertion, deletion, or amount-change candidate describes a provisional comparison between identified sources. That classification alone does not establish irregularity or wrongdoing by any office or official and should not be represented as such. Absence from an API snapshot likewise does not establish absence from the published NEP or concealment. Read the full notice: https://budget.bettergov.ph/hgab/2027/methodology#disclaimer.",
+        "dataset_key": "dpwh",
+        "house_stage": "hgab3",
+        "filters": {
+          "q": "marikina",
+          "held": "all"
+        },
+        "sort": "house",
+        "order": "desc",
+        "limit": 200,
+        "offset": 0,
+        "returned": 81,
+        "total": 81,
+        "note": "One row per comparison record. status_label is the plain status; trace is the raw code. Pairings are candidates, not confirmed changes; held = true marks an unconfirmed match. sums are per version over every matched row (not just this page). The NEP and the House bill are two versions of one budget: compare them, never add them."
+      }
+    }
+  ]
+}

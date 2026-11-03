@@ -4,7 +4,7 @@
   "reviewedAt": "2026-09-29",
   "scope": "W6-4a orphan and dead-end audit across the canonical public route surface.",
   "routeInventory": {
-    "substantiveCount": 51,
+    "substantiveCount": 52,
     "compatibilityRedirects": [
       {
         "from": "/parking",
@@ -76,7 +76,8 @@
     "/search",
     "/get-involved",
     "/contact",
-    "/hotlines"
+    "/hotlines",
+    "/budget-2027"
   ],
   "criticalOrphans": [],
   "fixedDeadEnds": [
@@ -144,5 +145,14 @@
     "Global navigation and Page Help are recovery mechanisms, not substitutes for a useful task-specific continuation.",
     "Do not add generic related-link blocks to every page; terminal and policy surfaces can remain terminal when that matches the user task."
   ],
-  "next": "W6-4b — civic relationship model"
+  "next": "W6-4b \u2014 civic relationship model",
+  "budget2027Continuation": {
+    "route": "/budget-2027",
+    "entry": "/projects-budget",
+    "outbound": [
+      "/projects-budget",
+      "/accountability"
+    ],
+    "scope": "2026-11-01 source inspection of explicit route links; browser acceptance tracked in BM-B27 checkpoint, not a repeat of the original audit"
+  }
 }
