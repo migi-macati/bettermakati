@@ -2905,10 +2905,12 @@ for (const language of ['en', 'fil']) {
       '2026-philgeps-makati-teachers-kits-13224300',
       '2026-philgeps-makati-creative-software-13203651',
     ]) {
+      await page.getByRole('searchbox').fill('procurement-' + id);
       const card = page.locator(`[id="procurement-${id}"]`);
       await expect(card.locator('[data-record-review]')).toHaveText(unknown);
       await expect(card).not.toContainText('Last verified: 24 September 2026');
     }
+    await page.getByRole('searchbox').fill('procurement-monitor-procurement-2025-q2-bs25-03-oe07');
     // An independently recorded source review survives the derived monitor card.
     await expect(page.locator('[id="procurement-monitor-procurement-2025-q2-bs25-03-oe07"] [data-record-review]')).toContainText('25 September 2026');
     await expect(page.getByText(language === 'en' ? 'Ledger overview reviewed:' : 'Huling review ng ledger overview:', { exact: true })).toBeVisible();
@@ -3031,4 +3033,60 @@ for (const query of ['budget 2027', 'pambansang budget 2027']) {
     await expect(page).toHaveURL(baseURL + '/budget-2027');
     await expect(page.getByRole('heading', { level: 1 })).toContainText('Budget 2027');
   });
+}
+
+
+for (const language of ['en', 'fil']) {
+  for (const width of [390, 1440]) {
+    test('BM-ORD-004 accountability bounded results ' + language + ' ' + width, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await page.addInitScript(lang => localStorage.setItem('i18nextLng', lang), language);
+      await page.goto(baseURL + '/accountability');
+      const cards = page.locator('#ledger-records article');
+      await expect(cards).toHaveCount(20);
+      const total = Number((await page.locator('[data-ledger-count]').innerText()).match(/\/\s*(\d+)/)[1]);
+      expect(total).toBeGreaterThan(40);
+      await page.locator('[data-ledger-load-more]').focus();
+      await page.keyboard.press('Enter');
+      await expect(cards).toHaveCount(40);
+      await expect(page).toHaveURL(/limit=40/);
+      const record = cards.nth(25);
+      const id = await record.getAttribute('id');
+      await record.getByRole('link', { name: language === 'fil' ? 'Link sa record' : 'Record link', exact: true }).click();
+      await expect(page).toHaveURL(new RegExp('#' + id + '$'));
+      await expect(page.locator('[id="' + id + '"] > details')).toHaveAttribute('open', '');
+      await page.goBack();
+      await expect(page).toHaveURL(/limit=40/);
+      await expect(cards).toHaveCount(40);
+      await page.reload();
+      await expect(cards).toHaveCount(40);
+      const search = page.getByRole('searchbox');
+      await search.fill(id);
+      await expect(cards).toHaveCount(1);
+      await expect(page).toHaveURL(/q=/);
+      await expect(page).not.toHaveURL(/limit=/);
+      await expect(cards.first()).toHaveAttribute('id', id);
+      await page.reload();
+      await expect(search).toHaveValue(id);
+      await expect(cards).toHaveCount(1);
+      await search.fill('no-matching-ledger-record-xyz');
+      await expect(cards).toHaveCount(0);
+      await expect(page.getByText('No matching record yet', { exact: true })).toBeVisible();
+      await page.goto(baseURL + '/accountability?sort=title&limit=40');
+      await expect(cards).toHaveCount(40);
+      const titles = await cards.locator('h3').allTextContents();
+      expect(titles.map(x => x.trim())).toEqual(titles.map(x => x.trim()).sort((a,b) => a.localeCompare(b)));
+      await page.goto(baseURL + '/accountability?type=project&q=BS25-04-0419');
+      await expect(cards).toHaveCount(1);
+      await expect(cards.locator('[data-record-review]')).toContainText('25 September 2026');
+      await cards.locator(':scope > details > summary').press('Enter');
+      await expect(cards.getByText('Winning bid:', { exact: true })).toBeVisible();
+      await cards.getByText('See details, evidence trail and sources', { exact: true }).click();
+      await expect(cards.getByText('Source evidence', { exact: true })).toBeVisible();
+      expect(await cards.locator('a[target="_blank"]').count()).toBeGreaterThan(0);
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+      const axe = await new AxeBuilder({ page }).include('#ledger-records').analyze();
+      expect(axe.violations.filter(v => ['serious','critical'].includes(v.impact))).toEqual([]);
+    });
+  }
 }
