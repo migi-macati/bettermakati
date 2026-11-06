@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   ArrowRight,
@@ -14,7 +14,7 @@ import {
   ShieldCheck,
   Target,
 } from 'lucide-react';
-import { Link, useSearchParams } from 'react-router';
+import { Link, useLocation, useSearchParams } from 'react-router';
 import { useBarangayScope } from '../hooks/useBarangayScope';
 import SEO from '../components/SEO';
 import Section from '../components/ui/Section';
@@ -222,21 +222,38 @@ type EvidenceFilter = 'All' | 'gaps' | 'later-evidence' | 'complete';
 type SortMode = 'newest' | 'oldest' | 'amount-desc' | 'title';
 
 export default function Accountability() {
-  const { t } = useTranslation();
-  const [params] = useSearchParams();
+  const { t, i18n } = useTranslation();
+  const fil = i18n.language.startsWith('fil');
+  const [params, setParams] = useSearchParams();
+  const { hash } = useLocation();
   const { barangay } = useBarangayScope();
-  const requestedType = params.get('type');
-  const initialType = ['project', 'fiscal', 'service', 'audit', 'commitment'].includes(
-    requestedType || ''
-  )
-    ? requestedType || 'All'
-    : 'All';
-
-  const [query, setQuery] = useState('');
-  const [type, setType] = useState(initialType);
-  const [year, setYear] = useState('All');
-  const [evidence, setEvidence] = useState<EvidenceFilter>('All');
-  const [sort, setSort] = useState<SortMode>('newest');
+  const query = params.get('q') || '';
+  const type = ['project', 'fiscal', 'service', 'audit', 'commitment'].includes(params.get('type') || '')
+    ? params.get('type')! : 'All';
+  const year = /^\d{4}$/.test(params.get('year') || '') ? params.get('year')! : 'All';
+  const evidence: EvidenceFilter = ['gaps', 'later-evidence', 'complete'].includes(params.get('evidence') || '')
+    ? params.get('evidence') as EvidenceFilter : 'All';
+  const sort: SortMode = ['oldest', 'amount-desc', 'title'].includes(params.get('sort') || '')
+    ? params.get('sort') as SortMode : 'newest';
+  const requestedLimit = Number(params.get('limit'));
+  const limit = Number.isSafeInteger(requestedLimit) && requestedLimit >= 20
+    ? Math.min(requestedLimit, accountabilityEntries.length) : 20;
+  let anchorId = '';
+  try { anchorId = decodeURIComponent(hash.slice(1)); } catch { /* Invalid URL fragment. */ }
+  const updateFilters = (updates: Record<string, string>, replace = false) => {
+    const next = new URLSearchParams(params);
+    next.delete('limit');
+    for (const [key, value] of Object.entries(updates)) {
+      if (!value || value === 'All' || (key === 'sort' && value === 'newest')) next.delete(key);
+      else next.set(key, value);
+    }
+    setParams(next, { replace, preventScrollReset: true });
+  };
+  const setQuery = (value: string) => updateFilters({ q: value }, true);
+  const setType = (value: string) => updateFilters({ type: value });
+  const setYear = (value: string) => updateFilters({ year: value });
+  const setEvidence = (value: EvidenceFilter) => updateFilters({ evidence: value });
+  const setSort = (value: SortMode) => updateFilters({ sort: value });
 
   const locallyTaggedEntries = useMemo(() => {
     if (!barangay) return accountabilityEntries;
@@ -307,6 +324,7 @@ export default function Accountability() {
           (evidence === 'complete' && entry.status === 'completed');
 
         const haystack = [
+          entry.id,
           entry.title,
           entry.summary,
           entry.period,
@@ -337,9 +355,21 @@ export default function Accountability() {
       });
   }, [query, type, year, evidence, sort, scopedEntries]);
 
+  // Keep existing record fragment URLs reachable beyond the first batch.
+  const anchorIndex = visible.findIndex(entry => entry.id === anchorId);
+  const shownCount = Math.min(visible.length, Math.max(limit, anchorIndex + 1));
+  const shown = visible.slice(0, shownCount);
+  useEffect(() => {
+    if (anchorIndex >= 0) document.getElementById(anchorId)?.scrollIntoView({ block: 'start' });
+  }, [anchorId, anchorIndex]);
+  const loadMore = () => {
+    const next = new URLSearchParams(params);
+    next.set('limit', String(Math.min(shownCount + 20, visible.length)));
+    setParams(next, { preventScrollReset: true });
+  };
+
   const chooseQuestion = (nextType: AccountabilityEntry['type']) => {
-    setType(nextType);
-    setEvidence('All');
+    updateFilters({ type: nextType, evidence: 'All' });
     window.setTimeout(
       () =>
         document
@@ -350,11 +380,7 @@ export default function Accountability() {
   };
 
   const clearFilters = () => {
-    setQuery('');
-    setType('All');
-    setYear('All');
-    setEvidence('All');
-    setSort('newest');
+    updateFilters({ q: '', type: 'All', year: 'All', evidence: 'All', sort: 'newest' });
   };
 
   return (
@@ -377,259 +403,7 @@ export default function Accountability() {
         </div>
         <LastReviewed date={accountabilityReviewed} label={t('accountabilityReview.pageLabel')} />
 
-        <div className="bm-evidence-handoff mt-5 p-5">
-          <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
-            Related national records
-          </div>
-          <div className="mt-3 flex flex-wrap gap-x-5 gap-y-3 text-sm font-bold">
-            <a
-              href="https://transparency.bettergov.ph/"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-1 text-primary-700 underline underline-offset-2"
-            >
-              Transparency records <ExternalLink className="h-3.5 w-3.5" />
-            </a>
-            <a
-              href="https://transparency.bettergov.ph/procurement"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-1 text-primary-700 underline underline-offset-2"
-            >
-              Procurement records <ExternalLink className="h-3.5 w-3.5" />
-            </a>
-            <a
-              href="https://saln.bettergov.ph/"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-1 text-primary-700 underline underline-offset-2"
-            >
-              SALN records <ExternalLink className="h-3.5 w-3.5" />
-            </a>
-            <a
-              href="https://juris.ph/"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-1 text-primary-700 underline underline-offset-2"
-            >
-              Laws & jurisprudence <ExternalLink className="h-3.5 w-3.5" />
-            </a>
-          </div>
-        </div>
-
-        {barangay && (
-          <div className="mt-4 rounded-xl border border-primary-100 bg-white p-4 text-sm leading-relaxed text-gray-700">
-            {locallyTaggedEntries.length > 0 ? (
-              <>
-                Showing <strong>{locallyTaggedEntries.length}</strong> record
-                {locallyTaggedEntries.length === 1 ? '' : 's'} explicitly tagged to{' '}
-                <strong>{barangay.name}</strong>. Citywide records are excluded from this barangay slice.
-              </>
-            ) : (
-              <>
-                No Accountability Ledger record is currently tagged to{' '}
-                <strong>{barangay.name}</strong>.
-              </>
-            )}
-            <div className="mt-2 flex flex-wrap gap-3">
-              <Link
-                to="/accountability"
-                className="font-bold text-primary-700 underline underline-offset-2"
-              >
-                View citywide ledger
-              </Link>
-              <Link
-                to={`/get-involved?type=source&barangay=${encodeURIComponent(
-                  barangay.slug
-                )}#submission`}
-                className="font-bold text-primary-700 underline underline-offset-2"
-              >
-                Share a local public record
-              </Link>
-            </div>
-          </div>
-        )}
-
-        <div className="mt-8">
-          <div className="text-sm font-extrabold text-gray-950">
-            What do you want to understand?
-          </div>
-          <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3">
-            <button
-              type="button"
-              onClick={() => chooseQuestion('fiscal')}
-              className="bm-evidence-card p-5 text-left"
-            >
-              <ReceiptText className="h-5 w-5 text-primary-700" />
-              <div className="mt-3 font-extrabold text-gray-950">
-                Where is public money going?
-              </div>
-              <p className="mt-1 text-sm leading-relaxed text-gray-600">
-                Budgets, major appropriations, dedicated funds and reported actuals.
-              </p>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => chooseQuestion('project')}
-              className="bm-evidence-card p-5 text-left"
-            >
-              <ClipboardList className="h-5 w-5 text-primary-700" />
-              <div className="mt-3 font-extrabold text-gray-950">
-                What happened to a project or purchase?
-              </div>
-              <p className="mt-1 text-sm leading-relaxed text-gray-600">
-                Follow awards toward contracts, implementation and completion evidence.
-              </p>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => chooseQuestion('audit')}
-              className="bm-evidence-card bm-evidence-card-accent p-5 text-left"
-            >
-              <Landmark className="h-5 w-5 text-secondary-800" />
-              <div className="mt-3 font-extrabold text-gray-950">
-                What did COA flag?
-              </div>
-              <p className="mt-1 text-sm leading-relaxed text-gray-600">
-                Read the observation, recommendation, response and known follow-up.
-              </p>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => chooseQuestion('service')}
-              className="bm-evidence-card p-5 text-left"
-            >
-              <ShieldCheck className="h-5 w-5 text-primary-700" />
-              <div className="mt-3 font-extrabold text-gray-950">
-                What service standard was published?
-              </div>
-              <p className="mt-1 text-sm leading-relaxed text-gray-600">
-                See what the city says a transaction should take or require.
-              </p>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => chooseQuestion('commitment')}
-              className="bm-evidence-card p-5 text-left"
-            >
-              <Target className="h-5 w-5 text-primary-700" />
-              <div className="mt-3 font-extrabold text-gray-950">
-                What did the city promise?
-              </div>
-              <p className="mt-1 text-sm leading-relaxed text-gray-600">
-                Compare a sourced promise or target with later delivery evidence.
-              </p>
-            </button>
-          </div>
-        </div>
-
-        <div className="mt-7 grid grid-cols-2 lg:grid-cols-3 gap-3">
-          <div className="rounded-2xl border border-primary-100 bg-white p-5">
-            <div className="text-3xl font-extrabold text-gray-950">
-              {scopedEntries.length}
-            </div>
-            <div className="mt-1 text-sm text-gray-600">
-              structured records in this view
-            </div>
-          </div>
-          <button
-            type="button"
-            onClick={() => {
-              setEvidence('gaps');
-              setType('All');
-              document
-                .getElementById('ledger-records')
-                ?.scrollIntoView({ behavior: 'smooth' });
-            }}
-            className="rounded-2xl border border-secondary-200 bg-secondary-50 p-5 text-left transition hover:border-secondary-400"
-          >
-            <div className="text-3xl font-extrabold text-gray-950">
-              {stats.missingEvidence}
-            </div>
-            <div className="mt-1 text-sm text-gray-700">
-              records with a follow-up evidence gap
-            </div>
-          </button>
-          <div className="rounded-2xl border border-primary-100 bg-white p-5">
-            <div className="text-3xl font-extrabold text-gray-950">
-              {stats.projects}
-            </div>
-            <div className="mt-1 text-sm text-gray-600">
-              projects / procurements tracked
-            </div>
-          </div>
-          <div className="rounded-2xl border border-primary-100 bg-white p-5">
-            <div className="text-3xl font-extrabold text-gray-950">
-              {stats.audits}
-            </div>
-            <div className="mt-1 text-sm text-gray-600">
-              structured audit observations
-            </div>
-          </div>
-          <div className="rounded-2xl border border-primary-100 bg-white p-5">
-            <div className="text-3xl font-extrabold text-gray-950">
-              {stats.services}
-            </div>
-            <div className="mt-1 text-sm text-gray-600">
-              published service standards
-            </div>
-          </div>
-          <div className="rounded-2xl border border-primary-100 bg-white p-5">
-            <div className="text-3xl font-extrabold text-gray-950">
-              {stats.commitments}
-            </div>
-            <div className="mt-1 text-sm text-gray-600">
-              public commitments indexed
-            </div>
-          </div>
-        </div>
-
-        {gapBreakdown.length > 0 && (
-          <div className="mt-4 rounded-2xl border border-secondary-200 bg-secondary-50 p-5">
-            <div className="text-xs font-bold uppercase tracking-[0.08em] text-secondary-900">
-              Follow-up gaps
-            </div>
-            <div className="mt-3 flex flex-wrap gap-2">
-              {gapBreakdown.map(item => (
-                <span
-                  key={item.label}
-                  className="rounded-full border border-secondary-200 bg-white px-3 py-1.5 text-sm text-gray-700"
-                >
-                  <strong className="text-gray-950">{item.count}</strong> {item.label}
-                </span>
-              ))}
-            </div>
-          </div>
-        )}
-
-        <div className="mt-5 flex flex-wrap gap-3">
-          <a
-            href={`data:text/csv;charset=utf-8,${encodeURIComponent(ledgerCsv)}`}
-            download="bettermakati-accountability-ledger.csv"
-            className="brand-btn-secondary"
-          >
-            <Download className="h-4 w-4" /> Download data
-          </a>
-          <Link
-            to="/get-involved?type=source#submission"
-            className="brand-btn-primary"
-          >
-            Share missing evidence
-          </Link>
-        </div>
       </Section>
-
-      <CivicDomainTimelinePreview
-        owner="accountability"
-        calendarTopic="projects-procurement"
-        heading="Procurement and project dates"
-        description={t('evidence.accountability.timelineDescription')}
-        className="bg-[#f5f8f2]"
-      />
 
       <Section id="ledger-records" className="scroll-mt-24 bg-white">
         <div className="section-eyebrow">{t('evidence.accountability.explore')}</div>
@@ -707,10 +481,12 @@ export default function Accountability() {
         </div>
 
         <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
-          <div className="text-sm text-gray-600">
-            <strong className="text-gray-950">{visible.length}</strong> matching records
+          <div className="text-sm text-gray-600" role="status" data-ledger-count>
+            {fil ? 'Ipinapakita ang' : 'Showing'} <strong className="text-gray-950">{shownCount}</strong>
+            {' / '}<strong className="text-gray-950">{visible.length}</strong>
+            {fil ? ' na tugmang record' : ' matching records'}
           </div>
-          {(query || type !== 'All' || year !== 'All' || evidence !== 'All') && (
+          {(query || type !== 'All' || year !== 'All' || evidence !== 'All' || sort !== 'newest') && (
             <button
               type="button"
               onClick={clearFilters}
@@ -722,7 +498,7 @@ export default function Accountability() {
         </div>
 
         <div className="mt-6 space-y-4">
-          {visible.map(entry => {
+          {shown.map(entry => {
             const missing = firstMissingEvidence(entry);
             const relatedPlaces = placesRelatedTo('accountability-record', entry.id);
             const integrityLinks = integrityForAccountability(entry.id);
@@ -769,6 +545,18 @@ export default function Accountability() {
                   </div>
                 </div>
 
+                <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-sm">
+                  <span>{amountShownLabel(entry)}: <strong>{amountShownValue(entry)}</strong></span>
+                  <span>{entry.sources.length} {fil ? 'naka-link na source' : 'sources linked'}</span>
+                  <span data-record-review>{t('accountabilityReview.recordLabel')}: {entry.lastVerified ?? t('accountabilityReview.unknown')}</span>
+                  <Link to={`/accountability#${entry.id}`} className="font-bold text-primary-700 underline">
+                    {fil ? 'Link sa record' : 'Record link'}
+                  </Link>
+                </div>
+                <details open={anchorId === entry.id} className="mt-3">
+                  <summary className="cursor-pointer rounded-lg py-2 font-bold text-primary-700 focus-visible:outline focus-visible:outline-2">
+                    {fil ? 'Tingnan ang detalye at sources' : 'View details and sources'}
+                  </summary>
                 <div className="mt-4 rounded-xl border border-primary-100 bg-white p-4">
                   <div className="text-xs font-bold uppercase tracking-[0.07em] text-primary-700">
                     What the public can say from the evidence
@@ -777,12 +565,6 @@ export default function Accountability() {
                     {publicRecordSummary(entry)}
                   </p>
                   <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs text-gray-500">
-                    <span>
-                      {entry.sources.length} source{entry.sources.length === 1 ? '' : 's'} linked
-                    </span>
-                    <span data-record-review>
-                      {t('accountabilityReview.recordLabel')}: {entry.lastVerified ?? t('accountabilityReview.unknown')}
-                    </span>
                     {entry.barangaySlug && <span>Local tag: {entry.barangaySlug}</span>}
                   </div>
                   <CivicRelationshipLinks
@@ -1122,9 +904,16 @@ export default function Accountability() {
                     </div>
                   </div>
                 </details>
+                </details>
               </article>
             );
           })}
+
+          {shownCount < visible.length && (
+            <button type="button" onClick={loadMore} className="brand-btn-secondary" data-ledger-load-more>
+              {fil ? 'Magpakita pa ng 20 record' : 'Load 20 more records'}
+            </button>
+          )}
 
           {visible.length === 0 && (
             <div className="rounded-2xl border border-gray-200 bg-white p-8 text-center">
@@ -1154,6 +943,262 @@ export default function Accountability() {
           )}
         </div>
       </Section>
+
+      <Section className="bg-[#fffdf8]">
+        <div className="bm-evidence-handoff mt-5 p-5">
+          <div className="text-xs font-bold uppercase tracking-[0.08em] text-primary-700">
+            Related national records
+          </div>
+          <div className="mt-3 flex flex-wrap gap-x-5 gap-y-3 text-sm font-bold">
+            <a
+              href="https://transparency.bettergov.ph/"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1 text-primary-700 underline underline-offset-2"
+            >
+              Transparency records <ExternalLink className="h-3.5 w-3.5" />
+            </a>
+            <a
+              href="https://transparency.bettergov.ph/procurement"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1 text-primary-700 underline underline-offset-2"
+            >
+              Procurement records <ExternalLink className="h-3.5 w-3.5" />
+            </a>
+            <a
+              href="https://saln.bettergov.ph/"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1 text-primary-700 underline underline-offset-2"
+            >
+              SALN records <ExternalLink className="h-3.5 w-3.5" />
+            </a>
+            <a
+              href="https://juris.ph/"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1 text-primary-700 underline underline-offset-2"
+            >
+              Laws & jurisprudence <ExternalLink className="h-3.5 w-3.5" />
+            </a>
+          </div>
+        </div>
+
+        {barangay && (
+          <div className="mt-4 rounded-xl border border-primary-100 bg-white p-4 text-sm leading-relaxed text-gray-700">
+            {locallyTaggedEntries.length > 0 ? (
+              <>
+                Showing <strong>{locallyTaggedEntries.length}</strong> record
+                {locallyTaggedEntries.length === 1 ? '' : 's'} explicitly tagged to{' '}
+                <strong>{barangay.name}</strong>. Citywide records are excluded from this barangay slice.
+              </>
+            ) : (
+              <>
+                No Accountability Ledger record is currently tagged to{' '}
+                <strong>{barangay.name}</strong>.
+              </>
+            )}
+            <div className="mt-2 flex flex-wrap gap-3">
+              <Link
+                to="/accountability"
+                className="font-bold text-primary-700 underline underline-offset-2"
+              >
+                View citywide ledger
+              </Link>
+              <Link
+                to={`/get-involved?type=source&barangay=${encodeURIComponent(
+                  barangay.slug
+                )}#submission`}
+                className="font-bold text-primary-700 underline underline-offset-2"
+              >
+                Share a local public record
+              </Link>
+            </div>
+          </div>
+        )}
+
+        <div className="mt-8">
+          <div className="text-sm font-extrabold text-gray-950">
+            What do you want to understand?
+          </div>
+          <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3">
+            <button
+              type="button"
+              onClick={() => chooseQuestion('fiscal')}
+              className="bm-evidence-card p-5 text-left"
+            >
+              <ReceiptText className="h-5 w-5 text-primary-700" />
+              <div className="mt-3 font-extrabold text-gray-950">
+                Where is public money going?
+              </div>
+              <p className="mt-1 text-sm leading-relaxed text-gray-600">
+                Budgets, major appropriations, dedicated funds and reported actuals.
+              </p>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => chooseQuestion('project')}
+              className="bm-evidence-card p-5 text-left"
+            >
+              <ClipboardList className="h-5 w-5 text-primary-700" />
+              <div className="mt-3 font-extrabold text-gray-950">
+                What happened to a project or purchase?
+              </div>
+              <p className="mt-1 text-sm leading-relaxed text-gray-600">
+                Follow awards toward contracts, implementation and completion evidence.
+              </p>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => chooseQuestion('audit')}
+              className="bm-evidence-card bm-evidence-card-accent p-5 text-left"
+            >
+              <Landmark className="h-5 w-5 text-secondary-800" />
+              <div className="mt-3 font-extrabold text-gray-950">
+                What did COA flag?
+              </div>
+              <p className="mt-1 text-sm leading-relaxed text-gray-600">
+                Read the observation, recommendation, response and known follow-up.
+              </p>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => chooseQuestion('service')}
+              className="bm-evidence-card p-5 text-left"
+            >
+              <ShieldCheck className="h-5 w-5 text-primary-700" />
+              <div className="mt-3 font-extrabold text-gray-950">
+                What service standard was published?
+              </div>
+              <p className="mt-1 text-sm leading-relaxed text-gray-600">
+                See what the city says a transaction should take or require.
+              </p>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => chooseQuestion('commitment')}
+              className="bm-evidence-card p-5 text-left"
+            >
+              <Target className="h-5 w-5 text-primary-700" />
+              <div className="mt-3 font-extrabold text-gray-950">
+                What did the city promise?
+              </div>
+              <p className="mt-1 text-sm leading-relaxed text-gray-600">
+                Compare a sourced promise or target with later delivery evidence.
+              </p>
+            </button>
+          </div>
+        </div>
+
+        <div className="mt-7 grid grid-cols-2 lg:grid-cols-3 gap-3">
+          <div className="rounded-2xl border border-primary-100 bg-white p-5">
+            <div className="text-3xl font-extrabold text-gray-950">
+              {scopedEntries.length}
+            </div>
+            <div className="mt-1 text-sm text-gray-600">
+              structured records in this view
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={() => {
+              updateFilters({ evidence: 'gaps', type: 'All' });
+              document
+                .getElementById('ledger-records')
+                ?.scrollIntoView({ behavior: 'smooth' });
+            }}
+            className="rounded-2xl border border-secondary-200 bg-secondary-50 p-5 text-left transition hover:border-secondary-400"
+          >
+            <div className="text-3xl font-extrabold text-gray-950">
+              {stats.missingEvidence}
+            </div>
+            <div className="mt-1 text-sm text-gray-700">
+              records with a follow-up evidence gap
+            </div>
+          </button>
+          <div className="rounded-2xl border border-primary-100 bg-white p-5">
+            <div className="text-3xl font-extrabold text-gray-950">
+              {stats.projects}
+            </div>
+            <div className="mt-1 text-sm text-gray-600">
+              projects / procurements tracked
+            </div>
+          </div>
+          <div className="rounded-2xl border border-primary-100 bg-white p-5">
+            <div className="text-3xl font-extrabold text-gray-950">
+              {stats.audits}
+            </div>
+            <div className="mt-1 text-sm text-gray-600">
+              structured audit observations
+            </div>
+          </div>
+          <div className="rounded-2xl border border-primary-100 bg-white p-5">
+            <div className="text-3xl font-extrabold text-gray-950">
+              {stats.services}
+            </div>
+            <div className="mt-1 text-sm text-gray-600">
+              published service standards
+            </div>
+          </div>
+          <div className="rounded-2xl border border-primary-100 bg-white p-5">
+            <div className="text-3xl font-extrabold text-gray-950">
+              {stats.commitments}
+            </div>
+            <div className="mt-1 text-sm text-gray-600">
+              public commitments indexed
+            </div>
+          </div>
+        </div>
+
+        {gapBreakdown.length > 0 && (
+          <div className="mt-4 rounded-2xl border border-secondary-200 bg-secondary-50 p-5">
+            <div className="text-xs font-bold uppercase tracking-[0.08em] text-secondary-900">
+              Follow-up gaps
+            </div>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {gapBreakdown.map(item => (
+                <span
+                  key={item.label}
+                  className="rounded-full border border-secondary-200 bg-white px-3 py-1.5 text-sm text-gray-700"
+                >
+                  <strong className="text-gray-950">{item.count}</strong> {item.label}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <div className="mt-5 flex flex-wrap gap-3">
+          <a
+            href={`data:text/csv;charset=utf-8,${encodeURIComponent(ledgerCsv)}`}
+            download="bettermakati-accountability-ledger.csv"
+            className="brand-btn-secondary"
+          >
+            <Download className="h-4 w-4" /> Download data
+          </a>
+          <Link
+            to="/get-involved?type=source#submission"
+            className="brand-btn-primary"
+          >
+            Share missing evidence
+          </Link>
+        </div>
+      </Section>
+
+      <CivicDomainTimelinePreview
+        owner="accountability"
+        calendarTopic="projects-procurement"
+        heading="Procurement and project dates"
+        description={t('evidence.accountability.timelineDescription')}
+        className="bg-[#f5f8f2]"
+      />
+
+
 
     </>
   );
