@@ -1323,12 +1323,11 @@ test('Accountability record cards expose provenance and the next evidence gap', 
   await page.goto(baseURL + '/accountability?type=project');
   const search = page.getByPlaceholder(/Search project, supplier, office, reference number/i);
   await search.fill('BS25-04-0419');
-  const card = page.locator('article').filter({
-    has: page.getByText('Instructional materials for Makati public elementary and secondary schools', { exact: true }),
-  });
+  const card = page.locator('#procurement-2025-q2-bs25-04-0419');
   await expect(card).toBeVisible();
   await expect(card.getByText(/source linked|sources linked/i)).toBeVisible();
   await expect(card.locator('[data-record-review]')).toHaveText('Source review date: 25 September 2026');
+  await card.locator(':scope > details > summary').press('Enter');
   await expect(card.getByText('Next evidence missing', { exact: true })).toBeVisible();
 });
 
@@ -3072,18 +3071,25 @@ for (const language of ['en', 'fil']) {
       await search.fill('no-matching-ledger-record-xyz');
       await expect(cards).toHaveCount(0);
       await expect(page.getByText('No matching record yet', { exact: true })).toBeVisible();
+      const reset = page.getByRole('button', { name: 'Clear filters', exact: true }).first();
+      await reset.focus();
+      await page.keyboard.press('Enter');
+      await expect(cards).toHaveCount(20);
+      await expect(page).not.toHaveURL(/q=/);
       await page.goto(baseURL + '/accountability?sort=title&limit=40');
       await expect(cards).toHaveCount(40);
       const titles = await cards.locator('h3').allTextContents();
       expect(titles.map(x => x.trim())).toEqual(titles.map(x => x.trim()).sort((a,b) => a.localeCompare(b)));
       await page.goto(baseURL + '/accountability?type=project&q=BS25-04-0419');
-      await expect(cards).toHaveCount(1);
-      await expect(cards.locator('[data-record-review]')).toContainText('25 September 2026');
-      await cards.locator(':scope > details > summary').press('Enter');
-      await expect(cards.getByText('Winning bid:', { exact: true })).toBeVisible();
-      await cards.getByText('See details, evidence trail and sources', { exact: true }).click();
-      await expect(cards.getByText('Source evidence', { exact: true })).toBeVisible();
-      expect(await cards.locator('a[target="_blank"]').count()).toBeGreaterThan(0);
+      // The reference appears in both the award and monitor records. Preserve both.
+      await expect(cards).toHaveCount(2);
+      const award = page.locator('#procurement-2025-q2-bs25-04-0419');
+      await expect(award.locator('[data-record-review]')).toContainText('25 September 2026');
+      await award.locator(':scope > details > summary').press('Enter');
+      await expect(award.getByText('Winning bid:', { exact: true })).toBeVisible();
+      await award.getByText('See details, evidence trail and sources', { exact: true }).click();
+      await expect(award.getByText('Source evidence', { exact: true })).toBeVisible();
+      expect(await award.locator('a[target="_blank"]').count()).toBeGreaterThan(0);
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
       const axe = await new AxeBuilder({ page }).include('#ledger-records').analyze();
       expect(axe.violations.filter(v => ['serious','critical'].includes(v.impact))).toEqual([]);
