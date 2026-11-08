@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useSearchParams } from 'react-router';
 import SEO from '../components/SEO';
+import { compareProject } from '../lib/budget2027/comparison';
 import { makatiScope } from '../lib/budget2027/scope';
 import {
   loadCityProjects,
@@ -57,6 +58,24 @@ export default function Budget2027() {
     [];
   const rawRows = available.flatMap(p => p.rows);
   const all = rawRows.filter(row => makatiScope(row) !== 'excluded');
+  const comparisons = all.map(compareProject);
+  const changeCounts = {
+    unchanged: comparisons.filter(c => c.status === 'unchanged').length,
+    increased: comparisons.filter(c => c.status === 'increased').length,
+    decreased: comparisons.filter(c => c.status === 'decreased').length,
+    unresolved: comparisons.filter(c => c.delta === null).length,
+  };
+  const comparisonText = (row: Project) => {
+    const comparison = compareProject(row);
+    switch (comparison.status) {
+      case 'unchanged': return t('Unchanged · ₱0 difference', 'Walang pagbabago · ₱0 ang diperensya');
+      case 'increased': return t(`Increased by ${pesos(comparison.delta!)}`, `Tumaas ng ${pesos(comparison.delta!)}`);
+      case 'decreased': return t(`Decreased by ${pesos(-comparison.delta!)}`, `Bumaba ng ${pesos(-comparison.delta!)}`);
+      case 'missing-nep': return t('NEP match unavailable; change unknown', 'Walang available na NEP match; hindi matukoy ang pagbabago');
+      case 'missing-house': return t('House third-reading match unavailable; change unknown', 'Walang available na House third-reading match; hindi matukoy ang pagbabago');
+      case 'unconfirmed': return t('Version match unconfirmed; change not calculated', 'Hindi kumpirmado ang version match; walang kinalkulang pagbabago');
+    }
+  };
   const excludedCount = rawRows.length - all.length;
   const rows = all.filter(
     row =>
@@ -94,6 +113,8 @@ export default function Budget2027() {
       'retrieved_at',
       'coverage',
       'location_scope',
+      'nep_to_house_third_status',
+      'nep_to_house_third_change_php',
     ];
     const values = rows.map(row => {
       const source = available.find(p =>
@@ -115,6 +136,8 @@ export default function Budget2027() {
         source.retrievedAt,
         'Whole-word Makati title candidates; not a citywide allocation; blank amount means missing',
         makatiScope(row),
+        compareProject(row).status,
+        compareProject(row).delta,
       ];
     });
     const url = URL.createObjectURL(
@@ -371,6 +394,19 @@ export default function Budget2027() {
                 )}
               </p>
             )}
+            <section aria-labelledby="budget-changes-heading" className="rounded-xl border border-primary-200 bg-primary-50 p-4 space-y-2" data-budget-changes>
+              <h3 id="budget-changes-heading" className="text-lg font-bold">{t('What changed?', 'Ano ang nagbago?')}</h3>
+              <p>{t('NEP → House third reading, across all loaded Makati title candidates:', 'NEP → House third reading, para sa lahat ng nakuhang kandidatong may Makati sa pamagat:')}</p>
+              <p className="font-semibold">{t(
+                `${changeCounts.unchanged} unchanged · ${changeCounts.increased} increased · ${changeCounts.decreased} decreased · ${changeCounts.unresolved} unresolved`,
+                `${changeCounts.unchanged} walang pagbabago · ${changeCounts.increased} tumaas · ${changeCounts.decreased} bumaba · ${changeCounts.unresolved} hindi matukoy`
+              )}</p>
+              <p className="text-sm">{t(
+                'A missing match does not prove that a project was added or removed. These counts cover available title matches, not every Makati allocation. Filters below do not change this summary.',
+                'Hindi patunay ang nawawalang match na may idinagdag o inalis na proyekto. Sakop ng bilang ang available na title matches, hindi lahat ng alokasyon para sa Makati. Hindi binabago ng filters sa ibaba ang buod na ito.'
+              )}</p>
+              {!city.completeQueries && <p className="text-sm font-semibold">{t('Partial results: one or more datasets are unavailable.', 'Bahagi lamang ng resulta: may dataset na hindi available.')}</p>}
+            </section>
             <div className="flex flex-wrap items-end gap-3">
               <label className="flex flex-col gap-1">
                 {t(
@@ -472,6 +508,9 @@ export default function Budget2027() {
                       )}
                     </p>
                   )}
+                  <p className="mt-3 text-sm font-semibold" data-project-change>
+                    {t('NEP → House third reading: ', 'NEP → House third reading: ')}{comparisonText(row)}
+                  </p>
                   <dl className="mt-3 grid gap-4 md:grid-cols-3">
                     {versions.map(v => (
                       <div key={v.key}>

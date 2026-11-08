@@ -2967,6 +2967,8 @@ for (const language of ['en', 'fil']) {
       await expect(page.getByRole('status').filter({ hasText: '11 / 11' })).toBeVisible();
       await expect(page.locator('#projects h3').filter({ hasText: 'Lamakati' })).toHaveCount(0);
       await expect(page.locator('#projects')).toContainText(language === 'en' ? 'Shared Makati–Mandaluyong project' : 'Shared project ng Makati–Mandaluyong');
+      await expect(page.locator('[data-budget-changes]')).toContainText(language === 'en' ? '10 unchanged · 0 increased · 0 decreased · 1 unresolved' : '10 walang pagbabago · 0 tumaas · 0 bumaba · 1 hindi matukoy');
+      await expect(page.locator('[data-project-change]').filter({ hasText: language === 'en' ? 'Unchanged' : 'Walang pagbabago' })).toHaveCount(10);
       // Export the complete visible scope before filtering: excluded projects must not leak.
       const allDownload = page.waitForEvent('download');
       await page.getByRole('button', { name: /CSV/ }).click();
@@ -2989,6 +2991,9 @@ for (const language of ['en', 'fil']) {
       await page.getByRole('button', { name: language === 'en' ? 'Export filtered CSV' : 'I-export ang naka-filter na CSV' }).click();
       const saved = await download;
       const csv = readFileSync(await saved.path(), 'utf8');
+      expect(csv).toContain('nep_to_house_third_status'); expect(csv).toContain('missing-nep');
+      await expect(page.locator('[data-project-change]')).toContainText(language === 'en' ? 'NEP match unavailable; change unknown' : 'Walang available na NEP match; hindi matukoy ang pagbabago');
+      await expect(page.locator('[data-budget-changes]')).toContainText(language === 'en' ? '10 unchanged' : '10 walang pagbabago');
       expect(csv).toContain('source_commit'); expect(csv).toContain('Filmore'); expect(csv).not.toContain('Vito Cruz');
       const localBudget = page.getByRole('link', { name: language === 'en' ? 'Makati city budget' : 'Budget ng lungsod ng Makati', exact: true });
       await localBudget.focus(); await expect(localBudget).toBeFocused(); await page.keyboard.press('Enter');
