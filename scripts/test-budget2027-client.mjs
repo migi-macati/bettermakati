@@ -54,3 +54,13 @@ assert.equal(makatiScope({ title: 'Mandaluyong–Makati bridge' }), 'shared');
 assert.equal(makatiScope({ title: 'Makati Div. Channel Br.' }), 'candidate');
 assert.equal(makatiScope({ title: 'Makatiño test' }), 'excluded');
 console.log('Makati title scope: 6 assertions passed');
+
+// Version comparisons: a zero is an amount; missing/held matches are not changes.
+const { compareProject } = await import('../src/lib/budget2027/comparison.ts');
+for (const [nep, house, held, status, delta] of [
+  [10,10,false,'unchanged',0], [0,10,false,'increased',10],
+  [10,0,false,'decreased',-10], [null,10,false,'missing-nep',null],
+  [10,null,false,'missing-house',null], [10,20,true,'unconfirmed',null],
+  [null,null,false,'missing-nep',null],
+]) assert.deepEqual(compareProject({nep_php:nep,hgab3_php:house,held}), {status,delta});
+console.log('Budget comparison missing/zero/held cases passed');
