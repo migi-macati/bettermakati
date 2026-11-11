@@ -380,7 +380,7 @@ test('canonical navigation families are direct links with separate menus', async
   for (const [label, href] of [
     ['Services', '/services'],
     ['Today', '/today'],
-    ['City', '/government'],
+    ['Government', '/government'],
     ['Barangays', '/barangays'],
     ['Accountability', '/accountability'],
     ['Participate', '/participate'],
@@ -394,7 +394,7 @@ test('canonical navigation families are direct links with separate menus', async
   await expect(servicesPanel.getByRole('link', { name: 'Where Should I Go?', exact: true })).toBeVisible();
   await expect(servicesPanel.getByRole('link', { name: 'Government Offices', exact: true })).toBeVisible();
 
-  await nav.getByRole('button', { name: 'Open City menu', exact: true }).click();
+  await nav.getByRole('button', { name: 'Open Government menu', exact: true }).click();
   const cityPanel = page.locator('#desktop-panel-city');
   await expect(cityPanel.getByRole('link', { name: 'History of Makati', exact: true })).toBeVisible();
   await expect(cityPanel.getByRole('link', { name: 'Areas & Districts', exact: true })).toHaveCount(0);
@@ -3098,6 +3098,37 @@ for (const language of ['en', 'fil']) {
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
       const axe = await new AxeBuilder({ page }).include('#ledger-records').analyze();
       expect(axe.violations.filter(v => ['serious','critical'].includes(v.impact))).toEqual([]);
+    });
+  }
+}
+
+// BM-ORD-005: selector names are places; destination identity retains Better branding.
+for (const language of ['en', 'fil']) {
+  for (const width of [390, 1440]) {
+    test(`BM-ORD-005 plain barangay navigation (${language}, ${width})`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await page.addInitScript(lang => localStorage.setItem('i18nextLng', lang), language);
+      await page.goto(baseURL + '/');
+      await page.locator('#mobile-menu-toggle').click();
+      const homeSelect = page.locator('#mobile-navigation select');
+      await expect(homeSelect.locator('option[value="guadalupe-nuevo"]')).toHaveText('Guadalupe Nuevo');
+      await homeSelect.selectOption({ label: 'Guadalupe Nuevo' });
+      await expect(page).toHaveURL(/\/barangays\/guadalupe-nuevo/);
+      const bar = page.locator('.bm-barangay-context');
+      await expect(bar).toContainText('BetterGuadalupeNuevo');
+      await expect(bar.locator('option[value="guadalupe-nuevo"]')).toHaveText('Guadalupe Nuevo');
+      await bar.locator('select').selectOption({ label: 'Poblacion' });
+      await expect(page).toHaveURL(/\/barangays\/poblacion/);
+      await page.goBack();
+      await expect(bar.locator('select')).toHaveValue('guadalupe-nuevo');
+      await page.locator('#mobile-menu-toggle').click();
+      const menu = page.locator('#mobile-navigation');
+      await expect(menu.getByRole('link', { name: 'Government', exact: true })).toBeVisible();
+      await expect(menu.locator('option[value="guadalupe-nuevo"]')).toHaveText('Guadalupe Nuevo');
+      await page.keyboard.press('Escape');
+      await expect(menu).toBeHidden();
+      await expect(page.locator('footer a[href="/government"]')).toHaveText('Government');
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy();
     });
   }
 }

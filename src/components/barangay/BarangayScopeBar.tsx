@@ -50,7 +50,7 @@ export default function BarangayScopeBar({
               <option value="">All Makati</option>
               {barangays.map(item => (
                 <option key={item.slug} value={item.slug}>
-                  Better{compactEditionName(item.name)}
+                  {item.name}
                 </option>
               ))}
             </select>
