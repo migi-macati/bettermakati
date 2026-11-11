@@ -53,7 +53,7 @@ export default function BetterBarangayContextBar() {
           <select value={value} onChange={event => chooseBarangay(event.target.value)} aria-label={t('barangayContext.choose')} className="absolute inset-0 h-full w-full cursor-pointer opacity-0">
             <option value="">{isProfile ? t('barangayContext.allBarangays') : t('barangayContext.allMakati')}</option>
             {barangays.map(item => (
-              <option key={item.slug} value={item.slug}>Better{compactEditionName(item.name)}</option>
+              <option key={item.slug} value={item.slug}>{item.name}</option>
             ))}
           </select>
         </div>

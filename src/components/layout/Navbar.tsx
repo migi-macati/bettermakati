@@ -288,7 +288,7 @@ export default function Navbar() {
                     <option value="">{t('navbar.allBarangays')}</option>
                     {barangays.map(item => (
                       <option key={item.slug} value={item.slug}>
-                        Better{item.name.replace(/\s+/g, '')}
+                        {item.name}
                       </option>
                     ))}
                   </select>
@@ -380,7 +380,7 @@ export default function Navbar() {
                 <option value="">{t('navbar.chooseBarangay')}</option>
                 {barangays.map(item => (
                   <option key={item.slug} value={item.slug}>
-                    Better{item.name.replace(/\s+/g, '')}
+                    {item.name}
                   </option>
                 ))}
               </select>
