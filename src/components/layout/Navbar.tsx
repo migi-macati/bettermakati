@@ -177,12 +177,12 @@ export default function Navbar() {
         }}
       >
         <div className="container px-5 md:px-6 lg:px-8">
-          <div className="flex w-full items-center py-3 gap-3">
+          <div className="flex w-full flex-wrap items-center py-3 gap-3">
             <div className="shrink-0">
               <BrandMark />
             </div>
 
-            <div className="ml-auto hidden 2xl:flex items-center gap-1">
+            <div className="order-last hidden w-full flex-wrap items-center justify-between gap-1 lg:flex 2xl:order-none 2xl:ml-auto 2xl:w-auto 2xl:justify-start">
               {mainNavigation.map(item => {
                 const expanded = activeMenu === item.id;
                 const current = familyOwnsPath(item);
@@ -295,13 +295,13 @@ export default function Navbar() {
                 </div>
               )}
 
-              <LanguageSwitcher />
+              <div className="hidden 2xl:block"><LanguageSwitcher /></div>
 
               <Link
                 to={searchHref}
                 onClick={closeMenu}
                 aria-label={t('navbar.searchBetterMakati')}
-                className="ml-2 inline-flex min-h-11 items-center gap-2 rounded-full border border-secondary-300 bg-secondary-100 px-3.5 text-sm font-bold text-primary-900 shadow-sm hover:bg-secondary-200"
+                className="ml-2 hidden min-h-11 items-center gap-2 2xl:inline-flex rounded-full border border-secondary-300 bg-secondary-100 px-3.5 text-sm font-bold text-primary-900 shadow-sm hover:bg-secondary-200"
               >
                 <Search className="h-5 w-5" aria-hidden="true" />
                 <span>{t('navbar.search')}</span>
@@ -336,7 +336,7 @@ export default function Navbar() {
                 id="mobile-menu-toggle"
                 type="button"
                 onClick={toggleMobileMenu}
-                className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-700 shadow-sm hover:bg-primary-50"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-700 shadow-sm lg:hidden hover:bg-primary-50"
                 aria-expanded={isOpen}
                 aria-controls="mobile-navigation"
                 aria-label={t(isOpen ? 'navbar.closeMainMenu' : 'navbar.openMainMenu')}
@@ -356,7 +356,7 @@ export default function Navbar() {
         <div
           id="mobile-navigation"
           hidden={!isOpen}
-          className="bm-shell-mobile-menu 2xl:hidden border-t"
+          className="bm-shell-mobile-menu lg:hidden border-t"
         >
           <div className="container px-3 py-3 space-y-1 max-h-[70dvh] overflow-y-auto overscroll-contain">
             <div className="flex sm:hidden items-center justify-between gap-3 rounded-xl border border-secondary-200 bg-secondary-50 p-3">

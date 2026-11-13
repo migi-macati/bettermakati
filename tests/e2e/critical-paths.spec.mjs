@@ -3104,7 +3104,7 @@ for (const language of ['en', 'fil']) {
 
 // BM-ORD-005: selector names are places; destination identity retains Better branding.
 for (const language of ['en', 'fil']) {
-  for (const width of [390, 1440]) {
+  for (const width of [390, 900]) {
     test(`BM-ORD-005 plain barangay navigation (${language}, ${width})`, async ({ page }) => {
       await page.setViewportSize({ width, height: 900 });
       await page.addInitScript(lang => localStorage.setItem('i18nextLng', lang), language);
@@ -3128,6 +3128,35 @@ for (const language of ['en', 'fil']) {
       await page.keyboard.press('Escape');
       await expect(menu).toBeHidden();
       await expect(page.locator('footer a[href="/government"]')).toHaveText('Government');
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy();
+    });
+  }
+}
+
+for (const lang of ['en', 'fil']) {
+  for (const width of [1024, 1280, 1440, 1920]) {
+    test(`BM-ORD-005 visible desktop navigation ${lang} ${width}`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await page.addInitScript(l => localStorage.setItem('i18nextLng', l), lang);
+      await page.goto(baseURL + '/barangays/guadalupe-nuevo');
+      const nav = page.getByRole('navigation', { name: 'Main navigation' });
+      for (const href of ['/services?barangay=guadalupe-nuevo', '/today', '/government', '/barangays', '/accountability?barangay=guadalupe-nuevo', '/participate?barangay=guadalupe-nuevo', '/visit']) {
+        await expect(nav.locator(`a[href="${href}"]:visible`)).toHaveCount(1);
+      }
+      await expect(page.locator('#mobile-menu-toggle')).toBeHidden();
+      const toggle = page.locator('#desktop-toggle-city');
+      await toggle.focus();
+      await page.keyboard.press('Enter');
+      await expect(page.locator('#desktop-panel-city')).toBeVisible();
+      await page.keyboard.press('Escape');
+      await expect(page.locator('#desktop-panel-city')).toBeHidden();
+      await expect(toggle).toBeFocused();
+      await nav.getByRole('link', { name: 'Government', exact: true }).click();
+      await expect(page).toHaveURL(baseURL + '/government');
+      await page.goBack();
+      await expect(page).toHaveURL(baseURL + '/barangays/guadalupe-nuevo');
+      await expect(page.locator('.bm-barangay-context select')).toHaveValue('guadalupe-nuevo');
+      expect(await page.evaluate(() => localStorage.getItem('i18nextLng'))).toBe(lang);
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy();
     });
   }
