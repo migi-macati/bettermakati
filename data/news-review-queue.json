@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "generatedAt": "2026-09-28T13:07:00+08:00",
+  "generatedAt": "2026-11-14T07:07:45.987Z",
   "sourceSnapshotVersion": 1,
   "resolutionPolicyVersion": "2026-09-28.w5-8e",
   "doctrine": {
@@ -18,50 +18,40 @@
     "suppressedResolved": 0,
     "resolutionCount": 0,
     "byOwner": {
-      "city-monitor": 1,
-      "services": 1
+      "mobility": 1
     }
   },
   "candidates": [
     {
-      "id": "news-review:story:2026-09-19:city-hall-adopts-day-onsite-workweek-extends-service-hours",
+      "id": "news-review:story:2026-11-13:heading-into-long-weekend-one-ayala-transport-terminal",
       "reviewStatus": "owner-review-needed",
       "publicEligible": false,
-      "storyClusterId": "story:2026-09-19:city-hall-adopts-day-onsite-workweek-extends-service-hours",
-      "clusterKey": "makati city hall adopts 4 day onsite workweek extends service hours 7 pm",
-      "title": "Makati City Hall adopts 4-day onsite workweek; extends service hours to 7 PM",
-      "description": "Official Makati City announcement dated 19 September 2026. Check the notice for the covered offices, schedule and service-hour details.",
-      "publisher": "Makati Web Portal",
-      "sourceClass": "government-primary",
-      "sourceUrl": "https://www.makati.gov.ph/content/news/135398",
+      "storyClusterId": "story:2026-11-13:heading-into-long-weekend-one-ayala-transport-terminal",
+      "clusterKey": "heading into long weekend one ayala transport terminal makati city friday night nov 13 2026 it will be non working three days metro manila nov 16 18 due aseansummit ivan saldajeno",
+      "title": "Heading into the long weekend at One Ayala Transport Terminal in Makati City on Friday night (Nov. 13, 2026). It will be a non-working three days in Metro Manila on Nov. 16 to 18 due to the #ASEANSummit. | Ivan Saldajeno",
+      "description": "Heading into the long weekend at One Ayala Transport Terminal in Makati City on Friday night (Nov. 13, 2026). It will be a non-working three days in Metro Manila on Nov. 16 to 18 due to the #ASEANSummit. | Ivan Saldajeno &nbsp;&nbsp; Facebook",
+      "publisher": "Facebook",
+      "sourceClass": "institutional-or-other",
+      "sourceUrl": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxQRVlnS3VDNXQ0ODFzSWFLam5sNjBxd3IyOGk3TnNmblRPU1R3X1hnWHhQUGkwZGYtQmpnTnBJeUsxNVkzOWZUaFZRZEJwbkpEY2pPTnJEaGw2YWJzOVl2cUx3Qk5nM3RmLXpCT3hXZlZmZTBORjlCcU50YjNmNjdCV3N3ODdZOUNqeDMxNzJDeTF1NnVNckl5N2JmNllTYUwweGNaZUtReFNlOVRrZzRqQXdSN1pDNWxNTGhNQnM2eVNkbzdhRjV0NXYyWXR0RFV4TUxXTw?oc=5",
       "coverageSources": [
         {
-          "url": "https://www.makati.gov.ph/content/news/135398",
-          "publisher": "Makati Web Portal",
-          "sourceClass": "government-primary",
-          "publishedAt": "2026-09-19T00:00:00+08:00"
+          "url": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxQRVlnS3VDNXQ0ODFzSWFLam5sNjBxd3IyOGk3TnNmblRPU1R3X1hnWHhQUGkwZGYtQmpnTnBJeUsxNVkzOWZUaFZRZEJwbkpEY2pPTnJEaGw2YWJzOVl2cUx3Qk5nM3RmLXpCT3hXZlZmZTBORjlCcU50YjNmNjdCV3N3ODdZOUNqeDMxNzJDeTF1NnVNckl5N2JmNllTYUwweGNaZUtReFNlOVRrZzRqQXdSN1pDNWxNTGhNQnM2eVNkbzdhRjV0NXYyWXR0RFV4TUxXTw?oc=5",
+          "publisher": "Facebook",
+          "sourceClass": "institutional-or-other",
+          "publishedAt": "Fri, 13 Nov 2026 10:48:10 GMT"
         }
       ],
-      "publishedAt": "2026-09-19T00:00:00+08:00",
-      "retrievedAt": "2026-09-28T13:07:00+08:00",
+      "publishedAt": "Fri, 13 Nov 2026 10:48:10 GMT",
+      "retrievedAt": "2026-11-14T07:07:45.987Z",
       "freshness": "current",
       "clusterSize": 1,
-      "primaryOwner": "services",
-      "suggestedOwners": [
-        "services",
-        "city-monitor"
-      ],
+      "primaryOwner": "mobility",
+      "suggestedOwners": ["mobility"],
       "routes": [
         {
-          "topic": "services",
-          "owner": "services",
-          "action": "Verify the service owner, affected service and effective date before changing a service guide.",
-          "existingCanonicalMatch": false
-        },
-        {
-          "topic": "official-notice",
-          "owner": "city-monitor",
-          "action": "Review the item as a City Monitor discovery signal and route to a stronger canonical owner when one exists.",
+          "topic": "mobility",
+          "owner": "mobility",
+          "action": "Verify the exact affected road, route, station or system and effective period against the Mobility owner/source before changing canonical service status.",
           "existingCanonicalMatch": false
         }
       ],
@@ -69,11 +59,7 @@
       "entityContext": [],
       "nextAction": "Review the original article, locate the strongest owner-specific primary/official evidence, then update or create a canonical record only if that evidence satisfies the destination domain.",
       "note": "This is an internal discovery/review candidate. News reporting is not itself a canonical BetterMakati record.",
-      "materialEvidenceKeys": [
-        "official-source:https://www.makati.gov.ph/content/news/135398",
-        "route:city-monitor:official-notice",
-        "route:services:services"
-      ]
+      "materialEvidenceKeys": ["route:mobility:mobility"]
     }
   ],
   "suppressedResolved": []

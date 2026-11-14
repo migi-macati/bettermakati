@@ -1,6 +1,6 @@
 # BetterMakati news review queue
 
-Generated: 2026-09-28T13:07:00+08:00
+Generated: 2026-11-14T07:07:45.987Z
 
 Internal review only. Headlines are discovery signals, not canonical civic records.
 
@@ -11,14 +11,14 @@ Internal review only. Headlines are discovery signals, not canonical civic recor
 - Resolved stories suppressed: 0
 - Resolution history entries: 0
 
-## Makati City Hall adopts 4-day onsite workweek; extends service hours to 7 PM
+## Heading into the long weekend at One Ayala Transport Terminal in Makati City on Friday night (Nov. 13, 2026). It will be a non-working three days in Metro Manila on Nov. 16 to 18 due to the #ASEANSummit. | Ivan Saldajeno
 
 - Status: owner-review-needed
-- Published: 2026-09-19T00:00:00+08:00
-- Publisher: Makati Web Portal
-- Primary owner: services
-- Suggested owners: services, city-monitor
+- Published: Fri, 13 Nov 2026 10:48:10 GMT
+- Publisher: Facebook
+- Primary owner: mobility
+- Suggested owners: mobility
 - Existing canonical matches: none
-- Source: https://www.makati.gov.ph/content/news/135398
+- Source: https://news.google.com/rss/articles/CBMi1AFBVV95cUxQRVlnS3VDNXQ0ODFzSWFLam5sNjBxd3IyOGk3TnNmblRPU1R3X1hnWHhQUGkwZGYtQmpnTnBJeUsxNVkzOWZUaFZRZEJwbkpEY2pPTnJEaGw2YWJzOVl2cUx3Qk5nM3RmLXpCT3hXZlZmZTBORjlCcU50YjNmNjdCV3N3ODdZOUNqeDMxNzJDeTF1NnVNckl5N2JmNllTYUwweGNaZUtReFNlOVRrZzRqQXdSN1pDNWxNTGhNQnM2eVNkbzdhRjV0NXYyWXR0RFV4TUxXTw?oc=5
 - Public item: no
 - Next action: Review the original article, locate the strongest owner-specific primary/official evidence, then update or create a canonical record only if that evidence satisfies the destination domain.
