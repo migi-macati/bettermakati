@@ -49,7 +49,9 @@ self.addEventListener('fetch', event => {
       return fetch(request).then(response => {
         if (response.ok && ['script', 'style', 'font', 'image'].includes(request.destination)) {
           const copy = response.clone();
-          caches.open(CACHE).then(cache => cache.put(request, copy));
+          event.waitUntil(
+            caches.open(CACHE).then(cache => cache.put(request, copy))
+          );
         }
         return response;
       });
