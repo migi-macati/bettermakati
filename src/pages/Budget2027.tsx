@@ -76,6 +76,11 @@ export default function Budget2027() {
       case 'unconfirmed': return t('Version match unconfirmed; change not calculated', 'Hindi kumpirmado ang version match; walang kinalkulang pagbabago');
     }
   };
+  // Failed feeds are unknown, including when the remaining feeds are empty.
+  const selectedUnavailable = city?.programs.some(
+    p => p.dataset === program && p.status === 'unavailable'
+  );
+  const countsUnavailable = !all.length && !city?.completeQueries;
   const excludedCount = rawRows.length - all.length;
   const rows = all.filter(
     row =>
@@ -397,10 +402,15 @@ export default function Budget2027() {
             <section aria-labelledby="budget-changes-heading" className="rounded-xl border border-primary-200 bg-primary-50 p-4 space-y-2" data-budget-changes>
               <h3 id="budget-changes-heading" className="text-lg font-bold">{t('What changed?', 'Ano ang nagbago?')}</h3>
               <p>{t('NEP → House third reading, across all loaded Makati title candidates:', 'NEP → House third reading, para sa lahat ng nakuhang kandidatong may Makati sa pamagat:')}</p>
-              <p className="font-semibold">{t(
+              {countsUnavailable ? (
+                <p role="status">{t(
+                  'Project changes cannot be counted: no Makati candidates were loaded and one or more datasets are unavailable.',
+                  'Hindi mabilang ang pagbabago sa mga proyekto: walang nakuhang Makati candidates at may dataset na hindi available.'
+                )}</p>
+              ) : <p className="font-semibold">{t(
                 `${changeCounts.unchanged} unchanged · ${changeCounts.increased} increased · ${changeCounts.decreased} decreased · ${changeCounts.unresolved} unresolved`,
                 `${changeCounts.unchanged} walang pagbabago · ${changeCounts.increased} tumaas · ${changeCounts.decreased} bumaba · ${changeCounts.unresolved} hindi matukoy`
-              )}</p>
+              )}</p>}
               <p className="text-sm">{t(
                 'A missing match does not prove that a project was added or removed. These counts cover available title matches, not every Makati allocation. Filters below do not change this summary.',
                 'Hindi patunay ang nawawalang match na may idinagdag o inalis na proyekto. Sakop ng bilang ang available na title matches, hindi lahat ng alokasyon para sa Makati. Hindi binabago ng filters sa ibaba ang buod na ito.'
@@ -465,14 +475,24 @@ export default function Budget2027() {
                 'partial-word matches ang hindi isinama sa listahan at CSV.'
               )}
             </p>
-            <p role="status">
+            {selectedUnavailable ? (
+              <p role="status">{t(
+                'Selected dataset is unavailable; its matching project count is unknown. Retry data or choose an available dataset.',
+                'Hindi available ang napiling dataset; hindi matukoy ang bilang ng tugmang proyekto. Subukang kunin muli ang datos o pumili ng available na dataset.'
+              )}</p>
+            ) : countsUnavailable && !program ? (
+              <p role="status">{t(
+                'Project count is unknown while datasets are unavailable.',
+                'Hindi matukoy ang bilang ng proyekto habang may dataset na hindi available.'
+              )}</p>
+            ) : <p role="status">
               {rows.length} / {all.length}{' '}
               {t(
                 'Makati title candidates',
                 'kandidatong may Makati sa pamagat'
               )}
-            </p>
-            {!rows.length && (
+            </p>}
+            {!rows.length && !selectedUnavailable && (!countsUnavailable || !!program) && (
               <p>
                 {t(
                   'No matching records in the available data. This does not mean there is no funding.',
@@ -538,7 +558,7 @@ export default function Budget2027() {
                 </li>
               ))}
             </ul>
-            <p className="text-sm">
+            {all.length > 0 && <p className="text-sm">
               {
                 all.filter(
                   r =>
@@ -554,7 +574,7 @@ export default function Budget2027() {
                 'records have valid coordinates. Missing coordinates remain in this list; no locations are inferred from office addresses.',
                 'record ang may valid coordinates. Nananatili sa listahan ang walang coordinates; hindi ginagamit ang address ng opisina bilang lokasyon ng proyekto.'
               )}
-            </p>
+            </p>}
           </>
         )}
         {(nationalError ||

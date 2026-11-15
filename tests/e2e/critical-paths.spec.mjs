@@ -3161,3 +3161,57 @@ for (const lang of ['en', 'fil']) {
     });
   }
 }
+
+
+// BM-B27-ERR-001: failed requests must not look like zero matches or zero changes.
+for (const language of ['en', 'fil']) {
+  for (const width of [390, 1440]) {
+    test(`BM-B27 unavailable versus empty (${language}, ${width})`, async ({ page }, testInfo) => {
+      await page.setViewportSize({ width, height: 900 });
+      await page.addInitScript(lang => localStorage.setItem('i18nextLng', lang), language);
+      let failure = 'all';
+      await page.route('https://budget.bettergov.ph/api/v1/**', async route => {
+        const program = new URL(route.request().url()).pathname.match(/datasets\/(\w+)\/projects/)?.[1];
+        if (program && (failure === 'all' || program === failure)) {
+          return route.fulfill({ status: 503, body: '{}' });
+        }
+        const file = program === 'dpwh' ? 'makati-dpwh-title' : program || 'national';
+        await route.fulfill({ json: JSON.parse(readFileSync(`data/budget2027/2026-11-01-${file}-response.json`, 'utf8')) });
+      });
+      await page.goto(baseURL + '/budget-2027?program=dpwh&q=Filmore');
+      const projects = page.locator('#projects');
+      const retry = page.getByRole('button', { name: language === 'en' ? 'Retry data' : 'Subukang kunin muli ang datos' });
+      await expect(retry).toBeVisible();
+      await expect(projects).not.toContainText('0 / 0');
+      await expect(page.locator('[data-budget-changes]')).not.toContainText(language === 'en' ? '0 unchanged' : '0 walang pagbabago');
+      await expect(projects).toContainText(language === 'en' ? 'Selected dataset is unavailable' : 'Hindi available ang napiling dataset');
+      await expect(projects).not.toContainText(language === 'en' ? 'No matching records' : 'Walang tugmang record');
+      await expect(page.getByRole('button', { name: /CSV/ })).toBeDisabled();
+      const scan = await new AxeBuilder({ page }).include('#main-content').withTags(['wcag2a', 'wcag2aa']).analyze();
+      expect(scan.violations.filter(v => ['serious', 'critical'].includes(v.impact))).toEqual([]);
+      await page.locator('#projects').screenshot({ path: testInfo.outputPath('unavailable-projects.png') });
+      // Successful empty datasets do not turn the missing DPWH feed into a zero.
+      failure = 'dpwh';
+      await retry.focus(); await page.keyboard.press('Enter');
+      await expect(retry).toBeVisible();
+      await expect(projects).not.toContainText('0 / 0');
+      await expect(page.locator('[data-budget-changes]')).not.toContainText(language === 'en' ? '0 unchanged' : '0 walang pagbabago');
+      // An available, empty dataset has a genuine zero-match state.
+      await page.getByLabel(language === 'en' ? 'Program dataset' : 'Dataset ng programa').selectOption('fmr');
+      await expect(projects).toContainText(language === 'en' ? 'No matching records' : 'Walang tugmang record');
+      await expect(projects).not.toContainText(language === 'en' ? 'Selected dataset is unavailable' : 'Hindi available ang napiling dataset');
+      // A missing selected feed must remain explicit even if other records are loaded.
+      failure = 'fmr'; await retry.click(); await expect(retry).toBeVisible();
+      await expect(projects).toContainText(language === 'en' ? 'Selected dataset is unavailable' : 'Hindi available ang napiling dataset');
+      await expect(page.locator('[data-budget-changes]')).toContainText(language === 'en' ? '10 unchanged' : '10 walang pagbabago');
+      failure = 'none'; await retry.click();
+      await expect(retry).toHaveCount(0);
+      await expect(projects).toContainText(language === 'en' ? 'No matching records' : 'Walang tugmang record');
+      await page.getByLabel(language === 'en' ? 'Program dataset' : 'Dataset ng programa').selectOption('dpwh');
+      await expect(page.getByRole('status').filter({ hasText: '1 / 11' })).toBeVisible();
+      await expect(page).toHaveURL(/q=Filmore/);
+      await expect(page.getByRole('button', { name: /CSV/ })).toBeEnabled();
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy();
+    });
+  }
+}
