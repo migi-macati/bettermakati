@@ -36,8 +36,9 @@ function createWorker() {
       };
     },
     async match(path) {
+      const key = typeof path === 'string' ? path : path.url;
       for (const store of stores.values()) {
-        if (store.has(path)) return store.get(path);
+        if (store.has(key)) return store.get(key);
       }
       return undefined;
     },
@@ -70,6 +71,7 @@ function createWorker() {
     },
     async request(path, destination = 'document') {
       let response;
+      const tasks = [];
       const request = {
         method: 'GET',
         mode: destination === 'document' ? 'navigate' : 'cors',
@@ -79,8 +81,11 @@ function createWorker() {
       handlers.get('fetch')({
         request,
         respondWith(promise) { response = promise; },
+        waitUntil(promise) { tasks.push(promise); },
       });
-      return response;
+      const result = await response;
+      await Promise.all(tasks);
+      return result;
     },
   };
 }
