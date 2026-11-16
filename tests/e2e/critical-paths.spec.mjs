@@ -2945,7 +2945,7 @@ for (const language of ['en', 'fil']) {
 // BM-B27: recorded API responses are test fixtures only, never public fallback facts.
 for (const language of ['en', 'fil']) {
   for (const width of [390, 1440]) {
-    test(`BM-B27 budget comparison (${language}, ${width})`, async ({ page }) => {
+    test(`BM-B27 budget comparison (${language}, ${width})`, async ({ page }, testInfo) => {
       await page.setViewportSize({ width, height: 900 });
       await page.addInitScript(lang => localStorage.setItem('i18nextLng', lang), language);
       await page.route('https://budget.bettergov.ph/api/v1/**', async route => {
@@ -2964,6 +2964,28 @@ for (const language of ['en', 'fil']) {
       await expect(page.locator('main')).toContainText('5.99%');
       await expect(page.getByRole('heading', { level: 1 })).toContainText('Budget 2027');
       await expect(page.locator('main')).toContainText('₱7,200,186,000,000');
+      await page.locator('a[href="#makati-allocation"]').click();
+      const allocation = page.locator('#makati-allocation');
+      await expect.poll(async () => {
+        const box = await allocation.getByRole('heading').boundingBox();
+        return box.y >= 80 && box.y < 300;
+      }).toBeTruthy();
+      await page.screenshot({ path: testInfo.outputPath('allocation-anchor.png') });
+      await expect(allocation.getByRole('heading')).toHaveText(language === 'en' ? 'Proposed allocation to Makati City' : 'Panukalang alokasyon sa Makati City');
+      for (const [year, stage, amount] of [
+        ['2025', language === 'en' ? 'Actual obligation' : 'Aktuwal na obligasyon', '1,193.60'],
+        ['2026', language === 'en' ? 'Adjusted program' : 'Inayos na programa', '1,386.72'],
+        ['2027', language === 'en' ? 'Proposed program' : 'Panukalang programa', '1,535.75'],
+      ]) {
+        const entry = allocation.locator('dl > div').filter({ hasText: year });
+        await expect(entry.locator('dt')).toHaveText(`${year} · ${stage}`);
+        await expect(entry.locator('dd')).toHaveText(`₱${amount} ${language === 'en' ? 'million' : 'milyon'}`);
+      }
+      await expect(allocation).toContainText(language === 'en' ? 'not Makati’s total city budget or actual 2027 spending' : 'Hindi ito ang buong budget ng Makati o aktuwal na gastos sa 2027');
+      const allocationSource = allocation.getByRole('link');
+      await expect(allocationSource).toHaveAttribute('href', 'https://www.dbm.gov.ph/wp-content/uploads/BESF/BESF2027/F1.pdf#page=1');
+      await allocationSource.focus(); await expect(allocationSource).toBeFocused();
+      await allocation.screenshot({ path: testInfo.outputPath('makati-allocation.png') });
       await expect(page.getByRole('status').filter({ hasText: '11 / 11' })).toBeVisible();
       await expect(page.locator('#projects h3').filter({ hasText: 'Lamakati' })).toHaveCount(0);
       await expect(page.locator('#projects')).toContainText(language === 'en' ? 'Shared Makati–Mandaluyong project' : 'Shared project ng Makati–Mandaluyong');
@@ -2974,6 +2996,8 @@ for (const language of ['en', 'fil']) {
       await page.getByRole('button', { name: /CSV/ }).click();
       const allCsv = readFileSync(await (await allDownload).path(), 'utf8');
       expect(allCsv).not.toContain('Lamakati');
+      expect(allCsv).not.toContain('1535750000');
+      expect(allCsv).not.toContain('1,535.75');
       expect(allCsv).toContain('location_scope');
       expect(allCsv).toContain('"shared"');
       expect(allCsv).toContain('Makati-Mandaluyong');

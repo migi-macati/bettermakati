@@ -238,6 +238,9 @@ export default function Budget2027() {
           <a href="#national" className={linkStyle}>
             {t('National overview', 'Pambansang kabuuan')}
           </a>
+          <a href="#makati-allocation" className={linkStyle}>
+            {t('Allocation to Makati', 'Alokasyon sa Makati')}
+          </a>
           <a href="#projects" className={linkStyle}>
             {t('Makati projects', 'Mga proyekto sa Makati')}
           </a>
@@ -350,6 +353,47 @@ export default function Budget2027() {
             </p>
           </>
         )}
+      </section>
+      <section
+        id="makati-allocation"
+        aria-labelledby="makati-allocation-heading"
+        className="space-y-4 rounded-xl border border-primary-200 bg-primary-50 p-4 sm:p-6"
+      >
+        <h2 id="makati-allocation-heading" className="text-2xl font-bold">
+          {t('Proposed allocation to Makati City', 'Panukalang alokasyon sa Makati City')}
+        </h2>
+        <p className="max-w-3xl">
+          {t(
+            'DBM’s FY 2027 Budget of Expenditures and Sources of Financing (BESF), Table F.1, lists these allocations to Makati City. The columns describe different budget stages; they are not three years of actual spending.',
+            'Nakalista sa Table F.1 ng FY 2027 Budget of Expenditures and Sources of Financing (BESF) ng DBM ang mga alokasyong ito sa Makati City. Magkakaiba ang budget stage ng bawat taon; hindi ito tatlong taon ng aktuwal na gastos.'
+          )}
+        </p>
+        <dl className="grid gap-4 sm:grid-cols-3">
+          {[
+            ['2025', t('Actual obligation', 'Aktuwal na obligasyon'), '1,193.60'],
+            ['2026', t('Adjusted program', 'Inayos na programa'), '1,386.72'],
+            ['2027', t('Proposed program', 'Panukalang programa'), '1,535.75'],
+          ].map(([year, stage, amount]) => (
+            <div key={year} className="rounded-lg bg-white p-4">
+              <dt className="text-sm font-semibold">{year} · {stage}</dt>
+              <dd className="mt-2 text-xl font-bold tabular-nums">
+                ₱{amount} {t('million', 'milyon')}
+              </dd>
+            </div>
+          ))}
+        </dl>
+        <p className="max-w-3xl text-sm">
+          {t(
+            'This LGU allocation is separate from the national agency project candidates below and is not added to their amounts or CSV. It is not Makati’s total city budget or actual 2027 spending. The composition of this allocation has not been reconciled with Makati’s individual National Tax Allotment (NTA) notification; no development-fund amount is inferred here.',
+            'Hiwalay ang alokasyong ito sa LGU sa mga kandidatong proyekto ng national agencies sa ibaba; hindi ito idinadagdag sa kanilang halaga o CSV. Hindi ito ang buong budget ng Makati o aktuwal na gastos sa 2027. Hindi pa naitugma ang mga bahagi nito sa indibidwal na abiso ng National Tax Allotment (NTA) para sa Makati; walang halagang ipinapalagay para sa development fund dito.'
+          )}
+        </p>
+        <p className="text-sm">
+          <a className={linkStyle} href="https://www.dbm.gov.ph/wp-content/uploads/BESF/BESF2027/F1.pdf#page=1">
+            {t('DBM Table F.1 · printed page 558 / PDF page 1', 'DBM Table F.1 · pahinang 558 / PDF page 1')}
+          </a>
+          {' · '}{t('Source checked 16 November 2026', 'Sinuri ang source noong 16 Nobyembre 2026')}
+        </p>
       </section>
       <section
         id="projects"
