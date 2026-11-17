@@ -1,4 +1,4 @@
-name: Publish Civic Briefs
+name: Prepare Civic Brief review
 
 on:
   schedule:
@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
     inputs:
       cadence:
-        description: Brief cadence to publish
+        description: Brief cadence to prepare
         required: true
         default: daily
         type: choice
@@ -21,7 +21,7 @@ on:
           - monthly
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: scheduled-main-writer
@@ -36,6 +36,7 @@ jobs:
         uses: actions/checkout@v7
         with:
           fetch-depth: 0
+          persist-credentials: false
 
       - name: Set up Node
         uses: actions/setup-node@v7
@@ -62,47 +63,19 @@ jobs:
           fi
           echo "cadence=$cadence" >> "$GITHUB_OUTPUT"
 
-      - name: Publish source-backed brief snapshot
+      - name: Generate source-backed brief candidate
         run: node scripts/generate-civic-brief.mjs --cadence=${{ steps.cadence.outputs.cadence }}
 
       - name: Verify production build
         run: npm run build
 
-      - name: Commit a new brief when created
-        shell: bash
-        run: |
-          git add data/civic-briefs.json
+      - name: Package candidate for publisher review
+        run: bash scripts/package-civic-brief-review.sh civic-brief-review
 
-          if git diff --cached --quiet; then
-            echo "No new Civic Brief snapshot to publish."
-            exit 0
-          fi
-
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "chore: publish ${{ steps.cadence.outputs.cadence }} Civic Brief"
-
-          # Production verification regenerates derived files that are not part of this
-          # publication commit. Restore only those uncommitted side effects so rebase
-          # can safely replay the intended generated-state commit on a moving main.
-          git restore --worktree .
-
-
-          for attempt in 1 2 3; do
-            git fetch origin main
-            if ! git rebase origin/main; then
-              git rebase --abort || true
-              echo "Civic Brief conflicted with main; refusing to overwrite."
-              exit 1
-            fi
-
-            if git push origin HEAD:main; then
-              exit 0
-            fi
-
-            echo "Push attempt $attempt failed because main moved; retrying after rebase."
-            sleep $((attempt * 5))
-          done
-
-          echo "Unable to publish Civic Brief after 3 attempts."
-          exit 1
+      - name: Retain candidate and exact base for review
+        uses: actions/upload-artifact@v4
+        with:
+          name: civic-brief-review-${{ steps.cadence.outputs.cadence }}-${{ github.run_id }}
+          path: civic-brief-review/
+          if-no-files-found: error
+          retention-days: 30
