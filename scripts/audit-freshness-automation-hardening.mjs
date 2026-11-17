@@ -81,18 +81,22 @@ for (const marker of [
   'group: scheduled-main-writer',
   'cancel-in-progress: false',
   'timeout-minutes: 20',
-  'for attempt in 1 2 3; do',
-  'git fetch origin main',
-  'git rebase origin/main',
-  'git rebase --abort || true',
-  'git push origin HEAD:main',
+  'contents: read',
+  'persist-credentials: false',
+  'npm run build',
+  'bash scripts/package-civic-brief-review.sh civic-brief-review',
+  'actions/upload-artifact@v4',
+  'if-no-files-found: error',
 ]) {
   if (!civicWorkflow.includes(marker)) {
-    problems.push('Civic Brief workflow lost direct-main writer hardening: ' + marker);
+    problems.push('Civic Brief review workflow lost safety requirement: ' + marker);
   }
 }
-if (civicWorkflow.includes('git push --force') || civicWorkflow.includes('git push -f')) {
-  problems.push('Civic Brief workflow must never force-push.');
+if (/git push|contents: write|pull-requests: write/.test(civicWorkflow)) {
+  problems.push('Civic Brief candidates must remain review artifacts, never direct publication.');
+}
+if (civicWorkflow.indexOf('npm run build') > civicWorkflow.indexOf('bash scripts/package-civic-brief-review.sh')) {
+  problems.push('Civic Brief review artifacts must follow a successful build.');
 }
 
 for (const marker of [
@@ -150,5 +154,5 @@ if (problems.length) {
 }
 
 console.log(
-  'Freshness automation hardening audit passed: shared writer lock, bounded runtime, retrying rebase/push, no force-push, post-publish issue sync, duplicate issue cleanup, recovery and no-op guards are intact.'
+  'Freshness automation hardening audit passed: monitor guards retained; Civic Briefs use read-only, build-verified review artifacts without direct pushes.'
 );
