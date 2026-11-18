@@ -32,8 +32,8 @@ jobs:
         run: npm run quality
       - name: Verify CDN-efficient service worker behavior
         run: node --test tests/service-worker-cache.test.mjs
-      - name: Verify Civic Brief review packaging
-        run: node --test tests/civic-brief-review.test.mjs
+      - name: Verify publisher review packaging
+        run: node --test tests/civic-brief-review.test.mjs tests/news-review.test.mjs
       - name: Build
         run: npm run build
 
