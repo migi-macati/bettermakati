@@ -7,15 +7,17 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
-  pull-requests: write
+  contents: read
 
 jobs:
   refresh:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - name: Check out repository
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Set up Node
         uses: actions/setup-node@v7
@@ -35,20 +37,18 @@ jobs:
       - name: Verify the site build
         run: npm run build
 
-      - name: Open a reviewable refresh pull request
-        uses: peter-evans/create-pull-request@v7
+      # The package allowlist contains only:
+      # src/data/newsSnapshot.ts
+      # data/news-discovery-snapshot.json
+      # data/news-review-queue.json
+      # data/news-review-queue.md
+      - name: Package successful refresh for publisher review
+        run: bash scripts/package-news-review.sh news-review
+
+      - name: Retain candidate for publisher review
+        uses: actions/upload-artifact@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          branch: automation/daily-news-discovery
-          delete-branch: true
-          commit-message: 'chore: refresh Makati news discovery'
-          title: 'Daily Makati news discovery refresh'
-          body: |
-            Automated refresh of the fallback Makati news snapshot and internal review queue.
-            The queue is not public civic data and does not auto-promote headlines into canonical records.
-            Live /api/news remains the primary public feed.
-          add-paths: |
-            src/data/newsSnapshot.ts
-            data/news-discovery-snapshot.json
-            data/news-review-queue.json
-            data/news-review-queue.md
+          name: news-review-${{ github.run_id }}
+          path: news-review/
+          if-no-files-found: error
+          retention-days: 30
