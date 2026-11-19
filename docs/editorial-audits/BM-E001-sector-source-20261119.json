@@ -1,0 +1,174 @@
+{
+  "sourceUrl": "https://psa.gov.ph/system/files/sead/PUB_NCR_Ind_2018PSNA_2018-2025_s.xlsx",
+  "sha256": "df56356783fb6a6d2af41fc3b0a95677fc2f42b96e93d554e7c100e16989d8a5",
+  "checkedAt": "2026-11-19",
+  "vintage": "As of August 2026",
+  "sheet": "Makati",
+  "unit": "thousand Philippine pesos at constant 2018 prices",
+  "gdp": {
+    "2024": 1205623305.477621,
+    "2025": 1266457527.182081,
+    "cells": ["I73", "J73"]
+  },
+  "suppression": {
+    "cells": ["I54", "J54", "I56", "J56"],
+    "values": ["s", "s", "s", "s"],
+    "note": "Gross value added in industry includes Gross value added for Agriculture, forestry and fishing and Mining and quarrying."
+  },
+  "sectors": [
+    {
+      "sector": "Financial and insurance",
+      "sourceLabel": "05. Financial and insurance activities",
+      "value2024": 583307471.1221967,
+      "value2025": 618112887.7730736,
+      "share2025": 48.80644431467036,
+      "growth2025": 5.966907398582862,
+      "contributionPercentagePoints": 2.886923012581307,
+      "cells": ["I65", "J65", "J264", "I145", "I344"],
+      "shareOfNetGrowth": 57.213548025592985
+    },
+    {
+      "sector": "Professional and business services",
+      "sourceLabel": "07. Professional and business services",
+      "value2024": 213922860.9340168,
+      "value2025": 227501207.48013774,
+      "share2025": 17.96358761326462,
+      "growth2025": 6.34730972035247,
+      "contributionPercentagePoints": 1.1262511668801662,
+      "cells": ["I67", "J67", "J266", "I147", "I346"],
+      "shareOfNetGrowth": 22.320243714280117
+    },
+    {
+      "sector": "Wholesale and retail trade",
+      "sourceLabel": "01. Wholesale and retail trade; repair        of motor vehicles and motorcycles",
+      "value2024": 177739234.89270562,
+      "value2025": 187894437.17738461,
+      "share2025": 14.836220966324651,
+      "growth2025": 5.713540001907475,
+      "contributionPercentagePoints": 0.8423196730305322,
+      "cells": ["I61", "J61", "J260", "I141", "I340"],
+      "shareOfNetGrowth": 16.693239430290095
+    },
+    {
+      "sector": "Real estate and dwellings",
+      "sourceLabel": "06. Real estate and ownership        of dwellings",
+      "value2024": 62912193.28115144,
+      "value2025": 61618988.2354416,
+      "share2025": 4.8654603026874765,
+      "growth2025": -2.055571389683678,
+      "contributionPercentagePoints": -0.10726443656441455,
+      "cells": ["I66", "J66", "J265", "I146", "I345"],
+      "shareOfNetGrowth": -2.125785469883036
+    },
+    {
+      "sector": "Manufacturing",
+      "sourceLabel": "02. Manufacturing",
+      "value2024": 43330870.324707195,
+      "value2025": 44665550.909122884,
+      "share2025": 3.5268100153745805,
+      "growth2025": 3.0802071927335675,
+      "contributionPercentagePoints": 0.11070461049912603,
+      "cells": ["I57", "J57", "J256", "I137", "I336"],
+      "shareOfNetGrowth": 2.193963441991139
+    },
+    {
+      "sector": "Information and communication",
+      "sourceLabel": "04. Information and communication",
+      "value2024": 29471529.943161856,
+      "value2025": 30640294.260976367,
+      "share2025": 2.419370062030604,
+      "growth2025": 3.9657402247815554,
+      "contributionPercentagePoints": 0.09694274426384708,
+      "cells": ["I64", "J64", "J263", "I144", "I343"],
+      "shareOfNetGrowth": 1.921228356454547
+    },
+    {
+      "sector": "Construction",
+      "sourceLabel": "04. Construction",
+      "value2024": 24930791.285089597,
+      "value2025": 21562262.85298398,
+      "share2025": 1.7025650201598852,
+      "growth2025": -13.511518321202402,
+      "contributionPercentagePoints": -0.27940140314151735,
+      "cells": ["I59", "J59", "J258", "I139", "I338"],
+      "shareOfNetGrowth": -5.5372261495681485
+    },
+    {
+      "sector": "Health and social work",
+      "sourceLabel": "10. Human health and social work        activities",
+      "value2024": 18524751.645205036,
+      "value2025": 20568361.072185256,
+      "share2025": 1.6240861324383051,
+      "growth2025": 11.031777732411257,
+      "contributionPercentagePoints": 0.16950646339493416,
+      "cells": ["I70", "J70", "J269", "I150", "I349"],
+      "shareOfNetGrowth": 3.3593089049586666
+    },
+    {
+      "sector": "Accommodation and food",
+      "sourceLabel": "03. Accommodation and food service        activities",
+      "value2024": 11527479.595521405,
+      "value2025": 12224852.033456806,
+      "share2025": 0.9652792747544874,
+      "growth2025": 6.049652329953716,
+      "contributionPercentagePoints": 0.05784331098834629,
+      "cells": ["I63", "J63", "J262", "I143", "I342"],
+      "shareOfNetGrowth": 1.146348910853699
+    },
+    {
+      "sector": "Other services",
+      "sourceLabel": "11. Other services",
+      "value2024": 9752899.204681046,
+      "value2025": 10153146.257466422,
+      "share2025": 0.8016965464335453,
+      "growth2025": 4.103877671505842,
+      "contributionPercentagePoints": 0.03319835067611054,
+      "cells": ["I71", "J71", "J270", "I151", "I350"],
+      "shareOfNetGrowth": 0.6579307527427987
+    },
+    {
+      "sector": "Transport and storage",
+      "sourceLabel": "02. Transportation and storage",
+      "value2024": 8417978.93903145,
+      "value2025": 9317853.038824003,
+      "share2025": 0.7357414551087712,
+      "growth2025": 10.689906761587721,
+      "contributionPercentagePoints": 0.07463973993403004,
+      "cells": ["I62", "J62", "J261", "I142", "I341"],
+      "shareOfNetGrowth": 1.4792234939147437
+    },
+    {
+      "sector": "Utilities and waste",
+      "sourceLabel": "03. Electricity, steam, water         and waste management",
+      "value2024": 9541323.114177516,
+      "value2025": 9289928.149586089,
+      "share2025": 0.7335364945286837,
+      "growth2025": -2.634801919849849,
+      "contributionPercentagePoints": -0.020851866702413638,
+      "cells": ["I58", "J58", "J257", "I138", "I337"],
+      "shareOfNetGrowth": -0.41324596180869094
+    },
+    {
+      "sector": "Education",
+      "sourceLabel": "09. Education",
+      "value2024": 6593428.746345138,
+      "value2025": 6900542.352285115,
+      "share2025": 0.5448696228794265,
+      "growth2025": 4.657874040274052,
+      "contributionPercentagePoints": 0.025473429764059703,
+      "cells": ["I69", "J69", "J268", "I149", "I348"],
+      "shareOfNetGrowth": 0.5048369114212924
+    },
+    {
+      "sector": "Public administration",
+      "sourceLabel": "08. Public administration and defense;        compulsory social security",
+      "value2024": 5371560.982294338,
+      "value2025": 5721188.111438719,
+      "share2025": 0.4517473336961084,
+      "growth2025": 6.508855252631719,
+      "contributionPercentagePoints": 0.028999698957036336,
+      "cells": ["I68", "J68", "J267", "I148", "I347"],
+      "shareOfNetGrowth": 0.5747211345004333
+    }
+  ]
+}

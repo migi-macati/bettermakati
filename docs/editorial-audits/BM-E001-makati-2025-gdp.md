@@ -69,3 +69,43 @@ Resumed existing draft PR #141 at eebebdda41d0de4e330f312e1430bcf979069f97 in an
 Added scripts/check-gdp-scenarios.mjs to the quality gate. It loads the actual report module, checks all ENG/FIL scenario table/chart amounts and national shares against the disclosed 1.266T base, 2/4.5/6.5% annual rates and 4% national growth assumption, and checks point years and row counts. Six negative controls reject the five former erroneous table values and a Filipino-only chart error. Running against current main's article fails at Low 2035 (1.544 versus 1.543); running against this branch passes. This is an arithmetic check, not independent validation of the base GDP, precision, source cells, forecast or editorial conclusions. No public copy or source-check date changed.
 
 Local quality passed. Full build result and exact-head CI recorded in the run result. No visual change in this batch; no new rendered-page acceptance claimed. Generated audit/build output excluded from the commit. Required build/browser-smoke gates remain unchanged. Keep PR draft and auto-merge disabled while same-vintage sector amounts/shares/contributions remain unresolved. Next owner action: complete that source reconciliation or explicitly narrow the unsupported claims, then refresh the correction publication date, run required gates and verify merge/deployment/live output. Build & Fix can repair concrete CI failures on this PR. Shared handoff remains v117 and its successful report cutoff is not advanced by this repository record.
+
+
+## 19 November 2026 — primary sector-cell reconciliation completed
+
+Build & Fix resumed existing draft PR #141 at `1d6f674edbde3a02fa2fb700c9e8edc6f350a9be`. This resolves the previously inaccessible sector-cell batch; it does not claim that every article claim has been reviewed or publish the held corrections.
+
+Original workbook: https://psa.gov.ph/system/files/sead/PUB_NCR_Ind_2018PSNA_2018-2025_s.xlsx. Downloaded 19 November 2026. SHA-256 `df56356783fb6a6d2af41fc3b0a95677fc2f42b96e93d554e7c100e16989d8a5`. Makati sheet A43 identifies **As of August 2026**; A49 identifies **constant 2018 prices**; A42 specifies **thousand Philippine pesos**. This matches the vintage, years and units in the prior OpenSTAT metadata review. It is a separate original PSA distribution, not a newly retrieved OpenSTAT API export. Publication day is not inferred from the retrieval date.
+
+Cell-addressed extraction: `BM-E001-sector-source-20261119.json`. Denominators: Makati!I73 = 1,205,623,305.477621 thousand pesos (2024); J73 = 1,266,457,527.182081 thousand pesos (2025). The article’s 1.266T is rounded. GVA in billions = source / 1,000,000; GDP share = sector2025 / GDP2025 × 100; annual growth = (sector2025 / sector2024 − 1) × 100. Share of net growth = (sector2025 − sector2024) / (GDP2025 − GDP2024) × 100. This last measure is distinct from PSA’s percentage-point contribution to aggregate GDP growth.
+
+All 14 numeric sector rows match the article at its displayed precision in both ENG and FIL: 56 displayed numerical fields per language. All 42 underlying growth/share/percentage-point identities independently agree with the workbook cells within 1e-9. Finance, business services and trade have a combined exact share of 81.606253%; the “more than four-fifths” concentration statement is supported. Finance is the largest positive contribution. No sector-value correction is needed.
+
+| Article sector | 2024/2025 GVA cells | Share / growth / percentage-point cells | Outcome |
+|---|---|---|---|
+| Financial and insurance | I65, J65 | J264, I145, I344 | All four displayed values match |
+| Professional and business services | I67, J67 | J266, I147, I346 | All four displayed values match |
+| Wholesale and retail trade | I61, J61 | J260, I141, I340 | All four displayed values match |
+| Real estate and dwellings | I66, J66 | J265, I146, I345 | All four displayed values match |
+| Manufacturing | I57, J57 | J256, I137, I336 | All four displayed values match |
+| Information and communication | I64, J64 | J263, I144, I343 | All four displayed values match |
+| Construction | I59, J59 | J258, I139, I338 | All four displayed values match |
+| Health and social work | I70, J70 | J269, I150, I349 | All four displayed values match |
+| Accommodation and food | I63, J63 | J262, I143, I342 | All four displayed values match |
+| Other services | I71, J71 | J270, I151, I350 | All four displayed values match |
+| Transport and storage | I62, J62 | J261, I142, I341 | All four displayed values match |
+| Utilities and waste | I58, J58 | J257, I138, I337 | All four displayed values match |
+| Education | I69, J69 | J268, I149, I348 | All four displayed values match |
+| Public administration | I68, J68 | J267, I148, I347 | All four displayed values match |
+
+Suppression remains explicit: I54/J54 and I56/J56 contain `s`. Workbook note A76 says aggregate Industry includes Agriculture/forestry/fishing and Mining/quarrying GVA. Do not substitute zero, infer suppressed values, or expect the 14 visible rounded sectors alone to equal total GDP.
+
+Primary PSA release https://rssoncr.psa.gov.ph/statistics/ppa/node/1684059166 rechecked today: 6 October 2026, ref2026-032; rounded 5.0% GDP growth and PHP4,265,273 GDP per resident remain corroborated. Workbook-derived exact aggregate growth is 5.045873070640397%, consistent with article 5.05%. This is verification of PSA’s estimates, not an independent economic measurement.
+
+Live downstream review: https://bettermakati.org/reports/makati-2025-economy-gdp-outlook at production commit3b4434f0a24d12ad13d9346ecbd70931dc9564e1. ENG and FIL sector tables share these values. The five old scenario errors and resilience wording are still visible; prepared #141 corrections are not published. FIL switch produced the translated headline; retained English sector labels/numeric table headings observed. Desktop top-of-page screenshot inspected; no mobile/keyboard/full-link acceptance claimed.
+
+Extended the existing quality-gated scenario check to compare both language tables to the frozen, source-addressed extraction. Two negative controls reject a billion/thousand unit error and confusing percentage-point contribution with share of net growth. Prior six scenario controls retained. No public module edited in this batch.
+
+Updated disposition: **sector source-cell blocker resolved**. PR remains draft while the owner completes remaining article-wide reconciliation (historical geography and per-capita/NCR/national denominators, unsampled source links and propagation), refreshes the correction date at release, and performs changed-output ENG/FIL/mobile acceptance. These are specifically unreviewed scope, not a renewed claim that the 14 sector values are unavailable. Existing full editorial release hold is retained; no extra approval role introduced. Next bounded batch should address the remaining denominator/geography evidence or explicitly narrow unsupported claims, then finish normal required CI/merge/deployment. Do not redo this completed sector extraction unless source vintage changes.
+
+Validation 19 November: local quality/build both exit0, expanded bilingual source/scenario guard passed. Exact-head remote CI is recorded in PR #141 separately; no merge/deployment for these held corrections.

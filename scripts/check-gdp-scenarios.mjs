@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { mkdtemp, rm } from 'node:fs/promises';
+import { mkdtemp, readFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -45,6 +45,44 @@ function checkScenarios(module) {
   }
 }
 
+// Frozen, cell-addressed PSA extraction; source access and editorial review are
+// recorded separately in docs/editorial-audits/BM-E001-sector-source-20261119.json.
+const sectorEvidence = JSON.parse(
+  await readFile(
+    new URL(
+      '../docs/editorial-audits/BM-E001-sector-source-20261119.json',
+      import.meta.url
+    ),
+    'utf8'
+  )
+);
+function checkSectors(module) {
+  const percent = value => `${value.toFixed(2)}%`.replace('-', '−');
+  for (const [language, article] of [
+    ['ENG', module.report],
+    ['FIL', module.fil],
+  ]) {
+    const rows = article.sections
+      .find(s => s.id === 'sector-structure')
+      .blocks.find(b => b.kind === 'table').rows;
+    assert.equal(rows.length, 15, `${language}: sector row count`);
+    for (const source of sectorEvidence.sectors) {
+      const row = rows.find(r => r.sector === source.sector);
+      assert.ok(row, `${language}: ${source.sector}`);
+      assert.equal(row.realGva, `₱${(source.value2025 / 1e6).toFixed(2)}B`);
+      assert.equal(row.share, percent(source.share2025));
+      assert.equal(row.growth, percent(source.growth2025));
+      const shareOfNetGrowth =
+        ((source.value2025 - source.value2024) /
+          (sectorEvidence.gdp['2025'] - sectorEvidence.gdp['2024'])) *
+        100;
+      assert.equal(row.growthContribution, percent(shareOfNetGrowth));
+    }
+    assert.equal(rows[14].realGva, 'Suppressed');
+    assert.equal(rows[14].share, '—');
+  }
+}
+
 const directory = await mkdtemp(join(tmpdir(), 'bettermakati-gdp-'));
 try {
   await build({
@@ -61,6 +99,20 @@ try {
     pathToFileURL(join(directory, 'report.mjs')).href
   );
   checkScenarios(module);
+  checkSectors(module);
+  const wrongUnit = structuredClone(module);
+  wrongUnit.report.sections
+    .find(s => s.id === 'sector-structure')
+    .blocks.find(b => b.kind === 'table').rows[0].realGva = '₱0.62B';
+  assert.throws(() => checkSectors(wrongUnit));
+  const wrongContribution = structuredClone(module);
+  wrongContribution.fil.sections
+    .find(s => s.id === 'sector-structure')
+    .blocks.find(b => b.kind === 'table').rows[0].growthContribution = '2.89%';
+  assert.throws(() => checkSectors(wrongContribution));
+  console.log(
+    'BM-E001: all 14 sector rows match PSA cells in ENG/FIL; unit and percentage-point confusion controls rejected.'
+  );
   // Prove that the guard rejects each previously published erroneous value.
   for (const [index, year, oldValue] of [
     [0, 2035, 1.544],
