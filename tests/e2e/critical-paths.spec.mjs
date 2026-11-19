@@ -1,7 +1,60 @@
+import AxeBuilder from '@axe-core/playwright';
 import { test, expect } from '@playwright/test';
 import { readdirSync, readFileSync } from 'node:fs';
 
 const baseURL = process.env.BASE_URL || 'http://127.0.0.1:4173';
+for (const language of ['en', 'fil']) {
+  for (const width of [390, 1440]) {
+    test(`BM-ORD-003 Today relevance (${language}, ${width})`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await page.clock.setFixedTime(new Date('2026-10-16T09:00:00Z'));
+      const brief = { id: 'daily-2026-09-24', cadence: 'daily', title: 'Substantive September brief', periodStart: '2026-09-24', periodEnd: '2026-09-24', publishedAt: '2026-09-25T00:00:00Z', recordIds: ['test-record'], reviewSignals: [], failedChecks: [] };
+      await page.addInitScript(({ lang, fixture }) => {
+        localStorage.setItem('i18nextLng', lang);
+        const nativeFetch = window.fetch.bind(window);
+        window.fetch = async (input, init) => {
+          const rawUrl = typeof input === 'string' ? input : input.url;
+          const url = new URL(rawUrl, location.origin);
+          if (url.pathname === '/civic-briefs.json') {
+            window.__briefFixtureServed = true;
+            return new Response(JSON.stringify({ briefs: [
+              { ...fixture, id: 'empty', title: 'Empty October brief', publishedAt: '2026-10-02T00:00:00Z', recordIds: [] }, fixture,
+            ] }), { status: 200, headers: { 'Content-Type': 'application/json' } });
+          }
+          if (url.origin === 'https://api.open-meteo.com' && url.pathname === '/v1/forecast') {
+            return new Response(JSON.stringify({ current: {} }), { status: 200, headers: { 'Content-Type': 'application/json' } });
+          }
+          if (url.pathname === '/api/news') {
+            return new Response(JSON.stringify({ items: [] }), { status: 200, headers: { 'Content-Type': 'application/json' } });
+          }
+          return nativeFetch(input, init);
+        };
+      }, { lang: language, fixture: brief });
+      await page.goto(baseURL + '/today');
+      await expect.poll(() => page.evaluate(() => window.__briefFixtureServed === true)).toBe(true);
+      await expect(page.getByText('Substantive September brief', { exact: true })).toBeVisible();
+      await expect(page.getByText('Empty October brief', { exact: true })).toHaveCount(0);
+      await expect(page.getByText(language === 'en'
+        ? 'Latest brief containing records. Check its coverage dates; this is not a live update for today.'
+        : 'Pinakahuling brief na may mga record. Tingnan ang sakop na petsa; hindi ito live update ngayong araw.')).toBeVisible();
+      const upcoming = page.getByRole('heading', { name: 'Now & Next', exact: true }).locator('../..');
+      await expect(upcoming).toContainText('30');
+      await expect(upcoming).not.toContainText('2028');
+      await expect(page.getByRole('link', { name: language === 'en' ? 'Read this brief' : 'Basahin ang brief', exact:true })).toHaveAttribute('href', '/briefs?brief=daily-2026-09-24');
+      await expect(page.getByRole('heading', { name: 'Recently Published', exact: true })).toBeVisible();
+      const calendar = page.getByRole('link', { name: 'Open full calendar' });
+      await calendar.focus();
+      await expect(calendar).toBeFocused();
+      await page.keyboard.press('Enter');
+      await expect(page).toHaveURL(baseURL + '/calendar');
+      await expect(page.locator('main')).toContainText('2028');
+      await page.goBack();
+      await expect(calendar).toBeVisible();
+      expect(await page.evaluate(() => localStorage.getItem('i18nextLng'))).toBe(language);
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy();
+    });
+  }
+}
 const reportIndexHrefs = readdirSync('src/data/reports')
   .filter(name => name.endsWith('.ts'))
   .sort((a, b) => a.localeCompare(b))
@@ -327,7 +380,7 @@ test('canonical navigation families are direct links with separate menus', async
   for (const [label, href] of [
     ['Services', '/services'],
     ['Today', '/today'],
-    ['City', '/government'],
+    ['Government', '/government'],
     ['Barangays', '/barangays'],
     ['Accountability', '/accountability'],
     ['Participate', '/participate'],
@@ -341,7 +394,7 @@ test('canonical navigation families are direct links with separate menus', async
   await expect(servicesPanel.getByRole('link', { name: 'Where Should I Go?', exact: true })).toBeVisible();
   await expect(servicesPanel.getByRole('link', { name: 'Government Offices', exact: true })).toBeVisible();
 
-  await nav.getByRole('button', { name: 'Open City menu', exact: true }).click();
+  await nav.getByRole('button', { name: 'Open Government menu', exact: true }).click();
   const cityPanel = page.locator('#desktop-panel-city');
   await expect(cityPanel.getByRole('link', { name: 'History of Makati', exact: true })).toBeVisible();
   await expect(cityPanel.getByRole('link', { name: 'Areas & Districts', exact: true })).toHaveCount(0);
@@ -814,8 +867,116 @@ test('services directory omits completeness scorekeeping', async ({ page }) => {
   await expect(page.getByText(/structured · .*verified/i)).toHaveCount(0);
   await expect(page.getByText('Detailed guide', { exact: true })).toHaveCount(0);
   await expect(page.getByText('Detail checked with caveat', { exact: true })).toHaveCount(0);
-  await expect(page.getByText(/results$/).first()).toBeVisible();
+  await expect(page.locator('[data-service-results-status]')).toBeVisible();
 });
+
+test('BM-ORD-004 services directory bounds results and restores URL state', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.addInitScript(() => localStorage.setItem('i18nextLng', 'en'));
+  await page.goto(baseURL + '/services');
+
+  const results = page.locator('[data-service-result]');
+  const status = page.locator('[data-service-results-status]');
+  await expect(results).toHaveCount(20);
+  await expect(status).toContainText('Showing 20 of 152 services');
+
+  const loadMore = page.getByRole('button', { name: 'Load 20 more', exact: true });
+  await loadMore.focus();
+  await expect(loadMore).toBeFocused();
+  await page.keyboard.press('Enter');
+  await expect(results).toHaveCount(40);
+  await expect(page).toHaveURL(/shown=40/);
+
+  const search = page.locator('#service-directory-search');
+  await search.fill('Zoning certificate');
+  await expect(page.getByRole('heading', {
+    name: 'Zoning certificate / certificate of non-conformance',
+    exact: true,
+  })).toBeVisible();
+  await expect(status).toContainText('Showing 1 of 1 services');
+
+  await search.fill('');
+  await page.getByRole('button', { name: 'Load 20 more', exact: true }).click();
+  await expect(results).toHaveCount(40);
+  await results.first().getByRole('link', { name: 'Open guide', exact: true }).click();
+  await page.goBack();
+
+  await expect(page).toHaveURL(/shown=40/);
+  await expect(results).toHaveCount(40);
+  await expect(status).toContainText('Showing 40 of 152 services');
+});
+
+test('BM-ORD-004 services directory remains usable in Filipino on mobile', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.addInitScript(() => localStorage.setItem('i18nextLng', 'fil'));
+  await page.goto(baseURL + '/services');
+
+  const results = page.locator('[data-service-result]');
+  await expect(results).toHaveCount(20);
+  await expect(page.locator('[data-service-results-status]')).toContainText(
+    'Ipinapakita ang 20 sa 152 services'
+  );
+
+  const loadMore = page.getByRole('button', {
+    name: 'Magpakita pa ng 20',
+    exact: true,
+  });
+  await loadMore.focus();
+  await expect(loadMore).toBeFocused();
+  await page.keyboard.press('Enter');
+  await expect(results).toHaveCount(40);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy();
+  expect(await page.evaluate(() => localStorage.getItem('i18nextLng'))).toBe('fil');
+});
+
+for (const language of ['en', 'fil']) {
+  test(`BM-C052 eBOSS registration support remains sourced and discoverable (${language})`, async ({ page }) => {
+    await page.addInitScript(lang => localStorage.setItem('i18nextLng', lang), language);
+    await page.goto(baseURL + '/services');
+
+    const search = page.locator('#service-directory-search');
+    await search.fill('hindi makapag register');
+    const result = page.locator('[data-service-result]').filter({
+      hasText: 'Makati eBOSS registration support',
+    });
+    await expect(result).toHaveCount(1);
+    await result
+      .getByRole('link', {
+        name: language === 'en' ? 'Open guide' : 'Buksan ang guide',
+        exact: true,
+      })
+      .click();
+
+    await expect(page).toHaveURL(
+      baseURL + '/services/guide/eboss-registration-support'
+    );
+    await expect(
+      page.getByRole('heading', {
+        name: 'Makati eBOSS registration support',
+        exact: true,
+      })
+    ).toBeVisible();
+    await expect(
+      page.getByText(
+        /The September notice does not establish that a registration problem is still occurring\./
+      )
+    ).toBeVisible();
+    const sourceLinks = page.locator(
+      'a[href="https://makati-eboss.ph/announcements/13"]'
+    );
+    await expect(sourceLinks.first()).toBeVisible();
+    await expect(sourceLinks.first()).toHaveAttribute('target', '_blank');
+
+    await page.goto(baseURL + '/services');
+    await page.locator('#service-directory-search').fill('new business permit');
+    await expect(
+      page.getByRole('heading', { name: 'New business permit', exact: true })
+    ).toBeVisible();
+    expect(await page.evaluate(() => localStorage.getItem('i18nextLng'))).toBe(
+      language
+    );
+  });
+}
 
 test('expanded Makati city service guides expose transaction details', async ({ page }) => {
   await page.goto(baseURL + '/services/guide/locational-clearance-business');
@@ -1060,14 +1221,18 @@ test('owner task: SSS benefit journey reaches Makati-facing service locations', 
   await expect(page.getByText(/Makati|office|branch/i).first()).toBeVisible();
 });
 
-test('Projects & Budget separates adopted plan, current estimate and 2026 proposal', async ({ page }) => {
+test('Projects & Budget distinguishes 2026 report figures from adopted and estimated series', async ({ page }) => {
   await page.goto(baseURL + '/projects-budget');
   await expect(page.getByText('2025 adopted budget plan', { exact: true })).toBeVisible();
   await expect(page.getByText('2025 current-year estimate', { exact: true })).toBeVisible();
-  await expect(page.getByText('2026 proposed city budget', { exact: true })).toBeVisible();
+  await expect(page.getByText('2026 budget report total', { exact: true })).toBeVisible();
   await expect(page.getByText('2025 adopted', { exact: true }).first()).toBeVisible();
   await expect(page.getByText('2025 current estimate', { exact: true }).first()).toBeVisible();
-  await expect(page.getByText('2026 proposed', { exact: true }).first()).toBeVisible();
+  await expect(page.getByText('2026 report figure', { exact: true }).first()).toBeVisible();
+  const correction = page.getByRole('complementary', { name: '2026 budget status correction' });
+  await expect(correction.getByText('Correction · 27 October 2026', { exact: true })).toBeVisible();
+  await expect(correction.getByText(/original signed appropriation ordinance has not been inspected/i)).toBeVisible();
+  await expect(correction.locator('[lang="fil"]')).toBeVisible();
 });
 
 test('Budget Explorer exposes the complete reconciled 2026 citywide summary', async ({ page }) => {
@@ -1158,12 +1323,11 @@ test('Accountability record cards expose provenance and the next evidence gap', 
   await page.goto(baseURL + '/accountability?type=project');
   const search = page.getByPlaceholder(/Search project, supplier, office, reference number/i);
   await search.fill('BS25-04-0419');
-  const card = page.locator('article').filter({
-    has: page.getByText('Instructional materials for Makati public elementary and secondary schools', { exact: true }),
-  });
+  const card = page.locator('#procurement-2025-q2-bs25-04-0419');
   await expect(card).toBeVisible();
   await expect(card.getByText(/source linked|sources linked/i)).toBeVisible();
   await expect(card.locator('[data-record-review]')).toHaveText('Source review date: 25 September 2026');
+  await card.locator(':scope > details > summary').press('Enter');
   await expect(card.getByText('Next evidence missing', { exact: true })).toBeVisible();
 });
 
@@ -2740,12 +2904,338 @@ for (const language of ['en', 'fil']) {
       '2026-philgeps-makati-teachers-kits-13224300',
       '2026-philgeps-makati-creative-software-13203651',
     ]) {
+      await page.getByRole('searchbox').fill('procurement-' + id);
       const card = page.locator(`[id="procurement-${id}"]`);
       await expect(card.locator('[data-record-review]')).toHaveText(unknown);
       await expect(card).not.toContainText('Last verified: 24 September 2026');
     }
+    await page.getByRole('searchbox').fill('procurement-monitor-procurement-2025-q2-bs25-03-oe07');
     // An independently recorded source review survives the derived monitor card.
     await expect(page.locator('[id="procurement-monitor-procurement-2025-q2-bs25-03-oe07"] [data-record-review]')).toContainText('25 September 2026');
     await expect(page.getByText(language === 'en' ? 'Ledger overview reviewed:' : 'Huling review ng ledger overview:', { exact: true })).toBeVisible();
   });
+}
+
+for (const language of ['en', 'fil']) {
+  test(`universal search audited resident journeys (${language})`, async ({ page }) => {
+    await page.setViewportSize({ width: language === 'fil' ? 390 : 1440, height: 900 });
+    await page.addInitScript(lang => localStorage.setItem('i18nextLng', lang), language);
+    await page.goto(baseURL + '/');
+    const search = page.locator('#site-search');
+    await search.fill('yellow card');
+    await expect(page.getByRole('listbox').getByRole('option').first()).toContainText('Makati Health Plus / Yellow Card');
+    await expect(page.getByRole('listbox').getByRole('option')).toHaveCount(5);
+    await search.fill('maingay ang kapitbahay');
+    await search.press('Enter');
+    await expect(page.getByRole('heading', {name: language === 'fil' ? 'Maingay na kapitbahay' : 'Noisy neighbor', exact: true})).toBeVisible();
+    expect(new URL(page.url()).search).toBe('');
+    await page.goto(baseURL + '/');
+    await search.fill('gusto ko magmungkahi ng bike lane');
+    await search.press('Enter');
+    await expect(page.getByRole('heading', {name: language === 'fil' ? 'May idea ka para sa Makati?' : 'Have an idea for Makati?'})).toBeVisible();
+    await page.goto(baseURL + '/');
+    await search.fill('business permit');
+    await search.press('Enter');
+    await expect(page.getByRole('heading', {name: language === 'fil' ? 'Bagong application o renewal?' : 'New application or renewal?'})).toBeVisible();
+    await expect(page.getByRole('link', {name: language === 'fil' ? 'I-renew ang permit' : 'Renew a permit', exact:true})).toHaveAttribute('href', '/services/guide/renew-business-permit');
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBeTruthy();
+  });
+}
+
+// BM-B27: recorded API responses are test fixtures only, never public fallback facts.
+for (const language of ['en', 'fil']) {
+  for (const width of [390, 1440]) {
+    test(`BM-B27 budget comparison (${language}, ${width})`, async ({ page }, testInfo) => {
+      await page.setViewportSize({ width, height: 900 });
+      await page.addInitScript(lang => localStorage.setItem('i18nextLng', lang), language);
+      await page.route('https://budget.bettergov.ph/api/v1/**', async route => {
+        const url = new URL(route.request().url());
+        const program = url.pathname.match(/datasets\/(\w+)\/projects/)?.[1];
+        const file = program === 'dpwh' ? 'makati-dpwh-title' : program || 'national';
+        await route.fulfill({ json: JSON.parse(readFileSync(`data/budget2027/2026-11-01-${file}-response.json`, 'utf8')) });
+      });
+      await page.goto(baseURL + '/');
+      const budgetFeature = page.getByRole('link', { name: /Budget 2027:/ });
+      await expect(budgetFeature).toHaveCount(1);
+      await budgetFeature.focus(); await expect(budgetFeature).toBeFocused();
+      await page.keyboard.press('Enter');
+      await expect(page).toHaveURL(baseURL + '/budget-2027');
+      await expect(page.locator('a[href*="Introduction.pdf#page=1"]')).toBeVisible();
+      await expect(page.locator('main')).toContainText('5.99%');
+      await expect(page.getByRole('heading', { level: 1 })).toContainText('Budget 2027');
+      await expect(page.locator('main')).toContainText('₱7,200,186,000,000');
+      await page.locator('a[href="#makati-allocation"]').click();
+      const allocation = page.locator('#makati-allocation');
+      await expect.poll(async () => {
+        const box = await allocation.getByRole('heading').boundingBox();
+        return box.y >= 80 && box.y < 300;
+      }).toBeTruthy();
+      await page.screenshot({ path: testInfo.outputPath('allocation-anchor.png') });
+      await expect(allocation.getByRole('heading')).toHaveText(language === 'en' ? 'Proposed allocation to Makati City' : 'Panukalang alokasyon sa Makati City');
+      for (const [year, stage, amount] of [
+        ['2025', language === 'en' ? 'Actual obligation' : 'Aktuwal na obligasyon', '1,193.60'],
+        ['2026', language === 'en' ? 'Adjusted program' : 'Inayos na programa', '1,386.72'],
+        ['2027', language === 'en' ? 'Proposed program' : 'Panukalang programa', '1,535.75'],
+      ]) {
+        const entry = allocation.locator('dl > div').filter({ hasText: year });
+        await expect(entry.locator('dt')).toHaveText(`${year} · ${stage}`);
+        await expect(entry.locator('dd')).toHaveText(`₱${amount} ${language === 'en' ? 'million' : 'milyon'}`);
+      }
+      await expect(allocation).toContainText(language === 'en' ? 'not Makati’s total city budget or actual 2027 spending' : 'Hindi ito ang buong budget ng Makati o aktuwal na gastos sa 2027');
+      const allocationSource = allocation.getByRole('link');
+      await expect(allocationSource).toHaveAttribute('href', 'https://www.dbm.gov.ph/wp-content/uploads/BESF/BESF2027/F1.pdf#page=1');
+      await allocationSource.focus(); await expect(allocationSource).toBeFocused();
+      await allocation.screenshot({ path: testInfo.outputPath('makati-allocation.png') });
+      await expect(page.getByRole('status').filter({ hasText: '11 / 11' })).toBeVisible();
+      await expect(page.locator('#projects h3').filter({ hasText: 'Lamakati' })).toHaveCount(0);
+      await expect(page.locator('#projects')).toContainText(language === 'en' ? 'Shared Makati–Mandaluyong project' : 'Shared project ng Makati–Mandaluyong');
+      await expect(page.locator('[data-budget-changes]')).toContainText(language === 'en' ? '10 unchanged · 0 increased · 0 decreased · 1 unresolved' : '10 walang pagbabago · 0 tumaas · 0 bumaba · 1 hindi matukoy');
+      await expect(page.locator('[data-project-change]').filter({ hasText: language === 'en' ? 'Unchanged' : 'Walang pagbabago' })).toHaveCount(10);
+      // Export the complete visible scope before filtering: excluded projects must not leak.
+      const allDownload = page.waitForEvent('download');
+      await page.getByRole('button', { name: /CSV/ }).click();
+      const allCsv = readFileSync(await (await allDownload).path(), 'utf8');
+      expect(allCsv).not.toContain('Lamakati');
+      expect(allCsv).not.toContain('1535750000');
+      expect(allCsv).not.toContain('1,535.75');
+      expect(allCsv).toContain('location_scope');
+      expect(allCsv).toContain('"shared"');
+      expect(allCsv).toContain('Makati-Mandaluyong');
+      await expect(page.locator('main')).toContainText(language === 'en' ? 'scheduled dates, not completed votes' : 'hindi mga natapos na botohan');
+      const scan = await new AxeBuilder({ page }).include('#main-content').withTags(['wcag2a', 'wcag2aa']).analyze();
+      expect(scan.violations.filter(v => ['serious', 'critical'].includes(v.impact))).toEqual([]);
+      await expect(page.locator('main')).toContainText(language === 'en' ? 'Not recorded in this version' : 'Walang nakatalang halaga sa bersyong ito');
+      const filter = page.getByLabel(language === 'en' ? 'Filter title or office' : 'Salain ayon sa pamagat o opisina');
+      await filter.fill('Filmore');
+      await expect(page).toHaveURL(/q=Filmore/);
+      await expect(page.getByRole('status').filter({ hasText: '1 / 11' })).toBeVisible();
+      await expect(page.locator('#projects')).toContainText('₱25,000,000');
+      await expect(page.locator('#projects a[href*="hb10858-3r"]')).toHaveAttribute('href', /#page=322$/);
+      const download = page.waitForEvent('download');
+      await page.getByRole('button', { name: language === 'en' ? 'Export filtered CSV' : 'I-export ang naka-filter na CSV' }).click();
+      const saved = await download;
+      const csv = readFileSync(await saved.path(), 'utf8');
+      expect(csv).toContain('nep_to_house_third_status'); expect(csv).toContain('missing-nep');
+      await expect(page.locator('[data-project-change]')).toContainText(language === 'en' ? 'NEP match unavailable; change unknown' : 'Walang available na NEP match; hindi matukoy ang pagbabago');
+      await expect(page.locator('[data-budget-changes]')).toContainText(language === 'en' ? '10 unchanged' : '10 walang pagbabago');
+      expect(csv).toContain('source_commit'); expect(csv).toContain('Filmore'); expect(csv).not.toContain('Vito Cruz');
+      const localBudget = page.getByRole('link', { name: language === 'en' ? 'Makati city budget' : 'Budget ng lungsod ng Makati', exact: true });
+      await localBudget.focus(); await expect(localBudget).toBeFocused(); await page.keyboard.press('Enter');
+      await expect(page).toHaveURL(baseURL + '/projects-budget'); await page.goBack();
+      await expect(filter).toHaveValue('Filmore');
+      expect(await page.evaluate(() => localStorage.getItem('i18nextLng'))).toBe(language);
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy();
+      await page.reload(); await expect(filter).toHaveValue('Filmore');
+      await filter.fill('no-such-project');
+      await expect(page.getByRole('status').filter({ hasText: '0 / 11' })).toBeVisible();
+      await expect(page.getByRole('button', { name: /CSV/ })).toBeDisabled();
+    });
+  }
+}
+test('BM-B27 failures stay unknown; partial results and retry work', async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem('i18nextLng', 'en'));
+  let failed = true;
+  await page.route('https://budget.bettergov.ph/api/v1/**', async route => {
+    const url = new URL(route.request().url());
+    const program = url.pathname.match(/datasets\/(\w+)\/projects/)?.[1];
+    if (failed && (!program || program === 'dpwh')) return route.fulfill({ status: 503, body: '{}' });
+    const file = program === 'dpwh' ? 'makati-dpwh-title' : program || 'national';
+    await route.fulfill({ json: JSON.parse(readFileSync(`data/budget2027/2026-11-01-${file}-response.json`, 'utf8')) });
+  });
+  await page.goto(baseURL + '/budget-2027');
+  await expect(page.getByRole('alert').filter({ hasText: 'National figures' })).toBeVisible();
+  await expect(page.locator('#projects')).toContainText('unavailable; not zero');
+  await expect(page.getByRole('alert').filter({ hasText: 'partial' })).toBeVisible();
+  failed = false;
+  await page.getByRole('button', { name: 'Retry data' }).click();
+  await expect(page.getByRole('status').filter({ hasText: '11 / 11' })).toBeVisible();
+  await expect(page.getByRole('alert')).toHaveCount(0);
+});
+
+for (const query of ['budget 2027', 'pambansang budget 2027']) {
+  test(`BM-B27 search opens canonical route: ${query}`, async ({ page }) => {
+    await page.goto(baseURL + '/search?q=' + encodeURIComponent(query));
+    const result = page.getByRole('option', { name: /^Budget 2027/ });
+    await expect(result).toHaveCount(1);
+    await result.click();
+    await expect(page).toHaveURL(baseURL + '/budget-2027');
+    await expect(page.getByRole('heading', { level: 1 })).toContainText('Budget 2027');
+  });
+}
+
+
+for (const language of ['en', 'fil']) {
+  for (const width of [390, 1440]) {
+    test('BM-ORD-004 accountability bounded results ' + language + ' ' + width, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await page.addInitScript(lang => localStorage.setItem('i18nextLng', lang), language);
+      await page.goto(baseURL + '/accountability');
+      const cards = page.locator('#ledger-records article');
+      await expect(cards).toHaveCount(20);
+      const total = Number((await page.locator('[data-ledger-count]').innerText()).match(/\/\s*(\d+)/)[1]);
+      expect(total).toBeGreaterThan(40);
+      await page.locator('[data-ledger-load-more]').focus();
+      await page.keyboard.press('Enter');
+      await expect(cards).toHaveCount(40);
+      await expect(page).toHaveURL(/limit=40/);
+      const record = cards.nth(25);
+      const id = await record.getAttribute('id');
+      await record.getByRole('link', { name: language === 'fil' ? 'Link sa record' : 'Record link', exact: true }).click();
+      await expect(page).toHaveURL(new RegExp('#' + id + '$'));
+      await expect(page.locator('[id="' + id + '"] > details')).toHaveAttribute('open', '');
+      await page.goBack();
+      await expect(page).toHaveURL(/limit=40/);
+      await expect(cards).toHaveCount(40);
+      await page.reload();
+      await expect(cards).toHaveCount(40);
+      const search = page.getByRole('searchbox');
+      await search.fill(id);
+      await expect(cards).toHaveCount(1);
+      await expect(page).toHaveURL(/q=/);
+      await expect(page).not.toHaveURL(/limit=/);
+      await expect(cards.first()).toHaveAttribute('id', id);
+      await page.reload();
+      await expect(search).toHaveValue(id);
+      await expect(cards).toHaveCount(1);
+      await search.fill('no-matching-ledger-record-xyz');
+      await expect(cards).toHaveCount(0);
+      await expect(page.getByText('No matching record yet', { exact: true })).toBeVisible();
+      const reset = page.getByRole('button', { name: 'Clear filters', exact: true }).first();
+      await reset.focus();
+      await page.keyboard.press('Enter');
+      await expect(cards).toHaveCount(20);
+      await expect(page).not.toHaveURL(/q=/);
+      await page.goto(baseURL + '/accountability?sort=title&limit=40');
+      await expect(cards).toHaveCount(40);
+      const titles = await cards.locator('h3').allTextContents();
+      expect(titles.map(x => x.trim())).toEqual(titles.map(x => x.trim()).sort((a,b) => a.localeCompare(b)));
+      await page.goto(baseURL + '/accountability?type=project&q=BS25-04-0419');
+      // The reference appears in both the award and monitor records. Preserve both.
+      await expect(cards).toHaveCount(2);
+      const award = page.locator('#procurement-2025-q2-bs25-04-0419');
+      await expect(award.locator('[data-record-review]')).toContainText('25 September 2026');
+      await award.locator(':scope > details > summary').press('Enter');
+      await expect(award.getByText('Winning bid:', { exact: true })).toBeVisible();
+      await award.getByText('See details, evidence trail and sources', { exact: true }).click();
+      await expect(award.getByText('Source evidence', { exact: true })).toBeVisible();
+      expect(await award.locator('a[target="_blank"]').count()).toBeGreaterThan(0);
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+      const axe = await new AxeBuilder({ page }).include('#ledger-records').analyze();
+      expect(axe.violations.filter(v => ['serious','critical'].includes(v.impact))).toEqual([]);
+    });
+  }
+}
+
+// BM-ORD-005: selector names are places; destination identity retains Better branding.
+for (const language of ['en', 'fil']) {
+  for (const width of [390, 900]) {
+    test(`BM-ORD-005 plain barangay navigation (${language}, ${width})`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await page.addInitScript(lang => localStorage.setItem('i18nextLng', lang), language);
+      await page.goto(baseURL + '/');
+      await page.locator('#mobile-menu-toggle').click();
+      const homeSelect = page.locator('#mobile-navigation select');
+      await expect(homeSelect.locator('option[value="guadalupe-nuevo"]')).toHaveText('Guadalupe Nuevo');
+      await homeSelect.selectOption({ label: 'Guadalupe Nuevo' });
+      await expect(page).toHaveURL(/\/barangays\/guadalupe-nuevo/);
+      const bar = page.locator('.bm-barangay-context');
+      await expect(bar).toContainText('BetterGuadalupeNuevo');
+      await expect(bar.locator('option[value="guadalupe-nuevo"]')).toHaveText('Guadalupe Nuevo');
+      await bar.locator('select').selectOption({ label: 'Poblacion' });
+      await expect(page).toHaveURL(/\/barangays\/poblacion/);
+      await page.goBack();
+      await expect(bar.locator('select')).toHaveValue('guadalupe-nuevo');
+      await page.locator('#mobile-menu-toggle').click();
+      const menu = page.locator('#mobile-navigation');
+      await expect(menu.getByRole('link', { name: 'Government', exact: true })).toBeVisible();
+      await expect(menu.locator('option[value="guadalupe-nuevo"]')).toHaveText('Guadalupe Nuevo');
+      await page.keyboard.press('Escape');
+      await expect(menu).toBeHidden();
+      await expect(page.locator('footer a[href="/government"]')).toHaveText('Government');
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy();
+    });
+  }
+}
+
+for (const lang of ['en', 'fil']) {
+  for (const width of [1024, 1280, 1440, 1920]) {
+    test(`BM-ORD-005 visible desktop navigation ${lang} ${width}`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await page.addInitScript(l => localStorage.setItem('i18nextLng', l), lang);
+      await page.goto(baseURL + '/barangays/guadalupe-nuevo');
+      const nav = page.getByRole('navigation', { name: 'Main navigation' });
+      for (const href of ['/services?barangay=guadalupe-nuevo', '/today', '/government', '/barangays', '/accountability?barangay=guadalupe-nuevo', '/participate?barangay=guadalupe-nuevo', '/visit']) {
+        await expect(nav.locator(`a[href="${href}"]:visible`)).toHaveCount(1);
+      }
+      await expect(page.locator('#mobile-menu-toggle')).toBeHidden();
+      const toggle = page.locator('#desktop-toggle-city');
+      await toggle.focus();
+      await page.keyboard.press('Enter');
+      await expect(page.locator('#desktop-panel-city')).toBeVisible();
+      await page.keyboard.press('Escape');
+      await expect(page.locator('#desktop-panel-city')).toBeHidden();
+      await expect(toggle).toBeFocused();
+      await nav.getByRole('link', { name: 'Government', exact: true }).click();
+      await expect(page).toHaveURL(baseURL + '/government');
+      await page.goBack();
+      await expect(page).toHaveURL(baseURL + '/barangays/guadalupe-nuevo');
+      await expect(page.locator('.bm-barangay-context select')).toHaveValue('guadalupe-nuevo');
+      expect(await page.evaluate(() => localStorage.getItem('i18nextLng'))).toBe(lang);
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy();
+    });
+  }
+}
+
+
+// BM-B27-ERR-001: failed requests must not look like zero matches or zero changes.
+for (const language of ['en', 'fil']) {
+  for (const width of [390, 1440]) {
+    test(`BM-B27 unavailable versus empty (${language}, ${width})`, async ({ page }, testInfo) => {
+      await page.setViewportSize({ width, height: 900 });
+      await page.addInitScript(lang => localStorage.setItem('i18nextLng', lang), language);
+      let failure = 'all';
+      await page.route('https://budget.bettergov.ph/api/v1/**', async route => {
+        const program = new URL(route.request().url()).pathname.match(/datasets\/(\w+)\/projects/)?.[1];
+        if (program && (failure === 'all' || program === failure)) {
+          return route.fulfill({ status: 503, body: '{}' });
+        }
+        const file = program === 'dpwh' ? 'makati-dpwh-title' : program || 'national';
+        await route.fulfill({ json: JSON.parse(readFileSync(`data/budget2027/2026-11-01-${file}-response.json`, 'utf8')) });
+      });
+      await page.goto(baseURL + '/budget-2027?program=dpwh&q=Filmore');
+      const projects = page.locator('#projects');
+      const retry = page.getByRole('button', { name: language === 'en' ? 'Retry data' : 'Subukang kunin muli ang datos' });
+      await expect(retry).toBeVisible();
+      await expect(projects).not.toContainText('0 / 0');
+      await expect(page.locator('[data-budget-changes]')).not.toContainText(language === 'en' ? '0 unchanged' : '0 walang pagbabago');
+      await expect(projects).toContainText(language === 'en' ? 'Selected dataset is unavailable' : 'Hindi available ang napiling dataset');
+      await expect(projects).not.toContainText(language === 'en' ? 'No matching records' : 'Walang tugmang record');
+      await expect(page.getByRole('button', { name: /CSV/ })).toBeDisabled();
+      const scan = await new AxeBuilder({ page }).include('#main-content').withTags(['wcag2a', 'wcag2aa']).analyze();
+      expect(scan.violations.filter(v => ['serious', 'critical'].includes(v.impact))).toEqual([]);
+      await page.locator('#projects').screenshot({ path: testInfo.outputPath('unavailable-projects.png') });
+      // Successful empty datasets do not turn the missing DPWH feed into a zero.
+      failure = 'dpwh';
+      await retry.focus(); await page.keyboard.press('Enter');
+      await expect(retry).toBeVisible();
+      await expect(projects).not.toContainText('0 / 0');
+      await expect(page.locator('[data-budget-changes]')).not.toContainText(language === 'en' ? '0 unchanged' : '0 walang pagbabago');
+      // An available, empty dataset has a genuine zero-match state.
+      await page.getByLabel(language === 'en' ? 'Program dataset' : 'Dataset ng programa').selectOption('fmr');
+      await expect(projects).toContainText(language === 'en' ? 'No matching records' : 'Walang tugmang record');
+      await expect(projects).not.toContainText(language === 'en' ? 'Selected dataset is unavailable' : 'Hindi available ang napiling dataset');
+      // A missing selected feed must remain explicit even if other records are loaded.
+      failure = 'fmr'; await retry.click(); await expect(retry).toBeVisible();
+      await expect(projects).toContainText(language === 'en' ? 'Selected dataset is unavailable' : 'Hindi available ang napiling dataset');
+      await expect(page.locator('[data-budget-changes]')).toContainText(language === 'en' ? '10 unchanged' : '10 walang pagbabago');
+      failure = 'none'; await retry.click();
+      await expect(retry).toHaveCount(0);
+      await expect(projects).toContainText(language === 'en' ? 'No matching records' : 'Walang tugmang record');
+      await page.getByLabel(language === 'en' ? 'Program dataset' : 'Dataset ng programa').selectOption('dpwh');
+      await expect(page.getByRole('status').filter({ hasText: '1 / 11' })).toBeVisible();
+      await expect(page).toHaveURL(/q=Filmore/);
+      await expect(page.getByRole('button', { name: /CSV/ })).toBeEnabled();
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy();
+    });
+  }
 }

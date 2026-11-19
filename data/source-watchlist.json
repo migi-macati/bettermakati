@@ -1425,5 +1425,17 @@
       "/elections",
       "/calendar"
     ]
+  },
+  {
+    "id": "makati-eboss-registration-support-20260929",
+    "label": "Makati eBOSS registration support notice (29 September 2026)",
+    "url": "https://makati-eboss.ph/announcements/13",
+    "kind": "business-permits",
+    "cadence": "monthly",
+    "monitoringMode": "reachability",
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   }
 ]

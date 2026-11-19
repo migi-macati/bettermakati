@@ -24,6 +24,7 @@ const Hotlines = lazy(() => import('./pages/Hotlines'));
 const CommunityTools = lazy(() => import('./pages/CommunityTools'));
 const ConcernFinder = lazy(() => import('./pages/ConcernFinder'));
 const GetInvolved = lazy(() => import('./pages/GetInvolved'));
+const Budget2027 = lazy(() => import('./pages/Budget2027'));
 const ProjectsBudget = lazy(() => import('./pages/ProjectsBudget'));
 const Statistics = lazy(() => import('./pages/Statistics'));
 const Legislation = lazy(() => import('./pages/Legislation'));
@@ -133,6 +134,7 @@ function App() {
                     <Route path="/legislation" element={<Legislation />} />
                     <Route path="/news" element={<News />} />
                     <Route path="/live" element={<LiveMakati />} />
+                    <Route path="/budget-2027" element={<Budget2027 />} />
                     <Route path="/projects-budget" element={<ProjectsBudget />} />
                     <Route path="/transparency" element={<CompatibilityRedirect to="/projects-budget" />} />
                     <Route path="/community-tools" element={<CommunityTools />} />

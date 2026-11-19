@@ -363,6 +363,16 @@ const heritageCollectionItems: SearchItem[] = heritageCollections.map(
 
 const recordItems: SearchItem[] = [
   {
+    title: 'Budget 2027',
+    group: 'Record',
+    category: 'Records',
+    description: 'National budget proposal, Makati project candidates, version comparisons and sources.',
+    href: '/budget-2027',
+    keywords: '2027 national budget NEP House Senate DPWH Makati flood control pambansang panukala pondo proyekto',
+    aliases: ['budget 2027', '2027 budget', '2027 flood control Makati', 'pambansang budget 2027'],
+    canonicalKey: 'page:budget-2027',
+  },
+  {
     title: 'Projects & Budget',
     group: 'Record',
     category: 'Records',

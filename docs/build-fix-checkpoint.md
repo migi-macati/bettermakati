@@ -2,6 +2,10 @@
 
 Updated 19 November 2026, Asia/Manila. Latest dated disposition supersedes older states. Owner: Build & Fix. This is the current continuation record; older dated checkpoints retain detailed release evidence. The associated PR body holds exact publication identifiers after this atomic commit.
 
+## 19 November 2026 — BM-E001 integration conflict repair
+
+Resumed draft PR #141 at 07ee8ed607183561a9886d027f217adee10941f6 and merged current main 3b4434f0a24d12ad13d9346ecbd70931dc9564e1 into its branch. Reproduced two conflicts: package.json quality command and the cumulative checkpoint. Retained main's complete quality command (including Budget 2027 tests), prefixed the GDP source/scenario guard, and preserved the November19 checkpoint plus all earlier records. No source/article values or release hold changed. This restores integration eligibility and lets required pull-request CI run; it is not editorial clearance. Remote head/CI evidence is recorded in the PR body after push. Remaining denominator/geography verification and release acceptance are pending work. Local npm run quality and npm run build both passed (exit 0), and all eight service-worker/publisher-packaging regression tests passed. Generated audit/build side effects excluded. Required hosted build/browser-smoke still need new-head results; no merge or deployment is claimed.
+
 ## 2026-11-19 17:12 PHT — BM-E001 sector-source reconciliation (Build & Fix)
 
 Completed bounded downstream publisher batch after two infrastructure runs. Existing draft PR #141, branch editorial/bm-e001-2025-gdp-evidence-20261019, parent1d6f674edbde3a02fa2fb700c9e8edc6f350a9be; isolated detached checkout bm-gdp-20261119, other dirty checkouts untouched. Startup main3b4434f0a24d12ad13d9346ecbd70931dc9564e1. Open PRs #141/#71/#70/#41/#10 checked; reused owner PR rather than creating a duplicate. Current ruleset24442024 active: PR/build/browser-smoke, zero approvals, no bypass. Report modularization #99 already landed, not repeated.

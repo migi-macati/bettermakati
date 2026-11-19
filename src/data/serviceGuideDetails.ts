@@ -32,6 +32,27 @@ export interface ServiceGuideDetail {
 const checked = '2026-09-20';
 
 export const serviceGuideDetails: Record<string, ServiceGuideDetail> = {
+  'eboss-registration-support': {
+    verification: 'partial',
+    sourceLabel: 'Makati eBOSS — registration issue announcement, 29 September 2026',
+    sourceUrl: 'https://makati-eboss.ph/announcements/13',
+    lastVerified: '2026-10-31',
+    whoMayAvail:
+      'People trying to register an account on the official Makati eBOSS business-permit portal. The September notice does not establish that a registration problem is still occurring.',
+    requirements: [],
+    steps: [
+      'Use the official Makati eBOSS portal to register or sign in: https://makati-eboss.ph/.',
+      'If account registration fails, consult the city’s 29 September 2026 registration-support announcement.',
+      'For registration help, email onlineservices@makati.gov.ph as directed in that announcement. Do not send your password or one-time verification code.',
+      'For an alternative official contact, the eBOSS portal lists the Business Permit Office at 8870-1362 or 8870-1359, G/F Makati City Hall Building II, 110 F. Zobel St, Poblacion.',
+    ],
+    processingTime: 'No support-response time or current outage status is stated in the cited announcement.',
+    notes: [
+      'This guide concerns eBOSS account-registration support, not the documentary requirements, fees or processing time for a business permit.',
+      'The official portal’s contact page supplies the office address and phone numbers: https://www.makati-eboss.ph/contact-us.',
+      'If you can already sign in, use the separate New business permit or Renew business permit guide for the permit transaction.',
+    ],
+  },
   'district-1-public-assistance-desk': {
     verification: 'verified',
     sourceLabel: districtOnePublicAssistanceProgram.source.label,

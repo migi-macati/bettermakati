@@ -18,6 +18,7 @@ import { briefArchiveHref, briefPeriodLabel } from '../data/civicBriefs';
 import CivicTimelinePreview from '../components/civic/CivicTimelinePreview';
 import type { NewsItem } from '../data/newsTypes';
 import { isTodayNewsCandidate } from '../data/newsCivicRelationships';
+import { latestSubstantiveBrief } from '../data/todayRelevance';
 
 interface Weather {
   temperature?: number;
@@ -62,6 +63,7 @@ const formatTimestamp = (value: string, locale: string) =>
 
 export default function Today() {
   const { t, i18n } = useTranslation();
+  const fil = i18n.resolvedLanguage === 'fil';
   const locale = i18n.resolvedLanguage === 'fil' ? 'fil-PH' : 'en-PH';
   const [params, setParams] = useSearchParams();
   const requested = params.get('barangay');
@@ -123,7 +125,7 @@ export default function Today() {
         try {
           const data = (await briefsTask.value.json()) as BriefArchive;
           const briefs = Array.isArray(data.briefs) ? data.briefs : [];
-          setLatestBrief(briefs[0] ?? null);
+          setLatestBrief(latestSubstantiveBrief(briefs));
         } catch {
           setLatestBrief(null);
         }
@@ -252,6 +254,7 @@ export default function Today() {
       </section>
 
       <CivicTimelinePreview
+        nearTermOnly
         barangaySlug={barangaySlug || undefined}
         contextLabel={barangay ? 'Barangay ' + barangay.name : 'Makati'}
         heading={
@@ -317,6 +320,11 @@ export default function Today() {
       <Section className="bg-white">
         <div className="section-eyebrow">{t('currentInfo.today.civicBrief')}</div>
         <Heading level={2}>{t('currentInfo.today.latestBrief')}</Heading>
+        <p className="mt-2 text-sm text-gray-600">
+          {fil
+            ? 'Pinakahuling brief na may mga record. Tingnan ang sakop na petsa; hindi ito live update ngayong araw.'
+            : 'Latest brief containing records. Check its coverage dates; this is not a live update for today.'}
+        </p>
 
         {latestBrief ? (
           <div className="mt-6 rounded-2xl border border-primary-100 bg-[#fffdf8] p-6">
@@ -335,23 +343,23 @@ export default function Today() {
                 </p>
               </div>
               <div className="shrink-0 text-xs text-gray-500">
-                Published {formatTimestamp(latestBrief.publishedAt, locale)}
+                {fil ? 'Inilathala' : 'Published'} {formatTimestamp(latestBrief.publishedAt, locale)}
               </div>
             </div>
             <div className="mt-5 flex flex-wrap gap-3">
               <Link to={briefArchiveHref(latestBrief.id)} className="brand-btn-primary">
-                Read this brief
+                {fil ? 'Basahin ang brief' : 'Read this brief'}
               </Link>
             </div>
           </div>
         ) : (
           <div className="mt-6 rounded-2xl border border-gray-200 bg-[#fffdf8] p-5 text-sm text-gray-600">
-            No published Civic Brief snapshot is available right now.
+            {fil ? 'Walang available na brief na may mga record. Makikita sa archive ang lahat ng snapshot.' : 'No brief containing records is available. All snapshots remain in the archive.'}
           </div>
         )}
         <div className="mt-5">
           <Link to="/briefs" className="brand-btn-secondary">
-            Open Civic Briefs
+            {fil ? 'Buksan ang Civic Briefs' : 'Open Civic Briefs'}
           </Link>
         </div>
       </Section>

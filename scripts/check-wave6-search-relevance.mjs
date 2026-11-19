@@ -36,17 +36,7 @@ requireAll(queryHelper, 'Search synonym normalization', [
   'export const queryVariants = (query: string): string[] => {',
 ]);
 
-requireAll(serviceSearch, 'Shared query helper integration', [
-  "import { queryVariants } from '../../data/searchQueryVariants';",
-]);
-
-requireAll(serviceSearch, 'Ranking order', [
-  'if (title === variant) score = Math.max(score, 100 * weight);',
-  'score = Math.max(score, 88 * weight);',
-  'if (keywords.includes(variant)) score = Math.max(score, 30 * weight);',
-  'allowFuzzy: index === 0',
-  'return Math.max(...scores);',
-]);
+requireAll(serviceSearch, 'Shared ranking integration', ["import { scoreItem } from '../../data/searchRanking';"]);
 
 requireAll(criticalPaths, 'User-facing relevance QA', [
   "['brgy poblacion', 'Barangay Poblacion']",
@@ -72,3 +62,5 @@ console.log(
 
 // Run the held-out lexical query cases in both required quality and build checks.
 await import('./check-search-query-variants.mjs');
+
+await import('./check-search-ranking.mjs');

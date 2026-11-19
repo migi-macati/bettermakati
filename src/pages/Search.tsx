@@ -10,7 +10,7 @@ import { Heading } from '../components/ui/Heading';
 import { useBarangayScope } from '../hooks/useBarangayScope';
 
 const isIdea = (query: string) =>
-  /\b(?:i suggest|i propose|my idea|i think we (?:should|need)|we should|there should be|suggestion|proposal|i have an idea)\b|(?:\bsana\b|\bdapat\b|\bmaganda kung\b|\bproposal ko\b|\bideya ko\b)/i.test(query);
+  /\b(?:i suggest|i propose|my idea|i think we (?:should|need)|we should|there should be|suggestion|proposal|i have an idea)\b|(?:\bsana\b|\bdapat\b|\bmaganda kung\b|\bproposal ko\b|\bideya ko\b|\bmagmungkahi\b|\bmungkahi\b|\bmag suggest\b)/i.test(query);
 
 export default function Search() {
   const { t, i18n } = useTranslation();
@@ -20,6 +20,7 @@ export default function Search() {
   const stateQuery = (location.state as { unifiedQuery?: string } | null)?.unifiedQuery ?? '';
   const initialQuery = (stateQuery || params.get('q') || '').slice(0, 500);
   const { barangaySlug } = useBarangayScope();
+  const showPermitChoice = /^(?:(?:makati|new|renew)\s+)?business permits?$/i.test(initialQuery.trim()) && !/new|renew/i.test(initialQuery);
   const showGuide = Boolean(initialQuery && (
     isImmediateDanger(initialQuery) || findCitizenGuides(initialQuery).length > 0
   ));
@@ -69,6 +70,16 @@ export default function Search() {
               {fil ? 'Ibang emergency hotlines' : 'Other emergency hotlines'}
             </Link>
           </div>
+
+          {showPermitChoice && (
+            <div className="mb-6 rounded-xl border border-primary-200 bg-white p-5">
+              <h2 className="text-xl font-bold">{fil ? 'Bagong application o renewal?' : 'New application or renewal?'}</h2>
+              <div className="mt-4 flex flex-wrap gap-3">
+                <Link className="brand-btn-primary" to="/services/guide/new-business-permit">{fil ? 'Bagong business permit' : 'New business permit'}</Link>
+                <Link className="brand-btn-secondary" to="/services/guide/renew-business-permit">{fil ? 'I-renew ang permit' : 'Renew a permit'}</Link>
+              </div>
+            </div>
+          )}
 
           {showGuide && (
             <>

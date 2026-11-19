@@ -235,6 +235,42 @@ export const cityMonitorSources: CityMonitorSource[] = [
 
 const baseCityMonitorRecords: CityMonitorRecord[] = [
   {
+    id: '2026-10-24-mmda-asean-event-permit-suspension',
+    type: 'official-notice',
+    title: 'MMDA announces temporary suspension of new public-event permits',
+    summary:
+      'The MMDA announced a temporary suspension of issuing permits for fun runs, motorcades, processions and similar public events from 24 October to 20 November 2026 in Makati and four other Metro Manila cities, as reported by PNA and GMA News on 21 October. The announcement does not establish automatic revocation of existing permits or Makati road closures.',
+    date: '2026-10-21',
+    publishedDate: '2026-10-21',
+    sourceReviewedOn: '2026-10-23',
+    status: 'published',
+    stage: 'Announced MMDA permit-issuance restriction; original directive not inspected',
+    sourceLabel: 'Philippine News Agency — MMDA announcement, 21 October 2026',
+    sourceUrl:
+      'https://www.pna.gov.ph/article/mmda-lgus-ready-traffic-plans-suspend-road-works-for-undas-asean',
+    sourcePublisher: 'Philippine News Agency (reporting MMDA)',
+    location: 'Makati City and four other covered Metro Manila cities',
+    summaryBullets: [
+      'Announced period: 24 October–20 November 2026. The restriction concerns issuance of permits for fun runs, motorcades, processions and similar events.',
+      'Taglish: Sa Makati, ayon sa MMDA announcement, pansamantalang suspended ang pag-issue ng permits para sa fun runs, motorcades, processions at kahalintulad na events mula October 24 hanggang November 20.',
+      'This is not a blanket Makati road-closure notice; the reported PICC/CCP security restrictions concern sites in Pasay.',
+      'The report does not say existing permits are automatically cancelled. Organizers should confirm their specific permit with the issuing authority.',
+      'The signed MMDA directive has not been inspected. Dates are calendar dates only; no exact start/end clock times were stated in the reports reviewed.',
+    ],
+    documents: [
+      {
+        label: 'PNA report of MMDA coordination announcement (21 October 2026)',
+        url: 'https://www.pna.gov.ph/article/mmda-lgus-ready-traffic-plans-suspend-road-works-for-undas-asean',
+        kind: 'publication',
+      },
+      {
+        label: 'GMA News corroboration of MMDA permit-issuance announcement (21 October 2026)',
+        url: 'https://www.gmanetwork.com/news/serbisyopubliko/transportation/1006682/pause-on-metro-manila-road-excavations-starts-nov-1-2026-due-to-asean/story/',
+        kind: 'publication',
+      },
+    ],
+  },
+  {
     id: '2026-10-08-poblacion-dm-rivera-power-interruption',
     type: 'official-notice',
     title: 'Power interruption on D.M. Rivera Street',

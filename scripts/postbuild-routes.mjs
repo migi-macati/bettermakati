@@ -39,6 +39,7 @@ const staticMeta = {
   '/legislation': ['Makati Legislation', 'Find Makati ordinances, resolutions and the City Charter.'],
   '/news': ['Makati in the News', 'Current news coverage about Makati and official city information sources.'],
   '/live': ['Live Makati', 'Weather, air quality, utilities and official advisory sources for Makati.'],
+  '/budget-2027': ['Budget 2027: What does it mean for Makati?', 'National budget context, Makati project candidates, version amounts and original sources.'],
   '/projects-budget': ['Makati Projects & Budget', 'Budgets, actual revenue and spending, projects, procurement and audit records.'],
   '/community-tools': ['BetterMakati Community Tools', 'Practical community-built civic tools for everyday Makati.'],
   '/community-tools/saan-ako-lalapit': ['Saan Ako Lalapit?', 'Find the Makati office, service or channel for your concern.'],

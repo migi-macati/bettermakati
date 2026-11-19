@@ -1,5 +1,7 @@
 import { ArrowRight, CalendarDays, FileText } from 'lucide-react';
 import { Link } from 'react-router';
+import { useTranslation } from 'react-i18next';
+import { startsWithinTodayWindow } from '../../data/todayRelevance';
 import { nativeCivicTimelineItems } from '../../data/civicTimelineNative';
 import {
   civicCalendarMatchesBarangay,
@@ -14,6 +16,7 @@ interface CivicTimelinePreviewProps {
   heading?: string;
   description?: string;
   className?: string;
+  nearTermOnly?: boolean;
 }
 
 const actionabilityLabel: Record<CivicTimelineItem['actionability'], string> = {
@@ -100,13 +103,18 @@ export default function CivicTimelinePreview({
   heading = 'What’s next in Makati',
   description,
   className = 'bg-[#fffdf8]',
+  nearTermOnly = false,
 }: CivicTimelinePreviewProps) {
+  const { i18n } = useTranslation();
+  const fil = i18n.resolvedLanguage === 'fil';
   const relevant = nativeCivicTimelineItems.filter(item =>
     civicCalendarMatchesBarangay(item, barangaySlug ?? '')
   );
   const now = new Date();
   const upcoming = localFirst(
-    civicCalendarViewItems(relevant, 'now-next', now),
+    civicCalendarViewItems(relevant, 'now-next', now).filter(item =>
+      !nearTermOnly || startsWithinTodayWindow(civicTimelinePrimaryValue(item), now)
+    ),
     barangaySlug
   ).slice(0, 4);
   const published = localFirst(
@@ -152,6 +160,11 @@ export default function CivicTimelinePreview({
               <CalendarDays className="h-5 w-5 text-primary-700" aria-hidden="true" />
               <h3 className="text-lg font-extrabold text-gray-950">Now &amp; Next</h3>
             </div>
+            {nearTermOnly && <p className="mt-2 text-sm text-gray-600">
+              {fil
+                ? 'Kasalukuyan at susunod na 30 araw. Nasa full calendar ang mas malalayong petsa.'
+                : 'Ongoing and the next 30 days. Later dates remain in the full calendar.'}
+            </p>}
             {upcoming.length > 0 ? (
               <div className="mt-4 grid gap-3 md:grid-cols-2">
                 {upcoming.map(item => (
@@ -164,7 +177,9 @@ export default function CivicTimelinePreview({
               </div>
             ) : (
               <div className="mt-4 rounded-2xl border border-gray-200 bg-white p-5 text-sm leading-relaxed text-gray-600">
-                No current or future civic dates are available for this scope yet.
+                {nearTermOnly
+                  ? (fil ? 'Walang nakalistang civic date sa loob ng 30 araw para rito.' : 'No civic dates are listed within 30 days for this scope.')
+                  : 'No current or future civic dates are available for this scope yet.'}
               </div>
             )}
           </div>

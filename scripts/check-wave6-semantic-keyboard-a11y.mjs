@@ -36,11 +36,11 @@ if (audit.status !== 'complete-static-semantic-keyboard-browser-suite-expanded')
 if (audit.next !== 'W6-5f — Device & browser pass') {
   problems.push('W6-5e next-step pointer changed.');
 }
-if (audit.coverage?.substantiveRoutePatterns !== 51) {
+if (audit.coverage?.substantiveRoutePatterns !== 52) {
   problems.push('W6-5e substantive route-pattern baseline changed.');
 }
-if (audit.coverage?.representativeAxeRoutes !== 51) {
-  problems.push('W6-5e Axe route coverage must remain at 51 representative URLs.');
+if (audit.coverage?.representativeAxeRoutes !== 52) {
+  problems.push('W6-5e Axe route coverage must remain at 52 representative URLs.');
 }
 if (audit.coverage?.uncoveredPatterns !== 0) {
   problems.push('W6-5e must not leave a substantive route pattern uncovered.');
@@ -50,7 +50,7 @@ if (audit.coverage?.browserKeyboardRegressions !== 6) {
 }
 
 need('W6-5e documentation', doc, 'Status: complete-static-semantic-keyboard-browser-suite-expanded');
-need('W6-5e documentation', doc, '**51 representative URLs covering all 51 substantive route patterns**');
+need('W6-5e documentation', doc, '**52 representative URLs covering all 52 substantive route patterns**');
 need('W6-5e documentation', doc, '**W6-5f — Device & browser pass.**');
 
 for (const marker of [
@@ -81,8 +81,8 @@ const routeBlock = accessibility.match(/const routes = \[([\s\S]*?)\];/);
 const axeRoutes = routeBlock
   ? [...routeBlock[1].matchAll(/'([^']+)'/g)].map(match => match[1])
   : [];
-if (axeRoutes.length !== 51) {
-  problems.push('Accessibility route list changed: expected 51, found ' + axeRoutes.length + '.');
+if (axeRoutes.length !== 52) {
+  problems.push('Accessibility route list changed: expected 52, found ' + axeRoutes.length + '.');
 }
 
 const appRoutes = [...app.matchAll(/<Route\s+path="([^"]+)"/g)].map(match => match[1]);
@@ -103,7 +103,7 @@ const patternCovered = pattern => {
   return axeRoutes.some(route => route.startsWith(prefix));
 };
 const uncovered = substantive.filter(pattern => !patternCovered(pattern));
-if (substantive.length !== 51) {
+if (substantive.length !== 52) {
   problems.push('Substantive public route-pattern count changed: ' + substantive.length + '.');
 }
 if (uncovered.length) {
@@ -164,5 +164,5 @@ if (problems.length) {
 }
 
 console.log(
-  'W6-5e semantic/keyboard accessibility passed: all 51 substantive route patterns have representative Axe coverage, WCAG 2.0/2.1 A-AA plus axe-core WCAG 2.2 AA rules are requested, six keyboard/focus regressions are protected, SPA route/fragment focus is explicit, and shared navigation semantics remain intact.'
+  'W6-5e semantic/keyboard accessibility passed: all 52 substantive route patterns have representative Axe coverage, WCAG 2.0/2.1 A-AA plus axe-core WCAG 2.2 AA rules are requested, six keyboard/focus regressions are protected, SPA route/fragment focus is explicit, and shared navigation semantics remain intact.'
 );

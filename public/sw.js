@@ -1,14 +1,7 @@
-const CACHE = 'bettermakati-civic-v1';
-const CORE = [
-  '/',
-  '/today',
-  '/services',
-  '/barangays',
-  '/hotlines',
-  '/offline.html',
-  '/bettermakati-mark.svg',
-  '/site.webmanifest',
-];
+const CACHE = 'bettermakati-civic-v2';
+// All client-side routes share Vite's index.html. A single cached shell handles
+// offline navigation without six extra CDN requests during installation.
+const CORE = ['/', '/offline.html'];
 
 self.addEventListener('install', event => {
   event.waitUntil(
@@ -40,17 +33,12 @@ self.addEventListener('fetch', event => {
   if (url.origin !== self.location.origin) return;
 
   if (request.mode === 'navigate') {
+    // Prefer a fresh page when online. When offline, the cached SPA shell
+    // renders any route without storing redundant copies of index.html.
     event.respondWith(
-      fetch(request)
-        .then(response => {
-          const copy = response.clone();
-          caches.open(CACHE).then(cache => cache.put(request, copy));
-          return response;
-        })
-        .catch(async () => {
-          const cached = await caches.match(request);
-          return cached || caches.match('/offline.html');
-        })
+      fetch(request).catch(async () =>
+        (await caches.match('/')) || caches.match('/offline.html')
+      )
     );
     return;
   }
@@ -61,7 +49,9 @@ self.addEventListener('fetch', event => {
       return fetch(request).then(response => {
         if (response.ok && ['script', 'style', 'font', 'image'].includes(request.destination)) {
           const copy = response.clone();
-          caches.open(CACHE).then(cache => cache.put(request, copy));
+          event.waitUntil(
+            caches.open(CACHE).then(cache => cache.put(request, copy))
+          );
         }
         return response;
       });

@@ -14,7 +14,7 @@ concurrency:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 12
     steps:
       - name: Check out repository
@@ -30,12 +30,16 @@ jobs:
         run: npm audit --omit=dev --audit-level=high
       - name: Quality checks
         run: npm run quality
+      - name: Verify CDN-efficient service worker behavior
+        run: node --test tests/service-worker-cache.test.mjs
+      - name: Verify publisher review packaging
+        run: node --test tests/civic-brief-review.test.mjs tests/news-review.test.mjs
       - name: Build
         run: npm run build
 
   browser-smoke:
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
       - name: Check out repository

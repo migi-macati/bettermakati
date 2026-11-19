@@ -3,6 +3,7 @@ import AxeBuilder from '@axe-core/playwright';
 
 const baseURL = process.env.BASE_URL || 'http://127.0.0.1:4173';
 const routes = [
+  '/budget-2027',
   '/',
   '/services',
   '/search',

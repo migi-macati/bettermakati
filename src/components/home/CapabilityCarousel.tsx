@@ -73,7 +73,7 @@ export default function CapabilityCarousel() {
                 <option value="">{t('home.capability.chooseBarangay')}</option>
                 {barangays.map(barangay => (
                   <option key={barangay.slug} value={barangay.slug}>
-                    Better{compactEditionName(barangay.name)}
+                    {barangay.name}
                   </option>
                 ))}
               </select>
