@@ -55,6 +55,35 @@ for (const language of ['en', 'fil']) {
     });
   }
 }
+// BM-ORD-003: barangay previews share Today's bounded window; the calendar stays complete.
+for (const language of ['en', 'fil']) {
+  for (const width of [390, 1440]) {
+    test(`BM-ORD-003 barangay near-term calendar (${language}, ${width})`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await page.clock.setFixedTime(new Date('2026-11-20T09:00:00Z'));
+      await page.addInitScript(lang => localStorage.setItem('i18nextLng', lang), language);
+      await page.goto(baseURL + '/barangays/poblacion');
+      const upcoming = page.getByRole('heading', { name: 'Now & Next', exact: true }).locator('../..');
+      await expect(upcoming).toContainText(language === 'en'
+        ? 'Ongoing and the next 30 days.' : 'Kasalukuyan at susunod na 30 araw.');
+      await expect(upcoming).not.toContainText('2028');
+      await expect(upcoming).toContainText(language === 'en'
+        ? 'No civic dates are listed within 30 days for this scope.'
+        : 'Walang nakalistang civic date sa loob ng 30 araw para rito.');
+      const calendar = page.getByRole('link', { name: 'Open full calendar', exact: true });
+      await expect(calendar).toHaveAttribute('href', '/calendar?barangay=poblacion');
+      await calendar.focus();
+      await expect(calendar).toBeFocused();
+      await page.keyboard.press('Enter');
+      await expect(page).toHaveURL(baseURL + '/calendar?barangay=poblacion');
+      await expect(page.locator('main')).toContainText('2028');
+      await page.goBack();
+      await expect(upcoming).toContainText('30');
+      expect(await page.evaluate(() => localStorage.getItem('i18nextLng'))).toBe(language);
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy();
+    });
+  }
+}
 const reportIndexHrefs = readdirSync('src/data/reports')
   .filter(name => name.endsWith('.ts'))
   .sort((a, b) => a.localeCompare(b))

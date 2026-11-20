@@ -103,7 +103,7 @@ export default function CivicTimelinePreview({
   heading = 'What’s next in Makati',
   description,
   className = 'bg-[#fffdf8]',
-  nearTermOnly = false,
+  nearTermOnly = true,
 }: CivicTimelinePreviewProps) {
   const { i18n } = useTranslation();
   const fil = i18n.resolvedLanguage === 'fil';
