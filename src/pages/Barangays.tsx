@@ -7,6 +7,7 @@ import SEO from '../components/SEO';
 import {
   barangays,
   barangayProfilesReviewed,
+  barangayCouncilCycle,
 } from '../data/barangays';
 
 export default function Barangays() {
@@ -99,7 +100,7 @@ export default function Barangays() {
 
             <LastReviewed
               date={barangayProfilesReviewed}
-              note={t('betterBarangay.directory.reviewNote')}
+              note={t('betterBarangay.directory.reviewNote', { cycle: barangayCouncilCycle })}
               className="mt-5 !text-primary-50 [&_strong]:!text-white [&_svg]:!text-secondary-300"
             />
           </div>

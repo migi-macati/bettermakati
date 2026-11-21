@@ -8,6 +8,17 @@ const areaRegistrySource = await readFile(
   'utf8'
 );
 const problems = [];
+const electionData = await readFile('src/data/electionCivic.ts', 'utf8');
+const electionYear = electionData.match(/electionDate: '([0-9]{4})-/)?.[1];
+if (!electionYear || !source.includes("barangayCouncilCycle = '2023–" + electionYear + "'")) {
+  problems.push('Council cycle must agree with the next regular BSKE.');
+}
+for (const lang of ['en', 'fil']) {
+  const copy = JSON.parse(await readFile('public/locales/' + lang + '/common.json', 'utf8'));
+  for (const label of [copy.betterBarangay.directory.reviewNote, copy.betterBarangay.profile.reviewNote, copy.evidence.status.coverageCouncilRostersDetail]) {
+    if (!label.includes('{{cycle}}')) problems.push(lang + ': roster labels must use the shared cycle');
+  }
+}
 
 const profileStart = source.indexOf('const barangayBaseProfiles');
 const profileEnd = source.indexOf('export const barangays', profileStart);
@@ -73,7 +84,7 @@ for (const slug of expected) {
 
   if (!/punongBarangay:\s*["']/.test(record)) problems.push(slug + ': missing Punong Barangay');
   if (!/skChairperson:\s*["']/.test(record)) problems.push(slug + ': missing SK Chairperson');
-  if (!/term:\s*'2023–2026'/.test(record)) problems.push(slug + ': roster term must be explicit');
+  if (!/term:\s*barangayCouncilCycle\b/.test(record)) problems.push(slug + ': roster term must be explicit');
   if (!/lastVerified:\s*barangayProfilesReviewed/.test(record)) problems.push(slug + ': roster freshness marker missing');
 
   const kagawadMatch = record.match(/kagawads:\s*(\[[^\n]+\])/);
