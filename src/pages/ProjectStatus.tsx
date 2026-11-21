@@ -22,7 +22,7 @@ import { Heading } from '../components/ui/Heading';
 import LastReviewed from '../components/ui/LastReviewed';
 import SharePage from '../components/ui/SharePage';
 import { accountabilityCoverageGaps, accountabilityEntries } from '../data/accountability';
-import { barangayCoverageGaps, barangayCoverageSummary, barangayProfilesReviewed } from '../data/barangays';
+import { barangayCoverageGaps, barangayCoverageSummary, barangayProfilesReviewed, barangayCouncilCycle } from '../data/barangays';
 import { electedOfficials } from '../data/electedOfficials';
 import {
   doctrineFoundations,
@@ -295,7 +295,7 @@ export default function ProjectStatus() {
     {
       label: t('evidence.status.coverageCouncilRosters'),
       value: `${barangayCoverageSummary.councilRosters}/23`,
-      detail: t('evidence.status.coverageCouncilRostersDetail', { date: barangayProfilesReviewed }),
+      detail: t('evidence.status.coverageCouncilRostersDetail', { cycle: barangayCouncilCycle, date: barangayProfilesReviewed }),
       icon: BadgeCheck,
     },
     {
