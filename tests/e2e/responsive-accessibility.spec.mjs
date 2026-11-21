@@ -303,3 +303,71 @@ test('200 percent text resizing does not create page-level overflow on core jour
     await assertNoPageOverflow(page, route + ' with 200% text');
   }
 });
+
+for (const language of ['en', 'fil']) {
+  for (const viewport of [{ width: 390, height: 844 }, { width: 1366, height: 768 }]) {
+    test(`Homepage task discovery (${language}, ${viewport.width})`, async ({ page }) => {
+      await page.setViewportSize(viewport);
+      await page.addInitScript(lang => localStorage.setItem('i18nextLng', lang), language);
+      await page.goto(baseURL);
+      const search = page.locator('main [role="combobox"]');
+      await expect(search).toBeInViewport({ ratio: 1 });
+      const shortcuts = page.getByRole('navigation', { name: language === 'fil' ? 'Mga gabay sa serbisyo' : 'Service guides' }).getByRole('link');
+      for (const index of [0, 1]) await expect(shortcuts.nth(index)).toBeInViewport({ ratio: 1 });
+      for (const link of await shortcuts.all()) {
+        const path = await link.getAttribute('href');
+        await link.click();
+        await expect(page).toHaveURL(baseURL + path);
+        await expect(page.locator('main h1')).toBeVisible();
+        await page.goBack();
+      }
+      await expect(page.locator('main a[href="/budget-2027"]').first()).toBeVisible();
+      await search.fill('barado ang kanal');
+      await page.getByRole('option').first().click();
+      await expect(page).toHaveURL(baseURL + '/search');
+      await expect(page.getByRole('button', { name: language === 'fil' ? 'Humingi ng official assistance' : 'Get official help' })).toBeVisible();
+      await expect(page.locator('main a[href="/civic-map/report"]')).toBeVisible();
+    });
+  }
+}
+
+test('Thirty resident queries reach a relevant homepage option', async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem('i18nextLng', 'en'));
+  await page.goto(baseURL);
+  const input = page.locator('main [role="combobox"]');
+  // Synthetic evaluation phrases, separate from the development examples.
+  const groups = [
+    [/drainage|flood/i, ['Water backs up in our street drain', 'Sa tapat ng school umaapaw ang kanal', 'The drainage by our gate smells']],
+    [/blocking streets or sidewalks/i, ['A parked vehicle takes up the whole footpath', 'May van na nakapark sa bangketa', 'Double parked na naman sa sidewalk']],
+    [/noisy neighbor/i, ['The karaoke upstairs goes on past midnight', 'May videoke sa kabilang bahay tuwing gabi', 'Kapitbahay plays loud music at midnight']],
+    [/uncollected rubbish|illegal dumping/i, ['Nobody picked up our rubbish this week', 'Naiwan ang basura namin sa kanto', 'Missed garbage pickup sa street namin']],
+    [/streetlight|street light/i, ['The streetlight across from school is out', 'Sira ang ilaw ng poste sa labas', 'Broken street light near the palengke']],
+    [/power outage|brownout|electricity/i, ['Our block has no electricity tonight', 'Nawalan ng kuryente ang buong kalye', 'Brownout since lunch sa amin']],
+    [/wages|salary|pay/i, ['My employer withheld wages for March', 'Hindi pa kami sinahuran ngayong buwan', 'Unpaid salary for dalawang linggo']],
+    [/senior citizen national id/i, ['senior citizen ID', 'Paano kumuha ng senior citizen ID?', 'Senior citizen ID application Makati']],
+    [/birth certificate/i, ['birth certificate', 'Kopya ng birth certificate', 'PSA birth certificate para sa school']],
+    [/emergency hotlines/i, ['A house is on fire next door', 'May sunog sa tindahan sa tabi namin', 'Live wire sa sidewalk may sparks']],
+  ];
+  const misses = [];
+  for (const [label, phrases] of groups) {
+    for (const phrase of phrases) {
+      await input.fill(phrase);
+      // Search ranking is synchronous with the controlled input.
+      const options = page.getByRole('option');
+      const titles = await options.evaluateAll(nodes => nodes.slice(0, 3).map(node => node.firstElementChild?.textContent ?? ''));
+      if (!titles.some(title => label.test(title))) misses.push(phrase);
+      if (label.source === 'emergency hotlines') {
+        await expect(options.first()).toContainText(label);
+        await options.first().click();
+        await expect(page).toHaveURL(baseURL + '/hotlines');
+        await expect(page.locator('a[href="tel:911"]').first()).toBeVisible();
+        await page.goBack();
+      }
+    }
+  }
+  expect(misses.length, misses.join(' | ')).toBeLessThanOrEqual(3);
+  for (const [phrase, title] of [['senior citizen ID', /Senior Citizen National ID/i], ['birth certificate', /birth certificate/i], ['business permit', /business permit/i]]) {
+    await input.fill(phrase);
+    await expect(page.getByRole('option').first()).toContainText(title);
+  }
+});
