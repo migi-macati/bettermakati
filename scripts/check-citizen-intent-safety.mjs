@@ -23,6 +23,7 @@ const cases = [
   ['May sunog sa bahay',null,true],
   ['The house is on fire',null,true],
   ['Clogged drain in front of our house','flooding',false],
+  ['Barado ang kanal sa kanto','flooding',false],
   ['There is floodwater on the road','flooding',false],
   ['Karaoke all night','neighborhood-noise',false],
   ['My neighbor is singing loudly','neighborhood-noise',false],

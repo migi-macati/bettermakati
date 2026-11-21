@@ -18,6 +18,7 @@ import { Link, useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { isBarangayContextPath, withBarangayScope } from '../../hooks/useBarangayScope';
 import { searchIndex, type SearchItem } from '../../data/searchIndex';
+import { findCitizenGuides, isImmediateDanger } from '../../data/citizenProblemGuides';
 import { scoreItem } from '../../data/searchRanking';
 import { serviceDirectory } from '../../data/serviceDirectory';
 import { officesForAgency } from '../../data/governmentServiceOffices';
@@ -217,7 +218,8 @@ export default function ServiceSearch({
   showInitially?: boolean;
   barangaySlug?: string;
 }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const language = i18n.resolvedLanguage === 'fil' ? 'fil' : 'en';
   const tabs = scope === 'services' ? serviceTabs : siteTabs;
   const [query, setQuery] = useState(initialQuery);
   const [tab, setTab] = useState<string>('All');
@@ -342,7 +344,7 @@ export default function ServiceSearch({
     return resolved;
   }, [showServicePlaces]);
 
-  const visibleResults = useMemo(() => {
+  const visibleResults = useMemo<SearchItem[]>(() => {
     if (!query.trim()) {
       const featured = results.filter(item => item.featured);
       return (featured.length ? featured : results).slice(
@@ -350,8 +352,26 @@ export default function ServiceSearch({
         scope === 'site' ? 8 : 12
       );
     }
+    if (unifiedHome) {
+      if (isImmediateDanger(query)) {
+        return [{
+          title: language === 'fil' ? 'Mga emergency hotline' : 'Emergency hotlines',
+          description: language === 'fil' ? 'Tumawag sa 911 para sa agarang tulong.' : 'Call 911 for immediate help.',
+          href: '/hotlines', category: 'Hotlines', group: 'Service', keywords: '',
+        }];
+      }
+      const guide = findCitizenGuides(query)[0];
+      if (guide) {
+        const suggestion: SearchItem = {
+          title: guide.title[language], description: guide.intro[language],
+          href: '/search', category: language === 'fil' ? 'Gabay' : 'Guide',
+          group: 'Service', keywords: '', canonicalKey: 'concern:' + guide.id,
+        };
+        return [suggestion, ...results].slice(0, 5);
+      }
+    }
     return results.slice(0, unifiedHome ? 5 : 12);
-  }, [query, results, scope, unifiedHome]);
+  }, [query, results, scope, unifiedHome, language]);
 
   const hasBroaderMatches = visibleResults.length === 0 && allRankedResults.length > 0;
   const activeFilterLabel =
@@ -654,7 +674,13 @@ export default function ServiceSearch({
                   tabIndex={-1}
                   aria-selected={index === activeIndex}
                   onMouseEnter={() => setActiveIndex(index)}
-                  onClick={() => selectResult(item.href)}
+                  onClick={() => {
+                    if (item.canonicalKey?.startsWith('concern:')) {
+                      navigate(scopedInternalHref('/search'), { state: { unifiedQuery: query.trim().slice(0, 500) } });
+                    } else {
+                      selectResult(item.href);
+                    }
+                  }}
                   className={
                     'w-full border-b border-gray-100 px-5 py-4 text-left last:border-b-0 transition ' +
                     (index === activeIndex
