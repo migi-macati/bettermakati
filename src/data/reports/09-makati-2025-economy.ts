@@ -212,7 +212,7 @@ const sectorRows = [
 
 const ncrRows = [
   { rank: 1, economy: 'Quezon City', realGdp: '₱1.398T', ncrShare: '19.31%' },
-  { rank: 2, economy: 'Makati', realGdp: '₱1.266T', ncrShare: '17.49%' },
+  { rank: 2, economy: 'Makati', realGdp: '₱1.266T', ncrShare: '17.48%' },
   { rank: 3, economy: 'Manila', realGdp: '₱1.061T', ncrShare: '14.65%' },
   { rank: 4, economy: 'Taguig', realGdp: '₱686.68B', ncrShare: '9.48%' },
   { rank: 5, economy: 'Pasig', realGdp: '₱541.59B', ncrShare: '7.48%' },
@@ -286,8 +286,8 @@ const reportModule: FeaturedReportModule = {
             kind: 'stat',
             label: 'NCR position',
             value: 'No. 2',
-            detail: '17.49% of NCR output',
-            evidence: { sourceIds: ['2', '3'], records: [records.ncrShare] },
+            detail: '17.48% of NCR output',
+            evidence: { sourceIds: ['2', '3', '9'], records: [records.ncrShare] },
           },
           {
             kind: 'stat',
@@ -295,7 +295,7 @@ const reportModule: FeaturedReportModule = {
             value: '₱4.265 million',
             detail: 'Production per resident, not resident income',
             evidence: {
-              sourceIds: ['6', '8'],
+              sourceIds: ['6', '8', '9'],
               records: [records.perCapita, records.population],
             },
           },
@@ -348,9 +348,15 @@ const reportModule: FeaturedReportModule = {
           {
             kind: 'paragraph',
             role: 'fact',
-            text: 'Quezon City led the country at ₱1.40 trillion in real GDP. Makati followed at ₱1.27 trillion, equal to 5.5% of national GDP. Within NCR, Makati generated 17.49% of the region’s ₱7.243-trillion economy. Manila ranked third nationally at ₱1.06 trillion.',
+            text: 'Correction, 22 November 2026. An earlier version gave Makati’s share of NCR output as 17.49%. The PSA workbook gives 17.48% when rounded to two decimal places.',
+            evidence: { sourceIds: ['9'] },
+          },
+          {
+            kind: 'paragraph',
+            role: 'fact',
+            text: 'Quezon City led the country at ₱1.40 trillion in real GDP. Makati followed at ₱1.27 trillion, equal to 5.5% of national GDP. Within NCR, Makati generated 17.48% of the region’s ₱7.243-trillion economy. Manila ranked third nationally at ₱1.06 trillion.',
             evidence: {
-              sourceIds: ['1', '2', '3'],
+              sourceIds: ['1', '2', '3', '9'],
               records: [records.level, records.nationalShare, records.ncrShare],
             },
           },
@@ -367,7 +373,7 @@ const reportModule: FeaturedReportModule = {
             ],
             rows: ncrRows,
             evidence: {
-              sourceIds: ['2', '3'],
+              sourceIds: ['2', '3', '9'],
               records: [records.level, records.ncrShare],
             },
           },
@@ -420,15 +426,15 @@ const reportModule: FeaturedReportModule = {
             role: 'fact',
             text: 'PSA reports Makati real GDP per person at ₱4.265 million in 2025 and current-price GDP per person at ₱5.201 million. The indicator divides production within Makati by the population denominator. It does not divide corporate value added among residents and is not a measure of household income, wages, wealth, poverty or inequality.',
             evidence: {
-              sourceIds: ['6'],
+              sourceIds: ['6', '9'],
               records: [records.perCapita, records.population],
             },
           },
           {
             kind: 'paragraph',
             role: 'analysis',
-            text: 'Makati’s large commuter and daytime workforce makes the ratio unusually high: workers and firms generate output inside the city even when many workers live elsewhere. The post-EMBO denominator further raises comparability concerns because PSA excludes the transferred barangays from Makati starting in 2022. The sharp change in the published per-capita series should therefore be read as a population-and-geography issue as well as an economic one.',
-            evidence: { sourceIds: ['6', '7'] },
+            text: 'People who commute to work in Makati contribute to its output even when they live elsewhere. PSA’s real GDP per person rose from ₱1.686 million in 2019 to ₱3.373 million in 2020, while the city’s real output fell 6.47%. The dates matter. This jump came before the 2022 change in EMBO coverage. The workbook identifies the 2020-based population projections but gives no explanation for the earlier break.',
+            evidence: { sourceIds: ['6', '7', '9'] },
           },
         ],
       },
@@ -628,6 +634,15 @@ const reportModule: FeaturedReportModule = {
     ],
     sources: [
       {
+        id: '9',
+        label: 'NCR GDP and per-capita GDP by city, 2018–2025 (Excel)',
+        href: 'https://psa.gov.ph/system/files/sead/PUB_NCR_Prov_2018PSNA_2018-2025.xlsx',
+        sourceKind: 'official-external',
+        publisher: 'Philippine Statistics Authority',
+        publishedOrPeriod: 'August 2026 series, PPA tables 1.1–1.2 and Capita tables 2.1–2.2',
+        checkedOn: '22 November 2026',
+      },
+      {
         id: '1',
         label: '2025 economic performance of 82 provinces and 33 HUCs',
         href: 'https://psa.gov.ph/content/psa-releases-2025-economic-performance-82-provinces-and-33-highly-urbanized-cities',
@@ -739,8 +754,8 @@ const reportModule: FeaturedReportModule = {
             kind: 'stat',
             label: 'NCR position',
             value: 'No. 2',
-            detail: '17.49% ng NCR output',
-            evidence: { sourceIds: ['2', '3'], records: [records.ncrShare] },
+            detail: '17.48% ng NCR output',
+            evidence: { sourceIds: ['2', '3', '9'], records: [records.ncrShare] },
           },
           {
             kind: 'stat',
@@ -748,7 +763,7 @@ const reportModule: FeaturedReportModule = {
             value: '₱4.265 million',
             detail: 'Production per resident, hindi resident income',
             evidence: {
-              sourceIds: ['6'],
+              sourceIds: ['6', '9'],
               records: [records.perCapita, records.population],
             },
           },
@@ -801,9 +816,15 @@ const reportModule: FeaturedReportModule = {
           {
             kind: 'paragraph',
             role: 'fact',
-            text: 'Nanguna ang Quezon City sa ₱1.40 trillion real GDP. Sumunod ang Makati sa ₱1.27 trillion, katumbas ng 5.5% ng national GDP. Sa NCR, 17.49% ng ₱7.243-trillion regional economy ang mula sa Makati. Pangatlo ang Manila sa ₱1.06 trillion.',
+            text: 'Pagwawasto, 22 Nobyembre 2026. Dating nakalagay na 17.49% ang bahagi ng Makati sa real GDP ng NCR. Batay sa workbook ng PSA, 17.48% ito kapag ni-round sa dalawang decimal place.',
+            evidence: { sourceIds: ['9'] },
+          },
+          {
+            kind: 'paragraph',
+            role: 'fact',
+            text: 'Nanguna ang Quezon City sa ₱1.40 trillion real GDP. Sumunod ang Makati sa ₱1.27 trillion, katumbas ng 5.5% ng national GDP. Sa NCR, 17.48% ng ₱7.243-trillion regional economy ang mula sa Makati. Pangatlo ang Manila sa ₱1.06 trillion.',
             evidence: {
-              sourceIds: ['1', '2', '3'],
+              sourceIds: ['1', '2', '3', '9'],
               records: [records.level, records.nationalShare, records.ncrShare],
             },
           },
@@ -820,7 +841,7 @@ const reportModule: FeaturedReportModule = {
             ],
             rows: ncrRows,
             evidence: {
-              sourceIds: ['2', '3'],
+              sourceIds: ['2', '3', '9'],
               records: [records.level, records.ncrShare],
             },
           },
@@ -873,15 +894,15 @@ const reportModule: FeaturedReportModule = {
             role: 'fact',
             text: '₱4.265 million ang Makati real GDP per person noong 2025 at ₱5.201 million sa current prices. Hinahati ng indicator ang production sa loob ng Makati sa population denominator. Hindi nito hinahati ang corporate value added sa residents at hindi ito measure ng household income, wages, wealth, poverty o inequality.',
             evidence: {
-              sourceIds: ['6'],
+              sourceIds: ['6', '9'],
               records: [records.perCapita, records.population],
             },
           },
           {
             kind: 'paragraph',
             role: 'analysis',
-            text: 'Pinapataas ng malaking commuter at daytime workforce ang ratio: gumagawa ng output sa Makati ang firms at workers kahit maraming workers ang nakatira sa ibang lugar. May additional comparability issue ang post-EMBO denominator dahil inaalis ng PSA ang transferred barangays starting 2022. Kaya population at geography issue rin ang malaking pagbabago sa published per-capita series.',
-            evidence: { sourceIds: ['6', '7'] },
+            text: 'Kasama sa produksyon ng Makati ang trabaho ng mga bumibiyahe rito kahit sa ibang lugar sila nakatira. Ayon sa PSA, tumaas ang real GDP bawat residente mula ₱1.686 milyon noong 2019 sa ₱3.373 milyon noong 2020, habang bumaba ng 6.47% ang kabuuang real GDP ng lungsod. Nauna ang pagtalon sa pagbabago ng sakop ng EMBO noong 2022. Binanggit ng PSA ang 2020-based population projections pero walang paliwanag sa workbook kung bakit nagbago nang ganoon ang bilang noong 2020.',
+            evidence: { sourceIds: ['6', '7', '9'] },
           },
         ],
       },
