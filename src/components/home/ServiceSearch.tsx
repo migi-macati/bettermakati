@@ -18,6 +18,7 @@ import { Link, useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { isBarangayContextPath, withBarangayScope } from '../../hooks/useBarangayScope';
 import { searchIndex, type SearchItem } from '../../data/searchIndex';
+import { findCitizenGuides, isImmediateDanger } from '../../data/citizenProblemGuides';
 import { scoreItem } from '../../data/searchRanking';
 import { serviceDirectory } from '../../data/serviceDirectory';
 import { officesForAgency } from '../../data/governmentServiceOffices';
@@ -217,13 +218,15 @@ export default function ServiceSearch({
   showInitially?: boolean;
   barangaySlug?: string;
 }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const language = i18n.resolvedLanguage === 'fil' ? 'fil' : 'en';
   const tabs = scope === 'services' ? serviceTabs : siteTabs;
   const [query, setQuery] = useState(initialQuery);
   const [tab, setTab] = useState<string>('All');
   const [domainFilter, setDomainFilter] = useState<SearchDomainId>('all');
   const [open, setOpen] = useState(Boolean(initialQuery.trim()) && showInitially);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const initialIndex = unifiedHome ? -1 : 0;
+  const [activeIndex, setActiveIndex] = useState(initialIndex);
   const [legislationIndex, setLegislationIndex] =
     useState<BrowserLegislationIndex | null>(null);
   const navigate = useNavigate();
@@ -342,7 +345,7 @@ export default function ServiceSearch({
     return resolved;
   }, [showServicePlaces]);
 
-  const visibleResults = useMemo(() => {
+  const visibleResults = useMemo<SearchItem[]>(() => {
     if (!query.trim()) {
       const featured = results.filter(item => item.featured);
       return (featured.length ? featured : results).slice(
@@ -350,8 +353,26 @@ export default function ServiceSearch({
         scope === 'site' ? 8 : 12
       );
     }
+    if (unifiedHome) {
+      if (isImmediateDanger(query)) {
+        return [{
+          title: language === 'fil' ? 'Mga emergency hotline' : 'Emergency hotlines',
+          description: language === 'fil' ? 'Tumawag sa 911 para sa agarang tulong.' : 'Call 911 for immediate help.',
+          href: '/hotlines', category: 'Hotlines', group: 'Service', keywords: '',
+        }];
+      }
+      const guide = findCitizenGuides(query)[0];
+      if (guide) {
+        const suggestion: SearchItem = {
+          title: guide.title[language], description: guide.intro[language],
+          href: '/search', category: language === 'fil' ? 'Gabay' : 'Guide',
+          group: 'Service', keywords: '', canonicalKey: 'concern:' + guide.id,
+        };
+        return [suggestion, ...results].slice(0, 5);
+      }
+    }
     return results.slice(0, unifiedHome ? 5 : 12);
-  }, [query, results, scope, unifiedHome]);
+  }, [query, results, scope, unifiedHome, language]);
 
   const hasBroaderMatches = visibleResults.length === 0 && allRankedResults.length > 0;
   const activeFilterLabel =
@@ -366,7 +387,7 @@ export default function ServiceSearch({
   const showAllMatches = () => {
     setTab('All');
     setDomainFilter('all');
-    setActiveIndex(0);
+    setActiveIndex(initialIndex);
     setOpen(true);
   };
 
@@ -402,7 +423,12 @@ export default function ServiceSearch({
     return withBarangayScope(href, barangaySlug);
   };
 
-  const selectResult = (href: string) => {
+  const selectResult = (item: SearchItem) => {
+    const href = item.href;
+    if (item.canonicalKey?.startsWith('concern:')) {
+      navigate(scopedInternalHref('/search'), { state: { unifiedQuery: query.trim().slice(0, 500) } });
+      return;
+    }
     setOpen(false);
     if (href.startsWith('http://') || href.startsWith('https://')) {
       window.location.assign(href);
@@ -413,8 +439,7 @@ export default function ServiceSearch({
 
   const submit = (event: FormEvent) => {
     event.preventDefault();
-    // One homepage entry: Enter always goes through the same result journey.
-    // Clickable autocomplete suggestions remain optional direct shortcuts.
+    // A free-form homepage submission opens the full search journey.
     if (unifiedHome) {
       // Keep free-form descriptions out of URLs, referrers and server logs.
       // Explicit shareable /search?q= links remain available for public queries.
@@ -427,7 +452,7 @@ export default function ServiceSearch({
     }
     if (visibleResults.length > 0) {
       selectResult(
-        visibleResults[Math.min(activeIndex, visibleResults.length - 1)].href
+        visibleResults[Math.min(Math.max(activeIndex, 0), visibleResults.length - 1)]
       );
       return;
     }
@@ -461,22 +486,23 @@ export default function ServiceSearch({
       setOpen(true);
       setActiveIndex(index =>
         visibleResults.length
-          ? (index - 1 + visibleResults.length) % visibleResults.length
+          ? ((index < 0 ? 0 : index) - 1 + visibleResults.length) % visibleResults.length
           : 0
       );
       return;
     }
 
     if (event.key === 'Escape') {
+      setActiveIndex(initialIndex);
       event.preventDefault();
       setOpen(false);
       return;
     }
 
-    if (event.key === 'Enter' && open && visibleResults.length > 0 && !unifiedHome) {
+    if (event.key === 'Enter' && open && visibleResults.length > 0 && activeIndex >= 0) {
       event.preventDefault();
       selectResult(
-        visibleResults[Math.min(activeIndex, visibleResults.length - 1)].href
+        visibleResults[Math.min(Math.max(activeIndex, 0), visibleResults.length - 1)]
       );
     }
   };
@@ -520,7 +546,7 @@ export default function ServiceSearch({
               onFocus={() => setOpen(true)}
               onChange={event => {
                 setQuery(event.target.value);
-                setActiveIndex(0);
+                setActiveIndex(initialIndex);
                 setOpen(true);
               }}
               onKeyDown={handleKeyDown}
@@ -544,7 +570,7 @@ export default function ServiceSearch({
                 type="button"
                 onClick={() => {
                   setQuery('');
-                  setActiveIndex(0);
+                  setActiveIndex(initialIndex);
                   setOpen(true);
                   requestAnimationFrame(() => inputRef.current?.focus());
                 }}
@@ -595,7 +621,7 @@ export default function ServiceSearch({
                   onClick={() => {
                     setTab(item);
                     setDomainFilter('all');
-                    setActiveIndex(0);
+                    setActiveIndex(initialIndex);
                   }}
                   className={
                     tab === item
@@ -623,7 +649,7 @@ export default function ServiceSearch({
                 onChange={event => {
                   setDomainFilter(event.target.value as SearchDomainId);
                   setTab('All');
-                  setActiveIndex(0);
+                  setActiveIndex(initialIndex);
                 }}
                 className="min-h-11 max-w-[68%] rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-semibold text-gray-800 outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-200"
               >
@@ -653,8 +679,8 @@ export default function ServiceSearch({
                   id={`search-result-${scope}-${index}`}
                   tabIndex={-1}
                   aria-selected={index === activeIndex}
-                  onMouseEnter={() => setActiveIndex(index)}
-                  onClick={() => selectResult(item.href)}
+                  onMouseEnter={() => { if (!unifiedHome) setActiveIndex(index); }}
+                  onClick={() => selectResult(item)}
                   className={
                     'w-full border-b border-gray-100 px-5 py-4 text-left last:border-b-0 transition ' +
                     (index === activeIndex

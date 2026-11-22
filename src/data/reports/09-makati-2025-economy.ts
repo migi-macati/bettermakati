@@ -280,7 +280,7 @@ const reportModule: FeaturedReportModule = {
             label: 'National position',
             value: 'No. 2',
             detail: '5.5% of Philippine GDP; behind Quezon City',
-            evidence: { sourceIds: ['1'], records: [records.nationalShare] },
+            evidence: { sourceIds: ['1', '9', '10'], records: [records.nationalShare] },
           },
           {
             kind: 'stat',
@@ -354,9 +354,9 @@ const reportModule: FeaturedReportModule = {
           {
             kind: 'paragraph',
             role: 'fact',
-            text: 'Quezon City led the country at ₱1.40 trillion in real GDP. Makati followed at ₱1.27 trillion, equal to 5.5% of national GDP. Within NCR, Makati generated 17.48% of the region’s ₱7.243-trillion economy. Manila ranked third nationally at ₱1.06 trillion.',
+            text: 'Quezon City led the country at ₱1.40 trillion in real GDP. Makati followed at ₱1.27 trillion, equal to 5.5% of national GDP. The August city estimate divided by the April national estimate of ₱23.229 trillion gives 5.45%, or 5.5% to one decimal place. Within NCR, Makati generated 17.48% of the region’s ₱7.243-trillion economy. Manila ranked third nationally at ₱1.06 trillion.',
             evidence: {
-              sourceIds: ['1', '2', '3', '9'],
+              sourceIds: ['1', '2', '3', '9', '10'],
               records: [records.level, records.nationalShare, records.ncrShare],
             },
           },
@@ -446,7 +446,7 @@ const reportModule: FeaturedReportModule = {
           {
             kind: 'paragraph',
             role: 'context',
-            text: 'BetterMakati compounds the 2025 real-GDP base of ₱1.266 trillion at fixed annual rates: 2.0% low, 4.5% middle and 6.5% high. These paths show sensitivity to assumptions; they are not PSA, city or market forecasts. The national-share illustration assumes Philippine real GDP grows 4.0% yearly and starts from Makati’s published 5.5% share.',
+            text: 'BetterMakati compounds the 2025 real-GDP base of ₱1.266 trillion at fixed annual rates: 2.0% low, 4.5% middle and 6.5% high. These paths show sensitivity to assumptions; they are not PSA, city or market forecasts. The national-share illustration assumes Philippine real GDP grows 4.0% yearly and starts from Makati’s published, rounded 5.5% share.',
             evidence: { sourceIds: ['1', '3'] },
           },
           {
@@ -634,6 +634,15 @@ const reportModule: FeaturedReportModule = {
     ],
     sources: [
       {
+        id: '10',
+        label: 'Philippine annual national accounts, GDP at constant 2018 prices (Excel)',
+        href: 'https://psa.gov.ph/sites/default/files/nap/01Summary_2018PSNA_Ann_5.xlsx',
+        sourceKind: 'official-external',
+        publisher: 'Philippine Statistics Authority',
+        publishedOrPeriod: 'April 2026 annual series, Summary table, 2025 column',
+        checkedOn: '22 November 2026',
+      },
+      {
         id: '9',
         label: 'NCR GDP and per-capita GDP by city, 2018–2025 (Excel)',
         href: 'https://psa.gov.ph/system/files/sead/PUB_NCR_Prov_2018PSNA_2018-2025.xlsx',
@@ -748,7 +757,7 @@ const reportModule: FeaturedReportModule = {
             label: 'National position',
             value: 'No. 2',
             detail: '5.5% ng Philippine GDP; kasunod ng Quezon City',
-            evidence: { sourceIds: ['1'], records: [records.nationalShare] },
+            evidence: { sourceIds: ['1', '9', '10'], records: [records.nationalShare] },
           },
           {
             kind: 'stat',
@@ -822,9 +831,9 @@ const reportModule: FeaturedReportModule = {
           {
             kind: 'paragraph',
             role: 'fact',
-            text: 'Nanguna ang Quezon City sa ₱1.40 trillion real GDP. Sumunod ang Makati sa ₱1.27 trillion, katumbas ng 5.5% ng national GDP. Sa NCR, 17.48% ng ₱7.243-trillion regional economy ang mula sa Makati. Pangatlo ang Manila sa ₱1.06 trillion.',
+            text: 'Nanguna ang Quezon City sa ₱1.40 trillion real GDP. Sumunod ang Makati sa ₱1.27 trillion, katumbas ng 5.5% ng national GDP. Kapag hinati ang tantiya para sa Makati noong Agosto sa pambansang tantiya noong Abril na ₱23.229 trillion, lalabas ang 5.45%, o 5.5% kapag isang decimal place ang gamit. Sa NCR, 17.48% ng ₱7.243-trillion regional economy ang mula sa Makati. Pangatlo ang Manila sa ₱1.06 trillion.',
             evidence: {
-              sourceIds: ['1', '2', '3', '9'],
+              sourceIds: ['1', '2', '3', '9', '10'],
               records: [records.level, records.nationalShare, records.ncrShare],
             },
           },
@@ -914,7 +923,7 @@ const reportModule: FeaturedReportModule = {
           {
             kind: 'paragraph',
             role: 'context',
-            text: 'Kinompound ng BetterMakati ang 2025 real-GDP base na ₱1.266 trillion gamit ang fixed annual rates: 2.0% low, 4.5% middle at 6.5% high. Sensitivity illustrations ito, hindi PSA, city o market forecasts. Para sa national-share illustration, 4.0% yearly ang assumed Philippine real growth at 5.5% ang starting Makati share.',
+            text: 'Kinompound ng BetterMakati ang 2025 real-GDP base na ₱1.266 trillion gamit ang fixed annual rates: 2.0% low, 4.5% middle at 6.5% high. Sensitivity illustrations ito, hindi PSA, city o market forecasts. Para sa national-share illustration, 4.0% yearly ang assumed Philippine real growth at ang inilathalang 5.5% ang panimulang share ng Makati, na ni-round sa isang decimal place.',
             evidence: { sourceIds: ['1', '3'] },
           },
           {

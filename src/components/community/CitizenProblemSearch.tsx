@@ -43,7 +43,7 @@ const copy = {
     'Guidance lang ito. Walang na-submit na complaint sa agency.'
   ),
   barangay: citizenText('Find your barangay', 'Hanapin ang barangay mo'),
-  map: citizenText('See public-place reports on the Civic Map', 'Tingnan ang public-place reports sa Civic Map'),
+  map: citizenText('Share a public-place observation with BetterMakati', 'Magbahagi sa BetterMakati ng napansin sa pampublikong lugar'),
 };
 
 const localized = (item: CitizenText, fil: boolean) => fil ? item.fil : item.en;
@@ -136,6 +136,12 @@ function GuideFlow({ guide, fil }: { guide: CitizenGuide; fil: boolean }) {
         )}
       </div>
 
+      {guide.placeRelated && (
+        <Link to="/civic-map/report" className="mt-3 inline-flex min-h-11 items-center gap-2 font-semibold text-primary-800 underline underline-offset-2">
+          {localized(copy.map, fil)} <ArrowRight className="h-4 w-4" aria-hidden="true" />
+        </Link>
+      )}
+
       <div className="mt-4">
         {(step > 0 || contacted) && (
           <button
@@ -179,11 +185,7 @@ function GuideFlow({ guide, fil }: { guide: CitizenGuide; fil: boolean }) {
                 </li>
               ))}
             </ul>
-            {guide.placeRelated && (
-              <Link to="/civic-map" className="mt-3 inline-flex min-h-11 items-center gap-2 font-semibold text-primary-800 underline underline-offset-2">
-                {localized(copy.map, fil)} <ArrowRight className="h-4 w-4" aria-hidden="true" />
-              </Link>
-            )}
+
           </div>
         </details>
       </div>

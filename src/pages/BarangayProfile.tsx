@@ -27,6 +27,8 @@ import {
   barangays,
   barangayFacilities,
   barangayProfilesReviewed,
+  barangayCouncilCycle,
+  barangayCouncilTermSource,
   commonBarangayServiceIds,
   findBarangay,
   psaBarangaySource,
@@ -300,7 +302,7 @@ export default function BarangayProfile() {
 
               <LastReviewed
                 date={barangayProfilesReviewed}
-                note={t('betterBarangay.profile.reviewNote')}
+                note={t('betterBarangay.profile.reviewNote', { cycle: barangayCouncilCycle })}
                 className="mt-4 rounded-xl bg-white/10 px-3 py-2 !text-primary-50 [&_strong]:!text-white [&_svg]:!text-secondary-400"
               />
             </div>
@@ -634,6 +636,9 @@ export default function BarangayProfile() {
                   )}
 
                   <div className="mt-5 flex flex-wrap gap-3 text-sm">
+                    <a href={barangayCouncilTermSource} className="font-bold text-primary-700 underline underline-offset-2">
+                      {t('betterBarangay.profile.cycleSource')}
+                    </a>
                     <a
                       href={barangay.officials.source}
                       target="_blank"
