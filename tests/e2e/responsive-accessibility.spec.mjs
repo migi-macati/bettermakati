@@ -323,7 +323,9 @@ for (const language of ['en', 'fil']) {
       }
       await expect(page.locator('main a[href="/budget-2027"]').first()).toBeVisible();
       await search.fill('barado ang kanal');
-      await page.getByRole('option').first().click();
+      await search.press('ArrowDown');
+      await expect(page.getByRole('option').first()).toHaveAttribute('aria-selected', 'true');
+      await search.press('Enter');
       await expect(page).toHaveURL(baseURL + '/search');
       await expect(page.getByRole('button', { name: language === 'fil' ? 'Humingi ng official assistance' : 'Get official help' })).toBeVisible();
       await expect(page.locator('main a[href="/civic-map/report"]')).toBeVisible();
@@ -365,6 +367,7 @@ test('Thirty resident queries reach a relevant homepage option', async ({ page }
       }
     }
   }
+  console.log('Resident search: ' + (30 - misses.length) + '/30. Misses: ' + misses.join(' | '));
   expect(misses.length, misses.join(' | ')).toBeLessThanOrEqual(3);
   for (const [phrase, title] of [['senior citizen ID', /Senior Citizen National ID/i], ['birth certificate', /birth certificate/i], ['business permit', /business permit/i]]) {
     await input.fill(phrase);
