@@ -280,14 +280,20 @@ const reportModule: FeaturedReportModule = {
             label: 'National position',
             value: 'No. 2',
             detail: '5.5% of Philippine GDP; behind Quezon City',
-            evidence: { sourceIds: ['1', '9', '10'], records: [records.nationalShare] },
+            evidence: {
+              sourceIds: ['1', '9', '10'],
+              records: [records.nationalShare],
+            },
           },
           {
             kind: 'stat',
             label: 'NCR position',
             value: 'No. 2',
             detail: '17.48% of NCR output',
-            evidence: { sourceIds: ['2', '3', '9'], records: [records.ncrShare] },
+            evidence: {
+              sourceIds: ['2', '3', '9'],
+              records: [records.ncrShare],
+            },
           },
           {
             kind: 'stat',
@@ -318,7 +324,7 @@ const reportModule: FeaturedReportModule = {
             kind: 'table',
             title: 'Makati GDP, 2018–2025',
             caption:
-              'PSA values are shown at current prices and constant 2018 prices. The 2022 boundary note prevents treating the full line as one unchanged-geography series.',
+              'PSA includes the EMBO barangays through 2021 and excludes them from 2022. The 1.64% growth shown for 2022 compares two different city boundaries.',
             columns: [
               { key: 'year', label: 'Year' },
               { key: 'current', label: 'Current-price GDP', align: 'right' },
@@ -328,7 +334,7 @@ const reportModule: FeaturedReportModule = {
             ],
             rows: gdpRows,
             evidence: {
-              sourceIds: ['3', '4', '7'],
+              sourceIds: ['9', '4', '7'],
               records: [records.level, records.growth],
             },
           },
@@ -501,7 +507,7 @@ const reportModule: FeaturedReportModule = {
                   { label: '2025', value: 1.266 },
                   { label: '2030', value: 1.578 },
                   { label: '2035', value: 1.966 },
-                  { label: '2040', value: 2.450 },
+                  { label: '2040', value: 2.45 },
                 ],
               },
               {
@@ -635,11 +641,13 @@ const reportModule: FeaturedReportModule = {
     sources: [
       {
         id: '10',
-        label: 'Philippine annual national accounts, GDP at constant 2018 prices (Excel)',
+        label:
+          'Philippine annual national accounts, GDP at constant 2018 prices (Excel)',
         href: 'https://psa.gov.ph/sites/default/files/nap/01Summary_2018PSNA_Ann_5.xlsx',
         sourceKind: 'official-external',
         publisher: 'Philippine Statistics Authority',
-        publishedOrPeriod: 'April 2026 annual series, Summary table, 2025 column',
+        publishedOrPeriod:
+          'April 2026 annual series, Summary table, 2025 column',
         checkedOn: '22 November 2026',
       },
       {
@@ -648,7 +656,8 @@ const reportModule: FeaturedReportModule = {
         href: 'https://psa.gov.ph/system/files/sead/PUB_NCR_Prov_2018PSNA_2018-2025.xlsx',
         sourceKind: 'official-external',
         publisher: 'Philippine Statistics Authority',
-        publishedOrPeriod: 'August 2026 series, PPA tables 1.1–1.2 and Capita tables 2.1–2.2',
+        publishedOrPeriod:
+          'August 2026 series, PPA tables 1.1–1.2 and Capita tables 2.1–2.2',
         checkedOn: '22 November 2026',
       },
       {
@@ -675,8 +684,9 @@ const reportModule: FeaturedReportModule = {
         href: 'https://openstat.psa.gov.ph/PXWeb/pxweb/en/DB/DB__2A__PPA/0012A5FPPA0.px/',
         sourceKind: 'official-external',
         publisher: 'Philippine Statistics Authority OpenSTAT',
-        publishedOrPeriod: '2018–2025 series; accessed 8 October 2026',
-        checkedOn,
+        publishedOrPeriod:
+          '2018–2025 series, table note on geographic coverage from 2022',
+        checkedOn: '23 November 2026',
       },
       {
         id: '4',
@@ -684,8 +694,8 @@ const reportModule: FeaturedReportModule = {
         href: 'https://openstat.psa.gov.ph/PXWeb/pxweb/en/DB/DB__2A__PPA/0032A5FPPA2.px/',
         sourceKind: 'official-external',
         publisher: 'Philippine Statistics Authority OpenSTAT',
-        publishedOrPeriod: '2018–2019 to 2024–2025',
-        checkedOn,
+        publishedOrPeriod: '2018–2019 to 2024–2025, geographic coverage in footnote ii',
+        checkedOn: '23 November 2026',
       },
       {
         id: '5',
@@ -731,8 +741,7 @@ const reportModule: FeaturedReportModule = {
     },
   },
   fil: {
-    headline:
-      '₱1.27 trillion ang real GDP ng Makati noong 2025',
+    headline: '₱1.27 trillion ang real GDP ng Makati noong 2025',
     subheadline:
       'Nanatiling second-largest local economy sa bansa ang Makati at may 5.5% share sa Philippine real GDP. Bumagal sa 5.05% ang growth, finance ang pangunahing source ng increase, habang lumiit ang construction at real estate.',
     synthesis:
@@ -757,14 +766,20 @@ const reportModule: FeaturedReportModule = {
             label: 'National position',
             value: 'No. 2',
             detail: '5.5% ng Philippine GDP; kasunod ng Quezon City',
-            evidence: { sourceIds: ['1', '9', '10'], records: [records.nationalShare] },
+            evidence: {
+              sourceIds: ['1', '9', '10'],
+              records: [records.nationalShare],
+            },
           },
           {
             kind: 'stat',
             label: 'NCR position',
             value: 'No. 2',
             detail: '17.48% ng NCR output',
-            evidence: { sourceIds: ['2', '3', '9'], records: [records.ncrShare] },
+            evidence: {
+              sourceIds: ['2', '3', '9'],
+              records: [records.ncrShare],
+            },
           },
           {
             kind: 'stat',
@@ -780,7 +795,7 @@ const reportModule: FeaturedReportModule = {
       },
       {
         id: 'trajectory',
-        heading: 'Magkahiwalay na geographic segments ang GDP history',
+        heading: 'Nagbago ang sakop ng GDP ng Makati noong 2022',
         blocks: [
           {
             kind: 'paragraph',
@@ -795,17 +810,35 @@ const reportModule: FeaturedReportModule = {
             kind: 'table',
             title: 'Makati GDP, 2018–2025',
             caption:
-              'Current prices at constant 2018 prices ang ipinapakita. Dahil sa 2022 boundary note, hindi ito isang unchanged-geography series.',
+              'Kasama sa GDP ng Makati ang mga barangay ng EMBO hanggang 2021. Inalis sila ng PSA sa bilang mula 2022. Magkaiba ang sakop ng lungsod sa dalawang taong pinaghambing para makuha ang 1.64% na paglago noong 2022.',
             columns: [
-              { key: 'year', label: 'Year' },
-              { key: 'current', label: 'Current-price GDP', align: 'right' },
-              { key: 'real', label: 'Real GDP (2018 prices)', align: 'right' },
-              { key: 'growth', label: 'Real growth', align: 'right' },
-              { key: 'geography', label: 'Geography note' },
+              { key: 'year', label: 'Taon' },
+              {
+                key: 'current',
+                label: 'GDP sa presyo ng taong iyon',
+                align: 'right',
+              },
+              {
+                key: 'real',
+                label: 'GDP sa presyo noong 2018',
+                align: 'right',
+              },
+              {
+                key: 'growth',
+                label: 'Tunay na paglago ng GDP',
+                align: 'right',
+              },
+              { key: 'geography', label: 'Sakop ng datos' },
             ],
-            rows: gdpRows,
+            rows: gdpRows.map(row => ({
+              ...row,
+              geography:
+                row.geography === 'Pre-transfer Makati'
+                  ? 'Kasama ang EMBO'
+                  : 'Hindi kasama ang EMBO',
+            })),
             evidence: {
-              sourceIds: ['3', '4', '7'],
+              sourceIds: ['9', '4', '7'],
               records: [records.level, records.growth],
             },
           },
@@ -978,7 +1011,7 @@ const reportModule: FeaturedReportModule = {
                   { label: '2025', value: 1.266 },
                   { label: '2030', value: 1.578 },
                   { label: '2035', value: 1.966 },
-                  { label: '2040', value: 2.450 },
+                  { label: '2040', value: 2.45 },
                 ],
               },
               {
