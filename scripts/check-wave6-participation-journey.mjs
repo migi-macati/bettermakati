@@ -27,7 +27,7 @@ const [
 const problems = [];
 
 for (const marker of [
-  "t('home.page.participationTitle')",
+  'id="public-action"',
   'to="/participate"',
 ]) {
   if (!home.includes(marker)) {

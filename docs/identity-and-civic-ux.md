@@ -19,7 +19,7 @@ Deep green #005447 is the identity and primary action colour. Gold #D5A62D is de
 
 ## Page families
 
-- Home: search, examples and common services before photographic discovery; keep civic records and comparisons accessible.
+- Home: group the search and common tasks in the opening. Lead the next section with one illustrated local report. Keep civic records and the statistics directory reachable.
 - Places/barangays: use location-matched licensed real photography only. Existing photographs retain captions, source and licence. Do not reuse a Poblacion image as a photograph of an unrelated barangay.
 - History: contemporary landmark photos explicitly labelled; add archival material only when provenance, event relationship and reproduction rights are known. No generated historical evidence.
 - Officials/elections: uniform neutral layout with sourced names, office, ballot year and results. No invented portrait or decorative candidate preference. Verified reusable portraits remain a content gap.
@@ -29,3 +29,7 @@ Deep green #005447 is the identity and primary action colour. Gold #D5A62D is de
 ## Remaining human/content work
 
 Baybayin recognition review, consented usability testing (including seniors and screen-reader users), licensed portraits, and event-matched archival imagery remain outstanding. These cannot be replaced with fabricated images, historical claims or automated accessibility scores. Automatic source discovery remains separate from editorial verification of civic claims.
+
+## Homepage and resident-facing copy · 23 November 2026
+
+Keep the civic question, search and common tasks together. Give the next story room. Use a single local photograph when its location and subject add context; show the photographer, source and licence. Name each link by its destination or task. Use compact service rows, fine dividers, visible keyboard focus and generous touch targets. Give links a consistent green treatment and reserve gold for small accents. Place statistics beside the question they answer and retain a route to the full directory. Check reading order, search, focus, destinations and tap targets in English and Filipino on mobile and desktop. Save before-and-after views when changing the homepage hierarchy.

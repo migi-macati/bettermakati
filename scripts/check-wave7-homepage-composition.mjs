@@ -1,38 +1,10 @@
-import fs from 'node:fs';
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 
-const home = fs.readFileSync('src/pages/Home.tsx', 'utf8');
-const css = fs.readFileSync('src/index.css', 'utf8');
-
-const requiredHome = [
-  'bm-home-section',
-  'bm-home-band-dark',
-  'bm-home-band-muted',
-  'bm-home-dark-card',
-  'bm-home-card',
-  "title={t('home.page.aroundMakati')}",
-  "t('home.page.commonServices')",
-  "t('home.page.publicActionEyebrow')",
-  "t('home.page.participationTitle')",
-  "t('home.page.exploreTitle')",
-  '<FeaturedInsightsCarousel />',
-  "t('home.page.glance')",
-];
-
-const requiredCss = [
-  '/* W7-3b — homepage composition. */',
-  '.bm-home-section',
-  '.bm-home-band-dark',
-  '.bm-home-band-muted',
-  '.bm-home-card',
-  '.bm-home-dark-card',
-  '@media (prefers-reduced-motion: reduce)',
-];
-
-for (const marker of requiredHome) {
-  if (!home.includes(marker)) throw new Error(`W7-3b homepage marker missing: ${marker}`);
+const home = readFileSync('src/pages/Home.tsx', 'utf8');
+for (const marker of ['<Hero />', '<figure>', '<figcaption', 'photo.credit', 'photo.license', 'divide-y', 'to="/budget-2027"', 'to="/statistics#city-comparison-title"']) {
+  assert.ok(home.includes(marker), 'Missing homepage element: ' + marker);
 }
-for (const marker of requiredCss) {
-  if (!css.includes(marker)) throw new Error(`W7-3b style marker missing: ${marker}`);
+for (const marker of ['<PhotoCarousel', '<FeaturedInsightsCarousel', 'section-eyebrow', 'stat-card']) {
+  assert.ok(!home.includes(marker), 'Retired homepage element: ' + marker);
 }
-
-console.log('W7-3b homepage composition guard passed.');

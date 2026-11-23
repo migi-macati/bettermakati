@@ -463,9 +463,7 @@ test('homepage universal entry accepts any citizen intent without a category cho
   const hero = page.locator('main section').first();
   await expect(hero.getByRole('heading', { level: 1 })).toContainText('How can we make Makati better?');
   await expect(hero.locator('#site-search')).toHaveCount(1);
-  await expect(
-    hero.locator('div').filter({ hasText: /^What's on your mind about Makati\?$/ }).first()
-  ).toBeVisible();
+  await expect(hero.getByRole('combobox', { name: "What's on your mind about Makati?" })).toBeVisible();
   await expect(hero.locator('aside[aria-labelledby="what-brings-you-here"]')).toHaveCount(0);
   await expect(hero.getByRole('link', { name: /Emergency\? Call 911 or see hotlines/ })).toHaveAttribute('href', '/hotlines');
 });
@@ -474,7 +472,7 @@ test('homepage supports evidence and participation without restoring feature-fam
   await page.goto(baseURL + '/');
 
   const evidence = page.locator('section').filter({
-    has: page.getByText('Public action & evidence', { exact: true }),
+    has: page.getByRole('heading', { name: 'Public records and participation' }),
   });
   await expect(evidence.getByRole('link', { name: /Accountability/i })).toHaveAttribute(
     'href',
@@ -489,9 +487,7 @@ test('homepage supports evidence and participation without restoring feature-fam
     '/records'
   );
 
-  const participation = page.locator('section').filter({
-    has: page.getByRole('heading', { name: 'Take part in Makati', exact: true }),
-  });
+  const participation = evidence;
   await expect(participation.getByRole('link', { name: 'Participate in Makati', exact: true })).toHaveAttribute(
     'href',
     '/participate'
@@ -514,30 +510,11 @@ test('homepage supports evidence and participation without restoring feature-fam
 test('homepage keeps priority journeys ahead of depth content', async ({ page }) => {
   await page.goto(baseURL + '/');
 
-  const markers = [
-    'Around Makati',
-    'Common services',
-    'Public action & evidence',
-    'Take part in Makati',
-    'Understand the city as you explore it',
-    'Featured Reports & Insights',
-    'Makati at a glance',
-  ];
+  const headings = page.locator('main h2');
+  await expect(headings).toHaveText([
+    /EMBO/, 'Common services', 'Public records and participation', 'Understand the city as you explore it',
+  ]);
 
-  for (const marker of markers) {
-    await expect(page.locator('#main-content section').filter({ hasText: marker }).first()).toBeVisible();
-  }
-
-  const sectionText = await page.locator('#main-content section').allTextContents();
-  const indices = markers.map(marker =>
-    sectionText.findIndex(text => text.includes(marker))
-  );
-
-  for (const [index, marker] of indices.map((index, i) => [index, markers[i]])) {
-    expect(index, marker + ' section should be present').toBeGreaterThanOrEqual(0);
-  }
-
-  expect(indices).toEqual([...indices].sort((a, b) => a - b));
 });
 
 test('homepage reaches a barangay edition through persistent navigation without a second hero chooser', async ({ page }) => {
@@ -561,32 +538,30 @@ test('homepage reaches a barangay edition through persistent navigation without 
 });
 
 
-test('homepage featured reports carousel shows one report article per card', async ({ page }) => {
-  await page.goto(baseURL + '/');
-  await expect(page.getByRole('heading', { name: 'Featured Reports & Insights', exact: true })).toBeVisible();
-
-  const carousel = page.locator('section[aria-roledescription="carousel"]');
-  const reportLink = carousel.getByRole('link', { name: 'Read more', exact: true });
-  await expect(reportLink).toHaveCount(1);
-
-  const href = await reportLink.getAttribute('href');
-  expect(href).toMatch(/^\/reports\/[a-z0-9-]+$/);
-
-  await reportLink.click();
-  await expect(page).toHaveURL(new RegExp(href + '$'));
-  await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
-});
-
-test('homepage featured reports carousel advances to a different report page', async ({ page }) => {
-  await page.goto(baseURL + '/');
-
-  const carousel = page.locator('section[aria-roledescription="carousel"]');
-  const reportLink = carousel.getByRole('link', { name: 'Read more', exact: true });
-  const firstHref = await reportLink.getAttribute('href');
-
-  await page.getByRole('button', { name: 'Next featured report' }).click();
-  await expect(reportLink).not.toHaveAttribute('href', firstHref);
-});
+for (const language of ['en', 'fil']) {
+  for (const width of [390, 1440]) {
+    test(`homepage local report and task links (${language}, ${width})`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 844 });
+      await page.addInitScript(lang => localStorage.setItem('i18nextLng', lang), language);
+      await page.goto(baseURL + '/');
+      const main = page.getByRole('main');
+      const report = main.locator('#lead-report a');
+      await expect(report).toHaveAttribute('href', '/reports/embo-makati-taguig-transition');
+      await expect(main.locator('figure img')).toBeVisible();
+      expect(await main.locator('figure img').evaluate(img => img.complete && img.naturalWidth > 0)).toBe(true);
+      await expect(main.locator('figcaption')).toContainText('Ralff Nestor Nacor');
+      await expect(main.locator('a[href="/budget-2027"]')).toContainText(language === 'en' ? 'proposed' : 'panukalang');
+      for (const anchor of await main.locator('a').all()) {
+        const rect = await anchor.boundingBox();
+        expect(rect.height).toBeGreaterThanOrEqual(24);
+      }
+      await report.focus();
+      await expect(report).toBeFocused();
+      await page.keyboard.press('Enter');
+      await expect(page).toHaveURL(/\/reports\/embo-makati-taguig-transition$/);
+    });
+  }
+}
 
 test('reports page lists standalone articles and never shows Makati Overview', async ({ page }) => {
   await page.goto(baseURL + '/reports');
@@ -2984,7 +2959,7 @@ for (const language of ['en', 'fil']) {
         await route.fulfill({ json: JSON.parse(readFileSync(`data/budget2027/2026-11-01-${file}-response.json`, 'utf8')) });
       });
       await page.goto(baseURL + '/');
-      const budgetFeature = page.getByRole('link', { name: /Budget 2027:/ });
+      const budgetFeature = page.locator('main a[href="/budget-2027"]');
       await expect(budgetFeature).toHaveCount(1);
       await budgetFeature.focus(); await expect(budgetFeature).toBeFocused();
       await page.keyboard.press('Enter');

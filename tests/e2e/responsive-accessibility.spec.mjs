@@ -260,24 +260,11 @@ test('narrow mobile can keyboard-scroll the dense statistics table', async ({ pa
   expect(after).toBeGreaterThan(before.left);
 });
 
-test('reduced motion disables Featured Reports autoplay control', async ({ page }) => {
+test('reduced-motion homepage has one static lead photograph', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
-  await page.setViewportSize({ width: 390, height: 844 });
   await page.goto(baseURL + '/');
-
-  const carousel = page.locator(
-    'section[aria-labelledby="featured-reports-title"][aria-roledescription="carousel"]'
-  );
-  await expect(carousel).toBeVisible();
-  await expect(
-    carousel.getByRole('button', { name: /Pause|Resume/ })
-  ).toHaveCount(0);
-  await expect(
-    carousel.getByRole('button', { name: 'Previous featured report' })
-  ).toBeVisible();
-  await expect(
-    carousel.getByRole('button', { name: 'Next featured report' })
-  ).toBeVisible();
+  await expect(page.locator('main figure img')).toHaveCount(1);
+  await expect(page.locator('main [aria-roledescription="carousel"]')).toHaveCount(0);
 });
 
 test('civic map iframe accepts keyboard focus and keeps a text fallback', async ({ page }) => {

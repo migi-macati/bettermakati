@@ -84,7 +84,7 @@ for (const marker of [
   "'/projects-budget'",
   "'/statistics'",
   "narrow mobile can keyboard-scroll the dense statistics table",
-  "reduced motion disables Featured Reports autoplay control",
+  "reduced-motion homepage has one static lead photograph",
   "200 percent text resizing does not create page-level overflow on core journeys",
 ]) {
   need('W6-5f responsive browser suite', responsiveSpec, marker);
