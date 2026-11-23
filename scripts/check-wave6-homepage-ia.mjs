@@ -32,14 +32,14 @@ if (hero.includes('CapabilityCarousel') || (hero.match(/<ServiceSearch/g) ?? [])
 }
 
 requireAll(home, 'Homepage hierarchy', [
-  "t('home.page.publicActionEyebrow')",
+  'id="public-action"',
   "key: 'accountability'",
   "href: '/accountability'",
   "key: 'projectsBudget'",
   "href: '/projects-budget'",
   "key: 'records'",
   "href: '/records'",
-  "t('home.page.participationTitle')",
+
   'to="/participate"',
   "t('home.page.improve')",
   'to="/get-involved"',
@@ -71,16 +71,7 @@ requireAll(tests, 'W6-3b browser QA', [
 
 
 
-const homepageOrder = [
-  '<Hero />',
-  "title={t('home.page.aroundMakati')}",
-  "t('home.page.commonServices')",
-  "t('home.page.publicActionEyebrow')",
-  "t('home.page.participationTitle')",
-  "t('home.page.exploreTitle')",
-  '<FeaturedInsightsCarousel />',
-  "t('home.page.glance')",
-];
+const homepageOrder = ['<Hero />', 'id="lead-report"', 'id="common-services"', 'id="public-action"', 'id="explore"'];
 
 let previousIndex = -1;
 for (const marker of homepageOrder) {

@@ -2,10 +2,6 @@ import { readFile } from 'node:fs/promises';
 import { readReportModuleSources } from './read-report-module-sources.mjs';
 
 const home = await readFile('src/pages/Home.tsx', 'utf8');
-const carousel = await readFile(
-  'src/components/home/FeaturedInsightsCarousel.tsx',
-  'utf8'
-);
 const reportsPage = await readFile('src/pages/Reports.tsx', 'utf8');
 const teaser = await readFile(
   'src/components/reports/ReportTeaser.tsx',
@@ -15,39 +11,8 @@ const reportsData = await readReportModuleSources();
 
 const problems = [];
 
-if ((home.match(/<FeaturedInsightsCarousel \/>/g) ?? []).length !== 1) {
-  problems.push(
-    'Homepage must render exactly one FeaturedInsightsCarousel module.'
-  );
-}
-
-for (const marker of [
-  "import { publicationReports } from '../../data/reports'",
-  "import ReportTeaser from '../reports/ReportTeaser'",
-  'useCarousel(publicationReports.length, 7000)',
-  'const report = publicationReports[carousel.index]',
-  '<ReportTeaser report={report} variant="carousel" />',
-  "t('home.featured.position', { current: carousel.index + 1, total: publicationReports.length })",
-  "t('home.featured.viewAll')",
-]) {
-  if (!carousel.includes(marker)) {
-    problems.push('Homepage Featured Reports reuse marker missing: ' + marker);
-  }
-}
-
-for (const forbidden of [
-  "import { reports } from '../../data/reports'",
-  'report.date',
-  'copy.headline',
-  'copy.subheadline',
-  'report.slug',
-]) {
-  if (carousel.includes(forbidden)) {
-    problems.push(
-      'Homepage carousel must not duplicate canonical ordering or teaser metadata markup: ' +
-        forbidden
-    );
-  }
+for (const marker of ["../data/reports/06-embo-makati-taguig-transition", 'embo.report.slug', 'story.headline', 'story.subheadline', 'embo.fil', 'to="/reports"']) {
+  if (!home.includes(marker)) problems.push('Homepage must link a bilingual canonical report: ' + marker);
 }
 
 if (
@@ -91,6 +56,4 @@ if (problems.length) {
   process.exit(1);
 }
 
-console.log(
-  'Homepage Featured Reports reuse check passed: Home and /reports share one publication order and one ReportTeaser component, so report ordering and teaser metadata cannot drift between surfaces.'
-);
+console.log('Homepage links the bilingual canonical lead and the reports directory.');

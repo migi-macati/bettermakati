@@ -170,8 +170,8 @@
         "cedula": "Cedula",
         "barangay": "Hanapin ang iyong barangay"
       },
-      "unifiedQuestionLead": "Paano natin gagawing",
-      "unifiedQuestionBetter": "better ang Makati?",
+      "unifiedQuestionLead": "Paano natin mapapabuti",
+      "unifiedQuestionBetter": "ang Makati?",
       "unifiedPromptLabel": "Ano'ng nasa isip mo tungkol sa Makati?",
       "unifiedPromptPlaceholder": "Magtanong, ikuwento ang concern, o mag-share ng idea...",
       "unifiedGo": "Hanapin ang sagot o next step",
@@ -222,24 +222,24 @@
       "seoKeywords": "Makati, Makati City, public services, local government, civic information, civic participation, city exploration, heritage",
       "aroundMakati": "Sa paligid ng Makati",
       "servicesEyebrow": "Services",
-      "commonServices": "Karaniwang services",
-      "viewAllServices": "Tingnan lahat ng services",
+      "commonServices": "Mga karaniwang serbisyo",
+      "viewAllServices": "Tingnan ang lahat ng serbisyo",
       "quickServices": {
         "business": {
-          "label": "Business permits",
-          "description": "New applications at renewals"
+          "label": "Mga permit sa negosyo",
+          "description": "Mag-apply o mag-renew ng permit."
         },
         "health": {
-          "label": "Health services",
-          "description": "Yellow Card, clinics, at access sa care"
+          "label": "Kalusugan",
+          "description": "Yellow Card, mga klinika at serbisyong medikal."
         },
         "education": {
-          "label": "Education",
-          "description": "UMak admissions at scholarships"
+          "label": "Edukasyon",
+          "description": "Pagpasok sa UMak at mga scholarship."
         },
         "property": {
-          "label": "Property at land use",
-          "description": "Property tax, zoning, at building permits"
+          "label": "Lupa at ari-arian",
+          "description": "Amilyar, zoning at mga permit sa pagpapatayo."
         }
       },
       "publicActionEyebrow": "Public action at evidence",
@@ -247,16 +247,16 @@
       "publicActionDescription": "Magsimula sa accountability, saka tingnan ang budgets, projects, at original public records kapag kailangan mo ang source.",
       "publicAction": {
         "accountability": {
-          "label": "Accountability",
-          "description": "Sundan ang projects, procurement, audit findings, at public commitments."
+          "label": "Mga pangako at resulta",
+          "description": "Sundan ang mga pangako ng lungsod, kontrata at natuklasan sa audit."
         },
         "projectsBudget": {
-          "label": "Projects at budget",
-          "description": "Tingnan kung saan nanggagaling at napupunta ang city funds at kung ano ang itinatayo."
+          "label": "Mga proyekto at budget",
+          "description": "Tingnan ang kita, gastos at mga proyektong pinopondohan ng lungsod."
         },
         "records": {
-          "label": "Public records",
-          "description": "Buksan ang documents, datasets, at source records sa likod ng civic information."
+          "label": "Mga pampublikong dokumento",
+          "description": "Hanapin ang mga ordinansa, ulat at datos ng pamahalaan."
         }
       },
       "open": "Buksan",
@@ -267,7 +267,7 @@
       "communityTools": "Iba pang community tools",
       "participate": "Makilahok sa Makati",
       "exploreEyebrow": "Tuklasin ang Makati",
-      "exploreTitle": "Kilalanin ang lungsod habang tinutuklas ito",
+      "exploreTitle": "Mga lugar at biyahe sa Makati",
       "exploreDescription": "Mula sa mga lugar at experiences, alamin ang districts, barangays, heritage, history, mobility, at current activity.",
       "explore": "Tuklasin ang Makati",
       "visit": {
@@ -280,11 +280,11 @@
           "description": "Public transport, transfers, routes, at live directions."
         },
         "districts": {
-          "label": "Areas at districts",
+          "label": "Mga distrito at sentro",
           "description": "Kilalanin ang Makati CBD, Ayala Center, Rockwell, Circuit, at iba pang city areas."
         },
         "heritage": {
-          "label": "Heritage at history",
+          "label": "Kasaysayan at pamana",
           "description": "Historic sites, self-guided routes, at Makati timeline."
         }
       },
@@ -292,10 +292,10 @@
       "cityComparisonEyebrow": "City comparison",
       "cityComparisonTitle": "Ihambing ang Makati sa ibang Philippine cities",
       "cityComparisonDescription": "Ihambing ang 2024 GDP per person gamit ang parehong PSA definition at price basis.",
-      "exploreStatistics": "Tingnan ang statistics",
+      "exploreStatistics": "Tingnan ang datos ng lungsod",
       "shortcuts": {
-        "cinemas": "Cinemas",
-        "liveDiscovery": "Live place discovery"
+        "cinemas": "Mga sinehan",
+        "liveDiscovery": "Maghanap ng lugar malapit sa iyo"
       },
       "stats": {
         "population": "Population",

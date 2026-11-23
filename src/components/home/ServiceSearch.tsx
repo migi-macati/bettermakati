@@ -521,12 +521,12 @@ export default function ServiceSearch({
   return (
     <div
       ref={containerRef}
-      className="relative rounded-2xl border border-primary-100 bg-white/95 p-5 md:p-6 shadow-[0_18px_50px_rgba(18,78,46,0.12)]"
+      className={unifiedHome ? "relative" : "relative rounded-2xl border border-primary-100 bg-white/95 p-5 md:p-6 shadow-[0_18px_50px_rgba(18,78,46,0.12)]"}
     >
-      <div className="flex items-center gap-2 text-gray-950 font-bold mb-4 text-lg">
+      {!unifiedHome && <div className="flex items-center gap-2 text-gray-950 font-bold mb-4 text-lg">
         <Search className="h-5 w-5 text-secondary-700" />
         {heading}
-      </div>
+      </div>}
 
       <form onSubmit={submit}>
         <label
@@ -600,7 +600,7 @@ export default function ServiceSearch({
                   : t('serviceSearch.searchBetterMakati')
             }
           >
-            <ArrowRight className="h-5 w-5" />
+            {unifiedHome ? <Search className="h-5 w-5" /> : <ArrowRight className="h-5 w-5" />}
           </button>
         </div>
       </form>
