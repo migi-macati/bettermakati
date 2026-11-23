@@ -206,6 +206,7 @@ function ReportBlock({
               <tr>
                 {block.columns.map(column => (
                   <th
+                      scope="col"
                     key={column.key}
                     className={
                       'px-4 py-3 font-bold text-gray-800 ' +

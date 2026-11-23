@@ -271,7 +271,7 @@ const reportModule: FeaturedReportModule = {
             value: '₱1.266 trillion',
             detail: 'Constant 2018 prices; 5.05% above 2024',
             evidence: {
-              sourceIds: ['1', '3', '4', '8'],
+              sourceIds: ['1', '3', '4', '8', '9'],
               records: [records.level, records.growth],
             },
           },
@@ -316,7 +316,7 @@ const reportModule: FeaturedReportModule = {
             role: 'fact',
             text: 'PSA’s latest table places Makati GDP at ₱1.544 trillion in current prices and ₱1.266 trillion at constant 2018 prices in 2025. Real output grew 5.05%, slower than 7.43% in 2024 but faster than the 4.4% national expansion. The 2019 and 2020 observations use the older city boundary, so comparisons with those years are not like-for-like measures of recovery.',
             evidence: {
-              sourceIds: ['1', '3', '4'],
+              sourceIds: ['1', '3', '4', '9'],
               records: [records.level, records.growth],
             },
           },
@@ -342,7 +342,7 @@ const reportModule: FeaturedReportModule = {
             kind: 'paragraph',
             role: 'context',
             text: 'The 2022 value cannot be read as a clean before-and-after estimate of the boundary ruling. PSA retroactively excludes EMBO from Makati starting in 2022, while earlier observations retain the older geography. The table therefore documents two official segments rather than a single boundary-neutral growth history.',
-            evidence: { sourceIds: ['3', '4', '7'] },
+            evidence: { sourceIds: ['3', '4', '7', '9'] },
           },
         ],
       },
@@ -354,7 +354,7 @@ const reportModule: FeaturedReportModule = {
           {
             kind: 'paragraph',
             role: 'fact',
-            text: 'Correction, 22 November 2026. An earlier version gave Makati’s share of NCR output as 17.49%. The PSA workbook gives 17.48% when rounded to two decimal places.',
+            text: 'Correction, 23 November 2026. An earlier version gave Makati’s share of NCR output as 17.49%. The PSA workbook gives 17.48% when rounded to two decimal places.',
             evidence: { sourceIds: ['9'] },
           },
           {
@@ -453,13 +453,13 @@ const reportModule: FeaturedReportModule = {
             kind: 'paragraph',
             role: 'context',
             text: 'BetterMakati compounds the 2025 real-GDP base of ₱1.266 trillion at fixed annual rates: 2.0% low, 4.5% middle and 6.5% high. These paths show sensitivity to assumptions; they are not PSA, city or market forecasts. The national-share illustration assumes Philippine real GDP grows 4.0% yearly and starts from Makati’s published, rounded 5.5% share.',
-            evidence: { sourceIds: ['1', '3'] },
+            evidence: { sourceIds: ['1', '3', '9'] },
           },
           {
             kind: 'paragraph',
             role: 'context',
-            text: 'Correction, 31 October 2026: Five previously displayed 2035–2040 scenario values were each overstated by ₱0.001 trillion (₱1 billion) because of rounding. The Low 2035, Middle 2035 and 2040, and High 2035 and 2040 table and chart values now use the disclosed ₱1.266-trillion base and annual compounding assumptions. The scenarios remain illustrative, not official forecasts. The original publication date is unchanged.',
-            evidence: { sourceIds: ['1', '3'], records: [records.level] },
+            text: 'Correction, 23 November 2026. Five previously displayed 2035–2040 scenario values were each overstated by ₱0.001 trillion (₱1 billion) because of rounding. The Low 2035, Middle 2035 and 2040, and High 2035 and 2040 table and chart values now use the disclosed ₱1.266-trillion base and annual compounding assumptions. The scenarios remain illustrative, not official forecasts. The original publication date is unchanged.',
+            evidence: { sourceIds: ['1', '3', '9'], records: [records.level] },
           },
           {
             kind: 'table',
@@ -480,7 +480,7 @@ const reportModule: FeaturedReportModule = {
             ],
             rows: projectionRows,
             evidence: {
-              sourceIds: ['1', '3'],
+              sourceIds: ['1', '3', '9'],
               records: [records.level, records.nationalShare],
             },
           },
@@ -520,13 +520,13 @@ const reportModule: FeaturedReportModule = {
                 ],
               },
             ],
-            evidence: { sourceIds: ['1', '3'], records: [records.level] },
+            evidence: { sourceIds: ['1', '3', '9'], records: [records.level] },
           },
           {
             kind: 'paragraph',
             role: 'analysis',
             text: 'Upside would come from sustained finance and professional-services productivity, health-sector expansion, successful redevelopment, improved transport connectivity and reliable low-carbon energy. Downside risks include financial and office-property cycles, prolonged hybrid-work effects, weak construction, infrastructure delays and climate or energy disruption. These are qualitative transmission channels, not quantified project benefits. A future update should revise the paths when new PPA benchmarks, population projections or firm-level evidence become available.',
-            evidence: { sourceIds: ['3', '5', '6'] },
+            evidence: { sourceIds: ['3', '5', '6', '9'] },
           },
         ],
       },
@@ -539,7 +539,7 @@ const reportModule: FeaturedReportModule = {
             role: 'context',
             text: 'These are BetterMakati recommendations informed by published economic structure, not adopted policies or official forecasts. PSA GDP data do not directly measure jobs, household welfare, office vacancy or service quality; those outcomes need separate evidence.',
             evidence: {
-              sourceIds: ['3', '5', '6'],
+              sourceIds: ['3', '5', '6', '9'],
               records: [
                 {
                   recordType: 'statistics-indicator',
@@ -610,7 +610,7 @@ const reportModule: FeaturedReportModule = {
               },
             ],
             evidence: {
-              sourceIds: ['3', '5', '6'],
+              sourceIds: ['3', '5', '6', '9'],
               records: [
                 {
                   recordType: 'statistics-indicator',
@@ -737,7 +737,7 @@ const reportModule: FeaturedReportModule = {
     methodology: {
       title: 'Method and limitations',
       text: 'All historical levels, growth rates and sector values come from the 2025 PSA PPA vintage. Real series use constant 2018 prices; current-price figures are nominal. Values displayed in billions or trillions are rounded from PSA tables reported in thousand pesos. Sector shares and contributions are BetterMakati calculations from same-vintage real values. PSA suppresses agriculture and mining cells. The 2022 geography break and preliminary 2020-based population projection limit comparisons. Scenario values are deterministic compound-growth illustrations and must not be presented as forecasts.',
-      evidence: { sourceIds: ['3', '4', '5', '6', '7'] },
+      evidence: { sourceIds: ['3', '4', '5', '6', '7', '9'] },
     },
   },
   fil: {
@@ -757,7 +757,7 @@ const reportModule: FeaturedReportModule = {
             value: '₱1.266 trillion',
             detail: 'Constant 2018 prices; 5.05% above 2024',
             evidence: {
-              sourceIds: ['1', '3', '4', '8'],
+              sourceIds: ['1', '3', '4', '8', '9'],
               records: [records.level, records.growth],
             },
           },
@@ -802,7 +802,7 @@ const reportModule: FeaturedReportModule = {
             role: 'fact',
             text: 'Sa latest PSA table, ₱1.544 trillion sa current prices at ₱1.266 trillion sa constant 2018 prices ang Makati GDP noong 2025. Lumago ang real output ng 5.05%, mas mabagal sa 7.43% noong 2024 pero mas mabilis sa 4.4% national growth. Old city boundary ang gamit ng 2019 at 2020 observations, kaya hindi like-for-like recovery measures ang comparisons sa mga taong iyon.',
             evidence: {
-              sourceIds: ['1', '3', '4'],
+              sourceIds: ['1', '3', '4', '9'],
               records: [records.level, records.growth],
             },
           },
@@ -846,7 +846,7 @@ const reportModule: FeaturedReportModule = {
             kind: 'paragraph',
             role: 'context',
             text: 'Hindi puwedeng basahin ang 2022 value bilang malinis na before-and-after estimate ng boundary ruling. Inaalis ng PSA ang EMBO sa Makati starting 2022, habang old geography pa ang earlier observations. Dalawang official segments ito, hindi isang boundary-neutral history.',
-            evidence: { sourceIds: ['3', '4', '7'] },
+            evidence: { sourceIds: ['3', '4', '7', '9'] },
           },
         ],
       },
@@ -858,7 +858,7 @@ const reportModule: FeaturedReportModule = {
           {
             kind: 'paragraph',
             role: 'fact',
-            text: 'Pagwawasto, 22 Nobyembre 2026. Dating nakalagay na 17.49% ang bahagi ng Makati sa real GDP ng NCR. Batay sa workbook ng PSA, 17.48% ito kapag ni-round sa dalawang decimal place.',
+            text: 'Pagwawasto, 23 Nobyembre 2026. Dating nakalagay na 17.49% ang bahagi ng Makati sa real GDP ng NCR. Batay sa workbook ng PSA, 17.48% ito kapag ni-round sa dalawang decimal place.',
             evidence: { sourceIds: ['9'] },
           },
           {
@@ -957,13 +957,13 @@ const reportModule: FeaturedReportModule = {
             kind: 'paragraph',
             role: 'context',
             text: 'Kinompound ng BetterMakati ang 2025 real-GDP base na ₱1.266 trillion gamit ang fixed annual rates: 2.0% low, 4.5% middle at 6.5% high. Sensitivity illustrations ito, hindi PSA, city o market forecasts. Para sa national-share illustration, 4.0% yearly ang assumed Philippine real growth at ang inilathalang 5.5% ang panimulang share ng Makati, na ni-round sa isang decimal place.',
-            evidence: { sourceIds: ['1', '3'] },
+            evidence: { sourceIds: ['1', '3', '9'] },
           },
           {
             kind: 'paragraph',
             role: 'context',
-            text: 'Correction, 31 October 2026: May limang dating scenario values para sa 2035–2040 na sobra ng ₱0.001 trillion (₱1 billion) bawat isa dahil sa rounding. Naayos na sa table at chart ang Low 2035, Middle 2035 at 2040, at High 2035 at 2040 gamit ang nakasaad na ₱1.266-trillion base at annual compounding assumptions. Illustrations pa rin ang scenarios, hindi official forecasts. Hindi binago ang original publication date.',
-            evidence: { sourceIds: ['1', '3'], records: [records.level] },
+            text: 'Pagwawasto, 23 Nobyembre 2026. May limang dating scenario values para sa 2035–2040 na sobra ng ₱0.001 trillion (₱1 billion) bawat isa dahil sa rounding. Naayos na sa table at chart ang Low 2035, Middle 2035 at 2040, at High 2035 at 2040 gamit ang nakasaad na ₱1.266-trillion base at annual compounding assumptions. Illustrations pa rin ang scenarios, hindi official forecasts. Hindi binago ang original publication date.',
+            evidence: { sourceIds: ['1', '3', '9'], records: [records.level] },
           },
           {
             kind: 'table',
@@ -984,7 +984,7 @@ const reportModule: FeaturedReportModule = {
             ],
             rows: projectionRows,
             evidence: {
-              sourceIds: ['1', '3'],
+              sourceIds: ['1', '3', '9'],
               records: [records.level, records.nationalShare],
             },
           },
@@ -1024,13 +1024,13 @@ const reportModule: FeaturedReportModule = {
                 ],
               },
             ],
-            evidence: { sourceIds: ['1', '3'], records: [records.level] },
+            evidence: { sourceIds: ['1', '3', '9'], records: [records.level] },
           },
           {
             kind: 'paragraph',
             role: 'analysis',
             text: 'Possible upside ang sustained finance at professional-services productivity, health expansion, successful redevelopment, better transport connectivity at reliable low-carbon energy. Downside risks ang financial at office-property cycles, matagal na hybrid-work effects, weak construction, infrastructure delays at climate o energy disruption. Qualitative channels ito, hindi quantified project benefits.',
-            evidence: { sourceIds: ['3', '5', '6'] },
+            evidence: { sourceIds: ['3', '5', '6', '9'] },
           },
         ],
       },
@@ -1043,7 +1043,7 @@ const reportModule: FeaturedReportModule = {
             role: 'context',
             text: 'Mga rekomendasyon ito ng BetterMakati batay sa published economic structure, hindi adopted city policies o official forecasts. Hindi direktang sinusukat ng PSA GDP ang jobs, household welfare, office vacancy o service quality; kailangan ng hiwalay na ebidensiya.',
             evidence: {
-              sourceIds: ['3', '5', '6'],
+              sourceIds: ['3', '5', '6', '9'],
               records: [
                 {
                   recordType: 'statistics-indicator',
@@ -1114,7 +1114,7 @@ const reportModule: FeaturedReportModule = {
               },
             ],
             evidence: {
-              sourceIds: ['3', '5', '6'],
+              sourceIds: ['3', '5', '6', '9'],
               records: [
                 {
                   recordType: 'statistics-indicator',
@@ -1145,7 +1145,7 @@ const reportModule: FeaturedReportModule = {
     methodology: {
       title: 'Method at limitations',
       text: 'Galing sa 2025 PSA PPA vintage ang historical levels, growth rates at sector values. Constant 2018 prices ang real series; nominal ang current-price figures. Rounded mula sa PSA thousand-peso tables ang billions at trillions. BetterMakati calculations mula sa same-vintage real values ang sector shares at contributions. Suppressed ng PSA ang agriculture at mining. Nililimitahan ng 2022 geography break at preliminary 2020-based population projection ang comparisons. Deterministic compounding illustrations ang scenarios, hindi forecasts.',
-      evidence: { sourceIds: ['3', '4', '5', '6', '7'] },
+      evidence: { sourceIds: ['3', '4', '5', '6', '7', '9'] },
     },
   },
 };
