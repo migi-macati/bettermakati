@@ -35,3 +35,22 @@ test('explicit language choice persists without changing the current URL', async
   await expect(returnVisit.getByRole('link', { name: 'Participate', exact: true }).first()).toBeVisible();
   await expect.poll(() => returnVisit.evaluate(() => localStorage.getItem('i18nextLng'))).toBe('en');
 });
+
+for (const language of ['en', 'fil']) {
+  for (const width of [390, 1440]) {
+    test(`BM-E001 GDP boundary and corrections (${language}, ${width})`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 844 });
+      await page.addInitScript(lang => localStorage.setItem('i18nextLng', lang), language);
+      await page.goto(baseURL + '/reports/makati-2025-economy-gdp-outlook');
+      const history = page.getByRole('table').filter({
+        has: page.getByRole('columnheader', { name: language === 'en' ? 'Geography note' : 'Sakop ng datos' }),
+      });
+      const historyRow = year => history.getByRole('row').filter({ has: page.getByRole('cell', { name: year, exact: true }) });
+      await expect(historyRow('2021')).toContainText(language === 'en' ? 'Pre-transfer Makati' : 'Kasama ang EMBO');
+      await expect(historyRow('2022')).toContainText(language === 'en' ? 'PSA excludes EMBO' : 'Hindi kasama ang EMBO');
+      await expect(historyRow('2022')).toContainText('1.64%');
+      await expect(page.locator('main')).toContainText('17.48%');
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    });
+  }
+}
