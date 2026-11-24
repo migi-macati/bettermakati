@@ -3005,7 +3005,9 @@ for (const language of ['en', 'fil']) {
       expect(allCsv).toContain('location_scope');
       expect(allCsv).toContain('"shared"');
       expect(allCsv).toContain('Makati-Mandaluyong');
-      await expect(page.locator('main')).toContainText(language === 'en' ? 'scheduled dates, not completed votes' : 'hindi mga natapos na botohan');
+      await expect(page.locator('main')).toContainText(language === 'en' ? 'The Senate began plenary debate on HB 10858 on 23 November 2026' : 'Sinimulan ng Senado ang debate sa plenaryo sa HB 10858 noong 23 Nobyembre 2026');
+      await expect(page.locator('main')).toContainText(language === 'en' ? 'They do not include Senate amendments' : 'Wala pa rito ang mga amyenda ng Senado');
+      await expect(page.locator('main a[href*="pna.gov.ph/article/senate-opens-plenary-debates"]')).toBeVisible();
       const scan = await new AxeBuilder({ page }).include('#main-content').withTags(['wcag2a', 'wcag2aa']).analyze();
       expect(scan.violations.filter(v => ['serious', 'critical'].includes(v.impact))).toEqual([]);
       await expect(page.locator('main')).toContainText(language === 'en' ? 'Not recorded in this version' : 'Walang nakatalang halaga sa bersyong ito');
