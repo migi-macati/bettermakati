@@ -207,8 +207,8 @@ export default function Budget2027() {
         </p>
         <p className="rounded-lg bg-amber-50 p-3 text-sm">
           {t(
-            'Checked 2 November 2026: the House reports third-reading approval of HB 10858 on 12 October. The Senate calendar lists interpellations for 23 November–1 December and third reading for 7 December. These are scheduled dates, not completed votes. This page compares NEP and House versions, not an enacted 2027 budget.',
-            'Sinuri noong 2 November 2026: ayon sa House, naaprubahan sa ikatlong pagbasa ang HB 10858 noong 12 October. Sa Senate calendar, nakatakda ang interpellations sa 23 November–1 December at ikatlong pagbasa sa 7 December. Iskedyul pa lamang ang mga ito, hindi mga natapos na botohan. NEP at House versions ang inihahambing dito, hindi ang naisabatas na 2027 budget.'
+            'The Senate began plenary debate on HB 10858 on 23 November 2026. The House approved it on third reading on 12 October. The project amounts below compare the executive proposal with the House readings. They do not include Senate amendments.',
+            'Sinimulan ng Senado ang debate sa plenaryo sa HB 10858 noong 23 Nobyembre 2026. Inaprubahan ito ng Kamara sa ikatlong pagbasa noong 12 Oktubre. Ang mga halaga sa ibaba ay mula sa panukala ng ehekutibo at sa mga pagbasa ng Kamara. Wala pa rito ang mga amyenda ng Senado.'
           )}
         </p>
         <p className="flex flex-wrap gap-4 text-sm">
@@ -220,6 +220,12 @@ export default function Budget2027() {
               'House approval · 12 October',
               'Pag-apruba ng House · 12 October'
             )}
+          </a>
+          <a
+            className={linkStyle}
+            href="https://www.pna.gov.ph/article/senate-opens-plenary-debates-on-p72-t-2027-budget"
+          >
+            {t('Opening of Senate debate · 23 November', 'Simula ng debate sa Senado · 23 Nobyembre')}
           </a>
           <a
             className={linkStyle}
