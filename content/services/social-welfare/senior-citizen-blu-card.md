@@ -1,9 +1,7 @@
 # Senior Citizen Blu Card Services
 
-Makati's **Blu Card** program for senior citizens is administered through the Makati Social Welfare Department.
+Makati’s Citizen’s Charter calls this service “Senior Citizen Benefits under Makatizen ID.” Start at your barangay Makati Action Center satellite office. The [Blu Card guide](/services/guide/senior-blu-card) lists eligibility, documents and the department’s contact details.
 
-The City of Makati's [Senior Citizen / Blu Card Citizen's Charter](https://www.makati.gov.ph/assets/uploads/staticmenu/docs/securing_social_services_%28citizens_charter%2920190104113800.pdf) describes eligibility, documentary requirements and the application process. Confirm current details through the [official Makati City Web Portal](https://www.makati.gov.ph/).
+Sa satellite office ng Makati Action Center sa inyong barangay magsimula. Nasa [gabay sa Blu Card](/services/guide/senior-blu-card) ang mga kwalipikasyon, kailangang dokumento at contact ng departamento.
 
-## Before applying
-
-Use the linked Citizen's Charter to check current eligibility and documentary requirements, then confirm the submission channel with the Makati Social Welfare Department. BetterMakati does not collect senior-citizen IDs or application documents.
+[Makati Citizen’s Charter, pp. 432–433](https://makati-eboss.ph/files/references/Makati%20Citizens%20Charter%202023.pdf#page=432)

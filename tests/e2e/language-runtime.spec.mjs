@@ -68,3 +68,13 @@ for (const [language, fee, intake] of [
     await expect(page.locator('a[href*="OSCA%20NID%20FORM"]').first()).toBeVisible();
   });
 }
+
+for (const [language, voterRule] of [['en', 'active Makati voter'], ['fil', 'aktibong botante']]) {
+  test('Blu Card guide distinguishes local benefit eligibility in ' + language, async ({ page }) => {
+    await page.addInitScript(lang => localStorage.setItem('i18nextLng', lang), language);
+    await page.goto(baseURL + '/services/guide/senior-blu-card');
+    await expect(page.getByText(voterRule, { exact: false })).toBeVisible();
+    await expect(page.getByText('(02) 8870-1640', { exact: true })).toBeVisible();
+    await expect(page.locator('a[href$="#page=432"]').first()).toBeVisible();
+  });
+}
