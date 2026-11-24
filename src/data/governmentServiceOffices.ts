@@ -19,6 +19,17 @@ export interface GovernmentServiceOffice {
 
 export const governmentServiceOffices: GovernmentServiceOffice[] = [
   {
+    id: 'makati-osca',
+    name: 'Office for Senior Citizens Affairs (OSCA)',
+    agency: 'Office for Senior Citizens Affairs',
+    scope: 'In Makati',
+    address: 'Ground Floor, Building 1, Makati City Hall',
+    phone: '(02) 8870-1714 / (02) 8870-1707',
+    email: 'MSWD@makati.gov.ph',
+    sourceUrl: 'https://makati-eboss.ph/files/references/Makati%20Citizens%20Charter%202023.pdf#page=502',
+    mapsQuery: 'Office for Senior Citizens Affairs Makati City Hall Building 1',
+  },
+  {
     id: 'makati-health-clearance-support',
     name: 'Makati Health Clearance Certificate System support',
     agency: 'Makati Health Department – Environmental Health and Sanitation',

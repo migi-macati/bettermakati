@@ -1195,25 +1195,25 @@ export const serviceGuideDetails: Record<string, ServiceGuideDetail> = {
   },
   'senior-national-id': {
     verification: 'verified',
-    sourceLabel: 'Makati Action Center Citizen’s Charter — National ID for Senior Citizen / White Card',
-    sourceUrl: 'https://www.makati.gov.ph/assets/uploads/downloads/2/481/pdf/Makati%20Action%20Center.pdf',
-    lastVerified: '2026-09-25',
-    classification: 'Simple',
+    sourceLabel: 'Makati Citizen’s Charter (2023), pp. 500–502',
+    sourceUrl: 'https://makati-eboss.ph/files/references/Makati%20Citizens%20Charter%202023.pdf#page=500',
+    lastVerified: '2026-11-24',
+    classification: 'Complex',
     transactionType: 'G2C',
-    whoMayAvail: 'Makati senior citizens applying for the cited Senior Citizen National ID / White Card service.',
+    whoMayAvail: 'Filipino citizens, including dual citizens, who live in Makati and are at least 60.',
     requirements: [
-      { item: 'White Card application form', whereToSecure: 'Barangay / Makati Action Center Coordinator' },
-      { item: 'Information and supporting requirements requested by the MAC Coordinator for residency and applicant validation', whereToSecure: 'Applicant' },
+      { item: 'White Card application form and two recent 1×1 photos', note: 'The city form specifies a white background and photos taken within six months.' },
+      { item: 'Birth certificate, original and photocopy', note: 'The form accepts PSA or local civil registry copies. If there is no birth record, ask OSCA which alternatives apply.' },
+      { item: 'Valid government ID and a certificate from your barangay', note: 'The charter says barangay certificate. The form calls it a clearance. Confirm the document with your barangay MAC satellite office.' },
+      { item: 'Marriage certificate, original and photocopy, if applicable', note: 'The charter lists married applicants. The form specifies married women. Check with MAC before obtaining another copy.' },
     ],
     steps: [
-      'Get the White Card application form from the barangay or MAC Coordinator.',
-      'Submit the requested information and documents for interview and verification.',
-      'Wait for encoding and home visitation/residency validation.',
-      'Receive the claim slip when the application is approved.',
-      'Claim the card through OSCA or receive it through the cited home-delivery channel.',
+      'File the form and documents with your barangay Makati Action Center (MAC) satellite office.',
+      'MAC checks residency through a home visit and forwards the application. OSCA prepares the card and booklets.',
+      'Ask MAC about delivery. For follow-up, use the OSCA contact below.',
     ],
-    fees: [{ label: 'White Card application', amount: 'No fee stated in the cited charter' }],
-    processingTime: 'The cited charter shows 5–10 minutes for initial interview, 5–10 minutes for encoding, 2–3 days for home validation and 2–5 minutes for release.',
+    fees: [{ label: 'White Card application', amount: 'Free' }],
+    processingTime: 'The charter lists 15 minutes for encoding and one day each for printing, endorsement and release. It gives no total waiting time for the home visit and delivery.',
   },
   'peso-job-referral': {
     verification: 'verified',
@@ -2530,6 +2530,26 @@ export const serviceGuideDetails: Record<string, ServiceGuideDetail> = {
     ],
     notes: ['The cited city guide is older. Confirm the current application site, appointment process and accepted document list before visiting.'],
   }
+};
+
+// Source, review date and transaction classification come from the same service record.
+export const filipinoServiceDetails: Record<string, Partial<ServiceGuideDetail>> = {
+  'senior-national-id': {
+    whoMayAvail: 'Mga Pilipinong nakatira sa Makati at edad 60 pataas, kasama ang may dual citizenship.',
+    requirements: [
+      { item: 'White Card application form at dalawang 1×1 na litrato', note: 'Ayon sa form, dapat puti ang background at kuha ang litrato sa loob ng nakaraang anim na buwan.' },
+      { item: 'Orihinal at photocopy ng birth certificate', note: 'Tinatanggap sa form ang kopya mula sa PSA o local civil registry. Kung walang birth record, itanong sa OSCA kung anong kapalit ang puwede.' },
+      { item: 'Valid government ID at sertipiko mula sa barangay', note: 'Barangay certificate ang nasa charter. Barangay clearance ang nasa form. Itanong sa MAC ng barangay kung alin ang kailangang dalhin.' },
+      { item: 'Orihinal at photocopy ng marriage certificate, kung kailangan', note: 'Kasama ang lahat ng kasal na aplikante sa charter. Sa form, para ito sa babaeng may asawa. Magtanong muna sa MAC bago kumuha ng panibagong kopya.' },
+    ],
+    steps: [
+      'Isumite ang form at mga dokumento sa satellite office ng Makati Action Center (MAC) sa inyong barangay.',
+      'Bibisita ang MAC sa bahay para kumpirmahin ang tirahan at saka ipapasa ang aplikasyon. Ihahanda ng OSCA ang card at mga booklet.',
+      'Itanong sa MAC kung kailan ihahatid ang card. Para sa follow-up, gamitin ang contact ng OSCA sa ibaba.',
+    ],
+    fees: [{ label: 'Pag-apply para sa White Card', amount: 'Libre' }],
+    processingTime: 'Ayon sa charter, 15 minuto ang encoding at tig-isang araw ang pag-print, pagpasa sa MAC at release. Walang kabuuang tagal na nakasaad para sa pagbisita sa bahay at paghahatid.',
+  },
 };
 
 export const detailedServiceGuideIds = Object.keys(serviceGuideDetails);

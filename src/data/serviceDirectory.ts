@@ -664,7 +664,7 @@ export const serviceDirectory: ServiceDirectoryItem[] = [
     level: 'City',
     type: 'ID',
     agency: 'Office for Senior Citizens Affairs',
-    description: 'Senior citizen registration and national ID through Makati OSCA.',
+    description: 'Senior Citizen ID (White Card) · Makati OSCA',
     href: 'https://www.makati.gov.ph/assets/uploads/downloads/1/824/pdf/OSCA%20NID%20FORM%202024%20v2.pdf',
     sourceUrl: 'https://www.makati.gov.ph/assets/uploads/downloads/1/824/pdf/OSCA%20NID%20FORM%202024%20v2.pdf',
     keywords: 'senior citizen national id white card osca elderly',

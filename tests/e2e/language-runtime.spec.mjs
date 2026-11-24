@@ -54,3 +54,17 @@ for (const language of ['en', 'fil']) {
     });
   }
 }
+
+for (const [language, fee, intake] of [
+  ['en', 'Free', 'File the form and documents with your barangay'],
+  ['fil', 'Libre', 'Isumite ang form at mga dokumento sa satellite office'],
+]) {
+  test('White Card preparation and office contact in ' + language, async ({ page }) => {
+    await page.addInitScript(lang => localStorage.setItem('i18nextLng', lang), language);
+    await page.goto(baseURL + '/services/guide/senior-national-id');
+    await expect(page.getByText(fee, { exact: true })).toBeVisible();
+    await expect(page.getByText(intake, { exact: false })).toBeVisible();
+    await expect(page.getByText('(02) 8870-1714 / (02) 8870-1707', { exact: true })).toBeVisible();
+    await expect(page.locator('a[href*="OSCA%20NID%20FORM"]').first()).toBeVisible();
+  });
+}

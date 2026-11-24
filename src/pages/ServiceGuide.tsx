@@ -18,7 +18,7 @@ import LastReviewed from '../components/ui/LastReviewed';
 import Breadcrumbs from '../components/ui/Breadcrumbs';
 import { serviceDirectory, type ServiceDirectoryItem } from '../data/serviceDirectory';
 import { officesForAgency } from '../data/governmentServiceOffices';
-import { serviceGuideDetails } from '../data/serviceGuideDetails';
+import { filipinoServiceDetails, serviceGuideDetails } from '../data/serviceGuideDetails';
 import { placeRegistryById } from '../data/placeRegistry';
 import NationalServiceHandoff from '../components/services/NationalServiceHandoff';
 import { useBarangayScope, withBarangayScope } from '../hooks/useBarangayScope';
@@ -368,7 +368,7 @@ const standardSteps = (item: ServiceDirectoryItem) => [
 ];
 
 export default function ServiceGuide() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { id } = useParams();
   const { barangay } = useBarangayScope();
   const servicesHref = withBarangayScope('/services', barangay?.slug);
@@ -391,7 +391,9 @@ export default function ServiceGuide() {
   }
 
   const offices = officesForAgency(item.agency);
-  const detail = serviceGuideDetails[item.id];
+  const baseDetail = serviceGuideDetails[item.id];
+  const translation = i18n.resolvedLanguage === 'fil' && filipinoServiceDetails[item.id];
+  const detail = baseDetail && translation ? { ...baseDetail, ...translation } : baseDetail;
   const guidance = specialGuidance[item.id] || agencyGuidance[item.agency];
   const prepare = guidance?.prepare || prepareByType[item.type] || prepareByType.Other;
   const steps = guidance?.steps || standardSteps(item);
