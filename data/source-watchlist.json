@@ -1234,10 +1234,7 @@
     "monitoringMode": "content-hash",
     "owner": "general-source-freshness",
     "affectedPages": [
-      "/services",
-      "/services/guide/senior-national-id",
-      "/services/guide/senior-blu-card",
-      "/services/social-welfare/senior-citizen-blu-card"
+      "/services"
     ]
   },
   {
@@ -1450,7 +1447,7 @@
     "monitoringMode": "content-hash",
     "owner": "general-source-freshness",
     "affectedPages": [
-      "/services/guide/senior-national-id"
+      "/services"
     ]
   }
 ]
