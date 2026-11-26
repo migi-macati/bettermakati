@@ -57,6 +57,8 @@ jobs:
         run: npm install --no-save @playwright/test@1.55.0 @axe-core/playwright@4.10.2
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
+      - name: Check local homepage traffic budgets
+        run: node scripts/check-homepage-requests.mjs
       - name: Start production preview
         run: |
           npm run preview -- --host 127.0.0.1 --port 4173 > /tmp/bettermakati-preview.log 2>&1 &

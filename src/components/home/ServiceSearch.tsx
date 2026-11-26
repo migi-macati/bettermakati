@@ -17,7 +17,7 @@ import {
 import { Link, useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { isBarangayContextPath, withBarangayScope } from '../../hooks/useBarangayScope';
-import { searchIndex, type SearchItem } from '../../data/searchIndex';
+import type { SearchItem } from '../../data/searchIndex';
 import { findCitizenGuides, isImmediateDanger } from '../../data/citizenProblemGuides';
 import { scoreItem } from '../../data/searchRanking';
 import { serviceDirectory } from '../../data/serviceDirectory';
@@ -233,6 +233,21 @@ export default function ServiceSearch({
   const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  const [searchIndex, setSearchIndex] = useState<SearchItem[] | null>(null);
+  const [indexFailed, setIndexFailed] = useState(false);
+  const needsIndex = open || Boolean(initialQuery.trim());
+
+  useEffect(() => {
+    if (!needsIndex || searchIndex) return;
+    let active = true;
+    // Keep the full civic catalog off a resident's first homepage request.
+    import('../../data/searchIndex').then(
+      module => { if (active) setSearchIndex(module.searchIndex); },
+      () => { if (active) setIndexFailed(true); }
+    );
+    return () => { active = false; };
+  }, [needsIndex, searchIndex]);
+
   const shouldSearchLegislation =
     scope === 'site' &&
     query.trim().length >= 3 &&
@@ -278,10 +293,11 @@ export default function ServiceSearch({
   }, [legislationIndex, query, shouldSearchLegislation]);
 
   const allRankedResults = useMemo(() => {
+    const catalog = searchIndex ?? [];
     const base =
       scope === 'services'
-        ? searchIndex.filter(item => item.group === 'Service')
-        : [...searchIndex, ...legislationItems];
+        ? catalog.filter(item => item.group === 'Service')
+        : [...catalog, ...legislationItems];
 
     const seen = new Set<string>();
     const canonical = base.filter(item => {
@@ -297,7 +313,7 @@ export default function ServiceSearch({
       .map(item => ({ ...item, score: scoreItem(item, query) }))
       .filter(item => !query.trim() || item.score > 0)
       .sort((a, b) => b.score - a.score || a.title.localeCompare(b.title));
-  }, [legislationItems, query, scope]);
+  }, [legislationItems, query, scope, searchIndex]);
 
   const rankedResults = useMemo(
     () => allRankedResults.filter(item => matchesTab(item, tab, scope)),
@@ -670,7 +686,13 @@ export default function ServiceSearch({
             role="listbox"
             aria-label={heading + ' matches'}
           >
-            {visibleResults.length > 0 ? (
+            {!searchIndex && visibleResults.length === 0 ? (
+              <p className="px-4 py-3" role="status">
+                {indexFailed
+                  ? (language === 'fil' ? 'Hindi ma-load ang mga resulta. I-reload ang pahina at subukan muli.' : 'Results could not load. Reload the page to try again.')
+                  : t('app.loadingPage')}
+              </p>
+            ) : visibleResults.length > 0 ? (
               visibleResults.map((item, index) => (
                 <button
                   key={item.canonicalKey ?? item.href + item.title}
