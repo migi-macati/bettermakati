@@ -61,10 +61,16 @@ try {
         }
         await page.waitForLoadState('networkidle');
         const bytes = responses.reduce((sum, r) => sum + r.bytes, 0);
-        const limits = { cold: [37, 405000], warm: [6, 4000], search: [32, 1250000] };
+        const limits = { cold: [37, width === 390 ? 283000 : 332000], warm: [5, 4000], search: [32, 1250000] };
         const [maxRequests, maxBytes] = limits[phase];
         console.log({ width, language, phase, requests: responses.length, bytes });
         assert(responses.length <= maxRequests && bytes <= maxBytes, 'Homepage request or transfer regression');
+        if (phase === 'cold') {
+          const photos = responses.filter(r => r.pathname.includes('guadalupe-skyline'));
+          assert.equal(photos.length, 1, 'Fetch one lead photo per viewport');
+          assert(photos[0].pathname.includes(width === 390 ? '-400-' : '-640-'));
+          assert(await page.locator('main figure img').evaluate(img => img.complete && img.naturalWidth > 0));
+        }
         if (phase !== 'search') assert(!responses.some(r => r.pathname.includes('/searchIndex-')));
       }
     } finally { await browser.close(); }
