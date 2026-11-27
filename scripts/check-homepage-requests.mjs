@@ -6,7 +6,7 @@ import { createHash } from 'node:crypto';
 import { resolve, sep, extname } from 'node:path';
 import { chromium } from '@playwright/test';
 
-// Local production-build comparison, with SW bypassed to isolate HTTP traffic.
+// Local production-build comparison, with ordinary HTTP caching and with the installed service worker.
 // Count actual server responses, including 304s. Transfer is compressed body bytes.
 const root = resolve(process.argv[2] || 'dist');
 const serviceArchive = JSON.parse(await readFile(new URL('../src/data/serviceLegislation.generated.json', import.meta.url)));
@@ -23,6 +23,10 @@ const config = JSON.parse(await readFile(new URL('../vercel.json', import.meta.u
 const immutable = config.headers.find(rule => rule.headers.some(h => h.value.includes('immutable')));
 const hashed = immutable && new RegExp('^' + immutable.source + '$');
 assert(!hashed?.test('/assets/search.js') && !hashed?.test('/locales/en/common.json'));
+const logoPaths = ['/bettermakati-logo-horizontal.svg', '/bettermakati-logo-horizontal-reverse.svg'];
+const exactCacheHeaders = new Map(config.headers.flatMap(rule =>
+  rule.headers.filter(header => header.key === 'Cache-Control').map(header => [rule.source, header.value])
+));
 let responses = [];
 const server = createServer(async (req, res) => {
   const pathname = new URL(req.url, 'http://localhost').pathname;
@@ -36,23 +40,26 @@ const server = createServer(async (req, res) => {
     const tag = '"' + createHash('sha256').update(body).digest('hex') + '"';
     const cached = req.headers['if-none-match'] === tag;
     res.setHeader('ETag', tag);
-    res.setHeader('Cache-Control', hashed?.test(pathname) ? 'public, max-age=31536000, immutable' : pathname.startsWith('/locales/') ? 'max-age=3600' : 'max-age=0, must-revalidate');
+    res.setHeader('Cache-Control', exactCacheHeaders.get(pathname) ?? (hashed?.test(pathname) ? 'public, max-age=31536000, immutable' : pathname.startsWith('/locales/') ? 'max-age=3600' : 'max-age=0, must-revalidate'));
     res.setHeader('Content-Type', type);
     if (compressed) res.setHeader('Content-Encoding', 'gzip');
     responses.push({ pathname, bytes: cached ? 0 : body.length });
     res.writeHead(cached ? 304 : 200).end(cached ? undefined : body);
-  } catch { res.writeHead(404).end(); }
+  } catch { responses.push({ pathname, bytes: 0, status: 404 }); res.writeHead(404).end(); }
 });
 await new Promise(done => server.listen(0, '127.0.0.1', done));
 const url = 'http://127.0.0.1:' + server.address().port;
 try {
-  for (const [width, language] of [[390, 'en'], [1440, 'fil']]) {
+  const journeys = [[390, 'en'], [1440, 'fil']];
+  for (const [width, language, serviceWorkers] of ['block', 'allow'].flatMap(mode =>
+    journeys.map(([width, language]) => [width, language, mode])
+  )) {
     const browser = await chromium.launch({
       executablePath: process.env.CHROMIUM_EXECUTABLE || undefined,
       args: ['--host-resolver-rules=MAP fonts.googleapis.com ~NOTFOUND, MAP fonts.gstatic.com ~NOTFOUND'],
     });
     try {
-      const page = await browser.newPage({ viewport: { width, height: 850 }, serviceWorkers: 'block' });
+      const page = await browser.newPage({ viewport: { width, height: 850 }, serviceWorkers });
       await page.addInitScript(lang => localStorage.setItem('i18nextLng', lang), language);
       for (const phase of ['cold', 'warm', 'search', 'archive']) {
         responses = [];
@@ -71,14 +78,18 @@ try {
         } else {
           await page.goto(url);
           await page.locator('main h1').waitFor();
+          if (serviceWorkers === 'allow') await page.waitForFunction(() => !!navigator.serviceWorker.controller);
         }
         await page.waitForLoadState('networkidle');
         const bytes = responses.reduce((sum, r) => sum + r.bytes, 0);
-        const limits = { cold: [37, width === 390 ? 283000 : 332000], warm: [5, 4000], search: [22, 255000], archive: [2, 1050000] };
+        const limits = { cold: [serviceWorkers === 'allow' ? 41 : 37, width === 390 ? 283000 : 332000], warm: [2, 4000], search: [22, 255000], archive: [2, 1050000] };
         const [maxRequests, maxBytes] = limits[phase];
-        console.log({ width, language, phase, requests: responses.length, bytes });
+        console.log({ width, language, serviceWorkers, phase, requests: responses.length, bytes });
+        assert(!responses.some(r => r.status === 404), 'Missing homepage resource');
         assert(responses.length <= maxRequests && bytes <= maxBytes, 'Homepage request or transfer regression');
+        if (phase === 'warm') assert(!responses.some(r => logoPaths.includes(r.pathname)), 'Revisited fresh logos');
         if (phase === 'cold') {
+          for (const logo of logoPaths) assert(responses.some(r => r.pathname === logo), 'Missing brand image');
           const photos = responses.filter(r => r.pathname.includes('guadalupe-skyline'));
           assert.equal(photos.length, 1, 'Fetch one lead photo per viewport');
           assert(photos[0].pathname.includes(width === 390 ? '-400-' : '-640-'));

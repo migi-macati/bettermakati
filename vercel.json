@@ -15,6 +15,24 @@
       ]
     },
     {
+      "source": "/bettermakati-logo-horizontal.svg",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/bettermakati-logo-horizontal-reverse.svg",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, must-revalidate"
+        }
+      ]
+    },
+    {
       "source": "/locales/(.*)",
       "headers": [
         {
