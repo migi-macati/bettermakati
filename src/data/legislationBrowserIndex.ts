@@ -59,7 +59,7 @@ export const loadLegislationBrowserIndex = () => {
 };
 
 export const matchLegislationRecords = (
-  index: BrowserLegislationIndex,
+  index: Pick<BrowserLegislationIndex, 'records'>,
   query: string,
   options: {
     measureType?: 'all' | LocalMeasureType;

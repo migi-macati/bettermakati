@@ -80,6 +80,18 @@ await mkdir(outputDir, { recursive: true });
 const outputPath = outputDir + '/makati-legislation-index.json';
 await writeFile(outputPath, JSON.stringify(browserIndex) + '\n', 'utf8');
 
+// These single-word fragments occur in common service queries. Every possible
+// archive match containing one of them must include it in the number or title.
+const fragments = ['yel', 'blu', 'cedul', 'senior', 'permit'];
+const serviceRecords = browserIndex.records.filter(([, , number, , title]) =>
+  fragments.some(fragment => (number + ' ' + title).toLowerCase().includes(fragment))
+);
+await writeFile(
+  'src/data/serviceLegislation.generated.json',
+  '{\n  "fragments": ' + JSON.stringify(fragments) +
+    ',\n  "records": [\n    ' + serviceRecords.map(row => JSON.stringify(row)).join(',\n    ') + '\n  ]\n}\n'
+);
+
 console.log(
   JSON.stringify(
     {

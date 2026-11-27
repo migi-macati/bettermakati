@@ -1,6 +1,8 @@
 import { Link } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import Hero from '../components/sections/Hero';
+import skyline400 from '../assets/guadalupe-skyline-400.webp';
+import skyline640 from '../assets/guadalupe-skyline-640.webp';
 import SEO from '../components/SEO';
 import embo from '../data/reports/06-embo-makati-taguig-transition';
 import { cityImages } from '../data/cityImages';
@@ -87,7 +89,10 @@ export default function Home() {
             <Link className={link} to="/reports">{fil ? 'Lahat ng ulat' : 'All local reports'}</Link>
           </div>
           <figure>
-            <img src="/images/makati/guadalupe-skyline.webp" width="960" height="723" alt={fil ? 'Matataas na gusali sa likod ng mga bahay at puno.' : 'Office towers rise beyond homes and trees.'} className="block aspect-[16/10] w-full object-cover" />
+            <img src="/images/makati/guadalupe-skyline.webp"
+              srcSet={`${skyline400} 400w, ${skyline640} 640w, /images/makati/guadalupe-skyline.webp 960w`}
+              sizes="(min-width: 1088px) 492px, (min-width: 768px) calc(50vw - 52px), calc(100vw - 40px)"
+              width="960" height="723" alt={fil ? 'Matataas na gusali sa likod ng mga bahay at puno.' : 'Office towers rise beyond homes and trees.'} className="block aspect-[16/10] w-full object-cover" />
             <figcaption className="mt-1 text-sm text-gray-600">
               {fil ? 'Tanaw ang skyline ng Makati mula sa Guadalupe, Abril 2025.' : 'The Makati skyline seen from Guadalupe, April 2025.'}{' '}
               <a className={link} href={photo.sourceUrl}>{photo.credit}</a>{' · '}
