@@ -19,6 +19,28 @@ export interface GovernmentServiceOffice {
 
 export const governmentServiceOffices: GovernmentServiceOffice[] = [
   {
+    id: 'makati-social-welfare',
+    name: 'Makati Social Welfare Department',
+    agency: 'Makati Social Welfare Department',
+    scope: 'In Makati',
+    address: '5/F, Building 1, Makati City Hall',
+    phone: '(02) 8870-1640',
+    email: 'MSWD@makati.gov.ph',
+    sourceUrl: 'https://makati-eboss.ph/files/references/Makati%20Citizens%20Charter%202023.pdf#page=495',
+    mapsQuery: 'Makati Social Welfare Department City Hall Building 1',
+  },
+  {
+    id: 'makati-osca',
+    name: 'Office for Senior Citizens Affairs (OSCA)',
+    agency: 'Office for Senior Citizens Affairs',
+    scope: 'In Makati',
+    address: 'Ground Floor, Building 1, Makati City Hall',
+    phone: '(02) 8870-1714 / (02) 8870-1707',
+    email: 'MSWD@makati.gov.ph',
+    sourceUrl: 'https://makati-eboss.ph/files/references/Makati%20Citizens%20Charter%202023.pdf#page=502',
+    mapsQuery: 'Office for Senior Citizens Affairs Makati City Hall Building 1',
+  },
+  {
     id: 'makati-health-clearance-support',
     name: 'Makati Health Clearance Certificate System support',
     agency: 'Makati Health Department – Environmental Health and Sanitation',

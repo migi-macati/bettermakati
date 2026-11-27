@@ -1078,7 +1078,7 @@ test('city and barangay long-tail guides expose current transaction details', as
   await expect(page.getByText(/EHS Form No. 110/i)).toBeVisible();
 
   await page.goto(baseURL + '/services/guide/senior-national-id');
-  await expect(page.getByText(/2–3 days for home validation/i)).toBeVisible();
+  await expect(page.getByText(/one day each for printing/i)).toBeVisible();
   await expect(page.getByText(/White Card application form/i).first()).toBeVisible();
 
   await page.goto(baseURL + '/services/guide/peso-job-referral');

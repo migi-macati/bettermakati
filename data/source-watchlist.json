@@ -1437,5 +1437,17 @@
     "affectedPages": [
       "/services"
     ]
+  },
+  {
+    "id": "makati-osca-white-card-form",
+    "label": "Makati OSCA White Card application and document checklist",
+    "url": "https://www.makati.gov.ph/assets/uploads/downloads/1/824/pdf/OSCA%20NID%20FORM%202024%20v2.pdf",
+    "kind": "services",
+    "cadence": "weekly",
+    "monitoringMode": "content-hash",
+    "owner": "general-source-freshness",
+    "affectedPages": [
+      "/services"
+    ]
   }
 ]

@@ -40,7 +40,7 @@ const detailSourceUrls = [
     [...detailBlock.matchAll(/sourceUrl:\s*'([^']+)'/g)].map(match => match[1])
   ),
 ];
-const unwatchedDetailSources = detailSourceUrls.filter(url => !watchedUrls.has(url));
+const unwatchedDetailSources = detailSourceUrls.filter(url => !watchedUrls.has(url.replace(/(\.pdf)#page=\d+$/i, '$1')) && !watchedUrls.has(url));
 if (unwatchedDetailSources.length) {
   problems.push(
     'Structured guide sources missing from source-watch: ' +
