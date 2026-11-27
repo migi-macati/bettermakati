@@ -233,7 +233,9 @@ export default function ServiceSearch({
   const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const [searchIndex, setSearchIndex] = useState<SearchItem[] | null>(null);
+  const [catalogModule, setCatalogModule] =
+    useState<typeof import('../../data/searchIndex') | null>(null);
+  const searchIndex = catalogModule?.searchIndex;
   const [indexFailed, setIndexFailed] = useState(false);
   const needsIndex = open || Boolean(initialQuery.trim());
 
@@ -242,7 +244,7 @@ export default function ServiceSearch({
     let active = true;
     // Keep the full civic catalog off a resident's first homepage request.
     import('../../data/searchIndex').then(
-      module => { if (active) setSearchIndex(module.searchIndex); },
+      module => { if (active) setCatalogModule(module); },
       () => { if (active) setIndexFailed(true); }
     );
     return () => { active = false; };
@@ -250,30 +252,42 @@ export default function ServiceSearch({
 
   const shouldSearchLegislation =
     scope === 'site' &&
+    !(unifiedHome && isImmediateDanger(query)) &&
     query.trim().length >= 3 &&
     (tab === 'All' || tab === 'Records');
 
+  const needle = query.trim().toLowerCase();
+  const serviceArchive = catalogModule?.serviceArchive;
+  const coveredByServiceArchive = serviceArchive?.fragments.some(fragment => needle.includes(fragment));
+  const archiveForQuery = legislationIndex ?? (coveredByServiceArchive ? serviceArchive : null);
+  const needsFullArchive = shouldSearchLegislation && !archiveForQuery && Boolean(catalogModule || indexFailed);
+
   useEffect(() => {
-    if (!shouldSearchLegislation || legislationIndex) return;
+    if (!needsFullArchive) return;
 
     let cancelled = false;
-    loadLegislationBrowserIndex()
-      .then(index => {
-        if (!cancelled) setLegislationIndex(index);
-      })
-      .catch(() => {
-        // Static site search remains available if the archive index cannot load.
-      });
+    // Service and emergency suggestions are immediate. Give an unfinished
+    // phrase time to reach a covered service before downloading the archive.
+    const timer = window.setTimeout(() => {
+      loadLegislationBrowserIndex()
+        .then(index => {
+          if (!cancelled) setLegislationIndex(index);
+        })
+        .catch(() => {
+          // Static site search remains available if the archive cannot load.
+        });
+    }, 250);
 
     return () => {
       cancelled = true;
+      window.clearTimeout(timer);
     };
-  }, [legislationIndex, shouldSearchLegislation]);
+  }, [needsFullArchive, needle]);
 
   const legislationItems = useMemo<SearchItem[]>(() => {
-    if (!shouldSearchLegislation || !legislationIndex) return [];
+    if (!shouldSearchLegislation || !archiveForQuery) return [];
 
-    return matchLegislationRecords(legislationIndex, query, { limit: 12 }).visible.map(
+    return matchLegislationRecords(archiveForQuery, query, { limit: 12 }).visible.map(
       record => ({
         title: legislationRecordDisplay(record),
         group: 'Record' as const,
@@ -290,7 +304,7 @@ export default function ServiceSearch({
         ].join(' '),
       })
     );
-  }, [legislationIndex, query, shouldSearchLegislation]);
+  }, [archiveForQuery, query, shouldSearchLegislation]);
 
   const allRankedResults = useMemo(() => {
     const catalog = searchIndex ?? [];

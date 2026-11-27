@@ -1,3 +1,5 @@
+import serviceLegislation from './serviceLegislation.generated.json';
+import type { BrowserLegislationRecord } from './legislationBrowserIndex';
 import { makatiHistory } from './makatiHistory';
 import { barangays as barangayProfiles, barangayFacilities } from './barangays';
 import { electedOfficials } from './electedOfficials';
@@ -1172,3 +1174,9 @@ export const searchIndex: SearchItem[] = [
     item => !coreCanonicalKeys.has(item.canonicalKey!)
   ),
 ];
+
+// Generated from the same archive as the full index, in the same record order.
+export const serviceArchive = {
+  fragments: serviceLegislation.fragments,
+  records: serviceLegislation.records as BrowserLegislationRecord[],
+};

@@ -9,6 +9,14 @@ import { chromium } from '@playwright/test';
 // Local production-build comparison, with SW bypassed to isolate HTTP traffic.
 // Count actual server responses, including 304s. Transfer is compressed body bytes.
 const root = resolve(process.argv[2] || 'dist');
+const serviceArchive = JSON.parse(await readFile(new URL('../src/data/serviceLegislation.generated.json', import.meta.url)));
+const fullArchive = JSON.parse(await readFile(resolve(root, 'data/makati-legislation-index.json')));
+for (const fragment of serviceArchive.fragments) {
+  const matches = ([, type, number, , title]) =>
+    ('City ' + type + ' No. ' + number + ' ' + number + ' ' + title).toLowerCase().includes(fragment);
+  assert.deepEqual(serviceArchive.records.filter(matches), fullArchive.records.filter(matches),
+    'Missing or changed archive records for ' + fragment);
+}
 const types = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css',
   '.json': 'application/json', '.svg': 'image/svg+xml', '.webp': 'image/webp', '.png': 'image/png' };
 const config = JSON.parse(await readFile(new URL('../vercel.json', import.meta.url), 'utf8'));
@@ -46,22 +54,27 @@ try {
     try {
       const page = await browser.newPage({ viewport: { width, height: 850 }, serviceWorkers: 'block' });
       await page.addInitScript(lang => localStorage.setItem('i18nextLng', lang), language);
-      for (const phase of ['cold', 'warm', 'search']) {
+      for (const phase of ['cold', 'warm', 'search', 'archive']) {
         responses = [];
         if (phase === 'search') {
+          const input = page.getByRole('combobox').first();
+          await input.pressSequentially(language === 'fil' ? 'paano mag apply ng yellow card' : 'yellow card', { delay: 40 });
+          if (language === 'fil') await input.fill('yellow card');
+          await page.getByRole('option').filter({ hasText: 'Yellow Card' }).first().waitFor();
+        } else if (phase === 'archive') {
           const archiveResponse = page.waitForResponse(r => new URL(r.url()).pathname === '/data/makati-legislation-index.json');
-          await page.getByRole('combobox').first().fill('yellow card');
+          await page.getByRole('combobox').first().fill('municipality of taytay');
           const archive = await archiveResponse;
           assert(archive.ok());
           await archive.finished();
-          await page.getByRole('option').filter({ hasText: 'Yellow Card' }).first().waitFor();
+          await page.getByRole('option').filter({ hasText: /City (Resolution|Ordinance) No\./ }).first().waitFor();
         } else {
           await page.goto(url);
           await page.locator('main h1').waitFor();
         }
         await page.waitForLoadState('networkidle');
         const bytes = responses.reduce((sum, r) => sum + r.bytes, 0);
-        const limits = { cold: [37, width === 390 ? 283000 : 332000], warm: [5, 4000], search: [32, 1250000] };
+        const limits = { cold: [37, width === 390 ? 283000 : 332000], warm: [5, 4000], search: [22, 255000], archive: [2, 1050000] };
         const [maxRequests, maxBytes] = limits[phase];
         console.log({ width, language, phase, requests: responses.length, bytes });
         assert(responses.length <= maxRequests && bytes <= maxBytes, 'Homepage request or transfer regression');
@@ -71,7 +84,9 @@ try {
           assert(photos[0].pathname.includes(width === 390 ? '-400-' : '-640-'));
           assert(await page.locator('main figure img').evaluate(img => img.complete && img.naturalWidth > 0));
         }
-        if (phase !== 'search') assert(!responses.some(r => r.pathname.includes('/searchIndex-')));
+        if (phase === 'cold' || phase === 'warm') assert(!responses.some(r => r.pathname.includes('/searchIndex-')));
+        const archives = responses.filter(r => r.pathname === '/data/makati-legislation-index.json');
+        assert.equal(archives.length, phase === 'archive' ? 1 : 0);
       }
     } finally { await browser.close(); }
   }
