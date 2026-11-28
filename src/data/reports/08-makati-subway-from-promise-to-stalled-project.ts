@@ -126,7 +126,7 @@ const reportModule: FeaturedReportModule = {
           {
             kind: 'paragraph',
             role: 'fact',
-            text: 'In January 2026, the Makati City Council authorized and ratified a new settlement framework through Resolutions 2026-008 and 2026-011. The reported exchange would transfer the project company and related assets to the city. The city archive title for Resolution 2026-011 refers to authorization under Resolution 2026-007, while Ordinance 2026-015 cross-references Resolutions 2026-008 and 2026-011; BetterMakati preserves that unresolved discrepancy rather than silently choosing one reference. On 18 February 2026, Infradev said the SIAC case remained pending and that the proceedings and negotiations were confidential; it did not publicly confirm the detailed commercial terms.',
+            text: 'In January 2026, the Makati City Council authorized and ratified a new settlement framework through Resolutions 2026-008 and 2026-011. The reported exchange would transfer the project company and related assets to the city. The city archive title for Resolution 2026-011 refers to authorization under Resolution 2026-007, while Ordinance 2026-015 cross-references Resolutions 2026-008 and 2026-011; BetterMakati preserves that unresolved discrepancy rather than silently choosing one reference. In its 18 February 2026 letter to the Philippine Stock Exchange, Infradev said the dispute was still before SIAC. The company cited a tribunal order dated 31 July 2025 requiring both parties to keep the proceedings confidential. It said it would disclose details once the case had concluded and the confidentiality obligation had ended.',
             evidence: {
               sourceIds: ['8', '9'],
               records: [
@@ -264,12 +264,12 @@ const reportModule: FeaturedReportModule = {
       },
       {
         id: '9',
-        label: 'Infradev declines to disclose settlement details',
-        href: 'https://context.ph/2026/02/19/infradev-declines-to-disclose-subway-settlement-details/',
-        sourceKind: 'secondary',
-        publisher: 'Context.ph',
-        publishedOrPeriod: '19 February 2026',
-        checkedOn: '5 October 2026',
+        label: 'Infradev’s signed reply to the Philippine Stock Exchange',
+        href: 'https://edge.pse.com.ph/downloadFile.do?file_id=1870660',
+        sourceKind: 'official-external',
+        publisher: 'Philippine Infradev Holdings, Inc., via PSE EDGE',
+        publishedOrPeriod: '18 February 2026',
+        checkedOn: '28 November 2026',
       },
       {
         id: '10',
@@ -282,7 +282,7 @@ const reportModule: FeaturedReportModule = {
     ],
     methodology: {
       title: 'Status and uncertainty note',
-      text: 'Company disclosures, government PPP records and the official boundary record take priority. Strong secondary reporting is used for station names and January 2026 settlement events whose complete official text is not accessible on the city portal. A settlement, asset transfer or database label is not treated as proof of a construction restart.',
+      text: 'Company disclosures, government PPP records and the official boundary record take priority. Strong secondary reporting is used for station names and January 2026 settlement events whose complete official text is not accessible on the city portal. The project status is assessed through 5 October 2026. Source clarification, 28 November 2026: the account of the company’s February position now cites its signed reply to the exchange.',
       evidence: { sourceIds: ['2', '3', '6', '8', '9', '10'] },
     },
   },
@@ -290,9 +290,9 @@ const reportModule: FeaturedReportModule = {
     headline:
       'Makati Subway: Mula sa 10-Station Promise Hanggang sa Natigil na Project',
     subheadline:
-      'Ang dating US$3.5-billion, 10-station intra-city railway ay umabot sa joint venture, engineering contracts at limited site works. Pero binago ng EMBO boundary ruling ang route economics, umatras ang original private partner, at wala pang publicly confirmed construction restart.',
+      'Ang dating US$3.5-billion, 10-station intra-city railway ay umabot sa joint venture, engineering contracts at limited site works. Pero binago ng EMBO boundary ruling ang route economics, umatras ang original private partner, at hanggang 5 Oktubre 2026 ay walang natukoy na dokumentong nagpapatunay na nagpatuloy ang konstruksyon.',
     synthesis:
-      'Hindi simpleng “drawing” lang ang Makati Subway: may signed joint venture, notice to proceed, contractors, land arrangements at limited works sa Station 3. Pero hindi rin ito active railway build ngayon. Nasa Taguig na ang planned depot at dalawang eastern stations, idineklara ng Infradev na hindi na feasible ang original project, at nauwi sa arbitration at settlement ang joint venture. May assets at studies na maaaring magamit sa future project, pero hiwalay iyon sa proof na may funded, approved at running replacement subway na.',
+      'Hindi simpleng “drawing” lang ang Makati Subway: may signed joint venture, notice to proceed, contractors, land arrangements at limited works sa Station 3. Hanggang 5 Oktubre 2026, walang patunay sa mga sinuring dokumento na muling sinimulan ang konstruksyon ng tren. Nasa Taguig na ang planned depot at dalawang eastern stations, idineklara ng Infradev na hindi na feasible ang original project, at nauwi sa arbitration at settlement ang joint venture. May assets at studies na maaaring magamit sa future project, pero hiwalay iyon sa proof na may funded, approved at running replacement subway na.',
     sections: [
       {
         id: 'promise-and-contract',
@@ -399,7 +399,7 @@ const reportModule: FeaturedReportModule = {
           {
             kind: 'paragraph',
             role: 'fact',
-            text: 'Noong January 2026, nag-authorize at nag-ratify ang Makati City Council ng bagong settlement framework sa pamamagitan ng Resolutions 2026-008 at 2026-011. Iniulat na kapalit ng settlement ang transfer ng project company at related assets sa city. Sa title ng Resolution 2026-011 sa city archive, Resolution 2026-007 ang nakalagay na authorization; pero Resolutions 2026-008 at 2026-011 ang cross-reference ng Ordinance 2026-015. Pinapanatili ng BetterMakati ang unresolved discrepancy na ito sa halip na pumili nang walang sapat na record. Pero noong 18 February 2026, sinabi ng Infradev na pending pa sa SIAC ang case at confidential ang proceedings at negotiations; hindi nito kinumpirma sa publiko ang detailed commercial terms.',
+            text: 'Noong January 2026, nag-authorize at nag-ratify ang Makati City Council ng bagong settlement framework sa pamamagitan ng Resolutions 2026-008 at 2026-011. Iniulat na kapalit ng settlement ang transfer ng project company at related assets sa city. Sa title ng Resolution 2026-011 sa city archive, Resolution 2026-007 ang nakalagay na authorization; pero Resolutions 2026-008 at 2026-011 ang cross-reference ng Ordinance 2026-015. Pinapanatili ng BetterMakati ang unresolved discrepancy na ito sa halip na pumili nang walang sapat na record. Sa liham nito sa Philippine Stock Exchange noong 18 Pebrero 2026, sinabi ng Infradev na nasa SIAC pa ang usapin. Ayon sa kumpanya, sa utos ng tribunal noong 31 Hulyo 2025, kailangang panatilihing kumpidensiyal ng magkabilang panig ang mga pagdinig at dokumento. Sinabi nitong ilalabas ang mga detalye kapag tapos na ang kaso at ang obligasyong panatilihing lihim ang mga ito.',
             evidence: {
               sourceIds: ['8', '9'],
               records: [
@@ -462,7 +462,7 @@ const reportModule: FeaturedReportModule = {
     ],
     methodology: {
       title: 'Status at uncertainty note',
-      text: 'Priority ang company disclosures, government PPP records at official court-boundary record. Ginagamit ang strong secondary reporting para sa station names at January 2026 settlement events na wala pang complete official text sa accessible city portal. Hindi tinatrato ang settlement, asset transfer o database label bilang proof ng construction restart.',
+      text: 'Priority ang company disclosures, government PPP records at official court-boundary record. Ginagamit ang strong secondary reporting para sa station names at January 2026 settlement events na wala pang complete official text sa accessible city portal. Hanggang 5 Oktubre 2026 ang saklaw ng pagsusuri sa proyekto. Paglilinaw noong 28 Nobyembre 2026: ang pahayag ng kumpanya noong Pebrero ay mula na sa mismong liham na nilagdaan nito.',
       evidence: { sourceIds: ['2', '3', '6', '8', '9', '10'] },
     },
   },
