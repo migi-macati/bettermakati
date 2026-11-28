@@ -247,5 +247,20 @@
     "2027": 7200.19,
     "2026": 6793.16,
     "change_percent": 5.99
+  },
+  "house_second_source_review": {
+    "checked": "2026-11-28",
+    "url": "https://budget-assets.bettergov.ph/hgab/2027/pdf/hb10858-2r-vol-ic.pdf",
+    "sha256": "0b790d6018db59abab648486c5068108a42ff20a33facc8e21ace0bbedf2d15f",
+    "pdf_pages": [
+      267,
+      273,
+      299,
+      300,
+      322,
+      413
+    ],
+    "stage_status": "unconfirmed",
+    "finding": "The file is labeled second reading by the source. Its cover and all six cited pages carry a third-reading production footer. The second- and third-reading files have different hashes. The stage of this copy requires independent confirmation."
   }
 }

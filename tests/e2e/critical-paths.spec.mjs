@@ -2999,6 +2999,11 @@ for (const language of ['en', 'fil']) {
       const allDownload = page.waitForEvent('download');
       await page.getByRole('button', { name: /CSV/ }).click();
       const allCsv = readFileSync(await (await allDownload).path(), 'utf8');
+      const stageLabel = language === 'en' ? 'House · second reading (unconfirmed)' : 'Kamara · ikalawang pagbasa (hindi pa tiyak)';
+      const stageNote = language === 'en' ? 'The stage is unconfirmed.' : 'Hindi pa tiyak ang bersyon.';
+      await expect(page.locator('#projects dt').filter({ hasText: stageLabel })).toHaveCount(11);
+      expect(allCsv.split('\r\n')[0]).toContain('house_second_source_note');
+      expect(allCsv.split('\r\n').slice(1).filter(line => line.includes(stageNote))).toHaveLength(11);
       expect(allCsv).not.toContain('Lamakati');
       expect(allCsv).not.toContain('1535750000');
       expect(allCsv).not.toContain('1,535.75');

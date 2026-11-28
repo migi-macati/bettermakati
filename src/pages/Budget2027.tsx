@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useSearchParams } from 'react-router';
 import SEO from '../components/SEO';
+import sourceChecks from '../../data/budget2027/2026-11-03-source-page-checks.json';
 import { compareProject } from '../lib/budget2027/comparison';
 import { makatiScope } from '../lib/budget2027/scope';
 import {
@@ -25,6 +26,9 @@ const cell = (value: unknown) =>
     .replaceAll('"', '""') +
   '"';
 const linkStyle = 'font-semibold text-primary-800 underline underline-offset-4';
+
+const needsStageNote = (row: Project) =>
+  row.pdf_url.hgab2?.split('#')[0] === sourceChecks.house_second_source_review.url;
 
 export default function Budget2027() {
   const { i18n } = useTranslation();
@@ -101,6 +105,11 @@ export default function Budget2027() {
   );
   const money = (value: number | null) =>
     value === null ? missing : pesos(value);
+  const stageNote = t(
+    'Source labels this copy second reading. Its footer says third reading. The stage is unconfirmed.',
+    'Ikalawang pagbasa ang label ng source. Ikatlong pagbasa ang nasa ibaba ng pahina. Hindi pa tiyak ang bersyon.'
+  );
+  const stageLabel = t('House · second reading (unconfirmed)', 'Kamara · ikalawang pagbasa (hindi pa tiyak)');
   const exportCsv = () => {
     const header = [
       'id',
@@ -120,6 +129,7 @@ export default function Budget2027() {
       'location_scope',
       'nep_to_house_third_status',
       'nep_to_house_third_change_php',
+      'house_second_source_note',
     ];
     const values = rows.map(row => {
       const source = available.find(p =>
@@ -143,6 +153,7 @@ export default function Budget2027() {
         makatiScope(row),
         compareProject(row).status,
         compareProject(row).delta,
+        needsStageNote(row) ? stageNote : null,
       ];
     });
     const url = URL.createObjectURL(
@@ -582,28 +593,31 @@ export default function Budget2027() {
                     {t('NEP → House third reading: ', 'NEP → House third reading: ')}{comparisonText(row)}
                   </p>
                   <dl className="mt-3 grid gap-4 md:grid-cols-3">
-                    {versions.map(v => (
-                      <div key={v.key}>
-                        <dt className="text-sm text-gray-600">{v.label}</dt>
-                        <dd className="font-semibold">{money(row[v.key])}</dd>
-                        <dd>
-                          {row.pdf_url[v.pdf] && (
-                            <a
-                              className={`${linkStyle} text-sm`}
-                              href={row.pdf_url[v.pdf]!}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              {t(
-                                'Open source PDF page',
-                                'Buksan ang pahina sa source PDF'
-                              )}{' '}
-                              · {v.label}
-                            </a>
-                          )}
-                        </dd>
-                      </div>
-                    ))}
+                    {versions.map(v => {
+                      const label = v.pdf === 'hgab2' && needsStageNote(row) ? stageLabel : v.label;
+                      return (
+                        <div key={v.key}>
+                          <dt className="text-sm text-gray-600">{label}</dt>
+                          <dd className="font-semibold">{money(row[v.key])}</dd>
+                          <dd>
+                            {row.pdf_url[v.pdf] && (
+                              <a
+                                className={`${linkStyle} text-sm`}
+                                href={row.pdf_url[v.pdf]!}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                {t(
+                                  'Open source PDF page',
+                                  'Buksan ang pahina sa source PDF'
+                                )}{' '}
+                                · {label}
+                              </a>
+                            )}
+                          </dd>
+                        </div>
+                      );
+                    })}
                   </dl>
                 </li>
               ))}
@@ -658,9 +672,19 @@ export default function Budget2027() {
         </p>
         <p>
           {t(
-            'On 3 November 2026, BetterMakati checked all 32 recorded version amounts for the 11 retained candidates against their linked source PDF pages: 11 House second-reading, 11 House third-reading and 10 NEP amounts. Filmore’s missing NEP match remains unknown, not proof that the project was absent. This does not verify city boundaries or later data revisions. PDF page numbers may differ from printed page numbers.',
-            'Noong 3 November 2026, sinuri ng BetterMakati ang lahat ng 32 nakatalang halaga para sa 11 kandidatong proyekto sa mga naka-link na source PDF page: 11 sa House second reading, 11 sa House third reading at 10 sa NEP. Hindi pa tiyak ang nawawalang NEP match ng Filmore; hindi ito patunay na wala ang proyekto. Hindi nito vine-verify ang hangganan ng lungsod o susunod na pagbabago sa datos. Maaaring magkaiba ang PDF page number at naka-print na page number.'
+            'On 3 November 2026, BetterMakati checked all 32 recorded version amounts for the 11 retained candidates against their linked source PDF pages: 11 from the file labeled House second reading, 11 from House third reading and 10 from the NEP. Filmore’s missing NEP match remains unknown, not proof that the project was absent. This does not verify city boundaries or later data revisions. PDF page numbers may differ from printed page numbers.',
+            'Noong 3 November 2026, sinuri ng BetterMakati ang lahat ng 32 nakatalang halaga para sa 11 kandidatong proyekto sa mga naka-link na source PDF page: 11 sa file na may label na House second reading, 11 sa House third reading at 10 sa NEP. Hindi pa tiyak ang nawawalang NEP match ng Filmore; hindi ito patunay na wala ang proyekto. Hindi nito vine-verify ang hangganan ng lungsod o susunod na pagbabago sa datos. Maaaring magkaiba ang PDF page number at naka-print na page number.'
           )}
+        </p>
+        <p>
+          <strong>{t('Source clarification · 28 November 2026. ', 'Paglilinaw sa source · 28 Nobyembre 2026. ')}</strong>
+          {t(
+            'All six cited pages in the file labeled House second reading use a third-reading footer. We verified the printed amounts. We are still checking which version the House approved on second reading. ',
+            'Ikatlong pagbasa ang nasa ibaba ng anim na pahinang sinipi mula sa file na may label na ikalawang pagbasa. Natiyak namin ang mga halagang nakalimbag. Sinusuri pa namin kung aling bersyon ang inaprubahan ng Kamara sa ikalawang pagbasa. '
+          )}
+          <a className={linkStyle} href={sourceChecks.house_second_source_review.url + '#page=273'}>
+            {t('Inspect the bridge entry on printed page 265 (PDF page 273)', 'Tingnan ang proyekto sa tulay sa pahina 265 (pahina 273 sa PDF)')}
+          </a>
         </p>
         <ul className="space-y-2 text-sm break-words">
           {available.map(r => (
